@@ -77,7 +77,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     // Prevent buttons from being disabled when associated with segment content
     if (this.contentId && this.disabled) {
       printIonWarning(
-        `Segment Button: Segment buttons cannot be disabled when associated with an <ion-segment-content>.`
+        `[ion-segment-button] - Segment buttons cannot be disabled when associated with an <ion-segment-content>.`
       );
       this.disabled = false;
     }
@@ -105,13 +105,13 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
 
     // If no associated Segment Content exists, log an error and return
     if (!segmentContent) {
-      printIonError(`Segment Button: Unable to find Segment Content with id="${this.contentId}".`);
+      printIonError(`[ion-segment-button] - Unable to find Segment Content with id="${this.contentId}".`);
       return;
     }
 
     // Ensure the found element is a valid ION-SEGMENT-CONTENT
     if (segmentContent.tagName !== 'ION-SEGMENT-CONTENT') {
-      printIonError(`Segment Button: Element with id="${this.contentId}" is not an <ion-segment-content> element.`);
+      printIonError(`[ion-segment-button] - Element with id="${this.contentId}" is not an <ion-segment-content> element.`);
       return;
     }
   }

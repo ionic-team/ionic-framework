@@ -52,7 +52,7 @@ export const writeNavState = async (
     }
     return changed;
   } catch (e) {
-    printIonError('[ion-router]', e);
+    printIonError('[ion-router] - Exception in writeNavState:', e);
     return false;
   }
 };

@@ -211,7 +211,7 @@ const getTab = (tabs: HTMLIonTabElement[], tab: string | HTMLIonTabElement): HTM
   const tabEl = typeof tab === 'string' ? tabs.find((t) => t.tab === tab) : tab;
 
   if (!tabEl) {
-    printIonError(`tab with id: "${tabEl}" does not exist`);
+    printIonError(`[ion-tabs] - Tab with id: "${tabEl}" does not exist`);
   }
   return tabEl;
 };

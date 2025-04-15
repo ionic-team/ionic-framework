@@ -155,7 +155,7 @@ export class SplitPane implements ComponentInterface {
       const isMain = contentId !== undefined && child.id === contentId;
       if (isMain) {
         if (foundMain) {
-          printIonWarning('split pane cannot have more than one main node');
+          printIonWarning('[ion-split-pane] - Cannot have more than one main node.');
           return;
         } else {
           setPaneClass(child, isMain);
@@ -164,7 +164,7 @@ export class SplitPane implements ComponentInterface {
       }
     }
     if (!foundMain) {
-      printIonWarning('split pane does not have a specified main node');
+      printIonWarning('[ion-split-pane] - Does not have a specified main node.');
     }
   }
 

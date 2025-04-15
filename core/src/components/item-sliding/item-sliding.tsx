@@ -344,7 +344,7 @@ export class ItemSliding implements ComponentInterface {
       case ItemSide.None:
         return;
       default:
-        printIonWarning('invalid ItemSideFlags value', this.sides);
+        printIonWarning('[ion-item-sliding] - invalid ItemSideFlags value', this.sides);
         break;
     }
 

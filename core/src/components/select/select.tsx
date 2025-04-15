@@ -428,14 +428,14 @@ export class Select implements ComponentInterface {
     let selectInterface = this.interface;
     if (selectInterface === 'action-sheet' && this.multiple) {
       printIonWarning(
-        `Select interface cannot be "${selectInterface}" with a multi-value select. Using the "alert" interface instead.`
+        `[ion-select] - Interface cannot be "${selectInterface}" with a multi-value select. Using the "alert" interface instead.`
       );
       selectInterface = 'alert';
     }
 
     if (selectInterface === 'popover' && !ev) {
       printIonWarning(
-        `Select interface cannot be a "${selectInterface}" without passing an event. Using the "alert" interface instead.`
+        `[ion-select] - Interface cannot be a "${selectInterface}" without passing an event. Using the "alert" interface instead.`
       );
       selectInterface = 'alert';
     }

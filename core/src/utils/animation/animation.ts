@@ -457,7 +457,7 @@ export const createAnimation = (animationId?: string): Animation => {
           elements.push((el as any)[i]);
         }
       } else {
-        printIonError('Invalid addElement value');
+        printIonError('createAnimation - Invalid addElement value.');
       }
     }
 

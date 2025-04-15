@@ -453,7 +453,7 @@ export class Refresher implements ComponentInterface {
 
   async connectedCallback() {
     if (this.el.getAttribute('slot') !== 'fixed') {
-      printIonError('Make sure you use: <ion-refresher slot="fixed">');
+      printIonError('[ion-refresher] - Make sure you use: <ion-refresher slot="fixed">');
       return;
     }
     const contentEl = this.el.closest(ION_CONTENT_ELEMENT_SELECTOR);

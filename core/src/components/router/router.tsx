@@ -167,7 +167,7 @@ export class Router implements ComponentInterface {
   @Method()
   async navChanged(direction: RouterDirection): Promise<boolean> {
     if (this.busy) {
-      printIonWarning('[ion-router] router is busy, navChanged was cancelled');
+      printIonWarning('[ion-router] - router is busy, navChanged was cancelled');
       return false;
     }
     const { ids, outlet } = await readNavState(window.document.body);
@@ -175,7 +175,7 @@ export class Router implements ComponentInterface {
     const chain = findChainForIDs(ids, routes);
     if (!chain) {
       printIonWarning(
-        '[ion-router] no matching URL for ',
+        '[ion-router] - no matching URL for ',
         ids.map((i) => i.id)
       );
       return false;
@@ -183,7 +183,7 @@ export class Router implements ComponentInterface {
 
     const segments = chainToSegments(chain);
     if (!segments) {
-      printIonWarning('[ion-router] router could not match path because some required param is missing');
+      printIonWarning('[ion-router] - router could not match path because some required param is missing');
       return false;
     }
 
@@ -233,7 +233,7 @@ export class Router implements ComponentInterface {
     animation?: AnimationBuilder
   ): Promise<boolean> {
     if (!segments) {
-      printIonError('[ion-router] URL is not part of the routing set');
+      printIonError('[ion-router] - URL is not part of the routing set');
       return false;
     }
 
@@ -254,7 +254,7 @@ export class Router implements ComponentInterface {
     const routes = readRoutes(this.el);
     const chain = findChainForSegments(segments, routes);
     if (!chain) {
-      printIonError('[ion-router] the path does not match any route');
+      printIonError('[ion-router] - The path does not match any route');
       return false;
     }
 
@@ -276,7 +276,7 @@ export class Router implements ComponentInterface {
     try {
       changed = await this.writeNavState(node, chain, direction, segments, redirectFrom, index, animation);
     } catch (e) {
-      printIonError('[ion-router]', e);
+      printIonError('[ion-router] - Exception in safeWriteNavState:', e);
     }
     unlock();
     return changed;
@@ -339,7 +339,7 @@ export class Router implements ComponentInterface {
     animation?: AnimationBuilder
   ): Promise<boolean> {
     if (this.busy) {
-      printIonWarning('[ion-router] router is busy, transition was cancelled');
+      printIonWarning('[ion-router] - router is busy, transition was cancelled');
       return false;
     }
     this.busy = true;

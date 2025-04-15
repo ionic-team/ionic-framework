@@ -320,7 +320,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     const inputTypes = new Set(inputs.map((i) => i.type));
     if (inputTypes.has('checkbox') && inputTypes.has('radio')) {
       printIonWarning(
-        `Alert cannot mix input types: ${Array.from(inputTypes.values()).join(
+        `[ion-alert] - Alert cannot mix input types: ${Array.from(inputTypes.values()).join(
           '/'
         )}. Please see alert docs for more info.`
       );

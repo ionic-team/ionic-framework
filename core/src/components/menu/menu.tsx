@@ -216,13 +216,13 @@ export class Menu implements ComponentInterface, MenuI {
     const content = this.contentId !== undefined ? document.getElementById(this.contentId) : null;
 
     if (content === null) {
-      printIonError('Menu: must have a "content" element to listen for drag events on.');
+      printIonError('[ion-menu] - Must have a "content" element to listen for drag events on.');
       return;
     }
 
     if (this.el.contains(content)) {
       printIonError(
-        `Menu: "contentId" should refer to the main view's ion-content, not the ion-content inside of the ion-menu.`
+        `[ion-menu] - The "contentId" should refer to the main view's ion-content, not the ion-content inside of the ion-menu.`
       );
     }
 

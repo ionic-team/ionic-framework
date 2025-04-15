@@ -78,7 +78,7 @@ export const startHardwareBackButton = () => {
           }
         }
       } catch (e) {
-        printIonError('[ion-app]', e);
+        printIonError('[ion-app] - Exception in startHardwareBackButton:', e);
       }
     };
 

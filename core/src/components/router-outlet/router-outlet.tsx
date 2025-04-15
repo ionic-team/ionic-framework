@@ -147,7 +147,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     try {
       changed = await this.transition(enteringEl, leavingEl, opts);
     } catch (e) {
-      printIonError('[ion-router-outlet]', e);
+      printIonError('[ion-router-outlet] - Exception in commit:', e);
     }
     unlock();
     return changed;

@@ -35,7 +35,7 @@ export class Tab implements ComponentInterface {
     if (Build.isDev) {
       if (this.component !== undefined && this.el.childElementCount > 0) {
         printIonError(
-          'You can not use a lazy-loaded component in a tab and inlined content at the same time.' +
+          '[ion-tab] - You can not use a lazy-loaded component in a tab and inlined content at the same time.' +
             `- Remove the component attribute in: <ion-tab component="${this.component}">` +
             ` or` +
             `- Remove the embedded content inside the ion-tab: <ion-tab></ion-tab>`
@@ -67,7 +67,7 @@ export class Tab implements ComponentInterface {
       try {
         return attachComponent(this.delegate, this.el, this.component, ['ion-page']);
       } catch (e) {
-        printIonError('[ion-tab]', e);
+        printIonError('[ion-tab] - Exception in prepareLazyLoaded:', e);
       }
     }
     return Promise.resolve(undefined);
