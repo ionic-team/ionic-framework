@@ -687,7 +687,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       expect(logs.length).toBe(1);
       expect(logs[0]).toContain(
-        '[Ionic Warning]: Datetime: "timeZone" and "timeZoneName" are not supported in "formatOptions".'
+        '[Ionic Warning]: [ion-datetime] - "timeZone" and "timeZoneName" are not supported in "formatOptions".'
       );
     });
 
