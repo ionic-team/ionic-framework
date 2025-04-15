@@ -9,13 +9,13 @@
 
   gap: globals.$ion-space-100;
 
-  transition: color 0.2s ease-in-out;
+  transition: color globals.$ion-transition-time-200 ease-in-out;
 
   font-weight: globals.$ion-font-weight-regular;
 
   text-decoration-color: inherit;
 
-  text-underline-offset: 2px;
+  text-underline-offset: globals.$ion-scale-050;
 
   cursor: pointer;
 
@@ -51,8 +51,7 @@
 
   &:focus,
   &.ion-focused {
-    outline: 2px solid globals.$ion-text-link-default;
-    outline-offset: 2px;
+    @include globals.focused-state(null, null, globals.$ion-text-link-default);
 
     text-decoration: underline;
   }
@@ -97,10 +96,7 @@ a.ionic-link,
 
   &:focus,
   &.ion-focused {
-    outline: 2px solid globals.$ion-text-link-default;
-    outline-offset: 2px;
-
-    color: currentColor;
+    @include globals.focused-state(null, null, globals.$ion-text-link-default);
 
     text-decoration: none;
   }
