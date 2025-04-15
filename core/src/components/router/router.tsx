@@ -167,7 +167,7 @@ export class Router implements ComponentInterface {
   @Method()
   async navChanged(direction: RouterDirection): Promise<boolean> {
     if (this.busy) {
-      printIonWarning('[ion-router] - Router is busy, navChanged was cancelled');
+      printIonWarning('[ion-router] - Router is busy, navChanged was cancelled.');
       return false;
     }
     const { ids, outlet } = await readNavState(window.document.body);
@@ -183,7 +183,7 @@ export class Router implements ComponentInterface {
 
     const segments = chainToSegments(chain);
     if (!segments) {
-      printIonWarning('[ion-router] - Router could not match path because some required param is missing');
+      printIonWarning('[ion-router] - Router could not match path because some required param is missing.');
       return false;
     }
 
