@@ -4,9 +4,6 @@
 // --------------------------------------------------
 
 :root {
-  --ionic-global-background-color: #{globals.$ion-primitives-neutral-100};
-  --ionic-global-text-color: #{globals.$ion-primitives-neutral-900};
-
   /**
    * Set the theme colors from the
    * `ionic.theme.default.scss` file.
@@ -26,8 +23,8 @@ html {
 }
 
 body {
-  background: var(--ionic-global-background-color);
-  color: var(--ionic-global-text-color);
+  background: var(--ion-background-color);
+  color: var(--ion-text-color);
 }
 
 body.backdrop-no-scroll {
@@ -312,7 +309,7 @@ ion-accordion > [slot="header"] .ion-accordion-toggle-icon {
 }
 
 ion-accordion.accordion-animated > [slot="header"] .ion-accordion-toggle-icon {
-  transition: 300ms transform cubic-bezier(0.25, 0.8, 0.5, 1);
+  transition: globals.$ion-transition-time-300 transform globals.$ion-transition-curve-quick;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -376,8 +373,8 @@ ion-input input::-webkit-date-and-time-value {
  * sized grid interface.
  */
 .ion-datetime-button-overlay ion-datetime.datetime-grid {
-  width: 320px;
-  min-height: 320px;
+  width: calc(#{globals.$ion-scale-7400} + #{globals.$ion-space-600});
+  min-height: calc(#{globals.$ion-scale-7400} + #{globals.$ion-space-600});
 }
 
 // Popover Styles
