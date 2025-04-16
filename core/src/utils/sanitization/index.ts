@@ -1,8 +1,9 @@
+import { printIonError } from '@utils/logging';
+
 /**
  * Does a simple sanitization of all elements
  * in an untrusted string
  */
-
 export const sanitizeDOMString = (untrustedString: IonicSafeString | string | undefined): string | undefined => {
   try {
     if (untrustedString instanceof IonicSafeString) {
@@ -81,7 +82,7 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
     const getInnerDiv = fragmentDiv.querySelector('div');
     return getInnerDiv !== null ? getInnerDiv.innerHTML : fragmentDiv.innerHTML;
   } catch (err) {
-    console.error(err);
+    printIonError('sanitizeDOMString', err);
 
     return '';
   }

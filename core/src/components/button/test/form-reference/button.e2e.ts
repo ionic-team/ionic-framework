@@ -169,7 +169,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
 
       expect(logs.length).toBe(1);
       expect(logs[0]).toContain(
-        '[Ionic Warning]: Form with selector: "#missingForm" could not be found. Verify that the id is correct and the form is rendered in the DOM.'
+        '[Ionic Warning]: [ion-button] - Form with selector: "#missingForm" could not be found. Verify that the id is correct and the form is rendered in the DOM.'
       );
     });
 
@@ -197,7 +197,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
 
       expect(logs.length).toBe(1);
       expect(logs[0]).toContain(
-        '[Ionic Warning]: The provided "form" element is invalid. Verify that the form is a HTMLFormElement and rendered in the DOM.'
+        '[Ionic Warning]: [ion-button] - The provided "form" element is invalid. Verify that the form is a HTMLFormElement and rendered in the DOM.'
       );
     });
   });
