@@ -9,7 +9,7 @@
 
   gap: globals.$ion-space-100;
 
-  transition: color 200ms ease-in-out;
+  transition: color globals.$ion-transition-time-200 ease-in-out;
 
   font-weight: globals.$ion-font-weight-regular;
 
