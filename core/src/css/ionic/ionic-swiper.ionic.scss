@@ -6,10 +6,10 @@
 .swiper {
   --bullet-background: #{tokens.$ion-primitives-neutral-800};
   --bullet-background-active: #{tokens.$ion-semantics-primary-base};
-  --progress-bar-background: rgba(#010408, 0.25);
+  --progress-bar-background: #{tokens.$ion-bg-neutral-boldest-default-rgb};
   --progress-bar-background-active: #{tokens.$ion-semantics-primary-600};
-  --scroll-bar-background: rgba(#010408, 0.1);
-  --scroll-bar-background-active: rgba(#010408, 0.5);
+  --scroll-bar-background: #{tokens.$ion-bg-neutral-boldest-default-rgb};
+  --scroll-bar-background-active: #{tokens.$ion-bg-neutral-boldest-press-rgb};
   /**
    * @prop --bullet-background: Background of the pagination bullets
    * @prop --bullet-background-active: Background of the active pagination bullet
@@ -70,6 +70,8 @@
 }
 
 .swiper .swiper-slide {
+  @include globals.typography(globals.$ion-heading-h6-bold);
+
   // Center slide text vertically
   display: flex;
   position: relative;
@@ -80,8 +82,6 @@
 
   width: 100%;
   height: 100%;
-
-  font-size: 18px;
 
   text-align: center;
   box-sizing: border-box;
