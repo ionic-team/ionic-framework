@@ -50,11 +50,20 @@ export class Input implements ComponentInterface {
    * Resets when the input loses focus.
    */
   private didInputClearOnEdit = false;
+
   /**
    * The value of the input when the input is focused.
    */
   private focusedValue?: string | number | null;
 
+  /**
+   * The `hasFocus` state ensures the focus class is
+   * added regardless of how the element is focused.
+   * The `ion-focused` class only applies when focused
+   * via tabbing, not by clicking.
+   * The `has-focus` logic was added to ensure the class
+   * is applied in both cases.
+   */
   @State() hasFocus = false;
 
   @Element() el!: HTMLIonInputElement;
