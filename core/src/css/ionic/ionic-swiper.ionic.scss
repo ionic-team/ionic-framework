@@ -1,15 +1,15 @@
-@use "../../foundations/ionic.vars.scss" as tokens;
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 
 // Slides
 // --------------------------------------------------
 
 .swiper {
-  --bullet-background: #{tokens.$ion-primitives-neutral-800};
-  --bullet-background-active: #{tokens.$ion-semantics-primary-base};
-  --progress-bar-background: #{tokens.$ion-bg-neutral-boldest-default-rgb};
-  --progress-bar-background-active: #{tokens.$ion-semantics-primary-600};
-  --scroll-bar-background: #{tokens.$ion-bg-neutral-boldest-default-rgb};
-  --scroll-bar-background-active: #{tokens.$ion-bg-neutral-boldest-press-rgb};
+  --bullet-background: #{globals.$ion-primitives-neutral-800};
+  --bullet-background-active: #{globals.$ion-semantics-primary-base};
+  --progress-bar-background: #{globals.$ion-bg-neutral-boldest-default-rgb};
+  --progress-bar-background-active: #{globals.$ion-semantics-primary-600};
+  --scroll-bar-background: #{globals.$ion-bg-neutral-boldest-default-rgb};
+  --scroll-bar-background-active: #{globals.$ion-bg-neutral-boldest-press-rgb};
   /**
    * @prop --bullet-background: Background of the pagination bullets
    * @prop --bullet-background-active: Background of the active pagination bullet
