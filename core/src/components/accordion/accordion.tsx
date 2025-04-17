@@ -381,12 +381,22 @@ export class Accordion implements ComponentInterface {
     return previousSibling as HTMLIonAccordionElement;
   };
 
-  private toggleExpanded() {
+  private toggleExpanded(event: MouseEvent) {
     const { accordionGroupEl, disabled, readonly, value, state } = this;
 
     if (disabled || readonly) return;
 
     if (accordionGroupEl) {
+      /**
+       * We check if the element that was clicked has the attribute
+       * skip-accordion-toggle. In case the element has it, then the accordion
+       * won't request an accordion toggle if it's inside an accordion group
+       */
+      const target = event.target as HTMLInputElement;
+      if (target.hasAttribute('skip-accordion-toggle') && target.getAttribute('skip-accordion-toggle') !== 'false') {
+        return;
+      }
+
       /**
        * Because the accordion group may or may
        * not allow multiple accordions open, we
@@ -428,7 +438,7 @@ export class Accordion implements ComponentInterface {
         }}
       >
         <div
-          onClick={() => this.toggleExpanded()}
+          onClick={($event) => this.toggleExpanded($event)}
           id="header"
           part={headerPart}
           aria-controls="content"
