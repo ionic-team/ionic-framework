@@ -1,5 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./avatar.common";
+@use "./avatar.common";
 
 // Ionic Avatar
 // --------------------------------------------------
@@ -22,7 +22,7 @@
 }
 
 :host(:not(.avatar-image)) {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 }
 
 // Avatar Sizes
@@ -125,7 +125,7 @@
 // --------------------------------------------------
 
 :host(.avatar-icon) {
-  @include padding(0);
+  @include globals.padding(0);
 }
 
 :host(.avatar-xsmall) ::slotted(ion-icon) {
