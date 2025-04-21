@@ -38,8 +38,20 @@
   height: globals.$ion-scale-100;
 
   background-color: globals.$ion-primitives-neutral-300;
+
+  &::before {
+    @include globals.padding(globals.$ion-space-100);
+  }
 }
 
 :host(.modal-sheet) .modal-wrapper {
   @include globals.border-radius(var(--border-radius), var(--border-radius), 0, 0);
+}
+
+/**
+ * Ensure that the sheet modal does not
+ * completely cover the content.
+ */
+:host(.modal-sheet) {
+  --height: calc(100% - (var(--ion-safe-area-top) + #{globals.$ion-scale-250}));
 }
