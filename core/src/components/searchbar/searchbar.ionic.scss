@@ -115,7 +115,7 @@
    * is used in a toolbar regardless of
    * the searchbar size.
    */
-  @include globals.position-horizontal(9px, null);
+  @include globals.position-horizontal(globals.$ion-space-200, null);
 }
 
 // Searchbar States
@@ -340,7 +340,7 @@
    * the size of the leading icon (search or cancel),
    * and the gap between the icon and the input.
    */
-  padding-inline-start: calc(9px + globals.$ion-scale-400 + globals.$ion-space-200);
+  padding-inline-start: globals.$ion-space-800;
 }
 
 /* Large */
@@ -437,7 +437,7 @@
    * the size of the leading icon (search or cancel),
    * and the gap between the icon and the input.
    */
-  padding-inline-start: calc(9px + globals.$ion-scale-500 + globals.$ion-space-200);
+  padding-inline-start: globals.$ion-space-900;
 }
 
 :host(.searchbar-size-large) .searchbar-search-icon,
