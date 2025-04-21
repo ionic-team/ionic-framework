@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { RouterModule } from "@angular/router";
 
 import { IonicModule } from '@ionic/angular';
 
@@ -7,6 +6,6 @@ import { IonicModule } from '@ionic/angular';
   selector: 'app-standalone',
   templateUrl: './standalone.component.html',
   standalone: true,
-  imports: [IonicModule, RouterModule]
+  imports: [IonicModule]
 })
 export class StandaloneComponent { }

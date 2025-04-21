@@ -4,7 +4,8 @@ import type { NotchController } from '@utils/forms';
 import { compareOptions, createNotchController, isOptionSelected } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { focusVisibleElement, inheritAttributes, renderHiddenInput } from '@utils/helpers';
-import { actionSheetController, alertController, modalController, popoverController } from '@utils/overlays';
+import { printIonWarning } from '@utils/logging';
+import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
 import type { OverlaySelect } from '@utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -69,6 +70,16 @@ export class Select implements ComponentInterface {
   @Element() el!: HTMLIonSelectElement;
 
   @State() isExpanded = false;
+
+  /**
+   * The `hasFocus` state ensures the focus class is
+   * added regardless of how the element is focused.
+   * The `ion-focused` class only applies when focused
+   * via tabbing, not by clicking.
+   * The `has-focus` logic was added to ensure the class
+   * is applied in both cases.
+   */
+  @State() hasFocus = false;
 
   /**
    * The text to display on the cancel button.
@@ -426,15 +437,15 @@ export class Select implements ComponentInterface {
   private createOverlay(ev?: UIEvent): Promise<OverlaySelect> {
     let selectInterface = this.interface;
     if (selectInterface === 'action-sheet' && this.multiple) {
-      console.warn(
-        `Select interface cannot be "${selectInterface}" with a multi-value select. Using the "alert" interface instead.`
+      printIonWarning(
+        `[ion-select] - Interface cannot be "${selectInterface}" with a multi-value select. Using the "alert" interface instead.`
       );
       selectInterface = 'alert';
     }
 
     if (selectInterface === 'popover' && !ev) {
-      console.warn(
-        `Select interface cannot be a "${selectInterface}" without passing an event. Using the "alert" interface instead.`
+      printIonWarning(
+        `[ion-select] - Interface cannot be a "${selectInterface}" without passing an event. Using the "alert" interface instead.`
       );
       selectInterface = 'alert';
     }
@@ -852,10 +863,14 @@ export class Select implements ComponentInterface {
   };
 
   private onFocus = () => {
+    this.hasFocus = true;
+
     this.ionFocus.emit();
   };
 
   private onBlur = () => {
+    this.hasFocus = false;
+
     this.ionBlur.emit();
   };
 
@@ -1090,8 +1105,20 @@ export class Select implements ComponentInterface {
   }
 
   render() {
-    const { disabled, el, isExpanded, expandedIcon, labelPlacement, justify, placeholder, fill, shape, name, value } =
-      this;
+    const {
+      disabled,
+      el,
+      isExpanded,
+      expandedIcon,
+      labelPlacement,
+      justify,
+      placeholder,
+      fill,
+      shape,
+      name,
+      value,
+      hasFocus,
+    } = this;
     const mode = getIonMode(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel && justify !== undefined;
@@ -1137,6 +1164,8 @@ export class Select implements ComponentInterface {
           'has-value': hasValue,
           'label-floating': labelShouldFloat,
           'has-placeholder': placeholder !== undefined,
+          'has-focus': hasFocus,
+          // TODO(FW-6451): Remove `ion-focusable` class in favor of `has-focus`.
           'ion-focusable': true,
           [`select-${rtl}`]: true,
           [`select-fill-${fill}`]: fill !== undefined,

@@ -2,6 +2,7 @@ import { doc } from '@utils/browser';
 import { focusFirstDescendant, focusLastDescendant, focusableQueryString } from '@utils/focus-trap';
 import type { BackButtonEvent } from '@utils/hardware-back-button';
 import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
+import { printIonError, printIonWarning } from '@utils/logging';
 
 import { config } from '../global/config';
 import { getIonMode } from '../global/ionic-global';
@@ -31,7 +32,6 @@ import {
   getElementRoot,
   removeEventListener,
 } from './helpers';
-import { printIonWarning } from './logging';
 import { isPlatform } from './platform';
 
 let lastOverlayIndex = 0;
@@ -520,9 +520,8 @@ export const present = async <OverlayPresentOptions>(
    */
   if (overlay.el.tagName !== 'ION-TOAST') {
     setRootAriaHidden(true);
+    document.body.classList.add(BACKDROP_NO_SCROLL);
   }
-
-  document.body.classList.add(BACKDROP_NO_SCROLL);
 
   hideUnderlyingOverlaysFromScreenReaders(overlay.el);
   hideAnimatingOverlayFromScreenReaders(overlay.el);
@@ -646,8 +645,10 @@ export const dismiss = async <OverlayDismissOptions>(
     return false;
   }
 
+  const presentedOverlays = doc !== undefined ? getPresentedOverlays(doc) : [];
+
   /**
-   * For accessibility, toasts lack focus traps and don’t receive
+   * For accessibility, toasts lack focus traps and don't receive
    * `aria-hidden` on the root element when presented.
    *
    * All other overlays use focus traps to keep keyboard focus
@@ -657,7 +658,7 @@ export const dismiss = async <OverlayDismissOptions>(
    * Therefore, we must remove `aria-hidden` from the root element
    * when the last non-toast overlay is dismissed.
    */
-  const overlaysNotToast = doc !== undefined ? getPresentedOverlays(doc).filter((o) => o.tagName !== 'ION-TOAST') : [];
+  const overlaysNotToast = presentedOverlays.filter((o) => o.tagName !== 'ION-TOAST');
 
   const lastOverlayNotToast = overlaysNotToast.length === 1 && overlaysNotToast[0].id === overlay.el.id;
 
@@ -722,7 +723,7 @@ export const dismiss = async <OverlayDismissOptions>(
       overlay.el.lastFocus = undefined;
     }
   } catch (err) {
-    console.error(err);
+    printIonError(`[${overlay.el.tagName.toLowerCase()}] - `, err);
   }
 
   overlay.el.remove();
@@ -939,7 +940,7 @@ export const createTriggerController = () => {
     const triggerEl = trigger !== undefined ? document.getElementById(trigger) : null;
     if (!triggerEl) {
       printIonWarning(
-        `A trigger element with the ID "${trigger}" was not found in the DOM. The trigger element must be in the DOM when the "trigger" property is set on an overlay component.`,
+        `[${el.tagName.toLowerCase()}] - A trigger element with the ID "${trigger}" was not found in the DOM. The trigger element must be in the DOM when the "trigger" property is set on an overlay component.`,
         el
       );
       return;

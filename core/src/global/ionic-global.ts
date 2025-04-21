@@ -1,4 +1,5 @@
 import { getMode, setMode } from '@stencil/core';
+import { printIonWarning } from '@utils/logging';
 
 import type { IonicConfig, Mode } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
@@ -67,7 +68,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
         if (isAllowedIonicModeValue(elmMode)) {
           return elmMode;
         } else if (isIonicElement(elm)) {
-          console.warn('Invalid ionic mode: "' + elmMode + '", expected: "ios" or "md"');
+          printIonWarning('Invalid ionic mode: "' + elmMode + '", expected: "ios" or "md"');
         }
       }
       elm = elm.parentElement;

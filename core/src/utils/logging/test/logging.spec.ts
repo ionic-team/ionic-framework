@@ -1,5 +1,5 @@
 import { config } from '@global/config';
-import { LogLevel } from '../index';
+import { LogLevel } from '../../../index';
 
 import { printIonError, printIonWarning } from '../index';
 

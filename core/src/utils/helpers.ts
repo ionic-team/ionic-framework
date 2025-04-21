@@ -1,4 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
+import { printIonError } from '@utils/logging';
 
 import type { Side } from '../components/menu/menu-interface';
 
@@ -287,7 +288,7 @@ export const clamp = (min: number, n: number, max: number) => {
 export const assert = (actual: any, reason: string) => {
   if (!actual) {
     const message = 'ASSERT: ' + reason;
-    console.error(message);
+    printIonError(message);
     debugger; // eslint-disable-line
     throw new Error(message);
   }
@@ -386,17 +387,6 @@ export const shallowEqualStringMap = (
   }
 
   return true;
-};
-
-export const getNextSiblingOfType = <T extends Element>(element: Element): T | null => {
-  let sibling = element.nextSibling;
-  while (sibling) {
-    if (sibling.nodeType === Node.ELEMENT_NODE && (sibling as T) !== null) {
-      return sibling as T;
-    }
-    sibling = sibling.nextSibling;
-  }
-  return null;
 };
 
 /**

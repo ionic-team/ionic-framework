@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.5.5](https://github.com/ionic-team/ionic-framework/compare/v8.5.4...v8.5.5) (2025-04-16)
+
+
+### Bug Fixes
+
+* **config:** allow LogLevel to work with isolatedModules and update all warns and errors to respect logLevel ([#30350](https://github.com/ionic-team/ionic-framework/issues/30350)) ([d52fca0](https://github.com/ionic-team/ionic-framework/commit/d52fca084cf5a9924d0f6a6c4d9ece0373b83213))
+* **modal:** add expandToScroll property to ModalOptions ([#30357](https://github.com/ionic-team/ionic-framework/issues/30357)) ([8dd566b](https://github.com/ionic-team/ionic-framework/commit/8dd566b5c1241022e26cc91c0f415de20c0d0f34)), closes [#30356](https://github.com/ionic-team/ionic-framework/issues/30356)
+* **select:** update icon color and use correct focused class ([#30342](https://github.com/ionic-team/ionic-framework/issues/30342)) ([cad1c61](https://github.com/ionic-team/ionic-framework/commit/cad1c61528c52a53b2164f2ea46f49144d3b46ad))
+* **toggle:** ensure proper visual selection when navigating via VoiceOver in Safari ([#30349](https://github.com/ionic-team/ionic-framework/issues/30349)) ([b1bc58f](https://github.com/ionic-team/ionic-framework/commit/b1bc58f1c8ffdc859e3f4349040bb1ad6e383d1e))
+
+
+
+
+
+## [8.5.4](https://github.com/ionic-team/ionic-framework/compare/v8.5.3...v8.5.4) (2025-04-09)
+
+
+### Bug Fixes
+
+* **config:** properly export LogLevel ([#30335](https://github.com/ionic-team/ionic-framework/issues/30335)) ([835ad52](https://github.com/ionic-team/ionic-framework/commit/835ad52c290a3687dc9e9c6bf4326948a9c3fe0d)), closes [#30255](https://github.com/ionic-team/ionic-framework/issues/30255)
+
+
+
+
+
+## [8.5.3](https://github.com/ionic-team/ionic-framework/compare/v8.5.2...v8.5.3) (2025-04-02)
+
+
+### Bug Fixes
+
+* **checkbox:** ensure proper visual selection when navigating via VoiceOver in Safari ([#30300](https://github.com/ionic-team/ionic-framework/issues/30300)) ([bb40a1e](https://github.com/ionic-team/ionic-framework/commit/bb40a1efe71237075db2f3a536eddeb1d7c400fc))
+* **overlays:** exclude backdrop-no-scroll class when toast is presented ([#30123](https://github.com/ionic-team/ionic-framework/issues/30123)) ([7f9df7a](https://github.com/ionic-team/ionic-framework/commit/7f9df7a89447e51eec0b1516069a1e0c9c9722e5)), closes [#30112](https://github.com/ionic-team/ionic-framework/issues/30112)
+* **segment-view:** prevent vertical scroll while scrolling horizontally ([#30276](https://github.com/ionic-team/ionic-framework/issues/30276)) ([105796f](https://github.com/ionic-team/ionic-framework/commit/105796f6bc8f961f58ecbb101285097cc86891c0)), closes [#30001](https://github.com/ionic-team/ionic-framework/issues/30001)
+
+
+
+
+
+## [8.5.2](https://github.com/ionic-team/ionic-framework/compare/v8.5.1...v8.5.2) (2025-03-26)
+
+
+### Bug Fixes
+
+* **datetime:** support typing time values in a 24-hour format ([#30147](https://github.com/ionic-team/ionic-framework/issues/30147)) ([ac6e6a0](https://github.com/ionic-team/ionic-framework/commit/ac6e6a03174263d09ec55c9742a026862a3df444)), closes [#28877](https://github.com/ionic-team/ionic-framework/issues/28877)
+* **range:** emit ionInput when value changes ([#30293](https://github.com/ionic-team/ionic-framework/issues/30293)) ([7789bb5](https://github.com/ionic-team/ionic-framework/commit/7789bb59ee5c76074ff4872dc6a50ae2d83df8f5)), closes [#29619](https://github.com/ionic-team/ionic-framework/issues/29619)
+* **segment-button:** ensure consistent disabled state for segment-content error handling ([#30288](https://github.com/ionic-team/ionic-framework/issues/30288)) ([1cfa915](https://github.com/ionic-team/ionic-framework/commit/1cfa915e8fe362951c521bce970a9f5f10918ab2))
+
+
+
+
+
 ## [8.5.1](https://github.com/ionic-team/ionic-framework/compare/v8.5.0...v8.5.1) (2025-03-19)
 
 

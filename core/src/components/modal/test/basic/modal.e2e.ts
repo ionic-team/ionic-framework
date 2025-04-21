@@ -145,7 +145,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(0.5));
 
       expect(warnings.length).toBe(1);
-      expect(warnings[0]).toBe('[Ionic Warning]: setCurrentBreakpoint is only supported on sheet modals.');
+      expect(warnings[0]).toBe(
+        '[Ionic Warning]: [ion-modal] - setCurrentBreakpoint is only supported on sheet modals.'
+      );
     });
 
     test('it should return undefined when getting the breakpoint on a non-sheet modal', async ({ page }) => {

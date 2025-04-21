@@ -218,7 +218,7 @@ export const getHighlightStyles = (
       return highlightedDates(dateIsoString);
     } catch (e) {
       printIonError(
-        'Exception thrown from provided `highlightedDates` callback. Please check your function and try again.',
+        '[ion-datetime] - Exception thrown from provided `highlightedDates` callback. Please check your function and try again.',
         el,
         e
       );

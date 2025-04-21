@@ -235,7 +235,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
            * element with that id is not a form element.
            */
           printIonWarning(
-            `Form with selector: "#${form}" could not be found. Verify that the id is attached to a <form> element.`,
+            `[ion-button] - Form with selector: "#${form}" could not be found. Verify that the id is attached to a <form> element.`,
             this.el
           );
           return null;
@@ -246,7 +246,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
          * element with that id could not be found in the DOM.
          */
         printIonWarning(
-          `Form with selector: "#${form}" could not be found. Verify that the id is correct and the form is rendered in the DOM.`,
+          `[ion-button] - Form with selector: "#${form}" could not be found. Verify that the id is correct and the form is rendered in the DOM.`,
           this.el
         );
         return null;
@@ -260,7 +260,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
        * as the form attribute.
        */
       printIonWarning(
-        `The provided "form" element is invalid. Verify that the form is a HTMLFormElement and rendered in the DOM.`,
+        `[ion-button] - The provided "form" element is invalid. Verify that the form is a HTMLFormElement and rendered in the DOM.`,
         this.el
       );
       return null;

@@ -1,4 +1,5 @@
 import { componentOnReady } from '@utils/helpers';
+import { printIonError } from '@utils/logging';
 
 import type { AnimationBuilder } from '../../../interface';
 
@@ -51,7 +52,7 @@ export const writeNavState = async (
     }
     return changed;
   } catch (e) {
-    console.error(e);
+    printIonError('[ion-router] - Exception in writeNavState:', e);
     return false;
   }
 };

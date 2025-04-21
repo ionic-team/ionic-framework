@@ -46,7 +46,7 @@ export class App implements ComponentInterface {
            */
           if (shouldUseCloseWatcher()) {
             printIonWarning(
-              'experimentalCloseWatcher was set to `true`, but hardwareBackButton was set to `false`. Both config options must be `true` for the Close Watcher API to be used.'
+              '[ion-app] - experimentalCloseWatcher was set to `true`, but hardwareBackButton was set to `false`. Both config options must be `true` for the Close Watcher API to be used.'
             );
           }
 
