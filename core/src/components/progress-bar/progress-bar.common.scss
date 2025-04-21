@@ -1,17 +1,10 @@
-@import "../../themes/native/native.globals";
+@import "../../themes/mixins";
 
 // Progress bar
 // ------------------------------------------------------------------------
 
 // Host has no background by default - this will be added to the progress-buffer-bar
 :host {
-  /**
-   * @prop --background: Background of the progress track, or the buffer bar if `buffer` is set
-   * @prop --progress-background: Background of the progress bar representing the current value
-   */
-  --background: #{ion-color(primary, base, 0.3)};
-  --progress-background: #{ion-color(primary, base)};
-
   display: block;
 
   position: relative;
