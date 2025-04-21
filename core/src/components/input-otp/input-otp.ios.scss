@@ -1,0 +1,21 @@
+@import "./input-otp";
+@import "../../themes/ionic.globals.ios";
+
+:host {
+  --border-width: 0.55px;
+}
+
+.native-input {
+  -webkit-appearance: none;
+
+  &:focus {
+    border-width: 1px;
+  }
+}
+
+// States
+// --------------------------------------------------
+
+:host(.input-otp-disabled) {
+  opacity: $form-control-ios-disabled-opacity;
+}
