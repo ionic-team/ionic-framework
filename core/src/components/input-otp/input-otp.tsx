@@ -53,10 +53,21 @@ export class InputOTP implements ComponentInterface {
 
   /**
    * A regex pattern string for allowed characters. Defaults based on type.
+   *
    * For numbers (type="number"): "[0-9]"
    * For text (type="text"): "[a-zA-Z0-9]"
    */
   @Prop() allowedKeys?: string;
+
+  /**
+   * A hint to the browser for which keyboard to display.
+   * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
+   * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+   *
+   * For numbers (type="number"): "numeric"
+   * For text (type="text"): "text"
+   */
+  @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
 
   /**
    * The size of the input boxes
@@ -131,6 +142,21 @@ export class InputOTP implements ComponentInterface {
       return new RegExp(`^${this.allowedKeys}$`, 'i');
     }
     return this.type === 'number' ? /^[0-9]$/ : /^[a-zA-Z0-9]$/i;
+  }
+
+  /**
+   * Get the default value for inputmode based on type if not explicitly set
+   */
+  private getInputmode(): string {
+    if (this.inputmode) {
+      return this.inputmode;
+    }
+
+    if (this.type == 'number') {
+      return 'numeric';
+    } else {
+      return 'text';
+    }
   }
 
   private updateValue() {
@@ -244,7 +270,7 @@ export class InputOTP implements ComponentInterface {
                 class="native-input"
                 id={`${this.inputId}-${index}`}
                 type="text"
-                inputmode={this.type === 'number' ? 'numeric' : 'text'}
+                inputmode={this.getInputmode()}
                 maxLength={1}
                 pattern={this.type === 'number' ? '[0-9]' : undefined}
                 disabled={this.disabled}

@@ -86,5 +86,15 @@
         </div>
       </ion-content>
     </ion-app>
+
+    <script>
+      const inputs = document.querySelectorAll('ion-input-otp');
+
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener('ionComplete', function(ev) {
+          console.log("Value:", ev.detail.value);
+        });
+      }
+    </script>
   </body>
 </html>

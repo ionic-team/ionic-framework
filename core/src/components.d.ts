@@ -1323,7 +1323,7 @@ export namespace Components {
     }
     interface IonInputOtp {
         /**
-          * A regex pattern string for allowed characters. Defaults based on type. For numbers (type="number"): "[0-9]" For text (type="text"): "[a-zA-Z0-9]"
+          * A regex pattern string for allowed characters. Defaults based on type.  For numbers (type="number"): "[0-9]" For text (type="text"): "[a-zA-Z0-9]"
          */
         "allowedKeys"?: string;
         /**
@@ -1338,6 +1338,10 @@ export namespace Components {
           * The fill style of the input boxes
          */
         "fill": 'solid' | 'outline';
+        /**
+          * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.  For numbers (type="number"): "numeric" For text (type="text"): "text"
+         */
+        "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
           * The number of input boxes to display
          */
@@ -6251,7 +6255,7 @@ declare namespace LocalJSX {
     }
     interface IonInputOtp {
         /**
-          * A regex pattern string for allowed characters. Defaults based on type. For numbers (type="number"): "[0-9]" For text (type="text"): "[a-zA-Z0-9]"
+          * A regex pattern string for allowed characters. Defaults based on type.  For numbers (type="number"): "[0-9]" For text (type="text"): "[a-zA-Z0-9]"
          */
         "allowedKeys"?: string;
         /**
@@ -6266,6 +6270,10 @@ declare namespace LocalJSX {
           * The fill style of the input boxes
          */
         "fill"?: 'solid' | 'outline';
+        /**
+          * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.  For numbers (type="number"): "numeric" For text (type="text"): "text"
+         */
+        "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
           * The number of input boxes to display
          */
