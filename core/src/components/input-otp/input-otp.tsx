@@ -177,6 +177,7 @@ export class InputOTP implements ComponentInterface {
     if (value.length > 1 || (value.length > 0 && !this.validKeys.test(value.toLowerCase()))) {
       // Reset the input value if not valid
       this.inputRefs[index].value = '';
+      this.inputValues[index] = '';
       return;
     }
 
@@ -202,6 +203,18 @@ export class InputOTP implements ComponentInterface {
         this.inputValues[index - 1] = '';
         this.updateValue();
       }
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      this.focusPrevious(index);
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      // Only allow moving right if current box has a value
+      if (this.inputValues[index] && index < this.length - 1) {
+        this.focusNext(index);
+      }
+    } else if (event.key === 'Tab') {
+      // Let all tab events proceed normally
+      return;
     }
   }
 
@@ -249,6 +262,14 @@ export class InputOTP implements ComponentInterface {
     );
   }
 
+  private handleBlur(ev: FocusEvent) {
+    const relatedTarget = ev.relatedTarget as HTMLElement;
+    if (relatedTarget == null ||
+        !this.inputRefs.includes(relatedTarget as HTMLInputElement)) {
+      this.hasFocus = false;
+    }
+  }
+
   render() {
     const mode = getIonMode(this);
 
@@ -264,26 +285,42 @@ export class InputOTP implements ComponentInterface {
         })}
       >
         <div role="group" aria-label="One-time password input" class="input-otp-group">
-          {Array.from({ length: this.length }).map((_, index) => (
-            <div class="native-wrapper">
-              <input
-                class="native-input"
-                id={`${this.inputId}-${index}`}
-                type="text"
-                inputmode={this.getInputmode()}
-                maxLength={1}
-                pattern={this.type === 'number' ? '[0-9]' : undefined}
-                disabled={this.disabled}
-                ref={(el) => (this.inputRefs[index] = el as HTMLInputElement)}
-                onInput={(e) => this.handleInput(index, (e.target as HTMLInputElement).value)}
-                onKeyDown={(e) => this.handleKeyDown(index, e)}
-                onPaste={(e) => this.handlePaste(e)}
-                onFocus={() => (this.hasFocus = true)}
-                onBlur={() => (this.hasFocus = false)}
-              />
-              {this.showSeparator(index) && <div class="input-otp-separator" />}
-            </div>
-          ))}
+          {Array.from({ length: this.length }).map((_, index) => {
+            // Find first empty index after any filled boxes
+            let firstEmptyIndex = -1;
+            for (let i = 0; i < this.length; i++) {
+              if (!this.inputValues[i] || this.inputValues[i] === '') {
+                firstEmptyIndex = i;
+                break;
+              }
+            }
+            // If all boxes are filled, make the last box tabbable
+            const shouldBeTabbable = firstEmptyIndex === -1 ?
+              index === this.length - 1 :
+              firstEmptyIndex === index;
+
+            return (
+              <div class="native-wrapper">
+                <input
+                  class="native-input"
+                  id={`${this.inputId}-${index}`}
+                  type="text"
+                  inputmode={this.getInputmode()}
+                  maxLength={1}
+                  pattern={this.type === 'number' ? '[0-9]' : undefined}
+                  disabled={this.disabled}
+                  tabIndex={shouldBeTabbable ? 0 : -1}
+                  ref={(el) => (this.inputRefs[index] = el as HTMLInputElement)}
+                  onInput={(e) => this.handleInput(index, (e.target as HTMLInputElement).value)}
+                  onKeyDown={(e) => this.handleKeyDown(index, e)}
+                  onPaste={(e) => this.handlePaste(e)}
+                  onFocus={() => (this.hasFocus = true)}
+                  onBlur={(e) => this.handleBlur(e)}
+                />
+                {this.showSeparator(index) && <div class="input-otp-separator" />}
+              </div>
+            );
+          })}
         </div>
         <div class="input-otp-description">
           <slot></slot>
@@ -294,3 +331,4 @@ export class InputOTP implements ComponentInterface {
 }
 
 let inputIds = 0;
+
