@@ -1,0 +1,9 @@
+@import "./backdrop.common";
+@import "../../themes/native/native.globals";
+
+// Backdrop
+// --------------------------------------------------
+
+:host {
+  z-index: $z-index-backdrop;
+}
