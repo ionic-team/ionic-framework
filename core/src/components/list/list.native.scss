@@ -1,0 +1,9 @@
+@import "./list.common";
+@import "../../themes/native/native.globals";
+
+ion-list.list-inset {
+    transform: translateZ(0);
+  
+    overflow: hidden;
+  }
+  

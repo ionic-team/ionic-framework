@@ -1,17 +1,8 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./list.common";
 
 // Ionic List
 // --------------------------------------------------
-
-ion-list {
-  @include globals.margin(0);
-  @include globals.padding(0);
-
-  display: block;
-
-  contain: content;
-  list-style-type: none;
-}
 
 // Ionic Inset List
 // --------------------------------------------------
