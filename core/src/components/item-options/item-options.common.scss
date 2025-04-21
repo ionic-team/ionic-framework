@@ -1,4 +1,4 @@
-@import "./item-options.vars";
+@import "../../themes/mixins";
 
 // Item Options
 // --------------------------------------------------
@@ -34,7 +34,6 @@ ion-item-options {
   height: 100%;
 
   user-select: none;
-  z-index: $z-index-item-options;
 }
 
 .item-options-start {
