@@ -262,12 +262,44 @@ export class InputOTP implements ComponentInterface {
     );
   }
 
+  private handleFocus(index: number) {
+    this.hasFocus = true;
+    // When an input receives focus, make it the only tabbable element
+    this.inputRefs.forEach((input, i) => {
+      input.tabIndex = i === index ? 0 : -1;
+    });
+  }
+
   private handleBlur(ev: FocusEvent) {
     const relatedTarget = ev.relatedTarget as HTMLElement;
     if (relatedTarget == null ||
         !this.inputRefs.includes(relatedTarget as HTMLInputElement)) {
       this.hasFocus = false;
+      // Reset tabIndexes when focus leaves the component
+      this.updateTabIndexes();
     }
+  }
+
+  private updateTabIndexes() {
+    // Find first empty index after any filled boxes
+    let firstEmptyIndex = -1;
+    for (let i = 0; i < this.length; i++) {
+      if (!this.inputValues[i] || this.inputValues[i] === '') {
+        firstEmptyIndex = i;
+        break;
+      }
+    }
+
+    // Update tabIndex for all inputs
+    this.inputRefs.forEach((input, index) => {
+      // If all boxes are filled, make the last box tabbable
+      // Otherwise, make the first empty box tabbable
+      const shouldBeTabbable = firstEmptyIndex === -1 ?
+        index === this.length - 1 :
+        firstEmptyIndex === index;
+
+      input.tabIndex = shouldBeTabbable ? 0 : -1;
+    });
   }
 
   render() {
@@ -314,7 +346,7 @@ export class InputOTP implements ComponentInterface {
                   onInput={(e) => this.handleInput(index, (e.target as HTMLInputElement).value)}
                   onKeyDown={(e) => this.handleKeyDown(index, e)}
                   onPaste={(e) => this.handlePaste(e)}
-                  onFocus={() => (this.hasFocus = true)}
+                  onFocus={() => this.handleFocus(index)}
                   onBlur={(e) => this.handleBlur(e)}
                 />
                 {this.showSeparator(index) && <div class="input-otp-separator" />}
