@@ -44,3 +44,10 @@
 :host(.item-option-disabled) .button-native {
   opacity: 0.5;
 }
+
+// Item Expandable Animation
+// --------------------------------------------------
+
+:host(.item-option-expandable) {
+  transition-timing-function: cubic-bezier(0.65, 0.05, 0.36, 1);
+}
