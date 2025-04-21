@@ -61,7 +61,7 @@ slot[name="end"]::slotted(*) {
 // Item: Disabled
 // --------------------------------------------------
 
-:host(.item-disabled) .item-native::after{
+:host(.item-disabled) .item-native::after {
   @include globals.disabled-state();
 }
 
