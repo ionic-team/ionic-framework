@@ -196,7 +196,7 @@
  * Label is on the left of the textarea in LTR and
  * on the right in RTL. Label also has a fixed width.
  */
- :host(.textarea-label-placement-fixed) .label-text {
+:host(.textarea-label-placement-fixed) .label-text {
   flex: 0 0 100px;
 
   width: 100px;

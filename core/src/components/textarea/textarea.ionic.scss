@@ -23,7 +23,6 @@
   --highlight-color-focused: #{globals.current-color(base)};
 }
 
-
 // Ionic Textarea Sizes
 // --------------------------------------------------
 
@@ -107,11 +106,12 @@
 .label-text-wrapper {
   @include globals.typography(globals.$ion-body-sm-medium);
 
-  color: globals.$ion-primitives-neutral-1000;
-
   max-width: globals.$ion-scale-5000;
 
-  transition: color globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive, transform globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive
+  transition: color globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive,
+    transform globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive;
+
+  color: globals.$ion-primitives-neutral-1000;
 }
 
 :host(.label-floating) .label-text-wrapper {
@@ -263,7 +263,7 @@ ion-icon {
  * Label is on the left of the textarea in LTR and
  * on the right in RTL. Label also has a fixed width.
  */
- :host(.textarea-label-placement-fixed) .label-text {
+:host(.textarea-label-placement-fixed) .label-text {
   $text-wrapper-width: calc(globals.$ion-scale-2400 + globals.$ion-space-100);
 
   flex: 0 0 $text-wrapper-width;
