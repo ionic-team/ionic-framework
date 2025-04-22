@@ -10,12 +10,14 @@
   --padding-top: #{globals.$ion-space-0};
   --padding-bottom: #{globals.$ion-space-0};
 
+  @include globals.typography(globals.$ion-body-action-sm);
+
   display: inline-flex;
 
   align-items: center;
   justify-content: center;
 
-  font-weight: globals.$ion-font-weight-medium;
+  min-width: globals.$ion-scale-250;
 }
 
 // Bold Badge
@@ -114,10 +116,6 @@
 
   min-width: globals.$ion-scale-800;
   height: globals.$ion-scale-800;
-
-  font-size: globals.$ion-font-size-400;
-
-  line-height: globals.$ion-font-line-height-600;
 }
 
 :host(.badge-small) ::slotted(ion-icon) {
@@ -127,12 +125,9 @@
 
 /* Medium Badge */
 :host(.badge-medium) {
+  @include globals.typography(globals.$ion-body-action-md);
   min-width: globals.$ion-scale-1000;
   height: globals.$ion-scale-1000;
-
-  font-size: globals.$ion-font-size-450;
-
-  line-height: globals.$ion-font-line-height-700;
 }
 
 :host(.badge-medium) ::slotted(ion-icon) {
@@ -142,12 +137,9 @@
 
 /* Large Badge */
 :host(.badge-large) {
+  @include globals.typography(globals.$ion-body-action-lg);
   min-width: globals.$ion-scale-1200;
   height: globals.$ion-scale-1200;
-
-  font-size: globals.$ion-font-size-500;
-
-  line-height: globals.$ion-font-line-height-700;
 }
 
 :host(.badge-large) ::slotted(ion-icon) {
@@ -157,12 +149,9 @@
 
 /* Extra Large Badge */
 :host(.badge-xlarge) {
+  @include globals.typography(globals.$ion-heading-h4-medium);
   min-width: globals.$ion-scale-1400;
   height: globals.$ion-scale-1400;
-
-  font-size: globals.$ion-font-size-550;
-
-  line-height: globals.$ion-font-line-height-700;
 }
 
 :host(.badge-xlarge) ::slotted(ion-icon) {
@@ -239,12 +228,9 @@
 }
 
 :host(:not(:empty).in-button) {
+  @include globals.typography(globals.$ion-body-action-xs);
   min-width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
-
-  font-size: globals.$ion-font-size-300;
-
-  line-height: globals.$ion-font-line-height-500;
 
   ::slotted(ion-icon) {
     width: globals.$ion-scale-300;

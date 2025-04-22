@@ -6,10 +6,21 @@
 // --------------------------------------------------
 
 :host {
+  --padding-top: #{$badge-padding-top};
+  --padding-end: #{$badge-padding-end};
+  --padding-bottom: #{$badge-padding-bottom};
+  --padding-start: #{$badge-padding-start};
   --background: #{ion-color(primary, base)};
   --color: #{ion-color(primary, contrast)};
 
+  min-width: $badge-min-width;
+
   font-family: $font-family-base;
+
+  font-size: $badge-font-size;
+  font-weight: $badge-font-weight;
+
+  line-height: 1;
 }
 
 :host(.ion-color) {
