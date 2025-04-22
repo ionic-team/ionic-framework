@@ -16,9 +16,7 @@
   @include globals.border-radius(var(--border-radius));
   @include globals.typography(globals.$ion-body-sm-medium);
 
-  gap: globals.$ion-space-100;
-
-  font-family: globals.$ion-font-family;
+  gap: globals.$ion-space-100; 
 
   line-height: globals.$ion-font-line-height-full;
 }
