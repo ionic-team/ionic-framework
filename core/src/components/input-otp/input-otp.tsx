@@ -113,7 +113,6 @@ export class InputOTP implements ComponentInterface {
    */
   @Event() ionComplete!: EventEmitter<InputOTPCompleteEventDetail>;
 
-
   @Watch('value')
   valueChanged() {
     this.initializeValues();
@@ -263,13 +262,16 @@ export class InputOTP implements ComponentInterface {
   }
 
   private get parsedSeparatorPositions(): number[] {
-    if (!this.separatorPositions) {
+    if (this.separatorPositions === undefined) {
       return [];
     }
     if (Array.isArray(this.separatorPositions)) {
       return this.separatorPositions;
     }
-    return this.separatorPositions.split(',').map(pos => parseInt(pos, 10)).filter(pos => !isNaN(pos));
+    return this.separatorPositions
+      .split(',')
+      .map((pos) => parseInt(pos, 10))
+      .filter((pos) => !isNaN(pos));
   }
 
   private showSeparator(index: number) {
