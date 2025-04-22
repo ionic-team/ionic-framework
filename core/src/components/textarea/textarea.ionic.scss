@@ -238,8 +238,6 @@ ion-icon {
 :host(.label-floating) .label-text-wrapper {
   $form-control-label-stacked-scale: 0.75;
 
-  @include globals.transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
-
   /**
    * Label text should not extend
    * beyond the bounds of the textarea.
