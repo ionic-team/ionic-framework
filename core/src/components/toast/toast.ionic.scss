@@ -7,8 +7,8 @@
 :host {
   --box-shadow: #{globals.$ion-elevation-4};
   --max-width: 343px;
-  --start: 8px;
-  --end: 8px;
+  --start: #{globals.$ion-space-200};
+  --end: #{globals.$ion-space-200};
 
   @include globals.typography(globals.$ion-body-md-medium);
 
