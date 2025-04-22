@@ -58,10 +58,6 @@
   width: auto;
 }
 
-:host(.ion-focused) input {
-  border: 2px solid #5e9ed6;
-}
-
 :host(.toggle-disabled) {
   pointer-events: none;
 }
