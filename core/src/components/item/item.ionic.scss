@@ -21,8 +21,6 @@
   --padding-start: #{globals.$ion-space-400};
 
   @include globals.typography(globals.$ion-body-lg-medium);
-
-  font-family: globals.$ion-font-family;
 }
 
 // Inner Item
