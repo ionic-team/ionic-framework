@@ -77,11 +77,11 @@ export class InputOTP implements ComponentInterface {
   /**
    * Whether to show separators between input boxes
    */
-  @Prop() separator1 = false;
-  @Prop() separator2 = false;
-  @Prop() separator3 = false;
-  @Prop() separator4 = false;
-  @Prop() separator5 = false;
+  @Prop({ mutable: true }) separator1 = false;
+  @Prop({ mutable: true }) separator2 = false;
+  @Prop({ mutable: true }) separator3 = false;
+  @Prop({ mutable: true }) separator4 = false;
+  @Prop({ mutable: true }) separator5 = false;
 
   /**
    * The fill style of the input boxes
@@ -145,10 +145,10 @@ export class InputOTP implements ComponentInterface {
       chars.forEach((char, index) => {
         if (this.validKeys.test(char.toLowerCase())) {
           this.inputValues[index] = char;
-          this.inputRefs[index].value = char;
         }
       });
-      this.updateValue();
+      // Update the value without emitting events
+      this.value = this.inputValues.join('');
     }
   }
 
