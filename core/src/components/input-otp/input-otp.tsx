@@ -113,10 +113,6 @@ export class InputOTP implements ComponentInterface {
    */
   @Event() ionComplete!: EventEmitter<InputOTPCompleteEventDetail>;
 
-  componentWillLoad() {
-    this.separatorChanged();
-  }
-
   // TODO is this a Stencil bug with ending in numbers?
   @Watch('separator1')
   @Watch('separator2')
@@ -131,6 +127,31 @@ export class InputOTP implements ComponentInterface {
         (this as any)[prop] = attrValue === '' || attrValue === 'true';
       }
     });
+  }
+
+  @Watch('value')
+  valueChanged() {
+    this.initializeValues();
+  }
+
+  componentWillLoad() {
+    this.separatorChanged();
+    this.initializeValues();
+  }
+
+  private initializeValues() {
+    if (this.value && this.value.length > 0) {
+      const chars = this.value.split('').slice(0, this.length);
+      chars.forEach((char, index) => {
+        if (this.validKeys.test(char.toLowerCase())) {
+          this.inputValues[index] = char;
+          if (this.inputRefs[index]) {
+            this.inputRefs[index].value = char;
+          }
+        }
+      });
+      this.updateValue();
+    }
   }
 
   /**
@@ -309,8 +330,33 @@ export class InputOTP implements ComponentInterface {
     });
   }
 
+  /**
+   * Loops through the input values and returns the index
+   * of the first empty input.
+   * Returns -1 if all inputs are filled.
+   */
+  private getFirstEmptyIndex() {
+    for (let i = 0; i < this.length; i++) {
+      if (!this.inputValues[i] || this.inputValues[i] === '') {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  /**
+   * Returns the index of the input that should be tabbed to.
+   * If all inputs are filled, returns the last input's index.
+   * Otherwise, returns the index of the first empty input.
+   */
+  private getTabbableIndex() {
+    const firstEmptyIndex = this.getFirstEmptyIndex();
+    return firstEmptyIndex === -1 ? this.length - 1 : firstEmptyIndex;
+  };
+
   render() {
     const mode = getIonMode(this);
+    const tabbableIndex = this.getTabbableIndex();
 
     return (
       <Host
@@ -325,19 +371,6 @@ export class InputOTP implements ComponentInterface {
       >
         <div role="group" aria-label="One-time password input" class="input-otp-group">
           {Array.from({ length: this.length }).map((_, index) => {
-            // Find first empty index after any filled boxes
-            let firstEmptyIndex = -1;
-            for (let i = 0; i < this.length; i++) {
-              if (!this.inputValues[i] || this.inputValues[i] === '') {
-                firstEmptyIndex = i;
-                break;
-              }
-            }
-            // If all boxes are filled, make the last box tabbable
-            const shouldBeTabbable = firstEmptyIndex === -1 ?
-              index === this.length - 1 :
-              firstEmptyIndex === index;
-
             return (
               <div class="native-wrapper">
                 <input
@@ -348,7 +381,8 @@ export class InputOTP implements ComponentInterface {
                   maxLength={1}
                   pattern={this.type === 'number' ? '[0-9]' : undefined}
                   disabled={this.disabled}
-                  tabIndex={shouldBeTabbable ? 0 : -1}
+                  tabIndex={index === tabbableIndex ? 0 : -1}
+                  value={this.inputValues[index] || ''}
                   ref={(el) => (this.inputRefs[index] = el as HTMLInputElement)}
                   onInput={(e) => this.handleInput(index, (e.target as HTMLInputElement).value)}
                   onKeyDown={(e) => this.handleKeyDown(index, e)}
