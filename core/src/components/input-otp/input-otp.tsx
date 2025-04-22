@@ -145,9 +145,7 @@ export class InputOTP implements ComponentInterface {
       chars.forEach((char, index) => {
         if (this.validKeys.test(char.toLowerCase())) {
           this.inputValues[index] = char;
-          if (this.inputRefs[index]) {
-            this.inputRefs[index].value = char;
-          }
+          this.inputRefs[index].value = char;
         }
       });
       this.updateValue();
@@ -248,7 +246,7 @@ export class InputOTP implements ComponentInterface {
       .slice(0, this.length);
 
     // Find the currently focused input
-    const focusedIndex = this.inputRefs.findIndex(input => input === document.activeElement);
+    const focusedIndex = this.inputRefs.findIndex((input) => input === document.activeElement);
     const startIndex = focusedIndex >= 0 ? focusedIndex : 0;
 
     validChars.forEach((char, index) => {
@@ -300,8 +298,7 @@ export class InputOTP implements ComponentInterface {
 
   private handleBlur(ev: FocusEvent) {
     const relatedTarget = ev.relatedTarget as HTMLElement;
-    if (relatedTarget == null ||
-        !this.inputRefs.includes(relatedTarget as HTMLInputElement)) {
+    if (relatedTarget == null || !this.inputRefs.includes(relatedTarget as HTMLInputElement)) {
       this.hasFocus = false;
       // Reset tabIndexes when focus leaves the component
       this.updateTabIndexes();
@@ -322,9 +319,7 @@ export class InputOTP implements ComponentInterface {
     this.inputRefs.forEach((input, index) => {
       // If all boxes are filled, make the last box tabbable
       // Otherwise, make the first empty box tabbable
-      const shouldBeTabbable = firstEmptyIndex === -1 ?
-        index === this.length - 1 :
-        firstEmptyIndex === index;
+      const shouldBeTabbable = firstEmptyIndex === -1 ? index === this.length - 1 : firstEmptyIndex === index;
 
       input.tabIndex = shouldBeTabbable ? 0 : -1;
     });
@@ -352,7 +347,7 @@ export class InputOTP implements ComponentInterface {
   private getTabbableIndex() {
     const firstEmptyIndex = this.getFirstEmptyIndex();
     return firstEmptyIndex === -1 ? this.length - 1 : firstEmptyIndex;
-  };
+  }
 
   render() {
     const mode = getIonMode(this);
@@ -404,4 +399,3 @@ export class InputOTP implements ComponentInterface {
 }
 
 let inputIds = 0;
-

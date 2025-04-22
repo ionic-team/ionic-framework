@@ -172,8 +172,9 @@
 }
 
 :host(.input-otp-fill-solid.ion-color) .native-input {
-  background: current-color(base, 0.08);
   border-color: transparent;
+
+  background: current-color(base, 0.08);
   color: current-color(shade);
 }
 
