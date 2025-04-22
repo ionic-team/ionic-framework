@@ -75,13 +75,13 @@ export class InputOTP implements ComponentInterface {
   @Prop() size: 'small' | 'medium' | 'large' = 'medium';
 
   /**
-   * Whether to show separators between input boxes
+   * Where separators should be shown between input boxes.
+   * Can be a comma-separated string or an array of numbers.
+   * For example:
+   * "3" would show a separator after the 3rd input box.
+   * [1,4] would show a separator after the 1st and 4th input boxes.
    */
-  @Prop({ mutable: true }) separator1 = false;
-  @Prop({ mutable: true }) separator2 = false;
-  @Prop({ mutable: true }) separator3 = false;
-  @Prop({ mutable: true }) separator4 = false;
-  @Prop({ mutable: true }) separator5 = false;
+  @Prop() separatorPositions?: string | number[];
 
   /**
    * The fill style of the input boxes
@@ -113,21 +113,6 @@ export class InputOTP implements ComponentInterface {
    */
   @Event() ionComplete!: EventEmitter<InputOTPCompleteEventDetail>;
 
-  // TODO is this a Stencil bug with ending in numbers?
-  @Watch('separator1')
-  @Watch('separator2')
-  @Watch('separator3')
-  @Watch('separator4')
-  @Watch('separator5')
-  separatorChanged() {
-    ['1', '2', '3', '4', '5'].forEach((num) => {
-      const prop = `separator${num}` as keyof InputOTP;
-      if (this.el.hasAttribute(prop)) {
-        const attrValue = this.el.getAttribute(prop);
-        (this as any)[prop] = attrValue === '' || attrValue === 'true';
-      }
-    });
-  }
 
   @Watch('value')
   valueChanged() {
@@ -135,7 +120,6 @@ export class InputOTP implements ComponentInterface {
   }
 
   componentWillLoad() {
-    this.separatorChanged();
     this.initializeValues();
   }
 
@@ -278,14 +262,18 @@ export class InputOTP implements ComponentInterface {
     }
   }
 
+  private get parsedSeparatorPositions(): number[] {
+    if (!this.separatorPositions) {
+      return [];
+    }
+    if (Array.isArray(this.separatorPositions)) {
+      return this.separatorPositions;
+    }
+    return this.separatorPositions.split(',').map(pos => parseInt(pos, 10)).filter(pos => !isNaN(pos));
+  }
+
   private showSeparator(index: number) {
-    return (
-      (index === 0 && this.separator1) ||
-      (index === 1 && this.separator2) ||
-      (index === 2 && this.separator3) ||
-      (index === 3 && this.separator4) ||
-      (index === 4 && this.separator5)
-    );
+    return this.parsedSeparatorPositions.includes(index + 1) && index < this.length - 1;
   }
 
   private handleFocus(index: number) {

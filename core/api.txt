@@ -787,11 +787,7 @@ ion-input-otp,prop,disabled,boolean,false,false,true
 ion-input-otp,prop,fill,"outline" | "solid",'outline',false,false
 ion-input-otp,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-input-otp,prop,length,number,4,false,false
-ion-input-otp,prop,separator1,boolean,false,false,false
-ion-input-otp,prop,separator2,boolean,false,false,false
-ion-input-otp,prop,separator3,boolean,false,false,false
-ion-input-otp,prop,separator4,boolean,false,false,false
-ion-input-otp,prop,separator5,boolean,false,false,false
+ion-input-otp,prop,separatorPositions,number[] | string | undefined,undefined,false,false
 ion-input-otp,prop,shape,"rectangular" | "round" | "soft",'round',false,false
 ion-input-otp,prop,size,"large" | "medium" | "small",'medium',false,false
 ion-input-otp,prop,type,"number" | "text",'number',false,false

@@ -1347,13 +1347,9 @@ export namespace Components {
          */
         "length": number;
         /**
-          * Whether to show separators between input boxes
+          * Where separators should be shown between input boxes. Can be a comma-separated string or an array of numbers. For example: "3" would show a separator after the 3rd input box. [1,4] would show a separator after the 1st and 4th input boxes.
          */
-        "separator1": boolean;
-        "separator2": boolean;
-        "separator3": boolean;
-        "separator4": boolean;
-        "separator5": boolean;
+        "separatorPositions"?: string | number[];
         /**
           * The shape of the input boxes
          */
@@ -6287,13 +6283,9 @@ declare namespace LocalJSX {
          */
         "onIonComplete"?: (event: IonInputOtpCustomEvent<InputOTPCompleteEventDetail>) => void;
         /**
-          * Whether to show separators between input boxes
+          * Where separators should be shown between input boxes. Can be a comma-separated string or an array of numbers. For example: "3" would show a separator after the 3rd input box. [1,4] would show a separator after the 1st and 4th input boxes.
          */
-        "separator1"?: boolean;
-        "separator2"?: boolean;
-        "separator3"?: boolean;
-        "separator4"?: boolean;
-        "separator5"?: boolean;
+        "separatorPositions"?: string | number[];
         /**
           * The shape of the input boxes
          */
