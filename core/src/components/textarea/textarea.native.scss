@@ -1,10 +1,14 @@
 @use "../../themes/native/native.globals" as globals;
 @use "./textarea.common";
+@import "./textarea.vars";
 
 // Textarea - iOS and Material Design
 // --------------------------------------------------
 
 :host {
+  --placeholder-opacity: #{$placeholder-opacity};
+  --padding-bottom: #{$textarea-padding-bottom};
+
   min-height: 44px;
 
   font-family: globals.$font-family-base;
@@ -137,4 +141,17 @@
 ::slotted([slot="end"]:first-of-type) {
   margin-inline-start: globals.$form-control-label-margin;
   margin-inline-end: 0;
+}
+
+/**
+ * This makes the label sit above the textarea.
+ */
+:host(.label-floating) .label-text-wrapper {
+  @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the textarea.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
 }

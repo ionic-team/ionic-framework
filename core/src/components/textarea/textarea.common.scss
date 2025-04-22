@@ -1,4 +1,4 @@
-@import "./textarea.vars";
+@import "../../themes/mixins";
 
 // Textarea
 // --------------------------------------------------
@@ -35,10 +35,8 @@
   --placeholder-color: initial;
   --placeholder-font-style: initial;
   --placeholder-font-weight: initial;
-  --placeholder-opacity: #{$placeholder-opacity};
   --padding-top: 0;
   --padding-end: 0;
-  --padding-bottom: #{$textarea-padding-bottom};
   --padding-start: 0;
   --border-radius: 0;
   --border-style: solid;
@@ -400,8 +398,6 @@
    */
   @include margin-horizontal(auto, null);
 
-  color: $text-color-step-300;
-
   white-space: nowrap;
 }
 
@@ -576,19 +572,6 @@
 :host(.has-focus.textarea-label-placement-floating) textarea,
 :host(.has-value.textarea-label-placement-floating) textarea {
   opacity: 1;
-}
-
-/**
- * This makes the label sit above the textarea.
- */
-:host(.label-floating) .label-text-wrapper {
-  @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
-
-  /**
-   * Label text should not extend
-   * beyond the bounds of the textarea.
-   */
-  max-width: calc(100% / #{$form-control-label-stacked-scale});
 }
 
 // Start / End Slots
