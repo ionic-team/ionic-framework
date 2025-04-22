@@ -8,15 +8,14 @@
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-radius-025};
 
+  @include globals.typography(globals.$ion-body-action-sm);
+
+  position: relative;
+
   align-content: center;
 
   min-height: globals.$ion-scale-1200;
   max-height: globals.$ion-scale-1800;
-
-  font-size: globals.$ion-font-size-300;
-  font-weight: globals.$ion-font-weight-medium;
-
-  line-height: globals.$ion-font-line-height-500;
 }
 
 // Tab Button: Native
@@ -33,6 +32,15 @@
 
 .button-native::after {
   @include globals.button-state();
+}
+
+// Tab Button Disabled
+// -------------------------------------------------------------------------------
+
+:host(.tab-disabled)::after {
+  @include globals.disabled-state();
+
+  z-index: 1;
 }
 
 // Tab Button Focused
