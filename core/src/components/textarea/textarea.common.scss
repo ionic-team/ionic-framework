@@ -40,9 +40,6 @@
   --padding-start: 0;
   --border-radius: 0;
   --border-style: solid;
-  --highlight-color-focused: #{ion-color(primary, base)};
-  --highlight-color-valid: #{ion-color(success, base)};
-  --highlight-color-invalid: #{ion-color(danger, base)};
 
   /**
    * This is a private API that is used to switch
@@ -79,8 +76,6 @@
 }
 
 :host(.ion-color) {
-  --highlight-color-focused: #{current-color(base)};
-
   background: initial;
 }
 
@@ -408,18 +403,6 @@
   @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
 
   /**
-   * Label text should not extend
-   * beyond the bounds of the textarea.
-   * However, we do not set the max
-   * width to 100% because then
-   * only the label would show and users
-   * would not be able to see what they are typing.
-   */
-  max-width: 200px;
-
-  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
-
-  /**
    * This ensures that double tapping this text
    * clicks the <label> and focuses the textarea
    * when a screen reader is enabled.
@@ -459,15 +442,6 @@
   display: none;
 }
 
-.textarea-wrapper textarea {
-  /**
-   * When the floating label appears on top of the
-   * textarea, we need to fade the textarea out so that the
-   * label does not overlap with the placeholder.
-   */
-  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 // Textarea Label Placement - Start
 // ----------------------------------------------------------------
 
@@ -488,21 +462,6 @@
  */
 :host(.textarea-label-placement-end) .textarea-wrapper {
   flex-direction: row-reverse;
-}
-
-// Textarea Label Placement - Fixed
-// ----------------------------------------------------------------
-
-/**
- * Label is on the left of the textarea in LTR and
- * on the right in RTL. Label also has a fixed width.
- */
-:host(.textarea-label-placement-fixed) .label-text {
-  flex: 0 0 100px;
-
-  width: 100px;
-  min-width: 100px;
-  max-width: 200px;
 }
 
 // Textarea Label Placement - Stacked and Floating
