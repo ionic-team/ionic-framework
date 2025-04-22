@@ -10,3 +10,15 @@
   --background: #{ion-color(primary, base, 0.3)};
   --progress-background: #{ion-color(primary, base)};
 }
+
+// Progress Bar: Color
+// ------------------------------------------------------------------------
+
+:host(.ion-color) .buffer-circles {
+  background-image: radial-gradient(
+    ellipse at center,
+    #{current-color(base, 0.3)} 0%,
+    #{current-color(base, 0.3)} 30%,
+    transparent 30%
+  );
+}

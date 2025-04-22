@@ -21,3 +21,15 @@
 :host(.progress-bar-shape-rectangular) {
   @include globals.border-radius(globals.$ion-rectangular-xs);
 }
+
+// Progress Bar: Color
+// ------------------------------------------------------------------------
+
+:host(.ion-color) .buffer-circles {
+  background-image: radial-gradient(
+    ellipse at center,
+    #{globals.current-color(base, 0.3)} 0%,
+    #{globals.current-color(base, 0.3)} 30%,
+    transparent 30%
+  );
+}
