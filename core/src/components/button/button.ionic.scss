@@ -11,12 +11,11 @@
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-size-050};
 
+  @include globals.typography(globals.$ion-body-action-md);
+
   position: relative;
 
   min-height: globals.$ion-scale-1000;
-
-  font-family: globals.$ion-font-family;
-  font-size: globals.$ion-font-size-350;
 
   // Target area
   &::after {
@@ -41,7 +40,7 @@
 
 // Default Clear Color
 :host(.button-clear) {
-  --color: #{ion-color(primary, foreground)};
+  --color: #{globals.ion-color(primary, foreground)};
 }
 
 // Solid Button
@@ -107,9 +106,9 @@
   --padding-top: #{globals.$ion-space-100};
   --padding-end: #{globals.$ion-space-300};
 
-  min-height: globals.$ion-space-600;
+  @include globals.typography(globals.$ion-body-action-xs);
 
-  font-size: globals.$ion-font-size-300;
+  min-height: globals.$ion-space-600;
 }
 
 /* Small Button */
@@ -117,9 +116,9 @@
   --padding-top: #{globals.$ion-space-200};
   --padding-end: #{globals.$ion-space-400};
 
-  min-height: #{globals.$ion-scale-800};
+  @include globals.typography(globals.$ion-body-action-sm);
 
-  font-size: #{globals.$ion-font-size-300};
+  min-height: #{globals.$ion-scale-800};
 }
 
 /* Large Button */
@@ -127,9 +126,9 @@
   --padding-top: #{globals.$ion-space-400};
   --padding-end: #{globals.$ion-space-600};
 
-  min-height: #{globals.$ion-scale-1200};
+  @include globals.typography(globals.$ion-body-action-lg);
 
-  font-size: #{globals.$ion-font-size-400};
+  min-height: #{globals.$ion-scale-1200};
 }
 
 /* Extra Large Button */
@@ -137,9 +136,9 @@
   --padding-top: #{globals.$ion-space-400};
   --padding-end: #{globals.$ion-space-800};
 
-  min-height: #{globals.$ion-scale-1400};
+  @include globals.typography(globals.$ion-heading-h6-medium);
 
-  font-size: #{globals.$ion-font-size-500};
+  min-height: #{globals.$ion-scale-1400};
 }
 
 // Button with Icons
