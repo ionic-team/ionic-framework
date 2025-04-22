@@ -378,6 +378,7 @@ export class InputOTP implements ComponentInterface {
                   disabled={this.disabled}
                   tabIndex={index === tabbableIndex ? 0 : -1}
                   value={this.inputValues[index] || ''}
+                  autocomplete={index === 0 ? "one-time-code" : "off"}
                   ref={(el) => (this.inputRefs[index] = el as HTMLInputElement)}
                   onInput={(e) => this.handleInput(index, (e.target as HTMLInputElement).value)}
                   onKeyDown={(e) => this.handleKeyDown(index, e)}
