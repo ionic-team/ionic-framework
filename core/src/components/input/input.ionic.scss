@@ -1,6 +1,6 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./input.common";
-@import "./input.ionic.outline.scss";
+@use "./input.common";
+@forward "./input.ionic.outline.scss";
 
 // Ionic Input
 // --------------------------------------------------
@@ -15,7 +15,7 @@
   --placeholder-opacity: 1;
   --background: #{globals.$ion-primitives-base-white};
 
-  font-size: globals.$ion-font-size-350;
+  @include globals.typography(globals.$ion-body-md-regular);
 }
 
 // Ionic Input Sizes
@@ -51,7 +51,7 @@
 // Target area
 // --------------------------------------------------
 :host .native-wrapper::after {
-  @include position(50%, 0, null, 0);
+  @include globals.position(50%, 0, null, 0);
 
   position: absolute;
 
@@ -89,7 +89,7 @@
 }
 
 .input-clear-icon:focus-visible {
-  @include border-radius(globals.$ion-border-radius-100);
+  @include globals.border-radius(globals.$ion-border-radius-100);
 
   outline: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-focus-default;
 
@@ -120,23 +120,20 @@
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
+  @include globals.typography(globals.$ion-body-sm-medium);
+
   color: globals.$ion-primitives-neutral-1000;
-
-  font-size: globals.$ion-font-size-300;
-  font-weight: globals.$ion-font-weight-medium;
-
-  line-height: globals.$ion-font-line-height-500;
 }
 
 :host(.label-floating) .label-text-wrapper {
-  @include transform(none);
+  @include globals.transform(none);
 }
 
 // Input Bottom Content
 // ----------------------------------------------------------------
 
 .input-bottom {
-  @include padding(globals.$ion-space-100, 0, 0, 0);
+  @include globals.padding(globals.$ion-space-100, 0, 0, 0);
   @include globals.typography(globals.$ion-body-sm-medium);
 }
 
@@ -209,7 +206,7 @@
 // ----------------------------------------------------------------
 
 .input-highlight {
-  @include position(null, null, -1px, 0);
+  @include globals.position(null, null, -1px, 0);
 
   position: absolute;
 
@@ -218,7 +215,7 @@
 
   transform: scale(0);
 
-  transition: transform 200ms;
+  transition: transform globals.$ion-transition-time-200;
 
   background: var(--border-color);
 }
