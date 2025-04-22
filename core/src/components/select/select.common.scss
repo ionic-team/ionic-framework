@@ -1,5 +1,4 @@
 @use "../../themes/mixins" as mixins;
-@import "./select.vars";
 
 // Select
 // --------------------------------------------------
@@ -50,7 +49,6 @@
   position: relative;
 
   width: 100%;
-  min-height: 44px;
 
   white-space: nowrap;
 
@@ -73,10 +71,6 @@
 
 :host(.select-disabled) {
   pointer-events: none;
-}
-
-:host(.ion-focused) button {
-  border: 2px solid #5e9ed6;
 }
 
 /**
@@ -149,8 +143,6 @@ button {
 .select-text {
   flex: 1;
 
-  min-width: 16px;
-
   font-size: inherit;
 
   text-overflow: ellipsis;
@@ -192,15 +184,6 @@ button {
   cursor: inherit;
 
   box-sizing: border-box;
-}
-
-.select-wrapper .select-placeholder {
-  /**
-   * When the floating label appears on top of the
-   * select, we need to fade the text out so that the
-   * label does not overlap with the placeholder.
-   */
-  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .select-wrapper-inner {
@@ -300,18 +283,6 @@ button {
   align-items: center;
 
   /**
-   * Label text should not extend
-   * beyond the bounds of the select.
-   * However, we do not set the max
-   * width to 100% because then
-   * only the label would show and users
-   * would not be able to see what they are typing.
-   */
-  max-width: 200px;
-
-  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
-
-  /**
    * This ensures that double tapping this text
    * clicks the <label> and focuses the input
    * when a screen reader is enabled.
@@ -360,13 +331,6 @@ button {
   align-items: center;
 
   /**
-   * When the floating label appears on top of the
-   * input, we need to fade the input out so that the
-   * label does not overlap with the placeholder.
-   */
-  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
-
-  /**
    * This ensures that the .select-text gets
    * truncated with ellipses when the text is
    * too long for the screen.
@@ -409,18 +373,6 @@ button {
  */
 :host(.select-label-placement-end) .select-wrapper {
   flex-direction: row-reverse;
-}
-
-/**
- * Label is on the left of the select in LTR and
- * on the right in RTL. Label also has a fixed width.
- */
-:host(.select-label-placement-fixed) .label-text-wrapper {
-  flex: 0 0 100px;
-
-  width: 100px;
-  min-width: 100px;
-  max-width: 200px;
 }
 
 // Select Label Placement - Stacked and Floating

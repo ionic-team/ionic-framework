@@ -1,5 +1,6 @@
 @import "../../themes/native/native.globals";
 @import "./select.common";
+@import "./select.vars";
 
 // Select: Native
 // --------------------------------------------------
@@ -7,9 +8,18 @@
 :host {
   --placeholder-opacity: #{$placeholder-opacity};
 
+  min-height: 44px;
+
   font-family: $font-family-base;
 
   z-index: $z-index-item-input;
+}
+
+// Select Used in ion-item
+// --------------------------------------------------
+
+:host(.ion-focused) button {
+  border: 2px solid #5e9ed6;
 }
 
 // Select Icon
@@ -41,6 +51,15 @@
   @include border-radius(var(--border-radius));
 }
 
+.select-wrapper .select-placeholder {
+  /**
+   * When the floating label appears on top of the
+   * select, we need to fade the text out so that the
+   * label does not overlap with the placeholder.
+   */
+  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 // Select Bottom Content
 // ----------------------------------------------------------------
 
@@ -60,6 +79,30 @@
 
 .select-bottom .helper-text {
   color: $text-color-step-300;
+}
+
+// Select Text
+// --------------------------------------------------
+
+.select-text {
+  min-width: 16px;
+}
+
+// Select Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  /**
+   * Label text should not extend
+   * beyond the bounds of the select.
+   * However, we do not set the max
+   * width to 100% because then
+   * only the label would show and users
+   * would not be able to see what they are typing.
+   */
+  max-width: 200px;
+
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 // Select Label Placement - Start
@@ -95,6 +138,15 @@
    * when the label sits at the start.
    */
   @include margin(0, $form-control-label-margin, 0, 0);
+  /**
+  * Label is on the left of the select in LTR and
+  * on the right in RTL. Label also has a fixed width.
+  */
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
 }
 
 // Select Label Placement - Stacked and Floating
@@ -169,4 +221,16 @@
 
 ::slotted([slot="end"]:first-of-type) {
   margin-inline-start: $form-control-label-margin;
+}
+
+// Select Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper {
+  /**
+   * When the floating label appears on top of the
+   * input, we need to fade the input out so that the
+   * label does not overlap with the placeholder.
+   */
+  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
