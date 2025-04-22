@@ -187,7 +187,7 @@
 }
 
 :host(.input-disabled.ion-color) {
-  --border-color: #{current-color(base, 0.6)};
+  --border-color: #{globals.current-color(base, 0.6)};
 }
 
 :host(.input-disabled.has-focus.ion-valid) .input-bottom .helper-text,
