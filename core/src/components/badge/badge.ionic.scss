@@ -10,7 +10,7 @@
   --padding-top: #{globals.$ion-space-0};
   --padding-bottom: #{globals.$ion-space-0};
 
-  @include globals.typography(globals.$ion-body-action-sm);
+  @include globals.typography(globals.$ion-body-sm-medium);
 
   display: inline-flex;
 
@@ -125,7 +125,7 @@
 
 /* Medium Badge */
 :host(.badge-medium) {
-  @include globals.typography(globals.$ion-body-action-md);
+  @include globals.typography(globals.$ion-body-md-medium);
   min-width: globals.$ion-scale-1000;
   height: globals.$ion-scale-1000;
 }
@@ -137,7 +137,7 @@
 
 /* Large Badge */
 :host(.badge-large) {
-  @include globals.typography(globals.$ion-body-action-lg);
+  @include globals.typography(globals.$ion-body-lg-medium);
   min-width: globals.$ion-scale-1200;
   height: globals.$ion-scale-1200;
 }
