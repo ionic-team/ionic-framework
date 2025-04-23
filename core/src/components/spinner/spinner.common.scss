@@ -49,16 +49,6 @@ svg {
 // --------------------------------------------------
 
 :host(.spinner-lines) line,
-:host(.spinner-lines-small) line {
-  stroke-width: 7px;
-}
-
-:host(.spinner-lines-sharp) line,
-:host(.spinner-lines-sharp-small) line {
-  stroke-width: 4px;
-}
-
-:host(.spinner-lines) line,
 :host(.spinner-lines-small) line,
 :host(.spinner-lines-sharp) line,
 :host(.spinner-lines-sharp-small) line {

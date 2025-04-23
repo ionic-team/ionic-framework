@@ -39,6 +39,11 @@
 // Button Fills
 // -------------------------------------------------------------------------------
 
+// Default Clear Color
+:host(.button-clear) {
+  --color: #{globals.ion-color(primary, foreground)};
+}
+
 // Solid Button
 // --------------------------------------------------
 
@@ -47,6 +52,8 @@
   --background-hover: #{globals.ion-color(primary, shade)};
   --background-focused: transparent;
   --background-hover-opacity: 1;
+  --background: #{globals.ion-color(primary, base)};
+  --color: #{globals.ion-color(primary, contrast)};
   --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
 }
@@ -61,6 +68,8 @@
   --background-focused: transparent;
   --background-hover: #{globals.$ion-bg-neutral-subtlest-press};
   --background-hover-opacity: 1;
+  --border-color: #{globals.ion-color(primary, base)};
+  --color: #{globals.ion-color(primary, base)};
   --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
 }
@@ -73,6 +82,7 @@
   --background-focused: transparent;
   --background-hover: #{globals.$ion-bg-neutral-subtlest-press};
   --background-hover-opacity: 1;
+  --color: #{globals.ion-color(primary, foreground)};
   --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
 }
@@ -240,8 +250,11 @@
 // Button: Disabled
 // --------------------------------------------------
 
-:host(.button-disabled) {
-  opacity: 0.6;
+:host(.button-disabled) .button-native::after {
+  @include globals.disabled-state();
+
+  width: inherit;
+  height: inherit;
 }
 
 // Button Icons
@@ -287,4 +300,10 @@
 :host(.button-xlarge) ::slotted(ion-icon[slot="end"]),
 :host(.button-xlarge) ::slotted(ion-spinner[slot="end"]) {
   @include globals.margin-horizontal(globals.$ion-space-300, null);
+}
+
+// Button Badge
+// --------------------------------------------------
+:host ::slotted(ion-badge[vertical]:not(:empty)) {
+  @include globals.padding(globals.$ion-space-050);
 }

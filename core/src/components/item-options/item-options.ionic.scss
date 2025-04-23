@@ -1,8 +1,12 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./item-options";
+@import "./item-options.common";
 
 // Ionic Item Options
 // --------------------------------------------------
+
+ion-item-options {
+  z-index: 1;
+}
 
 .item-options-ionic {
   align-items: center;

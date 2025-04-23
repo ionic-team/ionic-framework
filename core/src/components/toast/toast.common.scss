@@ -136,10 +136,6 @@
   justify-content: center;
 }
 
-.toast-icon {
-  @include margin(null, null, null, 16px);
-}
-
 .toast-content {
   min-width: 0;
 }
@@ -168,11 +164,6 @@
   color: var(--button-color);
 
   z-index: 0;
-}
-
-.toast-icon,
-.toast-button-icon {
-  font-size: 1.4em;
 }
 
 .toast-button-inner {

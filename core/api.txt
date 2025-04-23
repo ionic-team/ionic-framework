@@ -1707,10 +1707,8 @@ ion-progress-bar,prop,shape,"rectangular" | "round" | undefined,undefined,false,
 ion-progress-bar,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-progress-bar,prop,type,"determinate" | "indeterminate",'determinate',false,false
 ion-progress-bar,prop,value,number,0,false,false
-ion-progress-bar,css-prop,--background,ionic
 ion-progress-bar,css-prop,--background,ios
 ion-progress-bar,css-prop,--background,md
-ion-progress-bar,css-prop,--progress-background,ionic
 ion-progress-bar,css-prop,--progress-background,ios
 ion-progress-bar,css-prop,--progress-background,md
 ion-progress-bar,part,progress

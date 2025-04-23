@@ -102,12 +102,6 @@
   display: none !important;
 }
 
-:host(.tab-disabled) {
-  pointer-events: none;
-
-  opacity: 0.4;
-}
-
 // Tab Button: Label / Icon
 // --------------------------------------------------
 

@@ -1,23 +1,22 @@
-@import "./input.vars";
-@import "../../foundations/ionic.vars";
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 
 // Input Fill: Outline (Ionic Theme)
 // ----------------------------------------------------------------
 
 :host(.input-fill-outline) {
-  --border-radius: #{$ion-border-radius-100};
-  --padding-start: 12px;
-  --padding-end: 12px;
+  --border-radius: #{globals.$ion-border-radius-100};
+  --padding-start: #{globals.$ion-space-300};
+  --padding-end: #{globals.$ion-space-300};
 }
 
 :host(.input-fill-outline.input-size-large) {
-  --padding-start: 16px;
-  --padding-end: 16px;
+  --padding-start: #{globals.$ion-space-400};
+  --padding-end: #{globals.$ion-space-400};
 }
 
 :host(.input-fill-outline.input-size-xlarge) {
-  --padding-start: 20px;
-  --padding-end: 20px;
+  --padding-start: #{globals.$ion-space-500};
+  --padding-end: #{globals.$ion-space-500};
 }
 
 /**
@@ -35,7 +34,7 @@
    * outline container but does not always affect the
    * label text.
    */
-  @include padding(0);
+  @include globals.padding(0);
 
   /**
    * Outline inputs do not have a bottom border.
@@ -53,7 +52,7 @@
 }
 
 :host(.input-fill-outline.input-label-placement-stacked) .label-text-wrapper {
-  @include transform-origin(start, top);
+  @include globals.transform-origin(start, top);
 
   /**
    * Label text should not extend
@@ -71,10 +70,10 @@
 }
 
 :host(.input-fill-outline) .native-wrapper {
-  @include border-radius(inherit);
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include globals.border-radius(inherit);
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
-  min-height: 40px;
+  min-height: globals.$ion-scale-1000;
 
   /**
   * Apply the background to the native input
@@ -87,8 +86,8 @@
 // ----------------------------------------------------------------
 
 :host(.input-fill-outline) .input-outline {
-  @include position(0, 0, 0, 0);
-  @include border-radius(var(--border-radius));
+  @include globals.position(0, 0, 0, 0);
+  @include globals.border-radius(var(--border-radius));
 
   position: absolute;
 
@@ -105,34 +104,34 @@
 
 // This makes the label sit above the input.
 :host(.label-floating.input-fill-outline.input-label-placement-stacked) .label-text-wrapper {
-  @include margin(0);
-  @include padding(4px, null);
+  @include globals.margin(0);
+  @include globals.padding(globals.$ion-space-100, null);
 }
 
 // Start/End Slots
 // ----------------------------------------------------------------
 
 :host(.input-fill-outline) ::slotted([slot="start"]) {
-  margin-inline-end: 8px;
+  margin-inline-end: globals.$ion-space-200;
 }
 
 :host(.input-fill-outline) ::slotted([slot="end"]) {
-  margin-inline-start: 8px;
+  margin-inline-start: globals.$ion-space-200;
 }
 
 // Input Shapes
 // --------------------------------------------------
 
 :host(.input-fill-outline.input-shape-soft) {
-  --border-radius: #{$ion-border-radius-200};
+  --border-radius: #{globals.$ion-border-radius-200};
 }
 
 :host(.input-fill-outline.input-shape-round) {
-  --border-radius: #{$ion-border-radius-400};
+  --border-radius: #{globals.$ion-border-radius-400};
 }
 
 :host(.input-fill-outline.input-shape-rectangular) {
-  --border-radius: #{$ion-border-radius-0};
+  --border-radius: #{globals.$ion-border-radius-0};
 }
 
 // Input Focus

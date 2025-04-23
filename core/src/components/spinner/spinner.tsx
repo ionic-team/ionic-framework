@@ -17,8 +17,8 @@ import type { SpinnerConfig } from './spinner-interface';
 @Component({
   tag: 'ion-spinner',
   styleUrls: {
-    ios: 'spinner.common.scss',
-    md: 'spinner.common.scss',
+    ios: 'spinner.native.scss',
+    md: 'spinner.native.scss',
     ionic: 'spinner.ionic.scss',
   },
   shadow: true,

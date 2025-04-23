@@ -72,7 +72,7 @@
   * margin to the bottom of the label, it provides a buffer
   * for the pin to move into when it is pressed.
   */
-  @include margin(null, null, calc(globals.$ion-space-200 + globals.dynamic-font(12px)), null);
+  @include margin(null, null, calc(globals.$ion-space-200 + globals.$ion-font-size-300), null);
 }
 
 .range-bar-active {
@@ -115,7 +115,7 @@
 
   background: transparent;
 
-  font-size: globals.dynamic-font(12px);
+  font-size: globals.$ion-font-size-300;
 
   text-align: center;
 }

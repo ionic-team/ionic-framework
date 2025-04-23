@@ -21,7 +21,7 @@
 
   height: globals.$ion-border-size-025;
 
-  background-color: globals.$ion-primitives-neutral-300;
+  background-color: globals.$ion-border-default;
 
   content: "";
 
@@ -43,9 +43,9 @@
 // we are adding a border to the ::after element of the accordion.
 ::slotted(ion-item[slot="header"]) {
   --border-radius: inherit;
-  --color: #{globals.$ion-primitives-neutral-1200};
-  --border-width: 0;
-  --inner-border-width: 0;
+  --color: #{globals.$ion-text-default};
+  --border-width: #{globals.$ion-border-size-0};
+  --inner-border-width: #{globals.$ion-scale-0};
   --min-height: #{globals.$ion-scale-700};
   --padding-top: #{globals.$ion-space-300};
   --padding-end: #{globals.$ion-space-400};
@@ -62,7 +62,7 @@
   @include globals.padding(null, globals.$ion-space-400, globals.$ion-space-300, globals.$ion-space-400);
   @include globals.typography(globals.$ion-body-md-regular);
 
-  color: globals.$ion-primitives-neutral-1000;
+  color: globals.$ion-text-default;
 }
 
 // Disabled Accordion

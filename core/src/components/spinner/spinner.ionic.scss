@@ -6,6 +6,22 @@
 
 :host {
   --color: #{globals.$ion-primitives-neutral-800};
+
+  width: globals.$ion-scale-700;
+  height: globals.$ion-scale-700;
+}
+
+// Spinner: lines / lines-small / lines-sharp / lines-sharp-small
+// --------------------------------------------------
+
+:host(.spinner-lines) line,
+:host(.spinner-lines-small) line {
+  stroke-width: globals.$ion-scale-150;
+}
+
+:host(.spinner-lines-sharp) line,
+:host(.spinner-lines-sharp-small) line {
+  stroke-width: globals.$ion-scale-100;
 }
 
 // Sizes

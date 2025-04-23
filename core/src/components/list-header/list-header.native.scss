@@ -1,0 +1,14 @@
+@import "./list-header.common";
+@import "../../themes/native/native.globals";
+
+// List Header
+// --------------------------------------------------
+
+:host {
+  min-height: 40px;
+}
+
+:host(.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
+}
