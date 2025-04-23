@@ -1,5 +1,13 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
+import {
+  Component,
+  Element,
+  forceUpdate,
+  h,
+  Host,
+  Listen,
+  Prop,
+} from '@stencil/core';
 import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -58,8 +66,72 @@ export class Toolbar implements ComponentInterface {
     if (lastButtons) {
       lastButtons.classList.add('buttons-last-slot');
     }
+
+    this.updateSlotClasses();
   }
 
+  componentDidLoad() {
+    this.updateSlotClasses();
+  }
+
+  private updateSlotClasses() {
+    // Check if slots have content
+    const slots = ['start', 'end', 'primary', 'secondary'];
+
+    const classesToAdd: string[] = [];
+    const classesToRemove: string[] = [];
+    slots.forEach((slot) => {
+      const slotHasContent = this.hasSlotContent(slot);
+      const slotClass = `has-${slot}-content`;
+      if (slotHasContent) {
+        classesToAdd.push(slotClass);
+      } else {
+        classesToRemove.push(slotClass);
+      }
+    });
+
+    // Force visibilities in certain conditions. This works by adding a class to the toolbar
+    // named `show-{slot}`. This class will be added if the toolbar has the required slots
+    // and does not have any of the excluded slots, otherwise it will be removed.
+    // This is useful to enforce centering of the toolbar content when there are different amounts
+    // of slots on either side of the toolbar.
+    const conditions = [
+      { name: 'end', requiredSlots: ['start'], excludeSlots: ['end', 'primary'] },
+      { name: 'start', requiredSlots: ['end'], excludeSlots: ['start', 'secondary'] },
+      { name: 'secondary', requiredSlots: ['primary'], excludeSlots: ['secondary', 'start'] },
+      { name: 'primary', requiredSlots: ['secondary'], excludeSlots: ['primary', 'end'] },
+    ];
+    conditions.forEach((condition) => {
+      const hasRequiredSlots = condition.requiredSlots.every((slot) => classesToAdd.includes(`has-${slot}-content`));
+      const hasExcludedSlots = condition.excludeSlots.some((slot) => classesToAdd.includes(`has-${slot}-content`));
+      const className = `show-${condition.name}`;
+
+      if (hasRequiredSlots && !hasExcludedSlots) {
+        classesToAdd.push(className);
+      } else {
+        this.el.classList.remove(className);
+      }
+    });
+
+    // Add classes to the toolbar element
+    this.el.classList.add(...classesToAdd);
+    this.el.classList.remove(...classesToRemove);
+  }
+
+  private hasSlotContent(slotName: string): boolean {
+    const slotNode = this.el.shadowRoot?.querySelector(`slot[name="${slotName}"]`) as HTMLSlotElement | null;
+    if (slotNode) {
+      const assigned = slotNode.assignedNodes();
+      return assigned.length > 0;
+    }
+    return false;
+  }
+
+  /**
+   * @internal
+   * Used to update the toolbars in header/footer.
+   * Called by the child toolbar elements.
+   */
   @Listen('ionStyle')
   childrenStyle(ev: CustomEvent<StyleEventDetail>) {
     ev.stopPropagation();
@@ -88,19 +160,24 @@ export class Toolbar implements ComponentInterface {
   }
 
   render() {
-    const theme = getIonTheme(this);
+    const theme = getIonTheme(this.el);
     const childStyles = {};
-    this.childrenStyles.forEach((value) => {
-      Object.assign(childStyles, value);
+    this.childrenStyles.forEach((style) => {
+      Object.assign(childStyles, style);
     });
+
+    const hostClass = {
+      ...childStyles,
+    };
+
     return (
       <Host
         class={{
-          ...childStyles,
           ...createColorClasses(this.color, {
             [theme]: true,
             'in-toolbar': hostContext('ion-toolbar', this.el),
           }),
+          ...hostClass,
         }}
       >
         <div class="toolbar-background" part="background"></div>

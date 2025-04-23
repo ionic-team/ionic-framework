@@ -12,18 +12,6 @@
   pointer-events: none;
 }
 
-:host-context(ion-toolbar) {
-  @include globals.position(0, null, null, 0);
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  transform: translateZ(0);
-
-  z-index: -1; // TODO(ROU-10853): replace this value with a layer token. This is here to prevent the title from blokcing interaction with buttons.
-}
-
 // Title: Large
 // --------------------------------------------------
 

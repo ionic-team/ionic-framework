@@ -1,14 +1,6 @@
 @use "./toolbar.common";
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 
-$toolbar-order-ionic: (
-  slot-start: 1,
-  slot-secondary: 2,
-  content: 3,
-  slot-primary: 4,
-  slot-end: 5,
-);
-
 // Ionic Toolbar
 // --------------------------------------------------
 
@@ -31,9 +23,7 @@ $toolbar-order-ionic: (
 // --------------------------------------------------
 
 .toolbar-content {
-  flex: 2;
-  order: map-get($toolbar-order-ionic, content);
-
+  flex: 1 1 auto;
   min-width: 0;
 }
 
@@ -62,31 +52,35 @@ $toolbar-order-ionic: (
 // Ionic Toolbar Slot Placement
 // --------------------------------------------------
 
-::slotted([slot="secondary"]) {
-  order: map-get($toolbar-order-ionic, slot-secondary);
-}
-
-::slotted([slot="primary"]) {
-  order: map-get($toolbar-order-ionic, slot-primary);
-
+:host(.has-end-content) slot[name="end"],
+:host(.show-end) slot[name="end"] {
+  display: flex;
+  flex: 1 1 0;
+  gap: globals.$ion-space-200;
+  justify-content: flex-end;
   text-align: end;
 }
 
-::slotted([slot="start"]) {
-  order: map-get($toolbar-order-ionic, slot-start);
-}
-
-::slotted([slot="start"]),
-::slotted([slot="end"]) {
+:host(.has-start-content) slot[name="start"],
+:host(.show-start) slot[name="start"] {
   display: flex;
-
-  flex: 1;
+  flex: 1 1 0;
   gap: globals.$ion-space-200;
 }
 
-::slotted([slot="end"]) {
-  justify-content: end;
-  order: map-get($toolbar-order-ionic, slot-end);
-
-  font-size: globals.$ion-font-size-600;
+:host(.has-primary-content) slot[name="primary"],
+:host(.show-primary) slot[name="primary"] {
+  display: flex;
+  flex: 1 1 0;
+  gap: globals.$ion-space-200;
+  justify-content: flex-end;
+  text-align: end;
 }
+
+:host(.has-secondary-content) slot[name="secondary"],
+:host(.show-secondary) slot[name="secondary"] {
+  display: flex;
+  flex: 1 1 0;
+  gap: globals.$ion-space-200;
+}
+
