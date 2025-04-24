@@ -51,6 +51,7 @@ import { defineCustomElement as defineIonLoading } from '@ionic/core/components/
 import { defineCustomElement as defineIonMenu } from '@ionic/core/components/ion-menu.js';
 import { defineCustomElement as defineIonMenuButton } from '@ionic/core/components/ion-menu-button.js';
 import { defineCustomElement as defineIonMenuToggle } from '@ionic/core/components/ion-menu-toggle.js';
+import { defineCustomElement as defineIonMyChip } from '@ionic/core/components/ion-my-chip.js';
 import { defineCustomElement as defineIonNavLink } from '@ionic/core/components/ion-nav-link.js';
 import { defineCustomElement as defineIonNote } from '@ionic/core/components/ion-note.js';
 import { defineCustomElement as defineIonPicker } from '@ionic/core/components/ion-picker.js';
@@ -1418,6 +1419,30 @@ export class IonMenuToggle {
 
 
 export declare interface IonMenuToggle extends Components.IonMenuToggle {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonMyChip,
+  inputs: ['color', 'disabled', 'hue', 'mode', 'outline', 'shape', 'size', 'theme']
+})
+@Component({
+  selector: 'ion-my-chip',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['color', 'disabled', 'hue', 'mode', 'outline', 'shape', 'size', 'theme'],
+  standalone: true
+})
+export class IonMyChip {
+  protected el: HTMLIonMyChipElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonMyChip extends Components.IonMyChip {}
 
 
 @ProxyCmp({

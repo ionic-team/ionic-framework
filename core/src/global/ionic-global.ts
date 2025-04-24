@@ -2,6 +2,9 @@ import { Build, getMode, setMode, getElement } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
 
 import type { IonicConfig, Mode, Theme } from '../interface';
+import { defaultTheme as baseTheme } from '../themes/base/base.tokens';
+import type { Theme as BaseTheme } from '../themes/base/base.tokens';
+import { deepMerge, generateCSSVars } from '../themes/base/generate-css-vars';
 import { shouldUseCloseWatcher } from '../utils/hardware-back-button';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
@@ -23,6 +26,23 @@ const printInvalidModeWarning = (mode: Mode, theme: Theme, ref?: any) => {
     )} will be used.`,
     ref
   );
+};
+
+const applyTheme = (userTheme: BaseTheme, prefix?: string) => {
+  const mergedTheme = deepMerge(baseTheme, userTheme);
+  const { palette, components, ...restTokens } = mergedTheme;
+  const { enabled, ...restDarkTokens } = palette.dark;
+
+  config.set('customTheme', mergedTheme);
+
+  const style = document.createElement('style');
+  style.innerHTML = [generateCSSVars(restTokens, prefix), generateCSSVars(palette.light, prefix)].join('\n\n');
+
+  if (enabled === 'system') {
+    style.innerHTML += `@media (prefers-color-scheme: dark) {\n${generateCSSVars(restDarkTokens, prefix)}\n}`;
+  }
+
+  document.head.appendChild(style);
 };
 
 /**
@@ -132,6 +152,14 @@ export const getIonTheme = (ref?: any): Theme => {
   return defaultTheme;
 };
 
+export const getIonCustomTheme = (): any => {
+  const customTheme = config.get('customTheme');
+  if (customTheme) {
+    return customTheme;
+  }
+  return defaultTheme;
+};
+
 export const rIC = (callback: () => void) => {
   if ('requestIdleCallback' in window) {
     (window as any).requestIdleCallback(callback);
@@ -224,6 +252,12 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   config.set('theme', defaultTheme);
   doc.documentElement.setAttribute('theme', defaultTheme);
   doc.documentElement.classList.add(defaultTheme);
+
+  const customTheme: BaseTheme | undefined = configObj.customTheme;
+
+  if (customTheme) {
+    applyTheme(customTheme);
+  }
 
   if (config.getBoolean('_testing')) {
     config.set('animated', false);
