@@ -1,11 +1,12 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@use "./progress-bar";
+@use "./progress-bar.common.scss";
 
 // Ionic Progress bar
 // --------------------------------------------------
 
 :host {
   --background: #{globals.$ion-bg-neutral-subtle-default};
+  --progress-background: #{globals.ion-color(primary, base)};
 
   height: globals.$ion-scale-100;
 }
@@ -19,4 +20,16 @@
 
 :host(.progress-bar-shape-rectangular) {
   @include globals.border-radius(globals.$ion-rectangular-xs);
+}
+
+// Progress Bar: Color
+// ------------------------------------------------------------------------
+
+:host(.ion-color) .buffer-circles {
+  background-image: radial-gradient(
+    ellipse at center,
+    #{globals.current-color(base, 0.3)} 0%,
+    #{globals.current-color(base, 0.3)} 30%,
+    transparent 30%
+  );
 }

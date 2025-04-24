@@ -20,6 +20,8 @@
   --highlight-color-focused: #{globals.$ion-border-focus-default};
   --highlight-color-valid: #{globals.$ion-semantics-success-900};
   --highlight-color-invalid: #{globals.$ion-semantics-danger-800};
+
+  min-height: globals.$ion-scale-1100;
 }
 
 // Select Hint Text
@@ -34,11 +36,28 @@
   color: globals.$ion-primitives-neutral-800;
 }
 
+.select-text {
+  min-width: globals.$ion-space-400;
+}
+
 // Select Label
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
   @include globals.typography(globals.$ion-body-sm-medium);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the select.
+   * However, we do not set the max
+   * width to 100% because then
+   * only the label would show and users
+   * would not be able to see what they are typing.
+   */
+  max-width: globals.$ion-scale-5000;
+
+  transition: color globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive,
+    transform globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive;
 
   color: globals.$ion-primitives-neutral-1000;
 }
@@ -54,6 +73,16 @@
    * when the label sits at the start.
    */
   @include globals.margin(0, globals.$ion-space-100, 0, 0);
+}
+
+:host(.select-label-placement-fixed) .label-text-wrapper {
+  $text-wrapper-width: calc(globals.$ion-scale-2400 + globals.$ion-space-100);
+
+  flex: 0 0 $text-wrapper-width;
+
+  width: $text-wrapper-width;
+  min-width: $text-wrapper-width;
+  max-width: globals.$ion-scale-5000;
 }
 
 // Select Label Placement - End
@@ -90,6 +119,15 @@
   background: transparent;
 }
 
+.select-wrapper .select-placeholder {
+  /**
+   * When the floating label appears on top of the
+   * select, we need to fade the text out so that the
+   * label does not overlap with the placeholder.
+   */
+  transition: opacity globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive;
+}
+
 // Select Inner Wrapper
 // ----------------------------------------------------------------
 
@@ -116,6 +154,13 @@
 
 .native-wrapper {
   @include globals.typography(globals.$ion-body-md-regular);
+
+  /**
+   * When the floating label appears on top of the
+   * input, we need to fade the input out so that the
+   * label does not overlap with the placeholder.
+   */
+  transition: opacity globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive;
 
   color: globals.$ion-primitives-neutral-1200;
 }
@@ -144,10 +189,10 @@
 ::slotted(ion-button[slot="start"].button-has-icon-only),
 ::slotted(ion-button[slot="end"].button-has-icon-only) {
   --border-radius: 50%;
-  --padding-start: 8px;
-  --padding-end: 8px;
-  --padding-top: 8px;
-  --padding-bottom: 8px;
+  --padding-start: #{globals.$ion-space-200};
+  --padding-end: #{globals.$ion-space-200};
+  --padding-top: #{globals.$ion-space-200};
+  --padding-bottom: #{globals.$ion-space-200};
 
   aspect-ratio: 1;
 }
@@ -162,7 +207,7 @@
 }
 
 .select-icon {
-  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.15s globals.$ion-transition-curve-expressive;
 }
 
 /**

@@ -21,9 +21,6 @@
   --padding-start: #{globals.$ion-space-400};
 
   @include globals.typography(globals.$ion-body-lg-medium);
-
-  font-family: globals.$ion-font-family;
-  font-size: globals.$ion-font-size-400;
 }
 
 // Inner Item
@@ -62,8 +59,8 @@ slot[name="end"]::slotted(*) {
 // Item: Disabled
 // --------------------------------------------------
 
-:host(.item-disabled) {
-  opacity: 0.6;
+:host(.item-disabled) .item-native::after {
+  @include globals.disabled-state();
 }
 
 // Item: Activated

@@ -1,4 +1,4 @@
-@import "./backdrop.vars";
+@import "../../themes/mixins.scss";
 
 // Backdrop
 // --------------------------------------------------
@@ -15,7 +15,6 @@
   cursor: pointer;
   opacity: 0.01;
   touch-action: none;
-  z-index: $z-index-backdrop;
 }
 
 :host(.backdrop-hide) {

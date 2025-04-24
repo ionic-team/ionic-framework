@@ -1,7 +1,9 @@
+@import "./backdrop.common";
 @import "../../themes/native/native.globals";
 
-// Button
+// Backdrop
 // --------------------------------------------------
 
-/// @prop - Badge padding inside button
-$button-badge-padding: 2px;
+:host {
+  z-index: $z-index-backdrop;
+}

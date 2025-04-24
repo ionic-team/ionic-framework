@@ -5,6 +5,10 @@
   z-index: $z-index-item-input;
 }
 
+:host(.ion-focused) input {
+  border: 2px solid #5e9ed6;
+}
+
 :host(.in-item) .label-text-wrapper {
   @include margin($toggle-item-label-margin-top, null, $toggle-item-label-margin-bottom, null);
 }

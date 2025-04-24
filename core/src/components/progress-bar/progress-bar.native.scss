@@ -1,0 +1,24 @@
+@import "../../themes/native/native.globals";
+@import "./progress-bar.common.scss";
+
+// Host has no background by default - this will be added to the progress-buffer-bar
+:host {
+  /**
+     * @prop --background: Background of the progress track, or the buffer bar if `buffer` is set
+     * @prop --progress-background: Background of the progress bar representing the current value
+     */
+  --background: #{ion-color(primary, base, 0.3)};
+  --progress-background: #{ion-color(primary, base)};
+}
+
+// Progress Bar: Color
+// ------------------------------------------------------------------------
+
+:host(.ion-color) .buffer-circles {
+  background-image: radial-gradient(
+    ellipse at center,
+    #{current-color(base, 0.3)} 0%,
+    #{current-color(base, 0.3)} 30%,
+    transparent 30%
+  );
+}

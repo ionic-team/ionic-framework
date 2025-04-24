@@ -1,4 +1,4 @@
-@import "../../themes/native/native.globals";
+@import "../../themes/mixins";
 
 // List
 // --------------------------------------------------
@@ -11,10 +11,4 @@ ion-list {
 
   contain: content;
   list-style-type: none;
-}
-
-ion-list.list-inset {
-  transform: translateZ(0);
-
-  overflow: hidden;
 }

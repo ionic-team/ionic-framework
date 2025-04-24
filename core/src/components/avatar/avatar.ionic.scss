@@ -1,5 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./avatar.common";
+@use "./avatar.common";
 
 // Ionic Avatar
 // --------------------------------------------------
@@ -8,21 +8,19 @@
   --padding-top: #{globals.$ion-space-0};
   --padding-bottom: #{globals.$ion-space-0};
 
+  @include globals.typography(globals.$ion-heading-h6-medium);
+
   display: flex;
 
   align-items: center;
   justify-content: center;
 
-  background: globals.$ion-primitives-neutral-100;
-  color: globals.$ion-primitives-neutral-800;
-
-  font-weight: globals.$ion-font-weight-medium;
-
-  line-height: globals.$ion-font-line-height-700;
+  background: globals.$ion-bg-neutral-subtlest-default;
+  color: globals.$ion-text-subtlest;
 }
 
 :host(:not(.avatar-image)) {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 }
 
 // Avatar Sizes
@@ -33,12 +31,10 @@
   --padding-end: #{globals.$ion-space-050};
   --padding-start: #{globals.$ion-space-050};
 
+  @include globals.typography(globals.$ion-body-sm-medium);
+
   width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
-
-  font-size: globals.$ion-font-size-300;
-
-  line-height: globals.$ion-font-line-height-500;
 }
 
 /* Extra Small */
@@ -46,12 +42,10 @@
   --padding-end: #{globals.$ion-space-050};
   --padding-start: #{globals.$ion-space-050};
 
+  @include globals.typography(globals.$ion-body-sm-medium);
+
   width: globals.$ion-scale-600;
   height: globals.$ion-scale-600;
-
-  font-size: globals.$ion-font-size-300;
-
-  line-height: globals.$ion-font-line-height-500;
 }
 
 /* Small */
@@ -59,12 +53,10 @@
   --padding-end: #{globals.$ion-space-150};
   --padding-start: #{globals.$ion-space-150};
 
+  @include globals.typography(globals.$ion-body-lg-medium);
+
   width: globals.$ion-scale-800;
   height: globals.$ion-scale-800;
-
-  font-size: globals.$ion-font-size-400;
-
-  line-height: globals.$ion-font-line-height-600;
 }
 
 /* Medium */
@@ -74,8 +66,6 @@
 
   width: globals.$ion-scale-1000;
   height: globals.$ion-scale-1000;
-
-  font-size: globals.$ion-font-size-450;
 }
 
 /* Large */
@@ -83,10 +73,10 @@
   --padding-end: #{globals.$ion-space-250};
   --padding-start: #{globals.$ion-space-250};
 
+  @include globals.typography(globals.$ion-heading-h5-medium);
+
   width: globals.$ion-scale-1200;
   height: globals.$ion-scale-1200;
-
-  font-size: globals.$ion-font-size-500;
 }
 
 /* Extra Large */
@@ -94,10 +84,10 @@
   --padding-end: #{globals.$ion-space-300};
   --padding-start: #{globals.$ion-space-300};
 
+  @include globals.typography(globals.$ion-heading-h4-medium);
+
   width: globals.$ion-scale-1400;
   height: globals.$ion-scale-1400;
-
-  font-size: globals.$ion-font-size-550;
 }
 
 // Avatar Shapes
@@ -125,7 +115,7 @@
 // --------------------------------------------------
 
 :host(.avatar-icon) {
-  @include padding(0);
+  @include globals.padding(0);
 }
 
 :host(.avatar-xsmall) ::slotted(ion-icon) {

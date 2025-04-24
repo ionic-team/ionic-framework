@@ -1,5 +1,5 @@
 @import "../../themes/mixins";
-@import "./button.vars";
+@import "../../themes/functions.color";
 
 // Button
 // --------------------------------------------------
@@ -70,23 +70,12 @@
   pointer-events: none;
 }
 
-// Solid Button
-// --------------------------------------------------
-
-// Default Solid Color
-:host(.button-solid) {
-  --background: #{ion-color(primary, base)};
-  --color: #{ion-color(primary, contrast)};
-}
-
 // Outline Button
 // --------------------------------------------------
 
 // Default Outline Color
 :host(.button-outline) {
-  --border-color: #{ion-color(primary, base)};
   --background: transparent;
-  --color: #{ion-color(primary, base)};
 }
 
 // Clear Button
@@ -96,7 +85,6 @@
 :host(.button-clear) {
   --border-width: 0;
   --background: transparent;
-  --color: #{ion-color(primary, foreground)};
 }
 
 // Block Button
@@ -327,8 +315,6 @@ ion-ripple-effect {
 }
 
 :host ::slotted(ion-badge[vertical]:not(:empty)) {
-  @include padding($button-badge-padding);
-
   display: flex;
 
   align-items: center;

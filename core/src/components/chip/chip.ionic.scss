@@ -14,11 +14,9 @@
 
   @include globals.padding(globals.$ion-space-150, globals.$ion-space-200);
   @include globals.border-radius(var(--border-radius));
+  @include globals.typography(globals.$ion-body-sm-medium);
 
   gap: globals.$ion-space-100;
-
-  font-family: globals.$ion-font-family;
-  font-weight: globals.$ion-font-weight-medium;
 
   line-height: globals.$ion-font-line-height-full;
 }
@@ -35,8 +33,7 @@
 // ---------------------------------------------
 
 :host(.ion-focused) {
-  outline: var(--focus-ring-width) globals.$ion-border-style-solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-width);
+  @include globals.focused-state(null, null, var(--focus-ring-color));
 }
 
 // Chip: Hover
@@ -63,8 +60,8 @@
 // Chip: Disabled
 // ---------------------------------------------
 
-:host(.chip-disabled) {
-  opacity: 0.6;
+:host(.chip-disabled)::after {
+  @include globals.disabled-state();
 }
 
 // Chip Shapes

@@ -106,26 +106,12 @@ ion-backdrop {
   z-index: 11;
 
   &::before {
-    /**
-     * Adds a 4px tap area to the perimeter
-     * of the handle.
-     */
-    @include padding(4px, 4px, 4px, 4px);
-
     position: absolute;
 
     transform: translate(-50%, -50%);
 
     content: "";
   }
-}
-
-/**
- * Ensure that the sheet modal does not
- * completely cover the content.
- */
-:host(.modal-sheet) {
-  --height: calc(100% - (var(--ion-safe-area-top) + 10px));
 }
 
 :host(.modal-sheet) .modal-wrapper,

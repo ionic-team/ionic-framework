@@ -5,9 +5,9 @@
 // --------------------------------------------------
 
 :host {
-  min-width: 272px;
+  min-width: calc(#{globals.$ion-scale-6200} + #{globals.$ion-space-600});
 
-  background-color: globals.$ion-primitives-base-white;
+  background-color: globals.$ion-bg-neutral-subtlest-default;
 }
 
 // Inset Accordion Group

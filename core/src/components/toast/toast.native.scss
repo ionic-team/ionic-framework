@@ -6,3 +6,12 @@
 
   z-index: $z-index-overlay;
 }
+
+.toast-icon {
+  @include margin(null, null, null, 16px);
+}
+
+.toast-icon,
+.toast-button-icon {
+  font-size: 1.4em;
+}

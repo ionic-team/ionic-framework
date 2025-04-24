@@ -6,11 +6,7 @@
 
 :host {
   @include globals.padding(0);
-
-  font-size: globals.$ion-font-size-350;
-  font-weight: globals.$ion-font-weight-medium;
-
-  line-height: globals.$ion-font-line-height-500;
+  @include globals.typography(globals.$ion-body-action-sm);
 }
 
 .button-native {
@@ -68,8 +64,8 @@
 // --------------------------------------------------
 
 /* Disabled */
-:host(.item-option-disabled) {
-  opacity: 0.6;
+:host(.item-option-disabled)::after {
+  @include globals.disabled-state();
 }
 
 :host(.item-option-disabled) .button-native {
@@ -102,4 +98,11 @@
 :host(.item-option-bold.ion-color) {
   background: globals.current-color(base);
   color: globals.current-color(contrast);
+}
+
+// Item Expandable Animation
+// --------------------------------------------------
+
+:host(.item-option-expandable) {
+  transition-timing-function: globals.$ion-transition-curve-expressive;
 }

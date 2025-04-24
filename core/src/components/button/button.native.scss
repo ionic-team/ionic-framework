@@ -1,4 +1,4 @@
-@use "../../themes/native/native.globals.md" as globals;
+@use "../../themes/native/native.globals" as globals;
 @use "./button.common";
 
 // Button - iOS and Material Design
@@ -6,6 +6,32 @@
 
 :host {
   font-family: globals.$font-family-base;
+}
+
+// Solid Button
+// --------------------------------------------------
+
+// Default Solid Color
+:host(.button-solid) {
+  --background: #{globals.ion-color(primary, base)};
+  --color: #{globals.ion-color(primary, contrast)};
+}
+
+// Outline Button
+// --------------------------------------------------
+
+// Default Outline Color
+:host(.button-outline) {
+  --border-color: #{globals.ion-color(primary, base)};
+  --color: #{globals.ion-color(primary, base)};
+}
+
+// Clear Button
+// --------------------------------------------------
+
+// Default Clear Color
+:host(.button-clear) {
+  --color: #{globals.ion-color(primary, foreground)};
 }
 
 // Button Icons
@@ -28,4 +54,8 @@
 
 .button-native ::slotted(ion-badge) {
   position: fixed;
+}
+
+:host ::slotted(ion-badge[vertical]:not(:empty)) {
+  @include globals.padding(2px);
 }
