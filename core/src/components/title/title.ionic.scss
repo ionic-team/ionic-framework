@@ -6,7 +6,6 @@
 
 :host {
   @include globals.typography(globals.$ion-heading-h6-medium);
-  @include globals.padding(var(--padding-top), 0, var(--padding-bottom));
 
   box-sizing: border-box;
   pointer-events: none;
