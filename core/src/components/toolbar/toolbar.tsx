@@ -127,11 +127,6 @@ export class Toolbar implements ComponentInterface {
     return false;
   }
 
-  /**
-   * @internal
-   * Used to update the toolbars in header/footer.
-   * Called by the child toolbar elements.
-   */
   @Listen('ionStyle')
   childrenStyle(ev: CustomEvent<StyleEventDetail>) {
     ev.stopPropagation();
@@ -166,10 +161,6 @@ export class Toolbar implements ComponentInterface {
       Object.assign(childStyles, style);
     });
 
-    const hostClass = {
-      ...childStyles,
-    };
-
     return (
       <Host
         class={{
@@ -177,7 +168,7 @@ export class Toolbar implements ComponentInterface {
             [theme]: true,
             'in-toolbar': hostContext('ion-toolbar', this.el),
           }),
-          ...hostClass,
+          ...childStyles,
         }}
       >
         <div class="toolbar-background" part="background"></div>
