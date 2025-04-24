@@ -216,7 +216,7 @@ If you are running a test that takes a screenshot, you must first generate the r
 
 ### Generating or Updating Ground Truths With Docker (Local Development)
 
-We recommend generating ground truths inside of [Docker](https://www.docker.com) (using either Docker Desktop or Rancher Desktop). This allows anyone contributing to Ionic Framework to create or update ground truths in a consistent environment.
+We recommend generating ground truths inside of [Docker](https://www.docker.com) using [Rancher Desktop](#installing-rancher-desktop). This allows anyone contributing to Ionic Framework to create or update ground truths in a consistent environment.
 
 To create or update ground truths, run the following command:
 
