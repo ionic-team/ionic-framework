@@ -43,6 +43,7 @@ import { defineCustomElement as defineIonListHeader } from '@ionic/core/componen
 import { defineCustomElement as defineIonMenu } from '@ionic/core/components/ion-menu.js';
 import { defineCustomElement as defineIonMenuButton } from '@ionic/core/components/ion-menu-button.js';
 import { defineCustomElement as defineIonMenuToggle } from '@ionic/core/components/ion-menu-toggle.js';
+import { defineCustomElement as defineIonMyChip } from '@ionic/core/components/ion-my-chip.js';
 import { defineCustomElement as defineIonNav } from '@ionic/core/components/ion-nav.js';
 import { defineCustomElement as defineIonNavLink } from '@ionic/core/components/ion-nav-link.js';
 import { defineCustomElement as defineIonNote } from '@ionic/core/components/ion-note.js';
@@ -116,6 +117,7 @@ export const IonListHeader = /*@__PURE__*/createReactComponent<JSX.IonListHeader
 export const IonMenu = /*@__PURE__*/createReactComponent<JSX.IonMenu, HTMLIonMenuElement>('ion-menu', undefined, undefined, defineIonMenu);
 export const IonMenuButton = /*@__PURE__*/createReactComponent<JSX.IonMenuButton, HTMLIonMenuButtonElement>('ion-menu-button', undefined, undefined, defineIonMenuButton);
 export const IonMenuToggle = /*@__PURE__*/createReactComponent<JSX.IonMenuToggle, HTMLIonMenuToggleElement>('ion-menu-toggle', undefined, undefined, defineIonMenuToggle);
+export const IonMyChip = /*@__PURE__*/createReactComponent<JSX.IonMyChip, HTMLIonMyChipElement>('ion-my-chip', undefined, undefined, defineIonMyChip);
 export const IonNav = /*@__PURE__*/createReactComponent<JSX.IonNav, HTMLIonNavElement>('ion-nav', undefined, undefined, defineIonNav);
 export const IonNavLink = /*@__PURE__*/createReactComponent<JSX.IonNavLink, HTMLIonNavLinkElement>('ion-nav-link', undefined, undefined, defineIonNavLink);
 export const IonNote = /*@__PURE__*/createReactComponent<JSX.IonNote, HTMLIonNoteElement>('ion-note', undefined, undefined, defineIonNote);

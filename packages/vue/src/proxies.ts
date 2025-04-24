@@ -49,6 +49,7 @@ import { defineCustomElement as defineIonListHeader } from '@ionic/core/componen
 import { defineCustomElement as defineIonMenu } from '@ionic/core/components/ion-menu.js';
 import { defineCustomElement as defineIonMenuButton } from '@ionic/core/components/ion-menu-button.js';
 import { defineCustomElement as defineIonMenuToggle } from '@ionic/core/components/ion-menu-toggle.js';
+import { defineCustomElement as defineIonMyChip } from '@ionic/core/components/ion-my-chip.js';
 import { defineCustomElement as defineIonNav } from '@ionic/core/components/ion-nav.js';
 import { defineCustomElement as defineIonNavLink } from '@ionic/core/components/ion-nav-link.js';
 import { defineCustomElement as defineIonNote } from '@ionic/core/components/ion-note.js';
@@ -640,6 +641,16 @@ export const IonMenuButton: StencilVueComponent<JSX.IonMenuButton> = /*@__PURE__
 export const IonMenuToggle: StencilVueComponent<JSX.IonMenuToggle> = /*@__PURE__*/ defineContainer<JSX.IonMenuToggle>('ion-menu-toggle', defineIonMenuToggle, [
   'menu',
   'autoHide'
+]);
+
+
+export const IonMyChip: StencilVueComponent<JSX.IonMyChip> = /*@__PURE__*/ defineContainer<JSX.IonMyChip>('ion-my-chip', defineIonMyChip, [
+  'color',
+  'outline',
+  'disabled',
+  'hue',
+  'shape',
+  'size'
 ]);
 
 

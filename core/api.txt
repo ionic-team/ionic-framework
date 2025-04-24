@@ -1205,6 +1205,21 @@ ion-modal,part,backdrop
 ion-modal,part,content
 ion-modal,part,handle
 
+ion-my-chip,shadow
+ion-my-chip,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-my-chip,prop,disabled,boolean,false,false,false
+ion-my-chip,prop,hue,"bold" | "subtle" | undefined,'subtle',false,false
+ion-my-chip,prop,mode,"ios" | "md",undefined,false,false
+ion-my-chip,prop,outline,boolean,false,false,false
+ion-my-chip,prop,shape,"rectangular" | "round" | "soft" | undefined,'soft',false,false
+ion-my-chip,prop,size,"large" | "small" | undefined,'small',false,false
+ion-my-chip,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-my-chip,css-prop,--background
+ion-my-chip,css-prop,--border-radius
+ion-my-chip,css-prop,--color
+ion-my-chip,css-prop,--focus-ring-color
+ion-my-chip,css-prop,--focus-ring-width
+
 ion-nav,shadow
 ion-nav,prop,animated,boolean,true,false,false
 ion-nav,prop,animation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false

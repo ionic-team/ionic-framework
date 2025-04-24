@@ -1464,7 +1464,29 @@ export declare interface IonMenuToggle extends Components.IonMenuToggle {}
 
 
 @ProxyCmp({
-  inputs: ['component', 'componentProps', 'routerAnimation', 'routerDirection']
+  inputs: ['color', 'disabled', 'hue', 'mode', 'outline', 'shape', 'size', 'theme']
+})
+@Component({
+  selector: 'ion-my-chip',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['color', 'disabled', 'hue', 'mode', 'outline', 'shape', 'size', 'theme'],
+})
+export class IonMyChip {
+  protected el: HTMLIonMyChipElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonMyChip extends Components.IonMyChip {}
+
+
+@ProxyCmp({
+  inputs: ['component', 'componentProps', 'mode', 'routerAnimation', 'routerDirection', 'theme']
 })
 @Component({
   selector: 'ion-nav-link',

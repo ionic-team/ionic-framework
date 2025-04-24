@@ -2072,6 +2072,40 @@ export namespace Components {
          */
         "trigger": string | undefined;
     }
+    interface IonMyChip {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the chip.
+         */
+        "disabled": boolean;
+        /**
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Only applies to the `ionic` theme.
+         */
+        "hue"?: 'bold' | 'subtle';
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * Display an outline style button.
+         */
+        "outline": boolean;
+        /**
+          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners. Defaults to `"round"` for the `"ionic"` theme and `"soft"` for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+         */
+        "size"?: 'small' | 'large';
+        /**
+          * The theme determines the visual appearance of the component.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+    }
     interface IonNav {
         /**
           * If `true`, the nav should animate the transition of components.
@@ -4535,6 +4569,12 @@ declare global {
         prototype: HTMLIonModalElement;
         new (): HTMLIonModalElement;
     };
+    interface HTMLIonMyChipElement extends Components.IonMyChip, HTMLStencilElement {
+    }
+    var HTMLIonMyChipElement: {
+        prototype: HTMLIonMyChipElement;
+        new (): HTMLIonMyChipElement;
+    };
     interface HTMLIonNavElementEventMap {
         "ionNavWillLoad": void;
         "ionNavWillChange": void;
@@ -5236,6 +5276,7 @@ declare global {
         "ion-menu-button": HTMLIonMenuButtonElement;
         "ion-menu-toggle": HTMLIonMenuToggleElement;
         "ion-modal": HTMLIonModalElement;
+        "ion-my-chip": HTMLIonMyChipElement;
         "ion-nav": HTMLIonNavElement;
         "ion-nav-link": HTMLIonNavLinkElement;
         "ion-note": HTMLIonNoteElement;
@@ -7375,6 +7416,40 @@ declare namespace LocalJSX {
          */
         "trigger"?: string | undefined;
     }
+    interface IonMyChip {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the chip.
+         */
+        "disabled"?: boolean;
+        /**
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Only applies to the `ionic` theme.
+         */
+        "hue"?: 'bold' | 'subtle';
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * Display an outline style button.
+         */
+        "outline"?: boolean;
+        /**
+          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners. Defaults to `"round"` for the `"ionic"` theme and `"soft"` for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+         */
+        "size"?: 'small' | 'large';
+        /**
+          * The theme determines the visual appearance of the component.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+    }
     interface IonNav {
         /**
           * If `true`, the nav should animate the transition of components.
@@ -9166,6 +9241,7 @@ declare namespace LocalJSX {
         "ion-menu-button": IonMenuButton;
         "ion-menu-toggle": IonMenuToggle;
         "ion-modal": IonModal;
+        "ion-my-chip": IonMyChip;
         "ion-nav": IonNav;
         "ion-nav-link": IonNavLink;
         "ion-note": IonNote;
@@ -9269,6 +9345,7 @@ declare module "@stencil/core" {
             "ion-menu-button": LocalJSX.IonMenuButton & JSXBase.HTMLAttributes<HTMLIonMenuButtonElement>;
             "ion-menu-toggle": LocalJSX.IonMenuToggle & JSXBase.HTMLAttributes<HTMLIonMenuToggleElement>;
             "ion-modal": LocalJSX.IonModal & JSXBase.HTMLAttributes<HTMLIonModalElement>;
+            "ion-my-chip": LocalJSX.IonMyChip & JSXBase.HTMLAttributes<HTMLIonMyChipElement>;
             "ion-nav": LocalJSX.IonNav & JSXBase.HTMLAttributes<HTMLIonNavElement>;
             "ion-nav-link": LocalJSX.IonNavLink & JSXBase.HTMLAttributes<HTMLIonNavLinkElement>;
             "ion-note": LocalJSX.IonNote & JSXBase.HTMLAttributes<HTMLIonNoteElement>;

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MyChip - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>MyChip - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding" id="content" style="text-align: center">
+        <h2>My Chip</h2>
+        <p>
+          This is a POC, not all the features are working as expected. For example, the color property still needs to be
+          worked on.
+        </p>
+        <p>You can verify that the variables are being generated correctly by inspecting the root element.</p>
+
+        <ion-my-chip>default</ion-my-chip>
+
+        <ion-my-chip outline>outline</ion-my-chip>
+
+        <ion-my-chip size="large">large</ion-my-chip>
+
+        <ion-my-chip hue="bold">bold</ion-my-chip>
+        <ion-my-chip hue="bold" outline>bold with outline</ion-my-chip>
+
+        <ion-my-chip color="primary">primary, subtle hue</ion-my-chip>
+        <ion-my-chip color="primary" hue="bold">primary, bold hue</ion-my-chip>
+
+        <ion-my-chip color="secondary">secondary, subtle hue</ion-my-chip>
+        <ion-my-chip color="secondary" hue="bold">secondary, bold hue</ion-my-chip>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      window.Ionic = {
+        config: {
+          customTheme: {
+            palette: {
+              light: {
+                color: {
+                  primary: {
+                    bold: {
+                      base: 'pink',
+                      constrast: 'black',
+                    },
+                  },
+                  secondary: {
+                    bold: {
+                      base: '#510aa8',
+                    },
+                  },
+                  // gray: {
+                  //   800: 'pink',
+                  // }
+                },
+              },
+            },
+            components: {
+              IonChip: {
+                spacing: {
+                  sm: '12px',
+                },
+                palette: {
+                  light: {
+                    color: {
+                      gray: {
+                        800: 'pink',
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </body>
+</html>

@@ -51,6 +51,7 @@ export const DIRECTIVES = [
   d.IonMenu,
   d.IonMenuButton,
   d.IonMenuToggle,
+  d.IonMyChip,
   d.IonNavLink,
   d.IonNote,
   d.IonPicker,

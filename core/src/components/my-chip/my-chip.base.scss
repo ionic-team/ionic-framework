@@ -1,0 +1,156 @@
+// @import "../../themes/native/native.globals";
+@use "../../themes/functions.color" as color;
+@use "../../themes/mixins" as mixins;
+
+:host {
+  /**
+   * @prop --background: Background of the chip
+   * @prop --color: Color of the chip
+   * @prop --border-radius: Border radius of the chip
+   * @prop --focus-ring-color: Color of the focus ring
+   * @prop --focus-ring-width: Width of the focus ring
+   */
+  --focus-ring-color: var(--ion-color-blue-50);
+  --focus-ring-width: var(--ion-spacing-xs);
+
+  @include mixins.font-smoothing();
+  @include mixins.padding(var(--ion-spacing-xs), var(--ion-spacing-sm));
+  @include mixins.border-radius(var(--border-radius));
+
+  display: inline-flex;
+
+  position: relative;
+
+  align-items: center;
+  justify-content: center;
+
+  background: var(--background);
+  color: var(--color);
+
+  font-weight: var(--ion-font-weights-normal);
+
+  line-height: var(--ion-line-heights-md);
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  vertical-align: middle;
+
+  gap: var(--ion-spacing-xs);
+
+  box-sizing: border-box;
+}
+
+:host(.chip-disabled) {
+  cursor: default;
+  pointer-events: none;
+}
+
+// Outline Chip
+// ---------------------------------------------
+
+:host(.chip-outline) {
+  border-width: var(--ion-spacing-xxs);
+  border-style: solid; // Do we need to use a variable here? ionic uses tokens but all themes use solid so it's not really necessary
+}
+
+// Chip: Focus
+// ---------------------------------------------
+
+:host(.ion-focused) {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-width);
+}
+
+// Chip Shapes
+// ---------------------------------------------
+
+:host(.chip-soft) {
+  --border-radius: var(--ion-radii-lg);
+}
+
+:host(.chip-round) {
+  --border-radius: var(--ion-radii-xxl);
+}
+
+:host(.chip-rectangular) {
+  --border-radius: var(--ion-radii-none);
+}
+
+// Size
+// ---------------------------------------------
+
+:host(.chip-small) {
+  min-height: var(--ion-spacing-lg);
+
+  font-size: var(--ion-font-sizs-sm);
+}
+
+:host(.chip-large) {
+  min-height: var(--ion-spacing-xxl);
+
+  font-size: var(--ion-font-sizes-lg);
+}
+
+// Subtle Chip
+// ---------------------------------------------
+
+:host(.chip-subtle) {
+  --background: var(--ion-color-gray-100);
+  --color: var(--ion-color-gray-800);
+}
+
+:host(.chip-outline.chip-subtle) {
+  border-color: var(--ion-color-gray-300);
+}
+
+// Bold Chip
+// ---------------------------------------------
+
+:host(.chip-bold) {
+  --background: var(--ion-color-gray-700);
+  --color: var(--ion-color-white);
+}
+
+:host(.chip-outline.chip-bold) {
+  border-color: var(--ion-color-gray-800);
+}
+
+// Chip Colors
+// ---------------------------------------------
+
+// Subtle
+:host(.chip-subtle.ion-color) {
+  background: color.current-color(
+    base,
+    $subtle: true
+  ); // these don't work because we need to update the function to use the new color system
+  color: color.current-color(
+    contrast,
+    $subtle: true
+  ); // these don't work because we need to update the function to use the new color system
+}
+
+:host(.chip-subtle.chip-outline.ion-color) {
+  border-color: color.current-color(
+    shade,
+    $subtle: true
+  ); // these don't work because we need to update the function to use the new color system
+}
+
+// Bold
+:host(.chip-bold.ion-color) {
+  background: color.current-color(
+    base
+  ); // these don't work because we need to update the function to use the new color system
+  color: color.current-color(
+    contrast
+  ); // these don't work because we need to update the function to use the new color system
+}
+
+:host(.chip-bold.chip-outline.ion-color) {
+  border-color: color.current-color(
+    shade
+  ); // these don't work because we need to update the function to use the new color system
+}
