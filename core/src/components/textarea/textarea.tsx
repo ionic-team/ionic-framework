@@ -5,6 +5,7 @@ import {
   Element,
   Event,
   Host,
+  Listen,
   Method,
   Prop,
   State,
@@ -313,6 +314,19 @@ export class Textarea implements ComponentInterface {
    * Emitted when the input has focus.
    */
   @Event() ionFocus!: EventEmitter<FocusEvent>;
+
+  /**
+   * This is prevents the native input from emitting the click event.
+   * Instead, the click event from the ion-textarea is emitted.
+   */
+  @Listen('click', { capture: true })
+  onClickCapture(ev: Event) {
+    const nativeInput = this.nativeInput;
+    if (nativeInput && ev.target === nativeInput) {
+      ev.stopPropagation();
+      this.el.click();
+    }
+  }
 
   connectedCallback() {
     const { el } = this;
