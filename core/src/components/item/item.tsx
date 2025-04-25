@@ -286,6 +286,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           if (firstInteractive !== undefined && !multipleInputs) {
             const path = ev.composedPath();
             const target = path[0] as HTMLElement;
+
             if (ev.isTrusted) {
               /**
                * Dispatches a click event to the first interactive element,
@@ -306,6 +307,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
                   (firstInteractive as HTMLIonInputElement | HTMLIonTextareaElement).setFocus();
                 } else {
                   firstInteractive.click();
+                  /**
+                   * Stop the item event from being triggered
+                   * as the firstInteractive click event will also
+                   * trigger the item click event.
+                   */
+                  ev.stopImmediatePropagation();
                 }
               }
             }
