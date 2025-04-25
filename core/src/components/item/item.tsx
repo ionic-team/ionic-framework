@@ -305,15 +305,14 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
                  */
                 if (firstInteractive.tagName === 'ION-INPUT' || firstInteractive.tagName === 'ION-TEXTAREA') {
                   (firstInteractive as HTMLIonInputElement | HTMLIonTextareaElement).setFocus();
-                } else {
-                  firstInteractive.click();
-                  /**
-                   * Stop the item event from being triggered
-                   * as the firstInteractive click event will also
-                   * trigger the item click event.
-                   */
-                  ev.stopImmediatePropagation();
                 }
+                firstInteractive.click();
+                /**
+                 * Stop the item event from being triggered
+                 * as the firstInteractive click event will also
+                 * trigger the item click event.
+                 */
+                ev.stopImmediatePropagation();
               }
             }
           }
