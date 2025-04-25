@@ -316,7 +316,7 @@ export class Textarea implements ComponentInterface {
   @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   /**
-   * This is prevents the native input from emitting the click event.
+   * This prevents the native input from emitting the click event.
    * Instead, the click event from the ion-textarea is emitted.
    */
   @Listen('click', { capture: true })

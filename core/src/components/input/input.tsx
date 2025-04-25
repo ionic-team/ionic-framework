@@ -377,7 +377,7 @@ export class Input implements ComponentInterface {
   }
 
   /**
-   * This is prevents the native input from emitting the click event.
+   * This prevents the native input from emitting the click event.
    * Instead, the click event from the ion-input is emitted.
    */
   @Listen('click', { capture: true })
