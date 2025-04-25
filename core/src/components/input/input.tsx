@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
 import { createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
@@ -361,6 +361,19 @@ export class Input implements ComponentInterface {
       dir: newValue,
     };
     forceUpdate(this);
+  }
+
+  /**
+   * This is prevents the native input from emitting the click event.
+   * Instead, the click event from the ion-input is emitted.
+   */
+  @Listen('click', { capture: true })
+  onClickCapture(ev: Event) {
+    const nativeInput = this.nativeInput;
+    if (nativeInput && ev.target === nativeInput) {
+      ev.stopPropagation();
+      this.el.click();
+    }
   }
 
   componentWillLoad() {
