@@ -109,7 +109,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-textarea');
     });
 
-    test('clicking native textarea within item should fire click event with target as ion-textarea', async ({ page }) => {
+    test('clicking native textarea within item should fire click event with target as ion-textarea', async ({
+      page,
+    }) => {
       await page.setContent(
         `
         <ion-item>
