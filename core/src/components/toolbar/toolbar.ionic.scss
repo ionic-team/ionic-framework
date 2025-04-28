@@ -39,7 +39,7 @@
 // --------------------------------------------------
 
 ::slotted(ion-title) {
-  @include globals.padding-horizontal(var(--padding-top), var(--padding-end));
+  @include globals.padding-horizontal(var(--padding-start), var(--padding-end));
 }
 
 :host(.toolbar-title-default) ::slotted(ion-title) {
