@@ -275,6 +275,9 @@ export class InputOTP implements ComponentInterface {
   }
 
   private showSeparator(index: number) {
+    if (this.separatorPositions === 'all') {
+      return index < this.length - 1;
+    }
     return this.parsedSeparatorPositions.includes(index + 1) && index < this.length - 1;
   }
 

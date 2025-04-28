@@ -96,23 +96,10 @@
             <ion-input-otp length="6" separator-positions="1,3">
               Enter your one-time password (numbers only)
             </ion-input-otp>
-            <ion-input-otp id="all-separators" length="6"> Enter your one-time password (numbers only) </ion-input-otp>
+            <ion-input-otp separator-positions="all" length="6"> Enter your one-time password (numbers only) </ion-input-otp>
           </div>
         </div>
       </ion-content>
     </ion-app>
-
-    <script>
-      const inputs = document.querySelectorAll('ion-input-otp');
-
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].addEventListener('ionComplete', function (ev) {
-          console.log('Value:', ev.detail.value);
-        });
-      }
-
-      const allSeparators = document.getElementById('all-separators');
-      allSeparators.separatorPositions = [1, 2, 3, 4, 5];
-    </script>
   </body>
 </html>
