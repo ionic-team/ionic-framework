@@ -112,11 +112,7 @@ export class Toolbar implements ComponentInterface {
 
   private hasSlotContent(slotName: string): boolean {
     const slotNode = this.el.shadowRoot?.querySelector(`slot[name="${slotName}"]`) as HTMLSlotElement | null;
-    if (slotNode) {
-      const assigned = slotNode.assignedNodes();
-      return assigned.length > 0;
-    }
-    return false;
+    return !!slotNode && slotNode.assignedNodes().length > 0;
   }
 
   @Listen('ionStyle')
