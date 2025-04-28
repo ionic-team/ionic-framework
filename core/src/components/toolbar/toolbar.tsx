@@ -147,7 +147,7 @@ export class Toolbar implements ComponentInterface {
   }
 
   render() {
-    const theme = getIonTheme(this.el);
+    const theme = getIonTheme(this);
     const childStyles = {};
     this.childrenStyles.forEach((style) => {
       Object.assign(childStyles, style);
