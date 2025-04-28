@@ -101,7 +101,7 @@ export class Toolbar implements ComponentInterface {
       if (hasRequiredSlots && !hasExcludedSlots) {
         classesToAdd.push(className);
       } else {
-        this.el.classList.remove(className);
+        classesToRemove.push(className);
       }
     });
 
