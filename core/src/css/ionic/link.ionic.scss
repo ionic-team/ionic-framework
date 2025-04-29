@@ -3,6 +3,8 @@
 // Link: Shared Styles (Standalone & Underline)
 // -------------------------------------------------------------------------------
 @mixin link-shared {
+  @include globals.typography(globals.$ion-body-action-md);
+
   display: inline-flex;
 
   align-items: center;
@@ -10,8 +12,6 @@
   gap: globals.$ion-space-100;
 
   transition: color globals.$ion-transition-time-200 ease-in-out;
-
-  font-weight: globals.$ion-font-weight-regular;
 
   text-decoration-color: inherit;
 
