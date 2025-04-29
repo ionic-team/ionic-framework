@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react';
-import { Route, Redirect } from 'react-router';
+import { Route, Redirect } from 'react-router-dom';
 import ActionSheetHook from './ActionSheetHook';
 import {
   addCircleOutline,
@@ -18,20 +18,18 @@ import PickerHook from './PickerHook';
 import PopoverHook from './PopoverHook';
 import ToastHook from './ToastHook';
 
-interface OverlayHooksProps {}
-
-const OverlayHooks: React.FC<OverlayHooksProps> = () => {
+const OverlayHooks: React.FC = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Redirect from="/overlay-hooks" to="/overlay-hooks/actionsheet" exact />
-        <Route path="/overlay-hooks/actionsheet" component={ActionSheetHook} />
-        <Route path="/overlay-hooks/alert" component={AlertHook} />
-        <Route path="/overlay-hooks/loading" component={LoadingHook} />
-        <Route path="/overlay-hooks/modal" component={ModalHook} />
-        <Route path="/overlay-hooks/picker" component={PickerHook} />
-        <Route path="/overlay-hooks/popover" component={PopoverHook} />
-        <Route path="/overlay-hooks/toast" component={ToastHook} />
+        <Route path="/overlay-hooks" render={() => <Redirect to="/overlay-hooks/actionsheet" />} exact={true} />
+        <Route path="/overlay-hooks/actionsheet" component={ActionSheetHook} exact={true} />
+        <Route path="/overlay-hooks/alert" component={AlertHook} exact={true} />
+        <Route path="/overlay-hooks/loading" component={LoadingHook} exact={true} />
+        <Route path="/overlay-hooks/modal" component={ModalHook} exact={true} />
+        <Route path="/overlay-hooks/picker" component={PickerHook} exact={true} />
+        <Route path="/overlay-hooks/popover" component={PopoverHook} exact={true} />
+        <Route path="/overlay-hooks/toast" component={ToastHook} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="actionsheet" href="/overlay-hooks/actionsheet">

@@ -24,6 +24,7 @@ import './theme/variables.css';
 import Icons from './pages/Icons';
 import Inputs from './pages/Inputs';
 import Main from './pages/Main';
+import RadioGroup from './pages/RadioGroup';
 import Tabs from './pages/Tabs';
 import TabsBasic from './pages/TabsBasic';
 import NavComponent from './pages/navigation/NavComponent';
