@@ -70,8 +70,8 @@
   @include link-shared;
 }
 
-a.ionic-link,
-:not(a).ionic-link a {
+a,
+:not(a).ion-link a {
   @include ionic-link;
 }
 
@@ -96,7 +96,7 @@ a.ionic-link,
   }
 }
 
-a.ionic-link-underline,
-:not(a).ionic-link-underline a {
+a.ion-link-underline,
+:not(a).ion-link-underline a {
   @include ionic-link-underline;
 }
