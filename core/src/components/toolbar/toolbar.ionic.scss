@@ -39,7 +39,7 @@
 // --------------------------------------------------
 
 ::slotted(ion-title) {
-  @include globals.padding-horizontal(var(--padding-start), var(--padding-end));
+  @include globals.padding-horizontal(globals.$ion-space-200);
 }
 
 :host(.toolbar-title-default) ::slotted(ion-title) {
@@ -52,43 +52,53 @@
 
 // Ionic Toolbar Slot Placement
 // --------------------------------------------------
+// We're using the slots to force the main toolbar content to be
+// cenetered in the toolbar. This is a bit of a hack but it works.
+// The main content is placed in the center and then JavaScript evaluates
+// the sizes of the different slots and sets what size the pairs should be
+// based on the larger one. We then use `flex-basis` to set the expected
+// size of the slots and disable `flex-shrink` so that the smaller slot cannot
+// shrink and throw off the center. The slots are paired up so the mirroring slots
+// always have the same size. That is, start and end are paired and primary
+// and secondary are paired. All of this works together to force the main
+// content to maintain the center as best as CSS allows while also allowing
+// the slots and main content to have fairly dynamic widths.
+// --------------------------------------------------
 
 :host(.has-end-content) slot[name="end"],
 :host(.show-end) slot[name="end"] {
   display: flex;
 
-  flex: 1 1 0;
-  gap: globals.$ion-space-200;
-
+  flex: 1 0 var(--start-end-size, 0);
   justify-content: flex-end;
 
   text-align: end;
+  gap: globals.$ion-space-400;
 }
 
 :host(.has-start-content) slot[name="start"],
 :host(.show-start) slot[name="start"] {
   display: flex;
 
-  flex: 1 1 0;
-  gap: globals.$ion-space-200;
+  flex: 1 0 var(--start-end-size, 0);
+  gap: globals.$ion-space-400;
 }
 
 :host(.has-primary-content) slot[name="primary"],
 :host(.show-primary) slot[name="primary"] {
   display: flex;
 
-  flex: 1 1 0;
-  gap: globals.$ion-space-200;
-
+  flex: 1 0 var(--primary-secondary-size, 0);
   justify-content: flex-end;
 
   text-align: end;
+  gap: globals.$ion-space-400;
 }
 
 :host(.has-secondary-content) slot[name="secondary"],
 :host(.show-secondary) slot[name="secondary"] {
   display: flex;
 
-  flex: 1 1 0;
-  gap: globals.$ion-space-200;
+  flex: 1 0 var(--primary-secondary-size, 0);
+  gap: globals.$ion-space-400;
 }

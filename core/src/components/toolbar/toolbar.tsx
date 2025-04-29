@@ -64,6 +64,85 @@ export class Toolbar implements ComponentInterface {
 
   componentDidLoad() {
     this.updateSlotClasses();
+    this.updateSlotWidths();
+  }
+
+  /**
+   * Updates the CSS custom properties for slot widths
+   * This ensures that slots shown by their met conditions
+   * have a minimum width matching their required slot
+   */
+  private updateSlotWidths(tries: number = 0) {
+    // Set timeout to try to execute after everything is rendered
+    setTimeout(() => {
+      // Attempt to measure and update
+      const success = this.measureAndUpdateSlots();
+
+      // If not all measurements were successful, try again in 100 ms
+      // cap recursion at 5 tries for safety
+      if (!success && tries < 5) {
+        setTimeout(() => {
+          this.updateSlotWidths(tries + 1);
+        }, 100);
+      }
+    });
+  }
+
+  /**
+   * Measure the widths of the slots and update the CSS custom properties
+   * for the minimum width of each pair of slots based on the largest width in each pair.
+   * Returns whether we successfully measured all of the slots we expect to have content.
+   * If not, the content probably hasn't rendered yet and we need to try again.
+   */
+  private measureAndUpdateSlots(): boolean {
+    // Define the relationship between slots based on the conditions array
+    // Group slots that should have the same width
+    const slotPairs = [
+      { name: 'start-end', slots: ['start', 'end'] },
+      { name: 'primary-secondary', slots: ['primary', 'secondary'] },
+    ];
+
+    // First, measure all slot widths
+    const slotWidths = new Map<string, number>();
+    let allMeasurementsSuccessful = true;
+
+    // Measure all slots with content
+    const slots = ['start', 'end', 'primary', 'secondary'];
+    slots.forEach((slot) => {
+      if (this.el.classList.contains(`has-${slot}-content`)) {
+        const slotElement = this.el.shadowRoot?.querySelector(`slot[name="${slot}"]`) as HTMLElement | null;
+        if (slotElement) {
+          const width = slotElement.offsetWidth;
+          if (width > 0) {
+            slotWidths.set(slot, width);
+          } else {
+            allMeasurementsSuccessful = false;
+          }
+        }
+      }
+    });
+
+    // Then set the CSS custom properties based on the largest width in each pair
+    slotPairs.forEach(({ name, slots }) => {
+      // Find the maximum width among the slots in this pair
+      let maxWidth = 0;
+      let hasAnyContent = false;
+
+      slots.forEach((slot) => {
+        if (slotWidths.has(slot)) {
+          hasAnyContent = true;
+          maxWidth = Math.max(maxWidth, slotWidths.get(slot) ?? 0);
+        }
+      });
+
+      // If at least one slot in the pair has content, set the min-width for the pair
+      if (hasAnyContent && maxWidth > 0) {
+        // Set a single CSS variable for the pair
+        this.el.style.setProperty(`--${name}-size`, `${maxWidth}px`);
+      }
+    });
+
+    return allMeasurementsSuccessful;
   }
 
   private updateSlotClasses() {
@@ -108,6 +187,9 @@ export class Toolbar implements ComponentInterface {
     // Add classes to the toolbar element
     this.el.classList.add(...classesToAdd);
     this.el.classList.remove(...classesToRemove);
+
+    // Update slot widths after classes have been updated
+    this.updateSlotWidths();
   }
 
   private hasSlotContent(slotName: string): boolean {
