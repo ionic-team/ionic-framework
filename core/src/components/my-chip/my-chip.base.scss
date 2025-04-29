@@ -1,21 +1,61 @@
-// @import "../../themes/native/native.globals";
 @use "../../themes/functions.color" as color;
 @use "../../themes/mixins" as mixins;
 
 :host {
   /**
-   * @prop --background: Background of the chip
-   * @prop --color: Color of the chip
-   * @prop --border-radius: Border radius of the chip
-   * @prop --focus-ring-color: Color of the focus ring
-   * @prop --focus-ring-width: Width of the focus ring
-   */
-  --focus-ring-color: var(--ion-color-blue-50);
-  --focus-ring-width: var(--ion-spacing-xs);
+  * @prop --ion-chip-focus-ring-color: Color of the focus ring
+  * @prop --ion-chip-focus-ring-width: Width of the focus ring
+  * @prop --ion-chip-padding-horizontal: Padding top and bottom of the chip
+  * @prop --ion-chip-padding-vertical: Padding start and end of the chip
+  * @prop --ion-chip-font-weight: Font weight of the chip
+  * @prop --ion-chip-line-height: Line height of the chip
+  * @prop --ion-chip-gap: Gap between the chip and the text
+  * @prop --ion-chip-border-width: Border width of the chip
+  *
+  * @prop --ion-chip-shape-soft-border-radius: Border radius of the chip for the soft shape
+  * @prop --ion-chip-shape-round-border-radius: Border radius of the chip for the round shape
+  * @prop --ion-chip-shape-rectangular-border-radius: Border radius of the chip for the rectangular shape
+  *
+  * @prop --ion-chip-size-small-min-height: Minimum height of the chip for the small size
+  * @prop --ion-chip-size-large-min-height: Minimum height of the chip for the large size
+  * @prop --ion-chip-size-small-font-size: Font size of the chip for the small size
+  * @prop --ion-chip-size-large-font-size: Font size of the chip for the large size
+  *
+  * @prop --ion-chip-hue-subtle-bg: Background of the chip for the subtle hue
+  * @prop --ion-chip-hue-subtle-color: Color of the chip for the subtle hue
+  * @prop --ion-chip-hue-subtle-border-color: Border color of the chip for the subtle hue
+  * @prop --ion-chip-hue-bold-bg: Background of the chip for the bold hue
+  * @prop --ion-chip-hue-bold-color: Color of the chip for the bold hue
+  * @prop --ion-chip-hue-bold-border-color: Border color of the chip for the bold hue
+  */
+  --ion-chip-focus-ring-color: var(--ion-color-blue-50);
+  --ion-chip-focus-ring-width: var(--ion-spacing-xs);
+  --ion-chip-padding-horizontal: var(--ion-spacing-xs);
+  --ion-chip-padding-vertical: var(--ion-spacing-sm);
+  --ion-chip-font-weight: var(--ion-font-weights-normal);
+  --ion-chip-line-height: var(--ion-line-heights-md);
+  --ion-chip-gap: var(--ion-spacing-xs);
+  --ion-chip-border-width: var(--ion-spacing-xxs);
 
+  --ion-chip-shape-soft-border-radius: var(--ion-radii-lg);
+  --ion-chip-shape-round-border-radius: var(--ion-radii-xxl);
+  --ion-chip-shape-rectangular-border-radius: var(--ion-radii-none);
+
+  --ion-chip-size-small-min-height: var(--ion-spacing-lg);
+  --ion-chip-size-large-min-height: var(--ion-spacing-xxl);
+  --ion-chip-size-small-font-size: var(--ion-font-sizes-sm-rem);
+  --ion-chip-size-large-font-size: var(--ion-font-sizes-lg-rem);
+
+  --ion-chip-hue-subtle-bg: var(--ion-color-gray-100);
+  --ion-chip-hue-subtle-color: var(--ion-color-gray-800);
+  --ion-chip-hue-subtle-border-color: var(--ion-color-gray-300);
+  --ion-chip-hue-bold-bg: var(--ion-color-gray-700);
+  --ion-chip-hue-bold-color: var(--ion-color-white);
+  --ion-chip-hue-bold-border-color: var(--ion-color-gray-800);
+  
   @include mixins.font-smoothing();
-  @include mixins.padding(var(--ion-spacing-xs), var(--ion-spacing-sm));
-  @include mixins.border-radius(var(--border-radius));
+  @include mixins.padding(var(--ion-chip-padding-horizontal), var(--ion-chip-padding-vertical));
+  @include mixins.border-radius(var(--ion-chip-border-radius));
 
   display: inline-flex;
 
@@ -24,22 +64,21 @@
   align-items: center;
   justify-content: center;
 
-  background: var(--background);
-  color: var(--color);
-
-  font-weight: var(--ion-font-weights-normal);
-
-  line-height: var(--ion-line-heights-md);
+  background: var(--ion-chip-background);
+  color: var(--ion-chip-color);
 
   cursor: pointer;
 
+  font-weight: var(--ion-chip-font-weight);
+  line-height: var(--ion-chip-line-height);
+
+  gap: var(--ion-chip-gap);
+
   overflow: hidden;
 
-  vertical-align: middle;
-
-  gap: var(--ion-spacing-xs);
-
   box-sizing: border-box;
+
+  vertical-align: middle;
 }
 
 :host(.chip-disabled) {
@@ -51,70 +90,62 @@
 // ---------------------------------------------
 
 :host(.chip-outline) {
-  border-width: var(--ion-spacing-xxs);
+  border-width: var(--ion-chip-border-width);
   border-style: solid; // Do we need to use a variable here? ionic uses tokens but all themes use solid so it's not really necessary
-}
-
-// Chip: Focus
-// ---------------------------------------------
-
-:host(.ion-focused) {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-width);
 }
 
 // Chip Shapes
 // ---------------------------------------------
 
 :host(.chip-soft) {
-  --border-radius: var(--ion-radii-lg);
+  --ion-chip-border-radius: var(--ion-chip-shape-soft-border-radius);
 }
 
 :host(.chip-round) {
-  --border-radius: var(--ion-radii-xxl);
+  --ion-chip-border-radius: var(--ion-chip-shape-round-border-radius);
 }
 
 :host(.chip-rectangular) {
-  --border-radius: var(--ion-radii-none);
+  --ion-chip-border-radius: var(--ion-chip-shape-rectangular-border-radius);
 }
 
 // Size
 // ---------------------------------------------
 
 :host(.chip-small) {
-  min-height: var(--ion-spacing-lg);
+  min-height: var(--ion-chip-size-small-min-height);
 
-  font-size: var(--ion-font-sizs-sm);
+  font-size: var(--ion-chip-size-small-font-size);
 }
 
 :host(.chip-large) {
-  min-height: var(--ion-spacing-xxl);
+  min-height: var(--ion-chip-size-large-min-height);
 
-  font-size: var(--ion-font-sizes-lg);
+  font-size: var(--ion-chip-size-large-font-size);
 }
 
 // Subtle Chip
 // ---------------------------------------------
 
 :host(.chip-subtle) {
-  --background: var(--ion-color-gray-100);
-  --color: var(--ion-color-gray-800);
+  --ion-chip-background: var(--ion-chip-hue-subtle-bg);
+  --ion-chip-color: var(--ion-chip-hue-subtle-color);
 }
 
 :host(.chip-outline.chip-subtle) {
-  border-color: var(--ion-color-gray-300);
+  border-color: var(--ion-chip-hue-subtle-border-color);
 }
 
 // Bold Chip
 // ---------------------------------------------
 
 :host(.chip-bold) {
-  --background: var(--ion-color-gray-700);
-  --color: var(--ion-color-white);
+  --ion-chip-background: var(--ion-chip-hue-bold-bg);
+  --ion-chip-color: var(--ion-chip-hue-bold-color);
 }
 
 :host(.chip-outline.chip-bold) {
-  border-color: var(--ion-color-gray-800);
+  border-color: var(--ion-chip-hue-bold-border-color);
 }
 
 // Chip Colors

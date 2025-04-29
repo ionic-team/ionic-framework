@@ -8,6 +8,21 @@ export function generateCSSVars(theme: any, themePrefix = '--ion-', selector = '
         if (key.match(/([a-z])([A-Z])/g)) {
           key = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
         }
+
+        // If it's a font-sizes key, create rem version
+        // This is necessary to support the dynamic font size feature
+        if (key === 'font-sizes' && typeof val === 'object' && val !== null) {
+          const fontSizeBase = parseFloat(theme.fontSizes.root);
+          return Object.entries(val).map(([sizeKey, sizeValue]) => {
+            const remValue = `${parseFloat(sizeValue) / fontSizeBase}rem`;
+            // Need a check to determine if the value is already in rem
+            return [
+              `${prefix}${key}-${sizeKey}: ${sizeValue};`, // original px value
+              `${prefix}${key}-${sizeKey}-rem: ${remValue};` // rem value
+            ].join('\n');
+          }).join('\n');
+        }
+
         return typeof val === 'object' && val !== null
           ? flatten(val, `${prefix}${key}-`)
           : [`${prefix}${key}: ${val};`];

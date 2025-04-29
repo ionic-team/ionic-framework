@@ -41,7 +41,10 @@ html {
     /**
      * Includes fallback if Dynamic Type is not enabled.
      */
-    font: var(--ion-dynamic-font, 16px var(--ion-font-family));
+    // ion-font-sizes-root needs a fallback since the new theming isn't fully
+    // implemented in the framework yet.
+    font: var(--ion-dynamic-font, var(--ion-font-sizes-root, 16px) var(--ion-font-family));
+    // font: var(--ion-dynamic-font, var(--ion-font-sizes-root) var(--ion-font-family));
   }
 }
 
