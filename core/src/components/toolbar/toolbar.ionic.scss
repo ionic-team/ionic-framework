@@ -69,36 +69,32 @@
 :host(.show-end) slot[name="end"] {
   display: flex;
 
-  flex: 1 0 var(--start-end-size, 0);
+  flex: 0 0 var(--start-end-size, 0);
   justify-content: flex-end;
 
   text-align: end;
-  gap: globals.$ion-space-400;
 }
 
 :host(.has-start-content) slot[name="start"],
 :host(.show-start) slot[name="start"] {
   display: flex;
 
-  flex: 1 0 var(--start-end-size, 0);
-  gap: globals.$ion-space-400;
+  flex: 0 0 var(--start-end-size, 0);
 }
 
 :host(.has-primary-content) slot[name="primary"],
 :host(.show-primary) slot[name="primary"] {
   display: flex;
 
-  flex: 1 0 var(--primary-secondary-size, 0);
+  flex: 0 0 var(--primary-secondary-size, 0);
   justify-content: flex-end;
 
   text-align: end;
-  gap: globals.$ion-space-400;
 }
 
 :host(.has-secondary-content) slot[name="secondary"],
 :host(.show-secondary) slot[name="secondary"] {
   display: flex;
 
-  flex: 1 0 var(--primary-secondary-size, 0);
-  gap: globals.$ion-space-400;
+  flex: 0 0 var(--primary-secondary-size, 0);
 }
