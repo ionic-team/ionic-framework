@@ -27,7 +27,7 @@ const PageOne = ({
       <IonHeader>
         <IonToolbar>
           <IonTitle>Page One</IonTitle>
-          <IonButtons>
+          <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
         </IonToolbar>
@@ -57,7 +57,7 @@ const PageTwo = ({ nav, ...rest }: { someValue: string; nav: React.MutableRefObj
       <IonHeader>
         <IonToolbar>
           <IonTitle>Page Two</IonTitle>
-          <IonButtons>
+          <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
         </IonToolbar>
@@ -84,7 +84,7 @@ const PageThree = ({ nav }: { nav: React.MutableRefObject<HTMLIonNavElement> }) 
       <IonHeader>
         <IonToolbar>
           <IonTitle>Page Three</IonTitle>
-          <IonButtons>
+          <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
         </IonToolbar>
