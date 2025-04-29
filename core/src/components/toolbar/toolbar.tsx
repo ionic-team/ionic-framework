@@ -243,13 +243,13 @@ export class Toolbar implements ComponentInterface {
       >
         <div class="toolbar-background" part="background"></div>
         <div class="toolbar-container" part="container">
-          <slot name="start"></slot>
-          <slot name="secondary"></slot>
+          <slot name="start" onSlotchange={() => this.updateSlotClasses}></slot>
+          <slot name="secondary" onSlotchange={() => this.updateSlotClasses}></slot>
           <div class="toolbar-content" part="content">
             <slot></slot>
           </div>
-          <slot name="primary"></slot>
-          <slot name="end"></slot>
+          <slot name="primary" onSlotchange={() => this.updateSlotClasses}></slot>
+          <slot name="end" onSlotchange={() => this.updateSlotClasses}></slot>
         </div>
       </Host>
     );

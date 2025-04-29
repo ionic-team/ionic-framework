@@ -65,7 +65,8 @@
 // the sizes of the different slots and sets what size the pairs should be
 // based on the larger one. We then use `flex-basis` to set the expected
 // size of the slots and disable `flex-shrink` so that the smaller slot cannot
-// shrink and throw off the center. The slots are paired up so the mirroring slots
+// shrink and throw off the center, we also diable flex-grow so that slots do
+// not grow more than they need. The slots are paired up so the mirroring slots
 // always have the same size. That is, start and end are paired and primary
 // and secondary are paired. All of this works together to force the main
 // content to maintain the center as best as CSS allows while also allowing
