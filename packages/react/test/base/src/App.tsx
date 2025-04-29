@@ -64,6 +64,7 @@ const App: React.FC = () => (
         <Route path="/tabs" component={Tabs} />
         <Route path="/tabs-basic" component={TabsBasic} />
         <Route path="/icons" component={Icons} />
+        <Route path="/radio-group" component={RadioGroup} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

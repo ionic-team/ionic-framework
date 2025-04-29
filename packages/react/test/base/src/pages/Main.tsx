@@ -43,6 +43,9 @@ const Main: React.FC<MainProps> = () => {
           <IonItem routerLink="/icons">
             <IonLabel>Icons</IonLabel>
           </IonItem>
+          <IonItem routerLink="/radio-group">
+            <IonLabel>Radio Group</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
