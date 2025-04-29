@@ -16,6 +16,8 @@ import { generateCSSVars } from '../../themes/base/generate-css-vars';
   shadow: true,
 })
 export class MyChip implements ComponentInterface {
+  private isThemed = false;
+
   @Element() el!: HTMLElement;
 
   /**
@@ -71,9 +73,11 @@ export class MyChip implements ComponentInterface {
 
     // check if componentTheme is not an empty object or undefined
     if (componentTheme !== undefined || Object.keys(componentTheme).length > 0) {
+      this.isThemed = true;
+
       // apply a style tag to this component
       const style = document.createElement('style');
-      style.innerHTML = [generateCSSVars(componentTheme, '--ion-', ':host')].join('\n\n');
+      style.innerHTML = [generateCSSVars(componentTheme, '--ion-chip-', ':host(.chip-themed)')].join('\n\n');
 
       // Attach to Shadow Root if available, otherwise Light DOM
       const root = this.el.shadowRoot ?? this.el;
@@ -89,6 +93,9 @@ export class MyChip implements ComponentInterface {
       <Host
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
+          // Needed to properly add the custom styles else
+          // the styles would be ignored due to styling order
+          'chip-themed': this.isThemed,
           [`chip-${shape}`]: shape !== undefined,
           'chip-outline': this.outline,
           'chip-disabled': this.disabled,

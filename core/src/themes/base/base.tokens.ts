@@ -30,6 +30,8 @@ export const defaultTheme = {
     xl: '16px',
     xxl: '32px',
   },
+  dynamicFont: '-apple-system-body',
+  fontFamily: 'Roboto, "Helvetica Neue", sans-serif',
   fontWeights: {
     thin: '100',
     extraLight: '200',
@@ -42,6 +44,7 @@ export const defaultTheme = {
     black: '900',
   },
   fontSizes: {
+    root: '16px',
     xs: '12px',
     sm: '14px',
     md: '16px',
