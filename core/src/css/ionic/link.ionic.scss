@@ -3,7 +3,7 @@
 // Link: Shared Styles (Standalone & Underline)
 // -------------------------------------------------------------------------------
 @mixin link-shared {
-  @include globals.typography(globals.$ion-body-action-md);
+  @include globals.typography(globals.$ion-body-action-sm);
 
   display: inline-flex;
 
@@ -80,9 +80,9 @@ a,
 @mixin ionic-link-underline {
   color: globals.$ion-text-default;
 
-  text-decoration: underline;
-
   @include link-shared;
+
+  text-decoration: underline;
 
   // Link: Focus
   // -------------------------------------------------------------------------------
