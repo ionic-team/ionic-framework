@@ -25,6 +25,38 @@
   &:visited {
     color: globals.$ion-text-link-visited;
   }
+
+  // Link: Focus
+  // -------------------------------------------------------------------------------
+
+  &:focus,
+  &.ion-focused {
+    @include globals.focused-state();
+
+    border-radius: globals.$ion-border-radius-100;
+  }
+
+  // Link: Active
+  // -------------------------------------------------------------------------------
+
+  &:active,
+  &.ion-activated {
+    color: globals.$ion-text-link-press;
+
+    text-decoration: underline;
+  }
+
+  // Link:  Hover
+  // -------------------------------------------------------------------------------
+
+  @media (any-hover: hover) {
+    &:hover {
+      color: globals.$ion-text-link-press;
+
+      text-decoration: underline;
+    }
+  }
+
 }
 
 // Link: Standalone
@@ -36,35 +68,6 @@
   text-decoration: none;
 
   @include link-shared;
-
-  // Link: Standalone - Hover
-  // -------------------------------------------------------------------------------
-
-  @media (any-hover: hover) {
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  // Link: Standalone - Focus
-  // -------------------------------------------------------------------------------
-
-  &:focus,
-  &.ion-focused {
-    @include globals.focused-state(null, null, globals.$ion-text-link-default);
-
-    text-decoration: underline;
-  }
-
-  // Link: Standalone - Active
-  // -------------------------------------------------------------------------------
-
-  &:active,
-  &.ion-activated {
-    color: globals.$ion-text-link-press;
-
-    text-decoration: underline;
-  }
 }
 
 a.ionic-link,
@@ -76,37 +79,20 @@ a.ionic-link,
 // -------------------------------------------------------------------------------
 
 @mixin ionic-link-underline {
-  color: currentColor;
+  color: globals.$ion-text-default;
 
   text-decoration: underline;
 
   @include link-shared;
 
-  // Link: Underline - Hover
-  // -------------------------------------------------------------------------------
-
-  @media (any-hover: hover) {
-    &:hover {
-      color: globals.$ion-text-link-press;
-    }
-  }
-
-  // Link: Underline - Focus
+  // Link: Focus
   // -------------------------------------------------------------------------------
 
   &:focus,
   &.ion-focused {
-    @include globals.focused-state(null, null, globals.$ion-text-link-default);
+    color: globals.$ion-text-default;
 
     text-decoration: none;
-  }
-
-  // Link: Underline - Active
-  // -------------------------------------------------------------------------------
-
-  &:active,
-  &.ion-activated {
-    color: globals.$ion-text-link-press;
   }
 }
 
