@@ -52,6 +52,9 @@ const Main: React.FC<MainProps> = () => {
           <IonItem routerLink="/reorder-group">
             <IonLabel>Reorder Group</IonLabel>
           </IonItem>
+          <IonItem routerLink="/radio-group">
+            <IonLabel>Radio Group</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

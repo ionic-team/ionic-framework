@@ -70,6 +70,7 @@ const App: React.FC = () => (
         <Route path="/icons" component={Icons} />
         <Route path="/inputs" component={Inputs} />
         <Route path="/reorder-group" component={ReorderGroup} />
+        <Route path="/radio-group" component={RadioGroup} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
