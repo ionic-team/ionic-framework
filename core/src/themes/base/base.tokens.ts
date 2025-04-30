@@ -8,9 +8,6 @@ export const defaultTheme = {
   },
   // so far spacing is being used for
   // padding, margin, gap, border-width, height, width
-  // should we create scale for height and width instead?
-  // or keep it as is but change the keys to be numerical
-  // like 0.5, 1, 1.5, 2, 2.5, 3, etc?
   spacing: {
     none: '0',
     xxs: '2px',
@@ -20,6 +17,27 @@ export const defaultTheme = {
     lg: '24px',
     xl: '32px',
     xxl: '40px',
+  },
+  // scaling is used for width and height
+  scaling: {
+    0: '0',
+    100: '4px',
+    150: '6px',
+    200: '8px',
+    250: '10px',
+    300: '12px',
+    350: '14px',
+    400: '16px',
+    450: '18px',
+    500: '20px',
+    550: '22px',
+    600: '24px',
+    650: '26px',
+    700: '28px',
+    750: '30px',
+    800: '32px',
+    850: '34px',
+    900: '36px',
   },
   radii: {
     none: '0',
@@ -45,6 +63,7 @@ export const defaultTheme = {
   },
   fontSizes: {
     root: '16px',
+    xxs: '10px',
     xs: '12px',
     sm: '14px',
     md: '16px',
@@ -53,6 +72,7 @@ export const defaultTheme = {
     xxl: '24px',
   },
   lineHeights: {
+    xxs: '1',
     xs: '1.2',
     sm: '1.4',
     md: '1.6',
