@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
+import { Component, Element, forceUpdate, h, Host, Listen, Prop } from '@stencil/core';
 import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -58,6 +58,143 @@ export class Toolbar implements ComponentInterface {
     if (lastButtons) {
       lastButtons.classList.add('buttons-last-slot');
     }
+
+    this.updateSlotClasses();
+  }
+
+  componentDidLoad() {
+    this.updateSlotClasses();
+    this.updateSlotWidths();
+  }
+
+  /**
+   * Updates the CSS custom properties for slot widths
+   * This ensures that slots shown by their met conditions
+   * have a minimum width matching their required slot
+   */
+  private updateSlotWidths(tries: number = 0) {
+    // Set timeout to try to execute after everything is rendered
+    setTimeout(() => {
+      // Attempt to measure and update
+      const success = this.measureAndUpdateSlots();
+
+      // If not all measurements were successful, try again in 100 ms
+      // cap recursion at 5 tries for safety
+      if (!success && tries < 5) {
+        setTimeout(() => {
+          this.updateSlotWidths(tries + 1);
+        }, 100);
+      }
+    });
+  }
+
+  /**
+   * Measure the widths of the slots and update the CSS custom properties
+   * for the minimum width of each pair of slots based on the largest width in each pair.
+   * Returns whether we successfully measured all of the slots we expect to have content.
+   * If not, the content probably hasn't rendered yet and we need to try again.
+   */
+  private measureAndUpdateSlots(): boolean {
+    // Define the relationship between slots based on the conditions array
+    // Group slots that should have the same width
+    const slotPairs = [
+      { name: 'start-end', slots: ['start', 'end'] },
+      { name: 'primary-secondary', slots: ['primary', 'secondary'] },
+    ];
+
+    // First, measure all slot widths
+    const slotWidths = new Map<string, number>();
+    let allMeasurementsSuccessful = true;
+
+    // Measure all slots with content
+    const slots = ['start', 'end', 'primary', 'secondary'];
+    slots.forEach((slot) => {
+      if (this.el.classList.contains(`has-${slot}-content`)) {
+        const slotElement = this.el.shadowRoot?.querySelector(`slot[name="${slot}"]`) as HTMLElement | null;
+        if (slotElement) {
+          const width = slotElement.offsetWidth;
+          if (width > 0) {
+            slotWidths.set(slot, width);
+          } else {
+            allMeasurementsSuccessful = false;
+          }
+        }
+      }
+    });
+
+    // Then set the CSS custom properties based on the largest width in each pair
+    slotPairs.forEach(({ name, slots }) => {
+      // Find the maximum width among the slots in this pair
+      let maxWidth = 0;
+      let hasAnyContent = false;
+
+      slots.forEach((slot) => {
+        if (slotWidths.has(slot)) {
+          hasAnyContent = true;
+          maxWidth = Math.max(maxWidth, slotWidths.get(slot) ?? 0);
+        }
+      });
+
+      // If at least one slot in the pair has content, set the min-width for the pair
+      if (hasAnyContent && maxWidth > 0) {
+        // Set a single CSS variable for the pair
+        this.el.style.setProperty(`--${name}-size`, `${maxWidth}px`);
+      }
+    });
+
+    return allMeasurementsSuccessful;
+  }
+
+  private updateSlotClasses() {
+    // Check if slots have content
+    const slots = ['start', 'end', 'primary', 'secondary'];
+
+    const classesToAdd: string[] = [];
+    const classesToRemove: string[] = [];
+    slots.forEach((slot) => {
+      const slotHasContent = this.hasSlotContent(slot);
+      const slotClass = `has-${slot}-content`;
+      if (slotHasContent) {
+        classesToAdd.push(slotClass);
+      } else {
+        classesToRemove.push(slotClass);
+      }
+    });
+
+    // Force visibilities in certain conditions. This works by adding a class to the toolbar
+    // named `show-{slot}`. This class will be added if the toolbar has the required slots
+    // and does not have any of the excluded slots, otherwise it will be removed.
+    // This is useful to enforce centering of the toolbar content when there are different amounts
+    // of slots on either side of the toolbar.
+    const conditions = [
+      { name: 'end', requiredSlots: ['start'], excludeSlots: ['end', 'primary'] },
+      { name: 'start', requiredSlots: ['end'], excludeSlots: ['start', 'secondary'] },
+      { name: 'secondary', requiredSlots: ['primary'], excludeSlots: ['secondary', 'start'] },
+      { name: 'primary', requiredSlots: ['secondary'], excludeSlots: ['primary', 'end'] },
+    ];
+    conditions.forEach((condition) => {
+      const hasRequiredSlots = condition.requiredSlots.every((slot) => classesToAdd.includes(`has-${slot}-content`));
+      const hasExcludedSlots = condition.excludeSlots.some((slot) => classesToAdd.includes(`has-${slot}-content`));
+      const className = `show-${condition.name}`;
+
+      if (hasRequiredSlots && !hasExcludedSlots) {
+        classesToAdd.push(className);
+      } else {
+        classesToRemove.push(className);
+      }
+    });
+
+    // Add classes to the toolbar element
+    this.el.classList.add(...classesToAdd);
+    this.el.classList.remove(...classesToRemove);
+
+    // Update slot widths after classes have been updated
+    this.updateSlotWidths();
+  }
+
+  private hasSlotContent(slotName: string): boolean {
+    const slotNode = this.el.shadowRoot?.querySelector(`slot[name="${slotName}"]`) as HTMLSlotElement | null;
+    return !!slotNode && slotNode.assignedNodes().length > 0;
   }
 
   @Listen('ionStyle')
@@ -90,28 +227,29 @@ export class Toolbar implements ComponentInterface {
   render() {
     const theme = getIonTheme(this);
     const childStyles = {};
-    this.childrenStyles.forEach((value) => {
-      Object.assign(childStyles, value);
+    this.childrenStyles.forEach((style) => {
+      Object.assign(childStyles, style);
     });
+
     return (
       <Host
         class={{
-          ...childStyles,
           ...createColorClasses(this.color, {
             [theme]: true,
             'in-toolbar': hostContext('ion-toolbar', this.el),
           }),
+          ...childStyles,
         }}
       >
         <div class="toolbar-background" part="background"></div>
         <div class="toolbar-container" part="container">
-          <slot name="start"></slot>
-          <slot name="secondary"></slot>
+          <slot name="start" onSlotchange={() => this.updateSlotClasses}></slot>
+          <slot name="secondary" onSlotchange={() => this.updateSlotClasses}></slot>
           <div class="toolbar-content" part="content">
             <slot></slot>
           </div>
-          <slot name="primary"></slot>
-          <slot name="end"></slot>
+          <slot name="primary" onSlotchange={() => this.updateSlotClasses}></slot>
+          <slot name="end" onSlotchange={() => this.updateSlotClasses}></slot>
         </div>
       </Host>
     );

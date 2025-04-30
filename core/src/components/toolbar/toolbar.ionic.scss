@@ -1,14 +1,6 @@
 @use "./toolbar.common";
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 
-$toolbar-order-ionic: (
-  slot-start: 1,
-  slot-secondary: 2,
-  content: 3,
-  slot-primary: 4,
-  slot-end: 5,
-);
-
 // Ionic Toolbar
 // --------------------------------------------------
 
@@ -31,8 +23,7 @@ $toolbar-order-ionic: (
 // --------------------------------------------------
 
 .toolbar-content {
-  flex: 2;
-  order: map-get($toolbar-order-ionic, content);
+  flex: 1 1 auto;
 
   min-width: 0;
 }
@@ -44,11 +35,18 @@ $toolbar-order-ionic: (
   @include globals.padding(0);
 }
 
+// Toolbar: Buttons
+// --------------------------------------------------
+
+::slotted(ion-buttons) {
+  gap: globals.$ion-space-200;
+}
+
 // Toolbar: Title
 // --------------------------------------------------
 
 ::slotted(ion-title) {
-  @include globals.padding-horizontal(var(--padding-top), var(--padding-end));
+  @include globals.padding-horizontal(globals.$ion-space-200);
 }
 
 :host(.toolbar-title-default) ::slotted(ion-title) {
@@ -61,32 +59,50 @@ $toolbar-order-ionic: (
 
 // Ionic Toolbar Slot Placement
 // --------------------------------------------------
+// We're using the slots to force the main toolbar content to be
+// cenetered in the toolbar. This is a bit of a hack but it works.
+// The main content is placed in the center and then JavaScript evaluates
+// the sizes of the different slots and sets what size the pairs should be
+// based on the larger one. We then use `flex-basis` to set the expected
+// size of the slots and disable `flex-shrink` so that the smaller slot cannot
+// shrink and throw off the center, we also diable flex-grow so that slots do
+// not grow more than they need. The slots are paired up so the mirroring slots
+// always have the same size. That is, start and end are paired and primary
+// and secondary are paired. All of this works together to force the main
+// content to maintain the center as best as CSS allows while also allowing
+// the slots and main content to have fairly dynamic widths.
+// --------------------------------------------------
 
-::slotted([slot="secondary"]) {
-  order: map-get($toolbar-order-ionic, slot-secondary);
-}
+:host(.has-end-content) slot[name="end"],
+:host(.show-end) slot[name="end"] {
+  display: flex;
 
-::slotted([slot="primary"]) {
-  order: map-get($toolbar-order-ionic, slot-primary);
+  flex: 0 0 var(--start-end-size, 0);
+  justify-content: flex-end;
 
   text-align: end;
 }
 
-::slotted([slot="start"]) {
-  order: map-get($toolbar-order-ionic, slot-start);
-}
-
-::slotted([slot="start"]),
-::slotted([slot="end"]) {
+:host(.has-start-content) slot[name="start"],
+:host(.show-start) slot[name="start"] {
   display: flex;
 
-  flex: 1;
-  gap: globals.$ion-space-200;
+  flex: 0 0 var(--start-end-size, 0);
 }
 
-::slotted([slot="end"]) {
-  justify-content: end;
-  order: map-get($toolbar-order-ionic, slot-end);
+:host(.has-primary-content) slot[name="primary"],
+:host(.show-primary) slot[name="primary"] {
+  display: flex;
 
-  font-size: globals.$ion-font-size-600;
+  flex: 0 0 var(--primary-secondary-size, 0);
+  justify-content: flex-end;
+
+  text-align: end;
+}
+
+:host(.has-secondary-content) slot[name="secondary"],
+:host(.show-secondary) slot[name="secondary"] {
+  display: flex;
+
+  flex: 0 0 var(--primary-secondary-size, 0);
 }
