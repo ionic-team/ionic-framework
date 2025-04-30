@@ -730,7 +730,7 @@ export class Input implements ComponentInterface {
     if (ev.target === ev.currentTarget) {
       ev.stopPropagation();
     }
-  }
+  };
 
   /**
    * Renders the border container

@@ -274,7 +274,7 @@ export class Toggle implements ComponentInterface {
    */
   private onDivLabelClick = (ev: MouseEvent) => {
     ev.stopPropagation();
-  }
+  };
 
   private onFocus = () => {
     this.ionFocus.emit();

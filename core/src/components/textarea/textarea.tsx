@@ -582,7 +582,7 @@ export class Textarea implements ComponentInterface {
     if (ev.target === ev.currentTarget) {
       ev.stopPropagation();
     }
-  }
+  };
 
   /**
    * Renders the border container when fill="outline".

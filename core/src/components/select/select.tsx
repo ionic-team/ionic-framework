@@ -921,7 +921,7 @@ export class Select implements ComponentInterface {
     if (ev.target === ev.currentTarget) {
       ev.stopPropagation();
     }
-  }
+  };
 
   /**
    * Renders the border container

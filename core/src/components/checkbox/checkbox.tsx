@@ -205,7 +205,7 @@ export class Checkbox implements ComponentInterface {
    */
   private onDivLabelClick = (ev: MouseEvent) => {
     ev.stopPropagation();
-  }
+  };
 
   private getHintTextID(): string | undefined {
     const { el, helperText, errorText, helperTextId, errorTextId } = this;
