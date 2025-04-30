@@ -162,7 +162,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       // Verify that the event target is the checkbox and not the item
       const event = clickEvent.events[0];
-      expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('input');
+      expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-input');
     });
   });
 });

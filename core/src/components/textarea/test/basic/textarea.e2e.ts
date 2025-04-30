@@ -25,7 +25,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       // Verify that the event target is the checkbox and not the item
       const event = clickEvent.events[0];
-      expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('textarea');
+      expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-textarea');
     });
   });
 });
