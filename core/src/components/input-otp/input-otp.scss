@@ -16,11 +16,19 @@
    *
    * @prop --color: Text color of the input
    *
-   * @prop --margin: Margin between input boxes
-   * @prop --padding: Padding within input boxes
+   * @prop --margin-top: Top margin of the input group
+   * @prop --margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the input group
+   * @prop --margin-bottom: Bottom margin of the input group
+   * @prop --margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the input group
+   *
+   * @prop --padding-top: Top padding of the input boxes
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the input boxes
+   * @prop --padding-bottom: Bottom padding of the input boxes
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the input boxes
    *
    * @prop --height: Height of input boxes
    * @prop --width: Width of input boxes
+   * @prop --min-width: Minimum width of input boxes
    *
    * @prop --separator-color: Color of the separator between boxes
    * @prop --separator-width: Width of the separator between boxes
@@ -28,8 +36,15 @@
    *
    * @prop --highlight-color: Color used for the invalid state
    */
-  --margin: 8px;
-  --padding: 0;
+  --margin-top: 16px;
+  --margin-end: 0;
+  --margin-bottom: 16px;
+  --margin-start: 0;
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --min-width: 40px;
   --separator-width: 8px;
   --separator-height: var(--separator-width);
   --separator-border-radius: 999px;
@@ -42,6 +57,8 @@
 }
 
 .input-otp-group {
+  @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
+
   display: flex;
 
   align-items: center;
@@ -53,14 +70,18 @@
 
   align-items: center;
   justify-content: center;
+
+  min-width: var(--min-width);
 }
 
 .native-input {
   @include border-radius(var(--border-radius));
-  @include padding(var(--padding));
-  @include margin(var(--margin));
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   width: var(--width);
+
+  // Required to shrink the input box width
+  min-width: inherit;
   height: var(--height);
 
   border: var(--border-width, 1px) solid var(--border-color, var(--ion-border-color));
@@ -75,9 +96,12 @@
 }
 
 .input-otp-description {
-  @include margin(8px, 0);
-
   color: $text-color-step-400;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  line-height: 20px;
 
   text-align: center;
 }
@@ -95,25 +119,44 @@
 // --------------------------------------------------
 
 :host(.input-otp-size-small) {
-  --width: 32px;
-  --height: 32px;
+  --width: 40px;
+  --height: 40px;
 
   font-size: 0.875em;
 }
 
+:host(.input-otp-size-small) .input-otp-group {
+  gap: 8px;
+}
+
+:host(.input-otp-size-small) .input-otp-separator {
+  @include margin-horizontal(8px, null);
+}
+
 :host(.input-otp-size-medium) {
-  --width: 40px;
-  --height: 40px;
+  --width: 48px;
+  --height: 48px;
 
   font-size: 1em;
 }
 
 :host(.input-otp-size-large) {
-  --width: 48px;
-  --height: 48px;
+  --width: 56px;
+  --height: 56px;
 
   font-size: 1.125em;
 }
+
+:host(.input-otp-size-medium) .input-otp-group,
+:host(.input-otp-size-large) .input-otp-group {
+  gap: 12px;
+}
+
+:host(.input-otp-size-medium) .input-otp-separator,
+:host(.input-otp-size-large) .input-otp-separator {
+  @include margin-horizontal(12px, null);
+}
+
 
 // Shapes
 // --------------------------------------------------
