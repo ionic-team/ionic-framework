@@ -36,6 +36,7 @@ import { defineCustomElement as defineIonHeader } from '@ionic/core/components/i
 import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-img.js';
 import { defineCustomElement as defineIonInfiniteScroll } from '@ionic/core/components/ion-infinite-scroll.js';
 import { defineCustomElement as defineIonInfiniteScrollContent } from '@ionic/core/components/ion-infinite-scroll-content.js';
+import { defineCustomElement as defineIonInputOtp } from '@ionic/core/components/ion-input-otp.js';
 import { defineCustomElement as defineIonInputPasswordToggle } from '@ionic/core/components/ion-input-password-toggle.js';
 import { defineCustomElement as defineIonItem } from '@ionic/core/components/ion-item.js';
 import { defineCustomElement as defineIonItemDivider } from '@ionic/core/components/ion-item-divider.js';
@@ -979,6 +980,43 @@ export class IonInfiniteScrollContent {
 
 
 export declare interface IonInfiniteScrollContent extends Components.IonInfiniteScrollContent {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonInputOtp,
+  inputs: ['allowedKeys', 'color', 'disabled', 'fill', 'inputmode', 'length', 'separators', 'shape', 'size', 'type', 'value']
+})
+@Component({
+  selector: 'ion-input-otp',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['allowedKeys', 'color', 'disabled', 'fill', 'inputmode', 'length', 'separators', 'shape', 'size', 'type', 'value'],
+  standalone: true
+})
+export class IonInputOtp {
+  protected el: HTMLIonInputOtpElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionChange', 'ionComplete']);
+  }
+}
+
+
+import type { InputOTPChangeEventDetail as IIonInputOtpInputOTPChangeEventDetail } from '@ionic/core/components';
+import type { InputOTPCompleteEventDetail as IIonInputOtpInputOTPCompleteEventDetail } from '@ionic/core/components';
+
+export declare interface IonInputOtp extends Components.IonInputOtp {
+  /**
+   * Emitted when the value changes
+   */
+  ionChange: EventEmitter<CustomEvent<IIonInputOtpInputOTPChangeEventDetail>>;
+  /**
+   * Emitted when the input is complete (all boxes filled)
+   */
+  ionComplete: EventEmitter<CustomEvent<IIonInputOtpInputOTPCompleteEventDetail>>;
+}
 
 
 @ProxyCmp({

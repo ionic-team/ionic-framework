@@ -1,0 +1,183 @@
+@import "../../themes/ionic.globals";
+
+// Input OTP
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background color of the input boxes
+   * @prop --background-focused: Background color when focused
+   *
+   * @prop --border-radius: Border radius of the input boxes
+   *
+   * @prop --border-width: Border width of the input boxes
+   * @prop --border-color: Border color of the input boxes
+   * @prop --border-color-focused: Border color when focused
+   *
+   * @prop --color: Text color of the input
+   *
+   * @prop --margin: Margin between input boxes
+   * @prop --padding: Padding within input boxes
+   *
+   * @prop --height: Height of input boxes
+   * @prop --width: Width of input boxes
+   *
+   * @prop --separator-color: Color of the separator between boxes
+   * @prop --separator-width: Width of the separator between boxes
+   * @prop --separator-height: Height of the separator between boxes
+   *
+   * @prop --highlight-color: Color used for the invalid state
+   */
+  --margin: 8px;
+  --padding: 0;
+  --separator-width: 8px;
+  --separator-height: var(--separator-width);
+  --separator-border-radius: 999px;
+  --separator-color: #{$background-color-step-150};
+  --background-focused: var(--background);
+  --border-color-focused: #{ion-color(primary, base, 0.4)};
+
+  display: block;
+  position: relative;
+}
+
+.input-otp-group {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.native-wrapper {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.native-input {
+  @include border-radius(var(--border-radius));
+  @include padding(var(--padding));
+  @include margin(var(--margin));
+
+  width: var(--width);
+  height: var(--height);
+
+  border: var(--border-width, 1px) solid var(--border-color, var(--ion-border-color));
+
+  background: var(--background, var(--ion-background-color));
+  color: var(--color, var(--ion-text-color));
+
+  font-size: inherit;
+
+  text-align: center;
+  appearance: none;
+}
+
+.input-otp-description {
+  @include margin(8px, 0);
+
+  color: $text-color-step-400;
+
+  text-align: center;
+}
+
+.input-otp-separator {
+  @include border-radius(var(--separator-border-radius));
+
+  width: var(--separator-width);
+  height: var(--separator-height);
+
+  background: var(--separator-color);
+}
+
+// Sizes
+// --------------------------------------------------
+
+:host(.input-otp-size-small) {
+  --width: 32px;
+  --height: 32px;
+
+  font-size: 0.875em;
+}
+
+:host(.input-otp-size-medium) {
+  --width: 40px;
+  --height: 40px;
+
+  font-size: 1em;
+}
+
+:host(.input-otp-size-large) {
+  --width: 48px;
+  --height: 48px;
+
+  font-size: 1.125em;
+}
+
+// Shapes
+// --------------------------------------------------
+
+:host(.input-otp-shape-round) {
+  --border-radius: 16px;
+}
+
+:host(.input-otp-shape-soft) {
+  --border-radius: 8px;
+}
+
+:host(.input-otp-shape-rectangular) {
+  --border-radius: 0;
+}
+
+// Fills
+// --------------------------------------------------
+
+:host(.input-otp-fill-outline) {
+  --border-color: #{$background-color-step-350};
+  --background: none;
+}
+
+:host(.input-otp-fill-solid) {
+  --border-color: #{$background-color-step-100};
+  --background: var(--border-color);
+}
+
+// States
+// --------------------------------------------------
+
+:host(.input-otp-disabled),
+:host(.input-otp-disabled) .native-input:disabled {
+  cursor: not-allowed;
+}
+
+:host(.has-focus) .native-input:focus {
+  border-width: 2px;
+  border-color: var(--border-color-focused);
+
+  outline: none;
+
+  background: var(--background-focused);
+}
+
+// Colors
+// --------------------------------------------------
+
+:host(.input-otp-fill-outline.ion-color) .native-input {
+  border-color: current-color(base, 0.3);
+}
+
+:host(.input-otp-fill-outline.ion-color.has-focus) .native-input:focus {
+  border-color: current-color(base, 0.4);
+}
+
+:host(.input-otp-fill-solid.ion-color) .native-input {
+  border-color: transparent;
+
+  background: current-color(base, 0.08);
+  color: current-color(shade);
+}
+
+:host(.input-otp-fill-solid.ion-color.has-focus) .native-input:focus {
+  border-color: current-color(base, 0.4);
+}

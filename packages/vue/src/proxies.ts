@@ -35,6 +35,7 @@ import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-
 import { defineCustomElement as defineIonInfiniteScroll } from '@ionic/core/components/ion-infinite-scroll.js';
 import { defineCustomElement as defineIonInfiniteScrollContent } from '@ionic/core/components/ion-infinite-scroll-content.js';
 import { defineCustomElement as defineIonInput } from '@ionic/core/components/ion-input.js';
+import { defineCustomElement as defineIonInputOtp } from '@ionic/core/components/ion-input-otp.js';
 import { defineCustomElement as defineIonInputPasswordToggle } from '@ionic/core/components/ion-input-password-toggle.js';
 import { defineCustomElement as defineIonItem } from '@ionic/core/components/ion-item.js';
 import { defineCustomElement as defineIonItemDivider } from '@ionic/core/components/ion-item-divider.js';
@@ -489,6 +490,26 @@ export const IonInput: StencilVueComponent<JSX.IonInput, JSX.IonInput["value"]> 
   'ionFocus'
 ],
 'value', 'ion-input');
+
+
+export const IonInputOtp: StencilVueComponent<JSX.IonInputOtp> = /*@__PURE__*/ defineContainer<JSX.IonInputOtp>('ion-input-otp', defineIonInputOtp, [
+  'color',
+  'length',
+  'type',
+  'allowedKeys',
+  'inputmode',
+  'size',
+  'separators',
+  'fill',
+  'shape',
+  'disabled',
+  'value',
+  'ionChange',
+  'ionComplete'
+], [
+  'ionChange',
+  'ionComplete'
+]);
 
 
 export const IonInputPasswordToggle: StencilVueComponent<JSX.IonInputPasswordToggle> = /*@__PURE__*/ defineContainer<JSX.IonInputPasswordToggle>('ion-input-password-toggle', defineIonInputPasswordToggle, [

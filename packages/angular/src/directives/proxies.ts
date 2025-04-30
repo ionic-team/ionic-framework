@@ -1018,6 +1018,41 @@ This event will not emit when programmatically setting the `value` property.
 
 
 @ProxyCmp({
+  inputs: ['allowedKeys', 'color', 'disabled', 'fill', 'inputmode', 'length', 'separators', 'shape', 'size', 'type', 'value']
+})
+@Component({
+  selector: 'ion-input-otp',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['allowedKeys', 'color', 'disabled', 'fill', 'inputmode', 'length', 'separators', 'shape', 'size', 'type', 'value'],
+})
+export class IonInputOtp {
+  protected el: HTMLIonInputOtpElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionChange', 'ionComplete']);
+  }
+}
+
+
+import type { InputOTPChangeEventDetail as IIonInputOtpInputOTPChangeEventDetail } from '@ionic/core';
+import type { InputOTPCompleteEventDetail as IIonInputOtpInputOTPCompleteEventDetail } from '@ionic/core';
+
+export declare interface IonInputOtp extends Components.IonInputOtp {
+  /**
+   * Emitted when the value changes
+   */
+  ionChange: EventEmitter<CustomEvent<IIonInputOtpInputOTPChangeEventDetail>>;
+  /**
+   * Emitted when the input is complete (all boxes filled)
+   */
+  ionComplete: EventEmitter<CustomEvent<IIonInputOtpInputOTPCompleteEventDetail>>;
+}
+
+
+@ProxyCmp({
   inputs: ['color', 'hideIcon', 'mode', 'showIcon']
 })
 @Component({
