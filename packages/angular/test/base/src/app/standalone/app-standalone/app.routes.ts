@@ -19,6 +19,7 @@ export const routes: Routes = [
       { path: 'overlay-controllers', loadComponent: () => import('../overlay-controllers/overlay-controllers.component').then(c => c.OverlayControllersComponent) },
       { path: 'button', loadComponent: () => import('../button/button.component').then(c => c.ButtonComponent) },
       { path: 'icon', loadComponent: () => import('../icon/icon.component').then(c => c.IconComponent) },
+      { path: 'radio-group', loadComponent: () => import('../radio-group/radio-group.component').then(c => c.RadioGroupComponent) },
       { path: 'split-pane', redirectTo: '/standalone/split-pane/inbox', pathMatch: 'full' },
       {
         path: 'split-pane',
