@@ -1349,7 +1349,7 @@ export namespace Components {
         /**
           * Where separators should be shown between input boxes. Can be a comma-separated string or an array of numbers. For example: "3" would show a separator after the 3rd input box. [1,4] would show a separator after the 1st and 4th input boxes.
          */
-        "separators"?: "all" | string | number[];
+        "separators"?: 'all' | string | number[];
         /**
           * The shape of the input boxes
          */
@@ -6285,7 +6285,7 @@ declare namespace LocalJSX {
         /**
           * Where separators should be shown between input boxes. Can be a comma-separated string or an array of numbers. For example: "3" would show a separator after the 3rd input box. [1,4] would show a separator after the 1st and 4th input boxes.
          */
-        "separators"?: "all" | string | number[];
+        "separators"?: 'all' | string | number[];
         /**
           * The shape of the input boxes
          */
