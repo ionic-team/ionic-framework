@@ -45,8 +45,38 @@
               <ion-radio value="4">Item 4</ion-radio>
             </ion-item>
           </ion-radio-group>
+
+          <ion-radio-group id="dynamic">
+            <ion-list-header>
+              <ion-label>Dynamic Radio Group</ion-label>
+            </ion-list-header>
+          </ion-radio-group>
         </ion-list>
       </ion-content>
     </ion-app>
+
+    <script>
+      const dynamicGroup = document.getElementById('dynamic');
+
+      // Keep the existing radio-level listeners for comparison
+      document.addEventListener('ionBlur', (ev) => {
+        console.log('ionBlur', ev);
+      });
+
+      document.addEventListener('ionFocus', (ev) => {
+        console.log('ionFocus', ev);
+      });
+
+      setTimeout(() => {
+        for (let i = 1; i < 11; i++) {
+          const item = document.createElement('ion-item');
+          const radio = document.createElement('ion-radio');
+          radio.value = `item-${i}`;
+          radio.innerText = `Item ${i}`;
+          item.appendChild(radio);
+          dynamicGroup.appendChild(item);
+        }
+      }, 1000);
+    </script>
   </body>
 </html>
