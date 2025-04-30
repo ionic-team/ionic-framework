@@ -21,6 +21,7 @@ export const routes: Routes = [
       { path: 'button', loadComponent: () => import('../button/button.component').then(c => c.ButtonComponent) },
       { path: 'reorder-group', loadComponent: () => import('../reorder-group/reorder-group.component').then(c => c.ReorderGroupComponent) },
       { path: 'icon', loadComponent: () => import('../icon/icon.component').then(c => c.IconComponent) },
+      { path: 'radio-group', loadComponent: () => import('../radio-group/radio-group.component').then(c => c.RadioGroupComponent) },
       { path: 'split-pane', redirectTo: '/standalone/split-pane/inbox', pathMatch: 'full' },
       {
         path: 'split-pane',
