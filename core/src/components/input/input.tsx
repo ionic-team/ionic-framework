@@ -829,7 +829,7 @@ export class Input implements ComponentInterface {
          */}
         <label class="input-wrapper" htmlFor={inputId} onClick={this.onLabelClick}>
           {this.renderLabelContainer()}
-          <div class="native-wrapper">
+          <div class="native-wrapper" onClick={this.onLabelClick}>
             <slot name="start"></slot>
             <input
               class="native-input"
