@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.5.6](https://github.com/ionic-team/ionic-framework/compare/v8.5.5...v8.5.6) (2025-04-30)
+
+
+### Bug Fixes
+
+* **item:** emit click event once when clicking padded space on item and emit correct element ([#30373](https://github.com/ionic-team/ionic-framework/issues/30373)) ([7a9d138](https://github.com/ionic-team/ionic-framework/commit/7a9d138e3d5ecde55c12ff337ca29052a9194d69)), closes [#29758](https://github.com/ionic-team/ionic-framework/issues/29758) [#29761](https://github.com/ionic-team/ionic-framework/issues/29761)
+
+
+
+
+
 ## [8.5.5](https://github.com/ionic-team/ionic-framework/compare/v8.5.4...v8.5.5) (2025-04-16)
 
 
