@@ -3,6 +3,8 @@
 // Link: Shared Styles (Standalone & Underline)
 // -------------------------------------------------------------------------------
 @mixin link-shared {
+  @include globals.typography(globals.$ion-body-action-sm);
+
   display: inline-flex;
 
   align-items: center;
@@ -10,8 +12,6 @@
   gap: globals.$ion-space-100;
 
   transition: color globals.$ion-transition-time-200 ease-in-out;
-
-  font-weight: globals.$ion-font-weight-regular;
 
   text-decoration-color: inherit;
 
@@ -25,6 +25,37 @@
   &:visited {
     color: globals.$ion-text-link-visited;
   }
+
+  // Link: Focus
+  // -------------------------------------------------------------------------------
+
+  &:focus,
+  &.ion-focused {
+    @include globals.focused-state();
+
+    border-radius: globals.$ion-border-radius-100;
+  }
+
+  // Link: Active
+  // -------------------------------------------------------------------------------
+
+  &:active,
+  &.ion-activated {
+    color: globals.$ion-text-link-press;
+
+    text-decoration: underline;
+  }
+
+  // Link:  Hover
+  // -------------------------------------------------------------------------------
+
+  @media (any-hover: hover) {
+    &:hover {
+      color: globals.$ion-text-link-press;
+
+      text-decoration: underline;
+    }
+  }
 }
 
 // Link: Standalone
@@ -36,39 +67,10 @@
   text-decoration: none;
 
   @include link-shared;
-
-  // Link: Standalone - Hover
-  // -------------------------------------------------------------------------------
-
-  @media (any-hover: hover) {
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  // Link: Standalone - Focus
-  // -------------------------------------------------------------------------------
-
-  &:focus,
-  &.ion-focused {
-    @include globals.focused-state(null, null, globals.$ion-text-link-default);
-
-    text-decoration: underline;
-  }
-
-  // Link: Standalone - Active
-  // -------------------------------------------------------------------------------
-
-  &:active,
-  &.ion-activated {
-    color: globals.$ion-text-link-press;
-
-    text-decoration: underline;
-  }
 }
 
-a.ionic-link,
-:not(a).ionic-link a {
+a,
+:not(a).ion-link a {
   @include ionic-link;
 }
 
@@ -76,41 +78,24 @@ a.ionic-link,
 // -------------------------------------------------------------------------------
 
 @mixin ionic-link-underline {
-  color: currentColor;
-
-  text-decoration: underline;
+  color: globals.$ion-text-default;
 
   @include link-shared;
 
-  // Link: Underline - Hover
-  // -------------------------------------------------------------------------------
+  text-decoration: underline;
 
-  @media (any-hover: hover) {
-    &:hover {
-      color: globals.$ion-text-link-press;
-    }
-  }
-
-  // Link: Underline - Focus
+  // Link: Focus
   // -------------------------------------------------------------------------------
 
   &:focus,
   &.ion-focused {
-    @include globals.focused-state(null, null, globals.$ion-text-link-default);
+    color: globals.$ion-text-default;
 
     text-decoration: none;
   }
-
-  // Link: Underline - Active
-  // -------------------------------------------------------------------------------
-
-  &:active,
-  &.ion-activated {
-    color: globals.$ion-text-link-press;
-  }
 }
 
-a.ionic-link-underline,
-:not(a).ionic-link-underline a {
+a.ion-link-underline,
+:not(a).ion-link-underline a {
   @include ionic-link-underline;
 }
