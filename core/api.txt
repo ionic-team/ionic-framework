@@ -830,6 +830,8 @@ ion-input-otp,css-prop,--padding-start,ios
 ion-input-otp,css-prop,--padding-start,md
 ion-input-otp,css-prop,--padding-top,ios
 ion-input-otp,css-prop,--padding-top,md
+ion-input-otp,css-prop,--separator-border-radius,ios
+ion-input-otp,css-prop,--separator-border-radius,md
 ion-input-otp,css-prop,--separator-color,ios
 ion-input-otp,css-prop,--separator-color,md
 ion-input-otp,css-prop,--separator-height,ios

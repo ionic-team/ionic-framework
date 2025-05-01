@@ -21,10 +21,10 @@
    * @prop --margin-bottom: Bottom margin of the input group
    * @prop --margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the input group
    *
-   * @prop --padding-top: Top padding of the input boxes
-   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the input boxes
-   * @prop --padding-bottom: Bottom padding of the input boxes
-   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the input boxes
+   * @prop --padding-top: Top padding of the input group
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the input group
+   * @prop --padding-bottom: Bottom padding of the input group
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the input group
    *
    * @prop --height: Height of input boxes
    * @prop --width: Width of input boxes
@@ -33,16 +33,17 @@
    * @prop --separator-color: Color of the separator between boxes
    * @prop --separator-width: Width of the separator between boxes
    * @prop --separator-height: Height of the separator between boxes
+   * @prop --separator-border-radius: Border radius of the separator between boxes
    *
-   * @prop --highlight-color: Color used for the invalid state
+   * @prop --highlight-color-invalid: Color used for the invalid state
    */
-  --margin-top: 16px;
+  --margin-top: 0;
   --margin-end: 0;
-  --margin-bottom: 16px;
+  --margin-bottom: 0;
   --margin-start: 0;
-  --padding-top: 0;
+  --padding-top: 16px;
   --padding-end: 0;
-  --padding-bottom: 0;
+  --padding-bottom: 16px;
   --padding-start: 0;
   --min-width: 40px;
   --separator-width: 8px;
@@ -51,6 +52,7 @@
   --separator-color: #{$background-color-step-150};
   --background-focused: var(--background);
   --border-color-focused: #{ion-color(primary, base, 0.4)};
+  --highlight-color-invalid: #{ion-color(danger, base)};
 
   display: block;
   position: relative;
@@ -58,6 +60,7 @@
 
 .input-otp-group {
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   display: flex;
 
@@ -76,7 +79,6 @@
 
 .native-input {
   @include border-radius(var(--border-radius));
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   width: var(--width);
 
@@ -84,7 +86,9 @@
   min-width: inherit;
   height: var(--height);
 
-  border: var(--border-width, 1px) solid var(--border-color, var(--ion-border-color));
+  border-width: var(--border-width);
+  border-color: var(--border-color);
+  border-style: solid;
 
   background: var(--background, var(--ion-background-color));
   color: var(--color, var(--ion-text-color));
@@ -201,6 +205,10 @@
   outline: none;
 
   background: var(--background-focused);
+}
+
+:host(.ion-invalid) .native-input {
+  border-color: var(--highlight-color-invalid);
 }
 
 // Colors
