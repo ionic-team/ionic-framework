@@ -241,9 +241,19 @@
   border-color: transparent;
 
   background: current-color(base, 0.08);
-  color: current-color(shade);
 }
 
 :host(.input-otp-fill-solid.ion-color.has-focus) .native-input:focus {
   border-color: current-color(base, 0.4);
+}
+
+// Outline & Disabled
+:host(.input-otp-fill-outline.input-otp-disabled.ion-color) .native-input {
+  border-color: current-color(base, 0.1);
+}
+
+// Solid & Disabled/Readonly
+:host(.input-otp-fill-solid.input-otp-disabled.ion-color) .native-input,
+:host(.input-otp-fill-solid.input-otp-readonly.ion-color) .native-input {
+  background: current-color(base, 0.16);
 }
