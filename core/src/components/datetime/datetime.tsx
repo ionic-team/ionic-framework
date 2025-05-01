@@ -592,7 +592,7 @@ export class Datetime implements ComponentInterface {
        * Custom behavior: ['a', 'b']
        */
       printIonWarning(
-        `ion-datetime was passed an array of values, but multiple="false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+        `[ion-datetime] - An array of values was passed, but multiple is "false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
 
   Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
 `,
@@ -1402,24 +1402,24 @@ export class Datetime implements ComponentInterface {
 
     if (multiple) {
       if (presentation !== 'date') {
-        printIonWarning('Multiple date selection is only supported for presentation="date".', el);
+        printIonWarning('[ion-datetime] - Multiple date selection is only supported for presentation="date".', el);
       }
 
       if (preferWheel) {
-        printIonWarning('Multiple date selection is not supported with preferWheel="true".', el);
+        printIonWarning('[ion-datetime] - Multiple date selection is not supported with preferWheel="true".', el);
       }
     }
 
     if (highlightedDates !== undefined) {
       if (presentation !== 'date' && presentation !== 'date-time' && presentation !== 'time-date') {
         printIonWarning(
-          'The highlightedDates property is only supported with the date, date-time, and time-date presentations.',
+          '[ion-datetime] - The highlightedDates property is only supported with the date, date-time, and time-date presentations.',
           el
         );
       }
 
       if (preferWheel) {
-        printIonWarning('The highlightedDates property is not supported with preferWheel="true".', el);
+        printIonWarning('[ion-datetime] - The highlightedDates property is not supported with preferWheel="true".', el);
       }
     }
 
@@ -1681,7 +1681,7 @@ export class Datetime implements ComponentInterface {
           disabled = !isDateEnabled(convertDataToISO(referenceParts));
         } catch (e) {
           printIonError(
-            'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+            '[ion-datetime] - Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
             e
           );
         }
@@ -1772,7 +1772,7 @@ export class Datetime implements ComponentInterface {
           disabled = !isDateEnabled(convertDataToISO(referenceParts));
         } catch (e) {
           printIonError(
-            'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+            '[ion-datetime] - Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
             e
           );
         }
@@ -2299,7 +2299,7 @@ export class Datetime implements ComponentInterface {
                 isCalDayDisabled = !isDateEnabled(dateIsoString);
               } catch (e) {
                 printIonError(
-                  'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+                  '[ion-datetime] - Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
                   el,
                   e
                 );
@@ -2520,7 +2520,7 @@ export class Datetime implements ComponentInterface {
         try {
           headerText = titleSelectedDatesFormatter(convertDataToISO(activeParts));
         } catch (e) {
-          printIonError('Exception in provided `titleSelectedDatesFormatter`: ', e);
+          printIonError('[ion-datetime] - Exception in provided `titleSelectedDatesFormatter`:', e);
         }
       }
     } else {

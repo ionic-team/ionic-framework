@@ -105,7 +105,9 @@ export function parseDate(val: string | string[] | undefined | null): DatetimePa
 
   if (parse === null) {
     // wasn't able to parse the ISO datetime
-    printIonWarning(`Unable to parse date string: ${val}. Please provide a valid ISO 8601 datetime string.`);
+    printIonWarning(
+      `[ion-datetime] - Unable to parse date string: ${val}. Please provide a valid ISO 8601 datetime string.`
+    );
     return undefined;
   }
 
