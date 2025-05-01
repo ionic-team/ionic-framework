@@ -5,18 +5,7 @@ import { createColorClasses } from '@utils/theme';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
-export interface InputOTPChangeEventDetail {
-  value: string;
-  complete: boolean;
-}
-
-export interface InputOTPCompleteEventDetail {
-  value: string;
-}
-
-export interface HTMLIonInputOTPElement extends HTMLElement {
-  value?: string;
-}
+import type { InputOtpChangeEventDetail, InputOtpCompleteEventDetail } from './input-otp-interface';
 
 @Component({
   tag: 'ion-input-otp',
@@ -30,7 +19,7 @@ export class InputOTP implements ComponentInterface {
   private inputRefs: HTMLInputElement[] = [];
   private inputId = `ion-input-otp-${inputIds++}`;
 
-  @Element() el!: HTMLIonInputOTPElement;
+  @Element() el!: HTMLIonInputOtpElement;
 
   @State() private inputValues: string[] = [];
   @State() hasFocus = false;
@@ -38,26 +27,20 @@ export class InputOTP implements ComponentInterface {
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop({ reflect: true }) color?: Color;
 
   /**
-   * The number of input boxes to display
+   * If `true`, the user cannot interact with the input.
    */
-  @Prop() length = 4;
+  @Prop({ reflect: true }) disabled = false;
 
   /**
-   * The type of input allowed in the boxes
+   * The fill for the input boxes. If `"solid"` the input boxes will have a background. If
+   * `"outline"` the input boxes will be transparent with a border.
    */
-  @Prop() type: 'text' | 'number' = 'number';
-
-  /**
-   * A regex pattern string for allowed characters. Defaults based on type.
-   *
-   * For numbers (type="number"): "[0-9]"
-   * For text (type="text"): "[a-zA-Z0-9]"
-   */
-  @Prop() allowedKeys?: string;
+  @Prop() fill?: 'outline' | 'solid' = 'outline';
 
   /**
    * A hint to the browser for which keyboard to display.
@@ -70,48 +53,61 @@ export class InputOTP implements ComponentInterface {
   @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
 
   /**
-   * The size of the input boxes
+   * The number of input boxes to display.
+   */
+  @Prop() length = 4;
+
+  /**
+   * A regex pattern string for allowed characters. Defaults based on type.
+   *
+   * For numbers (type="number"): "[0-9]"
+   * For text (type="text"): "[a-zA-Z0-9]"
+   */
+  @Prop() allowedKeys?: string;
+
+  /**
+   * The size of the input boxes.
    */
   @Prop() size: 'small' | 'medium' | 'large' = 'medium';
 
   /**
    * Where separators should be shown between input boxes.
    * Can be a comma-separated string or an array of numbers.
+   *
    * For example:
-   * "3" would show a separator after the 3rd input box.
-   * [1,4] would show a separator after the 1st and 4th input boxes.
+   * `"3"` will show a separator after the 3rd input box.
+   * `[1,4]` will show a separator after the 1st and 4th input boxes.
+   * `"all"` will show a separator between every input box.
    */
   @Prop() separators?: 'all' | string | number[];
 
   /**
-   * The fill style of the input boxes
-   */
-  @Prop() fill: 'solid' | 'outline' = 'outline';
-
-  /**
-   * The shape of the input boxes
+   * The shape of the input boxes.
+   * If "round" they will have an increased border radius.
+   * If "rectangular" they will have no border radius.
+   * If "soft" they will have a soft border radius.
    */
   @Prop() shape: 'round' | 'rectangular' | 'soft' = 'round';
 
   /**
-   * Whether the input is disabled
+   * The type of input allowed in the input boxes.
    */
-  @Prop({ reflect: true }) disabled = false;
+  @Prop() type: 'text' | 'number' = 'number';
 
   /**
-   * The value of the OTP input
+   * The value of the OTP input.
    */
-  @Prop({ mutable: true }) value?: string = '';
+  @Prop({ mutable: true }) value?: string | number | null = '';
 
   /**
    * Emitted when the value changes
    */
-  @Event() ionChange!: EventEmitter<InputOTPChangeEventDetail>;
+  @Event() ionChange!: EventEmitter<InputOtpChangeEventDetail>;
 
   /**
    * Emitted when the input is complete (all boxes filled)
    */
-  @Event() ionComplete!: EventEmitter<InputOTPCompleteEventDetail>;
+  @Event() ionComplete!: EventEmitter<InputOtpCompleteEventDetail>;
 
   @Watch('value')
   valueChanged() {
@@ -123,8 +119,8 @@ export class InputOTP implements ComponentInterface {
   }
 
   private initializeValues() {
-    if (this.value && this.value.length > 0) {
-      const chars = this.value.split('').slice(0, this.length);
+    if (this.value != null && String(this.value).length > 0) {
+      const chars = String(this.value).split('').slice(0, this.length);
       chars.forEach((char, index) => {
         if (this.validKeys.test(char.toLowerCase())) {
           this.inputValues[index] = char;

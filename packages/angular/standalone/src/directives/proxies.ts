@@ -1004,18 +1004,18 @@ export class IonInputOtp {
 }
 
 
-import type { InputOTPChangeEventDetail as IIonInputOtpInputOTPChangeEventDetail } from '@ionic/core/components';
-import type { InputOTPCompleteEventDetail as IIonInputOtpInputOTPCompleteEventDetail } from '@ionic/core/components';
+import type { InputOtpChangeEventDetail as IIonInputOtpInputOtpChangeEventDetail } from '@ionic/core/components';
+import type { InputOtpCompleteEventDetail as IIonInputOtpInputOtpCompleteEventDetail } from '@ionic/core/components';
 
 export declare interface IonInputOtp extends Components.IonInputOtp {
   /**
    * Emitted when the value changes
    */
-  ionChange: EventEmitter<CustomEvent<IIonInputOtpInputOTPChangeEventDetail>>;
+  ionChange: EventEmitter<CustomEvent<IIonInputOtpInputOtpChangeEventDetail>>;
   /**
    * Emitted when the input is complete (all boxes filled)
    */
-  ionComplete: EventEmitter<CustomEvent<IIonInputOtpInputOTPCompleteEventDetail>>;
+  ionComplete: EventEmitter<CustomEvent<IIonInputOtpInputOtpCompleteEventDetail>>;
 }
 
 

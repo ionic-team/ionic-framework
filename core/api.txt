@@ -784,16 +784,16 @@ ion-input-otp,scoped
 ion-input-otp,prop,allowedKeys,string | undefined,undefined,false,false
 ion-input-otp,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-input-otp,prop,disabled,boolean,false,false,true
-ion-input-otp,prop,fill,"outline" | "solid",'outline',false,false
+ion-input-otp,prop,fill,"outline" | "solid" | undefined,'outline',false,false
 ion-input-otp,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-input-otp,prop,length,number,4,false,false
 ion-input-otp,prop,separators,number[] | string | undefined,undefined,false,false
 ion-input-otp,prop,shape,"rectangular" | "round" | "soft",'round',false,false
 ion-input-otp,prop,size,"large" | "medium" | "small",'medium',false,false
 ion-input-otp,prop,type,"number" | "text",'number',false,false
-ion-input-otp,prop,value,string | undefined,'',false,false
-ion-input-otp,event,ionChange,InputOTPChangeEventDetail,true
-ion-input-otp,event,ionComplete,InputOTPCompleteEventDetail,true
+ion-input-otp,prop,value,null | number | string | undefined,'',false,false
+ion-input-otp,event,ionChange,InputOtpChangeEventDetail,true
+ion-input-otp,event,ionComplete,InputOtpCompleteEventDetail,true
 ion-input-otp,css-prop,--background,ios
 ion-input-otp,css-prop,--background,md
 ion-input-otp,css-prop,--background-focused,ios
@@ -810,8 +810,8 @@ ion-input-otp,css-prop,--color,ios
 ion-input-otp,css-prop,--color,md
 ion-input-otp,css-prop,--height,ios
 ion-input-otp,css-prop,--height,md
-ion-input-otp,css-prop,--highlight-color,ios
-ion-input-otp,css-prop,--highlight-color,md
+ion-input-otp,css-prop,--highlight-color-invalid,ios
+ion-input-otp,css-prop,--highlight-color-invalid,md
 ion-input-otp,css-prop,--margin-bottom,ios
 ion-input-otp,css-prop,--margin-bottom,md
 ion-input-otp,css-prop,--margin-end,ios

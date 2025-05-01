@@ -18,7 +18,7 @@ import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-import { InputOTPChangeEventDetail, InputOTPCompleteEventDetail } from "./components/input-otp/input-otp";
+import { InputOtpChangeEventDetail, InputOtpCompleteEventDetail } from "./components/input-otp/input-otp-interface";
 import { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
@@ -56,7 +56,7 @@ export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-export { InputOTPChangeEventDetail, InputOTPCompleteEventDetail } from "./components/input-otp/input-otp";
+export { InputOtpChangeEventDetail, InputOtpCompleteEventDetail } from "./components/input-otp/input-otp-interface";
 export { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
@@ -1327,45 +1327,45 @@ export namespace Components {
          */
         "allowedKeys"?: string;
         /**
-          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
         /**
-          * Whether the input is disabled
+          * If `true`, the user cannot interact with the input.
          */
         "disabled": boolean;
         /**
-          * The fill style of the input boxes
+          * The fill for the input boxes. If `"solid"` the input boxes will have a background. If `"outline"` the input boxes will be transparent with a border.
          */
-        "fill": 'solid' | 'outline';
+        "fill"?: 'outline' | 'solid';
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.  For numbers (type="number"): "numeric" For text (type="text"): "text"
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * The number of input boxes to display
+          * The number of input boxes to display.
          */
         "length": number;
         /**
-          * Where separators should be shown between input boxes. Can be a comma-separated string or an array of numbers. For example: "3" would show a separator after the 3rd input box. [1,4] would show a separator after the 1st and 4th input boxes.
+          * Where separators should be shown between input boxes. Can be a comma-separated string or an array of numbers.  For example: `"3"` will show a separator after the 3rd input box. `[1,4]` will show a separator after the 1st and 4th input boxes. `"all"` will show a separator between every input box.
          */
         "separators"?: 'all' | string | number[];
         /**
-          * The shape of the input boxes
+          * The shape of the input boxes. If "round" they will have an increased border radius. If "rectangular" they will have no border radius. If "soft" they will have a soft border radius.
          */
         "shape": 'round' | 'rectangular' | 'soft';
         /**
-          * The size of the input boxes
+          * The size of the input boxes.
          */
         "size": 'small' | 'medium' | 'large';
         /**
-          * The type of input allowed in the boxes
+          * The type of input allowed in the input boxes.
          */
         "type": 'text' | 'number';
         /**
-          * The value of the OTP input
+          * The value of the OTP input.
          */
-        "value"?: string;
+        "value"?: string | number | null;
     }
     interface IonInputPasswordToggle {
         /**
@@ -3986,8 +3986,8 @@ declare global {
         new (): HTMLIonInputElement;
     };
     interface HTMLIonInputOtpElementEventMap {
-        "ionChange": InputOTPChangeEventDetail;
-        "ionComplete": InputOTPCompleteEventDetail;
+        "ionChange": InputOtpChangeEventDetail;
+        "ionComplete": InputOtpCompleteEventDetail;
     }
     interface HTMLIonInputOtpElement extends Components.IonInputOtp, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonInputOtpElementEventMap>(type: K, listener: (this: HTMLIonInputOtpElement, ev: IonInputOtpCustomEvent<HTMLIonInputOtpElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -6255,53 +6255,53 @@ declare namespace LocalJSX {
          */
         "allowedKeys"?: string;
         /**
-          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
         /**
-          * Whether the input is disabled
+          * If `true`, the user cannot interact with the input.
          */
         "disabled"?: boolean;
         /**
-          * The fill style of the input boxes
+          * The fill for the input boxes. If `"solid"` the input boxes will have a background. If `"outline"` the input boxes will be transparent with a border.
          */
-        "fill"?: 'solid' | 'outline';
+        "fill"?: 'outline' | 'solid';
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.  For numbers (type="number"): "numeric" For text (type="text"): "text"
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * The number of input boxes to display
+          * The number of input boxes to display.
          */
         "length"?: number;
         /**
           * Emitted when the value changes
          */
-        "onIonChange"?: (event: IonInputOtpCustomEvent<InputOTPChangeEventDetail>) => void;
+        "onIonChange"?: (event: IonInputOtpCustomEvent<InputOtpChangeEventDetail>) => void;
         /**
           * Emitted when the input is complete (all boxes filled)
          */
-        "onIonComplete"?: (event: IonInputOtpCustomEvent<InputOTPCompleteEventDetail>) => void;
+        "onIonComplete"?: (event: IonInputOtpCustomEvent<InputOtpCompleteEventDetail>) => void;
         /**
-          * Where separators should be shown between input boxes. Can be a comma-separated string or an array of numbers. For example: "3" would show a separator after the 3rd input box. [1,4] would show a separator after the 1st and 4th input boxes.
+          * Where separators should be shown between input boxes. Can be a comma-separated string or an array of numbers.  For example: `"3"` will show a separator after the 3rd input box. `[1,4]` will show a separator after the 1st and 4th input boxes. `"all"` will show a separator between every input box.
          */
         "separators"?: 'all' | string | number[];
         /**
-          * The shape of the input boxes
+          * The shape of the input boxes. If "round" they will have an increased border radius. If "rectangular" they will have no border radius. If "soft" they will have a soft border radius.
          */
         "shape"?: 'round' | 'rectangular' | 'soft';
         /**
-          * The size of the input boxes
+          * The size of the input boxes.
          */
         "size"?: 'small' | 'medium' | 'large';
         /**
-          * The type of input allowed in the boxes
+          * The type of input allowed in the input boxes.
          */
         "type"?: 'text' | 'number';
         /**
-          * The value of the OTP input
+          * The value of the OTP input.
          */
-        "value"?: string;
+        "value"?: string | number | null;
     }
     interface IonInputPasswordToggle {
         /**

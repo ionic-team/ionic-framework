@@ -494,15 +494,15 @@ export const IonInput: StencilVueComponent<JSX.IonInput, JSX.IonInput["value"]> 
 
 export const IonInputOtp: StencilVueComponent<JSX.IonInputOtp> = /*@__PURE__*/ defineContainer<JSX.IonInputOtp>('ion-input-otp', defineIonInputOtp, [
   'color',
-  'length',
-  'type',
-  'allowedKeys',
+  'disabled',
+  'fill',
   'inputmode',
+  'length',
+  'allowedKeys',
   'size',
   'separators',
-  'fill',
   'shape',
-  'disabled',
+  'type',
   'value',
   'ionChange',
   'ionComplete'

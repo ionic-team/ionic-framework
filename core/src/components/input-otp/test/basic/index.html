@@ -41,7 +41,7 @@
             <h2>Default</h2>
             <ion-input-otp> Didn't get a code? <a href="#">Resend the code</a> </ion-input-otp>
             <ion-input-otp length="2"> Didn't get a code? <a href="#">Resend the code</a> </ion-input-otp>
-            <ion-input-otp value="123" length="6"> Didn't get a code? <a href="#">Resend the code</a> </ion-input-otp>
+            <ion-input-otp id="numberValue" length="6"> Didn't get a code? <a href="#">Resend the code</a> </ion-input-otp>
             <ion-input-otp value="5893" length="8"> Didn't get a code? <a href="#">Resend the code</a> </ion-input-otp>
           </div>
 
@@ -65,6 +65,11 @@
           </div>
         </div>
       </ion-content>
+
+      <script>
+        const numberValue = document.getElementById('numberValue');
+        numberValue.value = 123;
+      </script>
     </ion-app>
   </body>
 </html>
