@@ -366,6 +366,7 @@ export class InputOTP implements ComponentInterface {
                 <input
                   class="native-input"
                   id={`${this.inputId}-${index}`}
+                  aria-label={`Input ${index + 1} of ${length}`}
                   type="text"
                   inputmode={this.getInputmode()}
                   maxLength={1}
