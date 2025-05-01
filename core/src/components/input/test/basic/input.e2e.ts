@@ -133,6 +133,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
   test.describe(title('input: click'), () => {
     test('should trigger onclick only once when clicking the label', async ({ page }) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30165',
+      });
       // Create a spy function in page context
       await page.setContent(
         `
