@@ -1018,14 +1018,14 @@ This event will not emit when programmatically setting the `value` property.
 
 
 @ProxyCmp({
-  inputs: ['allowedKeys', 'color', 'disabled', 'fill', 'inputmode', 'length', 'separators', 'shape', 'size', 'type', 'value']
+  inputs: ['allowedKeys', 'color', 'disabled', 'fill', 'inputmode', 'length', 'readonly', 'separators', 'shape', 'size', 'type', 'value']
 })
 @Component({
   selector: 'ion-input-otp',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['allowedKeys', 'color', 'disabled', 'fill', 'inputmode', 'length', 'separators', 'shape', 'size', 'type', 'value'],
+  inputs: ['allowedKeys', 'color', 'disabled', 'fill', 'inputmode', 'length', 'readonly', 'separators', 'shape', 'size', 'type', 'value'],
 })
 export class IonInputOtp {
   protected el: HTMLIonInputOtpElement;

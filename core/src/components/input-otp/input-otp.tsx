@@ -66,6 +66,11 @@ export class InputOTP implements ComponentInterface {
   @Prop() allowedKeys?: string;
 
   /**
+   * If `true`, the user cannot modify the value.
+   */
+  @Prop({ reflect: true }) readonly = false;
+
+  /**
    * The size of the input boxes.
    */
   @Prop() size: 'small' | 'medium' | 'large' = 'medium';
@@ -351,6 +356,7 @@ export class InputOTP implements ComponentInterface {
           [`input-otp-shape-${this.shape}`]: true,
           [`input-otp-fill-${this.fill}`]: true,
           'input-otp-disabled': this.disabled,
+          'input-otp-readonly': this.readonly,
         })}
       >
         <div role="group" aria-label="One-time password input" class="input-otp-group">
@@ -365,6 +371,7 @@ export class InputOTP implements ComponentInterface {
                   maxLength={1}
                   pattern={this.type === 'number' ? '[0-9]' : undefined}
                   disabled={this.disabled}
+                  readOnly={this.readonly}
                   tabIndex={index === tabbableIndex ? 0 : -1}
                   value={this.inputValues[index] || ''}
                   autocomplete={index === 0 ? 'one-time-code' : 'off'}

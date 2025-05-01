@@ -186,12 +186,17 @@
 }
 
 :host(.input-otp-fill-solid) {
-  --border-color: #{$background-color-step-100};
+  --border-color: #{$background-color-step-50};
   --background: var(--border-color);
 }
 
 // States
 // --------------------------------------------------
+
+:host(.input-otp-fill-outline.input-otp-disabled) {
+  --background: #{$background-color-step-50};
+  --border-color: #{$background-color-step-100};
+}
 
 :host(.input-otp-disabled),
 :host(.input-otp-disabled) .native-input:disabled {
@@ -207,8 +212,18 @@
   background: var(--background-focused);
 }
 
-:host(.ion-invalid) .native-input {
+:host(.ion-invalid) .native-input,
+:host(.ion-invalid.has-focus) .native-input {
   border-color: var(--highlight-color-invalid);
+}
+
+:host(.input-otp-fill-outline.input-otp-readonly) {
+  --background: #{$background-color-step-50};
+}
+
+:host(.input-otp-fill-solid.input-otp-disabled),
+:host(.input-otp-fill-solid.input-otp-readonly) {
+  --border-color: #{$background-color-step-100};
 }
 
 // Colors

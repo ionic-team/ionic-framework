@@ -15,10 +15,3 @@
     border-width: 1px;
   }
 }
-
-// States
-// --------------------------------------------------
-
-:host(.input-otp-disabled) {
-  opacity: $form-control-ios-disabled-opacity;
-}

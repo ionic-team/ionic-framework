@@ -41,20 +41,28 @@
             <h2>Default</h2>
             <ion-input-otp> Didn't get a code? <a href="#">Resend the code</a> </ion-input-otp>
             <ion-input-otp length="2"> Didn't get a code? <a href="#">Resend the code</a> </ion-input-otp>
-            <ion-input-otp id="numberValue" length="6"> Didn't get a code? <a href="#">Resend the code</a> </ion-input-otp>
+            <ion-input-otp id="numberValue" length="6">
+              Didn't get a code? <a href="#">Resend the code</a>
+            </ion-input-otp>
             <ion-input-otp value="5893" length="8"> Didn't get a code? <a href="#">Resend the code</a> </ion-input-otp>
           </div>
 
           <div class="grid-item">
             <h2>Disabled</h2>
-            <ion-input-otp disabled></ion-input-otp>
-            <ion-input-otp fill="solid" disabled></ion-input-otp>
+            <ion-input-otp value="1234" disabled>Description</ion-input-otp>
+            <ion-input-otp value="1234" fill="solid" disabled>Description</ion-input-otp>
+          </div>
+
+          <div class="grid-item">
+            <h2>Readonly</h2>
+            <ion-input-otp value="1234" readonly>Description</ion-input-otp>
+            <ion-input-otp value="1234" fill="solid" readonly>Description</ion-input-otp>
           </div>
 
           <div class="grid-item">
             <h2>Invalid</h2>
-            <ion-input-otp class="ion-invalid"></ion-input-otp>
-            <ion-input-otp fill="solid" class="ion-invalid"></ion-input-otp>
+            <ion-input-otp class="ion-invalid">Description</ion-input-otp>
+            <ion-input-otp fill="solid" class="ion-invalid">Description</ion-input-otp>
           </div>
 
           <div class="grid-item">
