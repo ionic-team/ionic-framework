@@ -4,6 +4,10 @@ import { configs, test } from '@utils/test/playwright';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('textarea: click'), () => {
     test('should trigger onclick only once when clicking the label', async ({ page }) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30165',
+      });
       // Create a spy function in page context
       await page.setContent(`<ion-textarea label="Textarea"></ion-textarea>`, config);
 
