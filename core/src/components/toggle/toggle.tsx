@@ -36,6 +36,7 @@ import type { ToggleChangeEventDetail } from './toggle-interface';
 })
 export class Toggle implements ComponentInterface {
   private inputId = `ion-tg-${toggleIds++}`;
+  private inputLabelId = `${this.inputId}-lbl`;
   private helperTextId = `${this.inputId}-helper-text`;
   private errorTextId = `${this.inputId}-error-text`;
   private gesture?: Gesture;
@@ -247,6 +248,15 @@ export class Toggle implements ComponentInterface {
     }
   }
 
+  private onKeyDown = (ev: KeyboardEvent) => {
+    if (ev.key === ' ') {
+      ev.preventDefault();
+      if (!this.disabled) {
+        this.toggleChecked();
+      }
+    }
+  };
+
   private onClick = (ev: MouseEvent) => {
     /**
      * The haptics for the toggle on tap is
@@ -364,8 +374,23 @@ export class Toggle implements ComponentInterface {
   }
 
   render() {
-    const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name, alignment, required } =
-      this;
+    const {
+      activated,
+      alignment,
+      checked,
+      color,
+      disabled,
+      el,
+      errorTextId,
+      hasLabel,
+      inheritedAttributes,
+      inputId,
+      inputLabelId,
+      justify,
+      labelPlacement,
+      name,
+      required,
+    } = this;
 
     const mode = getIonMode(this);
     const value = this.getValue();
@@ -374,9 +399,16 @@ export class Toggle implements ComponentInterface {
 
     return (
       <Host
+        role="switch"
+        aria-checked={`${checked}`}
         aria-describedby={this.getHintTextID()}
-        aria-invalid={this.getHintTextID() === this.errorTextId}
+        aria-invalid={this.getHintTextID() === errorTextId}
         onClick={this.onClick}
+        aria-labelledby={hasLabel ? inputLabelId : null}
+        aria-label={inheritedAttributes['aria-label'] || null}
+        aria-disabled={disabled ? 'true' : null}
+        tabindex={disabled ? undefined : 0}
+        onKeyDown={this.onKeyDown}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -389,7 +421,7 @@ export class Toggle implements ComponentInterface {
           [`toggle-${rtl}`]: true,
         })}
       >
-        <label class="toggle-wrapper">
+        <label class="toggle-wrapper" htmlFor={inputId}>
           {/*
             The native control must be rendered
             before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
@@ -405,14 +437,15 @@ export class Toggle implements ComponentInterface {
             onBlur={() => this.onBlur()}
             ref={(focusEl) => (this.focusEl = focusEl)}
             required={required}
-            {...this.inheritedAttributes}
+            {...inheritedAttributes}
           />
           <div
             class={{
               'label-text-wrapper': true,
-              'label-text-wrapper-hidden': !this.hasLabel,
+              'label-text-wrapper-hidden': !hasLabel,
             }}
             part="label"
+            id={inputLabelId}
           >
             <slot></slot>
             {this.renderHintText()}

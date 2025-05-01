@@ -1,6 +1,6 @@
 import { config } from '@global/config';
 
-export const enum LogLevel {
+export enum LogLevel {
   OFF = 'OFF',
   ERROR = 'ERROR',
   WARN = 'WARN',

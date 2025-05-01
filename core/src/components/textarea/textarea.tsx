@@ -5,6 +5,7 @@ import {
   Element,
   Event,
   Host,
+  Listen,
   Method,
   Prop,
   State,
@@ -70,6 +71,14 @@ export class Textarea implements ComponentInterface {
 
   @Element() el!: HTMLIonTextareaElement;
 
+  /**
+   * The `hasFocus` state ensures the focus class is
+   * added regardless of how the element is focused.
+   * The `ion-focused` class only applies when focused
+   * via tabbing, not by clicking.
+   * The `has-focus` logic was added to ensure the class
+   * is applied in both cases.
+   */
   @State() hasFocus = false;
 
   /**
@@ -305,6 +314,19 @@ export class Textarea implements ComponentInterface {
    * Emitted when the input has focus.
    */
   @Event() ionFocus!: EventEmitter<FocusEvent>;
+
+  /**
+   * This prevents the native input from emitting the click event.
+   * Instead, the click event from the ion-textarea is emitted.
+   */
+  @Listen('click', { capture: true })
+  onClickCapture(ev: Event) {
+    const nativeInput = this.nativeInput;
+    if (nativeInput && ev.target === nativeInput) {
+      ev.stopPropagation();
+      this.el.click();
+    }
+  }
 
   connectedCallback() {
     const { el } = this;

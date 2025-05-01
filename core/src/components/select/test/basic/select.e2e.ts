@@ -294,33 +294,51 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await select.evaluate((el: HTMLIonSelectElement) => (el.value = 'banana'));
       await expect(ionChange).not.toHaveReceivedEvent();
     });
+  });
+});
 
-    test('clicking padded space within item should click the select', async ({ page }) => {
+/**
+ * focus has a consistent behavior across modes
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('select: focus'), () => {
+    test('should have the focus class when tabbing', async ({ page, pageUtils }) => {
       await page.setContent(
         `
-        <ion-item>
-          <ion-select label="Fruit" interface="action-sheet">
-            <ion-select-option value="apple">Apple</ion-select-option>
-            <ion-select-option value="banana">Banana</ion-select-option>
-          </ion-select>
-        </ion-item>
+        <ion-select aria-label="Fruit" interface="alert">
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
       `,
         config
       );
-      const itemNative = page.locator('.item-native');
-      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
 
-      // Clicks the padded space within the item
-      await itemNative.click({
-        position: {
-          x: 5,
-          y: 5,
-        },
-      });
+      const select = page.locator('ion-select');
 
-      await ionActionSheetDidPresent.next();
+      await pageUtils.pressKeys('Tab');
+      await expect(select).toHaveClass(/has-focus/);
+    });
 
-      expect(ionActionSheetDidPresent).toHaveReceivedEvent();
+    test('should have the focus class after clicking to close', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-select aria-label="Fruit" interface="alert">
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const select = page.locator('ion-select');
+      const alert = page.locator('ion-alert');
+      const confirmButton = alert.locator('.alert-button:not(.alert-button-role-cancel)');
+
+      await select.click();
+      await ionAlertDidPresent.next();
+
+      await confirmButton.click();
+
+      await expect(select).toHaveClass(/has-focus/);
     });
   });
 });
