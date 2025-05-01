@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.5.6](https://github.com/ionic-team/ionic-framework/compare/v8.5.5...v8.5.6) (2025-04-30)
+
+
+### Bug Fixes
+
+* **item:** emit click event once when clicking padded space on item and emit correct element ([#30373](https://github.com/ionic-team/ionic-framework/issues/30373)) ([7a9d138](https://github.com/ionic-team/ionic-framework/commit/7a9d138e3d5ecde55c12ff337ca29052a9194d69)), closes [#29758](https://github.com/ionic-team/ionic-framework/issues/29758) [#29761](https://github.com/ionic-team/ionic-framework/issues/29761)
+
+
+
+
+
+## [8.5.5](https://github.com/ionic-team/ionic-framework/compare/v8.5.4...v8.5.5) (2025-04-16)
+
+
+### Bug Fixes
+
+* **config:** allow LogLevel to work with isolatedModules and update all warns and errors to respect logLevel ([#30350](https://github.com/ionic-team/ionic-framework/issues/30350)) ([d52fca0](https://github.com/ionic-team/ionic-framework/commit/d52fca084cf5a9924d0f6a6c4d9ece0373b83213))
+* **modal:** add expandToScroll property to ModalOptions ([#30357](https://github.com/ionic-team/ionic-framework/issues/30357)) ([8dd566b](https://github.com/ionic-team/ionic-framework/commit/8dd566b5c1241022e26cc91c0f415de20c0d0f34)), closes [#30356](https://github.com/ionic-team/ionic-framework/issues/30356)
+* **select:** update icon color and use correct focused class ([#30342](https://github.com/ionic-team/ionic-framework/issues/30342)) ([cad1c61](https://github.com/ionic-team/ionic-framework/commit/cad1c61528c52a53b2164f2ea46f49144d3b46ad))
+* **toggle:** ensure proper visual selection when navigating via VoiceOver in Safari ([#30349](https://github.com/ionic-team/ionic-framework/issues/30349)) ([b1bc58f](https://github.com/ionic-team/ionic-framework/commit/b1bc58f1c8ffdc859e3f4349040bb1ad6e383d1e))
+
+
+
+
+
+## [8.5.4](https://github.com/ionic-team/ionic-framework/compare/v8.5.3...v8.5.4) (2025-04-09)
+
+
+### Bug Fixes
+
+* **config:** properly export LogLevel ([#30335](https://github.com/ionic-team/ionic-framework/issues/30335)) ([835ad52](https://github.com/ionic-team/ionic-framework/commit/835ad52c290a3687dc9e9c6bf4326948a9c3fe0d)), closes [#30255](https://github.com/ionic-team/ionic-framework/issues/30255)
+
+
+
+
+
 ## [8.5.3](https://github.com/ionic-team/ionic-framework/compare/v8.5.2...v8.5.3) (2025-04-02)
 
 

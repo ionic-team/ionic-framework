@@ -1,5 +1,6 @@
 import { win } from '@utils/browser';
 import type { CloseWatcher } from '@utils/browser';
+import { printIonError } from '@utils/logging';
 
 import { config } from '../global/config';
 
@@ -77,7 +78,7 @@ export const startHardwareBackButton = () => {
           }
         }
       } catch (e) {
-        console.error(e);
+        printIonError('[ion-app] - Exception in startHardwareBackButton:', e);
       }
     };
 

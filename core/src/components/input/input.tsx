@@ -1,5 +1,18 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import {
+  Build,
+  Component,
+  Element,
+  Event,
+  Host,
+  Listen,
+  Method,
+  Prop,
+  State,
+  Watch,
+  forceUpdate,
+  h,
+} from '@stencil/core';
 import type { NotchController } from '@utils/forms';
 import { createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
@@ -50,11 +63,20 @@ export class Input implements ComponentInterface {
    * Resets when the input loses focus.
    */
   private didInputClearOnEdit = false;
+
   /**
    * The value of the input when the input is focused.
    */
   private focusedValue?: string | number | null;
 
+  /**
+   * The `hasFocus` state ensures the focus class is
+   * added regardless of how the element is focused.
+   * The `ion-focused` class only applies when focused
+   * via tabbing, not by clicking.
+   * The `has-focus` logic was added to ensure the class
+   * is applied in both cases.
+   */
   @State() hasFocus = false;
 
   @Element() el!: HTMLIonInputElement;
@@ -352,6 +374,19 @@ export class Input implements ComponentInterface {
       dir: newValue,
     };
     forceUpdate(this);
+  }
+
+  /**
+   * This prevents the native input from emitting the click event.
+   * Instead, the click event from the ion-input is emitted.
+   */
+  @Listen('click', { capture: true })
+  onClickCapture(ev: Event) {
+    const nativeInput = this.nativeInput;
+    if (nativeInput && ev.target === nativeInput) {
+      ev.stopPropagation();
+      this.el.click();
+    }
   }
 
   componentWillLoad() {
