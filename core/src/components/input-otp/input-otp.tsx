@@ -140,19 +140,22 @@ export class InputOTP implements ComponentInterface {
    * Get the default allowed keys based on type if not explicitly set
    */
   private get validKeys(): RegExp {
-    if (this.allowedKeys) {
+    const { allowedKeys, type } = this;
+
+    if (allowedKeys) {
       // Create a regex that matches a single character from the provided pattern
-      return new RegExp(`^${this.allowedKeys}$`, 'i');
+      return new RegExp(`^${allowedKeys}$`, 'i');
     }
-    return this.type === 'number' ? /^[0-9]$/ : /^[a-zA-Z0-9]$/i;
+    return type === 'number' ? /^[0-9]$/ : /^[a-zA-Z0-9]$/i;
   }
 
   /**
    * Get the default value for inputmode based on type if not explicitly set
    */
   private getInputmode(): string {
-    if (this.inputmode) {
-      return this.inputmode;
+    const { inputmode } = this;
+    if (inputmode) {
+      return inputmode;
     }
 
     if (this.type == 'number') {
@@ -163,21 +166,24 @@ export class InputOTP implements ComponentInterface {
   }
 
   private updateValue() {
-    const newValue = this.inputValues.join('');
+    const { inputValues, length } = this;
+    const newValue = inputValues.join('');
     this.value = newValue;
     this.ionChange.emit({
       value: newValue,
-      complete: newValue.length === this.length,
+      complete: newValue.length === length,
     });
 
-    if (newValue.length === this.length) {
+    if (newValue.length === length) {
       this.ionComplete.emit({ value: newValue });
     }
   }
 
   private handleInput(index: number, value: string) {
+    const { validKeys } = this;
+
     // Only allow input if it's a single character and matches the pattern
-    if (value.length > 1 || (value.length > 0 && !this.validKeys.test(value.toLowerCase()))) {
+    if (value.length > 1 || (value.length > 0 && !validKeys.test(value.toLowerCase()))) {
       // Reset the input value if not valid
       this.inputRefs[index].value = '';
       this.inputValues[index] = '';
@@ -193,6 +199,8 @@ export class InputOTP implements ComponentInterface {
   }
 
   private handleKeyDown(index: number, event: KeyboardEvent) {
+    const { length } = this;
+
     if (event.key === 'Backspace') {
       if (this.inputValues[index]) {
         // If current input has a value, clear it
@@ -212,7 +220,7 @@ export class InputOTP implements ComponentInterface {
     } else if (event.key === 'ArrowRight') {
       event.preventDefault();
       // Only allow moving right if current box has a value
-      if (this.inputValues[index] && index < this.length - 1) {
+      if (this.inputValues[index] && index < length - 1) {
         this.focusNext(index);
       }
     } else if (event.key === 'Tab') {
@@ -222,20 +230,22 @@ export class InputOTP implements ComponentInterface {
   }
 
   private handlePaste(event: ClipboardEvent) {
+    const { inputRefs, length, validKeys } = this;
+
     event.preventDefault();
     const pastedText = event.clipboardData?.getData('text') || '';
     const validChars = pastedText
       .split('')
-      .filter((char) => this.validKeys.test(char.toLowerCase()))
-      .slice(0, this.length);
+      .filter((char) => validKeys.test(char.toLowerCase()))
+      .slice(0, length);
 
     // Find the currently focused input
-    const focusedIndex = this.inputRefs.findIndex((input) => input === document.activeElement);
+    const focusedIndex = inputRefs.findIndex((input) => input === document.activeElement);
     const startIndex = focusedIndex >= 0 ? focusedIndex : 0;
 
     validChars.forEach((char, index) => {
       const targetIndex = startIndex + index;
-      if (targetIndex < this.length) {
+      if (targetIndex < length) {
         this.inputRefs[targetIndex].value = char;
         this.inputValues[targetIndex] = char;
       }
@@ -245,54 +255,60 @@ export class InputOTP implements ComponentInterface {
 
     // Focus the next empty input after pasting
     const nextEmptyIndex = startIndex + validChars.length;
-    if (nextEmptyIndex < this.length) {
-      this.inputRefs[nextEmptyIndex]?.focus();
+    if (nextEmptyIndex < length) {
+      inputRefs[nextEmptyIndex]?.focus();
     }
   }
 
   private focusNext(currentIndex: number) {
-    if (currentIndex < this.length - 1) {
-      this.inputRefs[currentIndex + 1]?.focus();
+    const { inputRefs, length } = this;
+    if (currentIndex < length - 1) {
+      inputRefs[currentIndex + 1]?.focus();
     }
   }
 
   private focusPrevious(currentIndex: number) {
+    const { inputRefs } = this;
     if (currentIndex > 0) {
-      this.inputRefs[currentIndex - 1]?.focus();
+      inputRefs[currentIndex - 1]?.focus();
     }
   }
 
   private get parsedSeparators(): number[] {
-    if (this.separators === undefined) {
+    const { separators } = this;
+    if (separators === undefined) {
       return [];
     }
-    if (Array.isArray(this.separators)) {
-      return this.separators;
+    if (Array.isArray(separators)) {
+      return separators;
     }
-    return this.separators
+    return separators
       .split(',')
       .map((pos) => parseInt(pos, 10))
       .filter((pos) => !isNaN(pos));
   }
 
   private showSeparator(index: number) {
-    if (this.separators === 'all') {
-      return index < this.length - 1;
+    const { length, separators } = this;
+    if (separators === 'all') {
+      return index < length - 1;
     }
-    return this.parsedSeparators.includes(index + 1) && index < this.length - 1;
+    return this.parsedSeparators.includes(index + 1) && index < length - 1;
   }
 
   private handleFocus(index: number) {
+    const { inputRefs } = this;
     this.hasFocus = true;
     // When an input receives focus, make it the only tabbable element
-    this.inputRefs.forEach((input, i) => {
+    inputRefs.forEach((input, i) => {
       input.tabIndex = i === index ? 0 : -1;
     });
   }
 
   private handleBlur(ev: FocusEvent) {
+    const { inputRefs } = this;
     const relatedTarget = ev.relatedTarget as HTMLElement;
-    if (relatedTarget == null || !this.inputRefs.includes(relatedTarget as HTMLInputElement)) {
+    if (relatedTarget == null || !inputRefs.includes(relatedTarget as HTMLInputElement)) {
       this.hasFocus = false;
       // Reset tabIndexes when focus leaves the component
       this.updateTabIndexes();
@@ -300,20 +316,22 @@ export class InputOTP implements ComponentInterface {
   }
 
   private updateTabIndexes() {
+    const { inputRefs, inputValues, length } = this;
+
     // Find first empty index after any filled boxes
     let firstEmptyIndex = -1;
-    for (let i = 0; i < this.length; i++) {
-      if (!this.inputValues[i] || this.inputValues[i] === '') {
+    for (let i = 0; i < length; i++) {
+      if (!inputValues[i] || inputValues[i] === '') {
         firstEmptyIndex = i;
         break;
       }
     }
 
     // Update tabIndex for all inputs
-    this.inputRefs.forEach((input, index) => {
+    inputRefs.forEach((input, index) => {
       // If all boxes are filled, make the last box tabbable
       // Otherwise, make the first empty box tabbable
-      const shouldBeTabbable = firstEmptyIndex === -1 ? index === this.length - 1 : firstEmptyIndex === index;
+      const shouldBeTabbable = firstEmptyIndex === -1 ? index === length - 1 : firstEmptyIndex === index;
 
       input.tabIndex = shouldBeTabbable ? 0 : -1;
     });
@@ -325,8 +343,10 @@ export class InputOTP implements ComponentInterface {
    * Returns -1 if all inputs are filled.
    */
   private getFirstEmptyIndex() {
-    for (let i = 0; i < this.length; i++) {
-      if (!this.inputValues[i] || this.inputValues[i] === '') {
+    const { inputValues, length } = this;
+
+    for (let i = 0; i < length; i++) {
+      if (!inputValues[i] || inputValues[i] === '') {
         return i;
       }
     }
@@ -339,44 +359,47 @@ export class InputOTP implements ComponentInterface {
    * Otherwise, returns the index of the first empty input.
    */
   private getTabbableIndex() {
+    const { length } = this;
     const firstEmptyIndex = this.getFirstEmptyIndex();
-    return firstEmptyIndex === -1 ? this.length - 1 : firstEmptyIndex;
+    return firstEmptyIndex === -1 ? length - 1 : firstEmptyIndex;
   }
 
   render() {
+    const { color, disabled, fill, hasFocus, inputId, inputRefs, inputValues, length, readonly, shape, size, type } = this;
     const mode = getIonMode(this);
+    const inputmode = this.getInputmode();
     const tabbableIndex = this.getTabbableIndex();
 
     return (
       <Host
-        class={createColorClasses(this.color, {
+        class={createColorClasses(color, {
           [mode]: true,
-          'has-focus': this.hasFocus,
-          [`input-otp-size-${this.size}`]: true,
-          [`input-otp-shape-${this.shape}`]: true,
-          [`input-otp-fill-${this.fill}`]: true,
-          'input-otp-disabled': this.disabled,
-          'input-otp-readonly': this.readonly,
+          'has-focus': hasFocus,
+          [`input-otp-size-${size}`]: true,
+          [`input-otp-shape-${shape}`]: true,
+          [`input-otp-fill-${fill}`]: true,
+          'input-otp-disabled': disabled,
+          'input-otp-readonly': readonly,
         })}
       >
         <div role="group" aria-label="One-time password input" class="input-otp-group">
-          {Array.from({ length: this.length }).map((_, index) => {
+          {Array.from({ length }).map((_, index) => {
             return (
               <div class="native-wrapper">
                 <input
                   class="native-input"
-                  id={`${this.inputId}-${index}`}
+                  id={`${inputId}-${index}`}
                   aria-label={`Input ${index + 1} of ${length}`}
                   type="text"
-                  inputmode={this.getInputmode()}
+                  inputmode={inputmode}
                   maxLength={1}
-                  pattern={this.type === 'number' ? '[0-9]' : undefined}
-                  disabled={this.disabled}
-                  readOnly={this.readonly}
+                  pattern={type === 'number' ? '[0-9]' : undefined}
+                  disabled={disabled}
+                  readOnly={readonly}
                   tabIndex={index === tabbableIndex ? 0 : -1}
-                  value={this.inputValues[index] || ''}
+                  value={inputValues[index] || ''}
                   autocomplete={index === 0 ? 'one-time-code' : 'off'}
-                  ref={(el) => (this.inputRefs[index] = el as HTMLInputElement)}
+                  ref={(el) => (inputRefs[index] = el as HTMLInputElement)}
                   onInput={(e) => this.handleInput(index, (e.target as HTMLInputElement).value)}
                   onKeyDown={(e) => this.handleKeyDown(index, e)}
                   onPaste={(e) => this.handlePaste(e)}
