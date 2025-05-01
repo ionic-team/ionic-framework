@@ -132,7 +132,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
   });
 
   test.describe(title('input: click'), () => {
-    test('should trigger onclick only once when clicking the label', async ({ page }) => {
+    test('should trigger onclick only once when clicking the label', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30165',
@@ -169,13 +169,18 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-input');
     });
 
-    test('should trigger onclick only once when clicking the wrapper', async ({ page }) => {
+    test('should trigger onclick only once when clicking the wrapper', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30165',
+      });
       // Create a spy function in page context
       await page.setContent(
         `
         <ion-input
           label="Click Me"
           value="Test Value"
+          label-placement="floating"
         ></ion-input>
       `,
         config
@@ -189,8 +194,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       // what would be the double click
       await input.click({
         position: {
-          x: 5,
-          y: 5,
+          x: 1,
+          y: 1,
         },
       });
 
