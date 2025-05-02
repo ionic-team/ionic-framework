@@ -3,7 +3,12 @@ import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('toggle: click'), () => {
-    test('should trigger onclick only once when clicking the label', async ({ page }) => {
+    test('should trigger onclick only once when clicking the label', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30165',
+      });
+
       // Create a spy function in page context
       await page.setContent(`<ion-toggle onclick="console.log('click called')">my label</ion-toggle>`, config);
 
