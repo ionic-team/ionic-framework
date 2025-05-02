@@ -101,7 +101,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   });
 
   test.describe(title('checkbox: click'), () => {
-    test('clicking a checkbox label should only trigger onclick once', async ({ page }, testInfo) => {
+    test('should trigger onclick only once when clicking the label', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30165',
