@@ -88,10 +88,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(inputBoxes.nth(3)).toHaveValue('5');
     });
 
-    test('should accept custom pattern when allowed-keys is set', async ({ page }) => {
+    test('should accept custom pattern when pattern is set', async ({ page }) => {
       await page.setContent(
         `
-        <ion-input-otp type="text" allowed-keys="[a-fA-F]">Description</ion-input-otp>
+        <ion-input-otp type="text" pattern="[a-fA-F]">Description</ion-input-otp>
       `,
         config
       );

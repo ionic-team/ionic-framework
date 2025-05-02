@@ -63,7 +63,7 @@ export class InputOTP implements ComponentInterface {
    * For numbers (type="number"): "[0-9]"
    * For text (type="text"): "[a-zA-Z0-9]"
    */
-  @Prop() allowedKeys?: string;
+  @Prop() pattern?: string;
 
   /**
    * If `true`, the user cannot modify the value.
@@ -140,11 +140,11 @@ export class InputOTP implements ComponentInterface {
    * Get the default allowed keys based on type if not explicitly set
    */
   private get validKeys(): RegExp {
-    const { allowedKeys, type } = this;
+    const { pattern, type } = this;
 
-    if (allowedKeys) {
+    if (pattern) {
       // Create a regex that matches a single character from the provided pattern
-      return new RegExp(`^${allowedKeys}$`, 'i');
+      return new RegExp(`^${pattern}$`, 'i');
     }
     return type === 'number' ? /^[0-9]$/ : /^[a-zA-Z0-9]$/i;
   }
@@ -376,7 +376,7 @@ export class InputOTP implements ComponentInterface {
   }
 
   render() {
-    const { color, disabled, fill, hasFocus, inputId, inputRefs, inputValues, length, readonly, shape, size, type } =
+    const { color, disabled, fill, hasFocus, inputId, inputRefs, inputValues, length, pattern, readonly, shape, size, type } =
       this;
     const mode = getIonMode(this);
     const inputmode = this.getInputmode();
@@ -405,7 +405,7 @@ export class InputOTP implements ComponentInterface {
                   type="text"
                   inputmode={inputmode}
                   maxLength={1}
-                  pattern={type === 'number' ? '[0-9]' : undefined}
+                  pattern={pattern || (type === 'number' ? '[0-9]' : '[a-zA-Z0-9]')}
                   disabled={disabled}
                   readOnly={readonly}
                   tabIndex={index === tabbableIndex ? 0 : -1}

@@ -984,14 +984,14 @@ export declare interface IonInfiniteScrollContent extends Components.IonInfinite
 
 @ProxyCmp({
   defineCustomElementFn: defineIonInputOtp,
-  inputs: ['allowedKeys', 'color', 'disabled', 'fill', 'inputmode', 'length', 'readonly', 'separators', 'shape', 'size', 'type', 'value']
+  inputs: ['color', 'disabled', 'fill', 'inputmode', 'length', 'pattern', 'readonly', 'separators', 'shape', 'size', 'type', 'value']
 })
 @Component({
   selector: 'ion-input-otp',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['allowedKeys', 'color', 'disabled', 'fill', 'inputmode', 'length', 'readonly', 'separators', 'shape', 'size', 'type', 'value'],
+  inputs: ['color', 'disabled', 'fill', 'inputmode', 'length', 'pattern', 'readonly', 'separators', 'shape', 'size', 'type', 'value'],
   standalone: true
 })
 export class IonInputOtp {

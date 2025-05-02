@@ -1323,10 +1323,6 @@ export namespace Components {
     }
     interface IonInputOtp {
         /**
-          * A regex pattern string for allowed characters. Defaults based on type.  For numbers (type="number"): "[0-9]" For text (type="text"): "[a-zA-Z0-9]"
-         */
-        "allowedKeys"?: string;
-        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -1346,6 +1342,10 @@ export namespace Components {
           * The number of input boxes to display.
          */
         "length": number;
+        /**
+          * A regex pattern string for allowed characters. Defaults based on type.  For numbers (type="number"): "[0-9]" For text (type="text"): "[a-zA-Z0-9]"
+         */
+        "pattern"?: string;
         /**
           * If `true`, the user cannot modify the value.
          */
@@ -6255,10 +6255,6 @@ declare namespace LocalJSX {
     }
     interface IonInputOtp {
         /**
-          * A regex pattern string for allowed characters. Defaults based on type.  For numbers (type="number"): "[0-9]" For text (type="text"): "[a-zA-Z0-9]"
-         */
-        "allowedKeys"?: string;
-        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -6286,6 +6282,10 @@ declare namespace LocalJSX {
           * Emitted when the input is complete (all boxes filled)
          */
         "onIonComplete"?: (event: IonInputOtpCustomEvent<InputOtpCompleteEventDetail>) => void;
+        /**
+          * A regex pattern string for allowed characters. Defaults based on type.  For numbers (type="number"): "[0-9]" For text (type="text"): "[a-zA-Z0-9]"
+         */
+        "pattern"?: string;
         /**
           * If `true`, the user cannot modify the value.
          */
