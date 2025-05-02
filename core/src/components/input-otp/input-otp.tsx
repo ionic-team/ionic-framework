@@ -203,16 +203,27 @@ export class InputOTP implements ComponentInterface {
 
     if (event.key === 'Backspace') {
       if (this.inputValues[index]) {
-        // If current input has a value, clear it
-        this.inputRefs[index].value = '';
+        // Remove the value at the current index
         this.inputValues[index] = '';
+
+        // Shift all values to the right of the current index left by one
+        for (let i = index; i < length - 1; i++) {
+          this.inputValues[i] = this.inputValues[i + 1];
+        }
+
+        // Clear the last box
+        this.inputValues[length - 1] = '';
+
+        // Update all inputRefs to match inputValues
+        for (let i = 0; i < length; i++) {
+          this.inputRefs[i].value = this.inputValues[i] || '';
+        }
+
         this.updateValue();
-      } else if (index > 0) {
-        // If current input is empty, move to previous input and clear its value
+        event.preventDefault();
+      } else if (!this.inputValues[index] && index > 0) {
+        // If current input is empty, move to previous input
         this.focusPrevious(index);
-        this.inputRefs[index - 1].value = '';
-        this.inputValues[index - 1] = '';
-        this.updateValue();
       }
     } else if (event.key === 'ArrowLeft') {
       event.preventDefault();
@@ -365,7 +376,8 @@ export class InputOTP implements ComponentInterface {
   }
 
   render() {
-    const { color, disabled, fill, hasFocus, inputId, inputRefs, inputValues, length, readonly, shape, size, type } = this;
+    const { color, disabled, fill, hasFocus, inputId, inputRefs, inputValues, length, readonly, shape, size, type } =
+      this;
     const mode = getIonMode(this);
     const inputmode = this.getInputmode();
     const tabbableIndex = this.getTabbableIndex();
