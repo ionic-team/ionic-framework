@@ -101,7 +101,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   });
 
   test.describe(title('checkbox: click'), () => {
-    test('clicking a checkbox label should only trigger onclick once', async ({ page }) => {
+    test('clicking a checkbox label should only trigger onclick once', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30165',
+      });
+
       // Create a spy function in page context
       await page.setContent(`<ion-checkbox onclick="console.log('click called')">Test Checkbox</ion-checkbox>`, config);
 
