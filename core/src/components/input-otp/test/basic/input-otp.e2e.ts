@@ -220,10 +220,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
   test.describe(title('input-otp: paste functionality'), () => {
     test('should paste text into the first and second input box when pasting 2 digits', async ({ page }) => {
-      await page.setContent(
-        `<ion-input-otp>Description</ion-input-otp>`,
-        config
-      );
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
@@ -231,7 +228,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         const event = new ClipboardEvent('paste', {
           bubbles: true,
           cancelable: true,
-          clipboardData: new DataTransfer()
+          clipboardData: new DataTransfer(),
         });
         if (event.clipboardData) {
           event.clipboardData.setData('text', value);
@@ -244,13 +241,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(inputBoxes.nth(1)).toHaveValue('2');
       await expect(inputBoxes.nth(2)).toHaveValue('');
       await expect(inputBoxes.nth(3)).toHaveValue('');
+
+      // Focus should be on the 3rd input box
+      await expect(inputBoxes.nth(2)).toBeFocused();
     });
 
     test('should paste text into all input boxes when pasting 4 digits', async ({ page }) => {
-      await page.setContent(
-        `<ion-input-otp>Description</ion-input-otp>`,
-        config
-      );
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
@@ -258,7 +255,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         const event = new ClipboardEvent('paste', {
           bubbles: true,
           cancelable: true,
-          clipboardData: new DataTransfer()
+          clipboardData: new DataTransfer(),
         });
         if (event.clipboardData) {
           event.clipboardData.setData('text', value);
@@ -271,13 +268,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(inputBoxes.nth(1)).toHaveValue('2');
       await expect(inputBoxes.nth(2)).toHaveValue('3');
       await expect(inputBoxes.nth(3)).toHaveValue('4');
+
+      // Focus should be on the 4th input box
+      await expect(inputBoxes.nth(3)).toBeFocused();
     });
 
-    test('should paste text into the first and second input box when pasting 2 digits in the 3rd box', async ({ page }) => {
-      await page.setContent(
-        `<ion-input-otp>Description</ion-input-otp>`,
-        config
-      );
+    test('should paste text into the first and second input box when pasting 2 digits in the 3rd box', async ({
+      page,
+    }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
       const thirdInput = page.locator('ion-input-otp input').nth(2);
       await thirdInput.focus();
@@ -285,7 +284,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         const event = new ClipboardEvent('paste', {
           bubbles: true,
           cancelable: true,
-          clipboardData: new DataTransfer()
+          clipboardData: new DataTransfer(),
         });
         if (event.clipboardData) {
           event.clipboardData.setData('text', value);
@@ -300,11 +299,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(inputBoxes.nth(3)).toHaveValue('');
     });
 
-    test('should paste text into the last two input boxes when pasting 2 digits after typing 2 digits', async ({ page }) => {
-      await page.setContent(
-        `<ion-input-otp>Description</ion-input-otp>`,
-        config
-      );
+    test('should paste text into the last two input boxes when pasting 2 digits after typing 2 digits', async ({
+      page,
+    }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
@@ -315,7 +313,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         const event = new ClipboardEvent('paste', {
           bubbles: true,
           cancelable: true,
-          clipboardData: new DataTransfer()
+          clipboardData: new DataTransfer(),
         });
         if (event.clipboardData) {
           event.clipboardData.setData('text', value);
@@ -331,10 +329,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     test('should paste text into all input boxes when pasting 4 digits after typing 4 digits', async ({ page }) => {
-      await page.setContent(
-        `<ion-input-otp>Description</ion-input-otp>`,
-        config
-      );
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
@@ -345,7 +340,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         const event = new ClipboardEvent('paste', {
           bubbles: true,
           cancelable: true,
-          clipboardData: new DataTransfer()
+          clipboardData: new DataTransfer(),
         });
         if (event.clipboardData) {
           event.clipboardData.setData('text', value);

@@ -266,9 +266,12 @@ export class InputOTP implements ComponentInterface {
     this.updateValue();
 
     // Focus the next empty input after pasting
+    // If all boxes are filled, focus the last input
     const nextEmptyIndex = pasteStart + validChars.length;
     if (nextEmptyIndex < length) {
       inputRefs[nextEmptyIndex]?.focus();
+    } else {
+      inputRefs[length - 1]?.focus();
     }
   }
 
@@ -377,8 +380,21 @@ export class InputOTP implements ComponentInterface {
   }
 
   render() {
-    const { color, disabled, fill, hasFocus, inputId, inputRefs, inputValues, length, pattern, readonly, shape, size, type } =
-      this;
+    const {
+      color,
+      disabled,
+      fill,
+      hasFocus,
+      inputId,
+      inputRefs,
+      inputValues,
+      length,
+      pattern,
+      readonly,
+      shape,
+      size,
+      type,
+    } = this;
     const mode = getIonMode(this);
     const inputmode = this.getInputmode();
     const tabbableIndex = this.getTabbableIndex();
