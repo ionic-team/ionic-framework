@@ -113,6 +113,8 @@
 .input-otp-separator {
   @include border-radius(var(--separator-border-radius));
 
+  flex: 1 0 auto;
+
   width: var(--separator-width);
   height: var(--separator-height);
 
@@ -129,12 +131,9 @@
   font-size: 0.875em;
 }
 
-:host(.input-otp-size-small) .input-otp-group {
+:host(.input-otp-size-small) .input-otp-group,
+:host(.input-otp-size-small) .native-wrapper {
   gap: 8px;
-}
-
-:host(.input-otp-size-small) .input-otp-separator {
-  @include margin-horizontal(8px, null);
 }
 
 :host(.input-otp-size-medium) {
@@ -152,15 +151,11 @@
 }
 
 :host(.input-otp-size-medium) .input-otp-group,
-:host(.input-otp-size-large) .input-otp-group {
+:host(.input-otp-size-medium) .native-wrapper,
+:host(.input-otp-size-large) .input-otp-group,
+:host(.input-otp-size-large) .native-wrapper {
   gap: 12px;
 }
-
-:host(.input-otp-size-medium) .input-otp-separator,
-:host(.input-otp-size-large) .input-otp-separator {
-  @include margin-horizontal(12px, null);
-}
-
 
 // Shapes
 // --------------------------------------------------
