@@ -250,12 +250,13 @@ export class InputOTP implements ComponentInterface {
       .filter((char) => validKeys.test(char.toLowerCase()))
       .slice(0, length);
 
-    // Find the currently focused input
-    const focusedIndex = inputRefs.findIndex((input) => input === document.activeElement);
-    const startIndex = focusedIndex >= 0 ? focusedIndex : 0;
+    // Find the first empty input
+    const startIndex = this.getFirstEmptyIndex();
+    // If all boxes are filled, start at 0
+    const pasteStart = startIndex === -1 ? 0 : startIndex;
 
     validChars.forEach((char, index) => {
-      const targetIndex = startIndex + index;
+      const targetIndex = pasteStart + index;
       if (targetIndex < length) {
         this.inputRefs[targetIndex].value = char;
         this.inputValues[targetIndex] = char;
@@ -265,7 +266,7 @@ export class InputOTP implements ComponentInterface {
     this.updateValue();
 
     // Focus the next empty input after pasting
-    const nextEmptyIndex = startIndex + validChars.length;
+    const nextEmptyIndex = pasteStart + validChars.length;
     if (nextEmptyIndex < length) {
       inputRefs[nextEmptyIndex]?.focus();
     }
