@@ -217,4 +217,147 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(inputBoxes.nth(3)).toHaveValue('');
     });
   });
+
+  test.describe(title('input-otp: paste functionality'), () => {
+    test('should paste text into the first and second input box when pasting 2 digits', async ({ page }) => {
+      await page.setContent(
+        `<ion-input-otp>Description</ion-input-otp>`,
+        config
+      );
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+      await firstInput.evaluate((input, value) => {
+        const event = new ClipboardEvent('paste', {
+          bubbles: true,
+          cancelable: true,
+          clipboardData: new DataTransfer()
+        });
+        if (event.clipboardData) {
+          event.clipboardData.setData('text', value);
+        }
+        input.dispatchEvent(event);
+      }, '12');
+
+      const inputBoxes = page.locator('ion-input-otp input');
+      await expect(inputBoxes.nth(0)).toHaveValue('1');
+      await expect(inputBoxes.nth(1)).toHaveValue('2');
+      await expect(inputBoxes.nth(2)).toHaveValue('');
+      await expect(inputBoxes.nth(3)).toHaveValue('');
+    });
+
+    test('should paste text into all input boxes when pasting 4 digits', async ({ page }) => {
+      await page.setContent(
+        `<ion-input-otp>Description</ion-input-otp>`,
+        config
+      );
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+      await firstInput.evaluate((input, value) => {
+        const event = new ClipboardEvent('paste', {
+          bubbles: true,
+          cancelable: true,
+          clipboardData: new DataTransfer()
+        });
+        if (event.clipboardData) {
+          event.clipboardData.setData('text', value);
+        }
+        input.dispatchEvent(event);
+      }, '1234');
+
+      const inputBoxes = page.locator('ion-input-otp input');
+      await expect(inputBoxes.nth(0)).toHaveValue('1');
+      await expect(inputBoxes.nth(1)).toHaveValue('2');
+      await expect(inputBoxes.nth(2)).toHaveValue('3');
+      await expect(inputBoxes.nth(3)).toHaveValue('4');
+    });
+
+    test('should paste text into the first and second input box when pasting 2 digits in the 3rd box', async ({ page }) => {
+      await page.setContent(
+        `<ion-input-otp>Description</ion-input-otp>`,
+        config
+      );
+
+      const thirdInput = page.locator('ion-input-otp input').nth(2);
+      await thirdInput.focus();
+      await thirdInput.evaluate((input, value) => {
+        const event = new ClipboardEvent('paste', {
+          bubbles: true,
+          cancelable: true,
+          clipboardData: new DataTransfer()
+        });
+        if (event.clipboardData) {
+          event.clipboardData.setData('text', value);
+        }
+        input.dispatchEvent(event);
+      }, '12');
+
+      const inputBoxes = page.locator('ion-input-otp input');
+      await expect(inputBoxes.nth(0)).toHaveValue('1');
+      await expect(inputBoxes.nth(1)).toHaveValue('2');
+      await expect(inputBoxes.nth(2)).toHaveValue('');
+      await expect(inputBoxes.nth(3)).toHaveValue('');
+    });
+
+    test('should paste text into the last two input boxes when pasting 2 digits after typing 2 digits', async ({ page }) => {
+      await page.setContent(
+        `<ion-input-otp>Description</ion-input-otp>`,
+        config
+      );
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('12');
+
+      await firstInput.evaluate((input, value) => {
+        const event = new ClipboardEvent('paste', {
+          bubbles: true,
+          cancelable: true,
+          clipboardData: new DataTransfer()
+        });
+        if (event.clipboardData) {
+          event.clipboardData.setData('text', value);
+        }
+        input.dispatchEvent(event);
+      }, '34');
+
+      const inputBoxes = page.locator('ion-input-otp input');
+      await expect(inputBoxes.nth(0)).toHaveValue('1');
+      await expect(inputBoxes.nth(1)).toHaveValue('2');
+      await expect(inputBoxes.nth(2)).toHaveValue('3');
+      await expect(inputBoxes.nth(3)).toHaveValue('4');
+    });
+
+    test('should paste text into all input boxes when pasting 4 digits after typing 4 digits', async ({ page }) => {
+      await page.setContent(
+        `<ion-input-otp>Description</ion-input-otp>`,
+        config
+      );
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('9999');
+
+      await firstInput.evaluate((input, value) => {
+        const event = new ClipboardEvent('paste', {
+          bubbles: true,
+          cancelable: true,
+          clipboardData: new DataTransfer()
+        });
+        if (event.clipboardData) {
+          event.clipboardData.setData('text', value);
+        }
+        input.dispatchEvent(event);
+      }, '1234');
+
+      const inputBoxes = page.locator('ion-input-otp input');
+      await expect(inputBoxes.nth(0)).toHaveValue('1');
+      await expect(inputBoxes.nth(1)).toHaveValue('2');
+      await expect(inputBoxes.nth(2)).toHaveValue('3');
+      await expect(inputBoxes.nth(3)).toHaveValue('4');
+    });
+  });
 });
