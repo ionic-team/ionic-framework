@@ -5,8 +5,8 @@
 // --------------------------------------------------
 
 :host {
-  --padding-start: #{globals.$ion-space-200};
-  --padding-end: #{globals.$ion-space-200};
+  --padding-start: #{globals.$ion-space-100};
+  --padding-end: #{globals.$ion-space-100};
   --padding-top: #{globals.$ion-space-0};
   --padding-bottom: #{globals.$ion-space-0};
 
@@ -54,8 +54,6 @@
   @include globals.border-radius(globals.$ion-border-radius-200);
 }
 
-:host(.badge-xxsmall.badge-soft),
-:host(.badge-xsmall.badge-soft),
 :host(.badge-small.badge-soft) {
   @include globals.border-radius(globals.$ion-border-radius-100);
 }
@@ -73,91 +71,22 @@
 // Badge Sizes
 // --------------------------------------------------
 
-/* 2-Extra Small Badge */
-:host(.badge-xxsmall) {
+/* Small Badge */
+:host(.badge-small) {
   --padding-start: #{globals.$ion-space-050};
   --padding-end: #{globals.$ion-space-050};
 
   min-width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
-
-  font-size: globals.$ion-font-size-300;
-
-  line-height: globals.$ion-font-line-height-400;
-}
-
-:host(.badge-xxsmall) ::slotted(ion-icon) {
-  width: globals.$ion-scale-300;
-  height: globals.$ion-scale-300;
-}
-
-/* Extra Small Badge */
-:host(.badge-xsmall) {
-  --padding-start: #{globals.$ion-space-100};
-  --padding-end: #{globals.$ion-space-100};
-
-  min-width: globals.$ion-scale-600;
-  height: globals.$ion-scale-600;
-
-  font-size: globals.$ion-font-size-350;
-
-  line-height: globals.$ion-font-line-height-600;
-}
-
-:host(.badge-xsmall) ::slotted(ion-icon) {
-  width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
-}
-
-/* Small Badge */
-:host(.badge-small) {
-  --padding-start: #{globals.$ion-space-100};
-  --padding-end: #{globals.$ion-space-100};
-
-  min-width: globals.$ion-scale-800;
-  height: globals.$ion-scale-800;
-}
-
-:host(.badge-small) ::slotted(ion-icon) {
-  width: globals.$ion-scale-500;
-  height: globals.$ion-scale-500;
 }
 
 /* Medium Badge */
 :host(.badge-medium) {
   @include globals.typography(globals.$ion-body-md-medium);
-  min-width: globals.$ion-scale-1000;
-  height: globals.$ion-scale-1000;
-}
-
-:host(.badge-medium) ::slotted(ion-icon) {
-  width: globals.$ion-scale-600;
+  min-width: globals.$ion-scale-600;
   height: globals.$ion-scale-600;
 }
 
-/* Large Badge */
-:host(.badge-large) {
-  @include globals.typography(globals.$ion-body-lg-medium);
-  min-width: globals.$ion-scale-1200;
-  height: globals.$ion-scale-1200;
-}
-
-:host(.badge-large) ::slotted(ion-icon) {
-  width: globals.$ion-scale-800;
-  height: globals.$ion-scale-800;
-}
-
-/* Extra Large Badge */
-:host(.badge-xlarge) {
-  @include globals.typography(globals.$ion-heading-h4-medium);
-  min-width: globals.$ion-scale-1400;
-  height: globals.$ion-scale-1400;
-}
-
-:host(.badge-xlarge) ::slotted(ion-icon) {
-  width: globals.$ion-scale-1000;
-  height: globals.$ion-scale-1000;
-}
 
 // Badge (hint)
 // --------------------------------------------------
@@ -215,15 +144,12 @@
 // Badge in Button
 // --------------------------------------------------
 
-:host([vertical]:not(.in-tab-button).in-button.badge-xxsmall),
-:host([vertical]:not(.in-tab-button).in-button.badge-xsmall),
 :host([vertical]:not(.in-tab-button).in-button.badge-small) {
   @include globals.position(null, calc(-1 * var(globals.$ion-space-050)));
 }
 
 :host([vertical]:not(.in-tab-button).in-button.badge-medium),
-:host([vertical]:not(.in-tab-button).in-button.badge-large),
-:host([vertical]:not(.in-tab-button).in-button.badge-xlarge) {
+:host([vertical]:not(.in-tab-button).in-button.badge-large) {
   @include globals.position(null, globals.$ion-space-050);
 }
 

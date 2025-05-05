@@ -317,7 +317,7 @@ ion-badge,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secon
 ion-badge,prop,hue,"bold" | "subtle" | undefined,undefined,false,false
 ion-badge,prop,mode,"ios" | "md",undefined,false,false
 ion-badge,prop,shape,"round | rectangular" | "soft" | undefined,undefined,false,false
-ion-badge,prop,size,"large" | "medium" | "small" | "xlarge" | "xsmall" | "xxsmall" | undefined,undefined,false,false
+ion-badge,prop,size,"medium" | "small" | undefined,undefined,false,false
 ion-badge,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-badge,prop,vertical,"bottom" | "top" | undefined,undefined,false,false
 ion-badge,css-prop,--background,ionic
