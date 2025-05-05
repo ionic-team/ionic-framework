@@ -109,6 +109,72 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 
+  test.describe(title('input-otp: input functionality'), () => {
+    test('should update the input value when typing 4 digits from the 1st box', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input-otp>Description</ion-input-otp>
+      `,
+        config
+      );
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      const inputOtp = page.locator('ion-input-otp');
+      const inputBoxes = page.locator('ion-input-otp input');
+
+      await expect(inputOtp).toHaveJSProperty('value', '');
+      await expect(inputBoxes.nth(0)).toHaveValue('');
+      await expect(inputBoxes.nth(1)).toHaveValue('');
+      await expect(inputBoxes.nth(2)).toHaveValue('');
+      await expect(inputBoxes.nth(3)).toHaveValue('');
+
+      await page.keyboard.type('12');
+
+      await expect(inputOtp).toHaveJSProperty('value', '12');
+      await expect(inputBoxes.nth(0)).toHaveValue('1');
+      await expect(inputBoxes.nth(1)).toHaveValue('2');
+      await expect(inputBoxes.nth(2)).toHaveValue('');
+      await expect(inputBoxes.nth(3)).toHaveValue('');
+
+      await page.keyboard.type('34');
+
+      await expect(inputOtp).toHaveJSProperty('value', '1234');
+      await expect(inputBoxes.nth(0)).toHaveValue('1');
+      await expect(inputBoxes.nth(1)).toHaveValue('2');
+      await expect(inputBoxes.nth(2)).toHaveValue('3');
+      await expect(inputBoxes.nth(3)).toHaveValue('4');
+    });
+
+    test('should update the 1st input value when typing in the 3rd box', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input-otp>Description</ion-input-otp>
+      `,
+        config
+      );
+
+      const thirdInput = page.locator('ion-input-otp input').nth(2);
+      await thirdInput.focus();
+
+      const inputOtp = page.locator('ion-input-otp');
+      const inputBoxes = page.locator('ion-input-otp input');
+
+      await page.keyboard.type('1');
+
+      await expect(inputBoxes.nth(0)).toHaveValue('1');
+      await expect(inputBoxes.nth(1)).toHaveValue('');
+      await expect(inputBoxes.nth(2)).toHaveValue('');
+      await expect(inputBoxes.nth(3)).toHaveValue('');
+      await expect(inputOtp).toHaveJSProperty('value', '1');
+
+      // Focus should be on the 2nd input box
+      const secondInput = page.locator('ion-input-otp input').nth(1);
+      await expect(secondInput).toBeFocused();
+    });
+  });
+
   test.describe(title('input-otp: focus functionality'), () => {
     test('should focus the first input box when tabbed to', async ({ page }) => {
       await page.setContent(

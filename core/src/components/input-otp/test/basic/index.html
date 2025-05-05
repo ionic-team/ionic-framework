@@ -48,12 +48,17 @@
           </div>
 
           <div class="grid-item">
-            <h2>Disabled</h2>
-            <ion-input-otp value="1234" disabled>Description</ion-input-otp>
-            <ion-input-otp value="1234" fill="solid" disabled>Description</ion-input-otp>
+            <h2>Types</h2>
+            <ion-input-otp id="numberType"> Numbers only <span id="value"></span> </ion-input-otp>
+            <ion-input-otp id="letterAndNumberType" type="text"> Letters and numbers <span id="value"></span> </ion-input-otp>
+            <ion-input-otp id="customType" type="text" pattern="[a-fA-F]"> Custom Pattern: a-f and A-F <span id="value"></span> </ion-input-otp>
           </div>
 
           <div class="grid-item">
+            <h2>Disabled</h2>
+            <ion-input-otp value="1234" disabled>Description</ion-input-otp>
+            <ion-input-otp value="1234" fill="solid" disabled>Description</ion-input-otp>
+
             <h2>Readonly</h2>
             <ion-input-otp value="1234" readonly>Description</ion-input-otp>
             <ion-input-otp value="1234" fill="solid" readonly>Description</ion-input-otp>
@@ -64,19 +69,23 @@
             <ion-input-otp class="ion-invalid">Description</ion-input-otp>
             <ion-input-otp fill="solid" class="ion-invalid">Description</ion-input-otp>
           </div>
-
-          <div class="grid-item">
-            <h2>Types</h2>
-            <ion-input-otp length="6"> Numbers only </ion-input-otp>
-            <ion-input-otp length="6" type="text"> Letters and numbers </ion-input-otp>
-            <ion-input-otp type="text" pattern="[a-fA-F]"> Custom Pattern: a-f and A-F </ion-input-otp>
-          </div>
         </div>
       </ion-content>
 
       <script>
         const numberValue = document.getElementById('numberValue');
         numberValue.value = 123;
+
+        // Display value under the different input types on ionChange
+        function addValueListener(id) {
+          const el = document.getElementById(id);
+          el.addEventListener('ionChange', (event) => {
+            const displayValue = event.detail.value != '' ? `(value: ${event.detail.value})` : '';
+            el.querySelector('#value').textContent = displayValue;
+          });
+        }
+
+        ['numberType', 'letterAndNumberType', 'customType'].forEach(addValueListener);
       </script>
     </ion-app>
   </body>

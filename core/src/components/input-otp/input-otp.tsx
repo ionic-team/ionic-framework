@@ -190,10 +190,25 @@ export class InputOTP implements ComponentInterface {
       return;
     }
 
-    this.inputValues[index] = value;
+    // Find the first empty box before or at the current index
+    let targetIndex = index;
+    for (let i = 0; i < index; i++) {
+      if (!this.inputValues[i] || this.inputValues[i] === '') {
+        targetIndex = i;
+        break;
+      }
+    }
+
+    // Set the value at the target index
+    this.inputValues[targetIndex] = value;
+
+    // If the value was entered in a later box, clear the current box
+    if (targetIndex !== index) {
+      this.inputRefs[index].value = '';
+    }
 
     if (value.length > 0) {
-      this.focusNext(index);
+      this.focusNext(targetIndex);
     }
     this.updateValue();
   }
