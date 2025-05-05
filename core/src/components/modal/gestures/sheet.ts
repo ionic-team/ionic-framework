@@ -119,32 +119,31 @@ export const createSheetGesture = (
 
   /**
    * Toggles the visible modal footer when `expandToScroll` is disabled.
-   * @param footer The footer to show.
+   * @param footer The footer to show. TODO: update the values to represent the latest changes.
    */
   const swapFooterVisibility = (footer: 'original' | 'cloned') => {
-    const originalFooter = baseEl.querySelector('ion-footer') as HTMLIonFooterElement | null;
+    const baseElFooter = baseEl.shadowRoot?.querySelector('ion-footer') as HTMLIonFooterElement | null;
+    const ionPage = baseEl.querySelector('.ion-page') as HTMLElement;
+    const ionPageFooter = ionPage.querySelector('ion-footer') as HTMLIonFooterElement | null;
 
-    if (!originalFooter) {
+    // if original was chosen then the footer needs to be moved from
+    // the baseEl to the ionPage
+    // else the footer needs to be moved from the ionPage to the baseEl
+    const footerToMove = footer === 'original' ? baseElFooter : ionPageFooter;
+
+    if (!footerToMove) {
       return;
     }
 
-    const clonedFooter = wrapperEl.nextElementSibling as HTMLIonFooterElement;
-    const footerToHide = footer === 'original' ? clonedFooter : originalFooter;
-    const footerToShow = footer === 'original' ? originalFooter : clonedFooter;
-
-    footerToShow.style.removeProperty('display');
-    footerToShow.removeAttribute('aria-hidden');
-
-    const page = baseEl.querySelector('.ion-page') as HTMLElement;
+    // Move the footer to the wrapperEl
     if (footer === 'original') {
-      page.style.removeProperty('padding-bottom');
+      ionPage.style.removeProperty('padding-bottom');
+      ionPage.appendChild(footerToMove);
     } else {
-      const pagePadding = footerToShow.clientHeight;
-      page.style.setProperty('padding-bottom', `${pagePadding}px`);
+      const pagePadding = footerToMove.clientHeight;
+      ionPage.style.setProperty('padding-bottom', `${pagePadding}px`);
+      baseEl.shadowRoot?.appendChild(footerToMove);
     }
-
-    footerToHide.style.setProperty('display', 'none');
-    footerToHide.setAttribute('aria-hidden', 'true');
   };
 
   /**

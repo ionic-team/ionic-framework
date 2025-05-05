@@ -74,13 +74,11 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
       const ionFooterAlreadyAppended = baseEl.shadowRoot!.querySelector('ion-footer');
       if (ionFooter && !ionFooterAlreadyAppended) {
         const footerHeight = ionFooter.clientHeight;
-        const clonedFooter = ionFooter.cloneNode(true) as HTMLIonFooterElement;
 
-        baseEl.shadowRoot!.appendChild(clonedFooter);
-        ionFooter.style.setProperty('display', 'none');
-        ionFooter.setAttribute('aria-hidden', 'true');
+        // Move the footer to be a direct child of the baseEl.
+        baseEl.shadowRoot!.appendChild(ionFooter);
 
-        // Padding is added to prevent some content from being hidden.
+        // Padding is added to prevent content from being hidden at the bottom.
         const page = baseEl.querySelector('.ion-page') as HTMLElement;
         page.style.setProperty('padding-bottom', `${footerHeight}px`);
       }

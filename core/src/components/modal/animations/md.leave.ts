@@ -47,16 +47,12 @@ export const mdLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOption
        */
       const ionFooter = baseEl.querySelector('ion-footer');
       if (ionFooter) {
-        const clonedFooter = baseEl.shadowRoot!.querySelector('ion-footer')!;
+        // Move the footer back to `.ion-page` so it can be dismissed
+        // with the modal.
+        const ionPage = baseEl.querySelector('.ion-page') as HTMLElement;
+        ionPage.appendChild(ionFooter);
 
-        ionFooter.style.removeProperty('display');
-        ionFooter.removeAttribute('aria-hidden');
-
-        clonedFooter.style.setProperty('display', 'none');
-        clonedFooter.setAttribute('aria-hidden', 'true');
-
-        const page = baseEl.querySelector('.ion-page') as HTMLElement;
-        page.style.removeProperty('padding-bottom');
+        ionPage.style.removeProperty('padding-bottom');
       }
     });
 

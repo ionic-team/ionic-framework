@@ -190,9 +190,11 @@
           ${items}
         </ion-list>
       </ion-content>
-      <ion-footer>
-        <ion-toolbar>
+      <ion-footer slot="footer">
+        <ion-toolbar style="--background: red;">
           <ion-title>Footer</ion-title>
+          <p>test</p>
+          <ion-button fill="outline">test</ion-button>
         </ion-toolbar>
       </ion-footer>
       `;
@@ -218,6 +220,12 @@
         // listen for close event
         const button = element.querySelector('ion-button');
         button.addEventListener('click', () => {
+          modalElement.dismiss();
+        });
+
+        const footerButton = element.querySelector('ion-footer ion-button');
+        footerButton.addEventListener('click', () => {
+          console.log('Footer button clicked');
           modalElement.dismiss();
         });
 
