@@ -190,8 +190,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(inputOtp).toHaveJSProperty('value', '1');
 
       // Focus should be on the 2nd input box
-      const secondInput = page.locator('ion-input-otp input').nth(1);
-      await expect(secondInput).toBeFocused();
+      await expect(inputBoxes.nth(1)).toBeFocused();
     });
 
     test('should update the 3rd input value and shift the values to the right when typing in the 3rd box containing a value', async ({ page }) => {
@@ -217,7 +216,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(inputOtp).toHaveJSProperty('value', '1293');
 
       // Focus should remain on the 3rd input box
-      await expect(thirdInput).toBeFocused();
+      await expect(inputBoxes.nth(2)).toBeFocused();
     });
 
     test('should update the 2nd input value when typing in the 2nd box containing a value', async ({ page }) => {
@@ -243,7 +242,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(inputOtp).toHaveJSProperty('value', '1934');
 
       // Focus should remain on the 2nd input box
-      await expect(secondInput).toBeFocused();
+      await expect(inputBoxes.nth(1)).toBeFocused();
     });
   });
 
@@ -288,6 +287,23 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const lastInput = page.locator('ion-input-otp input').last();
       await expect(lastInput).toBeFocused();
+    });
+
+    test('should focus the next input otp component when tabbed from the 2nd input box', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input-otp id="first" value="12">Description</ion-input-otp>
+        <ion-input-otp id="second">Description</ion-input-otp>
+      `,
+        config
+      );
+
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('ArrowLeft');
+      await page.keyboard.press('Tab');
+
+      const secondInputOtpFirstInput = page.locator('#second input').first();
+      await expect(secondInputOtpFirstInput).toBeFocused();
     });
   });
 
@@ -435,6 +451,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(inputBoxes.nth(1)).toHaveValue('2');
       await expect(inputBoxes.nth(2)).toHaveValue('');
       await expect(inputBoxes.nth(3)).toHaveValue('');
+
+      // Focus should be on the 3rd input box
+      await expect(inputBoxes.nth(2)).toBeFocused();
     });
 
     test('should paste text into the last two input boxes when pasting 2 digits after typing 2 digits', async ({
