@@ -6,7 +6,7 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('badge: shape'), () => {
-    test('should render soft badges for smaller sizes', async ({ page }) => {
+    test('should render soft badges for small size', async ({ page }) => {
       await page.setContent(
         `
         <div id="container">
@@ -18,10 +18,10 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
 
       const container = page.locator('#container');
 
-      await expect(container).toHaveScreenshot(screenshot(`badge-shape-soft-smaller-sizes`));
+      await expect(container).toHaveScreenshot(screenshot(`badge-shape-soft-small-size`));
     });
 
-    test('should render soft badges with long text for smaller sizes', async ({ page }) => {
+    test('should render soft badges with long text for small size', async ({ page }) => {
       await page.setContent(
         `
         <div id="container">
@@ -33,10 +33,10 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
 
       const container = page.locator('#container');
 
-      await expect(container).toHaveScreenshot(screenshot(`badge-shape-soft-smaller-sizes-long-text`));
+      await expect(container).toHaveScreenshot(screenshot(`badge-shape-soft-small-size-long-text`));
     });
 
-    test('should render soft badges with icon for smaller sizes', async ({ page }) => {
+    test('should render soft badges with icon for small size', async ({ page }) => {
       await page.setContent(
         `
         <div id="container">
@@ -50,7 +50,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
 
       const container = page.locator('#container');
 
-      await expect(container).toHaveScreenshot(screenshot(`badge-shape-soft-smaller-sizes-icon`));
+      await expect(container).toHaveScreenshot(screenshot(`badge-shape-soft-small-size-icon`));
     });
 
     test('should render soft badges for larger sizes', async ({ page }) => {
