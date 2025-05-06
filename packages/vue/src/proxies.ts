@@ -13,6 +13,7 @@ import { defineCustomElement as defineIonBadge } from '@ionic/core/components/io
 import { defineCustomElement as defineIonBreadcrumb } from '@ionic/core/components/ion-breadcrumb.js';
 import { defineCustomElement as defineIonBreadcrumbs } from '@ionic/core/components/ion-breadcrumbs.js';
 import { defineCustomElement as defineIonButton } from '@ionic/core/components/ion-button.js';
+import { defineCustomElement as defineIonButtonGroup } from '@ionic/core/components/ion-button-group.js';
 import { defineCustomElement as defineIonButtons } from '@ionic/core/components/ion-buttons.js';
 import { defineCustomElement as defineIonCard } from '@ionic/core/components/ion-card.js';
 import { defineCustomElement as defineIonCardContent } from '@ionic/core/components/ion-card-content.js';
@@ -194,6 +195,20 @@ export const IonButton: StencilVueComponent<JSX.IonButton> = /*@__PURE__*/ defin
 ], [
   'ionFocus',
   'ionBlur'
+]);
+
+
+export const IonButtonGroup: StencilVueComponent<JSX.IonButtonGroup> = /*@__PURE__*/ defineContainer<JSX.IonButtonGroup>('ion-button-group', defineIonButtonGroup, [
+  'fill',
+  'shape',
+  'size',
+  'color',
+  'value',
+  'ionChange',
+  'ionValueChange'
+], [
+  'ionChange',
+  'ionValueChange'
 ]);
 
 

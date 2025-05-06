@@ -607,6 +607,24 @@ export namespace Components {
          */
         "type": 'submit' | 'reset' | 'button';
     }
+    interface IonButtonGroup {
+        "color"?: Color;
+        "fill"?: 'outline' | 'solid';
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        "size"?: 'small' | 'default' | 'large';
+        /**
+          * The theme determines the visual appearance of the component.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
+          * The value of the currently selected button.
+         */
+        "value": string | number | null;
+    }
     interface IonButtons {
         /**
           * If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in the `ios` theme with `collapse` set to `true` on `ion-header`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
@@ -4019,6 +4037,10 @@ export interface IonButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonButtonElement;
 }
+export interface IonButtonGroupCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIonButtonGroupElement;
+}
 export interface IonCheckboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonCheckboxElement;
@@ -4350,6 +4372,24 @@ declare global {
     var HTMLIonButtonElement: {
         prototype: HTMLIonButtonElement;
         new (): HTMLIonButtonElement;
+    };
+    interface HTMLIonButtonGroupElementEventMap {
+        "ionChange": { value: string | number | null; activeIndex: number };
+        "ionValueChange": { value: string | number | null};
+    }
+    interface HTMLIonButtonGroupElement extends Components.IonButtonGroup, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonButtonGroupElementEventMap>(type: K, listener: (this: HTMLIonButtonGroupElement, ev: IonButtonGroupCustomEvent<HTMLIonButtonGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonButtonGroupElementEventMap>(type: K, listener: (this: HTMLIonButtonGroupElement, ev: IonButtonGroupCustomEvent<HTMLIonButtonGroupElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLIonButtonGroupElement: {
+        prototype: HTMLIonButtonGroupElement;
+        new (): HTMLIonButtonGroupElement;
     };
     interface HTMLIonButtonsElement extends Components.IonButtons, HTMLStencilElement {
     }
@@ -5419,6 +5459,7 @@ declare global {
         "ion-breadcrumb": HTMLIonBreadcrumbElement;
         "ion-breadcrumbs": HTMLIonBreadcrumbsElement;
         "ion-button": HTMLIonButtonElement;
+        "ion-button-group": HTMLIonButtonGroupElement;
         "ion-buttons": HTMLIonButtonsElement;
         "ion-card": HTMLIonCardElement;
         "ion-card-content": HTMLIonCardContentElement;
@@ -6087,6 +6128,29 @@ declare namespace LocalJSX {
           * The type of the button.
          */
         "type"?: 'submit' | 'reset' | 'button';
+    }
+    interface IonButtonGroup {
+        "color"?: Color;
+        "fill"?: 'outline' | 'solid';
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * Emitted when the active button changes.
+         */
+        "onIonChange"?: (event: IonButtonGroupCustomEvent<{ value: string | number | null; activeIndex: number }>) => void;
+        "onIonValueChange"?: (event: IonButtonGroupCustomEvent<{ value: string | number | null}>) => void;
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        "size"?: 'small' | 'default' | 'large';
+        /**
+          * The theme determines the visual appearance of the component.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
+          * The value of the currently selected button.
+         */
+        "value"?: string | number | null;
     }
     interface IonButtons {
         /**
@@ -9579,6 +9643,7 @@ declare namespace LocalJSX {
         "ion-breadcrumb": IonBreadcrumb;
         "ion-breadcrumbs": IonBreadcrumbs;
         "ion-button": IonButton;
+        "ion-button-group": IonButtonGroup;
         "ion-buttons": IonButtons;
         "ion-card": IonCard;
         "ion-card-content": IonCardContent;
@@ -9682,6 +9747,7 @@ declare module "@stencil/core" {
             "ion-breadcrumb": LocalJSX.IonBreadcrumb & JSXBase.HTMLAttributes<HTMLIonBreadcrumbElement>;
             "ion-breadcrumbs": LocalJSX.IonBreadcrumbs & JSXBase.HTMLAttributes<HTMLIonBreadcrumbsElement>;
             "ion-button": LocalJSX.IonButton & JSXBase.HTMLAttributes<HTMLIonButtonElement>;
+            "ion-button-group": LocalJSX.IonButtonGroup & JSXBase.HTMLAttributes<HTMLIonButtonGroupElement>;
             "ion-buttons": LocalJSX.IonButtons & JSXBase.HTMLAttributes<HTMLIonButtonsElement>;
             "ion-card": LocalJSX.IonCard & JSXBase.HTMLAttributes<HTMLIonCardElement>;
             "ion-card-content": LocalJSX.IonCardContent & JSXBase.HTMLAttributes<HTMLIonCardContentElement>;

@@ -13,6 +13,7 @@ export const DIRECTIVES = [
   d.IonBreadcrumb,
   d.IonBreadcrumbs,
   d.IonButton,
+  d.IonButtonGroup,
   d.IonButtons,
   d.IonCard,
   d.IonCardContent,

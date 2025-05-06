@@ -377,6 +377,36 @@ export declare interface IonButton extends Components.IonButton {
 
 
 @ProxyCmp({
+  inputs: ['color', 'fill', 'mode', 'shape', 'size', 'theme', 'value']
+})
+@Component({
+  selector: 'ion-button-group',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['color', 'fill', 'mode', 'shape', 'size', 'theme', 'value'],
+})
+export class IonButtonGroup {
+  protected el: HTMLIonButtonGroupElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionChange', 'ionValueChange']);
+  }
+}
+
+
+export declare interface IonButtonGroup extends Components.IonButtonGroup {
+  /**
+   * Emitted when the active button changes.
+   */
+  ionChange: EventEmitter<CustomEvent<{ value: string | number | null; activeIndex: number }>>;
+
+  ionValueChange: EventEmitter<CustomEvent<{ value: string | number | null}>>;
+}
+
+
+@ProxyCmp({
   inputs: ['collapse', 'mode', 'theme']
 })
 @Component({

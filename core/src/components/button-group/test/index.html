@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" mode="md" theme="ionic">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Button - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../css/ionic/bundle.ionic.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>ButtonGroup - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding" id="content" no-bounce>
+        <p class="ion-margin">
+            <ion-title>Default</ion-title>
+            <ion-button-group id="buttonGroup" value="Second">
+                <ion-button value="First">First</ion-button>
+                <ion-button value="Second">Second</ion-button>
+                <ion-button value="Third">Third</ion-button>
+            </ion-button-group>
+        </p>
+        <p class="ion-margin">
+            <ion-title>Shape: rectangular</ion-title>
+            <ion-button-group shape="rectangular" value="Second">
+                <ion-button value="First">First</ion-button>
+                <ion-button value="Second">Second</ion-button>
+                <ion-button value="Third">Third</ion-button>
+            </ion-button-group>
+        </p>
+        <p class="ion-margin">
+            <ion-title>Shape: soft</ion-title>
+            <ion-button-group shape="soft" value="Second">
+                <ion-button value="First">First</ion-button>
+                <ion-button value="Second">Second</ion-button>
+                <ion-button value="Third">Third</ion-button>
+            </ion-button-group>
+        </p>
+        <p class="ion-margin">
+            <ion-title>Shape: round</ion-title>
+            <ion-button-group shape="round" value="Second">
+                <ion-button value="First">First</ion-button>
+                <ion-button value="Second">Second</ion-button>
+                <ion-button value="Third">Third</ion-button>
+            </ion-button-group>
+        </p>
+        <p class="ion-margin">
+            <ion-title>Size: small</ion-title>
+            <ion-button-group size="small" value="Second">
+                <ion-button value="First">First</ion-button>
+                <ion-button value="Second">Second</ion-button>
+                <ion-button value="Third">Third</ion-button>
+            </ion-button-group>
+        </p>
+        <p class="ion-margin">
+            <ion-title>Size: medium</ion-title>
+            <ion-button-group size="default" value="Second">
+                <ion-button value="First">First</ion-button>
+                <ion-button value="Second">Second</ion-button>
+                <ion-button value="Third">Third</ion-button>
+            </ion-button-group>
+        </p>
+        <p class="ion-margin">
+            <ion-title>Size: large</ion-title>
+            <ion-button-group size="large" value="Second">
+                <ion-button value="First">First</ion-button>
+                <ion-button value="Second">Second</ion-button>
+                <ion-button value="Third">Third</ion-button>
+            </ion-button-group>
+        </p>
+        <p class="ion-margin">
+            <ion-title>Fill: filled</ion-title>
+            <ion-button-group fill="solid" value="Second">
+                <ion-button value="First">First</ion-button>
+                <ion-button value="Second">Second</ion-button>
+                <ion-button value="Third">Third</ion-button>
+            </ion-button-group>
+        </p>
+        <p class="ion-margin">
+            <ion-title>Fill: outline</ion-title>
+            <ion-button-group fill="outline" value="Second">
+                <ion-button value="First">First</ion-button>
+                <ion-button value="Second">Second</ion-button>
+                <ion-button value="Third">Third</ion-button>
+            </ion-button-group>
+        </p>
+
+        <p class="ion-margin">
+            <ion-title>Color: primary</ion-title>
+            <ion-button-group color="primary" value="Second">
+                <ion-button value="First">First</ion-button>
+                <ion-button value="Second">Second</ion-button>
+                <ion-button value="Third">Third</ion-button>
+            </ion-button-group>
+        </p>
+        <p class="ion-margin">
+            <ion-title>Color: neutral</ion-title>
+            <ion-button-group color="medium" value="Second">
+                <ion-button value="First">First</ion-button>
+                <ion-button value="Second">Second</ion-button>
+                <ion-button value="Third">Third</ion-button>
+            </ion-button-group>
+        </p>
+        <script>
+  const buttonGroup = document.getElementById('buttonGroup');
+  buttonGroup.addEventListener('ionValueChange', (event) => {
+    console.log('Value changed (manual listener):', event.detail.value);
+  });
+          </script>
+      </ion-content>
+    </ion-app>
+  </body>
+
+
+</html>

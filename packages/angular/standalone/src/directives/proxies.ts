@@ -17,6 +17,7 @@ import { defineCustomElement as defineIonBadge } from '@ionic/core/components/io
 import { defineCustomElement as defineIonBreadcrumb } from '@ionic/core/components/ion-breadcrumb.js';
 import { defineCustomElement as defineIonBreadcrumbs } from '@ionic/core/components/ion-breadcrumbs.js';
 import { defineCustomElement as defineIonButton } from '@ionic/core/components/ion-button.js';
+import { defineCustomElement as defineIonButtonGroup } from '@ionic/core/components/ion-button-group.js';
 import { defineCustomElement as defineIonButtons } from '@ionic/core/components/ion-buttons.js';
 import { defineCustomElement as defineIonCard } from '@ionic/core/components/ion-card.js';
 import { defineCustomElement as defineIonCardContent } from '@ionic/core/components/ion-card-content.js';
@@ -469,6 +470,38 @@ export declare interface IonButton extends Components.IonButton {
    * Emitted when the button loses focus.
    */
   ionBlur: EventEmitter<CustomEvent<void>>;
+}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonButtonGroup,
+  inputs: ['color', 'fill', 'mode', 'shape', 'size', 'theme', 'value']
+})
+@Component({
+  selector: 'ion-button-group',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['color', 'fill', 'mode', 'shape', 'size', 'theme', 'value'],
+  standalone: true
+})
+export class IonButtonGroup {
+  protected el: HTMLIonButtonGroupElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionChange', 'ionValueChange']);
+  }
+}
+
+
+export declare interface IonButtonGroup extends Components.IonButtonGroup {
+  /**
+   * Emitted when the active button changes.
+   */
+  ionChange: EventEmitter<CustomEvent<{ value: string | number | null; activeIndex: number }>>;
+
+  ionValueChange: EventEmitter<CustomEvent<{ value: string | number | null}>>;
 }
 
 

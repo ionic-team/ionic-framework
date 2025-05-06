@@ -1,0 +1,102 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+:host {
+    --border-radius: #{globals.$ion-border-radius-full};
+    display: flex;
+    position: relative;
+
+    border-radius: var(--border-radius);
+
+    background-color: #f2f4fd;
+}
+
+.active-indicator {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    transition: transform 0.3s ease;
+
+    border-radius: var(--border-radius);
+
+    background-color: #105cef;
+
+    z-index: 0;
+}
+
+::slotted(ion-button) {
+    --color: #105cef;
+    --background-hover: transparent;
+    --background-activated: transparent;
+    flex: 1;
+
+    transition: color 0.3s ease;
+
+    background-color: transparent;
+
+    z-index: 1;
+}
+
+::slotted(ion-button.active) {
+    color: #fff;
+}
+
+// ButtonGroup Shapes
+// -------------------------------------------------------------------------------
+
+// Soft Button
+// --------------------------------------------------
+
+:host(.button-group-soft) {
+    --border-radius: #{globals.$ion-border-radius-200};
+  }
+
+// Round Button
+// --------------------------------------------------
+
+:host(.button-group-round) {
+--border-radius: #{globals.$ion-border-radius-full};
+}
+
+// Rectangular Button
+// --------------------------------------------------
+
+:host(.button-group-rectangular) {
+    --border-radius: #{globals.$ion-border-radius-0};
+}
+
+
+// ButtonGroup Ouline
+// -------------------------------------------------------------------------------
+
+:host(.button-group-outline) .active-indicator {
+    border: 1px solid #105cef;
+
+    background-color: #fff;
+  }
+
+  :host(.button-group-outline)::slotted(ion-button.active) {
+    color: #105cef;
+  }
+
+ 
+
+  // ButtonGroup Medium
+// -------------------------------------------------------------------------------
+
+:host(.ion-color-medium) {
+    background-color: #EFEFEF;
+}
+
+:host(.ion-color-medium) .active-indicator {
+    background-color: #3B3B3B;
+  }
+
+  :host(.ion-color-medium)::slotted(ion-button.active) {
+    --color: #fff;
+  }
+
+  :host(.ion-color-medium)::slotted(ion-button) {
+    --color: #242424;
+  }

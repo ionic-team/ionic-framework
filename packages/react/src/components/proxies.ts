@@ -11,6 +11,7 @@ import { defineCustomElement as defineIonAvatar } from '@ionic/core/components/i
 import { defineCustomElement as defineIonBackdrop } from '@ionic/core/components/ion-backdrop.js';
 import { defineCustomElement as defineIonBadge } from '@ionic/core/components/ion-badge.js';
 import { defineCustomElement as defineIonBreadcrumbs } from '@ionic/core/components/ion-breadcrumbs.js';
+import { defineCustomElement as defineIonButtonGroup } from '@ionic/core/components/ion-button-group.js';
 import { defineCustomElement as defineIonButtons } from '@ionic/core/components/ion-buttons.js';
 import { defineCustomElement as defineIonCardContent } from '@ionic/core/components/ion-card-content.js';
 import { defineCustomElement as defineIonCardHeader } from '@ionic/core/components/ion-card-header.js';
@@ -84,6 +85,7 @@ export const IonAvatar = /*@__PURE__*/createReactComponent<JSX.IonAvatar, HTMLIo
 export const IonBackdrop = /*@__PURE__*/createReactComponent<JSX.IonBackdrop, HTMLIonBackdropElement>('ion-backdrop', undefined, undefined, defineIonBackdrop);
 export const IonBadge = /*@__PURE__*/createReactComponent<JSX.IonBadge, HTMLIonBadgeElement>('ion-badge', undefined, undefined, defineIonBadge);
 export const IonBreadcrumbs = /*@__PURE__*/createReactComponent<JSX.IonBreadcrumbs, HTMLIonBreadcrumbsElement>('ion-breadcrumbs', undefined, undefined, defineIonBreadcrumbs);
+export const IonButtonGroup = /*@__PURE__*/createReactComponent<JSX.IonButtonGroup, HTMLIonButtonGroupElement>('ion-button-group', undefined, undefined, defineIonButtonGroup);
 export const IonButtons = /*@__PURE__*/createReactComponent<JSX.IonButtons, HTMLIonButtonsElement>('ion-buttons', undefined, undefined, defineIonButtons);
 export const IonCardContent = /*@__PURE__*/createReactComponent<JSX.IonCardContent, HTMLIonCardContentElement>('ion-card-content', undefined, undefined, defineIonCardContent);
 export const IonCardHeader = /*@__PURE__*/createReactComponent<JSX.IonCardHeader, HTMLIonCardHeaderElement>('ion-card-header', undefined, undefined, defineIonCardHeader);
