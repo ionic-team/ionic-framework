@@ -127,7 +127,7 @@ export class InputOTP implements ComponentInterface {
     if (this.value != null && String(this.value).length > 0) {
       const chars = String(this.value).split('').slice(0, this.length);
       chars.forEach((char, index) => {
-        if (this.validKeys.test(char.toLowerCase())) {
+        if (this.validKeys.test(char)) {
           this.inputValues[index] = char;
         }
       });
@@ -137,20 +137,23 @@ export class InputOTP implements ComponentInterface {
   }
 
   /**
-   * Get the default allowed keys based on type if not explicitly set
+   * Get the regex pattern for allowed characters
+   * If a pattern is provided, use it to create a regex pattern
+   * Otherwise, use the default regex pattern based on type
    */
   private get validKeys(): RegExp {
     const { pattern, type } = this;
 
     if (pattern) {
-      // Create a regex that matches a single character from the provided pattern
-      return new RegExp(`^${pattern}$`, 'i');
+      return new RegExp(`^${pattern}$`);
     }
     return type === 'number' ? /^[0-9]$/ : /^[a-zA-Z0-9]$/i;
   }
 
   /**
-   * Get the default value for inputmode based on type if not explicitly set
+   * Get the default value for inputmode
+   * If inputmode is provided, use it
+   * Otherwise, use the default inputmode based on type
    */
   private getInputmode(): string {
     const { inputmode } = this;
@@ -183,7 +186,7 @@ export class InputOTP implements ComponentInterface {
     const { validKeys } = this;
 
     // Only allow input if it's a single character and matches the pattern
-    if (value.length > 1 || (value.length > 0 && !validKeys.test(value.toLowerCase()))) {
+    if (value.length > 1 || (value.length > 0 && !validKeys.test(value))) {
       // Reset the input value if not valid
       this.inputRefs[index].value = '';
       this.inputValues[index] = '';
@@ -287,7 +290,7 @@ export class InputOTP implements ComponentInterface {
 
     const validChars = pastedText
       .split('')
-      .filter((char) => validKeys.test(char.toLowerCase()))
+      .filter((char) => validKeys.test(char))
       .slice(0, length);
 
     // Find the first empty input

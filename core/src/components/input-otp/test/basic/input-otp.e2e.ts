@@ -88,7 +88,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(inputBoxes.nth(3)).toHaveValue('5');
     });
 
-    test('should accept custom pattern when pattern is set', async ({ page }) => {
+    test('should accept custom pattern of lowercase and uppercase letters when pattern is set', async ({ page }) => {
       await page.setContent(
         `
         <ion-input-otp type="text" pattern="[a-fA-F]">Description</ion-input-otp>
@@ -99,13 +99,33 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
 
-      await page.keyboard.type('AGBZFD');
+      await page.keyboard.type('aGBZfD');
 
       const inputBoxes = page.locator('ion-input-otp input');
-      await expect(inputBoxes.nth(0)).toHaveValue('A');
+      await expect(inputBoxes.nth(0)).toHaveValue('a');
       await expect(inputBoxes.nth(1)).toHaveValue('B');
-      await expect(inputBoxes.nth(2)).toHaveValue('F');
+      await expect(inputBoxes.nth(2)).toHaveValue('f');
       await expect(inputBoxes.nth(3)).toHaveValue('D');
+    });
+
+    test('should accept custom pattern of uppercase letters only when pattern is set', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input-otp type="text" pattern="[D-L]">Description</ion-input-otp>
+      `,
+        config
+      );
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('abcdABCDEFG');
+
+      const inputBoxes = page.locator('ion-input-otp input');
+      await expect(inputBoxes.nth(0)).toHaveValue('D');
+      await expect(inputBoxes.nth(1)).toHaveValue('E');
+      await expect(inputBoxes.nth(2)).toHaveValue('F');
+      await expect(inputBoxes.nth(3)).toHaveValue('G');
     });
   });
 

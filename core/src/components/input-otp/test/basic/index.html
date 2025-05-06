@@ -49,9 +49,10 @@
 
           <div class="grid-item">
             <h2>Types</h2>
-            <ion-input-otp id="numberType"> Numbers only <span id="value"></span> </ion-input-otp>
-            <ion-input-otp id="letterAndNumberType" type="text"> Letters and numbers <span id="value"></span> </ion-input-otp>
-            <ion-input-otp id="customType" type="text" pattern="[a-fA-F]"> Custom Pattern: a-f and A-F <span id="value"></span> </ion-input-otp>
+            <ion-input-otp class="input-otp-type"> Numbers only <span id="value"></span> </ion-input-otp>
+            <ion-input-otp class="input-otp-type" type="text"> Letters and numbers <span id="value"></span> </ion-input-otp>
+            <ion-input-otp class="input-otp-type" type="text" pattern="[a-fA-F]"> Custom Pattern: a-f and A-F <span id="value"></span> </ion-input-otp>
+            <ion-input-otp class="input-otp-type" type="text" pattern="[D-L]"> Custom Pattern: D-L <span id="value"></span> </ion-input-otp>
           </div>
 
           <div class="grid-item">
@@ -76,16 +77,15 @@
         const numberValue = document.getElementById('numberValue');
         numberValue.value = 123;
 
-        // Display value under the different input types on ionChange
-        function addValueListener(id) {
-          const el = document.getElementById(id);
-          el.addEventListener('ionChange', (event) => {
-            const displayValue = event.detail.value != '' ? `(value: ${event.detail.value})` : '';
-            el.querySelector('#value').textContent = displayValue;
-          });
-        }
+        const inputOtpTypes = document.querySelectorAll('.input-otp-type');
 
-        ['numberType', 'letterAndNumberType', 'customType'].forEach(addValueListener);
+        // Display value under the different input types on ionChange
+        inputOtpTypes.forEach((inputOtpType) => {
+          inputOtpType.addEventListener('ionChange', (event) => {
+            const displayValue = event.detail.value != '' ? `(value: ${event.detail.value})` : '';
+            inputOtpType.querySelector('#value').textContent = displayValue;
+          });
+        });
       </script>
     </ion-app>
   </body>
