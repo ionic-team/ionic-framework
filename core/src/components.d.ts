@@ -442,9 +442,9 @@ export namespace Components {
          */
         "shape"?: 'soft' | 'round | rectangular';
         /**
-          * Set to `"small"` for a small badge. Set to "medium" for a medium badge.  Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"small"` for a small badge. Set to `"medium"` for a medium badge. Set to `"large"` for a large badge, when it is empty (no text or icon).  Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
          */
-        "size"?: 'small' | 'medium';
+        "size"?: 'small' | 'medium' | 'large';
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -5899,9 +5899,9 @@ declare namespace LocalJSX {
          */
         "shape"?: 'soft' | 'round | rectangular';
         /**
-          * Set to `"small"` for a small badge. Set to "medium" for a medium badge.  Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"small"` for a small badge. Set to `"medium"` for a medium badge. Set to `"large"` for a large badge, when it is empty (no text or icon).  Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
          */
-        "size"?: 'small' | 'medium';
+        "size"?: 'small' | 'medium' | 'large';
         /**
           * The theme determines the visual appearance of the component.
          */

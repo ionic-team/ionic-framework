@@ -47,11 +47,12 @@ export class Badge implements ComponentInterface {
 
   /**
    * Set to `"small"` for a small badge.
-   * Set to "medium" for a medium badge.
+   * Set to `"medium"` for a medium badge.
+   * Set to `"large"` for a large badge, when it is empty (no text or icon).
    *
    * Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
    */
-  @Prop() size?: 'small' | 'medium';
+  @Prop() size?: 'small' | 'medium' | 'large';
 
   /**
    * Set to `"top"` to position the badge on top right absolute position of the parent element.
