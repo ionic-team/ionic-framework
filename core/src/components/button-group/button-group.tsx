@@ -102,6 +102,7 @@ export class ButtonGroup implements ComponentInterface {
           button.size = size;
           button.onclick = () => this.handleButtonClick(index, button.getAttribute('value'));
           button.classList.toggle('active', index === this.activeIndex);
+          button.setAttribute('aria-pressed', index === this.activeIndex ? 'true' : 'false');
         })}
       </Host>
     );
