@@ -14,6 +14,7 @@
   --focus-ring-width: #{globals.$ion-border-size-050};
 
   @include globals.typography(globals.$ion-body-md-regular);
+  width: 100%;
 
   min-height: globals.$ion-scale-1200;
 
