@@ -278,7 +278,13 @@ export class InputOTP implements ComponentInterface {
     const { inputRefs, length, validKeys } = this;
 
     event.preventDefault();
-    const pastedText = event.clipboardData?.getData('text') || '';
+
+    const pastedText = event.clipboardData?.getData('text');
+
+    if (!pastedText) {
+      return;
+    }
+
     const validChars = pastedText
       .split('')
       .filter((char) => validKeys.test(char.toLowerCase()))
