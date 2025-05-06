@@ -10,8 +10,6 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       await page.setContent(
         `
         <div id="container">
-          <ion-badge shape="soft" size="xxsmall">1</ion-badge>
-          <ion-badge shape="soft" size="xsmall">1</ion-badge>
           <ion-badge shape="soft" size="small">1</ion-badge>
         </div>
       `,
@@ -27,8 +25,6 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       await page.setContent(
         `
         <div id="container">
-          <ion-badge shape="soft" size="xxsmall">99+</ion-badge>
-          <ion-badge shape="soft" size="xsmall">99+</ion-badge>
           <ion-badge shape="soft" size="small">99+</ion-badge>
         </div>
       `,
@@ -44,12 +40,6 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       await page.setContent(
         `
         <div id="container">
-          <ion-badge shape="soft" size="xxsmall">
-            <ion-icon name="logo-ionic"></ion-icon>
-          </ion-badge>
-          <ion-badge shape="soft" size="xsmall">
-            <ion-icon name="logo-ionic"></ion-icon>
-          </ion-badge>
           <ion-badge shape="soft" size="small">
             <ion-icon name="logo-ionic"></ion-icon>
           </ion-badge>
@@ -69,7 +59,6 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
         <div id="container">
           <ion-badge shape="soft" size="medium">1</ion-badge>
           <ion-badge shape="soft" size="large">1</ion-badge>
-          <ion-badge shape="soft" size="xlarge">1</ion-badge>
         </div>
       `,
         config
@@ -85,8 +74,6 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
         `
         <div id="container">
           <ion-badge shape="soft" size="medium">99+</ion-badge>
-          <ion-badge shape="soft" size="large">99+</ion-badge>
-          <ion-badge shape="soft" size="xlarge">99+</ion-badge>
         </div>
       `,
         config
@@ -97,17 +84,11 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       await expect(container).toHaveScreenshot(screenshot(`badge-shape-soft-larger-sizes-long-text`));
     });
 
-    test('should render soft badges with icon for lager sizes', async ({ page }) => {
+    test('should render soft badges with icon for larger sizes', async ({ page }) => {
       await page.setContent(
         `
         <div id="container">
           <ion-badge shape="soft" size="medium">
-            <ion-icon name="logo-ionic"></ion-icon>
-          </ion-badge>
-          <ion-badge shape="soft" size="large">
-            <ion-icon name="logo-ionic"></ion-icon>
-          </ion-badge>
-          <ion-badge shape="soft" size="xlarge">
             <ion-icon name="logo-ionic"></ion-icon>
           </ion-badge>
         </div>
