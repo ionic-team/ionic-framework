@@ -31,15 +31,16 @@
     --background-activated: transparent;
     flex: 1;
 
-    transition: color 0.3s ease;
-
     background-color: transparent;
+    transition: color 0.3s ease;
+    will-change: color;
 
     z-index: 1;
 }
 
 ::slotted(ion-button.active) {
     color: #fff;
+
 }
 
 // ButtonGroup Shapes
