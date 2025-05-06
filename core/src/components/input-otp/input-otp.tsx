@@ -253,6 +253,25 @@ export class InputOTP implements ComponentInterface {
       // Let all tab events proceed normally
       return;
     }
+
+    // If the input box contains a value and the key being
+    // entered is a valid key for the input box, update the value,
+    // shift the values to the right if there is room.
+    if (this.inputValues[index] && this.validKeys.test(event.key)) {
+      if (!this.inputValues[length - 1]) {
+        for (let i = length - 1; i > index; i--) {
+          this.inputValues[i] = this.inputValues[i - 1];
+          this.inputRefs[i].value = this.inputValues[i] || '';
+        }
+      }
+      this.inputValues[index] = event.key;
+      this.inputRefs[index].value = event.key;
+      this.updateValue();
+
+      // Prevent default to avoid the browser from
+      // automatically moving the focus to the next input
+      event.preventDefault();
+    }
   }
 
   private handlePaste(event: ClipboardEvent) {

@@ -173,6 +173,58 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const secondInput = page.locator('ion-input-otp input').nth(1);
       await expect(secondInput).toBeFocused();
     });
+
+    test('should update the 3rd input value and shift the values to the right when typing in the 3rd box containing a value', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input-otp value="123">Description</ion-input-otp>
+      `,
+        config
+      );
+
+      const thirdInput = page.locator('ion-input-otp input').nth(2);
+      await thirdInput.focus();
+
+      const inputOtp = page.locator('ion-input-otp');
+      const inputBoxes = page.locator('ion-input-otp input');
+
+      await page.keyboard.type('9');
+
+      await expect(inputBoxes.nth(0)).toHaveValue('1');
+      await expect(inputBoxes.nth(1)).toHaveValue('2');
+      await expect(inputBoxes.nth(2)).toHaveValue('9');
+      await expect(inputBoxes.nth(3)).toHaveValue('3');
+      await expect(inputOtp).toHaveJSProperty('value', '1293');
+
+      // Focus should remain on the 3rd input box
+      await expect(thirdInput).toBeFocused();
+    });
+
+    test('should update the 2nd input value when typing in the 2nd box containing a value', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input-otp value="1234">Description</ion-input-otp>
+      `,
+        config
+      );
+
+      const secondInput = page.locator('ion-input-otp input').nth(1);
+      await secondInput.focus();
+
+      const inputOtp = page.locator('ion-input-otp');
+      const inputBoxes = page.locator('ion-input-otp input');
+
+      await page.keyboard.type('9');
+
+      await expect(inputBoxes.nth(0)).toHaveValue('1');
+      await expect(inputBoxes.nth(1)).toHaveValue('9');
+      await expect(inputBoxes.nth(2)).toHaveValue('3');
+      await expect(inputBoxes.nth(3)).toHaveValue('4');
+      await expect(inputOtp).toHaveJSProperty('value', '1934');
+
+      // Focus should remain on the 2nd input box
+      await expect(secondInput).toBeFocused();
+    });
   });
 
   test.describe(title('input-otp: focus functionality'), () => {
