@@ -80,11 +80,21 @@
   height: globals.$ion-scale-400;
 }
 
+:host(.badge-small) ::slotted(ion-icon) {
+  width: globals.$ion-scale-300;
+  height: globals.$ion-scale-300;
+}
+
 /* Medium Badge */
 :host(.badge-medium) {
   @include globals.typography(globals.$ion-body-md-medium);
   min-width: globals.$ion-scale-600;
   height: globals.$ion-scale-600;
+}
+
+:host(.badge-medium) ::slotted(ion-icon) {
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 }
 
 // Badge (hint)
@@ -138,16 +148,6 @@
   position: absolute;
 
   transform: translate(-50%, -50%);
-}
-
-:host(.badge-small) ::slotted(ion-icon) {
-  width: globals.$ion-scale-300;
-  height: globals.$ion-scale-300;
-}
-
-:host(.badge-medium) ::slotted(ion-icon) {
-  width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
 }
 
 // Badge in Button
