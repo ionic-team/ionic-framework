@@ -19,9 +19,9 @@ async function simulatePaste(input: any, value: string) {
 }
 
 /**
- * Functionality is the same across modes & directions
+ * Functionality is the same across modes
  */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['ios'] }).forEach(({ title, config }) => {
   test.describe(title('input-otp: basic functionality'), () => {
     test('should render with 4 input boxes and a default value', async ({ page }) => {
       await page.setContent(
@@ -379,8 +379,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       );
 
       await page.keyboard.press('Tab');
-      await page.keyboard.press('ArrowLeft');
-      await page.keyboard.press('ArrowLeft');
+
+      const isRTL = await page.evaluate(() => document.dir === 'rtl');
+      if (isRTL) {
+        await page.keyboard.press('ArrowRight');
+        await page.keyboard.press('ArrowRight');
+      } else {
+        await page.keyboard.press('ArrowLeft');
+        await page.keyboard.press('ArrowLeft');
+      }
       await page.keyboard.press('Backspace');
 
       const inputBoxes = page.locator('ion-input-otp input');
@@ -477,8 +484,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(inputBoxes.nth(3)).toHaveValue('4');
     });
   });
+});
 
-  test.describe(title('input-otp: events: ionInput functionality'), () => {
+/**
+ * Events are the same across modes & directions
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('input-otp: events: ionInput'), () => {
     test('should emit ionInput event when typing', async ({ page }) => {
       await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
@@ -565,7 +577,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 
-  test.describe(title('input-otp: events: ionChange functionality'), () => {
+  test.describe(title('input-otp: events: ionChange'), () => {
     test('should not emit ionChange event when typing', async ({ page }) => {
       await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
@@ -652,7 +664,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 
-  test.describe(title('input-otp: events: ionComplete functionality'), () => {
+  test.describe(title('input-otp: events: ionComplete'), () => {
     test('should emit ionComplete event when all input boxes are filled', async ({ page }) => {
       await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
@@ -669,7 +681,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 
-  test.describe(title('input-otp: events: ionFocus functionality'), () => {
+  test.describe(title('input-otp: events: ionFocus'), () => {
     test('should emit ionFocus event when input box is focused', async ({ page }) => {
       await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
@@ -699,7 +711,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 
-  test.describe(title('input-otp: events: ionBlur functionality'), () => {
+  test.describe(title('input-otp: events: ionBlur'), () => {
     test('should emit ionBlur event when focus leaves the component', async ({ page }) => {
       await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 

@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, h, Watch } from '@stencil/core';
+import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -308,6 +309,7 @@ export class InputOTP implements ComponentInterface {
    */
   private onKeyDown = (index: number) => (event: KeyboardEvent) => {
     const { length } = this;
+    const rtl = isRTL(this.el);
 
     if (event.key === 'Backspace') {
       if (this.inputValues[index]) {
@@ -333,14 +335,18 @@ export class InputOTP implements ComponentInterface {
         // If current input is empty, move to previous input
         this.focusPrevious(index);
       }
-    } else if (event.key === 'ArrowLeft') {
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
       event.preventDefault();
-      this.focusPrevious(index);
-    } else if (event.key === 'ArrowRight') {
-      event.preventDefault();
-      // Only allow moving right if current box has a value
-      if (this.inputValues[index] && index < length - 1) {
-        this.focusNext(index);
+      const isLeft = event.key === 'ArrowLeft';
+      const shouldMoveNext = (isLeft && rtl) || (!isLeft && !rtl);
+
+      // Only allow moving to the next input if the current has a value
+      if (shouldMoveNext) {
+        if (this.inputValues[index] && index < length - 1) {
+          this.focusNext(index);
+        }
+      } else {
+        this.focusPrevious(index);
       }
     } else if (event.key === 'Tab') {
       // Let all tab events proceed normally
