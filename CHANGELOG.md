@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.5.7](https://github.com/ionic-team/ionic-framework/compare/v8.5.6...v8.5.7) (2025-05-07)
+
+
+### Bug Fixes
+
+* **labels:** prevent clicking a label from triggering onClick twice on several components ([#30384](https://github.com/ionic-team/ionic-framework/issues/30384)) ([7d639b0](https://github.com/ionic-team/ionic-framework/commit/7d639b0412120523f758942c855cb69f9a52e9d9)), closes [#30165](https://github.com/ionic-team/ionic-framework/issues/30165)
+
+
+
+
+
 ## [8.5.6](https://github.com/ionic-team/ionic-framework/compare/v8.5.5...v8.5.6) (2025-04-30)
 
 
