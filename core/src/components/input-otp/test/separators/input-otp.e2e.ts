@@ -43,3 +43,91 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+/**
+ * Functionality is the same across modes and directions
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe.only(title('input-otp: separators functionality'), () => {
+    test('should render separators after the first and third input box', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input-otp separators="1,3">Description</ion-input-otp>
+      `,
+        config
+      );
+
+      const firstSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(1) .input-otp-separator');
+      await expect(firstSeparator).toHaveCount(1);
+
+      const secondSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(2) .input-otp-separator');
+      await expect(secondSeparator).toHaveCount(0);
+
+      const thirdSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(3) .input-otp-separator');
+      await expect(thirdSeparator).toHaveCount(1);
+    });
+
+    test('should render separators after the second and third input box', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input-otp>Description</ion-input-otp>
+      `,
+        config
+      );
+
+      const inputOtp = page.locator('ion-input-otp');
+      await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
+        el.separators = [2, 3];
+      });
+
+      const firstSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(1) .input-otp-separator');
+      await expect(firstSeparator).toHaveCount(0);
+
+      const secondSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(2) .input-otp-separator');
+      await expect(secondSeparator).toHaveCount(1);
+
+      const thirdSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(3) .input-otp-separator');
+      await expect(thirdSeparator).toHaveCount(1);
+    });
+
+    test('should render all separators', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input-otp separators="all">Description</ion-input-otp>
+      `,
+        config
+      );
+
+      const firstSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(1) .input-otp-separator');
+      await expect(firstSeparator).toHaveCount(1);
+
+      const secondSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(2) .input-otp-separator');
+      await expect(secondSeparator).toHaveCount(1);
+
+      const thirdSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(3) .input-otp-separator');
+      await expect(thirdSeparator).toHaveCount(1);
+    });
+
+    test('should warn when setting separators to a position greater than the input length', async ({ page }) => {
+      const warnings: string[] = [];
+
+      page.on('console', (ev) => {
+        if (ev.type() === 'warning') {
+          warnings.push(ev.text());
+        }
+      });
+
+      await page.setContent(
+        `
+        <ion-input-otp separators="1,3,5,6,7">Description</ion-input-otp>
+      `,
+        config
+      );
+
+      expect(warnings.length).toBe(1);
+      expect(warnings[0]).toContain(
+        '[Ionic Warning]: [ion-input-otp] - The following separator positions are greater than the input length (4): 5, 6, 7. These separators will be ignored.'
+      );
+    });
+  });
+});

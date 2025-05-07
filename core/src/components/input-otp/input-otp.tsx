@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, h, Watch } from '@stencil/core';
+import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 
@@ -23,6 +24,7 @@ import type {
 export class InputOTP implements ComponentInterface {
   private inputRefs: HTMLInputElement[] = [];
   private inputId = `ion-input-otp-${inputIds++}`;
+  private parsedSeparators: number[] = [];
 
   /**
    * The value of the OTP input when it is focused.
@@ -158,7 +160,52 @@ export class InputOTP implements ComponentInterface {
     this.initializeValues();
   }
 
+  /**
+   * Processes the separators prop into an array of numbers.
+   *
+   * If the separators prop is not provided, returns an empty array.
+   * If the separators prop is 'all', returns an array of all valid positions (1 to length-1).
+   * If the separators prop is an array, returns it as is.
+   * If the separators prop is a string, splits it by commas and parses each part as a number.
+   *
+   * If the separators are greater than the input length, it will warn and ignore the separators.
+   */
+  @Watch('separators')
+  @Watch('length')
+  private processSeparators() {
+    const { separators, length } = this;
+    if (separators === undefined) {
+      this.parsedSeparators = [];
+      return;
+    }
+
+    let separatorValues: number[];
+    if (separators === 'all') {
+      separatorValues = Array.from({ length: length - 1 }, (_, i) => i + 1);
+    } else if (Array.isArray(separators)) {
+      separatorValues = separators;
+    } else {
+      separatorValues = separators
+        .split(',')
+        .map((pos) => parseInt(pos, 10))
+        .filter((pos) => !isNaN(pos));
+    }
+
+    const invalidSeparators = separatorValues.filter((pos) => pos > length);
+    if (invalidSeparators.length > 0) {
+      printIonWarning(
+        `[ion-input-otp] - The following separator positions are greater than the input length (${length}): ${invalidSeparators.join(
+          ', '
+        )}. These separators will be ignored.`,
+        this.el
+      );
+    }
+
+    this.parsedSeparators = separatorValues.filter((pos) => pos <= length);
+  }
+
   componentWillLoad() {
+    this.processSeparators();
     this.initializeValues();
   }
 
@@ -446,37 +493,11 @@ export class InputOTP implements ComponentInterface {
   }
 
   /**
-   * Parses the separators prop into an array of numbers.
-   *
-   * If the separators prop is not provided, returns an empty array.
-   * If the separators prop is an array, returns it as is.
-   * If the separators prop is a string, splits it by commas and parses each part as a number.
-   */
-  private get parsedSeparators(): number[] {
-    const { separators } = this;
-    if (separators === undefined) {
-      return [];
-    }
-    if (Array.isArray(separators)) {
-      return separators;
-    }
-    return separators
-      .split(',')
-      .map((pos) => parseInt(pos, 10))
-      .filter((pos) => !isNaN(pos));
-  }
-
-  /**
-   * Determines if a separator should be shown for a given index.
-   *
-   * This function checks if the separators prop is set to 'all' or
-   * if the index is included in the separators array.
+   * Determines if a separator should be shown for a given index by
+   * checking if the index is included in the parsed separators array.
    */
   private showSeparator(index: number) {
-    const { length, separators } = this;
-    if (separators === 'all') {
-      return index < length - 1;
-    }
+    const { length } = this;
     return this.parsedSeparators.includes(index + 1) && index < length - 1;
   }
 
