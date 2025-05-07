@@ -58,7 +58,6 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
         `
         <div id="container">
           <ion-badge shape="soft" size="medium">1</ion-badge>
-          <ion-badge shape="soft" size="large">1</ion-badge>
         </div>
       `,
         config
