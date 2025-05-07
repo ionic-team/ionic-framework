@@ -179,6 +179,18 @@ export class InputOTP implements ComponentInterface {
       return;
     }
 
+    if (typeof separators === 'string' && separators !== 'all') {
+      const isValidFormat = /^(\d+)(,\d+)*$/.test(separators);
+      if (!isValidFormat) {
+        printIonWarning(
+          `[ion-input-otp] - Invalid separators format. Expected a comma-separated list of numbers, an array of numbers, or "all". Received: ${separators}`,
+          this.el
+        );
+        this.parsedSeparators = [];
+        return;
+      }
+    }
+
     let separatorValues: number[];
     if (separators === 'all') {
       separatorValues = Array.from({ length: length - 1 }, (_, i) => i + 1);
