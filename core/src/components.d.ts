@@ -18,7 +18,7 @@ import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-import { InputOtpChangeEventDetail, InputOtpCompleteEventDetail } from "./components/input-otp/input-otp-interface";
+import { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
 import { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
@@ -56,7 +56,7 @@ export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-export { InputOtpChangeEventDetail, InputOtpCompleteEventDetail } from "./components/input-otp/input-otp-interface";
+export { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
 export { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
@@ -1367,7 +1367,7 @@ export namespace Components {
          */
         "type": 'text' | 'number';
         /**
-          * The value of the OTP input.
+          * The value of the input group.
          */
         "value"?: string | number | null;
     }
@@ -3990,8 +3990,11 @@ declare global {
         new (): HTMLIonInputElement;
     };
     interface HTMLIonInputOtpElementEventMap {
+        "ionInput": InputOtpInputEventDetail;
         "ionChange": InputOtpChangeEventDetail;
         "ionComplete": InputOtpCompleteEventDetail;
+        "ionBlur": FocusEvent;
+        "ionFocus": FocusEvent;
     }
     interface HTMLIonInputOtpElement extends Components.IonInputOtp, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonInputOtpElementEventMap>(type: K, listener: (this: HTMLIonInputOtpElement, ev: IonInputOtpCustomEvent<HTMLIonInputOtpElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -6275,13 +6278,25 @@ declare namespace LocalJSX {
          */
         "length"?: number;
         /**
-          * Emitted when the value changes
+          * Emitted when the input group loses focus.
+         */
+        "onIonBlur"?: (event: IonInputOtpCustomEvent<FocusEvent>) => void;
+        /**
+          * The `ionChange` event is fired when the user modifies the input's value. Unlike the `ionInput` event, the `ionChange` event is only fired when changes are committed, not as the user types.  The `ionChange` event fires when the `<ion-input-otp>` component loses focus after its value has changed.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonInputOtpCustomEvent<InputOtpChangeEventDetail>) => void;
         /**
-          * Emitted when the input is complete (all boxes filled)
+          * Emitted when all input boxes have been filled with valid values.
          */
         "onIonComplete"?: (event: IonInputOtpCustomEvent<InputOtpCompleteEventDetail>) => void;
+        /**
+          * Emitted when the input group has focus.
+         */
+        "onIonFocus"?: (event: IonInputOtpCustomEvent<FocusEvent>) => void;
+        /**
+          * The `ionInput` event is fired each time the user modifies the input's value. Unlike the `ionChange` event, the `ionInput` event is fired for each alteration to the input's value. This typically happens for each keystroke as the user types.  For elements that accept text input (`type=text`, `type=tel`, etc.), the interface is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others, the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If the input is cleared on edit, the type is `null`.
+         */
+        "onIonInput"?: (event: IonInputOtpCustomEvent<InputOtpInputEventDetail>) => void;
         /**
           * A regex pattern string for allowed characters. Defaults based on type.  For numbers (type="number"): "[0-9]" For text (type="text"): "[a-zA-Z0-9]"
          */
@@ -6307,7 +6322,7 @@ declare namespace LocalJSX {
          */
         "type"?: 'text' | 'number';
         /**
-          * The value of the OTP input.
+          * The value of the input group.
          */
         "value"?: string | number | null;
     }

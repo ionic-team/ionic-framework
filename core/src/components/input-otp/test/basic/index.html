@@ -50,9 +50,15 @@
           <div class="grid-item">
             <h2>Types</h2>
             <ion-input-otp class="input-otp-type"> Numbers only <span id="value"></span> </ion-input-otp>
-            <ion-input-otp class="input-otp-type" type="text"> Letters and numbers <span id="value"></span> </ion-input-otp>
-            <ion-input-otp class="input-otp-type" type="text" pattern="[a-fA-F]"> Custom Pattern: a-f and A-F <span id="value"></span> </ion-input-otp>
-            <ion-input-otp class="input-otp-type" type="text" pattern="[D-L]"> Custom Pattern: D-L <span id="value"></span> </ion-input-otp>
+            <ion-input-otp class="input-otp-type" type="text">
+              Letters and numbers <span id="value"></span>
+            </ion-input-otp>
+            <ion-input-otp class="input-otp-type" type="text" pattern="[a-fA-F]">
+              Custom Pattern: a-f and A-F <span id="value"></span>
+            </ion-input-otp>
+            <ion-input-otp class="input-otp-type" type="text" pattern="[D-L]">
+              Custom Pattern: D-L <span id="value"></span>
+            </ion-input-otp>
           </div>
 
           <div class="grid-item">
@@ -79,12 +85,32 @@
 
         const inputOtpTypes = document.querySelectorAll('.input-otp-type');
 
-        // Display value under the different input types on ionChange
+        // Display value under the different input types on ionInput
         inputOtpTypes.forEach((inputOtpType) => {
-          inputOtpType.addEventListener('ionChange', (event) => {
+          inputOtpType.addEventListener('ionInput', (event) => {
             const displayValue = event.detail.value != '' ? `(value: ${event.detail.value})` : '';
             inputOtpType.querySelector('#value').textContent = displayValue;
           });
+        });
+
+        document.addEventListener('ionChange', (ev) => {
+          console.log('ionChange', ev);
+        });
+
+        document.addEventListener('ionInput', (ev) => {
+          console.log('ionInput', ev);
+        });
+
+        document.addEventListener('ionComplete', (ev) => {
+          console.log('ionComplete', ev);
+        });
+
+        document.addEventListener('ionFocus', (ev) => {
+          console.log('ionFocus', ev);
+        });
+
+        document.addEventListener('ionBlur', (ev) => {
+          console.log('ionBlur', ev);
         });
       </script>
     </ion-app>

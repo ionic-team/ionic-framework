@@ -1032,23 +1032,50 @@ export class IonInputOtp {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionComplete']);
+    proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionComplete', 'ionBlur', 'ionFocus']);
   }
 }
 
 
+import type { InputOtpInputEventDetail as IIonInputOtpInputOtpInputEventDetail } from '@ionic/core';
 import type { InputOtpChangeEventDetail as IIonInputOtpInputOtpChangeEventDetail } from '@ionic/core';
 import type { InputOtpCompleteEventDetail as IIonInputOtpInputOtpCompleteEventDetail } from '@ionic/core';
 
 export declare interface IonInputOtp extends Components.IonInputOtp {
   /**
-   * Emitted when the value changes
+   * The `ionInput` event is fired each time the user modifies the input's value.
+Unlike the `ionChange` event, the `ionInput` event is fired for each alteration
+to the input's value. This typically happens for each keystroke as the user types.
+
+For elements that accept text input (`type=text`, `type=tel`, etc.), the interface
+is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others,
+the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If
+the input is cleared on edit, the type is `null`.
+   */
+  ionInput: EventEmitter<CustomEvent<IIonInputOtpInputOtpInputEventDetail>>;
+  /**
+   * The `ionChange` event is fired when the user modifies the input's value.
+Unlike the `ionInput` event, the `ionChange` event is only fired when changes
+are committed, not as the user types.
+
+The `ionChange` event fires when the `<ion-input-otp>` component loses
+focus after its value has changed.
+
+This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonInputOtpInputOtpChangeEventDetail>>;
   /**
-   * Emitted when the input is complete (all boxes filled)
+   * Emitted when all input boxes have been filled with valid values.
    */
   ionComplete: EventEmitter<CustomEvent<IIonInputOtpInputOtpCompleteEventDetail>>;
+  /**
+   * Emitted when the input group loses focus.
+   */
+  ionBlur: EventEmitter<CustomEvent<FocusEvent>>;
+  /**
+   * Emitted when the input group has focus.
+   */
+  ionFocus: EventEmitter<CustomEvent<FocusEvent>>;
 }
 
 

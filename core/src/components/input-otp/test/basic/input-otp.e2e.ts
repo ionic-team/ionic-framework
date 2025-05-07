@@ -2,6 +2,23 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
+ * Simulates a paste event in an input element with the given value
+ */
+async function simulatePaste(input: any, value: string) {
+  await input.evaluate((input: any, value: string) => {
+    const event = new ClipboardEvent('paste', {
+      bubbles: true,
+      cancelable: true,
+      clipboardData: new DataTransfer(),
+    });
+    if (event.clipboardData) {
+      event.clipboardData.setData('text', value);
+    }
+    input.dispatchEvent(event);
+  }, value);
+}
+
+/**
  * Functionality is the same across modes & directions
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
@@ -193,7 +210,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(inputBoxes.nth(1)).toBeFocused();
     });
 
-    test('should update the 3rd input value and shift the values to the right when typing in the 3rd box containing a value', async ({ page }) => {
+    test('should update the 3rd input value and shift the values to the right when typing in the 3rd box containing a value', async ({
+      page,
+    }) => {
       await page.setContent(
         `
         <ion-input-otp value="123">Description</ion-input-otp>
@@ -378,17 +397,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
-      await firstInput.evaluate((input, value) => {
-        const event = new ClipboardEvent('paste', {
-          bubbles: true,
-          cancelable: true,
-          clipboardData: new DataTransfer(),
-        });
-        if (event.clipboardData) {
-          event.clipboardData.setData('text', value);
-        }
-        input.dispatchEvent(event);
-      }, '12');
+      await simulatePaste(firstInput, '12');
 
       const inputBoxes = page.locator('ion-input-otp input');
       await expect(inputBoxes.nth(0)).toHaveValue('1');
@@ -405,17 +414,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
-      await firstInput.evaluate((input, value) => {
-        const event = new ClipboardEvent('paste', {
-          bubbles: true,
-          cancelable: true,
-          clipboardData: new DataTransfer(),
-        });
-        if (event.clipboardData) {
-          event.clipboardData.setData('text', value);
-        }
-        input.dispatchEvent(event);
-      }, '1234');
+      await simulatePaste(firstInput, '1234');
 
       const inputBoxes = page.locator('ion-input-otp input');
       await expect(inputBoxes.nth(0)).toHaveValue('1');
@@ -434,17 +433,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const thirdInput = page.locator('ion-input-otp input').nth(2);
       await thirdInput.focus();
-      await thirdInput.evaluate((input, value) => {
-        const event = new ClipboardEvent('paste', {
-          bubbles: true,
-          cancelable: true,
-          clipboardData: new DataTransfer(),
-        });
-        if (event.clipboardData) {
-          event.clipboardData.setData('text', value);
-        }
-        input.dispatchEvent(event);
-      }, '12');
+      await simulatePaste(thirdInput, '12');
 
       const inputBoxes = page.locator('ion-input-otp input');
       await expect(inputBoxes.nth(0)).toHaveValue('1');
@@ -463,20 +452,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
-
       await page.keyboard.type('12');
-
-      await firstInput.evaluate((input, value) => {
-        const event = new ClipboardEvent('paste', {
-          bubbles: true,
-          cancelable: true,
-          clipboardData: new DataTransfer(),
-        });
-        if (event.clipboardData) {
-          event.clipboardData.setData('text', value);
-        }
-        input.dispatchEvent(event);
-      }, '34');
+      await simulatePaste(firstInput, '34');
 
       const inputBoxes = page.locator('ion-input-otp input');
       await expect(inputBoxes.nth(0)).toHaveValue('1');
@@ -490,26 +467,268 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
-
       await page.keyboard.type('9999');
-
-      await firstInput.evaluate((input, value) => {
-        const event = new ClipboardEvent('paste', {
-          bubbles: true,
-          cancelable: true,
-          clipboardData: new DataTransfer(),
-        });
-        if (event.clipboardData) {
-          event.clipboardData.setData('text', value);
-        }
-        input.dispatchEvent(event);
-      }, '1234');
+      await simulatePaste(firstInput, '1234');
 
       const inputBoxes = page.locator('ion-input-otp input');
       await expect(inputBoxes.nth(0)).toHaveValue('1');
       await expect(inputBoxes.nth(1)).toHaveValue('2');
       await expect(inputBoxes.nth(2)).toHaveValue('3');
       await expect(inputBoxes.nth(3)).toHaveValue('4');
+    });
+  });
+
+  test.describe(title('input-otp: events: ionInput functionality'), () => {
+    test('should emit ionInput event when typing', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const ionInput = await page.spyOnEvent('ionInput');
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('1');
+      await ionInput.next();
+      await expect(ionInput).toHaveReceivedEventDetail({ value: '1', event: { isTrusted: true } });
+      await expect(ionInput).toHaveReceivedEventTimes(1);
+
+      await page.keyboard.type('2');
+      await ionInput.next();
+      await expect(ionInput).toHaveReceivedEventDetail({ value: '12', event: { isTrusted: true } });
+      await expect(ionInput).toHaveReceivedEventTimes(2);
+
+      await page.keyboard.type('3');
+      await ionInput.next();
+      await expect(ionInput).toHaveReceivedEventDetail({ value: '123', event: { isTrusted: true } });
+      await expect(ionInput).toHaveReceivedEventTimes(3);
+
+      await page.keyboard.type('4');
+      await ionInput.next();
+      await expect(ionInput).toHaveReceivedEventDetail({ value: '1234', event: { isTrusted: true } });
+      await expect(ionInput).toHaveReceivedEventTimes(4);
+    });
+
+    test('should emit ionInput event when backspacing', async ({ page }) => {
+      await page.setContent(`<ion-input-otp value="1234">Description</ion-input-otp>`, config);
+
+      const ionInput = await page.spyOnEvent('ionInput');
+
+      await page.keyboard.press('Tab');
+
+      await page.keyboard.press('Backspace');
+      await ionInput.next();
+      await expect(ionInput).toHaveReceivedEventDetail({ value: '123', event: { isTrusted: true } });
+      await expect(ionInput).toHaveReceivedEventTimes(1);
+
+      await page.keyboard.press('Backspace');
+      await ionInput.next();
+      await expect(ionInput).toHaveReceivedEventDetail({ value: '12', event: { isTrusted: true } });
+      await expect(ionInput).toHaveReceivedEventTimes(2);
+
+      await page.keyboard.press('Backspace');
+      await ionInput.next();
+      await expect(ionInput).toHaveReceivedEventDetail({ value: '1', event: { isTrusted: true } });
+      await expect(ionInput).toHaveReceivedEventTimes(3);
+
+      await page.keyboard.press('Backspace');
+      await ionInput.next();
+      await expect(ionInput).toHaveReceivedEventDetail({ value: '', event: { isTrusted: true } });
+      await expect(ionInput).toHaveReceivedEventTimes(4);
+    });
+
+    test('should emit ionInput event when pasting', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const ionInput = await page.spyOnEvent('ionInput');
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+      await simulatePaste(firstInput, '12');
+
+      await ionInput.next();
+      await expect(ionInput).toHaveReceivedEventDetail({ value: '12', event: { isTrusted: false } });
+      await expect(ionInput).toHaveReceivedEventTimes(1);
+    });
+
+    test('should not emit ionInput event when programmatically setting the value', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const ionInput = await page.spyOnEvent('ionInput');
+
+      const inputOtp = page.locator('ion-input-otp');
+      await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
+        el.value = '1234';
+      });
+      await expect(inputOtp).toHaveJSProperty('value', '1234');
+
+      await expect(ionInput).not.toHaveReceivedEvent();
+    });
+  });
+
+  test.describe(title('input-otp: events: ionChange functionality'), () => {
+    test('should not emit ionChange event when typing', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const ionChange = await page.spyOnEvent('ionChange');
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('12');
+
+      await expect(ionChange).not.toHaveReceivedEvent();
+    });
+
+    test('should emit ionChange event when pasting and then blurring', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const ionChange = await page.spyOnEvent('ionChange');
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+      await simulatePaste(firstInput, '12');
+
+      // Click outside the input to trigger the blur event
+      await page.mouse.click(0, 0);
+
+      await ionChange.next();
+      await expect(ionChange).toHaveReceivedEventDetail({ value: '12', event: { isTrusted: true } });
+      await expect(ionChange).toHaveReceivedEventTimes(1);
+    });
+
+    test('should emit ionChange event when blurring with a new value', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input-otp>Description</ion-input-otp>
+      `,
+        config
+      );
+
+      const ionChange = await page.spyOnEvent('ionChange');
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('12');
+
+      // Click outside the input to trigger the blur event
+      await page.mouse.click(0, 0);
+
+      await ionChange.next();
+      await expect(ionChange).toHaveReceivedEvent();
+      await expect(ionChange).toHaveReceivedEventTimes(1);
+    });
+
+    test('should not emit ionChange event when blurring with the same value', async ({ page }) => {
+      await page.setContent(`<ion-input-otp value="12">Description</ion-input-otp>`, config);
+
+      const ionBlur = await page.spyOnEvent('ionBlur');
+      const ionChange = await page.spyOnEvent('ionChange');
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      // Click outside the input to trigger the blur event
+      await page.mouse.click(0, 0);
+
+      await ionBlur.next();
+      await expect(ionBlur).toHaveReceivedEvent();
+      await expect(ionBlur).toHaveReceivedEventTimes(1);
+      await expect(ionChange).not.toHaveReceivedEvent();
+    });
+
+    test('should not emit ionChange event when programmatically setting the value', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const ionChange = await page.spyOnEvent('ionChange');
+
+      const inputOtp = page.locator('ion-input-otp');
+      await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
+        el.value = '1234';
+      });
+      await expect(inputOtp).toHaveJSProperty('value', '1234');
+
+      await expect(ionChange).not.toHaveReceivedEvent();
+    });
+  });
+
+  test.describe(title('input-otp: events: ionComplete functionality'), () => {
+    test('should emit ionComplete event when all input boxes are filled', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const ionComplete = await page.spyOnEvent('ionComplete');
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('1234');
+
+      await ionComplete.next();
+      await expect(ionComplete).toHaveReceivedEventDetail({ value: '1234' });
+      await expect(ionComplete).toHaveReceivedEventTimes(1);
+    });
+  });
+
+  test.describe(title('input-otp: events: ionFocus functionality'), () => {
+    test('should emit ionFocus event when input box is focused', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const ionFocus = await page.spyOnEvent('ionFocus');
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await ionFocus.next();
+      await expect(ionFocus).toHaveReceivedEvent();
+      await expect(ionFocus).toHaveReceivedEventTimes(1);
+    });
+
+    test('should not emit ionFocus event when focus is moved to another input in the same component', async ({
+      page,
+    }) => {
+      await page.setContent(`<ion-input-otp value="1234">Description</ion-input-otp>`, config);
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      const ionFocus = await page.spyOnEvent('ionFocus');
+
+      await page.keyboard.press('ArrowRight');
+
+      await expect(ionFocus).not.toHaveReceivedEvent();
+    });
+  });
+
+  test.describe(title('input-otp: events: ionBlur functionality'), () => {
+    test('should emit ionBlur event when focus leaves the component', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const ionBlur = await page.spyOnEvent('ionBlur');
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      // Click outside the input to trigger the blur event
+      await page.mouse.click(0, 0);
+
+      await ionBlur.next();
+      await expect(ionBlur).toHaveReceivedEvent();
+      await expect(ionBlur).toHaveReceivedEventTimes(1);
+    });
+
+    test('should not emit ionBlur event when focus is moved to another input in the same component', async ({
+      page,
+    }) => {
+      await page.setContent(`<ion-input-otp value="1234">Description</ion-input-otp>`, config);
+
+      const ionBlur = await page.spyOnEvent('ionBlur');
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.press('ArrowRight');
+
+      await expect(ionBlur).not.toHaveReceivedEvent();
     });
   });
 });

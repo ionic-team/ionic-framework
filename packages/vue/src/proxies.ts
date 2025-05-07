@@ -505,11 +505,17 @@ export const IonInputOtp: StencilVueComponent<JSX.IonInputOtp> = /*@__PURE__*/ d
   'shape',
   'type',
   'value',
+  'ionInput',
   'ionChange',
-  'ionComplete'
+  'ionComplete',
+  'ionBlur',
+  'ionFocus'
 ], [
+  'ionInput',
   'ionChange',
-  'ionComplete'
+  'ionComplete',
+  'ionBlur',
+  'ionFocus'
 ]);
 
 

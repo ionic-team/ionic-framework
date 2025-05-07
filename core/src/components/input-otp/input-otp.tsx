@@ -5,7 +5,11 @@ import { createColorClasses } from '@utils/theme';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
-import type { InputOtpChangeEventDetail, InputOtpCompleteEventDetail } from './input-otp-interface';
+import type {
+  InputOtpChangeEventDetail,
+  InputOtpCompleteEventDetail,
+  InputOtpInputEventDetail,
+} from './input-otp-interface';
 
 @Component({
   tag: 'ion-input-otp',
@@ -18,6 +22,11 @@ import type { InputOtpChangeEventDetail, InputOtpCompleteEventDetail } from './i
 export class InputOTP implements ComponentInterface {
   private inputRefs: HTMLInputElement[] = [];
   private inputId = `ion-input-otp-${inputIds++}`;
+
+  /**
+   * The value of the OTP input when it is focused.
+   */
+  private focusedValue?: string | number | null;
 
   @Element() el!: HTMLIonInputOtpElement;
 
@@ -100,19 +109,48 @@ export class InputOTP implements ComponentInterface {
   @Prop() type: 'text' | 'number' = 'number';
 
   /**
-   * The value of the OTP input.
+   * The value of the input group.
    */
   @Prop({ mutable: true }) value?: string | number | null = '';
 
   /**
-   * Emitted when the value changes
+   * The `ionInput` event is fired each time the user modifies the input's value.
+   * Unlike the `ionChange` event, the `ionInput` event is fired for each alteration
+   * to the input's value. This typically happens for each keystroke as the user types.
+   *
+   * For elements that accept text input (`type=text`, `type=tel`, etc.), the interface
+   * is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others,
+   * the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If
+   * the input is cleared on edit, the type is `null`.
+   */
+  @Event() ionInput!: EventEmitter<InputOtpInputEventDetail>;
+
+  /**
+   * The `ionChange` event is fired when the user modifies the input's value.
+   * Unlike the `ionInput` event, the `ionChange` event is only fired when changes
+   * are committed, not as the user types.
+   *
+   * The `ionChange` event fires when the `<ion-input-otp>` component loses
+   * focus after its value has changed.
+   *
+   * This event will not emit when programmatically setting the `value` property.
    */
   @Event() ionChange!: EventEmitter<InputOtpChangeEventDetail>;
 
   /**
-   * Emitted when the input is complete (all boxes filled)
+   * Emitted when all input boxes have been filled with valid values.
    */
   @Event() ionComplete!: EventEmitter<InputOtpCompleteEventDetail>;
+
+  /**
+   * Emitted when the input group loses focus.
+   */
+  @Event() ionBlur!: EventEmitter<FocusEvent>;
+
+  /**
+   * Emitted when the input group has focus.
+   */
+  @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   @Watch('value')
   valueChanged() {
@@ -123,6 +161,12 @@ export class InputOTP implements ComponentInterface {
     this.initializeValues();
   }
 
+  /**
+   * Initializes the input values array based on the current value prop.
+   * This splits the value into individual characters and validates them against
+   * the allowed pattern. The values are then used as the values in the native
+   * input boxes and the value of the input group is updated.
+   */
   private initializeValues() {
     if (this.value != null && String(this.value).length > 0) {
       const chars = String(this.value).split('').slice(0, this.length);
@@ -137,7 +181,7 @@ export class InputOTP implements ComponentInterface {
   }
 
   /**
-   * Get the regex pattern for allowed characters
+   * Get the regex pattern for allowed characters.
    * If a pattern is provided, use it to create a regex pattern
    * Otherwise, use the default regex pattern based on type
    */
@@ -147,12 +191,12 @@ export class InputOTP implements ComponentInterface {
     if (pattern) {
       return new RegExp(`^${pattern}$`);
     }
-    return type === 'number' ? /^[0-9]$/ : /^[a-zA-Z0-9]$/i;
+    return type === 'number' ? /^[0-9]$/ : /^[a-zA-Z0-9]$/;
   }
 
   /**
-   * Get the default value for inputmode
-   * If inputmode is provided, use it
+   * Get the default value for inputmode.
+   * If inputmode is provided, use it.
    * Otherwise, use the default inputmode based on type
    */
   private getInputmode(): string {
@@ -168,22 +212,53 @@ export class InputOTP implements ComponentInterface {
     }
   }
 
-  private updateValue() {
+  /**
+   * Updates the value of the input group.
+   * This updates the value of the input group and emits an `ionChange` event.
+   * If all of the input boxes are filled, it emits an `ionComplete` event.
+   */
+  private updateValue(event: Event) {
     const { inputValues, length } = this;
     const newValue = inputValues.join('');
     this.value = newValue;
-    this.ionChange.emit({
-      value: newValue,
-      complete: newValue.length === length,
-    });
-
+    this.emitIonInput(event);
     if (newValue.length === length) {
       this.ionComplete.emit({ value: newValue });
     }
   }
 
-  private handleInput(index: number, value: string) {
+  /**
+   * Emits an `ionChange` event.
+   * This API should be called for user committed changes.
+   * This API should not be used for external value changes.
+   */
+  private emitIonChange(event: Event) {
+    const { value } = this;
+
+    // Checks for both null and undefined values
+    const newValue = value == null ? value : value.toString();
+
+    this.ionChange.emit({ value: newValue, event });
+  }
+
+  /**
+   * Emits an `ionInput` event.
+   * This is used to emit the input value when the user types,
+   * backspaces, or pastes.
+   */
+  private emitIonInput(event: Event) {
+    const { value } = this;
+
+    // Checks for both null and undefined values
+    const newValue = value == null ? value : value.toString();
+
+    this.ionInput.emit({ value: newValue, event });
+  }
+
+  private onInput = (index: number) => (event: InputEvent) => {
     const { validKeys } = this;
+
+    const value = (event.target as HTMLInputElement).value;
 
     // Only allow input if it's a single character and matches the pattern
     if (value.length > 1 || (value.length > 0 && !validKeys.test(value))) {
@@ -213,10 +288,25 @@ export class InputOTP implements ComponentInterface {
     if (value.length > 0) {
       this.focusNext(targetIndex);
     }
-    this.updateValue();
-  }
+    this.updateValue(event);
+  };
 
-  private handleKeyDown(index: number, event: KeyboardEvent) {
+  /**
+   * Handles keyboard navigation and input for the OTP component.
+   *
+   * Navigation:
+   * - Backspace: Clears current input and moves to previous box if empty
+   * - Arrow Left/Right: Moves focus between input boxes
+   * - Tab: Allows normal tab navigation between components
+   *
+   * Input Behavior:
+   * - Validates input against the allowed pattern
+   * - When entering a key in a filled box:
+   *   - Shifts existing values right if there is room
+   *   - Updates the value of the input group
+   *   - Prevents default behavior to avoid automatic focus shift
+   */
+  private onKeyDown = (index: number) => (event: KeyboardEvent) => {
     const { length } = this;
 
     if (event.key === 'Backspace') {
@@ -237,7 +327,7 @@ export class InputOTP implements ComponentInterface {
           this.inputRefs[i].value = this.inputValues[i] || '';
         }
 
-        this.updateValue();
+        this.updateValue(event);
         event.preventDefault();
       } else if (!this.inputValues[index] && index > 0) {
         // If current input is empty, move to previous input
@@ -258,8 +348,8 @@ export class InputOTP implements ComponentInterface {
     }
 
     // If the input box contains a value and the key being
-    // entered is a valid key for the input box, update the value,
-    // shift the values to the right if there is room.
+    // entered is a valid key for the input box update the value
+    // and shift the values to the right if there is room.
     if (this.inputValues[index] && this.validKeys.test(event.key)) {
       if (!this.inputValues[length - 1]) {
         for (let i = length - 1; i > index; i--) {
@@ -269,22 +359,33 @@ export class InputOTP implements ComponentInterface {
       }
       this.inputValues[index] = event.key;
       this.inputRefs[index].value = event.key;
-      this.updateValue();
+      this.updateValue(event);
 
       // Prevent default to avoid the browser from
       // automatically moving the focus to the next input
       event.preventDefault();
     }
-  }
+  };
 
-  private handlePaste(event: ClipboardEvent) {
+  /**
+   * Handles pasting text into the input OTP component.
+   * This function prevents the default paste behavior and
+   * validates the pasted text against the allowed pattern.
+   * It then updates the value of the input group and focuses
+   * the next empty input after pasting.
+   */
+  private onPaste = (event: ClipboardEvent) => {
     const { inputRefs, length, validKeys } = this;
 
     event.preventDefault();
 
     const pastedText = event.clipboardData?.getData('text');
 
+    // If there is no pasted text, still emit the input change event
+    // because this is how the native input element behaves
+    // but return early because there is nothing to paste.
     if (!pastedText) {
+      this.emitIonInput(event);
       return;
     }
 
@@ -306,7 +407,7 @@ export class InputOTP implements ComponentInterface {
       }
     });
 
-    this.updateValue();
+    this.updateValue(event);
 
     // Focus the next empty input after pasting
     // If all boxes are filled, focus the last input
@@ -316,8 +417,11 @@ export class InputOTP implements ComponentInterface {
     } else {
       inputRefs[length - 1]?.focus();
     }
-  }
+  };
 
+  /**
+   * Focuses the next input box.
+   */
   private focusNext(currentIndex: number) {
     const { inputRefs, length } = this;
     if (currentIndex < length - 1) {
@@ -325,6 +429,9 @@ export class InputOTP implements ComponentInterface {
     }
   }
 
+  /**
+   * Focuses the previous input box.
+   */
   private focusPrevious(currentIndex: number) {
     const { inputRefs } = this;
     if (currentIndex > 0) {
@@ -332,6 +439,13 @@ export class InputOTP implements ComponentInterface {
     }
   }
 
+  /**
+   * Parses the separators prop into an array of numbers.
+   *
+   * If the separators prop is not provided, returns an empty array.
+   * If the separators prop is an array, returns it as is.
+   * If the separators prop is a string, splits it by commas and parses each part as a number.
+   */
   private get parsedSeparators(): number[] {
     const { separators } = this;
     if (separators === undefined) {
@@ -346,6 +460,12 @@ export class InputOTP implements ComponentInterface {
       .filter((pos) => !isNaN(pos));
   }
 
+  /**
+   * Determines if a separator should be shown for a given index.
+   *
+   * This function checks if the separators prop is set to 'all' or
+   * if the index is included in the separators array.
+   */
   private showSeparator(index: number) {
     const { length, separators } = this;
     if (separators === 'all') {
@@ -354,25 +474,58 @@ export class InputOTP implements ComponentInterface {
     return this.parsedSeparators.includes(index + 1) && index < length - 1;
   }
 
-  private handleFocus(index: number) {
+  /**
+   * Handles the focus behavior for the input OTP component.
+   * Emits the `ionFocus` event when the input group gains focus.
+   */
+  private onFocus = (index: number) => (event: FocusEvent) => {
     const { inputRefs } = this;
+    // Only emit ionFocus and set the focusedValue when the
+    // component first gains focus
+    if (!this.hasFocus) {
+      this.ionFocus.emit(event);
+      this.focusedValue = this.value;
+    }
     this.hasFocus = true;
+
     // When an input receives focus, make it the only tabbable element
     inputRefs.forEach((input, i) => {
       input.tabIndex = i === index ? 0 : -1;
     });
-  }
+  };
 
-  private handleBlur(ev: FocusEvent) {
+  /**
+   * Handles the blur behavior for the input OTP component.
+   * Emits the `ionBlur` event when the input group loses focus.
+   */
+  private onBlur = (event: FocusEvent) => {
     const { inputRefs } = this;
-    const relatedTarget = ev.relatedTarget as HTMLElement;
-    if (relatedTarget == null || !inputRefs.includes(relatedTarget as HTMLInputElement)) {
+    const relatedTarget = event.relatedTarget as HTMLElement;
+
+    // Do not emit blur if we're moving to another input box in the same component
+    const isInternalFocus = relatedTarget != null && inputRefs.includes(relatedTarget as HTMLInputElement);
+
+    if (!isInternalFocus) {
       this.hasFocus = false;
+
       // Reset tabIndexes when focus leaves the component
       this.updateTabIndexes();
-    }
-  }
 
+      // Always emit ionBlur when focus leaves the component
+      this.ionBlur.emit(event);
+
+      // Only emit ionChange if the value has actually changed
+      if (this.focusedValue !== this.value) {
+        this.emitIonChange(event);
+      }
+    }
+  };
+
+  /**
+   * Updates the tabIndexes for the input boxes.
+   * This is used to ensure that the correct input is
+   * focused when the user navigates using the tab key.
+   */
   private updateTabIndexes() {
     const { inputRefs, inputValues, length } = this;
 
@@ -472,11 +625,11 @@ export class InputOTP implements ComponentInterface {
                   value={inputValues[index] || ''}
                   autocomplete={index === 0 ? 'one-time-code' : 'off'}
                   ref={(el) => (inputRefs[index] = el as HTMLInputElement)}
-                  onInput={(e) => this.handleInput(index, (e.target as HTMLInputElement).value)}
-                  onKeyDown={(e) => this.handleKeyDown(index, e)}
-                  onPaste={(e) => this.handlePaste(e)}
-                  onFocus={() => this.handleFocus(index)}
-                  onBlur={(e) => this.handleBlur(e)}
+                  onInput={this.onInput(index)}
+                  onBlur={this.onBlur}
+                  onFocus={this.onFocus(index)}
+                  onKeyDown={this.onKeyDown(index)}
+                  onPaste={this.onPaste}
                 />
                 {this.showSeparator(index) && <div class="input-otp-separator" />}
               </div>
