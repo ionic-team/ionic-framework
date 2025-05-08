@@ -21,9 +21,9 @@
     bottom: 0;
     left: 0;
 
-    transition: transform 0.3s ease;
+    transition: transform globals.$ion-transition-time-300 globals.$ion-transition-curve-quick;
 
-    border: 1px solid var(--active-item-border-color);
+    border: globals.$ion-border-size-025 globals.$ion-border-style-solid var(--active-item-border-color);
     border-radius: var(--border-radius);
 
     background-color: var(--active-item-background);
@@ -38,7 +38,7 @@
     flex: 1;
 
     background-color: transparent;
-    transition: color 0.3s ease;
+    transition: color globals.$ion-transition-time-300 globals.$ion-transition-curve-linear;
     will-change: color;
 
     z-index: 1;
