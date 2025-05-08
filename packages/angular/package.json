@@ -57,7 +57,7 @@
     "@angular/forms": ">=18.0.0",
     "@angular/router": ">=18.0.0",
     "rxjs": ">=7.5.0",
-    "zone.js": ">=0.13.0"
+    "zone.js": ">=0.14.0"
   },
   "devDependencies": {
     "@angular-devkit/core": "^18.0.0",
