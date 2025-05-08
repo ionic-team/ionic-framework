@@ -324,6 +324,21 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       const secondInputOtpFirstInput = page.locator('#second input').first();
       await expect(secondInputOtpFirstInput).toBeFocused();
     });
+
+    test('should focus the first input box when clicking on the 2nd input box without a value', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input-otp>Description</ion-input-otp>
+      `,
+        config
+      );
+
+      const secondInput = page.locator('ion-input-otp input').nth(1);
+      await secondInput.click();
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await expect(firstInput).toBeFocused();
+    });
   });
 
   test.describe(title('input-otp: backspace functionality'), () => {
@@ -750,8 +765,20 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('input-otp: setFocus method'), () => {
-    test('should focus the specified input box when index is provided', async ({ page }) => {
+    test('should not focus the specified input box when index is provided and value is not set', async ({ page }) => {
       await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
+        el.setFocus(2);
+      });
+
+      const thirdInput = page.locator('ion-input-otp input').nth(2);
+      await expect(thirdInput).not.toBeFocused();
+    });
+
+    test('should focus the specified input box when index is provided and value is set', async ({ page }) => {
+      await page.setContent(`<ion-input-otp value="1234">Description</ion-input-otp>`, config);
 
       const inputOtp = page.locator('ion-input-otp');
       await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
@@ -787,7 +814,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     test('should clamp invalid indices to valid range', async ({ page }) => {
-      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+      await page.setContent(`<ion-input-otp value="1234">Description</ion-input-otp>`, config);
 
       const inputOtp = page.locator('ion-input-otp');
 

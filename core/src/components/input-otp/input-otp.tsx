@@ -32,6 +32,13 @@ export class InputOTP implements ComponentInterface {
    */
   private focusedValue?: string | number | null;
 
+  /**
+   * Tracks whether the user is navigating through input boxes using keyboard navigation
+   * (arrow keys, tab) versus mouse clicks. This is used to determine the appropriate
+   * focus behavior when an input box is focused.
+   */
+  private isKeyboardNavigation = false;
+
   @Element() el!: HTMLIonInputOtpElement;
 
   @State() private inputValues: string[] = [];
@@ -261,9 +268,9 @@ export class InputOTP implements ComponentInterface {
 
   /**
    * Sets focus to an input box.
-   * @param index The index of the input box to focus. If not provided,
-   * focuses the first empty input box or the last input if all are filled.
-   * The input boxes start at index 0.
+   * @param index - The index of the input box to focus (0-based).
+   * If provided and the input box has a value, the input box at that index will be focused.
+   * Otherwise, the first empty input box or the last input if all are filled will be focused.
    */
   @Method()
   async setFocus(index?: number) {
@@ -406,6 +413,13 @@ export class InputOTP implements ComponentInterface {
     const { length } = this;
     const rtl = isRTL(this.el);
 
+    // Do not process the paste shortcut to avoid changing
+    // the value to the letter "v" on paste
+    const isPasteShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'v';
+    if (isPasteShortcut) {
+      return;
+    }
+
     if (event.key === 'Backspace') {
       if (this.inputValues[index]) {
         // Remove the value at the current index
@@ -431,6 +445,7 @@ export class InputOTP implements ComponentInterface {
         this.focusPrevious(index);
       }
     } else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      this.isKeyboardNavigation = true;
       event.preventDefault();
       const isLeft = event.key === 'ArrowLeft';
       const shouldMoveNext = (isLeft && rtl) || (!isLeft && !rtl);
@@ -444,6 +459,7 @@ export class InputOTP implements ComponentInterface {
         this.focusPrevious(index);
       }
     } else if (event.key === 'Tab') {
+      this.isKeyboardNavigation = true;
       // Let all tab events proceed normally
       return;
     }
@@ -551,6 +567,13 @@ export class InputOTP implements ComponentInterface {
 
   /**
    * Handles the focus behavior for the input OTP component.
+   *
+   * Focus behavior:
+   * 1. Keyboard navigation: Allow normal focus movement
+   * 2. Mouse click:
+   *    - If clicked box has value: Focus that box
+   *    - If clicked box is empty: Focus first empty box
+   *
    * Emits the `ionFocus` event when the input group gains focus.
    */
   private onFocus = (index: number) => (event: FocusEvent) => {
@@ -563,10 +586,25 @@ export class InputOTP implements ComponentInterface {
     }
     this.hasFocus = true;
 
-    // When an input receives focus, make it the only tabbable element
+    let finalIndex = index;
+
+    if (!this.isKeyboardNavigation) {
+      // If the clicked box has a value, focus it
+      // Otherwise focus the first empty box
+      const targetIndex = this.inputValues[index] ? index : this.getFirstEmptyIndex();
+      finalIndex = targetIndex === -1 ? this.length - 1 : targetIndex;
+
+      // Focus the target box
+      this.inputRefs[finalIndex]?.focus();
+    }
+
+    // Update tabIndexes to match the focused box
     inputRefs.forEach((input, i) => {
-      input.tabIndex = i === index ? 0 : -1;
+      input.tabIndex = i === finalIndex ? 0 : -1;
     });
+
+    // Reset the keyboard navigation flag
+    this.isKeyboardNavigation = false;
   };
 
   /**

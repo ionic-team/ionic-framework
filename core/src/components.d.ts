@@ -1360,7 +1360,7 @@ export namespace Components {
         "separators"?: 'all' | string | number[];
         /**
           * Sets focus to an input box.
-          * @param index The index of the input box to focus. If not provided, focuses the first empty input box or the last input if all are filled. The input boxes start at index 0.
+          * @param index - The index of the input box to focus (0-based). If provided and the input box has a value, the input box at that index will be focused. Otherwise, the first empty input box or the last input if all are filled will be focused.
          */
         "setFocus": (index?: number) => Promise<void>;
         /**
