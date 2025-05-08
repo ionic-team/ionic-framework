@@ -102,8 +102,15 @@ export const getDaysOfWeek = (locale: string, theme: Theme, firstDayOfWeek = 0) 
  * the firstDayOfWeek value (Sunday by default)
  * using null values.
  */
-export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: number) => {
+export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: number, displayHiddenDays = false) => {
   const numDays = getNumDaysInMonth(month, year);
+  let previousNumDays: number; //previous month number of days
+  if (month === 1) { //If january the previous month should be january and the last year
+    previousNumDays = getNumDaysInMonth(12, year-1);
+  } else { //If not the previous month should be month -1 and the current year
+    previousNumDays = getNumDaysInMonth(month - 1, year);
+  }
+  
   const firstOfMonth = new Date(`${month}/1/${year}`).getDay();
 
   /**
@@ -127,14 +134,38 @@ export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: numb
    */
   const offset =
     firstOfMonth >= firstDayOfWeek ? firstOfMonth - (firstDayOfWeek + 1) : 6 - (firstDayOfWeek - firstOfMonth);
+  let days: ({
+   day: number;
+   dayOfWeek: number;
+   hiddenDay: boolean;
+  } | {
+      day: null;
+      dayOfWeek: null;
+      hiddenDay: boolean;
+})[] = [];
+   for (let i = 1; i <= numDays; i++) {
+    days.push({ day: i, dayOfWeek: (offset + i) % 7, hiddenDay: false });
+   }
 
-  let days = [];
-  for (let i = 1; i <= numDays; i++) {
-    days.push({ day: i, dayOfWeek: (offset + i) % 7 });
-  }
+  if (displayHiddenDays) {
+    for (let i = 0; i <= offset; i++) {
+      // Using offset create previous month hidden day, starting from last day
+      days = [{ day: previousNumDays-i, dayOfWeek: (previousNumDays - i) % 7, hiddenDay:true }, ...days];
+    }
 
-  for (let i = 0; i <= offset; i++) {
-    days = [{ day: null, dayOfWeek: null }, ...days];
+    // Calculate positiveOffset
+    // The calendar will display 42 days (6 rows of 7 columns)
+    // Knowing this the offset is 41 (we start at index 0)
+    // minus (the previous offset + the current month days) 
+    const positiveOffset = 41 - (numDays + offset);
+    for (let i = 0; i < positiveOffset; i++) {
+      days.push( {day:i+1, dayOfWeek:((numDays + offset) + i) % 7, hiddenDay: true} )
+    }
+
+  } else {
+    for (let i = 0; i <= offset; i++) {
+      days = [{ day: null, dayOfWeek: null, hiddenDay:true }, ...days];
+    }
   }
 
   return days;
