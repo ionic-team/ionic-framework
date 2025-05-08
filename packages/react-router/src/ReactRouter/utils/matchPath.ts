@@ -1,4 +1,5 @@
 import { matchPath as reactRouterMatchPath } from 'react-router';
+import type { PathMatch } from 'react-router';
 
 interface MatchPathOptions {
   /**
@@ -10,37 +11,36 @@ interface MatchPathOptions {
    */
   componentProps: {
     path?: string;
-    from?: string;
-    component?: any;
-    exact?: boolean;
+    caseSensitive?: boolean;
+    end?: boolean;
+    // from is removed in react-router v6 since Redirect was replaced with Navigate
+    // component is removed in react-router v6, replaced with element but not used in this function
+    // exact is removed in react-router v6
   };
 }
 
 /**
- * @see https://v5.reactrouter.com/web/api/matchPath
+ * The matchPath function is used only for matching paths, not rendering components or elements.
+ * @see https://reactrouter.com/v6/utils/match-path
  */
 export const matchPath = ({
   pathname,
   componentProps,
-}: MatchPathOptions): false | ReturnType<typeof reactRouterMatchPath> => {
-  const { exact, component } = componentProps;
+}: MatchPathOptions): PathMatch<string> | null => {
+  const { path, ...restProps } = componentProps;
 
-  const path = componentProps.path || componentProps.from;
-  /***
-   * The props to match against, they are identical
-   * to the matching props `Route` accepts. It could also be a string
-   * or an array of strings as shortcut for `{ path }`.
-   */
-  const matchProps = {
-    exact,
-    path,
-    component,
-  };
+  if (!path) {
+    console.warn(
+      '[Ionic] matchPath: No path prop provided. This will always return null.', {
+      componentProps,
+    });
+    return null;
+  }
 
-  const match = reactRouterMatchPath(pathname, matchProps);
+  const match = reactRouterMatchPath({ path, ...restProps }, pathname);
 
   if (!match) {
-    return false;
+    return null;
   }
 
   return match;
