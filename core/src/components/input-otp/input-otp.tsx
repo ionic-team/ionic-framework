@@ -684,7 +684,7 @@ export class InputOTP implements ComponentInterface {
       >
         <div role="group" aria-label="One-time password input" class="input-otp-group">
           {Array.from({ length }).map((_, index) => (
-            <Fragment>
+            <>
               <div class="native-wrapper">
                 <input
                   class="native-input"
@@ -708,7 +708,7 @@ export class InputOTP implements ComponentInterface {
                 />
               </div>
               {this.showSeparator(index) && <div class="input-otp-separator" />}
-            </Fragment>
+            </>
           ))}
         </div>
         <div class="input-otp-description">
