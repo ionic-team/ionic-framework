@@ -12,6 +12,7 @@
    *
    * @prop --border-width: Border width of the input boxes
    * @prop --border-color: Border color of the input boxes
+   * @prop --border-width-focused: Border width when focused
    * @prop --border-color-focused: Border color when focused
    *
    * @prop --color: Text color of the input
@@ -35,7 +36,9 @@
    * @prop --separator-height: Height of the separator between boxes
    * @prop --separator-border-radius: Border radius of the separator between boxes
    *
-   * @prop --highlight-color-invalid: Color used for the invalid state
+   * @prop --highlight-color-focused: The color of the highlight on the input when focused
+   * @prop --highlight-color-valid: The color of the highlight on the input when valid
+   * @prop --highlight-color-invalid: The color of the highlight on the input when invalid
    */
   --margin-top: 0;
   --margin-end: 0;
@@ -51,11 +54,24 @@
   --separator-border-radius: 999px;
   --separator-color: #{$background-color-step-150};
   --background-focused: var(--background);
-  --border-color-focused: #{ion-color(primary, base, 0.4)};
+  --border-width-focused: 2px;
+  --border-color-focused: var(--highlight-color);
+  --highlight-color-focused: #{ion-color(primary, base, 0.4)};
+  --highlight-color-valid: #{ion-color(success, base)};
   --highlight-color-invalid: #{ion-color(danger, base)};
+
+  /**
+   * This is a private API that is used to switch
+   * out the highlight color based on the state
+   * of the component without having to write
+   * different selectors for different fill variants.
+   */
+  --highlight-color: var(--highlight-color-focused);
 
   display: block;
   position: relative;
+
+  font-size: dynamic-font(14px);
 }
 
 .input-otp-group {
@@ -102,7 +118,7 @@
 .input-otp-description {
   color: $text-color-step-400;
 
-  font-size: 12px;
+  font-size: dynamic-font(12px);
   font-weight: 500;
 
   line-height: 20px;
@@ -127,8 +143,6 @@
 :host(.input-otp-size-small) {
   --width: 40px;
   --height: 40px;
-
-  font-size: 0.875em;
 }
 
 :host(.input-otp-size-small) .input-otp-group {
@@ -138,15 +152,11 @@
 :host(.input-otp-size-medium) {
   --width: 48px;
   --height: 48px;
-
-  font-size: 1em;
 }
 
 :host(.input-otp-size-large) {
   --width: 56px;
   --height: 56px;
-
-  font-size: 1.125em;
 }
 
 :host(.input-otp-size-medium) .input-otp-group,
@@ -179,7 +189,7 @@
 
 :host(.input-otp-fill-solid) {
   --border-color: #{$background-color-step-50};
-  --background: var(--border-color);
+  --background: #{$background-color-step-50};
 }
 
 // States
@@ -188,6 +198,8 @@
 :host(.input-otp-fill-outline.input-otp-disabled) {
   --background: #{$background-color-step-50};
   --border-color: #{$background-color-step-100};
+
+  color: #{$text-color-step-650};
 }
 
 :host(.input-otp-disabled),
@@ -196,17 +208,12 @@
 }
 
 :host(.has-focus) .native-input:focus {
-  border-width: 2px;
+  border-width: var(--border-width-focused);
   border-color: var(--border-color-focused);
 
   outline: none;
 
   background: var(--background-focused);
-}
-
-:host(.ion-invalid) .native-input,
-:host(.ion-invalid.has-focus) .native-input {
-  border-color: var(--highlight-color-invalid);
 }
 
 :host(.input-otp-fill-outline.input-otp-readonly) {
@@ -218,34 +225,62 @@
   --border-color: #{$background-color-step-100};
 }
 
+// Input Highlight
+// ----------------------------------------------------------------
+
+:host(.ion-touched.ion-invalid) {
+  --highlight-color: var(--highlight-color-invalid);
+}
+
+/**
+ * The component highlight is only shown
+ * on focus, so we can safely set the valid
+ * color state when valid. If we
+ * set it when .has-focus is present then
+ * the highlight color would change
+ * from the valid color to the component's
+ * color during the transition after the
+ * component loses focus.
+ */
+:host(.ion-valid) {
+  --highlight-color: var(--highlight-color-valid);
+}
+
+:host(.has-focus.ion-valid),
+:host(.ion-touched.ion-invalid) {
+  --border-color: var(--highlight-color);
+}
+
 // Colors
 // --------------------------------------------------
 
 :host(.input-otp-fill-outline.ion-color) .native-input {
-  border-color: current-color(base, 0.3);
+  border-color: #{current-color(base, 0.3)};
 }
 
-:host(.input-otp-fill-outline.ion-color.has-focus) .native-input:focus {
-  border-color: current-color(base, 0.4);
-}
-
-:host(.input-otp-fill-solid.ion-color) .native-input {
-  border-color: transparent;
-
-  background: current-color(base, 0.08);
-}
-
+// Focused
+:host(.input-otp-fill-outline.ion-color.has-focus) .native-input:focus,
 :host(.input-otp-fill-solid.ion-color.has-focus) .native-input:focus {
-  border-color: current-color(base, 0.4);
+  border-color: #{current-color(base, 0.4)};
+}
+
+// Invalid
+:host(.input-otp-fill-outline.ion-color.ion-invalid) .native-input,
+:host(.input-otp-fill-solid.ion-color.ion-invalid) .native-input,
+:host(.input-otp-fill-outline.ion-color.has-focus.ion-invalid) .native-input,
+:host(.input-otp-fill-solid.ion-color.has-focus.ion-invalid) .native-input {
+  border-color: #{ion-color(danger, base)};
+}
+
+// Valid
+:host(.input-otp-fill-outline.ion-color.ion-valid) .native-input,
+:host(.input-otp-fill-solid.ion-color.ion-valid) .native-input,
+:host(.input-otp-fill-outline.ion-color.has-focus.ion-valid) .native-input,
+:host(.input-otp-fill-solid.ion-color.has-focus.ion-valid) .native-input {
+  border-color: #{ion-color(success, base)};
 }
 
 // Outline & Disabled
 :host(.input-otp-fill-outline.input-otp-disabled.ion-color) .native-input {
-  border-color: current-color(base, 0.1);
-}
-
-// Solid & Disabled/Readonly
-:host(.input-otp-fill-solid.input-otp-disabled.ion-color) .native-input,
-:host(.input-otp-fill-solid.input-otp-readonly.ion-color) .native-input {
-  background: current-color(base, 0.16);
+  border-color: #{current-color(base, 0.1)};
 }

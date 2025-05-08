@@ -65,22 +65,24 @@
 
           <div class="grid-item">
             <h2>Disabled</h2>
-            <ion-input-otp value="12" color="primary" disabled>Outline</ion-input-otp>
-            <ion-input-otp value="12" color="warning" disabled>Outline</ion-input-otp>
-            <ion-input-otp value="12" color="danger" disabled>Outline</ion-input-otp>
-            <ion-input-otp value="12" color="primary" fill="solid" disabled>Solid</ion-input-otp>
-            <ion-input-otp value="12" color="warning" fill="solid" disabled>Solid</ion-input-otp>
-            <ion-input-otp value="12" color="danger" fill="solid" disabled>Solid</ion-input-otp>
+            <ion-input-otp value="12" color="tertiary" disabled>Outline</ion-input-otp>
+            <ion-input-otp value="12" color="tertiary" fill="solid" disabled>Solid</ion-input-otp>
+
+            <h2>Readonly</h2>
+            <ion-input-otp value="12" color="tertiary" readonly>Outline</ion-input-otp>
+            <ion-input-otp value="12" color="tertiary" fill="solid" readonly>Solid</ion-input-otp>
           </div>
 
           <div class="grid-item">
-            <h2>Readonly</h2>
-            <ion-input-otp value="12" color="primary" readonly>Outline</ion-input-otp>
-            <ion-input-otp value="12" color="warning" readonly>Outline</ion-input-otp>
-            <ion-input-otp value="12" color="danger" readonly>Outline</ion-input-otp>
-            <ion-input-otp value="12" color="primary" fill="solid" readonly>Solid</ion-input-otp>
-            <ion-input-otp value="12" color="warning" fill="solid" readonly>Solid</ion-input-otp>
-            <ion-input-otp value="12" color="danger" fill="solid" readonly>Solid</ion-input-otp>
+            <h2>Invalid / Touched</h2>
+            <ion-input-otp value="12" color="tertiary" class="ion-invalid ion-touched">Outline</ion-input-otp>
+            <ion-input-otp value="12" color="tertiary" fill="solid" class="ion-invalid ion-touched"
+              >Solid</ion-input-otp
+            >
+
+            <h2>Valid / Focused</h2>
+            <ion-input-otp value="12" color="tertiary" class="ion-valid has-focus">Outline</ion-input-otp>
+            <ion-input-otp value="12" color="tertiary" fill="solid" class="ion-valid has-focus">Solid</ion-input-otp>
           </div>
         </div>
       </ion-content>
