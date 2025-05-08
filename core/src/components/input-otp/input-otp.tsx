@@ -412,11 +412,14 @@ export class InputOTP implements ComponentInterface {
   private onKeyDown = (index: number) => (event: KeyboardEvent) => {
     const { length } = this;
     const rtl = isRTL(this.el);
+    const input = event.target as HTMLInputElement;
 
-    // Do not process the paste shortcut to avoid changing
-    // the value to the letter "v" on paste
     const isPasteShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'v';
-    if (isPasteShortcut) {
+    const isTextSelection = input.selectionStart !== input.selectionEnd;
+
+    // Return if the key is the paste shortcut or the input value
+    // text is selected and let the onPaste / onInput handler manage it
+    if (isPasteShortcut || isTextSelection) {
       return;
     }
 

@@ -263,6 +263,30 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       // Focus should remain on the 2nd input box
       await expect(inputBoxes.nth(1)).toBeFocused();
     });
+
+    test('should not shift values right when selecting the text in the 2nd input box', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input-otp value="123">Description</ion-input-otp>
+      `,
+        config
+      );
+
+      const secondInput = page.locator('ion-input-otp input').nth(1);
+      await secondInput.focus();
+      await secondInput.selectText();
+
+      const inputOtp = page.locator('ion-input-otp');
+      const inputBoxes = page.locator('ion-input-otp input');
+
+      await page.keyboard.type('9');
+
+      await expect(inputBoxes.nth(0)).toHaveValue('1');
+      await expect(inputBoxes.nth(1)).toHaveValue('9');
+      await expect(inputBoxes.nth(2)).toHaveValue('3');
+      await expect(inputBoxes.nth(3)).toHaveValue('');
+      await expect(inputOtp).toHaveJSProperty('value', '193');
+    });
   });
 
   test.describe(title('input-otp: focus functionality'), () => {
