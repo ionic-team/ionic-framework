@@ -10,6 +10,7 @@
     "assumeChangesOnlyAffectDirectDependencies": true,
     "jsx": "react",
     "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
     "lib": [
       "dom",
       "dom.iterable",

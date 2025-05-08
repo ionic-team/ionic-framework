@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, State, h, Watch } from '@stencil/core';
+import { Component, Element, Event, Fragment, Host, Prop, State, h, Watch } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
@@ -683,8 +683,8 @@ export class InputOTP implements ComponentInterface {
         })}
       >
         <div role="group" aria-label="One-time password input" class="input-otp-group">
-          {Array.from({ length }).map((_, index) => {
-            return (
+          {Array.from({ length }).map((_, index) => (
+            <Fragment>
               <div class="native-wrapper">
                 <input
                   class="native-input"
@@ -706,10 +706,10 @@ export class InputOTP implements ComponentInterface {
                   onKeyDown={this.onKeyDown(index)}
                   onPaste={this.onPaste}
                 />
-                {this.showSeparator(index) && <div class="input-otp-separator" />}
               </div>
-            );
-          })}
+              {this.showSeparator(index) && <div class="input-otp-separator" />}
+            </Fragment>
+          ))}
         </div>
         <div class="input-otp-description">
           <slot></slot>
