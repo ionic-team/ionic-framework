@@ -52,7 +52,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 **Minimum JavaScript Framework Versions**
 | Framework | Supported Version     |
 | --------- | --------------------- |
-| Angular   | 16+                   |
+| Angular   | 18+                   |
 | React     | 17+                   |
 | Vue       | 3.0.6+                |
 
