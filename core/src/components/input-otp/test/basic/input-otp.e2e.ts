@@ -24,12 +24,7 @@ async function simulatePaste(input: any, value: string) {
 configs({ modes: ['ios'] }).forEach(({ title, config }) => {
   test.describe(title('input-otp: basic functionality'), () => {
     test('should render with 4 input boxes and a default value', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input-otp value="12">Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp value="12">Description</ion-input-otp>`, config);
 
       const inputBoxes = page.locator('ion-input-otp input');
       await expect(inputBoxes).toHaveCount(4);
@@ -42,12 +37,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     });
 
     test('should render with 8 input boxes when length is set to 8 and a default value', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input-otp length="8" value="12345678">Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp length="8" value="12345678">Description</ion-input-otp>`, config);
 
       const inputBoxes = page.locator('ion-input-otp input');
       await expect(inputBoxes).toHaveCount(8);
@@ -66,12 +56,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     });
 
     test('should accept numbers only by default', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input-otp>Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
@@ -86,12 +71,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     });
 
     test('should accept text and numbers when type is set to text', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input-otp type="text">Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp type="text">Description</ion-input-otp>`, config);
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
@@ -106,12 +86,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     });
 
     test('should accept custom pattern of lowercase and uppercase letters when pattern is set', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input-otp type="text" pattern="[a-fA-F]">Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp type="text" pattern="[a-fA-F]">Description</ion-input-otp>`, config);
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
@@ -126,12 +101,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     });
 
     test('should accept custom pattern of uppercase letters only when pattern is set', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input-otp type="text" pattern="[D-L]">Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp type="text" pattern="[D-L]">Description</ion-input-otp>`, config);
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
@@ -148,12 +118,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
   test.describe(title('input-otp: input functionality'), () => {
     test('should update the input value when typing 4 digits from the 1st box', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input-otp>Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
@@ -185,12 +150,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     });
 
     test('should update the 1st input value when typing in the 3rd box', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input-otp>Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
       const thirdInput = page.locator('ion-input-otp input').nth(2);
       await thirdInput.focus();
@@ -213,12 +173,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     test('should update the 3rd input value and shift the values to the right when typing in the 3rd box containing a value', async ({
       page,
     }) => {
-      await page.setContent(
-        `
-        <ion-input-otp value="123">Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp value="123">Description</ion-input-otp>`, config);
 
       const thirdInput = page.locator('ion-input-otp input').nth(2);
       await thirdInput.focus();
@@ -239,12 +194,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     });
 
     test('should update the 2nd input value when typing in the 2nd box containing a value', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input-otp value="1234">Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp value="1234">Description</ion-input-otp>`, config);
 
       const secondInput = page.locator('ion-input-otp input').nth(1);
       await secondInput.focus();
@@ -265,12 +215,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     });
 
     test('should not shift values right when selecting the text in the 2nd input box', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input-otp value="123">Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp value="123">Description</ion-input-otp>`, config);
 
       const secondInput = page.locator('ion-input-otp input').nth(1);
       await secondInput.focus();
@@ -291,12 +236,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
   test.describe(title('input-otp: focus functionality'), () => {
     test('should focus the first input box when tabbed to', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input-otp>Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
       await page.keyboard.press('Tab');
 
@@ -305,12 +245,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     });
 
     test('should focus the third input box when tabbed to with a default value of 2 digits', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input-otp value="12">Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp value="12">Description</ion-input-otp>`, config);
 
       await page.keyboard.press('Tab');
 
@@ -319,12 +254,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     });
 
     test('should focus the last input box when tabbed to with a default value of 4 digits', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input-otp value="1234">Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp value="1234">Description</ion-input-otp>`, config);
 
       await page.keyboard.press('Tab');
 
@@ -350,12 +280,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     });
 
     test('should focus the first input box when clicking on the 2nd input box without a value', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input-otp>Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
       const secondInput = page.locator('ion-input-otp input').nth(1);
       await secondInput.click();
@@ -369,12 +294,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     test('should backspace the first input box when backspace is pressed twice from the 2nd input box and the first input box has a value', async ({
       page,
     }) => {
-      await page.setContent(
-        `
-        <ion-input-otp value="1">Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp value="1">Description</ion-input-otp>`, config);
 
       await page.keyboard.press('Tab');
       await page.keyboard.press('Backspace');
@@ -390,12 +310,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     test('should backspace the last input box when backspace is pressed and all values are filled', async ({
       page,
     }) => {
-      await page.setContent(
-        `
-        <ion-input-otp value="1234">Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp value="1234">Description</ion-input-otp>`, config);
 
       await page.keyboard.press('Tab');
       await page.keyboard.press('Backspace');
@@ -410,12 +325,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     test('should backspace the 2nd input box and fill it with the 3rd value when backspace is pressed and 3 values are filled', async ({
       page,
     }) => {
-      await page.setContent(
-        `
-        <ion-input-otp value="123">Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp value="123">Description</ion-input-otp>`, config);
 
       await page.keyboard.press('Tab');
 
@@ -648,12 +558,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     test('should emit ionChange event when blurring with a new value', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input-otp>Description</ion-input-otp>
-      `,
-        config
-      );
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
       const ionChange = await page.spyOnEvent('ionChange');
 
