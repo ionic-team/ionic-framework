@@ -2,12 +2,17 @@
 
 :host {
     --border-radius: #{globals.$ion-border-radius-full};
+    --active-item-color: #{globals.$ion-text-inverse};
+    --active-item-background: #{globals.$ion-bg-primary-base-default};
+    --active-item-border-color: transparent;
+    --background: #{globals.$ion-bg-primary-subtle-default};
+    --item-color: #{globals.$ion-text-primary};
     display: flex;
     position: relative;
 
     border-radius: var(--border-radius);
 
-    background-color: #f2f4fd;
+    background-color: var(--background);
 }
 
 .active-indicator {
@@ -18,15 +23,16 @@
 
     transition: transform 0.3s ease;
 
+    border: 1px solid var(--active-item-border-color);
     border-radius: var(--border-radius);
 
-    background-color: #105cef;
+    background-color: var(--active-item-background);
 
     z-index: 0;
 }
 
 ::slotted(ion-button) {
-    --color: #105cef;
+    --color: var(--item-color);
     --background-hover: transparent;
     --background-activated: transparent;
     flex: 1;
@@ -39,7 +45,7 @@
 }
 
 ::slotted(ion-button.active) {
-    color: #fff;
+    color: var(--active-item-color);
 
 }
 
@@ -50,8 +56,8 @@
 // --------------------------------------------------
 
 :host(.button-group-soft) {
-    --border-radius: #{globals.$ion-border-radius-200};
-  }
+  --border-radius: #{globals.$ion-border-radius-200};
+}
 
 // Round Button
 // --------------------------------------------------
@@ -72,32 +78,25 @@
 // -------------------------------------------------------------------------------
 
 :host(.button-group-outline) .active-indicator {
-    border: 1px solid #105cef;
+  --active-item-background: #{globals.$ion-bg-surface-default};
+  --active-item-border-color: #{globals.$ion-border-primary};
+}
 
-    background-color: #fff;
-  }
+:host(.button-group-outline)::slotted(ion-button.active) {
+  color: var(--item-color);
+}
 
-  :host(.button-group-outline)::slotted(ion-button.active) {
-    color: #105cef;
-  }
-
- 
-
-  // ButtonGroup Medium
+// ButtonGroup Medium
 // -------------------------------------------------------------------------------
 
 :host(.ion-color-medium) {
-    background-color: #EFEFEF;
+  --background: #{globals.$ion-bg-neutral-subtle-default};
 }
 
 :host(.ion-color-medium) .active-indicator {
-    background-color: #3B3B3B;
-  }
+  --active-item-background: #{globals.$ion-bg-neutral-bold-default};
+}
 
-  :host(.ion-color-medium)::slotted(ion-button.active) {
-    --color: #fff;
-  }
-
-  :host(.ion-color-medium)::slotted(ion-button) {
-    --color: #242424;
-  }
+:host(.ion-color-medium)::slotted(ion-button) {
+  --item-color: #{globals.$ion-text-default};
+}

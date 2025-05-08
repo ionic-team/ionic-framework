@@ -475,10 +475,15 @@ ion-button,css-prop,--transition,md
 ion-button,part,native
 
 ion-button-group,scoped
+ion-button-group,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-button-group,prop,fill,"outline" | "solid" | undefined,undefined,false,true
 ion-button-group,prop,mode,"ios" | "md",undefined,false,false
+ion-button-group,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,true
+ion-button-group,prop,size,"default" | "large" | "small" | undefined,undefined,false,true
 ion-button-group,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-button-group,prop,value,null | number | string,null,false,false
+ion-button-group,prop,value,null | number | string,null,false,true
 ion-button-group,event,ionChange,{ value: string | number | null; activeIndex: number; },true
+ion-button-group,event,ionValueChange,{ value: string | number | null; },true
 
 ion-buttons,scoped
 ion-buttons,prop,collapse,boolean,false,false,false
