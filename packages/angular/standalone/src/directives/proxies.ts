@@ -984,7 +984,8 @@ export declare interface IonInfiniteScrollContent extends Components.IonInfinite
 
 @ProxyCmp({
   defineCustomElementFn: defineIonInputOtp,
-  inputs: ['color', 'disabled', 'fill', 'inputmode', 'length', 'pattern', 'readonly', 'separators', 'shape', 'size', 'type', 'value']
+  inputs: ['color', 'disabled', 'fill', 'inputmode', 'length', 'pattern', 'readonly', 'separators', 'shape', 'size', 'type', 'value'],
+  methods: ['reset', 'setFocus']
 })
 @Component({
   selector: 'ion-input-otp',

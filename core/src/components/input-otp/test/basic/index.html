@@ -24,6 +24,10 @@
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
+
+      button {
+        margin: 8px 2px !important;
+      }
     </style>
   </head>
 
@@ -75,6 +79,15 @@
             <h2>Invalid</h2>
             <ion-input-otp class="ion-invalid">Description</ion-input-otp>
             <ion-input-otp fill="solid" class="ion-invalid">Description</ion-input-otp>
+
+            <h2>Methods</h2>
+            <ion-input-otp id="inputOtpMethods" value="1234">Description</ion-input-otp>
+            <div style="display: flex; justify-content: center">
+              <button id="reset">Reset</button>
+              <button id="focus">Focus</button>
+              <button id="focus-third">Focus Third</button>
+              <button id="focus-and-reset">Focus and Reset</button>
+            </div>
           </div>
         </div>
       </ion-content>
@@ -111,6 +124,23 @@
 
         document.addEventListener('ionBlur', (ev) => {
           console.log('ionBlur', ev);
+        });
+
+        document.getElementById('reset').addEventListener('click', () => {
+          inputOtpMethods.reset();
+        });
+
+        document.getElementById('focus').addEventListener('click', () => {
+          inputOtpMethods.setFocus();
+        });
+
+        document.getElementById('focus-third').addEventListener('click', () => {
+          inputOtpMethods.setFocus(2);
+        });
+
+        document.getElementById('focus-and-reset').addEventListener('click', () => {
+          inputOtpMethods.setFocus();
+          inputOtpMethods.reset();
         });
       </script>
     </ion-app>

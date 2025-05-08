@@ -3,6 +3,7 @@ import { Component, Element, Event, Host, Prop, State, h, Watch } from '@stencil
 import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
+import { Method } from 'ionicons/dist/types/stencil-public-runtime';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
@@ -237,6 +238,41 @@ export class InputOTP implements ComponentInterface {
       });
       // Update the value without emitting events
       this.value = this.inputValues.join('');
+    }
+  }
+
+  /**
+   * Resets the input values and focus state.
+   */
+  @Method()
+  async reset() {
+    this.inputValues = Array(this.length).fill('');
+    this.value = '';
+
+    this.focusedValue = null;
+    this.hasFocus = false;
+
+    this.inputRefs.forEach((input) => {
+      input.blur();
+    });
+
+    this.updateTabIndexes();
+  }
+
+  /**
+   * Sets focus to an input box.
+   * @param index The index of the input box to focus. If not provided,
+   * focuses the first empty input box or the last input if all are filled.
+   * The input boxes start at index 0.
+   */
+  @Method()
+  async setFocus(index?: number) {
+    if (typeof index === 'number') {
+      const validIndex = Math.max(0, Math.min(index, this.length - 1));
+      this.inputRefs[validIndex]?.focus();
+    } else {
+      const tabbableIndex = this.getTabbableIndex();
+      this.inputRefs[tabbableIndex]?.focus();
     }
   }
 

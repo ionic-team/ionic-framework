@@ -1351,9 +1351,18 @@ export namespace Components {
          */
         "readonly": boolean;
         /**
+          * Resets the input values and focus state.
+         */
+        "reset": () => Promise<void>;
+        /**
           * Where separators should be shown between input boxes. Can be a comma-separated string or an array of numbers.  For example: `"3"` will show a separator after the 3rd input box. `[1,4]` will show a separator after the 1st and 4th input boxes. `"all"` will show a separator between every input box.
          */
         "separators"?: 'all' | string | number[];
+        /**
+          * Sets focus to an input box.
+          * @param index The index of the input box to focus. If not provided, focuses the first empty input box or the last input if all are filled. The input boxes start at index 0.
+         */
+        "setFocus": (index?: number) => Promise<void>;
         /**
           * The shape of the input boxes. If "round" they will have an increased border radius. If "rectangular" they will have no border radius. If "soft" they will have a soft border radius.
          */

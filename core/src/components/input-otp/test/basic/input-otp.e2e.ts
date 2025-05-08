@@ -744,3 +744,94 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 });
+
+/**
+ * Methods are the same across modes & directions
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('input-otp: setFocus method'), () => {
+    test('should focus the specified input box when index is provided', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
+        el.setFocus(2);
+      });
+
+      const thirdInput = page.locator('ion-input-otp input').nth(2);
+      await expect(thirdInput).toBeFocused();
+    });
+
+    test('should focus first empty input when no index is provided and not all inputs are filled', async ({ page }) => {
+      await page.setContent(`<ion-input-otp value="12">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
+        el.setFocus();
+      });
+
+      const thirdInput = page.locator('ion-input-otp input').nth(2);
+      await expect(thirdInput).toBeFocused();
+    });
+
+    test('should focus last input when no index is provided and all inputs are filled', async ({ page }) => {
+      await page.setContent(`<ion-input-otp value="1234">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
+        el.setFocus();
+      });
+
+      const lastInput = page.locator('ion-input-otp input').last();
+      await expect(lastInput).toBeFocused();
+    });
+
+    test('should clamp invalid indices to valid range', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+
+      // Test negative index
+      await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
+        el.setFocus(-1);
+      });
+      const firstInput = page.locator('ion-input-otp input').first();
+      await expect(firstInput).toBeFocused();
+
+      // Test index beyond length
+      await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
+        el.setFocus(10);
+      });
+      const lastInput = page.locator('ion-input-otp input').last();
+      await expect(lastInput).toBeFocused();
+    });
+  });
+
+  test.describe(title('input-otp: reset method'), () => {
+    test('should clear all input values and reset focus state', async ({ page }) => {
+      await page.setContent(`<ion-input-otp value="1234">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const inputBoxes = page.locator('ion-input-otp input');
+
+      // Focus an input first
+      await inputBoxes.nth(2).focus();
+      await expect(inputBoxes.nth(2)).toBeFocused();
+
+      // Call reset
+      await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
+        el.reset();
+      });
+
+      // Check that values are cleared
+      await expect(inputOtp).toHaveJSProperty('value', '');
+      await expect(inputBoxes.nth(0)).toHaveValue('');
+      await expect(inputBoxes.nth(1)).toHaveValue('');
+      await expect(inputBoxes.nth(2)).toHaveValue('');
+      await expect(inputBoxes.nth(3)).toHaveValue('');
+
+      // Check that focus is removed
+      await expect(inputBoxes.nth(2)).not.toBeFocused();
+    });
+  });
+});
