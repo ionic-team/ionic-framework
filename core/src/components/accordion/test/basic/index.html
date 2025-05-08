@@ -344,6 +344,87 @@
               </ion-accordion>
             </ion-accordion-group>
           </div>
+
+          <div class="grid-item">
+            <h2>Radio Group with skip-accordion-toggle</h2>
+            <ion-accordion-group value="attractions">
+              <ion-radio-group>
+                <ion-accordion value="attractions">
+                  <ion-item color="primary" slot="header" button detail="false">
+                    <ion-radio slot="start" value="attractions" color="light" skip-accordion-toggle></ion-radio>
+                    <ion-icon slot="start" ios="film-outline" md="film"></ion-icon>
+                    <ion-label>Attractions</ion-label>
+                  </ion-item>
+                  <ion-list lines="none" slot="content">
+                    <ion-item>
+                      <ion-label>Movie Theaters</ion-label>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Amusement Parks</ion-label>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Mini Golf</ion-label>
+                    </ion-item>
+                  </ion-list>
+                </ion-accordion>
+                <ion-accordion value="dining">
+                  <ion-item color="warning" slot="header" button detail="false">
+                    <ion-radio slot="start" value="dining" color="light" skip-accordion-toggle></ion-radio>
+                    <ion-icon slot="start" name="pizza"></ion-icon>
+                    <ion-label>Dining</ion-label>
+                  </ion-item>
+                  <ion-list lines="none" slot="content">
+                    <ion-item>
+                      <ion-label>Breakfast & Brunch</ion-label>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>New American</ion-label>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Sushi Bars</ion-label>
+                    </ion-item>
+                  </ion-list>
+                </ion-accordion>
+                <ion-accordion value="games">
+                  <ion-item color="danger" slot="header" button detail="false">
+                    <ion-radio slot="start" value="games" color="light" skip-accordion-toggle></ion-radio>
+                    <ion-icon slot="start" ios="game-controller-outline" md="game-controller"></ion-icon>
+                    <ion-label>Games</ion-label>
+                  </ion-item>
+
+                  <ion-list lines="none" slot="content">
+                    <ion-item>
+                      <ion-label>Xbox</ion-label>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Playstation</ion-label>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Switch</ion-label>
+                    </ion-item>
+                  </ion-list>
+                </ion-accordion>
+                <ion-accordion value="exercise">
+                  <ion-item color="success" slot="header" button detail="false">
+                    <ion-radio slot="start" value="exercise" color="light" [skip-accordion-toggle]="false"></ion-radio>
+                    <ion-label>This radio button toggles accordion</ion-label>
+                  </ion-item>
+
+                  <ion-list lines="none" slot="content">
+                    <ion-item>
+                      <ion-label>Jog</ion-label>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Swim</ion-label>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Nap</ion-label>
+                    </ion-item>
+                  </ion-list>
+                </ion-accordion>
+              </ion-radio-group>
+            </ion-accordion-group>
+          </div>
         </div>
       </ion-content>
     </ion-app>
