@@ -59,8 +59,8 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOption
        * A workaround is to clone the footer element and append
        * it outside of the wrapper element. This way, the footer
        * is still visible and the drag can be done without
-       * flickering. The original footer is hidden until the modal
-       * is dismissed. This maintains the animation of the footer
+       * flickering. The cloned footer is hidden until the modal
+       * is moving. This maintains the animation of the footer
        * when the modal is dismissed.
        *
        * The workaround needs to be done before the animation starts
@@ -75,16 +75,10 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOption
        */
       const ionFooterAlreadyAppended = baseEl.shadowRoot!.querySelector('ion-footer');
       if (ionFooter && !ionFooterAlreadyAppended) {
-        const footerHeight = ionFooter.clientHeight;
         const clonedFooter = ionFooter.cloneNode(true) as HTMLIonFooterElement;
-
+        clonedFooter.style.setProperty('display', 'none');
+        clonedFooter.setAttribute('aria-hidden', 'true');
         baseEl.shadowRoot!.appendChild(clonedFooter);
-        ionFooter.style.setProperty('display', 'none');
-        ionFooter.setAttribute('aria-hidden', 'true');
-
-        // Padding is added to prevent some content from being hidden.
-        const page = baseEl.querySelector('.ion-page') as HTMLElement;
-        page.style.setProperty('padding-bottom', `${footerHeight}px`);
       }
     });
 
