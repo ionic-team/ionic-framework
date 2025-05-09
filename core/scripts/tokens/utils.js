@@ -48,6 +48,18 @@ function removeConsecutiveRepeatedWords(str) {
     return str.replace(/(\b\w+\b)(-\1)+/g, '$1');
 }
 
+// Generates a reference variable for an alias token type
+function getAliasReferenceVariable(prop) {
+  if (typeof prop.$value === 'string' && prop.$value.startsWith('{') && prop.$value.endsWith('}')) {
+    // Remove curly braces and replace dots with dashes
+    let ref = prop.$value.slice(1, -1).replace(/\./g, '-');
+    // Remove consecutive repeated words (e.g., border-border-radius-0 → border-radius-0)
+    ref = removeConsecutiveRepeatedWords(ref);
+    return `$${variablesPrefix}-${ref}`;
+  }
+  return null;
+}
+
 // Generates a valid box-shadow value from a shadow Design Token structure
 function generateShadowValue(prop, propName) {
   const cssShadow = prop.$value.map(shadow => {
@@ -80,17 +92,25 @@ function generateFontFamilyValue(prop, propName, variableType = 'css') {
 
 // Generates a final value, based if the Design Token is of type color or not
 function generateValue(prop, propName) {
-  const rgb = hexToRgb(prop.$value);
+  // Use the original value to detect aliases
+  const aliasVar = getAliasReferenceVariable({ $value: prop.original.$value });
 
-  let rgbDeclaration = '';
-
-  if (rgb) {
-    // If the token is color, also add a rgb variable using the same color
-    rgbDeclaration = `\n$${variablesPrefix}-${propName}-rgb: var(--${variablesPrefix}-${propName}-rgb, ${rgb.r}, ${rgb.g}, ${rgb.b});`;
-    prop.value = getRgbaValue(prop.$value);
+  // Always generate the main variable
+  let mainValue;
+  if (aliasVar) {
+    mainValue = `$${variablesPrefix}-${propName}: var(--${variablesPrefix}-${propName}, ${aliasVar});`;
+  } else {
+    mainValue = `$${variablesPrefix}-${propName}: var(--${variablesPrefix}-${propName}, ${prop.$value});`;
   }
 
-  return `$${variablesPrefix}-${propName}: var(--${variablesPrefix}-${propName}, ${prop.$value});${rgbDeclaration}`;
+  // Always generate the -rgb variable if it's a color
+  const rgb = hexToRgb(prop.$value);
+  let rgbDeclaration = '';
+  if (rgb) {
+    rgbDeclaration = `\n$${variablesPrefix}-${propName}-rgb: var(--${variablesPrefix}-${propName}-rgb, ${rgb.r}, ${rgb.g}, ${rgb.b});`;
+  }
+
+  return `${mainValue}${rgbDeclaration}`;
 }
 
 // Generates a typography based css utility-class or scss variable from a typography token structure
@@ -287,6 +307,7 @@ module.exports = {
     generateFontFamilyValue,
     generateTypographyOutput,
     generateValue,
+    getAliasReferenceVariable,
     setPrefixValue,
     generateRadiusUtilityClasses,
     generateColorUtilityClasses,
