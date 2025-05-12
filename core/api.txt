@@ -781,6 +781,7 @@ ion-input,css-prop,--placeholder-opacity,ios
 ion-input,css-prop,--placeholder-opacity,md
 
 ion-input-otp,scoped
+ion-input-otp,prop,autocapitalize,string,'off',false,false
 ion-input-otp,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-input-otp,prop,disabled,boolean,false,false,true
 ion-input-otp,prop,fill,"outline" | "solid" | undefined,'outline',false,false

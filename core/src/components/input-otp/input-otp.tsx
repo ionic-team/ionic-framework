@@ -45,6 +45,12 @@ export class InputOTP implements ComponentInterface {
   @State() hasFocus = false;
 
   /**
+   * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+   * Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
+   */
+  @Prop() autocapitalize = 'off';
+
+  /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
@@ -693,6 +699,7 @@ export class InputOTP implements ComponentInterface {
 
   render() {
     const {
+      autocapitalize,
       color,
       disabled,
       fill,
@@ -732,6 +739,7 @@ export class InputOTP implements ComponentInterface {
                   id={`${inputId}-${index}`}
                   aria-label={`Input ${index + 1} of ${length}`}
                   type="text"
+                  autoCapitalize={autocapitalize}
                   inputmode={inputmode}
                   maxLength={1}
                   pattern={pattern || (type === 'number' ? '[0-9]' : '[a-zA-Z0-9]')}
