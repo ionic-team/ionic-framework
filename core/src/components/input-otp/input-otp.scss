@@ -45,6 +45,7 @@
   --padding-end: 0;
   --padding-bottom: 16px;
   --padding-start: 0;
+  --color: initial;
   --min-width: 40px;
   --separator-width: 8px;
   --separator-height: var(--separator-width);
@@ -103,8 +104,8 @@
   border-style: solid;
   border-color: var(--border-color);
 
-  background: var(--background, var(--ion-background-color));
-  color: var(--color, var(--ion-text-color));
+  background: var(--background);
+  color: var(--color);
 
   font-size: inherit;
 
@@ -200,11 +201,13 @@
 // States
 // --------------------------------------------------
 
+:host(.input-otp-disabled) {
+  --color: #{$text-color-step-650};
+}
+
 :host(.input-otp-fill-outline.input-otp-disabled) {
   --background: #{$background-color-step-50};
   --border-color: #{$background-color-step-100};
-
-  color: #{$text-color-step-650};
 }
 
 :host(.input-otp-disabled),
