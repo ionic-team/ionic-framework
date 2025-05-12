@@ -60,26 +60,3 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
     });
   });
 });
-
-/**
- * The following tests are specific to the Ionic theme and do not depend on the text direction.
- */
-configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('button: size'), () => {
-    test('should render xsmall buttons', async ({ page }) => {
-      await page.setContent(`<ion-button size="xsmall" fill="solid">X-Small Button</ion-button>`, config);
-
-      const wrapper = page.locator('ion-button');
-
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-size-x-small`));
-    });
-
-    test('should render xlarge buttons', async ({ page }) => {
-      await page.setContent(`<ion-button size="xlarge" fill="solid">X-Large Button</ion-button>`, config);
-
-      const wrapper = page.locator('ion-button');
-
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-size-x-large`));
-    });
-  });
-});

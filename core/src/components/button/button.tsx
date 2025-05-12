@@ -128,7 +128,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * is inside of an item, where the size is `"small"` by default. Set the size to
    * `"default"` inside of an item to make it a standard size button.
    */
-  @Prop({ reflect: true }) size?: 'xsmall' | 'small' | 'default' | 'large' | 'xlarge';
+  @Prop({ reflect: true }) size?: 'small' | 'default' | 'large';
 
   /**
    * If `true`, activates a button with a heavier font weight.
@@ -233,18 +233,13 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   }
 
   /**
-   * Disable the "xsmall" and "xlarge" sizes if the theme is "ios" or "md"
+   * Set the size based if the button is inside of an item, the default size is "small"
    */
   private getSize(): string | undefined {
-    const theme = getIonTheme(this);
     const { size } = this;
 
     if (size === undefined && this.inItem) {
       return 'small';
-    }
-
-    if ((theme === 'ios' || theme === 'md') && (size === 'xsmall' || size === 'xlarge')) {
-      return undefined;
     }
 
     return size;
