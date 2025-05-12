@@ -52,14 +52,17 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('should render separators after the first and third input box', async ({ page }) => {
       await page.setContent(`<ion-input-otp separators="1,3">Description</ion-input-otp>`, config);
 
-      const firstSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(1) .input-otp-separator');
-      await expect(firstSeparator).toHaveCount(1);
+      const group = page.locator('.input-otp-group');
+      const wrappers = group.locator('> .native-wrapper');
 
-      const secondSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(2) .input-otp-separator');
-      await expect(secondSeparator).toHaveCount(0);
+      // Helper to check if the next sibling is a separator
+      const hasSeparatorAfter = async (index: number) =>
+        wrappers.nth(index).evaluate((el) => el.nextElementSibling?.classList.contains('input-otp-separator') ?? false);
 
-      const thirdSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(3) .input-otp-separator');
-      await expect(thirdSeparator).toHaveCount(1);
+      await expect(await hasSeparatorAfter(0)).toBe(true);
+      await expect(await hasSeparatorAfter(1)).toBe(false);
+      await expect(await hasSeparatorAfter(2)).toBe(true);
+      await expect(await hasSeparatorAfter(3)).toBe(false);
     });
 
     test('should render separators after the second and third input box', async ({ page }) => {
@@ -70,27 +73,33 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         el.separators = [2, 3];
       });
 
-      const firstSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(1) .input-otp-separator');
-      await expect(firstSeparator).toHaveCount(0);
+      const group = page.locator('.input-otp-group');
+      const wrappers = group.locator('> .native-wrapper');
 
-      const secondSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(2) .input-otp-separator');
-      await expect(secondSeparator).toHaveCount(1);
+      // Helper to check if the next sibling is a separator
+      const hasSeparatorAfter = async (index: number) =>
+        wrappers.nth(index).evaluate((el) => el.nextElementSibling?.classList.contains('input-otp-separator') ?? false);
 
-      const thirdSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(3) .input-otp-separator');
-      await expect(thirdSeparator).toHaveCount(1);
+      await expect(await hasSeparatorAfter(0)).toBe(false);
+      await expect(await hasSeparatorAfter(1)).toBe(true);
+      await expect(await hasSeparatorAfter(2)).toBe(true);
+      await expect(await hasSeparatorAfter(3)).toBe(false);
     });
 
     test('should render all separators', async ({ page }) => {
       await page.setContent(`<ion-input-otp separators="all">Description</ion-input-otp>`, config);
 
-      const firstSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(1) .input-otp-separator');
-      await expect(firstSeparator).toHaveCount(1);
+      const group = page.locator('.input-otp-group');
+      const wrappers = group.locator('> .native-wrapper');
 
-      const secondSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(2) .input-otp-separator');
-      await expect(secondSeparator).toHaveCount(1);
+      // Helper to check if the next sibling is a separator
+      const hasSeparatorAfter = async (index: number) =>
+        wrappers.nth(index).evaluate((el) => el.nextElementSibling?.classList.contains('input-otp-separator') ?? false);
 
-      const thirdSeparator = page.locator('ion-input-otp .native-wrapper:nth-child(3) .input-otp-separator');
-      await expect(thirdSeparator).toHaveCount(1);
+      await expect(await hasSeparatorAfter(0)).toBe(true);
+      await expect(await hasSeparatorAfter(1)).toBe(true);
+      await expect(await hasSeparatorAfter(2)).toBe(true);
+      await expect(await hasSeparatorAfter(3)).toBe(false);
     });
 
     test('should warn when setting separators to a position greater than the input length', async ({ page }) => {

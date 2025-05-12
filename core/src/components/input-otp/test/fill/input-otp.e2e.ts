@@ -15,7 +15,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         const inputOtp = page.locator('ion-input-otp');
         await expect(inputOtp).toHaveScreenshot(screenshot(`input-otp-${fill}`));
       });
-      test(`disabled should not have visual regressions`, async ({ page }) => {
+      test(`disabled ${fill} fill should not have visual regressions`, async ({ page }) => {
         await page.setContent(
           `
           <ion-input-otp fill="${fill}" value="12" disabled>Description</ion-input-otp>
@@ -26,7 +26,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         const inputOtp = page.locator('ion-input-otp');
         await expect(inputOtp).toHaveScreenshot(screenshot(`input-otp-${fill}-disabled`));
       });
-      test(`readonly should not have visual regressions`, async ({ page }) => {
+      test(`readonly ${fill} fill should not have visual regressions`, async ({ page }) => {
         await page.setContent(
           `
           <ion-input-otp fill="${fill}" value="12" readonly>Description</ion-input-otp>
