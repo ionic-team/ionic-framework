@@ -24,6 +24,8 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const container = page.locator('#container');
+        // Set viewport size to ensure the entire height is visible
+        await page.setViewportSize({ width: 393, height: 900 });
         await expect(container).toHaveScreenshot(screenshot(`input-otp-color-${fill}`));
       });
       test(`disabled color with ${fill} fill should not have visual regressions`, async ({ page }) => {
@@ -45,6 +47,8 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const container = page.locator('#container');
+        // Set viewport size to ensure the entire height is visible
+        await page.setViewportSize({ width: 393, height: 900 });
         await expect(container).toHaveScreenshot(screenshot(`input-otp-color-${fill}-disabled`));
       });
       test(`readonly color with ${fill} fill should not have visual regressions`, async ({ page }) => {
@@ -66,6 +70,8 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const container = page.locator('#container');
+        // Set viewport size to ensure the entire height is visible
+        await page.setViewportSize({ width: 393, height: 900 });
         await expect(container).toHaveScreenshot(screenshot(`input-otp-color-${fill}-readonly`));
       });
     });
