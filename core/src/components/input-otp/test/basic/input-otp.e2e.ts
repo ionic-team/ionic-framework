@@ -1,4 +1,5 @@
 import { expect } from '@playwright/test';
+import type { Locator } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
@@ -19,6 +20,21 @@ async function simulatePaste(input: any, value: string) {
 }
 
 /**
+ * Helper function to verify input values in both the input
+ * boxes and the input-otp component's value property
+ */
+async function verifyInputValues(inputOtp: Locator, expectedValues: string[]) {
+  const inputBoxes = inputOtp.locator('input');
+  for (let i = 0; i < expectedValues.length; i++) {
+    await expect(inputBoxes.nth(i)).toHaveValue(expectedValues[i]);
+  }
+
+  // Concatenate the expected values and check the JS property
+  const concatenatedValue = expectedValues.join('');
+  await expect(inputOtp).toHaveJSProperty('value', concatenatedValue);
+}
+
+/**
  * Functionality is the same across modes
  */
 configs({ modes: ['ios'] }).forEach(({ title, config }) => {
@@ -26,93 +42,75 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     test('should render with 4 input boxes and a default value', async ({ page }) => {
       await page.setContent(`<ion-input-otp value="12">Description</ion-input-otp>`, config);
 
+      const inputOtp = page.locator('ion-input-otp');
+
       const inputBoxes = page.locator('ion-input-otp input');
       await expect(inputBoxes).toHaveCount(4);
 
-      await expect(inputBoxes.nth(0)).toHaveValue('1');
-      await expect(inputBoxes.nth(1)).toHaveValue('2');
-
-      const inputOtp = page.locator('ion-input-otp');
-      await expect(inputOtp).toHaveAttribute('value', '12');
+      await verifyInputValues(inputOtp, ['1', '2', '', '']);
     });
 
     test('should render with 8 input boxes when length is set to 8 and a default value', async ({ page }) => {
       await page.setContent(`<ion-input-otp length="8" value="12345678">Description</ion-input-otp>`, config);
 
+      const inputOtp = page.locator('ion-input-otp');
+
       const inputBoxes = page.locator('ion-input-otp input');
       await expect(inputBoxes).toHaveCount(8);
 
-      await expect(inputBoxes.nth(0)).toHaveValue('1');
-      await expect(inputBoxes.nth(1)).toHaveValue('2');
-      await expect(inputBoxes.nth(2)).toHaveValue('3');
-      await expect(inputBoxes.nth(3)).toHaveValue('4');
-      await expect(inputBoxes.nth(4)).toHaveValue('5');
-      await expect(inputBoxes.nth(5)).toHaveValue('6');
-      await expect(inputBoxes.nth(6)).toHaveValue('7');
-      await expect(inputBoxes.nth(7)).toHaveValue('8');
-
-      const inputOtp = page.locator('ion-input-otp');
-      await expect(inputOtp).toHaveAttribute('value', '12345678');
+      await verifyInputValues(inputOtp, ['1', '2', '3', '4', '5', '6', '7', '8']);
     });
 
     test('should accept numbers only by default', async ({ page }) => {
       await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
 
       await page.keyboard.type('A2e468');
 
-      const inputBoxes = page.locator('ion-input-otp input');
-      await expect(inputBoxes.nth(0)).toHaveValue('2');
-      await expect(inputBoxes.nth(1)).toHaveValue('4');
-      await expect(inputBoxes.nth(2)).toHaveValue('6');
-      await expect(inputBoxes.nth(3)).toHaveValue('8');
+      await verifyInputValues(inputOtp, ['2', '4', '6', '8']);
     });
 
     test('should accept text and numbers when type is set to text', async ({ page }) => {
       await page.setContent(`<ion-input-otp type="text">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
 
       await page.keyboard.type('A2-B5');
 
-      const inputBoxes = page.locator('ion-input-otp input');
-      await expect(inputBoxes.nth(0)).toHaveValue('A');
-      await expect(inputBoxes.nth(1)).toHaveValue('2');
-      await expect(inputBoxes.nth(2)).toHaveValue('B');
-      await expect(inputBoxes.nth(3)).toHaveValue('5');
+      await verifyInputValues(inputOtp, ['A', '2', 'B', '5']);
     });
 
     test('should accept custom pattern of lowercase and uppercase letters when pattern is set', async ({ page }) => {
       await page.setContent(`<ion-input-otp type="text" pattern="[a-fA-F]">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
 
       await page.keyboard.type('aGBZfD');
 
-      const inputBoxes = page.locator('ion-input-otp input');
-      await expect(inputBoxes.nth(0)).toHaveValue('a');
-      await expect(inputBoxes.nth(1)).toHaveValue('B');
-      await expect(inputBoxes.nth(2)).toHaveValue('f');
-      await expect(inputBoxes.nth(3)).toHaveValue('D');
+      await verifyInputValues(inputOtp, ['a', 'B', 'f', 'D']);
     });
 
     test('should accept custom pattern of uppercase letters only when pattern is set', async ({ page }) => {
       await page.setContent(`<ion-input-otp type="text" pattern="[D-L]">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
 
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
 
       await page.keyboard.type('abcdABCDEFG');
 
-      const inputBoxes = page.locator('ion-input-otp input');
-      await expect(inputBoxes.nth(0)).toHaveValue('D');
-      await expect(inputBoxes.nth(1)).toHaveValue('E');
-      await expect(inputBoxes.nth(2)).toHaveValue('F');
-      await expect(inputBoxes.nth(3)).toHaveValue('G');
+      await verifyInputValues(inputOtp, ['D', 'E', 'F', 'G']);
     });
   });
 
@@ -124,29 +122,16 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await firstInput.focus();
 
       const inputOtp = page.locator('ion-input-otp');
-      const inputBoxes = page.locator('ion-input-otp input');
 
-      await expect(inputOtp).toHaveJSProperty('value', '');
-      await expect(inputBoxes.nth(0)).toHaveValue('');
-      await expect(inputBoxes.nth(1)).toHaveValue('');
-      await expect(inputBoxes.nth(2)).toHaveValue('');
-      await expect(inputBoxes.nth(3)).toHaveValue('');
+      await verifyInputValues(inputOtp, ['', '', '', '']);
 
       await page.keyboard.type('12');
 
-      await expect(inputOtp).toHaveJSProperty('value', '12');
-      await expect(inputBoxes.nth(0)).toHaveValue('1');
-      await expect(inputBoxes.nth(1)).toHaveValue('2');
-      await expect(inputBoxes.nth(2)).toHaveValue('');
-      await expect(inputBoxes.nth(3)).toHaveValue('');
+      await verifyInputValues(inputOtp, ['1', '2', '', '']);
 
       await page.keyboard.type('34');
 
-      await expect(inputOtp).toHaveJSProperty('value', '1234');
-      await expect(inputBoxes.nth(0)).toHaveValue('1');
-      await expect(inputBoxes.nth(1)).toHaveValue('2');
-      await expect(inputBoxes.nth(2)).toHaveValue('3');
-      await expect(inputBoxes.nth(3)).toHaveValue('4');
+      await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
     });
 
     test('should update the 1st input value when typing in the 3rd box', async ({ page }) => {
@@ -160,11 +145,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
       await page.keyboard.type('1');
 
-      await expect(inputBoxes.nth(0)).toHaveValue('1');
-      await expect(inputBoxes.nth(1)).toHaveValue('');
-      await expect(inputBoxes.nth(2)).toHaveValue('');
-      await expect(inputBoxes.nth(3)).toHaveValue('');
-      await expect(inputOtp).toHaveJSProperty('value', '1');
+      await verifyInputValues(inputOtp, ['1', '', '', '']);
 
       // Focus should be on the 2nd input box
       await expect(inputBoxes.nth(1)).toBeFocused();
@@ -183,11 +164,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
       await page.keyboard.type('9');
 
-      await expect(inputBoxes.nth(0)).toHaveValue('1');
-      await expect(inputBoxes.nth(1)).toHaveValue('2');
-      await expect(inputBoxes.nth(2)).toHaveValue('9');
-      await expect(inputBoxes.nth(3)).toHaveValue('3');
-      await expect(inputOtp).toHaveJSProperty('value', '1293');
+      await verifyInputValues(inputOtp, ['1', '2', '9', '3']);
 
       // Focus should remain on the 3rd input box
       await expect(inputBoxes.nth(2)).toBeFocused();
@@ -204,11 +181,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
       await page.keyboard.type('9');
 
-      await expect(inputBoxes.nth(0)).toHaveValue('1');
-      await expect(inputBoxes.nth(1)).toHaveValue('9');
-      await expect(inputBoxes.nth(2)).toHaveValue('3');
-      await expect(inputBoxes.nth(3)).toHaveValue('4');
-      await expect(inputOtp).toHaveJSProperty('value', '1934');
+      await verifyInputValues(inputOtp, ['1', '9', '3', '4']);
 
       // Focus should remain on the 2nd input box
       await expect(inputBoxes.nth(1)).toBeFocused();
@@ -222,15 +195,10 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await secondInput.selectText();
 
       const inputOtp = page.locator('ion-input-otp');
-      const inputBoxes = page.locator('ion-input-otp input');
 
       await page.keyboard.type('9');
 
-      await expect(inputBoxes.nth(0)).toHaveValue('1');
-      await expect(inputBoxes.nth(1)).toHaveValue('9');
-      await expect(inputBoxes.nth(2)).toHaveValue('3');
-      await expect(inputBoxes.nth(3)).toHaveValue('');
-      await expect(inputOtp).toHaveJSProperty('value', '193');
+      await verifyInputValues(inputOtp, ['1', '9', '3', '']);
     });
   });
 
@@ -296,15 +264,13 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     }) => {
       await page.setContent(`<ion-input-otp value="1">Description</ion-input-otp>`, config);
 
+      const inputOtp = page.locator('ion-input-otp');
+
       await page.keyboard.press('Tab');
       await page.keyboard.press('Backspace');
       await page.keyboard.press('Backspace');
 
-      const inputBoxes = page.locator('ion-input-otp input');
-      await expect(inputBoxes.nth(0)).toHaveValue('');
-      await expect(inputBoxes.nth(1)).toHaveValue('');
-      await expect(inputBoxes.nth(2)).toHaveValue('');
-      await expect(inputBoxes.nth(3)).toHaveValue('');
+      await verifyInputValues(inputOtp, ['', '', '', '']);
     });
 
     test('should backspace the last input box when backspace is pressed and all values are filled', async ({
@@ -312,14 +278,12 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     }) => {
       await page.setContent(`<ion-input-otp value="1234">Description</ion-input-otp>`, config);
 
+      const inputOtp = page.locator('ion-input-otp');
+
       await page.keyboard.press('Tab');
       await page.keyboard.press('Backspace');
 
-      const inputBoxes = page.locator('ion-input-otp input');
-      await expect(inputBoxes.nth(0)).toHaveValue('1');
-      await expect(inputBoxes.nth(1)).toHaveValue('2');
-      await expect(inputBoxes.nth(2)).toHaveValue('3');
-      await expect(inputBoxes.nth(3)).toHaveValue('');
+      await verifyInputValues(inputOtp, ['1', '2', '3', '']);
     });
 
     test('should backspace the 2nd input box and fill it with the 3rd value when backspace is pressed and 3 values are filled', async ({
@@ -339,11 +303,8 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       }
       await page.keyboard.press('Backspace');
 
-      const inputBoxes = page.locator('ion-input-otp input');
-      await expect(inputBoxes.nth(0)).toHaveValue('1');
-      await expect(inputBoxes.nth(1)).toHaveValue('3');
-      await expect(inputBoxes.nth(2)).toHaveValue('');
-      await expect(inputBoxes.nth(3)).toHaveValue('');
+      const inputOtp = page.locator('ion-input-otp');
+      await verifyInputValues(inputOtp, ['1', '3', '', '']);
     });
   });
 
@@ -355,11 +316,10 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await firstInput.focus();
       await simulatePaste(firstInput, '12');
 
+      const inputOtp = page.locator('ion-input-otp');
+
       const inputBoxes = page.locator('ion-input-otp input');
-      await expect(inputBoxes.nth(0)).toHaveValue('1');
-      await expect(inputBoxes.nth(1)).toHaveValue('2');
-      await expect(inputBoxes.nth(2)).toHaveValue('');
-      await expect(inputBoxes.nth(3)).toHaveValue('');
+      await verifyInputValues(inputOtp, ['1', '2', '', '']);
 
       // Focus should be on the 3rd input box
       await expect(inputBoxes.nth(2)).toBeFocused();
@@ -372,11 +332,9 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await firstInput.focus();
       await simulatePaste(firstInput, '1234');
 
+      const inputOtp = page.locator('ion-input-otp');
       const inputBoxes = page.locator('ion-input-otp input');
-      await expect(inputBoxes.nth(0)).toHaveValue('1');
-      await expect(inputBoxes.nth(1)).toHaveValue('2');
-      await expect(inputBoxes.nth(2)).toHaveValue('3');
-      await expect(inputBoxes.nth(3)).toHaveValue('4');
+      await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
 
       // Focus should be on the 4th input box
       await expect(inputBoxes.nth(3)).toBeFocused();
@@ -391,11 +349,10 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await thirdInput.focus();
       await simulatePaste(thirdInput, '12');
 
+      const inputOtp = page.locator('ion-input-otp');
+
       const inputBoxes = page.locator('ion-input-otp input');
-      await expect(inputBoxes.nth(0)).toHaveValue('1');
-      await expect(inputBoxes.nth(1)).toHaveValue('2');
-      await expect(inputBoxes.nth(2)).toHaveValue('');
-      await expect(inputBoxes.nth(3)).toHaveValue('');
+      await verifyInputValues(inputOtp, ['1', '2', '', '']);
 
       // Focus should be on the 3rd input box
       await expect(inputBoxes.nth(2)).toBeFocused();
@@ -411,11 +368,9 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await page.keyboard.type('12');
       await simulatePaste(firstInput, '34');
 
-      const inputBoxes = page.locator('ion-input-otp input');
-      await expect(inputBoxes.nth(0)).toHaveValue('1');
-      await expect(inputBoxes.nth(1)).toHaveValue('2');
-      await expect(inputBoxes.nth(2)).toHaveValue('3');
-      await expect(inputBoxes.nth(3)).toHaveValue('4');
+      const inputOtp = page.locator('ion-input-otp');
+
+      await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
     });
 
     test('should paste text into all input boxes when pasting 4 digits after typing 4 digits', async ({ page }) => {
@@ -426,11 +381,9 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await page.keyboard.type('9999');
       await simulatePaste(firstInput, '1234');
 
-      const inputBoxes = page.locator('ion-input-otp input');
-      await expect(inputBoxes.nth(0)).toHaveValue('1');
-      await expect(inputBoxes.nth(1)).toHaveValue('2');
-      await expect(inputBoxes.nth(2)).toHaveValue('3');
-      await expect(inputBoxes.nth(3)).toHaveValue('4');
+      const inputOtp = page.locator('ion-input-otp');
+
+      await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
     });
   });
 });
@@ -520,7 +473,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
         el.value = '1234';
       });
-      await expect(inputOtp).toHaveJSProperty('value', '1234');
+      await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
 
       await expect(ionInput).not.toHaveReceivedEvent();
     });
@@ -602,7 +555,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
         el.value = '1234';
       });
-      await expect(inputOtp).toHaveJSProperty('value', '1234');
+      await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
 
       await expect(ionChange).not.toHaveReceivedEvent();
     });
@@ -780,11 +733,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       });
 
       // Check that values are cleared
-      await expect(inputOtp).toHaveJSProperty('value', '');
-      await expect(inputBoxes.nth(0)).toHaveValue('');
-      await expect(inputBoxes.nth(1)).toHaveValue('');
-      await expect(inputBoxes.nth(2)).toHaveValue('');
-      await expect(inputBoxes.nth(3)).toHaveValue('');
+      await verifyInputValues(inputOtp, ['', '', '', '']);
 
       // Check that focus is removed
       await expect(inputBoxes.nth(2)).not.toBeFocused();
