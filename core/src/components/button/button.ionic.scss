@@ -11,12 +11,11 @@
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-size-050};
 
+  @include globals.typography(globals.$ion-body-action-md);
+
   position: relative;
 
-  min-height: globals.$ion-scale-1000;
-
-  font-family: globals.$ion-font-family;
-  font-size: globals.$ion-font-size-350;
+  min-height: globals.$ion-scale-1200;
 
   // Target area
   &::after {
@@ -102,44 +101,28 @@
 // Button Sizes
 // -------------------------------------------------------------------------------
 
-/* Extra Small Button */
-:host(.button-xsmall) {
-  --padding-top: #{globals.$ion-space-100};
-  --padding-end: #{globals.$ion-space-300};
-
-  min-height: globals.$ion-space-600;
-
-  font-size: globals.$ion-font-size-300;
-}
-
 /* Small Button */
-:host(.button-small) {
+/* Extra Small Button */
+:host(.button-small),
+:host(.button-xsmall) {
   --padding-top: #{globals.$ion-space-200};
   --padding-end: #{globals.$ion-space-400};
 
-  min-height: #{globals.$ion-scale-800};
+  @include globals.typography(globals.$ion-body-action-sm);
 
-  font-size: #{globals.$ion-font-size-300};
+  min-height: #{globals.$ion-scale-1000};
 }
 
 /* Large Button */
-:host(.button-large) {
+/* Extra Large Button */
+:host(.button-large),
+:host(.button-xlarge) {
   --padding-top: #{globals.$ion-space-400};
   --padding-end: #{globals.$ion-space-600};
 
-  min-height: #{globals.$ion-scale-1200};
-
-  font-size: #{globals.$ion-font-size-400};
-}
-
-/* Extra Large Button */
-:host(.button-xlarge) {
-  --padding-top: #{globals.$ion-space-400};
-  --padding-end: #{globals.$ion-space-800};
+  @include globals.typography(globals.$ion-body-action-lg);
 
   min-height: #{globals.$ion-scale-1400};
-
-  font-size: #{globals.$ion-font-size-500};
 }
 
 // Button with Icons
