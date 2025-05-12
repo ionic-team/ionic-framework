@@ -15,7 +15,7 @@ import {
   IonContent,
   IonButton,
 } from '@ionic/react';
-import { Route, Redirect } from 'react-router';
+import { Route, Navigate } from 'react-router';
 import { triangle, square } from 'ionicons/icons';
 
 interface TabsProps {}
@@ -24,11 +24,11 @@ const Tabs: React.FC<TabsProps> = () => {
   return (
     <IonTabs data-pageid="tabs">
       <IonRouterOutlet id="tabs">
-        <Route path="/tabs/tab1" component={Tab1} exact />
-        <Route path="/tabs/tab2" component={Tab2} exact />
-        <Route path="/tabs/tab1/child" component={Tab1Child1} exact />
-        <Route path="/tabs/tab1/child2" component={Tab1Child2} exact />
-        <Redirect from="/tabs" to="/tabs/tab1" exact />
+        <Route path="/tabs/tab1" element={<Tab1 />} exact />
+        <Route path="/tabs/tab2" element={<Tab2 />} exact />
+        <Route path="/tabs/tab1/child" element={<Tab1Child1 />} exact />
+        <Route path="/tabs/tab1/child2" element={<Tab1Child2 />} exact />
+        <Navigate from="/tabs" to="/tabs/tab1" exact replace />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="tab1" href="/tabs/tab1">

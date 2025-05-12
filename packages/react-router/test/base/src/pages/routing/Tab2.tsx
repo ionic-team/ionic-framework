@@ -13,10 +13,10 @@ import {
   IonButton,
 } from '@ionic/react';
 import './Tab2.css';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 
 const Tab2: React.FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log('Settings mount');

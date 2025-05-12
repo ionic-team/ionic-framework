@@ -17,8 +17,8 @@ interface SwipeToGoBackProps {}
 export const SwipeToGoBack: React.FC<SwipeToGoBackProps> = () => {
   return (
     <IonRouterOutlet id="swipe-to-go-back">
-      <Route path="/swipe-to-go-back" component={Main} exact />
-      <Route path="/swipe-to-go-back/details" component={Details} />
+      <Route path="/swipe-to-go-back" element={<Main />} exact />
+      <Route path="/swipe-to-go-back/details" element={<Details />} />
     </IonRouterOutlet>
   );
 };

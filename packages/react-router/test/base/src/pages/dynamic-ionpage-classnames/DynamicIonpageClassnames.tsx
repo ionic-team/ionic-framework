@@ -15,7 +15,7 @@ interface DynamicIonpageClassnamesProps {}
 const DynamicIonpageClassnames: React.FC<DynamicIonpageClassnamesProps> = () => {
   return (
     <IonRouterOutlet>
-      <Route path="/dynamic-ionpage-classnames" component={Page} />
+      <Route path="/dynamic-ionpage-classnames" element={<Page />} />
     </IonRouterOutlet>
   );
 };

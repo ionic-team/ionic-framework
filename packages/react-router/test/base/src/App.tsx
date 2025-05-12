@@ -46,23 +46,23 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
-          <Route path="/" component={Main} exact />
-          <Route path="/routing" component={Routing} />
-          <Route path="/dynamic-routes" component={DynamicRoutes} />
-          <Route path="/multiple-tabs" component={MultipleTabs} />
-          <Route path="/dynamic-tabs" component={DynamicTabs} />
-          <Route path="/nested-outlet" component={NestedOutlet} />
-          <Route path="/nested-outlet2" component={NestedOutlet2} />
-          <Route path="/replace-action" component={ReplaceAction} />
-          <Route path="/tab-context" component={TabsContext} />
-          <Route path="/outlet-ref" component={OutletRef} />
-          <Route path="/swipe-to-go-back" component={SwipeToGoBack} />
-          <Route path="/dynamic-ionpage-classnames" component={DynamicIonpageClassnames} />
-          <Route path="/tabs" component={Tabs} />
-          <Route path="/tabs-secondary" component={TabsSecondary} />
-          <Route path="/refs" component={Refs} />
-          <Route path="/overlays" component={Overlays} />
-          <Route path="/params/:id" component={Params} />
+          <Route path="/" element={<Main />} exact />
+          <Route path="/routing" element={<Routing />} />
+          <Route path="/dynamic-routes" element={<DynamicRoutes />} />
+          <Route path="/multiple-tabs" element={<MultipleTabs />} />
+          <Route path="/dynamic-tabs" element={<DynamicTabs />} />
+          <Route path="/nested-outlet" element={<NestedOutlet />} />
+          <Route path="/nested-outlet2" element={<NestedOutlet2 />} />
+          <Route path="/replace-action" element={<ReplaceAction />} />
+          <Route path="/tab-context" element={<TabsContext />} />
+          <Route path="/outlet-ref" element={<OutletRef />} />
+          <Route path="/swipe-to-go-back" element={<SwipeToGoBack />} />
+          <Route path="/dynamic-ionpage-classnames" element={<DynamicIonpageClassnames/ >} />
+          <Route path="/tabs" element={<Tabs />} />
+          <Route path="/tabs-secondary" element={<TabsSecondary />} />
+          <Route path="/refs" element={<Refs />} />
+          <Route path="/overlays" element={<Overlays />} />
+          <Route path="/params/:id" element={<Params />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

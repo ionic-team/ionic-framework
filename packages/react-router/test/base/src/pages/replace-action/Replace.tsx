@@ -10,17 +10,17 @@ import {
   IonButtons,
   IonBackButton,
 } from '@ionic/react';
-import { Route, Redirect, useHistory } from 'react-router';
+import { Route, Navigate, useNavigate } from 'react-router';
 
 interface TopPageProps {}
 
 const ReplaceAction: React.FC<TopPageProps> = () => {
   return (
     <IonRouterOutlet>
-      <Route path="/replace-action/page1" component={Page1} exact />
-      <Route path="/replace-action/page2" component={Page2} exact />
-      <Route path="/replace-action/page3" component={Page3} exact />
-      <Route exact path="/replace-action" render={() => <Redirect to="/replace-action/page1" />} />
+      <Route path="/replace-action/page1" element={<Page1 />} exact />
+      <Route path="/replace-action/page2" element={<Page2 />} exact />
+      <Route path="/replace-action/page3" element={<Page3 />} exact />
+      <Route exact path="/replace-action" render={() => <Navigate to="/replace-action/page1" replace />} />
     </IonRouterOutlet>
   );
 };
@@ -42,10 +42,10 @@ const Page1: React.FC = () => (
 );
 
 const Page2: React.FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const clickButton = () => {
-    history.replace('/replace-action/page3');
+    navigate('/replace-action/page3', { replace: true });
   };
 
   return (

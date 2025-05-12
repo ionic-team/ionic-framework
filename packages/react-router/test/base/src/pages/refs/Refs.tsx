@@ -15,8 +15,8 @@ const Refs: React.FC = () => {
   return (
     <IonRouterOutlet>
       {/* <Route exact path="/home" render={() => <Home update={addRoute} />} /> */}
-      <Route exact path="/refs" component={RefsFC} />
-      <Route exact path="/refs/class" component={RefsClass} />
+      <Route exact path="/refs" element={<RefsFC />} />
+      <Route exact path="/refs/class" element={<RefsClass/ >} />
     </IonRouterOutlet>
   );
 };

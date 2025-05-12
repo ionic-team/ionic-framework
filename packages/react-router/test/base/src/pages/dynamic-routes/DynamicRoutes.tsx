@@ -7,7 +7,7 @@ import {
   IonToolbar,
   IonRouterOutlet,
 } from '@ionic/react';
-import { Route, Redirect } from 'react-router';
+import { Route, Navigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
 const DynamicRoutes: React.FC = () => {
@@ -22,7 +22,7 @@ const DynamicRoutes: React.FC = () => {
 
   const addRoute = () => {
     const newRoute = (
-      <Route key="lsdjldj" path="/dynamic-routes/newRoute" component={NewRoute} exact={true} />
+      <Route key="lsdjldj" path="/dynamic-routes/newRoute" element={<NewRoute />} exact={true} />
     );
     setRoutes([...routes, newRoute]);
   };
@@ -31,7 +31,7 @@ const DynamicRoutes: React.FC = () => {
     <IonRouterOutlet>
       {routes}
       {/* <Route exact path="/home" render={() => <Home update={addRoute} />} /> */}
-      <Route exact path="/dynamic-routes" render={() => <Redirect to="/dynamic-routes/home" />} />
+      <Route exact path="/dynamic-routes" render={() => <Navigate to="/dynamic-routes/home" replace />} />
       <Route render={() => <Failed />} />
     </IonRouterOutlet>
   );
