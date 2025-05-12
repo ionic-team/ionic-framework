@@ -6,14 +6,11 @@
 :host {
   /**
    * @prop --background: Background color of the input boxes
-   * @prop --background-focused: Background color when focused
    *
    * @prop --border-radius: Border radius of the input boxes
    *
    * @prop --border-width: Border width of the input boxes
    * @prop --border-color: Border color of the input boxes
-   * @prop --border-width-focused: Border width when focused
-   * @prop --border-color-focused: Border color when focused
    *
    * @prop --color: Text color of the input
    *
@@ -53,10 +50,7 @@
   --separator-height: var(--separator-width);
   --separator-border-radius: 999px;
   --separator-color: #{$background-color-step-150};
-  --background-focused: var(--background);
-  --border-width-focused: 2px;
-  --border-color-focused: var(--highlight-color);
-  --highlight-color-focused: #{ion-color(primary, base, 0.4)};
+  --highlight-color-focused: #{ion-color(primary, base)};
   --highlight-color-valid: #{ion-color(success, base)};
   --highlight-color-invalid: #{ion-color(danger, base)};
 
@@ -93,6 +87,9 @@
   min-width: var(--min-width);
 }
 
+// Native Input
+// ----------------------------------------------------------------
+
 .native-input {
   @include border-radius(var(--border-radius));
 
@@ -115,16 +112,25 @@
   appearance: none;
 }
 
+:host(.has-focus) .native-input {
+  caret-color: var(--highlight-color);
+}
+
+// Input Description
+// ----------------------------------------------------------------
+
 .input-otp-description {
-  color: $text-color-step-400;
+  color: $text-color-step-300;
 
   font-size: dynamic-font(12px);
-  font-weight: 500;
 
-  line-height: 20px;
+  line-height: dynamic-font(20px);
 
   text-align: center;
 }
+
+// Input Separator
+// ----------------------------------------------------------------
 
 .input-otp-separator {
   @include border-radius(var(--separator-border-radius));
@@ -183,7 +189,6 @@
 // --------------------------------------------------
 
 :host(.input-otp-fill-outline) {
-  --border-color: #{$background-color-step-350};
   --background: none;
 }
 
@@ -208,12 +213,9 @@
 }
 
 :host(.has-focus) .native-input:focus {
-  border-width: var(--border-width-focused);
-  border-color: var(--border-color-focused);
+  --border-color: var(--highlight-color);
 
   outline: none;
-
-  background: var(--background-focused);
 }
 
 :host(.input-otp-fill-outline.input-otp-readonly) {
@@ -223,6 +225,7 @@
 :host(.input-otp-fill-solid.input-otp-disabled),
 :host(.input-otp-fill-solid.input-otp-readonly) {
   --border-color: #{$background-color-step-100};
+  --background: #{$background-color-step-100};
 }
 
 // Input Highlight
@@ -246,22 +249,33 @@
   --highlight-color: var(--highlight-color-valid);
 }
 
+/**
+ * If the input has a validity state, the
+ * border should reflect that as a color.
+ * The invalid state should show if the input is
+ * invalid and has already been touched.
+ * The valid state should show if the input
+ * is valid, has already been touched, and
+ * is currently focused. Do not show the valid
+ * highlight when the input is blurred.
+ */
 :host(.has-focus.ion-valid),
 :host(.ion-touched.ion-invalid) {
   --border-color: var(--highlight-color);
 }
 
 // Colors
-// --------------------------------------------------
+// ----------------------------------------------------------------
 
-:host(.input-otp-fill-outline.ion-color) .native-input {
-  border-color: #{current-color(base, 0.3)};
+:host(.ion-color) {
+  --highlight-color-focused: #{current-color(base)};
 }
 
-// Focused
-:host(.input-otp-fill-outline.ion-color.has-focus) .native-input:focus,
-:host(.input-otp-fill-solid.ion-color.has-focus) .native-input:focus {
-  border-color: #{current-color(base, 0.4)};
+// Outline border should match the current color
+// and the solid border should match when focused
+:host(.input-otp-fill-outline.ion-color) .native-input,
+:host(.input-otp-fill-solid.ion-color) .native-input:focus {
+  border-color: #{current-color(base, 0.6)};
 }
 
 // Invalid
@@ -282,5 +296,5 @@
 
 // Outline & Disabled
 :host(.input-otp-fill-outline.input-otp-disabled.ion-color) .native-input {
-  border-color: #{current-color(base, 0.1)};
+  border-color: #{current-color(base, 0.3)};
 }

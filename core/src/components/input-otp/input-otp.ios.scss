@@ -5,13 +5,16 @@
 // --------------------------------------------------
 
 :host {
-  --border-width: 0.55px;
+  --border-width: #{$hairlines-width};
 }
 
-.native-input {
-  -webkit-appearance: none;
+:host(.has-focus) .native-input:focus {
+  --border-width: 1px;
+}
 
-  &:focus {
-    border-width: 1px;
-  }
+// Fills
+// --------------------------------------------------
+
+:host(.input-otp-fill-outline) {
+  --border-color: #{$item-ios-border-color};
 }
