@@ -1,11 +1,14 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+const VALID_SHAPES = ['rectangular', 'round', 'soft'];
+const VALID_SIZES = ['small', 'medium', 'large'];
+
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input-otp: shape'), () => {
     // Test all shapes with all sizes
-    ['rectangular', 'round', 'soft'].forEach((shape) => {
-      ['small', 'medium', 'large'].forEach((size) => {
+    VALID_SHAPES.forEach((shape) => {
+      VALID_SIZES.forEach((size) => {
         test(`${shape} shape with ${size} size should not have visual regressions`, async ({ page }) => {
           await page.setContent(
             `

@@ -1,9 +1,11 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+const VALID_FILLS = ['outline', 'solid'];
+
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input-otp: fill'), () => {
-    ['outline', 'solid'].forEach((fill) => {
+    VALID_FILLS.forEach((fill) => {
       test(`${fill} fill should not have visual regressions`, async ({ page }) => {
         await page.setContent(
           `

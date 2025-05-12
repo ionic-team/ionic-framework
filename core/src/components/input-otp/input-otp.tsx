@@ -217,6 +217,15 @@ export class InputOTP implements ComponentInterface {
         .filter((pos) => !isNaN(pos));
     }
 
+    // Check for duplicate separator positions
+    const duplicates = separatorValues.filter((pos, index) => separatorValues.indexOf(pos) !== index);
+    if (duplicates.length > 0) {
+      printIonWarning(
+        `[ion-input-otp] - Duplicate separator positions are not allowed. Received: ${separators}`,
+        this.el
+      );
+    }
+
     const invalidSeparators = separatorValues.filter((pos) => pos > length);
     if (invalidSeparators.length > 0) {
       printIonWarning(

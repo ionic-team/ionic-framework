@@ -1,9 +1,11 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+const VALID_SIZES = ['small', 'medium', 'large'];
+
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input-otp: size'), () => {
-    ['small', 'medium', 'large'].forEach((size) => {
+    VALID_SIZES.forEach((size) => {
       test(`${size} size should not have visual regressions`, async ({ page }) => {
         await page.setContent(
           `
