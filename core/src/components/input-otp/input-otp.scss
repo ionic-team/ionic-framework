@@ -278,7 +278,7 @@
 // and the solid border should match when focused
 :host(.input-otp-fill-outline.ion-color) .native-input,
 :host(.input-otp-fill-solid.ion-color) .native-input:focus {
-  border-color: #{current-color(base, 0.6)};
+  border-color: current-color(base, 0.6);
 }
 
 // Invalid
@@ -286,7 +286,7 @@
 :host(.input-otp-fill-solid.ion-color.ion-invalid) .native-input,
 :host(.input-otp-fill-outline.ion-color.has-focus.ion-invalid) .native-input,
 :host(.input-otp-fill-solid.ion-color.has-focus.ion-invalid) .native-input {
-  border-color: #{ion-color(danger, base)};
+  border-color: ion-color(danger, base);
 }
 
 // Valid
@@ -294,10 +294,10 @@
 :host(.input-otp-fill-solid.ion-color.ion-valid) .native-input,
 :host(.input-otp-fill-outline.ion-color.has-focus.ion-valid) .native-input,
 :host(.input-otp-fill-solid.ion-color.has-focus.ion-valid) .native-input {
-  border-color: #{ion-color(success, base)};
+  border-color: ion-color(success, base);
 }
 
 // Outline & Disabled
 :host(.input-otp-fill-outline.input-otp-disabled.ion-color) .native-input {
-  border-color: #{current-color(base, 0.3)};
+  border-color: current-color(base, 0.3);
 }
