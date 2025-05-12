@@ -304,12 +304,19 @@ export class InputOTP implements ComponentInterface {
    * Otherwise, use the default regex pattern based on type
    */
   private get validKeys(): RegExp {
-    const { pattern, type } = this;
+    return new RegExp(`^${this.getPattern()}$`);
+  }
 
+  /**
+   * Gets the string pattern to pass to the input element
+   * and use in the regex for allowed characters.
+   */
+  private getPattern(): string {
+    const { pattern, type } = this;
     if (pattern) {
-      return new RegExp(`^${pattern}$`);
+      return pattern;
     }
-    return type === 'number' ? /^[0-9]$/ : /^[a-zA-Z0-9]$/;
+    return type === 'number' ? '[0-9]' : '[a-zA-Z0-9]';
   }
 
   /**
@@ -717,15 +724,14 @@ export class InputOTP implements ComponentInterface {
       inputRefs,
       inputValues,
       length,
-      pattern,
       readonly,
       shape,
       size,
-      type,
     } = this;
     const mode = getIonMode(this);
     const inputmode = this.getInputmode();
     const tabbableIndex = this.getTabbableIndex();
+    const pattern = this.getPattern();
 
     return (
       <Host
@@ -751,7 +757,7 @@ export class InputOTP implements ComponentInterface {
                   autoCapitalize={autocapitalize}
                   inputmode={inputmode}
                   maxLength={1}
-                  pattern={pattern || (type === 'number' ? '[0-9]' : '[a-zA-Z0-9]')}
+                  pattern={pattern}
                   disabled={disabled}
                   readOnly={readonly}
                   tabIndex={index === tabbableIndex ? 0 : -1}
