@@ -181,6 +181,24 @@ const setManualFocus = (el: HTMLElement) => {
     return;
   }
 
+  /**
+   * Optimization for scenarios where the currently focused element is a sibling
+   * of the target element. In such cases, we avoid setting `SKIP_SCROLL_ASSIST`.
+   *
+   * This is crucial for accessibility: input elements can now contain focusable
+   * siblings (e.g., clear buttons, slotted elements). If we didn't skip setting
+   * the attribute here, screen readers would be unable to navigate to and interact
+   * with these sibling elements.
+   *
+   * Without this check, we would need to call `ev.stopPropagation()` on the 
+   * 'focusin' event of each focusable sibling to prevent the scroll assist
+   * listener from incorrectly moving focus back to the input. This approach
+   * is less maintainable and more error-prone.
+   */
+  if (document.activeElement?.parentNode === el.parentNode) {
+    return;
+  }
+
   el.setAttribute(SKIP_SCROLL_ASSIST, 'true');
   el.focus();
 };
