@@ -587,9 +587,9 @@ export namespace Components {
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a button with less height and padding, to `"default"` for a button with the default height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button.
+          * Set to `"small"` for a button with less height and padding, to `"medium"` for a button with the medium height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button.
          */
-        "size"?: 'small' | 'default' | 'large';
+        "size"?: 'small' | 'default' | 'medium' | 'large';
         /**
           * If `true`, activates a button with a heavier font weight.
          */
@@ -6068,9 +6068,9 @@ declare namespace LocalJSX {
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a button with less height and padding, to `"default"` for a button with the default height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button.
+          * Set to `"small"` for a button with less height and padding, to `"medium"` for a button with the medium height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button.
          */
-        "size"?: 'small' | 'default' | 'large';
+        "size"?: 'small' | 'default' | 'medium' | 'large';
         /**
           * If `true`, activates a button with a heavier font weight.
          */

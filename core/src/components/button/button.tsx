@@ -122,13 +122,13 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Prop({ reflect: true }) shape?: 'soft' | 'round' | 'rectangular';
 
   /**
-   * Set to `"small"` for a button with less height and padding, to `"default"`
-   * for a button with the default height and padding, or to `"large"` for a button
+   * Set to `"small"` for a button with less height and padding, to `"medium"`
+   * for a button with the medium height and padding, or to `"large"` for a button
    * with more height and padding. By default the size is unset, unless the button
    * is inside of an item, where the size is `"small"` by default. Set the size to
    * `"default"` inside of an item to make it a standard size button.
    */
-  @Prop({ reflect: true }) size?: 'small' | 'default' | 'large';
+  @Prop({ reflect: true }) size?: 'small' | 'default' | 'medium' | 'large';
 
   /**
    * If `true`, activates a button with a heavier font weight.
@@ -239,8 +239,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private getSize(): string | undefined {
     const { size } = this;
 
-    if (size === undefined && this.inItem) {
-      return 'small';
+    if (size === undefined) {
+      return this.inItem ? 'small' : 'medium';
     }
 
     return size;

@@ -5,17 +5,13 @@
 // -------------------------------------------------------------------------------
 :host {
   --padding-top: #{globals.$ion-space-0};
-  --padding-end: #{globals.$ion-space-500};
+  --padding-end: #{globals.$ion-space-0};
   --padding-bottom: var(--padding-top);
   --padding-start: var(--padding-end);
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-size-050};
 
-  @include globals.typography(globals.$ion-body-action-md);
-
   position: relative;
-
-  min-height: globals.$ion-scale-1200;
 
   // Target area
   &::after {
@@ -108,6 +104,15 @@
   @include globals.typography(globals.$ion-body-action-sm);
 
   min-height: #{globals.$ion-scale-1000};
+}
+
+/* Medium Button */
+:host(.button-medium) {
+  --padding-end: #{globals.$ion-space-500};
+
+  @include globals.typography(globals.$ion-body-action-md);
+
+  min-height: #{globals.$ion-scale-1200};
 }
 
 /* Large Button */
