@@ -233,7 +233,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   }
 
   /**
-   * Get the default size. If size is unset and the button is inside an item, 
+   * Get the default size. If size is unset and the button is inside an item,
    * the default size is "small". Otherwise, it uses the value of size.
    */
   private getSize(): string | undefined {
