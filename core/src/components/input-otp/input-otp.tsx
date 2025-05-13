@@ -28,7 +28,9 @@ export class InputOTP implements ComponentInterface {
   private parsedSeparators: number[] = [];
 
   /**
-   * The value of the OTP input when it is focused.
+   * Stores the initial value of the input when it receives focus.
+   * Used to determine if the value changed during the focus session
+   * to avoid emitting unnecessary change events on blur.
    */
   private focusedValue?: string | number | null;
 
