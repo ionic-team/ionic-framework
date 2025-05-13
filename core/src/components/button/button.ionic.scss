@@ -4,10 +4,10 @@
 // Ionic Button
 // -------------------------------------------------------------------------------
 :host {
-  --padding-bottom: var(--padding-top);
-  --padding-end: #{globals.$ion-space-500};
-  --padding-start: var(--padding-end);
   --padding-top: #{globals.$ion-space-0};
+  --padding-end: #{globals.$ion-space-500};
+  --padding-bottom: var(--padding-top);
+  --padding-start: var(--padding-end);
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-size-050};
 
@@ -166,10 +166,6 @@
 
 :host(.button-soft) {
   --border-radius: #{globals.$ion-border-radius-200};
-}
-
-:host(.button-soft.button-small) {
-  --border-radius: #{globals.$ion-border-radius-100};
 }
 
 // Round Button
