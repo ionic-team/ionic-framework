@@ -103,7 +103,6 @@
 
 /* Small Button */
 :host(.button-small) {
-  --padding-top: #{globals.$ion-space-200};
   --padding-end: #{globals.$ion-space-400};
 
   @include globals.typography(globals.$ion-body-action-sm);
@@ -113,7 +112,6 @@
 
 /* Large Button */
 :host(.button-large) {
-  --padding-top: #{globals.$ion-space-400};
   --padding-end: #{globals.$ion-space-600};
 
   @include globals.typography(globals.$ion-body-action-lg);
