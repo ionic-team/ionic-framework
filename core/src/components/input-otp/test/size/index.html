@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Input OTP - Size</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      h2 {
+        text-align: center;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Input OTP - Size</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Small</h2>
+            <ion-input-otp value="12" size="small">Description</ion-input-otp>
+            <ion-input-otp value="12" size="small" separators="all">Description</ion-input-otp>
+            <ion-input-otp value="12" size="small" fill="solid">Description</ion-input-otp>
+            <ion-input-otp value="12" size="small" fill="solid" separators="all">Description</ion-input-otp>
+          </div>
+
+          <div class="grid-item">
+            <h2>Medium</h2>
+            <ion-input-otp value="12" size="medium">Description</ion-input-otp>
+            <ion-input-otp value="12" size="medium" separators="all">Description</ion-input-otp>
+            <ion-input-otp value="12" size="medium" fill="solid">Description</ion-input-otp>
+            <ion-input-otp value="12" size="medium" fill="solid" separators="all">Description</ion-input-otp>
+          </div>
+
+          <div class="grid-item">
+            <h2>Large</h2>
+            <ion-input-otp value="12" size="large">Description</ion-input-otp>
+            <ion-input-otp value="12" size="large" separators="all">Description</ion-input-otp>
+            <ion-input-otp value="12" size="large" fill="solid">Description</ion-input-otp>
+            <ion-input-otp value="12" size="large" fill="solid" separators="all">Description</ion-input-otp>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

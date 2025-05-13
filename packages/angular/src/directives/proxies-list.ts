@@ -36,6 +36,7 @@ export const DIRECTIVES = [
   d.IonInfiniteScroll,
   d.IonInfiniteScrollContent,
   d.IonInput,
+  d.IonInputOtp,
   d.IonInputPasswordToggle,
   d.IonItem,
   d.IonItemDivider,
