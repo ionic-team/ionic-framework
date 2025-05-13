@@ -49,6 +49,7 @@ function removeConsecutiveRepeatedWords(str) {
 }
 
 // Generates a reference variable for an alias token type
+// (e.g., $ion-border-default: var(--ion-border-default, #d5d5d5) → $ion-border-default: var(--ion-border-default, $ion-primitives-neutral-400))
 function getAliasReferenceVariable(prop) {
   if (typeof prop.$value === 'string' && prop.$value.startsWith('{') && prop.$value.endsWith('}')) {
     // Remove curly braces and replace dots with dashes
