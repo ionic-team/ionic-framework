@@ -20,4 +20,38 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(results.violations).toEqual([]);
     });
   });
+
+  test.describe(title('input password toggle: aria attributes'), () => {
+    test('should inherit aria attributes to inner button on load', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input label="input" type="password">
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
+      `,
+        config
+      );
+
+      const nativeButton = page.locator('ion-input-password-toggle button');
+
+      await expect(nativeButton).toHaveAttribute('aria-label', 'Show password');
+      await expect(nativeButton).toHaveAttribute('aria-checked', 'false');
+    });
+    test('should inherit aria attributes to inner button after toggle', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input label="input" type="password">
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
+      `,
+        config
+      );
+
+      const nativeButton = page.locator('ion-input-password-toggle button');
+      await nativeButton.click();
+
+      await expect(nativeButton).toHaveAttribute('aria-label', 'Hide password');
+      await expect(nativeButton).toHaveAttribute('aria-checked', 'true');
+    });
+  });
 });
