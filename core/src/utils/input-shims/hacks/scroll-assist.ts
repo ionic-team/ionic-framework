@@ -190,7 +190,7 @@ const setManualFocus = (el: HTMLElement) => {
    * the attribute here, screen readers would be unable to navigate to and interact
    * with these sibling elements.
    *
-   * Without this check, we would need to call `ev.stopPropagation()` on the 
+   * Without this check, we would need to call `ev.stopPropagation()` on the
    * 'focusin' event of each focusable sibling to prevent the scroll assist
    * listener from incorrectly moving focus back to the input. This approach
    * is less maintainable and more error-prone.
