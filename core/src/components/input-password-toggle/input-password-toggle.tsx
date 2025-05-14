@@ -127,7 +127,7 @@ export class InputPasswordToggle implements ComponentInterface {
           fill="clear"
           shape="round"
           aria-checked={isPasswordVisible ? 'true' : 'false'}
-          aria-label="show password"
+          aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
           role="switch"
           type="button"
           onPointerDown={(ev) => {
