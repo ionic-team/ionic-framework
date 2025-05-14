@@ -43,12 +43,25 @@
 
       console.log('Generating SCSS variables...');
 
-      // Separate typography tokens from the rest
-      const typographyProperties = dictionary.allTokens.filter((prop) => prop.$type === 'typography');
-      const otherProperties = dictionary.allTokens.filter((prop) => prop.$type !== 'typography');
-
-      // Make sure the reused scss variables are defined first, to avoid compilation errors
-      const sortedProperties = [...otherProperties, ...typographyProperties];
+      const primitiveProperties = dictionary.allTokens.filter((prop) => prop.path[0] === 'primitives');
+      const scaleProperties = dictionary.allTokens.filter((prop) => prop.path[0] === 'scale');
+      const borderProperties = dictionary.allTokens.filter((prop) => prop.path[0] === 'border');
+      const semanticsProperties = dictionary.allTokens.filter((prop) => prop.path[0] === 'semantics');
+      const nonPrimitiveScaleBorderSemanticsProperties = dictionary.allTokens.filter(
+        (prop) => !['primitives', 'scale', 'border', 'semantics'].includes(prop.path[0])
+      );
+      const typographyProperties = nonPrimitiveScaleBorderSemanticsProperties.filter((prop) => prop.$type === 'typography');
+      const otherProperties = nonPrimitiveScaleBorderSemanticsProperties.filter((prop) => prop.$type !== 'typography');
+      
+      // Order: primitives → semantics → scale → border → other → typography
+      const sortedProperties = [
+        ...primitiveProperties,
+        ...semanticsProperties,
+        ...scaleProperties,
+        ...borderProperties,
+        ...otherProperties,
+        ...typographyProperties
+      ];
 
       const prefixedVariables = sortedProperties.map((prop) => {
         // Remove consecutive repeated words from the token name, like border-border-color
