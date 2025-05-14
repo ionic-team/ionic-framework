@@ -117,7 +117,7 @@
 
 /* Large Button */
 :host(.button-large) {
-  --padding-end: #{globals.$ion-space-600};
+  --padding-end: #{globals.$ion-space-700};
 
   @include globals.typography(globals.$ion-body-action-lg);
 
