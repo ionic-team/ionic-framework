@@ -192,8 +192,8 @@ const setManualFocus = (el: HTMLElement) => {
    *
    * Without this check, we would need to call `ev.stopPropagation()` on the
    * 'focusin' event of each focusable sibling to prevent the scroll assist
-   * listener from incorrectly moving focus back to the input. This approach
-   * is less maintainable and more error-prone.
+   * listener from incorrectly moving focus back to the input. That approach
+   * would be less maintainable and more error-prone.
    */
   if (document.activeElement?.parentNode === el.parentNode) {
     return;
