@@ -88,6 +88,35 @@
               readonly="true"
             ></ion-input>
           </div>
+
+          <div class="grid-item">
+            <h2>Solid</h2>
+
+            <ion-input
+              fill="solid"
+              label="Email"
+              value="hi@ionic.io"
+              helper-text="Enter an email"
+              counter="true"
+              maxlength="20"
+              readonly="true"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid: Color</h2>
+
+            <ion-input
+              color="warning"
+              fill="solid"
+              label="Email"
+              value="hi@ionic.io"
+              helper-text="Enter an email"
+              counter="true"
+              maxlength="20"
+              readonly="true"
+            ></ion-input>
+          </div>
         </div>
 
         <h1>Disabled</h1>
@@ -209,6 +238,67 @@
           </div>
         </div>
 
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Solid</h2>
+
+            <ion-input
+              fill="solid"
+              label="Email"
+              value="hi@ionic.io"
+              helper-text="Enter an email"
+              counter="true"
+              maxlength="20"
+              disabled="true"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid, Valid</h2>
+
+            <ion-input
+              fill="solid"
+              label="Email"
+              value="hi@ionic.io"
+              helper-text="Enter an email"
+              counter="true"
+              maxlength="20"
+              class="ion-valid has-focus"
+              disabled="true"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid, Invalid</h2>
+
+            <ion-input
+              fill="solid"
+              label="Email"
+              value="hi@ionic.io"
+              error-text="Please enter a valid email"
+              counter="true"
+              maxlength="20"
+              class="ion-touched ion-invalid"
+              disabled="true"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid, Color (ionic theme only)</h2>
+
+            <ion-input
+              fill="solid"
+              label="Email"
+              value="hi@ionic.io"
+              helper-text="Enter an email"
+              counter="true"
+              maxlength="20"
+              disabled="true"
+              color="warning"
+            ></ion-input>
+          </div>
+        </div>
+
         <h1>Focused</h1>
         <div class="grid">
           <div class="grid-item">
@@ -221,6 +311,12 @@
             <h2>Outline</h2>
 
             <ion-input fill="outline" label="Email" value="hi@ionic.io" class="has-focus"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid</h2>
+
+            <ion-input fill="solid" label="Email" value="hi@ionic.io" class="has-focus"></ion-input>
           </div>
         </div>
       </ion-content>
