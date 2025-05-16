@@ -101,7 +101,7 @@ export class Searchbar implements ComponentInterface {
   @Prop() cancelButtonIcon = config.get('backButtonIcon', arrowBackSharp) as string;
 
   /**
-   * Set the the cancel button text. Only applies to `ios` mode.
+   * Set the cancel button text. Only applies to `ios` mode.
    */
   @Prop() cancelButtonText = 'Cancel';
 
