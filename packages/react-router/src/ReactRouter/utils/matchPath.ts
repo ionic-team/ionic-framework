@@ -1,5 +1,5 @@
-import { matchPath as reactRouterMatchPath } from 'react-router';
 import type { PathMatch } from 'react-router';
+import { matchPath as reactRouterMatchPath } from 'react-router-dom';
 
 interface MatchPathOptions {
   /**
