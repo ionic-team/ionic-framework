@@ -1,0 +1,11 @@
+<div>
+  <h1>IonInputOtp Value Accessors</h1>
+  <p>
+    This test checks the form integrations with ion-input-otp to make sure values are correctly assigned to the form group.
+  </p>
+
+  <app-value-accessor-test [formGroup]="form">
+    <ion-input-otp type="text" formControlName="inputOtpString">String</ion-input-otp>
+    <ion-input-otp type="number" formControlName="inputOtpNumber">Number</ion-input-otp>
+  </app-value-accessor-test>
+</div>
