@@ -194,7 +194,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
           );
 
           const container = page.locator('.container');
-          await expect(container).toHaveScreenshot(screenshot(`input-disabled-outline`));
+          await expect(container).toHaveScreenshot(screenshot(`input-disabled-solid`));
         });
       });
     });
