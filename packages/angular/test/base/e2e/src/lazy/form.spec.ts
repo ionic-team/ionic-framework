@@ -7,6 +7,8 @@ describe('Form', () => {
     it('should update Ionic form classes when calling form methods programmatically', async () => {
       cy.get('#input-touched').click();
       cy.get('#touched-input-test').should('have.class', 'ion-touched');
+      cy.get('#input-otp-touched').click();
+      cy.get('#touched-input-otp-number-test').should('have.class', 'ion-touched');
     });
 
     describe('markAllAsTouched', () => {
@@ -32,6 +34,9 @@ describe('Form', () => {
         input2: 'Default Value',
         inputMin: 1,
         inputMax: 1,
+        inputOtp: null,
+        inputOtpText: '',
+        inputOtp2: 1234,
         checkbox: false,
         radio: null
       });
@@ -40,6 +45,15 @@ describe('Form', () => {
     it('should become valid', () => {
       cy.get('ion-input.required').type('Some value');
       cy.get('ion-input.required input').blur();
+
+      // Test number OTP input
+      cy.get('#touched-input-otp-number-test input').first().type('5678');
+      cy.get('#touched-input-otp-number-test input').last().focus().blur();
+
+
+      // Test text OTP input
+      cy.get('#touched-input-otp-text-test input').first().type('ABCD');
+      cy.get('#touched-input-otp-text-test input').last().focus().blur();
 
       testStatus('INVALID');
 
@@ -60,6 +74,9 @@ describe('Form', () => {
         input2: 'Default Value',
         inputMin: 1,
         inputMax: 1,
+        inputOtp: 5678,
+        inputOtpText: 'ABCD',
+        inputOtp2: 1234,
         checkbox: false,
         radio: null
       });
@@ -75,6 +92,9 @@ describe('Form', () => {
         input2: 'Default Value',
         inputMin: 1,
         inputMax: 1,
+        inputOtp: null,
+        inputOtpText: '',
+        inputOtp2: 1234,
         checkbox: false,
         radio: null
       });
@@ -90,6 +110,9 @@ describe('Form', () => {
         input2: 'Default Value',
         inputMin: 1,
         inputMax: 1,
+        inputOtp: null,
+        inputOtpText: '',
+        inputOtp2: 1234,
         checkbox: true,
         radio: null
       });
@@ -105,8 +128,36 @@ describe('Form', () => {
         input2: 'Default Value',
         inputMin: 1,
         inputMax: 1,
+        inputOtp: null,
+        inputOtpText: '',
+        inputOtp2: 1234,
         checkbox: false,
-        radio: 'nes'
+        radio: 'nes',
+      });
+    });
+
+    it('ion-input-otp should change', () => {
+      // Test number OTP input
+      cy.get('#touched-input-otp-number-test input').first().type('5678');
+      cy.get('#touched-input-otp-number-test input').last().focus().blur();
+
+      // Test text OTP input
+      cy.get('#touched-input-otp-text-test input').first().type('ABCD');
+      cy.get('#touched-input-otp-text-test input').last().focus().blur();
+
+      testData({
+        datetime: '2010-08-20',
+        select: null,
+        toggle: false,
+        input: '',
+        input2: 'Default Value',
+        inputMin: 1,
+        inputMax: 1,
+        inputOtp: 5678,
+        inputOtpText: 'ABCD',
+        inputOtp2: 1234,
+        checkbox: false,
+        radio: null
       });
     });
 
@@ -114,6 +165,38 @@ describe('Form', () => {
       cy.get('#set-values').click();
       cy.get('#submit-button').click();
       cy.get('#submit').should('have.text', 'true');
+    });
+
+    it('ion-input-otp should validate both number and text types', () => {
+      // Test number OTP validation
+      cy.get('#touched-input-otp-number-test').should('have.class', 'ng-invalid');
+      cy.get('#touched-input-otp-number-test input').first().type('5678');
+      cy.get('#touched-input-otp-number-test input').last().focus().blur();
+      cy.get('#touched-input-otp-number-test').should('have.class', 'ng-valid');
+
+      // Test text OTP validation
+      cy.get('#touched-input-otp-text-test').should('have.class', 'ng-invalid');
+      cy.get('#touched-input-otp-text-test input').first().type('ABCD');
+      cy.get('#touched-input-otp-text-test input').last().focus().blur();
+      cy.get('#touched-input-otp-text-test').should('have.class', 'ng-valid');
+    });
+
+    // Add test for partial OTP input validation
+    it('ion-input-otp should remain invalid when partially filled', () => {
+      // Test number OTP with only first digit
+      cy.get('#touched-input-otp-number-test').should('have.class', 'ng-invalid');
+      cy.get('#touched-input-otp-number-test input').first().type('5');
+      cy.get('#touched-input-otp-number-test input').eq(1).focus().blur();
+      cy.get('#touched-input-otp-number-test').should('have.class', 'ng-invalid');
+
+      // Test text OTP with only first character
+      cy.get('#touched-input-otp-text-test').should('have.class', 'ng-invalid');
+      cy.get('#touched-input-otp-text-test input').first().type('A');
+      cy.get('#touched-input-otp-text-test input').eq(1).focus().blur();
+      cy.get('#touched-input-otp-text-test').should('have.class', 'ng-invalid');
+
+      // Verify form status is still invalid
+      testStatus('INVALID');
     });
   });
 
@@ -128,6 +211,9 @@ describe('Form', () => {
         input2: 'Default Value',
         inputMin: 1,
         inputMax: 1,
+        inputOtp: null,
+        inputOtpText: '',
+        inputOtp2: 1234,
         checkbox: false,
         radio: null
       });
@@ -140,6 +226,9 @@ describe('Form', () => {
         input2: 'Default Value',
         inputMin: 1,
         inputMax: 1,
+        inputOtp: null,
+        inputOtpText: '',
+        inputOtp2: 1234,
         checkbox: true,
         radio: null
       });
