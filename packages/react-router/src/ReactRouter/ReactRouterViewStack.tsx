@@ -12,12 +12,7 @@
  */
 
 import type { RouteInfo, ViewItem } from '@ionic/react';
-import {
-  IonRoute,
-  ViewLifeCycleManager,
-  ViewStacks,
-  generateId,
-} from '@ionic/react';
+import { IonRoute, ViewLifeCycleManager, ViewStacks, generateId } from '@ionic/react';
 import React from 'react';
 import type { PathMatch } from 'react-router';
 import { Routes } from 'react-router';
@@ -33,12 +28,7 @@ export class ReactRouterViewStack extends ViewStacks {
    * Creates a new view item for the given outlet and react route element.
    * Associates route props with the matched route path for further lookups.
    */
-  createViewItem = (
-    outletId: string,
-    reactElement: React.ReactElement,
-    routeInfo: RouteInfo,
-    page?: HTMLElement
-  ) => {
+  createViewItem = (outletId: string, reactElement: React.ReactElement, routeInfo: RouteInfo, page?: HTMLElement) => {
     const viewItem: ViewItem = {
       id: generateId('viewItem'),
       outletId,
@@ -80,18 +70,12 @@ export class ReactRouterViewStack extends ViewStacks {
     }
 
     return (
-      <ViewLifeCycleManager
-        key={`view-${viewItem.id}`}
-        mount={viewItem.mount}
-        removeView={() => this.remove(viewItem)}
-      >
+      <ViewLifeCycleManager key={`view-${viewItem.id}`} mount={viewItem.mount} removeView={() => this.remove(viewItem)}>
         {/**
          * Wrapped in <Routes> to ensure React Router v6 correctly processes nested route elements
          * `key` is provided to enforce remounting of Routes when switching between view items.
          */}
-        <Routes key={`routes-${viewItem.id}`}>
-          {React.cloneElement(viewItem.reactElement)}
-        </Routes>
+        <Routes key={`routes-${viewItem.id}`}>{React.cloneElement(viewItem.reactElement)}</Routes>
       </ViewLifeCycleManager>
     );
   };
@@ -106,25 +90,16 @@ export class ReactRouterViewStack extends ViewStacks {
    * 3. Returns a list of React components that will be rendered inside the outlet
    *    Each view is wrapped in <ViewLifeCycleManager> to manage lifecycle and rendering
    */
-  getChildrenToRender = (
-    outletId: string,
-    ionRouterOutlet: React.ReactElement,
-    routeInfo: RouteInfo
-  ) => {
+  getChildrenToRender = (outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo) => {
     const viewItems = this.getViewItemsForOutlet(outletId);
 
     // Sync child elements with stored viewItems (e.g. to reflect new props)
-    React.Children.forEach(
-      ionRouterOutlet.props.children,
-      (child: React.ReactElement) => {
-        const viewItem = viewItems.find((v) =>
-          matchComponent(child, v.routeData.childProps.path)
-        );
-        if (viewItem) {
-          viewItem.reactElement = child;
-        }
+    React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
+      const viewItem = viewItems.find((v) => matchComponent(child, v.routeData.childProps.path));
+      if (viewItem) {
+        viewItem.reactElement = child;
       }
-    );
+    });
 
     // Render all view items using renderViewItem
     return viewItems.map((viewItem) => this.renderViewItem(viewItem, routeInfo));
@@ -133,15 +108,8 @@ export class ReactRouterViewStack extends ViewStacks {
   /**
    * Finds a view item matching the current route, optionally updating its match state.
    */
-  findViewItemByRouteInfo = (
-    routeInfo: RouteInfo,
-    outletId?: string,
-    updateMatch?: boolean
-  ) => {
-    const { viewItem, match } = this.findViewItemByPath(
-      routeInfo.pathname,
-      outletId
-    );
+  findViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: string, updateMatch?: boolean) => {
+    const { viewItem, match } = this.findViewItemByPath(routeInfo.pathname, outletId);
     const shouldUpdateMatch = updateMatch === undefined || updateMatch === true;
     if (shouldUpdateMatch && viewItem && match) {
       viewItem.routeData.match = match;
@@ -152,16 +120,8 @@ export class ReactRouterViewStack extends ViewStacks {
   /**
    * Finds the view item that was previously active before a route change.
    */
-  findLeavingViewItemByRouteInfo = (
-    routeInfo: RouteInfo,
-    outletId?: string,
-    mustBeIonRoute = true
-  ) => {
-    const { viewItem } = this.findViewItemByPath(
-      routeInfo.lastPathname!,
-      outletId,
-      mustBeIonRoute
-    );
+  findLeavingViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: string, mustBeIonRoute = true) => {
+    const { viewItem } = this.findViewItemByPath(routeInfo.lastPathname!, outletId, mustBeIonRoute);
     return viewItem;
   };
 
@@ -177,11 +137,7 @@ export class ReactRouterViewStack extends ViewStacks {
    * Core function that matches a given pathname against all view items.
    * Returns both the matched view item and match metadata.
    */
-  private findViewItemByPath(
-    pathname: string,
-    outletId?: string,
-    mustBeIonRoute?: boolean
-  ) {
+  private findViewItemByPath(pathname: string, outletId?: string, mustBeIonRoute?: boolean) {
     let viewItem: ViewItem | undefined;
     let match: PathMatch<string> | null = null;
     let viewStack: ViewItem[];

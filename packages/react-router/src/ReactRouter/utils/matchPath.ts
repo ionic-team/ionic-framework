@@ -23,15 +23,11 @@ interface MatchPathOptions {
  * The matchPath function is used only for matching paths, not rendering components or elements.
  * @see https://reactrouter.com/v6/utils/match-path
  */
-export const matchPath = ({
-  pathname,
-  componentProps,
-}: MatchPathOptions): PathMatch<string> | null => {
+export const matchPath = ({ pathname, componentProps }: MatchPathOptions): PathMatch<string> | null => {
   const { path, ...restProps } = componentProps;
 
   if (!path) {
-    console.warn(
-      '[Ionic] matchPath: No path prop provided. This will always return null.', {
+    console.warn('[Ionic] matchPath: No path prop provided. This will always return null.', {
       componentProps,
     });
     return null;
