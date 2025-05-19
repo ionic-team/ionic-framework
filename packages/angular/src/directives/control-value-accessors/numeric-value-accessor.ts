@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 
 @Directive({
-  selector: 'ion-input[type=number],ion-range',
+  selector: 'ion-input[type=number],ion-input-otp:not([type=text]),ion-range',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -18,12 +18,12 @@ export class NumericValueAccessorDirective extends ValueAccessor {
   }
 
   @HostListener('ionInput', ['$event.target'])
-  handleInputEvent(el: HTMLIonInputElement | HTMLIonRangeElement): void {
+  handleInputEvent(el: HTMLIonInputElement | HTMLIonInputOtpElement | HTMLIonRangeElement): void {
     this.handleValueChange(el, el.value);
   }
 
   registerOnChange(fn: (_: number | null) => void): void {
-    if (this.el.nativeElement.tagName === 'ION-INPUT') {
+    if (this.el.nativeElement.tagName === 'ION-INPUT' || this.el.nativeElement.tagName === 'ION-INPUT-OTP') {
       super.registerOnChange((value: string) => {
         fn(value === '' ? null : parseFloat(value));
       });

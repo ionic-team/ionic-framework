@@ -32,6 +32,7 @@ export {
   IonCheckbox,
   IonDatetime,
   IonInput,
+  IonInputOtp,
   IonIcon,
   IonRadioGroup,
   IonRange,
