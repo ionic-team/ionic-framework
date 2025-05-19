@@ -1,8 +1,10 @@
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
 import { RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
 import React from 'react';
+import { Route } from 'react-router';
 
 import { clonePageElement } from './clonePageElement';
+import { findRoutesNode } from './utils/findRoutesNode';
 import { matchPath } from './utils/matchPath';
 
 // TODO(FW-2959): types
@@ -135,16 +137,16 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       }
 
       // Match the route element to render
-      const enteringRoute = matchRoute(this.ionRouterOutlet?.props.children, routeInfo) as React.ReactElement;
+      const enteringRoute = findRouteByRouteInfo(this.ionRouterOutlet?.props.children, routeInfo) as React.ReactElement;
 
       /**
        * If we already have a view item for this route, update its element.
        * Otherwise, create a new view item for the route.
        */
       if (enteringViewItem) {
-        enteringViewItem.reactElement = enteringRoute;
+        enteringViewItem.reactElement = enteringRoute.props.element;
       } else if (enteringRoute) {
-        enteringViewItem = this.context.createViewItem(this.id, enteringRoute, routeInfo);
+        enteringViewItem = this.context.createViewItem(this.id, enteringRoute.props.element, routeInfo);
         this.context.addViewItem(enteringViewItem);
       }
 
@@ -519,33 +521,48 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
 export default StackManager;
 
-function matchRoute(node: React.ReactNode, routeInfo: RouteInfo) {
+/**
+ * Finds the `<Route />` node matching the current route info.
+ * If no `<Route />` can be matched, a fallback node is returned.
+ */
+function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo) {
   let matchedNode: React.ReactNode;
-  for (const child of React.Children.toArray(node) as React.ReactElement[]) {
-    const match = matchPath({
-      pathname: routeInfo.pathname,
-      componentProps: child.props,
-    });
+  let fallbackNode: React.ReactNode;
 
-    if (match) {
-      matchedNode = child;
-      break;
+  // `<Route />` nodes are rendered inside of a <Routes /> node
+  const routesNode = findRoutesNode(node) ?? node;
+
+  for (const child of React.Children.toArray(routesNode) as React.ReactElement[]) {
+    // Check if the child is a `<Route />` node
+    if (child.type === Route) {
+      const match = matchPath({
+        pathname: routeInfo.pathname,
+        componentProps: child.props,
+      });
+
+      if (match) {
+        matchedNode = child;
+        break;
+      }
     }
   }
 
   if (matchedNode) {
     return matchedNode;
   }
+
   // If we haven't found a node
-  // try to find one that doesn't have a path or from prop, that will be our not found route
-  for (const child of React.Children.toArray(node) as React.ReactElement[]) {
-    if (!(child.props.path || child.props.from)) {
-      matchedNode = child;
-      break;
+  // try to find one that doesn't have a path prop, that will be our not found route
+  for (const child of React.Children.toArray(routesNode) as React.ReactElement[]) {
+    if (child.type === Route) {
+      if (!child.props.path) {
+        fallbackNode = child;
+        break;
+      }
     }
   }
 
-  return matchedNode;
+  return matchedNode ?? fallbackNode;
 }
 
 function matchComponent(node: React.ReactElement, pathname: string, forceExact?: boolean) {
