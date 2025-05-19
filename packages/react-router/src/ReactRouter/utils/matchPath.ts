@@ -13,9 +13,6 @@ interface MatchPathOptions {
     path?: string;
     caseSensitive?: boolean;
     end?: boolean;
-    // from is removed in react-router v6 since Redirect was replaced with Navigate
-    // component is removed in react-router v6, replaced with element but not used in this function
-    // exact is removed in react-router v6
   };
 }
 
