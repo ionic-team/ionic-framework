@@ -331,24 +331,6 @@
   --background: #{globals.$ion-primitives-neutral-100};
 }
 
-// Input Highlight
-// ----------------------------------------------------------------
-
-.input-highlight {
-  @include globals.position(null, null, -1px, 0);
-
-  position: absolute;
-
-  width: 100%;
-  height: globals.$ion-border-size-050;
-
-  transform: scale(0);
-
-  transition: transform globals.$ion-transition-time-200;
-
-  background: var(--border-color);
-}
-
 // Input Focus
 // ----------------------------------------------------------------
 
