@@ -847,7 +847,7 @@ export class Input implements ComponentInterface {
     const size = this.getSize();
     const shape = this.getShape();
     const inItem = hostContext('ion-item', this.el);
-    const shouldRenderHighlight = (theme === 'md') && fill !== 'outline' && !inItem;
+    const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
     const labelPlacement = this.getLabelPlacement();
 
     const hasValue = this.hasValue();

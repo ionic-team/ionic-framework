@@ -12,7 +12,7 @@
  * border should reflect that as a color.
  */
 :host(.has-focus.input-fill-solid.ion-valid) .native-wrapper,
-:host(.input-fill-solid.ion-touched.ion-invalid) .native-wrapper{
+:host(.input-fill-solid.ion-touched.ion-invalid) .native-wrapper {
   --border-color: var(--highlight-color);
 }
 
@@ -21,7 +21,7 @@
  * slightly darker on hover.
  */
 @media (any-hover: hover) {
-  :host(:hover){
+  :host(:hover) {
     --border-color: #{globals.$ion-border-focus-default};
   }
 }
@@ -29,7 +29,7 @@
 // Input - Disabled
 // ----------------------------------------------------------------
 
-:host(.input-fill-solid.input-disabled){
+:host(.input-fill-solid.input-disabled) {
   --background: #{globals.$ion-bg-input-bold-disabled};
   --placeholder-color: #{globals.$ion-text-disabled};
 }
@@ -46,6 +46,6 @@
  * Background and border should be
  * much darker on focus.
  */
-:host(.input-fill-solid.has-focus){
+:host(.input-fill-solid.has-focus) {
   --border-color: #{globals.$ion-border-focus-default};
 }
