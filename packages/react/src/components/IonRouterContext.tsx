@@ -79,7 +79,7 @@ export type UseIonRouterResult = {
    */
   goBack(animationBuilder?: AnimationBuilder): void;
   /**
-   * Determines if there are any additional routes in the the Router's history. However, routing is not prevented if the browser's history has more entries. Returns true if more entries exist, false if not.
+   * Determines if there are any additional routes in the Router's history. However, routing is not prevented if the browser's history has more entries. Returns true if more entries exist, false if not.
    */
   canGoBack(): boolean;
   routeInfo: RouteInfo;
