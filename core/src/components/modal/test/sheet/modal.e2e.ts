@@ -22,6 +22,48 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         animations: 'allow',
       });
     });
+    test('should have working event listener in ion-footer when expandToScroll is false', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30315',
+      });
+
+      await page.setContent(
+        `
+        <ion-content>
+          <ion-button id="open-modal">Open</ion-button>
+          <ion-modal trigger="open-modal" initial-breakpoint="0.25" expandToScroll="false">
+            <ion-footer>
+              <ion-toolbar>
+                <ion-button id="dismiss">Dismiss</ion-button>
+              </ion-toolbar>
+            </ion-footer>
+          </ion-modal>
+        </ion-content>
+        <script>
+          const modal = document.querySelector('ion-modal');
+
+          const dismiss = document.querySelector('#dismiss');
+          dismiss.addEventListener('click', () => {
+            modal.dismiss();
+          });
+        </script>
+      `,
+        config
+      );
+
+      const dismissButton = page.locator('#dismiss');
+      const openButton = page.locator('#open-modal');
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      await openButton.click();
+      await ionModalDidPresent.next();
+
+      await dismissButton.click();
+      await ionModalDidDismiss.next();
+    });
   });
 });
 
