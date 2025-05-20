@@ -695,7 +695,7 @@ export class InputOTP implements ComponentInterface {
     // Create an array of the same length as the input OTP
     // and fill it with the input values
     const values = Array.from({ length }, (_, i) => inputValues[i] || '');
-    return values.findIndex(value => !value || value === '') ?? -1;
+    return values.findIndex((value) => !value || value === '') ?? -1;
   }
 
   /**
