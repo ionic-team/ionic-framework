@@ -256,7 +256,7 @@ export class InputOTP implements ComponentInterface {
     if (this.value != null && String(this.value).length > 0) {
       const chars = String(this.value).split('').slice(0, this.length);
       chars.forEach((char, index) => {
-        if (this.validKeys.test(char)) {
+        if (this.validKeyPattern.test(char)) {
           this.inputValues[index] = char;
         }
       });
@@ -305,7 +305,7 @@ export class InputOTP implements ComponentInterface {
    * If a pattern is provided, use it to create a regex pattern
    * Otherwise, use the default regex pattern based on type
    */
-  private get validKeys(): RegExp {
+  private get validKeyPattern(): RegExp {
     return new RegExp(`^${this.getPattern()}$`);
   }
 
@@ -383,12 +383,12 @@ export class InputOTP implements ComponentInterface {
   }
 
   private onInput = (index: number) => (event: InputEvent) => {
-    const { validKeys } = this;
+    const { validKeyPattern } = this;
 
     const value = (event.target as HTMLInputElement).value;
 
     // Only allow input if it's a single character and matches the pattern
-    if (value.length > 1 || (value.length > 0 && !validKeys.test(value))) {
+    if (value.length > 1 || (value.length > 0 && !validKeyPattern.test(value))) {
       // Reset the input value if not valid
       this.inputRefs[index].value = '';
       this.inputValues[index] = '';
@@ -494,7 +494,7 @@ export class InputOTP implements ComponentInterface {
     // If the input box contains a value and the key being
     // entered is a valid key for the input box update the value
     // and shift the values to the right if there is room.
-    if (this.inputValues[index] && this.validKeys.test(event.key)) {
+    if (this.inputValues[index] && this.validKeyPattern.test(event.key)) {
       if (!this.inputValues[length - 1]) {
         for (let i = length - 1; i > index; i--) {
           this.inputValues[i] = this.inputValues[i - 1];
@@ -519,7 +519,7 @@ export class InputOTP implements ComponentInterface {
    * the next empty input after pasting.
    */
   private onPaste = (event: ClipboardEvent) => {
-    const { inputRefs, length, validKeys } = this;
+    const { inputRefs, length, validKeyPattern } = this;
 
     event.preventDefault();
 
@@ -535,7 +535,7 @@ export class InputOTP implements ComponentInterface {
 
     const validChars = pastedText
       .split('')
-      .filter((char) => validKeys.test(char))
+      .filter((char) => validKeyPattern.test(char))
       .slice(0, length);
 
     // Find the first empty input
