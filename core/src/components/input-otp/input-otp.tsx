@@ -88,7 +88,7 @@ export class InputOTP implements ComponentInterface {
   /**
    * A regex pattern string for allowed characters. Defaults based on type.
    *
-   * For numbers (type="number"): "[0-9]"
+   * For numbers (type="number"): "[\\p{N}]"
    * For text (type="text"): "[\\p{L}\\p{N}]"
    */
   @Prop() pattern?: string;
@@ -318,7 +318,7 @@ export class InputOTP implements ComponentInterface {
     if (pattern) {
       return pattern;
     }
-    return type === 'number' ? '[0-9]' : '[\\p{L}\\p{N}]';
+    return type === 'number' ? '[\\p{N}]' : '[\\p{L}\\p{N}]';
   }
 
   /**

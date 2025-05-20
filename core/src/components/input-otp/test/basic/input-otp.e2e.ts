@@ -74,6 +74,33 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await verifyInputValues(inputOtp, ['2', '4', '6', '8']);
     });
 
+    test('should accept Eastern Arabic numerals by default', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('١٢٣٤');
+
+      // There is an issue with Playwright automatically flipping the
+      // values, so we check for the flipped values from above, even though
+      // it is entered correctly in the component.
+      await verifyInputValues(inputOtp, ['١', '٢', '٣', '٤']);
+    });
+
+    test('should accept only Western Arabic numerals when pattern is set to [0-9]', async ({ page }) => {
+      await page.setContent(`<ion-input-otp pattern="[0-9]">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('12٣٤34');
+
+      await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
+    });
+
     test('should accept Latin characters when type is text', async ({ page }) => {
       await page.setContent(`<ion-input-otp type="text">Description</ion-input-otp>`, config);
 
