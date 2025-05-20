@@ -134,15 +134,6 @@
   font-size: globals.$ion-font-size-500;
 }
 
-:host(.button-small),
-:host(.button-medium) {
-  ::slotted(ion-icon[slot="start"]),
-  ::slotted(ion-icon[slot="end"]),
-  ::slotted(ion-icon[slot="icon-only"]) {
-    font-size: globals.$ion-font-size-500;
-  }
-}
-
 :host(.button-large) {
   ::slotted(ion-icon[slot="start"]),
   ::slotted(ion-icon[slot="end"]),
@@ -284,8 +275,7 @@
   @include globals.position(null, calc(-1 * globals.$ion-space-050), null, null);
 }
 
-:host(.button-medium),
-:host:not(.button-small):not(.button-large) {
+:host(.button-medium) {
   ::slotted(ion-badge.long-badge.badge-vertical-top) {
     @include globals.position($top: globals.$ion-space-100);
   }

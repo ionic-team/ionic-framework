@@ -80,7 +80,7 @@ export class Badge implements ComponentInterface {
     const theme = getIonTheme(this);
     const { size } = this;
 
-    // TODO(RFW-6355): Remove theme check when sizes are defined for all themes.
+    // TODO(FW-6355): Remove theme check when sizes are defined for all themes.
     if (theme !== 'ionic') {
       return undefined;
     }
