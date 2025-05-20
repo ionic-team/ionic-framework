@@ -1347,7 +1347,7 @@ export namespace Components {
          */
         "length": number;
         /**
-          * A regex pattern string for allowed characters. Defaults based on type.  For numbers (type="number"): "[0-9]" For text (type="text"): "[a-zA-Z0-9]"
+          * A regex pattern string for allowed characters. Defaults based on type.  For numbers (type="number"): "[0-9]" For text (type="text"): "[\\p{L}\\p{N}]"
          */
         "pattern"?: string;
         /**
@@ -6315,7 +6315,7 @@ declare namespace LocalJSX {
          */
         "onIonInput"?: (event: IonInputOtpCustomEvent<InputOtpInputEventDetail>) => void;
         /**
-          * A regex pattern string for allowed characters. Defaults based on type.  For numbers (type="number"): "[0-9]" For text (type="text"): "[a-zA-Z0-9]"
+          * A regex pattern string for allowed characters. Defaults based on type.  For numbers (type="number"): "[0-9]" For text (type="text"): "[\\p{L}\\p{N}]"
          */
         "pattern"?: string;
         /**

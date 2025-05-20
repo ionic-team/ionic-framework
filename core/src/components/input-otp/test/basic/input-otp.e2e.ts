@@ -74,7 +74,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await verifyInputValues(inputOtp, ['2', '4', '6', '8']);
     });
 
-    test('should accept text and numbers when type is set to text', async ({ page }) => {
+    test('should accept Latin characters when type is text', async ({ page }) => {
       await page.setContent(`<ion-input-otp type="text">Description</ion-input-otp>`, config);
 
       const inputOtp = page.locator('ion-input-otp');
@@ -85,6 +85,102 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await page.keyboard.type('A2-B5');
 
       await verifyInputValues(inputOtp, ['A', '2', 'B', '5']);
+    });
+
+    test('should accept accented Latin characters when type is text', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('áéíó');
+
+      await verifyInputValues(inputOtp, ['á', 'é', 'í', 'ó']);
+    });
+
+    test('should accept Cyrillic characters when type is text', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('АбвГ');
+
+      await verifyInputValues(inputOtp, ['А', 'б', 'в', 'Г']);
+    });
+
+    test('should accept Chinese characters when type is text', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('中国北京');
+
+      await verifyInputValues(inputOtp, ['中', '国', '北', '京']);
+    });
+
+    test('should accept Japanese characters when type is text', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('ひらがな');
+
+      await verifyInputValues(inputOtp, ['ひ', 'ら', 'が', 'な']);
+    });
+
+    test('should accept Korean characters when type is text', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('안녕하세');
+
+      await verifyInputValues(inputOtp, ['안', '녕', '하', '세']);
+    });
+
+    test('should accept Arabic characters when type is text', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('أبجد');
+
+      await verifyInputValues(inputOtp, ['أ', 'ب', 'ج', 'د']);
+    });
+
+    test('should accept mixed language characters when type is text', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('A漢字Б');
+
+      await verifyInputValues(inputOtp, ['A', '漢', '字', 'Б']);
+    });
+
+    test('should reject special characters when type is text', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('!@#$%^&*()-,:;./?+');
+
+      await verifyInputValues(inputOtp, ['', '', '', '']);
     });
 
     test('should accept custom pattern of lowercase and uppercase letters when pattern is set', async ({ page }) => {
@@ -111,6 +207,91 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await page.keyboard.type('abcdABCDEFG');
 
       await verifyInputValues(inputOtp, ['D', 'E', 'F', 'G']);
+    });
+
+    test('should accept custom pattern of all characters when pattern is set', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text" pattern=".">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('*#.!');
+
+      await verifyInputValues(inputOtp, ['*', '#', '.', '!']);
+    });
+
+    test('should accept only Latin characters and numbers when pattern is set', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text" pattern="[A-Za-z0-9]">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('Ab中国北京12');
+
+      await verifyInputValues(inputOtp, ['A', 'b', '1', '2']);
+    });
+
+    test('should accept only Cyrillic characters when pattern is set', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text" pattern="[А-Яа-я]">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('АбABC123вГ');
+
+      await verifyInputValues(inputOtp, ['А', 'б', 'в', 'Г']);
+    });
+
+    test('should accept only Chinese characters when pattern is set', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text" pattern="[\\u4e00-\\u9fff]">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('中国ABC123北京');
+
+      await verifyInputValues(inputOtp, ['中', '国', '北', '京']);
+    });
+
+    test('should accept only Japanese characters when pattern is set', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text" pattern="[\\u3040-\\u309F\\u30A0-\\u30FF]">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('ひらABC123がな');
+
+      await verifyInputValues(inputOtp, ['ひ', 'ら', 'が', 'な']);
+    });
+
+    test('should accept only Korean characters when pattern is set', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text" pattern="[\\uAC00-\\uD7AF\\u1100-\\u11FF]">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('안녕ABC123하세');
+
+      await verifyInputValues(inputOtp, ['안', '녕', '하', '세']);
+    });
+
+    test('should accept only Arabic characters when pattern is set', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text" pattern="[\\u0600-\\u06FF]">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('أبجد123');
+
+      await verifyInputValues(inputOtp, ['أ', 'ب', 'ج', 'د']);
     });
   });
 

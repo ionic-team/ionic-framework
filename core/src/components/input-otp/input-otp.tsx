@@ -89,7 +89,7 @@ export class InputOTP implements ComponentInterface {
    * A regex pattern string for allowed characters. Defaults based on type.
    *
    * For numbers (type="number"): "[0-9]"
-   * For text (type="text"): "[a-zA-Z0-9]"
+   * For text (type="text"): "[\\p{L}\\p{N}]"
    */
   @Prop() pattern?: string;
 
@@ -306,7 +306,7 @@ export class InputOTP implements ComponentInterface {
    * Otherwise, use the default regex pattern based on type
    */
   private get validKeyPattern(): RegExp {
-    return new RegExp(`^${this.getPattern()}$`);
+    return new RegExp(`^${this.getPattern()}$`, 'u');
   }
 
   /**
@@ -318,7 +318,7 @@ export class InputOTP implements ComponentInterface {
     if (pattern) {
       return pattern;
     }
-    return type === 'number' ? '[0-9]' : '[a-zA-Z0-9]';
+    return type === 'number' ? '[0-9]' : '[\\p{L}\\p{N}]';
   }
 
   /**
