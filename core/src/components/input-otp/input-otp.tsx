@@ -686,19 +686,16 @@ export class InputOTP implements ComponentInterface {
   }
 
   /**
-   * Loops through the input values and returns the index
+   * Searches through the input values and returns the index
    * of the first empty input.
    * Returns -1 if all inputs are filled.
    */
   private getFirstEmptyIndex() {
     const { inputValues, length } = this;
-
-    for (let i = 0; i < length; i++) {
-      if (!inputValues[i] || inputValues[i] === '') {
-        return i;
-      }
-    }
-    return -1;
+    // Create an array of the same length as the input OTP
+    // and fill it with the input values
+    const values = Array.from({ length }, (_, i) => inputValues[i] || '');
+    return values.findIndex(value => !value || value === '') ?? -1;
   }
 
   /**
