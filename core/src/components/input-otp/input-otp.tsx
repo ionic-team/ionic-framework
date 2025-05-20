@@ -449,9 +449,6 @@ export class InputOTP implements ComponentInterface {
 
     if (event.key === 'Backspace') {
       if (this.inputValues[index]) {
-        // Remove the value at the current index
-        this.inputValues[index] = '';
-
         // Shift all values to the right of the current index left by one
         for (let i = index; i < length - 1; i++) {
           this.inputValues[i] = this.inputValues[i + 1];
