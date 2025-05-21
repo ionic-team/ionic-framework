@@ -146,13 +146,6 @@
   }
 }
 
-:host(.ion-color) {
-  .progress,
-  .progress-indeterminate {
-    background: #{current-color(base)};
-  }
-}
-
 // Progress Bar: Animation Keyframes
 // ------------------------------------------------------------------------
 // Source: https://github.com/material-components/material-components-web/blob/master/packages/mdc-linear-progress/_keyframes.scss
