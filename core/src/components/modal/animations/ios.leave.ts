@@ -32,33 +32,33 @@ export const iosLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
     .addElement(baseEl)
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(duration)
-    .addAnimation(wrapperAnimation)
-    .beforeAddWrite(() => {
-      if (expandToScroll) {
-        // Scroll can only be done when the modal is fully expanded.
-        return;
-      }
+    .addAnimation(wrapperAnimation);
+    // .beforeAddWrite(() => {
+    //   if (expandToScroll) {
+    //     // Scroll can only be done when the modal is fully expanded.
+    //     return;
+    //   }
 
-      /**
-       * If expandToScroll is disabled, we need to swap
-       * the visibility to the original, so the footer
-       * dismisses with the modal and doesn't stay
-       * until the modal is removed from the DOM.
-       */
-      const ionFooter = baseEl.querySelector('ion-footer');
-      if (ionFooter) {
-        const clonedFooter = baseEl.shadowRoot!.querySelector('ion-footer')!;
+    //   /**
+    //    * If expandToScroll is disabled, we need to swap
+    //    * the visibility to the original, so the footer
+    //    * dismisses with the modal and doesn't stay
+    //    * until the modal is removed from the DOM.
+    //    */
+    //   const ionFooter = baseEl.querySelector('ion-footer');
+    //   if (ionFooter) {
+    //     const clonedFooter = baseEl.shadowRoot!.querySelector('ion-footer')!;
 
-        ionFooter.style.removeProperty('display');
-        ionFooter.removeAttribute('aria-hidden');
+    //     ionFooter.style.removeProperty('display');
+    //     ionFooter.removeAttribute('aria-hidden');
 
-        clonedFooter.style.setProperty('display', 'none');
-        clonedFooter.setAttribute('aria-hidden', 'true');
+    //     clonedFooter.style.setProperty('display', 'none');
+    //     clonedFooter.setAttribute('aria-hidden', 'true');
 
-        const page = baseEl.querySelector('.ion-page') as HTMLElement;
-        page.style.removeProperty('padding-bottom');
-      }
-    });
+    //     const page = baseEl.querySelector('.ion-page') as HTMLElement;
+    //     page.style.removeProperty('padding-bottom');
+    //   }
+    // });
 
   if (presentingEl) {
     const isMobile = window.innerWidth < 768;

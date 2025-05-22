@@ -128,23 +128,23 @@ export const createSheetGesture = (
       return;
     }
 
-    const clonedFooter = wrapperEl.nextElementSibling as HTMLIonFooterElement;
-    const footerToHide = footer === 'original' ? clonedFooter : originalFooter;
-    const footerToShow = footer === 'original' ? originalFooter : clonedFooter;
+    // const clonedFooter = wrapperEl.nextElementSibling as HTMLIonFooterElement;
+    // const footerToHide = footer === 'original' ? clonedFooter : originalFooter;
+    // const footerToShow = footer === 'original' ? originalFooter : clonedFooter;
 
-    footerToShow.style.removeProperty('display');
-    footerToShow.removeAttribute('aria-hidden');
+    // footerToShow.style.removeProperty('display');
+    // footerToShow.removeAttribute('aria-hidden');
 
-    const page = baseEl.querySelector('.ion-page') as HTMLElement;
-    if (footer === 'original') {
-      page.style.removeProperty('padding-bottom');
-    } else {
-      const pagePadding = footerToShow.clientHeight;
-      page.style.setProperty('padding-bottom', `${pagePadding}px`);
-    }
+    // const page = baseEl.querySelector('.ion-page') as HTMLElement;
+    // if (footer === 'original') {
+    //   page.style.removeProperty('padding-bottom');
+    // } else {
+    //   const pagePadding = footerToShow.clientHeight;
+    //   page.style.setProperty('padding-bottom', `${pagePadding}px`);
+    // }
 
-    footerToHide.style.setProperty('display', 'none');
-    footerToHide.setAttribute('aria-hidden', 'true');
+    // footerToHide.style.setProperty('display', 'none');
+    // footerToHide.setAttribute('aria-hidden', 'true');
   };
 
   /**

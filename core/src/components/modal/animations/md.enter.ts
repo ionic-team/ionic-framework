@@ -43,50 +43,50 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOption
     .addElement(baseEl)
     .easing('cubic-bezier(0.36,0.66,0.04,1)')
     .duration(280)
-    .addAnimation([backdropAnimation, wrapperAnimation])
-    .beforeAddWrite(() => {
-      if (expandToScroll) {
-        // Scroll can only be done when the modal is fully expanded.
-        return;
-      }
+    .addAnimation([backdropAnimation, wrapperAnimation]);
+    // .beforeAddWrite(() => {
+    //   if (expandToScroll) {
+    //     // Scroll can only be done when the modal is fully expanded.
+    //     return;
+    //   }
 
-      /**
-       * There are some browsers that causes flickering when
-       * dragging the content when scroll is enabled at every
-       * breakpoint. This is due to the wrapper element being
-       * transformed off the screen and having a snap animation.
-       *
-       * A workaround is to clone the footer element and append
-       * it outside of the wrapper element. This way, the footer
-       * is still visible and the drag can be done without
-       * flickering. The original footer is hidden until the modal
-       * is dismissed. This maintains the animation of the footer
-       * when the modal is dismissed.
-       *
-       * The workaround needs to be done before the animation starts
-       * so there are no flickering issues.
-       */
-      const ionFooter = baseEl.querySelector('ion-footer');
-      /**
-       * This check is needed to prevent more than one footer
-       * from being appended to the shadow root.
-       * Otherwise, iOS and MD enter animations would append
-       * the footer twice.
-       */
-      const ionFooterAlreadyAppended = baseEl.shadowRoot!.querySelector('ion-footer');
-      if (ionFooter && !ionFooterAlreadyAppended) {
-        const footerHeight = ionFooter.clientHeight;
-        const clonedFooter = ionFooter.cloneNode(true) as HTMLIonFooterElement;
+    //   /**
+    //    * There are some browsers that causes flickering when
+    //    * dragging the content when scroll is enabled at every
+    //    * breakpoint. This is due to the wrapper element being
+    //    * transformed off the screen and having a snap animation.
+    //    *
+    //    * A workaround is to clone the footer element and append
+    //    * it outside of the wrapper element. This way, the footer
+    //    * is still visible and the drag can be done without
+    //    * flickering. The original footer is hidden until the modal
+    //    * is dismissed. This maintains the animation of the footer
+    //    * when the modal is dismissed.
+    //    *
+    //    * The workaround needs to be done before the animation starts
+    //    * so there are no flickering issues.
+    //    */
+    //   const ionFooter = baseEl.querySelector('ion-footer');
+    //   /**
+    //    * This check is needed to prevent more than one footer
+    //    * from being appended to the shadow root.
+    //    * Otherwise, iOS and MD enter animations would append
+    //    * the footer twice.
+    //    */
+    //   const ionFooterAlreadyAppended = baseEl.shadowRoot!.querySelector('ion-footer');
+    //   if (ionFooter && !ionFooterAlreadyAppended) {
+    //     const footerHeight = ionFooter.clientHeight;
+    //     const clonedFooter = ionFooter.cloneNode(true) as HTMLIonFooterElement;
 
-        baseEl.shadowRoot!.appendChild(clonedFooter);
-        ionFooter.style.setProperty('display', 'none');
-        ionFooter.setAttribute('aria-hidden', 'true');
+    //     baseEl.shadowRoot!.appendChild(clonedFooter);
+    //     ionFooter.style.setProperty('display', 'none');
+    //     ionFooter.setAttribute('aria-hidden', 'true');
 
-        // Padding is added to prevent some content from being hidden.
-        const page = baseEl.querySelector('.ion-page') as HTMLElement;
-        page.style.setProperty('padding-bottom', `${footerHeight}px`);
-      }
-    });
+    //     // Padding is added to prevent some content from being hidden.
+    //     const page = baseEl.querySelector('.ion-page') as HTMLElement;
+    //     page.style.setProperty('padding-bottom', `${footerHeight}px`);
+    //   }
+    // });
 
   if (contentAnimation) {
     baseAnimation.addAnimation(contentAnimation);
