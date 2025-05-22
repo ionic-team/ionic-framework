@@ -262,7 +262,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     });
 
     test('should accept only Cyrillic characters when pattern is set', async ({ page }) => {
-      await page.setContent(`<ion-input-otp type="text" pattern="[А-Яа-я]">Description</ion-input-otp>`, config);
+      await page.setContent(`<ion-input-otp type="text" pattern="[\\p{Script=Cyrillic}]">Description</ion-input-otp>`, config);
 
       const inputOtp = page.locator('ion-input-otp');
       const firstInput = page.locator('ion-input-otp input').first();
@@ -275,7 +275,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
     test('should accept only Chinese characters when pattern is set', async ({ page }) => {
       await page.setContent(
-        `<ion-input-otp type="text" pattern="[\\u4e00-\\u9fff]">Description</ion-input-otp>`,
+        `<ion-input-otp type="text" pattern="[\\p{Script=Han}]">Description</ion-input-otp>`,
         config
       );
 
@@ -290,7 +290,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
     test('should accept only Japanese characters when pattern is set', async ({ page }) => {
       await page.setContent(
-        `<ion-input-otp type="text" pattern="[\\u3040-\\u309F\\u30A0-\\u30FF]">Description</ion-input-otp>`,
+        `<ion-input-otp type="text" pattern="\\p{Script=Hiragana}">Description</ion-input-otp>`,
         config
       );
 
@@ -305,7 +305,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
     test('should accept only Korean characters when pattern is set', async ({ page }) => {
       await page.setContent(
-        `<ion-input-otp type="text" pattern="[\\uAC00-\\uD7AF\\u1100-\\u11FF]">Description</ion-input-otp>`,
+        `<ion-input-otp type="text" pattern="\\p{Script=Hangul}">Description</ion-input-otp>`,
         config
       );
 
@@ -320,7 +320,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
     test('should accept only Arabic characters when pattern is set', async ({ page }) => {
       await page.setContent(
-        `<ion-input-otp type="text" pattern="[\\u0600-\\u06FF]">Description</ion-input-otp>`,
+        `<ion-input-otp type="text" pattern="\\p{Script=Arabic}">Description</ion-input-otp>`,
         config
       );
 
