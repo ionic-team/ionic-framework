@@ -1,5 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Fragment, Host, Prop, State, h, Watch } from '@stencil/core';
+import type { Attributes } from '@utils/helpers';
+import { inheritAriaAttributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
@@ -23,6 +25,7 @@ import type {
   scoped: true,
 })
 export class InputOTP implements ComponentInterface {
+  private inheritedAttributes: Attributes = {};
   private inputRefs: HTMLInputElement[] = [];
   private inputId = `ion-input-otp-${inputIds++}`;
   private parsedSeparators: number[] = [];
@@ -242,8 +245,13 @@ export class InputOTP implements ComponentInterface {
   }
 
   componentWillLoad() {
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
     this.processSeparators();
     this.initializeValues();
+  }
+
+  componentDidLoad() {
+    this.updateTabIndexes();
   }
 
   /**
@@ -352,6 +360,7 @@ export class InputOTP implements ComponentInterface {
     if (newValue.length === length) {
       this.ionComplete.emit({ value: newValue });
     }
+    this.updateTabIndexes();
   }
 
   /**
@@ -675,13 +684,16 @@ export class InputOTP implements ComponentInterface {
       }
     }
 
-    // Update tabIndex for all inputs
+    // Update tabIndex and aria-hidden for all inputs
     inputRefs.forEach((input, index) => {
-      // If all boxes are filled, make the last box tabbable
-      // Otherwise, make the first empty box tabbable
       const shouldBeTabbable = firstEmptyIndex === -1 ? index === length - 1 : firstEmptyIndex === index;
 
       input.tabIndex = shouldBeTabbable ? 0 : -1;
+
+      // If the input is empty and not the first empty input,
+      // it should be hidden from screen readers.
+      const isEmpty = !inputValues[index] || inputValues[index] === '';
+      input.setAttribute('aria-hidden', isEmpty && !shouldBeTabbable ? 'true' : 'false');
     });
   }
 
@@ -716,6 +728,7 @@ export class InputOTP implements ComponentInterface {
       disabled,
       fill,
       hasFocus,
+      inheritedAttributes,
       inputId,
       inputRefs,
       inputValues,
@@ -741,7 +754,7 @@ export class InputOTP implements ComponentInterface {
           'input-otp-readonly': readonly,
         })}
       >
-        <div role="group" aria-label="One-time password input" class="input-otp-group">
+        <div role="group" aria-label="One-time password input" class="input-otp-group" {...inheritedAttributes}>
           {Array.from({ length }).map((_, index) => (
             <>
               <div class="native-wrapper">

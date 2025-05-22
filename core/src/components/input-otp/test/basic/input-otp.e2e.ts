@@ -262,7 +262,10 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
     });
 
     test('should accept only Cyrillic characters when pattern is set', async ({ page }) => {
-      await page.setContent(`<ion-input-otp type="text" pattern="[\\p{Script=Cyrillic}]">Description</ion-input-otp>`, config);
+      await page.setContent(
+        `<ion-input-otp type="text" pattern="[\\p{Script=Cyrillic}]">Description</ion-input-otp>`,
+        config
+      );
 
       const inputOtp = page.locator('ion-input-otp');
       const firstInput = page.locator('ion-input-otp input').first();
