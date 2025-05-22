@@ -726,6 +726,7 @@ export class InputOTP implements ComponentInterface {
       autocapitalize,
       color,
       disabled,
+      el,
       fill,
       hasFocus,
       inheritedAttributes,
@@ -741,6 +742,7 @@ export class InputOTP implements ComponentInterface {
     const inputmode = this.getInputmode();
     const tabbableIndex = this.getTabbableIndex();
     const pattern = this.getPattern();
+    const hasDescription = el.querySelector('.input-otp-description')?.textContent?.trim() !== '';
 
     return (
       <Host
@@ -784,7 +786,11 @@ export class InputOTP implements ComponentInterface {
             </>
           ))}
         </div>
-        <div class="input-otp-description">
+        <div
+          class={{
+            'input-otp-description': true,
+            'input-otp-description-hidden': !hasDescription,
+          }}>
           <slot></slot>
         </div>
       </Host>
