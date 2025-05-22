@@ -195,7 +195,13 @@ const setManualFocus = (el: HTMLElement) => {
    * listener from incorrectly moving focus back to the input. That approach
    * would be less maintainable and more error-prone.
    */
-  if (document.activeElement?.parentNode === el.parentNode) {
+  const inputId = el.getAttribute('id');
+  const label = el.closest(`label[for="${inputId}"]`);
+  const activeElLabel = document.activeElement?.closest(`label[for="${inputId}"]`);
+
+  if (label !== null && label === activeElLabel) {
+    // If the label is the same as the active element label, then
+    // we don't need to set the `SKIP_SCROLL_ASSIST` and reset focus.
     return;
   }
 
