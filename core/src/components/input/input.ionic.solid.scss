@@ -1,0 +1,51 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+// Input Fill: Solid
+// ----------------------------------------------------------------
+
+:host(.input-fill-solid) {
+  --background: #{globals.$ion-bg-input-bold-default};
+  --border-color: #{globals.$ion-bg-input-bold-default};
+}
+
+/**
+ * If the input has a validity state, the
+ * border should reflect that as a color.
+ */
+:host(.input-fill-solid.has-focus.ion-valid) .native-wrapper,
+:host(.input-fill-solid.ion-touched.ion-invalid) .native-wrapper {
+  --border-color: var(--highlight-color);
+}
+
+/**
+ * Background and border should be
+ * slightly darker on hover.
+ */
+@media (any-hover: hover) {
+  :host(:hover) {
+    --border-color: #{globals.$ion-border-focus-default};
+  }
+}
+
+// Input - Disabled
+// ----------------------------------------------------------------
+
+:host(.input-fill-solid.input-disabled) {
+  --background: #{globals.$ion-bg-input-bold-disabled};
+  --placeholder-color: #{globals.$ion-text-disabled};
+}
+
+// Input - Readonly
+// ----------------------------------------------------------------
+
+:host(.input-fill-solid.input-readonly) {
+  --background: #{globals.$ion-bg-input-bold-read-only};
+  --border-color: #{globals.$ion-bg-input-bold-read-only};
+}
+
+/**
+ * Background and border should be
+ * much darker on focus.
+ */
+:host(.input-fill-solid.has-focus) {
+  --border-color: #{globals.$ion-border-focus-default};
+}
