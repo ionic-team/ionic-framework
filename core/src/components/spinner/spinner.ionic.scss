@@ -11,8 +11,8 @@
   height: globals.$ion-scale-700;
 }
 
-:host(.ion-color.ion-color-medium) {
-  color: globals.current-color(contrast, null, true);
+:host(.ion-color-medium) {
+  color: #{globals.ion-color(medium, contrast, $subtle:true)}
 }
 
 // Spinner: lines / lines-small / lines-sharp / lines-sharp-small
