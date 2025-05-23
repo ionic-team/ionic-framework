@@ -1,0 +1,20 @@
+@import "./input-otp";
+@import "../../themes/ionic.globals.md";
+
+// Material Design Input OTP
+// --------------------------------------------------
+
+:host {
+  --border-width: 1px;
+}
+
+:host(.has-focus) .native-input:focus {
+  --border-width: 2px;
+}
+
+// Fills
+// --------------------------------------------------
+
+:host(.input-otp-fill-outline) {
+  --border-color: #{$background-color-step-300};
+}

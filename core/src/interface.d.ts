@@ -12,6 +12,7 @@ export { CheckboxCustomEvent } from './components/checkbox/checkbox-interface';
 export { DatetimeCustomEvent, DatetimeHighlightStyle } from './components/datetime/datetime-interface';
 export { InfiniteScrollCustomEvent } from './components/infinite-scroll/infinite-scroll-interface';
 export { InputCustomEvent } from './components/input/input-interface';
+export { InputOtpCustomEvent } from './components/input-otp/input-otp-interface';
 export { CounterFormatter } from './components/item/item-interface';
 export { ItemSlidingCustomEvent } from './components/item-sliding/item-sliding-interface';
 export { LoadingOptions } from './components/loading/loading-interface';

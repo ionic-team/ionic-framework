@@ -45,6 +45,20 @@
       </ion-item>
 
       <ion-item>
+        <ion-input-otp id="touched-input-otp-number-test" formControlName="inputOtp" class="required">Input OTP (required)</ion-input-otp>
+      </ion-item>
+
+      <ion-button id="input-otp-touched" (click)="setOtpTouched()">Set Input OTP Touched</ion-button>
+
+      <ion-item>
+        <ion-input-otp id="touched-input-otp-text-test" type="text" formControlName="inputOtpText" class="required">Input OTP Text (required)</ion-input-otp>
+      </ion-item>
+
+      <ion-item>
+        <ion-input-otp formControlName="inputOtp2">Input OTP</ion-input-otp>
+      </ion-item>
+
+      <ion-item>
         <ion-checkbox formControlName="checkbox"> Checkbox </ion-checkbox>
       </ion-item>
 
