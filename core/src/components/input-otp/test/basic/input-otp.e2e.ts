@@ -83,10 +83,10 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
       await page.keyboard.type('١٢٣٤');
 
-      // There is an issue with Playwright automatically flipping the
-      // values, so we check for the flipped values from above, even though
-      // it is entered correctly in the component.
-      await verifyInputValues(inputOtp, ['١', '٢', '٣', '٤']);
+      // Because Arabic is a right-to-left script, JavaScript's handling of RTL text
+      // causes the array values to be reversed while input boxes maintain LTR order.
+      // We reverse our expected values to match this behavior.
+      await verifyInputValues(inputOtp, ['٤', '٣', '٢', '١'].reverse());
     });
 
     test('should accept only Western Arabic numerals when pattern is set to [0-9]', async ({ page }) => {
@@ -183,7 +183,10 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
       await page.keyboard.type('أبجد');
 
-      await verifyInputValues(inputOtp, ['أ', 'ب', 'ج', 'د']);
+      // Because Arabic is a right-to-left script, JavaScript's handling of RTL text
+      // causes the array values to be reversed while input boxes maintain LTR order.
+      // We reverse our expected values to match this behavior.
+      await verifyInputValues(inputOtp, ['د', 'ج', 'ب', 'أ'].reverse());
     });
 
     test('should accept mixed language characters when type is text', async ({ page }) => {
@@ -333,7 +336,10 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
       await page.keyboard.type('أبجد123');
 
-      await verifyInputValues(inputOtp, ['أ', 'ب', 'ج', 'د']);
+      // Because Arabic is a right-to-left script, JavaScript's handling of RTL text
+      // causes the array values to be reversed while input boxes maintain LTR order.
+      // We reverse our expected values to match this behavior.
+      await verifyInputValues(inputOtp, ['د', 'ج', 'ب', 'أ'].reverse());
     });
   });
 
