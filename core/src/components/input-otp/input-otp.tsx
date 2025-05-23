@@ -261,24 +261,31 @@ export class InputOTP implements ComponentInterface {
    * input boxes and the value of the input group is updated.
    */
   private initializeValues() {
-    if (this.value != null && String(this.value).length > 0) {
-      const chars = String(this.value).split('').slice(0, this.length);
-      chars.forEach((char, index) => {
-        if (this.validKeyPattern.test(char)) {
-          this.inputValues[index] = char;
-        }
-      });
-      // Update the value without emitting events
-      this.value = this.inputValues.join('');
+    // Clear all input values
+    this.inputValues = Array(this.length).fill('');
+
+    // If the value is null, undefined, or an empty string, return
+    if (this.value == null || String(this.value).length === 0) {
+      return;
     }
+
+    // Split the value into individual characters and validate
+    // them against the allowed pattern
+    const chars = String(this.value).split('').slice(0, this.length);
+    chars.forEach((char, index) => {
+      if (this.validKeyPattern.test(char)) {
+        this.inputValues[index] = char;
+      }
+    });
+    // Update the value without emitting events
+    this.value = this.inputValues.join('');
   }
 
   /**
-   * Resets the input values and focus state.
+   * Resets the value and focus state.
    */
   @Method()
   async reset() {
-    this.inputValues = Array(this.length).fill('');
     this.value = '';
 
     this.focusedValue = null;
@@ -790,7 +797,8 @@ export class InputOTP implements ComponentInterface {
           class={{
             'input-otp-description': true,
             'input-otp-description-hidden': !hasDescription,
-          }}>
+          }}
+        >
           <slot></slot>
         </div>
       </Host>

@@ -78,7 +78,10 @@ configs().forEach(({ title, config }) => {
     });
 
     test('should update aria-label and aria-labelledby when set on host', async ({ page }) => {
-      await page.setContent(`<ion-input-otp aria-label="Custom label" aria-labelledby="my-label"></ion-input-otp>`, config);
+      await page.setContent(
+        `<ion-input-otp aria-label="Custom label" aria-labelledby="my-label"></ion-input-otp>`,
+        config
+      );
 
       const inputOtpGroup = page.locator('ion-input-otp .input-otp-group');
       await expect(inputOtpGroup).toHaveAttribute('aria-label', 'Custom label');

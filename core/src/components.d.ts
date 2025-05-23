@@ -1355,7 +1355,7 @@ export namespace Components {
          */
         "readonly": boolean;
         /**
-          * Resets the input values and focus state.
+          * Resets the value and focus state.
          */
         "reset": () => Promise<void>;
         /**
