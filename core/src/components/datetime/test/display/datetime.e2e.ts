@@ -5,7 +5,7 @@ import { configs, test } from '@utils/test/playwright';
  * This behavior does not vary across directions
  * since it is texting fixed vs fluid widths.
  */
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('datetime: rendering'), () => {
     test.describe('fixed sizes', () => {
       test('date-time should not have any visual regressions', async ({ page }) => {

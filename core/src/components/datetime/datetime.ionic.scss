@@ -178,8 +178,6 @@
 // -----------------------------------
 :host .datetime-time {
   @include globals.padding(globals.$ion-space-100, globals.$ion-space-400);
-
-  height: globals.$ion-scale-800;
 }
 
 :host .datetime-time .time-header {
@@ -196,6 +194,8 @@
   display: flex;
 
   align-items: center;
+
+  height: globals.$ion-scale-800;
 
   background-color: globals.$ion-primitives-neutral-100;
   color: globals.$ion-primitives-neutral-1200;
