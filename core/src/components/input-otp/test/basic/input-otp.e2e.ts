@@ -587,7 +587,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await expect(inputBoxes.nth(2)).toBeFocused();
     });
 
-    test('should paste text into the last two input boxes when pasting 2 digits after typing 2 digits', async ({
+    test('should paste text into the first two input boxes when pasting 2 digits after typing 2 digits', async ({
       page,
     }) => {
       await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
@@ -599,7 +599,7 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
       const inputOtp = page.locator('ion-input-otp');
 
-      await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
+      await verifyInputValues(inputOtp, ['3', '4', '', '']);
     });
 
     test('should paste text into all input boxes when pasting 4 digits after typing 4 digits', async ({ page }) => {

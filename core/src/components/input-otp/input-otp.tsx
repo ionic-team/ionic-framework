@@ -551,24 +551,21 @@ export class InputOTP implements ComponentInterface {
       .filter((char) => validKeyPattern.test(char))
       .slice(0, length);
 
-    // Find the first empty input
-    const startIndex = this.getFirstEmptyIndex();
-    // If all boxes are filled, start at 0
-    const pasteStart = startIndex === -1 ? 0 : startIndex;
-
+    // Always paste starting at the first box
     validChars.forEach((char, index) => {
-      const targetIndex = pasteStart + index;
-      if (targetIndex < length) {
-        this.inputRefs[targetIndex].value = char;
-        this.inputValues[targetIndex] = char;
+      if (index < length) {
+        this.inputRefs[index].value = char;
+        this.inputValues[index] = char;
       }
     });
 
+    // Update the value so that all input boxes are updated
+    this.value = validChars.join('');
     this.updateValue(event);
 
     // Focus the next empty input after pasting
     // If all boxes are filled, focus the last input
-    const nextEmptyIndex = pasteStart + validChars.length;
+    const nextEmptyIndex = validChars.length;
     if (nextEmptyIndex < length) {
       inputRefs[nextEmptyIndex]?.focus();
     } else {
