@@ -145,62 +145,6 @@
           >
             Backdrop is inactive
           </button>
-          <ion-button id="open-footer-test-modal" expand="block">Present Sheet Modal (footer test)</ion-button>
-          <ion-modal class="footer-test-modal" mode="ios" trigger="open-footer-test-modal" initial-breakpoint="0.25" expand-to-scroll="false">
-            <ion-content>
-              <ion-text>
-                <p>This is a modal!!</p>
-              <ion-list>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <!-- <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item>
-                <ion-item>Item</ion-item> -->
-              </ion-list>
-              The end!
-            </ion-content>
-            <ion-footer>
-              <ion-toolbar>
-                Hello world!
-                <ion-textarea placeholder="This is a textarea" />
-              </ion-toolbar>
-            </ion-footer>
-          </ion-modal>
-          <script>
-            var footerTestModal = document.getElementsByClassName('footer-test-modal')[0];
-            footerTestModal.breakpoints = [0, 0.25, 0.5, 0.75, 1];
-            console.log('footerTestModal', footerTestModal);
-          </script>
-          <!-- <button id="sheet-modal-footer-test" onclick="presentModalFooterTest()">
-
-          </button> -->
-
           <div class="grid">
             <div class="grid-item red"></div>
             <div class="grid-item green"></div>
@@ -282,62 +226,6 @@
 
       async function presentModal(options) {
         const modal = createModal(options);
-        await modal.present();
-
-        await modal.onDidDismiss();
-        modal.remove();
-      }
-
-      function createModalFooterTest(options) {
-        // create component to open
-        const element = document.createElement('div');
-        element.innerHTML = `
-      <ion-content class="ion-padding">
-        <ion-text>
-          <p>This is a modal!!</p>
-        </ion-text>
-      </ion-content>
-      <ion-footer>
-        <ion-toolbar>
-          <ion-textarea placeholder="This is a textarea"></ion-textarea>
-          <ion-buttons slot="end">
-            <ion-button class="dismiss-footer-test">Dismiss</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-footer>
-      `;
-
-        let extraOptions = {
-          initialBreakpoint: 0.25,
-          breakpoints: [0, 0.25, 0.5, 0.75, 1],
-          expandToScroll: false,
-        };
-
-        if (options) {
-          extraOptions = {
-            ...extraOptions,
-            ...options,
-          };
-        }
-
-        // present the modal
-        const modalElement = Object.assign(document.createElement('ion-modal'), {
-          component: element,
-          ...extraOptions,
-        });
-
-        // listen for close event
-        const button = element.querySelector('ion-button.dismiss-footer-test');
-        button.addEventListener('click', () => {
-          modalElement.dismiss();
-        });
-
-        document.body.appendChild(modalElement);
-        return modalElement;
-      }
-
-      async function presentModalFooterTest(options) {
-        const modal = createModalFooterTest(options);
         await modal.present();
 
         await modal.onDidDismiss();
