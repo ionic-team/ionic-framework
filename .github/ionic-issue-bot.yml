@@ -93,7 +93,6 @@ stale:
     - "triage"
     - "type: bug"
     - "type: feature request"
-    - "needs: investigation"
   exemptAssigned: true
   exemptProjects: true
   exemptMilestones: true
@@ -114,8 +113,6 @@ noReply:
   maxIssuesPerRun: 100
   label: "needs: reply"
   responseLabel: triage
-  exemptLabels:
-    - "needs: investigation"
   exemptProjects: true
   exemptMilestones: true
   message: >
@@ -134,8 +131,6 @@ noReproduction:
   maxIssuesPerRun: 100
   label: "ionitron: needs reproduction"
   responseLabel: triage
-  exemptLabels:
-    - "needs: investigation"
   exemptProjects: true
   exemptMilestones: true
   message: >
