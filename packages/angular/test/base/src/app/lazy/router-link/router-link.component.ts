@@ -3,8 +3,9 @@ import { NavController, ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-router-link',
-  templateUrl: './router-link.component.html',
+    selector: 'app-router-link',
+    templateUrl: './router-link.component.html',
+    standalone: false
 })
 export class RouterLinkComponent implements OnInit, ViewWillEnter, ViewDidEnter, ViewWillLeave, ViewDidLeave {
 

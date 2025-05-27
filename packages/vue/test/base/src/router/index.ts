@@ -161,6 +161,10 @@ const routes: Array<RouteRecordRaw> = [
       }
     ]
   },
+  {
+    path: '/tabs-basic',
+    component: () => import('@/views/TabsBasic.vue')
+  },
 ]
 
 const router = createRouter({

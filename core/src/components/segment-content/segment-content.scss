@@ -1,0 +1,24 @@
+// Segment Content
+// --------------------------------------------------
+
+:host {
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+
+  flex-shrink: 0;
+
+  width: 100%;
+
+  overflow-y: scroll;
+
+  /* Hide scrollbar in Firefox */
+  scrollbar-width: none;
+
+  /* Hide scrollbar in IE and Edge */
+  -ms-overflow-style: none;
+
+  /* Hide scrollbar in webkit */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

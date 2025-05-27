@@ -3,6 +3,222 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.5.7](https://github.com/ionic-team/ionic-framework/compare/v8.5.6...v8.5.7) (2025-05-07)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.5.6](https://github.com/ionic-team/ionic-framework/compare/v8.5.5...v8.5.6) (2025-04-30)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.5.5](https://github.com/ionic-team/ionic-framework/compare/v8.5.4...v8.5.5) (2025-04-16)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.5.4](https://github.com/ionic-team/ionic-framework/compare/v8.5.3...v8.5.4) (2025-04-09)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.5.3](https://github.com/ionic-team/ionic-framework/compare/v8.5.2...v8.5.3) (2025-04-02)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.5.2](https://github.com/ionic-team/ionic-framework/compare/v8.5.1...v8.5.2) (2025-03-26)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.5.1](https://github.com/ionic-team/ionic-framework/compare/v8.5.0...v8.5.1) (2025-03-19)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.4.6](https://github.com/ionic-team/ionic-framework/compare/v8.4.5...v8.4.6) (2025-03-19)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+# [8.5.0](https://github.com/ionic-team/ionic-framework/compare/v8.4.5...v8.5.0) (2025-03-13)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.4.5](https://github.com/ionic-team/ionic-framework/compare/v8.4.4...v8.4.5) (2025-03-13)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.4.4](https://github.com/ionic-team/ionic-framework/compare/v8.4.3...v8.4.4) (2025-03-13)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.4.3](https://github.com/ionic-team/ionic-framework/compare/v8.4.2...v8.4.3) (2025-01-29)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.4.2](https://github.com/ionic-team/ionic-framework/compare/v8.4.1...v8.4.2) (2025-01-22)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.4.1](https://github.com/ionic-team/ionic-framework/compare/v8.4.0...v8.4.1) (2024-11-27)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+# [8.4.0](https://github.com/ionic-team/ionic-framework/compare/v8.3.4...v8.4.0) (2024-11-04)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.3.4](https://github.com/ionic-team/ionic-framework/compare/v8.3.3...v8.3.4) (2024-10-30)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.3.3](https://github.com/ionic-team/ionic-framework/compare/v8.3.2...v8.3.3) (2024-10-16)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.3.2](https://github.com/ionic-team/ionic-framework/compare/v8.3.1...v8.3.2) (2024-10-02)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.3.1](https://github.com/ionic-team/ionic-framework/compare/v8.3.0...v8.3.1) (2024-09-17)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+# [8.3.0](https://github.com/ionic-team/ionic-framework/compare/v8.2.8...v8.3.0) (2024-09-05)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.2.8](https://github.com/ionic-team/ionic-framework/compare/v8.2.7...v8.2.8) (2024-09-05)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.2.7](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.7) (2024-08-13)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.2.6](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.6) (2024-07-24)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.2.5](https://github.com/ionic-team/ionic-framework/compare/v8.2.4...v8.2.5) (2024-07-03)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.2.4](https://github.com/ionic-team/ionic-framework/compare/v8.2.2...v8.2.4) (2024-06-28)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## 8.2.3
+
+This version should be skipped. Install 8.2.4 instead.
+
+
+
+
+
+## [8.2.2](https://github.com/ionic-team/ionic-framework/compare/v8.2.1...v8.2.2) (2024-06-12)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
 ## [8.2.1](https://github.com/ionic-team/ionic-framework/compare/v8.2.0...v8.2.1) (2024-06-05)
 
 **Note:** Version bump only for package @ionic/angular-server

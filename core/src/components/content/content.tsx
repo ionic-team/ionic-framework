@@ -1,6 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
-import { componentOnReady, hasLazyBuild } from '@utils/helpers';
+import { componentOnReady, hasLazyBuild, inheritAriaAttributes } from '@utils/helpers';
+import type { Attributes } from '@utils/helpers';
 import { isPlatform } from '@utils/platform';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -33,6 +34,7 @@ export class Content implements ComponentInterface {
   private backgroundContentEl?: HTMLElement;
   private isMainContent = true;
   private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+  private inheritedAttributes: Attributes = {};
 
   private tabsElement: HTMLElement | null = null;
   private tabsLoadCallback?: () => void;
@@ -124,6 +126,10 @@ export class Content implements ComponentInterface {
    * Set `scrollEvents` to `true` to enable.
    */
   @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
+
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
+  }
 
   connectedCallback() {
     this.isMainContent = this.el.closest('ion-menu, ion-popover, ion-modal') === null;
@@ -432,7 +438,7 @@ export class Content implements ComponentInterface {
   }
 
   render() {
-    const { fixedSlotPlacement, isMainContent, scrollX, scrollY, el } = this;
+    const { fixedSlotPlacement, inheritedAttributes, isMainContent, scrollX, scrollY, el } = this;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
@@ -453,6 +459,7 @@ export class Content implements ComponentInterface {
           '--offset-top': `${this.cTop}px`,
           '--offset-bottom': `${this.cBottom}px`,
         }}
+        {...inheritedAttributes}
       >
         <div ref={(el) => (this.backgroundContentEl = el)} id="background-content" part="background"></div>
 

@@ -15,8 +15,9 @@ import {
 } from '@ionic/angular';
 
 @Component({
-  selector: 'app-providers',
-  templateUrl: './providers.component.html',
+    selector: 'app-providers',
+    templateUrl: './providers.component.html',
+    standalone: false
 })
 export class ProvidersComponent {
   isLoaded = false;

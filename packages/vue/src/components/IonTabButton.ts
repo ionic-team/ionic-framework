@@ -18,12 +18,16 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
     selected: Boolean,
     tab: String,
     target: String,
+    _onClick: {
+      type: Function,
+      required: false,
+    },
   },
   setup(props, { slots }) {
     defineCustomElement();
 
     // TODO(FW-2969): type
-    const ionRouter: any = inject("navManager");
+    const ionRouter: any = inject("navManager", null);
     const onClick = (ev: Event) => {
       if (ev.cancelable) {
         ev.preventDefault();
@@ -37,10 +41,28 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
        */
       const { tab, href, _getTabState } = props;
       const tabState = _getTabState();
+      const hasRouterOutlet = tabState.hasRouterOutlet;
       const tappedTab = tabState.tabs[tab] || {};
       const originalHref = tappedTab.originalHref || href;
-      const currentHref = tappedTab.currentHref || href;
+      /**
+       * If the router outlet is not defined, then the tabs is being used
+       * as a basic tab navigation without the router. In this case, we
+       * don't want to update the href else the URL will change.
+       */
+      const currentHref = hasRouterOutlet ? tappedTab.currentHref || href : "";
       const prevActiveTab = tabState.activeTab;
+
+      if (!hasRouterOutlet && props._onClick) {
+        props._onClick(
+          new CustomEvent("ionTabButtonClick", {
+            detail: {
+              href: currentHref,
+              selected: tab === prevActiveTab,
+              tab,
+            },
+          })
+        );
+      }
 
       /**
        * If we are still on the same
@@ -50,12 +72,14 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
        * should direct users back to the root
        * of the tab.
        */
-      if (prevActiveTab === tab) {
-        if (originalHref !== currentHref) {
-          ionRouter.resetTab(tab);
+      if (ionRouter !== null) {
+        if (prevActiveTab === tab) {
+          if (originalHref !== currentHref) {
+            ionRouter.resetTab(tab);
+          }
+        } else {
+          ionRouter.changeTab(tab, currentHref);
         }
-      } else {
-        ionRouter.changeTab(tab, currentHref);
       }
     };
     return () => {

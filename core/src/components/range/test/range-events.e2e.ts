@@ -7,10 +7,7 @@ import { configs, dragElementBy, test } from '@utils/test/playwright';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('range: events:'), () => {
     test.describe('range: knob events', () => {
-      /**
-       * The mouse events are flaky on CI
-       */
-      test.fixme('should emit start/end events', async ({ page }) => {
+      test('should emit start/end events', async ({ page }) => {
         /**
          * Requires padding to prevent the knob from being clipped.
          * If it's clipped, then the value might be one off.
@@ -31,23 +28,34 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         const rangeEl = page.locator('ion-range');
 
-        await dragElementBy(rangeEl, page, 300, 0);
-        await page.waitForChanges();
-
         /**
-         * dragElementBy defaults to starting the drag from the middle of the el,
-         * so the start value should jump to 50 despite the range defaulting to 20.
+         * Verify both events fire if range is dragged.
          */
-        expect(rangeStart).toHaveReceivedEventDetail({ value: 50 });
+        await dragElementBy(rangeEl, page, 180);
+
+        await rangeStart.next();
+        await rangeEnd.next();
+
+        // Once the knob is dragged, the start event should fire with
+        // the initial value.
+        expect(rangeStart).toHaveReceivedEventDetail({ value: 20 });
+        // Once the knob is released, the end event should fire with
+        // the final value.
         expect(rangeEnd).toHaveReceivedEventDetail({ value: 100 });
 
         /**
-         * Verify both events fire if range is clicked without dragging.
+         * Verify both events fire if range is tapped without dragging.
          */
         await dragElementBy(rangeEl, page, 0, 0);
-        await page.waitForChanges();
 
-        expect(rangeStart).toHaveReceivedEventDetail({ value: 50 });
+        await rangeStart.next();
+        await rangeEnd.next();
+
+        // Once the tap is released, the start event should fire with
+        // the initial value.
+        expect(rangeStart).toHaveReceivedEventDetail({ value: 100 });
+        // Once the tap is released, the end event should fire with
+        // the final value.
         expect(rangeEnd).toHaveReceivedEventDetail({ value: 50 });
       });
 
@@ -99,31 +107,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         expect(rangeEndSpy.length).toBe(1);
       });
-
-      // TODO FW-2873
-      test.skip('should not scroll when the knob is swiped', async ({ page, skip }) => {
-        skip.browser('webkit', 'mouse.wheel is not available in WebKit');
-
-        await page.goto(`/src/components/range/test/basic`, config);
-
-        const knobEl = page.locator('ion-range#stacked-range .range-knob-handle');
-        const scrollEl = page.locator('ion-content .inner-scroll');
-
-        expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
-
-        await dragElementBy(knobEl, page, 30, 0, undefined, undefined, false);
-
-        /**
-         * Do not use scrollToBottom() or other scrolling methods
-         * on ion-content as those will update the scroll position.
-         * Setting scrollTop still works even with overflow-y: hidden.
-         * However, simulating a user gesture should not scroll the content.
-         */
-        await page.mouse.wheel(0, 100);
-        await page.waitForChanges();
-
-        expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
-      });
     });
 
     test.describe('ionChange', () => {
@@ -151,14 +134,26 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         expect(ionChangeSpy).toHaveReceivedEventTimes(0);
       });
 
-      // TODO FW-2873
-      test.skip('should emit when the knob is released', async ({ page }) => {
-        await page.setContent(`<ion-range aria-label="range"></ion-range>`, config);
+      test('should emit when the knob is released', async ({ page }) => {
+        /**
+         * Requires padding to prevent the knob from being clipped.
+         * If it's clipped, then the value might be one off.
+         * For example, if the knob is clipped on the right, then the value
+         * will be 99 instead of 100.
+         */
+        await page.setContent(
+          `
+          <div style="padding: 0 20px">
+            <ion-range aria-label="Range"></ion-range>
+          </div>
+        `,
+          config
+        );
 
-        const rangeHandle = page.locator('ion-range .range-knob-handle');
+        const rangeEl = page.locator('ion-range');
         const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-        await dragElementBy(rangeHandle, page, 100, 0);
+        await dragElementBy(rangeEl, page, 100);
 
         await ionChangeSpy.next();
 
@@ -196,20 +191,66 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     test.describe('ionInput', () => {
-      // TODO(FW-2873) Enable this test when touch events/gestures are better supported in Playwright
-      test.skip('should emit when the knob is dragged', async ({ page }) => {
-        await page.setContent(`<ion-range aria-label="range"></ion-range>`, config);
+      test('should emit when the knob is dragged', async ({ page }) => {
+        /**
+         * Requires padding to prevent the knob from being clipped.
+         * If it's clipped, then the value might be one off.
+         * For example, if the knob is clipped on the right, then the value
+         * will be 99 instead of 100.
+         */
+        await page.setContent(
+          `
+          <div style="padding: 0 20px">
+            <ion-range aria-label="range"></ion-range>
+          </div>
+        `,
+          config
+        );
 
-        const rangeHandle = page.locator('ion-range .range-knob-handle');
+        const rangeEl = page.locator('ion-range');
         const ionInputSpy = await page.spyOnEvent('ionInput');
 
-        await rangeHandle.hover();
-
-        await dragElementBy(rangeHandle, page, 100, 0, undefined, undefined, false);
+        await dragElementBy(rangeEl, page, 100);
 
         await ionInputSpy.next();
 
         expect(ionInputSpy).toHaveReceivedEvent();
+      });
+
+      test('should not emit when the value does not change', async ({ page }, testInfo) => {
+        testInfo.annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/29619',
+        });
+
+        /**
+         * Requires padding to prevent the knob from being clipped.
+         * If it's clipped, then the value might be one off.
+         * For example, if the knob is clipped on the right, then the value
+         * will be 99 instead of 100.
+         */
+        await page.setContent(
+          `
+          <div style="padding: 0 20px">
+            <ion-range aria-label="range"></ion-range>
+          </div>
+        `,
+          config
+        );
+
+        const rangeHandle = page.locator('ion-range .range-knob-handle');
+        const ionInputSpy = await page.spyOnEvent('ionInput');
+
+        const rangeHandleBoundingBox = await rangeHandle.boundingBox();
+        const x = rangeHandleBoundingBox!.width / 2;
+        const y = rangeHandleBoundingBox!.height / 2;
+
+        // Click in the middle of the knob to prevent the knob from moving.
+        await rangeHandle.click({
+          position: { x, y },
+        });
+
+        expect(ionInputSpy).not.toHaveReceivedEvent();
       });
 
       test('should emit when the knob is moved with the keyboard', async ({ page }) => {

@@ -20,7 +20,7 @@ export const appInitialize = (config: Config, doc: Document, zone: NgZone) => {
 
       return applyPolyfills().then(() => {
         return defineCustomElements(win, {
-          exclude: ['ion-tabs', 'ion-tab'],
+          exclude: ['ion-tabs'],
           syncQueue: true,
           raf,
           jmp: (h: any) => zone.runOutsideAngular(h),

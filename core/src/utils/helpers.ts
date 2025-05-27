@@ -1,4 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
+import { printIonError } from '@utils/logging';
 
 import type { Side } from '../components/menu/menu-interface';
 
@@ -42,7 +43,7 @@ const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (
   if (el) {
     el.addEventListener('webkitTransitionEnd', onTransitionEnd, opts);
     el.addEventListener('transitionend', onTransitionEnd, opts);
-    animationTimeout = setTimeout(onTransitionEnd, expectedDuration + ANIMATION_FALLBACK_TIMEOUT);
+    animationTimeout = setTimeout(onTransitionEnd, expectedDuration + ANIMATION_FALLBACK_TIMEOUT) as unknown as number;
 
     unRegTrans = () => {
       if (animationTimeout !== undefined) {
@@ -190,36 +191,10 @@ export const inheritAriaAttributes = (el: HTMLElement, ignoreList?: string[]) =>
 };
 
 export const addEventListener = (el: any, eventName: string, callback: any, opts?: any) => {
-  if (typeof (window as any) !== 'undefined') {
-    const win = window as any;
-    const config = win?.Ionic?.config;
-    if (config) {
-      const ael = config.get('_ael');
-      if (ael) {
-        return ael(el, eventName, callback, opts);
-      } else if (config._ael) {
-        return config._ael(el, eventName, callback, opts);
-      }
-    }
-  }
-
   return el.addEventListener(eventName, callback, opts);
 };
 
 export const removeEventListener = (el: any, eventName: string, callback: any, opts?: any) => {
-  if (typeof (window as any) !== 'undefined') {
-    const win = window as any;
-    const config = win?.Ionic?.config;
-    if (config) {
-      const rel = config.get('_rel');
-      if (rel) {
-        return rel(el, eventName, callback, opts);
-      } else if (config._rel) {
-        return config._rel(el, eventName, callback, opts);
-      }
-    }
-  }
-
   return el.removeEventListener(eventName, callback, opts);
 };
 
@@ -313,7 +288,7 @@ export const clamp = (min: number, n: number, max: number) => {
 export const assert = (actual: any, reason: string) => {
   if (!actual) {
     const message = 'ASSERT: ' + reason;
-    console.error(message);
+    printIonError(message);
     debugger; // eslint-disable-line
     throw new Error(message);
   }
@@ -412,4 +387,11 @@ export const shallowEqualStringMap = (
   }
 
   return true;
+};
+
+/**
+ * Checks input for usable number. Not NaN and not Infinite.
+ */
+export const isSafeNumber = (input: unknown): input is number => {
+  return typeof input === 'number' && !isNaN(input) && isFinite(input);
 };

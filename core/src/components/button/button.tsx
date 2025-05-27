@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, Watch, State, h } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, Watch, State, forceUpdate, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, hasShadowDom } from '@utils/helpers';
@@ -159,6 +159,26 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Event() ionBlur!: EventEmitter<void>;
 
   /**
+   * This component is used within the `ion-input-password-toggle` component
+   * to toggle the visibility of the password input.
+   * These attributes need to update based on the state of the password input.
+   * Otherwise, the values will be stale.
+   *
+   * @param newValue
+   * @param _oldValue
+   * @param propName
+   */
+  @Watch('aria-checked')
+  @Watch('aria-label')
+  onAriaChanged(newValue: string, _oldValue: string, propName: string) {
+    this.inheritedAttributes = {
+      ...this.inheritedAttributes,
+      [propName]: newValue,
+    };
+    forceUpdate(this);
+  }
+
+  /**
    * This is responsible for rendering a hidden native
    * button element inside the associated form. This allows
    * users to submit a form by pressing "Enter" when a text
@@ -235,7 +255,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
            * element with that id is not a form element.
            */
           printIonWarning(
-            `Form with selector: "#${form}" could not be found. Verify that the id is attached to a <form> element.`,
+            `[ion-button] - Form with selector: "#${form}" could not be found. Verify that the id is attached to a <form> element.`,
             this.el
           );
           return null;
@@ -246,7 +266,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
          * element with that id could not be found in the DOM.
          */
         printIonWarning(
-          `Form with selector: "#${form}" could not be found. Verify that the id is correct and the form is rendered in the DOM.`,
+          `[ion-button] - Form with selector: "#${form}" could not be found. Verify that the id is correct and the form is rendered in the DOM.`,
           this.el
         );
         return null;
@@ -260,7 +280,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
        * as the form attribute.
        */
       printIonWarning(
-        `The provided "form" element is invalid. Verify that the form is a HTMLFormElement and rendered in the DOM.`,
+        `[ion-button] - The provided "form" element is invalid. Verify that the form is a HTMLFormElement and rendered in the DOM.`,
         this.el
       );
       return null;

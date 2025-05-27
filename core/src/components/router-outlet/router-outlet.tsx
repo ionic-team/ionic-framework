@@ -4,6 +4,7 @@ import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '@utils/framework-delegate';
 import { shallowEqualStringMap, hasLazyBuild } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
+import { printIonError } from '@utils/logging';
 import { transition } from '@utils/transition';
 
 import { config } from '../../global/config';
@@ -146,7 +147,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     try {
       changed = await this.transition(enteringEl, leavingEl, opts);
     } catch (e) {
-      console.error(e);
+      printIonError('[ion-router-outlet] - Exception in commit:', e);
     }
     unlock();
     return changed;

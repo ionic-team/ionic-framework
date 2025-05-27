@@ -1,10 +1,10 @@
 import { JsonPipe } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 
 import { IonicModule } from "@ionic/angular";
 
 /**
- * This is used to track if any occurences of
+ * This is used to track if any occurrences of
  * the ion-nav root component being attached to
  * the DOM result in the rootParams not being
  * assigned to the component instance.
@@ -21,7 +21,7 @@ let rootParamsException = false;
   standalone: true,
   imports: [IonicModule, JsonPipe]
 })
-export class NavRootComponent {
+export class NavRootComponent implements OnInit {
 
   @Input() params: any;
 

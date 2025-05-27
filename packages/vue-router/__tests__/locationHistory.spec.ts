@@ -84,4 +84,25 @@ describe('Location History', () => {
     expect(locationHistory.canGoBack(1, 0, 1)).toEqual(true);
     expect(locationHistory.canGoBack(2, 0, 1)).toEqual(false);
   });
+
+  it('should correctly find the last location', () => {
+    const [home, pageA, pageB, pageC] = [
+      { pathname: '/home' },
+      { pathname: '/page-a', pushedByRoute: '/home' },
+      { pathname: '/page-b', pushedByRoute: '/page-a' },
+      { pathname: '/page-c', pushedByRoute: '/page-b' },
+    ];
+
+    locationHistory.add(home);
+    locationHistory.add(pageA);
+    locationHistory.add(pageB);
+    locationHistory.add(pageC);
+
+    expect(locationHistory.findLastLocation(pageB)).toEqual(pageA);
+    expect(locationHistory.findLastLocation(pageB, -2)).toEqual(home);
+
+    expect(locationHistory.findLastLocation(pageC)).toEqual(pageB);
+    expect(locationHistory.findLastLocation(pageC, -2)).toEqual(pageA);
+    expect(locationHistory.findLastLocation(pageC, -3)).toEqual(home);
+  });
 });

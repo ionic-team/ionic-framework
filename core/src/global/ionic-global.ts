@@ -1,4 +1,5 @@
-import { getMode, setMode, setPlatformHelpers } from '@stencil/core';
+import { getMode, setMode } from '@stencil/core';
+import { printIonWarning } from '@utils/logging';
 
 import type { IonicConfig, Mode } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
@@ -21,18 +22,6 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   const doc = window.document;
   const win = window;
   const Ionic = ((win as any).Ionic = (win as any).Ionic || {});
-
-  const platformHelpers: any = {};
-  if (userConfig._ael) {
-    platformHelpers.ael = userConfig._ael;
-  }
-  if (userConfig._rel) {
-    platformHelpers.rel = userConfig._rel;
-  }
-  if (userConfig._ce) {
-    platformHelpers.ce = userConfig._ce;
-  }
-  setPlatformHelpers(platformHelpers);
 
   // create the Ionic.config from raw config object (if it exists)
   // and convert Ionic.config into a ConfigApi that has a get() fn
@@ -79,7 +68,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
         if (isAllowedIonicModeValue(elmMode)) {
           return elmMode;
         } else if (isIonicElement(elm)) {
-          console.warn('Invalid ionic mode: "' + elmMode + '", expected: "ios" or "md"');
+          printIonWarning('Invalid ionic mode: "' + elmMode + '", expected: "ios" or "md"');
         }
       }
       elm = elm.parentElement;

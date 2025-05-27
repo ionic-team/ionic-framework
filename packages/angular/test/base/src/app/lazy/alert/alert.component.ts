@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',
+  standalone: false
 })
 export class AlertComponent {
 

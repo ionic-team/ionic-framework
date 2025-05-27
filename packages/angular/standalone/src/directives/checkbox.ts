@@ -20,6 +20,8 @@ const CHECKBOX_INPUTS = [
   'checked',
   'color',
   'disabled',
+  'errorText',
+  'helperText',
   'indeterminate',
   'justify',
   'labelPlacement',

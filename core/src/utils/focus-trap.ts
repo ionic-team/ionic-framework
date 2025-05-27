@@ -13,7 +13,7 @@ import { focusVisibleElement } from '@utils/helpers';
  * valid usage for the disabled property on ion-button.
  */
 export const focusableQueryString =
-  '[tabindex]:not([tabindex^="-"]):not([hidden]):not([disabled]), input:not([type=hidden]):not([tabindex^="-"]):not([hidden]):not([disabled]), textarea:not([tabindex^="-"]):not([hidden]):not([disabled]), button:not([tabindex^="-"]):not([hidden]):not([disabled]), select:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable[disabled="false"]:not([tabindex^="-"]):not([hidden])';
+  '[tabindex]:not([tabindex^="-"]):not([hidden]):not([disabled]), input:not([type=hidden]):not([tabindex^="-"]):not([hidden]):not([disabled]), textarea:not([tabindex^="-"]):not([hidden]):not([disabled]), button:not([tabindex^="-"]):not([hidden]):not([disabled]), select:not([tabindex^="-"]):not([hidden]):not([disabled]), ion-checkbox:not([tabindex^="-"]):not([hidden]):not([disabled]), ion-radio:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable[disabled="false"]:not([tabindex^="-"]):not([hidden])';
 
 /**
  * Focuses the first descendant in a context
@@ -78,7 +78,13 @@ const focusElementInContext = <T extends HTMLElement>(
   }
 
   if (elementToFocus) {
-    focusVisibleElement(elementToFocus);
+    const radioGroup = elementToFocus.closest('ion-radio-group');
+
+    if (radioGroup) {
+      radioGroup.setFocus();
+    } else {
+      focusVisibleElement(elementToFocus);
+    }
   } else {
     // Focus fallback element instead of letting focus escape
     fallbackElement.focus();

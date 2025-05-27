@@ -107,6 +107,10 @@
 
   width: 100%;
   max-width: 100%;
+
+  // Ensure the input fills the full height of the native wrapper.
+  // This prevents the wrapper from being the click event target.
+  height: 100%;
   max-height: 100%;
 
   border: 0;
@@ -306,6 +310,8 @@
   border-top: var(--border-width) var(--border-style) var(--border-color);
 
   font-size: dynamic-font(12px);
+
+  white-space: normal;
 }
 
 /**
@@ -340,7 +346,7 @@
 .input-bottom .helper-text {
   display: block;
 
-  color: #{$text-color-step-450};
+  color: $text-color-step-300;
 }
 
 :host(.ion-touched.ion-invalid) .input-bottom .error-text {
@@ -362,7 +368,7 @@
    */
   @include margin-horizontal(auto, null);
 
-  color: #{$text-color-step-450};
+  color: $text-color-step-300;
 
   white-space: nowrap;
 

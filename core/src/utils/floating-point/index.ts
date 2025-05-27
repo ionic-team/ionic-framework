@@ -1,4 +1,7 @@
+import { isSafeNumber } from '@utils/helpers';
+
 export function getDecimalPlaces(n: number) {
+  if (!isSafeNumber(n)) return 0;
   if (n % 1 === 0) return 0;
   return n.toString().split('.')[1].length;
 }
@@ -36,6 +39,7 @@ export function getDecimalPlaces(n: number) {
  * be used as a reference for the desired specificity.
  */
 export function roundToMaxDecimalPlaces(n: number, ...references: number[]) {
+  if (!isSafeNumber(n)) return 0;
   const maxPlaces = Math.max(...references.map((r) => getDecimalPlaces(r)));
   return Number(n.toFixed(maxPlaces));
 }

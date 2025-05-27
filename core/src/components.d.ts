@@ -18,7 +18,7 @@ import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-import { MenuChangeEventDetail, MenuType, Side } from "./components/menu/menu-interface";
+import { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 import { ViewController } from "./components/nav/view-controller";
@@ -34,7 +34,9 @@ import { NavigationHookCallback } from "./components/route/route-interface";
 import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 import { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 import { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+import { SegmentViewScrollEvent } from "./components/segment-view/segment-view-interface";
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
+import { SelectModalOption } from "./components/select-modal/select-modal-interface";
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
@@ -53,7 +55,7 @@ export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-export { MenuChangeEventDetail, MenuType, Side } from "./components/menu/menu-interface";
+export { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 export { ViewController } from "./components/nav/view-controller";
@@ -69,7 +71,9 @@ export { NavigationHookCallback } from "./components/route/route-interface";
 export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 export { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 export { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+export { SegmentViewScrollEvent } from "./components/segment-view/segment-view-interface";
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
+export { SelectModalOption } from "./components/select-modal/select-modal-interface";
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
@@ -304,6 +308,9 @@ export namespace Components {
         "trigger": string | undefined;
     }
     interface IonApp {
+        /**
+          * Used to set focus on an element that uses `ion-focusable`. Do not use this if focusing the element as a result of a keyboard event as the focus utility should handle this for us. This method should be used when we want to programmatically focus an element as a result of another user action. (Ex: We focus the first element inside of a popover when the user presents it, but the popover is not always presented as a result of keyboard action.)
+         */
         "setFocus": (elements: HTMLElement[]) => Promise<void>;
     }
     interface IonAvatar {
@@ -601,9 +608,9 @@ export namespace Components {
     }
     interface IonCheckbox {
         /**
-          * How to control the alignment of the checkbox and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+          * How to control the alignment of the checkbox and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL. Setting this property will change the checkbox `display` to `block`.
          */
-        "alignment": 'start' | 'center';
+        "alignment"?: 'start' | 'center';
         /**
           * If `true`, the checkbox is selected.
          */
@@ -617,13 +624,21 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Text that is placed under the checkbox label and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the checkbox label and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * If `true`, the checkbox will visually appear as indeterminate.
          */
         "indeterminate": boolean;
         /**
-          * How to pack the label and checkbox within a line. `"start"`: The label and checkbox will appear on the left in LTR and on the right in RTL. `"end"`: The label and checkbox will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and checkbox within a line. `"start"`: The label and checkbox will appear on the left in LTR and on the right in RTL. `"end"`: The label and checkbox will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and checkbox will appear on opposite ends of the line with space between the two elements. Setting this property will change the checkbox `display` to `block`.
          */
-        "justify": 'start' | 'end' | 'space-between';
+        "justify"?: 'start' | 'end' | 'space-between';
         /**
           * Where to place the label relative to the checkbox. `"start"`: The label will appear to the left of the checkbox in LTR and to the right in RTL. `"end"`: The label will appear to the right of the checkbox in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("..."). `"stacked"`: The label will appear above the checkbox regardless of the direction. The alignment of the label can be controlled with the `alignment` property.
          */
@@ -636,6 +651,11 @@ export namespace Components {
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required": boolean;
+        "setFocus": () => Promise<void>;
         /**
           * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
          */
@@ -1593,7 +1613,7 @@ export namespace Components {
         /**
           * Closes the menu. If the menu is already closed or it can't be closed, it returns `false`.
          */
-        "close": (animated?: boolean) => Promise<boolean>;
+        "close": (animated?: boolean, role?: string) => Promise<boolean>;
         /**
           * The `id` of the main content. When using a router this is typically `ion-router-outlet`. When not using a router, this is typically your main view's `ion-content`. This is not the id of the `ion-content` inside of your `ion-menu`.
          */
@@ -1625,7 +1645,7 @@ export namespace Components {
         /**
           * Opens or closes the button. If the operation can't be completed successfully, it returns `false`.
          */
-        "setOpen": (shouldOpen: boolean, animated?: boolean) => Promise<boolean>;
+        "setOpen": (shouldOpen: boolean, animated?: boolean, role?: string) => Promise<boolean>;
         /**
           * Which side of the view the menu should be placed.
          */
@@ -1723,6 +1743,10 @@ export namespace Components {
           * Animation to use when the modal is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        /**
+          * Controls whether scrolling or dragging within the sheet modal expands it to a larger breakpoint. This only takes effect when `breakpoints` and `initialBreakpoint` are set.  If `true`, scrolling or dragging anywhere in the modal will first expand it to the next breakpoint. Once fully expanded, scrolling will affect the content. If `false`, scrolling will always affect the content. The modal will only expand when dragging the header or handle. The modal will close when dragging the header or handle. It can also be closed when dragging the content, but only if the content is scrolled to the top.
+         */
+        "expandToScroll": boolean;
         /**
           * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
          */
@@ -2248,9 +2272,9 @@ export namespace Components {
     }
     interface IonRadio {
         /**
-          * How to control the alignment of the radio and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+          * How to control the alignment of the radio and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL. Setting this property will change the radio `display` to `block`.
          */
-        "alignment": 'start' | 'center';
+        "alignment"?: 'start' | 'center';
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -2260,9 +2284,9 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * How to pack the label and radio within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and radio within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements. Setting this property will change the radio `display` to `block`.
          */
-        "justify": 'start' | 'end' | 'space-between';
+        "justify"?: 'start' | 'end' | 'space-between';
         /**
           * Where to place the label relative to the radio. `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL. `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("..."). `"stacked"`: The label will appear above the radio regardless of the direction. The alignment of the label can be controlled with the `alignment` property.
          */
@@ -2276,7 +2300,7 @@ export namespace Components {
          */
         "name": string;
         "setButtonTabindex": (value: number) => Promise<void>;
-        "setFocus": (ev: globalThis.Event) => Promise<void>;
+        "setFocus": (ev?: globalThis.Event) => Promise<void>;
         /**
           * the value of the radio.
          */
@@ -2292,9 +2316,18 @@ export namespace Components {
          */
         "compareWith"?: string | RadioGroupCompareFn | null;
         /**
+          * The error text to display at the top of the radio group.
+         */
+        "errorText"?: string;
+        /**
+          * The helper text to display at the top of the radio group.
+         */
+        "helperText"?: string;
+        /**
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        "setFocus": () => Promise<void>;
         /**
           * the value of the radio group.
          */
@@ -2579,7 +2612,7 @@ export namespace Components {
          */
         "cancelButtonIcon": string;
         /**
-          * Set the the cancel button text. Only applies to `ios` mode.
+          * Set the cancel button text. Only applies to `ios` mode.
          */
         "cancelButtonText": string;
         /**
@@ -2691,6 +2724,10 @@ export namespace Components {
     }
     interface IonSegmentButton {
         /**
+          * The `id` of the segment content.
+         */
+        "contentId"?: string;
+        /**
           * If `true`, the user cannot interact with the segment button.
          */
         "disabled": boolean;
@@ -2712,6 +2749,19 @@ export namespace Components {
          */
         "value": SegmentValue;
     }
+    interface IonSegmentContent {
+    }
+    interface IonSegmentView {
+        /**
+          * If `true`, the segment view cannot be interacted with.
+         */
+        "disabled": boolean;
+        /**
+          * @param id : The id of the segment content to display.
+          * @param smoothScroll : Whether to animate the scroll transition.
+         */
+        "setContent": (id: string, smoothScroll?: boolean) => Promise<void>;
+    }
     interface IonSelect {
         /**
           * The text to display on the cancel button.
@@ -2730,6 +2780,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Text that is placed under the select and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
           * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
          */
         "expandedIcon"?: string;
@@ -2738,17 +2792,21 @@ export namespace Components {
          */
         "fill"?: 'outline' | 'solid';
         /**
-          * The interface the select should use: `action-sheet`, `popover` or `alert`.
+          * Text that is placed under the select and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
+          * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
          */
         "interface": SelectInterface;
         /**
-          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet) and the [ion-popover docs](./popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
+          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet), the [ion-popover docs](./popover), and the [ion-modal docs](./modal) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions": any;
         /**
           * How to pack the label and select within a line. `justify` does not apply when the label and select are on different lines when `labelPlacement` is set to `"floating"` or `"stacked"`. `"start"`: The label and select will appear on the left in LTR and on the right in RTL. `"end"`: The label and select will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and select will appear on opposite ends of the line with space between the two elements.
          */
-        "justify": 'start' | 'end' | 'space-between';
+        "justify"?: 'start' | 'end' | 'space-between';
         /**
           * The visible label associated with the select.  Use this if you need to render a plaintext label.  The `label` property will take priority over the `label` slot if both are used.
          */
@@ -2783,6 +2841,10 @@ export namespace Components {
          */
         "placeholder"?: string;
         /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required": boolean;
+        /**
           * The text to display instead of the selected option's value.
          */
         "selectedText"?: string | null;
@@ -2798,6 +2860,11 @@ export namespace Components {
           * The value of the select.
          */
         "value"?: any | null;
+    }
+    interface IonSelectModal {
+        "header"?: string;
+        "multiple"?: boolean;
+        "options": SelectModalOption[];
     }
     interface IonSelectOption {
         /**
@@ -3214,9 +3281,9 @@ export namespace Components {
     }
     interface IonToggle {
         /**
-          * How to control the alignment of the toggle and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+          * How to control the alignment of the toggle and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL. Setting this property will change the toggle `display` to `block`.
          */
-        "alignment": 'start' | 'center';
+        "alignment"?: 'start' | 'center';
         /**
           * If `true`, the toggle is selected.
          */
@@ -3234,9 +3301,17 @@ export namespace Components {
          */
         "enableOnOffLabels": boolean | undefined;
         /**
-          * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements.
+          * Text that is placed under the toggle label and displayed when an error is detected.
          */
-        "justify": 'start' | 'end' | 'space-between';
+        "errorText"?: string;
+        /**
+          * Text that is placed under the toggle label and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
+          * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements. Setting this property will change the toggle `display` to `block`.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
         /**
           * Where to place the label relative to the input. `"start"`: The label will appear to the left of the toggle in LTR and to the right in RTL. `"end"`: The label will appear to the right of the toggle in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("..."). `"stacked"`: The label will appear above the toggle regardless of the direction. The alignment of the label can be controlled with the `alignment` property.
          */
@@ -3249,6 +3324,10 @@ export namespace Components {
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required": boolean;
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */
@@ -3412,6 +3491,10 @@ export interface IonSearchbarCustomEvent<T> extends CustomEvent<T> {
 export interface IonSegmentCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSegmentElement;
+}
+export interface IonSegmentViewCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIonSegmentViewElement;
 }
 export interface IonSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -3966,9 +4049,9 @@ declare global {
     };
     interface HTMLIonMenuElementEventMap {
         "ionWillOpen": void;
-        "ionWillClose": void;
+        "ionWillClose": MenuCloseEventDetail;
         "ionDidOpen": void;
-        "ionDidClose": void;
+        "ionDidClose": MenuCloseEventDetail;
         "ionMenuChange": MenuChangeEventDetail;
     }
     interface HTMLIonMenuElement extends Components.IonMenu, HTMLStencilElement {
@@ -4409,6 +4492,29 @@ declare global {
         prototype: HTMLIonSegmentButtonElement;
         new (): HTMLIonSegmentButtonElement;
     };
+    interface HTMLIonSegmentContentElement extends Components.IonSegmentContent, HTMLStencilElement {
+    }
+    var HTMLIonSegmentContentElement: {
+        prototype: HTMLIonSegmentContentElement;
+        new (): HTMLIonSegmentContentElement;
+    };
+    interface HTMLIonSegmentViewElementEventMap {
+        "ionSegmentViewScroll": SegmentViewScrollEvent;
+    }
+    interface HTMLIonSegmentViewElement extends Components.IonSegmentView, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonSegmentViewElementEventMap>(type: K, listener: (this: HTMLIonSegmentViewElement, ev: IonSegmentViewCustomEvent<HTMLIonSegmentViewElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonSegmentViewElementEventMap>(type: K, listener: (this: HTMLIonSegmentViewElement, ev: IonSegmentViewCustomEvent<HTMLIonSegmentViewElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLIonSegmentViewElement: {
+        prototype: HTMLIonSegmentViewElement;
+        new (): HTMLIonSegmentViewElement;
+    };
     interface HTMLIonSelectElementEventMap {
         "ionChange": SelectChangeEventDetail;
         "ionCancel": void;
@@ -4430,6 +4536,12 @@ declare global {
     var HTMLIonSelectElement: {
         prototype: HTMLIonSelectElement;
         new (): HTMLIonSelectElement;
+    };
+    interface HTMLIonSelectModalElement extends Components.IonSelectModal, HTMLStencilElement {
+    }
+    var HTMLIonSelectModalElement: {
+        prototype: HTMLIonSelectModalElement;
+        new (): HTMLIonSelectModalElement;
     };
     interface HTMLIonSelectOptionElement extends Components.IonSelectOption, HTMLStencilElement {
     }
@@ -4718,7 +4830,10 @@ declare global {
         "ion-searchbar": HTMLIonSearchbarElement;
         "ion-segment": HTMLIonSegmentElement;
         "ion-segment-button": HTMLIonSegmentButtonElement;
+        "ion-segment-content": HTMLIonSegmentContentElement;
+        "ion-segment-view": HTMLIonSegmentViewElement;
         "ion-select": HTMLIonSelectElement;
+        "ion-select-modal": HTMLIonSelectModalElement;
         "ion-select-option": HTMLIonSelectOptionElement;
         "ion-select-popover": HTMLIonSelectPopoverElement;
         "ion-skeleton-text": HTMLIonSkeletonTextElement;
@@ -5321,7 +5436,7 @@ declare namespace LocalJSX {
     }
     interface IonCheckbox {
         /**
-          * How to control the alignment of the checkbox and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+          * How to control the alignment of the checkbox and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL. Setting this property will change the checkbox `display` to `block`.
          */
         "alignment"?: 'start' | 'center';
         /**
@@ -5337,11 +5452,19 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Text that is placed under the checkbox label and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the checkbox label and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * If `true`, the checkbox will visually appear as indeterminate.
          */
         "indeterminate"?: boolean;
         /**
-          * How to pack the label and checkbox within a line. `"start"`: The label and checkbox will appear on the left in LTR and on the right in RTL. `"end"`: The label and checkbox will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and checkbox within a line. `"start"`: The label and checkbox will appear on the left in LTR and on the right in RTL. `"end"`: The label and checkbox will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and checkbox will appear on opposite ends of the line with space between the two elements. Setting this property will change the checkbox `display` to `block`.
          */
         "justify"?: 'start' | 'end' | 'space-between';
         /**
@@ -5368,6 +5491,10 @@ declare namespace LocalJSX {
           * Emitted when the checkbox has focus.
          */
         "onIonFocus"?: (event: IonCheckboxCustomEvent<void>) => void;
+        /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required"?: boolean;
         /**
           * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
          */
@@ -6361,7 +6488,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the menu is closed.
          */
-        "onIonDidClose"?: (event: IonMenuCustomEvent<void>) => void;
+        "onIonDidClose"?: (event: IonMenuCustomEvent<MenuCloseEventDetail>) => void;
         /**
           * Emitted when the menu is open.
          */
@@ -6373,7 +6500,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the menu is about to be closed.
          */
-        "onIonWillClose"?: (event: IonMenuCustomEvent<void>) => void;
+        "onIonWillClose"?: (event: IonMenuCustomEvent<MenuCloseEventDetail>) => void;
         /**
           * Emitted when the menu is about to be opened.
          */
@@ -6465,6 +6592,10 @@ declare namespace LocalJSX {
           * Animation to use when the modal is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        /**
+          * Controls whether scrolling or dragging within the sheet modal expands it to a larger breakpoint. This only takes effect when `breakpoints` and `initialBreakpoint` are set.  If `true`, scrolling or dragging anywhere in the modal will first expand it to the next breakpoint. Once fully expanded, scrolling will affect the content. If `false`, scrolling will always affect the content. The modal will only expand when dragging the header or handle. The modal will close when dragging the header or handle. It can also be closed when dragging the content, but only if the content is scrolled to the top.
+         */
+        "expandToScroll"?: boolean;
         /**
           * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
          */
@@ -6939,7 +7070,7 @@ declare namespace LocalJSX {
     }
     interface IonRadio {
         /**
-          * How to control the alignment of the radio and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+          * How to control the alignment of the radio and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL. Setting this property will change the radio `display` to `block`.
          */
         "alignment"?: 'start' | 'center';
         /**
@@ -6951,7 +7082,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * How to pack the label and radio within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and radio within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements. Setting this property will change the radio `display` to `block`.
          */
         "justify"?: 'start' | 'end' | 'space-between';
         /**
@@ -6988,6 +7119,14 @@ declare namespace LocalJSX {
           * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-radio-group. When not specified, the default behavior will use strict equality (===) for comparison.
          */
         "compareWith"?: string | RadioGroupCompareFn | null;
+        /**
+          * The error text to display at the top of the radio group.
+         */
+        "errorText"?: string;
+        /**
+          * The helper text to display at the top of the radio group.
+         */
+        "helperText"?: string;
         /**
           * The name of the control, which is submitted with the form data.
          */
@@ -7304,7 +7443,7 @@ declare namespace LocalJSX {
          */
         "cancelButtonIcon"?: string;
         /**
-          * Set the the cancel button text. Only applies to `ios` mode.
+          * Set the cancel button text. Only applies to `ios` mode.
          */
         "cancelButtonText"?: string;
         /**
@@ -7448,6 +7587,10 @@ declare namespace LocalJSX {
     }
     interface IonSegmentButton {
         /**
+          * The `id` of the segment content.
+         */
+        "contentId"?: string;
+        /**
           * If `true`, the user cannot interact with the segment button.
          */
         "disabled"?: boolean;
@@ -7468,6 +7611,18 @@ declare namespace LocalJSX {
          */
         "value"?: SegmentValue;
     }
+    interface IonSegmentContent {
+    }
+    interface IonSegmentView {
+        /**
+          * If `true`, the segment view cannot be interacted with.
+         */
+        "disabled"?: boolean;
+        /**
+          * Emitted when the segment view is scrolled.
+         */
+        "onIonSegmentViewScroll"?: (event: IonSegmentViewCustomEvent<SegmentViewScrollEvent>) => void;
+    }
     interface IonSelect {
         /**
           * The text to display on the cancel button.
@@ -7486,6 +7641,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Text that is placed under the select and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
           * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
          */
         "expandedIcon"?: string;
@@ -7494,11 +7653,15 @@ declare namespace LocalJSX {
          */
         "fill"?: 'outline' | 'solid';
         /**
-          * The interface the select should use: `action-sheet`, `popover` or `alert`.
+          * Text that is placed under the select and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
+          * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
          */
         "interface"?: SelectInterface;
         /**
-          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet) and the [ion-popover docs](./popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
+          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet), the [ion-popover docs](./popover), and the [ion-modal docs](./modal) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions"?: any;
         /**
@@ -7558,6 +7721,10 @@ declare namespace LocalJSX {
          */
         "placeholder"?: string;
         /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required"?: boolean;
+        /**
           * The text to display instead of the selected option's value.
          */
         "selectedText"?: string | null;
@@ -7573,6 +7740,11 @@ declare namespace LocalJSX {
           * The value of the select.
          */
         "value"?: any | null;
+    }
+    interface IonSelectModal {
+        "header"?: string;
+        "multiple"?: boolean;
+        "options"?: SelectModalOption[];
     }
     interface IonSelectOption {
         /**
@@ -8020,7 +8192,7 @@ declare namespace LocalJSX {
     }
     interface IonToggle {
         /**
-          * How to control the alignment of the toggle and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+          * How to control the alignment of the toggle and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL. Setting this property will change the toggle `display` to `block`.
          */
         "alignment"?: 'start' | 'center';
         /**
@@ -8040,7 +8212,15 @@ declare namespace LocalJSX {
          */
         "enableOnOffLabels"?: boolean | undefined;
         /**
-          * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements.
+          * Text that is placed under the toggle label and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the toggle label and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
+          * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements. Setting this property will change the toggle `display` to `block`.
          */
         "justify"?: 'start' | 'end' | 'space-between';
         /**
@@ -8067,6 +8247,10 @@ declare namespace LocalJSX {
           * Emitted when the toggle has focus.
          */
         "onIonFocus"?: (event: IonToggleCustomEvent<void>) => void;
+        /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required"?: boolean;
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */
@@ -8159,7 +8343,10 @@ declare namespace LocalJSX {
         "ion-searchbar": IonSearchbar;
         "ion-segment": IonSegment;
         "ion-segment-button": IonSegmentButton;
+        "ion-segment-content": IonSegmentContent;
+        "ion-segment-view": IonSegmentView;
         "ion-select": IonSelect;
+        "ion-select-modal": IonSelectModal;
         "ion-select-option": IonSelectOption;
         "ion-select-popover": IonSelectPopover;
         "ion-skeleton-text": IonSkeletonText;
@@ -8258,7 +8445,10 @@ declare module "@stencil/core" {
             "ion-searchbar": LocalJSX.IonSearchbar & JSXBase.HTMLAttributes<HTMLIonSearchbarElement>;
             "ion-segment": LocalJSX.IonSegment & JSXBase.HTMLAttributes<HTMLIonSegmentElement>;
             "ion-segment-button": LocalJSX.IonSegmentButton & JSXBase.HTMLAttributes<HTMLIonSegmentButtonElement>;
+            "ion-segment-content": LocalJSX.IonSegmentContent & JSXBase.HTMLAttributes<HTMLIonSegmentContentElement>;
+            "ion-segment-view": LocalJSX.IonSegmentView & JSXBase.HTMLAttributes<HTMLIonSegmentViewElement>;
             "ion-select": LocalJSX.IonSelect & JSXBase.HTMLAttributes<HTMLIonSelectElement>;
+            "ion-select-modal": LocalJSX.IonSelectModal & JSXBase.HTMLAttributes<HTMLIonSelectModalElement>;
             "ion-select-option": LocalJSX.IonSelectOption & JSXBase.HTMLAttributes<HTMLIonSelectOptionElement>;
             "ion-select-popover": LocalJSX.IonSelectPopover & JSXBase.HTMLAttributes<HTMLIonSelectPopoverElement>;
             "ion-skeleton-text": LocalJSX.IonSkeletonText & JSXBase.HTMLAttributes<HTMLIonSkeletonTextElement>;

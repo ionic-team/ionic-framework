@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Segment View - Disabled</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      ion-segment-view {
+        height: 100px;
+      }
+
+      ion-segment-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      ion-segment-content:nth-of-type(1) {
+        background: lightpink;
+      }
+
+      ion-segment-content:nth-of-type(2) {
+        background: lightblue;
+      }
+
+      ion-segment-content:nth-of-type(3) {
+        background: lightgreen;
+      }
+
+      ion-segment-content:nth-of-type(4) {
+        background: lightgoldenrodyellow;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Segment View - Disabled</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-segment>
+          <ion-segment-button disabled content-id="all" value="all">
+            <ion-label>All</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="favorites" value="favorites">
+            <ion-label>Favorites</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view>
+          <ion-segment-content id="all">All</ion-segment-content>
+          <ion-segment-content id="favorites">Favorites</ion-segment-content>
+        </ion-segment-view>
+
+        <ion-segment disabled value="paid">
+          <ion-segment-button content-id="paid" value="paid">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="free" value="free">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="top" value="top">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view>
+          <ion-segment-content id="paid">Paid</ion-segment-content>
+          <ion-segment-content id="free">Free</ion-segment-content>
+          <ion-segment-content id="top">Top</ion-segment-content>
+        </ion-segment-view>
+
+        <ion-segment value="reading-list">
+          <ion-segment-button content-id="bookmarks" value="bookmarks">
+            <ion-label>Bookmarks</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="reading-list" value="reading-list">
+            <ion-label>Reading List</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="shared-links" value="shared-links">
+            <ion-label>Shared Links</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view disabled>
+          <ion-segment-content id="bookmarks">Bookmarks</ion-segment-content>
+          <ion-segment-content id="reading-list">Reading List</ion-segment-content>
+          <ion-segment-content id="shared-links">Shared Links</ion-segment-content>
+        </ion-segment-view>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

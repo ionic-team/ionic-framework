@@ -584,4 +584,10 @@ describe('Routing - Swipe to Go Back', () => {
     cy.ionPageDoesNotExist('routingparameter-abc');
     cy.ionPageVisible('routing');
   })
+
+  it('should be activatable when router-link is used on an item without the button property', () => {
+    cy.visit('/');
+
+    cy.get('ion-item[routerlink="/overlays"]').should('have.class', 'ion-activatable');
+  });
 })

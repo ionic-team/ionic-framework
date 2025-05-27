@@ -14,6 +14,24 @@ it('should inherit attributes', async () => {
   expect(nativeEl.getAttribute('data-form-type')).toBe('password');
 });
 
+it('should inherit watched attributes', async () => {
+  const page = await newSpecPage({
+    components: [Textarea],
+    html: '<ion-textarea dir="ltr"></ion-textarea>',
+  });
+
+  const textareaEl = page.body.querySelector('ion-textarea')!;
+  const nativeEl = textareaEl.querySelector('textarea')!;
+
+  expect(nativeEl.getAttribute('dir')).toBe('ltr');
+
+  textareaEl.setAttribute('dir', 'rtl');
+
+  await page.waitForChanges();
+
+  expect(nativeEl.getAttribute('dir')).toBe('rtl');
+});
+
 /**
  * Textarea uses emulated slots, so the internal
  * behavior will not exactly match IonSelect's slots.

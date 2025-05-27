@@ -72,6 +72,7 @@
   flex-grow: 1;
 
   align-items: center;
+  justify-content: space-between;
 
   height: inherit;
 
@@ -86,7 +87,10 @@
   overflow: hidden;
 }
 
-:host(.in-item) .label-text-wrapper {
+// Checkboxes that are not slotted inside an item and are not used with a
+// stacked label should have margins equal to those of the label.
+:host(.in-item) .label-text-wrapper,
+:host(.in-item:not(.checkbox-label-placement-stacked):not([slot])) .native-wrapper {
   @include margin($checkbox-item-label-margin-top, null, $checkbox-item-label-margin-bottom, null);
 }
 
@@ -107,8 +111,12 @@
   display: none;
 }
 
+/**
+ * The native input must be hidden with display instead of visibility or 
+ * aria-hidden to avoid accessibility issues with nested interactive elements.
+ */
 input {
-  @include visually-hidden();
+  display: none;
 }
 
 .native-wrapper {
@@ -144,30 +152,51 @@ input {
   opacity: 0;
 }
 
-// Justify Content
-// ---------------------------------------------
+// Checkbox Bottom Content
+// ----------------------------------------------------------------
 
-:host(.checkbox-justify-space-between) .checkbox-wrapper {
+.checkbox-bottom {
+  @include padding(4px, null, null, null);
+
+  display: flex;
+
   justify-content: space-between;
+
+  font-size: dynamic-font(12px);
+
+  white-space: normal;
 }
 
-:host(.checkbox-justify-start) .checkbox-wrapper {
-  justify-content: start;
+:host(.checkbox-label-placement-stacked) .checkbox-bottom {
+  font-size: dynamic-font(16px);
 }
 
-:host(.checkbox-justify-end) .checkbox-wrapper {
-  justify-content: end;
+// Checkbox Hint Text
+// ----------------------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is
+ * present on the checkbox. Otherwise the helper text should
+ * be shown.
+ */
+.checkbox-bottom .error-text {
+  display: none;
+
+  color: ion-color(danger, base);
 }
 
-// Align Items
-// ---------------------------------------------
+.checkbox-bottom .helper-text {
+  display: block;
 
-:host(.checkbox-alignment-start) .checkbox-wrapper {
-  align-items: start;
+  color: $text-color-step-300;
 }
 
-:host(.checkbox-alignment-center) .checkbox-wrapper {
-  align-items: center;
+:host(.ion-touched.ion-invalid) .checkbox-bottom .error-text {
+  display: block;
+}
+
+:host(.ion-touched.ion-invalid) .checkbox-bottom .helper-text {
+  display: none;
 }
 
 // Label Placement - Start
@@ -199,6 +228,8 @@ input {
  */
 :host(.checkbox-label-placement-end) .checkbox-wrapper {
   flex-direction: row-reverse;
+
+  justify-content: start;
 }
 
 /**
@@ -242,6 +273,8 @@ input {
  */
 :host(.checkbox-label-placement-stacked) .checkbox-wrapper {
   flex-direction: column;
+
+  text-align: center;
 }
 
 :host(.checkbox-label-placement-stacked) .label-text-wrapper {
@@ -267,6 +300,46 @@ input {
 
 :host(.checkbox-label-placement-stacked.checkbox-alignment-center) .label-text-wrapper {
   @include transform-origin(center, top);
+}
+
+// Justify Content
+// ---------------------------------------------
+
+:host(.checkbox-justify-space-between) .checkbox-wrapper {
+  justify-content: space-between;
+}
+
+:host(.checkbox-justify-start) .checkbox-wrapper {
+  justify-content: start;
+}
+
+:host(.checkbox-justify-end) .checkbox-wrapper {
+  justify-content: end;
+}
+
+// Align Items
+// ---------------------------------------------
+
+:host(.checkbox-alignment-start) .checkbox-wrapper {
+  align-items: start;
+}
+
+:host(.checkbox-alignment-center) .checkbox-wrapper {
+  align-items: center;
+}
+
+// Justify Content & Align Items
+// ---------------------------------------------
+
+// The checkbox should be displayed as block when either justify
+// or alignment is set; otherwise, these properties will have no
+// visible effect.
+:host(.checkbox-justify-space-between),
+:host(.checkbox-justify-start),
+:host(.checkbox-justify-end),
+:host(.checkbox-alignment-start),
+:host(.checkbox-alignment-center) {
+  display: block;
 }
 
 // Checked / Indeterminate Checkbox

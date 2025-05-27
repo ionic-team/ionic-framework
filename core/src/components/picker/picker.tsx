@@ -410,14 +410,71 @@ export class Picker implements ComponentInterface {
     colEl: HTMLIonPickerColumnElement,
     value: string,
     zeroBehavior: 'start' | 'end' = 'start'
-  ) => {
+  ): boolean => {
+    if (!value) {
+      return false;
+    }
+
     const behavior = zeroBehavior === 'start' ? /^0+/ : /0$/;
+    value = value.replace(behavior, '');
     const option = Array.from(colEl.querySelectorAll('ion-picker-column-option')).find((el) => {
       return el.disabled !== true && el.textContent!.replace(behavior, '') === value;
     });
 
     if (option) {
       colEl.setValue(option.value);
+    }
+
+    return !!option;
+  };
+
+  /**
+   * Attempts to intelligently search the first and second
+   * column as if they're number columns for the provided numbers
+   * where the first two numbers are the first column
+   * and the last 2 are the last column. Tries to allow for the first
+   * number to be ignored for situations where typos occurred.
+   */
+  private multiColumnSearch = (
+    firstColumn: HTMLIonPickerColumnElement,
+    secondColumn: HTMLIonPickerColumnElement,
+    input: string
+  ) => {
+    if (input.length === 0) {
+      return;
+    }
+
+    const inputArray = input.split('');
+    const hourValue = inputArray.slice(0, 2).join('');
+    // Try to find a match for the first two digits in the first column
+    const foundHour = this.searchColumn(firstColumn, hourValue);
+
+    // If we have more than 2 digits and found a match for hours,
+    // use the remaining digits for the second column (minutes)
+    if (inputArray.length > 2 && foundHour) {
+      const minuteValue = inputArray.slice(2, 4).join('');
+      this.searchColumn(secondColumn, minuteValue);
+    }
+    // If we couldn't find a match for the two-digit hour, try single digit approaches
+    else if (!foundHour && inputArray.length >= 1) {
+      // First try the first digit as a single-digit hour
+      let singleDigitHour = inputArray[0];
+      let singleDigitFound = this.searchColumn(firstColumn, singleDigitHour);
+
+      // If that didn't work, try the second digit as a single-digit hour
+      // (handles case where user made a typo in the first digit, or they typed over themselves)
+      if (!singleDigitFound) {
+        inputArray.shift();
+        singleDigitHour = inputArray[0];
+        singleDigitFound = this.searchColumn(firstColumn, singleDigitHour);
+      }
+
+      // If we found a single-digit hour and have remaining digits,
+      // use up to 2 of the remaining digits for the second column
+      if (singleDigitFound && inputArray.length > 1) {
+        const remainingDigits = inputArray.slice(1, 3).join('');
+        this.searchColumn(secondColumn, remainingDigits);
+      }
     }
   };
 
@@ -433,91 +490,15 @@ export class Picker implements ComponentInterface {
     const lastColumn = numericPickers[1];
 
     let value = inputEl.value;
-    let minuteValue;
-    switch (value.length) {
-      case 1:
-        this.searchColumn(firstColumn, value);
-        break;
-      case 2:
-        /**
-         * If the first character is `0` or `1` it is
-         * possible that users are trying to type `09`
-         * or `11` into the hour field, so we should look
-         * at that first.
-         */
-        const firstCharacter = inputEl.value.substring(0, 1);
-        value = firstCharacter === '0' || firstCharacter === '1' ? inputEl.value : firstCharacter;
+    if (value.length > 4) {
+      const startIndex = inputEl.value.length - 4;
+      const newString = inputEl.value.substring(startIndex);
 
-        this.searchColumn(firstColumn, value);
-
-        /**
-         * If only checked the first value,
-         * we can check the second value
-         * for a match in the minutes column
-         */
-        if (value.length === 1) {
-          minuteValue = inputEl.value.substring(inputEl.value.length - 1);
-          this.searchColumn(lastColumn, minuteValue, 'end');
-        }
-        break;
-      case 3:
-        /**
-         * If the first character is `0` or `1` it is
-         * possible that users are trying to type `09`
-         * or `11` into the hour field, so we should look
-         * at that first.
-         */
-        const firstCharacterAgain = inputEl.value.substring(0, 1);
-        value =
-          firstCharacterAgain === '0' || firstCharacterAgain === '1'
-            ? inputEl.value.substring(0, 2)
-            : firstCharacterAgain;
-
-        this.searchColumn(firstColumn, value);
-
-        /**
-         * If only checked the first value,
-         * we can check the second value
-         * for a match in the minutes column
-         */
-        minuteValue = value.length === 1 ? inputEl.value.substring(1) : inputEl.value.substring(2);
-
-        this.searchColumn(lastColumn, minuteValue, 'end');
-        break;
-      case 4:
-        /**
-         * If the first character is `0` or `1` it is
-         * possible that users are trying to type `09`
-         * or `11` into the hour field, so we should look
-         * at that first.
-         */
-        const firstCharacterAgainAgain = inputEl.value.substring(0, 1);
-        value =
-          firstCharacterAgainAgain === '0' || firstCharacterAgainAgain === '1'
-            ? inputEl.value.substring(0, 2)
-            : firstCharacterAgainAgain;
-        this.searchColumn(firstColumn, value);
-
-        /**
-         * If only checked the first value,
-         * we can check the second value
-         * for a match in the minutes column
-         */
-        const minuteValueAgain =
-          value.length === 1
-            ? inputEl.value.substring(1, inputEl.value.length)
-            : inputEl.value.substring(2, inputEl.value.length);
-        this.searchColumn(lastColumn, minuteValueAgain, 'end');
-
-        break;
-      default:
-        const startIndex = inputEl.value.length - 4;
-        const newString = inputEl.value.substring(startIndex);
-
-        inputEl.value = newString;
-        this.selectMultiColumn();
-        break;
+      inputEl.value = newString;
+      value = newString;
     }
+
+    this.multiColumnSearch(firstColumn, lastColumn, value);
   };
 
   /**

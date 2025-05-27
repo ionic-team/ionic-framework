@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Segment View - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      ion-segment-view {
+        height: 100px;
+
+        margin-bottom: 20px;
+      }
+
+      ion-segment-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      ion-segment-content:nth-of-type(3n + 1) {
+        background: lightpink;
+      }
+
+      ion-segment-content:nth-of-type(3n + 2) {
+        background: lightblue;
+      }
+
+      ion-segment-content:nth-of-type(3n + 3) {
+        background: lightgreen;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Segment View - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-segment id="noValueSegment">
+          <ion-segment-button content-id="no" value="no">
+            <ion-label>No</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="value" value="value">
+            <ion-label>Value</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view id="noValueSegmentView">
+          <ion-segment-content id="no">No</ion-segment-content>
+          <ion-segment-content id="value">Value</ion-segment-content>
+        </ion-segment-view>
+
+        <ion-segment value="free">
+          <ion-segment-button content-id="paid" value="paid">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button style="min-width: 200px" content-id="free" value="free">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="top" value="top">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view>
+          <ion-segment-content id="paid">Paid</ion-segment-content>
+          <ion-segment-content id="free">Free</ion-segment-content>
+          <ion-segment-content id="top">Top</ion-segment-content>
+        </ion-segment-view>
+
+        <ion-segment value="peach" scrollable>
+          <ion-segment-button content-id="orange" value="orange">
+            <ion-label>Orange</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="banana" value="banana">
+            <ion-label>Banana</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="pear" value="pear">
+            <ion-label>Pear</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="peach" value="peach">
+            <ion-label>Peach</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="grape" value="grape">
+            <ion-label>Grape</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="mango" value="mango">
+            <ion-label>Mango</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="apple" value="apple">
+            <ion-label>Apple</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="strawberry" value="strawberry">
+            <ion-label>Strawberry</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="cherry" value="cherry">
+            <ion-label>Cherry</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view>
+          <ion-segment-content id="orange">Orange</ion-segment-content>
+          <ion-segment-content id="banana">Banana</ion-segment-content>
+          <ion-segment-content id="pear">Pear</ion-segment-content>
+          <ion-segment-content id="peach">Peach</ion-segment-content>
+          <ion-segment-content id="grape">Grape</ion-segment-content>
+          <ion-segment-content id="mango">Mango</ion-segment-content>
+          <ion-segment-content id="apple">Apple</ion-segment-content>
+          <ion-segment-content id="strawberry">Strawberry</ion-segment-content>
+          <ion-segment-content id="cherry">Cherry</ion-segment-content>
+        </ion-segment-view>
+
+        <button class="expand" onClick="changeSegmentContent()">Change Segment Content</button>
+
+        <button class="expand" onClick="clearSegmentValue()">Clear Segment Value</button>
+
+        <button class="expand" onClick="addSegmentButtonAndContent()">Add New Segment Button & Content</button>
+      </ion-content>
+
+      <ion-footer>
+        <ion-toolbar>
+          <ion-title>Footer</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+
+      <script>
+        function changeSegmentContent() {
+          const segment = document.querySelector('#noValueSegment');
+          const segmentView = document.querySelector('#noValueSegmentView');
+
+          let currentValue = segment.value;
+
+          if (currentValue === 'value') {
+            currentValue = 'no';
+          } else {
+            currentValue = 'value';
+          }
+
+          segment.value = currentValue;
+        }
+
+        async function clearSegmentValue() {
+          const segmentView = document.querySelector('#noValueSegmentView');
+          segmentView.setContent('no', false);
+
+          // Set timeout to ensure the value is cleared after
+          // the segment content is updated
+          setTimeout(() => {
+            const segment = document.querySelector('#noValueSegment');
+            segment.value = undefined;
+          });
+        }
+
+        async function addSegmentButtonAndContent() {
+          const segment = document.querySelector('ion-segment');
+          const segmentView = document.querySelector('ion-segment-view');
+
+          const newButton = document.createElement('ion-segment-button');
+          const newId = `new-${Date.now()}`;
+          newButton.setAttribute('content-id', newId);
+          newButton.setAttribute('value', newId);
+          newButton.innerHTML = '<ion-label>New Button</ion-label>';
+
+          segment.appendChild(newButton);
+
+          setTimeout(() => {
+            // Timeout to test waitForSegmentContent() in segment-button
+            const newContent = document.createElement('ion-segment-content');
+            newContent.setAttribute('id', newId);
+            newContent.innerHTML = 'New Content';
+
+            segmentView.appendChild(newContent);
+
+            // Necessary timeout to ensure the value is set after the content is added.
+            // Otherwise, the transition is unsuccessful and the content is not shown.
+            setTimeout(() => {
+              segment.setAttribute('value', newId);
+            }, 200);
+          }, 200);
+        }
+      </script>
+    </ion-app>
+  </body>
+</html>

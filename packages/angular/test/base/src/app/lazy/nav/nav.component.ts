@@ -1,11 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalExampleComponent } from '../modal-example/modal-example.component';
 
 @Component({
-  selector: 'app-nav',
-  templateUrl: './nav.component.html',
+    selector: 'app-nav',
+    templateUrl: './nav.component.html',
+    standalone: false
 })
-export class NavComponent {
+export class NavComponent implements OnInit {
   rootPage = ModalExampleComponent;
   rootParams: any;
 

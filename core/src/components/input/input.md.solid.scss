@@ -32,6 +32,10 @@
   --border-color: var(--highlight-color);
 }
 
+/**
+ * The bottom content should never have
+ * a border with the solid style.
+ */
 :host(.input-fill-solid) .input-bottom {
   border-top: none;
 }

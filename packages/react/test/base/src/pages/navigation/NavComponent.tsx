@@ -98,7 +98,7 @@ const PageThree = ({ nav }: { nav: React.MutableRefObject<HTMLIonNavElement> }) 
 };
 
 const NavComponent: React.FC = () => {
-  const ref = useRef<any>();
+  const ref = useRef<any>(null);
   return (
     <IonPage>
       <IonNav

@@ -15,7 +15,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-item button router-link="/routing" id="routing">
+      <ion-item router-link="/routing" id="routing">
         <ion-label>Go to /routing</ion-label>
       </ion-item>
     </ion-content>

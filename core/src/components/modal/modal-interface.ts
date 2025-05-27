@@ -25,12 +25,14 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   backdropBreakpoint?: number;
   handle?: boolean;
   handleBehavior?: ModalHandleBehavior;
+  expandToScroll?: boolean;
 }
 
 export interface ModalAnimationOptions {
   presentingEl?: HTMLElement;
   currentBreakpoint?: number;
   backdropBreakpoint?: number;
+  expandToScroll: boolean;
 }
 
 export interface ModalBreakpointChangeEventDetail {

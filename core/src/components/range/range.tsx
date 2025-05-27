@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, clamp, debounceEvent, renderHiddenInput } from '@utils/helpers';
+import { inheritAriaAttributes, clamp, debounceEvent, renderHiddenInput, isSafeNumber } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -109,7 +109,11 @@ export class Range implements ComponentInterface {
    */
   @Prop() min = 0;
   @Watch('min')
-  protected minChanged() {
+  protected minChanged(newValue: number) {
+    if (!isSafeNumber(newValue)) {
+      this.min = 0;
+    }
+
     if (!this.noUpdate) {
       this.updateRatio();
     }
@@ -120,7 +124,11 @@ export class Range implements ComponentInterface {
    */
   @Prop() max = 100;
   @Watch('max')
-  protected maxChanged() {
+  protected maxChanged(newValue: number) {
+    if (!isSafeNumber(newValue)) {
+      this.max = 100;
+    }
+
     if (!this.noUpdate) {
       this.updateRatio();
     }
@@ -151,6 +159,12 @@ export class Range implements ComponentInterface {
    * Specifies the value granularity.
    */
   @Prop() step = 1;
+  @Watch('step')
+  protected stepChanged(newValue: number) {
+    if (!isSafeNumber(newValue)) {
+      this.step = 1;
+    }
+  }
 
   /**
    * If `true`, tick marks are displayed based on the step value.
@@ -169,13 +183,13 @@ export class Range implements ComponentInterface {
     if (activeBarStart !== undefined) {
       if (activeBarStart > this.max) {
         printIonWarning(
-          `Range: The value of activeBarStart (${activeBarStart}) is greater than the max (${this.max}). Valid values are greater than or equal to the min value and less than or equal to the max value.`,
+          `[ion-range] - The value of activeBarStart (${activeBarStart}) is greater than the max (${this.max}). Valid values are greater than or equal to the min value and less than or equal to the max value.`,
           this.el
         );
         this.activeBarStart = this.max;
       } else if (activeBarStart < this.min) {
         printIonWarning(
-          `Range: The value of activeBarStart (${activeBarStart}) is less than the min (${this.min}). Valid values are greater than or equal to the min value and less than or equal to the max value.`,
+          `[ion-range] - The value of activeBarStart (${activeBarStart}) is less than the min (${this.min}). Valid values are greater than or equal to the min value and less than or equal to the max value.`,
           this.el
         );
         this.activeBarStart = this.min;
@@ -199,11 +213,31 @@ export class Range implements ComponentInterface {
    */
   @Prop({ mutable: true }) value: RangeValue = 0;
   @Watch('value')
-  protected valueChanged() {
+  protected valueChanged(newValue: RangeValue, oldValue: RangeValue) {
+    const valuesChanged = this.compareValues(newValue, oldValue);
+    if (valuesChanged) {
+      this.ionInput.emit({ value: this.value });
+    }
+
     if (!this.noUpdate) {
       this.updateRatio();
     }
   }
+
+  /**
+   * Compares two RangeValue inputs to determine if they are different.
+   *
+   * @param newVal - The new value.
+   * @param oldVal - The old value.
+   * @returns `true` if the values are different, `false` otherwise.
+   */
+  private compareValues = (newVal: RangeValue, oldVal: RangeValue) => {
+    if (typeof newVal === 'object' && typeof oldVal === 'object') {
+      return newVal.lower !== oldVal.lower || newVal.upper !== oldVal.upper;
+    }
+
+    return newVal !== oldVal;
+  };
 
   private clampBounds = (value: any): number => {
     return clamp(this.min, value, this.max);
@@ -300,6 +334,11 @@ export class Range implements ComponentInterface {
     }
 
     this.inheritedAttributes = inheritAriaAttributes(this.el);
+    // If min, max, or step are not safe, set them to 0, 100, and 1, respectively.
+    // Each watch does this, but not before the initial load.
+    this.min = isSafeNumber(this.min) ? this.min : 0;
+    this.max = isSafeNumber(this.max) ? this.max : 100;
+    this.step = isSafeNumber(this.step) ? this.step : 1;
   }
 
   componentDidLoad() {
@@ -325,7 +364,8 @@ export class Range implements ComponentInterface {
       this.setupGesture();
     }
 
-    this.contentEl = findClosestIonContent(this.el);
+    const ionContent = findClosestIonContent(this.el);
+    this.contentEl = ionContent?.querySelector('.ion-content-scroll-host') ?? ionContent;
   }
 
   disconnectedCallback() {
@@ -418,7 +458,7 @@ export class Range implements ComponentInterface {
      *
      * This only needs to be done once.
      */
-    if (contentEl && this.initialContentScrollY === undefined) {
+    if (contentEl && this.pressedKnob === undefined) {
       this.initialContentScrollY = disableContentScrollY(contentEl);
     }
 
@@ -449,7 +489,7 @@ export class Range implements ComponentInterface {
    */
   private onEnd(detail: GestureDetail | MouseEvent) {
     const { contentEl, initialContentScrollY } = this;
-    const currentX = (detail as GestureDetail).currentX || (detail as MouseEvent).clientX;
+    const currentX = (detail as GestureDetail).currentX ?? (detail as MouseEvent).clientX;
 
     /**
      * The `pressedKnob` can be undefined if the user never
@@ -469,7 +509,7 @@ export class Range implements ComponentInterface {
      *
      * The user can now scroll on the view in the next gesture event.
      */
-    if (contentEl && initialContentScrollY !== undefined) {
+    if (contentEl && this.pressedKnob !== undefined) {
       resetContentScrollY(contentEl, initialContentScrollY);
     }
 
@@ -570,8 +610,6 @@ export class Range implements ComponentInterface {
           lower: Math.min(valA, valB),
           upper: Math.max(valA, valB),
         };
-
-    this.ionInput.emit({ value: this.value });
 
     this.noUpdate = false;
   }

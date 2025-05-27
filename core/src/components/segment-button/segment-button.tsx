@@ -3,6 +3,7 @@ import { Component, Element, Host, Prop, Method, State, Watch, forceUpdate, h } 
 import type { ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { addEventListener, removeEventListener, inheritAttributes } from '@utils/helpers';
+import { printIonError, printIonWarning } from '@utils/logging';
 import { hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -37,6 +38,11 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   @State() checked = false;
 
   /**
+   * The `id` of the segment content.
+   */
+  @Prop({ reflect: true }) contentId?: string;
+
+  /**
    * If `true`, the user cannot interact with the segment button.
    */
   @Prop({ mutable: true }) disabled = false;
@@ -67,6 +73,14 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
       addEventListener(segmentEl, 'ionSelect', this.updateState);
       addEventListener(segmentEl, 'ionStyle', this.updateStyle);
     }
+
+    // Prevent buttons from being disabled when associated with segment content
+    if (this.contentId && this.disabled) {
+      printIonWarning(
+        `[ion-segment-button] - Segment buttons cannot be disabled when associated with an <ion-segment-content>.`
+      );
+      this.disabled = false;
+    }
   }
 
   disconnectedCallback() {
@@ -82,6 +96,26 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     this.inheritedAttributes = {
       ...inheritAttributes(this.el, ['aria-label']),
     };
+
+    // Return if there is no contentId defined
+    if (!this.contentId) return;
+
+    // Attempt to find the Segment Content by its contentId
+    const segmentContent = document.getElementById(this.contentId) as HTMLIonSegmentContentElement | null;
+
+    // If no associated Segment Content exists, log an error and return
+    if (!segmentContent) {
+      printIonError(`[ion-segment-button] - Unable to find Segment Content with id="${this.contentId}".`);
+      return;
+    }
+
+    // Ensure the found element is a valid ION-SEGMENT-CONTENT
+    if (segmentContent.tagName !== 'ION-SEGMENT-CONTENT') {
+      printIonError(
+        `[ion-segment-button] - Element with id="${this.contentId}" is not an <ion-segment-content> element.`
+      );
+      return;
+    }
   }
 
   private get hasLabel() {
@@ -161,13 +195,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           </span>
           {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </button>
-        <div
-          part="indicator"
-          class={{
-            'segment-button-indicator': true,
-            'segment-button-indicator-animated': true,
-          }}
-        >
+        <div part="indicator" class="segment-button-indicator segment-button-indicator-animated">
           <div part="indicator-background" class="segment-button-indicator-background"></div>
         </div>
       </Host>

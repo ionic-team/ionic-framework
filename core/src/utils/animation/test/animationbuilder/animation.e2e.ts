@@ -20,14 +20,14 @@ const testNavigation = async (page: E2EPage) => {
 
   await page.click('page-root ion-button.next');
   await ionRouteDidChange.next();
-  page.click('page-one ion-button.next');
+  await page.click('page-one ion-button.next');
   await ionRouteDidChange.next();
-  page.click('page-two ion-button.next');
+  await page.click('page-two ion-button.next');
   await ionRouteDidChange.next();
-  page.click('page-three ion-back-button');
+  await page.click('page-three ion-back-button');
   await ionRouteDidChange.next();
-  page.click('page-two ion-back-button');
+  await page.click('page-two ion-back-button');
   await ionRouteDidChange.next();
-  page.click('page-one ion-back-button');
+  await page.click('page-one ion-back-button');
   await ionRouteDidChange.next();
 };

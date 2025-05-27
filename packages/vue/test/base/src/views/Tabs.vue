@@ -1,7 +1,7 @@
 <template>
   <ion-page data-pageid="tabs">
     <ion-content>
-      <ion-tabs id="tabs">
+      <ion-tabs id="tabs" @ionTabsWillChange="onTabWillChange" @ionTabsDidChange="onTabDidChange">
         <ion-router-outlet></ion-router-outlet>
         <ion-tab-bar slot="bottom">
           <ion-tab-button
@@ -47,7 +47,15 @@ export default defineComponent({
       ]
     }
 
-    return { tabs, addTab }
+    const onTabWillChange = (e: { tab: string }) => {
+      console.log('ionTabsWillChange', e.tab);
+    }
+
+    const onTabDidChange = (e: { tab: string }) => {
+      console.log('ionTabsDidChange', e.tab);
+    }
+
+    return { tabs, addTab, onTabWillChange, onTabDidChange }
   }
 });
 </script>

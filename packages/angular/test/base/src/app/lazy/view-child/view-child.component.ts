@@ -2,8 +2,9 @@ import { Component, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { IonTabs, IonButton } from '@ionic/angular';
 
 @Component({
-  selector: 'app-view-child',
-  templateUrl: './view-child.component.html'
+    selector: 'app-view-child',
+    templateUrl: './view-child.component.html',
+    standalone: false
 })
 export class ViewChildComponent implements AfterViewInit {
   @ViewChild(IonButton, { static: true }) button!: IonButton;

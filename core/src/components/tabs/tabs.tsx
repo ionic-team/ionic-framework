@@ -1,5 +1,6 @@
 import type { EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
+import { printIonError } from '@utils/logging';
 
 import type { NavOutlet, RouteID, RouteWrite } from '../router/utils/interface';
 import type { TabButtonClickEventDetail } from '../tab-bar/tab-bar-interface';
@@ -43,7 +44,17 @@ export class Tabs implements NavOutlet {
 
   async componentWillLoad() {
     if (!this.useRouter) {
-      this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
+      /**
+       * JavaScript and StencilJS use `ion-router`, while
+       * the other frameworks use `ion-router-outlet`.
+       *
+       * If either component is present then tabs will not use
+       * a basic tab-based navigation. It will use the history
+       * stack or URL updates associated with the router.
+       */
+      this.useRouter =
+        (!!this.el.querySelector('ion-router-outlet') || !!document.querySelector('ion-router')) &&
+        !this.el.closest('[no-router]');
     }
     if (!this.useRouter) {
       const tabs = this.tabs;
@@ -200,7 +211,7 @@ const getTab = (tabs: HTMLIonTabElement[], tab: string | HTMLIonTabElement): HTM
   const tabEl = typeof tab === 'string' ? tabs.find((t) => t.tab === tab) : tab;
 
   if (!tabEl) {
-    console.error(`tab with id: "${tabEl}" does not exist`);
+    printIonError(`[ion-tabs] - Tab with id: "${tabEl}" does not exist`);
   }
   return tabEl;
 };

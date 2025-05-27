@@ -14,13 +14,14 @@ configs({ modes: ['md'] }).forEach(({ title, config, screenshot }) => {
         const ionDidOpen = await page.spyOnEvent('ionDidOpen');
 
         await page.evaluate(() => {
-          const style = document.querySelector('style');
-          style!.innerHTML = `
+          const overwrittenStyle = document.createElement('style');
+          overwrittenStyle.innerHTML = `
             :root {
               --ion-safe-area-left: 50px !important;
               --ion-safe-area-right: 10px !important;
             }
           `;
+          document.head.appendChild(overwrittenStyle);
         });
 
         await page.click('#open-start');
@@ -28,20 +29,20 @@ configs({ modes: ['md'] }).forEach(({ title, config, screenshot }) => {
 
         const startMenu = page.locator('[menu-id="start-menu"]');
         await expect(startMenu).toHaveClass(/show-menu/);
-
         await expect(page).toHaveScreenshot(screenshot(`menu-start-safe-area-left-notch`));
       });
       test('should render with safe area when notch is on the right', async ({ page }) => {
         const ionDidOpen = await page.spyOnEvent('ionDidOpen');
 
         await page.evaluate(() => {
-          const style = document.querySelector('style');
-          style!.innerHTML = `
+          const overwrittenStyle = document.createElement('style');
+          overwrittenStyle.innerHTML = `
             :root {
               --ion-safe-area-left: 10px !important;
               --ion-safe-area-right: 50px !important;
             }
           `;
+          document.head.appendChild(overwrittenStyle);
         });
 
         await page.click('#open-start');
@@ -58,13 +59,14 @@ configs({ modes: ['md'] }).forEach(({ title, config, screenshot }) => {
         const ionDidOpen = await page.spyOnEvent('ionDidOpen');
 
         await page.evaluate(() => {
-          const style = document.querySelector('style');
-          style!.innerHTML = `
+          const overwrittenStyle = document.createElement('style');
+          overwrittenStyle.innerHTML = `
             :root {
               --ion-safe-area-left: 50px !important;
               --ion-safe-area-right: 10px !important;
             }
           `;
+          document.head.appendChild(overwrittenStyle);
         });
 
         await page.click('#open-end');
@@ -79,13 +81,14 @@ configs({ modes: ['md'] }).forEach(({ title, config, screenshot }) => {
         const ionDidOpen = await page.spyOnEvent('ionDidOpen');
 
         await page.evaluate(() => {
-          const style = document.querySelector('style');
-          style!.innerHTML = `
+          const overwrittenStyle = document.createElement('style');
+          overwrittenStyle.innerHTML = `
             :root {
               --ion-safe-area-left: 10px !important;
               --ion-safe-area-right: 50px !important;
             }
           `;
+          document.head.appendChild(overwrittenStyle);
         });
 
         await page.click('#open-end');

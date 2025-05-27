@@ -1,16 +1,16 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { OverlayKeepContentsMounted } from ".";
+import { OverlayKeepContentsMountedComponent } from ".";
 
 @NgModule({
   imports: [
     RouterModule.forChild([
       {
         path: '',
-        component: OverlayKeepContentsMounted
+        component: OverlayKeepContentsMountedComponent
       }
     ])
   ],
   exports: [RouterModule]
 })
-export class OverlayKeepContentsMountedRoutingModule { }
+export class OverlayKeepContentsMountedComponentRoutingModule { }

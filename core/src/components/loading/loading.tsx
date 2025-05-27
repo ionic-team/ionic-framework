@@ -214,7 +214,9 @@ export class Loading implements ComponentInterface, OverlayInterface {
       const mode = getIonMode(this);
       this.spinner = config.get('loadingSpinner', config.get('spinner', mode === 'ios' ? 'lines' : 'crescent'));
     }
-    setOverlayId(this.el);
+    if (!this.htmlAttributes?.id) {
+      setOverlayId(this.el);
+    }
   }
 
   componentDidLoad() {
@@ -354,7 +356,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
       >
         <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />
 
-        <div tabindex="0"></div>
+        <div tabindex="0" aria-hidden="true"></div>
 
         <div class="loading-wrapper ion-overlay-wrapper">
           {spinner && (
@@ -366,7 +368,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
           {message !== undefined && this.renderLoadingMessage(msgId)}
         </div>
 
-        <div tabindex="0"></div>
+        <div tabindex="0" aria-hidden="true"></div>
       </Host>
     );
   }

@@ -2,6 +2,7 @@
 @import "../themes/ionic.globals";
 @import "../components/menu/menu.ios.vars";
 @import "../components/menu/menu.md.vars";
+@import "../components/modal/modal.vars";
 
 :root {
   /**
@@ -55,7 +56,7 @@ body.backdrop-no-scroll {
 html.ios ion-modal.modal-card ion-header ion-toolbar:first-of-type,
 html.ios ion-modal.modal-sheet ion-header ion-toolbar:first-of-type,
 html.ios ion-modal ion-footer ion-toolbar:first-of-type {
-  padding-top: 6px;
+  padding-top: $modal-sheet-padding-top;
 }
 
 /**
@@ -65,7 +66,7 @@ html.ios ion-modal ion-footer ion-toolbar:first-of-type {
 */
 html.ios ion-modal.modal-card ion-header ion-toolbar:last-of-type,
 html.ios ion-modal.modal-sheet ion-header ion-toolbar:last-of-type {
-  padding-bottom: 6px;
+  padding-bottom: $modal-sheet-padding-bottom;
 }
 
 /**

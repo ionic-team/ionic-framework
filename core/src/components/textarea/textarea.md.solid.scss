@@ -32,6 +32,10 @@
   --border-color: var(--highlight-color);
 }
 
+/**
+ * The bottom content should never have
+ * a border with the solid style.
+ */
 :host(.textarea-fill-solid) .textarea-bottom {
   border-top: none;
 }

@@ -131,6 +131,21 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() breakpoints?: number[];
 
   /**
+   * Controls whether scrolling or dragging within the sheet modal expands
+   * it to a larger breakpoint. This only takes effect when `breakpoints`
+   * and `initialBreakpoint` are set.
+   *
+   * If `true`, scrolling or dragging anywhere in the modal will first expand
+   * it to the next breakpoint. Once fully expanded, scrolling will affect the
+   * content.
+   * If `false`, scrolling will always affect the content. The modal will
+   * only expand when dragging the header or handle. The modal will close when
+   * dragging the header or handle. It can also be closed when dragging the
+   * content, but only if the content is scrolled to the top.
+   */
+  @Prop() expandToScroll = true;
+
+  /**
    * A decimal value between 0 and 1 that indicates the
    * initial point the modal will open at when creating a
    * sheet modal. This value must also be listed in the
@@ -412,10 +427,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     if (breakpoints !== undefined && initialBreakpoint !== undefined && !breakpoints.includes(initialBreakpoint)) {
-      printIonWarning('Your breakpoints array must include the initialBreakpoint value.');
+      printIonWarning('[ion-modal] - Your breakpoints array must include the initialBreakpoint value.');
     }
 
-    setOverlayId(el);
+    if (!this.htmlAttributes?.id) {
+      setOverlayId(this.el);
+    }
   }
 
   componentDidLoad() {
@@ -560,6 +577,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: presentingElement,
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
+      expandToScroll: this.expandToScroll,
     });
 
     /* tslint:disable-next-line */
@@ -614,7 +632,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // should be in the DOM and referenced by now, except
     // for the presenting el
     const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
-    const ani = (this.animation = animationBuilder(el, { presentingEl: this.presentingElement }));
+    const ani = (this.animation = animationBuilder(el, {
+      presentingEl: this.presentingElement,
+      expandToScroll: this.expandToScroll,
+    }));
 
     const contentEl = findIonContent(el);
     if (!contentEl) {
@@ -666,6 +687,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: this.presentingElement,
       currentBreakpoint: initialBreakpoint,
       backdropBreakpoint,
+      expandToScroll: this.expandToScroll,
     }));
 
     ani.progressStart(true, 1);
@@ -678,6 +700,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       backdropBreakpoint,
       ani,
       this.sortedBreakpoints,
+      this.expandToScroll,
       () => this.currentBreakpoint ?? 0,
       () => this.sheetOnDismiss(),
       (breakpoint: number) => {
@@ -776,6 +799,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         presentingEl: presentingElement,
         currentBreakpoint: this.currentBreakpoint ?? this.initialBreakpoint,
         backdropBreakpoint: this.backdropBreakpoint,
+        expandToScroll: this.expandToScroll,
       }
     );
 
@@ -823,12 +847,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Method()
   async setCurrentBreakpoint(breakpoint: number): Promise<void> {
     if (!this.isSheetModal) {
-      printIonWarning('setCurrentBreakpoint is only supported on sheet modals.');
+      printIonWarning('[ion-modal] - setCurrentBreakpoint is only supported on sheet modals.');
       return;
     }
     if (!this.breakpoints!.includes(breakpoint)) {
       printIonWarning(
-        `Attempted to set invalid breakpoint value ${breakpoint}. Please double check that the breakpoint value is part of your defined breakpoints.`
+        `[ion-modal] - Attempted to set invalid breakpoint value ${breakpoint}. Please double check that the breakpoint value is part of your defined breakpoints.`
       );
       return;
     }
@@ -925,9 +949,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
   };
 
   render() {
-    const { handle, isSheetModal, presentingElement, htmlAttributes, handleBehavior, inheritedAttributes, focusTrap } =
-      this;
-
+    const {
+      handle,
+      isSheetModal,
+      presentingElement,
+      htmlAttributes,
+      handleBehavior,
+      inheritedAttributes,
+      focusTrap,
+      expandToScroll,
+    } = this;
     const showHandle = handle !== false && isSheetModal;
     const mode = getIonMode(this);
     const isCardModal = presentingElement !== undefined && mode === 'ios';
@@ -946,6 +977,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           ['modal-default']: !isCardModal && !isSheetModal,
           [`modal-card`]: isCardModal,
           [`modal-sheet`]: isSheetModal,
+          [`modal-no-expand-scroll`]: isSheetModal && !expandToScroll,
           'overlay-hidden': true,
           [FOCUS_TRAP_DISABLE_CLASS]: focusTrap === false,
           ...getClassMap(this.cssClass),
@@ -1017,6 +1049,12 @@ interface ModalOverlayOptions {
    * to fade in when using a sheet modal.
    */
   backdropBreakpoint: number;
+
+  /**
+   * Whether or not the modal should scroll/drag
+   * the content only when fully expanded.
+   */
+  expandToScroll?: boolean;
 }
 
 type ModalPresentOptions = ModalOverlayOptions;

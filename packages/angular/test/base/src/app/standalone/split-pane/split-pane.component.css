@@ -1,0 +1,3 @@
+ion-item.selected {
+  --background: rgb(var(--ion-color-primary-rgb, 0, 84, 233), 0.14);
+}

@@ -99,7 +99,8 @@ const isCordova = (win: any): boolean => !!(win['cordova'] || win['phonegap'] ||
 
 const isCapacitorNative = (win: any): boolean => {
   const capacitor = win['Capacitor'];
-  return !!capacitor?.isNative;
+  // TODO(ROU-11693): Remove when we no longer support Capacitor 2, which does not have isNativePlatform
+  return !!(capacitor?.isNative || (capacitor?.isNativePlatform && !!capacitor.isNativePlatform()));
 };
 
 const isElectron = (win: Window): boolean => testUserAgent(win, /electron/i);

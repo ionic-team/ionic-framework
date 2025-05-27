@@ -31,8 +31,6 @@
 
   max-width: 100%;
 
-  outline: none;
-
   cursor: pointer;
   user-select: none;
   z-index: $z-index-item-input;
@@ -53,7 +51,7 @@
  */
 :host([slot="start"]),
 :host([slot="end"]) {
-  // Reset the flex property when the checkbox
+  // Reset the flex property when the toggle
   // is slotted to avoid growing the element larger
   // than its content.
   flex: initial;
@@ -69,8 +67,12 @@
   pointer-events: none;
 }
 
+/**
+ * The native input must be hidden with display instead of visibility or
+ * aria-hidden to avoid accessibility issues with nested interactive elements.
+ */
 input {
-  @include visually-hidden();
+  display: none;
 }
 
 // Toggle Wrapper
@@ -82,6 +84,9 @@ input {
   position: relative;
 
   flex-grow: 1;
+
+  align-items: center;
+  justify-content: space-between;
 
   height: inherit;
 
@@ -131,31 +136,51 @@ input {
   align-items: center;
 }
 
-// Toggle Justify
-// --------------------------------------------------
+// Toggle Bottom Content
+// ----------------------------------------------------------------
 
-:host(.toggle-justify-space-between) .toggle-wrapper {
+.toggle-bottom {
+  @include padding(4px, null, null, null);
+
+  display: flex;
+
   justify-content: space-between;
+
+  font-size: dynamic-font(12px);
+
+  white-space: normal;
 }
 
-:host(.toggle-justify-start) .toggle-wrapper {
-  justify-content: start;
+:host(.toggle-label-placement-stacked) .toggle-bottom {
+  font-size: dynamic-font(16px);
 }
 
-:host(.toggle-justify-end) .toggle-wrapper {
-  justify-content: end;
+// Toggle Hint Text
+// ----------------------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is
+ * present on the checkbox. Otherwise the helper text should
+ * be shown.
+ */
+.toggle-bottom .error-text {
+  display: none;
+
+  color: ion-color(danger, base);
 }
 
-// Toggle Align
-// --------------------------------------------------
+.toggle-bottom .helper-text {
+  display: block;
 
-
-:host(.toggle-alignment-start) .toggle-wrapper {
-  align-items: start;
+  color: $text-color-step-300;
 }
 
-:host(.toggle-alignment-center) .toggle-wrapper {
-  align-items: center;
+:host(.ion-touched.ion-invalid) .toggle-bottom .error-text {
+  display: block;
+}
+
+:host(.ion-touched.ion-invalid) .toggle-bottom .helper-text {
+  display: none;
 }
 
 // Toggle Label Placement - Start
@@ -187,6 +212,8 @@ input {
  */
 :host(.toggle-label-placement-end) .toggle-wrapper {
   flex-direction: row-reverse;
+
+  justify-content: start;
 }
 
 /**
@@ -230,6 +257,8 @@ input {
  */
 :host(.toggle-label-placement-stacked) .toggle-wrapper {
   flex-direction: column;
+
+  text-align: center;
 }
 
 :host(.toggle-label-placement-stacked) .label-text-wrapper {
@@ -255,6 +284,46 @@ input {
 
 :host(.toggle-label-placement-stacked.toggle-alignment-center) .label-text-wrapper {
   @include transform-origin(center, top);
+}
+
+// Toggle Justify
+// --------------------------------------------------
+
+:host(.toggle-justify-space-between) .toggle-wrapper {
+  justify-content: space-between;
+}
+
+:host(.toggle-justify-start) .toggle-wrapper {
+  justify-content: start;
+}
+
+:host(.toggle-justify-end) .toggle-wrapper {
+  justify-content: end;
+}
+
+// Toggle Align
+// --------------------------------------------------
+
+:host(.toggle-alignment-start) .toggle-wrapper {
+  align-items: start;
+}
+
+:host(.toggle-alignment-center) .toggle-wrapper {
+  align-items: center;
+}
+
+// Justify Content & Align Items
+// ---------------------------------------------
+
+// The toggle should be displayed as block when either justify
+// or alignment is set; otherwise, these properties will have no
+// visible effect.
+:host(.toggle-justify-space-between),
+:host(.toggle-justify-start),
+:host(.toggle-justify-end),
+:host(.toggle-alignment-start),
+:host(.toggle-alignment-center) {
+  display: block;
 }
 
 // Toggle Background Track: Unchecked

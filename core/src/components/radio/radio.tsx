@@ -90,15 +90,17 @@ export class Radio implements ComponentInterface {
    * on the left in RTL.
    * `"space-between"`: The label and radio will appear on opposite
    * ends of the line with space between the two elements.
+   * Setting this property will change the radio `display` to `block`.
    */
-  @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+  @Prop() justify?: 'start' | 'end' | 'space-between';
 
   /**
    * How to control the alignment of the radio and label on the cross axis.
    * `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL.
    * `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+   * Setting this property will change the radio `display` to `block`.
    */
-  @Prop() alignment: 'start' | 'center' = 'center';
+  @Prop() alignment?: 'start' | 'center';
 
   /**
    * Emitted when the radio button has focus.
@@ -124,9 +126,11 @@ export class Radio implements ComponentInterface {
 
   /** @internal */
   @Method()
-  async setFocus(ev: globalThis.Event) {
-    ev.stopPropagation();
-    ev.preventDefault();
+  async setFocus(ev?: globalThis.Event) {
+    if (ev !== undefined) {
+      ev.stopPropagation();
+      ev.preventDefault();
+    }
 
     this.el.focus();
   }
@@ -223,8 +227,8 @@ export class Radio implements ComponentInterface {
           'in-item': inItem,
           'radio-checked': checked,
           'radio-disabled': disabled,
-          [`radio-justify-${justify}`]: true,
-          [`radio-alignment-${alignment}`]: true,
+          [`radio-justify-${justify}`]: justify !== undefined,
+          [`radio-alignment-${alignment}`]: alignment !== undefined,
           [`radio-label-placement-${labelPlacement}`]: true,
           // Focus and active styling should not apply when the radio is in an item
           'ion-activatable': !inItem,

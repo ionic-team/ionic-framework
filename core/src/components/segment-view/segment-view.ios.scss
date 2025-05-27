@@ -1,0 +1,9 @@
+@import "./segment-view";
+@import "../segment-button/segment-button.ios.vars";
+
+// iOS Segment View
+// --------------------------------------------------
+
+:host(.segment-view-disabled) {
+  opacity: $segment-button-ios-opacity-disabled;
+}

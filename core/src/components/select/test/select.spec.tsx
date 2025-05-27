@@ -125,3 +125,35 @@ describe('select: slot interactivity', () => {
     expect(divSpy).toHaveBeenCalled();
   });
 });
+
+describe('ion-select: required', () => {
+  it('should have a aria-required attribute as true in inner button', async () => {
+    const page = await newSpecPage({
+      components: [Select],
+      html: `
+        <ion-select required="true"></ion-select>
+      `,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+
+    const nativeButton = select.shadowRoot!.querySelector('button')!;
+
+    expect(nativeButton.getAttribute('aria-required')).toBe('true');
+  });
+
+  it('should not have a aria-required attribute as false in inner button', async () => {
+    const page = await newSpecPage({
+      components: [Select],
+      html: `
+        <ion-select required="false"></ion-select>
+      `,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+
+    const nativeButton = select.shadowRoot!.querySelector('button')!;
+
+    expect(nativeButton.getAttribute('aria-required')).toBe('false');
+  });
+});

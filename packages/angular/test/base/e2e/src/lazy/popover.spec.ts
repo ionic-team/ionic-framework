@@ -22,4 +22,14 @@ describe('Popovers: Inline', () => {
     cy.get('ion-list ion-item:nth-child(3)').should('have.text', 'C');
     cy.get('ion-list ion-item:nth-child(4)').should('have.text', 'D');
   });
+
+  it('should have an item with a disabled attribute', () => {
+    cy.get('ion-button').click();
+
+    cy.get('ion-popover').should('be.visible');
+
+    cy.wait(1500);
+
+    cy.get('ion-list ion-item:nth-child(3)').should('have.attr', 'disabled');
+  });
 });

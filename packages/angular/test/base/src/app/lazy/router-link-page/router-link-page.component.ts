@@ -2,8 +2,9 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { IonRouterOutlet, ViewDidEnter, ViewDidLeave, ViewWillLeave } from '@ionic/angular';
 
 @Component({
-  selector: 'app-router-link-page',
-  templateUrl: './router-link-page.component.html',
+    selector: 'app-router-link-page',
+    templateUrl: './router-link-page.component.html',
+    standalone: false
 })
 export class RouterLinkPageComponent implements OnInit, ViewWillLeave, ViewDidEnter, ViewWillLeave, ViewDidLeave {
 

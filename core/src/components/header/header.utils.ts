@@ -167,13 +167,34 @@ export const handleToolbarIntersection = (
 
 export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
   const headerEl = headerIndex.el;
+  const toolbars = headerIndex.toolbars;
+  const ionTitles = toolbars.map((toolbar) => toolbar.ionTitleEl);
 
   if (active) {
     headerEl.classList.remove('header-collapse-condense-inactive');
-    headerEl.removeAttribute('aria-hidden');
+
+    ionTitles.forEach((ionTitle) => {
+      if (ionTitle) {
+        ionTitle.removeAttribute('aria-hidden');
+      }
+    });
   } else {
     headerEl.classList.add('header-collapse-condense-inactive');
-    headerEl.setAttribute('aria-hidden', 'true');
+
+    /**
+     * The small title should only be accessed by screen readers
+     * when the large title collapses into the small title due
+     * to scrolling.
+     *
+     * Originally, the header was given `aria-hidden="true"`
+     * but this caused issues with screen readers not being
+     * able to access any focusable elements within the header.
+     */
+    ionTitles.forEach((ionTitle) => {
+      if (ionTitle) {
+        ionTitle.setAttribute('aria-hidden', 'true');
+      }
+    });
   }
 };
 

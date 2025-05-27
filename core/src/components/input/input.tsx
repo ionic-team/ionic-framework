@@ -1,5 +1,18 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import {
+  Build,
+  Component,
+  Element,
+  Event,
+  Host,
+  Listen,
+  Method,
+  Prop,
+  State,
+  Watch,
+  forceUpdate,
+  h,
+} from '@stencil/core';
 import type { NotchController } from '@utils/forms';
 import { createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
@@ -33,6 +46,8 @@ import { getCounterText } from './input.utils';
 export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
   private slotMutationController?: SlotMutationController;
@@ -48,11 +63,20 @@ export class Input implements ComponentInterface {
    * Resets when the input loses focus.
    */
   private didInputClearOnEdit = false;
+
   /**
    * The value of the input when the input is focused.
    */
   private focusedValue?: string | number | null;
 
+  /**
+   * The `hasFocus` state ensures the focus class is
+   * added regardless of how the element is focused.
+   * The `ion-focused` class only applies when focused
+   * via tabbing, not by clicking.
+   * The `has-focus` logic was added to ensure the class
+   * is applied in both cases.
+   */
   @State() hasFocus = false;
 
   @Element() el!: HTMLIonInputElement;
@@ -336,10 +360,39 @@ export class Input implements ComponentInterface {
     }
   }
 
+  /**
+   * dir is a globally enumerated attribute.
+   * As a result, creating these as properties
+   * can have unintended side effects. Instead, we
+   * listen for attribute changes and inherit them
+   * to the inner `<input>` element.
+   */
+  @Watch('dir')
+  onDirChanged(newValue: string) {
+    this.inheritedAttributes = {
+      ...this.inheritedAttributes,
+      dir: newValue,
+    };
+    forceUpdate(this);
+  }
+
+  /**
+   * This prevents the native input from emitting the click event.
+   * Instead, the click event from the ion-input is emitted.
+   */
+  @Listen('click', { capture: true })
+  onClickCapture(ev: Event) {
+    const nativeInput = this.nativeInput;
+    if (nativeInput && ev.target === nativeInput) {
+      ev.stopPropagation();
+      this.el.click();
+    }
+  }
+
   componentWillLoad() {
     this.inheritedAttributes = {
       ...inheritAriaAttributes(this.el),
-      ...inheritAttributes(this.el, ['tabindex', 'title', 'data-form-type']),
+      ...inheritAttributes(this.el, ['tabindex', 'title', 'data-form-type', 'dir']),
     };
   }
 
@@ -573,9 +626,30 @@ export class Input implements ComponentInterface {
    * Renders the helper text or error text values
    */
   private renderHintText() {
-    const { helperText, errorText } = this;
+    const { helperText, errorText, helperTextId, errorTextId } = this;
 
-    return [<div class="helper-text">{helperText}</div>, <div class="error-text">{errorText}</div>];
+    return [
+      <div id={helperTextId} class="helper-text">
+        {helperText}
+      </div>,
+      <div id={errorTextId} class="error-text">
+        {errorText}
+      </div>,
+    ];
+  }
+
+  private getHintTextID(): string | undefined {
+    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+
+    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+      return errorTextId;
+    }
+
+    if (helperText) {
+      return helperTextId;
+    }
+
+    return undefined;
   }
 
   private renderCounter() {
@@ -645,6 +719,18 @@ export class Input implements ComponentInterface {
   private get hasLabel() {
     return this.label !== undefined || this.labelSlot !== null;
   }
+
+  /**
+   * Stops propagation when the label is clicked,
+   * otherwise, two clicks will be triggered.
+   */
+  private onLabelClick = (ev: MouseEvent) => {
+    // Only stop propagation if the click was directly on the label
+    // and not on the input or other child elements
+    if (ev.target === ev.currentTarget) {
+      ev.stopPropagation();
+    }
+  };
 
   /**
    * Renders the border container
@@ -741,9 +827,9 @@ export class Input implements ComponentInterface {
          * interactable, clicking the label would focus that instead
          * since it comes before the input in the DOM.
          */}
-        <label class="input-wrapper" htmlFor={inputId}>
+        <label class="input-wrapper" htmlFor={inputId} onClick={this.onLabelClick}>
           {this.renderLabelContainer()}
-          <div class="native-wrapper">
+          <div class="native-wrapper" onClick={this.onLabelClick}>
             <slot name="start"></slot>
             <input
               class="native-input"
@@ -777,6 +863,8 @@ export class Input implements ComponentInterface {
               onKeyDown={this.onKeydown}
               onCompositionstart={this.onCompositionStart}
               onCompositionend={this.onCompositionEnd}
+              aria-describedby={this.getHintTextID()}
+              aria-invalid={this.getHintTextID() === this.errorTextId}
               {...this.inheritedAttributes}
             />
             {this.clearInput && !readonly && !disabled && (

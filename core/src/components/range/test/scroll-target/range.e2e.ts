@@ -1,29 +1,26 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, test, dragElementBy } from '@utils/test/playwright';
 
-// TODO FW-2873
 /**
  * This behavior does not vary across modes/directions.
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe.skip(title('range: scroll-target'), () => {
+  test.describe(title('range: scroll-target'), () => {
     test('should not scroll when the knob is swiped in custom scroll target', async ({ page, skip }) => {
+      /**
+       * The Playwright team has stated that they will not implement this feature:
+       * https://github.com/microsoft/playwright/issues/28755
+       */
       skip.browser('webkit', 'mouse.wheel is not available in WebKit');
 
       await page.goto(`/src/components/range/test/scroll-target`, config);
 
-      const knobEl = page.locator('ion-range .range-knob-handle');
+      const rangeEl = page.locator('ion-range');
       const scrollEl = page.locator('.ion-content-scroll-host');
 
       expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
 
-      const box = (await knobEl.boundingBox())!;
-      const centerX = box.x + box.width / 2;
-      const centerY = box.y + box.height / 2;
-
-      await page.mouse.move(centerX, centerY);
-      await page.mouse.down();
-      await page.mouse.move(centerX + 30, centerY);
+      await dragElementBy(rangeEl, page, 100, 0, undefined, undefined, false);
 
       /**
        * Do not use scrollToBottom() or other scrolling methods

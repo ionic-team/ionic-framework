@@ -11,7 +11,16 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await ionModalDidPresent.next();
 
-      await expect(page).toHaveScreenshot(screenshot(`modal-sheet-present`));
+      await expect(page).toHaveScreenshot(screenshot(`modal-sheet-present`), {
+        /**
+         * Animations must be enabled to capture the screenshot.
+         * By default, animations are disabled with toHaveScreenshot,
+         * and when capturing the screenshot will call animation.finish().
+         * This will cause the modal to close and the screenshot capture
+         * to be invalid.
+         */
+        animations: 'allow',
+      });
     });
   });
 });
@@ -87,7 +96,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       test('it should warn when setting an invalid breakpoint', async () => {
         expect(warnings.length).toBe(1);
         expect(warnings[0]).toBe(
-          '[Ionic Warning]: Attempted to set invalid breakpoint value 0.01. Please double check that the breakpoint value is part of your defined breakpoints.'
+          '[Ionic Warning]: [ion-modal] - Attempted to set invalid breakpoint value 0.01. Please double check that the breakpoint value is part of your defined breakpoints.'
         );
       });
     });
@@ -265,7 +274,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const backdrop = page.locator('ion-modal ion-backdrop');
 
       await handle.click();
-      backdrop.click();
+      await backdrop.click();
 
       await ionBreakpointDidChange.next();
 

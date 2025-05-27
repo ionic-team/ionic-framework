@@ -5,6 +5,7 @@ import { AccordionModalComponent } from './accordion-modal/accordion-modal.compo
 @Component({
   selector: 'app-accordion',
   templateUrl: './accordion.component.html',
+  standalone: false
 })
 export class AccordionComponent {
 

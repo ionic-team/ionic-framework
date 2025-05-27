@@ -5,6 +5,7 @@ import type { Gesture } from '@utils/gesture';
 import { createButtonActiveGesture } from '@utils/gesture/button-active';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
+import { printIonWarning } from '@utils/logging';
 import {
   createDelegateController,
   createTriggerController,
@@ -237,6 +238,18 @@ export class Alert implements ComponentInterface, OverlayInterface {
       return;
     }
 
+    /**
+     * Ensure when alert container is being focused, and the user presses the tab + shift keys, the focus will be set to the last alert button.
+     */
+    if (ev.target.classList.contains('alert-wrapper')) {
+      if (ev.key === 'Tab' && ev.shiftKey) {
+        ev.preventDefault();
+        const lastChildBtn = this.wrapperEl?.querySelector('.alert-button:last-child') as HTMLButtonElement;
+        lastChildBtn.focus();
+        return;
+      }
+    }
+
     // The only inputs we want to navigate between using arrow keys are the radios
     // ignore the keydown event if it is not on a radio button
     if (
@@ -306,8 +319,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
     // checkboxes and inputs are all accepted, but they cannot be mixed.
     const inputTypes = new Set(inputs.map((i) => i.type));
     if (inputTypes.has('checkbox') && inputTypes.has('radio')) {
-      console.warn(
-        `Alert cannot mix input types: ${Array.from(inputTypes.values()).join(
+      printIonWarning(
+        `[ion-alert] - Alert cannot mix input types: ${Array.from(inputTypes.values()).join(
           '/'
         )}. Please see alert docs for more info.`
       );
@@ -341,7 +354,9 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
-    setOverlayId(this.el);
+    if (!this.htmlAttributes?.id) {
+      setOverlayId(this.el);
+    }
     this.inputsChanged();
     this.buttonsChanged();
   }
@@ -398,7 +413,19 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
     await this.delegateController.attachViewToDom();
 
-    await present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation);
+    await present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation).then(() => {
+      /**
+       * Check if alert has only one button and no inputs.
+       * If so, then focus on the button. Otherwise, focus the alert wrapper.
+       * This will map to the default native alert behavior.
+       */
+      if (this.buttons.length === 1 && this.inputs.length === 0) {
+        const queryBtn = this.wrapperEl?.querySelector('.alert-button') as HTMLButtonElement;
+        queryBtn.focus();
+      } else {
+        this.wrapperEl?.focus();
+      }
+    });
 
     unlock();
   }
@@ -723,24 +750,21 @@ export class Alert implements ComponentInterface, OverlayInterface {
     const { overlayIndex, header, subHeader, message, htmlAttributes } = this;
     const mode = getIonMode(this);
     const hdrId = `alert-${overlayIndex}-hdr`;
-    const subHdrId = `alert-${overlayIndex}-sub-hdr`;
     const msgId = `alert-${overlayIndex}-msg`;
+    const subHdrId = `alert-${overlayIndex}-sub-hdr`;
     const role = this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert';
 
     /**
-     * If the header is defined, use that. Otherwise, fall back to the subHeader.
-     * If neither is defined, don't set aria-labelledby.
+     * Use both the header and subHeader ids if they are defined.
+     * If only the header is defined, use the header id.
+     * If only the subHeader is defined, use the subHeader id.
+     * If neither are defined, do not set aria-labelledby.
      */
-    const ariaLabelledBy = header ? hdrId : subHeader ? subHdrId : null;
+    const ariaLabelledBy = header && subHeader ? `${hdrId} ${subHdrId}` : header ? hdrId : subHeader ? subHdrId : null;
 
     return (
       <Host
-        role={role}
-        aria-modal="true"
-        aria-labelledby={ariaLabelledBy}
-        aria-describedby={message !== undefined ? msgId : null}
         tabindex="-1"
-        {...(htmlAttributes as any)}
         style={{
           zIndex: `${20000 + overlayIndex}`,
         }}
@@ -755,19 +779,35 @@ export class Alert implements ComponentInterface, OverlayInterface {
       >
         <ion-backdrop tappable={this.backdropDismiss} />
 
-        <div tabindex="0"></div>
+        <div tabindex="0" aria-hidden="true"></div>
 
-        <div class="alert-wrapper ion-overlay-wrapper" ref={(el) => (this.wrapperEl = el)}>
+        <div
+          class="alert-wrapper ion-overlay-wrapper"
+          role={role}
+          aria-modal="true"
+          aria-labelledby={ariaLabelledBy}
+          aria-describedby={message !== undefined ? msgId : null}
+          tabindex="0"
+          ref={(el) => (this.wrapperEl = el)}
+          {...(htmlAttributes as any)}
+        >
           <div class="alert-head">
             {header && (
               <h2 id={hdrId} class="alert-title">
                 {header}
               </h2>
             )}
-            {subHeader && (
+            {/* If no header exists, subHeader should be the highest heading level, h2 */}
+            {subHeader && !header && (
               <h2 id={subHdrId} class="alert-sub-title">
                 {subHeader}
               </h2>
+            )}
+            {/* If a header exists, subHeader should be one level below it, h3 */}
+            {subHeader && header && (
+              <h3 id={subHdrId} class="alert-sub-title">
+                {subHeader}
+              </h3>
             )}
           </div>
 
@@ -777,7 +817,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
           {this.renderAlertButtons()}
         </div>
 
-        <div tabindex="0"></div>
+        <div tabindex="0" aria-hidden="true"></div>
       </Host>
     );
   }

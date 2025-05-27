@@ -174,7 +174,7 @@ const createMenuController = (): MenuControllerI => {
     }
   };
 
-  const _setOpen = async (menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean> => {
+  const _setOpen = async (menu: MenuI, shouldOpen: boolean, animated: boolean, role: string): Promise<boolean> => {
     if (isAnimatingSync()) {
       return false;
     }
@@ -184,7 +184,7 @@ const createMenuController = (): MenuControllerI => {
         await openedMenu.setOpen(false, false);
       }
     }
-    return menu._setOpen(shouldOpen, animated);
+    return menu._setOpen(shouldOpen, animated, role);
   };
 
   const _createAnimation = (type: string, menuCmp: MenuI) => {

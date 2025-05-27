@@ -52,6 +52,13 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
     if (el === this.elementRef.nativeElement) {
       this.onTouched();
       setIonicClasses(this.elementRef);
+
+      // When ion-radio is blurred, el and this.elementRef.nativeElement are
+      // different so we need to check if the closest ion-radio-group is the same
+      // as this.elementRef.nativeElement and if so, we need to mark the radio group
+      // as touched
+    } else if (el.closest('ion-radio-group') === this.elementRef.nativeElement) {
+      this.onTouched();
     }
   }
 

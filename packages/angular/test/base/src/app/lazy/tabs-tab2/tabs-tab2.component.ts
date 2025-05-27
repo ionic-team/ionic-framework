@@ -3,6 +3,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 @Component({
   selector: 'app-tabs-tab2',
   templateUrl: './tabs-tab2.component.html',
+  standalone: false
 })
 export class TabsTab2Component implements OnInit {
   title = 'ERROR';

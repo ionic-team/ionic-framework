@@ -9,17 +9,18 @@ import { IonPopover } from "@ionic/angular";
  */
 @Component({
   selector: 'app-popover-inline',
-  templateUrl: 'popover-inline.component.html'
+  templateUrl: 'popover-inline.component.html',
+  standalone: false
 })
 export class PopoverInlineComponent {
 
-  items: string[] = [];
+  items: {text: string, disabled?: boolean}[] = [];
 
   openPopover(popover: IonPopover) {
     popover.present();
 
     setTimeout(() => {
-      this.items = ['A', 'B', 'C', 'D'];
+      this.items = [{text: 'A'}, {text: 'B'}, {text: 'C', disabled: true}, {text: 'D'}];
     }, 1000);
   }
 

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Select - Bottom Content</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+      }
+
+      ion-select.custom-error-color {
+        --highlight-color-invalid: purple;
+      }
+    </style>
+  </head>
+
+  <body onLoad="onLoad()">
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Select - Bottom Content</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Hint</h2>
+            <ion-select label="Label">
+              <ion-select-option>Option</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Hint: Stacked</h2>
+            <ion-select label="Label" label-placement="stacked">
+              <ion-select-option>Option</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Helper Text</h2>
+            <ion-select label="Label" helper-text="Helper text">
+              <ion-select-option>Option</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Helper Text: Stacked</h2>
+            <ion-select label="Label" label-placement="stacked" helper-text="Helper text"
+              >Label
+              <ion-select-option>Option</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text</h2>
+            <ion-select class="ion-touched ion-invalid" label="Label" error-text="Error text">
+              <ion-select-option>Option</ion-select-option></ion-select
+            >
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text: Stacked</h2>
+            <ion-select class="ion-touched ion-invalid" label="Label" label-placement="stacked" error-text="Error text">
+              <ion-select-option>Option</ion-select-option></ion-select
+            >
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text: Custom Color</h2>
+            <ion-select class="ion-touched ion-invalid custom-error-color" label="Label" error-text="Error text">
+              <ion-select-option>Option</ion-select-option></ion-select
+            >
+          </div>
+
+          <div class="grid-item">
+            <h2>Helper Text: Wrapping</h2>
+            <ion-select
+              label="Label"
+              helper-text="Helper text helper text helper text helper text helper text helper text helper text helper text helper text"
+            >
+              <ion-select-option>Option</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
+
+        <button class="expand" onclick="toggleFill()">Toggle Fill</button>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      // Hide the toggle fill button on ios mode since it's not supported
+      function onLoad() {
+        const toggleFillButton = document.querySelector('button');
+
+        if (Ionic.mode === 'ios' && toggleFillButton) {
+          toggleFillButton.style.display = 'none';
+        }
+      }
+
+      const selects = document.querySelectorAll('ion-select');
+
+      function toggleFill() {
+        selects.forEach((select) => {
+          switch (select.fill) {
+            case 'outline':
+              select.fill = 'solid';
+              break;
+            case 'solid':
+              select.fill = undefined;
+              break;
+            default:
+              select.fill = 'outline';
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

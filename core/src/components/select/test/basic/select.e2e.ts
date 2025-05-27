@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
 import type { E2ELocator } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
 /**
  * This checks that certain overlays open correctly. While the
@@ -8,7 +8,7 @@ import type { E2ELocator } from '@utils/test/playwright';
  * does not. The overlay rendering is already tested in the respective
  * test files.
  */
-configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
   test.describe(title('select: basic'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/select/test/basic', config);
@@ -24,6 +24,16 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await expect(page.locator('ion-alert')).toBeVisible();
       });
+
+      test('it should scroll to selected option when opened', async ({ page }) => {
+        const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+        await page.click('#alert-select-scroll-to-selected');
+        await ionAlertDidPresent.next();
+
+        const alert = page.locator('ion-alert');
+        await expect(alert).toHaveScreenshot(screenshot(`select-basic-alert-scroll-to-selected`));
+      });
     });
 
     test.describe('select: action sheet', () => {
@@ -35,6 +45,16 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
         await ionActionSheetDidPresent.next();
 
         await expect(page.locator('ion-action-sheet')).toBeVisible();
+      });
+
+      test('it should scroll to selected option when opened', async ({ page }) => {
+        const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+
+        await page.click('#action-sheet-select-scroll-to-selected');
+        await ionActionSheetDidPresent.next();
+
+        const actionSheet = page.locator('ion-action-sheet');
+        await expect(actionSheet).toHaveScreenshot(screenshot(`select-basic-action-sheet-scroll-to-selected`));
       });
     });
 
@@ -56,6 +76,44 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
         await expect(popoverOption1).toBeFocused();
 
         await expect(popover).toBeVisible();
+      });
+
+      test('it should scroll to selected option when opened', async ({ page }) => {
+        const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+        await page.click('#popover-select-scroll-to-selected');
+        await ionPopoverDidPresent.next();
+
+        const popover = page.locator('ion-popover');
+        await expect(popover).toHaveScreenshot(screenshot(`select-basic-popover-scroll-to-selected`));
+      });
+    });
+
+    test.describe('select: modal', () => {
+      test('it should open a modal select', async ({ page }) => {
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        await page.click('#customModalSelect');
+
+        await ionModalDidPresent.next();
+
+        const modal = page.locator('ion-modal');
+
+        // select has no value, so first option should be focused by default
+        const modalOption1 = modal.locator('.select-interface-option:first-of-type ion-radio');
+        await expect(modalOption1).toBeFocused();
+
+        await expect(modal).toBeVisible();
+      });
+
+      test('it should scroll to selected option when opened', async ({ page }) => {
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        await page.click('#modal-select-scroll-to-selected');
+        await ionModalDidPresent.next();
+
+        const modal = page.locator('ion-modal');
+        await expect(modal).toHaveScreenshot(screenshot(`select-basic-modal-scroll-to-selected`));
       });
     });
   });
@@ -80,14 +138,55 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
          * is already visible. We manually click() the element instead
          * to avoid flaky tests.
          */
+        /* eslint-disable custom-rules/await-playwright-promise-assertion */
         el.click();
         el.click();
         el.click();
+        /* eslint-enable custom-rules/await-playwright-promise-assertion */
       });
 
       const alerts = await page.$$('ion-alert');
 
       expect(alerts.length).toBe(1);
+    });
+  });
+
+  test.describe(title('select: click'), () => {
+    test('should trigger onclick only once when clicking the label', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30165',
+      });
+      // Create a spy function in page context
+      await page.setContent(
+        `
+        <ion-select aria-label="Fruit" interface="alert">
+          <ion-select-option value="apple">Apple</ion-select-option>
+          <ion-select-option value="banana">Banana</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+
+      // Track calls to the exposed function
+      const clickEvent = await page.spyOnEvent('click');
+      const input = page.locator('label.select-wrapper');
+
+      // Use position to make sure we click into the label enough to trigger
+      // what would be the double click
+      await input.click({
+        position: {
+          x: 5,
+          y: 5,
+        },
+      });
+
+      // Verify the click was triggered exactly once
+      expect(clickEvent).toHaveReceivedEventTimes(1);
+
+      // Verify that the event target is the checkbox and not the item
+      const event = clickEvent.events[0];
+      expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-select');
     });
   });
 });
@@ -234,33 +333,51 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await select.evaluate((el: HTMLIonSelectElement) => (el.value = 'banana'));
       await expect(ionChange).not.toHaveReceivedEvent();
     });
+  });
+});
 
-    test('clicking padded space within item should click the select', async ({ page }) => {
+/**
+ * focus has a consistent behavior across modes
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('select: focus'), () => {
+    test('should have the focus class when tabbing', async ({ page, pageUtils }) => {
       await page.setContent(
         `
-        <ion-item>
-          <ion-select label="Fruit" interface="action-sheet">
-            <ion-select-option value="apple">Apple</ion-select-option>
-            <ion-select-option value="banana">Banana</ion-select-option>
-          </ion-select>
-        </ion-item>
+        <ion-select aria-label="Fruit" interface="alert">
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
       `,
         config
       );
-      const itemNative = page.locator('.item-native');
-      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
 
-      // Clicks the padded space within the item
-      await itemNative.click({
-        position: {
-          x: 5,
-          y: 5,
-        },
-      });
+      const select = page.locator('ion-select');
 
-      await ionActionSheetDidPresent.next();
+      await pageUtils.pressKeys('Tab');
+      await expect(select).toHaveClass(/has-focus/);
+    });
 
-      expect(ionActionSheetDidPresent).toHaveReceivedEvent();
+    test('should have the focus class after clicking to close', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-select aria-label="Fruit" interface="alert">
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const select = page.locator('ion-select');
+      const alert = page.locator('ion-alert');
+      const confirmButton = alert.locator('.alert-button:not(.alert-button-role-cancel)');
+
+      await select.click();
+      await ionAlertDidPresent.next();
+
+      await confirmButton.click();
+
+      await expect(select).toHaveClass(/has-focus/);
     });
   });
 });

@@ -15,7 +15,7 @@ runs:
   steps:
     - uses: actions/setup-node@v4
       with:
-        node-version: 18.x
+        node-version: 22.x
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
@@ -49,7 +49,7 @@ runs:
       # which is why we not using the upload-archive
       # composite step here.
       run: |
-        npm run test.e2e.docker.ci ${{ inputs.component }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
+        npm run test.e2e.docker.ci ${{ inputs.component }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots='changed'
         git add src/\*.png --force
         mkdir updated-screenshots
         cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots

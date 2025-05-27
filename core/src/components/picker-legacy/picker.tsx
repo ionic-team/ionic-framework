@@ -199,12 +199,14 @@ export class Picker implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
-    setOverlayId(this.el);
+    if (!this.htmlAttributes?.id) {
+      setOverlayId(this.el);
+    }
   }
 
   componentDidLoad() {
     printIonWarning(
-      'ion-picker-legacy and ion-picker-legacy-column have been deprecated in favor of new versions of the ion-picker and ion-picker-column components. These new components display inline with your page content allowing for more presentation flexibility than before.',
+      '[ion-picker-legacy] - ion-picker-legacy and ion-picker-legacy-column have been deprecated in favor of new versions of the ion-picker and ion-picker-column components. These new components display inline with your page content allowing for more presentation flexibility than before.',
       this.el
     );
 
@@ -373,7 +375,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
       >
         <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}></ion-backdrop>
 
-        <div tabindex="0"></div>
+        <div tabindex="0" aria-hidden="true"></div>
 
         <div class="picker-wrapper ion-overlay-wrapper" role="dialog">
           <div class="picker-toolbar">
@@ -393,7 +395,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
           </div>
         </div>
 
-        <div tabindex="0"></div>
+        <div tabindex="0" aria-hidden="true"></div>
       </Host>
     );
   }

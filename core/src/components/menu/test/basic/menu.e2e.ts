@@ -1,7 +1,7 @@
 import type { Locator } from '@playwright/test';
 import { expect } from '@playwright/test';
 import type { E2EPage, ScreenshotFn } from '@utils/test/playwright';
-import { configs, test } from '@utils/test/playwright';
+import { configs, dragElementBy, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, config, screenshot }) => {
   test.describe(title('menu: rendering'), () => {
@@ -136,6 +136,97 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         await el.close();
       });
       await ionDidClose.next();
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across modes/directions
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('menu: events'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto(`/src/components/menu/test/basic`, config);
+    });
+
+    test('should pass role when swiping to close', async ({ page }) => {
+      const ionDidOpen = await page.spyOnEvent('ionDidOpen');
+      const ionWillClose = await page.spyOnEvent('ionWillClose');
+      const ionDidClose = await page.spyOnEvent('ionDidClose');
+
+      await page.click('#open-start');
+      await ionDidOpen.next();
+
+      const menu = page.locator('#start-menu');
+      await dragElementBy(menu, page, -150, 0);
+
+      await ionWillClose.next();
+      await ionDidClose.next();
+      await expect(ionWillClose).toHaveReceivedEventDetail({ role: 'gesture' });
+      await expect(ionDidClose).toHaveReceivedEventDetail({ role: 'gesture' });
+    });
+
+    test('should pass role when clicking backdrop to close', async ({ page }) => {
+      const ionDidOpen = await page.spyOnEvent('ionDidOpen');
+      const ionWillClose = await page.spyOnEvent('ionWillClose');
+      const ionDidClose = await page.spyOnEvent('ionDidClose');
+
+      await page.click('#open-start');
+      await ionDidOpen.next();
+
+      const menu = page.locator('#start-menu');
+      const backdrop = menu.locator('ion-backdrop');
+
+      /**
+       * Coordinates for the click event.
+       * These need to be near the right edge of the backdrop
+       * in order to avoid clicking on the menu.
+       */
+      const backdropBoundingBox = await backdrop.boundingBox();
+      const x = backdropBoundingBox!.width - 50;
+      const y = backdropBoundingBox!.height - 50;
+
+      // Click near the right side of the backdrop.
+      await backdrop.click({
+        position: { x, y },
+      });
+
+      await ionWillClose.next();
+      await ionDidClose.next();
+      await expect(ionWillClose).toHaveReceivedEventDetail({ role: 'backdrop' });
+      await expect(ionDidClose).toHaveReceivedEventDetail({ role: 'backdrop' });
+    });
+
+    test('should pass role when pressing escape key to close', async ({ page }) => {
+      const ionDidOpen = await page.spyOnEvent('ionDidOpen');
+      const ionWillClose = await page.spyOnEvent('ionWillClose');
+      const ionDidClose = await page.spyOnEvent('ionDidClose');
+
+      await page.click('#open-start');
+      await ionDidOpen.next();
+
+      await page.keyboard.press('Escape');
+
+      await ionWillClose.next();
+      await ionDidClose.next();
+      await expect(ionWillClose).toHaveReceivedEventDetail({ role: 'backdrop' });
+      await expect(ionDidClose).toHaveReceivedEventDetail({ role: 'backdrop' });
+    });
+
+    test('should not pass role when clicking a menu toggle button to close', async ({ page }) => {
+      const ionDidOpen = await page.spyOnEvent('ionDidOpen');
+      const ionWillClose = await page.spyOnEvent('ionWillClose');
+      const ionDidClose = await page.spyOnEvent('ionDidClose');
+
+      await page.click('#open-start');
+      await ionDidOpen.next();
+
+      await page.click('#start-menu-button');
+
+      await ionWillClose.next();
+      await ionDidClose.next();
+      await expect(ionWillClose).toHaveReceivedEventDetail({ role: undefined });
+      await expect(ionDidClose).toHaveReceivedEventDetail({ role: undefined });
     });
   });
 });

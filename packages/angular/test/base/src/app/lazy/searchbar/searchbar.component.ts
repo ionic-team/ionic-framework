@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-searchbar',
   templateUrl: 'searchbar.component.html',
+  standalone: false
 })
 export class SearchbarComponent {
 

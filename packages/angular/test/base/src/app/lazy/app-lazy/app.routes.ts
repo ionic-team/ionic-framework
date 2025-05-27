@@ -18,6 +18,7 @@ import { NavigationPage2Component } from '../navigation-page2/navigation-page2.c
 import { NavigationPage3Component } from '../navigation-page3/navigation-page3.component';
 import { AlertComponent } from '../alert/alert.component';
 import { AccordionComponent } from '../accordion/accordion.component';
+import { TabsBasicComponent } from '../tabs-basic/tabs-basic.component';
 
 export const routes: Routes = [
   {
@@ -65,6 +66,7 @@ export const routes: Routes = [
         path: 'tabs-slots',
         loadComponent: () => import('../tabs-slots.component').then(c => c.TabsSlotsComponent)
       },
+      { path: 'tabs-basic', component: TabsBasicComponent },
       {
         path: 'nested-outlet',
         component: NestedOutletComponent,

@@ -5,6 +5,7 @@ import { NavController } from '@ionic/angular';
 @Component({
   selector: 'app-navigation-page2',
   templateUrl: './navigation-page2.component.html',
+  standalone: false
 })
 export class NavigationPage2Component {
   constructor(

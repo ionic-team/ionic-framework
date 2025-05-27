@@ -4,6 +4,7 @@ import { NavController } from '@ionic/angular';
 @Component({
   selector: 'app-tabs-tab1',
   templateUrl: './tabs-tab1.component.html',
+  standalone: false
 })
 export class TabsTab1Component {
   title = 'ERROR';

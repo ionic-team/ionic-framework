@@ -72,7 +72,7 @@ input {
  */
 :host([slot="start"]),
 :host([slot="end"]) {
-  // Reset the flex property when the checkbox
+  // Reset the flex property when the radio
   // is slotted to avoid growing the element larger
   // than its content.
   flex: initial;
@@ -90,6 +90,7 @@ input {
   flex-grow: 1;
 
   align-items: center;
+  justify-content: space-between;
 
   height: inherit;
 
@@ -163,6 +164,20 @@ input {
 
 :host(.radio-alignment-center) .radio-wrapper {
   align-items: center;
+}
+
+// Justify Content & Align Items
+// ---------------------------------------------
+
+// The radio should be displayed as block when either justify
+// or alignment is set; otherwise, these properties will have no
+// visible effect.
+:host(.radio-justify-space-between),
+:host(.radio-justify-start),
+:host(.radio-justify-end),
+:host(.radio-alignment-start),
+:host(.radio-alignment-center) {
+  display: block;
 }
 
 // Radio Label Placement - Start

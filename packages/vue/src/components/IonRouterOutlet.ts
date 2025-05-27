@@ -44,7 +44,7 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
     let previousMatchedRouteRef: Ref | undefined;
     let previousMatchedPath: string | undefined;
 
-    provide(viewDepthKey, depth + 1);
+    provide(viewDepthKey, (depth + 1) as 0);
     provide(matchedRouteKey, matchedRouteRef);
 
     const ionRouterOutlet = ref();

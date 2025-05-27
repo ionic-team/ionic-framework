@@ -3,6 +3,267 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.5.7](https://github.com/ionic-team/ionic-framework/compare/v8.5.6...v8.5.7) (2025-05-07)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.5.6](https://github.com/ionic-team/ionic-framework/compare/v8.5.5...v8.5.6) (2025-04-30)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.5.5](https://github.com/ionic-team/ionic-framework/compare/v8.5.4...v8.5.5) (2025-04-16)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.5.4](https://github.com/ionic-team/ionic-framework/compare/v8.5.3...v8.5.4) (2025-04-09)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.5.3](https://github.com/ionic-team/ionic-framework/compare/v8.5.2...v8.5.3) (2025-04-02)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.5.2](https://github.com/ionic-team/ionic-framework/compare/v8.5.1...v8.5.2) (2025-03-26)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.5.1](https://github.com/ionic-team/ionic-framework/compare/v8.5.0...v8.5.1) (2025-03-19)
+
+
+### Bug Fixes
+
+* **vue:** update output target and fix incorrect types ([#30259](https://github.com/ionic-team/ionic-framework/issues/30259)) ([f4186c6](https://github.com/ionic-team/ionic-framework/commit/f4186c6761c46bf386f8effecf90d88831c34726)), closes [#30254](https://github.com/ionic-team/ionic-framework/issues/30254)
+
+
+
+
+
+## [8.4.6](https://github.com/ionic-team/ionic-framework/compare/v8.4.5...v8.4.6) (2025-03-19)
+
+
+### Bug Fixes
+
+* **vue:** update output target and fix incorrect types ([#30259](https://github.com/ionic-team/ionic-framework/issues/30259)) ([0eaee78](https://github.com/ionic-team/ionic-framework/commit/0eaee78fe1cae8f8a6cb04a01abad8c05dec0723)), closes [#30254](https://github.com/ionic-team/ionic-framework/issues/30254)
+
+
+
+
+
+# [8.5.0](https://github.com/ionic-team/ionic-framework/compare/v8.4.5...v8.5.0) (2025-03-13)
+
+
+### Features
+
+* **checkbox:** add helperText and errorText properties ([#30140](https://github.com/ionic-team/ionic-framework/issues/30140)) ([99d2f1c](https://github.com/ionic-team/ionic-framework/commit/99d2f1c7503c204d0f3d3e5c11cfdd98d1bb3c4d)), closes [#29810](https://github.com/ionic-team/ionic-framework/issues/29810)
+* **checkbox:** add required prop ([#30157](https://github.com/ionic-team/ionic-framework/issues/30157)) ([41da4c3](https://github.com/ionic-team/ionic-framework/commit/41da4c3565421ccc1ddd792f883d010ba4dd618e))
+* **modal:** add expandToScroll property to allow scrolling at all breakpoints ([#30097](https://github.com/ionic-team/ionic-framework/issues/30097)) ([166e435](https://github.com/ionic-team/ionic-framework/commit/166e43554e832ff550ce6ad3505a95979b4e7138)), closes [#24631](https://github.com/ionic-team/ionic-framework/issues/24631)
+* **radio-group:** add helperText and errorText properties ([#30222](https://github.com/ionic-team/ionic-framework/issues/30222)) ([18e26ac](https://github.com/ionic-team/ionic-framework/commit/18e26acb0132234d13355d62d288e920edd11a88))
+* **select:** add helperText and errorText properties  ([#30143](https://github.com/ionic-team/ionic-framework/issues/30143)) ([bbdaec0](https://github.com/ionic-team/ionic-framework/commit/bbdaec0cc192310d86dc2bd79577991337966224)), closes [#29205](https://github.com/ionic-team/ionic-framework/issues/29205)
+* **select:** add required prop ([#30155](https://github.com/ionic-team/ionic-framework/issues/30155)) ([0b54983](https://github.com/ionic-team/ionic-framework/commit/0b549835b6b96fe9b3b312dc107ed972d0ea3d32))
+* **toggle:** add helperText and errorText properties ([#30161](https://github.com/ionic-team/ionic-framework/issues/30161)) ([94ca2e5](https://github.com/ionic-team/ionic-framework/commit/94ca2e54cbbe727e58472dd6402beb4381559c9f))
+* **toggle:** add required prop ([#30156](https://github.com/ionic-team/ionic-framework/issues/30156)) ([0bbb9f3](https://github.com/ionic-team/ionic-framework/commit/0bbb9f37b4f1f145be63765f1643dc4ac3c3b872))
+
+
+
+
+
+## [8.4.5](https://github.com/ionic-team/ionic-framework/compare/v8.4.4...v8.4.5) (2025-03-13)
+
+
+### Bug Fixes
+
+* **vue:** pin Vue output target to latest release ([#30248](https://github.com/ionic-team/ionic-framework/issues/30248)) ([3799d45](https://github.com/ionic-team/ionic-framework/commit/3799d456d9461faac9a5e2c44f187329f113b3db)), closes [#30221](https://github.com/ionic-team/ionic-framework/issues/30221)
+
+
+
+
+
+## [8.4.4](https://github.com/ionic-team/ionic-framework/compare/v8.4.3...v8.4.4) (2025-03-13)
+
+
+### Bug Fixes
+
+* **vue:** update output target and properly emit events ([#30227](https://github.com/ionic-team/ionic-framework/issues/30227)) ([11554a5](https://github.com/ionic-team/ionic-framework/commit/11554a5d3590c660dbf609931dcb63cc2daf79cb)), closes [#30206](https://github.com/ionic-team/ionic-framework/issues/30206) [#30178](https://github.com/ionic-team/ionic-framework/issues/30178) [#30177](https://github.com/ionic-team/ionic-framework/issues/30177) [#30170](https://github.com/ionic-team/ionic-framework/issues/30170)
+* **vue:** update output target and resolve type issues ([#30239](https://github.com/ionic-team/ionic-framework/issues/30239)) ([6dcb143](https://github.com/ionic-team/ionic-framework/commit/6dcb143307682793ac4fd46d03efa5868a49e87d)), closes [#30179](https://github.com/ionic-team/ionic-framework/issues/30179)
+
+
+
+
+
+## [8.4.3](https://github.com/ionic-team/ionic-framework/compare/v8.4.2...v8.4.3) (2025-01-29)
+
+
+### Bug Fixes
+
+* **vue:** update Stencil Vue output target ([#30159](https://github.com/ionic-team/ionic-framework/issues/30159)) ([eb725fc](https://github.com/ionic-team/ionic-framework/commit/eb725fce6eb15facd8a1c21be11a1b2d46336479))
+
+
+
+
+
+## [8.4.2](https://github.com/ionic-team/ionic-framework/compare/v8.4.1...v8.4.2) (2025-01-22)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.4.1](https://github.com/ionic-team/ionic-framework/compare/v8.4.0...v8.4.1) (2024-11-27)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+# [8.4.0](https://github.com/ionic-team/ionic-framework/compare/v8.3.4...v8.4.0) (2024-11-04)
+
+
+### Features
+
+* **segment-view:** adds support for new `ion-segment-view` component ([#29969](https://github.com/ionic-team/ionic-framework/issues/29969)) ([89508fb](https://github.com/ionic-team/ionic-framework/commit/89508fb89172900b1d11cc3fc18883f57a7fbab6))
+* **select:** add `modal` as interface ([#29972](https://github.com/ionic-team/ionic-framework/issues/29972)) ([3628ea8](https://github.com/ionic-team/ionic-framework/commit/3628ea875a66a717783de5e0a4df440872339040))
+
+
+
+
+
+## [8.3.4](https://github.com/ionic-team/ionic-framework/compare/v8.3.3...v8.3.4) (2024-10-30)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.3.3](https://github.com/ionic-team/ionic-framework/compare/v8.3.2...v8.3.3) (2024-10-16)
+
+
+### Bug Fixes
+
+* **tabs, tab-bar:** use standalone tab bar in Vue, React ([#29940](https://github.com/ionic-team/ionic-framework/issues/29940)) ([b7b383b](https://github.com/ionic-team/ionic-framework/commit/b7b383bee080b72de2e6307ff9a9a051314c69ed)), closes [#29885](https://github.com/ionic-team/ionic-framework/issues/29885) [#29924](https://github.com/ionic-team/ionic-framework/issues/29924)
+
+
+
+
+
+## [8.3.2](https://github.com/ionic-team/ionic-framework/compare/v8.3.1...v8.3.2) (2024-10-02)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.3.1](https://github.com/ionic-team/ionic-framework/compare/v8.3.0...v8.3.1) (2024-09-17)
+
+
+### Bug Fixes
+
+* **react, vue:** add default value for navManager on tabs ([#29865](https://github.com/ionic-team/ionic-framework/issues/29865)) ([df39cea](https://github.com/ionic-team/ionic-framework/commit/df39ceac6db6511518aed4766e6a59aa24fb53ec))
+
+
+
+
+
+# [8.3.0](https://github.com/ionic-team/ionic-framework/compare/v8.2.8...v8.3.0) (2024-09-05)
+
+
+### Features
+
+* **react, vue, angular:** use tabs without router ([#29794](https://github.com/ionic-team/ionic-framework/issues/29794)) ([867066b](https://github.com/ionic-team/ionic-framework/commit/867066b4eba369de025f3c7c8ef33e7089cdf3bc)), closes [#25184](https://github.com/ionic-team/ionic-framework/issues/25184)
+
+
+
+
+
+## [8.2.8](https://github.com/ionic-team/ionic-framework/compare/v8.2.7...v8.2.8) (2024-09-05)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.2.7](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.7) (2024-08-13)
+
+
+### Bug Fixes
+
+* **vue:** pass router-link value to href to properly render clickable elements ([#29745](https://github.com/ionic-team/ionic-framework/issues/29745)) ([ab4f279](https://github.com/ionic-team/ionic-framework/commit/ab4f2791c1968adbb1d858c5f009fa251bb9101b))
+
+
+
+
+
+## [8.2.6](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.6) (2024-07-24)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.2.5](https://github.com/ionic-team/ionic-framework/compare/v8.2.4...v8.2.5) (2024-07-03)
+
+
+### Bug Fixes
+
+* **vue:** add optional IonicConfig type parameter to IonicVue plugin ([#29637](https://github.com/ionic-team/ionic-framework/issues/29637)) ([90893f4](https://github.com/ionic-team/ionic-framework/commit/90893f46c930dbccd4251fa2f56bdde30b669158)), closes [#29659](https://github.com/ionic-team/ionic-framework/issues/29659)
+
+
+
+
+
+## [8.2.4](https://github.com/ionic-team/ionic-framework/compare/v8.2.2...v8.2.4) (2024-06-28)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## 8.2.3
+
+This version should be skipped. Install 8.2.4 instead.
+
+
+
+
+
+## [8.2.2](https://github.com/ionic-team/ionic-framework/compare/v8.2.1...v8.2.2) (2024-06-12)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
 ## [8.2.1](https://github.com/ionic-team/ionic-framework/compare/v8.2.0...v8.2.1) (2024-06-05)
 
 **Note:** Version bump only for package @ionic/vue

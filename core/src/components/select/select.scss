@@ -88,7 +88,7 @@
   pointer-events: none;
 }
 
-:host(.ion-focused) button {
+:host(.has-focus) button {
   border: 2px solid #5e9ed6;
 }
 
@@ -100,7 +100,7 @@
  */
 :host([slot="start"]),
 :host([slot="end"]) {
-  // Reset the flex property when the checkbox
+  // Reset the flex property when the select
   // is slotted to avoid growing the element larger
   // than its content.
   flex: initial;
@@ -203,6 +203,7 @@ button {
   flex-grow: 1;
 
   align-items: center;
+  justify-content: space-between;
 
   height: inherit;
 
@@ -272,6 +273,73 @@ button {
  */
 :host(.ion-valid) {
   --highlight-color: var(--highlight-color-valid);
+}
+
+// Select Bottom Content
+// ----------------------------------------------------------------
+
+.select-bottom {
+  /**
+   * The bottom content should take on the start and end
+   * padding so it is always aligned with either the label
+   * or the start of the text select.
+   */
+  @include padding(5px, var(--padding-end), 0, var(--padding-start));
+
+  display: flex;
+
+  justify-content: space-between;
+
+  border-top: var(--border-width) var(--border-style) var(--border-color);
+
+  font-size: dynamic-font(12px);
+
+  white-space: normal;
+}
+
+/**
+ * If the select has a validity state, the
+ * border and label should reflect that as a color.
+ * The invalid state should show if the select is
+ * invalid and has already been touched.
+ * The valid state should show if the select
+ * is valid, has already been touched, and
+ * is currently focused. Do not show the valid
+ * highlight when the select is blurred.
+ */
+:host(.has-focus.ion-valid),
+:host(.select-expanded.ion-valid),
+:host(.ion-touched.ion-invalid),
+:host(.select-expanded.ion-touched.ion-invalid) {
+  --border-color: var(--highlight-color);
+}
+
+// Select Hint Text
+// ----------------------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is
+ * present on the select. Otherwise the helper text should
+ * be shown.
+ */
+.select-bottom .error-text {
+  display: none;
+
+  color: var(--highlight-color-invalid);
+}
+
+.select-bottom .helper-text {
+  display: block;
+
+  color: $text-color-step-300;
+}
+
+:host(.ion-touched.ion-invalid) .select-bottom .error-text {
+  display: block;
+}
+
+:host(.ion-touched.ion-invalid) .select-bottom .helper-text {
+  display: none;
 }
 
 // Select Label
@@ -531,7 +599,7 @@ button {
  * :host(.label-floating.select-label-placement-floating) .native-wrapper .select-placeholder
  */
 :host(.select-expanded.select-label-placement-floating) .native-wrapper .select-placeholder,
-:host(.ion-focused.select-label-placement-floating) .native-wrapper .select-placeholder,
+:host(.has-focus.select-label-placement-floating) .native-wrapper .select-placeholder,
 :host(.has-value.select-label-placement-floating) .native-wrapper .select-placeholder {
   opacity: 1;
 }

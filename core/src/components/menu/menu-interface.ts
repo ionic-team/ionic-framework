@@ -22,7 +22,7 @@ export interface MenuI {
   close(animated?: boolean): Promise<boolean>;
   toggle(animated?: boolean): Promise<boolean>;
   setOpen(shouldOpen: boolean, animated?: boolean): Promise<boolean>;
-  _setOpen(shouldOpen: boolean, animated?: boolean): Promise<boolean>;
+  _setOpen(shouldOpen: boolean, animated?: boolean, role?: string): Promise<boolean>;
 }
 
 export interface MenuControllerI {
@@ -42,12 +42,16 @@ export interface MenuControllerI {
   _createAnimation(type: string, menuCmp: MenuI): Promise<Animation>;
   _register(menu: MenuI): void;
   _unregister(menu: MenuI): void;
-  _setOpen(menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean>;
+  _setOpen(menu: MenuI, shouldOpen: boolean, animated: boolean, role?: string): Promise<boolean>;
 }
 
 export interface MenuChangeEventDetail {
   disabled: boolean;
   open: boolean;
+}
+
+export interface MenuCloseEventDetail {
+  role?: string;
 }
 
 export interface MenuCustomEvent<T = any> extends CustomEvent {

@@ -6,6 +6,7 @@ export const routes: Routes = [
     path: '',
     component: AppComponent,
     children: [
+      { path: '', loadComponent: () => import('../home-page/home-page.component').then(c => c.HomePageComponent) },
       { path: 'menu-controller', loadComponent: () => import('../menu-controller/menu-controller.component').then(c => c.MenuControllerComponent) },
       { path: 'action-sheet-controller', loadComponent: () => import('../action-sheet-controller/action-sheet-controller.component').then(c => c.ActionSheetControllerComponent) },
       { path: 'popover', loadComponent: () => import('../popover/popover.component').then(c => c.PopoverComponent) },
@@ -18,6 +19,14 @@ export const routes: Routes = [
       { path: 'overlay-controllers', loadComponent: () => import('../overlay-controllers/overlay-controllers.component').then(c => c.OverlayControllersComponent) },
       { path: 'button', loadComponent: () => import('../button/button.component').then(c => c.ButtonComponent) },
       { path: 'icon', loadComponent: () => import('../icon/icon.component').then(c => c.IconComponent) },
+      { path: 'split-pane', redirectTo: '/standalone/split-pane/inbox', pathMatch: 'full' },
+      {
+        path: 'split-pane',
+        loadComponent: () => import('../split-pane/split-pane.component').then(c => c.SplitPaneComponent),
+        children: [
+          { path: ':id', loadComponent: () => import('../split-pane/split-pane-page.component').then(c => c.SplitPanePageComponent) },
+        ]
+      },
       { path: 'tabs', redirectTo: '/standalone/tabs/tab-one', pathMatch: 'full' },
       {
         path: 'tabs',
@@ -28,6 +37,7 @@ export const routes: Routes = [
           { path: 'tab-three', loadComponent: () => import('../tabs/tab3.component').then(c => c.TabThreeComponent) }
         ]
       },
+      { path: 'tabs-basic', loadComponent: () => import('../tabs-basic/tabs-basic.component').then(c => c.TabsBasicComponent) },
       {
         path: 'value-accessors',
         children: [

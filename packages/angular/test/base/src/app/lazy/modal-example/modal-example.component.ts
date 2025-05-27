@@ -3,8 +3,9 @@ import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ModalController, IonNav, ViewWillLeave, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 
 @Component({
-  selector: 'app-modal-example',
-  templateUrl: './modal-example.component.html',
+    selector: 'app-modal-example',
+    templateUrl: './modal-example.component.html',
+    standalone: false
 })
 export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnter, ViewWillLeave, ViewDidLeave {
 

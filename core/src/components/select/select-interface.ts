@@ -1,4 +1,4 @@
-export type SelectInterface = 'action-sheet' | 'popover' | 'alert';
+export type SelectInterface = 'action-sheet' | 'popover' | 'alert' | 'modal';
 
 export type SelectCompareFn = (currentValue: any, compareValue: any) => boolean;
 

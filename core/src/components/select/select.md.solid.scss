@@ -27,11 +27,16 @@
  * If the select has a validity state, the
  * border should reflect that as a color.
  */
+:host(.select-expanded.select-fill-solid.ion-valid),
 :host(.has-focus.select-fill-solid.ion-valid),
 :host(.select-fill-solid.ion-touched.ion-invalid) {
   --border-color: var(--highlight-color);
 }
 
+/**
+ * The bottom content should never have
+ * a border with the solid style.
+ */
 :host(.select-fill-solid) .select-bottom {
   border-top: none;
 }
@@ -52,9 +57,9 @@
  * much darker on focus.
  */
 :host(.select-fill-solid.select-expanded),
-:host(.select-fill-solid.ion-focused) {
+:host(.select-fill-solid.has-focus) {
   --background: #{$background-color-step-150};
-  --border-color: #{$background-color-step-750};
+  --border-color: var(--highlight-color);
 }
 
 :host(.select-fill-solid) .select-wrapper {
@@ -74,4 +79,19 @@
    * beyond the bounds of the select.
    */
   max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+// Select Icon
+// ----------------------------------------------------------------
+
+/**
+ * When the select has a solid fill and
+ * in an item, then the icon should
+ * take on the highlight color.
+ */
+:host(.in-item.select-expanded.select-fill-solid) .select-wrapper .select-icon,
+:host(.in-item.has-focus.select-fill-solid) .select-wrapper .select-icon,
+:host(.in-item.has-focus.ion-valid.select-fill-solid) .select-wrapper .select-icon,
+:host(.in-item.ion-touched.ion-invalid.select-fill-solid) .select-wrapper .select-icon {
+  color: var(--highlight-color);
 }

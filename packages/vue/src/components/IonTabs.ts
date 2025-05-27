@@ -1,10 +1,26 @@
+import { defineCustomElement } from "@ionic/core/components/ion-tabs.js";
 import type { VNode } from "vue";
-import { h, defineComponent } from "vue";
+import {
+  h,
+  defineComponent,
+  Fragment,
+  isVNode,
+  provide,
+  shallowRef,
+} from "vue";
+
+import { IonTab } from "../proxies";
 
 const WILL_CHANGE = "ionTabsWillChange";
 const DID_CHANGE = "ionTabsDidChange";
 
 // TODO(FW-2969): types
+
+interface TabBarData {
+  hasRouterOutlet: boolean;
+  _tabsWillChange: Function;
+  _tabsDidChange: Function;
+}
 
 /**
  * Vue 3.2.38 fixed an issue where Web Component
@@ -21,95 +37,135 @@ const isRouterOutlet = (node: VNode) => {
   );
 };
 
-const isTabBar = (node: VNode) => {
+const isTab = (node: VNode): boolean => {
+  // The `ion-tab` component was created with the `v-for` directive.
+  if (node.type === Fragment) {
+    if (Array.isArray(node.children)) {
+      return node.children.some((child) => isVNode(child) && isTab(child));
+    }
+
+    return false; // In case the fragment has no children.
+  }
+
   return (
-    node.type &&
-    ((node.type as any).name === "IonTabBar" || node.type === "ion-tab-bar")
+    node.type && ((node.type as any).name === "ion-tab" || node.type === IonTab)
   );
 };
 
 export const IonTabs = /*@__PURE__*/ defineComponent({
   name: "IonTabs",
   emits: [WILL_CHANGE, DID_CHANGE],
-  render() {
-    const { $slots: slots, $emit } = this;
-    const slottedContent = slots.default && slots.default();
-    let routerOutlet;
+  data() {
+    return {
+      hasRouterOutlet: false,
+    };
+  },
+  setup(props, { slots, emit }) {
+    const slottedContent: VNode[] | undefined =
+      slots.default && slots.default();
+    let routerOutlet: VNode | undefined = undefined;
 
-    /**
-     * Developers must pass an ion-router-outlet
-     * inside of ion-tabs.
-     */
     if (slottedContent && slottedContent.length > 0) {
+      /**
+       * Developers must pass an ion-router-outlet
+       * inside of ion-tabs if they want to use
+       * the history stack or URL updates associated
+       * with the router.
+       */
       routerOutlet = slottedContent.find((child: VNode) =>
         isRouterOutlet(child)
       );
     }
 
-    if (!routerOutlet) {
-      throw new Error(
-        "IonTabs must contain an IonRouterOutlet. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information."
-      );
-    }
-
-    let childrenToRender = [
-      h(
-        "div",
-        {
-          class: "tabs-inner",
-          style: {
-            position: "relative",
-            flex: "1",
-            contain: "layout size style",
-          },
-        },
-        routerOutlet
-      ),
-    ];
-
     /**
-     * If ion-tab-bar has slot="top" it needs to be
-     * rendered before `.tabs-inner` otherwise it will
-     * not show above the tab content.
+     * Tab bar can be used as a standalone component,
+     * so it cannot be modified directly through
+     * IonTabs. Instead, data will be passed through
+     * the provide/inject.
      */
+    provide(
+      "tabBarData",
+      shallowRef<TabBarData>({
+        hasRouterOutlet: !!routerOutlet,
+        _tabsWillChange: (tab: string) => emit(WILL_CHANGE, { tab }),
+        _tabsDidChange: (tab: string) => emit(DID_CHANGE, { tab }),
+      })
+    );
+
+    return {
+      props,
+      slots,
+      emit,
+    };
+  },
+  mounted() {
+    /**
+     * `defineCustomElement` must be called in the `mounted` hook
+     * to ensure that the custom element is defined after the
+     * component has been fully rendered and initialized.
+     * This prevents issues with undefined properties, like
+     * `selectedTab` from core, which may occur if the custom
+     * element is defined too early in the component's lifecycle.
+     */
+    defineCustomElement();
+  },
+  render() {
+    const { slots, props } = this;
+    const slottedContent: VNode[] | undefined =
+      slots.default && slots.default();
+    let routerOutlet: VNode | undefined = undefined;
+    let hasTab = false;
+
     if (slottedContent && slottedContent.length > 0) {
       /**
-       * Render all content except for router outlet
-       * since that needs to be inside of `.tabs-inner`.
+       * Developers must pass an ion-router-outlet
+       * inside of ion-tabs if they want to use
+       * the history stack or URL updates associated
+       * with the router.
        */
-      const filteredContent = slottedContent.filter(
-        (child: VNode) => !child.type || !isRouterOutlet(child)
+      routerOutlet = slottedContent.find((child: VNode) =>
+        isRouterOutlet(child)
       );
 
-      const slottedTabBar = filteredContent.find((child: VNode) =>
-        isTabBar(child)
-      );
-      const hasTopSlotTabBar =
-        slottedTabBar && slottedTabBar.props?.slot === "top";
-
-      if (slottedTabBar) {
-        if (!slottedTabBar.props) {
-          slottedTabBar.props = {};
-        }
-        /**
-         * ionTabsWillChange and ionTabsDidChange are
-         * fired from `ion-tabs`, so we need to pass these down
-         * as props so they can fire when the active tab changes.
-         * TODO: We may want to move logic from the tab bar into here
-         * so we do not have code split across two components.
-         */
-        slottedTabBar.props._tabsWillChange = (tab: string) =>
-          $emit(WILL_CHANGE, { tab });
-        slottedTabBar.props._tabsDidChange = (tab: string) =>
-          $emit(DID_CHANGE, { tab });
-      }
-
-      if (hasTopSlotTabBar) {
-        childrenToRender = [...filteredContent, ...childrenToRender];
-      } else {
-        childrenToRender = [...childrenToRender, ...filteredContent];
-      }
+      /**
+       * Developers must pass at least one ion-tab
+       * inside of ion-tabs if they want to use a
+       * basic tab-based navigation without the
+       * history stack or URL updates associated
+       * with the router.
+       */
+      hasTab = slottedContent.some((child: VNode) => isTab(child));
     }
+
+    if (!routerOutlet && !hasTab) {
+      throw new Error("IonTabs must contain an IonRouterOutlet or an IonTab.");
+    }
+    if (routerOutlet && hasTab) {
+      throw new Error(
+        "IonTabs cannot contain an IonRouterOutlet and IonTab at the same time."
+      );
+    }
+
+    if (hasTab) {
+      return h(
+        "ion-tabs",
+        {
+          ...props,
+        },
+        slottedContent
+      );
+    }
+
+    /**
+     * TODO(ROU-11056)
+     *
+     * Vue handles the error case for when there is no
+     * associated page matching the tab `href`.
+     *
+     * More investigation is needed to determine if we
+     * override the error handling and provide our own
+     * error message.
+     */
 
     return h(
       "ion-tabs",
@@ -128,7 +184,7 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
           "z-index": "0",
         },
       },
-      childrenToRender
+      slottedContent
     );
   },
 });

@@ -16,31 +16,31 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-item button @click="setRouteParams" id="route-params">
+      <ion-item @click="setRouteParams" id="route-params">
         <ion-label>Set Route Parameters</ion-label>
       </ion-item>
 
-      <ion-item button router-link="/routing/child" id="child">
+      <ion-item router-link="/routing/child" id="child">
         <ion-label>Go to Child Page</ion-label>
       </ion-item>
 
-      <ion-item button router-link="/routing/abc" id="parameter-abc">
+      <ion-item router-link="/routing/abc" id="parameter-abc">
         <ion-label>Go to Parameter Page ABC</ion-label>
       </ion-item>
 
-      <ion-item button router-link="/routing/xyz" id="parameter-xyz">
+      <ion-item router-link="/routing/xyz" id="parameter-xyz">
         <ion-label>Go to Parameter Page XYZ</ion-label>
       </ion-item>
 
-      <ion-item button router-link="/routing/123/view" id="parameter-view-item">
+      <ion-item router-link="/routing/123/view" id="parameter-view-item">
         <ion-label>Go to Parameterized Page View</ion-label>
       </ion-item>
 
-      <ion-item button @click="replace" id="replace">
+      <ion-item @click="replace" id="replace">
         <ion-label>Replace to Navigation page</ion-label>
       </ion-item>
 
-      <ion-item button router-link="/tabs/tab1" id="tab1">
+      <ion-item router-link="/tabs/tab1" id="tab1">
         <ion-label>Go to /tabs/tab1</ion-label>
       </ion-item>
     </ion-content>

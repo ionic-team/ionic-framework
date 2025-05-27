@@ -310,7 +310,9 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
-    setOverlayId(this.el);
+    if (!this.htmlAttributes?.id) {
+      setOverlayId(this.el);
+    }
   }
 
   componentDidLoad() {
@@ -383,7 +385,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
       >
         <ion-backdrop tappable={this.backdropDismiss} />
 
-        <div tabindex="0"></div>
+        <div tabindex="0" aria-hidden="true"></div>
 
         <div class="action-sheet-wrapper ion-overlay-wrapper" ref={(el) => (this.wrapperEl = el)}>
           <div class="action-sheet-container">
@@ -444,7 +446,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
           </div>
         </div>
 
-        <div tabindex="0"></div>
+        <div tabindex="0" aria-hidden="true"></div>
       </Host>
     );
   }
