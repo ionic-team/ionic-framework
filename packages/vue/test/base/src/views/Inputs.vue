@@ -42,7 +42,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-input-otp :value="inputOtp" @ion-input="e => inputOtp = e.detail.value"></ion-input-otp>
+        <ion-input-otp v-model="inputOtp"></ion-input-otp>
       </ion-item>
 
       <ion-item>
