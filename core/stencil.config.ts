@@ -54,6 +54,7 @@ const getAngularOutputTargets = () => {
          * Value Accessors are manually implemented in the `@ionic/angular/standalone` package.
          */
         'ion-input',
+        'ion-input-otp',
         'ion-textarea',
         'ion-searchbar',
         'ion-datetime',
