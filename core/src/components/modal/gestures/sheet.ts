@@ -138,12 +138,12 @@ export const createSheetGesture = (
     currentFooterState = newPosition;
     if (newPosition === 'stationary') {
       // Reset positioning styles to allow normal document flow
+      cachedFooterEl.classList.remove('modal-footer-moving');
       cachedFooterEl.style.removeProperty('position');
       cachedFooterEl.style.removeProperty('bottom');
       page?.style.removeProperty('padding-bottom');
 
       // Move to page
-      console.log('Moving footer to page');
       page?.appendChild(cachedFooterEl);
     } else {
       // Add padding to the parent element to prevent content from being hidden
@@ -154,6 +154,7 @@ export const createSheetGesture = (
       page?.style.setProperty('padding-bottom', `${footerHeight}px`);
 
       // Apply positioning styles to keep footer at bottom
+      cachedFooterEl.classList.add('modal-footer-moving');
       cachedFooterEl.style.setProperty('position', 'absolute');
       cachedFooterEl.style.setProperty('bottom', '0');
 
@@ -162,7 +163,6 @@ export const createSheetGesture = (
       // the position back so it will collapse correctly.
       cachedFooterYPosition = cachedFooterEl.getBoundingClientRect().top + window.scrollY;
 
-      console.log('Moving footer to body');
       document.body.appendChild(cachedFooterEl);
     }
   };
