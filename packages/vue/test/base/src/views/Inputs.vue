@@ -42,6 +42,10 @@
       </ion-item>
 
       <ion-item>
+        <ion-input-otp :value="inputOtp" @ion-input="e => inputOtp = e.detail.value"></ion-input-otp>
+      </ion-item>
+
+      <ion-item>
         <ion-range label="Range" :dual-knobs="true" :min="0" :max="100" slot="end" v-model="range"></ion-range>
       </ion-item>
 
@@ -77,6 +81,7 @@
         Checkbox: {{ checkbox }}<br>
         Toggle: {{ toggle }}<br>
         Input: <span id="input-ref">{{ input }}</span><br>
+        Input OTP: <span id="input-otp-ref">{{ inputOtp }}</span><br>
         Range: {{ range }}<br>
         Textarea: <span id="textarea-ref">{{ textarea }}</span><br>
         Searchbar: <span id="searchbar-ref">{{ searchbar }}</span><br>
@@ -104,6 +109,7 @@ import {
   IonDatetime,
   IonHeader,
   IonInput,
+  IonInputOtp,
   IonItem,
   IonLabel,
   IonPage,
@@ -132,6 +138,7 @@ export default defineComponent({
     IonDatetime,
     IonHeader,
     IonInput,
+    IonInputOtp,
     IonItem,
     IonLabel,
     IonPage,
@@ -152,6 +159,7 @@ export default defineComponent({
     const checkbox = ref(false);
     const toggle = ref(false);
     const input = ref('');
+    const inputOtp = ref('');
     const range = ref({
       lower: 30,
       upper: 70
@@ -167,6 +175,7 @@ export default defineComponent({
       checkbox.value = false;
       toggle.value = false;
       input.value = '';
+      inputOtp.value = '';
       range.value = {
         lower: 30,
         upper: 70
@@ -183,6 +192,7 @@ export default defineComponent({
       checkbox.value = true;
       toggle.value = true;
       input.value = 'Hello World';
+      inputOtp.value = '1234';
       range.value = {
         lower: 10,
         upper: 90
@@ -199,6 +209,7 @@ export default defineComponent({
       checkbox,
       toggle,
       input,
+      inputOtp,
       range,
       textarea,
       searchbar,
