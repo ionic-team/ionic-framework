@@ -14,10 +14,18 @@
   * [Switch](#switch)
   * [Accordion](#accordion)
 - [Rendering Anchor or Button](#rendering-anchor-or-button)
-  * [Example Components](#example-components-1)
+  * [Example Components](#example-components-4)
   * [Component Structure](#component-structure-1)
 - [Converting Scoped to Shadow](#converting-scoped-to-shadow)
 - [RTL](#rtl)
+- [Adding New Components with Native Input Support](#adding-new-components-with-native-input-support)
+  * [Angular Integration](#angular-integration)
+  * [Angular Tests](#angular-tests)
+  * [Vue Integration](#vue-integration)
+  * [Vue Tests](#vue-tests)
+  * [React Integration](#react-integration)
+  * [React Tests](#react-tests)
+  * [Interface Exports](#interface-exports)
 
 ## Button States
 
@@ -748,4 +756,166 @@ class={{
 :host(.my-cmp-rtl) {
   transform-origin: right center;
 }
+```
+
+## Adding New Components with Native Input Support
+
+When creating a new component that renders native input elements (such as `<input>` or `<textarea>`), there are several steps required to ensure proper form integration across all frameworks (Angular, React, and Vue).
+
+### Angular Integration
+
+#### Value Accessors
+
+For Angular integration, you should use one of the existing value accessors based on your component's needs. Choose the one that most closely matches your component's behavior:
+
+- For text input (handles string values): Use [`TextValueAccessorDirective`](/packages/angular/src/directives/control-value-accessors/text-value-accessor.ts) which handles `ion-input:not([type=number])`, `ion-input-otp[type=text]`, `ion-textarea`, and `ion-searchbar`
+- For numeric input (converts string to number): Use [`NumericValueAccessorDirective`](/packages/angular/src/directives/control-value-accessors/numeric-value-accessor.ts) which handles `ion-input[type=number]`, `ion-input-otp:not([type=text])`, and `ion-range`
+- For boolean input (handles true/false): Use [`BooleanValueAccessorDirective`](/packages/angular/src/directives/control-value-accessors/boolean-value-accessor.ts) which handles `ion-checkbox` and `ion-toggle`
+- For select-like input (handles option selection): Use [`SelectValueAccessorDirective`](/packages/angular/src/directives/control-value-accessors/select-value-accessor.ts) which handles `ion-select`, `ion-radio-group`, `ion-segment`, and `ion-datetime`
+
+These value accessors are already set up in the `@ionic/angular` package and handle all the necessary form integration. You don't need to create a new value accessor unless your component has unique requirements that aren't covered by these existing ones.
+
+For example, if your component renders a text input, it should be included in the `TextValueAccessorDirective` selector in [`text-value-accessor.ts`](/packages/angular/src/directives/control-value-accessors/text-value-accessor.ts):
+
+```diff
+@Directive({
+-  selector: 'ion-input:not([type=number]),ion-input-otp[type=text],ion-textarea,ion-searchbar,
++  selector: 'ion-input:not([type=number]),ion-input-otp[type=text],ion-textarea,ion-searchbar,ion-new-component',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: TextValueAccessorDirective,
+      multi: true,
+    },
+  ],
+})
+```
+
+#### Standalone Directive
+
+For standalone components, create a directive in the [standalone package](/packages/angular/standalone/src/directives). Look at the implementation of the most similar existing component as a reference:
+
+- For text/numeric inputs: See [ion-input](/packages/angular/standalone/src/directives/input.ts) or [ion-input-otp](/packages/angular/standalone/src/directives/input-otp.ts)
+- For boolean inputs: See [ion-checkbox](/packages/angular/standalone/src/directives/checkbox.ts) or [ion-toggle](/packages/angular/standalone/src/directives/toggle.ts)
+- For select-like inputs: See [ion-select](/packages/angular/standalone/src/directives/select.ts) or [ion-radio-group](/packages/angular/standalone/src/directives/radio-group.ts)
+
+After creating the directive, you need to export it in two places:
+
+1. First, add your component to the directives export group in [`packages/angular/standalone/src/directives/index.ts`](/packages/angular/standalone/src/directives/index.ts):
+
+```typescript
+export { IonNewComponent } from './new-component';
+```
+
+2. Then, add it to the main standalone package's index file in [`packages/angular/standalone/src/index.ts`](/packages/angular/standalone/src/index.ts):
+
+```typescript
+export {
+  IonCheckbox,
+  IonDatetime,
+  IonInput,
+  IonInputOtp,
+  IonNewComponent, // Add your new component here
+  // ... other components
+} from './directives';
+```
+
+This ensures your component is properly exported and available for use in standalone Angular applications.
+
+### Angular Tests
+
+Add tests for the new component to the existing Angular test files:
+
+- **(Lazy) Inputs**
+  - [`inputs.component.html`](/packages/angular/test/base/src/app/lazy/inputs/inputs.component.html)
+  - [`inputs.component.ts`](/packages/angular/test/base/src/app/lazy/inputs/inputs.component.ts)
+  - [`inputs.spec.ts`](/packages/angular/test/base/e2e/src/lazy/inputs.spec.ts)
+- **(Lazy) Form**
+  - [`form.component.html`](/packages/angular/test/base/src/app/lazy/form/form.component.html)
+  - [`form.component.ts`](/packages/angular/test/base/src/app/lazy/form/form.component.ts)
+  - [`form.spec.ts`](/packages/angular/test/base/e2e/src/lazy/form.spec.ts)
+- **(Standalone) Value Accessors**
+  - [`value-accessors/`](/packages/angular/test/base/src/app/standalone/value-accessors)
+  - [`value-accessors.spec.ts`](/packages/angular/test/base/e2e/src/standalone/value-accessors.spec.ts)
+
+These files contain tests for form integration and input behavior. Review how similar components are tested and add the new component to the relevant test files.
+
+### Vue Integration
+
+#### Output Target Configuration
+
+Update the `vueOutputTarget` configuration in `stencil.config.ts` to include the new component:
+
+```typescript
+vueOutputTarget({
+  // ... other config
+  componentModels: [
+    {
+      elements: ['ion-new-component'],
+      targetAttr: 'value', // or 'checked' for boolean inputs
+      event: 'ion-input', // or 'ion-change' depending on the component
+    }
+  ]
+})
+```
+
+Choose the `targetAttr` and `event` based on your component's behavior:
+- For text/numeric inputs: Use `targetAttr: 'value'` and `event: 'ion-input'` (like `ion-input` and `ion-textarea`)
+- For boolean inputs: Use `targetAttr: 'checked'` and `event: 'ion-change'` (like `ion-checkbox` and `ion-toggle`)
+- For select-like inputs: Use `targetAttr: 'value'` and `event: 'ion-change'` (like `ion-select` and `ion-radio-group`)
+
+Look at similar components in the [Vue output target configuration](/core/stencil.config.ts) to see which values they use.
+
+### Vue Tests
+
+- **Inputs**
+  - [`Inputs.vue`](/packages/vue/test/base/src/views/Inputs.vue)
+  - [`inputs.cy.js`](/packages/vue/test/base/tests/e2e/specs/inputs.cy.js)
+
+These files contain tests for input behavior. Review how similar components are tested and add the new component to the relevant test files.
+
+### React Integration
+
+React components are automatically generated from the core component definitions. No additional configuration is needed.
+
+### React Tests
+
+- **Inputs**
+  - [`Inputs.tsx`](/packages/react/test/base/src/pages/Inputs.tsx)
+  - [`inputs.cy.ts`](/packages/react/test/base/tests/e2e/specs/components/inputs.cy.ts)
+
+These files contain tests for input behavior. Review how similar components are tested and add the new component to the relevant test files.
+
+### Interface Exports
+
+Add your component's interfaces to the framework packages:
+
+1. Angular ([`packages/angular/src/index.ts`](/packages/angular/src/index.ts)):
+```typescript
+export {
+  NewComponentCustomEvent,
+  NewComponentChangeEventDetail,
+  NewComponentInputEventDetail,
+  // ... other event interfaces
+} from '@ionic/core';
+```
+
+2. React ([`packages/react/src/components/index.ts`](/packages/react/src/components/index.ts)):
+```typescript
+export {
+  NewComponentCustomEvent,
+  NewComponentChangeEventDetail,
+  NewComponentInputEventDetail,
+  // ... other event interfaces
+} from '@ionic/core/components';
+```
+
+3. Vue ([`packages/vue/src/index.ts`](/packages/vue/src/index.ts)):
+```typescript
+export {
+  NewComponentCustomEvent,
+  NewComponentChangeEventDetail,
+  NewComponentInputEventDetail,
+  // ... other event interfaces
+} from '@ionic/core/components';
 ```
