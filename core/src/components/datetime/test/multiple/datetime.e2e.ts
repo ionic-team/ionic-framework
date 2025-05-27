@@ -301,14 +301,26 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   });
 
   test.describe('with selected days in different months', () => {
-    test(`set the active month view to the latest value's month`, async ({ page }) => {
+    test(`set the active month view to the latest value's month`, async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/29094',
+      });
+
       const datetime = await new DatetimeMultipleFixture(page).goto(config, MULTIPLE_DATES_SEPARATE_MONTHS);
       const calendarMonthYear = datetime.locator('.calendar-month-year');
 
       await expect(calendarMonthYear).toHaveText(/May 2022/);
     });
 
-    test('does not change the active month view when selecting a day in a different month', async ({ page }) => {
+    test('does not change the active month view when selecting a day in a different month', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/29094',
+      });
+
       const datetime = await new DatetimeMultipleFixture(page).goto(config, MULTIPLE_DATES_SEPARATE_MONTHS);
       const nextButton = page.locator('.calendar-next-prev ion-button:nth-child(2)');
       const calendarMonthYear = datetime.locator('.calendar-month-year');
