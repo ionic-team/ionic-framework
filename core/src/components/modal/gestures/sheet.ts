@@ -84,6 +84,7 @@ export const createSheetGesture = (
   let offset = 0;
   let canDismissBlocksGesture = false;
   let cachedScrollEl: HTMLElement | null = null;
+  let cachedFooterEl: HTMLIonFooterElement | null = null;
   let cachedFooterYPosition: number | null = null;
   let currentFooterState: 'moving' | 'stationary' | null = null;
   const canDismissMaxStep = 0.95;
@@ -125,33 +126,44 @@ export const createSheetGesture = (
    * @param footer Whether the footer is in a moving or stationary position.
    */
   const swapFooterPosition = (newPosition: 'moving' | 'stationary') => {
-    const originalFooter = baseEl.querySelector('ion-footer') as HTMLIonFooterElement | null;
-    if (!originalFooter) {
-      return;
+    if (!cachedFooterEl) {
+      cachedFooterEl = baseEl.querySelector('ion-footer') as HTMLIonFooterElement | null;
+      if (!cachedFooterEl) {
+        return;
+      }
     }
+
+    const page = baseEl.querySelector('.ion-page') as HTMLElement | null;
 
     currentFooterState = newPosition;
     if (newPosition === 'stationary') {
       // Reset positioning styles to allow normal document flow
-      originalFooter.style.removeProperty('position');
-      originalFooter.style.removeProperty('bottom');
-      originalFooter.parentElement?.style.removeProperty('padding-bottom');
+      cachedFooterEl.style.removeProperty('position');
+      cachedFooterEl.style.removeProperty('bottom');
+      page?.style.removeProperty('padding-bottom');
+
+      // Move to page
+      console.log('Moving footer to page');
+      page?.appendChild(cachedFooterEl);
     } else {
       // Add padding to the parent element to prevent content from being hidden
       // when the footer is positioned absolutely. This has to be done before we
       // make the footer absolutely positioned or we may accidentally cause the
       // sheet to scroll.
-      const footerHeight = originalFooter.clientHeight;
-      originalFooter.parentElement?.style.setProperty('padding-bottom', `${footerHeight}px`);
+      const footerHeight = cachedFooterEl.clientHeight;
+      page?.style.setProperty('padding-bottom', `${footerHeight}px`);
 
       // Apply positioning styles to keep footer at bottom
-      originalFooter.style.setProperty('position', 'absolute');
-      originalFooter.style.setProperty('bottom', '0');
+      cachedFooterEl.style.setProperty('position', 'absolute');
+      cachedFooterEl.style.setProperty('bottom', '0');
 
       // Also cache the footer Y position, which we use to determine if the
       // sheet has been moved below the footer. When that happens, we need to swap
       // the position back so it will collapse correctly.
-      cachedFooterYPosition = originalFooter.getBoundingClientRect().top + window.scrollY;
+      cachedFooterYPosition = cachedFooterEl.getBoundingClientRect().top + window.scrollY;
+
+      console.log('Moving footer to body');
+      document.body.appendChild(cachedFooterEl);
     }
   };
 
