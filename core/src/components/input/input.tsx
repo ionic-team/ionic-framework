@@ -847,7 +847,7 @@ export class Input implements ComponentInterface {
     const size = this.getSize();
     const shape = this.getShape();
     const inItem = hostContext('ion-item', this.el);
-    const shouldRenderHighlight = (theme === 'md' || theme === 'ionic') && fill !== 'outline' && !inItem;
+    const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
     const labelPlacement = this.getLabelPlacement();
 
     const hasValue = this.hasValue();
@@ -909,7 +909,7 @@ export class Input implements ComponentInterface {
                * <label> element, ensuring that clicking the label text
                * focuses the input.
                */
-              theme === 'ionic' && fill === 'outline' && <div class="input-outline"></div>
+              theme === 'ionic' && <div class="input-outline"></div>
             }
             <slot name="start"></slot>
             <input

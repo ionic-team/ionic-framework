@@ -1,25 +1,127 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "./input.common";
 @forward "./input.ionic.outline.scss";
-
+@forward "./input.ionic.solid.scss";
 // Ionic Input
 // --------------------------------------------------
 
 :host {
   --color: #{globals.$ion-primitives-neutral-1200};
   --border-width: #{globals.$ion-border-size-025};
-  --border-color: #{globals.$ion-primitives-neutral-500};
   --highlight-color-valid: #{globals.$ion-semantics-success-900};
-  --highlight-color-invalid: #{globals.$ion-semantics-danger-800};
+  --highlight-color-invalid: #{globals.$ion-border-danger-default};
   --placeholder-color: #{globals.$ion-primitives-neutral-800};
   --placeholder-opacity: 1;
-  --background: #{globals.$ion-primitives-base-white};
 
   @include globals.typography(globals.$ion-body-md-regular);
 }
 
+// Input Outline Container
+// ----------------------------------------------------------------
+
+.input-outline {
+  @include globals.position(0, 0, 0, 0);
+  @include globals.border-radius(var(--border-radius));
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+
+  border: var(--border-width) var(--border-style) var(--border-color);
+}
+
+// Input Label Placement: Stacked
+// ----------------------------------------------------------------
+
+// This makes the label sit above the input.
+:host(.label-floating.input-label-placement-stacked) .label-text-wrapper {
+  @include globals.margin(0);
+  @include globals.padding(globals.$ion-space-100, null);
+}
+
+.input-wrapper {
+  /**
+   * For the ionic theme, the padding needs to sit on the
+   * native wrapper instead, so that it sits within the
+   * outline container but does not always affect the
+   * label text.
+   */
+  @include globals.padding(0);
+
+  /**
+   * Outline inputs do not have a bottom border.
+   * Instead, they have a border that wraps the
+   * input + label.
+   */
+  border-bottom: none;
+
+  /**
+   * Do not show a background on the input wrapper as
+   * this includes the label, instead we apply the
+   * background to the native wrapper.
+   */
+  background: transparent;
+}
+
+.label-text-wrapper {
+  /**
+   * The label should appear on top of an outline
+   * container that overlaps it so it is always clickable.
+   */
+  position: relative;
+}
+
+:host(.input-label-placement-stacked) .label-text-wrapper {
+  @include globals.transform-origin(start, top);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the input.
+   */
+  max-width: calc(100% - var(--padding-start) - var(--padding-end));
+}
+
+/**
+ * The bottom content should never have
+ * a border with the outline style.
+ */
+.input-bottom {
+  border-top: none;
+}
+
+.native-wrapper {
+  @include globals.border-radius(inherit);
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  min-height: globals.$ion-scale-1000;
+
+  /**
+  * Apply the background to the native input
+  * wrapper to only style the input.
+  */
+  background: var(--background);
+}
+
 // Ionic Input Sizes
 // --------------------------------------------------
+
+:host(.input-size-medium) {
+  --padding-start: #{globals.$ion-space-300};
+  --padding-end: #{globals.$ion-space-300};
+}
+
+:host(.input-size-large) {
+  --padding-start: #{globals.$ion-space-400};
+  --padding-end: #{globals.$ion-space-400};
+}
+
+:host(.input-size-xlarge) {
+  --padding-start: #{globals.$ion-space-500};
+  --padding-end: #{globals.$ion-space-500};
+}
 
 :host(.input-size-medium) .native-wrapper {
   min-height: globals.$ion-scale-1000;
@@ -33,10 +135,25 @@
   min-height: globals.$ion-scale-1400;
 }
 
+// Input Shapes
+// --------------------------------------------------
+
+:host(.input-shape-soft) {
+  --border-radius: #{globals.$ion-soft-xl};
+}
+
+:host(.input-shape-round) {
+  --border-radius: #{globals.$ion-round-xl};
+}
+
+:host(.input-shape-rectangular) {
+  --border-radius: #{globals.$ion-rectangular-xl};
+}
+
 // Ionic Input Password Toggle Sizes
 // --------------------------------------------------
 
-:host ion-input-password-toggle {
+:host(.input-size-medium) ion-input-password-toggle {
   --size: #{globals.$ion-scale-1000};
 }
 
@@ -50,7 +167,8 @@
 
 // Target area
 // --------------------------------------------------
-:host .native-wrapper::after {
+
+.native-wrapper::after {
   @include globals.position(50%, 0, null, 0);
 
   position: absolute;
@@ -76,6 +194,17 @@
    * button, which should be clickable.
    */
   z-index: 2;
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+::slotted([slot="start"]) {
+  margin-inline-end: globals.$ion-space-200;
+}
+
+::slotted([slot="end"]) {
+  margin-inline-start: globals.$ion-space-200;
 }
 
 // Input Clear Button
@@ -202,29 +331,12 @@
   --background: #{globals.$ion-primitives-neutral-100};
 }
 
-// Input Highlight
-// ----------------------------------------------------------------
-
-.input-highlight {
-  @include globals.position(null, null, -1px, 0);
-
-  position: absolute;
-
-  width: 100%;
-  height: globals.$ion-border-size-050;
-
-  transform: scale(0);
-
-  transition: transform globals.$ion-transition-time-200;
-
-  background: var(--border-color);
-}
-
 // Input Focus
 // ----------------------------------------------------------------
 
 :host(.has-focus) {
   --border-color: #{globals.$ion-border-focus-default};
+  --border-width: #{globals.$ion-border-size-050};
 }
 
 :host(.has-focus) .input-highlight {

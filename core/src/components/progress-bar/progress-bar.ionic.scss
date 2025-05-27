@@ -25,6 +25,13 @@
 // Progress Bar: Color
 // ------------------------------------------------------------------------
 
+:host(.ion-color) {
+  .progress,
+  .progress-indeterminate {
+    background: #{globals.current-color(base)};
+  }
+}
+
 :host(.ion-color) .buffer-circles {
   background-image: radial-gradient(
     ellipse at center,

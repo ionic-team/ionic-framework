@@ -141,6 +141,62 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
           await expect(container).toHaveScreenshot(screenshot(`input-disabled-outline`));
         });
       });
+      test.describe(title('solid'), () => {
+        test('should render disabled input correctly', async ({ page }) => {
+          await page.setContent(
+            `
+            <div class="container">
+              <ion-input
+                fill="solid"
+                label="Email"
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                disabled="true"
+              ></ion-input>
+
+              <ion-input
+                fill="solid"
+                label="Email"
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                class="ion-valid has-focus"
+                disabled="true"
+              ></ion-input>
+
+              <ion-input
+                fill="solid"
+                label="Email"
+                value="hi@ionic.io"
+                error-text="Please enter a valid email"
+                counter="true"
+                maxlength="20"
+                class="ion-touched ion-invalid"
+                disabled="true"
+              ></ion-input>
+
+              <ion-input
+                fill="solid"
+                label="Email"
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                disabled="true"
+                color="warning"
+              ></ion-input>
+            </div>
+          `,
+            config
+          );
+
+          const container = page.locator('.container');
+          await expect(container).toHaveScreenshot(screenshot(`input-disabled-solid`));
+        });
+      });
     });
 
     test.describe(title('focused'), () => {
@@ -159,6 +215,16 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
 
             <ion-input
               fill="outline"
+              label="Email"
+              value="hi@ionic.io"
+              helper-text="Enter an email"
+              counter="true"
+              maxlength="20"
+              class="has-focus"
+            ></ion-input>
+
+            <ion-input
+              fill="solid"
               label="Email"
               value="hi@ionic.io"
               helper-text="Enter an email"
@@ -221,6 +287,30 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
 
           const container = page.locator('.container');
           await expect(container).toHaveScreenshot(screenshot(`input-readonly-outline`));
+        });
+      });
+
+      test.describe(title('solid'), () => {
+        test('should render readonly input correctly', async ({ page }) => {
+          await page.setContent(
+            `
+            <div class="container">
+              <ion-input
+                fill="solid"
+                label="Email"
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                readonly="true"
+              ></ion-input>
+            </div>
+          `,
+            config
+          );
+
+          const container = page.locator('.container');
+          await expect(container).toHaveScreenshot(screenshot(`input-readonly-solid`));
         });
       });
     });
