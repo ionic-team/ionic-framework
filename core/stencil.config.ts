@@ -202,7 +202,7 @@ export const config: Config = {
           event: 'ion-change',
         },
         {
-          elements: ['ion-input', 'ion-searchbar', 'ion-textarea', 'ion-range'],
+          elements: ['ion-input', 'ion-input-otp', 'ion-searchbar', 'ion-textarea', 'ion-range'],
           targetAttr: 'value',
           event: 'ion-input',
         }
