@@ -102,11 +102,6 @@ export class InputOTP implements ComponentInterface {
   @Prop({ reflect: true }) readonly = false;
 
   /**
-   * The size of the input boxes.
-   */
-  @Prop() size: 'small' | 'medium' | 'large' = 'medium';
-
-  /**
    * Where separators should be shown between input boxes.
    * Can be a comma-separated string or an array of numbers.
    *
@@ -124,6 +119,11 @@ export class InputOTP implements ComponentInterface {
    * If "soft" they will have a soft border radius.
    */
   @Prop() shape: 'round' | 'rectangular' | 'soft' = 'round';
+
+  /**
+   * The size of the input boxes.
+   */
+  @Prop() size: 'small' | 'medium' | 'large' = 'medium';
 
   /**
    * The type of input allowed in the input boxes.
