@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.5.8](https://github.com/ionic-team/ionic-framework/compare/v8.5.7...v8.5.8) (2025-05-28)
+
+
+### Bug Fixes
+
+* **input-password-toggle, button:** force update aria attributes ([#30411](https://github.com/ionic-team/ionic-framework/issues/30411)) ([4e38700](https://github.com/ionic-team/ionic-framework/commit/4e387005663b4e8425cb28e41608bb4f924b3864))
+
+
+
+
+
 ## [8.5.7](https://github.com/ionic-team/ionic-framework/compare/v8.5.6...v8.5.7) (2025-05-07)
 
 
