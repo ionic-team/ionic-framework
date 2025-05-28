@@ -174,6 +174,40 @@ export class InputOTP implements ComponentInterface {
    */
   @Event() ionFocus!: EventEmitter<FocusEvent>;
 
+  /**
+   * Resets the value and focus state.
+   */
+  @Method()
+  async reset() {
+    this.value = '';
+
+    this.focusedValue = null;
+    this.hasFocus = false;
+
+    this.inputRefs.forEach((input) => {
+      input.blur();
+    });
+
+    this.updateTabIndexes();
+  }
+
+  /**
+   * Sets focus to an input box.
+   * @param index - The index of the input box to focus (0-based).
+   * If provided and the input box has a value, the input box at that index will be focused.
+   * Otherwise, the first empty input box or the last input if all are filled will be focused.
+   */
+  @Method()
+  async setFocus(index?: number) {
+    if (typeof index === 'number') {
+      const validIndex = Math.max(0, Math.min(index, this.length - 1));
+      this.inputRefs[validIndex]?.focus();
+    } else {
+      const tabbableIndex = this.getTabbableIndex();
+      this.inputRefs[tabbableIndex]?.focus();
+    }
+  }
+
   @Watch('value')
   valueChanged() {
     this.initializeValues();
@@ -255,67 +289,6 @@ export class InputOTP implements ComponentInterface {
   }
 
   /**
-   * Initializes the input values array based on the current value prop.
-   * This splits the value into individual characters and validates them against
-   * the allowed pattern. The values are then used as the values in the native
-   * input boxes and the value of the input group is updated.
-   */
-  private initializeValues() {
-    // Clear all input values
-    this.inputValues = Array(this.length).fill('');
-
-    // If the value is null, undefined, or an empty string, return
-    if (this.value == null || String(this.value).length === 0) {
-      return;
-    }
-
-    // Split the value into individual characters and validate
-    // them against the allowed pattern
-    const chars = String(this.value).split('').slice(0, this.length);
-    chars.forEach((char, index) => {
-      if (this.validKeyPattern.test(char)) {
-        this.inputValues[index] = char;
-      }
-    });
-    // Update the value without emitting events
-    this.value = this.inputValues.join('');
-  }
-
-  /**
-   * Resets the value and focus state.
-   */
-  @Method()
-  async reset() {
-    this.value = '';
-
-    this.focusedValue = null;
-    this.hasFocus = false;
-
-    this.inputRefs.forEach((input) => {
-      input.blur();
-    });
-
-    this.updateTabIndexes();
-  }
-
-  /**
-   * Sets focus to an input box.
-   * @param index - The index of the input box to focus (0-based).
-   * If provided and the input box has a value, the input box at that index will be focused.
-   * Otherwise, the first empty input box or the last input if all are filled will be focused.
-   */
-  @Method()
-  async setFocus(index?: number) {
-    if (typeof index === 'number') {
-      const validIndex = Math.max(0, Math.min(index, this.length - 1));
-      this.inputRefs[validIndex]?.focus();
-    } else {
-      const tabbableIndex = this.getTabbableIndex();
-      this.inputRefs[tabbableIndex]?.focus();
-    }
-  }
-
-  /**
    * Get the regex pattern for allowed characters.
    * If a pattern is provided, use it to create a regex pattern
    * Otherwise, use the default regex pattern based on type
@@ -352,6 +325,33 @@ export class InputOTP implements ComponentInterface {
     } else {
       return 'text';
     }
+  }
+
+  /**
+   * Initializes the input values array based on the current value prop.
+   * This splits the value into individual characters and validates them against
+   * the allowed pattern. The values are then used as the values in the native
+   * input boxes and the value of the input group is updated.
+   */
+  private initializeValues() {
+    // Clear all input values
+    this.inputValues = Array(this.length).fill('');
+
+    // If the value is null, undefined, or an empty string, return
+    if (this.value == null || String(this.value).length === 0) {
+      return;
+    }
+
+    // Split the value into individual characters and validate
+    // them against the allowed pattern
+    const chars = String(this.value).split('').slice(0, this.length);
+    chars.forEach((char, index) => {
+      if (this.validKeyPattern.test(char)) {
+        this.inputValues[index] = char;
+      }
+    });
+    // Update the value without emitting events
+    this.value = this.inputValues.join('');
   }
 
   /**
@@ -398,41 +398,148 @@ export class InputOTP implements ComponentInterface {
     this.ionInput.emit({ value: newValue, event });
   }
 
-  private onInput = (index: number) => (event: InputEvent) => {
-    const { validKeyPattern } = this;
+  /**
+   * Handles the focus behavior for the input OTP component.
+   *
+   * Focus behavior:
+   * 1. Keyboard navigation: Allow normal focus movement
+   * 2. Mouse click:
+   *    - If clicked box has value: Focus that box
+   *    - If clicked box is empty: Focus first empty box
+   *
+   * Emits the `ionFocus` event when the input group gains focus.
+   */
+  private onFocus = (index: number) => (event: FocusEvent) => {
+    const { inputRefs } = this;
+    // Only emit ionFocus and set the focusedValue when the
+    // component first gains focus
+    if (!this.hasFocus) {
+      this.ionFocus.emit(event);
+      this.focusedValue = this.value;
+    }
+    this.hasFocus = true;
 
-    const value = (event.target as HTMLInputElement).value;
+    let finalIndex = index;
 
-    // Only allow input if it's a single character and matches the pattern
-    if (value.length > 1 || (value.length > 0 && !validKeyPattern.test(value))) {
-      // Reset the input value if not valid
-      this.inputRefs[index].value = '';
-      this.inputValues[index] = '';
-      return;
+    if (!this.isKeyboardNavigation) {
+      // If the clicked box has a value, focus it
+      // Otherwise focus the first empty box
+      const targetIndex = this.inputValues[index] ? index : this.getFirstEmptyIndex();
+      finalIndex = targetIndex === -1 ? this.length - 1 : targetIndex;
+
+      // Focus the target box
+      this.inputRefs[finalIndex]?.focus();
     }
 
-    // Find the first empty box before or at the current index
-    let targetIndex = index;
-    for (let i = 0; i < index; i++) {
-      if (!this.inputValues[i] || this.inputValues[i] === '') {
-        targetIndex = i;
+    // Update tabIndexes to match the focused box
+    inputRefs.forEach((input, i) => {
+      input.tabIndex = i === finalIndex ? 0 : -1;
+    });
+
+    // Reset the keyboard navigation flag
+    this.isKeyboardNavigation = false;
+  };
+
+  /**
+   * Handles the blur behavior for the input OTP component.
+   * Emits the `ionBlur` event when the input group loses focus.
+   */
+  private onBlur = (event: FocusEvent) => {
+    const { inputRefs } = this;
+    const relatedTarget = event.relatedTarget as HTMLElement;
+
+    // Do not emit blur if we're moving to another input box in the same component
+    const isInternalFocus = relatedTarget != null && inputRefs.includes(relatedTarget as HTMLInputElement);
+
+    if (!isInternalFocus) {
+      this.hasFocus = false;
+
+      // Reset tabIndexes when focus leaves the component
+      this.updateTabIndexes();
+
+      // Always emit ionBlur when focus leaves the component
+      this.ionBlur.emit(event);
+
+      // Only emit ionChange if the value has actually changed
+      if (this.focusedValue !== this.value) {
+        this.emitIonChange(event);
+      }
+    }
+  };
+
+  /**
+   * Focuses the next input box.
+   */
+  private focusNext(currentIndex: number) {
+    const { inputRefs, length } = this;
+    if (currentIndex < length - 1) {
+      inputRefs[currentIndex + 1]?.focus();
+    }
+  }
+
+  /**
+   * Focuses the previous input box.
+   */
+  private focusPrevious(currentIndex: number) {
+    const { inputRefs } = this;
+    if (currentIndex > 0) {
+      inputRefs[currentIndex - 1]?.focus();
+    }
+  }
+
+  /**
+   * Searches through the input values and returns the index
+   * of the first empty input.
+   * Returns -1 if all inputs are filled.
+   */
+  private getFirstEmptyIndex() {
+    const { inputValues, length } = this;
+    // Create an array of the same length as the input OTP
+    // and fill it with the input values
+    const values = Array.from({ length }, (_, i) => inputValues[i] || '');
+    return values.findIndex((value) => !value || value === '') ?? -1;
+  }
+
+  /**
+   * Returns the index of the input that should be tabbed to.
+   * If all inputs are filled, returns the last input's index.
+   * Otherwise, returns the index of the first empty input.
+   */
+  private getTabbableIndex() {
+    const { length } = this;
+    const firstEmptyIndex = this.getFirstEmptyIndex();
+    return firstEmptyIndex === -1 ? length - 1 : firstEmptyIndex;
+  }
+
+  /**
+   * Updates the tabIndexes for the input boxes.
+   * This is used to ensure that the correct input is
+   * focused when the user navigates using the tab key.
+   */
+  private updateTabIndexes() {
+    const { inputRefs, inputValues, length } = this;
+
+    // Find first empty index after any filled boxes
+    let firstEmptyIndex = -1;
+    for (let i = 0; i < length; i++) {
+      if (!inputValues[i] || inputValues[i] === '') {
+        firstEmptyIndex = i;
         break;
       }
     }
 
-    // Set the value at the target index
-    this.inputValues[targetIndex] = value;
+    // Update tabIndex and aria-hidden for all inputs
+    inputRefs.forEach((input, index) => {
+      const shouldBeTabbable = firstEmptyIndex === -1 ? index === length - 1 : firstEmptyIndex === index;
 
-    // If the value was entered in a later box, clear the current box
-    if (targetIndex !== index) {
-      this.inputRefs[index].value = '';
-    }
+      input.tabIndex = shouldBeTabbable ? 0 : -1;
 
-    if (value.length > 0) {
-      this.focusNext(targetIndex);
-    }
-    this.updateValue(event);
-  };
+      // If the input is empty and not the first empty input,
+      // it should be hidden from screen readers.
+      const isEmpty = !inputValues[index] || inputValues[index] === '';
+      input.setAttribute('aria-hidden', isEmpty && !shouldBeTabbable ? 'true' : 'false');
+    });
+  }
 
   /**
    * Handles keyboard navigation and input for the OTP component.
@@ -524,6 +631,42 @@ export class InputOTP implements ComponentInterface {
     }
   };
 
+  private onInput = (index: number) => (event: InputEvent) => {
+    const { validKeyPattern } = this;
+
+    const value = (event.target as HTMLInputElement).value;
+
+    // Only allow input if it's a single character and matches the pattern
+    if (value.length > 1 || (value.length > 0 && !validKeyPattern.test(value))) {
+      // Reset the input value if not valid
+      this.inputRefs[index].value = '';
+      this.inputValues[index] = '';
+      return;
+    }
+
+    // Find the first empty box before or at the current index
+    let targetIndex = index;
+    for (let i = 0; i < index; i++) {
+      if (!this.inputValues[i] || this.inputValues[i] === '') {
+        targetIndex = i;
+        break;
+      }
+    }
+
+    // Set the value at the target index
+    this.inputValues[targetIndex] = value;
+
+    // If the value was entered in a later box, clear the current box
+    if (targetIndex !== index) {
+      this.inputRefs[index].value = '';
+    }
+
+    if (value.length > 0) {
+      this.focusNext(targetIndex);
+    }
+    this.updateValue(event);
+  };
+
   /**
    * Handles pasting text into the input OTP component.
    * This function prevents the default paste behavior and
@@ -574,155 +717,12 @@ export class InputOTP implements ComponentInterface {
   };
 
   /**
-   * Focuses the next input box.
-   */
-  private focusNext(currentIndex: number) {
-    const { inputRefs, length } = this;
-    if (currentIndex < length - 1) {
-      inputRefs[currentIndex + 1]?.focus();
-    }
-  }
-
-  /**
-   * Focuses the previous input box.
-   */
-  private focusPrevious(currentIndex: number) {
-    const { inputRefs } = this;
-    if (currentIndex > 0) {
-      inputRefs[currentIndex - 1]?.focus();
-    }
-  }
-
-  /**
    * Determines if a separator should be shown for a given index by
    * checking if the index is included in the parsed separators array.
    */
   private showSeparator(index: number) {
     const { length } = this;
     return this.parsedSeparators.includes(index + 1) && index < length - 1;
-  }
-
-  /**
-   * Handles the focus behavior for the input OTP component.
-   *
-   * Focus behavior:
-   * 1. Keyboard navigation: Allow normal focus movement
-   * 2. Mouse click:
-   *    - If clicked box has value: Focus that box
-   *    - If clicked box is empty: Focus first empty box
-   *
-   * Emits the `ionFocus` event when the input group gains focus.
-   */
-  private onFocus = (index: number) => (event: FocusEvent) => {
-    const { inputRefs } = this;
-    // Only emit ionFocus and set the focusedValue when the
-    // component first gains focus
-    if (!this.hasFocus) {
-      this.ionFocus.emit(event);
-      this.focusedValue = this.value;
-    }
-    this.hasFocus = true;
-
-    let finalIndex = index;
-
-    if (!this.isKeyboardNavigation) {
-      // If the clicked box has a value, focus it
-      // Otherwise focus the first empty box
-      const targetIndex = this.inputValues[index] ? index : this.getFirstEmptyIndex();
-      finalIndex = targetIndex === -1 ? this.length - 1 : targetIndex;
-
-      // Focus the target box
-      this.inputRefs[finalIndex]?.focus();
-    }
-
-    // Update tabIndexes to match the focused box
-    inputRefs.forEach((input, i) => {
-      input.tabIndex = i === finalIndex ? 0 : -1;
-    });
-
-    // Reset the keyboard navigation flag
-    this.isKeyboardNavigation = false;
-  };
-
-  /**
-   * Handles the blur behavior for the input OTP component.
-   * Emits the `ionBlur` event when the input group loses focus.
-   */
-  private onBlur = (event: FocusEvent) => {
-    const { inputRefs } = this;
-    const relatedTarget = event.relatedTarget as HTMLElement;
-
-    // Do not emit blur if we're moving to another input box in the same component
-    const isInternalFocus = relatedTarget != null && inputRefs.includes(relatedTarget as HTMLInputElement);
-
-    if (!isInternalFocus) {
-      this.hasFocus = false;
-
-      // Reset tabIndexes when focus leaves the component
-      this.updateTabIndexes();
-
-      // Always emit ionBlur when focus leaves the component
-      this.ionBlur.emit(event);
-
-      // Only emit ionChange if the value has actually changed
-      if (this.focusedValue !== this.value) {
-        this.emitIonChange(event);
-      }
-    }
-  };
-
-  /**
-   * Updates the tabIndexes for the input boxes.
-   * This is used to ensure that the correct input is
-   * focused when the user navigates using the tab key.
-   */
-  private updateTabIndexes() {
-    const { inputRefs, inputValues, length } = this;
-
-    // Find first empty index after any filled boxes
-    let firstEmptyIndex = -1;
-    for (let i = 0; i < length; i++) {
-      if (!inputValues[i] || inputValues[i] === '') {
-        firstEmptyIndex = i;
-        break;
-      }
-    }
-
-    // Update tabIndex and aria-hidden for all inputs
-    inputRefs.forEach((input, index) => {
-      const shouldBeTabbable = firstEmptyIndex === -1 ? index === length - 1 : firstEmptyIndex === index;
-
-      input.tabIndex = shouldBeTabbable ? 0 : -1;
-
-      // If the input is empty and not the first empty input,
-      // it should be hidden from screen readers.
-      const isEmpty = !inputValues[index] || inputValues[index] === '';
-      input.setAttribute('aria-hidden', isEmpty && !shouldBeTabbable ? 'true' : 'false');
-    });
-  }
-
-  /**
-   * Searches through the input values and returns the index
-   * of the first empty input.
-   * Returns -1 if all inputs are filled.
-   */
-  private getFirstEmptyIndex() {
-    const { inputValues, length } = this;
-    // Create an array of the same length as the input OTP
-    // and fill it with the input values
-    const values = Array.from({ length }, (_, i) => inputValues[i] || '');
-    return values.findIndex((value) => !value || value === '') ?? -1;
-  }
-
-  /**
-   * Returns the index of the input that should be tabbed to.
-   * If all inputs are filled, returns the last input's index.
-   * Otherwise, returns the index of the first empty input.
-   */
-  private getTabbableIndex() {
-    const { length } = this;
-    const firstEmptyIndex = this.getFirstEmptyIndex();
-    return firstEmptyIndex === -1 ? length - 1 : firstEmptyIndex;
   }
 
   render() {
