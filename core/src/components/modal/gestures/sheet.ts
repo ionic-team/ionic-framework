@@ -140,12 +140,19 @@ export const createSheetGesture = (
       // Reset positioning styles to allow normal document flow
       cachedFooterEl.classList.remove('modal-footer-moving');
       cachedFooterEl.style.removeProperty('position');
-      cachedFooterEl.style.removeProperty('bottom');
+      cachedFooterEl.style.removeProperty('width');
+      cachedFooterEl.style.removeProperty('height');
+      cachedFooterEl.style.removeProperty('top');
+      cachedFooterEl.style.removeProperty('left');
       page?.style.removeProperty('padding-bottom');
 
       // Move to page
       page?.appendChild(cachedFooterEl);
     } else {
+      // Get both the footer and document body positions
+      const cachedFooterElRect = cachedFooterEl.getBoundingClientRect();
+      const bodyRect = document.body.getBoundingClientRect();
+
       // Add padding to the parent element to prevent content from being hidden
       // when the footer is positioned absolutely. This has to be done before we
       // make the footer absolutely positioned or we may accidentally cause the
@@ -155,13 +162,23 @@ export const createSheetGesture = (
 
       // Apply positioning styles to keep footer at bottom
       cachedFooterEl.classList.add('modal-footer-moving');
+
+      // Calculate absolute position relative to body
+      // We need to subtract the body's offsetTop to get true position within document.body
+      const absoluteTop = cachedFooterElRect.top - bodyRect.top;
+      const absoluteLeft = cachedFooterElRect.left - bodyRect.left;
+
+      // Capture the footer's current dimensions and hard code them during the drag
       cachedFooterEl.style.setProperty('position', 'absolute');
-      cachedFooterEl.style.setProperty('bottom', '0');
+      cachedFooterEl.style.setProperty('width', `${cachedFooterEl.clientWidth}px`);
+      cachedFooterEl.style.setProperty('height', `${cachedFooterEl.clientHeight}px`);
+      cachedFooterEl.style.setProperty('top', `${absoluteTop}px`);
+      cachedFooterEl.style.setProperty('left', `${absoluteLeft}px`);
 
       // Also cache the footer Y position, which we use to determine if the
       // sheet has been moved below the footer. When that happens, we need to swap
       // the position back so it will collapse correctly.
-      cachedFooterYPosition = cachedFooterEl.getBoundingClientRect().top + window.scrollY;
+      cachedFooterYPosition = absoluteTop;
 
       document.body.appendChild(cachedFooterEl);
     }
@@ -482,20 +499,20 @@ export const createSheetGesture = (
       contentEl.scrollY = true;
     }
 
+    /**
+     * If expandToScroll is disabled, we need to swap
+     * the footer position to stationary so that it
+     * will act as it would by default
+     */
+    if (!expandToScroll) {
+      swapFooterPosition('stationary');
+    }
+
     return new Promise<void>((resolve) => {
       animation
         .onFinish(
           () => {
             if (shouldRemainOpen) {
-              /**
-               * If expandToScroll is disabled, we need to swap
-               * the footer position to stationary so that it
-               * will act as it would by default
-               */
-              if (!expandToScroll) {
-                swapFooterPosition('stationary');
-              }
-
               /**
                * Once the snapping animation completes,
                * we need to reset the animation to go
