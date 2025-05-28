@@ -779,7 +779,7 @@ For example, if your component renders a text input, it should be included in th
 
 ```diff
 @Directive({
--  selector: 'ion-input:not([type=number]),ion-input-otp[type=text],ion-textarea,ion-searchbar,
+-  selector: 'ion-input:not([type=number]),ion-input-otp[type=text],ion-textarea,ion-searchbar',
 +  selector: 'ion-input:not([type=number]),ion-input-otp[type=text],ion-textarea,ion-searchbar,ion-new-component',
   providers: [
     {
@@ -789,6 +789,33 @@ For example, if your component renders a text input, it should be included in th
     },
   ],
 })
+```
+
+You'll also need to add your component's type to the value accessor's type definitions. For example, in the `TextValueAccessorDirective`, you would add your component's type to the `_handleInputEvent` method:
+
+```diff
+@HostListener('ionInput', ['$event.target'])
+_handleInputEvent(
+-  el: HTMLIonInputElement | HTMLIonInputOtpElement | HTMLIonTextareaElement | HTMLIonSearchbarElement
++  el: HTMLIonInputElement | HTMLIonInputOtpElement | HTMLIonTextareaElement | HTMLIonSearchbarElement | HTMLIonNewComponentElement
+): void {
+  this.handleValueChange(el, el.value);
+}
+```
+
+If your component needs special handling for value changes, you'll also need to update the `registerOnChange` method. For example, if your component needs to handle numeric values:
+
+```diff
+registerOnChange(fn: (_: number | null) => void): void {
+-  if (this.el.nativeElement.tagName === 'ION-INPUT' || this.el.nativeElement.tagName === 'ION-INPUT-OTP') {
++  if (this.el.nativeElement.tagName === 'ION-INPUT' || this.el.nativeElement.tagName === 'ION-INPUT-OTP' || this.el.nativeElement.tagName === 'ION-NEW-COMPONENT') {
+    super.registerOnChange((value: string) => {
+      fn(value === '' ? null : parseFloat(value));
+    });
+  } else {
+    super.registerOnChange(fn);
+  }
+}
 ```
 
 #### Standalone Directive
