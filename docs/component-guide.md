@@ -849,6 +849,24 @@ export {
 
 This ensures your component is properly exported and available for use in standalone Angular applications.
 
+#### Output Target Configuration
+
+Update the `angularOutputTarget` configuration in [`stencil.config.ts`](/core/stencil.config.ts) to exclude your new component from the generated proxies. This is necessary because value accessors for these components are manually implemented in the standalone package.
+
+```typescript
+angularOutputTarget({
+  // ... other config
+  excludeComponents: [
+    ...excludeComponents,
+    // ... other excludes
+    /**
+     * Value Accessors are manually implemented in the `@ionic/angular/standalone` package.
+     */
+    'ion-new-component'
+  ]
+})
+```
+
 ### Angular Tests
 
 Add tests for the new component to the existing Angular test files:
@@ -871,27 +889,29 @@ These files contain tests for form integration and input behavior. Review how si
 
 #### Output Target Configuration
 
-Update the `vueOutputTarget` configuration in `stencil.config.ts` to include the new component:
+Update the `vueOutputTarget` configuration in [`stencil.config.ts`](/core/stencil.config.ts):
 
-```typescript
+- Add your new component to the appropriate `componentModels` array, based on its behavior:
+  - For boolean inputs, add to the array with `targetAttr: 'checked'` and `event: 'ion-change'`
+  - For select-like inputs, add to the array with `targetAttr: 'value'` and `event: 'ion-change'`
+  - For text/numeric inputs, add to the array with `targetAttr: 'value'` and `event: 'ion-input'`
+
+For example, if your component is a text input, add it to:
+```js
 vueOutputTarget({
   // ... other config
   componentModels: [
+    // ... other models
     {
-      elements: ['ion-new-component'],
-      targetAttr: 'value', // or 'checked' for boolean inputs
-      event: 'ion-input', // or 'ion-change' depending on the component
+      elements: ['ion-input', 'ion-input-otp', 'ion-searchbar', 'ion-textarea', 'ion-range', 'ion-new-component'],
+      targetAttr: 'value',
+      event: 'ion-input',
     }
-  ]
-})
+  ],
+}),
 ```
 
-Choose the `targetAttr` and `event` based on your component's behavior:
-- For text/numeric inputs: Use `targetAttr: 'value'` and `event: 'ion-input'` (like `ion-input` and `ion-textarea`)
-- For boolean inputs: Use `targetAttr: 'checked'` and `event: 'ion-change'` (like `ion-checkbox` and `ion-toggle`)
-- For select-like inputs: Use `targetAttr: 'value'` and `event: 'ion-change'` (like `ion-select` and `ion-radio-group`)
-
-Look at similar components in the [Vue output target configuration](/core/stencil.config.ts) to see which values they use.
+Look at similar components in the `componentModels` arrays to determine the correct placement.
 
 ### Vue Tests
 
