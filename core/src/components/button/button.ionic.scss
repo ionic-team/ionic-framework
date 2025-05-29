@@ -102,6 +102,7 @@
   --padding-end: #{globals.$ion-space-400};
 
   @include globals.typography(globals.$ion-body-action-sm);
+  min-width: globals.$ion-scale-1600;
 
   min-height: #{globals.$ion-scale-1000};
 }
@@ -111,6 +112,7 @@
   --padding-end: #{globals.$ion-space-500};
 
   @include globals.typography(globals.$ion-body-action-md);
+  min-width: globals.$ion-scale-1800;
 
   min-height: #{globals.$ion-scale-1200};
 }
@@ -120,6 +122,7 @@
   --padding-end: #{globals.$ion-space-700};
 
   @include globals.typography(globals.$ion-body-action-lg);
+  min-width: globals.$ion-scale-2000;
 
   min-height: #{globals.$ion-scale-1400};
 }
@@ -128,23 +131,28 @@
 // -------------------------------------------------------------------------------
 
 /* Button containing only an icon */
-::slotted(ion-icon[slot="start"]),
-::slotted(ion-icon[slot="end"]),
-::slotted(ion-icon[slot="icon-only"]) {
-  font-size: globals.$ion-font-size-400;
+:host(.button-small),
+:host(.button-medium) {
+  ::slotted(ion-icon[slot="start"]),
+  ::slotted(ion-icon[slot="end"]),
+  ::slotted(ion-icon[slot="icon-only"]) {
+    width: globals.$ion-scale-500;
+    height: globals.$ion-scale-500;
+  }
 }
 
-:host(.button-small),
 :host(.button-large) {
   ::slotted(ion-icon[slot="start"]),
   ::slotted(ion-icon[slot="end"]),
   ::slotted(ion-icon[slot="icon-only"]) {
-    font-size: inherit;
+    width: globals.$ion-scale-600;
+    height: globals.$ion-scale-600;
   }
 }
 
 :host(.button-has-icon-only) {
   --padding-end: var(--padding-top);
+  min-width: unset;
 
   aspect-ratio: 1 / 1;
 }
@@ -159,8 +167,8 @@
 ::slotted(ion-spinner[slot="start"]),
 ::slotted(ion-spinner[slot="end"]),
 ::slotted(ion-spinner[slot="icon-only"]) {
-  width: globals.$ion-space-500;
-  height: globals.$ion-space-500;
+  width: globals.$ion-scale-500;
+  height: globals.$ion-scale-500;
 }
 
 // Button Shapes
@@ -264,8 +272,46 @@
   @include globals.margin-horizontal(globals.$ion-space-300, null);
 }
 
-// Button Badge
+// Button with Badge
 // --------------------------------------------------
-:host ::slotted(ion-badge[vertical]:not(:empty)) {
-  @include globals.padding(globals.$ion-space-050);
+
+:host(.button-has-badge) {
+  --padding-top: #{globals.$ion-space-0};
+  --padding-bottom: #{globals.$ion-space-0};
+}
+
+:host(.button-small) ::slotted(ion-badge) {
+  @include globals.position(null, calc(-1 * globals.$ion-space-050), null, null);
+}
+
+:host(.button-medium) {
+  ::slotted(ion-badge.long-badge.badge-vertical-top) {
+    @include globals.position($top: globals.$ion-space-100);
+  }
+  ::slotted(ion-badge.long-badge.badge-vertical-bottom) {
+    @include globals.position($bottom: globals.$ion-space-100);
+  }
+
+  ::slotted(ion-badge:not(.long-badge).badge-vertical-top) {
+    @include globals.position(globals.$ion-space-100, globals.$ion-space-150, null, null);
+  }
+  ::slotted(ion-badge:not(.long-badge).badge-vertical-bottom) {
+    @include globals.position(null, globals.$ion-space-150, globals.$ion-space-100, null);
+  }
+}
+
+:host(.button-large) {
+  ::slotted(ion-badge.long-badge.badge-vertical-top) {
+    @include globals.position($top: globals.$ion-space-200);
+  }
+  ::slotted(ion-badge.long-badge.badge-vertical-bottom) {
+    @include globals.position($bottom: globals.$ion-space-200);
+  }
+
+  ::slotted(ion-badge:not(.long-badge).badge-vertical-top) {
+    @include globals.position(globals.$ion-space-200, globals.$ion-space-200, null, null);
+  }
+  ::slotted(ion-badge:not(.long-badge).badge-vertical-bottom) {
+    @include globals.position(null, globals.$ion-space-200, globals.$ion-space-200, null);
+  }
 }
