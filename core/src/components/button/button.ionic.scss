@@ -102,9 +102,9 @@
   --padding-end: #{globals.$ion-space-400};
 
   @include globals.typography(globals.$ion-body-action-sm);
+  min-width: globals.$ion-scale-1600;
 
   min-height: #{globals.$ion-scale-1000};
-  min-width: globals.$ion-scale-1600;
 }
 
 /* Medium Button */
@@ -112,9 +112,9 @@
   --padding-end: #{globals.$ion-space-500};
 
   @include globals.typography(globals.$ion-body-action-md);
+  min-width: globals.$ion-scale-1800;
 
   min-height: #{globals.$ion-scale-1200};
-  min-width: globals.$ion-scale-1800;
 }
 
 /* Large Button */
@@ -122,9 +122,9 @@
   --padding-end: #{globals.$ion-space-700};
 
   @include globals.typography(globals.$ion-body-action-lg);
+  min-width: globals.$ion-scale-2000;
 
   min-height: #{globals.$ion-scale-1400};
-  min-width: globals.$ion-scale-2000;
 }
 
 // Button with Icons
@@ -133,8 +133,8 @@
   ::slotted(ion-icon[slot="start"]),
   ::slotted(ion-icon[slot="end"]),
   ::slotted(ion-icon[slot="icon-only"]) {
-    height: globals.$ion-scale-500;
     width: globals.$ion-scale-500;
+    height: globals.$ion-scale-500;
   }
 }
 
@@ -142,8 +142,8 @@
   ::slotted(ion-icon[slot="start"]),
   ::slotted(ion-icon[slot="end"]),
   ::slotted(ion-icon[slot="icon-only"]) {
-    height: globals.$ion-scale-600;
     width: globals.$ion-scale-600;
+    height: globals.$ion-scale-600;
   }
 }
 
