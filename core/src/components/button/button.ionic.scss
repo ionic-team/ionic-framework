@@ -129,7 +129,8 @@
 
 // Button with Icons
 // -------------------------------------------------------------------------------
-:host(.button-small) {
+:host(.button-small),
+:host(.button-medium) {
   ::slotted(ion-icon[slot="start"]),
   ::slotted(ion-icon[slot="end"]),
   ::slotted(ion-icon[slot="icon-only"]) {
