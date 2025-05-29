@@ -18,6 +18,7 @@ import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
+import { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
 import { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
@@ -55,6 +56,7 @@ export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
+export { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
 export { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
@@ -1316,6 +1318,65 @@ export namespace Components {
         "type": TextFieldTypes;
         /**
           * The value of the input.
+         */
+        "value"?: string | number | null;
+    }
+    interface IonInputOtp {
+        /**
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
+         */
+        "autocapitalize": string;
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the input.
+         */
+        "disabled": boolean;
+        /**
+          * The fill for the input boxes. If `"solid"` the input boxes will have a background. If `"outline"` the input boxes will be transparent with a border.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
+          * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.  For numbers (type="number"): "numeric" For text (type="text"): "text"
+         */
+        "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+        /**
+          * The number of input boxes to display.
+         */
+        "length": number;
+        /**
+          * A regex pattern string for allowed characters. Defaults based on type.  For numbers (`type="number"`): `"[\p{N}]"` For text (`type="text"`): `"[\p{L}\p{N}]"`
+         */
+        "pattern"?: string;
+        /**
+          * If `true`, the user cannot modify the value.
+         */
+        "readonly": boolean;
+        /**
+          * Where separators should be shown between input boxes. Can be a comma-separated string or an array of numbers.  For example: `"3"` will show a separator after the 3rd input box. `[1,4]` will show a separator after the 1st and 4th input boxes. `"all"` will show a separator between every input box.
+         */
+        "separators"?: 'all' | string | number[];
+        /**
+          * Sets focus to an input box.
+          * @param index - The index of the input box to focus (0-based). If provided and the input box has a value, the input box at that index will be focused. Otherwise, the first empty input box or the last input if all are filled will be focused.
+         */
+        "setFocus": (index?: number) => Promise<void>;
+        /**
+          * The shape of the input boxes. If "round" they will have an increased border radius. If "rectangular" they will have no border radius. If "soft" they will have a soft border radius.
+         */
+        "shape": 'round' | 'rectangular' | 'soft';
+        /**
+          * The size of the input boxes.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The type of input allowed in the input boxes.
+         */
+        "type": 'text' | 'number';
+        /**
+          * The value of the input group.
          */
         "value"?: string | number | null;
     }
@@ -3404,6 +3465,10 @@ export interface IonInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonInputElement;
 }
+export interface IonInputOtpCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIonInputOtpElement;
+}
 export interface IonItemOptionsCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonItemOptionsElement;
@@ -3932,6 +3997,27 @@ declare global {
     var HTMLIonInputElement: {
         prototype: HTMLIonInputElement;
         new (): HTMLIonInputElement;
+    };
+    interface HTMLIonInputOtpElementEventMap {
+        "ionInput": InputOtpInputEventDetail;
+        "ionChange": InputOtpChangeEventDetail;
+        "ionComplete": InputOtpCompleteEventDetail;
+        "ionBlur": FocusEvent;
+        "ionFocus": FocusEvent;
+    }
+    interface HTMLIonInputOtpElement extends Components.IonInputOtp, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonInputOtpElementEventMap>(type: K, listener: (this: HTMLIonInputOtpElement, ev: IonInputOtpCustomEvent<HTMLIonInputOtpElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonInputOtpElementEventMap>(type: K, listener: (this: HTMLIonInputOtpElement, ev: IonInputOtpCustomEvent<HTMLIonInputOtpElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLIonInputOtpElement: {
+        prototype: HTMLIonInputOtpElement;
+        new (): HTMLIonInputOtpElement;
     };
     interface HTMLIonInputPasswordToggleElement extends Components.IonInputPasswordToggle, HTMLStencilElement {
     }
@@ -4792,6 +4878,7 @@ declare global {
         "ion-infinite-scroll": HTMLIonInfiniteScrollElement;
         "ion-infinite-scroll-content": HTMLIonInfiniteScrollContentElement;
         "ion-input": HTMLIonInputElement;
+        "ion-input-otp": HTMLIonInputOtpElement;
         "ion-input-password-toggle": HTMLIonInputPasswordToggleElement;
         "ion-item": HTMLIonItemElement;
         "ion-item-divider": HTMLIonItemDividerElement;
@@ -6175,6 +6262,80 @@ declare namespace LocalJSX {
         "type"?: TextFieldTypes;
         /**
           * The value of the input.
+         */
+        "value"?: string | number | null;
+    }
+    interface IonInputOtp {
+        /**
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
+         */
+        "autocapitalize"?: string;
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the input.
+         */
+        "disabled"?: boolean;
+        /**
+          * The fill for the input boxes. If `"solid"` the input boxes will have a background. If `"outline"` the input boxes will be transparent with a border.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
+          * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.  For numbers (type="number"): "numeric" For text (type="text"): "text"
+         */
+        "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+        /**
+          * The number of input boxes to display.
+         */
+        "length"?: number;
+        /**
+          * Emitted when the input group loses focus.
+         */
+        "onIonBlur"?: (event: IonInputOtpCustomEvent<FocusEvent>) => void;
+        /**
+          * The `ionChange` event is fired when the user modifies the input's value. Unlike the `ionInput` event, the `ionChange` event is only fired when changes are committed, not as the user types.  The `ionChange` event fires when the `<ion-input-otp>` component loses focus after its value has changed.  This event will not emit when programmatically setting the `value` property.
+         */
+        "onIonChange"?: (event: IonInputOtpCustomEvent<InputOtpChangeEventDetail>) => void;
+        /**
+          * Emitted when all input boxes have been filled with valid values.
+         */
+        "onIonComplete"?: (event: IonInputOtpCustomEvent<InputOtpCompleteEventDetail>) => void;
+        /**
+          * Emitted when the input group has focus.
+         */
+        "onIonFocus"?: (event: IonInputOtpCustomEvent<FocusEvent>) => void;
+        /**
+          * The `ionInput` event is fired each time the user modifies the input's value. Unlike the `ionChange` event, the `ionInput` event is fired for each alteration to the input's value. This typically happens for each keystroke as the user types.  For elements that accept text input (`type=text`, `type=tel`, etc.), the interface is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others, the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If the input is cleared on edit, the type is `null`.
+         */
+        "onIonInput"?: (event: IonInputOtpCustomEvent<InputOtpInputEventDetail>) => void;
+        /**
+          * A regex pattern string for allowed characters. Defaults based on type.  For numbers (`type="number"`): `"[\p{N}]"` For text (`type="text"`): `"[\p{L}\p{N}]"`
+         */
+        "pattern"?: string;
+        /**
+          * If `true`, the user cannot modify the value.
+         */
+        "readonly"?: boolean;
+        /**
+          * Where separators should be shown between input boxes. Can be a comma-separated string or an array of numbers.  For example: `"3"` will show a separator after the 3rd input box. `[1,4]` will show a separator after the 1st and 4th input boxes. `"all"` will show a separator between every input box.
+         */
+        "separators"?: 'all' | string | number[];
+        /**
+          * The shape of the input boxes. If "round" they will have an increased border radius. If "rectangular" they will have no border radius. If "soft" they will have a soft border radius.
+         */
+        "shape"?: 'round' | 'rectangular' | 'soft';
+        /**
+          * The size of the input boxes.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The type of input allowed in the input boxes.
+         */
+        "type"?: 'text' | 'number';
+        /**
+          * The value of the input group.
          */
         "value"?: string | number | null;
     }
@@ -8309,6 +8470,7 @@ declare namespace LocalJSX {
         "ion-infinite-scroll": IonInfiniteScroll;
         "ion-infinite-scroll-content": IonInfiniteScrollContent;
         "ion-input": IonInput;
+        "ion-input-otp": IonInputOtp;
         "ion-input-password-toggle": IonInputPasswordToggle;
         "ion-item": IonItem;
         "ion-item-divider": IonItemDivider;
@@ -8411,6 +8573,7 @@ declare module "@stencil/core" {
             "ion-infinite-scroll": LocalJSX.IonInfiniteScroll & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollElement>;
             "ion-infinite-scroll-content": LocalJSX.IonInfiniteScrollContent & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollContentElement>;
             "ion-input": LocalJSX.IonInput & JSXBase.HTMLAttributes<HTMLIonInputElement>;
+            "ion-input-otp": LocalJSX.IonInputOtp & JSXBase.HTMLAttributes<HTMLIonInputOtpElement>;
             "ion-input-password-toggle": LocalJSX.IonInputPasswordToggle & JSXBase.HTMLAttributes<HTMLIonInputPasswordToggleElement>;
             "ion-item": LocalJSX.IonItem & JSXBase.HTMLAttributes<HTMLIonItemElement>;
             "ion-item-divider": LocalJSX.IonItemDivider & JSXBase.HTMLAttributes<HTMLIonItemDividerElement>;
