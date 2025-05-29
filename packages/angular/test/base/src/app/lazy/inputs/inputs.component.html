@@ -72,6 +72,16 @@
     </ion-item>
 
     <ion-item>
+      <ion-input-otp [(ngModel)]="inputOtp">Input OTP</ion-input-otp>
+      <ion-note slot="end" id="input-otp-note">{{inputOtp}}</ion-note>
+    </ion-item>
+
+    <ion-item color="dark">
+      <ion-input-otp [(ngModel)]="inputOtp">Input OTP Mirror</ion-input-otp>
+      <ion-note slot="end">{{inputOtp}}</ion-note>
+    </ion-item>
+
+    <ion-item>
       <ion-checkbox [(ngModel)]="checkbox" slot="start" id="first-checkbox">
         Checkbox
       </ion-checkbox>

@@ -26,7 +26,7 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
-        "varsIgnorePattern": "^h$"
+        "varsIgnorePattern": "^(h|Fragment)$"
       }
     ],
     "no-useless-catch": "off",

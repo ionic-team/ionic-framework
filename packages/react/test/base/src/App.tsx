@@ -22,6 +22,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import Icons from './pages/Icons';
+import Inputs from './pages/Inputs';
 import Main from './pages/Main';
 import Tabs from './pages/Tabs';
 import TabsBasic from './pages/TabsBasic';
@@ -63,6 +64,7 @@ const App: React.FC = () => (
         <Route path="/tabs" component={Tabs} />
         <Route path="/tabs-basic" component={TabsBasic} />
         <Route path="/icons" component={Icons} />
+        <Route path="/inputs" component={Inputs} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
