@@ -304,7 +304,13 @@ ion-ripple-effect {
   @include border-radius(inherit);
 }
 
-:host(.button-has-badge) .button-native {
+// This rule works for Chrome.
+:has(ion-badge) .button-native {
+  --overflow: visible;
+}
+
+// This rule works for the rest of the browsers.
+:host(:has(ion-badge)) .button-native {
   --overflow: visible;
 }
 

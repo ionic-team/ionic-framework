@@ -206,10 +206,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     return !!this.el.querySelector('[slot="icon-only"]');
   }
 
-  private get hasBadge() {
-    return !!this.el.querySelector('ion-badge');
-  }
-
   private get rippleType() {
     const hasClearFill = this.fill === undefined || this.fill === 'clear';
 
@@ -349,20 +345,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   };
 
   render() {
-    const {
-      buttonType,
-      type,
-      disabled,
-      rel,
-      target,
-      href,
-      color,
-      expand,
-      hasIconOnly,
-      hasBadge,
-      strong,
-      inheritedAttributes,
-    } = this;
+    const { buttonType, type, disabled, rel, target, href, color, expand, hasIconOnly, strong, inheritedAttributes } =
+      this;
 
     const theme = getIonTheme(this);
     const mode = getIonMode(this);
@@ -414,7 +398,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'in-buttons': hostContext('ion-buttons', this.el),
           'button-has-icon-only': hasIconOnly,
-          'button-has-badge': hasBadge,
           'button-disabled': disabled,
           'ion-activatable': true,
           'ion-focusable': true,

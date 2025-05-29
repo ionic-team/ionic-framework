@@ -56,13 +56,5 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
 
       await expect(container).toHaveScreenshot(screenshot(`badge-hint-button-bottom`));
     });
-
-    test('should not have visual regressions for different button sizes', async ({ page }) => {
-      await page.goto('/src/components/badge/test/hint', config);
-
-      const container = page.locator('#button-size');
-
-      await expect(container).toHaveScreenshot(screenshot(`badge-hint-button-size`));
-    });
   });
 });

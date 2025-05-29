@@ -160,12 +160,17 @@
 // Badge in Button
 // --------------------------------------------------
 
+:host([vertical]:not(.in-tab-button).in-button.badge-small) {
+  @include globals.position(null, calc(-1 * var(globals.$ion-space-050)));
+}
+
+:host([vertical]:not(.in-tab-button).in-button.badge-medium),
+:host([vertical]:not(.in-tab-button).in-button.badge-large) {
+  @include globals.position(null, globals.$ion-space-050);
+}
+
 :host(:not(:empty).in-button) {
-  --padding-start: #{globals.$ion-scale-050};
-  --padding-end: #{globals.$ion-scale-050};
-
   @include globals.typography(globals.$ion-body-action-xs);
-
   min-width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
 

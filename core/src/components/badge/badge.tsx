@@ -80,7 +80,7 @@ export class Badge implements ComponentInterface {
     const theme = getIonTheme(this);
     const { size } = this;
 
-    // TODO(FW-6355): Remove theme check when sizes are defined for all themes.
+    // TODO(ROU-10747): Remove theme check when sizes are defined for all themes.
     if (theme !== 'ionic') {
       return undefined;
     }
@@ -133,7 +133,6 @@ export class Badge implements ComponentInterface {
           [`badge-vertical-${this.vertical}`]: this.vertical !== undefined,
           'in-button': hostContext('ion-button', this.el),
           'in-tab-button': hostContext('ion-tab-button', this.el),
-          'long-badge': (this.el.textContent?.trim().length ?? 0) > 2,
         })}
       >
         <slot></slot>
