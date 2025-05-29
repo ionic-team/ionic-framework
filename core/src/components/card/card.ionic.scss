@@ -9,11 +9,11 @@
   --border-width: #{globals.$ion-border-size-025};
   --border-color: #{globals.$ion-border-default};
   --border-style: #{globals.$ion-border-style-solid};
-  --border-radius:  #{globals.$ion-round-xl};
+  --border-radius: #{globals.$ion-round-xl};
   --color: #{globals.$ion-primitives-neutral-1200};
+  min-width: globals.$ion-scale-2400;
 
   border: var(--border-width) var(--border-style) var(--border-color);
-  min-width: globals.$ion-scale-2400;
 }
 
 ::slotted(img) {
