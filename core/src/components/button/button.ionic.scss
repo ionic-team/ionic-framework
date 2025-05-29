@@ -165,8 +165,8 @@
 ::slotted(ion-spinner[slot="start"]),
 ::slotted(ion-spinner[slot="end"]),
 ::slotted(ion-spinner[slot="icon-only"]) {
-  width: globals.$ion-space-500;
-  height: globals.$ion-space-500;
+  width: globals.$ion-scale-500;
+  height: globals.$ion-scale-500;
 }
 
 // Button Shapes
