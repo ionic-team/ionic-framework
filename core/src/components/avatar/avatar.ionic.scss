@@ -15,7 +15,7 @@
   align-items: center;
   justify-content: center;
 
-  background: globals.$ion-bg-neutral-subtlest-default;
+  background: globals.$ion-bg-neutral-subtle-default;
   color: globals.$ion-text-subtlest;
 }
 
@@ -118,6 +118,11 @@
   @include globals.padding(0);
 }
 
+:host(.avatar-xxsmall) ::slotted(ion-icon) {
+  width: globals.$ion-scale-300;
+  height: globals.$ion-scale-300;
+}
+
 :host(.avatar-xsmall) ::slotted(ion-icon) {
   width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
@@ -139,8 +144,8 @@
 }
 
 :host(.avatar-xlarge) ::slotted(ion-icon) {
-  width: globals.$ion-scale-1000;
-  height: globals.$ion-scale-1000;
+  width: globals.$ion-scale-800;
+  height: globals.$ion-scale-800;
 }
 
 // Avatar Badge Empty (hint)
