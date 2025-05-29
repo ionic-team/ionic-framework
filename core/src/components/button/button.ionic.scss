@@ -131,15 +131,14 @@
 ::slotted(ion-icon[slot="start"]),
 ::slotted(ion-icon[slot="end"]),
 ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: globals.$ion-font-size-400;
+  font-size: globals.$ion-font-size-500;
 }
 
-:host(.button-small),
 :host(.button-large) {
   ::slotted(ion-icon[slot="start"]),
   ::slotted(ion-icon[slot="end"]),
   ::slotted(ion-icon[slot="icon-only"]) {
-    font-size: inherit;
+    font-size: globals.$ion-font-size-600;
   }
 }
 
@@ -264,8 +263,46 @@
   @include globals.margin-horizontal(globals.$ion-space-300, null);
 }
 
-// Button Badge
+// Button with Badge
 // --------------------------------------------------
-:host ::slotted(ion-badge[vertical]:not(:empty)) {
-  @include globals.padding(globals.$ion-space-050);
+
+:host(.button-has-badge) {
+  --padding-top: #{globals.$ion-space-0};
+  --padding-bottom: #{globals.$ion-space-0};
+}
+
+:host(.button-small) ::slotted(ion-badge) {
+  @include globals.position(null, calc(-1 * globals.$ion-space-050), null, null);
+}
+
+:host(.button-medium) {
+  ::slotted(ion-badge.long-badge.badge-vertical-top) {
+    @include globals.position($top: globals.$ion-space-100);
+  }
+  ::slotted(ion-badge.long-badge.badge-vertical-bottom) {
+    @include globals.position($bottom: globals.$ion-space-100);
+  }
+
+  ::slotted(ion-badge:not(.long-badge).badge-vertical-top) {
+    @include globals.position(globals.$ion-space-100, globals.$ion-space-150, null, null);
+  }
+  ::slotted(ion-badge:not(.long-badge).badge-vertical-bottom) {
+    @include globals.position(null, globals.$ion-space-150, globals.$ion-space-100, null);
+  }
+}
+
+:host(.button-large) {
+  ::slotted(ion-badge.long-badge.badge-vertical-top) {
+    @include globals.position($top: globals.$ion-space-200);
+  }
+  ::slotted(ion-badge.long-badge.badge-vertical-bottom) {
+    @include globals.position($bottom: globals.$ion-space-200);
+  }
+
+  ::slotted(ion-badge:not(.long-badge).badge-vertical-top) {
+    @include globals.position(globals.$ion-space-200, globals.$ion-space-200, null, null);
+  }
+  ::slotted(ion-badge:not(.long-badge).badge-vertical-bottom) {
+    @include globals.position(null, globals.$ion-space-200, globals.$ion-space-200, null);
+  }
 }
