@@ -179,6 +179,13 @@ export const createSheetGesture = (
       // sheet has been moved below the footer. When that happens, we need to swap
       // the position back so it will collapse correctly.
       cachedFooterYPosition = absoluteTop;
+      // If there's a toolbar, we need to combine the toolbar height with the footer position
+      // because the toolbar moves with the drag handle, so when it starts overlapping the footer,
+      // we need to account for that.
+      const toolbar = baseEl.querySelector('ion-toolbar') as HTMLIonToolbarElement | null;
+      if (toolbar) {
+        cachedFooterYPosition -= toolbar.clientHeight;
+      }
 
       document.body.appendChild(cachedFooterEl);
     }
@@ -500,11 +507,13 @@ export const createSheetGesture = (
     }
 
     /**
-     * If expandToScroll is disabled, we need to swap
+     * If expandToScroll is disabled and we're animating
+     * to the close of the sheet, we need to swap
      * the footer position to stationary so that it
-     * will act as it would by default
+     * will collapse correctly. We cannot just always swap
+     * here or it'll be jittery while animating movement.
      */
-    if (!expandToScroll) {
+    if (!expandToScroll && snapToBreakpoint === 0) {
       swapFooterPosition('stationary');
     }
 
@@ -513,6 +522,13 @@ export const createSheetGesture = (
         .onFinish(
           () => {
             if (shouldRemainOpen) {
+              /**
+               * If expandToScroll is disabled, we need to swap
+               * the footer position to stationary so that it
+               * will act as it would by default
+               */
+              swapFooterPosition('stationary');
+
               /**
                * Once the snapping animation completes,
                * we need to reset the animation to go
