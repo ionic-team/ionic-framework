@@ -77,6 +77,24 @@ configs().forEach(({ title, config }) => {
       await expect(inputBoxes.nth(3)).toHaveAttribute('aria-hidden', 'true');
     });
 
+    test('should update aria-hidden when value is set after initialization', async ({ page }) => {
+      await page.setContent(`<ion-input-otp></ion-input-otp>`, config);
+
+      await page.evaluate(() => {
+        const inputOtp = document.querySelector('ion-input-otp');
+        if (inputOtp) {
+          inputOtp.value = '12';
+        }
+      });
+
+      const inputBoxes = page.locator('ion-input-otp input');
+
+      await expect(inputBoxes.nth(0)).toHaveAttribute('aria-hidden', 'false');
+      await expect(inputBoxes.nth(1)).toHaveAttribute('aria-hidden', 'false');
+      await expect(inputBoxes.nth(2)).toHaveAttribute('aria-hidden', 'false');
+      await expect(inputBoxes.nth(3)).toHaveAttribute('aria-hidden', 'true');
+    });
+
     test('should update aria-label and aria-labelledby when set on host', async ({ page }) => {
       await page.setContent(
         `<ion-input-otp aria-label="Custom label" aria-labelledby="my-label"></ion-input-otp>`,

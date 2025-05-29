@@ -175,23 +175,6 @@ export class InputOTP implements ComponentInterface {
   @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   /**
-   * Resets the value and focus state.
-   */
-  @Method()
-  async reset() {
-    this.value = '';
-
-    this.focusedValue = null;
-    this.hasFocus = false;
-
-    this.inputRefs.forEach((input) => {
-      input.blur();
-    });
-
-    this.updateTabIndexes();
-  }
-
-  /**
    * Sets focus to an input box.
    * @param index - The index of the input box to focus (0-based).
    * If provided and the input box has a value, the input box at that index will be focused.
@@ -211,6 +194,7 @@ export class InputOTP implements ComponentInterface {
   @Watch('value')
   valueChanged() {
     this.initializeValues();
+    this.updateTabIndexes();
   }
 
   /**
@@ -367,7 +351,6 @@ export class InputOTP implements ComponentInterface {
     if (newValue.length === length) {
       this.ionComplete.emit({ value: newValue });
     }
-    this.updateTabIndexes();
   }
 
   /**

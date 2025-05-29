@@ -1019,7 +1019,7 @@ This event will not emit when programmatically setting the `value` property.
 
 @ProxyCmp({
   inputs: ['autocapitalize', 'color', 'disabled', 'fill', 'inputmode', 'length', 'pattern', 'readonly', 'separators', 'shape', 'size', 'type', 'value'],
-  methods: ['reset', 'setFocus']
+  methods: ['setFocus']
 })
 @Component({
   selector: 'ion-input-otp',

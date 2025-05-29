@@ -944,28 +944,4 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(lastInput).toBeFocused();
     });
   });
-
-  test.describe(title('input-otp: reset method'), () => {
-    test('should clear all input values and reset focus state', async ({ page }) => {
-      await page.setContent(`<ion-input-otp value="1234">Description</ion-input-otp>`, config);
-
-      const inputOtp = page.locator('ion-input-otp');
-      const inputBoxes = page.locator('ion-input-otp input');
-
-      // Focus an input first
-      await inputBoxes.nth(2).focus();
-      await expect(inputBoxes.nth(2)).toBeFocused();
-
-      // Call reset
-      await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
-        el.reset();
-      });
-
-      // Check that values are cleared
-      await verifyInputValues(inputOtp, ['', '', '', '']);
-
-      // Check that focus is removed
-      await expect(inputBoxes.nth(2)).not.toBeFocused();
-    });
-  });
 });

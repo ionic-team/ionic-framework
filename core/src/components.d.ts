@@ -1355,10 +1355,6 @@ export namespace Components {
          */
         "readonly": boolean;
         /**
-          * Resets the value and focus state.
-         */
-        "reset": () => Promise<void>;
-        /**
           * Where separators should be shown between input boxes. Can be a comma-separated string or an array of numbers.  For example: `"3"` will show a separator after the 3rd input box. `[1,4]` will show a separator after the 1st and 4th input boxes. `"all"` will show a separator between every input box.
          */
         "separators"?: 'all' | string | number[];

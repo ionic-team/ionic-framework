@@ -54,7 +54,7 @@ const accessorProvider = {
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
   inputs: INPUT_OTP_INPUTS,
-  methods: ['reset', 'setFocus'],
+  methods: ['setFocus'],
 })
 @Component({
   selector: 'ion-input-otp',

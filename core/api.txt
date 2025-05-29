@@ -794,7 +794,6 @@ ion-input-otp,prop,shape,"rectangular" | "round" | "soft",'round',false,false
 ion-input-otp,prop,size,"large" | "medium" | "small",'medium',false,false
 ion-input-otp,prop,type,"number" | "text",'number',false,false
 ion-input-otp,prop,value,null | number | string | undefined,'',false,false
-ion-input-otp,method,reset,reset() => Promise<void>
 ion-input-otp,method,setFocus,setFocus(index?: number) => Promise<void>
 ion-input-otp,event,ionBlur,FocusEvent,true
 ion-input-otp,event,ionChange,InputOtpChangeEventDetail,true
