@@ -527,7 +527,9 @@ export const createSheetGesture = (
                * the footer position to stationary so that it
                * will act as it would by default
                */
-              swapFooterPosition('stationary');
+              if (!expandToScroll) {
+                swapFooterPosition('stationary');
+              }
 
               /**
                * Once the snapping animation completes,
