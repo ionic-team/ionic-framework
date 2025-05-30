@@ -6,8 +6,14 @@
 
 :host {
   --background: #{globals.$ion-primitives-base-white};
-  --border-radius: #{globals.$ion-border-radius-400};
+  --border-width: #{globals.$ion-border-size-025};
+  --border-color: #{globals.$ion-border-default};
+  --border-style: #{globals.$ion-border-style-solid};
+  --border-radius: #{globals.$ion-round-xl};
   --color: #{globals.$ion-primitives-neutral-1200};
+  min-width: globals.$ion-scale-2400;
+
+  border: var(--border-width) var(--border-style) var(--border-color);
 }
 
 ::slotted(img) {
@@ -18,9 +24,13 @@
 // ---------------------------------------------
 
 :host(.card-soft) {
-  --border-radius: #{globals.$ion-border-radius-200};
+  --border-radius: #{globals.$ion-soft-xl};
+}
+
+:host(.card-round) {
+  --border-radius: #{globals.$ion-round-xl};
 }
 
 :host(.card-rectangular) {
-  --border-radius: #{globals.$ion-border-radius-0};
+  --border-radius: #{globals.$ion-rectangular-xl};
 }
