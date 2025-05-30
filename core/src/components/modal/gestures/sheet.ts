@@ -508,7 +508,7 @@ export const createSheetGesture = (
 
     /**
      * If expandToScroll is disabled and we're animating
-     * to the close of the sheet, we need to swap
+     * to close the sheet, we need to swap
      * the footer position to stationary so that it
      * will collapse correctly. We cannot just always swap
      * here or it'll be jittery while animating movement.
