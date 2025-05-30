@@ -525,7 +525,7 @@ export const createSheetGesture = (
               /**
                * If expandToScroll is disabled, we need to swap
                * the footer position to stationary so that it
-               * will act as it would by default
+               * will act as it would by default.
                */
               if (!expandToScroll) {
                 swapFooterPosition('stationary');
