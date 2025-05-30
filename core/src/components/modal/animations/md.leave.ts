@@ -21,7 +21,7 @@ const createLeaveAnimation = () => {
  * Md Modal Leave Animation
  */
 export const mdLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptions): Animation => {
-  const { currentBreakpoint, expandToScroll } = opts;
+  const { currentBreakpoint } = opts;
   const root = getElementRoot(baseEl);
   const { wrapperAnimation, backdropAnimation } =
     currentBreakpoint !== undefined ? createSheetLeaveAnimation(opts) : createLeaveAnimation();
@@ -32,33 +32,7 @@ export const mdLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOption
   const baseAnimation = createAnimation()
     .easing('cubic-bezier(0.47,0,0.745,0.715)')
     .duration(200)
-    .addAnimation([backdropAnimation, wrapperAnimation])
-    .beforeAddWrite(() => {
-      if (expandToScroll) {
-        // Scroll can only be done when the modal is fully expanded.
-        return;
-      }
-
-      /**
-       * If expandToScroll is disabled, we need to swap
-       * the visibility to the original, so the footer
-       * dismisses with the modal and doesn't stay
-       * until the modal is removed from the DOM.
-       */
-      const ionFooter = baseEl.querySelector('ion-footer');
-      if (ionFooter) {
-        const clonedFooter = baseEl.shadowRoot!.querySelector('ion-footer')!;
-
-        ionFooter.style.removeProperty('display');
-        ionFooter.removeAttribute('aria-hidden');
-
-        clonedFooter.style.setProperty('display', 'none');
-        clonedFooter.setAttribute('aria-hidden', 'true');
-
-        const page = baseEl.querySelector('.ion-page') as HTMLElement;
-        page.style.removeProperty('padding-bottom');
-      }
-    });
+    .addAnimation([backdropAnimation, wrapperAnimation]);
 
   return baseAnimation;
 };

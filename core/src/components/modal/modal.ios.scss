@@ -87,16 +87,3 @@
 :host(.modal-sheet) .modal-wrapper {
   @include border-radius(var(--border-radius), var(--border-radius), 0, 0);
 }
-
-// iOS Sheet Modal - Scroll at all breakpoints
-// --------------------------------------------------
-
-/**
- * Sheet modals require an additional padding as mentioned in the
- * `core.scss` file. However, there's a workaround that requires
- * a cloned footer to be added to the modal. This is only necessary
- * because the core styles are not being applied to the cloned footer.
- */
-:host(.modal-sheet.modal-no-expand-scroll) ion-footer ion-toolbar:first-of-type {
-  padding-top: $modal-sheet-padding-top;
-}
