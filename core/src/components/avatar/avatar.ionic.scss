@@ -139,8 +139,8 @@
 }
 
 :host(.avatar-large) ::slotted(ion-icon) {
-  width: globals.$ion-scale-800;
-  height: globals.$ion-scale-800;
+  width: globals.$ion-scale-700;
+  height: globals.$ion-scale-700;
 }
 
 :host(.avatar-xlarge) ::slotted(ion-icon) {
