@@ -619,6 +619,21 @@ export class InputOTP implements ComponentInterface {
 
     const value = (event.target as HTMLInputElement).value;
 
+    // If the value is longer than 1 character, it's likely from
+    // autofill, so we need to split the value up
+    if (value.length > 1) {
+      const chars = value.split('').slice(0, this.length);
+      chars.forEach((char, index) => {
+        if (this.validKeyPattern.test(char)) {
+          this.inputRefs[index].value = char;
+          this.inputValues[index] = char;
+        }
+      });
+      this.value = chars.join('');
+      this.updateValue(event);
+      return;
+    }
+
     // Only allow input if it's a single character and matches the pattern
     if (value.length > 1 || (value.length > 0 && !validKeyPattern.test(value))) {
       // Reset the input value if not valid
@@ -760,7 +775,7 @@ export class InputOTP implements ComponentInterface {
                   readOnly={readonly}
                   tabIndex={index === tabbableIndex ? 0 : -1}
                   value={inputValues[index] || ''}
-                  autocomplete={index === 0 ? 'one-time-code' : 'off'}
+                  autocomplete="one-time-code"
                   ref={(el) => (inputRefs[index] = el as HTMLInputElement)}
                   onInput={this.onInput(index)}
                   onBlur={this.onBlur}
