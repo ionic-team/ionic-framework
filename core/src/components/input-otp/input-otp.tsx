@@ -623,13 +623,34 @@ export class InputOTP implements ComponentInterface {
     // If the value is longer than 1 character (autofill), split it into
     // characters and filter out invalid ones
     if (value.length > 1) {
-      const chars = value.split('').filter((char) => validKeyPattern.test(char)).slice(0, length);
-      chars.forEach((char, i) => {
-        this.inputRefs[i].value = char;
-        this.inputValues[i] = char;
-      });
-      this.value = chars.join('');
+      const validChars = value
+        .split('')
+        .filter((char) => validKeyPattern.test(char))
+        .slice(0, length);
+
+      // If there are no valid characters coming from the
+      // autofill, all input refs have to be cleared after the
+      // browser has finished the autofill behavior
+      if (validChars.length === 0) {
+        requestAnimationFrame(() => {
+          this.inputRefs.forEach((input) => {
+            input.value = '';
+          });
+        });
+      }
+
+      // Update the value of the input group and emit the input change event
+      this.value = validChars.join('');
       this.updateValue(event);
+
+      // Focus the first empty input box or the last input box if all boxes
+      // are filled after a small delay to ensure the input boxes have been
+      // updated before moving the focus
+      setTimeout(() => {
+        const nextIndex = validChars.length < length ? validChars.length : length - 1;
+        this.inputRefs[nextIndex]?.focus();
+      }, 20);
+
       return;
     }
 
