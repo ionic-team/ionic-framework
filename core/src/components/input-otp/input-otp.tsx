@@ -617,54 +617,36 @@ export class InputOTP implements ComponentInterface {
   };
 
   private onInput = (index: number) => (event: InputEvent) => {
-    const { validKeyPattern } = this;
-
+    const { length, validKeyPattern } = this;
     const value = (event.target as HTMLInputElement).value;
 
-    // If the value is longer than 1 character, it's likely from
-    // autofill, so we need to split the value up
+    // If the value is longer than 1 character (autofill), split it into
+    // characters and filter out invalid ones
     if (value.length > 1) {
-      const chars = value.split('').slice(0, this.length);
-      chars.forEach((char, index) => {
-        if (this.validKeyPattern.test(char)) {
-          this.inputRefs[index].value = char;
-          this.inputValues[index] = char;
-        }
+      const chars = value.split('').filter((char) => validKeyPattern.test(char)).slice(0, length);
+      chars.forEach((char, i) => {
+        this.inputRefs[i].value = char;
+        this.inputValues[i] = char;
       });
       this.value = chars.join('');
       this.updateValue(event);
       return;
     }
 
-    // Only allow input if it's a single character and matches the pattern
-    if (value.length > 1 || (value.length > 0 && !validKeyPattern.test(value))) {
-      // Reset the input value if not valid
+    // Only allow input if it matches the pattern
+    if (value.length > 0 && !validKeyPattern.test(value)) {
       this.inputRefs[index].value = '';
       this.inputValues[index] = '';
       return;
     }
 
-    // Find the first empty box before or at the current index
-    let targetIndex = index;
-    for (let i = 0; i < index; i++) {
-      if (!this.inputValues[i] || this.inputValues[i] === '') {
-        targetIndex = i;
-        break;
-      }
-    }
-
-    // Set the value at the target index
-    this.inputValues[targetIndex] = value;
-
-    // If the value was entered in a later box, clear the current box
-    if (targetIndex !== index) {
-      this.inputRefs[index].value = '';
-    }
+    // For single character input, fill the current box
+    this.inputValues[index] = value;
+    this.updateValue(event);
 
     if (value.length > 0) {
-      this.focusNext(targetIndex);
+      this.focusNext(index);
     }
-    this.updateValue(event);
   };
 
   /**

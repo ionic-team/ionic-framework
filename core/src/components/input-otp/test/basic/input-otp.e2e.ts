@@ -668,6 +668,18 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
       await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
     });
+
+    test('should paste mixed language text into all input boxes', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text" length="6">Description</ion-input-otp>`, config);
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+      await simulatePaste(firstInput, 'أبجد123');
+
+      const inputOtp = page.locator('ion-input-otp');
+
+      await verifyInputValues(inputOtp, ['أ', 'ب', 'ج', 'د', '1', '2']);
+    });
   });
 });
 
