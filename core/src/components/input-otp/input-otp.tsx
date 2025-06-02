@@ -544,12 +544,14 @@ export class InputOTP implements ComponentInterface {
     const rtl = isRTL(this.el);
     const input = event.target as HTMLInputElement;
 
-    const isPasteShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'v';
+    // Meta shortcuts are used to copy, paste, and select text
+    // We don't want to handle these keys here
+    const metaShortcuts = ['a', 'c', 'v', 'x', 'r', 'z', 'y'];
     const isTextSelection = input.selectionStart !== input.selectionEnd;
 
-    // Return if the key is the paste shortcut or the input value
+    // Return if the key is a meta shortcut or the input value
     // text is selected and let the onPaste / onInput handler manage it
-    if (isPasteShortcut || isTextSelection) {
+    if (isTextSelection || ((event.metaKey || event.ctrlKey) && metaShortcuts.includes(event.key.toLowerCase()))) {
       return;
     }
 
