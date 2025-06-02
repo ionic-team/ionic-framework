@@ -3,6 +3,16 @@ import type { Locator } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
+ * Simulates an autofill event in an input element with the given value
+ */
+async function simulateAutofill(input: any, value: string) {
+  await input.evaluate((input: any, value: string) => {
+    (input as HTMLInputElement).value = value;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  }, value);
+}
+
+/**
  * Simulates a paste event in an input element with the given value
  */
 async function simulatePaste(input: any, value: string) {
@@ -429,37 +439,52 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
       await verifyInputValues(inputOtp, ['1', '9', '3', '']);
     });
+  });
 
+  test.describe(title('input-otp: autofill functionality'), () => {
     test('should handle autofill correctly', async ({ page }) => {
       await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
       const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
 
-      // Set the value in the 1st input directly and trigger input event
-      // this simulates the value being set by autofill
-      await firstInput.evaluate((input) => {
-        (input as HTMLInputElement).value = '1234';
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-      });
+      await simulateAutofill(firstInput, '1234');
 
       const inputOtp = page.locator('ion-input-otp');
       await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
+
+      const lastInput = page.locator('ion-input-otp input').last();
+      await expect(lastInput).toBeFocused();
     });
 
     test('should handle autofill correctly when it exceeds the length', async ({ page }) => {
       await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
 
       const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
 
-      // Set the value in the 1st input directly and trigger input event
-      // this simulates the value being set by autofill
-      await firstInput.evaluate((input) => {
-        (input as HTMLInputElement).value = '123456';
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-      });
+      await simulateAutofill(firstInput, '123456');
 
       const inputOtp = page.locator('ion-input-otp');
       await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
+
+      const lastInput = page.locator('ion-input-otp input').last();
+      await expect(lastInput).toBeFocused();
+    });
+
+    test('should handle autofill correctly when it is less than the length', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await simulateAutofill(firstInput, '12');
+
+      const inputOtp = page.locator('ion-input-otp');
+      await verifyInputValues(inputOtp, ['1', '2', '', '']);
+
+      const thirdInput = page.locator('ion-input-otp input').nth(2);
+      await expect(thirdInput).toBeFocused();
     });
 
     test('should handle autofill correctly when using autofill after typing 1 character', async ({ page }) => {
@@ -473,15 +498,27 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       const secondInput = page.locator('ion-input-otp input').nth(1);
       await secondInput.focus();
 
-      // Set the value in the 2nd input directly and trigger input event
-      // this simulates the value being set by autofill from the 2nd input
-      await secondInput.evaluate((input) => {
-        (input as HTMLInputElement).value = '1234';
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-      });
+      await simulateAutofill(secondInput, '1234');
 
       const inputOtp = page.locator('ion-input-otp');
       await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
+
+      const lastInput = page.locator('ion-input-otp input').last();
+      await expect(lastInput).toBeFocused();
+    });
+
+    test('should handle autofill correctly when autofill value contains invalid characters', async ({ page }) => {
+      await page.setContent(`<ion-input-otp pattern="[a-zA-Z]">Description</ion-input-otp>`, config);
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await simulateAutofill(firstInput, '1234');
+
+      const inputOtp = page.locator('ion-input-otp');
+      await verifyInputValues(inputOtp, ['', '', '', '']);
+
+      await expect(firstInput).toBeFocused();
     });
   });
 
