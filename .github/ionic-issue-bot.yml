@@ -132,8 +132,6 @@ noReproduction:
   maxIssuesPerRun: 100
   label: "ionitron: needs reproduction"
   responseLabel: triage
-  exemptLabels:
-    - "needs: investigation"
   exemptProjects: true
   exemptMilestones: true
   message: >
