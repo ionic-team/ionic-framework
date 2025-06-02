@@ -344,7 +344,10 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
 
-      await page.keyboard.type('أبجد123');
+      // We need to type the numbers separately because the browser
+      // does not properly handle the script text when mixed with numbers
+      await page.keyboard.type('123');
+      await page.keyboard.type('أبجد');
 
       // Because Arabic is a right-to-left script, JavaScript's handling of RTL text
       // causes the array values to be reversed while input boxes maintain LTR order.

@@ -774,7 +774,6 @@ export class InputOTP implements ComponentInterface {
                   type="text"
                   autoCapitalize={autocapitalize}
                   inputmode={inputmode}
-                  maxLength={1}
                   pattern={pattern}
                   disabled={disabled}
                   readOnly={readonly}
