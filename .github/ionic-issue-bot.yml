@@ -114,8 +114,6 @@ noReply:
   maxIssuesPerRun: 100
   label: "needs: reply"
   responseLabel: triage
-  exemptLabels:
-    - "needs: investigation"
   exemptProjects: true
   exemptMilestones: true
   message: >
