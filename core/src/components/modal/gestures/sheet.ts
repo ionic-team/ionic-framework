@@ -123,7 +123,7 @@ export const createSheetGesture = (
   /**
    * Toggles the footer to an absolute position while moving to prevent
    * it from shaking while the sheet is being dragged.
-   * @param footer Whether the footer is in a moving or stationary position.
+   * @param newPosition Whether the footer is in a moving or stationary position.
    */
   const swapFooterPosition = (newPosition: 'moving' | 'stationary') => {
     if (!cachedFooterEl) {
