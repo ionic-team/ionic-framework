@@ -544,12 +544,14 @@ export class InputOTP implements ComponentInterface {
     const rtl = isRTL(this.el);
     const input = event.target as HTMLInputElement;
 
-    const isPasteShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'v';
+    // Meta shortcuts are used to copy, paste, and select text
+    // We don't want to handle these keys here
+    const metaShortcuts = ['a', 'c', 'v', 'x', 'r', 'z', 'y'];
     const isTextSelection = input.selectionStart !== input.selectionEnd;
 
-    // Return if the key is the paste shortcut or the input value
+    // Return if the key is a meta shortcut or the input value
     // text is selected and let the onPaste / onInput handler manage it
-    if (isPasteShortcut || isTextSelection) {
+    if (isTextSelection || ((event.metaKey || event.ctrlKey) && metaShortcuts.includes(event.key.toLowerCase()))) {
       return;
     }
 
@@ -615,39 +617,57 @@ export class InputOTP implements ComponentInterface {
   };
 
   private onInput = (index: number) => (event: InputEvent) => {
-    const { validKeyPattern } = this;
-
+    const { length, validKeyPattern } = this;
     const value = (event.target as HTMLInputElement).value;
 
-    // Only allow input if it's a single character and matches the pattern
-    if (value.length > 1 || (value.length > 0 && !validKeyPattern.test(value))) {
-      // Reset the input value if not valid
+    // If the value is longer than 1 character (autofill), split it into
+    // characters and filter out invalid ones
+    if (value.length > 1) {
+      const validChars = value
+        .split('')
+        .filter((char) => validKeyPattern.test(char))
+        .slice(0, length);
+
+      // If there are no valid characters coming from the
+      // autofill, all input refs have to be cleared after the
+      // browser has finished the autofill behavior
+      if (validChars.length === 0) {
+        requestAnimationFrame(() => {
+          this.inputRefs.forEach((input) => {
+            input.value = '';
+          });
+        });
+      }
+
+      // Update the value of the input group and emit the input change event
+      this.value = validChars.join('');
+      this.updateValue(event);
+
+      // Focus the first empty input box or the last input box if all boxes
+      // are filled after a small delay to ensure the input boxes have been
+      // updated before moving the focus
+      setTimeout(() => {
+        const nextIndex = validChars.length < length ? validChars.length : length - 1;
+        this.inputRefs[nextIndex]?.focus();
+      }, 20);
+
+      return;
+    }
+
+    // Only allow input if it matches the pattern
+    if (value.length > 0 && !validKeyPattern.test(value)) {
       this.inputRefs[index].value = '';
       this.inputValues[index] = '';
       return;
     }
 
-    // Find the first empty box before or at the current index
-    let targetIndex = index;
-    for (let i = 0; i < index; i++) {
-      if (!this.inputValues[i] || this.inputValues[i] === '') {
-        targetIndex = i;
-        break;
-      }
-    }
-
-    // Set the value at the target index
-    this.inputValues[targetIndex] = value;
-
-    // If the value was entered in a later box, clear the current box
-    if (targetIndex !== index) {
-      this.inputRefs[index].value = '';
-    }
+    // For single character input, fill the current box
+    this.inputValues[index] = value;
+    this.updateValue(event);
 
     if (value.length > 0) {
-      this.focusNext(targetIndex);
+      this.focusNext(index);
     }
-    this.updateValue(event);
   };
 
   /**
@@ -754,13 +774,12 @@ export class InputOTP implements ComponentInterface {
                   type="text"
                   autoCapitalize={autocapitalize}
                   inputmode={inputmode}
-                  maxLength={1}
                   pattern={pattern}
                   disabled={disabled}
                   readOnly={readonly}
                   tabIndex={index === tabbableIndex ? 0 : -1}
                   value={inputValues[index] || ''}
-                  autocomplete={index === 0 ? 'one-time-code' : 'off'}
+                  autocomplete="one-time-code"
                   ref={(el) => (inputRefs[index] = el as HTMLInputElement)}
                   onInput={this.onInput(index)}
                   onBlur={this.onBlur}

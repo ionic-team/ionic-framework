@@ -3,6 +3,16 @@ import type { Locator } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
+ * Simulates an autofill event in an input element with the given value
+ */
+async function simulateAutofill(input: any, value: string) {
+  await input.evaluate((input: any, value: string) => {
+    (input as HTMLInputElement).value = value;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  }, value);
+}
+
+/**
  * Simulates a paste event in an input element with the given value
  */
 async function simulatePaste(input: any, value: string) {
@@ -334,7 +344,10 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       const firstInput = page.locator('ion-input-otp input').first();
       await firstInput.focus();
 
-      await page.keyboard.type('أبجد123');
+      // We need to type the numbers separately because the browser
+      // does not properly handle the script text when mixed with numbers
+      await page.keyboard.type('123');
+      await page.keyboard.type('أبجد');
 
       // Because Arabic is a right-to-left script, JavaScript's handling of RTL text
       // causes the array values to be reversed while input boxes maintain LTR order.
@@ -428,6 +441,87 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await page.keyboard.type('9');
 
       await verifyInputValues(inputOtp, ['1', '9', '3', '']);
+    });
+  });
+
+  test.describe(title('input-otp: autofill functionality'), () => {
+    test('should handle autofill correctly', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await simulateAutofill(firstInput, '1234');
+
+      const inputOtp = page.locator('ion-input-otp');
+      await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
+
+      const lastInput = page.locator('ion-input-otp input').last();
+      await expect(lastInput).toBeFocused();
+    });
+
+    test('should handle autofill correctly when it exceeds the length', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await simulateAutofill(firstInput, '123456');
+
+      const inputOtp = page.locator('ion-input-otp');
+      await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
+
+      const lastInput = page.locator('ion-input-otp input').last();
+      await expect(lastInput).toBeFocused();
+    });
+
+    test('should handle autofill correctly when it is less than the length', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await simulateAutofill(firstInput, '12');
+
+      const inputOtp = page.locator('ion-input-otp');
+      await verifyInputValues(inputOtp, ['1', '2', '', '']);
+
+      const thirdInput = page.locator('ion-input-otp input').nth(2);
+      await expect(thirdInput).toBeFocused();
+    });
+
+    test('should handle autofill correctly when using autofill after typing 1 character', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('9');
+
+      const secondInput = page.locator('ion-input-otp input').nth(1);
+      await secondInput.focus();
+
+      await simulateAutofill(secondInput, '1234');
+
+      const inputOtp = page.locator('ion-input-otp');
+      await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
+
+      const lastInput = page.locator('ion-input-otp input').last();
+      await expect(lastInput).toBeFocused();
+    });
+
+    test('should handle autofill correctly when autofill value contains invalid characters', async ({ page }) => {
+      await page.setContent(`<ion-input-otp pattern="[a-zA-Z]">Description</ion-input-otp>`, config);
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await simulateAutofill(firstInput, '1234');
+
+      const inputOtp = page.locator('ion-input-otp');
+      await verifyInputValues(inputOtp, ['', '', '', '']);
+
+      await expect(firstInput).toBeFocused();
     });
   });
 
@@ -613,6 +707,18 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       const inputOtp = page.locator('ion-input-otp');
 
       await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
+    });
+
+    test('should paste mixed language text into all input boxes', async ({ page }) => {
+      await page.setContent(`<ion-input-otp type="text" length="6">Description</ion-input-otp>`, config);
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+      await simulatePaste(firstInput, 'أبجد123');
+
+      const inputOtp = page.locator('ion-input-otp');
+
+      await verifyInputValues(inputOtp, ['أ', 'ب', 'ج', 'د', '1', '2']);
     });
   });
 });
