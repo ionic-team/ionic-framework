@@ -37,7 +37,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOption
 
   // The content animation is only added if scrolling is enabled for
   // all the breakpoints.
-  expandToScroll && contentAnimation?.addElement(baseEl.querySelector('.ion-page')!);
+  !expandToScroll && contentAnimation?.addElement(baseEl.querySelector('.ion-page')!);
 
   const baseAnimation = createAnimation()
     .addElement(baseEl)
