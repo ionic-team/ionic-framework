@@ -174,18 +174,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(monthYear).toHaveText(/June 2022/);
     });
 
-    test('should not scroll to new month when value is updated with dates in different months', async ({ page }) => {
-      const datetime = await datetimeFixture.goto(config, MULTIPLE_DATES);
-      await datetime.evaluate((el: HTMLIonDatetimeElement, dates: string[]) => {
-        el.value = dates;
-      }, MULTIPLE_DATES_SEPARATE_MONTHS);
-
-      await page.waitForChanges();
-
-      const monthYear = datetime.locator('.calendar-month-year');
-      await expect(monthYear).toHaveText(/June 2022/);
-    });
-
     test('with buttons, should only update value when confirm is called', async ({ page }) => {
       const datetime = await datetimeFixture.goto(config, SINGLE_DATE, { showDefaultButtons: true });
       const june2Button = datetime.locator('[data-month="6"][data-day="2"]');
@@ -309,6 +297,43 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const header = datetime.locator('.datetime-selected-date');
 
       await expect(header).toHaveText('Mon, Oct 10');
+    });
+  });
+
+  test.describe('with selected days in different months', () => {
+    test(`set the active month view to the latest value's month`, async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/29094',
+      });
+
+      const datetime = await new DatetimeMultipleFixture(page).goto(config, MULTIPLE_DATES_SEPARATE_MONTHS);
+      const calendarMonthYear = datetime.locator('.calendar-month-year');
+
+      await expect(calendarMonthYear).toHaveText(/May 2022/);
+    });
+
+    test('does not change the active month view when selecting a day in a different month', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/29094',
+      });
+
+      const datetime = await new DatetimeMultipleFixture(page).goto(config, MULTIPLE_DATES_SEPARATE_MONTHS);
+      const nextButton = page.locator('.calendar-next-prev ion-button:nth-child(2)');
+      const calendarMonthYear = datetime.locator('.calendar-month-year');
+
+      await nextButton.click();
+
+      await expect(calendarMonthYear).toHaveText(/June 2022/);
+
+      const june8Button = datetime.locator('[data-month="6"][data-day="8"]');
+
+      await june8Button.click();
+
+      await expect(calendarMonthYear).toHaveText(/June 2022/);
     });
   });
 });
