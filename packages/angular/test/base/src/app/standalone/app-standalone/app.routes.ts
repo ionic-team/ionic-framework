@@ -44,6 +44,7 @@ export const routes: Routes = [
           { path: 'checkbox', loadComponent: () => import('../value-accessors/checkbox/checkbox.component').then(c => c.CheckboxComponent) },
           { path: 'datetime', loadComponent: () => import('../value-accessors/datetime/datetime.component').then(c => c.DatetimeComponent) },
           { path: 'input', loadComponent: () => import('../value-accessors/input/input.component').then(c => c.InputComponent) },
+          { path: 'input-otp', loadComponent: () => import('../value-accessors/input-otp/input-otp.component').then(c => c.InputOtpComponent) },
           { path: 'radio-group', loadComponent: () => import('../value-accessors/radio-group/radio-group.component').then(c => c.RadioGroupComponent) },
           { path: 'range', loadComponent: () => import('../value-accessors/range/range.component').then(c => c.RangeComponent) },
           { path: 'searchbar', loadComponent: () => import('../value-accessors/searchbar/searchbar.component').then(c => c.SearchbarComponent) },

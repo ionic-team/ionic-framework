@@ -54,6 +54,7 @@ const getAngularOutputTargets = () => {
          * Value Accessors are manually implemented in the `@ionic/angular/standalone` package.
          */
         'ion-input',
+        'ion-input-otp',
         'ion-textarea',
         'ion-searchbar',
         'ion-datetime',
@@ -202,7 +203,7 @@ export const config: Config = {
           event: 'ion-change',
         },
         {
-          elements: ['ion-input', 'ion-searchbar', 'ion-textarea', 'ion-range'],
+          elements: ['ion-input', 'ion-input-otp', 'ion-searchbar', 'ion-textarea', 'ion-range'],
           targetAttr: 'value',
           event: 'ion-input',
         }
@@ -243,7 +244,6 @@ export const config: Config = {
     // },
     ...getAngularOutputTargets(),
   ],
-  buildEs5: 'prod',
   testing: {
     moduleNameMapper: {
       "@utils/test": ["<rootDir>/src/utils/test/utils"],

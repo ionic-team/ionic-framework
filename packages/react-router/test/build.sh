@@ -1,33 +1,38 @@
 #!/bin/bash
 
-# The directory where the source
-# for each specific application is.
+# Directory containing test application versions
+# (e.g. reactrouter5, reactrouter6, etc.)
 APPS_DIR="apps"
 
-# The directory where the
-# base application logic is
+# Base application template that all test apps are built from
 BASE_DIR="base"
+
+# Output directory for built applications
 BUILD_DIR="build"
 
-# The specific application
-# we are building
+# Application version to build (passed as first argument)
 APP_DIR="${1}"
 
-# The full path to the specific application.
+# Full paths for source and destination
 FULL_APP_DIR="${APPS_DIR}/${APP_DIR}/."
-
-# The full path to the base application.
 FULL_BASE_DIR="${BASE_DIR}/."
-
-# The full path to the built application.
 BUILD_APP_DIR="${BUILD_DIR}/${APP_DIR}/"
 
-# Make the build directory if it does not already exist.
+# Verify application version exists
+if [ ! -d $FULL_APP_DIR ]; then
+  echo "Could not find test app: ${FULL_APP_DIR}"
+  exit 1
+fi
+
+# Create build directory if needed
 mkdir -p $BUILD_DIR
 
-# First we need to copy the base application
+# Copy base template first
+echo "Copying base application..."
 cp -R $FULL_BASE_DIR $BUILD_APP_DIR
 
-# Then we can copy the specific app which
-# will override any files in the base application.
+# Copy version-specific files (overrides base template)
+echo "Copying application version..."
 cp -R $FULL_APP_DIR $BUILD_APP_DIR
+
+echo "Copied test app files for ${APP_DIR}"

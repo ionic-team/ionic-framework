@@ -1,6 +1,7 @@
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
+  includeShadowDom: true,
   video: false,
   screenshotOnRunFailure: false,
   defaultCommandTimeout: 10000,

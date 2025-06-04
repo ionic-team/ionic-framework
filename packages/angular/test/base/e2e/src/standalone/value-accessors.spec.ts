@@ -1,4 +1,3 @@
-
 describe('Value Accessors', () => {
 
   describe('Checkbox', () => {
@@ -144,6 +143,81 @@ describe('Value Accessors', () => {
       cy.get('#formValue').should('have.text', JSON.stringify({ toggle: true }, null, 2));
       cy.get('ion-toggle').should('have.class', 'ion-dirty');
       cy.get('ion-toggle').should('have.class', 'ion-valid');
+    });
+  });
+
+  describe('Input OTP', () => {
+    beforeEach(() => cy.visit('/standalone/value-accessors/input-otp'));
+
+    it('should update the form value', () => {
+      cy.get('#formValue').should('have.text', JSON.stringify({
+        inputOtpString: '',
+        inputOtpNumber: ''
+      }, null, 2));
+      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-pristine');
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-pristine');
+
+      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-invalid');
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-invalid');
+
+      // Type into the string OTP input
+      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(0).type('a');
+      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(1).type('b');
+      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(2).type('c');
+      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(3).type('d');
+      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(3).blur();
+
+      // Type into the number OTP input
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(0).type('1');
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(1).type('2');
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(2).type('3');
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(3).type('4');
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(3).blur();
+
+      cy.get('#formValue').should('have.text', JSON.stringify({
+        inputOtpString: 'abcd',
+        inputOtpNumber: 1234
+      }, null, 2));
+
+      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-dirty');
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-dirty');
+
+      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-valid');
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-valid');
+    });
+
+    it('should remain invalid when partially filled', () => {
+      cy.get('#formValue').should('have.text', JSON.stringify({
+        inputOtpString: '',
+        inputOtpNumber: ''
+      }, null, 2));
+      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-pristine');
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-pristine');
+
+      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-invalid');
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-invalid');
+
+      // Type only 2 characters into the string OTP input
+      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(0).type('a');
+      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(1).type('b');
+      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(2).blur();
+
+      // Type only 2 characters into the number OTP input
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(0).type('1');
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(1).type('2');
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(2).blur();
+
+      cy.get('#formValue').should('have.text', JSON.stringify({
+        inputOtpString: 'ab',
+        inputOtpNumber: 12
+      }, null, 2));
+
+      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-dirty');
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-dirty');
+
+      // Verify both inputs remain invalid when partially filled
+      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-invalid');
+      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-invalid');
     });
   });
 
