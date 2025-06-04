@@ -9,7 +9,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * **datetime:** display the correct month when multiple values are set ([#29610](https://github.com/ionic-team/ionic-framework/issues/29610)) ([14f32f8](https://github.com/ionic-team/ionic-framework/commit/14f32f8feea7b3880367868ff0a2134b0c28cc07)), closes [#29094](https://github.com/ionic-team/ionic-framework/issues/29094)
-* **sheet:** move sheet footers instead of cloning while dragging ([#30433](https://github.com/ionic-team/ionic-framework/issues/30433)) ([4cbbbb0](https://github.com/ionic-team/ionic-framework/commit/4cbbbb053ad36d176f1d79ad09777f94ca8076d2))
+* **modal:** move sheet footers instead of cloning while dragging ([#30433](https://github.com/ionic-team/ionic-framework/issues/30433)) ([4cbbbb0](https://github.com/ionic-team/ionic-framework/commit/4cbbbb053ad36d176f1d79ad09777f94ca8076d2)), closes [#30315](https://github.com/ionic-team/ionic-framework/issues/30315) [#30341](https://github.com/ionic-team/ionic-framework/issues/30341) [#30312](https://github.com/ionic-team/ionic-framework/issues/30312)
 
 
 
