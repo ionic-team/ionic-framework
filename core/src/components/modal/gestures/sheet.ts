@@ -84,6 +84,9 @@ export const createSheetGesture = (
   let offset = 0;
   let canDismissBlocksGesture = false;
   let cachedScrollEl: HTMLElement | null = null;
+  let cachedFooterEl: HTMLIonFooterElement | null = null;
+  let cachedFooterYPosition: number | null = null;
+  let currentFooterState: 'moving' | 'stationary' | null = null;
   const canDismissMaxStep = 0.95;
   const maxBreakpoint = breakpoints[breakpoints.length - 1];
   const minBreakpoint = breakpoints[0];
@@ -118,33 +121,74 @@ export const createSheetGesture = (
   };
 
   /**
-   * Toggles the visible modal footer when `expandToScroll` is disabled.
-   * @param footer The footer to show.
+   * Toggles the footer to an absolute position while moving to prevent
+   * it from shaking while the sheet is being dragged.
+   * @param newPosition Whether the footer is in a moving or stationary position.
    */
-  const swapFooterVisibility = (footer: 'original' | 'cloned') => {
-    const originalFooter = baseEl.querySelector('ion-footer') as HTMLIonFooterElement | null;
-
-    if (!originalFooter) {
-      return;
+  const swapFooterPosition = (newPosition: 'moving' | 'stationary') => {
+    if (!cachedFooterEl) {
+      cachedFooterEl = baseEl.querySelector('ion-footer') as HTMLIonFooterElement | null;
+      if (!cachedFooterEl) {
+        return;
+      }
     }
 
-    const clonedFooter = wrapperEl.nextElementSibling as HTMLIonFooterElement;
-    const footerToHide = footer === 'original' ? clonedFooter : originalFooter;
-    const footerToShow = footer === 'original' ? originalFooter : clonedFooter;
+    const page = baseEl.querySelector('.ion-page') as HTMLElement | null;
 
-    footerToShow.style.removeProperty('display');
-    footerToShow.removeAttribute('aria-hidden');
+    currentFooterState = newPosition;
+    if (newPosition === 'stationary') {
+      // Reset positioning styles to allow normal document flow
+      cachedFooterEl.classList.remove('modal-footer-moving');
+      cachedFooterEl.style.removeProperty('position');
+      cachedFooterEl.style.removeProperty('width');
+      cachedFooterEl.style.removeProperty('height');
+      cachedFooterEl.style.removeProperty('top');
+      cachedFooterEl.style.removeProperty('left');
+      page?.style.removeProperty('padding-bottom');
 
-    const page = baseEl.querySelector('.ion-page') as HTMLElement;
-    if (footer === 'original') {
-      page.style.removeProperty('padding-bottom');
+      // Move to page
+      page?.appendChild(cachedFooterEl);
     } else {
-      const pagePadding = footerToShow.clientHeight;
-      page.style.setProperty('padding-bottom', `${pagePadding}px`);
-    }
+      // Get both the footer and document body positions
+      const cachedFooterElRect = cachedFooterEl.getBoundingClientRect();
+      const bodyRect = document.body.getBoundingClientRect();
 
-    footerToHide.style.setProperty('display', 'none');
-    footerToHide.setAttribute('aria-hidden', 'true');
+      // Add padding to the parent element to prevent content from being hidden
+      // when the footer is positioned absolutely. This has to be done before we
+      // make the footer absolutely positioned or we may accidentally cause the
+      // sheet to scroll.
+      const footerHeight = cachedFooterEl.clientHeight;
+      page?.style.setProperty('padding-bottom', `${footerHeight}px`);
+
+      // Apply positioning styles to keep footer at bottom
+      cachedFooterEl.classList.add('modal-footer-moving');
+
+      // Calculate absolute position relative to body
+      // We need to subtract the body's offsetTop to get true position within document.body
+      const absoluteTop = cachedFooterElRect.top - bodyRect.top;
+      const absoluteLeft = cachedFooterElRect.left - bodyRect.left;
+
+      // Capture the footer's current dimensions and hard code them during the drag
+      cachedFooterEl.style.setProperty('position', 'absolute');
+      cachedFooterEl.style.setProperty('width', `${cachedFooterEl.clientWidth}px`);
+      cachedFooterEl.style.setProperty('height', `${cachedFooterEl.clientHeight}px`);
+      cachedFooterEl.style.setProperty('top', `${absoluteTop}px`);
+      cachedFooterEl.style.setProperty('left', `${absoluteLeft}px`);
+
+      // Also cache the footer Y position, which we use to determine if the
+      // sheet has been moved below the footer. When that happens, we need to swap
+      // the position back so it will collapse correctly.
+      cachedFooterYPosition = absoluteTop;
+      // If there's a toolbar, we need to combine the toolbar height with the footer position
+      // because the toolbar moves with the drag handle, so when it starts overlapping the footer,
+      // we need to account for that.
+      const toolbar = baseEl.querySelector('ion-toolbar') as HTMLIonToolbarElement | null;
+      if (toolbar) {
+        cachedFooterYPosition -= toolbar.clientHeight;
+      }
+
+      document.body.appendChild(cachedFooterEl);
+    }
   };
 
   /**
@@ -247,12 +291,11 @@ export const createSheetGesture = (
 
     /**
      * If expandToScroll is disabled, we need to swap
-     * the footer visibility to the original, so if the modal
-     * is dismissed, the footer dismisses with the modal
-     * and doesn't stay on the screen after the modal is gone.
+     * the footer position to moving so that it doesn't shake
+     * while the sheet is being dragged.
      */
     if (!expandToScroll) {
-      swapFooterVisibility('original');
+      swapFooterPosition('moving');
     }
 
     /**
@@ -275,6 +318,21 @@ export const createSheetGesture = (
   };
 
   const onMove = (detail: GestureDetail) => {
+    /**
+     * If `expandToScroll` is disabled, we need to see if we're currently below
+     * the footer element and the footer is in a stationary position. If so,
+     * we need to make the stationary the original position so that the footer
+     * collapses with the sheet.
+     */
+    if (!expandToScroll && cachedFooterYPosition !== null && currentFooterState !== null) {
+      // Check if we need to swap the footer position
+      if (detail.currentY >= cachedFooterYPosition && currentFooterState === 'moving') {
+        swapFooterPosition('stationary');
+      } else if (detail.currentY < cachedFooterYPosition && currentFooterState === 'stationary') {
+        swapFooterPosition('moving');
+      }
+    }
+
     /**
      * If `expandToScroll` is disabled, and an upwards swipe gesture is done within
      * the scrollable content, we should not allow the swipe gesture to continue.
@@ -431,15 +489,6 @@ export const createSheetGesture = (
      */
     gesture.enable(false);
 
-    /**
-     * If expandToScroll is disabled, we need to swap
-     * the footer visibility to the cloned one so the footer
-     * doesn't flicker when the sheet's height is animated.
-     */
-    if (!expandToScroll && shouldRemainOpen) {
-      swapFooterVisibility('cloned');
-    }
-
     if (shouldPreventDismiss) {
       handleCanDismiss(baseEl, animation);
     } else if (!shouldRemainOpen) {
@@ -457,11 +506,31 @@ export const createSheetGesture = (
       contentEl.scrollY = true;
     }
 
+    /**
+     * If expandToScroll is disabled and we're animating
+     * to close the sheet, we need to swap
+     * the footer position to stationary so that it
+     * will collapse correctly. We cannot just always swap
+     * here or it'll be jittery while animating movement.
+     */
+    if (!expandToScroll && snapToBreakpoint === 0) {
+      swapFooterPosition('stationary');
+    }
+
     return new Promise<void>((resolve) => {
       animation
         .onFinish(
           () => {
             if (shouldRemainOpen) {
+              /**
+               * If expandToScroll is disabled, we need to swap
+               * the footer position to stationary so that it
+               * will act as it would by default.
+               */
+              if (!expandToScroll) {
+                swapFooterPosition('stationary');
+              }
+
               /**
                * Once the snapping animation completes,
                * we need to reset the animation to go

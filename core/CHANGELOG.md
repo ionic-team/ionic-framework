@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.5.9](https://github.com/ionic-team/ionic-framework/compare/v8.5.8...v8.5.9) (2025-06-04)
+
+
+### Bug Fixes
+
+* **datetime:** display the correct month when multiple values are set ([#29610](https://github.com/ionic-team/ionic-framework/issues/29610)) ([14f32f8](https://github.com/ionic-team/ionic-framework/commit/14f32f8feea7b3880367868ff0a2134b0c28cc07)), closes [#29094](https://github.com/ionic-team/ionic-framework/issues/29094)
+* **modal:** move sheet footers instead of cloning while dragging ([#30433](https://github.com/ionic-team/ionic-framework/issues/30433)) ([4cbbbb0](https://github.com/ionic-team/ionic-framework/commit/4cbbbb053ad36d176f1d79ad09777f94ca8076d2)), closes [#30315](https://github.com/ionic-team/ionic-framework/issues/30315) [#30341](https://github.com/ionic-team/ionic-framework/issues/30341) [#30312](https://github.com/ionic-team/ionic-framework/issues/30312)
+
+
+
+
+
+## [8.5.8](https://github.com/ionic-team/ionic-framework/compare/v8.5.7...v8.5.8) (2025-05-28)
+
+
+### Bug Fixes
+
+* **input-password-toggle, button:** force update aria attributes ([#30411](https://github.com/ionic-team/ionic-framework/issues/30411)) ([4e38700](https://github.com/ionic-team/ionic-framework/commit/4e387005663b4e8425cb28e41608bb4f924b3864))
+
+
+
+
+
+## [8.5.7](https://github.com/ionic-team/ionic-framework/compare/v8.5.6...v8.5.7) (2025-05-07)
+
+
+### Bug Fixes
+
+* **labels:** prevent clicking a label from triggering onClick twice on several components ([#30384](https://github.com/ionic-team/ionic-framework/issues/30384)) ([7d639b0](https://github.com/ionic-team/ionic-framework/commit/7d639b0412120523f758942c855cb69f9a52e9d9)), closes [#30165](https://github.com/ionic-team/ionic-framework/issues/30165)
+
+
+
+
+
 ## [8.5.6](https://github.com/ionic-team/ionic-framework/compare/v8.5.5...v8.5.6) (2025-04-30)
 
 
