@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.6.0](https://github.com/ionic-team/ionic-framework/compare/v8.5.9...v8.6.0) (2025-06-04)
+
+
+### Bug Fixes
+
+* **input-otp:** correctly handle autofill by splitting the values into all inputs ([#30444](https://github.com/ionic-team/ionic-framework/issues/30444)) ([b77447b](https://github.com/ionic-team/ionic-framework/commit/b77447bea050821da1e5f618ec7b7b530e7f7f5d))
+* **scroll-assist:** allow focus on input's siblings ([#30409](https://github.com/ionic-team/ionic-framework/issues/30409)) ([2dea607](https://github.com/ionic-team/ionic-framework/commit/2dea6071db12903f2ce815328db19b95366aa9a5))
+
+
+### Features
+
+* **datetime:** add animation to adjacent days selection ([#30298](https://github.com/ionic-team/ionic-framework/issues/30298)) ([e140b90](https://github.com/ionic-team/ionic-framework/commit/e140b9010fd63490a8d340b3d705869fb04a4319))
+* **datetime:** add showAdjacentDays to display days from the previous and next months ([#30262](https://github.com/ionic-team/ionic-framework/issues/30262)) ([b67259e](https://github.com/ionic-team/ionic-framework/commit/b67259edae267c2dbece360da532ca9017c8febd))
+* **input-otp:** add new input-otp component ([#30386](https://github.com/ionic-team/ionic-framework/issues/30386)) ([4d6a067](https://github.com/ionic-team/ionic-framework/commit/4d6a067677a7b828263c2ed71a409a3a4c392c85))
+* **toggle:** add iOS 18 haptic feedback ([#29945](https://github.com/ionic-team/ionic-framework/issues/29945)) ([796e007](https://github.com/ionic-team/ionic-framework/commit/796e00720e0da90eda1d246a6d5b11f954e5993c))
+
+
+
+
+
 ## [8.5.9](https://github.com/ionic-team/ionic-framework/compare/v8.5.8...v8.5.9) (2025-06-04)
 
 
