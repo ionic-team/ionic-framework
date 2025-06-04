@@ -125,14 +125,20 @@
  * is selected should have ion-color for
  * text color and be bolder.
  */
-:host .calendar-day.calendar-day-active {
+:host .calendar-day.calendar-day-active,
+:host .calendar-day.calendar-day-adjacent-day.calendar-day-active {
   color: current-color(contrast);
 }
 
-.calendar-day.calendar-day-active {
+.calendar-day.calendar-day-active,
+.calendar-day.calendar-day-active:focus {
   border: 1px solid current-color(base);
 
   background: current-color(base);
+}
+
+:host .calendar-day.calendar-day-adjacent-day {
+  color: $text-color-step-500;
 }
 
 // Time / Header

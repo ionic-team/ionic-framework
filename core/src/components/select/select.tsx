@@ -5,6 +5,7 @@ import type { NotchController } from '@utils/forms';
 import { compareOptions, createNotchController, isOptionSelected } from '@utils/forms';
 import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
 import type { OverlaySelect } from '@utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
@@ -73,6 +74,16 @@ export class Select implements ComponentInterface {
   @Element() el!: HTMLIonSelectElement;
 
   @State() isExpanded = false;
+
+  /**
+   * The `hasFocus` state ensures the focus class is
+   * added regardless of how the element is focused.
+   * The `ion-focused` class only applies when focused
+   * via tabbing, not by clicking.
+   * The `has-focus` logic was added to ensure the class
+   * is applied in both cases.
+   */
+  @State() hasFocus = false;
 
   /**
    * The text to display on the cancel button.
@@ -442,15 +453,15 @@ export class Select implements ComponentInterface {
   private createOverlay(ev?: UIEvent): Promise<OverlaySelect> {
     let selectInterface = this.interface;
     if (selectInterface === 'action-sheet' && this.multiple) {
-      console.warn(
-        `Select interface cannot be "${selectInterface}" with a multi-value select. Using the "alert" interface instead.`
+      printIonWarning(
+        `[ion-select] - Interface cannot be "${selectInterface}" with a multi-value select. Using the "alert" interface instead.`
       );
       selectInterface = 'alert';
     }
 
     if (selectInterface === 'popover' && !ev) {
-      console.warn(
-        `Select interface cannot be a "${selectInterface}" without passing an event. Using the "alert" interface instead.`
+      printIonWarning(
+        `[ion-select] - Interface cannot be a "${selectInterface}" without passing an event. Using the "alert" interface instead.`
       );
       selectInterface = 'alert';
     }
@@ -867,10 +878,14 @@ export class Select implements ComponentInterface {
   };
 
   private onFocus = () => {
+    this.hasFocus = true;
+
     this.ionFocus.emit();
   };
 
   private onBlur = () => {
+    this.hasFocus = false;
+
     this.ionBlur.emit();
   };
 
@@ -927,6 +942,18 @@ export class Select implements ComponentInterface {
   private get hasLabel() {
     return this.label !== undefined || this.labelSlot !== null;
   }
+
+  /**
+   * Stops propagation when the label is clicked,
+   * otherwise, two clicks will be triggered.
+   */
+  private onLabelClick = (ev: MouseEvent) => {
+    // Only stop propagation if the click was directly on the label
+    // and not on the input or other child elements
+    if (ev.target === ev.currentTarget) {
+      ev.stopPropagation();
+    }
+  };
 
   /**
    * Renders the border container
@@ -1184,7 +1211,19 @@ export class Select implements ComponentInterface {
   }
 
   render() {
-    const { disabled, el, isExpanded, expandedIcon, labelPlacement, justify, placeholder, fill, name, value } = this;
+    const {
+      disabled,
+      el,
+      isExpanded,
+      expandedIcon,
+      labelPlacement,
+      justify,
+      placeholder,
+      fill,
+      name,
+      value,
+      hasFocus,
+    } = this;
     const theme = getIonTheme(this);
     const shape = this.getShape();
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
@@ -1234,6 +1273,8 @@ export class Select implements ComponentInterface {
           'has-value': hasValue,
           'label-floating': labelShouldFloat,
           'has-placeholder': placeholder !== undefined,
+          'has-focus': hasFocus,
+          // TODO(FW-6451): Remove `ion-focusable` class in favor of `has-focus`.
           'ion-focusable': true,
           [`select-${rtl}`]: true,
           [`select-fill-${fill}`]: fill !== undefined,
@@ -1243,7 +1284,7 @@ export class Select implements ComponentInterface {
           [`select-size-${size}`]: size !== undefined,
         })}
       >
-        <label class="select-wrapper" id="select-label">
+        <label class="select-wrapper" id="select-label" onClick={this.onLabelClick}>
           {this.renderLabelContainer()}
           <div class="select-wrapper-inner">
             {

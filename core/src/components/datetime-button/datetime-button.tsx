@@ -65,7 +65,7 @@ export class DatetimeButton implements ComponentInterface {
     const { datetime } = this;
     if (!datetime) {
       printIonError(
-        'An ID associated with an ion-datetime instance is required for ion-datetime-button to function properly.',
+        '[ion-datetime-button] - An ID associated with an ion-datetime instance is required to function properly.',
         this.el
       );
       return;
@@ -73,7 +73,7 @@ export class DatetimeButton implements ComponentInterface {
 
     const datetimeEl = (this.datetimeEl = document.getElementById(datetime) as HTMLIonDatetimeElement | null);
     if (!datetimeEl) {
-      printIonError(`No ion-datetime instance found for ID '${datetime}'.`, this.el);
+      printIonError(`[ion-datetime-button] - No ion-datetime instance found for ID '${datetime}'.`, this.el);
       return;
     }
 
@@ -83,7 +83,7 @@ export class DatetimeButton implements ComponentInterface {
      */
     if (datetimeEl.tagName !== 'ION-DATETIME') {
       printIonError(
-        `Expected an ion-datetime instance for ID '${datetime}' but received '${datetimeEl.tagName.toLowerCase()}' instead.`,
+        `[ion-datetime-button] - Expected an ion-datetime instance for ID '${datetime}' but received '${datetimeEl.tagName.toLowerCase()}' instead.`,
         datetimeEl
       );
       return;
@@ -247,7 +247,7 @@ export class DatetimeButton implements ComponentInterface {
             try {
               headerText = titleSelectedDatesFormatter(parsedValues);
             } catch (e) {
-              printIonError('Exception in provided `titleSelectedDatesFormatter`: ', e);
+              printIonError('[ion-datetime-button] - Exception in provided `titleSelectedDatesFormatter`:', e);
             }
           }
           this.dateText = headerText;

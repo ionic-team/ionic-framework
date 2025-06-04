@@ -703,6 +703,7 @@ ion-datetime,prop,name,string,this.inputId,false,false
 ion-datetime,prop,preferWheel,boolean,false,false,false
 ion-datetime,prop,presentation,"date" | "date-time" | "month" | "month-year" | "time" | "time-date" | "year",'date-time',false,false
 ion-datetime,prop,readonly,boolean,false,false,false
+ion-datetime,prop,showAdjacentDays,boolean,false,false,false
 ion-datetime,prop,showClearButton,boolean,false,false,false
 ion-datetime,prop,showDefaultButtons,boolean,false,false,false
 ion-datetime,prop,showDefaultTimeLabel,boolean,true,false,false
@@ -1025,6 +1026,73 @@ ion-input,css-prop,--placeholder-font-weight,md
 ion-input,css-prop,--placeholder-opacity,ionic
 ion-input,css-prop,--placeholder-opacity,ios
 ion-input,css-prop,--placeholder-opacity,md
+
+ion-input-otp,scoped
+ion-input-otp,prop,autocapitalize,string,'off',false,false
+ion-input-otp,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-input-otp,prop,disabled,boolean,false,false,true
+ion-input-otp,prop,fill,"outline" | "solid" | undefined,'outline',false,false
+ion-input-otp,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
+ion-input-otp,prop,length,number,4,false,false
+ion-input-otp,prop,pattern,string | undefined,undefined,false,false
+ion-input-otp,prop,readonly,boolean,false,false,true
+ion-input-otp,prop,separators,number[] | string | undefined,undefined,false,false
+ion-input-otp,prop,shape,"rectangular" | "round" | "soft",'round',false,false
+ion-input-otp,prop,size,"large" | "medium" | "small",'medium',false,false
+ion-input-otp,prop,type,"number" | "text",'number',false,false
+ion-input-otp,prop,value,null | number | string | undefined,'',false,false
+ion-input-otp,method,setFocus,setFocus(index?: number) => Promise<void>
+ion-input-otp,event,ionBlur,FocusEvent,true
+ion-input-otp,event,ionChange,InputOtpChangeEventDetail,true
+ion-input-otp,event,ionComplete,InputOtpCompleteEventDetail,true
+ion-input-otp,event,ionFocus,FocusEvent,true
+ion-input-otp,event,ionInput,InputOtpInputEventDetail,true
+ion-input-otp,css-prop,--background,ios
+ion-input-otp,css-prop,--background,md
+ion-input-otp,css-prop,--border-color,ios
+ion-input-otp,css-prop,--border-color,md
+ion-input-otp,css-prop,--border-radius,ios
+ion-input-otp,css-prop,--border-radius,md
+ion-input-otp,css-prop,--border-width,ios
+ion-input-otp,css-prop,--border-width,md
+ion-input-otp,css-prop,--color,ios
+ion-input-otp,css-prop,--color,md
+ion-input-otp,css-prop,--height,ios
+ion-input-otp,css-prop,--height,md
+ion-input-otp,css-prop,--highlight-color-focused,ios
+ion-input-otp,css-prop,--highlight-color-focused,md
+ion-input-otp,css-prop,--highlight-color-invalid,ios
+ion-input-otp,css-prop,--highlight-color-invalid,md
+ion-input-otp,css-prop,--highlight-color-valid,ios
+ion-input-otp,css-prop,--highlight-color-valid,md
+ion-input-otp,css-prop,--margin-bottom,ios
+ion-input-otp,css-prop,--margin-bottom,md
+ion-input-otp,css-prop,--margin-end,ios
+ion-input-otp,css-prop,--margin-end,md
+ion-input-otp,css-prop,--margin-start,ios
+ion-input-otp,css-prop,--margin-start,md
+ion-input-otp,css-prop,--margin-top,ios
+ion-input-otp,css-prop,--margin-top,md
+ion-input-otp,css-prop,--min-width,ios
+ion-input-otp,css-prop,--min-width,md
+ion-input-otp,css-prop,--padding-bottom,ios
+ion-input-otp,css-prop,--padding-bottom,md
+ion-input-otp,css-prop,--padding-end,ios
+ion-input-otp,css-prop,--padding-end,md
+ion-input-otp,css-prop,--padding-start,ios
+ion-input-otp,css-prop,--padding-start,md
+ion-input-otp,css-prop,--padding-top,ios
+ion-input-otp,css-prop,--padding-top,md
+ion-input-otp,css-prop,--separator-border-radius,ios
+ion-input-otp,css-prop,--separator-border-radius,md
+ion-input-otp,css-prop,--separator-color,ios
+ion-input-otp,css-prop,--separator-color,md
+ion-input-otp,css-prop,--separator-height,ios
+ion-input-otp,css-prop,--separator-height,md
+ion-input-otp,css-prop,--separator-width,ios
+ion-input-otp,css-prop,--separator-width,md
+ion-input-otp,css-prop,--width,ios
+ion-input-otp,css-prop,--width,md
 
 ion-input-password-toggle,shadow
 ion-input-password-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true

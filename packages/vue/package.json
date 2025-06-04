@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "8.5.4",
+  "version": "8.6.0",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "eslint": "eslint src",
@@ -67,7 +67,7 @@
     "vue-router": "^4.0.16"
   },
   "dependencies": {
-    "@ionic/core": "^8.5.4",
+    "@ionic/core": "^8.6.0",
     "@stencil/vue-output-target": "0.10.7",
     "ionicons": "^7.0.0"
   },

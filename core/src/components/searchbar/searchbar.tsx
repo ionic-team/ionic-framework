@@ -864,7 +864,7 @@ export class Searchbar implements ComponentInterface {
                 aria-hidden="true"
                 icon={searchbarClearIcon}
                 lazy={false}
-                className="searchbar-clear-icon"
+                class="searchbar-clear-icon"
               ></ion-icon>
             </button>
           )}

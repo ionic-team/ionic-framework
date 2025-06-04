@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import { isEndSide } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
 import { watchForOptions } from '@utils/watch-options';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -347,7 +348,7 @@ export class ItemSliding implements ComponentInterface {
       case ItemSide.None:
         return;
       default:
-        console.warn('invalid ItemSideFlags value', this.sides);
+        printIonWarning('[ion-item-sliding] - invalid ItemSideFlags value', this.sides);
         break;
     }
 

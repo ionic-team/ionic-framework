@@ -1,5 +1,6 @@
 import type { EventEmitter } from '@stencil/core';
 import { focusElements } from '@utils/focus-visible';
+import { printIonError } from '@utils/logging';
 
 import type { Side } from '../components/menu/menu-interface';
 import { config } from '../global/config';
@@ -326,7 +327,7 @@ export const clamp = (min: number, n: number, max: number) => {
 export const assert = (actual: any, reason: string) => {
   if (!actual) {
     const message = 'ASSERT: ' + reason;
-    console.error(message);
+    printIonError(message);
     debugger; // eslint-disable-line
     throw new Error(message);
   }

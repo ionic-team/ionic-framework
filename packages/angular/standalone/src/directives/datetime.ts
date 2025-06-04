@@ -40,6 +40,7 @@ const DATETIME_INPUTS = [
   'preferWheel',
   'presentation',
   'readonly',
+  'showAdjacentDays',
   'showClearButton',
   'showDefaultButtons',
   'showDefaultTimeLabel',

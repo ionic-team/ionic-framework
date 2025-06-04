@@ -19,24 +19,32 @@ Follow these steps to install Playwright dependencies. These steps must also be 
 
 ## Configuring Docker
 
-Ionic uses [Docker](https://www.docker.com) to provide a way to run tests locally in the same environment that is used on CI. Using Docker is **optional** as all tests can be run locally on your host machine, but there are a few reasons why you might want to use Docker to run tests locally:
+Ionic's test environment uses [Docker](https://www.docker.com) to ensure consistent testing conditions between local development and continuous integration (CI). While you can run tests directly on your local machine, using Docker through [Rancher Desktop](https://rancherdesktop.io) offers several benefits:
 
-1. You want to run screenshot tests against the same ground truths used on CI to test your work. Screenshots must be tested in a consistent environment otherwise there will be screenshot mismatches. Without Docker, you would first need to generate ground truths in your local environment.
-2. You want to update ground truths locally. Ground truths can be updated using a GitHub Action on CI, but this can take ~15 minutes.
-3. You are a community contributor and you do not have access to the GitHub Action to update ground truths.
-4. You want to debug an issue that only happen on CI. While this is rare, there are sometimes Linux-specific issues that pop up during development.
+1. **Consistent Testing Environment** - Run screenshot tests in the same environment as CI, eliminating environment-specific differences and false positives.
+2. **Fast Ground Truth Updates** - Generate and update screenshot ground truths locally in minutes instead of waiting for CI GitHub Actions.
+3. **Universal Contributor Access** - Enable all developers, including community contributors, to work with ground truths without requiring GitHub Action access.
+4. **CI Environment Replication** - Debug Linux-specific issues and reproduce CI-only problems locally in a controlled environment.
+5. **Workflow Consistency** - Ensure tests behave identically across all development machines, reducing environment-specific issues.
 
-The [Running Tests](#running-tests) and [Managing Screenshots](#managing-screenshots) sections show how to perform various tasks in Playwright with Docker. The section below shows how to configure your environment to get set up with Docker.
+Rancher Desktop provides the Docker engine functionality needed to run our containerized tests. It's a free, open-source alternative to Docker Desktop that we use to ensure a consistent testing environment. The following sections on [Running Tests](#running-tests) and [Managing Screenshots](#managing-screenshots) will show you how to use Playwright with Docker through Rancher Desktop. First, let's get your environment set up with Rancher Desktop.
 
-### Installing Docker
+### Installing Rancher Desktop
 
-Docker can be installed by [following the steps on the Docker website](https://docs.docker.com/get-docker/).
+Rancher Desktop can be installed by [following the steps on the Rancher Desktop website](https://rancherdesktop.io/).
+
+After launching Rancher Desktop, choose the following settings to ensure Docker is properly configured:
+  - Uncheck "Enable Kubernetes"
+  - Choose Container Engine: `dockerd` (this enables the Docker Engine)
+  - Configure PATH: Automatic
+
+Once installed and configured, you can use all Docker commands through Rancher Desktop just as you would with Docker Desktop. All commands in this guide that reference Docker (such as `npm run test.e2e.docker`) will work through Rancher Desktop's Docker engine.
 
 ### Docker and Windows Development
 
 Developers using Windows who wish to run tests using Docker must use the [Windows Subsystem for Linux v2 (WSL 2)](https://learn.microsoft.com/en-us/windows/wsl/about). Developers who wish to run headed tests will also need to use WSLg.
 
-If you are running Docker Desktop on Windows 10 or 11 you likely already have both WSL and WSLg installed. The following steps show how to verify that WSL and WSLg are installed. If either of the below verification checks fail, then developers should [download the latest version of WSL](https://apps.microsoft.com/store/detail/9P9TQF7MRM4R?hl=en-us&gl=US).
+The following steps show how to verify that WSL and WSLg are installed. If either of the below verification checks fail, then developers should [download the latest version of WSL](https://apps.microsoft.com/store/detail/9P9TQF7MRM4R?hl=en-us&gl=US).
 
 1. To verify WSL is installed, launch "WSL" from the start menu. If "WSL" does not show up in the start menu then you do not have WSL installed.
 2. With WSL open, verify that WSLg is installed: `ls -a -w 1 /mnt/wslg`. If the command fails with `No such file or directory` then your system is either missing WSLg or running an old version.
@@ -62,7 +70,7 @@ macOS uses [XQuartz](https://www.xquartz.org) to use XServer on macOS.
 
 1. Install [Homebrew](https://brew.sh) if not already installed. You can run `brew --version` to check if Homebrew is installed.
 2. Install XQuartz: `brew install --cask xquartz`
-3. Open XQuartz, go to `Preferences > Security`, and check “Allow connections from network clients”.
+3. Open XQuartz, go to `Preferences > Security`, and check "Allow connections from network clients".
 4. Restart your computer.
 5. Start XQuartz from the command line: `xhost +localhost`
 6. Open Docker Desktop and edit settings to give access to `/tmp/.X11-unix` in `Preferences > Resources > File sharing`.
@@ -111,7 +119,7 @@ npm run test.e2e src/components/button/test
 
 ### Running Tests Inside Docker
 
-While `npm run test.e2e` can be used to run tests in the same environment that you are developing in, `npm run test.e2e.docker` can be used to run tests in a Docker environment provided by the Ionic team. This command supports all the same features as `npm run test.e2e` detailed in the previous section.
+While `npm run test.e2e` can be used to run tests in the same environment that you are developing in, `npm run test.e2e.docker` can be used to run tests in a Docker environment provided by the Ionic team through [Rancher Desktop](#installing-rancher-desktop). This command supports all the same features as `npm run test.e2e` detailed in the previous section.
 
 This command builds a Docker image before tests run. It will also re-build the Docker image in the event that a Playwright update was merged into the repo.
 
@@ -208,7 +216,7 @@ If you are running a test that takes a screenshot, you must first generate the r
 
 ### Generating or Updating Ground Truths With Docker (Local Development)
 
-We recommend generating ground truths inside of [Docker](https://www.docker.com). This allows anyone contributing to Ionic Framework to create or update ground truths.
+We recommend generating ground truths inside of [Docker](https://www.docker.com) using [Rancher Desktop](#installing-rancher-desktop). This allows anyone contributing to Ionic Framework to create or update ground truths in a consistent environment.
 
 To create or update ground truths, run the following command:
 
@@ -265,7 +273,7 @@ Instead, use the [Update Reference Screenshots GitHub Action](https://github.com
 3. Leave the input field blank.
 4. Click **Run workflow**.
 
-This workflow will re-run all of the the screenshot tests. Instead of failing any tests with mismatched screenshots, it will take new ground truth screenshots. These ground truth screenshots will be pushed as a single commit to your branch once the workflow is completed.
+This workflow will re-run all of the screenshot tests. Instead of failing any tests with mismatched screenshots, it will take new ground truth screenshots. These ground truth screenshots will be pushed as a single commit to your branch once the workflow is completed.
 
 If you want to update ground truths for a specific test, you can pass the test file path as an input to the workflow. This is useful when working on a specific component.
 
