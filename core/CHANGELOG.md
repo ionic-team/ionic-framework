@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.5.9](https://github.com/ionic-team/ionic-framework/compare/v8.5.8...v8.5.9) (2025-06-04)
+
+
+### Bug Fixes
+
+* **datetime:** set working parts to last selected value ([#29610](https://github.com/ionic-team/ionic-framework/issues/29610)) ([14f32f8](https://github.com/ionic-team/ionic-framework/commit/14f32f8feea7b3880367868ff0a2134b0c28cc07)), closes [#29094](https://github.com/ionic-team/ionic-framework/issues/29094)
+* **sheet:** move sheet footers instead of cloning while dragging ([#30433](https://github.com/ionic-team/ionic-framework/issues/30433)) ([4cbbbb0](https://github.com/ionic-team/ionic-framework/commit/4cbbbb053ad36d176f1d79ad09777f94ca8076d2))
+
+
+
+
+
 ## [8.5.8](https://github.com/ionic-team/ionic-framework/compare/v8.5.7...v8.5.8) (2025-05-28)
 
 
