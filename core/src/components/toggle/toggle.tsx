@@ -277,6 +277,14 @@ export class Toggle implements ComponentInterface {
     }
   };
 
+  /**
+   * Stops propagation when the display label is clicked,
+   * otherwise, two clicks will be triggered.
+   */
+  private onDivLabelClick = (ev: MouseEvent) => {
+    ev.stopPropagation();
+  };
+
   private onFocus = () => {
     this.ionFocus.emit();
   };
@@ -446,6 +454,7 @@ export class Toggle implements ComponentInterface {
             }}
             part="label"
             id={inputLabelId}
+            onClick={this.onDivLabelClick}
           >
             <slot></slot>
             {this.renderHintText()}

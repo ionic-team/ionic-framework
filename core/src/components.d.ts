@@ -2928,7 +2928,7 @@ export namespace Components {
          */
         "cancelButtonIcon": string;
         /**
-          * Set the the cancel button text. Only applies to `ios` mode.
+          * Set the cancel button text. Only applies to `ios` mode.
           * @default 'Cancel'
          */
         "cancelButtonText": string;
@@ -8188,7 +8188,7 @@ declare namespace LocalJSX {
          */
         "cancelButtonIcon"?: string;
         /**
-          * Set the the cancel button text. Only applies to `ios` mode.
+          * Set the cancel button text. Only applies to `ios` mode.
           * @default 'Cancel'
          */
         "cancelButtonText"?: string;
