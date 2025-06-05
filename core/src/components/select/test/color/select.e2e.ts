@@ -7,7 +7,7 @@ configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, sc
       test('should set label and highlight color on expand', async ({ page }) => {
         await page.setContent(
           `
-          <ion-select fill="outline" label="Label" class="select-expanded" value="apple" class="ion-focused" color="danger">
+          <ion-select fill="outline" label="Label" class="select-expanded" value="apple" class="has-focus" color="danger">
             <ion-select-option value="apple">Apple</ion-select-option>
           </ion-select>
         `,
@@ -51,21 +51,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
         const select = page.locator('ion-select');
         await expect(select).toHaveScreenshot(screenshot(`select-solid-color`));
-      });
-    });
-    test.describe('input: fill outline', () => {
-      test('should set label and highlight color on expand', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-select fill="outline" label="Label" class="select-expanded" value="apple" class="has-focus" color="danger">
-            <ion-select-option value="apple">Apple</ion-select-option>
-          </ion-select>
-        `,
-          config
-        );
-
-        const select = page.locator('ion-select');
-        await expect(select).toHaveScreenshot(screenshot(`select-outline-color`));
       });
     });
   });

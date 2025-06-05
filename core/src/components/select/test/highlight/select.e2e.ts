@@ -268,48 +268,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       });
     });
   });
-
-  test.describe(title('select: expanded highlight'), () => {
-    test.describe('select: no fill', () => {
-      test('should render bottom highlight', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-select label="Label" class="select-expanded"></ion-select>
-        `,
-          config
-        );
-
-        const select = page.locator('ion-select');
-        await expect(select).toHaveScreenshot(screenshot(`select-no-fill-highlight`));
-      });
-    });
-    test.describe('select: solid', () => {
-      test('should render bottom highlight', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-select fill="solid" label="Label" class="select-expanded"></ion-select>
-        `,
-          config
-        );
-
-        const select = page.locator('ion-select');
-        await expect(select).toHaveScreenshot(screenshot(`select-solid-highlight`));
-      });
-    });
-    test.describe('select: outline', () => {
-      test('should render bottom highlight', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-select fill="outline" label="Label" class="select-expanded"></ion-select>
-        `,
-          config
-        );
-
-        const select = page.locator('ion-select');
-        await expect(select).toHaveScreenshot(screenshot(`select-outline-highlight`));
-      });
-    });
-  });
 });
 
 configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
