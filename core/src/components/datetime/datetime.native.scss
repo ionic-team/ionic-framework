@@ -50,6 +50,12 @@
   opacity: 0.4;
 }
 
+.calendar-day:not(.calendar-day-adjacent-day):focus {
+  background: current-color(base, 0.2);
+
+  box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
+}
+
 .calendar-day:focus {
   background: globals.current-color(base, 0.2);
 

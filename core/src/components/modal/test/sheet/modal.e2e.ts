@@ -133,7 +133,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       test('it should warn when setting an invalid breakpoint', async () => {
         expect(warnings.length).toBe(1);
         expect(warnings[0]).toBe(
-          '[Ionic Warning]: Attempted to set invalid breakpoint value 0.01. Please double check that the breakpoint value is part of your defined breakpoints.'
+          '[Ionic Warning]: [ion-modal] - Attempted to set invalid breakpoint value 0.01. Please double check that the breakpoint value is part of your defined breakpoints.'
         );
       });
     });

@@ -7,6 +7,9 @@
 /// @prop - Size of the select icon
 $select-md-icon-size: dynamic-font(13px);
 
+/// @prop - Color of the select icon
+$select-md-icon-color: $text-color-step-500;
+
 /// @prop - The amount of whitespace to display on either side of the floating label
 $select-md-floating-label-padding: 4px;
 

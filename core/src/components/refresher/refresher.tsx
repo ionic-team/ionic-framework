@@ -8,6 +8,7 @@ import {
   printIonContentErrorMsg,
 } from '@utils/content';
 import { clamp, componentOnReady, getElementRoot, raf, transitionEndAsync } from '@utils/helpers';
+import { printIonError } from '@utils/logging';
 import { ImpactStyle, hapticImpact } from '@utils/native/haptic';
 
 import { getIonMode, getIonTheme } from '../../global/ionic-global';
@@ -454,7 +455,7 @@ export class Refresher implements ComponentInterface {
 
   async connectedCallback() {
     if (this.el.getAttribute('slot') !== 'fixed') {
-      console.error('Make sure you use: <ion-refresher slot="fixed">');
+      printIonError('[ion-refresher] - Make sure you use: <ion-refresher slot="fixed">');
       return;
     }
     const contentEl = this.el.closest(ION_CONTENT_ELEMENT_SELECTOR);

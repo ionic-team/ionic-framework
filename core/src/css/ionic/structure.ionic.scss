@@ -20,10 +20,6 @@ html {
   text-size-adjust: 100%;
 }
 
-html:not(.hydrated) body {
-  display: none;
-}
-
 html.ion-ce body {
   display: block;
 }

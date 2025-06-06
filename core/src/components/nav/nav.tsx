@@ -101,7 +101,7 @@ export class Nav implements NavOutlet {
         this.setRoot(this.root, this.rootParams);
       }
     } else if (isDev) {
-      printIonWarning('<ion-nav> does not support a root attribute when using ion-router.', this.el);
+      printIonWarning('[ion-nav] - A root attribute is not supported when using ion-router.', this.el);
     }
   }
 
@@ -824,8 +824,8 @@ export class Nav implements NavOutlet {
     const finalNumViews = this.views.length + (insertViews?.length ?? 0) - (removeCount ?? 0);
     assert(finalNumViews >= 0, 'final balance can not be negative');
     if (finalNumViews === 0) {
-      console.warn(
-        `You can't remove all the pages in the navigation stack. nav.pop() is probably called too many times.`,
+      printIonWarning(
+        `[ion-nav] - You can't remove all the pages in the navigation stack. nav.pop() is probably called too many times.`,
         this,
         this.el
       );

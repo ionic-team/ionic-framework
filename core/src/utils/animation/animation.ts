@@ -1,3 +1,5 @@
+import { printIonError } from '@utils/logging';
+
 import { win } from '../browser';
 
 import type {
@@ -455,7 +457,7 @@ export const createAnimation = (animationId?: string): Animation => {
           elements.push((el as any)[i]);
         }
       } else {
-        console.error('Invalid addElement value');
+        printIonError('createAnimation - Invalid addElement value.');
       }
     }
 

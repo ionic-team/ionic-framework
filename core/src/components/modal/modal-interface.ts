@@ -21,6 +21,7 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> extends Ove
   backdropBreakpoint?: number;
   handle?: boolean;
   handleBehavior?: ModalHandleBehavior;
+  expandToScroll?: boolean;
 }
 
 export interface ModalAnimationOptions {

@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Listen, Method, Prop } from '@stencil/core';
 import type { BackButtonEvent } from '@utils/hardware-back-button';
 import { debounce } from '@utils/helpers';
+import { printIonError, printIonWarning } from '@utils/logging';
 
 import type { AnimationBuilder } from '../../interface';
 import type { NavigationHookResult } from '../route/route-interface';
@@ -170,15 +171,15 @@ export class Router implements ComponentInterface {
   @Method()
   async navChanged(direction: RouterDirection): Promise<boolean> {
     if (this.busy) {
-      console.warn('[ion-router] router is busy, navChanged was cancelled');
+      printIonWarning('[ion-router] - Router is busy, navChanged was cancelled.');
       return false;
     }
     const { ids, outlet } = await readNavState(window.document.body);
     const routes = readRoutes(this.el);
     const chain = findChainForIDs(ids, routes);
     if (!chain) {
-      console.warn(
-        '[ion-router] no matching URL for ',
+      printIonWarning(
+        '[ion-router] - No matching URL for',
         ids.map((i) => i.id)
       );
       return false;
@@ -186,7 +187,7 @@ export class Router implements ComponentInterface {
 
     const segments = chainToSegments(chain);
     if (!segments) {
-      console.warn('[ion-router] router could not match path because some required param is missing');
+      printIonWarning('[ion-router] - Router could not match path because some required param is missing.');
       return false;
     }
 
@@ -236,7 +237,7 @@ export class Router implements ComponentInterface {
     animation?: AnimationBuilder
   ): Promise<boolean> {
     if (!segments) {
-      console.error('[ion-router] URL is not part of the routing set');
+      printIonError('[ion-router] - URL is not part of the routing set.');
       return false;
     }
 
@@ -257,7 +258,7 @@ export class Router implements ComponentInterface {
     const routes = readRoutes(this.el);
     const chain = findChainForSegments(segments, routes);
     if (!chain) {
-      console.error('[ion-router] the path does not match any route');
+      printIonError('[ion-router] - The path does not match any route.');
       return false;
     }
 
@@ -279,7 +280,7 @@ export class Router implements ComponentInterface {
     try {
       changed = await this.writeNavState(node, chain, direction, segments, redirectFrom, index, animation);
     } catch (e) {
-      console.error(e);
+      printIonError('[ion-router] - Exception in safeWriteNavState:', e);
     }
     unlock();
     return changed;
@@ -342,7 +343,7 @@ export class Router implements ComponentInterface {
     animation?: AnimationBuilder
   ): Promise<boolean> {
     if (this.busy) {
-      console.warn('[ion-router] router is busy, transition was cancelled');
+      printIonWarning('[ion-router] - Router is busy, transition was cancelled.');
       return false;
     }
     this.busy = true;

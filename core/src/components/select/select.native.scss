@@ -18,7 +18,7 @@
 // Select Used in ion-item
 // --------------------------------------------------
 
-:host(.ion-focused) button {
+:host(.has-focus) button {
   border: 2px solid #5e9ed6;
 }
 

@@ -15,6 +15,7 @@ export interface DatetimeParts {
   hour?: number;
   minute?: number;
   ampm?: 'am' | 'pm';
+  isAdjacentDay?: boolean;
 }
 
 export type DatetimePresentation = 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';

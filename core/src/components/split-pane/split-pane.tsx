@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { printIonWarning } from '@utils/logging';
 
 import { getIonTheme } from '../../global/ionic-global';
 
@@ -159,7 +160,7 @@ export class SplitPane implements ComponentInterface {
       const isMain = contentId !== undefined && child.id === contentId;
       if (isMain) {
         if (foundMain) {
-          console.warn('split pane cannot have more than one main node');
+          printIonWarning('[ion-split-pane] - Cannot have more than one main node.');
           return;
         } else {
           setPaneClass(child, isMain);
@@ -168,7 +169,7 @@ export class SplitPane implements ComponentInterface {
       }
     }
     if (!foundMain) {
-      console.warn('split pane does not have a specified main node');
+      printIonWarning('[ion-split-pane] - Does not have a specified main node.');
     }
   }
 

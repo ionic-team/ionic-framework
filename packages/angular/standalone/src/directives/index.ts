@@ -2,6 +2,7 @@ export * from './checkbox';
 export * from './datetime';
 export * from './icon';
 export * from './input';
+export * from './input-otp';
 export * from './radio-group';
 export * from './range';
 export * from './searchbar';

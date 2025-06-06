@@ -144,6 +144,7 @@ export class Datetime implements ComponentInterface {
     hour: 13,
     minute: 52,
     ampm: 'pm',
+    isAdjacentDay: false,
   };
 
   @Element() el!: HTMLIonDatetimeElement;
@@ -211,6 +212,13 @@ export class Datetime implements ComponentInterface {
    * Custom implementations should be optimized for performance to avoid jank.
    */
   @Prop() isDateEnabled?: (dateIsoString: string) => boolean;
+
+  /**
+   * If `true`, the datetime calendar displays a six-week (42-day) layout,
+   * including days from the previous and next months to fill the grid.
+   * These adjacent days are selectable unless disabled.
+   */
+  @Prop() showAdjacentDays = false;
 
   @Watch('disabled')
   protected disabledChanged() {
@@ -589,7 +597,7 @@ export class Datetime implements ComponentInterface {
        * Custom behavior: ['a', 'b']
        */
       printIonWarning(
-        `ion-datetime was passed an array of values, but multiple="false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+        `[ion-datetime] - An array of values was passed, but multiple is "false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
 
   Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
 `,
@@ -810,12 +818,17 @@ export class Datetime implements ComponentInterface {
 
   private focusWorkingDay = (currentMonth: Element) => {
     /**
-     * Get the number of padding days so
+     * Get the number of offset days so
      * we know how much to offset our next selector by
      * to grab the correct calendar-day element.
      */
-    const padding = currentMonth.querySelectorAll('.calendar-day-padding');
-    const { day } = this.workingParts;
+
+    const { day, month, year } = this.workingParts;
+    const firstOfMonth = new Date(`${month}/1/${year}`).getDay();
+    const offset =
+      firstOfMonth >= this.firstDayOfWeek
+        ? firstOfMonth - this.firstDayOfWeek
+        : 7 - (this.firstDayOfWeek - firstOfMonth);
 
     if (day === null) {
       return;
@@ -826,7 +839,7 @@ export class Datetime implements ComponentInterface {
      * and focus it.
      */
     const dayEl = currentMonth.querySelector(
-      `.calendar-day-wrapper:nth-of-type(${padding.length + day}) .calendar-day`
+      `.calendar-day-wrapper:nth-of-type(${offset + day}) .calendar-day`
     ) as HTMLElement | null;
     if (dayEl) {
       dayEl.focus();
@@ -1268,21 +1281,20 @@ export class Datetime implements ComponentInterface {
     }
 
     /**
-     * If there are multiple values, pick an arbitrary one to clamp to. This way,
-     * if the values are across months, we always show at least one of them. Note
-     * that the values don't necessarily have to be in order.
+     * If there are multiple values, clamp to the last one.
+     * This is because the last value is the one that the user
+     * has most recently interacted with.
      */
-    const singleValue = Array.isArray(valueToProcess) ? valueToProcess[0] : valueToProcess;
+    const singleValue = Array.isArray(valueToProcess) ? valueToProcess[valueToProcess.length - 1] : valueToProcess;
     const targetValue = clampDate(singleValue, minParts, maxParts);
 
     const { month, day, year, hour, minute } = targetValue;
     const ampm = parseAmPm(hour!);
 
     /**
-     * Since `activeParts` indicates a value that
-     * been explicitly selected either by the
-     * user or the app, only update `activeParts`
-     * if the `value` property is set.
+     * Since `activeParts` indicates a value that been explicitly selected
+     * either by the user or the app, only update `activeParts` if the
+     * `value` property is set.
      */
     if (hasValue) {
       if (Array.isArray(valueToProcess)) {
@@ -1306,53 +1318,29 @@ export class Datetime implements ComponentInterface {
       this.activeParts = [];
     }
 
-    /**
-     * Only animate if:
-     * 1. We're using grid style (wheel style pickers should just jump to new value)
-     * 2. The month and/or year actually changed, and both are defined (otherwise there's nothing to animate to)
-     * 3. The calendar body is visible (prevents animation when in collapsed datetime-button, for example)
-     * 4. The month/year picker is not open (since you wouldn't see the animation anyway)
-     */
     const didChangeMonth =
       (month !== undefined && month !== workingParts.month) || (year !== undefined && year !== workingParts.year);
     const bodyIsVisible = el.classList.contains('datetime-ready');
     const { isGridStyle, showMonthAndYear } = this;
 
-    let areAllSelectedDatesInSameMonth = true;
-    if (Array.isArray(valueToProcess)) {
-      const firstMonth = valueToProcess[0].month;
-      for (const date of valueToProcess) {
-        if (date.month !== firstMonth) {
-          areAllSelectedDatesInSameMonth = false;
-          break;
-        }
-      }
-    }
-
-    /**
-     * If there is more than one date selected
-     * and the dates aren't all in the same month,
-     * then we should neither animate to the date
-     * nor update the working parts because we do
-     * not know which date the user wants to view.
-     */
-    if (areAllSelectedDatesInSameMonth) {
-      if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
-        this.animateToDate(targetValue);
-      } else {
-        /**
-         * We only need to do this if we didn't just animate to a new month,
-         * since that calls prevMonth/nextMonth which calls setWorkingParts for us.
-         */
-        this.setWorkingParts({
-          month,
-          day,
-          year,
-          hour,
-          minute,
-          ampm,
-        });
-      }
+    if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
+      /**
+       * Only animate if:
+       * 1. We're using grid style (wheel style pickers should just jump to new value)
+       * 2. The month and/or year actually changed, and both are defined (otherwise there's nothing to animate to)
+       * 3. The calendar body is visible (prevents animation when in collapsed datetime-button, for example)
+       * 4. The month/year picker is not open (since you wouldn't see the animation anyway)
+       */
+      this.animateToDate(targetValue);
+    } else {
+      this.setWorkingParts({
+        month,
+        day,
+        year,
+        hour,
+        minute,
+        ampm,
+      });
     }
   };
 
@@ -1394,24 +1382,24 @@ export class Datetime implements ComponentInterface {
 
     if (multiple) {
       if (presentation !== 'date') {
-        printIonWarning('Multiple date selection is only supported for presentation="date".', el);
+        printIonWarning('[ion-datetime] - Multiple date selection is only supported for presentation="date".', el);
       }
 
       if (preferWheel) {
-        printIonWarning('Multiple date selection is not supported with preferWheel="true".', el);
+        printIonWarning('[ion-datetime] - Multiple date selection is not supported with preferWheel="true".', el);
       }
     }
 
     if (highlightedDates !== undefined) {
       if (presentation !== 'date' && presentation !== 'date-time' && presentation !== 'time-date') {
         printIonWarning(
-          'The highlightedDates property is only supported with the date, date-time, and time-date presentations.',
+          '[ion-datetime] - The highlightedDates property is only supported with the date, date-time, and time-date presentations.',
           el
         );
       }
 
       if (preferWheel) {
-        printIonWarning('The highlightedDates property is not supported with preferWheel="true".', el);
+        printIonWarning('[ion-datetime] - The highlightedDates property is not supported with preferWheel="true".', el);
       }
     }
 
@@ -1676,7 +1664,7 @@ export class Datetime implements ComponentInterface {
           disabled = !isDateEnabled(convertDataToISO(referenceParts));
         } catch (e) {
           printIonError(
-            'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+            '[ion-datetime] - Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
             e
           );
         }
@@ -1767,7 +1755,7 @@ export class Datetime implements ComponentInterface {
           disabled = !isDateEnabled(convertDataToISO(referenceParts));
         } catch (e) {
           printIonError(
-            'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+            '[ion-datetime] - Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
             e
           );
         }
@@ -2234,10 +2222,34 @@ export class Datetime implements ComponentInterface {
         }}
       >
         <div class="calendar-month-grid">
-          {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
-            const { day, dayOfWeek } = dateObject;
-            const { el, highlightedDates, isDateEnabled, multiple } = this;
-            const referenceParts = { month, day, year };
+          {getDaysOfMonth(month, year, this.firstDayOfWeek % 7, this.showAdjacentDays).map((dateObject, index) => {
+            const { day, dayOfWeek, isAdjacentDay } = dateObject;
+            const { el, highlightedDates, isDateEnabled, multiple, showAdjacentDays } = this;
+            let _month = month;
+            let _year = year;
+            if (showAdjacentDays && isAdjacentDay && day !== null) {
+              if (day > 20) {
+                // Leading with the adjacent day from the previous month
+                // if its a adjacent day and is higher than '20' (last week even in feb)
+                if (month === 1) {
+                  _year = year - 1;
+                  _month = 12;
+                } else {
+                  _month = month - 1;
+                }
+              } else if (day < 15) {
+                // Leading with the adjacent day from the next month
+                // if its a adjacent day and is lower than '15' (first two weeks)
+                if (month === 12) {
+                  _year = year + 1;
+                  _month = 1;
+                } else {
+                  _month = month + 1;
+                }
+              }
+            }
+
+            const referenceParts = { month: _month, day, year: _year, isAdjacentDay };
             const isCalendarPadding = day === null;
             const {
               isActive,
@@ -2270,7 +2282,7 @@ export class Datetime implements ComponentInterface {
                 isCalDayDisabled = !isDateEnabled(dateIsoString);
               } catch (e) {
                 printIonError(
-                  'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+                  '[ion-datetime] - Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
                   el,
                   e
                 );
@@ -2292,7 +2304,7 @@ export class Datetime implements ComponentInterface {
              * Custom highlight styles should not override the style for selected dates,
              * nor apply to "filler days" at the start of the grid.
              */
-            if (highlightedDates !== undefined && !isActive && day !== null) {
+            if (highlightedDates !== undefined && !isActive && day !== null && !isAdjacentDay) {
               dateStyle = getHighlightStyles(highlightedDates, dateIsoString, el);
             }
 
@@ -2300,10 +2312,12 @@ export class Datetime implements ComponentInterface {
 
             // "Filler days" at the beginning of the grid should not get the calendar day
             // CSS parts added to them
-            if (!isCalendarPadding) {
+            if (!isCalendarPadding && !isAdjacentDay) {
               dateParts = `calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}${
                 isCalDayDisabled ? ' disabled' : ''
               }`;
+            } else if (isAdjacentDay) {
+              dateParts = `calendar-day${isCalDayDisabled ? ' disabled' : ''}`;
             }
 
             return (
@@ -2327,8 +2341,8 @@ export class Datetime implements ComponentInterface {
                   }}
                   tabindex="-1"
                   data-day={day}
-                  data-month={month}
-                  data-year={year}
+                  data-month={_month}
+                  data-year={_year}
                   data-index={index}
                   data-day-of-week={dayOfWeek}
                   disabled={isButtonDisabled}
@@ -2338,6 +2352,7 @@ export class Datetime implements ComponentInterface {
                     'calendar-day-active': isActive,
                     'calendar-day-constrained': isCalDayConstrained,
                     'calendar-day-today': isToday,
+                    'calendar-day-adjacent-day': isAdjacentDay,
                   }}
                   part={dateParts}
                   aria-hidden={isCalendarPadding ? 'true' : null}
@@ -2348,30 +2363,27 @@ export class Datetime implements ComponentInterface {
                       return;
                     }
 
-                    this.setWorkingParts({
-                      ...this.workingParts,
-                      month,
-                      day,
-                      year,
-                    });
-
-                    // multiple only needs date info, so we can wipe out other fields like time
-                    if (multiple) {
-                      this.setActiveParts(
-                        {
-                          month,
-                          day,
-                          year,
-                        },
-                        isActive
-                      );
+                    if (isAdjacentDay) {
+                      // The user selected a day outside the current month. Ignore this button, as the month will be re-rendered.
+                      this.el.blur();
+                      this.activeParts = { ...activePart, ...referenceParts };
+                      this.animateToDate(referenceParts);
+                      this.confirm();
                     } else {
-                      this.setActiveParts({
-                        ...activePart,
-                        month,
-                        day,
-                        year,
+                      this.setWorkingParts({
+                        ...this.workingParts,
+                        ...referenceParts,
                       });
+
+                      // Multiple only needs date info so we can wipe out other fields like time.
+                      if (multiple) {
+                        this.setActiveParts(referenceParts, isActive);
+                      } else {
+                        this.setActiveParts({
+                          ...activePart,
+                          ...referenceParts,
+                        });
+                      }
                     }
                   }}
                 >
@@ -2491,7 +2503,7 @@ export class Datetime implements ComponentInterface {
         try {
           headerText = titleSelectedDatesFormatter(convertDataToISO(activeParts));
         } catch (e) {
-          printIonError('Exception in provided `titleSelectedDatesFormatter`: ', e);
+          printIonError('[ion-datetime] - Exception in provided `titleSelectedDatesFormatter`:', e);
         }
       }
     } else {
