@@ -5,6 +5,7 @@ import type { Gesture } from '@utils/gesture';
 import { createButtonActiveGesture } from '@utils/gesture/button-active';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
+import { printIonWarning } from '@utils/logging';
 import {
   createDelegateController,
   createTriggerController,
@@ -320,8 +321,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
     // checkboxes and inputs are all accepted, but they cannot be mixed.
     const inputTypes = new Set(inputs.map((i) => i.type));
     if (inputTypes.has('checkbox') && inputTypes.has('radio')) {
-      console.warn(
-        `Alert cannot mix input types: ${Array.from(inputTypes.values()).join(
+      printIonWarning(
+        `[ion-alert] - Alert cannot mix input types: ${Array.from(inputTypes.values()).join(
           '/'
         )}. Please see alert docs for more info.`
       );

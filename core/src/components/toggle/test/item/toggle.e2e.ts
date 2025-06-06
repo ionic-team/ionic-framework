@@ -110,9 +110,14 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
   });
 });
 
-configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, config }) => {
-  test.describe(title('toggle: ionChange'), () => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('toggle: item functionality'), () => {
     test('clicking padded space within item should click the toggle', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27169',
+      });
+
       await page.setContent(
         `
         <ion-item>
@@ -121,7 +126,7 @@ configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ ti
       `,
         config
       );
-      const itemNative = page.locator('.item-native');
+      const item = page.locator('ion-item');
       const ionChange = await page.spyOnEvent('ionChange');
 
       /**
@@ -134,7 +139,7 @@ configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ ti
        * 2. iOS is inconsistent in their implementation and other controls can be activated by clicking the label.
        * 3. MD is consistent in their implementation and activates controls by clicking the label.
        */
-      await itemNative.click({
+      await item.click({
         position: {
           x: 5,
           y: 5,
@@ -142,6 +147,41 @@ configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ ti
       });
 
       expect(ionChange).toHaveReceivedEvent();
+    });
+
+    test('clicking padded space within item should fire one click event', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/29758',
+      });
+
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-toggle>
+            Toggle
+          </ion-toggle>
+        </ion-item>
+      `,
+        config
+      );
+
+      const item = page.locator('ion-item');
+      const onClick = await page.spyOnEvent('click');
+
+      // Click the padding area (5px from left edge)
+      await item.click({
+        position: {
+          x: 5,
+          y: 5,
+        },
+      });
+
+      expect(onClick).toHaveReceivedEventTimes(1);
+
+      // Verify that the event target is the toggle and not the item
+      const event = onClick.events[0];
+      expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-toggle');
     });
   });
 });

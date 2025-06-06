@@ -4,7 +4,7 @@ import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import type { Gesture } from '@utils/gesture';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
-import { printIonWarning } from '@utils/logging';
+import { printIonError, printIonWarning } from '@utils/logging';
 import {
   GESTURE,
   createDelegateController,
@@ -533,7 +533,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
     }
 
     if (position === 'middle' && positionAnchor !== undefined) {
-      printIonWarning('The positionAnchor property is ignored when using position="middle".', this.el);
+      printIonWarning('[ion-toast] - The positionAnchor property is ignored when using position="middle".', this.el);
       return undefined;
     }
 
@@ -546,7 +546,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
        */
       const foundEl = document.getElementById(positionAnchor);
       if (foundEl === null) {
-        printIonWarning(`An anchor element with an ID of "${positionAnchor}" was not found in the DOM.`, el);
+        printIonWarning(
+          `[ion-toast] - An anchor element with an ID of "${positionAnchor}" was not found in the DOM.`,
+          el
+        );
         return undefined;
       }
 
@@ -557,7 +560,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       return positionAnchor;
     }
 
-    printIonWarning('Invalid positionAnchor value:', positionAnchor, el);
+    printIonWarning('[ion-toast] - Invalid positionAnchor value:', positionAnchor, el);
     return undefined;
   }
 
@@ -584,7 +587,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
           return false;
         }
       } catch (e) {
-        console.error(e);
+        printIonError('[ion-toast] - Exception in callButtonHandler:', e);
       }
     }
     return true;
@@ -742,7 +745,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
      */
     if (layout === 'stacked' && startButtons.length > 0 && endButtons.length > 0) {
       printIonWarning(
-        'This toast is using start and end buttons with the stacked toast layout. We recommend following the best practice of using either start or end buttons with the stacked toast layout.',
+        '[ion-toast] - This toast is using start and end buttons with the stacked toast layout. We recommend following the best practice of using either start or end buttons with the stacked toast layout.',
         el
       );
     }

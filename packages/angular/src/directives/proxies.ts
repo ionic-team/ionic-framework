@@ -637,7 +637,7 @@ Set `scrollEvents` to `true` to enable.
 
 
 @ProxyCmp({
-  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'theme', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
+  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showAdjacentDays', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'theme', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
   methods: ['confirm', 'reset', 'cancel']
 })
 @Component({
@@ -645,7 +645,7 @@ Set `scrollEvents` to `true` to enable.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'theme', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
+  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showAdjacentDays', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'theme', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
 })
 export class IonDatetime {
   protected el: HTMLIonDatetimeElement;
@@ -1037,6 +1037,69 @@ This event will not emit when programmatically setting the `value` property.
   ionBlur: EventEmitter<CustomEvent<FocusEvent>>;
   /**
    * Emitted when the input has focus.
+   */
+  ionFocus: EventEmitter<CustomEvent<FocusEvent>>;
+}
+
+
+@ProxyCmp({
+  inputs: ['autocapitalize', 'color', 'disabled', 'fill', 'inputmode', 'length', 'pattern', 'readonly', 'separators', 'shape', 'size', 'type', 'value'],
+  methods: ['setFocus']
+})
+@Component({
+  selector: 'ion-input-otp',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['autocapitalize', 'color', 'disabled', 'fill', 'inputmode', 'length', 'pattern', 'readonly', 'separators', 'shape', 'size', 'type', 'value'],
+})
+export class IonInputOtp {
+  protected el: HTMLIonInputOtpElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionComplete', 'ionBlur', 'ionFocus']);
+  }
+}
+
+
+import type { InputOtpInputEventDetail as IIonInputOtpInputOtpInputEventDetail } from '@ionic/core';
+import type { InputOtpChangeEventDetail as IIonInputOtpInputOtpChangeEventDetail } from '@ionic/core';
+import type { InputOtpCompleteEventDetail as IIonInputOtpInputOtpCompleteEventDetail } from '@ionic/core';
+
+export declare interface IonInputOtp extends Components.IonInputOtp {
+  /**
+   * The `ionInput` event is fired each time the user modifies the input's value.
+Unlike the `ionChange` event, the `ionInput` event is fired for each alteration
+to the input's value. This typically happens for each keystroke as the user types.
+
+For elements that accept text input (`type=text`, `type=tel`, etc.), the interface
+is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others,
+the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If
+the input is cleared on edit, the type is `null`.
+   */
+  ionInput: EventEmitter<CustomEvent<IIonInputOtpInputOtpInputEventDetail>>;
+  /**
+   * The `ionChange` event is fired when the user modifies the input's value.
+Unlike the `ionInput` event, the `ionChange` event is only fired when changes
+are committed, not as the user types.
+
+The `ionChange` event fires when the `<ion-input-otp>` component loses
+focus after its value has changed.
+
+This event will not emit when programmatically setting the `value` property.
+   */
+  ionChange: EventEmitter<CustomEvent<IIonInputOtpInputOtpChangeEventDetail>>;
+  /**
+   * Emitted when all input boxes have been filled with valid values.
+   */
+  ionComplete: EventEmitter<CustomEvent<IIonInputOtpInputOtpCompleteEventDetail>>;
+  /**
+   * Emitted when the input group loses focus.
+   */
+  ionBlur: EventEmitter<CustomEvent<FocusEvent>>;
+  /**
+   * Emitted when the input group has focus.
    */
   ionFocus: EventEmitter<CustomEvent<FocusEvent>>;
 }

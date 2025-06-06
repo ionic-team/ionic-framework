@@ -239,7 +239,9 @@ button {
  * highlight when the select is blurred.
  */
 :host(.has-focus.ion-valid),
-:host(.ion-touched.ion-invalid) {
+:host(.select-expanded.ion-valid),
+:host(.ion-touched.ion-invalid),
+:host(.select-expanded.ion-touched.ion-invalid) {
   --border-color: var(--highlight-color);
 }
 
@@ -448,7 +450,7 @@ button {
  * :host(.label-floating.select-label-placement-floating) .native-wrapper .select-placeholder
  */
 :host(.select-expanded.select-label-placement-floating) .native-wrapper .select-placeholder,
-:host(.ion-focused.select-label-placement-floating) .native-wrapper .select-placeholder,
+:host(.has-focus.select-label-placement-floating) .native-wrapper .select-placeholder,
 :host(.has-value.select-label-placement-floating) .native-wrapper .select-placeholder {
   opacity: 1;
 }

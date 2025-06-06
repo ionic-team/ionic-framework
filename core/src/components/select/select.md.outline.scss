@@ -43,7 +43,7 @@
  * the select is focused.
  */
 :host(.select-fill-outline.select-expanded),
-:host(.select-fill-outline.ion-focused) {
+:host(.select-fill-outline.has-focus) {
   --border-width: var(--highlight-height);
   --border-color: var(--highlight-color);
 }
@@ -241,4 +241,19 @@
  */
 :host(.label-floating.select-fill-outline) .select-outline-notch {
   border-top: none;
+}
+
+// Select Icon
+// ----------------------------------------------------------------
+
+/**
+ * When the select has an outline fill and
+ * in an item, then the icon should
+ * take on the highlight color.
+ */
+:host(.in-item.select-expanded.select-fill-outline) .select-wrapper .select-icon,
+:host(.in-item.has-focus.select-fill-outline) .select-wrapper .select-icon,
+:host(.in-item.has-focus.ion-valid.select-fill-outline) .select-wrapper .select-icon,
+:host(.in-item.ion-touched.ion-invalid.select-fill-outline) .select-wrapper .select-icon {
+  color: var(--highlight-color);
 }

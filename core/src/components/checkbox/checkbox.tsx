@@ -212,6 +212,14 @@ export class Checkbox implements ComponentInterface {
     this.toggleChecked(ev);
   };
 
+  /**
+   * Stops propagation when the display label is clicked,
+   * otherwise, two clicks will be triggered.
+   */
+  private onDivLabelClick = (ev: MouseEvent) => {
+    ev.stopPropagation();
+  };
+
   private getHintTextID(): string | undefined {
     const { el, helperText, errorText, helperTextId, errorTextId } = this;
 
@@ -332,6 +340,7 @@ export class Checkbox implements ComponentInterface {
             }}
             part="label"
             id={this.inputLabelId}
+            onClick={this.onDivLabelClick}
           >
             <slot></slot>
             {this.renderHintText()}

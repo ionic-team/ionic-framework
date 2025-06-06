@@ -438,7 +438,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     if (breakpoints !== undefined && initialBreakpoint !== undefined && !breakpoints.includes(initialBreakpoint)) {
-      printIonWarning('Your breakpoints array must include the initialBreakpoint value.');
+      printIonWarning('[ion-modal] - Your breakpoints array must include the initialBreakpoint value.');
     }
 
     if (!this.htmlAttributes?.id) {
@@ -861,12 +861,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Method()
   async setCurrentBreakpoint(breakpoint: number): Promise<void> {
     if (!this.isSheetModal) {
-      printIonWarning('setCurrentBreakpoint is only supported on sheet modals.');
+      printIonWarning('[ion-modal] - setCurrentBreakpoint is only supported on sheet modals.');
       return;
     }
     if (!this.breakpoints!.includes(breakpoint)) {
       printIonWarning(
-        `Attempted to set invalid breakpoint value ${breakpoint}. Please double check that the breakpoint value is part of your defined breakpoints.`
+        `[ion-modal] - Attempted to set invalid breakpoint value ${breakpoint}. Please double check that the breakpoint value is part of your defined breakpoints.`
       );
       return;
     }

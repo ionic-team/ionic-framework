@@ -3,6 +3,7 @@ import { Component, Element, Host, Prop, Method, State, Watch, forceUpdate, h } 
 import type { ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { addEventListener, removeEventListener, inheritAttributes } from '@utils/helpers';
+import { printIonError, printIonWarning } from '@utils/logging';
 import { hostContext } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -77,7 +78,9 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
 
     // Prevent buttons from being disabled when associated with segment content
     if (this.contentId && this.disabled) {
-      console.warn(`Segment Button: Segment buttons cannot be disabled when associated with an <ion-segment-content>.`);
+      printIonWarning(
+        `[ion-segment-button] - Segment buttons cannot be disabled when associated with an <ion-segment-content>.`
+      );
       this.disabled = false;
     }
   }
@@ -104,13 +107,15 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
 
     // If no associated Segment Content exists, log an error and return
     if (!segmentContent) {
-      console.error(`Segment Button: Unable to find Segment Content with id="${this.contentId}".`);
+      printIonError(`[ion-segment-button] - Unable to find Segment Content with id="${this.contentId}".`);
       return;
     }
 
     // Ensure the found element is a valid ION-SEGMENT-CONTENT
     if (segmentContent.tagName !== 'ION-SEGMENT-CONTENT') {
-      console.error(`Segment Button: Element with id="${this.contentId}" is not an <ion-segment-content> element.`);
+      printIonError(
+        `[ion-segment-button] - Element with id="${this.contentId}" is not an <ion-segment-content> element.`
+      );
       return;
     }
   }

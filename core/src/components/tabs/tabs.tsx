@@ -1,5 +1,6 @@
 import type { EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
+import { printIonError } from '@utils/logging';
 
 import type { NavOutlet, RouteID, RouteWrite } from '../router/utils/interface';
 import type { TabButtonClickEventDetail } from '../tab-bar/tab-bar-interface';
@@ -213,7 +214,7 @@ const getTab = (tabs: HTMLIonTabElement[], tab: string | HTMLIonTabElement): HTM
   const tabEl = typeof tab === 'string' ? tabs.find((t) => t.tab === tab) : tab;
 
   if (!tabEl) {
-    console.error(`tab with id: "${tabEl}" does not exist`);
+    printIonError(`[ion-tabs] - Tab with id: "${tabEl}" does not exist`);
   }
   return tabEl;
 };

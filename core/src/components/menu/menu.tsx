@@ -6,6 +6,7 @@ import { GESTURE_CONTROLLER } from '@utils/gesture';
 import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '@utils/helpers';
+import { printIonError } from '@utils/logging';
 import { menuController } from '@utils/menu-controller';
 import { BACKDROP, GESTURE, getPresentedOverlay } from '@utils/overlays';
 import { isPlatform } from '@utils/platform';
@@ -219,13 +220,13 @@ export class Menu implements ComponentInterface, MenuI {
     const content = this.contentId !== undefined ? document.getElementById(this.contentId) : null;
 
     if (content === null) {
-      console.error('Menu: must have a "content" element to listen for drag events on.');
+      printIonError('[ion-menu] - Must have a "content" element to listen for drag events on.');
       return;
     }
 
     if (this.el.contains(content)) {
-      console.error(
-        `Menu: "contentId" should refer to the main view's ion-content, not the ion-content inside of the ion-menu.`
+      printIonError(
+        `[ion-menu] - The "contentId" should refer to the main view's ion-content, not the ion-content inside of the ion-menu.`
       );
     }
 

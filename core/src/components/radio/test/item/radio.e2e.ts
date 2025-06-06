@@ -97,9 +97,16 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       await expect(list).toHaveScreenshot(screenshot(`radio-stacked-label-in-item`));
     });
   });
+});
 
-  test.describe(title('radio: ionChange'), () => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('radio: item functionality'), () => {
     test('clicking padded space within item should click the radio', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27169',
+      });
+
       await page.setContent(
         `
         <ion-radio-group>
@@ -112,11 +119,11 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       `,
         config
       );
-      const itemNative = page.locator('.item-native');
+      const item = page.locator('ion-item');
       const ionChange = await page.spyOnEvent('ionChange');
 
       // Clicks the padded space within the item
-      await itemNative.click({
+      await item.click({
         position: {
           x: 5,
           y: 5,
@@ -124,6 +131,41 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       });
 
       expect(ionChange).toHaveReceivedEvent();
+    });
+
+    test('clicking padded space within item should fire one click event', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/29758',
+      });
+
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-radio>
+            Radio
+          </ion-radio>
+        </ion-item>
+      `,
+        config
+      );
+
+      const item = page.locator('ion-item');
+      const onClick = await page.spyOnEvent('click');
+
+      // Click the padding area (5px from left edge)
+      await item.click({
+        position: {
+          x: 5,
+          y: 5,
+        },
+      });
+
+      expect(onClick).toHaveReceivedEventTimes(1);
+
+      // Verify that the event target is the radio and not the item
+      const event = onClick.events[0];
+      expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-radio');
     });
   });
 });

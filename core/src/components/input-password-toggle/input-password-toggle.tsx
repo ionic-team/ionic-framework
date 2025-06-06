@@ -63,7 +63,7 @@ export class InputPasswordToggle implements ComponentInterface {
   onTypeChange(newValue: TextFieldTypes) {
     if (newValue !== 'text' && newValue !== 'password') {
       printIonWarning(
-        `ion-input-password-toggle only supports inputs of type "text" or "password". Input of type "${newValue}" is not compatible.`,
+        `[ion-input-password-toggle] - Only inputs of type "text" or "password" are supported. Input of type "${newValue}" is not compatible.`,
         this.el
       );
 
@@ -78,7 +78,7 @@ export class InputPasswordToggle implements ComponentInterface {
 
     if (!inputElRef) {
       printIonWarning(
-        'No ancestor ion-input found for ion-input-password-toggle. This component must be slotted inside of an ion-input.',
+        '[ion-input-password-toggle] - No ancestor ion-input found. This component must be slotted inside of an ion-input.',
         el
       );
 
@@ -170,7 +170,7 @@ export class InputPasswordToggle implements ComponentInterface {
           fill="clear"
           shape="round"
           aria-checked={isPasswordVisible ? 'true' : 'false'}
-          aria-label="show password"
+          aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
           role="switch"
           type="button"
           onPointerDown={(ev) => {

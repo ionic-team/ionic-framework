@@ -12,14 +12,6 @@
   --highlight-height: 2px;
 }
 
-.select-icon {
-  width: $select-md-icon-size;
-
-  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-
-  color: #{$text-color-step-500};
-}
-
 // Select Label
 // ----------------------------------------------------------------
 
@@ -29,9 +21,9 @@
  * only apply to floating or stacked labels.
  */
 :host(.select-label-placement-floating.select-expanded) .label-text-wrapper,
-:host(.select-label-placement-floating.ion-focused) .label-text-wrapper,
+:host(.select-label-placement-floating.has-focus) .label-text-wrapper,
 :host(.select-label-placement-stacked.select-expanded) .label-text-wrapper,
-:host(.select-label-placement-stacked.ion-focused) .label-text-wrapper {
+:host(.select-label-placement-stacked.has-focus) .label-text-wrapper {
   color: var(--highlight-color);
 }
 
@@ -61,7 +53,7 @@
 }
 
 :host(.select-expanded) .select-highlight,
-:host(.ion-focused) .select-highlight {
+:host(.has-focus) .select-highlight {
   transform: scale(1);
 }
 
@@ -77,6 +69,14 @@
 // Select Icon
 // ----------------------------------------------------------------
 
+.select-icon {
+  width: $select-md-icon-size;
+
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+  color: #{$select-md-icon-color};
+}
+
 /**
  * This rotates the chevron icon
  * when the select is activated.
@@ -84,6 +84,18 @@
  */
 :host(.select-expanded:not(.has-expanded-icon)) .select-icon {
   @include transform(rotate(180deg));
+}
+
+/**
+ * When the select has no fill and
+ * in an item, then the icon should
+ * be the same color as the text color.
+ */
+:host(.in-item.select-expanded) .select-wrapper .select-icon,
+:host(.in-item.has-focus) .select-wrapper .select-icon,
+:host(.in-item.has-focus.ion-valid) .select-wrapper .select-icon,
+:host(.in-item.ion-touched.ion-invalid) .select-wrapper .select-icon {
+  color: #{$select-md-icon-color};
 }
 
 /**
@@ -95,7 +107,7 @@
 :host(.select-expanded) .select-wrapper .select-icon,
 :host(.has-focus.ion-valid) .select-wrapper .select-icon,
 :host(.ion-touched.ion-invalid) .select-wrapper .select-icon,
-:host(.ion-focused) .select-wrapper .select-icon {
+:host(.has-focus) .select-wrapper .select-icon {
   color: var(--highlight-color);
 }
 

@@ -24,7 +24,7 @@ export const getCounterText = (
   try {
     return counterFormatter(valueLength, maxLength);
   } catch (e) {
-    printIonError('Exception in provided `counterFormatter`.', e);
+    printIonError('[ion-input] - Exception in provided `counterFormatter`:', e);
     return defaultCounterText;
   }
 };

@@ -47,7 +47,8 @@ html.ionic ion-modal ion-header {
  */
 html.ionic ion-modal.modal-card ion-header ion-toolbar:first-of-type,
 html.ionic ion-modal.modal-sheet ion-header ion-toolbar:first-of-type,
-html.ionic ion-modal ion-footer ion-toolbar:first-of-type {
+html.ionic ion-modal ion-footer ion-toolbar:first-of-type,
+html.ionic ion-footer.modal-footer-moving ion-toolbar:first-of-type {
   padding-top: globals.$ion-space-400;
 }
 
@@ -63,12 +64,14 @@ html.ionic ion-modal ion-footer ion-toolbar:last-of-type {
 }
 
 /**
-* Add additional padding to the left and right of toolbars while accounting
-* for the safe area insets.
+* Add padding on the left and right
+* of toolbars while accounting for
+* safe area values when in landscape.
 */
-html.ionic ion-modal ion-toolbar {
-  --padding-start: calc(var(--ion-safe-area-right) + #{globals.$ion-space-400});
-  --padding-end: calc(var(--ion-safe-area-left) + #{globals.$ion-space-400});
+html.ionic ion-modal ion-toolbar,
+html.ionic .modal-footer-moving ion-toolbar {
+  padding-right: calc(var(--ion-safe-area-right) + #{globals.$ion-space-400});
+  padding-left: calc(var(--ion-safe-area-left) + #{globals.$ion-space-400});
 }
 
 /**

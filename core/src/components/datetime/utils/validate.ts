@@ -14,7 +14,7 @@ export const warnIfTimeZoneProvided = (el: HTMLElement, formatOptions?: FormatOp
     formatOptions?.time?.timeZone ||
     formatOptions?.time?.timeZoneName
   ) {
-    printIonWarning('Datetime: "timeZone" and "timeZoneName" are not supported in "formatOptions".', el);
+    printIonWarning('[ion-datetime] - "timeZone" and "timeZoneName" are not supported in "formatOptions".', el);
   }
 };
 
@@ -33,19 +33,22 @@ export const checkForPresentationFormatMismatch = (
     case 'month':
     case 'year':
       if (formatOptions.date === undefined) {
-        printIonWarning(`Datetime: The '${presentation}' presentation requires a date object in formatOptions.`, el);
+        printIonWarning(
+          `[ion-datetime] - The '${presentation}' presentation requires a date object in formatOptions.`,
+          el
+        );
       }
       break;
     case 'time':
       if (formatOptions.time === undefined) {
-        printIonWarning(`Datetime: The 'time' presentation requires a time object in formatOptions.`, el);
+        printIonWarning(`[ion-datetime] - The 'time' presentation requires a time object in formatOptions.`, el);
       }
       break;
     case 'date-time':
     case 'time-date':
       if (formatOptions.date === undefined && formatOptions.time === undefined) {
         printIonWarning(
-          `Datetime: The '${presentation}' presentation requires either a date or time object (or both) in formatOptions.`,
+          `[ion-datetime] - The '${presentation}' presentation requires either a date or time object (or both) in formatOptions.`,
           el
         );
       }

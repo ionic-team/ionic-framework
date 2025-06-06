@@ -58,7 +58,8 @@ body.backdrop-no-scroll {
  */
 html.ios ion-modal.modal-card ion-header ion-toolbar:first-of-type,
 html.ios ion-modal.modal-sheet ion-header ion-toolbar:first-of-type,
-html.ios ion-modal ion-footer ion-toolbar:first-of-type {
+html.ios ion-modal ion-footer ion-toolbar:first-of-type,
+html.ios ion-footer.modal-footer-moving ion-toolbar:first-of-type {
   padding-top: $modal-sheet-padding-top;
 }
 
@@ -77,7 +78,8 @@ html.ios ion-modal.modal-sheet ion-header ion-toolbar:last-of-type {
 * of toolbars while accounting for
 * safe area values when in landscape.
 */
-html.ios ion-modal ion-toolbar {
+html.ios ion-modal ion-toolbar,
+html.ios .modal-footer-moving ion-toolbar {
   padding-right: calc(var(--ion-safe-area-right) + 8px);
   padding-left: calc(var(--ion-safe-area-left) + 8px);
 }
