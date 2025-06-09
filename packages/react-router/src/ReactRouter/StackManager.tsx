@@ -524,7 +524,7 @@ export default StackManager;
 /**
  * Finds the `<Route />` node matching the current route info.
  * If no `<Route />` can be matched, a fallback node is returned.
- * 
+ *
  * @param node The root node to search for `<Route />` nodes.
  * @param routeInfo The route information to match against.
  */
