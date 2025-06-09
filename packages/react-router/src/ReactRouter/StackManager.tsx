@@ -1,3 +1,9 @@
+/**
+ * `StackManager` is responsible for managing page transitions, keeping track
+ * of views (pages), and ensuring that navigation behaves like native apps —
+ * particularly with animations and swipe gestures.
+ */
+
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
 import { RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
 import React from 'react';
