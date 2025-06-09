@@ -21,6 +21,7 @@ import type {
   styleUrls: {
     ios: 'input-otp.ios.scss',
     md: 'input-otp.md.scss',
+    ionic: 'input-otp.ionic.scss',
   },
   scoped: true,
 })
