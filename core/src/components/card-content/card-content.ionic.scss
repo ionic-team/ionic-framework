@@ -6,16 +6,13 @@
 
 .card-content-ionic {
   @include globals.padding(globals.$ion-space-400);
+  @include globals.typography(globals.$ion-body-md-regular);
 
   display: flex;
 
   flex-direction: column;
 
-  font-size: globals.$ion-font-size-350;
-
-  line-height: globals.$ion-font-line-height-600;
-
-  gap: globals.$ion-space-200;
+  gap: globals.$ion-space-400;
 
   img {
     @include globals.margin(globals.$ion-space-200, 0, globals.$ion-space-200, 0);
