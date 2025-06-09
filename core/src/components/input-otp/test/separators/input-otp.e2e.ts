@@ -30,7 +30,7 @@ const collectWarnings = async (page: E2EPage): Promise<string[]> => {
   return warnings;
 };
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input-otp: separators'), () => {
     // Test separators with all sizes
     VALID_SIZES.forEach((size) => {
