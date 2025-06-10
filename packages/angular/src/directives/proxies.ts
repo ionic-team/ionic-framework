@@ -1895,20 +1895,41 @@ export class IonReorderGroup {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionItemReorder']);
+    proxyOutputs(this, this.el, ['ionItemReorder', 'ionReorderStart', 'ionReorderMove', 'ionReorderEnd']);
   }
 }
 
 
 import type { ItemReorderEventDetail as IIonReorderGroupItemReorderEventDetail } from '@ionic/core';
+import type { ReorderMoveEventDetail as IIonReorderGroupReorderMoveEventDetail } from '@ionic/core';
+import type { ReorderEndEventDetail as IIonReorderGroupReorderEndEventDetail } from '@ionic/core';
 
 export declare interface IonReorderGroup extends Components.IonReorderGroup {
   /**
-   * Event that needs to be listened to in order to complete the reorder action.
+   * TODO(FW-6590): Remove this in a major release. @deprecated Use `ionReorderEnd` instead. The new event is emitted
+at the end of every reorder gesture, even if the positions do not
+change. If you were accessing `event.detail.from` or `event.detail.to`,
+you should now add `undefined` checks as they can be `undefined` in
+`ionReorderEnd`.
+   */
+  ionItemReorder: EventEmitter<CustomEvent<IIonReorderGroupItemReorderEventDetail>>;
+  /**
+   * Event that is emitted when the reorder gesture starts.
+   */
+  ionReorderStart: EventEmitter<CustomEvent<void>>;
+  /**
+   * Event that is emitted as the reorder gesture moves.
+   */
+  ionReorderMove: EventEmitter<CustomEvent<IIonReorderGroupReorderMoveEventDetail>>;
+  /**
+   * Event that is emitted when the reorder gesture ends.
+The from and to properties are only available if the reorder gesture
+moved the item. If the item did not move, the from and to properties
+will be undefined.
 Once the event has been emitted, the `complete()` method then needs
 to be called in order to finalize the reorder action.
    */
-  ionItemReorder: EventEmitter<CustomEvent<IIonReorderGroupItemReorderEventDetail>>;
+  ionReorderEnd: EventEmitter<CustomEvent<IIonReorderGroupReorderEndEventDetail>>;
 }
 
 
