@@ -31,12 +31,6 @@ interface PageOptions {
    * - `'commit'` - consider operation to be finished when network response is received and the document started loading.
    */
   waitUntil?: 'load' | 'domcontentloaded' | 'networkidle' | 'commit';
-
-  /**
-   * If true, the default Ionic imports will be included
-   * via the CDN instead of the local bundle.
-   */
-  importIonicFromCDN?: boolean;
 }
 
 export interface E2EPage extends Page {
