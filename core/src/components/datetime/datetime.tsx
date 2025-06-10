@@ -525,7 +525,7 @@ export class Datetime implements ComponentInterface {
    * `value` property, and optionally closes the popover
    * or modal that the datetime was presented in.
    * 
-   * @param closeOverlay If `true`, closes the the parent overlay. Defaults to `false`.
+   * @param closeOverlay If `true`, closes the parent overlay. Defaults to `false`.
    */
   @Method()
   async confirm(closeOverlay = false) {
@@ -575,7 +575,7 @@ export class Datetime implements ComponentInterface {
    * or modal that the datetime was
    * presented in.
    * 
-   * @param closeOverlay If `true`, closes the the parent overlay. Defaults to `false`.
+   * @param closeOverlay If `true`, closes the parent overlay. Defaults to `false`.
    */
   @Method()
   async cancel(closeOverlay = false) {
