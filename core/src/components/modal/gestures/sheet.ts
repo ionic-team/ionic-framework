@@ -178,12 +178,12 @@ export const createSheetGesture = (
         // and needs to be swapped back to stationary so it collapses correctly.
         if (index === 0) {
           cachedFooterYPosition = absoluteTop;
-          // If there's a toolbar, we need to combine the toolbar height with the footer position
-          // because the toolbar moves with the drag handle, so when it starts overlapping the footer,
+          // If there's a header, we need to combine the header height with the footer position
+          // because the header moves with the drag handle, so when it starts overlapping the footer,
           // we need to account for that.
-          const toolbar = baseEl.querySelector('ion-toolbar') as HTMLIonToolbarElement | null;
-          if (toolbar) {
-            cachedFooterYPosition -= toolbar.clientHeight;
+          const header = baseEl.querySelector('ion-header') as HTMLIonHeaderElement | null;
+          if (header) {
+            cachedFooterYPosition -= header.clientHeight;
           }
         }
       });
