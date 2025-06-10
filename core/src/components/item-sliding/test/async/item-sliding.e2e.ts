@@ -79,12 +79,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
           function generateItem() {
             const currentItem = itemList.length + 1;
             const item = \`
-              <ion-item-sliding id="item-\${currentItem}">
+              <ion-item-sliding>
                 <ion-item>
                   <ion-label>Sliding Item \${currentItem}</ion-label>
                 </ion-item>
                 <ion-item-options side="end">
-                  <ion-item-option color="danger" id="delete-item-\${currentItem}">Delete</ion-item-option>
+                  <ion-item-option>Delete</ion-item-option>
                 </ion-item-options>
               </ion-item-sliding>
             \`;
@@ -95,11 +95,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
             const list = document.getElementById('list');
             list.innerHTML += generateItem();
             const currentItem = itemList.length;
-            const deleteId = \`#delete-item-\${currentItem}\`;
-            const itemId = \`#item-\${currentItem}\`;
-            document.querySelector(deleteId).addEventListener('click', (ev) => {
-              document.querySelector(itemId).remove();
-            });
           }
         </script>
       `,
