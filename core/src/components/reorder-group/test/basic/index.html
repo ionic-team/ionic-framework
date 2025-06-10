@@ -122,8 +122,25 @@
         const reorderGroup = document.getElementById('reorder');
         reorderGroup.disabled = !reorderGroup.disabled;
 
+        // TODO(FW-6590): Remove this once the deprecated event is removed
         reorderGroup.addEventListener('ionItemReorder', ({ detail }) => {
-          console.log('Dragged from index', detail.from, 'to', detail.to);
+          console.log('ionItemReorder: Dragged from index', detail.from, 'to', detail.to);
+        });
+
+        reorderGroup.addEventListener('ionReorderStart', () => {
+          console.log('ionReorderStart');
+        });
+
+        reorderGroup.addEventListener('ionReorderMove', ({ detail }) => {
+          console.log('ionReorderMove: Dragged from index', detail.from, 'to', detail.to);
+        });
+
+        reorderGroup.addEventListener('ionReorderEnd', ({ detail }) => {
+          if (detail.from !== undefined && detail.to !== undefined) {
+            console.log('ionReorderEnd: Dragged from index', detail.from, 'to', detail.to);
+          } else {
+            console.log('ionReorderEnd: No position change occurred');
+          }
 
           detail.complete();
         });

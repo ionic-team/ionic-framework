@@ -50,7 +50,7 @@
         reorderGroup.innerHTML = html;
       }
 
-      reorderGroup.addEventListener('ionItemReorder', ({ detail }) => {
+      reorderGroup.addEventListener('ionReorderEnd', ({ detail }) => {
         console.log('Dragged from index', detail.from, 'to', detail.to);
 
         console.log('Before complete', items);
