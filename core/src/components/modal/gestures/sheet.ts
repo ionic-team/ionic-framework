@@ -430,9 +430,7 @@ export const createSheetGesture = (
        * This can cause issues if the user has a modal with content that can be dragged, as we'll
        * swap to moving on drag and if we don't swap back here then the footer will get stuck.
        */
-      if (!expandToScroll) {
-        swapFooterPosition('stationary');
-      }
+      swapFooterPosition('stationary');
       return;
     }
 
