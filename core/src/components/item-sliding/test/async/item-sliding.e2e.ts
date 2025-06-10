@@ -39,26 +39,29 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(itemSlidingEl).toHaveClass(/item-sliding-active-slide/);
     });
 
-    test('should not throw errors when adding multiple items with side="end" using the Ionic CDN', async ({ page }, testInfo) => {
+    test('should not throw errors when adding multiple items with side="end" using the Ionic CDN', async ({
+      page,
+    }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/29499',
       });
 
       const errors: string[] = [];
-      page.on('console', msg => {
+      page.on('console', (msg) => {
         if (msg.type() === 'error') {
           errors.push(msg.text());
         }
       });
-      page.on('pageerror', error => {
+      page.on('pageerror', (error) => {
         errors.push(error.message);
       });
 
       // This issue only happens when using a CDN version of Ionic
       // so we need to use the CDN by passing the `importIonicFromCDN` option
       // to setContent.
-      await page.setContent(`
+      await page.setContent(
+        `
         <ion-header>
           <ion-toolbar>
             <ion-title>Item Sliding</ion-title>
@@ -99,7 +102,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
             });
           }
         </script>
-      `, { ...config, importIonicFromCDN: true });
+      `,
+        { ...config, importIonicFromCDN: true }
+      );
 
       // Click the button enough times to reproduce the issue
       const addButton = page.locator('#addItem');
