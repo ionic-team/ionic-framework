@@ -164,7 +164,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await page.waitForChanges();
 
         await expect(ionReorderEnd).toHaveReceivedEventTimes(1);
-        await expect(ionReorderEnd).toHaveReceivedEventDetail({ complete: undefined });
+        await expect(ionReorderEnd).toHaveReceivedEventDetail({ from: 0, to: 0, complete: undefined });
       });
 
       test('should emit with details when the reorder operation ends and the item has moved', async ({ page }) => {

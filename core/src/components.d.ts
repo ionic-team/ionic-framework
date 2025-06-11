@@ -8043,11 +8043,11 @@ declare namespace LocalJSX {
         "disabled"?: boolean;
         /**
           * TODO(FW-6590): Remove this in a major release.
-          * @deprecated Use `ionReorderEnd` instead. The new event is emitted at the end of every reorder gesture, even if the positions do not change. If you were accessing `event.detail.from` or `event.detail.to`, you should now add `undefined` checks as they can be `undefined` in `ionReorderEnd`.
+          * @deprecated Use `ionReorderEnd` instead. The new event is emitted at the end of every reorder gesture, even if the positions do not change. If you were accessing `event.detail.from` or `event.detail.to` before and relying on them being different you should now add checks as they are always emitted in `ionReorderEnd`, even when they are the same.
          */
         "onIonItemReorder"?: (event: IonReorderGroupCustomEvent<ItemReorderEventDetail>) => void;
         /**
-          * Event that is emitted when the reorder gesture ends. The from and to properties are only available if the reorder gesture moved the item. If the item did not move, the from and to properties will be undefined. Once the event has been emitted, the `complete()` method then needs to be called in order to finalize the reorder action.
+          * Event that is emitted when the reorder gesture ends. The from and to properties are always available, regardless of if the reorder gesture moved the item. If the item did not change from its start position, the from and to properties will be the same. Once the event has been emitted, the `complete()` method then needs to be called in order to finalize the reorder action.
          */
         "onIonReorderEnd"?: (event: IonReorderGroupCustomEvent<ReorderEndEventDetail>) => void;
         /**

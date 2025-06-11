@@ -17,8 +17,8 @@ export interface ReorderMoveEventDetail {
 }
 
 export interface ReorderEndEventDetail {
-  from?: number;
-  to?: number;
+  from: number;
+  to: number;
   complete: (data?: boolean | any[]) => any;
 }
 
