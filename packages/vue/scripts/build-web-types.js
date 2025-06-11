@@ -1,5 +1,5 @@
 const fs = require("fs");
-const docs = require("@ionic/core/dist/docs.json");
+const docs = require("@ionic/core/docs.json");
 const { pascalCase } = require("change-case");
 
 const components = [];
