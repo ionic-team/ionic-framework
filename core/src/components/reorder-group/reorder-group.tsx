@@ -257,7 +257,6 @@ export class ReorderGroup implements ComponentInterface {
       to: toIndex,
       complete: this.completeReorder.bind(this),
     });
-
   }
 
   private completeReorder(listOrReorder?: boolean | any[]): any {
