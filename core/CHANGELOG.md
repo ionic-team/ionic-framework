@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.6.1](https://github.com/ionic-team/ionic-framework/compare/v8.6.0...v8.6.1) (2025-06-11)
+
+
+### Bug Fixes
+
+* **item-sliding:** check for side attribute to avoid an `undefined` value ([#29845](https://github.com/ionic-team/ionic-framework/issues/29845)) ([c38aa07](https://github.com/ionic-team/ionic-framework/commit/c38aa07cf8bfab200b3c071328d893bd1627cde7)), closes [#29499](https://github.com/ionic-team/ionic-framework/issues/29499)
+* **modal:** reset footer positioning after content drag and multi-footer support ([#30470](https://github.com/ionic-team/ionic-framework/issues/30470)) ([071b414](https://github.com/ionic-team/ionic-framework/commit/071b414a00f4497ed0baa1431f0bee4b3c7c13fb)), closes [#30468](https://github.com/ionic-team/ionic-framework/issues/30468)
+
+
+
+
+
 # [8.6.0](https://github.com/ionic-team/ionic-framework/compare/v8.5.9...v8.6.0) (2025-06-04)
 
 
