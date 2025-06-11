@@ -250,13 +250,14 @@ export class ReorderGroup implements ComponentInterface {
       });
     }
 
+    hapticSelectionEnd();
+
     this.ionReorderEnd.emit({
       from: fromIndex,
       to: toIndex,
       complete: this.completeReorder.bind(this),
     });
 
-    hapticSelectionEnd();
   }
 
   private completeReorder(listOrReorder?: boolean | any[]): any {
