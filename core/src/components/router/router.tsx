@@ -124,6 +124,7 @@ export class Router implements ComponentInterface {
    *
    * @param path The path to navigate to.
    * @param direction The direction of the animation. Defaults to `"forward"`.
+   * @param animation The animation to play when navigating.
    */
   @Method()
   async push(path: string, direction: RouterDirection = 'forward', animation?: AnimationBuilder) {
