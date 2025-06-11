@@ -403,6 +403,10 @@ export class Menu implements ComponentInterface, MenuI {
   /**
    * Opens or closes the button.
    * If the operation can't be completed successfully, it returns `false`.
+   * 
+   * @param shouldOpen If `true`, attempt to open the menu.
+   * @param animated If `true`, open or close the menu with animation. Defaults to `true`.
+   * @param role The role of the element that is closing the menu.
    */
   @Method()
   setOpen(shouldOpen: boolean, animated = true, role?: string): Promise<boolean> {
