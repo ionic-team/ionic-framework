@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "8.6.0",
+  "version": "8.6.1",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -36,7 +36,7 @@
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.10.1",
+    "@axe-core/playwright": "^4.10.2",
     "@capacitor/core": "^7.0.0",
     "@capacitor/haptics": "^7.0.0",
     "@capacitor/keyboard": "^7.0.0",
