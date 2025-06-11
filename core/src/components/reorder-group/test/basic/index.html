@@ -136,7 +136,7 @@
         });
 
         reorderGroup.addEventListener('ionReorderEnd', ({ detail }) => {
-          if (detail.from !== undefined && detail.to !== undefined) {
+          if (detail.from !== detail.to) {
             console.log('ionReorderEnd: Dragged from index', detail.from, 'to', detail.to);
           } else {
             console.log('ionReorderEnd: No position change occurred');

@@ -236,6 +236,10 @@ export class ReorderGroup implements ComponentInterface {
     const fromIndex = indexForItem(selectedItemEl);
 
     if (toIndex === fromIndex) {
+      // TODO(FW-6590): Remove this once the deprecated event is removed
+      // Since the ionReorderEnd event is emitted at the end of every reorder
+      // gesture, even if the item did not move, the user can always call
+      // complete() to reset the state of the reorder group.
       this.completeReorder();
     } else {
       // TODO(FW-6590): Remove this once the deprecated event is removed
