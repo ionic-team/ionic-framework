@@ -459,6 +459,8 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * Developers can pass a mouse, touch, or pointer event
    * to position the popover relative to where that event
    * was dispatched.
+   * 
+   * @param event Event to position popover relative to.
    */
   @Method()
   async present(event?: MouseEvent | TouchEvent | PointerEvent | CustomEvent): Promise<void> {
@@ -540,15 +542,14 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   /**
    * Dismiss the popover overlay after it has been presented.
-   *
-   * @param data Any data to emit in the dismiss events.
-   * @param role The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'.
-   * @param dismissParentPopover If `true`, dismissing this popover will also dismiss
-   * a parent popover if this popover is nested. Defaults to `true`.
-   *
    * This is a no-op if the overlay has not been presented yet. If you want
    * to remove an overlay from the DOM that was never presented, use the
    * [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the popover. For example, `cancel` or `backdrop`.
+   * @param dismissParentPopover If `true`, dismissing this popover will also dismiss
+   * a parent popover if this popover is nested. Defaults to `true`.
    */
   @Method()
   async dismiss(data?: any, role?: string, dismissParentPopover = true): Promise<boolean> {
