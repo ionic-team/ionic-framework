@@ -1,53 +1,53 @@
-import type { Action as HistoryAction, History, Location as HistoryLocation } from 'history';
-import { createBrowserHistory as createHistory } from 'history';
-import React from 'react';
+/**
+ * `IonReactRouter` facilitates the integration of Ionic's specific
+ * navigation and UI management with the standard React Router mechanisms,
+ * allowing an inner Ionic-specific router (`IonRouter`) to react to
+ * navigation events.
+ */
+
+import type { Action as HistoryAction, Location as HistoryLocation } from 'history';
+import type { PropsWithChildren } from 'react';
+import React, { useEffect, useRef } from 'react';
 import type { BrowserRouterProps } from 'react-router-dom';
-import { Router } from 'react-router-dom';
+import { BrowserRouter, useLocation, useNavigationType } from 'react-router-dom';
 
 import { IonRouter } from './IonRouter';
 
-interface IonReactRouterProps extends BrowserRouterProps {
-  history?: History;
-}
+export const IonReactRouter = ({ children }: PropsWithChildren<BrowserRouterProps>) => {
+  const location = useLocation();
+  const navigationType = useNavigationType();
 
-export class IonReactRouter extends React.Component<IonReactRouterProps> {
-  historyListenHandler?: (location: HistoryLocation, action: HistoryAction) => void;
-  history: History;
+  const historyListenHandler = useRef<(location: HistoryLocation, action: HistoryAction) => void>();
 
-  constructor(props: IonReactRouterProps) {
-    super(props);
-    const { history, ...rest } = props;
-    this.history = history || createHistory(rest);
-    this.history.listen(this.handleHistoryChange.bind(this));
-    this.registerHistoryListener = this.registerHistoryListener.bind(this);
-  }
+  const registerHistoryListener = (cb: (location: HistoryLocation, action: HistoryAction) => void) => {
+    historyListenHandler.current = cb;
+  };
 
   /**
-   * history@4.x passes separate location and action
-   * params. history@5.x passes location and action
-   * together as a single object.
-   * TODO: If support for React Router <=5 is dropped
-   * this logic is no longer needed. We can just assume
-   * a single object with both location and action.
+   * Processes navigation changes within the application.
+   *
+   * Its purpose is to relay the current `location` and the associated
+   * `action` ('PUSH', 'POP', or 'REPLACE') to any registered listeners,
+   * primarily for `IonRouter` to manage Ionic-specific UI updates and
+   * navigation stack behavior.
+   *
+   * @param location The current browser history location object.
+   * @param action The type of navigation action ('PUSH', 'POP', or
+   * 'REPLACE').
    */
-  handleHistoryChange(location: HistoryLocation, action: HistoryAction) {
-    const locationValue = (location as any).location || location;
-    const actionValue = (location as any).action || action;
-    if (this.historyListenHandler) {
-      this.historyListenHandler(locationValue, actionValue);
+  const handleHistoryChange = (location: HistoryLocation, action: HistoryAction) => {
+    if (historyListenHandler.current) {
+      historyListenHandler.current(location, action);
     }
-  }
+  };
 
-  registerHistoryListener(cb: (location: HistoryLocation, action: HistoryAction) => void) {
-    this.historyListenHandler = cb;
-  }
+  useEffect(() => {
+    handleHistoryChange(location, navigationType);
+  }, [location, navigationType]);
 
-  render() {
-    const { children, ...props } = this.props;
-    return (
-      <Router history={this.history} {...props}>
-        <IonRouter registerHistoryListener={this.registerHistoryListener}>{children}</IonRouter>
-      </Router>
-    );
-  }
-}
+  return (
+    <BrowserRouter>
+      <IonRouter registerHistoryListener={registerHistoryListener}>{children}</IonRouter>
+    </BrowserRouter>
+  );
+};
