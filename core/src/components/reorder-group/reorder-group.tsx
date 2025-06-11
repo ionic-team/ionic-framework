@@ -51,8 +51,8 @@ export class ReorderGroup implements ComponentInterface {
     }
   }
 
+  // TODO(FW-6590): Remove this in a major release.
   /**
-   * TODO(FW-6590): Remove this in a major release.
    * @deprecated Use `ionReorderEnd` instead. The new event is emitted
    * at the end of every reorder gesture, even if the positions do not
    * change. If you were accessing `event.detail.from` or `event.detail.to`

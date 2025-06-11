@@ -1766,7 +1766,7 @@ import type { ReorderEndEventDetail as IIonReorderGroupReorderEndEventDetail } f
 
 export declare interface IonReorderGroup extends Components.IonReorderGroup {
   /**
-   * TODO(FW-6590): Remove this in a major release. @deprecated Use `ionReorderEnd` instead. The new event is emitted
+   *  @deprecated Use `ionReorderEnd` instead. The new event is emitted
 at the end of every reorder gesture, even if the positions do not
 change. If you were accessing `event.detail.from` or `event.detail.to`
 before and relying on them being different you should now add checks as
