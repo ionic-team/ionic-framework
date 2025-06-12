@@ -390,8 +390,12 @@ export class PickerColumn implements ComponentInterface {
          * for this use case and appears to handle Shadow DOM retargeting
          * more reliably in this specific iOS bug.
          */
-        if (!newActiveElement) {
-          newActiveElement = referenceNode.elementFromPoint(centerX, centerY) as HTMLIonPickerColumnOptionElement;
+        if (newActiveElement === undefined) {
+          const fallbackActiveElement = referenceNode.elementFromPoint(centerX, centerY);
+
+          if (fallbackActiveElement?.tagName === 'ION-PICKER-COLUMN-OPTION') {
+            newActiveElement = fallbackActiveElement as HTMLIonPickerColumnOptionElement;
+          }
         }
 
         if (activeEl !== undefined) {
