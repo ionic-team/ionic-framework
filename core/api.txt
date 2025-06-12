@@ -1508,6 +1508,9 @@ ion-reorder-group,none
 ion-reorder-group,prop,disabled,boolean,true,false,false
 ion-reorder-group,method,complete,complete(listOrReorder?: boolean | any[]) => Promise<any>
 ion-reorder-group,event,ionItemReorder,ItemReorderEventDetail,true
+ion-reorder-group,event,ionReorderEnd,ReorderEndEventDetail,true
+ion-reorder-group,event,ionReorderMove,ReorderMoveEventDetail,true
+ion-reorder-group,event,ionReorderStart,void,true
 
 ion-ripple-effect,shadow
 ion-ripple-effect,prop,type,"bounded" | "unbounded",'bounded',false,false
