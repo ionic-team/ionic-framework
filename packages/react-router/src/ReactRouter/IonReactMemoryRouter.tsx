@@ -1,51 +1,47 @@
 import type { Action as HistoryAction, Location as HistoryLocation, MemoryHistory } from 'history';
-import React from 'react';
+import type { PropsWithChildren } from 'react';
+import React, { useEffect, useRef } from 'react';
 import type { MemoryRouterProps } from 'react-router';
-import { Router } from 'react-router';
+import { MemoryRouter } from 'react-router';
+import { useLocation, useNavigationType } from 'react-router-dom';
 
 import { IonRouter } from './IonRouter';
 
-interface IonReactMemoryRouterProps extends MemoryRouterProps {
-  history: MemoryHistory;
-}
+export const IonReactMemoryRouter = ({ children }: PropsWithChildren<MemoryRouterProps>) => {
+  const location = useLocation();
+  const navigationType = useNavigationType();
 
-export class IonReactMemoryRouter extends React.Component<IonReactMemoryRouterProps> {
-  history: MemoryHistory;
-  historyListenHandler?: (location: HistoryLocation, action: HistoryAction) => void;
+  const historyListenHandler = useRef<(location: HistoryLocation, action: HistoryAction) => void>();
 
-  constructor(props: IonReactMemoryRouterProps) {
-    super(props);
-    this.history = props.history;
-    this.history.listen(this.handleHistoryChange.bind(this));
-    this.registerHistoryListener = this.registerHistoryListener.bind(this);
-  }
+  const registerHistoryListener = (cb: (location: HistoryLocation, action: HistoryAction) => void) => {
+    historyListenHandler.current = cb;
+  };
 
   /**
-   * history@4.x passes separate location and action
-   * params. history@5.x passes location and action
-   * together as a single object.
-   * TODO: If support for React Router <=5 is dropped
-   * this logic is no longer needed. We can just assume
-   * a single object with both location and action.
+   * Processes navigation changes within the application.
+   *
+   * Its purpose is to relay the current `location` and the associated
+   * `action` ('PUSH', 'POP', or 'REPLACE') to any registered listeners,
+   * primarily for `IonRouter` to manage Ionic-specific UI updates and
+   * navigation stack behavior.
+   *
+   * @param location The current browser history location object.
+   * @param action The type of navigation action ('PUSH', 'POP', or
+   * 'REPLACE').
    */
-  handleHistoryChange(location: HistoryLocation, action: HistoryAction) {
-    const locationValue = (location as any).location || location;
-    const actionValue = (location as any).action || action;
-    if (this.historyListenHandler) {
-      this.historyListenHandler(locationValue, actionValue);
+  const handleHistoryChange = (location: HistoryLocation, action: HistoryAction) => {
+    if (historyListenHandler.current) {
+      historyListenHandler.current(location, action);
     }
-  }
+  };
 
-  registerHistoryListener(cb: (location: HistoryLocation, action: HistoryAction) => void) {
-    this.historyListenHandler = cb;
-  }
+  useEffect(() => {
+    handleHistoryChange(location, navigationType);
+  }, [location, navigationType]);
 
-  render() {
-    const { children, ...props } = this.props;
-    return (
-      <Router {...props}>
-        <IonRouter registerHistoryListener={this.registerHistoryListener}>{children}</IonRouter>
-      </Router>
-    );
-  }
-}
+  return (
+    <MemoryRouter>
+      <IonRouter registerHistoryListener={registerHistoryListener}>{children}</IonRouter>
+    </MemoryRouter>
+  );
+};
