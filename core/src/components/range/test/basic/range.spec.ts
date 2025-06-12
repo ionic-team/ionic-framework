@@ -95,7 +95,7 @@ describe('range: dual knobs focus management', () => {
     expect(knobB.classList.contains('ion-focused')).toBe(false);
   });
 
-  it('should emit ionFocus when any knob receives focus', async () => {
+  it('should emit ionFocus when any knob receives focus but only once until blur', async () => {
     const page = await newSpecPage({
       components: [Range],
       html: `
@@ -107,18 +107,20 @@ describe('range: dual knobs focus management', () => {
     const range = page.body.querySelector('ion-range')!;
     await page.waitForChanges();
 
-    let focusEventFired = false;
+    let focusEventFiredCount = 0;
     range.addEventListener('ionFocus', () => {
-      focusEventFired = true;
+      focusEventFiredCount++;
     });
 
     const knobA = range.shadowRoot!.querySelector('.range-knob-a') as HTMLElement;
+    const knobB = range.shadowRoot!.querySelector('.range-knob-b') as HTMLElement;
 
     // Focus knob A
     knobA.dispatchEvent(new Event('focus'));
+    knobB.dispatchEvent(new Event('focus'));
     await page.waitForChanges();
 
-    expect(focusEventFired).toBe(true);
+    expect(focusEventFiredCount).toBe(1);
   });
 
   it('should emit ionBlur when focus leaves the range completely', async () => {
