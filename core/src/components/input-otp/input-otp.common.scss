@@ -1,6 +1,6 @@
-@import "../../themes/native/native.globals";
+@import "../../themes/mixins";
 
-// Input OTP
+// Input OTP Common
 // --------------------------------------------------
 
 :host {
@@ -10,6 +10,7 @@
    * @prop --border-radius: Border radius of the input boxes
    *
    * @prop --border-width: Border width of the input boxes
+   * @prop --border-style: Border style of the input boxes
    * @prop --border-color: Border color of the input boxes
    *
    * @prop --color: Text color of the input
@@ -41,19 +42,7 @@
   --margin-end: 0;
   --margin-bottom: 0;
   --margin-start: 0;
-  --padding-top: 16px;
-  --padding-end: 0;
-  --padding-bottom: 16px;
-  --padding-start: 0;
-  --color: initial;
-  --min-width: 40px;
-  --separator-width: 8px;
   --separator-height: var(--separator-width);
-  --separator-border-radius: 999px;
-  --separator-color: #{$background-color-step-150};
-  --highlight-color-focused: #{ion-color(primary, base)};
-  --highlight-color-valid: #{ion-color(success, base)};
-  --highlight-color-invalid: #{ion-color(danger, base)};
 
   /**
    * This is a private API that is used to switch
@@ -65,8 +54,6 @@
 
   display: block;
   position: relative;
-
-  font-size: dynamic-font(14px);
 }
 
 .input-otp-group {
@@ -101,7 +88,7 @@
   height: var(--height);
 
   border-width: var(--border-width);
-  border-style: solid;
+  border-style: var(--border-style);
   border-color: var(--border-color);
 
   background: var(--background);
@@ -121,12 +108,6 @@
 // ----------------------------------------------------------------
 
 .input-otp-description {
-  color: $text-color-step-300;
-
-  font-size: dynamic-font(12px);
-
-  line-height: dynamic-font(20px);
-
   text-align: center;
 }
 
@@ -148,48 +129,6 @@
   background: var(--separator-color);
 }
 
-// Sizes
-// --------------------------------------------------
-
-:host(.input-otp-size-small) {
-  --width: 40px;
-  --height: 40px;
-}
-
-:host(.input-otp-size-small) .input-otp-group {
-  gap: 8px;
-}
-
-:host(.input-otp-size-medium) {
-  --width: 48px;
-  --height: 48px;
-}
-
-:host(.input-otp-size-large) {
-  --width: 56px;
-  --height: 56px;
-}
-
-:host(.input-otp-size-medium) .input-otp-group,
-:host(.input-otp-size-large) .input-otp-group {
-  gap: 12px;
-}
-
-// Shapes
-// --------------------------------------------------
-
-:host(.input-otp-shape-round) {
-  --border-radius: 16px;
-}
-
-:host(.input-otp-shape-soft) {
-  --border-radius: 8px;
-}
-
-:host(.input-otp-shape-rectangular) {
-  --border-radius: 0;
-}
-
 // Fills
 // --------------------------------------------------
 
@@ -197,22 +136,8 @@
   --background: none;
 }
 
-:host(.input-otp-fill-solid) {
-  --border-color: #{$background-color-step-50};
-  --background: #{$background-color-step-50};
-}
-
 // States
 // --------------------------------------------------
-
-:host(.input-otp-disabled) {
-  --color: #{$text-color-step-650};
-}
-
-:host(.input-otp-fill-outline.input-otp-disabled) {
-  --background: #{$background-color-step-50};
-  --border-color: #{$background-color-step-100};
-}
 
 :host(.input-otp-disabled),
 :host(.input-otp-disabled) .native-input:disabled {
@@ -223,16 +148,6 @@
   --border-color: var(--highlight-color);
 
   outline: none;
-}
-
-:host(.input-otp-fill-outline.input-otp-readonly) {
-  --background: #{$background-color-step-50};
-}
-
-:host(.input-otp-fill-solid.input-otp-disabled),
-:host(.input-otp-fill-solid.input-otp-readonly) {
-  --border-color: #{$background-color-step-100};
-  --background: #{$background-color-step-100};
 }
 
 // Input Highlight
@@ -269,39 +184,4 @@
 :host(.has-focus.ion-valid),
 :host(.ion-touched.ion-invalid) {
   --border-color: var(--highlight-color);
-}
-
-// Colors
-// ----------------------------------------------------------------
-
-:host(.ion-color) {
-  --highlight-color-focused: #{current-color(base)};
-}
-
-// Outline border should match the current color
-// and the solid border should match when focused
-:host(.input-otp-fill-outline.ion-color) .native-input,
-:host(.input-otp-fill-solid.ion-color) .native-input:focus {
-  border-color: current-color(base, 0.6);
-}
-
-// Invalid
-:host(.input-otp-fill-outline.ion-color.ion-invalid) .native-input,
-:host(.input-otp-fill-solid.ion-color.ion-invalid) .native-input,
-:host(.input-otp-fill-outline.ion-color.has-focus.ion-invalid) .native-input,
-:host(.input-otp-fill-solid.ion-color.has-focus.ion-invalid) .native-input {
-  border-color: ion-color(danger, base);
-}
-
-// Valid
-:host(.input-otp-fill-outline.ion-color.ion-valid) .native-input,
-:host(.input-otp-fill-solid.ion-color.ion-valid) .native-input,
-:host(.input-otp-fill-outline.ion-color.has-focus.ion-valid) .native-input,
-:host(.input-otp-fill-solid.ion-color.has-focus.ion-valid) .native-input {
-  border-color: ion-color(success, base);
-}
-
-// Outline & Disabled
-:host(.input-otp-fill-outline.input-otp-disabled.ion-color) .native-input {
-  border-color: current-color(base, 0.3);
 }

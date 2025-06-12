@@ -3,7 +3,7 @@ import { configs, test } from '@utils/test/playwright';
 
 const VALID_FILLS = ['outline', 'solid'];
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input-otp: fill'), () => {
     VALID_FILLS.forEach((fill) => {
       test(`${fill} fill should not have visual regressions`, async ({ page }) => {
