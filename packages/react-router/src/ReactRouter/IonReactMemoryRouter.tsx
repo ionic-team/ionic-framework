@@ -1,4 +1,4 @@
-import type { Action as HistoryAction, Location as HistoryLocation, MemoryHistory } from 'history';
+import type { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import type { PropsWithChildren } from 'react';
 import React, { useEffect, useRef } from 'react';
 import type { MemoryRouterProps } from 'react-router';
