@@ -14,9 +14,9 @@ interface RefsProps {}
 const Refs: React.FC = () => {
   return (
     <IonRouterOutlet>
-      {/* <Route path="/home" render={() => <Home update={addRoute} />} /> */}
+      {/* <Route path="/home" element={<Home update={addRoute} />} /> */}
       <Route path="/refs" element={<RefsFC />} />
-      <Route path="/refs/class" element={<RefsClass/ >} />
+      <Route path="/refs/class" element={<RefsClass />} />
     </IonRouterOutlet>
   );
 };

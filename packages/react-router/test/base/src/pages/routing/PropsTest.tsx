@@ -21,7 +21,7 @@ const PropsTest: React.FC<PropsTestProps> = () => {
     <IonRouterOutlet>
       <Route
         path="/routing/propstest"
-        render={() => <InnerPropsTest count={count} setCount={setCount} />}
+        element={<InnerPropsTest count={count} setCount={setCount} />}
       />
     </IonRouterOutlet>
   );

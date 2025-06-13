@@ -22,9 +22,7 @@ export const OutletRef: React.FC<OutletRefProps> = () => {
     <IonRouterOutlet id="main-outlet" ref={ref}>
       <Route
         path="/outlet-ref"
-        render={() => {
-          return <Main outletId={ref.current?.id} />;
-        }}
+        element={<Main outletId={ref.current?.id} />}
       />
     </IonRouterOutlet>
   );

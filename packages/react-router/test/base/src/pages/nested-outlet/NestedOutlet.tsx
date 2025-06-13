@@ -48,7 +48,7 @@ const SecondPage: React.FC = () => {
     <IonRouterOutlet ionPage>
       <Route
         path="/nested-outlet/secondpage"
-        element={() => <Navigate to="/nested-outlet/secondpage/page" replace />}
+        element={<Navigate to="/nested-outlet/secondpage/page" replace />}
       />
       <Route path="/nested-outlet/secondpage/page" element={<Page />} />
     </IonRouterOutlet>

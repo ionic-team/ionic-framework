@@ -126,7 +126,7 @@ const NestedOutlet2: React.FC = () => (
     <Route path="/nested-outlet2/home" element={<HomePage />} />
     <Route
       path="/nested-outlet2"
-      element={() => <Navigate to="/nested-outlet2/home" replace />}
+      element={<Navigate to="/nested-outlet2/home" replace />}
     />
   </IonRouterOutlet>
 );

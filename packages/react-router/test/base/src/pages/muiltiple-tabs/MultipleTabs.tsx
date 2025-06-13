@@ -27,15 +27,11 @@ const MultipleTabs: React.FC = () => {
       <IonRouterOutlet id="main">
         <Route
           path="/multiple-tabs/tab1/*"
-          render={() => {
-            return <Tab1 />;
-          }}
+          element={<Tab1 />}
         />
         <Route
           path="/multiple-tabs/tab2/*"
-          render={() => {
-            return <Tab2 />;
-          }}
+          element={<Tab2 />}
         />
         <Route path="/multiple-tabs" element={<Navigate to="/multiple-tabs/tab1" replace />} />
       </IonRouterOutlet>
@@ -62,11 +58,11 @@ const Tab1: React.FC = () => {
       <IonRouterOutlet id="tab1">
         <Route
           path="/multiple-tabs/tab1"
-          element={() => <Navigate to="/multiple-tabs/tab1/pagea" replace />}
+          element={<Navigate to="/multiple-tabs/tab1/pagea" replace />}
         />
         {/* <Route path="/multiple-tabs/event" element={<Navigate to="/multiple-tabs/tab1/pagea" replace />} /> */}
-        <Route path="/multiple-tabs/tab1/pagea" render={() => <Page name="PageA" />} />
-        <Route path="/multiple-tabs/tab1/pageb" render={() => <Page name="PageB" />} />
+        <Route path="/multiple-tabs/tab1/pagea" element={<Page name="PageA" />} />
+        <Route path="/multiple-tabs/tab1/pageb" element={<Page name="PageB" />} />
       </IonRouterOutlet>
     </IonTabs>
   );
@@ -88,11 +84,11 @@ const Tab2: React.FC = () => {
       <IonRouterOutlet id="tab2">
         <Route
           path="/multiple-tabs/tab2"
-          element={() => <Navigate to="/multiple-tabs/tab2/pagec" replace />}
+          element={<Navigate to="/multiple-tabs/tab2/pagec" replace />}
         />
         {/* <Route path="/multiple-tabs/tab2" element={<Navigate to="/multiple-tabs/tab2/pagec" replace />} /> */}
-        <Route path="/multiple-tabs/tab2/pagec" render={() => <Page name="PageC" />} />
-        <Route path="/multiple-tabs/tab2/paged" render={() => <Page name="PageD" />} />
+        <Route path="/multiple-tabs/tab2/pagec" element={<Page name="PageC" />} />
+        <Route path="/multiple-tabs/tab2/paged" element={<Page name="PageD" />} />
       </IonRouterOutlet>
     </IonTabs>
   );

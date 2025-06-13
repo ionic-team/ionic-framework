@@ -11,14 +11,6 @@ import { Route, Navigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
 const DynamicRoutes: React.FC = () => {
-  const [routes, setRoutes] = useState<ReactElement[]>([
-    <Route
-      key="sldjflsdj"
-      path="/dynamic-routes/home"
-      render={() => <Home update={addRoute} />}
-    />,
-  ]);
-
   const addRoute = () => {
     const newRoute = (
       <Route key="lsdjldj" path="/dynamic-routes/newRoute" element={<NewRoute />} />
@@ -26,12 +18,20 @@ const DynamicRoutes: React.FC = () => {
     setRoutes([...routes, newRoute]);
   };
 
+  const [routes, setRoutes] = useState<ReactElement[]>([
+    <Route
+      key="sldjflsdj"
+      path="/dynamic-routes/home"
+      element={<Home update={addRoute} />}
+    />,
+  ]);
+
   return (
     <IonRouterOutlet>
       {routes}
       {/* <Route path="/home" render={() => <Home update={addRoute} />} /> */}
       <Route path="/dynamic-routes" element={<Navigate to="/dynamic-routes/home" replace />} />
-      <Route render={() => <Failed />} />
+      <Route element={<Failed />} />
     </IonRouterOutlet>
   );
 };
