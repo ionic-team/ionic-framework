@@ -42,11 +42,8 @@ const DynamicTabs: React.FC = () => {
           <IonRouterOutlet>
             <Route path="/dynamic-tabs/tab1" render={renderFirstTab} />
             {render2ndTabRoute()}
-            <Route
-              path="/dynamic-tabs/"
-              render={() => <Navigate to="/dynamic-tabs/tab1" replace />}
-            />
-            <Route render={() => <Navigate to="/dynamic-tabs/tab1" replace />} />
+            <Route path="/dynamic-tabs" element={<Navigate to="/dynamic-tabs/tab1" replace />} />
+            <Route path="*" element={<Navigate to="/dynamic-tabs/tab1" replace />} />
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
             <IonTabButton tab="tab1" href="/dynamic-tabs/tab1">

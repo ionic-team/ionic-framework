@@ -37,10 +37,7 @@ const MultipleTabs: React.FC = () => {
             return <Tab2 />;
           }}
         />
-        <Route
-          path="/multiple-tabs"
-          render={() => <Navigate to="/multiple-tabs/tab1" replace />}
-        />
+        <Route path="/multiple-tabs" element={<Navigate to="/multiple-tabs/tab1" replace />} />
       </IonRouterOutlet>
     </IonSplitPane>
   );
@@ -65,9 +62,9 @@ const Tab1: React.FC = () => {
       <IonRouterOutlet id="tab1">
         <Route
           path="/multiple-tabs/tab1"
-          render={() => <Navigate to="/multiple-tabs/tab1/pagea" replace />}
+          element={() => <Navigate to="/multiple-tabs/tab1/pagea" replace />}
         />
-        {/* <Navigate path="/multiple-tabs/event" to="/multiple-tabs/tab1/pagea" replace /> */}
+        {/* <Route path="/multiple-tabs/event" element={<Navigate to="/multiple-tabs/tab1/pagea" replace />} /> */}
         <Route path="/multiple-tabs/tab1/pagea" render={() => <Page name="PageA" />} />
         <Route path="/multiple-tabs/tab1/pageb" render={() => <Page name="PageB" />} />
       </IonRouterOutlet>
@@ -91,9 +88,9 @@ const Tab2: React.FC = () => {
       <IonRouterOutlet id="tab2">
         <Route
           path="/multiple-tabs/tab2"
-          render={() => <Navigate to="/multiple-tabs/tab2/pagec" replace />}
+          element={() => <Navigate to="/multiple-tabs/tab2/pagec" replace />}
         />
-        {/* <Navigate path="/multiple-tabs/tab2" to="/multiple-tabs/tab2/pagec" replace /> */}
+        {/* <Route path="/multiple-tabs/tab2" element={<Navigate to="/multiple-tabs/tab2/pagec" replace />} /> */}
         <Route path="/multiple-tabs/tab2/pagec" render={() => <Page name="PageC" />} />
         <Route path="/multiple-tabs/tab2/paged" render={() => <Page name="PageD" />} />
       </IonRouterOutlet>

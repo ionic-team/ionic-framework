@@ -22,7 +22,7 @@ const Routing: React.FC<RoutingProps> = () => {
       <IonRouterOutlet id="main">
         <Route path="/routing/tabs" render={() => <Tabs />} />
         {/* <Route path="/routing/tabs" element={<Tabs />} /> */}
-        <Route path="/routing/" render={() => <Navigate to="/routing/tabs" />} replace />
+        <Route path="/routing" element={() => <Navigate to="/routing/tabs" replace />} />
         <Route path="/routing/favorites" element={<Favorites />} />
         {/* <Route path="/routing/favorites" render={() => {
         return (
@@ -40,7 +40,7 @@ const Routing: React.FC<RoutingProps> = () => {
       }} /> */}
         <Route path="/routing/otherpage" element={<OtherPage />} />
         <Route path="/routing/propstest" element={<PropsTest />} />
-        <Route path="/routing/redirect" render={() => <Navigate to="/routing/tabs" replace />} />
+        <Route path="/routing/redirect" element={() => <Navigate to="/routing/tabs" replace />} />
         <Route path="/routing/redirect-routing" render={() => <RedirectRouting />} />
         <Route
           render={() => (
@@ -51,7 +51,7 @@ const Routing: React.FC<RoutingProps> = () => {
             </IonPage>
           )}
         />
-        {/* <Route render={() => <Navigate to="/tabs" replace />} /> */}
+        {/* <Route element={() => <Navigate to="/tabs" replace />} /> */}
       </IonRouterOutlet>
     </IonSplitPane>
   );

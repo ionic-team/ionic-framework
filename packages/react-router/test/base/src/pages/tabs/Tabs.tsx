@@ -28,7 +28,7 @@ const Tabs: React.FC<TabsProps> = () => {
         <Route path="/tabs/tab2" element={<Tab2 />} />
         <Route path="/tabs/tab1/child" element={<Tab1Child1 />} />
         <Route path="/tabs/tab1/child2" element={<Tab1Child2 />} />
-        <Navigate from="/tabs" to="/tabs/tab1" replace />
+        <Route path="/tabs" element={<Navigate to="/tabs/tab1" replace />} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="tab1" href="/tabs/tab1">

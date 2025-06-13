@@ -24,13 +24,13 @@ const Tabs: React.FC<TabsProps> = () => {
         <Route path="/routing/tabs/tab3" element={<Tab3 />} />
         <Route
           path="/routing/tabs"
-          render={() => <Navigate to="/routing/tabs/home" replace />}
+          element={() => <Navigate to="/routing/tabs/home" replace />}
         />
         <Route
           path="/routing/tabs/redirect"
-          render={() => <Navigate to="/routing/tabs/settings" replace />}
+          element={() => <Navigate to="/routing/tabs/settings" replace />}
         />
-        {/* <Route path="/routing/tabs" render={() => <Route render={() => <Navigate to="/tabs/home" replace />} />} /> */}
+        {/* <Route path="/routing/tabs" element={() => <Navigate to="/tabs/home" replace />} /> */}
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="home" href="/routing/tabs/home" routerOptions={{ unmount: true }}>

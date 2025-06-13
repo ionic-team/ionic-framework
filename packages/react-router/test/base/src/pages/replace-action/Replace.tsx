@@ -20,7 +20,7 @@ const ReplaceAction: React.FC<TopPageProps> = () => {
       <Route path="/replace-action/page1" element={<Page1 />} />
       <Route path="/replace-action/page2" element={<Page2 />} />
       <Route path="/replace-action/page3" element={<Page3 />} />
-      <Route path="/replace-action" render={() => <Navigate to="/replace-action/page1" replace />} />
+      <Route path="/replace-action" element={() => <Navigate to="/replace-action/page1" replace />} />
     </IonRouterOutlet>
   );
 };
