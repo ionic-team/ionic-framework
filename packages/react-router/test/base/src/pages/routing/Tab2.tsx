@@ -51,10 +51,10 @@ const Tab2: React.FC = () => {
         <br />
         <IonButton
           onClick={() => {
-            history.push('/routing/tabs/settings/details/1', { routerOptions: { unmount: true } });
+            navigate('/routing/tabs/settings/details/1');
           }}
         >
-          Details with Unmount via history.push
+          Details with Unmount via navigate
         </IonButton>
       </IonContent>
     </IonPage>
