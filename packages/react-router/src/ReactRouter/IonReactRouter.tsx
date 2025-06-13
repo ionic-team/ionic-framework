@@ -7,21 +7,29 @@
 
 import type { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import type { PropsWithChildren } from 'react';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import type { BrowserRouterProps } from 'react-router-dom';
 import { BrowserRouter, useLocation, useNavigationType } from 'react-router-dom';
 
 import { IonRouter } from './IonRouter';
 
-export const IonReactRouter = ({ children }: PropsWithChildren<BrowserRouterProps>) => {
+/**
+ * This component acts as a bridge to ensure React Router hooks like
+ * `useLocation` and `useNavigationType` are called within the valid
+ * context of a `<BrowserRouter>`.
+ *
+ * It was split from `IonReactRouter` because these hooks must be
+ * descendants of a `<Router>` component, which `BrowserRouter` provides.
+ */
+const RouterContent = ({ children }: PropsWithChildren<{}>) => {
   const location = useLocation();
   const navigationType = useNavigationType();
 
   const historyListenHandler = useRef<(location: HistoryLocation, action: HistoryAction) => void>();
 
-  const registerHistoryListener = (cb: (location: HistoryLocation, action: HistoryAction) => void) => {
+  const registerHistoryListener = useCallback((cb: (location: HistoryLocation, action: HistoryAction) => void) => {
     historyListenHandler.current = cb;
-  };
+  }, []);
 
   /**
    * Processes navigation changes within the application.
@@ -35,19 +43,27 @@ export const IonReactRouter = ({ children }: PropsWithChildren<BrowserRouterProp
    * @param action The type of navigation action ('PUSH', 'POP', or
    * 'REPLACE').
    */
-  const handleHistoryChange = (location: HistoryLocation, action: HistoryAction) => {
+  const handleHistoryChange = useCallback((loc: HistoryLocation, act: HistoryAction) => {
     if (historyListenHandler.current) {
-      historyListenHandler.current(location, action);
+      historyListenHandler.current(loc, act);
     }
-  };
+  }, []);
 
   useEffect(() => {
     handleHistoryChange(location, navigationType);
-  }, [location, navigationType]);
+  }, [location, navigationType, handleHistoryChange]);
 
   return (
-    <BrowserRouter>
-      <IonRouter registerHistoryListener={registerHistoryListener}>{children}</IonRouter>
+    <IonRouter registerHistoryListener={registerHistoryListener}>
+      {children}
+    </IonRouter>
+  );
+};
+
+export const IonReactRouter = ({ children, ...browserRouterProps }: PropsWithChildren<BrowserRouterProps>) => {
+  return (
+    <BrowserRouter {...browserRouterProps}>
+      <RouterContent>{children}</RouterContent>
     </BrowserRouter>
   );
 };
