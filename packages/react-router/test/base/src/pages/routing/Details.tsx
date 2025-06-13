@@ -24,7 +24,7 @@ const Details: React.FC<DetailsProps> = () => {
     return () => console.log('Home Details unmount');
   }, []);
 
-  const nextId = parseInt(id, 10) + 1;
+  const nextId = parseInt(id ?? '0', 10) + 1;
 
   return (
     <IonPage data-pageid={`home-details-page-${id}`}>

@@ -22,7 +22,7 @@ const SettingsDetails: React.FC<DetailsProps> = () => {
     return () => console.log('Settings Details unmount');
   }, []);
 
-  const nextId = parseInt(id, 10) + 1;
+  const nextId = parseInt(id ?? '0', 10) + 1;
   // LEFT OFF - why is back button not working for multiple entries?
 
   return (

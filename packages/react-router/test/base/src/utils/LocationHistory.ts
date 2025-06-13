@@ -1,4 +1,4 @@
-import { Location as HistoryLocation } from 'history';
+import type { Location as HistoryLocation } from 'history';
 
 const RESTRICT_SIZE = 25;
 

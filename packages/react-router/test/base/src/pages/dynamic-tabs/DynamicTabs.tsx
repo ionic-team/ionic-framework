@@ -22,8 +22,8 @@ const DynamicTabs: React.FC = () => {
   const [display2ndTab, setDisplayThirdTab] = useState<boolean>(false);
 
   const renderFirstTab = useCallback(() => {
-    return <Tab1 setDisplayThirdTab={() => setDisplayThirdTab(!display2ndTab)} />;
-  }, [display2ndTab]);
+    return <Tab1 setDisplayThirdTab={() => setDisplayThirdTab(true)} />;
+  }, []);
 
   const render2ndTabRoute = useCallback(() => {
     if (display2ndTab) {
@@ -31,7 +31,7 @@ const DynamicTabs: React.FC = () => {
     } else {
       // This is weird, if I return null or undefined then I get all sorts of errors, seemingly
       // because the router is mad about a child not being a route.
-      return <Route path="/dynamic-tabs/tab200" element={<Tab1 />} />;
+      return <Route path="/dynamic-tabs/tab200" element={<Tab1 setDisplayThirdTab={setDisplayThirdTab} />} />;
     }
   }, [display2ndTab]);
 
@@ -40,7 +40,7 @@ const DynamicTabs: React.FC = () => {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route path="/dynamic-tabs/tab1" element={renderFirstTab} />
+            <Route path="/dynamic-tabs/tab1" element={renderFirstTab()} />
             {render2ndTabRoute()}
             <Route path="/dynamic-tabs" element={<Navigate to="/dynamic-tabs/tab1" replace />} />
             <Route path="*" element={<Navigate to="/dynamic-tabs/tab1" replace />} />
