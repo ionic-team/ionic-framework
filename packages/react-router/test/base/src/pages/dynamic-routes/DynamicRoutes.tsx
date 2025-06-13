@@ -16,13 +16,12 @@ const DynamicRoutes: React.FC = () => {
       key="sldjflsdj"
       path="/dynamic-routes/home"
       render={() => <Home update={addRoute} />}
-      exact={true}
     />,
   ]);
 
   const addRoute = () => {
     const newRoute = (
-      <Route key="lsdjldj" path="/dynamic-routes/newRoute" element={<NewRoute />} exact={true} />
+      <Route key="lsdjldj" path="/dynamic-routes/newRoute" element={<NewRoute />} />
     );
     setRoutes([...routes, newRoute]);
   };
@@ -30,8 +29,8 @@ const DynamicRoutes: React.FC = () => {
   return (
     <IonRouterOutlet>
       {routes}
-      {/* <Route exact path="/home" render={() => <Home update={addRoute} />} /> */}
-      <Route exact path="/dynamic-routes" render={() => <Navigate to="/dynamic-routes/home" replace />} />
+      {/* <Route path="/home" render={() => <Home update={addRoute} />} /> */}
+      <Route path="/dynamic-routes" render={() => <Navigate to="/dynamic-routes/home" replace />} />
       <Route render={() => <Failed />} />
     </IonRouterOutlet>
   );

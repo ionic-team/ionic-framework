@@ -14,23 +14,21 @@ const Tabs: React.FC<TabsProps> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet id="tabs">
-        <Route path="/routing/tabs/home" element={<Tab1 />} exact />
-        <Route path="/routing/tabs/home/details/:id" element={<Details />} exact={true} />
+        <Route path="/routing/tabs/home" element={<Tab1 />} />
+        <Route path="/routing/tabs/home/details/:id" element={<Details />} />
         {/* <Route path="/routing/tabs/home/details/:id" render={(props) => {
           return <Details />
-        }} exact={true} /> */}
-        <Route path="/routing/tabs/settings" element={<Tab2 />} exact={true} />
-        <Route path="/routing/tabs/settings/details/:id" element={<SettingsDetails />} exact={true} />
+        }} /> */}
+        <Route path="/routing/tabs/settings" element={<Tab2 />} />
+        <Route path="/routing/tabs/settings/details/:id" element={<SettingsDetails />} />
         <Route path="/routing/tabs/tab3" element={<Tab3 />} />
         <Route
           path="/routing/tabs"
           render={() => <Navigate to="/routing/tabs/home" replace />}
-          exact={true}
         />
         <Route
           path="/routing/tabs/redirect"
           render={() => <Navigate to="/routing/tabs/settings" replace />}
-          exact={true}
         />
         {/* <Route path="/routing/tabs" render={() => <Route render={() => <Navigate to="/tabs/home" replace />} />} /> */}
       </IonRouterOutlet>

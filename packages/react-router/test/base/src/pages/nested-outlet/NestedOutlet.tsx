@@ -48,10 +48,9 @@ const SecondPage: React.FC = () => {
     <IonRouterOutlet ionPage>
       <Route
         path="/nested-outlet/secondpage"
-        exact={true}
         render={() => <Navigate to="/nested-outlet/secondpage/page" replace />}
       />
-      <Route path="/nested-outlet/secondpage/page" element={<Page />} exact={true} />
+      <Route path="/nested-outlet/secondpage/page" element={<Page />} />
     </IonRouterOutlet>
   );
 };
@@ -81,7 +80,7 @@ const FirstPage: React.FC = () => {
 
 const NestedOutlet: React.FC = () => (
   <IonRouterOutlet>
-    <Route path="/nested-outlet" element={<FirstPage />} exact={true} />
+    <Route path="/nested-outlet" element={<FirstPage />} />
     <Route path="/nested-outlet/secondpage" element={<SecondPage />} />
   </IonRouterOutlet>
 );

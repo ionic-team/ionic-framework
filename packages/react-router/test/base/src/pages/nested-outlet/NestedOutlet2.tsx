@@ -17,7 +17,7 @@ import {
 const ListPage: React.FC<RouteComponentProps> = ({ match }) => {
   return (
     <IonRouterOutlet ionPage id="listpage">
-      <Route exact path="/nested-outlet2/list" element={<List />} />
+      <Route path="/nested-outlet2/list" element={<List />} />
       <Route path={`${match.url}/:id`} element={<Item />} />
     </IonRouterOutlet>
   );
@@ -70,7 +70,7 @@ const Item: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
 const HomePage: React.FC<RouteComponentProps> = ({ match }) => {
   return (
     <IonRouterOutlet ionPage id="homepage">
-      <Route exact path="/nested-outlet2/home" element={<Home />} />
+      <Route path="/nested-outlet2/home" element={<Home />} />
       <Route path="/nested-outlet2/home/welcome" element={<Welcome />} />
     </IonRouterOutlet>
   );
@@ -127,7 +127,6 @@ const NestedOutlet2: React.FC = () => (
     <Route
       path="/nested-outlet2"
       render={() => <Navigate to="/nested-outlet2/home" replace />}
-      exact={true}
     />
   </IonRouterOutlet>
 );

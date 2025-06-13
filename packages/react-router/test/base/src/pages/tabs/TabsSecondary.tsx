@@ -23,9 +23,9 @@ const TabsSecondary: React.FC<TabsSecondaryProps> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet id="tabs-secondary">
-        <Route path="/tabs-secondary/tab1" element={<Tab1 />} exact />
-        <Route path="/tabs-secondary/tab2" element={<Tab2 />} exact />
-        <Navigate from="/tabs-secondary" to="/tabs-secondary/tab1" exact replace />
+        <Route path="/tabs-secondary/tab1" element={<Tab1 />} />
+        <Route path="/tabs-secondary/tab2" element={<Tab2 />} />
+        <Navigate from="/tabs-secondary" to="/tabs-secondary/tab1" replace />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="tab1-secondary" href="/tabs-secondary/tab1">

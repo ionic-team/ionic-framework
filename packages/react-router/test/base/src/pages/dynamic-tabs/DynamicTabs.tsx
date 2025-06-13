@@ -40,12 +40,11 @@ const DynamicTabs: React.FC = () => {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route path="/dynamic-tabs/tab1" render={renderFirstTab} exact={true} />
+            <Route path="/dynamic-tabs/tab1" render={renderFirstTab} />
             {render2ndTabRoute()}
             <Route
               path="/dynamic-tabs/"
               render={() => <Navigate to="/dynamic-tabs/tab1" replace />}
-              exact={true}
             />
             <Route render={() => <Navigate to="/dynamic-tabs/tab1" replace />} />
           </IonRouterOutlet>

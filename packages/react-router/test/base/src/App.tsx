@@ -46,7 +46,7 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
-          <Route path="/" element={<Main />} exact />
+          <Route path="/" element={<Main />} />
           <Route path="/routing" element={<Routing />} />
           <Route path="/dynamic-routes" element={<DynamicRoutes />} />
           <Route path="/multiple-tabs" element={<MultipleTabs />} />

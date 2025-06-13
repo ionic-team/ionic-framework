@@ -25,9 +25,9 @@ const TabsContext: React.FC<TabsContextProps> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet id="tabs">
-        <Route path="/tab-context/tab1" element={<Tab1 />} exact />
-        <Route path="/tab-context/tab2" element={<Tab2 />} exact />
-        <Navigate from="/tab-context" to="/tab-context/tab1" exact replace />
+        <Route path="/tab-context/tab1" element={<Tab1 />} />
+        <Route path="/tab-context/tab2" element={<Tab2 />} />
+        <Navigate from="/tab-context" to="/tab-context/tab1" replace />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="tab1" href="/tab-context/tab1" routerOptions={{ unmount: true }}>
