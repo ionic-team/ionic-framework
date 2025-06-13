@@ -1,9 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
 import { compareOptions, createNotchController, isOptionSelected } from '@utils/forms';
-import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
+import { focusVisibleElement, inheritAttributes, renderHiddenInput } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
 import type { OverlaySelect } from '@utils/overlays-interface';
@@ -18,15 +18,15 @@ import type {
   AlertOptions,
   Color,
   CssClassMap,
+  ModalOptions,
   PopoverOptions,
   StyleEventDetail,
-  ModalOptions,
 } from '../../interface';
 import type { ActionSheetButton } from '../action-sheet/action-sheet-interface';
 import type { AlertInput } from '../alert/alert-interface';
 import type { SelectPopoverOption } from '../select-popover/select-popover-interface';
 
-import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from './select-interface';
+import type { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from './select-interface';
 
 // TODO(FW-2832): types
 
@@ -735,6 +735,7 @@ export class Select implements ComponentInterface {
       component: 'ion-select-modal',
       componentProps: {
         header: interfaceOptions.header,
+        cancelText: this.cancelText,
         multiple,
         value,
         options: this.createOverlaySelectOptions(this.childOpts, value),
