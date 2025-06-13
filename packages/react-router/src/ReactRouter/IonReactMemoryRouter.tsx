@@ -1,3 +1,9 @@
+/**
+ * `IonReactMemoryRouter` provides a way to use `react-router` in
+ * environments where a traditional browser history (like `BrowserRouter`)
+ * isn't available or desirable.
+ */
+
 import type { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import type { PropsWithChildren } from 'react';
 import React, { useEffect, useRef } from 'react';

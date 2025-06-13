@@ -4,17 +4,6 @@
  * transitions between different views. It intercepts route changes from
  * React Router and translates them into actions that Ionic can understand
  * and animate.
- *
- * Key responsibilities:
- * - Intercepts route changes from React Router.
- * - Manages a detailed navigation history tailored for Ionic's needs.
- * - Orchestrates the creation and management of view items.
- * - Provides a context for other Ionic components to interact with
- * navigation.
- * - Handles different navigation actions (push, pop, replace) and directions.
- * - Specifically manages navigation within tabbed interfaces.
- * - Bridges the gap between React Router's URL-based routing and Ionic's
- * component-based view management with animations.
  */
 
 import type { AnimationBuilder, RouteAction, RouteInfo, RouteManagerContextState, RouterDirection } from '@ionic/react';

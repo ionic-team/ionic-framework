@@ -1,3 +1,8 @@
+/**
+ * `IonReactHashRouter` provides a way to use hash-based routing in Ionic
+ * React applications.
+ */
+
 import type { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import type { PropsWithChildren } from 'react';
 import React, { useEffect, useRef } from 'react';

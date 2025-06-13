@@ -3,13 +3,6 @@
  * apps to map React Router route elements (such as `<IonRoute>`) to "view
  * items" that Ionic can manage in a view stack. This is critical to maintain
  * Ionic’s animation, lifecycle, and history behavior across views.
- *
- * Key responsibilities:
- * - Tracking route-based React elements and associating them with unique
- * view items
- * - Mapping routes to components via matchPath (React Router v6 compatible)
- * - Controlling mount/unmount behavior based on active routes
- * - Supporting nested outlets and default routes
  */
 
 import type { RouteInfo, ViewItem } from '@ionic/react';
