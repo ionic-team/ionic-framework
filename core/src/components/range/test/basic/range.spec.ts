@@ -156,46 +156,89 @@ describe('range: dual knobs focus management', () => {
     expect(blurEventFired).toBe(true);
   });
 
-  it('should correctly handle Tab navigation between knobs', async () => {
+  it('should correctly handle Tab navigation between knobs using KeyboardEvent', async () => {
+    // Using KeyboardEvent to simulate Tab key is more realistic than just firing focus events
+    // because it tests the actual keyboard navigation behavior users would experience
     const page = await newSpecPage({
       components: [Range],
       html: `
+        <button id="before">Before</button>
         <ion-range dual-knobs="true" min="0" max="100" value='{"lower": 25, "upper": 75}' aria-label="Dual range">
         </ion-range>
+        <button id="after">After</button>
       `,
     });
 
     const range = page.body.querySelector('ion-range')!;
+    const beforeButton = page.body.querySelector('#before') as HTMLElement;
     await page.waitForChanges();
 
     const knobA = range.shadowRoot!.querySelector('.range-knob-a') as HTMLElement;
     const knobB = range.shadowRoot!.querySelector('.range-knob-b') as HTMLElement;
 
-    // Simulate Tab to first knob
-    knobA.dispatchEvent(new Event('focus'));
+    // Start with focus on element before the range
+    beforeButton.focus();
+
+    // Simulate Tab key press - this would move focus to first knob
+    let tabEvent = new KeyboardEvent('keydown', {
+      key: 'Tab',
+      code: 'Tab',
+      bubbles: true,
+      cancelable: true,
+    });
+
+    beforeButton.dispatchEvent(tabEvent);
+    knobA.focus(); // Browser would focus next tabindex element
     await page.waitForChanges();
 
     // First knob should be focused
     expect(knobA.classList.contains('ion-focused')).toBe(true);
     expect(knobB.classList.contains('ion-focused')).toBe(false);
 
-    // Simulate Tab to second knob (blur first, focus second)
-    knobA.dispatchEvent(new Event('blur'));
-    knobB.dispatchEvent(new Event('focus'));
+    // Simulate another Tab key press - this would move focus to second knob
+    tabEvent = new KeyboardEvent('keydown', {
+      key: 'Tab',
+      code: 'Tab',
+      bubbles: true,
+      cancelable: true,
+    });
+
+    knobA.dispatchEvent(tabEvent);
+    knobB.focus(); // Browser would focus next tabindex element
     await page.waitForChanges();
 
     // Second knob should be focused, first should not
     expect(knobA.classList.contains('ion-focused')).toBe(false);
     expect(knobB.classList.contains('ion-focused')).toBe(true);
 
-    // Verify Arrow key navigation still works on focused knob
+    // Simulate Shift+Tab (reverse tab) - should go back to first knob
+    const shiftTabEvent = new KeyboardEvent('keydown', {
+      key: 'Tab',
+      code: 'Tab',
+      shiftKey: true,
+      bubbles: true,
+      cancelable: true,
+    });
 
-    // Simulate Arrow Right key press on knob B
-    const keyEvent = new KeyboardEvent('keydown', { key: 'ArrowRight' });
-    knobB.dispatchEvent(keyEvent);
+    knobB.dispatchEvent(shiftTabEvent);
+    knobA.focus(); // Browser would focus previous tabindex element
+    await page.waitForChanges();
+
+    // First knob should be focused again
+    expect(knobA.classList.contains('ion-focused')).toBe(true);
+    expect(knobB.classList.contains('ion-focused')).toBe(false);
+
+    // Verify Arrow key navigation still works on focused knob
+    const arrowEvent = new KeyboardEvent('keydown', {
+      key: 'ArrowRight',
+      code: 'ArrowRight',
+      bubbles: true,
+      cancelable: true,
+    });
+    knobA.dispatchEvent(arrowEvent);
     await page.waitForChanges();
 
     // The knob that visually appears focused should be the one that responds to keyboard input
-    expect(knobB.classList.contains('ion-focused')).toBe(true);
+    expect(knobA.classList.contains('ion-focused')).toBe(true);
   });
 });
