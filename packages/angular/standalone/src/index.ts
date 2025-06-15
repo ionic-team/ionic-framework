@@ -21,6 +21,7 @@ export {
   Config,
   Platform,
   NavParams,
+  IonModalToken,
   IonicRouteStrategy,
   ViewWillEnter,
   ViewDidEnter,

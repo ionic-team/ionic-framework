@@ -26,6 +26,7 @@ export {
   AngularDelegate,
   NavParams,
   IonicRouteStrategy,
+  IonModalToken,
   ViewWillEnter,
   ViewWillLeave,
   ViewDidEnter,
