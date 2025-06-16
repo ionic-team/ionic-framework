@@ -39,8 +39,8 @@ const RouterContent = ({ children }: PropsWithChildren<{}>) => {
    * primarily for `IonRouter` to manage Ionic-specific UI updates and
    * navigation stack behavior.
    *
-   * @param location The current browser history location object.
-   * @param action The type of navigation action ('PUSH', 'POP', or
+   * @param loc The current browser history location object.
+   * @param act The type of navigation action ('PUSH', 'POP', or
    * 'REPLACE').
    */
   const handleHistoryChange = useCallback((loc: HistoryLocation, act: HistoryAction) => {
@@ -53,11 +53,7 @@ const RouterContent = ({ children }: PropsWithChildren<{}>) => {
     handleHistoryChange(location, navigationType);
   }, [location, navigationType, handleHistoryChange]);
 
-  return (
-    <IonRouter registerHistoryListener={registerHistoryListener}>
-      {children}
-    </IonRouter>
-  );
+  return <IonRouter registerHistoryListener={registerHistoryListener}>{children}</IonRouter>;
 };
 
 export const IonReactRouter = ({ children, ...browserRouterProps }: PropsWithChildren<BrowserRouterProps>) => {
