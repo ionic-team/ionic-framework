@@ -2,10 +2,7 @@
 
 // Ionic Content
 // --------------------------------------------------
-
-ion-content {
-
-  &.in-modal {
-    background: inherit;
-  }
+  
+:host(.in-modal) {
+  --background: var(--ion-bg-surface-default, var(--ion-primitives-base-white));
 }

@@ -13,7 +13,7 @@ ion-header {
   }
 
   &.in-modal {
-    background: inherit;
+    --background: var(--ion-bg-surface-default, var(--ion-primitives-base-white));
   }
 }
 
