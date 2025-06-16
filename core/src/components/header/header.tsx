@@ -232,6 +232,7 @@ export class Header implements ComponentInterface {
           // Used internally for styling
           [`header-${theme}`]: true,
 
+          'in-modal': hostContext('ion-modal', this.el),
           [`header-translucent`]: this.translucent,
           [`header-collapse-${collapse}`]: true,
           [`header-translucent-${theme}`]: this.translucent,

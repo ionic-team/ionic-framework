@@ -1,0 +1,11 @@
+@import "./content.scss";
+
+// Ionic Content
+// --------------------------------------------------
+
+ion-content {
+
+  &.in-modal {
+    background: inherit;
+  }
+}
