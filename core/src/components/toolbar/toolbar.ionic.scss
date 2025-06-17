@@ -17,6 +17,14 @@
 
 .toolbar-container {
   gap: globals.$ion-space-400;
+  z-index: 10;
+}
+
+// Toolbar: Transparent
+// --------------------------------------------------
+
+.toolbar-background {
+  z-index: -1;
 }
 
 // Toolbar: Content

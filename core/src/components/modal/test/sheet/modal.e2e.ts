@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test, dragElementBy } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', "md", "ionic-ios", "ionic-md"], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('sheet modal: rendering'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.goto('/src/components/modal/test/sheet', config);
@@ -25,7 +25,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
-configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ["ionic-ios", 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('sheet modal: half screen rendering'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.goto('/src/components/modal/test/sheet', config);
@@ -62,7 +62,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
   });
 });
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['ios', "ionic-ios"], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('sheet modal: backdrop'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/modal/test/sheet', config);
