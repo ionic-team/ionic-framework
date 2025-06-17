@@ -17,3 +17,16 @@ ion-toolbar + ion-toolbar {
   --padding-start: #{globals.$ion-space-400};
   --padding-end: #{globals.$ion-space-400};
 }
+
+@supports (backdrop-filter: blur(0)) {
+  .header-background {
+    @include globals.position(0, 0, 0, 0);
+
+    position: absolute;
+
+    backdrop-filter: saturate(180%) blur(globals.$ion-scale-100);
+  }
+  .header-translucent-ionic ion-toolbar {
+    --opacity: 0.7;
+  }
+}

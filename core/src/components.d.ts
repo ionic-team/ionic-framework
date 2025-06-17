@@ -1460,7 +1460,7 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the header will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
+          * If `true`, the header will be translucent. Only applies when the theme is `"ios"` or `"ionic"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
           * @default false
          */
         "translucent": boolean;
@@ -7369,7 +7369,7 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the header will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
+          * If `true`, the header will be translucent. Only applies when the theme is `"ios"` or `"ionic"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
           * @default false
          */
         "translucent"?: boolean;
