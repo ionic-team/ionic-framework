@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "8.5.6",
+  "version": "8.6.1",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -31,17 +31,17 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "4.20.0",
+    "@stencil/core": "4.33.1",
     "ionicons": "^7.2.2",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.10.1",
+    "@axe-core/playwright": "^4.10.2",
     "@capacitor/core": "^7.0.0",
     "@capacitor/haptics": "^7.0.0",
     "@capacitor/keyboard": "^7.0.0",
     "@capacitor/status-bar": "^7.0.0",
-    "@clack/prompts": "^0.10.0",
+    "@clack/prompts": "^0.11.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@playwright/test": "^1.52.0",

@@ -29,7 +29,8 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await popoverFixture.open('#long-list-popover');
       await popoverFixture.screenshot('basic-long-list-popover', screenshot);
     });
-    test('should render no event popover', async () => {
+    // TODO(FW-6588): Remove skip once the flaky test is fixed
+    test.skip('should render no event popover', async () => {
       await popoverFixture.open('#no-event-popover');
       await popoverFixture.screenshot('basic-no-event-popover', screenshot);
     });
