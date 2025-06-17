@@ -115,7 +115,15 @@ export class ReactRouterViewStack extends ViewStacks {
    * Finds the view item that was previously active before a route change.
    */
   findLeavingViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: string, mustBeIonRoute = true) => {
-    const { viewItem } = this.findViewItemByPath(routeInfo.lastPathname!, outletId, mustBeIonRoute);
+    // If the lastPathname is not set, we cannot find a leaving view item
+    if (!routeInfo.lastPathname) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn(`[ReactRouterViewStack] No matching leaving view item found for: ${routeInfo.pathname}`);
+      }
+      return undefined;
+    }
+
+    const { viewItem } = this.findViewItemByPath(routeInfo.lastPathname, outletId, mustBeIonRoute);
     return viewItem;
   };
 

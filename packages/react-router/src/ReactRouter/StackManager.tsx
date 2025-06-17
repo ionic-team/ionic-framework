@@ -150,9 +150,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
        * Otherwise, create a new view item for the route.
        */
       if (enteringViewItem) {
-        enteringViewItem.reactElement = enteringRoute.props.element;
+        enteringViewItem.reactElement = enteringRoute;
       } else if (enteringRoute) {
-        enteringViewItem = this.context.createViewItem(this.id, enteringRoute.props.element, routeInfo);
+        enteringViewItem = this.context.createViewItem(this.id, enteringRoute, routeInfo);
         this.context.addViewItem(enteringViewItem);
       }
 
