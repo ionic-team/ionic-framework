@@ -236,6 +236,7 @@ export class Header implements ComponentInterface {
           [`header-collapse-${collapse}`]: true,
           [`header-translucent-${theme}`]: this.translucent,
           ['header-divider']: divider,
+          'in-modal': hostContext('ion-modal', this.el),
         }}
         {...inheritedAttributes}
       >

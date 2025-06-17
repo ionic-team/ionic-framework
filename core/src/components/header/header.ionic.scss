@@ -11,6 +11,10 @@ ion-header {
   &.header-divider {
     border-bottom: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-primitives-neutral-300;
   }
+
+  &.in-modal {
+    --background: var(--ion-bg-surface-default, var(--ion-primitives-base-white));
+  }
 }
 
 ion-toolbar + ion-toolbar {
