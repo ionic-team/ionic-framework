@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 /**
  * This behavior does not vary across directions
  */
-configs({modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('datetime: show adjacent days'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.goto('/src/components/datetime/test/show-adjacent-days', config);
