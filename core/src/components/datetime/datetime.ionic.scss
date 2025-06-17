@@ -104,7 +104,7 @@
   --background-activated: #{globals.$ion-primitives-neutral-200};
   --background-hover: #{globals.$ion-primitives-neutral-200};
   --background-hover-opacity: 1;
-  min-height: 40px;
+  min-height: globals.$ion-scale-1000;
 }
 
 // TODO(ROU-11119): Rewrite this when we replace the ion-button with a native button
@@ -182,7 +182,7 @@
   color: globals.$ion-text-subtlest;
 }
 
-// Pressed Adjacent Day 
+// Pressed Adjacent Day
 .calendar-day.calendar-day-adjacent-day:active {
   background: globals.$ion-bg-primary-base-press;
 }
