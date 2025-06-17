@@ -104,6 +104,7 @@
   --background-activated: #{globals.$ion-primitives-neutral-200};
   --background-hover: #{globals.$ion-primitives-neutral-200};
   --background-hover-opacity: 1;
+  min-height: 40px;
 }
 
 // TODO(ROU-11119): Rewrite this when we replace the ion-button with a native button
