@@ -153,12 +153,14 @@
 }
 
 // Selected Day
-.calendar-day.calendar-day-active {
+.calendar-day.calendar-day-active,
+.calendar-day.calendar-day-active.calendar-day-adjacent-day {
   background: globals.$ion-semantics-primary-100;
 }
 
 // Focused Day
-.calendar-day:focus-visible {
+.calendar-day:focus-visible,
+.calendar-day.calendar-day-adjacent-day:focus-visible {
   border: var(--focus-ring-width) globals.$ion-border-style-solid var(--focus-ring-color);
 }
 
@@ -172,6 +174,16 @@
 // Pressed Day
 .calendar-day:active {
   background: globals.$ion-semantics-primary-300;
+}
+
+// Adjacent Day
+.calendar-day.calendar-day-adjacent-day {
+  color: globals.$ion-text-subtlest;
+}
+
+// Pressed Adjacent Day 
+.calendar-day.calendar-day-adjacent-day:active {
+  background: globals.$ion-bg-primary-base-press;
 }
 
 // Time / Header
@@ -203,7 +215,6 @@
 
 // Calendar / Footer / Action Buttons
 // -----------------------------------
-
 :host .datetime-buttons ion-buttons,
 .datetime-action-buttons .datetime-action-buttons-container {
   flex-flow: column;
