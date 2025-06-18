@@ -68,6 +68,8 @@ export class App implements ComponentInterface {
    * a result of another user action. (Ex: We focus the first element
    * inside of a popover when the user presents it, but the popover is not always
    * presented as a result of keyboard action.)
+   * 
+   * @param elements An array of HTML elements to set focus on
    */
   @Method()
   async setFocus(elements: HTMLElement[]) {

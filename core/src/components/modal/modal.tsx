@@ -739,13 +739,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the modal overlay after it has been presented.
-   *
-   * @param data Any data to emit in the dismiss events.
-   * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.
-   *
    * This is a no-op if the overlay has not been presented yet. If you want
    * to remove an overlay from the DOM that was never presented, use the
    * [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the modal. For example, `cancel` or `backdrop`.
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
@@ -843,6 +842,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   /**
    * Move a sheet style modal to a specific breakpoint. The breakpoint value must
    * be a value defined in your `breakpoints` array.
+   * 
+   * @param breakpoint A value in the `breakpoints` array
    */
   @Method()
   async setCurrentBreakpoint(breakpoint: number): Promise<void> {
