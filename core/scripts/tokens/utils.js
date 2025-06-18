@@ -142,8 +142,12 @@ function generateTypographyOutput(prop, propName, isVariable) {
 
 // Generates a color based css utility-class from a color Design Token structure
 function generateColorUtilityClasses(prop, className) {
-  return `.${variablesPrefix}-${className} {\n  color: $${variablesPrefix}-${prop.name};\n}
-  .${variablesPrefix}-background-${className} {\n  background-color: $${variablesPrefix}-${prop.name};\n}`;
+  const isBg = className.includes('bg');
+  const cssProp = isBg ? 'background-color' : 'color';
+  return `.${variablesPrefix}-${className} {
+  --${cssProp}: $${variablesPrefix}-${prop.name};
+  ${cssProp}: $${variablesPrefix}-${prop.name};
+}`;
 }
 
 // Generates margin and padding utility classes to match the token-agnostic
@@ -264,7 +268,10 @@ function generateSpaceUtilityClasses(prop, className) {
 
 // Generates a valid box-shadow value from a shadow Design Token structure
 function generateRadiusUtilityClasses(propName) {
-  return `.${variablesPrefix}-${propName} {\n  border-radius: $${variablesPrefix}-${propName};\n}`;
+  return `.${variablesPrefix}-${propName} {
+  --border-radius: $${variablesPrefix}-${propName};
+  border-radius: $${variablesPrefix}-${propName};
+}`;
 }
 
 // Generates a border based css utility-class from a font Design Token structure
@@ -282,7 +289,10 @@ function generateBorderUtilityClasses(prop, propName) {
     default:
       attribute = 'border-color';
   }
-  return `.${variablesPrefix}-${propName} {\n  ${attribute}: $${variablesPrefix}-${propName};\n}`;
+  return `.${variablesPrefix}-${propName} {
+  --${attribute}: $${variablesPrefix}-${propName};
+  ${attribute}: $${variablesPrefix}-${propName};
+}`;
 }
 
 // Generates a font based css utility-class from a font Design Token structure
@@ -292,7 +302,10 @@ function generateFontUtilityClasses(prop, propName) {
 
 // Generates a valid box-shadow value from a shadow Design Token structure
 function generateShadowUtilityClasses(propName) {
-  return `.${variablesPrefix}-${propName} {\n  box-shadow: $${variablesPrefix}-${propName};\n}`;
+  return `.${variablesPrefix}-${propName} {
+  --box-shadow: $${variablesPrefix}-${propName};
+  box-shadow: $${variablesPrefix}-${propName};
+}`;
 }
 
 // Generates a utility class for a given token category and name
