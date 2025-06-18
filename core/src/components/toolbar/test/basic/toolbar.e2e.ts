@@ -1,25 +1,27 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ modes: ['ios', 'md', 'ionic-md'], palettes: ['light', 'dark'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('toolbar: basic (LTR only)'), () => {
-    test('should not have visual regressions with text only', async ({ page }) => {
-      await page.setContent(
-        `
+configs({ modes: ['ios', 'md', 'ionic-md'], palettes: ['light', 'dark'], directions: ['ltr'] }).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(title('toolbar: basic (LTR only)'), () => {
+      test('should not have visual regressions with text only', async ({ page }) => {
+        await page.setContent(
+          `
           <ion-header>
             <ion-toolbar>
               <ion-title>Toolbar</ion-title>
             </ion-toolbar>
           </ion-header>
         `,
-        config
-      );
+          config
+        );
 
-      const header = page.locator('ion-header');
-      await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-text-only`));
+        const header = page.locator('ion-header');
+        await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-text-only`));
+      });
     });
-  });
-});
+  }
+);
 
 configs({ modes: ['ios', 'md', 'ionic-md'], palettes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('toolbar: basic'), () => {

@@ -1,31 +1,33 @@
 import { expect } from '@playwright/test';
 import { configs, test, dragElementBy } from '@utils/test/playwright';
 
-configs({ modes: ['ios', "md", "ionic-ios", "ionic-md"], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('sheet modal: rendering'), () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.goto('/src/components/modal/test/sheet', config);
-      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+configs({ modes: ['ios', 'md', 'ionic-ios', 'ionic-md'], directions: ['ltr'] }).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(title('sheet modal: rendering'), () => {
+      test('should not have visual regressions', async ({ page }) => {
+        await page.goto('/src/components/modal/test/sheet', config);
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
-      await page.click('#sheet-modal');
+        await page.click('#sheet-modal');
 
-      await ionModalDidPresent.next();
+        await ionModalDidPresent.next();
 
-      await expect(page).toHaveScreenshot(screenshot(`modal-sheet-present`), {
-        /**
-         * Animations must be enabled to capture the screenshot.
-         * By default, animations are disabled with toHaveScreenshot,
-         * and when capturing the screenshot will call animation.finish().
-         * This will cause the modal to close and the screenshot capture
-         * to be invalid.
-         */
-        animations: 'allow',
+        await expect(page).toHaveScreenshot(screenshot(`modal-sheet-present`), {
+          /**
+           * Animations must be enabled to capture the screenshot.
+           * By default, animations are disabled with toHaveScreenshot,
+           * and when capturing the screenshot will call animation.finish().
+           * This will cause the modal to close and the screenshot capture
+           * to be invalid.
+           */
+          animations: 'allow',
+        });
       });
     });
-  });
-});
+  }
+);
 
-configs({ modes: ["ionic-ios", 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ionic-ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('sheet modal: half screen rendering'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.goto('/src/components/modal/test/sheet', config);
@@ -62,7 +64,7 @@ configs({ modes: ["ionic-ios", 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
   });
 });
 
-configs({ modes: ['ios', "ionic-ios"], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('sheet modal: backdrop'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/modal/test/sheet', config);
