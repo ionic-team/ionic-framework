@@ -44,7 +44,7 @@
     "@clack/prompts": "^0.11.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
-    "@playwright/test": "^1.52.0",
+    "@playwright/test": "^1.53.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.10.0",
