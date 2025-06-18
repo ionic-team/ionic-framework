@@ -55,7 +55,7 @@ export class Header implements ComponentInterface {
 
   /**
    * If `true`, the header will be translucent.
-   * Only applies when the theme is `"ios"` and the device supports
+   * Only applies when the theme is `"ios"` or `"ionic"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    *
    * Note: In order to scroll content behind the header, the `fullscreen`
@@ -240,7 +240,7 @@ export class Header implements ComponentInterface {
         }}
         {...inheritedAttributes}
       >
-        {theme === 'ios' && translucent && <div class="header-background"></div>}
+        {theme !== 'md' && translucent && <div class="header-background"></div>}
         <slot></slot>
       </Host>
     );
