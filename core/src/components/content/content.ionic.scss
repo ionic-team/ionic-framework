@@ -1,0 +1,8 @@
+@import "./content.scss";
+
+// Ionic Content
+// --------------------------------------------------
+
+:host(.in-modal) {
+  --background: var(--ion-bg-surface-default, var(--ion-primitives-base-white));
+}

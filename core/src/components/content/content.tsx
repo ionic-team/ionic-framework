@@ -24,8 +24,12 @@ import type { ScrollBaseDetail, ScrollDetail } from './content-interface';
  */
 @Component({
   tag: 'ion-content',
-  styleUrl: 'content.scss',
   shadow: true,
+  styleUrls: {
+    ios: 'content.scss',
+    md: 'content.scss',
+    ionic: 'content.ionic.scss',
+  },
 })
 export class Content implements ComponentInterface {
   private watchDog: ReturnType<typeof setInterval> | null = null;
@@ -458,6 +462,7 @@ export class Content implements ComponentInterface {
           'content-sizing': hostContext('ion-popover', this.el),
           overscroll: forceOverscroll,
           [`content-${rtl}`]: true,
+          'in-modal': hostContext('ion-modal', this.el),
         })}
         style={{
           '--offset-top': `${this.cTop}px`,
