@@ -177,7 +177,7 @@ configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, 
         const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
         const header = page.locator('.modal-sheet ion-header');
 
-        await dragElementBy(header, page, 0, 125);
+        await dragElementBy(header, page, 0, 110);
 
         await ionBreakpointDidChange.next();
 
