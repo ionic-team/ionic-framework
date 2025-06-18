@@ -17,6 +17,16 @@
 
 .toolbar-container {
   gap: globals.$ion-space-400;
+  // TODO(ROU-10853): replace this value with a layer token
+  z-index: 10;
+}
+
+// Toolbar: Transparent
+// --------------------------------------------------
+
+.toolbar-background {
+  // TODO(ROU-10853): replace this value with a layer token
+  z-index: -1;
 }
 
 // Toolbar: Content
