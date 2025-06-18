@@ -7,7 +7,7 @@ import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail } from '../../interface';
 
-import type { ItemReorderEventDetail } from './reorder-group-interface';
+import type { ItemReorderEventDetail, ReorderMoveEventDetail, ReorderEndEventDetail } from './reorder-group-interface';
 
 // TODO(FW-2832): types
 
@@ -51,12 +51,35 @@ export class ReorderGroup implements ComponentInterface {
     }
   }
 
+  // TODO(FW-6590): Remove this in a major release.
   /**
    * Event that needs to be listened to in order to complete the reorder action.
+   * @deprecated Use `ionReorderEnd` instead. If you are accessing
+   * `event.detail.from` or `event.detail.to` and relying on them
+   * being different you should now add checks as they are always emitted
+   * in `ionReorderEnd`, even when they are the same.
+   */
+  @Event() ionItemReorder!: EventEmitter<ItemReorderEventDetail>;
+
+  /**
+   * Event that is emitted when the reorder gesture starts.
+   */
+  @Event() ionReorderStart!: EventEmitter<void>;
+
+  /**
+   * Event that is emitted as the reorder gesture moves.
+   */
+  @Event() ionReorderMove!: EventEmitter<ReorderMoveEventDetail>;
+
+  /**
+   * Event that is emitted when the reorder gesture ends.
+   * The from and to properties are always available, regardless of
+   * if the reorder gesture moved the item. If the item did not change
+   * from its start position, the from and to properties will be the same.
    * Once the event has been emitted, the `complete()` method then needs
    * to be called in order to finalize the reorder action.
    */
-  @Event() ionItemReorder!: EventEmitter<ItemReorderEventDetail>;
+  @Event() ionReorderEnd!: EventEmitter<ReorderEndEventDetail>;
 
   async connectedCallback() {
     const contentEl = findClosestIonContent(this.el);
@@ -88,7 +111,7 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   /**
-   * Completes the reorder operation. Must be called by the `ionItemReorder` event.
+   * Completes the reorder operation. Must be called by the `ionReorderEnd` event.
    *
    * If a list of items is passed, the list will be reordered and returned in the
    * proper order.
@@ -164,6 +187,8 @@ export class ReorderGroup implements ComponentInterface {
     item.classList.add(ITEM_REORDER_SELECTED);
 
     hapticSelectionStart();
+
+    this.ionReorderStart.emit();
   }
 
   private onMove(ev: GestureDetail) {
@@ -180,6 +205,7 @@ export class ReorderGroup implements ComponentInterface {
     const currentY = Math.max(top, Math.min(ev.currentY, bottom));
     const deltaY = scroll + currentY - ev.startY;
     const normalizedY = currentY - top;
+    const fromIndex = this.lastToIndex;
     const toIndex = this.itemIndexForTop(normalizedY);
     if (toIndex !== this.lastToIndex) {
       const fromIndex = indexForItem(selectedItem);
@@ -191,6 +217,11 @@ export class ReorderGroup implements ComponentInterface {
 
     // Update selected item position
     selectedItem.style.transform = `translateY(${deltaY}px)`;
+
+    this.ionReorderMove.emit({
+      from: fromIndex,
+      to: toIndex,
+    });
   }
 
   private onEnd() {
@@ -207,6 +238,7 @@ export class ReorderGroup implements ComponentInterface {
     if (toIndex === fromIndex) {
       this.completeReorder();
     } else {
+      // TODO(FW-6590): Remove this once the deprecated event is removed
       this.ionItemReorder.emit({
         from: fromIndex,
         to: toIndex,
@@ -215,6 +247,12 @@ export class ReorderGroup implements ComponentInterface {
     }
 
     hapticSelectionEnd();
+
+    this.ionReorderEnd.emit({
+      from: fromIndex,
+      to: toIndex,
+      complete: this.completeReorder.bind(this),
+    });
   }
 
   private completeReorder(listOrReorder?: boolean | any[]): any {
