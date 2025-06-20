@@ -10,14 +10,20 @@ import {
   IonLabel,
 } from '@ionic/react';
 
+import packageJson from '../../package.json';
+
 interface MainProps {}
 
 const Main: React.FC<MainProps> = () => {
+  const majorVersion = packageJson.dependencies['react-router'].match(
+    /(\d+)\.(\d+)\.(\d+)/
+  )?.[1];
+
   return (
     <IonPage data-pageid="home">
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Main</IonTitle>
+          <IonTitle>Test App - React Router v{majorVersion}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

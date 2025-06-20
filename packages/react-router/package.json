@@ -42,8 +42,8 @@
   "peerDependencies": {
     "react": ">=16.8.6",
     "react-dom": ">=16.8.6",
-    "react-router": ">=5.0.1",
-    "react-router-dom": ">=5.0.1"
+    "react-router": ">=6.0.0",
+    "react-router-dom": ">=6.0.0"
   },
   "devDependencies": {
     "@ionic/eslint-config": "^0.3.0",
