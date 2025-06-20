@@ -160,8 +160,7 @@
 }
 
 // Focused Day
-.calendar-day:focus-visible,
-.calendar-day.calendar-day-adjacent-day:focus-visible {
+.calendar-day:focus-visible {
   border: var(--focus-ring-width) globals.$ion-border-style-solid var(--focus-ring-color);
 }
 
@@ -173,8 +172,9 @@
 }
 
 // Pressed Day
-.calendar-day:active {
-  background: globals.$ion-semantics-primary-300;
+.calendar-day:active,
+.calendar-day.calendar-day-adjacent-day:active {
+  background: globals.$ion-bg-primary-subtle-press;
 }
 
 // Adjacent Day
@@ -182,9 +182,9 @@
   color: globals.$ion-text-subtlest;
 }
 
-// Pressed Adjacent Day
-.calendar-day.calendar-day-adjacent-day:active {
-  background: globals.$ion-bg-primary-subtle-press;
+// Selected Adjacent Day
+.calendar-day.calendar-day-active.calendar-day-adjacent-day {
+  color: globals.$ion-text-default;
 }
 
 // Time / Header
