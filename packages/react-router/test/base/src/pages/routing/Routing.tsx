@@ -20,16 +20,15 @@ const Routing: React.FC<RoutingProps> = () => {
     <IonSplitPane contentId="main">
       <Menu />
       <IonRouterOutlet id="main">
-        <Route path="/routing/tabs" element={<Tabs />} />
-        {/* <Route path="/routing/tabs" element={<Tabs />} /> */}
-        <Route path="/routing" element={<Navigate to="/routing/tabs" replace />} />
-        <Route path="/routing/favorites" element={<Favorites />} />
-        {/* <Route path="/routing/favorites" element={<IonRouterOutlet id="favorites"><Route path="/routing/favorites" element={<Favorites />} /></IonRouterOutlet>} /> */}
-        {/* <Route path="/routing/otherpage" element={<IonRouterOutlet id="otherpage"><Route path="/routing/otherpage" element={<OtherPage />} /></IonRouterOutlet>} /> */}
-        <Route path="/routing/otherpage" element={<OtherPage />} />
-        <Route path="/routing/propstest" element={<PropsTest />} />
-        <Route path="/routing/redirect" element={<Navigate to="/routing/tabs" replace />} />
-        <Route path="/routing/redirect-routing" element={<RedirectRouting />} />
+        <Route index element={<Navigate to="/routing/tabs" replace />} />
+
+        <Route path="tabs" element={<Tabs />} />
+        <Route path="favorites" element={<Favorites />} />
+        <Route path="otherpage" element={<OtherPage />} />
+        <Route path="propstest" element={<PropsTest />} />
+        <Route path="redirect" element={<Navigate to="/routing/tabs" replace />} />
+        <Route path="redirect-routing" element={<RedirectRouting />} />
+
         <Route
           path="*"
           element={
@@ -40,7 +39,6 @@ const Routing: React.FC<RoutingProps> = () => {
             </IonPage>
           }
         />
-        {/* <Route element={<Navigate to="/tabs" replace />} /> */}
       </IonRouterOutlet>
     </IonSplitPane>
   );

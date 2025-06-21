@@ -13,6 +13,7 @@ interface MatchPathOptions {
     path?: string;
     caseSensitive?: boolean;
     end?: boolean;
+    index?: boolean;
   };
 }
 

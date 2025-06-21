@@ -89,9 +89,15 @@ export class ReactRouterViewStack extends ViewStacks {
 
     // Sync child elements with stored viewItems (e.g. to reflect new props)
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
-      const viewItem = viewItems.find((v) => matchComponent(child, v.routeData.childProps.path));
-      if (viewItem) {
-        viewItem.reactElement = child;
+      // Ensure the child is a valid React element sincewe
+      // might have whitespace strings or other non-element children
+      if (React.isValidElement(child)) {
+        const viewItem = viewItems.find((v) =>
+          matchComponent(child, v.routeData.childProps.path || routeInfo.pathname)
+        );
+        if (viewItem) {
+          viewItem.reactElement = child;
+        }
       }
     });
 
