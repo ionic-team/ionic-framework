@@ -69,7 +69,7 @@ export class App implements ComponentInterface {
    * inside of a popover when the user presents it, but the popover is not always
    * presented as a result of keyboard action.)
    * 
-   * @param elements An array of HTML elements to set focus on
+   * @param elements An array of HTML elements to set focus on.
    */
   @Method()
   async setFocus(elements: HTMLElement[]) {
