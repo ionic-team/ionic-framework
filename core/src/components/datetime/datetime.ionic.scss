@@ -104,6 +104,7 @@
   --background-activated: #{globals.$ion-primitives-neutral-200};
   --background-hover: #{globals.$ion-primitives-neutral-200};
   --background-hover-opacity: 1;
+  min-height: globals.$ion-scale-1000;
 }
 
 // TODO(ROU-11119): Rewrite this when we replace the ion-button with a native button
@@ -153,7 +154,8 @@
 }
 
 // Selected Day
-.calendar-day.calendar-day-active {
+.calendar-day.calendar-day-active,
+.calendar-day.calendar-day-active.calendar-day-adjacent-day {
   background: globals.$ion-semantics-primary-100;
 }
 
@@ -170,8 +172,19 @@
 }
 
 // Pressed Day
-.calendar-day:active {
-  background: globals.$ion-semantics-primary-300;
+.calendar-day:active,
+.calendar-day.calendar-day-adjacent-day:active {
+  background: globals.$ion-bg-primary-subtle-press;
+}
+
+// Adjacent Day
+.calendar-day.calendar-day-adjacent-day {
+  color: globals.$ion-text-subtlest;
+}
+
+// Selected Adjacent Day
+.calendar-day.calendar-day-active.calendar-day-adjacent-day {
+  color: globals.$ion-text-default;
 }
 
 // Time / Header
@@ -203,7 +216,6 @@
 
 // Calendar / Footer / Action Buttons
 // -----------------------------------
-
 :host .datetime-buttons ion-buttons,
 .datetime-action-buttons .datetime-action-buttons-container {
   flex-flow: column;
