@@ -460,7 +460,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * to position the popover relative to where that event
    * was dispatched.
    * 
-   * @param event Event to position popover relative to.
+   * @param event The event to position the popover relative to.
    */
   @Method()
   async present(event?: MouseEvent | TouchEvent | PointerEvent | CustomEvent): Promise<void> {
