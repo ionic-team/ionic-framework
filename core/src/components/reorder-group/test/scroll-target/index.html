@@ -57,9 +57,9 @@
 
     <script>
       const group = document.querySelector('ion-reorder-group');
-      group.addEventListener('ionItemReorder', (ev) => {
+      group.addEventListener('ionReorderEnd', (ev) => {
         ev.detail.complete();
-        window.dispatchEvent(new CustomEvent('ionItemReorderComplete'));
+        window.dispatchEvent(new CustomEvent('ionReorderComplete'));
       });
     </script>
   </body>
