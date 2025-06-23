@@ -37,6 +37,24 @@ configs({ modes: ['ios', 'md', 'ionic-md'], palettes: ['light', 'dark'], directi
         const header = page.locator('ion-header');
         await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-slotted-images`));
       });
+
+      test('should not have visual regressions with slotted images with intrinsic width', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-header>
+            <ion-toolbar>
+              <img src="https://picsum.photos/id/237/50/50" slot="start" />
+              <ion-title>Image | Ion-Image</ion-title>
+              <ion-img src="https://picsum.photos/id/237/50/50" slot="end"></ion-img>
+            </ion-toolbar>
+          </ion-header>
+        `,
+          config
+        );
+
+        const header = page.locator('ion-header');
+        await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-slotted-images-intrinsic-width`));
+      });
     });
   }
 );
