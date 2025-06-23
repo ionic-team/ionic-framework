@@ -5,7 +5,7 @@ import { ModalComponent } from "./modal/modal.component";
 @Injectable({
   providedIn: 'root'
 })
-export class ProgramaticModalService {
+export class ProgrammaticModalService {
   #modalController = inject(ModalController);
 
   async open() {
