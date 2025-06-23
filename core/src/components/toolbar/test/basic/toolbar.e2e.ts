@@ -19,6 +19,24 @@ configs({ modes: ['ios', 'md', 'ionic-md'], palettes: ['light', 'dark'], directi
         const header = page.locator('ion-header');
         await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-text-only`));
       });
+
+      test('should not have visual regressions with slotted images', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-header>
+            <ion-toolbar>
+              <img src="/src/components/toolbar/test/image.svg" style="width: 50px; height: 50px;" slot="start"/>
+              <ion-title>Toolbar</ion-title>
+              <ion-img src="/src/components/toolbar/test/image.svg" style="width: 50px; height: 50px;" slot="end"/>
+            </ion-toolbar>
+          </ion-header>
+        `,
+          config
+        );
+
+        const header = page.locator('ion-header');
+        await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-slotted-images`));
+      });
     });
   }
 );
