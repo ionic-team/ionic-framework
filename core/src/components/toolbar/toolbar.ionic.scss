@@ -70,12 +70,12 @@
 // Ionic Toolbar Slot Placement
 // --------------------------------------------------
 // We're using the slots to force the main toolbar content to be
-// cenetered in the toolbar. This is a bit of a hack but it works.
+// centered in the toolbar. This is a bit of a hack but it works.
 // The main content is placed in the center and then JavaScript evaluates
 // the sizes of the different slots and sets what size the pairs should be
 // based on the larger one. We then use `flex-basis` to set the expected
 // size of the slots and disable `flex-shrink` so that the smaller slot cannot
-// shrink and throw off the center, we also diable flex-grow so that slots do
+// shrink and throw off the center, we also disable flex-grow so that slots do
 // not grow more than they need. The slots are paired up so the mirroring slots
 // always have the same size. That is, start and end are paired and primary
 // and secondary are paired. All of this works together to force the main

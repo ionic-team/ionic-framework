@@ -112,8 +112,17 @@ export class Toolbar implements ComponentInterface {
       if (this.el.classList.contains(`has-${slot}-content`)) {
         const slotElement = this.el.shadowRoot?.querySelector(`slot[name="${slot}"]`) as HTMLElement | null;
         if (slotElement) {
+          // Temporarily allow slot to size to content by setting flex-basis
+          // to 'auto'. This ensures that slotted content (like images) can
+          // render at their intrinsic width for measurement.
+          const { name } = slotPairs.find((pair) => pair.slots.includes(slot))!;
+          this.el.style.setProperty(`--${name}-size`, 'auto');
+
           const width = slotElement.offsetWidth;
+
+          // Set the slot size variable to the measured width
           if (width > 0) {
+            this.el.style.setProperty(`--${name}-size`, `${width}px`);
             slotWidths.set(slot, width);
           } else {
             allMeasurementsSuccessful = false;
