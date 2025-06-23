@@ -459,7 +459,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * Developers can pass a mouse, touch, or pointer event
    * to position the popover relative to where that event
    * was dispatched.
-   * 
+   *
    * @param event The event to position the popover relative to.
    */
   @Method()

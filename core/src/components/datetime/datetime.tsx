@@ -524,7 +524,7 @@ export class Datetime implements ComponentInterface {
    * Confirms the selected datetime value, updates the
    * `value` property, and optionally closes the popover
    * or modal that the datetime was presented in.
-   * 
+   *
    * @param closeOverlay If `true`, closes the parent overlay. Defaults to `false`.
    */
   @Method()
@@ -561,7 +561,7 @@ export class Datetime implements ComponentInterface {
    * Resets the internal state of the datetime but does not update the value.
    * Passing a valid ISO-8601 string will reset the state of the component to the provided date.
    * If no value is provided, the internal state will be reset to the clamped value of the min, max and today.
-   * 
+   *
    * @param startDate a valid [ISO-8601 string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#date_time_string_format) to reset the datetime state to.
    */
   @Method()
@@ -574,7 +574,7 @@ export class Datetime implements ComponentInterface {
    * optionally closes the popover
    * or modal that the datetime was
    * presented in.
-   * 
+   *
    * @param closeOverlay If `true`, closes the parent overlay. Defaults to `false`.
    */
   @Method()
