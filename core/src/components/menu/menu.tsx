@@ -404,7 +404,7 @@ export class Menu implements ComponentInterface, MenuI {
    * Opens or closes the menu.
    * If the operation can't be completed successfully, it returns `false`.
    * 
-   * @param shouldOpen If `true`, attempt to open the menu.
+   * @param shouldOpen If `true`, the menu will open. If `false`, the menu will close.
    * @param animated If `true`, open or close the menu with animation. Defaults to `true`.
    * @param role The role of the element that is closing the menu.
    */
