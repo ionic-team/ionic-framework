@@ -378,7 +378,7 @@ export class Menu implements ComponentInterface, MenuI {
    * Closes the menu. If the menu is already closed or it can't be closed,
    * it returns `false`.
    * 
-   * @param animated If `true`, close the menu with animation. Defaults to `true`.
+   * @param animated If `true`, the menu will animate when closing. If `false`, the menu will close instantly without animation. Defaults to `true`.
    * @param role The role of the element that is closing the menu.
    * This can be useful in a button handler for determining which button was
    * clicked to close the menu. Some examples include:
