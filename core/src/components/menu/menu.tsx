@@ -393,7 +393,7 @@ export class Menu implements ComponentInterface, MenuI {
    * Toggles the menu. If the menu is already open, it will try to close, otherwise it will try to open it.
    * If the operation can't be completed successfully, it returns `false`.
    * 
-   * @param animated If `true`, toggle the menu with animation. Defaults to `true`.
+   * @param animated If `true`, the menu will animate when opening/closing. If `false`, the menu will open/close instantly without animation. Defaults to `true`.
    */
   @Method()
   toggle(animated = true): Promise<boolean> {
