@@ -401,7 +401,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * Opens or closes the button.
+   * Opens or closes the menu.
    * If the operation can't be completed successfully, it returns `false`.
    * 
    * @param shouldOpen If `true`, attempt to open the menu.
