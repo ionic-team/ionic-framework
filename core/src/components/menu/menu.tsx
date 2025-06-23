@@ -367,7 +367,7 @@ export class Menu implements ComponentInterface, MenuI {
    * Opens the menu. If the menu is already open or it can't be opened,
    * it returns `false`.
    * 
-   * @param animated If `true`, open the menu with animation. Defaults to `true`.
+   * @param animated If `true`, the menu will animate when opening. If `false`, the menu will open instantly without animation. Defaults to `true`.
    */
   @Method()
   open(animated = true): Promise<boolean> {
