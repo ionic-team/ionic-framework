@@ -1,13 +1,13 @@
 import {
   ApplicationRef,
-  NgZone,
-  Injectable,
-  Injector,
+  ComponentRef,
+  createComponent,
   EnvironmentInjector,
   inject,
-  createComponent,
+  Injectable,
   InjectionToken,
-  ComponentRef,
+  Injector,
+  NgZone,
 } from '@angular/core';
 import {
   FrameworkDelegate,
@@ -21,6 +21,9 @@ import {
 import { NavParams } from '../directives/navigation/nav-params';
 
 import { ConfigToken } from './config';
+
+// Token for injecting the modal element
+export const IonModalToken = new InjectionToken<HTMLIonModalElement>('IonModalToken');
 
 // TODO(FW-2827): types
 
@@ -142,8 +145,19 @@ export const attachView = (
    * The modern approach is to access the data directly
    * from the component's class instance.
    */
+  const providers = getProviders(params);
+
+  // If this is an ion-modal, provide the modal element as an injectable
+  // so components inside the modal can inject it directly
+  if (container.tagName.toLowerCase() === 'ion-modal') {
+    providers.push({
+      provide: IonModalToken,
+      useValue: container,
+    });
+  }
+
   const childInjector = Injector.create({
-    providers: getProviders(params),
+    providers,
     parent: injector,
   });
 
