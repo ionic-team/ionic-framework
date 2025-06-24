@@ -23,7 +23,7 @@ html {
 }
 
 body {
-  background: var(--ion-background-color);
+  background: var(--ion-background-color, #{globals.$ion-bg-body});
   color: var(--ion-text-color);
 }
 
