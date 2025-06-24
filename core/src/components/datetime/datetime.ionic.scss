@@ -219,9 +219,9 @@
 :host .datetime-footer {
   @include globals.padding(
     globals.$ion-space-200,
-    globals.$ion-space-0,
+    globals.$ion-space-400,
     globals.$ion-space-200,
-    globals.$ion-space-0
+    globals.$ion-space-400
   );
   margin-top: globals.$ion-space-200;
 
