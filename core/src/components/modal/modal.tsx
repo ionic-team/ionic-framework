@@ -967,7 +967,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     return (
       <Host
         no-router
-        tabindex="-1"
+        // Allow the modal to be navigable when the handle is focusable
+        tabIndex={!isHandleCycle ? -1 : 0}
         {...(htmlAttributes as any)}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
