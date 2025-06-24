@@ -19,64 +19,6 @@ configs({ modes: ['ios', 'md', 'ionic-md'], palettes: ['light', 'dark'], directi
         const header = page.locator('ion-header');
         await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-text-only`));
       });
-
-      test('should not have visual regressions with slotted svgs', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-header>
-            <ion-toolbar>
-              <img src="/src/components/toolbar/test/image.svg" slot="start"/>
-              <ion-title>Toolbar</ion-title>
-              <ion-img src="/src/components/toolbar/test/image.svg" slot="end"/>
-            </ion-toolbar>
-          </ion-header>
-        `,
-          config
-        );
-
-        const header = page.locator('ion-header');
-        await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-slotted-svgs`));
-      });
-
-      test('should not have visual regressions with slotted images', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-header>
-            <ion-toolbar>
-              <img src="https://picsum.photos/id/237/50/50" slot="start" />
-              <ion-title>Image | Ion-Image</ion-title>
-              <ion-img src="https://picsum.photos/id/237/50/50" slot="end"></ion-img>
-            </ion-toolbar>
-          </ion-header>
-        `,
-          config
-        );
-
-        const header = page.locator('ion-header');
-        await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-slotted-images`));
-      });
-
-      test('should not have visual regressions with nested slotted images', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-header>
-            <ion-toolbar>
-              <div slot="start">
-                <img src="https://picsum.photos/id/237/50/50" />
-              </div>
-              <ion-title>Image | Ion-Image</ion-title>
-              <div slot="end">
-                <ion-img src="https://picsum.photos/id/237/50/50"></ion-img>
-              </div>
-            </ion-toolbar>
-          </ion-header>
-        `,
-          config
-        );
-
-        const header = page.locator('ion-header');
-        await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-nested-slotted-images`));
-      });
     });
   }
 );
@@ -235,6 +177,70 @@ configs({ modes: ['ios', 'md', 'ionic-md'], palettes: ['light', 'dark'] }).forEa
 
       const header = page.locator('ion-header');
       await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-text-buttons-inside-content`));
+    });
+  });
+});
+
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('toolbar: basic'), () => {
+    test.describe(title('slot content'), () => {
+      test('should not have visual regressions with slotted svgs', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-header>
+              <ion-toolbar>
+                <img src="/src/components/toolbar/test/image.svg" slot="start"/>
+                <ion-title>Toolbar</ion-title>
+                <ion-img src="/src/components/toolbar/test/image.svg" slot="end"/>
+              </ion-toolbar>
+            </ion-header>
+          `,
+          config
+        );
+
+        const header = page.locator('ion-header');
+        await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-slotted-svgs`));
+      });
+
+      test('should not have visual regressions with slotted images', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-header>
+              <ion-toolbar>
+                <img src="https://picsum.photos/id/237/50/50" slot="start" />
+                <ion-title>Toolbar</ion-title>
+                <ion-img src="https://picsum.photos/id/237/50/50" slot="end"></ion-img>
+              </ion-toolbar>
+            </ion-header>
+          `,
+          config
+        );
+
+        const header = page.locator('ion-header');
+        await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-slotted-images`));
+      });
+
+      test('should not have visual regressions with nested slotted images', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-header>
+              <ion-toolbar>
+                <div slot="start">
+                  <img src="https://picsum.photos/id/237/50/50" />
+                </div>
+                <ion-title>Toolbar</ion-title>
+                <div slot="end">
+                  <ion-img src="https://picsum.photos/id/237/50/50"></ion-img>
+                </div>
+              </ion-toolbar>
+            </ion-header>
+          `,
+          config
+        );
+
+        const header = page.locator('ion-header');
+        await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-nested-slotted-images`));
+      });
     });
   });
 });
