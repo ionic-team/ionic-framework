@@ -217,12 +217,7 @@
 // Calendar / Footer / Action Buttons
 // -----------------------------------
 :host .datetime-footer {
-  @include globals.padding(
-    globals.$ion-space-200,
-    globals.$ion-space-0,
-    globals.$ion-space-200,
-    globals.$ion-space-0
-  );
+  @include globals.padding(globals.$ion-space-200, globals.$ion-space-0, globals.$ion-space-200, globals.$ion-space-0);
   margin-top: globals.$ion-space-200;
 
   border-top: globals.$ion-border-style-solid globals.$ion-border-size-025 globals.$ion-primitives-neutral-300;
