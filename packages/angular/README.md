@@ -21,35 +21,47 @@ Ionic Angular specific building blocks on top of [@ionic/core](https://www.npmjs
 ## Testing ng-add in ionic
 
 1. Pull the latest from `main`
-2. Build ionic/angular: `npm run build`
-3. Run `npm link` from `ionic/angular/dist` directory
-4. Create a blank angular project
+2. Install dependencies and build `core` package:
 
 ```
-ng new add-test
-// Say yes to including the router, we need it
-cd add-test
+$ cd core
+$ npm install
+$ npm run build
 ```
 
-5. To run schematics locally, we need the schematics-cli (once published, this will not be needed)
+3. Install dependencies and build Angular package:
 
 ```
-npm install @angular-devkit/schematics-cli
+$ cd ../packages/angular
+$ npm install
+$ npm run build
 ```
 
-6. Link `@ionic/angular`
-
+4. Link Angular package from `dist` folder
 ```
-npm link @ionic/angular
-```
-
-
-7. Run the local copy of the ng-add schematic
-
-```
-$ npx schematics @ionic/angular:ng-add
+$ cd dist
+$ npm link
 ```
 
+5. Create a blank angular project
+
+```
+$ ng new add-test
+$ cd add-test
+```
+
+6. Link the local ionic/angular package to the add-test app
+
+```
+$ npm link @ionic/angular
+```
+
+
+8. Run the local copy of the ng-add schematic
+
+```
+$ ng add @ionic/angular
+```
 
 You'll now be able to add ionic components to a vanilla Angular app setup.
 
