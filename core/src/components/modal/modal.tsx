@@ -965,12 +965,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const mode = getIonMode(this);
     const isCardModal = presentingElement !== undefined && mode === 'ios';
     const isHandleCycle = handleBehavior === 'cycle';
+    const isSheetModalWithHandle = isSheetModal && showHandle;
 
     return (
       <Host
         no-router
         // Allow the modal to be navigable when the handle is focusable
-        tabIndex={!isHandleCycle ? -1 : 0}
+        tabIndex={isHandleCycle && isSheetModalWithHandle ? 0 : -1}
         {...(htmlAttributes as any)}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
