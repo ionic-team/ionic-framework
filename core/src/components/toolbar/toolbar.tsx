@@ -110,9 +110,28 @@ export class Toolbar implements ComponentInterface {
     const slots = ['start', 'end', 'primary', 'secondary'];
     slots.forEach((slot) => {
       if (this.el.classList.contains(`has-${slot}-content`)) {
-        const slotElement = this.el.shadowRoot?.querySelector(`slot[name="${slot}"]`) as HTMLElement | null;
+        const slotElement = this.el.shadowRoot?.querySelector(`slot[name="${slot}"]`) as HTMLSlotElement | null;
         if (slotElement) {
+          // Check if the slot contains an img or ion-img
+          const assignedElements = slotElement.assignedElements({ flatten: true });
+          const hasImg = assignedElements.some((el) => {
+            if (el.tagName === 'IMG' || el.tagName === 'ION-IMG') {
+              return true;
+            }
+            // Check for nested images
+            return el.querySelector('img, ion-img');
+          });
+
+          // Temporarily allow slot to size to content by setting flex-basis
+          // to 'auto'. This ensures that slotted images can render at their
+          // intrinsic width for measurement.
+          if (hasImg) {
+            const { name } = slotPairs.find((pair) => pair.slots.includes(slot))!;
+            this.el.style.setProperty(`--${name}-size`, 'auto');
+          }
+
           const width = slotElement.offsetWidth;
+
           if (width > 0) {
             slotWidths.set(slot, width);
           } else {
