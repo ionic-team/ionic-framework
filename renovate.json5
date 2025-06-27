@@ -30,15 +30,21 @@
       ]
     },
     {
+      matchDatasources: ["npm"],
+      matchPackagePatterns: ["@playwright/test", "@axe-core/playwright"],
       groupName: "playwright",
-      matchPackageNames: [
-        "@playwright/test",
-        "@axe-core/playwright",
-        "mcr.microsoft.com/playwright"
+      matchFileNames: [
+        "core/package.json"
       ],
-      matchDatasources: ["npm", "docker"],
-      matchFileNames: ["core/package.json", "core/Dockerfile"],
-      rangeStrategy: "bump",
+      "rangeStrategy": "bump"
+    },
+    {
+      matchDatasources: ["docker"],
+      matchPackageNames: ["mcr.microsoft.com/playwright"],
+      groupName: "playwright",
+      matchFileNames: [
+        "core/Dockerfile"
+      ],
       versioning: "semver"
     },
     {
