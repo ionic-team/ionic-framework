@@ -22,14 +22,6 @@
       ],
       allowedVersions: ["<=0.5.3"]
     },
-    // TODO(ROU-11173): unpin Stencil version
-    {
-      matchPackageNames: ["@stencil/core"],
-      matchFileNames: [
-        "core/package.json"
-      ],
-      allowedVersions: ["<=4.20.0"]
-    },
     {
       matchPackagePatterns: ["@capacitor/core", "@capacitor/keyboard", "@capacitor/haptics", "@capacitor/status-bar"],
       groupName: "capacitor",
@@ -94,7 +86,6 @@
     }
   ],
   dependencyDashboard: false,
-  minimumReleaseAge: "3 days",
   rebaseWhen: "never",
   schedule: ["every weekday before 11am"],
   semanticCommits: "enabled",
