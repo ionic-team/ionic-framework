@@ -4,14 +4,17 @@ import { configs, test } from '@utils/test/playwright';
 configs().forEach(({ config, screenshot, title }) => {
   test.describe(title('breadcrumbs: basic'), () => {
     test('should not have visual regressions', async ({ page }) => {
-      await page.setContent(`
+      await page.setContent(
+        `
         <ion-breadcrumbs>
           <ion-breadcrumb>First</ion-breadcrumb>
           <ion-breadcrumb>Second</ion-breadcrumb>
           <ion-breadcrumb>Third</ion-breadcrumb>
           <ion-breadcrumb>Fourth</ion-breadcrumb>
         </ion-breadcrumbs>
-      `, config);
+      `,
+        config
+      );
 
       const breadcrumbs = page.locator('ion-breadcrumbs');
 
@@ -19,14 +22,17 @@ configs().forEach(({ config, screenshot, title }) => {
     });
 
     test('should not have visual regressions with links', async ({ page }) => {
-      await page.setContent(`
+      await page.setContent(
+        `
         <ion-breadcrumbs>
           <ion-breadcrumb href="#">First</ion-breadcrumb>
           <ion-breadcrumb href="#">Second</ion-breadcrumb>
           <ion-breadcrumb href="#">Third</ion-breadcrumb>
           <ion-breadcrumb>Fourth</ion-breadcrumb>
         </ion-breadcrumbs>
-      `, config);
+      `,
+        config
+      );
 
       const breadcrumbs = page.locator('ion-breadcrumbs');
 
@@ -34,7 +40,8 @@ configs().forEach(({ config, screenshot, title }) => {
     });
 
     test('should not have visual regressions with custom separators', async ({ page }) => {
-      await page.setContent(`
+      await page.setContent(
+        `
         <ion-breadcrumbs>
           <ion-breadcrumb>
             First
@@ -52,7 +59,9 @@ configs().forEach(({ config, screenshot, title }) => {
             Fourth
           </ion-breadcrumb>
         </ion-breadcrumbs>
-      `, config);
+      `,
+        config
+      );
 
       const breadcrumbs = page.locator('ion-breadcrumbs');
 
@@ -60,7 +69,8 @@ configs().forEach(({ config, screenshot, title }) => {
     });
 
     test('should not have visual regressions with slotted start icons', async ({ page }) => {
-      await page.setContent(`
+      await page.setContent(
+        `
         <ion-breadcrumbs>
           <ion-breadcrumb>
             <ion-icon slot="start" name="home"></ion-icon>
@@ -79,7 +89,9 @@ configs().forEach(({ config, screenshot, title }) => {
             Fourth
           </ion-breadcrumb>
         </ion-breadcrumbs>
-      `, config);
+      `,
+        config
+      );
 
       const breadcrumbs = page.locator('ion-breadcrumbs');
 
@@ -87,7 +99,8 @@ configs().forEach(({ config, screenshot, title }) => {
     });
 
     test('should not have visual regressions with slotted end icons', async ({ page }) => {
-      await page.setContent(`
+      await page.setContent(
+        `
         <ion-breadcrumbs>
           <ion-breadcrumb>
             First
@@ -106,7 +119,9 @@ configs().forEach(({ config, screenshot, title }) => {
             <ion-icon slot="end" name="document"></ion-icon>
           </ion-breadcrumb>
         </ion-breadcrumbs>
-      `, config);
+      `,
+        config
+      );
 
       const breadcrumbs = page.locator('ion-breadcrumbs');
 
@@ -114,7 +129,8 @@ configs().forEach(({ config, screenshot, title }) => {
     });
 
     test('should not have visual regressions in a toolbar', async ({ page }) => {
-      await page.setContent(`
+      await page.setContent(
+        `
         <ion-toolbar>
           <ion-breadcrumbs>
             <ion-breadcrumb>First</ion-breadcrumb>
@@ -123,7 +139,9 @@ configs().forEach(({ config, screenshot, title }) => {
             <ion-breadcrumb>Fourth</ion-breadcrumb>
           </ion-breadcrumbs>
         </ion-toolbar>
-      `, config);
+      `,
+        config
+      );
 
       const breadcrumbs = page.locator('ion-breadcrumbs');
 
@@ -138,28 +156,34 @@ configs().forEach(({ config, screenshot, title }) => {
 configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('breadcrumbs: states'), () => {
     test('should not have visual regressions when focused', async ({ page }) => {
-      await page.setContent(`
+      await page.setContent(
+        `
         <ion-breadcrumbs>
           <ion-breadcrumb href="#">First</ion-breadcrumb>
           <ion-breadcrumb href="#">Second</ion-breadcrumb>
           <ion-breadcrumb href="#" class="ion-focused">Third</ion-breadcrumb>
           <ion-breadcrumb>Fourth</ion-breadcrumb>
         </ion-breadcrumbs>
-      `, config);
+      `,
+        config
+      );
 
       const breadcrumbs = page.locator('ion-breadcrumbs');
       await expect(breadcrumbs).toHaveScreenshot(screenshot(`breadcrumbs-focused`));
     });
 
     test('should not have visual regressions when all breadcrumbs are disabled', async ({ page }) => {
-      await page.setContent(`
+      await page.setContent(
+        `
         <ion-breadcrumbs>
           <ion-breadcrumb disabled>First</ion-breadcrumb>
           <ion-breadcrumb disabled>Second</ion-breadcrumb>
           <ion-breadcrumb disabled>Third</ion-breadcrumb>
           <ion-breadcrumb disabled>Fourth</ion-breadcrumb>
         </ion-breadcrumbs>
-      `, config);
+      `,
+        config
+      );
 
       const breadcrumbs = page.locator('ion-breadcrumbs');
 
@@ -167,14 +191,17 @@ configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
     });
 
     test('should not have visual regressions when one breadcrumb is disabled', async ({ page }) => {
-      await page.setContent(`
+      await page.setContent(
+        `
         <ion-breadcrumbs>
           <ion-breadcrumb>First</ion-breadcrumb>
           <ion-breadcrumb disabled>Second</ion-breadcrumb>
           <ion-breadcrumb>Third</ion-breadcrumb>
           <ion-breadcrumb>Fourth</ion-breadcrumb>
         </ion-breadcrumbs>
-      `, config);
+      `,
+        config
+      );
 
       const breadcrumbs = page.locator('ion-breadcrumbs');
 
