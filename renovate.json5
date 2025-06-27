@@ -46,7 +46,6 @@
       ],
       matchDatasources: ["npm", "docker"],
       matchFileNames: ["core/package.json", "core/Dockerfile"],
-      allowedVersions: "/^\\d+\\.\\d+\\.\\d+$/",
       rangeStrategy: "bump",
       versioning: "semver"
     },
