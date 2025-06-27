@@ -78,14 +78,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "test-app:build"
+            "browserTarget": "test-app:build"
           },
           "configurations": {
             "production": {
-              "buildTarget": "test-app:build:production"
+              "browserTarget": "test-app:build:production"
             },
             "development": {
-              "buildTarget": "test-app:build:development"
+              "browserTarget": "test-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -93,7 +93,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "test-app:build"
+            "browserTarget": "test-app:build"
           }
         },
         "lint": {
@@ -124,7 +124,7 @@
           }
         },
         "serve-ssr": {
-          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "builder": "@nguniversal/builders:ssr-dev-server",
           "options": {
             "browserTarget": "test-app:build",
             "serverTarget": "test-app:server"
@@ -137,7 +137,7 @@
           }
         },
         "prerender": {
-          "builder": "@angular-devkit/build-angular:prerender",
+          "builder": "@nguniversal/builders:prerender",
           "options": {
             "browserTarget": "test-app:build:production",
             "serverTarget": "test-app:server:production",
