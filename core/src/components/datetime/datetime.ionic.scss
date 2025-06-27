@@ -34,7 +34,7 @@
 
   margin-bottom: globals.$ion-space-200;
 
-  border-bottom: globals.$ion-border-style-solid globals.$ion-border-size-025 globals.$ion-primitives-neutral-300;
+  border-bottom: globals.$ion-border-style-solid globals.$ion-border-size-025 globals.$ion-primitives-neutral-400;
 }
 
 :host .datetime-header .datetime-title {
@@ -216,6 +216,17 @@
 
 // Calendar / Footer / Action Buttons
 // -----------------------------------
+:host .datetime-footer {
+  @include globals.padding(globals.$ion-space-200, 0, 0, 0);
+  @include globals.margin(globals.$ion-space-200, 0, 0, 0);
+  @include globals.border(
+    globals.$ion-border-style-solid globals.$ion-border-size-025 globals.$ion-primitives-neutral-400,
+    0,
+    0,
+    0
+  );
+}
+
 :host .datetime-buttons ion-buttons,
 .datetime-action-buttons .datetime-action-buttons-container {
   flex-flow: column;
