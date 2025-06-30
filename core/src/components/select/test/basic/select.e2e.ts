@@ -147,7 +147,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
         await expect(focusedOptions).toHaveCount(0);
       });
 
-      test('it should focus the second option when opened', async ({ page }) => {
+      test('it should focus the second option when opened with a value', async ({ page }) => {
         // ion-app is required to apply the focused styles
         await page.setContent(
           `
@@ -177,7 +177,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
         await expect(bananasOption).toHaveClass(/ion-focused/);
       });
 
-      test('it should focus the second option when opened with a header', async ({ page }) => {
+      test('it should focus the second option when opened with a value and a header', async ({ page }) => {
         test.info().annotations.push({
           type: 'issue',
           description: 'https://github.com/ionic-team/ionic-framework/issues/30480',
@@ -239,7 +239,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
         await expect(popover).toBeVisible();
       });
 
-      test('it should focus the second option when value is set', async ({ page, skip }) => {
+      test('it should focus the second option when opened with a value', async ({ page, skip }) => {
         // TODO (ROU-5437)
         skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
 
@@ -300,7 +300,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
         await expect(modal).toBeVisible();
       });
 
-      test('it should focus the second option when value is set', async ({ page }) => {
+      test('it should focus the second option when opened with a value', async ({ page }) => {
         // ion-app is required to apply the focused styles
         await page.setContent(
           `
