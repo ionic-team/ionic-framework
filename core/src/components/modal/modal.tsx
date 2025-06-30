@@ -37,7 +37,7 @@ import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
-import { mobileToPortraitTransition, portraitToMobileTransition } from './animations/ios.transition';
+import { portraitToLandscapeTransition, landscapeToPortraitTransition } from './animations/ios.transition';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
@@ -91,9 +91,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
   // Whether or not modal is being dismissed via gesture
   private gestureAnimationDismissing = false;
 
-  // View transition properties for handling mobile/portrait switches
+  // View transition properties for handling portrait/landscape switches
   private resizeListener?: () => void;
-  private currentViewIsMobile?: boolean;
+  private currentViewIsPortrait?: boolean;
   private viewTransitionAnimation?: Animation;
 
   lastFocus?: HTMLElement;
@@ -981,7 +981,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     // Set initial view state
-    this.currentViewIsMobile = window.innerWidth < 768;
+    this.currentViewIsPortrait = window.innerWidth < 768;
 
     // Create debounced resize handler
     let resizeTimeout: any;
@@ -996,10 +996,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private handleViewTransition() {
-    const isMobile = window.innerWidth < 768;
+    const isPortrait = window.innerWidth < 768;
 
     // Only transition if view state actually changed
-    if (this.currentViewIsMobile === isMobile) {
+    if (this.currentViewIsPortrait === isPortrait) {
       return;
     }
 
@@ -1016,17 +1016,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     // Create transition animation
     let transitionAnimation: Animation;
-    if (this.currentViewIsMobile && !isMobile) {
-      // Mobile to portrait transition
-      transitionAnimation = mobileToPortraitTransition(this.el, {
+    if (this.currentViewIsPortrait && !isPortrait) {
+      // Portrait to landscape transition
+      transitionAnimation = portraitToLandscapeTransition(this.el, {
         presentingEl: presentingElement,
         currentBreakpoint: this.currentBreakpoint,
         backdropBreakpoint: this.backdropBreakpoint,
         expandToScroll: this.expandToScroll,
       });
     } else {
-      // Portrait to mobile transition
-      transitionAnimation = portraitToMobileTransition(this.el, {
+      // Landscape to portrait transition
+      transitionAnimation = landscapeToPortraitTransition(this.el, {
         presentingEl: presentingElement,
         currentBreakpoint: this.currentBreakpoint,
         backdropBreakpoint: this.backdropBreakpoint,
@@ -1035,7 +1035,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     // Update state and play animation
-    this.currentViewIsMobile = isMobile;
+    this.currentViewIsPortrait = isPortrait;
     this.viewTransitionAnimation = transitionAnimation;
 
     transitionAnimation.play().then(() => {

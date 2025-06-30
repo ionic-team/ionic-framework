@@ -6,11 +6,11 @@ import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 import type { ModalAnimationOptions } from '../modal-interface';
 
 /**
- * Transition animation from mobile view to portrait view
- * This handles the case where a card modal is open in mobile view
- * and the user switches to portrait view
+ * Transition animation from portrait view to landscape view
+ * This handles the case where a card modal is open in portrait view
+ * and the user switches to landscape view
  */
-export const mobileToPortraitTransition = (
+export const portraitToLandscapeTransition = (
   baseEl: HTMLElement,
   opts: ModalAnimationOptions,
   duration = 300
@@ -19,7 +19,7 @@ export const mobileToPortraitTransition = (
 
   if (!presentingEl) {
     // No transition needed for non-card modals
-    return createAnimation('mobile-to-portrait-transition');
+    return createAnimation('portrait-to-landscape-transition');
   }
 
   const hasCardModal =
@@ -27,7 +27,7 @@ export const mobileToPortraitTransition = (
   const presentingElRoot = getElementRoot(presentingEl);
   const bodyEl = document.body;
 
-  const baseAnimation = createAnimation('mobile-to-portrait-transition')
+  const baseAnimation = createAnimation('portrait-to-landscape-transition')
     .addElement(baseEl)
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(duration);
@@ -35,20 +35,20 @@ export const mobileToPortraitTransition = (
   const presentingAnimation = createAnimation();
 
   if (!hasCardModal) {
-    // Non-card modal: transition from mobile state to portrait state
-    // Mobile: presentingEl has transform and body has black background
-    // Portrait: no transform, no body background, modal wrapper opacity changes
+    // Non-card modal: transition from portrait state to landscape state
+    // Portrait: presentingEl has transform and body has black background
+    // Landscape: no transform, no body background, modal wrapper opacity changes
 
     const root = getElementRoot(baseEl);
     const wrapperAnimation = createAnimation()
       .addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!)
-      .fromTo('opacity', '1', '1'); // Keep wrapper visible in portrait
+      .fromTo('opacity', '1', '1'); // Keep wrapper visible in landscape
 
     const backdropAnimation = createAnimation()
       .addElement(root.querySelector('ion-backdrop')!)
       .fromTo('opacity', 'var(--backdrop-opacity)', 'var(--backdrop-opacity)'); // Keep backdrop visible
 
-    // Animate presentingEl from mobile state back to normal
+    // Animate presentingEl from portrait state back to normal
     const transformOffset = !CSS.supports('width', 'max(0px, 1px)') ? '30px' : 'max(30px, var(--ion-safe-area-top))';
     const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
     const fromTransform = `translateY(${transformOffset}) scale(${toPresentingScale})`;
@@ -62,7 +62,7 @@ export const mobileToPortraitTransition = (
 
     baseAnimation.addAnimation([presentingAnimation, wrapperAnimation, backdropAnimation]);
   } else {
-    // Card modal: transition from mobile card state to portrait card state
+    // Card modal: transition from portrait card state to landscape card state
     const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
     const transformOffset = !CSS.supports('width', 'max(0px, 1px)') ? '30px' : 'max(30px, var(--ion-safe-area-top))';
     const fromTransform = `translateY(${transformOffset}) scale(${toPresentingScale})`;
@@ -75,7 +75,7 @@ export const mobileToPortraitTransition = (
 
     const shadowAnimation = createAnimation()
       .addElement(presentingElRoot.querySelector('.modal-shadow')!)
-      .fromTo('opacity', '0', '0') // Shadow stays hidden in portrait for card modals
+      .fromTo('opacity', '0', '0') // Shadow stays hidden in landscape for card modals
       .fromTo('transform', fromTransform, toTransform);
 
     baseAnimation.addAnimation([presentingAnimation, shadowAnimation]);
@@ -85,11 +85,11 @@ export const mobileToPortraitTransition = (
 };
 
 /**
- * Transition animation from portrait view to mobile view
- * This handles the case where a card modal is open in portrait view
- * and the user switches to mobile view
+ * Transition animation from landscape view to portrait view
+ * This handles the case where a card modal is open in landscape view
+ * and the user switches to portrait view
  */
-export const portraitToMobileTransition = (
+export const landscapeToPortraitTransition = (
   baseEl: HTMLElement,
   opts: ModalAnimationOptions,
   duration = 300
@@ -98,7 +98,7 @@ export const portraitToMobileTransition = (
 
   if (!presentingEl) {
     // No transition needed for non-card modals
-    return createAnimation('portrait-to-mobile-transition');
+    return createAnimation('landscape-to-portrait-transition');
   }
 
   const hasCardModal =
@@ -106,7 +106,7 @@ export const portraitToMobileTransition = (
   const presentingElRoot = getElementRoot(presentingEl);
   const bodyEl = document.body;
 
-  const baseAnimation = createAnimation('portrait-to-mobile-transition')
+  const baseAnimation = createAnimation('landscape-to-portrait-transition')
     .addElement(baseEl)
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(duration);
@@ -114,7 +114,7 @@ export const portraitToMobileTransition = (
   const presentingAnimation = createAnimation();
 
   if (!hasCardModal) {
-    // Non-card modal: transition from portrait state to mobile state
+    // Non-card modal: transition from landscape state to portrait state
     const root = getElementRoot(baseEl);
     const wrapperAnimation = createAnimation()
       .addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!)
@@ -124,7 +124,7 @@ export const portraitToMobileTransition = (
       .addElement(root.querySelector('ion-backdrop')!)
       .fromTo('opacity', 'var(--backdrop-opacity)', 'var(--backdrop-opacity)'); // Keep backdrop visible
 
-    // Animate presentingEl from normal state to mobile state
+    // Animate presentingEl from normal state to portrait state
     const transformOffset = !CSS.supports('width', 'max(0px, 1px)') ? '30px' : 'max(30px, var(--ion-safe-area-top))';
     const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
     const toTransform = `translateY(${transformOffset}) scale(${toPresentingScale})`;
@@ -138,7 +138,7 @@ export const portraitToMobileTransition = (
 
     baseAnimation.addAnimation([presentingAnimation, wrapperAnimation, backdropAnimation]);
   } else {
-    // Card modal: transition from portrait card state to mobile card state
+    // Card modal: transition from landscape card state to portrait card state
     const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
     const transformOffset = !CSS.supports('width', 'max(0px, 1px)') ? '30px' : 'max(30px, var(--ion-safe-area-top))';
     const fromTransform = `translateY(-10px) scale(${toPresentingScale})`;
