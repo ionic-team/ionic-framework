@@ -37,6 +37,7 @@ import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
+import { mobileToPortraitTransition, portraitToMobileTransition } from './animations/ios.transition';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
@@ -88,6 +89,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   // Whether or not modal is being dismissed via gesture
   private gestureAnimationDismissing = false;
+
+  // View transition properties for handling mobile/portrait switches
+  private resizeListener?: () => void;
+  private currentViewIsMobile?: boolean;
+  private viewTransitionAnimation?: Animation;
 
   lastFocus?: HTMLElement;
   animation?: Animation;
@@ -377,6 +383,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   disconnectedCallback() {
     this.triggerController.removeClickListener();
+    this.cleanupViewTransitionListener();
   }
 
   componentWillLoad() {
@@ -618,6 +625,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.initSwipeToClose();
     }
 
+    // Initialize view transition listener for iOS card modals
+    this.initViewTransitionListener();
+
     unlock();
   }
 
@@ -815,6 +825,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       if (this.gesture) {
         this.gesture.destroy();
       }
+      this.cleanupViewTransitionListener();
     }
     this.currentBreakpoint = undefined;
     this.animation = undefined;
@@ -949,6 +960,87 @@ export class Modal implements ComponentInterface, OverlayInterface {
       el.dispatchEvent(ev);
     }
   };
+
+  private initViewTransitionListener() {
+    // Only enable for iOS card modals when no custom animations are provided
+    if (getIonMode(this) !== 'ios' || !this.presentingElement || this.enterAnimation || this.leaveAnimation) {
+      return;
+    }
+
+    // Set initial view state
+    this.currentViewIsMobile = window.innerWidth < 768;
+
+    // Create debounced resize handler
+    let resizeTimeout: any;
+    this.resizeListener = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        this.handleViewTransition();
+      }, 100); // Debounce for 100ms to avoid excessive calls
+    };
+
+    window.addEventListener('resize', this.resizeListener);
+  }
+
+  private handleViewTransition() {
+    const isMobile = window.innerWidth < 768;
+
+    // Only transition if view state actually changed
+    if (this.currentViewIsMobile === isMobile) {
+      return;
+    }
+
+    // Cancel any ongoing transition animation
+    if (this.viewTransitionAnimation) {
+      this.viewTransitionAnimation.destroy();
+      this.viewTransitionAnimation = undefined;
+    }
+
+    const { presentingElement } = this;
+    if (!presentingElement) {
+      return;
+    }
+
+    // Create transition animation
+    let transitionAnimation: Animation;
+    if (this.currentViewIsMobile && !isMobile) {
+      // Mobile to portrait transition
+      transitionAnimation = mobileToPortraitTransition(this.el, {
+        presentingEl: presentingElement,
+        currentBreakpoint: this.currentBreakpoint,
+        backdropBreakpoint: this.backdropBreakpoint,
+        expandToScroll: this.expandToScroll,
+      });
+    } else {
+      // Portrait to mobile transition
+      transitionAnimation = portraitToMobileTransition(this.el, {
+        presentingEl: presentingElement,
+        currentBreakpoint: this.currentBreakpoint,
+        backdropBreakpoint: this.backdropBreakpoint,
+        expandToScroll: this.expandToScroll,
+      });
+    }
+
+    // Update state and play animation
+    this.currentViewIsMobile = isMobile;
+    this.viewTransitionAnimation = transitionAnimation;
+
+    transitionAnimation.play().then(() => {
+      this.viewTransitionAnimation = undefined;
+    });
+  }
+
+  private cleanupViewTransitionListener() {
+    if (this.resizeListener) {
+      window.removeEventListener('resize', this.resizeListener);
+      this.resizeListener = undefined;
+    }
+
+    if (this.viewTransitionAnimation) {
+      this.viewTransitionAnimation.destroy();
+      this.viewTransitionAnimation = undefined;
+    }
+  }
 
   render() {
     const {
