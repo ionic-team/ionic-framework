@@ -207,5 +207,23 @@ configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
 
       await expect(breadcrumbs).toHaveScreenshot(screenshot(`breadcrumbs-one-disabled`));
     });
+
+    test('should not have visual regressions when setting a different breadcrumb to active', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-breadcrumbs>
+          <ion-breadcrumb>First</ion-breadcrumb>
+          <ion-breadcrumb>Second</ion-breadcrumb>
+          <ion-breadcrumb active>Third</ion-breadcrumb>
+          <ion-breadcrumb>Fourth</ion-breadcrumb>
+        </ion-breadcrumbs>
+      `,
+        config
+      );
+
+      const breadcrumbs = page.locator('ion-breadcrumbs');
+
+      await expect(breadcrumbs).toHaveScreenshot(screenshot(`breadcrumbs-custom-active`));
+    });
   });
 });
