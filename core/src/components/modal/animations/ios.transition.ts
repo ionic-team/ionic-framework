@@ -32,7 +32,11 @@ export const portraitToLandscapeTransition = (
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(duration);
 
-  const presentingAnimation = createAnimation();
+  const presentingAnimation = createAnimation().beforeStyles({
+    transform: 'translateY(0)',
+    'transform-origin': 'top center',
+    overflow: 'hidden',
+  });
 
   if (!hasCardModal) {
     // Non-card modal: transition from portrait state to landscape state
@@ -55,6 +59,10 @@ export const portraitToLandscapeTransition = (
 
     presentingAnimation
       .addElement(presentingEl)
+      .afterStyles({
+        transform: 'translateY(0px) scale(1)',
+        'border-radius': '0px',
+      })
       .beforeAddWrite(() => bodyEl.style.setProperty('background-color', ''))
       .fromTo('transform', fromTransform, 'translateY(0px) scale(1)')
       .fromTo('filter', 'contrast(0.85)', 'contrast(1)')
@@ -111,7 +119,11 @@ export const landscapeToPortraitTransition = (
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(duration);
 
-  const presentingAnimation = createAnimation();
+  const presentingAnimation = createAnimation().beforeStyles({
+    transform: 'translateY(0)',
+    'transform-origin': 'top center',
+    overflow: 'hidden',
+  });
 
   if (!hasCardModal) {
     // Non-card modal: transition from landscape state to portrait state
@@ -131,6 +143,10 @@ export const landscapeToPortraitTransition = (
 
     presentingAnimation
       .addElement(presentingEl)
+      .afterStyles({
+        transform: toTransform,
+        'border-radius': '10px 10px 0 0',
+      })
       .beforeAddWrite(() => bodyEl.style.setProperty('background-color', 'black'))
       .fromTo('transform', 'translateY(0px) scale(1)', toTransform)
       .fromTo('filter', 'contrast(1)', 'contrast(0.85)')
