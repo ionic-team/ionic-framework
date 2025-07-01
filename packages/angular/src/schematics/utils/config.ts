@@ -20,9 +20,9 @@ function isAngularBrowserProject(projectConfig: any): boolean {
 
     // Angular 16 and lower
     const legacyBrowserBuilder = buildConfig.builder === '@angular-devkit/build-angular:browser';
-    // Angular 17-19
+    // Angular 17
     const legacyApplicationBuilder = buildConfig.builder === '@angular-devkit/build-angular:application';
-    // Angular 20+
+    // Angular 18+
     const modernApplicationBuilder = buildConfig.builder === '@angular/build:application';
 
     return legacyBrowserBuilder || legacyApplicationBuilder || modernApplicationBuilder;
