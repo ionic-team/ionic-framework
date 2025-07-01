@@ -146,6 +146,9 @@ export const landscapeToPortraitTransition = (
       .afterStyles({
         transform: toTransform,
         'border-radius': '10px 10px 0 0',
+        filter: 'contrast(0.85)',
+        overflow: 'hidden',
+        'transform-origin': 'top center',
       })
       .beforeAddWrite(() => bodyEl.style.setProperty('background-color', 'black'))
       .fromTo('transform', 'translateY(0px) scale(1)', toTransform)
