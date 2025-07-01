@@ -1044,6 +1044,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private cleanupViewTransitionListener() {
+    const hasCardView = !!this.resizeListener;
     if (this.resizeListener) {
       window.removeEventListener('resize', this.resizeListener);
       this.resizeListener = undefined;
@@ -1052,6 +1053,15 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (this.viewTransitionAnimation) {
       this.viewTransitionAnimation.destroy();
       this.viewTransitionAnimation = undefined;
+    }
+
+    if (hasCardView) {
+      // If we had a card view, let's trigger the view transition
+      // one last time to make sure we're in the right state.
+      // This will prevent tricky things like resizing the modal causing
+      // it to dismiss programatically too quickly and preventing the view transition
+      // from being applied.
+      this.handleViewTransition();
     }
   }
 
