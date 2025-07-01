@@ -18,40 +18,80 @@ Ionic Angular specific building blocks on top of [@ionic/core](https://www.npmjs
 
 * [MIT](https://raw.githubusercontent.com/ionic-team/ionic/main/LICENSE)
 
-## Testing ng-add in ionic
+## Testing Local Ionic Framework with `ng add`
 
-1. Pull the latest from `main`
-2. Build ionic/angular: `npm run build`
-3. Run `npm link` from `ionic/angular/dist` directory
-4. Create a blank angular project
+This guide shows you how to test the local Ionic Framework build with a new Angular application using `ng add`. This is useful for development and testing changes before publishing.
 
-```
-ng new add-test
-// Say yes to including the router, we need it
-cd add-test
-```
+### Prerequisites
 
-5. To run schematics locally, we need the schematics-cli (once published, this will not be needed)
+- Node.js and npm installed
+- Angular CLI installed globally (`npm install -g @angular/cli`)
 
-```
-npm install @angular-devkit/schematics-cli
-```
+### Build Local Ionic Framework
 
-6. Link `@ionic/angular`
+1. Clone the repository (if not already done):
+    ```sh
+    git clone https://github.com/ionic-team/ionic-framework.git
+    cd ionic-framework
+    ```
 
-```
-npm link @ionic/angular
-```
+2. Pull the latest from `main`
+    ```sh
+    git pull origin main
+    ```
 
+3. Install dependencies and build the `core` package:
+    ```sh
+    cd core
+    npm install
+    npm run build
+    ```
 
-7. Run the local copy of the ng-add schematic
+4. Install dependencies, sync the `core` build and build the Angular package:
+    ```sh
+    cd ../packages/angular
+    npm install
+    npm run sync
+    npm run build
+    ```
 
-```
-$ npx schematics @ionic/angular:ng-add
-```
+5. Create a tarball:
+    ```sh
+    cd dist
+    npm pack
+    ```
 
+6. Copy the tarball to Downloads:
+    ```sh
+    cp ionic-angular-*.tgz ~/Downloads/ionic-angular.tgz
+    ```
 
-You'll now be able to add ionic components to a vanilla Angular app setup.
+### Test with New Angular App
+
+7. Create a new Angular app:
+    ```sh
+    # Change to whichever directory you want the app in
+    cd ~/Documents/
+    ng new my-app --style=css --ssr=false --zoneless=false
+    cd my-app
+    ```
+
+8. Install the local `@ionic/angular` package:
+    ```sh
+    npm install ~/Downloads/ionic-angular.tgz
+    ```
+
+9. Run `ng add`:
+    ```sh
+    ng add @ionic/angular --skip-confirmation
+    ```
+
+10. Serve the app:
+    ```sh
+    ng serve
+    ```
+
+The local Ionic Framework build is now active in the Angular app. Changes to the Ionic source code require rebuilding the packages and reinstalling the tarball to see updates.
 
 ## Project Structure
 
