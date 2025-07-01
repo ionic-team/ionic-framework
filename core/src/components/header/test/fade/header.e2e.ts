@@ -2,9 +2,9 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * Translucent effect is only available in iOS mode.
+ * Translucent effect is only available in iOS and Ionic mode.
  */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('header: fade'), () => {
     test('should not have visual regressions with fade header', async ({ page }) => {
       await page.goto('/src/components/header/test/fade', config);

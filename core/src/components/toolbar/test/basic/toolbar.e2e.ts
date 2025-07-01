@@ -1,27 +1,29 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ palettes: ['light', 'dark'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('toolbar: basic (LTR only)'), () => {
-    test('should not have visual regressions with text only', async ({ page }) => {
-      await page.setContent(
-        `
+configs({ modes: ['ios', 'md', 'ionic-md'], palettes: ['light', 'dark'], directions: ['ltr'] }).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(title('toolbar: basic (LTR only)'), () => {
+      test('should not have visual regressions with text only', async ({ page }) => {
+        await page.setContent(
+          `
           <ion-header>
             <ion-toolbar>
               <ion-title>Toolbar</ion-title>
             </ion-toolbar>
           </ion-header>
         `,
-        config
-      );
+          config
+        );
 
-      const header = page.locator('ion-header');
-      await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-text-only`));
+        const header = page.locator('ion-header');
+        await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-text-only`));
+      });
     });
-  });
-});
+  }
+);
 
-configs({ palettes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], palettes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('toolbar: basic'), () => {
     test('should truncate long title with ellipsis', async ({ page }) => {
       await page.setContent(
@@ -155,6 +157,90 @@ configs({ palettes: ['light', 'dark'] }).forEach(({ title, screenshot, config })
 
       const header = page.locator('ion-header');
       await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-text-icon-buttons`));
+    });
+
+    test('should not have visual regressions with text and button inside the content slot', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-header>
+            <ion-toolbar>
+              <ion-button fill="solid">
+                <ion-icon slot="start" name="person-circle"></ion-icon>
+                Solid
+              </ion-button>
+              <span>Solid</span>
+            </ion-toolbar>
+          </ion-header>
+        `,
+        config
+      );
+
+      const header = page.locator('ion-header');
+      await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-text-buttons-inside-content`));
+    });
+  });
+});
+
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('toolbar: basic'), () => {
+    test.describe(title('slot content'), () => {
+      test('should not have visual regressions with slotted svgs', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-header>
+              <ion-toolbar>
+                <img src="/src/components/toolbar/test/image.svg" slot="start"/>
+                <ion-title>Toolbar</ion-title>
+                <ion-img src="/src/components/toolbar/test/image.svg" slot="end"/>
+              </ion-toolbar>
+            </ion-header>
+          `,
+          config
+        );
+
+        const header = page.locator('ion-header');
+        await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-slotted-svgs`));
+      });
+
+      test('should not have visual regressions with slotted images', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-header>
+              <ion-toolbar>
+                <img src="https://picsum.photos/id/237/50/50" slot="start" />
+                <ion-title>Toolbar</ion-title>
+                <ion-img src="https://picsum.photos/id/237/50/50" slot="end"></ion-img>
+              </ion-toolbar>
+            </ion-header>
+          `,
+          config
+        );
+
+        const header = page.locator('ion-header');
+        await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-slotted-images`));
+      });
+
+      test('should not have visual regressions with nested slotted images', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-header>
+              <ion-toolbar>
+                <div slot="start">
+                  <img src="https://picsum.photos/id/237/50/50" />
+                </div>
+                <ion-title>Toolbar</ion-title>
+                <div slot="end">
+                  <ion-img src="https://picsum.photos/id/237/50/50"></ion-img>
+                </div>
+              </ion-toolbar>
+            </ion-header>
+          `,
+          config
+        );
+
+        const header = page.locator('ion-header');
+        await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-nested-slotted-images`));
+      });
     });
   });
 });

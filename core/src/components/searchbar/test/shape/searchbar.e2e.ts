@@ -14,7 +14,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
           <style>
             /* Background styles to show the border radius */
             :root {
-              background: #000;
+              --background: #000;
             }
           </style>
 

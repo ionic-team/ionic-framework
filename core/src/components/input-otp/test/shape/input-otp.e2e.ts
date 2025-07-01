@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 const VALID_SHAPES = ['rectangular', 'round', 'soft'];
 const VALID_SIZES = ['small', 'medium', 'large'];
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input-otp: shape'), () => {
     // Test all shapes with all sizes
     VALID_SHAPES.forEach((shape) => {
