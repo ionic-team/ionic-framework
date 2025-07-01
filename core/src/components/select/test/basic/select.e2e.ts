@@ -34,6 +34,66 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
         const alert = page.locator('ion-alert');
         await expect(alert).toHaveScreenshot(screenshot(`select-basic-alert-scroll-to-selected`));
       });
+
+      test('it should not focus any option when opened with no value', async ({ page }) => {
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="alert">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const select = page.locator('ion-select');
+        const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+        await select.click();
+        await ionAlertDidPresent.next();
+
+        await page.waitForChanges();
+
+        const alert = page.locator('ion-alert');
+
+        // Verify that no option has the ion-focused class
+        const focusedOptions = alert.locator('.alert-radio-button.ion-focused');
+        await expect(focusedOptions).toHaveCount(0);
+      });
+
+      test('it should not focus any option when opened with a value', async ({ page }) => {
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="alert" value="bananas">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const select = page.locator('ion-select');
+        const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+        await select.click();
+        await ionAlertDidPresent.next();
+
+        await page.waitForChanges();
+
+        const alert = page.locator('ion-alert');
+
+        // Alert interface doesn't apply ion-focused class to selected options
+        const focusedOptions = alert.locator('.alert-radio-button.ion-focused');
+        await expect(focusedOptions).toHaveCount(0);
+      });
     });
 
     test.describe('select: action sheet', () => {
@@ -56,6 +116,107 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
         const actionSheet = page.locator('ion-action-sheet');
         await expect(actionSheet).toHaveScreenshot(screenshot(`select-basic-action-sheet-scroll-to-selected`));
       });
+
+      test('it should not focus any option when opened with no value', async ({ page }) => {
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="action-sheet">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const select = page.locator('ion-select');
+        const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+
+        await select.click();
+        await ionActionSheetDidPresent.next();
+
+        await page.waitForChanges();
+
+        const actionSheet = page.locator('ion-action-sheet');
+
+        // Verify that none of the options have the ion-focused class
+        const focusedOptions = actionSheet.locator('.action-sheet-button.ion-focused');
+        await expect(focusedOptions).toHaveCount(0);
+      });
+
+      test('it should focus the second option when opened with a value', async ({ page }) => {
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="action-sheet" value="bananas">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const select = page.locator('ion-select');
+        const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+
+        await select.click();
+        await ionActionSheetDidPresent.next();
+
+        await page.waitForChanges();
+
+        const actionSheet = page.locator('ion-action-sheet');
+
+        // Find the button containing "Bananas" and verify it has the ion-focused class
+        const bananasOption = actionSheet.locator('.action-sheet-button:has-text("Bananas")');
+        await expect(bananasOption).toHaveClass(/ion-focused/);
+      });
+
+      test('it should focus the second option when opened with a value and a header', async ({ page }) => {
+        test.info().annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/30480',
+        });
+
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="action-sheet" value="bananas">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const select = page.locator('ion-select');
+        await select.evaluate((el: HTMLIonSelectElement) => {
+          el.interfaceOptions = {
+            header: 'Header',
+          };
+        });
+
+        const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+
+        await select.click();
+        await ionActionSheetDidPresent.next();
+
+        await page.waitForChanges();
+
+        const actionSheet = page.locator('ion-action-sheet');
+
+        // Find the option containing "Bananas" and verify it has the ion-focused class
+        const bananasOption = actionSheet.locator('.action-sheet-button:has-text("Bananas")');
+        await expect(bananasOption).toHaveClass(/ion-focused/);
+      });
     });
 
     test.describe('select: popover', () => {
@@ -76,6 +237,39 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
         await expect(popoverOption1).toBeFocused();
 
         await expect(popover).toBeVisible();
+      });
+
+      test('it should focus the second option when opened with a value', async ({ page, skip }) => {
+        // TODO (ROU-5437)
+        skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="popover" value="bananas">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const select = page.locator('ion-select');
+        const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+        await select.click();
+        await ionPopoverDidPresent.next();
+
+        await page.waitForChanges();
+
+        const popover = page.locator('ion-popover');
+
+        // Find the option containing "Bananas" and verify it has the ion-focused class
+        const bananasOption = popover.locator('.select-interface-option:has-text("Bananas")');
+        await expect(bananasOption).toHaveClass(/ion-focused/);
       });
 
       test('it should scroll to selected option when opened', async ({ page }) => {
@@ -104,6 +298,36 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
         await expect(modalOption1).toBeFocused();
 
         await expect(modal).toBeVisible();
+      });
+
+      test('it should focus the second option when opened with a value', async ({ page }) => {
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="modal" value="bananas">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const select = page.locator('ion-select');
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        await select.click();
+        await ionModalDidPresent.next();
+
+        await page.waitForChanges();
+
+        const modal = page.locator('ion-modal');
+
+        // Find the option containing "Bananas" and verify it has the ion-focused class
+        const bananasOption = modal.locator('.select-interface-option:has-text("Bananas")');
+        await expect(bananasOption).toHaveClass(/ion-focused/);
       });
 
       test('it should scroll to selected option when opened', async ({ page }) => {
