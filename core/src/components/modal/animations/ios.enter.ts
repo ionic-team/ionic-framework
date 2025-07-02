@@ -48,7 +48,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
   }
 
   if (presentingEl) {
-    const isMobile = window.innerWidth < 768;
+    const isPortrait = window.innerWidth < 768;
     const hasCardModal =
       presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined;
     const presentingElRoot = getElementRoot(presentingEl);
@@ -61,7 +61,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
 
     const bodyEl = document.body;
 
-    if (isMobile) {
+    if (isPortrait) {
       /**
        * Fallback for browsers that does not support `max()` (ex: Firefox)
        * No need to worry about statusbar padding since engines like Gecko
