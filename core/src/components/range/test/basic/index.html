@@ -80,6 +80,10 @@
         lower: '10',
         upper: '90',
       };
+
+      dualKnobs.addEventListener('ionFocus', () => {
+        console.log('Dual Knob ionFocus', dualKnobs.value);
+      });
     </script>
   </body>
 </html>

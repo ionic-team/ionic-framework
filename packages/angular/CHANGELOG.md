@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.6.3](https://github.com/ionic-team/ionic-framework/compare/v8.6.2...v8.6.3) (2025-07-02)
+
+
+### Bug Fixes
+
+* **angular:** update schematics to support Angular's latest build system ([#30525](https://github.com/ionic-team/ionic-framework/issues/30525)) ([08e3e7a](https://github.com/ionic-team/ionic-framework/commit/08e3e7ab5165baea668571af9845933b5befeb46)), closes [ionic-team/ionic-docs#2091](https://github.com/ionic-team/ionic-docs/issues/2091)
+
+
+
+
+
+## [8.6.2](https://github.com/ionic-team/ionic-framework/compare/v8.6.1...v8.6.2) (2025-06-18)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
 ## [8.6.1](https://github.com/ionic-team/ionic-framework/compare/v8.6.0...v8.6.1) (2025-06-11)
 
 **Note:** Version bump only for package @ionic/angular

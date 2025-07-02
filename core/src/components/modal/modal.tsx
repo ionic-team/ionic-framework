@@ -74,6 +74,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
+  private dragHandleEl?: HTMLButtonElement;
   private sortedBreakpoints?: number[];
   private keyboardOpenCallback?: () => void;
   private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<void>;
@@ -739,13 +740,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the modal overlay after it has been presented.
-   *
-   * @param data Any data to emit in the dismiss events.
-   * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.
-   *
    * This is a no-op if the overlay has not been presented yet. If you want
    * to remove an overlay from the DOM that was never presented, use the
    * [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the modal.
+   * For example, `cancel` or `backdrop`.
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
@@ -841,8 +842,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
-   * Move a sheet style modal to a specific breakpoint. The breakpoint value must
-   * be a value defined in your `breakpoints` array.
+   * Move a sheet style modal to a specific breakpoint.
+   *
+   * @param breakpoint The breakpoint value to move the sheet modal to.
+   * Must be a value defined in your `breakpoints` array.
    */
   @Method()
   async setCurrentBreakpoint(breakpoint: number): Promise<void> {
@@ -948,6 +951,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
   };
 
+  /**
+   * When the modal receives focus directly, pass focus to the handle
+   * if it exists and is focusable, otherwise let the focus trap handle it.
+   */
+  private onModalFocus = (ev: FocusEvent) => {
+    const { dragHandleEl, el } = this;
+    // Only handle focus if the modal itself was focused (not a child element)
+    if (ev.target === el && dragHandleEl && dragHandleEl.tabIndex !== -1) {
+      dragHandleEl.focus();
+    }
+  };
+
   render() {
     const {
       handle,
@@ -963,11 +978,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const mode = getIonMode(this);
     const isCardModal = presentingElement !== undefined && mode === 'ios';
     const isHandleCycle = handleBehavior === 'cycle';
+    const isSheetModalWithHandle = isSheetModal && showHandle;
 
     return (
       <Host
         no-router
-        tabindex="-1"
+        // Allow the modal to be navigable when the handle is focusable
+        tabIndex={isHandleCycle && isSheetModalWithHandle ? 0 : -1}
         {...(htmlAttributes as any)}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
@@ -987,6 +1004,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         onIonModalWillPresent={this.onLifecycle}
         onIonModalWillDismiss={this.onLifecycle}
         onIonModalDidDismiss={this.onLifecycle}
+        onFocus={this.onModalFocus}
       >
         <ion-backdrop
           ref={(el) => (this.backdropEl = el)}
@@ -1019,6 +1037,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
               aria-label="Activate to adjust the size of the dialog overlaying the screen"
               onClick={isHandleCycle ? this.onHandleClick : undefined}
               part="handle"
+              ref={(el) => (this.dragHandleEl = el)}
             ></button>
           )}
           <slot></slot>

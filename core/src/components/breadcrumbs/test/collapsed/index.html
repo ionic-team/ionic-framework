@@ -23,22 +23,19 @@
             <ion-button id="expandToggleButton" onClick="toggleBreadcrumbCollapse()"> Expand All </ion-button>
           </ion-buttons>
         </ion-toolbar>
+        <ion-toolbar>
+          <ion-breadcrumbs max-items="4" class="expandOnClick">
+            <ion-breadcrumb href="#"> Home </ion-breadcrumb>
+            <ion-breadcrumb href="#electronics"> Electronics </ion-breadcrumb>
+            <ion-breadcrumb href="#photography"> Photography </ion-breadcrumb>
+            <ion-breadcrumb href="#cameras"> Cameras </ion-breadcrumb>
+            <ion-breadcrumb href="#film"> Film </ion-breadcrumb>
+            <ion-breadcrumb> 35 mm </ion-breadcrumb>
+          </ion-breadcrumbs>
+        </ion-toolbar>
       </ion-header>
 
       <ion-content class="ion-padding">
-        <h1>Default</h1>
-
-        <ion-breadcrumbs class="expandWithoutCollapse">
-          <ion-breadcrumb href="#"> Home </ion-breadcrumb>
-          <ion-breadcrumb href="#electronics"> Electronics </ion-breadcrumb>
-          <ion-breadcrumb href="#photography"> Photography </ion-breadcrumb>
-          <ion-breadcrumb href="#cameras"> Cameras </ion-breadcrumb>
-          <ion-breadcrumb href="#film"> Film </ion-breadcrumb>
-          <ion-breadcrumb> 35 mm </ion-breadcrumb>
-        </ion-breadcrumbs>
-
-        <hr />
-
         <h1>Max Items: 4</h1>
 
         <ion-breadcrumbs max-items="4" class="expandOnClick">
@@ -117,49 +114,9 @@
 
         <hr />
 
-        <h1>
-          Max Items: 4; ItemsBeforeCollapse: 0; ItemsAfterCollapse: 4
-          <ion-button size="small" fill="clear" onClick="changeActive()">Set Active</ion-button>
-        </h1>
+        <h1>Max Items: 4; ItemsBeforeCollapse: 0; ItemsAfterCollapse: 4</h1>
 
-        <ion-breadcrumbs
-          id="custom-active"
-          max-items="4"
-          items-before-collapse="0"
-          items-after-collapse="4"
-          class="expandOnClick"
-        >
-          <ion-breadcrumb href="#">
-            Home
-            <ion-icon slot="separator" name="arrow-forward"></ion-icon>
-          </ion-breadcrumb>
-          <ion-breadcrumb href="#electronics">
-            Electronics
-            <ion-icon slot="separator" name="arrow-forward"></ion-icon>
-          </ion-breadcrumb>
-          <ion-breadcrumb href="#photography">
-            Photography
-            <ion-icon slot="separator" name="arrow-forward"></ion-icon>
-          </ion-breadcrumb>
-          <ion-breadcrumb href="#cameras">
-            Cameras
-            <ion-icon slot="separator" name="arrow-forward"></ion-icon>
-          </ion-breadcrumb>
-          <ion-breadcrumb href="#film" active>
-            Film
-            <ion-icon slot="separator" name="arrow-forward"></ion-icon>
-          </ion-breadcrumb>
-          <ion-breadcrumb>
-            35 mm
-            <ion-icon slot="separator" name="arrow-forward"></ion-icon>
-          </ion-breadcrumb>
-        </ion-breadcrumbs>
-
-        <hr />
-
-        <h1>Max Items: 4; ItemsBeforeCollapse: 3; ItemsAfterCollapse: 2</h1>
-
-        <ion-breadcrumbs max-items="4" items-before-collapse="3" items-after-collapse="2" class="expandOnClick">
+        <ion-breadcrumbs max-items="4" items-before-collapse="0" items-after-collapse="4" class="expandOnClick">
           <ion-breadcrumb href="#"> Home </ion-breadcrumb>
           <ion-breadcrumb href="#electronics"> Electronics </ion-breadcrumb>
           <ion-breadcrumb href="#photography"> Photography </ion-breadcrumb>
@@ -170,15 +127,15 @@
 
         <hr />
 
-        <h1>Max Items: 4; ItemsBeforeCollapse: 4; ItemsAfterCollapse: 4</h1>
+        <h1>Breadcrumbs: collapsed / popover on click</h1>
 
-        <ion-breadcrumbs max-items="4" items-before-collapse="4" items-after-collapse="4" class="expandOnClick">
-          <ion-breadcrumb href="#"> Home </ion-breadcrumb>
-          <ion-breadcrumb href="#electronics"> Electronics </ion-breadcrumb>
-          <ion-breadcrumb href="#photography"> Photography </ion-breadcrumb>
-          <ion-breadcrumb href="#cameras"> Cameras </ion-breadcrumb>
-          <ion-breadcrumb href="#film"> Film </ion-breadcrumb>
-          <ion-breadcrumb> 35 mm </ion-breadcrumb>
+        <ion-breadcrumbs id="popoverOnClick" max-items="4" items-before-collapse="0" items-after-collapse="3">
+          <ion-breadcrumb href="#">Home</ion-breadcrumb>
+          <ion-breadcrumb href="#electronics">Electronics</ion-breadcrumb>
+          <ion-breadcrumb href="#photography">Photography</ion-breadcrumb>
+          <ion-breadcrumb href="#cameras">Cameras</ion-breadcrumb>
+          <ion-breadcrumb href="#film">Film</ion-breadcrumb>
+          <ion-breadcrumb>35 mm</ion-breadcrumb>
         </ion-breadcrumbs>
 
         <hr />
@@ -196,19 +153,16 @@
       }
 
       function expandBreadcrumbs(breadcrumbs) {
-        console.log('expand breadcrumbs');
         breadcrumbs.maxItems = undefined;
       }
 
       function expandAllBreadcrumbs() {
-        console.log('expand all breadcrumbs');
         for (const breadcrumbs of expandOnClickBreadcrumbs) {
           breadcrumbs.maxItems = undefined;
         }
       }
 
       function collapseAllBreadcrumbs() {
-        console.log('collapse all breadcrumbs');
         for (const breadcrumbs of expandOnClickBreadcrumbs) {
           breadcrumbs.maxItems = 4;
         }
@@ -226,27 +180,48 @@
         }
       }
 
-      const expandWithoutCollapseBreadcrumbs = document.querySelector('.expandWithoutCollapse');
-      expandWithoutCollapseBreadcrumbs.addEventListener('ionCollapsedClick', () => expandBreadcrumbs(breadcrumbs));
+      // Popover on click breadcrumbs
+      const popoverOnClick = document.querySelector('#popoverOnClick');
+      popoverOnClick.addEventListener('ionCollapsedClick', (ev) => presentPopover(ev));
 
-      function changeActive() {
-        const breadcrumbs = Array.from(document.querySelectorAll('#custom-active ion-breadcrumb'));
-        const activeIndex = breadcrumbs.findIndex((breadcrumb) => breadcrumb.active);
-
-        switch (activeIndex) {
-          case 4:
-            breadcrumbs[4].active = false;
-            breadcrumbs[2].active = true;
-            break;
-          case 2:
-            breadcrumbs[2].active = false;
-            breadcrumbs[1].active = true;
-            break;
-          case 1:
-            breadcrumbs[1].active = false;
-            breadcrumbs[4].active = true;
-            break;
+      class ListPopover extends HTMLElement {
+        constructor() {
+          super();
         }
+
+        connectedCallback() {
+          let template = '';
+
+          this.collapsedBreadcrumbs.forEach((breadcrumb) => {
+            template += `
+            <ion-item href="${breadcrumb.href}">
+              <ion-label>${breadcrumb.textContent}</ion-label>
+            </ion-item>
+          `;
+          });
+
+          this.innerHTML = `
+          <ion-content>
+            <ion-list>
+              ${template}
+            </ion-list>
+          </ion-content>
+        `;
+        }
+      }
+
+      customElements.define('list-popover', ListPopover);
+
+      async function presentPopover(ev) {
+        console.log('present ev', ev);
+        const popover = Object.assign(document.createElement('ion-popover'), {
+          component: 'list-popover',
+          componentProps: ev.detail,
+          event: ev,
+        });
+        document.body.appendChild(popover);
+
+        await popover.present();
       }
     </script>
 
