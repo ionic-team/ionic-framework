@@ -95,6 +95,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private resizeListener?: () => void;
   private currentViewIsPortrait?: boolean;
   private viewTransitionAnimation?: Animation;
+  private resizeTimeout?: any;
 
   lastFocus?: HTMLElement;
   animation?: Animation;
@@ -984,12 +985,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.currentViewIsPortrait = window.innerWidth < 768;
 
     // Create debounced resize handler
-    let resizeTimeout: any;
     this.resizeListener = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = setTimeout(() => {
+        console.log('View transition triggered by resize');
         this.handleViewTransition();
-      }, 100); // Debounce for 100ms to avoid excessive calls
+      }, 50); // Debounce to avoid excessive calls during active resizing
     };
 
     window.addEventListener('resize', this.resizeListener);
@@ -1040,29 +1041,50 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     transitionAnimation.play().then(() => {
       this.viewTransitionAnimation = undefined;
+
+      // After orientation transition, recreate the swipe-to-close gesture
+      // with updated animation that reflects the new presenting element state
+      this.reinitSwipeToClose();
     });
   }
 
   private cleanupViewTransitionListener() {
-    const hasCardView = !!this.resizeListener;
     if (this.resizeListener) {
       window.removeEventListener('resize', this.resizeListener);
       this.resizeListener = undefined;
+    }
+
+    // Clear any pending resize timeout
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = undefined;
     }
 
     if (this.viewTransitionAnimation) {
       this.viewTransitionAnimation.destroy();
       this.viewTransitionAnimation = undefined;
     }
+  }
 
-    if (hasCardView) {
-      // If we had a card view, let's trigger the view transition
-      // one last time to make sure we're in the right state.
-      // This will prevent tricky things like resizing the modal causing
-      // it to dismiss programatically too quickly and preventing the view transition
-      // from being applied.
-      this.handleViewTransition();
+  private reinitSwipeToClose() {
+    // Only reinitialize if we have a presenting element and are on iOS
+    if (getIonMode(this) !== 'ios' || !this.presentingElement) {
+      return;
     }
+
+    // Clean up existing gesture and animation
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
+
+    if (this.animation) {
+      this.animation.destroy();
+      this.animation = undefined;
+    }
+
+    // Reinitialize the swipe-to-close gesture with current state
+    this.initSwipeToClose();
   }
 
   render() {
