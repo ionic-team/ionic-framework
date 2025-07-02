@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.6.3](https://github.com/ionic-team/ionic-framework/compare/v8.6.2...v8.6.3) (2025-07-02)
+
+
+### Bug Fixes
+
+* **modal:** add conditional tabIndex for handle cycling ([#30510](https://github.com/ionic-team/ionic-framework/issues/30510)) ([ee47660](https://github.com/ionic-team/ionic-framework/commit/ee47660745428e04c78cfef0555f3c5788959a8c))
+* **select:** focus the correct selected item in an action sheet interface with a header ([#30481](https://github.com/ionic-team/ionic-framework/issues/30481)) ([80a111c](https://github.com/ionic-team/ionic-framework/commit/80a111cffac70e831eb57e827301370163ef4e2a)), closes [#30480](https://github.com/ionic-team/ionic-framework/issues/30480)
+
+
+
+
+
 ## [8.6.2](https://github.com/ionic-team/ionic-framework/compare/v8.6.1...v8.6.2) (2025-06-18)
 
 
