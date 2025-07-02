@@ -22,7 +22,7 @@ export const portraitToLandscapeTransition = (
     return createAnimation('portrait-to-landscape-transition');
   }
 
-  const hasCardModal =
+  const presentingElIsCardModal =
     presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined;
   const presentingElRoot = getElementRoot(presentingEl);
   const bodyEl = document.body;
@@ -38,11 +38,9 @@ export const portraitToLandscapeTransition = (
     overflow: 'hidden',
   });
 
-  if (!hasCardModal) {
-    // Non-card modal: transition from portrait state to landscape state
-    // Portrait: presentingEl has transform and body has black background
-    // Landscape: no transform, no body background, modal wrapper opacity changes
-
+  if (!presentingElIsCardModal) {
+    // The presenting element is not a card modal, so we do not
+    // need to care about layering and modal-specific styles.
     const root = getElementRoot(baseEl);
     const wrapperAnimation = createAnimation()
       .addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!)
@@ -70,19 +68,25 @@ export const portraitToLandscapeTransition = (
 
     baseAnimation.addAnimation([presentingAnimation, wrapperAnimation, backdropAnimation]);
   } else {
-    // Card modal: transition from portrait card state to landscape card state
+    // The presenting element is a card modal, so we do
+    // need to care about layering and modal-specific styles.
     const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
-    const transformOffset = !CSS.supports('width', 'max(0px, 1px)') ? '30px' : 'max(30px, var(--ion-safe-area-top))';
-    const fromTransform = `translateY(${transformOffset}) scale(${toPresentingScale})`;
+    const fromTransform = `translateY(-10px) scale(${toPresentingScale})`;
     const toTransform = `translateY(-10px) scale(${toPresentingScale})`;
 
     presentingAnimation
       .addElement(presentingElRoot.querySelector('.modal-wrapper')!)
+      .afterStyles({
+        transform: toTransform,
+      })
       .fromTo('transform', fromTransform, toTransform)
       .fromTo('filter', 'contrast(0.85)', 'contrast(0.85)'); // Keep same contrast for card
 
     const shadowAnimation = createAnimation()
       .addElement(presentingElRoot.querySelector('.modal-shadow')!)
+      .afterStyles({
+        transform: toTransform,
+      })
       .fromTo('opacity', '0', '0') // Shadow stays hidden in landscape for card modals
       .fromTo('transform', fromTransform, toTransform);
 
@@ -109,7 +113,7 @@ export const landscapeToPortraitTransition = (
     return createAnimation('landscape-to-portrait-transition');
   }
 
-  const hasCardModal =
+  const presentingElIsCardModal =
     presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined;
   const presentingElRoot = getElementRoot(presentingEl);
   const bodyEl = document.body;
@@ -125,8 +129,9 @@ export const landscapeToPortraitTransition = (
     overflow: 'hidden',
   });
 
-  if (!hasCardModal) {
-    // Non-card modal: transition from landscape state to portrait state
+  if (!presentingElIsCardModal) {
+    // The presenting element is not a card modal, so we do not
+    // need to care about layering and modal-specific styles.
     const root = getElementRoot(baseEl);
     const wrapperAnimation = createAnimation()
       .addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!)
@@ -143,6 +148,11 @@ export const landscapeToPortraitTransition = (
 
     presentingAnimation
       .addElement(presentingEl)
+      .beforeStyles({
+        transform: 'translateY(0px) scale(1)',
+        'transform-origin': 'top center',
+        overflow: 'hidden',
+      })
       .afterStyles({
         transform: toTransform,
         'border-radius': '10px 10px 0 0',
@@ -151,25 +161,33 @@ export const landscapeToPortraitTransition = (
         'transform-origin': 'top center',
       })
       .beforeAddWrite(() => bodyEl.style.setProperty('background-color', 'black'))
-      .fromTo('transform', 'translateY(0px) scale(1)', toTransform)
-      .fromTo('filter', 'contrast(1)', 'contrast(0.85)')
-      .fromTo('border-radius', '0px', '10px 10px 0 0');
+      .keyframes([
+        { offset: 0, transform: 'translateY(0px) scale(1)', filter: 'contrast(1)', borderRadius: '0px' },
+        { offset: 0.2, transform: 'translateY(0px) scale(1)', filter: 'contrast(1)', borderRadius: '10px 10px 0 0' },
+        { offset: 1, transform: toTransform, filter: 'contrast(0.85)', borderRadius: '10px 10px 0 0' },
+      ]);
 
     baseAnimation.addAnimation([presentingAnimation, wrapperAnimation, backdropAnimation]);
   } else {
-    // Card modal: transition from landscape card state to portrait card state
+    // The presenting element is also a card modal, so we need
+    // to handle layering and modal-specific styles.
     const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
-    const transformOffset = !CSS.supports('width', 'max(0px, 1px)') ? '30px' : 'max(30px, var(--ion-safe-area-top))';
     const fromTransform = `translateY(-10px) scale(${toPresentingScale})`;
-    const toTransform = `translateY(${transformOffset}) scale(${toPresentingScale})`;
+    const toTransform = `translateY(-10px) scale(${toPresentingScale})`;
 
     presentingAnimation
       .addElement(presentingElRoot.querySelector('.modal-wrapper')!)
+      .afterStyles({
+        transform: toTransform,
+      })
       .fromTo('transform', fromTransform, toTransform)
       .fromTo('filter', 'contrast(0.85)', 'contrast(0.85)'); // Keep same contrast for card
 
     const shadowAnimation = createAnimation()
       .addElement(presentingElRoot.querySelector('.modal-shadow')!)
+      .afterStyles({
+        transform: toTransform,
+      })
       .fromTo('opacity', '0', '0') // Shadow stays hidden
       .fromTo('transform', fromTransform, toTransform);
 
