@@ -4,9 +4,7 @@
 // iOS List
 // --------------------------------------------------
 
-.list-ios {
-  @include margin($list-ios-margin-top, $list-ios-margin-end, $list-ios-margin-bottom, $list-ios-margin-start);
-
+:host {
   background: $item-ios-background;
 }
 
@@ -14,7 +12,7 @@
 // iOS Inset List
 // --------------------------------------------------
 
-.list-ios.list-inset {
+:host(.list-inset) {
   @include margin($list-inset-ios-margin-top, $list-inset-ios-margin-end, $list-inset-ios-margin-bottom, $list-inset-ios-margin-start);
   @include border-radius($list-inset-ios-border-radius);
 }
@@ -31,14 +29,14 @@
  * items in an item-sliding when the item is the last
  * element in the item-sliding container.
  */
-.list-ios.list-inset ion-item:only-child,
-.list-ios.list-inset ion-item:not(:only-of-type):last-of-type,
-.list-ios.list-inset ion-item-sliding:last-of-type ion-item {
+:host(.list-inset) ion-item:only-child,
+:host(.list-inset) ion-item:not(:only-of-type):last-of-type,
+:host(.list-inset) ion-item-sliding:last-of-type ion-item {
   --border-width: 0;
   --inner-border-width: 0;
 }
 
-.list-ios.list-inset + ion-list.list-inset {
+:host(.list-inset) + ion-list.list-inset {
   @include margin(0, null, null, null);
 }
 
@@ -46,7 +44,7 @@
 // iOS No Lines List
 // --------------------------------------------------
 
-.list-ios-lines-none .item-lines-default {
+:host(.lines-none) .item-lines-default {
   --inner-border-width: 0px;
   --border-width: 0px;
 }
@@ -54,7 +52,7 @@
 // iOS Full Lines List
 // --------------------------------------------------
 
-.list-ios-lines-full .item-lines-default {
+:host(.lines-full) .item-lines-default {
   --inner-border-width: 0px;
   --border-width: #{0 0 $list-ios-item-border-bottom-width 0};
 }
@@ -62,7 +60,7 @@
 // iOS Inset Lines List
 // --------------------------------------------------
 
-.list-ios-lines-inset .item-lines-default {
+:host(.lines-inset) .item-lines-default {
   --inner-border-width: #{0 0 $list-ios-item-border-bottom-width 0};
   --border-width: 0px;
 }
@@ -70,6 +68,6 @@
 // iOS List Inside A Card
 // --------------------------------------------------
 
-ion-card .list-ios {
+:host-context(ion-card) {
   @include margin(0);
 }

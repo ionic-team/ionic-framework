@@ -4,7 +4,7 @@
 // List
 // --------------------------------------------------
 
-ion-list {
+:host {
   @include margin(0);
   @include padding(0);
 
@@ -14,7 +14,7 @@ ion-list {
   list-style-type: none;
 }
 
-ion-list.list-inset {
+:host(.list-inset) {
   transform: translateZ(0);
 
   overflow: hidden;

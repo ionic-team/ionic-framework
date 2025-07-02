@@ -4,32 +4,20 @@
 // iOS List
 // --------------------------------------------------
 
-/// @prop - Margin top of the list
-$list-ios-margin-top:                 null;
-
-/// @prop - Margin end of the list
-$list-ios-margin-end:                 null;
-
-/// @prop - Margin bottom of the list
-$list-ios-margin-bottom:              null;
-
-/// @prop - Margin start of the list
-$list-ios-margin-start:               null;
-
 /// @prop - Border bottom of the item in a list
-$list-ios-item-border-bottom-width:   $item-ios-border-bottom-width;
+$list-ios-item-border-bottom-width: $item-ios-border-bottom-width;
 
 /// @prop - Margin top of the inset list
-$list-inset-ios-margin-top:           16px;
+$list-inset-ios-margin-top: 16px;
 
 /// @prop - Margin end of the inset list
-$list-inset-ios-margin-end:           16px;
+$list-inset-ios-margin-end: $list-inset-ios-margin-top;
 
 /// @prop - Margin bottom of the inset list
-$list-inset-ios-margin-bottom:        16px;
+$list-inset-ios-margin-bottom: $list-inset-ios-margin-top;
 
 /// @prop - Margin start of the inset list
-$list-inset-ios-margin-start:         16px;
+$list-inset-ios-margin-start: $list-inset-ios-margin-top;
 
 /// @prop - Border radius of the inset list
-$list-inset-ios-border-radius:        10px;
+$list-inset-ios-border-radius: 10px;

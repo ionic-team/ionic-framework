@@ -4,21 +4,21 @@
 // Material Design List
 // --------------------------------------------------
 
-.list-md {
-  @include margin($list-md-margin-top, $list-md-margin-end, $list-md-margin-bottom, $list-md-margin-start);
+:host {
+  @include margin(0);
   @include padding($list-md-padding-top, $list-md-padding-end, $list-md-padding-bottom, $list-md-padding-start);
 
   background: $item-md-background;
 }
 
-.list-md > .input:last-child::after {
+:host > .input:last-child::after {
   @include position-horizontal(0, null);
 }
 
 // Material Design Inset List
 // --------------------------------------------------
 
-.list-md.list-inset {
+:host(.list-inset) {
   @include margin($list-inset-md-margin-top, $list-inset-md-margin-end, $list-inset-md-margin-bottom, $list-inset-md-margin-start);
   @include border-radius($list-inset-md-border-radius);
 }
@@ -34,8 +34,8 @@
  * items in an item-sliding when the item is the last
  * element in the item-sliding container.
  */
-.list-md.list-inset ion-item:not(:only-of-type):last-of-type,
-.list-md.list-inset ion-item-sliding:last-of-type ion-item {
+:host(.list-inset) ion-item:not(:only-of-type):last-of-type,
+:host(.list-inset) ion-item-sliding:last-of-type ion-item {
   --border-width: 0;
   --inner-border-width: 0;
 }
@@ -46,12 +46,12 @@
  * ion-item-sliding because the item will be the only
  * one of its type inside of the ion-item-sliding group.
  */
-.list-md.list-inset ion-item:only-child {
+:host(.list-inset) ion-item:only-child {
   --border-width: 0;
   --inner-border-width: 0;
 }
 
-.list-md.list-inset + ion-list.list-inset {
+:host(.list-inset) + ion-list.list-inset {
   @include margin(0, null, null, null);
 }
 
@@ -59,7 +59,7 @@
 // Material Design No Lines List
 // --------------------------------------------------
 
-.list-md-lines-none .item-lines-default {
+:host(.lines-none) .item-lines-default {
   --inner-border-width: 0px;
   --border-width: 0px;
 }
@@ -67,7 +67,7 @@
 // Material Design Full Lines List
 // --------------------------------------------------
 
-.list-md-lines-full .item-lines-default {
+:host(.lines-full) .item-lines-default {
   --inner-border-width: 0px;
   --border-width: #{0 0 $list-md-item-border-bottom-width 0};
 }
@@ -75,7 +75,7 @@
 // Material Design Inset Lines List
 // --------------------------------------------------
 
-.list-md-lines-inset .item-lines-default {
+:host(.lines-inset) .item-lines-default {
   --inner-border-width: #{0 0 $list-md-item-border-bottom-width 0};
   --border-width: 0px;
 }
@@ -83,6 +83,6 @@
 // Material Design List Inside A Card
 // --------------------------------------------------
 
-ion-card .list-md {
+:host-context(ion-card) {
   @include margin(0);
 }

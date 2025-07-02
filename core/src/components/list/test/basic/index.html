@@ -12,6 +12,14 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      h2 {
+        margin-top: 20px;
+        margin-inline-start: 16px;
+        margin-bottom: 0;
+      }
+    </style>
   </head>
 
   <body>
@@ -23,7 +31,18 @@
       </ion-header>
 
       <ion-content id="content">
+        <h2>Default</h2>
+
         <ion-list>
+          <ion-item>Pokémon Yellow</ion-item>
+          <ion-item>Super Metroid</ion-item>
+          <ion-item>Mega Man X</ion-item>
+          <ion-item>The Legend of Zelda</ion-item>
+          <ion-item lines="full">Halo</ion-item>
+        </ion-list>
+
+        <h2>No padding</h2>
+        <ion-list class="ion-no-padding">
           <ion-item>Pokémon Yellow</ion-item>
           <ion-item>Super Metroid</ion-item>
           <ion-item>Mega Man X</ion-item>

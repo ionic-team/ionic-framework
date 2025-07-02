@@ -12,6 +12,7 @@ import { getIonMode } from '../../global/ionic-global';
     ios: 'list.ios.scss',
     md: 'list.md.scss',
   },
+  scoped: true,
 })
 export class List implements ComponentInterface {
   @Element() el!: HTMLElement;
