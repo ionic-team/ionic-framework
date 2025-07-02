@@ -41,7 +41,9 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
     if (ev instanceof PointerEvent && ev.pointerType !== '') {
       hadPointerEvent = true;
       // Reset after the event loop so only the immediate focusin is suppressed
-      setTimeout(() => { hadPointerEvent = false; }, 0);
+      setTimeout(() => {
+        hadPointerEvent = false;
+      }, 0);
     }
   };
 
@@ -61,9 +63,9 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
   const onFocusin = (ev: Event) => {
     const target = ev.target as HTMLElement;
     if (target.classList.contains(ION_FOCUSABLE) && !hadPointerEvent) {
-      const toFocus = ev.composedPath().filter((el): el is HTMLElement =>
-        el instanceof HTMLElement && el.classList.contains(ION_FOCUSABLE)
-      );
+      const toFocus = ev
+        .composedPath()
+        .filter((el): el is HTMLElement => el instanceof HTMLElement && el.classList.contains(ION_FOCUSABLE));
       setFocus(toFocus);
     }
   };
