@@ -3,6 +3,84 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.6.2](https://github.com/ionic-team/ionic-framework/compare/v8.6.1...v8.6.2) (2025-06-18)
+
+
+### Bug Fixes
+
+* **picker-column:** fallback to elementFromPoint for iOS 16 Shadow DOM bug ([#30479](https://github.com/ionic-team/ionic-framework/issues/30479)) ([6ae2907](https://github.com/ionic-team/ionic-framework/commit/6ae29077424434f3523d75426f3328765a4797f4)), closes [#29672](https://github.com/ionic-team/ionic-framework/issues/29672)
+* **range:** improve focus and blur handling for dual knobs ([#30482](https://github.com/ionic-team/ionic-framework/issues/30482)) ([6811fe5](https://github.com/ionic-team/ionic-framework/commit/6811fe5cc88f132f998476a3f4b956ce21122631))
+
+
+
+
+
+## [8.6.1](https://github.com/ionic-team/ionic-framework/compare/v8.6.0...v8.6.1) (2025-06-11)
+
+
+### Bug Fixes
+
+* **item-sliding:** check for side attribute to avoid an `undefined` value ([#29845](https://github.com/ionic-team/ionic-framework/issues/29845)) ([c38aa07](https://github.com/ionic-team/ionic-framework/commit/c38aa07cf8bfab200b3c071328d893bd1627cde7)), closes [#29499](https://github.com/ionic-team/ionic-framework/issues/29499)
+* **modal:** reset footer positioning after content drag and multi-footer support ([#30470](https://github.com/ionic-team/ionic-framework/issues/30470)) ([071b414](https://github.com/ionic-team/ionic-framework/commit/071b414a00f4497ed0baa1431f0bee4b3c7c13fb)), closes [#30468](https://github.com/ionic-team/ionic-framework/issues/30468)
+
+
+
+
+
+# [8.6.0](https://github.com/ionic-team/ionic-framework/compare/v8.5.9...v8.6.0) (2025-06-04)
+
+
+### Bug Fixes
+
+* **input-otp:** correctly handle autofill by splitting the values into all inputs ([#30444](https://github.com/ionic-team/ionic-framework/issues/30444)) ([b77447b](https://github.com/ionic-team/ionic-framework/commit/b77447bea050821da1e5f618ec7b7b530e7f7f5d))
+* **scroll-assist:** allow focus on input's siblings ([#30409](https://github.com/ionic-team/ionic-framework/issues/30409)) ([2dea607](https://github.com/ionic-team/ionic-framework/commit/2dea6071db12903f2ce815328db19b95366aa9a5))
+
+
+### Features
+
+* **datetime:** add animation to adjacent days selection ([#30298](https://github.com/ionic-team/ionic-framework/issues/30298)) ([e140b90](https://github.com/ionic-team/ionic-framework/commit/e140b9010fd63490a8d340b3d705869fb04a4319))
+* **datetime:** add showAdjacentDays to display days from the previous and next months ([#30262](https://github.com/ionic-team/ionic-framework/issues/30262)) ([b67259e](https://github.com/ionic-team/ionic-framework/commit/b67259edae267c2dbece360da532ca9017c8febd))
+* **input-otp:** add new input-otp component ([#30386](https://github.com/ionic-team/ionic-framework/issues/30386)) ([4d6a067](https://github.com/ionic-team/ionic-framework/commit/4d6a067677a7b828263c2ed71a409a3a4c392c85))
+* **toggle:** add iOS 18 haptic feedback ([#29945](https://github.com/ionic-team/ionic-framework/issues/29945)) ([796e007](https://github.com/ionic-team/ionic-framework/commit/796e00720e0da90eda1d246a6d5b11f954e5993c))
+
+
+
+
+
+## [8.5.9](https://github.com/ionic-team/ionic-framework/compare/v8.5.8...v8.5.9) (2025-06-04)
+
+
+### Bug Fixes
+
+* **datetime:** display the correct month when multiple values are set ([#29610](https://github.com/ionic-team/ionic-framework/issues/29610)) ([14f32f8](https://github.com/ionic-team/ionic-framework/commit/14f32f8feea7b3880367868ff0a2134b0c28cc07)), closes [#29094](https://github.com/ionic-team/ionic-framework/issues/29094)
+* **modal:** move sheet footers instead of cloning while dragging ([#30433](https://github.com/ionic-team/ionic-framework/issues/30433)) ([4cbbbb0](https://github.com/ionic-team/ionic-framework/commit/4cbbbb053ad36d176f1d79ad09777f94ca8076d2)), closes [#30315](https://github.com/ionic-team/ionic-framework/issues/30315) [#30341](https://github.com/ionic-team/ionic-framework/issues/30341) [#30312](https://github.com/ionic-team/ionic-framework/issues/30312)
+
+
+
+
+
+## [8.5.8](https://github.com/ionic-team/ionic-framework/compare/v8.5.7...v8.5.8) (2025-05-28)
+
+
+### Bug Fixes
+
+* **input-password-toggle, button:** force update aria attributes ([#30411](https://github.com/ionic-team/ionic-framework/issues/30411)) ([4e38700](https://github.com/ionic-team/ionic-framework/commit/4e387005663b4e8425cb28e41608bb4f924b3864))
+
+
+
+
+
+## [8.5.7](https://github.com/ionic-team/ionic-framework/compare/v8.5.6...v8.5.7) (2025-05-07)
+
+
+### Bug Fixes
+
+* **labels:** prevent clicking a label from triggering onClick twice on several components ([#30384](https://github.com/ionic-team/ionic-framework/issues/30384)) ([7d639b0](https://github.com/ionic-team/ionic-framework/commit/7d639b0412120523f758942c855cb69f9a52e9d9)), closes [#30165](https://github.com/ionic-team/ionic-framework/issues/30165)
+
+
+
+
+
 ## [8.5.6](https://github.com/ionic-team/ionic-framework/compare/v8.5.5...v8.5.6) (2025-04-30)
 
 

@@ -93,6 +93,7 @@ stale:
     - "triage"
     - "type: bug"
     - "type: feature request"
+    - "needs: investigation"
   exemptAssigned: true
   exemptProjects: true
   exemptMilestones: true

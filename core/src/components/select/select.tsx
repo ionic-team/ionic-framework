@@ -349,7 +349,7 @@ export class Select implements ComponentInterface {
       const indexOfSelected = this.childOpts.findIndex((o) => o.value === this.value);
       if (indexOfSelected > -1) {
         const selectedItem = overlay.querySelector<HTMLElement>(
-          `.select-interface-option:nth-child(${indexOfSelected + 1})`
+          `.select-interface-option:nth-of-type(${indexOfSelected + 1})`
         );
 
         if (selectedItem) {
@@ -912,6 +912,18 @@ export class Select implements ComponentInterface {
   }
 
   /**
+   * Stops propagation when the label is clicked,
+   * otherwise, two clicks will be triggered.
+   */
+  private onLabelClick = (ev: MouseEvent) => {
+    // Only stop propagation if the click was directly on the label
+    // and not on the input or other child elements
+    if (ev.target === ev.currentTarget) {
+      ev.stopPropagation();
+    }
+  };
+
+  /**
    * Renders the border container
    * when fill="outline".
    */
@@ -1173,7 +1185,7 @@ export class Select implements ComponentInterface {
           [`select-label-placement-${labelPlacement}`]: true,
         })}
       >
-        <label class="select-wrapper" id="select-label">
+        <label class="select-wrapper" id="select-label" onClick={this.onLabelClick}>
           {this.renderLabelContainer()}
           <div class="select-wrapper-inner">
             <slot name="start"></slot>

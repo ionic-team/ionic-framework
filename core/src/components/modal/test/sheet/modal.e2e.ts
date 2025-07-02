@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test, dragElementBy } from '@utils/test/playwright';
+import { configs, dragElementBy, test } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('sheet modal: rendering'), () => {
@@ -30,6 +30,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/modal/test/sheet', config);
     });
+
     test('should dismiss the sheet modal when clicking the active backdrop', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
@@ -42,6 +43,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await ionModalDidDismiss.next();
     });
+
     test('should present another sheet modal when clicking an inactive backdrop', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const modal = page.locator('.custom-height');
@@ -54,6 +56,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(modal).toBeVisible();
     });
+
     test('input outside sheet modal should be focusable when backdrop is inactive', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
@@ -66,6 +69,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(input).toBeFocused();
     });
   });
+
   test.describe(title('sheet modal: setting the breakpoint'), () => {
     test.describe('sheet modal: invalid values', () => {
       let warnings: string[] = [];
@@ -88,11 +92,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         const modal = page.locator('ion-modal');
         await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(0.01));
       });
+
       test('it should not change the breakpoint when setting to an invalid value', async ({ page }) => {
         const modal = page.locator('ion-modal');
         const breakpoint = await modal.evaluate((el: HTMLIonModalElement) => el.getCurrentBreakpoint());
         expect(breakpoint).toBe(0.25);
       });
+
       test('it should warn when setting an invalid breakpoint', async () => {
         expect(warnings.length).toBe(1);
         expect(warnings[0]).toBe(
@@ -100,6 +106,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         );
       });
     });
+
     test.describe('sheet modal: valid values', () => {
       test.beforeEach(async ({ page }) => {
         await page.goto('/src/components/modal/test/sheet', config);
@@ -108,6 +115,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await page.click('#sheet-modal');
         await ionModalDidPresent.next();
       });
+
       test('should update the current breakpoint', async ({ page }) => {
         const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
         const modal = page.locator('.modal-sheet');
@@ -118,6 +126,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         const breakpoint = await modal.evaluate((el: HTMLIonModalElement) => el.getCurrentBreakpoint());
         expect(breakpoint).toBe(0.5);
       });
+
       test('should emit ionBreakpointDidChange', async ({ page }) => {
         const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
         const modal = page.locator('.modal-sheet');
@@ -126,6 +135,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await ionBreakpointDidChange.next();
         expect(ionBreakpointDidChange.events.length).toBe(1);
       });
+
       test('should emit ionBreakpointDidChange when breakpoint is set to 0', async ({ page }) => {
         const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
         const modal = page.locator('.modal-sheet');
@@ -134,6 +144,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await ionBreakpointDidChange.next();
         expect(ionBreakpointDidChange.events.length).toBe(1);
       });
+
       test('should emit ionBreakpointDidChange when the sheet is swiped to breakpoint 0', async ({ page }) => {
         const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
         const header = page.locator('.modal-sheet ion-header');
@@ -211,6 +222,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(updatedBreakpoint).toBe(0.5);
     });
   });
+
   test.describe(title('sheet modal: clicking the handle'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/modal/test/sheet', config);
@@ -283,6 +295,62 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await ionBreakpointDidChange.next();
 
       await expect(await modal.evaluate((el: HTMLIonModalElement) => el.getCurrentBreakpoint())).toBe(0.75);
+    });
+  });
+
+  test.describe(title('sheet modal: accessibility'), () => {
+    test('it should allow focus on the drag handle from outside of the modal', async ({ page }) => {
+      // In this scenario, the modal is opened and has no backdrop, allowing
+      // the background content to be focused. We need to ensure that we can
+      // navigate to the drag handle using the keyboard and voiceover/talkback.
+      await page.goto('/src/components/modal/test/sheet', config);
+
+      await page.setContent(
+        `
+        <ion-content>
+          <button id="open-modal">Open</button>
+          <ion-modal trigger="open-modal" initial-breakpoint="0.25">
+            <ion-content>
+              <ion-button id="dismiss" onclick="modal.dismiss();">Dismiss</ion-button>
+              <ion-button id="set-breakpoint">Set breakpoint</ion-button>
+            </ion-content>
+          </ion-modal>
+        </ion-content>
+        <script>
+          const modal = document.querySelector('ion-modal');
+          const setBreakpointButton = document.querySelector('#set-breakpoint');
+
+          modal.breakpoints = [0.25, 0.5, 1];
+          modal.handleBehavior = 'cycle';
+          modal.backdropBreakpoint = 1;
+          modal.backdropDismiss = false;
+          modal.expandToScroll = false;
+
+          setBreakpointButton.addEventListener('click', () => {
+            modal.setCurrentBreakpoint(0.5);
+          });
+        </script>
+      `,
+        config
+      );
+
+      const openButton = page.locator('#open-modal');
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await openButton.click();
+      await ionModalDidPresent.next();
+
+      const dragHandle = page.locator('ion-modal .modal-handle');
+      await expect(dragHandle).toBeVisible();
+
+      openButton.focus();
+      await expect(openButton).toBeFocused();
+
+      // Tab should now bring us to the drag handle
+      await page.keyboard.press('Tab');
+
+      await expect(dragHandle).toBeFocused();
     });
   });
 });
