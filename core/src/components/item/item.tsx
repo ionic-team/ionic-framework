@@ -32,11 +32,13 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
   private inheritedAriaAttributes: Attributes = {};
+  private observer?: MutationObserver;
 
   @Element() el!: HTMLIonItemElement;
 
   @State() multipleInputs = false;
   @State() focusable = true;
+  @State() isInteractive = false;
 
   /**
    * The color to use from your application's color palette.
@@ -163,6 +165,19 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   connectedCallback() {
     this.hasStartEl();
+
+    // create MutationObserver to watch for changes in nested content
+    // and update state to reflect change in behavior and rerender
+    if (typeof MutationObserver !== 'undefined' && !this.observer) {
+      this.observer = new MutationObserver(() => {
+        this.setIsInteractive();
+        this.setMultipleInputs();
+      });
+
+      this.observer.observe(this.el, {
+        childList: true,
+      });
+    }
   }
 
   componentWillLoad() {
@@ -176,10 +191,14 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     });
   }
 
-  // If the item contains multiple clickable elements and/or inputs, then the item
-  // should not have a clickable input cover over the entire item to prevent
-  // interfering with their individual click events
-  private setMultipleInputs() {
+  disconnectedCallback(): void {
+    // disconnect MutationObserver when component is disconnected from the DOM
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  }
+
+  private totalNestedInputs() {
     // The following elements have a clickable cover that is relative to the entire item
     const covers = this.el.querySelectorAll('ion-checkbox, ion-datetime, ion-select, ion-radio');
 
@@ -193,12 +212,32 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // The following elements should also stay clickable when an input with cover is present
     const clickables = this.el.querySelectorAll('ion-router-link, ion-button, a, button');
 
+    return {
+      covers,
+      inputs,
+      clickables,
+    };
+  }
+
+  // If the item contains multiple clickable elements and/or inputs, then the item
+  // should not have a clickable input cover over the entire item to prevent
+  // interfering with their individual click events
+  private setMultipleInputs() {
+    const { covers, inputs, clickables } = this.totalNestedInputs();
+
     // Check for multiple inputs to change the position of the input cover to relative
     // for all of the covered inputs above
     this.multipleInputs =
       covers.length + inputs.length > 1 ||
       covers.length + clickables.length > 1 ||
       (covers.length > 0 && this.isClickable());
+  }
+
+  private setIsInteractive() {
+    // If item contains any interactive children, set isInteractive to `true`
+    const { covers, inputs, clickables } = this.totalNestedInputs();
+
+    this.isInteractive = !!(covers.length + inputs.length + clickables.length);
   }
 
   // If the item contains an input including a checkbox, datetime, select, or radio
