@@ -93,7 +93,6 @@ export class ReorderGroup implements ComponentInterface {
 
   /**
    * Completes the reorder operation. Must be called by the `ionItemReorder` event.
-   *
    * If a list of items is passed, the list will be reordered and returned in the
    * proper order.
    *

@@ -365,7 +365,7 @@ export class Select implements ComponentInterface {
       const indexOfSelected = this.childOpts.findIndex((o) => o.value === this.value);
       if (indexOfSelected > -1) {
         const selectedItem = overlay.querySelector<HTMLElement>(
-          `.select-interface-option:nth-child(${indexOfSelected + 1})`
+          `.select-interface-option:nth-of-type(${indexOfSelected + 1})`
         );
 
         if (selectedItem) {

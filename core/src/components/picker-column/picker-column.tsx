@@ -377,7 +377,27 @@ export class PickerColumn implements ComponentInterface {
          * elementsFromPoint can returns multiple elements
          * so find the relevant picker column option if one exists.
          */
-        const newActiveElement = elementsAtPoint.find((el) => el.tagName === 'ION-PICKER-COLUMN-OPTION');
+        let newActiveElement = elementsAtPoint.find((el) => el.tagName === 'ION-PICKER-COLUMN-OPTION');
+
+        /**
+         * TODO(FW-6594): Remove this workaround when iOS 16 is no longer
+         * supported.
+         *
+         * If `elementsFromPoint` failed to find the active element (a known
+         * issue on iOS 16 when elements are in a Shadow DOM and the
+         * referenceNode is the document), a fallback to `elementFromPoint`
+         * is used. While `elementsFromPoint` returns all elements,
+         * `elementFromPoint` returns only the top-most, which is sufficient
+         * for this use case and appears to handle Shadow DOM retargeting
+         * more reliably in this specific iOS bug.
+         */
+        if (newActiveElement === undefined) {
+          const fallbackActiveElement = referenceNode.elementFromPoint(centerX, centerY);
+
+          if (fallbackActiveElement?.tagName === 'ION-PICKER-COLUMN-OPTION') {
+            newActiveElement = fallbackActiveElement as HTMLIonPickerColumnOptionElement;
+          }
+        }
 
         if (activeEl !== undefined) {
           this.setPickerItemActiveState(activeEl, false);

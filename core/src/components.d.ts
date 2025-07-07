@@ -185,9 +185,9 @@ export namespace Components {
         "cssClass"?: string | string[];
         "delegate"?: FrameworkDelegate;
         /**
-          * Dismiss the action sheet overlay after it has been presented.
+          * Dismiss the action sheet overlay after it has been presented. This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the action sheet. This can be useful in a button handler for determining which button was clicked to dismiss the action sheet. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
+          * @param role The role of the element that is dismissing the action sheet. This can be useful in a button handler for determining which button was clicked to dismiss the action sheet. Some examples include: `"cancel"`, `"destructive"`, `"selected"`, and `"backdrop"`.
          */
         "dismiss": (data?: any, role?: string) => Promise<boolean>;
         /**
@@ -277,9 +277,9 @@ export namespace Components {
         "cssClass"?: string | string[];
         "delegate"?: FrameworkDelegate;
         /**
-          * Dismiss the alert overlay after it has been presented.
+          * Dismiss the alert overlay after it has been presented. This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the alert. This can be useful in a button handler for determining which button was clicked to dismiss the alert. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
+          * @param role The role of the element that is dismissing the alert. This can be useful in a button handler for determining which button was clicked to dismiss the alert. Some examples include: `"cancel"`, `"destructive"`, `"selected"`, and `"backdrop"`.
          */
         "dismiss": (data?: any, role?: string) => Promise<boolean>;
         /**
@@ -363,7 +363,7 @@ export namespace Components {
         "mode"?: "ios" | "md";
         /**
           * Used to set focus on an element that uses `ion-focusable`. Do not use this if focusing the element as a result of a keyboard event as the focus utility should handle this for us. This method should be used when we want to programmatically focus an element as a result of another user action. (Ex: We focus the first element inside of a popover when the user presents it, but the popover is not always presented as a result of keyboard action.)
-          * @param elements - The elements to set focus on.
+          * @param elements An array of HTML elements to set focus on.
          */
         "setFocus": (elements: HTMLElement[]) => Promise<void>;
         /**
@@ -1082,6 +1082,7 @@ export namespace Components {
     interface IonDatetime {
         /**
           * Emits the ionCancel event and optionally closes the popover or modal that the datetime was presented in.
+          * @param closeOverlay If `true`, closes the parent overlay. Defaults to `false`.
          */
         "cancel": (closeOverlay?: boolean) => Promise<void>;
         /**
@@ -1101,6 +1102,7 @@ export namespace Components {
         "color"?: Color;
         /**
           * Confirms the selected datetime value, updates the `value` property, and optionally closes the popover or modal that the datetime was presented in.
+          * @param closeOverlay If `true`, closes the parent overlay. Defaults to `false`.
          */
         "confirm": (closeOverlay?: boolean) => Promise<void>;
         /**
@@ -1194,6 +1196,7 @@ export namespace Components {
         "readonly": boolean;
         /**
           * Resets the internal state of the datetime but does not update the value. Passing a valid ISO-8601 string will reset the state of the component to the provided date. If no value is provided, the internal state will be reset to the clamped value of the min, max and today.
+          * @param startDate A valid [ISO-8601 string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#date_time_string_format) to reset the datetime state to.
          */
         "reset": (startDate?: string) => Promise<void>;
         /**
@@ -2073,9 +2076,9 @@ export namespace Components {
         "cssClass"?: string | string[];
         "delegate"?: FrameworkDelegate;
         /**
-          * Dismiss the loading overlay after it has been presented.
+          * Dismiss the loading overlay after it has been presented. This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
+          * @param role The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: `"cancel"`, `"destructive"`, `"selected"`, and `"backdrop"`.
          */
         "dismiss": (data?: any, role?: string) => Promise<boolean>;
         /**
@@ -2156,6 +2159,8 @@ export namespace Components {
     interface IonMenu {
         /**
           * Closes the menu. If the menu is already closed or it can't be closed, it returns `false`.
+          * @param animated If `true`, the menu will animate when closing. If `false`, the menu will close instantly without animation. Defaults to `true`.
+          * @param role The role of the element that is closing the menu. This can be useful in a button handler for determining which button was clicked to close the menu. Some examples include: `"cancel"`, `"destructive"`, `"selected"`, and `"backdrop"`.
          */
         "close": (animated?: boolean, role?: string) => Promise<boolean>;
         /**
@@ -2168,7 +2173,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * Returns `true` is the menu is active.  A menu is active when it can be opened or closed, meaning it's enabled and it's not part of a `ion-split-pane`.
+          * Returns `true` if the menu is active.  A menu is active when it can be opened or closed, meaning it's enabled and it's not part of a `ion-split-pane`.
          */
         "isActive": () => Promise<boolean>;
         /**
@@ -2190,10 +2195,14 @@ export namespace Components {
         "mode"?: "ios" | "md";
         /**
           * Opens the menu. If the menu is already open or it can't be opened, it returns `false`.
+          * @param animated If `true`, the menu will animate when opening. If `false`, the menu will open instantly without animation. Defaults to `true`.
          */
         "open": (animated?: boolean) => Promise<boolean>;
         /**
-          * Opens or closes the button. If the operation can't be completed successfully, it returns `false`.
+          * Opens or closes the menu. If the operation can't be completed successfully, it returns `false`.
+          * @param shouldOpen If `true`, the menu will open. If `false`, the menu will close.
+          * @param animated If `true`, the menu will animate when opening/closing. If `false`, the menu will open/close instantly without animation.
+          * @param role The role of the element that is closing the menu.
          */
         "setOpen": (shouldOpen: boolean, animated?: boolean, role?: string) => Promise<boolean>;
         /**
@@ -2212,6 +2221,7 @@ export namespace Components {
         "theme"?: "ios" | "md" | "ionic";
         /**
           * Toggles the menu. If the menu is already open, it will try to close, otherwise it will try to open it. If the operation can't be completed successfully, it returns `false`.
+          * @param animated If `true`, the menu will animate when opening/closing. If `false`, the menu will open/close instantly without animation. Defaults to `true`.
          */
         "toggle": (animated?: boolean) => Promise<boolean>;
         /**
@@ -2310,9 +2320,9 @@ export namespace Components {
         "cssClass"?: string | string[];
         "delegate"?: FrameworkDelegate;
         /**
-          * Dismiss the modal overlay after it has been presented.
+          * Dismiss the modal overlay after it has been presented. This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
+          * @param role The role of the element that is dismissing the modal. For example, `cancel` or `backdrop`.
          */
         "dismiss": (data?: any, role?: string) => Promise<boolean>;
         /**
@@ -2395,7 +2405,8 @@ export namespace Components {
          */
         "presentingElement"?: HTMLElement;
         /**
-          * Move a sheet style modal to a specific breakpoint. The breakpoint value must be a value defined in your `breakpoints` array.
+          * Move a sheet style modal to a specific breakpoint.
+          * @param breakpoint The breakpoint value to move the sheet modal to. Must be a value defined in your `breakpoints` array.
          */
         "setCurrentBreakpoint": (breakpoint: number) => Promise<void>;
         /**
@@ -2804,10 +2815,10 @@ export namespace Components {
         "cssClass"?: string | string[];
         "delegate"?: FrameworkDelegate;
         /**
-          * Dismiss the popover overlay after it has been presented.
+          * Dismiss the popover overlay after it has been presented. This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'.
-          * @param dismissParentPopover If `true`, dismissing this popover will also dismiss a parent popover if this popover is nested. Defaults to `true`.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
+          * @param role The role of the element that is dismissing the popover. For example, `cancel` or `backdrop`.
+          * @param dismissParentPopover If `true`, dismissing this popover will also dismiss a parent popover if this popover is nested. Defaults to `true`.
          */
         "dismiss": (data?: any, role?: string, dismissParentPopover?: boolean) => Promise<boolean>;
         /**
@@ -2875,6 +2886,7 @@ export namespace Components {
         "overlayIndex": number;
         /**
           * Present the popover overlay after it has been created. Developers can pass a mouse, touch, or pointer event to position the popover relative to where that event was dispatched.
+          * @param event The event to position the popover relative to.
          */
         "present": (event?: MouseEvent | TouchEvent | PointerEvent | CustomEvent) => Promise<void>;
         /**
@@ -3214,7 +3226,7 @@ export namespace Components {
     }
     interface IonReorderGroup {
         /**
-          * Completes the reorder operation. Must be called by the `ionItemReorder` event.  If a list of items is passed, the list will be reordered and returned in the proper order.  If no parameters are passed or if `true` is passed in, the reorder will complete and the item will remain in the position it was dragged to. If `false` is passed, the reorder will complete and the item will bounce back to its original position.
+          * Completes the reorder operation. Must be called by the `ionItemReorder` event. If a list of items is passed, the list will be reordered and returned in the proper order.  If no parameters are passed or if `true` is passed in, the reorder will complete and the item will remain in the position it was dragged to. If `false` is passed, the reorder will complete and the item will bounce back to its original position.
           * @param listOrReorder A list of items to be sorted and returned in the new order or a boolean of whether or not the reorder should reposition the item.
          */
         "complete": (listOrReorder?: boolean | any[]) => Promise<any>;
@@ -3310,6 +3322,7 @@ export namespace Components {
           * Navigate to the specified path.
           * @param path The path to navigate to.
           * @param direction The direction of the animation. Defaults to `"forward"`.
+          * @param animation A custom animation to use for the transition.
          */
         "push": (path: string, direction?: RouterDirection, animation?: AnimationBuilder) => Promise<boolean>;
         /**
@@ -3483,7 +3496,7 @@ export namespace Components {
          */
         "searchIcon"?: string | boolean;
         /**
-          * Sets focus on the native `input` in `ion-searchbar`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.  See [managing focus](/docs/developing/managing-focus) for more information.
+          * Sets focus on the native `input` in `ion-searchbar`. Use this method instead of the global `input.focus()`. Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method. Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.  See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "setFocus": () => Promise<void>;
         /**
@@ -4202,9 +4215,9 @@ export namespace Components {
         "cssClass"?: string | string[];
         "delegate"?: FrameworkDelegate;
         /**
-          * Dismiss the toast overlay after it has been presented.
+          * Dismiss the toast overlay after it has been presented. This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the toast. This can be useful in a button handler for determining which button was clicked to dismiss the toast. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
+          * @param role The role of the element that is dismissing the toast. This can be useful in a button handler for determining which button was clicked to dismiss the toast. Some examples include: `"cancel"`, `"destructive"`, `"selected"`, and `"backdrop"`.
          */
         "dismiss": (data?: any, role?: string) => Promise<boolean>;
         /**

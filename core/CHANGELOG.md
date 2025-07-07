@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.6.3](https://github.com/ionic-team/ionic-framework/compare/v8.6.2...v8.6.3) (2025-07-02)
+
+
+### Bug Fixes
+
+* **modal:** add conditional tabIndex for handle cycling ([#30510](https://github.com/ionic-team/ionic-framework/issues/30510)) ([ee47660](https://github.com/ionic-team/ionic-framework/commit/ee47660745428e04c78cfef0555f3c5788959a8c))
+* **select:** focus the correct selected item in an action sheet interface with a header ([#30481](https://github.com/ionic-team/ionic-framework/issues/30481)) ([80a111c](https://github.com/ionic-team/ionic-framework/commit/80a111cffac70e831eb57e827301370163ef4e2a)), closes [#30480](https://github.com/ionic-team/ionic-framework/issues/30480)
+
+
+
+
+
+## [8.6.2](https://github.com/ionic-team/ionic-framework/compare/v8.6.1...v8.6.2) (2025-06-18)
+
+
+### Bug Fixes
+
+* **picker-column:** fallback to elementFromPoint for iOS 16 Shadow DOM bug ([#30479](https://github.com/ionic-team/ionic-framework/issues/30479)) ([6ae2907](https://github.com/ionic-team/ionic-framework/commit/6ae29077424434f3523d75426f3328765a4797f4)), closes [#29672](https://github.com/ionic-team/ionic-framework/issues/29672)
+* **range:** improve focus and blur handling for dual knobs ([#30482](https://github.com/ionic-team/ionic-framework/issues/30482)) ([6811fe5](https://github.com/ionic-team/ionic-framework/commit/6811fe5cc88f132f998476a3f4b956ce21122631))
+
+
+
+
+
 ## [8.6.1](https://github.com/ionic-team/ionic-framework/compare/v8.6.0...v8.6.1) (2025-06-11)
 
 
