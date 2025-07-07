@@ -641,6 +641,51 @@ export class Range implements ComponentInterface {
     }
   };
 
+  private onKnobFocus = (knob: KnobName) => {
+    if (!this.hasFocus) {
+      this.hasFocus = true;
+      this.ionFocus.emit();
+    }
+
+    // Manually manage ion-focused class for dual knobs
+    if (this.dualKnobs && this.el.shadowRoot) {
+      const knobA = this.el.shadowRoot.querySelector('.range-knob-a');
+      const knobB = this.el.shadowRoot.querySelector('.range-knob-b');
+
+      // Remove ion-focused from both knobs first
+      knobA?.classList.remove('ion-focused');
+      knobB?.classList.remove('ion-focused');
+
+      // Add ion-focused only to the focused knob
+      const focusedKnobEl = knob === 'A' ? knobA : knobB;
+      focusedKnobEl?.classList.add('ion-focused');
+    }
+  };
+
+  private onKnobBlur = () => {
+    // Check if focus is moving to another knob within the same range
+    // by delaying the reset to allow the new focus to register
+    setTimeout(() => {
+      const activeElement = this.el.shadowRoot?.activeElement;
+      const isStillFocusedOnKnob = activeElement && activeElement.classList.contains('range-knob-handle');
+
+      if (!isStillFocusedOnKnob) {
+        if (this.hasFocus) {
+          this.hasFocus = false;
+          this.ionBlur.emit();
+        }
+
+        // Remove ion-focused from both knobs when focus leaves the range
+        if (this.dualKnobs && this.el.shadowRoot) {
+          const knobA = this.el.shadowRoot.querySelector('.range-knob-a');
+          const knobB = this.el.shadowRoot.querySelector('.range-knob-b');
+          knobA?.classList.remove('ion-focused');
+          knobB?.classList.remove('ion-focused');
+        }
+      }
+    }, 0);
+  };
+
   /**
    * Returns true if content was passed to the "start" slot
    */
@@ -815,6 +860,8 @@ export class Range implements ComponentInterface {
           min,
           max,
           inheritedAttributes,
+          onKnobFocus: this.onKnobFocus,
+          onKnobBlur: this.onKnobBlur,
         })}
 
         {this.dualKnobs &&
@@ -830,6 +877,8 @@ export class Range implements ComponentInterface {
             min,
             max,
             inheritedAttributes,
+            onKnobFocus: this.onKnobFocus,
+            onKnobBlur: this.onKnobBlur,
           })}
       </div>
     );
@@ -910,11 +959,27 @@ interface RangeKnob {
   pinFormatter: PinFormatter;
   inheritedAttributes: Attributes;
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
+  onKnobFocus: (knob: KnobName) => void;
+  onKnobBlur: () => void;
 }
 
 const renderKnob = (
   rtl: boolean,
-  { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, pinFormatter, inheritedAttributes }: RangeKnob
+  {
+    knob,
+    value,
+    ratio,
+    min,
+    max,
+    disabled,
+    pressed,
+    pin,
+    handleKeyboard,
+    pinFormatter,
+    inheritedAttributes,
+    onKnobFocus,
+    onKnobBlur,
+  }: RangeKnob
 ) => {
   const start = rtl ? 'right' : 'left';
 
@@ -943,6 +1008,8 @@ const renderKnob = (
           ev.stopPropagation();
         }
       }}
+      onFocus={() => onKnobFocus(knob)}
+      onBlur={onKnobBlur}
       class={{
         'range-knob-handle': true,
         'range-knob-a': knob === 'A',
