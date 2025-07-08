@@ -36,14 +36,18 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
   // The Ionic bundle is included locally by default unless the test
   // config passes in the importIonicFromCDN option. This is useful
   // when testing with the CDN version of Ionic.
-  let ionicImports = `
+  let ionicCSSImports = `
     <link href="${baseUrl}/css/ionic.bundle.css" rel="stylesheet" />
+  `;
+  let ionicJSImports = `
     <script type="module" src="${baseUrl}/dist/ionic/ionic.esm.js"></script>
   `;
 
   if (options?.importIonicFromCDN) {
-    ionicImports = `
+    ionicCSSImports = `
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+    `;
+    ionicJSImports = `
       <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
       <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
     `;
@@ -56,10 +60,11 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
         <title>Ionic Playwright Test</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+        ${ionicCSSImports}
         <link href="${baseUrl}/scripts/testing/styles.css" rel="stylesheet" />
         ${palette !== 'light' ? `<link href="${baseUrl}/css/palettes/${palette}.always.css" rel="stylesheet" />` : ''}
         <script src="${baseUrl}/scripts/testing/scripts.js"></script>
-        ${ionicImports}
+        ${ionicJSImports}
         <script>
           window.Ionic = {
             config: {
