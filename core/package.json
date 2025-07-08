@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "@stencil/core": "4.33.1",
-    "ionicons": "^8.0.10",
+    "ionicons": "^8.0.11",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
