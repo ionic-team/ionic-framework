@@ -22,15 +22,15 @@ export type DatetimePresentation = 'date-time' | 'time-date' | 'date' | 'time' |
 
 export type TitleSelectedDatesFormatter = (selectedDates: string[]) => string;
 
-export type DatetimeHighlightStyle =
-  | {
-      textColor: string;
-      backgroundColor?: string;
-    }
-  | {
-      textColor?: string;
-      backgroundColor: string;
-    };
+/**
+ * DatetimeHighlightStyle must include textColor, backgroundColor, or border.
+ * It cannot be an empty object.
+ */
+export type DatetimeHighlightStyle = {
+  textColor?: string;
+  backgroundColor?: string;
+  border?: string;
+} & ({ textColor: string } | { backgroundColor: string } | { border: string });
 
 export type DatetimeHighlight = { date: string } & DatetimeHighlightStyle;
 
