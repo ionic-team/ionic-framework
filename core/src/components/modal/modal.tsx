@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { findIonContent, printIonContentErrorMsg } from '@utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
-import { raf, inheritAttributes, hasLazyBuild } from '@utils/helpers';
+import { raf, inheritAttributes, hasLazyBuild, getElementRoot } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
@@ -1079,12 +1079,43 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     if (this.animation) {
+      // Properly end the progress-based animation at initial state before destroying
+      // to avoid leaving modal in intermediate swipe position
+      this.animation.progressEnd(0, 0, 0);
       this.animation.destroy();
       this.animation = undefined;
     }
 
-    // Reinitialize the swipe-to-close gesture with current state
-    this.initSwipeToClose();
+    // Minimal fix: timing + essential positioning
+    raf(() => {
+      this.ensureCorrectModalPosition();
+      this.initSwipeToClose();
+    });
+  }
+
+  private ensureCorrectModalPosition() {
+    const { el, presentingElement } = this;
+    const root = getElementRoot(el);
+
+    // Minimal fix: wrapper element and presenting element positioning only
+    const wrapperEl = root.querySelector('.modal-wrapper') as HTMLElement | null;
+
+    if (wrapperEl) {
+      wrapperEl.style.transform = 'translateY(0vh)';
+      wrapperEl.style.opacity = '1';
+    }
+
+    if (presentingElement) {
+      const isPortrait = window.innerWidth < 768;
+
+      if (isPortrait) {
+        const transformOffset = !CSS.supports('width', 'max(0px, 1px)') ? '30px' : 'max(30px, var(--ion-safe-area-top))';
+        const scale = 0.915; // SwipeToCloseDefaults.MIN_PRESENTING_SCALE
+        presentingElement.style.transform = `translateY(${transformOffset}) scale(${scale})`;
+      } else {
+        presentingElement.style.transform = 'translateY(0px) scale(1)';
+      }
+    }
   }
 
   render() {
