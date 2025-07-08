@@ -39,6 +39,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(itemSlidingEl).toHaveClass(/item-sliding-active-slide/);
     });
 
+    // NOTE: This test uses the CDN version of Ionic.
+    // If this test fails, it is likely due to a regression in the published package.
     test('should not throw errors when adding multiple items with side="end" using the Ionic CDN', async ({
       page,
     }, testInfo) => {
