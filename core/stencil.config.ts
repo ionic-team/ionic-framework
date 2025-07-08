@@ -217,9 +217,6 @@ export const config: Config = {
     {
       type: 'dist',
       esmLoaderPath: '../loader',
-      copy: [
-        { src: '../node_modules/ionicons/dist/svg', dest: 'svg' }
-      ]
     },
     {
       type: 'dist-custom-elements',
