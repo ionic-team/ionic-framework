@@ -39,9 +39,12 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
   // The Ionic bundle is included locally by default unless the test
   // config passes in the importIonicFromCDN option. This is useful
   // when testing with the CDN version of Ionic.
-  let ionicCSSImports = theme === 'ionic' ? `
+  let ionicCSSImports =
+    theme === 'ionic'
+      ? `
     <link href="${baseUrl}/css/ionic/bundle.ionic.css" rel="stylesheet" />
-  ` : `
+  `
+      : `
     <link href="${baseUrl}/css/ionic.bundle.css" rel="stylesheet" />
   `;
   let ionicJSImports = `
@@ -49,9 +52,12 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
   `;
 
   if (options?.importIonicFromCDN) {
-    ionicCSSImports = theme === 'ionic' ? `
+    ionicCSSImports =
+      theme === 'ionic'
+        ? `
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic/bundle.ionic.css" />
-    ` : `
+    `
+        : `
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
     `;
     ionicJSImports = `
