@@ -1,5 +1,5 @@
 import type { Page, TestInfo } from '@playwright/test';
-import type { E2EPageOptions, Mode, Direction, Theme, Palette } from '@utils/test/playwright';
+import type { Direction, E2EPageOptions, Mode, Palette, Theme } from '@utils/test/playwright';
 
 /**
  * Overwrites the default Playwright page.setContent method.
@@ -36,6 +36,30 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
 
   const baseUrl = process.env.PLAYWRIGHT_TEST_BASE_URL;
 
+  // The Ionic bundle is included locally by default unless the test
+  // config passes in the importIonicFromCDN option. This is useful
+  // when testing with the CDN version of Ionic.
+  let ionicCSSImports = theme === 'ionic' ? `
+    <link href="${baseUrl}/css/ionic/bundle.ionic.css" rel="stylesheet" />
+  ` : `
+    <link href="${baseUrl}/css/ionic.bundle.css" rel="stylesheet" />
+  `;
+  let ionicJSImports = `
+    <script type="module" src="${baseUrl}/dist/ionic/ionic.esm.js"></script>
+  `;
+
+  if (options?.importIonicFromCDN) {
+    ionicCSSImports = theme === 'ionic' ? `
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic/bundle.ionic.css" />
+    ` : `
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+    `;
+    ionicJSImports = `
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+      <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    `;
+  }
+
   const output = `
     <!DOCTYPE html>
     <html dir="${direction}" lang="en">
@@ -43,15 +67,11 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
         <title>Ionic Playwright Test</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
-        ${
-          theme === 'ionic'
-            ? `<link href="${baseUrl}/css/ionic/bundle.ionic.css" rel="stylesheet" />`
-            : `<link href="${baseUrl}/css/ionic.bundle.css" rel="stylesheet" />`
-        }
+        ${ionicCSSImports}
         <link href="${baseUrl}/scripts/testing/styles.css" rel="stylesheet" />
         ${palette !== 'light' ? `<link href="${baseUrl}/css/palettes/${palette}.always.css" rel="stylesheet" />` : ''}
         <script src="${baseUrl}/scripts/testing/scripts.js"></script>
-        <script type="module" src="${baseUrl}/dist/ionic/ionic.esm.js"></script>
+        ${ionicJSImports}
         <script>
           window.Ionic = {
             config: {
