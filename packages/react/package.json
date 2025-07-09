@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@ionic/core": "^8.6.2",
-    "ionicons": "^7.0.0",
+    "ionicons": "^8.0.13",
     "tslib": "*"
   },
   "peerDependencies": {
