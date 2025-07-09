@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.6.4](https://github.com/ionic-team/ionic-framework/compare/v8.6.3...v8.6.4) (2025-07-09)
+
+
+### Bug Fixes
+
+* **modal:** support iOS card view transitions for viewport changes ([#30520](https://github.com/ionic-team/ionic-framework/issues/30520)) ([0fd9e82](https://github.com/ionic-team/ionic-framework/commit/0fd9e824508333a53175d7da5f681fc3126a2394)), closes [#30296](https://github.com/ionic-team/ionic-framework/issues/30296)
+
+
+
+
+
 ## [8.6.3](https://github.com/ionic-team/ionic-framework/compare/v8.6.2...v8.6.3) (2025-07-02)
 
 
