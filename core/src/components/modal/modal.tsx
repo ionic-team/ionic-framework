@@ -42,7 +42,7 @@ import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
-import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
+import { createSwipeToCloseGesture, SwipeToCloseDefaults } from './gestures/swipe-to-close';
 import type { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from './modal-interface';
 import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
@@ -1085,7 +1085,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.animation = undefined;
     }
 
-    // Minimal fix: timing + essential positioning
+    // Force the modal back to the correct position or it could end up
+    // in a weird state after destroying the animation
     raf(() => {
       this.ensureCorrectModalPosition();
       this.initSwipeToClose();
@@ -1096,9 +1097,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const { el, presentingElement } = this;
     const root = getElementRoot(el);
 
-    // Minimal fix: wrapper element and presenting element positioning only
     const wrapperEl = root.querySelector('.modal-wrapper') as HTMLElement | null;
-
     if (wrapperEl) {
       wrapperEl.style.transform = 'translateY(0vh)';
       wrapperEl.style.opacity = '1';
@@ -1111,7 +1110,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         const transformOffset = !CSS.supports('width', 'max(0px, 1px)')
           ? '30px'
           : 'max(30px, var(--ion-safe-area-top))';
-        const scale = 0.915; // SwipeToCloseDefaults.MIN_PRESENTING_SCALE
+        const scale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
         presentingElement.style.transform = `translateY(${transformOffset}) scale(${scale})`;
       } else {
         presentingElement.style.transform = 'translateY(0px) scale(1)';
