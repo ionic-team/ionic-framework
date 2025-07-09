@@ -1,8 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { findIonContent, printIonContentErrorMsg } from '@utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
-import { raf, inheritAttributes, hasLazyBuild } from '@utils/helpers';
+import { raf, inheritAttributes, hasLazyBuild, getElementRoot } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
@@ -37,11 +37,12 @@ import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
+import { portraitToLandscapeTransition, landscapeToPortraitTransition } from './animations/ios.transition';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
-import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
+import { createSwipeToCloseGesture, SwipeToCloseDefaults } from './gestures/swipe-to-close';
 import type { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from './modal-interface';
 import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
@@ -89,6 +90,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   // Whether or not modal is being dismissed via gesture
   private gestureAnimationDismissing = false;
+
+  // View transition properties for handling portrait/landscape switches
+  private currentViewIsPortrait?: boolean;
+  private viewTransitionAnimation?: Animation;
+  private resizeTimeout?: any;
 
   lastFocus?: HTMLElement;
   animation?: Animation;
@@ -261,6 +267,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
   }
 
+  @Listen('resize', { target: 'window' })
+  onWindowResize() {
+    // Only handle resize for iOS card modals when no custom animations are provided
+    if (getIonMode(this) !== 'ios' || !this.presentingElement || this.enterAnimation || this.leaveAnimation) {
+      return;
+    }
+
+    clearTimeout(this.resizeTimeout);
+    this.resizeTimeout = setTimeout(() => {
+      this.handleViewTransition();
+    }, 50); // Debounce to avoid excessive calls during active resizing
+  }
+
   /**
    * If `true`, the component passed into `ion-modal` will
    * automatically be mounted when the modal is created. The
@@ -378,6 +397,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   disconnectedCallback() {
     this.triggerController.removeClickListener();
+    this.cleanupViewTransitionListener();
   }
 
   componentWillLoad() {
@@ -619,6 +639,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.initSwipeToClose();
     }
 
+    // Initialize view transition listener for iOS card modals
+    this.initViewTransitionListener();
+
     unlock();
   }
 
@@ -816,6 +839,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       if (this.gesture) {
         this.gesture.destroy();
       }
+      this.cleanupViewTransitionListener();
     }
     this.currentBreakpoint = undefined;
     this.animation = undefined;
@@ -962,6 +986,134 @@ export class Modal implements ComponentInterface, OverlayInterface {
       dragHandleEl.focus();
     }
   };
+
+  private initViewTransitionListener() {
+    // Only enable for iOS card modals when no custom animations are provided
+    if (getIonMode(this) !== 'ios' || !this.presentingElement || this.enterAnimation || this.leaveAnimation) {
+      return;
+    }
+
+    // Set initial view state
+    this.currentViewIsPortrait = window.innerWidth < 768;
+  }
+
+  private handleViewTransition() {
+    const isPortrait = window.innerWidth < 768;
+
+    // Only transition if view state actually changed
+    if (this.currentViewIsPortrait === isPortrait) {
+      return;
+    }
+
+    // Cancel any ongoing transition animation
+    if (this.viewTransitionAnimation) {
+      this.viewTransitionAnimation.destroy();
+      this.viewTransitionAnimation = undefined;
+    }
+
+    const { presentingElement } = this;
+    if (!presentingElement) {
+      return;
+    }
+
+    // Create transition animation
+    let transitionAnimation: Animation;
+    if (this.currentViewIsPortrait && !isPortrait) {
+      // Portrait to landscape transition
+      transitionAnimation = portraitToLandscapeTransition(this.el, {
+        presentingEl: presentingElement,
+        currentBreakpoint: this.currentBreakpoint,
+        backdropBreakpoint: this.backdropBreakpoint,
+        expandToScroll: this.expandToScroll,
+      });
+    } else {
+      // Landscape to portrait transition
+      transitionAnimation = landscapeToPortraitTransition(this.el, {
+        presentingEl: presentingElement,
+        currentBreakpoint: this.currentBreakpoint,
+        backdropBreakpoint: this.backdropBreakpoint,
+        expandToScroll: this.expandToScroll,
+      });
+    }
+
+    // Update state and play animation
+    this.currentViewIsPortrait = isPortrait;
+    this.viewTransitionAnimation = transitionAnimation;
+
+    transitionAnimation.play().then(() => {
+      this.viewTransitionAnimation = undefined;
+
+      // After orientation transition, recreate the swipe-to-close gesture
+      // with updated animation that reflects the new presenting element state
+      this.reinitSwipeToClose();
+    });
+  }
+
+  private cleanupViewTransitionListener() {
+    // Clear any pending resize timeout
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = undefined;
+    }
+
+    if (this.viewTransitionAnimation) {
+      this.viewTransitionAnimation.destroy();
+      this.viewTransitionAnimation = undefined;
+    }
+  }
+
+  private reinitSwipeToClose() {
+    // Only reinitialize if we have a presenting element and are on iOS
+    if (getIonMode(this) !== 'ios' || !this.presentingElement) {
+      return;
+    }
+
+    // Clean up existing gesture and animation
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
+
+    if (this.animation) {
+      // Properly end the progress-based animation at initial state before destroying
+      // to avoid leaving modal in intermediate swipe position
+      this.animation.progressEnd(0, 0, 0);
+      this.animation.destroy();
+      this.animation = undefined;
+    }
+
+    // Force the modal back to the correct position or it could end up
+    // in a weird state after destroying the animation
+    raf(() => {
+      this.ensureCorrectModalPosition();
+      this.initSwipeToClose();
+    });
+  }
+
+  private ensureCorrectModalPosition() {
+    const { el, presentingElement } = this;
+    const root = getElementRoot(el);
+
+    const wrapperEl = root.querySelector('.modal-wrapper') as HTMLElement | null;
+    if (wrapperEl) {
+      wrapperEl.style.transform = 'translateY(0vh)';
+      wrapperEl.style.opacity = '1';
+    }
+
+    if (presentingElement) {
+      const isPortrait = window.innerWidth < 768;
+
+      if (isPortrait) {
+        const transformOffset = !CSS.supports('width', 'max(0px, 1px)')
+          ? '30px'
+          : 'max(30px, var(--ion-safe-area-top))';
+        const scale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
+        presentingElement.style.transform = `translateY(${transformOffset}) scale(${scale})`;
+      } else {
+        presentingElement.style.transform = 'translateY(0px) scale(1)';
+      }
+    }
+  }
 
   render() {
     const {

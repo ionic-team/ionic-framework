@@ -35,7 +35,7 @@ export const iosLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
     .addAnimation(wrapperAnimation);
 
   if (presentingEl) {
-    const isMobile = window.innerWidth < 768;
+    const isPortrait = window.innerWidth < 768;
     const hasCardModal =
       presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined;
     const presentingElRoot = getElementRoot(presentingEl);
@@ -61,7 +61,7 @@ export const iosLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
 
     const bodyEl = document.body;
 
-    if (isMobile) {
+    if (isPortrait) {
       const transformOffset = !CSS.supports('width', 'max(0px, 1px)') ? '30px' : 'max(30px, var(--ion-safe-area-top))';
       const modalTransform = hasCardModal ? '-10px' : transformOffset;
       const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
