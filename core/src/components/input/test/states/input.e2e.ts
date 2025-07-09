@@ -27,7 +27,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await expect(input).toHaveScreenshot(screenshot(`input-disabled`));
     });
 
-    test('should maintain consistent height when password toggle is hidden on disabled input', async ({ page }, testInfo) => {
+    test('should maintain consistent height when password toggle is hidden on disabled input', async ({
+      page,
+    }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/29562',
@@ -44,21 +46,22 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const input = page.locator('ion-input');
 
       // Get the height when input is enabled
-      const enabledHeight = await input.boundingBox().then(box => box?.height);
+      const enabledHeight = await input.boundingBox().then((box) => box?.height);
 
       // Disable the input
-      await input.evaluate(el => el.setAttribute('disabled', 'true'));
+      await input.evaluate((el) => el.setAttribute('disabled', 'true'));
       await page.waitForChanges();
 
       // Get the height when input is disabled
-      const disabledHeight = await input.boundingBox().then(box => box?.height);
+      const disabledHeight = await input.boundingBox().then((box) => box?.height);
 
       // Verify heights are the same
       expect(enabledHeight).toBe(disabledHeight);
     });
 
-
-    test('should maintain consistent height when password toggle is hidden on readonly input', async ({ page }, testInfo) => {
+    test('should maintain consistent height when password toggle is hidden on readonly input', async ({
+      page,
+    }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/29562',
@@ -75,14 +78,14 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const input = page.locator('ion-input');
 
       // Get the height when input is enabled
-      const enabledHeight = await input.boundingBox().then(box => box?.height);
+      const enabledHeight = await input.boundingBox().then((box) => box?.height);
 
       // Make the input readonly
-      await input.evaluate(el => el.setAttribute('readonly', 'true'));
+      await input.evaluate((el) => el.setAttribute('readonly', 'true'));
       await page.waitForChanges();
 
       // Get the height when input is readonly
-      const readonlyHeight = await input.boundingBox().then(box => box?.height);
+      const readonlyHeight = await input.boundingBox().then((box) => box?.height);
 
       // Verify heights are the same
       expect(enabledHeight).toBe(readonlyHeight);
