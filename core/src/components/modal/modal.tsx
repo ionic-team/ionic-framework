@@ -988,7 +988,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.resizeListener = () => {
       clearTimeout(this.resizeTimeout);
       this.resizeTimeout = setTimeout(() => {
-        console.log('View transition triggered by resize');
         this.handleViewTransition();
       }, 50); // Debounce to avoid excessive calls during active resizing
     };
@@ -1109,7 +1108,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       const isPortrait = window.innerWidth < 768;
 
       if (isPortrait) {
-        const transformOffset = !CSS.supports('width', 'max(0px, 1px)') ? '30px' : 'max(30px, var(--ion-safe-area-top))';
+        const transformOffset = !CSS.supports('width', 'max(0px, 1px)')
+          ? '30px'
+          : 'max(30px, var(--ion-safe-area-top))';
         const scale = 0.915; // SwipeToCloseDefaults.MIN_PRESENTING_SCALE
         presentingElement.style.transform = `translateY(${transformOffset}) scale(${scale})`;
       } else {
