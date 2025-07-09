@@ -618,5 +618,5 @@
  */
 :host([disabled]) ::slotted(ion-input-password-toggle),
 :host([readonly]) ::slotted(ion-input-password-toggle) {
-  display: none;
+  visibility: hidden;
 }
