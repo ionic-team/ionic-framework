@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { findIonContent, printIonContentErrorMsg } from '@utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
 import { raf, inheritAttributes, hasLazyBuild, getElementRoot } from '@utils/helpers';
@@ -92,7 +92,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private gestureAnimationDismissing = false;
 
   // View transition properties for handling portrait/landscape switches
-  private resizeListener?: () => void;
   private currentViewIsPortrait?: boolean;
   private viewTransitionAnimation?: Animation;
   private resizeTimeout?: any;
@@ -266,6 +265,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (trigger) {
       triggerController.addClickListener(el, trigger);
     }
+  }
+
+  @Listen('resize', { target: 'window' })
+  onWindowResize() {
+    // Only handle resize for iOS card modals when no custom animations are provided
+    if (getIonMode(this) !== 'ios' || !this.presentingElement || this.enterAnimation || this.leaveAnimation) {
+      return;
+    }
+
+    clearTimeout(this.resizeTimeout);
+    this.resizeTimeout = setTimeout(() => {
+      this.handleViewTransition();
+    }, 50); // Debounce to avoid excessive calls during active resizing
   }
 
   /**
@@ -983,16 +995,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     // Set initial view state
     this.currentViewIsPortrait = window.innerWidth < 768;
-
-    // Create debounced resize handler
-    this.resizeListener = () => {
-      clearTimeout(this.resizeTimeout);
-      this.resizeTimeout = setTimeout(() => {
-        this.handleViewTransition();
-      }, 50); // Debounce to avoid excessive calls during active resizing
-    };
-
-    window.addEventListener('resize', this.resizeListener);
   }
 
   private handleViewTransition() {
@@ -1048,11 +1050,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private cleanupViewTransitionListener() {
-    if (this.resizeListener) {
-      window.removeEventListener('resize', this.resizeListener);
-      this.resizeListener = undefined;
-    }
-
     // Clear any pending resize timeout
     if (this.resizeTimeout) {
       clearTimeout(this.resizeTimeout);
