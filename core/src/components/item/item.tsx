@@ -32,7 +32,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
   private inheritedAriaAttributes: Attributes = {};
-  private observer?: MutationObserver;
 
   @Element() el!: HTMLIonItemElement;
 
@@ -165,19 +164,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   connectedCallback() {
     this.hasStartEl();
-
-    // create MutationObserver to watch for changes in nested content
-    // and update state to reflect change in behavior and rerender
-    if (typeof MutationObserver !== 'undefined' && !this.observer) {
-      this.observer = new MutationObserver(() => {
-        this.setIsInteractive();
-        this.setMultipleInputs();
-      });
-
-      this.observer.observe(this.el, {
-        childList: true,
-      });
-    }
   }
 
   componentWillLoad() {
@@ -187,15 +173,9 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   componentDidLoad() {
     raf(() => {
       this.setMultipleInputs();
+      this.setIsInteractive();
       this.focusable = this.isFocusable();
     });
-  }
-
-  disconnectedCallback(): void {
-    // disconnect MutationObserver when component is disconnected from the DOM
-    if (this.observer) {
-      this.observer.disconnect();
-    }
   }
 
   private totalNestedInputs() {
@@ -237,8 +217,14 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // If item contains any interactive children, set isInteractive to `true`
     const { covers, inputs, clickables } = this.totalNestedInputs();
 
-    this.isInteractive = !!(covers.length + inputs.length + clickables.length);
+    this.isInteractive = covers.length > 0 || inputs.length > 0 || clickables.length > 0;
   }
+
+  // slot change listener updates state to reflect how/if item should be interactive
+  private updateInteractivityOnSlotChange = () => {
+    this.setIsInteractive();
+    this.setMultipleInputs();
+  };
 
   // If the item contains an input including a checkbox, datetime, select, or radio
   // then the item will have a clickable input cover that covers the item
@@ -403,12 +389,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           disabled={disabled}
           {...clickFn}
         >
-          <slot name="start"></slot>
+          <slot name="start" onSlotchange={this.updateInteractivityOnSlotChange}></slot>
           <div class="item-inner">
             <div class="input-wrapper">
-              <slot></slot>
+              <slot onSlotchange={this.updateInteractivityOnSlotChange}></slot>
             </div>
-            <slot name="end"></slot>
+            <slot name="end" onSlotchange={this.updateInteractivityOnSlotChange}></slot>
             {showDetail && (
               <ion-icon
                 icon={detailIcon}
