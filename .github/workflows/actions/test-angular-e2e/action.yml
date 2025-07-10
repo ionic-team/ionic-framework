@@ -40,17 +40,3 @@ runs:
       run: npm run test
       shell: bash
       working-directory: ./packages/angular/test/build/${{ inputs.app }}
-    - name: Package Failing App for Debugging
-      if: failure()
-      run: |
-        cd ./packages/angular/test/build/${{ inputs.app }}
-        tar -czf failing-app-${{ inputs.app }}.tar.gz .
-      shell: bash
-    - name: Upload Failing App Artifact
-      if: failure()
-      uses: actions/upload-artifact@v4
-      with:
-        name: failing-app-${{ inputs.app }}
-        path: ./packages/angular/test/build/${{ inputs.app }}/failing-app-${{ inputs.app }}.tar.gz
-        retention-days: 7
-
