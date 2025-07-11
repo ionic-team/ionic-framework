@@ -620,16 +620,32 @@ export class InputOTP implements ComponentInterface {
         .split('')
         .filter((char) => validKeyPattern.test(char))
         .slice(0, length);
+
+      // If there are no valid characters coming from the
+      // autofill, all input refs have to be cleared after the
+      // browser has finished the autofill behavior
+      if (validChars.length === 0) {
+        requestAnimationFrame(() => {
+          this.inputRefs.forEach((input) => {
+            input.value = '';
+          });
+        });
+      }
+
       for (let i = 0; i < length; i++) {
         this.inputValues[i] = validChars[i] || '';
         this.inputRefs[i].value = validChars[i] || '';
       }
       this.updateValue(event);
-      // Focus the next empty input or the last one
+
+      // Focus the first empty input box or the last input box if all boxes
+      // are filled after a small delay to ensure the input boxes have been
+      // updated before moving the focus
       setTimeout(() => {
         const nextIndex = validChars.length < length ? validChars.length : length - 1;
-        this.inputRefs[nextIndex].focus();
+        this.inputRefs[nextIndex]?.focus();
       }, 20);
+
       this.previousInputValues = [...this.inputValues];
       return;
     }
