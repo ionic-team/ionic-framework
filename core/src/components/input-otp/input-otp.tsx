@@ -622,17 +622,13 @@ export class InputOTP implements ComponentInterface {
         .slice(0, length);
       for (let i = 0; i < length; i++) {
         this.inputValues[i] = validChars[i] || '';
-        if (this.inputRefs[i] != null) {
-          this.inputRefs[i]!.value = validChars[i] || '';
-        }
+        this.inputRefs[i].value = validChars[i] || '';
       }
       this.updateValue(event);
       // Focus the next empty input or the last one
       setTimeout(() => {
         const nextIndex = validChars.length < length ? validChars.length : length - 1;
-        if (this.inputRefs[nextIndex] != null) {
-          this.inputRefs[nextIndex]!.focus();
-        }
+        this.inputRefs[nextIndex].focus();
       }, 20);
       this.previousInputValues = [...this.inputValues];
       return;
@@ -643,7 +639,6 @@ export class InputOTP implements ComponentInterface {
     // restore the previous value and exit
     if (value.length > 0 && !validKeyPattern.test(value[value.length - 1])) {
       input.value = this.inputValues[index] || '';
-      this.previousInputValues[index] = this.inputValues[index] || '';
       this.previousInputValues = [...this.inputValues];
       return;
     }
@@ -657,7 +652,6 @@ export class InputOTP implements ComponentInterface {
     if (isAllSelected || isEmpty) {
       this.inputValues[index] = value;
       input.value = value;
-      this.previousInputValues[index] = value;
       this.updateValue(event);
       this.focusNext(index);
       this.previousInputValues = [...this.inputValues];
@@ -678,22 +672,16 @@ export class InputOTP implements ComponentInterface {
       // Validate the new character before shifting
       if (!validKeyPattern.test(newChar)) {
         input.value = this.inputValues[index] || '';
-        this.previousInputValues[index] = this.inputValues[index] || '';
         this.previousInputValues = [...this.inputValues];
         return;
       }
       // Shift values right from the end to the insertion point
       for (let i = this.inputValues.length - 1; i > index; i--) {
         this.inputValues[i] = this.inputValues[i - 1];
-        if (this.inputRefs[i] != null) {
-          this.inputRefs[i]!.value = this.inputValues[i] || '';
-        }
+        this.inputRefs[i].value = this.inputValues[i] || '';
       }
       this.inputValues[index] = newChar;
-      if (this.inputRefs[index] != null) {
-        this.inputRefs[index]!.value = newChar;
-      }
-      this.previousInputValues[index] = newChar;
+      this.inputRefs[index].value = newChar;
       this.updateValue(event);
       this.previousInputValues = [...this.inputValues];
       return;
@@ -713,14 +701,12 @@ export class InputOTP implements ComponentInterface {
     // Check if the new character is valid before updating the value
     if (!validKeyPattern.test(newChar)) {
       input.value = this.inputValues[index] || '';
-      this.previousInputValues[index] = this.inputValues[index] || '';
       this.previousInputValues = [...this.inputValues];
       return;
     }
 
-    input.value = newChar;
     this.inputValues[index] = newChar;
-    this.previousInputValues[index] = newChar;
+    input.value = newChar;
     this.updateValue(event);
     this.previousInputValues = [...this.inputValues];
   };
