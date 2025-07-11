@@ -353,7 +353,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * Returns `true` is the menu is active.
+   * Returns `true` if the menu is active.
    *
    * A menu is active when it can be opened or closed, meaning it's enabled
    * and it's not part of a `ion-split-pane`.
@@ -366,6 +366,10 @@ export class Menu implements ComponentInterface, MenuI {
   /**
    * Opens the menu. If the menu is already open or it can't be opened,
    * it returns `false`.
+   *
+   * @param animated If `true`, the menu will animate when opening.
+   * If `false`, the menu will open instantly without animation.
+   * Defaults to `true`.
    */
   @Method()
   open(animated = true): Promise<boolean> {
@@ -375,6 +379,13 @@ export class Menu implements ComponentInterface, MenuI {
   /**
    * Closes the menu. If the menu is already closed or it can't be closed,
    * it returns `false`.
+   *
+   * @param animated If `true`, the menu will animate when closing. If `false`,
+   * the menu will close instantly without animation. Defaults to `true`.
+   * @param role The role of the element that is closing the menu.
+   * This can be useful in a button handler for determining which button was
+   * clicked to close the menu. Some examples include:
+   * `"cancel"`, `"destructive"`, `"selected"`, and `"backdrop"`.
    */
   @Method()
   close(animated = true, role?: string): Promise<boolean> {
@@ -382,8 +393,13 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * Toggles the menu. If the menu is already open, it will try to close, otherwise it will try to open it.
+   * Toggles the menu. If the menu is already open, it will try to close,
+   * otherwise it will try to open it.
    * If the operation can't be completed successfully, it returns `false`.
+   *
+   * @param animated If `true`, the menu will animate when opening/closing.
+   * If `false`, the menu will open/close instantly without animation.
+   * Defaults to `true`.
    */
   @Method()
   toggle(animated = true): Promise<boolean> {
@@ -391,8 +407,14 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   /**
-   * Opens or closes the button.
+   * Opens or closes the menu.
    * If the operation can't be completed successfully, it returns `false`.
+   *
+   * @param shouldOpen If `true`, the menu will open. If `false`, the menu
+   * will close.
+   * @param animated If `true`, the menu will animate when opening/closing.
+   * If `false`, the menu will open/close instantly without animation.
+   * @param role The role of the element that is closing the menu.
    */
   @Method()
   setOpen(shouldOpen: boolean, animated = true, role?: string): Promise<boolean> {

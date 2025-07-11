@@ -1,8 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { findIonContent, printIonContentErrorMsg } from '@utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
-import { raf, inheritAttributes, hasLazyBuild } from '@utils/helpers';
+import { raf, inheritAttributes, hasLazyBuild, getElementRoot } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
@@ -37,11 +37,12 @@ import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
+import { portraitToLandscapeTransition, landscapeToPortraitTransition } from './animations/ios.transition';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
-import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
+import { createSwipeToCloseGesture, SwipeToCloseDefaults } from './gestures/swipe-to-close';
 import type { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from './modal-interface';
 import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
@@ -74,6 +75,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
+  private dragHandleEl?: HTMLButtonElement;
   private sortedBreakpoints?: number[];
   private keyboardOpenCallback?: () => void;
   private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<void>;
@@ -88,6 +90,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   // Whether or not modal is being dismissed via gesture
   private gestureAnimationDismissing = false;
+
+  // View transition properties for handling portrait/landscape switches
+  private currentViewIsPortrait?: boolean;
+  private viewTransitionAnimation?: Animation;
+  private resizeTimeout?: any;
 
   lastFocus?: HTMLElement;
   animation?: Animation;
@@ -260,6 +267,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
   }
 
+  @Listen('resize', { target: 'window' })
+  onWindowResize() {
+    // Only handle resize for iOS card modals when no custom animations are provided
+    if (getIonMode(this) !== 'ios' || !this.presentingElement || this.enterAnimation || this.leaveAnimation) {
+      return;
+    }
+
+    clearTimeout(this.resizeTimeout);
+    this.resizeTimeout = setTimeout(() => {
+      this.handleViewTransition();
+    }, 50); // Debounce to avoid excessive calls during active resizing
+  }
+
   /**
    * If `true`, the component passed into `ion-modal` will
    * automatically be mounted when the modal is created. The
@@ -377,6 +397,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   disconnectedCallback() {
     this.triggerController.removeClickListener();
+    this.cleanupViewTransitionListener();
   }
 
   componentWillLoad() {
@@ -618,6 +639,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.initSwipeToClose();
     }
 
+    // Initialize view transition listener for iOS card modals
+    this.initViewTransitionListener();
+
     unlock();
   }
 
@@ -739,13 +763,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * Dismiss the modal overlay after it has been presented.
-   *
-   * @param data Any data to emit in the dismiss events.
-   * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.
-   *
    * This is a no-op if the overlay has not been presented yet. If you want
    * to remove an overlay from the DOM that was never presented, use the
    * [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the modal.
+   * For example, `cancel` or `backdrop`.
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
@@ -759,6 +783,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * in case the dismiss transition does run.
      */
     const unlock = await this.lockController.lock();
+
+    /**
+     * Dismiss all child modals. This is especially important in
+     * Angular and React because it's possible to lose control of a child
+     * modal when the parent modal is dismissed.
+     */
+    await this.dismissNestedModals();
 
     /**
      * If a canDismiss handler is responsible
@@ -815,6 +846,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       if (this.gesture) {
         this.gesture.destroy();
       }
+      this.cleanupViewTransitionListener();
     }
     this.currentBreakpoint = undefined;
     this.animation = undefined;
@@ -841,8 +873,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
-   * Move a sheet style modal to a specific breakpoint. The breakpoint value must
-   * be a value defined in your `breakpoints` array.
+   * Move a sheet style modal to a specific breakpoint.
+   *
+   * @param breakpoint The breakpoint value to move the sheet modal to.
+   * Must be a value defined in your `breakpoints` array.
    */
   @Method()
   async setCurrentBreakpoint(breakpoint: number): Promise<void> {
@@ -948,6 +982,174 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
   };
 
+  /**
+   * When the modal receives focus directly, pass focus to the handle
+   * if it exists and is focusable, otherwise let the focus trap handle it.
+   */
+  private onModalFocus = (ev: FocusEvent) => {
+    const { dragHandleEl, el } = this;
+    // Only handle focus if the modal itself was focused (not a child element)
+    if (ev.target === el && dragHandleEl && dragHandleEl.tabIndex !== -1) {
+      dragHandleEl.focus();
+    }
+  };
+
+  private initViewTransitionListener() {
+    // Only enable for iOS card modals when no custom animations are provided
+    if (getIonMode(this) !== 'ios' || !this.presentingElement || this.enterAnimation || this.leaveAnimation) {
+      return;
+    }
+
+    // Set initial view state
+    this.currentViewIsPortrait = window.innerWidth < 768;
+  }
+
+  private handleViewTransition() {
+    const isPortrait = window.innerWidth < 768;
+
+    // Only transition if view state actually changed
+    if (this.currentViewIsPortrait === isPortrait) {
+      return;
+    }
+
+    // Cancel any ongoing transition animation
+    if (this.viewTransitionAnimation) {
+      this.viewTransitionAnimation.destroy();
+      this.viewTransitionAnimation = undefined;
+    }
+
+    const { presentingElement } = this;
+    if (!presentingElement) {
+      return;
+    }
+
+    // Create transition animation
+    let transitionAnimation: Animation;
+    if (this.currentViewIsPortrait && !isPortrait) {
+      // Portrait to landscape transition
+      transitionAnimation = portraitToLandscapeTransition(this.el, {
+        presentingEl: presentingElement,
+        currentBreakpoint: this.currentBreakpoint,
+        backdropBreakpoint: this.backdropBreakpoint,
+        expandToScroll: this.expandToScroll,
+      });
+    } else {
+      // Landscape to portrait transition
+      transitionAnimation = landscapeToPortraitTransition(this.el, {
+        presentingEl: presentingElement,
+        currentBreakpoint: this.currentBreakpoint,
+        backdropBreakpoint: this.backdropBreakpoint,
+        expandToScroll: this.expandToScroll,
+      });
+    }
+
+    // Update state and play animation
+    this.currentViewIsPortrait = isPortrait;
+    this.viewTransitionAnimation = transitionAnimation;
+
+    transitionAnimation.play().then(() => {
+      this.viewTransitionAnimation = undefined;
+
+      // After orientation transition, recreate the swipe-to-close gesture
+      // with updated animation that reflects the new presenting element state
+      this.reinitSwipeToClose();
+    });
+  }
+
+  private cleanupViewTransitionListener() {
+    // Clear any pending resize timeout
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = undefined;
+    }
+
+    if (this.viewTransitionAnimation) {
+      this.viewTransitionAnimation.destroy();
+      this.viewTransitionAnimation = undefined;
+    }
+  }
+
+  private reinitSwipeToClose() {
+    // Only reinitialize if we have a presenting element and are on iOS
+    if (getIonMode(this) !== 'ios' || !this.presentingElement) {
+      return;
+    }
+
+    // Clean up existing gesture and animation
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
+
+    if (this.animation) {
+      // Properly end the progress-based animation at initial state before destroying
+      // to avoid leaving modal in intermediate swipe position
+      this.animation.progressEnd(0, 0, 0);
+      this.animation.destroy();
+      this.animation = undefined;
+    }
+
+    // Force the modal back to the correct position or it could end up
+    // in a weird state after destroying the animation
+    raf(() => {
+      this.ensureCorrectModalPosition();
+      this.initSwipeToClose();
+    });
+  }
+
+  private ensureCorrectModalPosition() {
+    const { el, presentingElement } = this;
+    const root = getElementRoot(el);
+
+    const wrapperEl = root.querySelector('.modal-wrapper') as HTMLElement | null;
+    if (wrapperEl) {
+      wrapperEl.style.transform = 'translateY(0vh)';
+      wrapperEl.style.opacity = '1';
+    }
+
+    if (presentingElement) {
+      const isPortrait = window.innerWidth < 768;
+
+      if (isPortrait) {
+        const transformOffset = !CSS.supports('width', 'max(0px, 1px)')
+          ? '30px'
+          : 'max(30px, var(--ion-safe-area-top))';
+        const scale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
+        presentingElement.style.transform = `translateY(${transformOffset}) scale(${scale})`;
+      } else {
+        presentingElement.style.transform = 'translateY(0px) scale(1)';
+      }
+    }
+  }
+
+  /**
+   * When the slot changes, we need to find all the modals in the slot
+   * and set the data-parent-ion-modal attribute on them so we can find them
+   * and dismiss them when we get dismissed.
+   * We need to do it this way because when a modal is opened, it's moved to
+   * the end of the body and is no longer an actual child of the modal.
+   */
+  private onSlotChange = ({ target }: Event) => {
+    const slot = target as HTMLSlotElement;
+    slot.assignedElements().forEach((el) => {
+      el.querySelectorAll('ion-modal').forEach((childModal) => {
+        // We don't need to write to the DOM if the modal is already tagged
+        // If this is a deeply nested modal, this effect should cascade so we don't
+        // need to worry about another modal claiming the same child.
+        if (childModal.getAttribute('data-parent-ion-modal') === null) {
+          childModal.setAttribute('data-parent-ion-modal', this.el.id);
+        }
+      });
+    });
+  };
+
+  private async dismissNestedModals(): Promise<void> {
+    const nestedModals = document.querySelectorAll(`ion-modal[data-parent-ion-modal="${this.el.id}"]`);
+    nestedModals?.forEach(async (modal) => {
+      await (modal as HTMLIonModalElement).dismiss(undefined, 'parent-dismissed');
+    });
+  }
+
   render() {
     const {
       handle,
@@ -963,11 +1165,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const mode = getIonMode(this);
     const isCardModal = presentingElement !== undefined && mode === 'ios';
     const isHandleCycle = handleBehavior === 'cycle';
+    const isSheetModalWithHandle = isSheetModal && showHandle;
 
     return (
       <Host
         no-router
-        tabindex="-1"
+        // Allow the modal to be navigable when the handle is focusable
+        tabIndex={isHandleCycle && isSheetModalWithHandle ? 0 : -1}
         {...(htmlAttributes as any)}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
@@ -987,6 +1191,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         onIonModalWillPresent={this.onLifecycle}
         onIonModalWillDismiss={this.onLifecycle}
         onIonModalDidDismiss={this.onLifecycle}
+        onFocus={this.onModalFocus}
       >
         <ion-backdrop
           ref={(el) => (this.backdropEl = el)}
@@ -1019,9 +1224,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
               aria-label="Activate to adjust the size of the dialog overlaying the screen"
               onClick={isHandleCycle ? this.onHandleClick : undefined}
               part="handle"
+              ref={(el) => (this.dragHandleEl = el)}
             ></button>
           )}
-          <slot></slot>
+          <slot onSlotchange={this.onSlotChange}></slot>
         </div>
       </Host>
     );
