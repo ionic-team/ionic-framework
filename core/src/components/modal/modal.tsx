@@ -785,6 +785,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const unlock = await this.lockController.lock();
 
     /**
+     * Dismiss all child modals. This is especially important in
+     * Angular and React because it's possible to lose control of a child
+     * modal when the parent modal is dismissed.
+     */
+    await this.dismissNestedModals();
+
+    /**
      * If a canDismiss handler is responsible
      * for calling the dismiss method, we should
      * not run the canDismiss check again.
@@ -1115,6 +1122,34 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
   }
 
+  /**
+   * When the slot changes, we need to find all the modals in the slot
+   * and set the data-parent-ion-modal attribute on them so we can find them
+   * and dismiss them when we get dismissed.
+   * We need to do it this way because when a modal is opened, it's moved to
+   * the end of the body and is no longer an actual child of the modal.
+   */
+  private onSlotChange = ({ target }: Event) => {
+    const slot = target as HTMLSlotElement;
+    slot.assignedElements().forEach((el) => {
+      el.querySelectorAll('ion-modal').forEach((childModal) => {
+        // We don't need to write to the DOM if the modal is already tagged
+        // If this is a deeply nested modal, this effect should cascade so we don't
+        // need to worry about another modal claiming the same child.
+        if (childModal.getAttribute('data-parent-ion-modal') === null) {
+          childModal.setAttribute('data-parent-ion-modal', this.el.id);
+        }
+      });
+    });
+  };
+
+  private async dismissNestedModals(): Promise<void> {
+    const nestedModals = document.querySelectorAll(`ion-modal[data-parent-ion-modal="${this.el.id}"]`);
+    nestedModals?.forEach(async (modal) => {
+      await (modal as HTMLIonModalElement).dismiss(undefined, 'parent-dismissed');
+    });
+  }
+
   render() {
     const {
       handle,
@@ -1192,7 +1227,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
               ref={(el) => (this.dragHandleEl = el)}
             ></button>
           )}
-          <slot></slot>
+          <slot onSlotchange={this.onSlotChange}></slot>
         </div>
       </Host>
     );

@@ -7,7 +7,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.goto('/src/components/modal/test/inline', config);
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
-      const modal = page.locator('ion-modal');
+      const modal = page.locator('ion-modal').first();
 
       await page.click('#open-inline-modal');
 
@@ -20,6 +20,67 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await ionModalDidDismiss.next();
 
       await expect(modal).toBeHidden();
+    });
+
+    test('it should dismiss child modals when parent modal is dismissed', async ({ page }) => {
+      await page.goto('/src/components/modal/test/inline', config);
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      const parentModal = page.locator('ion-modal').first();
+      const childModal = page.locator('#child-modal');
+
+      // Open the parent modal
+      await page.click('#open-inline-modal');
+      await ionModalDidPresent.next();
+      await expect(parentModal).toBeVisible();
+
+      // Open the child modal
+      await page.click('#open-child-modal');
+      await ionModalDidPresent.next();
+      await expect(childModal).toBeVisible();
+
+      // Both modals should be visible
+      await expect(parentModal).toBeVisible();
+      await expect(childModal).toBeVisible();
+
+      // Dismiss the parent modal
+      await page.click('#dismiss-parent');
+
+      // Wait for both modals to be dismissed
+      await ionModalDidDismiss.next(); // child modal dismissed
+      await ionModalDidDismiss.next(); // parent modal dismissed
+
+      // Both modals should be hidden
+      await expect(parentModal).toBeHidden();
+      await expect(childModal).toBeHidden();
+    });
+
+    test('it should only dismiss child modal when child dismiss button is clicked', async ({ page }) => {
+      await page.goto('/src/components/modal/test/inline', config);
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      const parentModal = page.locator('ion-modal').first();
+      const childModal = page.locator('#child-modal');
+
+      // Open the parent modal
+      await page.click('#open-inline-modal');
+      await ionModalDidPresent.next();
+      await expect(parentModal).toBeVisible();
+
+      // Open the child modal
+      await page.click('#open-child-modal');
+      await ionModalDidPresent.next();
+      await expect(childModal).toBeVisible();
+
+      // Dismiss only the child modal
+      await page.click('#dismiss-child');
+      await ionModalDidDismiss.next();
+
+      // Parent modal should still be visible, child modal should be hidden
+      await expect(parentModal).toBeVisible();
+      await expect(childModal).toBeHidden();
     });
 
     test('presenting should create a single root element with the ion-page class', async ({ page }, testInfo) => {
