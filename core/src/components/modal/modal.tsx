@@ -1183,11 +1183,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    const grandParent = this.cachedOriginalParent.parentNode;
-    if (!grandParent) {
-      return;
-    }
-
     this.parentRemovalObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'childList' && mutation.removedNodes.length > 0) {
@@ -1210,8 +1205,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       });
     });
 
-    // Observe with subtree to catch nested removals
-    this.parentRemovalObserver.observe(grandParent, {
+    // Observe document body with subtree to catch removals at any level
+    this.parentRemovalObserver.observe(document.body, {
       childList: true,
       subtree: true,
     });
