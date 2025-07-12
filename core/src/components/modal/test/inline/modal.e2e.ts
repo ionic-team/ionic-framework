@@ -122,5 +122,72 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await modal.evaluate((el: HTMLIonModalElement) => el.firstElementChild!.firstElementChild!.className)
       ).not.toContain('ion-page');
     });
+
+    test('it should dismiss modal when parent container is removed from DOM', async ({ page }) => {
+      await page.goto('/src/components/modal/test/inline', config);
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      const modal = page.locator('ion-modal').first();
+      const modalContainer = page.locator('#modal-container');
+
+      // Open the modal
+      await page.click('#open-inline-modal');
+      await ionModalDidPresent.next();
+      await expect(modal).toBeVisible();
+
+      // Remove the modal container from DOM
+      await page.click('#remove-modal-container');
+
+      // Wait for modal to be dismissed
+      const dismissEvent = await ionModalDidDismiss.next();
+
+      // Verify the modal was dismissed with the correct role
+      expect(dismissEvent.detail.role).toBe('parent-removed');
+
+      // Verify the modal is no longer visible
+      await expect(modal).toBeHidden();
+
+      // Verify the container was actually removed
+      await expect(modalContainer).not.toBeAttached();
+    });
+
+    test('it should dismiss both parent and child modals when parent container is removed from DOM', async ({ page }) => {
+      await page.goto('/src/components/modal/test/inline', config);
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      const parentModal = page.locator('ion-modal').first();
+      const childModal = page.locator('#child-modal');
+      const modalContainer = page.locator('#modal-container');
+
+      // Open the parent modal
+      await page.click('#open-inline-modal');
+      await ionModalDidPresent.next();
+      await expect(parentModal).toBeVisible();
+
+      // Open the child modal
+      await page.click('#open-child-modal');
+      await ionModalDidPresent.next();
+      await expect(childModal).toBeVisible();
+
+      // Remove the modal container from DOM
+      await page.click('#child-remove-modal-container');
+
+      // Wait for both modals to be dismissed
+      const firstDismissEvent = await ionModalDidDismiss.next();
+      const secondDismissEvent = await ionModalDidDismiss.next();
+
+      // Verify at least one modal was dismissed with 'parent-removed' role
+      const dismissRoles = [firstDismissEvent.detail.role, secondDismissEvent.detail.role];
+      expect(dismissRoles).toContain('parent-removed');
+
+      // Verify both modals are no longer visible
+      await expect(parentModal).toBeHidden();
+      await expect(childModal).toBeHidden();
+
+      // Verify the container was actually removed
+      await expect(modalContainer).not.toBeAttached();
+    });
   });
 });
