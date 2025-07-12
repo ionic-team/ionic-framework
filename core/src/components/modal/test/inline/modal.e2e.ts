@@ -152,7 +152,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(modalContainer).not.toBeAttached();
     });
 
-    test('it should dismiss both parent and child modals when parent container is removed from DOM', async ({ page }) => {
+    test('it should dismiss both parent and child modals when parent container is removed from DOM', async ({
+      page,
+    }) => {
       await page.goto('/src/components/modal/test/inline', config);
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');

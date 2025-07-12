@@ -1172,7 +1172,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     // Don't observe document or fragment nodes as they can't be "removed"
-    if (this.cachedOriginalParent.nodeType === Node.DOCUMENT_NODE || this.cachedOriginalParent.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+    if (
+      this.cachedOriginalParent.nodeType === Node.DOCUMENT_NODE ||
+      this.cachedOriginalParent.nodeType === Node.DOCUMENT_FRAGMENT_NODE
+    ) {
       return;
     }
 
@@ -1181,33 +1184,35 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    this.parentRemovalObserver = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'childList' && mutation.removedNodes.length > 0) {
-          // Check if our cached original parent was removed
-          const cachedParentWasRemoved = Array.from(mutation.removedNodes).some(
-            (node) => {
+    if (typeof MutationObserver !== 'undefined') {
+      this.parentRemovalObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'childList' && mutation.removedNodes.length > 0) {
+            // Check if our cached original parent was removed
+            const cachedParentWasRemoved = Array.from(mutation.removedNodes).some((node) => {
               const isDirectMatch = node === this.cachedOriginalParent;
-              const isContainedMatch = this.cachedOriginalParent ? (node as HTMLElement).contains?.(this.cachedOriginalParent) : false;
+              const isContainedMatch = this.cachedOriginalParent
+                ? (node as HTMLElement).contains?.(this.cachedOriginalParent)
+                : false;
               return isDirectMatch || isContainedMatch;
+            });
+
+            // Also check if parent is no longer connected to DOM
+            const cachedParentDisconnected = this.cachedOriginalParent && !this.cachedOriginalParent.isConnected;
+
+            if (cachedParentWasRemoved || cachedParentDisconnected) {
+              this.dismiss(undefined, 'parent-removed');
             }
-          );
-
-          // Also check if parent is no longer connected to DOM
-          const cachedParentDisconnected = this.cachedOriginalParent && !this.cachedOriginalParent.isConnected;
-
-          if (cachedParentWasRemoved || cachedParentDisconnected) {
-            this.dismiss(undefined, 'parent-removed');
           }
-        }
+        });
       });
-    });
 
-    // Observe with subtree to catch nested removals
-    this.parentRemovalObserver.observe(grandParent, {
-      childList: true,
-      subtree: true,
-    });
+      // Observe with subtree to catch nested removals
+      this.parentRemovalObserver.observe(grandParent, {
+        childList: true,
+        subtree: true,
+      });
+    }
   }
 
   private cleanupParentRemovalObserver() {
