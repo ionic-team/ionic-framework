@@ -1200,6 +1200,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
           if (cachedParentWasRemoved || cachedParentDisconnected) {
             this.dismiss(undefined, 'parent-removed');
+            // Release the reference to the cached original parent
+            // so we don't have a memory leak
+            this.cachedOriginalParent = undefined;
           }
         }
       });
@@ -1213,10 +1216,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private cleanupParentRemovalObserver() {
-    if (this.parentRemovalObserver) {
-      this.parentRemovalObserver.disconnect();
-      this.parentRemovalObserver = undefined;
-    }
+    this.parentRemovalObserver?.disconnect();
+    this.parentRemovalObserver = undefined;
   }
 
   render() {
