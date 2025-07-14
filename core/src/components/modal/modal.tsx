@@ -96,6 +96,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private viewTransitionAnimation?: Animation;
   private resizeTimeout?: any;
 
+  // Mutation observer to watch for parent removal
+  private parentRemovalObserver?: MutationObserver;
+  // Cached original parent from before modal is moved to body during presentation
+  private cachedOriginalParent?: HTMLElement;
+
   lastFocus?: HTMLElement;
   animation?: Animation;
 
@@ -398,6 +403,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   disconnectedCallback() {
     this.triggerController.removeClickListener();
     this.cleanupViewTransitionListener();
+    this.cleanupParentRemovalObserver();
   }
 
   componentWillLoad() {
@@ -406,6 +412,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const attributesToInherit = ['aria-label', 'role'];
     this.inheritedAttributes = inheritAttributes(el, attributesToInherit);
+
+    // Cache original parent before modal gets moved to body during presentation
+    if (el.parentNode) {
+      this.cachedOriginalParent = el.parentNode as HTMLElement;
+    }
 
     /**
      * When using a controller modal you can set attributes
@@ -642,6 +653,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // Initialize view transition listener for iOS card modals
     this.initViewTransitionListener();
 
+    // Initialize parent removal observer
+    this.initParentRemovalObserver();
+
     unlock();
   }
 
@@ -847,6 +861,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         this.gesture.destroy();
       }
       this.cleanupViewTransitionListener();
+      this.cleanupParentRemovalObserver();
     }
     this.currentBreakpoint = undefined;
     this.animation = undefined;
@@ -1148,6 +1163,61 @@ export class Modal implements ComponentInterface, OverlayInterface {
     nestedModals?.forEach(async (modal) => {
       await (modal as HTMLIonModalElement).dismiss(undefined, 'parent-dismissed');
     });
+  }
+
+  private initParentRemovalObserver() {
+    if (typeof MutationObserver === 'undefined') {
+      return;
+    }
+
+    // Only observe if we have a cached parent and are in browser environment
+    if (typeof window === 'undefined' || !this.cachedOriginalParent) {
+      return;
+    }
+
+    // Don't observe document or fragment nodes as they can't be "removed"
+    if (
+      this.cachedOriginalParent.nodeType === Node.DOCUMENT_NODE ||
+      this.cachedOriginalParent.nodeType === Node.DOCUMENT_FRAGMENT_NODE
+    ) {
+      return;
+    }
+
+    this.parentRemovalObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList' && mutation.removedNodes.length > 0) {
+          // Check if our cached original parent was removed
+          const cachedParentWasRemoved = Array.from(mutation.removedNodes).some((node) => {
+            const isDirectMatch = node === this.cachedOriginalParent;
+            const isContainedMatch = this.cachedOriginalParent
+              ? (node as HTMLElement).contains?.(this.cachedOriginalParent)
+              : false;
+            return isDirectMatch || isContainedMatch;
+          });
+
+          // Also check if parent is no longer connected to DOM
+          const cachedParentDisconnected = this.cachedOriginalParent && !this.cachedOriginalParent.isConnected;
+
+          if (cachedParentWasRemoved || cachedParentDisconnected) {
+            this.dismiss(undefined, 'parent-removed');
+            // Release the reference to the cached original parent
+            // so we don't have a memory leak
+            this.cachedOriginalParent = undefined;
+          }
+        }
+      });
+    });
+
+    // Observe document body with subtree to catch removals at any level
+    this.parentRemovalObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  private cleanupParentRemovalObserver() {
+    this.parentRemovalObserver?.disconnect();
+    this.parentRemovalObserver = undefined;
   }
 
   render() {
