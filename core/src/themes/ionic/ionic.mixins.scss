@@ -12,14 +12,12 @@
 //      }
 //
 // --------------------------------------------------
-@mixin pressed-state($color: null) {
-  $color: if($color != null, $color, tokens.$ion-state-press);
-
+@mixin pressed-state() {
   @include mixins.position(0, 0, 0, 0);
 
   position: absolute;
 
-  background-color: $color;
+  background-color: tokens.$ion-state-press;
 
   content: "";
 }
