@@ -1122,7 +1122,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       wrapperEl.style.opacity = '1';
     }
 
-    if (presentingElement) {
+    if (presentingElement?.tagName === 'ION-MODAL') {
       const isPortrait = window.innerWidth < 768;
 
       if (isPortrait) {
