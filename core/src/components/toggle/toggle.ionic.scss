@@ -5,7 +5,7 @@
 // -----------------------------------------
 
 :host {
-  --track-background: #{globals.$ion-primitives-neutral-800};
+  --track-background: #{globals.$ion-primitives-neutral-500};
   --track-background-checked: #{globals.ion-color(primary, base)};
   --border-radius: #{globals.$ion-border-radius-full};
   --focus-ring-color: #{globals.$ion-border-focus-default};
@@ -82,9 +82,12 @@
 
 // Toggle Native Wrapper: Pressed
 // ----------------------------------------------------------------
+:host(.ion-activated) .toggle-icon {
+  background: globals.$ion-bg-neutral-base-press;
+}
 
-:host(.ion-activated) .toggle-icon::after {
-  @include globals.pressed-state();
+:host(.ion-activated.toggle-checked) .toggle-icon {
+  background: globals.$ion-bg-primary-base-press;
 }
 
 // Ionic Toggle: Disabled
