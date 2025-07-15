@@ -80,6 +80,9 @@
   outline-offset: var(--focus-ring-width);
 }
 
+:host(.ion-focused) {
+  outline: none;
+}
 // Toggle Native Wrapper: Pressed
 // ----------------------------------------------------------------
 :host(.ion-activated) .toggle-icon {
