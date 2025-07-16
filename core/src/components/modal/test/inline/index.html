@@ -22,9 +22,8 @@
         </ion-header>
 
         <ion-content class="ion-padding">
-          <button id="open-inline-modal" onclick="openModal(event)">Open Modal</button>
-
           <div id="modal-container">
+            <button id="open-inline-modal" onclick="openModal(event)">Open Modal</button>
             <ion-modal swipe-to-close="true">
               <ion-header>
                 <ion-toolbar>
@@ -34,6 +33,9 @@
               <ion-content class="ion-padding">
                 <p>This is my inline modal content!</p>
                 <button id="open-child-modal" onclick="openChildModal(event)">Open Child Modal</button>
+                <button id="remove-modal-container" onclick="removeModalContainer(event)">
+                  Remove Modal Container
+                </button>
 
                 <ion-modal id="child-modal" swipe-to-close="true">
                   <ion-header>
@@ -46,6 +48,9 @@
                     <p>When the parent modal is dismissed, this child modal should also be dismissed automatically.</p>
                     <button id="dismiss-parent" onclick="dismissParent(event)">Dismiss Parent Modal</button>
                     <button id="dismiss-child" onclick="dismissChild(event)">Dismiss Child Modal</button>
+                    <button id="child-remove-modal-container" onclick="removeModalContainer(event)">
+                      Remove Modal Container
+                    </button>
                   </ion-content>
                 </ion-modal>
               </ion-content>
@@ -76,6 +81,14 @@
 
       const dismissChild = () => {
         childModal.isOpen = false;
+      };
+
+      const removeModalContainer = () => {
+        const container = document.querySelector('#modal-container');
+        if (container) {
+          container.remove();
+          console.log('Modal container removed from DOM');
+        }
       };
 
       modal.addEventListener('didDismiss', () => {
