@@ -716,24 +716,16 @@ export class PickerColumn implements ComponentInterface {
            * This causes keyboard navigation to focus to this
            * element instead of going to the next element in
            * the tab order.
-           *
-           * The desired behavior is for the user to be able to
-           * focus the assistive focusable element and tab to
-           * the next element in the tab order. Instead of tabbing
-           * to this element.
-           *
-           * To prevent this, we set the tabIndex to -1. This
-           * will match the behavior of the other browsers.
            */
-          tabIndex={-1}
+          tabIndex={0}
         >
-          <div class="picker-item-empty">&nbsp;</div>
-          <div class="picker-item-empty">&nbsp;</div>
-          <div class="picker-item-empty">&nbsp;</div>
+          <div class="picker-item-empty" aria-hidden="true">&nbsp;</div>
+          <div class="picker-item-empty" aria-hidden="true">&nbsp;</div>
+          <div class="picker-item-empty" aria-hidden="true">&nbsp;</div>
           <slot></slot>
-          <div class="picker-item-empty">&nbsp;</div>
-          <div class="picker-item-empty">&nbsp;</div>
-          <div class="picker-item-empty">&nbsp;</div>
+          <div class="picker-item-empty" aria-hidden="true">&nbsp;</div>
+          <div class="picker-item-empty" aria-hidden="true">&nbsp;</div>
+          <div class="picker-item-empty" aria-hidden="true">&nbsp;</div>
         </div>
         <slot name="suffix"></slot>
       </Host>
