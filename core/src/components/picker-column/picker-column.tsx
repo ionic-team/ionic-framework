@@ -726,25 +726,13 @@ export class PickerColumn implements ComponentInterface {
            */
           tabIndex={-1}
         >
-          <div class="picker-item-empty">
-            &nbsp;
-          </div>
-          <div class="picker-item-empty">
-            &nbsp;
-          </div>
-          <div class="picker-item-empty">
-            &nbsp;
-          </div>
+          <div class="picker-item-empty">&nbsp;</div>
+          <div class="picker-item-empty">&nbsp;</div>
+          <div class="picker-item-empty">&nbsp;</div>
           <slot></slot>
-          <div class="picker-item-empty">
-            &nbsp;
-          </div>
-          <div class="picker-item-empty">
-            &nbsp;
-          </div>
-          <div class="picker-item-empty">
-            &nbsp;
-          </div>
+          <div class="picker-item-empty">&nbsp;</div>
+          <div class="picker-item-empty">&nbsp;</div>
+          <div class="picker-item-empty">&nbsp;</div>
         </div>
         <slot name="suffix"></slot>
       </Host>
