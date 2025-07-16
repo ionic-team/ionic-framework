@@ -64,7 +64,11 @@
 
       // Add newly loaded items with special styling
       function appendNewItems() {
-        const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+        const randomColor =
+          '#' +
+          Math.floor(Math.random() * 16777215)
+            .toString(16)
+            .padStart(6, '0');
 
         // Reverse the order of the items to match
         // the order of the initial items
