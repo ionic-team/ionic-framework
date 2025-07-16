@@ -59,6 +59,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       // Wait for the content to be scrolled
       await page.waitForChanges();
 
+      // Wait for the image to load and be visible
+      const imgLocator = page.locator('ion-segment-content#third ion-img');
+      await imgLocator.waitFor({ state: 'visible', timeout: 10000 });
+
+      // Wait for any layout adjustments
+      await page.waitForChanges();
+
       // Check that the third content is visible
       const segmentView = page.locator('ion-segment-view');
       const thirdContent = page.locator('ion-segment-content#third');
