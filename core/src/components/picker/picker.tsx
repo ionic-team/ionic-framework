@@ -537,6 +537,7 @@ export class Picker implements ComponentInterface {
     return (
       <Host onPointerDown={(ev: PointerEvent) => this.onPointerDown(ev)} onClick={() => this.onClick()}>
         <input
+          aria-hidden="true"
           tabindex={-1}
           inputmode="numeric"
           type="number"
