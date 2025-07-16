@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Infinite Scroll - Basic</title>
+    <title>Infinite Scroll - Top</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -18,7 +18,7 @@
     <ion-app>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Infinite Scroll - Basic</ion-title>
+          <ion-title>Infinite Scroll - Top</ion-title>
         </ion-toolbar>
       </ion-header>
 
@@ -28,9 +28,9 @@
           </ion-infinite-scroll-content>
         </ion-infinite-scroll>
 
-        <button onclick="toggleInfiniteScroll()" class="expand">Toggle InfiniteScroll</button>
+        <div id="list"></div>
 
-        <ion-list id="list"></ion-list>
+        <button onclick="toggleInfiniteScroll()" class="expand">Toggle InfiniteScroll</button>
       </ion-content>
     </ion-app>
 
@@ -46,17 +46,32 @@
         console.log('Loading data...');
         await wait(500);
         infiniteScroll.complete();
-        appendItems();
+        appendNewItems();
         // Custom event consumed in the e2e tests
         window.dispatchEvent(new CustomEvent('ionInfiniteComplete'));
 
         console.log('Done');
       });
 
-      function appendItems() {
+      // Add initial items
+      function appendInitialItems() {
         for (var i = 0; i < 30; i++) {
           const el = document.createElement('ion-item');
-          el.textContent = `${1 + i}`;
+          el.textContent = `Item ${1 + i}`;
+          list.appendChild(el);
+        }
+      }
+
+      // Add newly loaded items with special styling
+      function appendNewItems() {
+        const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+
+        // Reverse the order of the items to match
+        // the order of the initial items
+        for (var i = 29; i >= 0; i--) {
+          const el = document.createElement('ion-item');
+          el.textContent = `Item ${i + 1}`;
+          el.style.borderLeft = `4px solid ${randomColor}`;
           list.prepend(el);
         }
       }
@@ -69,7 +84,7 @@
         });
       }
 
-      appendItems();
+      appendInitialItems();
     </script>
   </body>
 </html>
