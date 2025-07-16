@@ -3,6 +3,7 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTa
 import { startFocusVisible } from '@utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '@utils/helpers';
 import { printIonError, printIonWarning } from '@utils/logging';
+import { FOCUS_TRAP_DISABLE_CLASS } from '@utils/overlays';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
@@ -1598,7 +1599,7 @@ export class Datetime implements ComponentInterface {
       forcePresentation === 'time-date'
         ? [this.renderTimePickerColumns(forcePresentation), this.renderDatePickerColumns(forcePresentation)]
         : [this.renderDatePickerColumns(forcePresentation), this.renderTimePickerColumns(forcePresentation)];
-    return <ion-picker>{renderArray}</ion-picker>;
+    return <ion-picker class={FOCUS_TRAP_DISABLE_CLASS}>{renderArray}</ion-picker>;
   }
 
   private renderDatePickerColumns(forcePresentation: string) {
