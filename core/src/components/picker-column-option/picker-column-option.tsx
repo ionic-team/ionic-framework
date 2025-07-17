@@ -124,9 +124,9 @@ export class PickerColumnOption implements ComponentInterface {
           ['option-disabled']: disabled,
         })}
       >
-        <button tabindex="-1" aria-label={ariaLabel} disabled={disabled} onClick={() => this.onClick()}>
+        <div class={"picker-column-option-button"} role="button" aria-label={ariaLabel} onClick={() => this.onClick()}>
           <slot></slot>
-        </button>
+        </div>
       </Host>
     );
   }
