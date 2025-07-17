@@ -72,22 +72,22 @@ export const portraitToLandscapeTransition = (
     // need to care about layering and modal-specific styles.
     const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
     const fromTransform = `translateY(-10px) scale(${toPresentingScale})`;
-    const toTransform = `translateY(-10px) scale(${toPresentingScale})`;
+    const toTransform = `translateY(0px) scale(1)`;
 
     presentingAnimation
-      .addElement(presentingElRoot.querySelector('.modal-wrapper')!)
+      .addElement(presentingEl)
       .afterStyles({
         transform: toTransform,
       })
       .fromTo('transform', fromTransform, toTransform)
-      .fromTo('filter', 'contrast(0.85)', 'contrast(0.85)'); // Keep same contrast for card
+      .fromTo('filter', 'contrast(0.85)', 'contrast(1)');
 
     const shadowAnimation = createAnimation()
       .addElement(presentingElRoot.querySelector('.modal-shadow')!)
       .afterStyles({
         transform: toTransform,
+        opacity: '0',
       })
-      .fromTo('opacity', '0', '0') // Shadow stays hidden in landscape for card modals
       .fromTo('transform', fromTransform, toTransform);
 
     baseAnimation.addAnimation([presentingAnimation, shadowAnimation]);
@@ -148,17 +148,8 @@ export const landscapeToPortraitTransition = (
 
     presentingAnimation
       .addElement(presentingEl)
-      .beforeStyles({
-        transform: 'translateY(0px) scale(1)',
-        'transform-origin': 'top center',
-        overflow: 'hidden',
-      })
       .afterStyles({
         transform: toTransform,
-        'border-radius': '10px 10px 0 0',
-        filter: 'contrast(0.85)',
-        overflow: 'hidden',
-        'transform-origin': 'top center',
       })
       .beforeAddWrite(() => bodyEl.style.setProperty('background-color', 'black'))
       .keyframes([
@@ -173,22 +164,21 @@ export const landscapeToPortraitTransition = (
     // to handle layering and modal-specific styles.
     const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
     const fromTransform = `translateY(-10px) scale(${toPresentingScale})`;
-    const toTransform = `translateY(-10px) scale(${toPresentingScale})`;
+    const toTransform = `translateY(0) scale(1)`;
 
     presentingAnimation
-      .addElement(presentingElRoot.querySelector('.modal-wrapper')!)
+      .addElement(presentingEl)
       .afterStyles({
         transform: toTransform,
       })
-      .fromTo('transform', fromTransform, toTransform)
-      .fromTo('filter', 'contrast(0.85)', 'contrast(0.85)'); // Keep same contrast for card
+      .fromTo('transform', fromTransform, toTransform);
 
     const shadowAnimation = createAnimation()
       .addElement(presentingElRoot.querySelector('.modal-shadow')!)
       .afterStyles({
         transform: toTransform,
+        opacity: '0',
       })
-      .fromTo('opacity', '0', '0') // Shadow stays hidden
       .fromTo('transform', fromTransform, toTransform);
 
     baseAnimation.addAnimation([presentingAnimation, shadowAnimation]);
