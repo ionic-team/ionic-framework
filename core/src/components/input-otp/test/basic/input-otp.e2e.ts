@@ -442,6 +442,67 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
       await verifyInputValues(inputOtp, ['1', '9', '3', '']);
     });
+
+    test('should replace the last value when typing one more than the length', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = inputOtp.locator('input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('12345');
+
+      await verifyInputValues(inputOtp, ['1', '2', '3', '5']);
+    });
+
+    test('should replace the last value when typing one more than the length and the type is text', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30459',
+      });
+
+      await page.setContent(`<ion-input-otp type="text">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = inputOtp.locator('input').first();
+      await firstInput.focus();
+
+      await page.keyboard.type('abcde');
+
+      await verifyInputValues(inputOtp, ['a', 'b', 'c', 'e']);
+    });
+
+    test('should not insert or shift when typing an invalid character before a number', async ({ page }) => {
+      await page.setContent(`<ion-input-otp value="12">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = inputOtp.locator('input').first();
+      await firstInput.focus();
+
+      // Move cursor to the start of the first input
+      await firstInput.evaluate((el: HTMLInputElement) => el.setSelectionRange(0, 0));
+
+      await page.keyboard.type('w');
+
+      await verifyInputValues(inputOtp, ['1', '2', '', '']);
+    });
+
+    test('should not insert or shift when typing an invalid character after a number', async ({ page }) => {
+      await page.setContent(`<ion-input-otp value="12">Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const firstInput = inputOtp.locator('input').first();
+      await firstInput.focus();
+
+      // Move cursor to the end of the first input
+      await firstInput.evaluate((el: HTMLInputElement) => el.setSelectionRange(1, 1));
+
+      await page.keyboard.type('w');
+
+      await verifyInputValues(inputOtp, ['1', '2', '', '']);
+    });
   });
 
   test.describe(title('input-otp: autofill functionality'), () => {
@@ -455,6 +516,53 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
       const inputOtp = page.locator('ion-input-otp');
       await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
+
+      const lastInput = page.locator('ion-input-otp input').last();
+      await expect(lastInput).toBeFocused();
+    });
+
+    test('should handle autofill correctly when all characters are the same', async ({ page }) => {
+      await page.setContent(`<ion-input-otp>Description</ion-input-otp>`, config);
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await simulateAutofill(firstInput, '1111');
+
+      const inputOtp = page.locator('ion-input-otp');
+      await verifyInputValues(inputOtp, ['1', '1', '1', '1']);
+
+      const lastInput = page.locator('ion-input-otp input').last();
+      await expect(lastInput).toBeFocused();
+    });
+
+    test('should handle autofill correctly when length is 2', async ({ page }) => {
+      await page.setContent(`<ion-input-otp length="2">Description</ion-input-otp>`, config);
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+
+      await simulateAutofill(firstInput, '12');
+
+      const inputOtp = page.locator('ion-input-otp');
+      await verifyInputValues(inputOtp, ['1', '2']);
+
+      const lastInput = page.locator('ion-input-otp input').last();
+      await expect(lastInput).toBeFocused();
+    });
+
+    test('should handle autofill correctly when length is 2 after typing 1 character', async ({ page }) => {
+      await page.setContent(`<ion-input-otp length="2">Description</ion-input-otp>`, config);
+
+      await page.keyboard.type('1');
+
+      const secondInput = page.locator('ion-input-otp input').nth(1);
+      await secondInput.focus();
+
+      await simulateAutofill(secondInput, '22');
+
+      const inputOtp = page.locator('ion-input-otp');
+      await verifyInputValues(inputOtp, ['2', '2']);
 
       const lastInput = page.locator('ion-input-otp input').last();
       await expect(lastInput).toBeFocused();

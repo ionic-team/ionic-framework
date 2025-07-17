@@ -252,5 +252,46 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(list).toHaveScreenshot(screenshot(`item-inputs-div-with-inputs`));
     });
+
+    test('should update interactivity state when elements are conditionally rendered', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/29763',
+      });
+
+      await page.setContent(
+        `
+        <ion-list>
+          <ion-item>
+            <ion-label>Conditional Checkbox</ion-label>
+          </ion-item>
+        </ion-list>
+        `,
+        config
+      );
+
+      const item = page.locator('ion-item');
+
+      await page.evaluate(() => {
+        const item = document.querySelector('ion-item');
+        const checkbox = document.createElement('ion-checkbox');
+        item?.appendChild(checkbox);
+      });
+
+      await page.waitForChanges();
+
+      const checkbox = page.locator('ion-checkbox');
+      await expect(checkbox).not.toBeChecked();
+
+      // Test that clicking on the left edge of the item toggles the checkbox
+      await item.click({
+        position: {
+          x: 5,
+          y: 5,
+        },
+      });
+
+      await expect(checkbox).toBeChecked();
+    });
   });
 });
