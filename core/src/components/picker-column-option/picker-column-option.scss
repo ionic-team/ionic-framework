@@ -3,7 +3,7 @@
 // Picker Column
 // --------------------------------------------------
 
-button {
+.picker-column-option-button {
   @include padding(0);
   @include margin(0);
 
@@ -40,6 +40,6 @@ button {
   opacity: 0.4;
 }
 
-:host(.option-disabled) button {
+:host(.option-disabled) .picker-column-option-button {
   cursor: default;
 }
