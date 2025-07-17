@@ -653,7 +653,6 @@ export class PickerColumn implements ComponentInterface {
     return el ? el.getAttribute('aria-label') ?? el.innerText : '';
   };
 
-
   render() {
     const { color, disabled, isActive, numericInput } = this;
     const mode = getIonMode(this);
