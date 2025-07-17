@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.6.5](https://github.com/ionic-team/ionic-framework/compare/v8.6.4...v8.6.5) (2025-07-16)
+
+
+### Bug Fixes
+
+* **input-otp:** improve autofill detection and invalid character handling ([#30541](https://github.com/ionic-team/ionic-framework/issues/30541)) ([8b4023d](https://github.com/ionic-team/ionic-framework/commit/8b4023d520212c254395a5be6d3a76dcbee6f2da)), closes [#30459](https://github.com/ionic-team/ionic-framework/issues/30459)
+* **input:** prevent layout shift when hiding password toggle ([#30533](https://github.com/ionic-team/ionic-framework/issues/30533)) ([f1defba](https://github.com/ionic-team/ionic-framework/commit/f1defba2acb417c6f243b2902923d85efbb6f879)), closes [#29562](https://github.com/ionic-team/ionic-framework/issues/29562)
+* **item:** allow nested content to be conditionally interactive ([#30519](https://github.com/ionic-team/ionic-framework/issues/30519)) ([3f730ab](https://github.com/ionic-team/ionic-framework/commit/3f730ab1d77be54d1faf14168eee9e9dc41002d6)), closes [#29763](https://github.com/ionic-team/ionic-framework/issues/29763)
+* **modal:** dismiss child modals when parent is dismissed ([#30540](https://github.com/ionic-team/ionic-framework/issues/30540)) ([9b0099f](https://github.com/ionic-team/ionic-framework/commit/9b0099f462fda6d40b49dde1a1c97afbbbee2287)), closes [#30389](https://github.com/ionic-team/ionic-framework/issues/30389)
+* **modal:** dismiss modal when parent element is removed from DOM ([#30544](https://github.com/ionic-team/ionic-framework/issues/30544)) ([850338c](https://github.com/ionic-team/ionic-framework/commit/850338cbd5c76addbc2cc3068b93071dea14c0af)), closes [#30389](https://github.com/ionic-team/ionic-framework/issues/30389)
+* **modal:** improve card modal background transition from portrait to landscape ([#30551](https://github.com/ionic-team/ionic-framework/issues/30551)) ([d37b9b8](https://github.com/ionic-team/ionic-framework/commit/d37b9b8e468b7b2c9cda8b27fe7019bb905ad2bf))
+* **segment-view:** scroll to correct content when height is not set ([#30547](https://github.com/ionic-team/ionic-framework/issues/30547)) ([d14311f](https://github.com/ionic-team/ionic-framework/commit/d14311fb65ae3de7ba7578791ce1ea44f186c413)), closes [#30543](https://github.com/ionic-team/ionic-framework/issues/30543)
+
+
+
+
+
 ## [8.6.4](https://github.com/ionic-team/ionic-framework/compare/v8.6.3...v8.6.4) (2025-07-09)
 
 

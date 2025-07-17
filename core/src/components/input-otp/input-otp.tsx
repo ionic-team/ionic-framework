@@ -49,6 +49,7 @@ export class InputOTP implements ComponentInterface {
 
   @State() private inputValues: string[] = [];
   @State() hasFocus = false;
+  @State() private previousInputValues: string[] = [];
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
@@ -337,6 +338,7 @@ export class InputOTP implements ComponentInterface {
     });
     // Update the value without emitting events
     this.value = this.inputValues.join('');
+    this.previousInputValues = [...this.inputValues];
   }
 
   /**
@@ -526,19 +528,12 @@ export class InputOTP implements ComponentInterface {
   }
 
   /**
-   * Handles keyboard navigation and input for the OTP component.
+   * Handles keyboard navigation for the OTP component.
    *
    * Navigation:
    * - Backspace: Clears current input and moves to previous box if empty
    * - Arrow Left/Right: Moves focus between input boxes
    * - Tab: Allows normal tab navigation between components
-   *
-   * Input Behavior:
-   * - Validates input against the allowed pattern
-   * - When entering a key in a filled box:
-   *   - Shifts existing values right if there is room
-   *   - Updates the value of the input group
-   *   - Prevents default behavior to avoid automatic focus shift
    */
   private onKeyDown = (index: number) => (event: KeyboardEvent) => {
     const { length } = this;
@@ -596,34 +591,32 @@ export class InputOTP implements ComponentInterface {
       // Let all tab events proceed normally
       return;
     }
-
-    // If the input box contains a value and the key being
-    // entered is a valid key for the input box update the value
-    // and shift the values to the right if there is room.
-    if (this.inputValues[index] && this.validKeyPattern.test(event.key)) {
-      if (!this.inputValues[length - 1]) {
-        for (let i = length - 1; i > index; i--) {
-          this.inputValues[i] = this.inputValues[i - 1];
-          this.inputRefs[i].value = this.inputValues[i] || '';
-        }
-      }
-      this.inputValues[index] = event.key;
-      this.inputRefs[index].value = event.key;
-      this.updateValue(event);
-
-      // Prevent default to avoid the browser from
-      // automatically moving the focus to the next input
-      event.preventDefault();
-    }
   };
 
+  /**
+   * Processes all input scenarios for each input box.
+   *
+   * This function manages:
+   * 1. Autofill handling
+   * 2. Input validation
+   * 3. Full selection replacement or typing in an empty box
+   * 4. Inserting in the middle with available space (shifting)
+   * 5. Single character replacement
+   */
   private onInput = (index: number) => (event: InputEvent) => {
     const { length, validKeyPattern } = this;
-    const value = (event.target as HTMLInputElement).value;
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+    const previousValue = this.previousInputValues[index] || '';
 
-    // If the value is longer than 1 character (autofill), split it into
-    // characters and filter out invalid ones
-    if (value.length > 1) {
+    // 1. Autofill handling
+    // If the length of the value increases by more than 1 from the previous
+    // value, treat this as autofill. This is to prevent the case where the
+    // user is typing a single character into an input box containing a value
+    // as that will trigger this function with a value length of 2 characters.
+    const isAutofill = value.length - previousValue.length > 1;
+    if (isAutofill) {
+      // Distribute valid characters across input boxes
       const validChars = value
         .split('')
         .filter((char) => validKeyPattern.test(char))
@@ -640,8 +633,10 @@ export class InputOTP implements ComponentInterface {
         });
       }
 
-      // Update the value of the input group and emit the input change event
-      this.value = validChars.join('');
+      for (let i = 0; i < length; i++) {
+        this.inputValues[i] = validChars[i] || '';
+        this.inputRefs[i].value = validChars[i] || '';
+      }
       this.updateValue(event);
 
       // Focus the first empty input box or the last input box if all boxes
@@ -652,23 +647,85 @@ export class InputOTP implements ComponentInterface {
         this.inputRefs[nextIndex]?.focus();
       }, 20);
 
+      this.previousInputValues = [...this.inputValues];
       return;
     }
 
-    // Only allow input if it matches the pattern
-    if (value.length > 0 && !validKeyPattern.test(value)) {
-      this.inputRefs[index].value = '';
-      this.inputValues[index] = '';
+    // 2. Input validation
+    // If the character entered is invalid (does not match the pattern),
+    // restore the previous value and exit
+    if (value.length > 0 && !validKeyPattern.test(value[value.length - 1])) {
+      input.value = this.inputValues[index] || '';
+      this.previousInputValues = [...this.inputValues];
       return;
     }
 
-    // For single character input, fill the current box
-    this.inputValues[index] = value;
-    this.updateValue(event);
-
-    if (value.length > 0) {
+    // 3. Full selection replacement or typing in an empty box
+    // If the user selects all text in the input box and types, or if the
+    // input box is empty, replace only this input box. If the box is empty,
+    // move to the next box, otherwise stay focused on this box.
+    const isAllSelected = input.selectionStart === 0 && input.selectionEnd === value.length;
+    const isEmpty = !this.inputValues[index];
+    if (isAllSelected || isEmpty) {
+      this.inputValues[index] = value;
+      input.value = value;
+      this.updateValue(event);
       this.focusNext(index);
+      this.previousInputValues = [...this.inputValues];
+      return;
     }
+
+    // 4. Inserting in the middle with available space (shifting)
+    // If typing in a filled input box and there are empty boxes at the end,
+    // shift all values starting at the current box to the right, and insert
+    // the new character at the current box.
+    const hasAvailableBoxAtEnd = this.inputValues[this.inputValues.length - 1] === '';
+    if (this.inputValues[index] && hasAvailableBoxAtEnd && value.length === 2) {
+      // Get the inserted character (from event or by diffing value/previousValue)
+      let newChar = (event as InputEvent).data;
+      if (!newChar) {
+        newChar = value.split('').find((c, i) => c !== previousValue[i]) || value[value.length - 1];
+      }
+      // Validate the new character before shifting
+      if (!validKeyPattern.test(newChar)) {
+        input.value = this.inputValues[index] || '';
+        this.previousInputValues = [...this.inputValues];
+        return;
+      }
+      // Shift values right from the end to the insertion point
+      for (let i = this.inputValues.length - 1; i > index; i--) {
+        this.inputValues[i] = this.inputValues[i - 1];
+        this.inputRefs[i].value = this.inputValues[i] || '';
+      }
+      this.inputValues[index] = newChar;
+      this.inputRefs[index].value = newChar;
+      this.updateValue(event);
+      this.previousInputValues = [...this.inputValues];
+      return;
+    }
+
+    // 5. Single character replacement
+    // Handles replacing a single character in a box containing a value based
+    // on the cursor position. We need the cursor position to determine which
+    // character was the last character typed. For example, if the user types "2"
+    // in an input box with the cursor at the beginning of the value of "6",
+    // the value will be "26", but we want to grab the "2" as the last character
+    // typed.
+    const cursorPos = input.selectionStart ?? value.length;
+    const newCharIndex = cursorPos - 1;
+    const newChar = value[newCharIndex] ?? value[0];
+
+    // Check if the new character is valid before updating the value
+    if (!validKeyPattern.test(newChar)) {
+      input.value = this.inputValues[index] || '';
+      this.previousInputValues = [...this.inputValues];
+      return;
+    }
+
+    this.inputValues[index] = newChar;
+    input.value = newChar;
+    this.updateValue(event);
+    this.previousInputValues = [...this.inputValues];
   };
 
   /**
@@ -712,12 +769,8 @@ export class InputOTP implements ComponentInterface {
 
     // Focus the next empty input after pasting
     // If all boxes are filled, focus the last input
-    const nextEmptyIndex = validChars.length;
-    if (nextEmptyIndex < length) {
-      inputRefs[nextEmptyIndex]?.focus();
-    } else {
-      inputRefs[length - 1]?.focus();
-    }
+    const nextEmptyIndex = validChars.length < length ? validChars.length : length - 1;
+    inputRefs[nextEmptyIndex]?.focus();
   };
 
   /**

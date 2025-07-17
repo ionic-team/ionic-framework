@@ -5,7 +5,7 @@
 // -----------------------------------------
 
 :host {
-  --track-background: #{globals.$ion-primitives-neutral-800};
+  --track-background: #{globals.$ion-primitives-neutral-500};
   --track-background-checked: #{globals.ion-color(primary, base)};
   --border-radius: #{globals.$ion-border-radius-full};
   --focus-ring-color: #{globals.$ion-border-focus-default};
@@ -65,11 +65,11 @@
 // ----------------------------------------------------------------
 
 .toggle-bottom .error-text {
-  color: globals.$ion-semantics-danger-800;
+  color: globals.$ion-semantics-danger-900;
 }
 
 .toggle-bottom .helper-text {
-  color: globals.$ion-primitives-neutral-800;
+  color: globals.$ion-primitives-neutral-900;
 }
 
 // Toggle Native Wrapper: Focused
@@ -80,11 +80,17 @@
   outline-offset: var(--focus-ring-width);
 }
 
+:host(.ion-focused) {
+  outline: none;
+}
 // Toggle Native Wrapper: Pressed
 // ----------------------------------------------------------------
+:host(.ion-activated) .toggle-icon {
+  background: globals.$ion-bg-neutral-base-press;
+}
 
-:host(.ion-activated) .toggle-icon::after {
-  @include globals.pressed-state();
+:host(.ion-activated.toggle-checked) .toggle-icon {
+  background: globals.$ion-bg-primary-base-press;
 }
 
 // Ionic Toggle: Disabled
