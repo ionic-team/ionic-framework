@@ -246,7 +246,7 @@ export class Checkbox implements ComponentInterface {
      * be treated as not having helper/error text.
      */
     const hasHelperText = !!helperText;
-    const hasErrorText = (!!errorText && !checked);
+    const hasErrorText = !!errorText && !checked;
     if (!hasHelperText && !hasErrorText) {
       return;
     }
