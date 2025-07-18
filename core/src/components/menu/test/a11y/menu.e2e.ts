@@ -1,4 +1,4 @@
-import AxeBuilder from '@axe-core/playwright';
+// import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
