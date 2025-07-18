@@ -98,6 +98,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private viewTransitionAnimation?: Animation;
   private resizeTimeout?: any;
 
+  // Mutation observer to watch for parent removal
+  private parentRemovalObserver?: MutationObserver;
+  // Cached original parent from before modal is moved to body during presentation
+  private cachedOriginalParent?: HTMLElement;
+
   lastFocus?: HTMLElement;
   animation?: Animation;
 
@@ -409,6 +414,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   disconnectedCallback() {
     this.triggerController.removeClickListener();
     this.cleanupViewTransitionListener();
+    this.cleanupParentRemovalObserver();
   }
 
   componentWillLoad() {
@@ -417,6 +423,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const attributesToInherit = ['aria-label', 'role'];
     this.inheritedAttributes = inheritAttributes(el, attributesToInherit);
+
+    // Cache original parent before modal gets moved to body during presentation
+    if (el.parentNode) {
+      this.cachedOriginalParent = el.parentNode as HTMLElement;
+    }
 
     /**
      * When using a controller modal you can set attributes
@@ -654,6 +665,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // Initialize view transition listener for iOS card modals
     this.initViewTransitionListener();
 
+    // Initialize parent removal observer
+    this.initParentRemovalObserver();
+
     unlock();
   }
 
@@ -799,6 +813,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const unlock = await this.lockController.lock();
 
     /**
+     * Dismiss all child modals. This is especially important in
+     * Angular and React because it's possible to lose control of a child
+     * modal when the parent modal is dismissed.
+     */
+    await this.dismissNestedModals();
+
+    /**
      * If a canDismiss handler is responsible
      * for calling the dismiss method, we should
      * not run the canDismiss check again.
@@ -854,6 +875,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         this.gesture.destroy();
       }
       this.cleanupViewTransitionListener();
+      this.cleanupParentRemovalObserver();
     }
     this.currentBreakpoint = undefined;
     this.animation = undefined;
@@ -1130,7 +1152,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       wrapperEl.style.opacity = '1';
     }
 
-    if (presentingElement) {
+    if (presentingElement?.tagName === 'ION-MODAL') {
       const isPortrait = window.innerWidth < 768;
 
       if (isPortrait) {
@@ -1143,6 +1165,89 @@ export class Modal implements ComponentInterface, OverlayInterface {
         presentingElement.style.transform = 'translateY(0px) scale(1)';
       }
     }
+  }
+
+  /**
+   * When the slot changes, we need to find all the modals in the slot
+   * and set the data-parent-ion-modal attribute on them so we can find them
+   * and dismiss them when we get dismissed.
+   * We need to do it this way because when a modal is opened, it's moved to
+   * the end of the body and is no longer an actual child of the modal.
+   */
+  private onSlotChange = ({ target }: Event) => {
+    const slot = target as HTMLSlotElement;
+    slot.assignedElements().forEach((el) => {
+      el.querySelectorAll('ion-modal').forEach((childModal) => {
+        // We don't need to write to the DOM if the modal is already tagged
+        // If this is a deeply nested modal, this effect should cascade so we don't
+        // need to worry about another modal claiming the same child.
+        if (childModal.getAttribute('data-parent-ion-modal') === null) {
+          childModal.setAttribute('data-parent-ion-modal', this.el.id);
+        }
+      });
+    });
+  };
+
+  private async dismissNestedModals(): Promise<void> {
+    const nestedModals = document.querySelectorAll(`ion-modal[data-parent-ion-modal="${this.el.id}"]`);
+    nestedModals?.forEach(async (modal) => {
+      await (modal as HTMLIonModalElement).dismiss(undefined, 'parent-dismissed');
+    });
+  }
+
+  private initParentRemovalObserver() {
+    if (typeof MutationObserver === 'undefined') {
+      return;
+    }
+
+    // Only observe if we have a cached parent and are in browser environment
+    if (typeof window === 'undefined' || !this.cachedOriginalParent) {
+      return;
+    }
+
+    // Don't observe document or fragment nodes as they can't be "removed"
+    if (
+      this.cachedOriginalParent.nodeType === Node.DOCUMENT_NODE ||
+      this.cachedOriginalParent.nodeType === Node.DOCUMENT_FRAGMENT_NODE
+    ) {
+      return;
+    }
+
+    this.parentRemovalObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList' && mutation.removedNodes.length > 0) {
+          // Check if our cached original parent was removed
+          const cachedParentWasRemoved = Array.from(mutation.removedNodes).some((node) => {
+            const isDirectMatch = node === this.cachedOriginalParent;
+            const isContainedMatch = this.cachedOriginalParent
+              ? (node as HTMLElement).contains?.(this.cachedOriginalParent)
+              : false;
+            return isDirectMatch || isContainedMatch;
+          });
+
+          // Also check if parent is no longer connected to DOM
+          const cachedParentDisconnected = this.cachedOriginalParent && !this.cachedOriginalParent.isConnected;
+
+          if (cachedParentWasRemoved || cachedParentDisconnected) {
+            this.dismiss(undefined, 'parent-removed');
+            // Release the reference to the cached original parent
+            // so we don't have a memory leak
+            this.cachedOriginalParent = undefined;
+          }
+        }
+      });
+    });
+
+    // Observe document body with subtree to catch removals at any level
+    this.parentRemovalObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  private cleanupParentRemovalObserver() {
+    this.parentRemovalObserver?.disconnect();
+    this.parentRemovalObserver = undefined;
   }
 
   render() {
@@ -1224,7 +1329,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
               ref={(el) => (this.dragHandleEl = el)}
             ></button>
           )}
-          <slot></slot>
+          <slot onSlotchange={this.onSlotChange}></slot>
         </div>
       </Host>
     );
