@@ -38,22 +38,12 @@ export const readRoutes = (root: Element): RouteChain[] => {
 };
 
 /**
- * Stencil patches `elm.children` to behave like calling `elm.children` on an
- * element with shadow DOM even though the `ion-router` is not a shadow DOM element.
- * To allow the `ion-router` to work properly we need to access the original accessor
- * for this property which is `__children`.
- */
-interface PatchedStencilElement extends Element {
-  __children?: HTMLCollection;
-}
-
-/**
  * Reads the route nodes as a tree modeled after the DOM tree of <ion-route> elements.
  *
  * Note: routes without a component are ignored together with their children.
  */
-export const readRouteNodes = (node: PatchedStencilElement): RouteTree => {
-  return (Array.from(node.__children ?? []) as HTMLIonRouteElement[])
+export const readRouteNodes = (node: Element): RouteTree => {
+  return (Array.from(node.children) as HTMLIonRouteElement[])
     .filter((el) => el.tagName === 'ION-ROUTE' && el.component)
     .map((el) => {
       const component = readProp(el, 'component') as string;
