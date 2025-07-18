@@ -239,25 +239,30 @@ export class Checkbox implements ComponentInterface {
    * This element should only be rendered if hint text is set.
    */
   private renderHintText() {
-    const { helperText, errorText, helperTextId, errorTextId } = this;
+    const { helperText, errorText, helperTextId, errorTextId, checked } = this;
 
     /**
      * undefined and empty string values should
      * be treated as not having helper/error text.
      */
-    const hasHintText = !!helperText || !!errorText;
-    if (!hasHintText) {
+    const hasHelperText = !!helperText;
+    const hasErrorText = (!!errorText && !checked);
+    if (!hasHelperText && !hasErrorText) {
       return;
     }
 
     return (
       <div class="checkbox-bottom">
-        <div id={helperTextId} class="helper-text" part="supporting-text helper-text">
-          {helperText}
-        </div>
-        <div id={errorTextId} class="error-text" part="supporting-text error-text">
-          {errorText}
-        </div>
+        {hasHelperText && (
+          <div id={helperTextId} class="helper-text" part="supporting-text helper-text">
+            {helperText}
+          </div>
+        )}
+        {hasErrorText && (
+          <div id={errorTextId} class="error-text" part="supporting-text error-text">
+            {errorText}
+          </div>
+        )}
       </div>
     );
   }
