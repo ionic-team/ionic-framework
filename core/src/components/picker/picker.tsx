@@ -410,7 +410,7 @@ export class Picker implements ComponentInterface {
     colEl: HTMLIonPickerColumnElement,
     value: string,
     zeroBehavior: 'start' | 'end' = 'start'
-  ): boolean => {    
+  ): boolean => {
     if (!value) {
       return false;
     }
@@ -535,10 +535,7 @@ export class Picker implements ComponentInterface {
 
   render() {
     return (
-      <Host
-        onPointerDown={(ev: PointerEvent) => this.onPointerDown(ev)}
-        onClick={() => this.onClick()}
-      >
+      <Host onPointerDown={(ev: PointerEvent) => this.onPointerDown(ev)} onClick={() => this.onClick()}>
         <input
           aria-hidden="true"
           tabindex={-1}

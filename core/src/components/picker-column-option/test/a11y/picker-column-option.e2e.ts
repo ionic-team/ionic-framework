@@ -12,8 +12,8 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
 
       const results = await new AxeBuilder({ page }).analyze();
 
-      const hasKnownViolations = results.violations.filter(violation =>  violation.id === 'color-contrast');
-      const violations = results.violations.filter(violation => !hasKnownViolations.includes(violation));
+      const hasKnownViolations = results.violations.filter((violation) => violation.id === 'color-contrast');
+      const violations = results.violations.filter((violation) => !hasKnownViolations.includes(violation));
 
       if (hasKnownViolations.length > 0) {
         console.warn('Known color contrast violations:', hasKnownViolations);

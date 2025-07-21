@@ -109,10 +109,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const firstColumn = await page.evaluate(() => document.querySelector('ion-picker-column#first'));
       const secondColumn = await page.evaluate(() => document.querySelector('ion-picker-column#second'));
 
-
       // Focus first column
       await page.keyboard.press('Tab');
-    
+
       let activeElement = await page.evaluate(() => document.activeElement);
       expect(activeElement).toEqual(firstColumn);
 
