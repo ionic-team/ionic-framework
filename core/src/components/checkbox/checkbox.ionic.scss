@@ -199,12 +199,9 @@ input {
 // --------------------------------------------------
 :host(.ion-invalid) {
   --focus-ring-color: #{globals.$ion-border-focus-error};
-
-  .native-wrapper {
-    border-color: globals.$ion-border-danger-default;
-  }
 }
 
+:host(.ion-invalid:not(.checkbox-checked)),
 :host(.ion-invalid:not(.checkbox-checked).checkbox-disabled) {
   .native-wrapper {
     border-color: globals.$ion-border-danger-default;
