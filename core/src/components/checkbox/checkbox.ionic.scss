@@ -199,7 +199,7 @@ input {
 // --------------------------------------------------
 :host(.ion-invalid) {
   --focus-ring-color: #{globals.$ion-border-focus-error};
-  
+
   .native-wrapper {
     border-color: globals.$ion-border-danger-default;
   }
