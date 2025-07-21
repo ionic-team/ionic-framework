@@ -37,11 +37,14 @@ export class ReactRouterViewStack extends ViewStacks {
       viewItem.disableIonPageManagement = reactElement.props.disableIonPageManagement;
     }
 
+    console.log('Creating view for matched route', routeInfo.pathname);
+    const match = matchPath({
+      pathname: routeInfo.pathname,
+      componentProps: reactElement.props,
+    });
+    console.log('- Match?', match);
     viewItem.routeData = {
-      match: matchPath({
-        pathname: routeInfo.pathname,
-        componentProps: reactElement.props,
-      }),
+      match,
       childProps: reactElement.props,
     };
 
@@ -86,6 +89,7 @@ export class ReactRouterViewStack extends ViewStacks {
    */
   getChildrenToRender = (outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo) => {
     const viewItems = this.getViewItemsForOutlet(outletId);
+    console.log(`Trying to get children to render for ${outletId}:`, viewItems);
 
     // Sync child elements with stored viewItems (e.g. to reflect new props)
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {

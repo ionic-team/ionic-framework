@@ -22,16 +22,31 @@ interface MatchPathOptions {
  * @see https://reactrouter.com/v6/utils/match-path
  */
 export const matchPath = ({ pathname, componentProps }: MatchPathOptions): PathMatch<string> | null => {
-  const { path, ...restProps } = componentProps;
+  const { path, index, ...restProps } = componentProps;
 
-  if (!path) {
+  if (!path && !index) {
     console.warn('[Ionic] matchPath: No path prop provided. This will always return null.', {
       componentProps,
     });
     return null;
   }
 
+  if (!path) {
+    return reactRouterMatchPath({ path: '/', ...restProps, end: true }, pathname);
+  }
+
   const match = reactRouterMatchPath({ path, ...restProps }, pathname);
+  if (match) {
+    console.log('--------------------------------');
+    console.log(' Match found');
+    console.log('--------------------------------');
+    console.log('Path', path);
+    console.log('Index', index);
+    console.log('Pathname', pathname);
+    console.log('Other props', restProps);
+    console.log('Match', match);
+    console.log('--------------------------------\n');
+  }
 
   if (!match) {
     return null;

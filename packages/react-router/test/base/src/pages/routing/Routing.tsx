@@ -22,7 +22,7 @@ const Routing: React.FC<RoutingProps> = () => {
       <IonRouterOutlet id="main">
         <Route index element={<Navigate to="/routing/tabs" replace />} />
 
-        <Route path="tabs" element={<Tabs />} />
+        <Route path="tabs/*" element={<Tabs />} />
         <Route path="favorites" element={<Favorites />} />
         <Route path="otherpage" element={<OtherPage />} />
         <Route path="propstest" element={<PropsTest />} />

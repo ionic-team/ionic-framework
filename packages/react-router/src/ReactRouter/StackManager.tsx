@@ -541,6 +541,7 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo) {
   // `<Route />` nodes are rendered inside of a <Routes /> node
   const routesNode = findRoutesNode(node) ?? node;
 
+  console.log('Looking for route by route info', routeInfo);
   for (const child of React.Children.toArray(routesNode) as React.ReactElement[]) {
     // Check if the child is a `<Route />` node
     if (child.type === Route) {
@@ -551,6 +552,7 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo) {
 
       if (match) {
         matchedNode = child;
+        console.log('Found matching child', child);
         break;
       }
     }
@@ -566,9 +568,14 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo) {
     if (child.type === Route) {
       if (!child.props.path) {
         fallbackNode = child;
+        console.log('Found fallback child', child);
         break;
       }
     }
+  }
+
+  if (!matchedNode && !fallbackNode) {
+    console.log('No match found at all, sad times :(');
   }
 
   return matchedNode ?? fallbackNode;
