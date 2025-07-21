@@ -133,62 +133,11 @@ export class Picker implements ComponentInterface {
    * function that has been set in onPointerDown
    * so that we enter/exit input mode correctly.
    */
-  private onClick = (ev: PointerEvent) => {
+  private onClick = () => {
     const { actionOnClick } = this;
     if (actionOnClick) {
       actionOnClick();
       this.actionOnClick = undefined;
-    }
-
-    /**
-     * In order to avoid a11y issues we must manage focus
-     * on the picker columns and picker itself.
-     * This is because once picker is clicked we got an issue/warning because
-     * picker input is being focused, and once it has tabindex -1 it can't be focused,
-     * which ends on focusing the picker itself.
-     * During the process above we fall into issues since there is an element
-     * with tabindex -1 and aria-hidden='true' that is focused, which is not allowed.
-     * That said and since onClick is being propagated to the picker itself, we need to
-     * manage focus on the picker columns and picker itself to avoid the issue.
-     */
-    const clickedTarget = ev.target as HTMLElement;
-    let elementToFocus: HTMLElement | null = null;
-
-    switch (clickedTarget.tagName) {
-      case 'ION-PICKER':
-        /**
-         * If the user clicked the picker itself
-         * then we should focus the first picker options
-         * so that users can scroll through them.
-         */
-        const ionPickerColumn = this.el.querySelector('ion-picker-column');
-        elementToFocus = ionPickerColumn?.shadowRoot?.querySelector('.picker-opts') as HTMLElement | null;
-        break;
-
-      case 'ION-PICKER-COLUMN':
-        /**
-         * If the user clicked a picker column
-         * then we should focus its own picker options
-         * so that users can scroll through them.
-         */
-        elementToFocus = clickedTarget.shadowRoot?.querySelector('.picker-opts') as HTMLElement | null;
-        break;
-
-      case 'ION-PICKER-COLUMN-OPTION':
-        /**
-         * If the user clicked a picker column option
-         * then we should focus its picker options parent so that
-         * users can scroll through them.
-         */
-        const ionPickerColumnOption = clickedTarget.closest('ion-picker-column');
-        if (ionPickerColumnOption) {
-          elementToFocus = ionPickerColumnOption.shadowRoot?.querySelector('.picker-opts') as HTMLElement | null;
-        }
-        break;
-    }
-
-    if (elementToFocus) {
-      elementToFocus.focus();
     }
   };
 
@@ -461,7 +410,7 @@ export class Picker implements ComponentInterface {
     colEl: HTMLIonPickerColumnElement,
     value: string,
     zeroBehavior: 'start' | 'end' = 'start'
-  ): boolean => {
+  ): boolean => {    
     if (!value) {
       return false;
     }
@@ -588,7 +537,7 @@ export class Picker implements ComponentInterface {
     return (
       <Host
         onPointerDown={(ev: PointerEvent) => this.onPointerDown(ev)}
-        onClick={(ev: PointerEvent) => this.onClick(ev)}
+        onClick={() => this.onClick()}
       >
         <input
           aria-hidden="true"
