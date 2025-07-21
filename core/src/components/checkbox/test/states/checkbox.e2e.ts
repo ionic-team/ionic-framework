@@ -15,6 +15,18 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
       await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-disabled`));
     });
 
+    test('should render disabled invalid checkbox correctly', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-checkbox disabled="true" error-text="Error text" class="ion-invalid">Label</ion-checkbox>
+      `,
+        config
+      );
+
+      const checkbox = page.locator('ion-checkbox');
+      await expect(checkbox).toHaveScreenshot(screenshot(`invalid-checkbox-disabled`));
+    });
+
     test('should render disabled checked checkbox correctly', async ({ page }) => {
       await page.setContent(
         `
@@ -57,6 +69,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
           <div id="checkboxes" style="padding: 8px">
             <ion-checkbox class="ion-focused">Label</ion-checkbox>
             <ion-checkbox class="ion-focused" checked>Label</ion-checkbox>
+            <ion-checkbox class="ion-invalid ion-focused">Label</ion-checkbox>
           </div>
       `,
         config
