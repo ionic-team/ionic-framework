@@ -81,6 +81,18 @@
             <h2>Focused, Checked</h2>
             <ion-checkbox checked class="ion-focused">Enable Notifications</ion-checkbox>
           </div>
+
+          <div class="grid-item">
+            <h2>Focused, Invalid</h2>
+            <ion-checkbox error-text="Error text" class="ion-invalid ion-focused">Enable Notifications</ion-checkbox>
+          </div>
+
+          <div class="grid-item">
+            <h2>Disabled, Invalid</h2>
+            <ion-checkbox disabled="true" error-text="Error text" class="ion-invalid"
+              >Enable Notifications
+            </ion-checkbox>
+          </div>
         </div>
       </ion-content>
     </ion-app>
