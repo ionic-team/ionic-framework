@@ -16,7 +16,6 @@ export class InfiniteScroll implements ComponentInterface {
   private thrPx = 0;
   private thrPc = 0;
   private scrollEl?: HTMLElement;
-  private contentEl: HTMLElement | null = null;
 
   /**
    * didFire exists so that ionInfinite
@@ -97,12 +96,12 @@ export class InfiniteScroll implements ComponentInterface {
   @Event() ionInfinite!: EventEmitter<void>;
 
   async connectedCallback() {
-    this.contentEl = findClosestIonContent(this.el);
-    if (!this.contentEl) {
+    const contentEl = findClosestIonContent(this.el);
+    if (!contentEl) {
       printIonContentErrorMsg(this.el);
       return;
     }
-    this.scrollEl = await getScrollElement(this.contentEl);
+    this.scrollEl = await getScrollElement(contentEl);
     this.thresholdChanged();
     this.disabledChanged();
     if (this.position === 'top') {
