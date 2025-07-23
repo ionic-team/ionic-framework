@@ -157,28 +157,35 @@ export class InfiniteScroll implements ComponentInterface {
     return 4;
   };
 
+  /**
+   * Loop through our sibling elements and lock or unlock their min height.
+   * This keeps our siblings, for example `ion-list`, the same height as their
+   * content currently is, so when it loads new data and the DOM removes the old
+   * data, the height of the container doesn't change and we don't lose our scroll position.
+   *
+   * We preserve existing min-height values, if they're set, so we don't erase what
+   * has been previously set by the user when we restore after complete is called.
+   */
   private lockSiblingMinHeight(lock: boolean) {
     if (!this.preserveRerenderScrollPosition) {
       return;
     }
 
     // Loop through all the siblings of the infinite scroll, but ignore the infinite scroll itself
-    const siblings = this.el.parentElement?.children;
-    if (siblings) {
-      for (const sibling of siblings) {
-        if (sibling !== this.el && sibling instanceof HTMLElement) {
-          if (lock) {
-            const elementHeight = sibling.getBoundingClientRect().height;
-            const previousMinHeight = sibling.style.minHeight;
-            if (previousMinHeight) {
-              sibling.style.setProperty('--ion-previous-min-height', previousMinHeight);
-            }
-            sibling.style.minHeight = `${elementHeight}px`;
-          } else {
-            const previousMinHeight = sibling.style.getPropertyValue('--ion-previous-min-height');
-            sibling.style.minHeight = previousMinHeight || 'auto';
-            sibling.style.removeProperty('--ion-previous-min-height');
+    const siblings = this.el.parentElement?.children || [];
+    for (const sibling of siblings) {
+      if (sibling !== this.el && sibling instanceof HTMLElement) {
+        if (lock) {
+          const elementHeight = sibling.getBoundingClientRect().height;
+          const previousMinHeight = sibling.style.minHeight;
+          if (previousMinHeight) {
+            sibling.style.setProperty('--ion-previous-min-height', previousMinHeight);
           }
+          sibling.style.minHeight = `${elementHeight}px`;
+        } else {
+          const previousMinHeight = sibling.style.getPropertyValue('--ion-previous-min-height');
+          sibling.style.minHeight = previousMinHeight || 'auto';
+          sibling.style.removeProperty('--ion-previous-min-height');
         }
       }
     }
