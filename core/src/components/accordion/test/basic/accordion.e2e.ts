@@ -30,6 +30,20 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
           <button slot="header">Header</button>
           <div slot="content">Third Content</div>
         </ion-accordion>
+        <ion-accordion value="fourth">
+          <ion-item slot="header">
+            <ion-button slot="start" skip-accordion-toggle>Skip Toggle</ion-button>
+            <ion-label>Header</ion-label>
+          </ion-item>
+          <div slot="content">Fourth Content</div>
+        </ion-accordion>
+        <ion-accordion value="fifth">
+          <ion-item slot="header">
+            <ion-button slot="start" skip-accordion-toggle="false">Skip Toggle</ion-button>
+            <ion-label>Header</ion-label>
+          </ion-item>
+          <div slot="content">Fifth Content</div>
+        </ion-accordion>
       </ion-accordion-group>
     `,
         config
@@ -47,6 +61,24 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
 
       await accordionHeaders.nth(2).click();
       await expect(ionChange).toHaveReceivedEventDetail({ value: 'third' });
+    });
+
+    test('should not fire ionChange when click comes from an element with skip-accordion-toggle', async ({ page }) => {
+      const ionChange = await page.spyOnEvent('ionChange');
+      const skipAccordionToggles = page.locator('[skip-accordion-toggle]');
+
+      await skipAccordionToggles.nth(0).click();
+      await expect(ionChange).not.toHaveReceivedEvent();
+    });
+
+    test('should fire ionChange when click comes from an element with skip-accordion-toggle set to false', async ({
+      page,
+    }) => {
+      const ionChange = await page.spyOnEvent('ionChange');
+      const skipAccordionToggles = page.locator('[skip-accordion-toggle="false"]');
+
+      await skipAccordionToggles.nth(0).click();
+      await expect(ionChange).toHaveReceivedEventDetail({ value: 'fourth' });
     });
 
     test('should not fire when programmatically setting a valid value', async ({ page }) => {
