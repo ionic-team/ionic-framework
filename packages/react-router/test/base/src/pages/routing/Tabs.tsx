@@ -1,5 +1,5 @@
-import React from 'react';
-import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/react';
+import React, { useEffect } from 'react';
+import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonPage, IonContent } from '@ionic/react';
 import { Route, Navigate } from 'react-router';
 import Tab1 from './Tab1';
 import Details from './Details';
@@ -10,25 +10,30 @@ import SettingsDetails from './SettingsDetails';
 
 interface TabsProps {}
 
-const Tabs: React.FC<TabsProps> = () => {
+const Tabs: React.FC = () => {
+  useEffect(() => {
+    console.log('[Tabs] Mounted');
+  }, []);
   return (
     <IonTabs>
       <IonRouterOutlet id="tabs">
-        <Route path="/routing/tabs/home" element={<Tab1 />} />
-        <Route path="/routing/tabs/home/details/:id" element={<Details />} />
-        {/* <Route path="/routing/tabs/home/details/:id" element={<Details />} /> */}
-        <Route path="/routing/tabs/settings" element={<Tab2 />} />
-        <Route path="/routing/tabs/settings/details/:id" element={<SettingsDetails />} />
-        <Route path="/routing/tabs/tab3" element={<Tab3 />} />
+        <Route index element={<Navigate to="home" replace />} />
+        <Route path="home" element={<Tab1 />} />
+        <Route path="home/details/:id" element={<Details />} />
+        <Route path="settings" element={<Tab2 />} />
+        <Route path="settings/details/:id" element={<SettingsDetails />} />
+        <Route path="tab3" element={<Tab3 />} />
+        <Route path="redirect" element={<Navigate to="settings" replace />} />
         <Route
-          path="/routing/tabs"
-          element={<Navigate to="/routing/tabs/home" replace />}
+          path="*"
+          element={
+            <IonPage data-pageid="not-found-tabs">
+              <IonContent>
+                <div>Not found in tabs.tsx</div>
+              </IonContent>
+            </IonPage>
+          }
         />
-        <Route
-          path="/routing/tabs/redirect"
-          element={<Navigate to="/routing/tabs/settings" replace />}
-        />
-        {/* <Route path="/routing/tabs" element={<Navigate to="/tabs/home" replace />} /> */}
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="home" href="/routing/tabs/home" routerOptions={{ unmount: true }}>

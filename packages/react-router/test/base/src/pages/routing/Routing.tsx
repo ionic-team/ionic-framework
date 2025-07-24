@@ -34,7 +34,7 @@ const Routing: React.FC<RoutingProps> = () => {
           element={
             <IonPage data-pageid="not-found">
               <IonContent>
-                <div>Not found</div>
+                <div>Not found in routing.tsx</div>
               </IonContent>
             </IonPage>
           }
