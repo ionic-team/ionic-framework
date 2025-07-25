@@ -952,7 +952,7 @@ export declare interface IonImg extends Components.IonImg {
 
 @ProxyCmp({
   defineCustomElementFn: defineIonInfiniteScroll,
-  inputs: ['disabled', 'mode', 'position', 'preserveRerenderScrollPosition', 'theme', 'threshold'],
+  inputs: ['disabled', 'mode', 'position', 'theme', 'threshold'],
   methods: ['complete']
 })
 @Component({
@@ -960,7 +960,7 @@ export declare interface IonImg extends Components.IonImg {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'mode', 'position', 'preserveRerenderScrollPosition', 'theme', 'threshold'],
+  inputs: ['disabled', 'mode', 'position', 'theme', 'threshold'],
   standalone: true
 })
 export class IonInfiniteScroll {
