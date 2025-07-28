@@ -19,8 +19,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(heading).toHaveText('Open Menu');
 
       /**
-       * Skip the rule that checks if the menu is scrollable and focusable.
-       * This test is missing the `ion-app` wrapper which allows the
+       * Disable the 'scrollable-region-focusable' rule because this test
+       * is missing the required `ion-app` wrapper component. The `ion-app`
+       * wrapper provides the necessary focus management that allows the
        * menu content to be focusable.
        */
       const results = await new AxeBuilder({ page }).disableRules('scrollable-region-focusable').analyze();
