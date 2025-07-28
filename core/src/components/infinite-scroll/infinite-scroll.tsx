@@ -85,7 +85,6 @@ export class InfiniteScroll implements ComponentInterface {
    * If `true`, the infinite scroll will preserve the scroll position
    * when the content is re-rendered. This is useful when the content is
    * re-rendered with new keys, and the scroll position should be preserved.
-   * @internal
    */
   @Prop() preserveRerenderScrollPosition: boolean = false;
 
@@ -143,15 +142,18 @@ export class InfiniteScroll implements ComponentInterface {
 
     if (distanceFromInfinite < 0) {
       if (!this.didFire) {
+        this.isLoading = true;
+        this.didFire = true;
+
         if (this.preserveRerenderScrollPosition) {
           // Lock the min height of the siblings of the infinite scroll
           // if we are preserving the rerender scroll position
-          this.lockSiblingMinHeight(true);
+          this.lockSiblingMinHeight(true).then(() => {
+            this.ionInfinite.emit();
+          });
+        } else {
+          this.ionInfinite.emit();
         }
-
-        this.isLoading = true;
-        this.didFire = true;
-        this.ionInfinite.emit();
         return 3;
       }
     }
@@ -168,32 +170,44 @@ export class InfiniteScroll implements ComponentInterface {
    * We preserve existing min-height values, if they're set, so we don't erase what
    * has been previously set by the user when we restore after complete is called.
    */
-  private lockSiblingMinHeight(lock: boolean) {
-    const siblings = this.el.parentElement?.children || [];
-    for (const sibling of siblings) {
-      // Loop through all the siblings of the infinite scroll, but ignore ourself
-      if (sibling !== this.el && sibling instanceof HTMLElement) {
-        if (lock) {
-          const elementHeight = sibling.getBoundingClientRect().height;
-          if (this.minHeightLocked) {
-            // The previous min height is from us locking it before, so we can disregard it
-            // We still need to lock the min height if we're already locked, though, because
-            // the user could have triggered a new load before we've finished the previous one.
-            const previousMinHeight = sibling.style.minHeight;
-            if (previousMinHeight) {
-              sibling.style.setProperty('--ion-previous-min-height', previousMinHeight);
-            }
+  private lockSiblingMinHeight(lock: boolean): Promise<void> {
+    return new Promise((resolve) => {
+      const siblings = this.el.parentElement?.children || [];
+      const writes: (() => void)[] = [];
+
+      for (const sibling of siblings) {
+        // Loop through all the siblings of the infinite scroll, but ignore ourself
+        if (sibling !== this.el && sibling instanceof HTMLElement) {
+          if (lock) {
+            const elementHeight = sibling.getBoundingClientRect().height;
+            writes.push(() => {
+              if (this.minHeightLocked) {
+                // The previous min height is from us locking it before, so we can disregard it
+                // We still need to lock the min height if we're already locked, though, because
+                // the user could have triggered a new load before we've finished the previous one.
+                const previousMinHeight = sibling.style.minHeight;
+                if (previousMinHeight) {
+                  sibling.style.setProperty('--ion-previous-min-height', previousMinHeight);
+                }
+              }
+              sibling.style.minHeight = `${elementHeight}px`;
+            });
+          } else {
+            writes.push(() => {
+              const previousMinHeight = sibling.style.getPropertyValue('--ion-previous-min-height');
+              sibling.style.minHeight = previousMinHeight || 'auto';
+              sibling.style.removeProperty('--ion-previous-min-height');
+            });
           }
-          sibling.style.minHeight = `${elementHeight}px`;
-        } else {
-          const previousMinHeight = sibling.style.getPropertyValue('--ion-previous-min-height');
-          sibling.style.minHeight = previousMinHeight || 'auto';
-          sibling.style.removeProperty('--ion-previous-min-height');
         }
       }
-    }
 
-    this.minHeightLocked = lock;
+      writeTask(() => {
+        writes.forEach((w) => w());
+        this.minHeightLocked = lock;
+        resolve();
+      });
+    });
   }
 
   /**
@@ -264,8 +278,8 @@ export class InfiniteScroll implements ComponentInterface {
     // Unlock the min height of the siblings of the infinite scroll
     // if we are preserving the rerender scroll position
     if (this.preserveRerenderScrollPosition) {
-      setTimeout(() => {
-        this.lockSiblingMinHeight(false);
+      setTimeout(async () => {
+        await this.lockSiblingMinHeight(false);
       }, 100);
     }
   }

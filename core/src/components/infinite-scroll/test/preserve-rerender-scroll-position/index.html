@@ -67,7 +67,6 @@
         }
         loading = true;
 
-        await wait(300);
         replaceAllItems();
         infiniteScroll.complete();
 
@@ -99,7 +98,7 @@
 
         // Add new items with new "keys" (different content/identifiers)
         // Start with more items to ensure scrollable content
-        const totalItems = generation === 1 ? 30 : 30 + generation * 20;
+        const totalItems = generation === 1 ? 50 : 30 + generation * 20;
         itemCount = 0;
 
         for (let i = 0; i < totalItems; i++) {

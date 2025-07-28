@@ -12,10 +12,10 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const content = page.locator('ion-content');
       const items = page.locator('ion-item');
       const innerScroll = page.locator('.inner-scroll');
-      expect(await items.count()).toBe(30);
+      expect(await items.count()).toBe(50);
 
       let previousScrollTop = 0;
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 30; i++) {
         await content.evaluate((el: HTMLIonContentElement) => el.scrollToBottom(0));
         const currentScrollTop = await innerScroll.evaluate((el: HTMLIonContentElement) => el.scrollTop);
         expect(currentScrollTop).toBeGreaterThan(previousScrollTop);
@@ -26,13 +26,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           previousScrollTop
         );
         previousScrollTop = currentScrollTop;
-
-        // Timeout to allow the browser to catch up.
-        // For some reason, without this, the scroll top gets reset to 0. Adding this
-        // prevents that, which implies it's an issue with Playwright, not the feature.
-        // For some reason, this delay needs to be longer than the time required to
-        // reset the minimum height in infinite scroll.
-        await new Promise((resolve) => setTimeout(resolve, 1001));
       }
     });
   });
