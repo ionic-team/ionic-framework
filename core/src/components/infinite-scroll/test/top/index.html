@@ -46,36 +46,26 @@
         console.log('Loading data...');
         await wait(500);
         infiniteScroll.complete();
-        appendNewItems();
+        appendItems(true);
         // Custom event consumed in the e2e tests
         window.dispatchEvent(new CustomEvent('ionInfiniteComplete'));
 
         console.log('Done');
       });
 
-      // Add initial items
-      function appendInitialItems() {
-        for (var i = 0; i < 30; i++) {
-          const el = document.createElement('ion-item');
-          el.textContent = `Item ${1 + i}`;
-          list.appendChild(el);
-        }
-      }
-
-      // Add newly loaded items with special styling
-      function appendNewItems() {
+      function appendItems(newItems = false) {
         const randomColor =
           '#' +
           Math.floor(Math.random() * 16777215)
             .toString(16)
             .padStart(6, '0');
 
-        // Reverse the order of the items to match
-        // the order of the initial items
-        for (var i = 29; i >= 0; i--) {
+        for (var i = 0; i < 30; i++) {
           const el = document.createElement('ion-item');
-          el.textContent = `Item ${i + 1}`;
-          el.style.borderLeft = `4px solid ${randomColor}`;
+          el.textContent = `Item ${1 + i}`;
+          if (newItems) {
+            el.style.borderLeft = `4px solid ${randomColor}`;
+          }
           list.prepend(el);
         }
       }
@@ -88,7 +78,7 @@
         });
       }
 
-      appendInitialItems();
+      appendItems();
     </script>
   </body>
 </html>
