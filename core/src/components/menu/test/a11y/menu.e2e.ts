@@ -1,4 +1,4 @@
-// import AxeBuilder from '@axe-core/playwright';
+import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
@@ -19,10 +19,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(heading).toHaveText('Open Menu');
 
       /**
-       * started to fail after update to Stencil v4.36.1
+       * Skip the rule that checks if the menu is scrollable and focusable.
+       * This test is missing the `ion-app` wrapper which allows the
+       * menu content to be focusable.
        */
-      // const results = await new AxeBuilder({ page }).analyze();
-      // expect(results.violations).toEqual([]);
+      const results = await new AxeBuilder({ page }).disableRules('scrollable-region-focusable').analyze();
+      expect(results.violations).toEqual([]);
     });
   });
 });
