@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.6.6](https://github.com/ionic-team/ionic-framework/compare/v8.6.5...v8.6.6) (2025-07-30)
+
+### Dependencies
+
+* **stencil:** update to version 4.36.2
+
+
+
+
+
 ## [8.6.5](https://github.com/ionic-team/ionic-framework/compare/v8.6.4...v8.6.5) (2025-07-16)
 
 
