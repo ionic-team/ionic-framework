@@ -1506,6 +1506,11 @@ export namespace Components {
          */
         "position": 'top' | 'bottom';
         /**
+          * If `true`, the infinite scroll will preserve the scroll position when the content is re-rendered. This is useful when the content is re-rendered with new keys, and the scroll position should be preserved.
+          * @default false
+         */
+        "preserveRerenderScrollPosition": boolean;
+        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -7436,6 +7441,11 @@ declare namespace LocalJSX {
           * @default 'bottom'
          */
         "position"?: 'top' | 'bottom';
+        /**
+          * If `true`, the infinite scroll will preserve the scroll position when the content is re-rendered. This is useful when the content is re-rendered with new keys, and the scroll position should be preserved.
+          * @default false
+         */
+        "preserveRerenderScrollPosition"?: boolean;
         /**
           * The theme determines the visual appearance of the component.
          */

@@ -16,6 +16,7 @@ export class InfiniteScroll implements ComponentInterface {
   private thrPx = 0;
   private thrPc = 0;
   private scrollEl?: HTMLElement;
+  private minHeightLocked = false;
 
   /**
    * didFire exists so that ionInfinite
@@ -81,6 +82,13 @@ export class InfiniteScroll implements ComponentInterface {
   @Prop() position: 'top' | 'bottom' = 'bottom';
 
   /**
+   * If `true`, the infinite scroll will preserve the scroll position
+   * when the content is re-rendered. This is useful when the content is
+   * re-rendered with new keys, and the scroll position should be preserved.
+   */
+  @Prop() preserveRerenderScrollPosition: boolean = false;
+
+  /**
    * Emitted when the scroll reaches
    * the threshold distance. From within your infinite handler,
    * you must call the infinite scroll's `complete()` method when
@@ -136,13 +144,71 @@ export class InfiniteScroll implements ComponentInterface {
       if (!this.didFire) {
         this.isLoading = true;
         this.didFire = true;
-        this.ionInfinite.emit();
+
+        if (this.preserveRerenderScrollPosition) {
+          // Lock the min height of the siblings of the infinite scroll
+          // if we are preserving the rerender scroll position
+          this.lockSiblingMinHeight(true).then(() => {
+            this.ionInfinite.emit();
+          });
+        } else {
+          this.ionInfinite.emit();
+        }
         return 3;
       }
     }
 
     return 4;
   };
+
+  /**
+   * Loop through our sibling elements and lock or unlock their min height.
+   * This keeps our siblings, for example `ion-list`, the same height as their
+   * content currently is, so when it loads new data and the DOM removes the old
+   * data, the height of the container doesn't change and we don't lose our scroll position.
+   *
+   * We preserve existing min-height values, if they're set, so we don't erase what
+   * has been previously set by the user when we restore after complete is called.
+   */
+  private lockSiblingMinHeight(lock: boolean): Promise<void> {
+    return new Promise((resolve) => {
+      const siblings = this.el.parentElement?.children || [];
+      const writes: (() => void)[] = [];
+
+      for (const sibling of siblings) {
+        // Loop through all the siblings of the infinite scroll, but ignore ourself
+        if (sibling !== this.el && sibling instanceof HTMLElement) {
+          if (lock) {
+            const elementHeight = sibling.getBoundingClientRect().height;
+            writes.push(() => {
+              if (this.minHeightLocked) {
+                // The previous min height is from us locking it before, so we can disregard it
+                // We still need to lock the min height if we're already locked, though, because
+                // the user could have triggered a new load before we've finished the previous one.
+                const previousMinHeight = sibling.style.minHeight;
+                if (previousMinHeight) {
+                  sibling.style.setProperty('--ion-previous-min-height', previousMinHeight);
+                }
+              }
+              sibling.style.minHeight = `${elementHeight}px`;
+            });
+          } else {
+            writes.push(() => {
+              const previousMinHeight = sibling.style.getPropertyValue('--ion-previous-min-height');
+              sibling.style.minHeight = previousMinHeight || 'auto';
+              sibling.style.removeProperty('--ion-previous-min-height');
+            });
+          }
+        }
+      }
+
+      writeTask(() => {
+        writes.forEach((w) => w());
+        this.minHeightLocked = lock;
+        resolve();
+      });
+    });
+  }
 
   /**
    * Call `complete()` within the `ionInfinite` output event handler when
@@ -207,6 +273,14 @@ export class InfiniteScroll implements ComponentInterface {
       });
     } else {
       this.didFire = false;
+    }
+
+    // Unlock the min height of the siblings of the infinite scroll
+    // if we are preserving the rerender scroll position
+    if (this.preserveRerenderScrollPosition) {
+      setTimeout(async () => {
+        await this.lockSiblingMinHeight(false);
+      }, 100);
     }
   }
 

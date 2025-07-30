@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Infinite Scroll - Item Replacement</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Infinite Scroll - Item Replacement</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding" id="content">
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">Title</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+
+        <div className="ion-padding">Scroll the list to see the title collapse.</div>
+
+        <ion-list id="list"></ion-list>
+
+        <ion-infinite-scroll threshold="100px" id="infinite-scroll" preserve-rerender-scroll-position>
+          <ion-infinite-scroll-content loading-spinner="crescent" loading-text="Loading more data...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const list = document.getElementById('list');
+      const infiniteScroll = document.getElementById('infinite-scroll');
+      const content = document.getElementById('content');
+      const scrollPositionDiv = document.getElementById('scroll-position');
+      const modeDiv = document.getElementById('mode');
+      let loading = false;
+      let itemCount = 0;
+      let generationCount = 0;
+
+      // Track scroll position for debugging
+      content.addEventListener('ionScroll', () => {
+        const scrollTop = content.scrollTop;
+        scrollPositionDiv.textContent = `Scroll Position: ${scrollTop}`;
+      });
+
+      infiniteScroll.addEventListener('ionInfinite', async function () {
+        // Save current scroll position before replacement
+        const currentScrollTop = content.scrollTop;
+        window.currentScrollBeforeReplace = currentScrollTop;
+        console.log('loading', loading);
+        if (loading) {
+          infiniteScroll.complete();
+          return;
+        }
+        loading = true;
+
+        replaceAllItems();
+        infiniteScroll.complete();
+
+        window.dispatchEvent(
+          new CustomEvent('ionInfiniteComplete', {
+            detail: {
+              scrollTopBefore: currentScrollTop,
+              scrollTopAfter: content.scrollTop,
+              generation: generationCount,
+              mode: 'normal',
+            },
+          })
+        );
+
+        setTimeout(() => {
+          console.log('setting loading to false');
+          loading = false;
+        });
+      });
+
+      function replaceAllItems() {
+        console.log('replaceAllItems');
+        // This simulates what happens in React when all items get new keys
+        // Clear all existing items
+        list.innerHTML = '';
+
+        generationCount++;
+        const generation = generationCount;
+
+        // Add new items with new "keys" (different content/identifiers)
+        // Start with more items to ensure scrollable content
+        const totalItems = generation === 1 ? 50 : 30 + generation * 20;
+        itemCount = 0;
+
+        for (let i = 0; i < totalItems; i++) {
+          const el = document.createElement('ion-item');
+          el.setAttribute('data-key', `gen-${generation}-item-${i}`);
+          el.setAttribute('data-generation', generation);
+          el.textContent = `Gen ${generation} - Item ${
+            i + 1
+          } - Additional content to make this item taller and ensure scrolling`;
+          el.id = `item-gen-${generation}-${i}`;
+          list.appendChild(el);
+          itemCount++;
+        }
+      }
+
+      function wait(time) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve();
+          }, time);
+        });
+      }
+
+      // Initial load
+      replaceAllItems();
+    </script>
+  </body>
+</html>

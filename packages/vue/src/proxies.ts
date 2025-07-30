@@ -455,6 +455,7 @@ export const IonInfiniteScroll: StencilVueComponent<JSX.IonInfiniteScroll> = /*@
   'threshold',
   'disabled',
   'position',
+  'preserveRerenderScrollPosition',
   'ionInfinite'
 ], [
   'ionInfinite'
