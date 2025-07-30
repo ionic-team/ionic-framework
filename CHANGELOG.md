@@ -5,7 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [8.6.6](https://github.com/ionic-team/ionic-framework/compare/v8.6.5...v8.6.6) (2025-07-30)
 
-**Note:** Version bump only for package ionic-framework
+### Dependencies
+
+* **stencil:** update to version 4.36.2
 
 
 
