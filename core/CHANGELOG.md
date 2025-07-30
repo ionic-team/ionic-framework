@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.7.0](https://github.com/ionic-team/ionic-framework/compare/v8.6.7...v8.7.0) (2025-07-30)
+
+
+### Features
+
+* **css:** add new css utility classes for display and flex utils ([#30567](https://github.com/ionic-team/ionic-framework/issues/30567)) ([75f6c05](https://github.com/ionic-team/ionic-framework/commit/75f6c05fb96313ef890cc80a229a3a3ed3d57460)), closes [#22469](https://github.com/ionic-team/ionic-framework/issues/22469)
+* **datetime:** add border property to highlightedDates ([#30534](https://github.com/ionic-team/ionic-framework/issues/30534)) ([d5627c7](https://github.com/ionic-team/ionic-framework/commit/d5627c73681faf658ea3b869f3fb04d708391eb9)), closes [#29833](https://github.com/ionic-team/ionic-framework/issues/29833)
+* **deps:** update ionicons to v8 ([#30390](https://github.com/ionic-team/ionic-framework/issues/30390)) ([74cd71a](https://github.com/ionic-team/ionic-framework/commit/74cd71af243183aa738d11b280e155bdfd652126)), closes [#30445](https://github.com/ionic-team/ionic-framework/issues/30445)
+* **reorder-group:** add ionReorderStart, ionReorderMove, ionReorderEnd events ([#30471](https://github.com/ionic-team/ionic-framework/issues/30471)) ([b154f4e](https://github.com/ionic-team/ionic-framework/commit/b154f4ed095890f57ccab539fd9217976a5466e5)), closes [#23148](https://github.com/ionic-team/ionic-framework/issues/23148) [#27614](https://github.com/ionic-team/ionic-framework/issues/27614)
+
+
+
+
+
 ## [8.6.7](https://github.com/ionic-team/ionic-framework/compare/v8.6.6...v8.6.7) (2025-07-30)
 
 ### Dependencies
