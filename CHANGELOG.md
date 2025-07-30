@@ -5,7 +5,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [8.6.7](https://github.com/ionic-team/ionic-framework/compare/v8.6.6...v8.6.7) (2025-07-30)
 
-**Note:** Version bump only for package ionic-framework
+### Dependencies
+
+* **stencil:** downgrade `@stencil/core` to version 4.33.1
+
+_Stencil has been downgraded due to an uncaught regression in Reorder._
 
 
 
@@ -15,7 +19,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Dependencies
 
-* **stencil:** update to version 4.36.2
+* **stencil:** upgrade `@stencil/core` to version 4.36.2
 
 
 
