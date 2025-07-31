@@ -6,6 +6,7 @@ import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail } from '../../interface';
+import type { HTMLStencilElement } from '../../utils/element-interface';
 
 import type { ItemReorderEventDetail, ReorderMoveEventDetail, ReorderEndEventDetail } from './reorder-group-interface';
 
@@ -38,7 +39,7 @@ export class ReorderGroup implements ComponentInterface {
 
   @State() state = ReorderGroupState.Idle;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLStencilElement;
 
   /**
    * If `true`, the reorder will be hidden.
@@ -152,7 +153,7 @@ export class ReorderGroup implements ComponentInterface {
     const heights = this.cachedHeights;
     heights.length = 0;
     const el = this.el;
-    const children: any = el.children;
+    const children: any = el.__children;
     if (!children || children.length === 0) {
       return;
     }
@@ -258,7 +259,7 @@ export class ReorderGroup implements ComponentInterface {
   private completeReorder(listOrReorder?: boolean | any[]): any {
     const selectedItemEl = this.selectedItemEl;
     if (selectedItemEl && this.state === ReorderGroupState.Complete) {
-      const children = this.el.children as any;
+      const children: any = this.el.__children;
       const len = children.length;
       const toIndex = this.lastToIndex;
       const fromIndex = indexForItem(selectedItemEl);
@@ -308,7 +309,7 @@ export class ReorderGroup implements ComponentInterface {
   /********* DOM WRITE ********* */
   private reorderMove(fromIndex: number, toIndex: number) {
     const itemHeight = this.selectedItemHeight;
-    const children = this.el.children;
+    const children: any = this.el.__children;
     for (let i = 0; i < children.length; i++) {
       const style = (children[i] as any).style;
       let value = '';

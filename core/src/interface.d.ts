@@ -23,7 +23,7 @@ export { PickerOptions, PickerColumnOption } from './components/picker-legacy/pi
 export { PopoverOptions } from './components/popover/popover-interface';
 export { RadioGroupCustomEvent } from './components/radio-group/radio-group-interface';
 export { RangeCustomEvent, PinFormatter } from './components/range/range-interface';
-export { HTMLStencilElement, RouterCustomEvent } from './components/router/utils/interface';
+export { RouterCustomEvent } from './components/router/utils/interface';
 export { RefresherCustomEvent } from './components/refresher/refresher-interface';
 export {
   ItemReorderCustomEvent,
@@ -49,6 +49,7 @@ export {
   AnimationKeyFrames,
   AnimationLifecycle,
 } from './utils/animation/animation-interface';
+export { HTMLStencilElement } from './utils/element-interface';
 export { TransitionOptions } from './utils/transition';
 export { HTMLIonOverlayElement, OverlayController, OverlayInterface } from './utils/overlays-interface';
 export { Config, config } from './global/config';
