@@ -5,7 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [8.7.1](https://github.com/ionic-team/ionic-framework/compare/v8.7.0...v8.7.1) (2025-07-31)
 
-**Note:** Version bump only for package ionic-framework
+### Dependencies
+
+* **stencil:** upgrade `@stencil/core` to version 4.36.2
 
 
 
