@@ -84,7 +84,7 @@
       }
       function initGroup(group) {
         var groupEl = document.getElementById(group.id);
-        groupEl.addEventListener('ionItemReorder', function (ev) {
+        groupEl.addEventListener('ionReorderEnd', function (ev) {
           ev.detail.complete();
         });
         var groupItems = [];

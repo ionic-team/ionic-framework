@@ -78,6 +78,10 @@
           textColor: 'blue',
           backgroundColor: 'lightblue',
         },
+        {
+          date: '2023-01-07',
+          border: '2px dotted red',
+        },
       ];
 
       document.querySelector('#withCallback').highlightedDates = (isoString) => {
@@ -103,6 +107,7 @@
           date: new Date().toISOString().split('T')[0],
           textColor: 'purple',
           backgroundColor: 'pink',
+          border: '2px solid purple',
         },
       ];
     </script>

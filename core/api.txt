@@ -1950,6 +1950,9 @@ ion-reorder-group,prop,mode,"ios" | "md",undefined,false,false
 ion-reorder-group,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-reorder-group,method,complete,complete(listOrReorder?: boolean | any[]) => Promise<any>
 ion-reorder-group,event,ionItemReorder,ItemReorderEventDetail,true
+ion-reorder-group,event,ionReorderEnd,ReorderEndEventDetail,true
+ion-reorder-group,event,ionReorderMove,ReorderMoveEventDetail,true
+ion-reorder-group,event,ionReorderStart,void,true
 
 ion-ripple-effect,shadow
 ion-ripple-effect,prop,mode,"ios" | "md",undefined,false,false

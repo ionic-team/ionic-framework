@@ -18,7 +18,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const heading = page.locator('ion-menu h1');
       await expect(heading).toHaveText('Open Menu');
 
-      const results = await new AxeBuilder({ page }).analyze();
+      /**
+       * Disable the 'scrollable-region-focusable' rule because this test
+       * is missing the required `ion-app` wrapper component. The `ion-app`
+       * wrapper provides the necessary focus management that allows the
+       * menu content to be focusable.
+       */
+      const results = await new AxeBuilder({ page }).disableRules('scrollable-region-focusable').analyze();
       expect(results.violations).toEqual([]);
     });
   });
