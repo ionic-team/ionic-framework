@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.1](https://github.com/ionic-team/ionic-framework/compare/v8.7.0...v8.7.1) (2025-07-31)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
 # [8.7.0](https://github.com/ionic-team/ionic-framework/compare/v8.6.7...v8.7.0) (2025-07-30)
 
 
