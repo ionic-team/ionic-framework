@@ -17,7 +17,7 @@ $align-content-values: (
   center: center,
   between: space-between,
   around: space-around,
-  stretch: stretch
+  stretch: stretch,
 );
 
 @each $breakpoint in map-keys($screen-breakpoints) {
@@ -34,13 +34,7 @@ $align-content-values: (
 // Align Items
 // ------------------------------------------------------------------
 
-$align-items-values: (
-  start,
-  end,
-  center,
-  stretch,
-  baseline
-);
+$align-items-values: (start, end, center, stretch, baseline);
 
 @each $breakpoint in map-keys($screen-breakpoints) {
   $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
@@ -56,14 +50,7 @@ $align-items-values: (
 // Align Self
 // ------------------------------------------------------------------
 
-$align-self-values: (
-  start,
-  end,
-  center,
-  stretch,
-  baseline,
-  auto
-);
+$align-self-values: (start, end, center, stretch, baseline, auto);
 
 @each $breakpoint in map-keys($screen-breakpoints) {
   $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
@@ -85,7 +72,7 @@ $justify-content-values: (
   center: center,
   between: space-between,
   around: space-around,
-  evenly: space-evenly
+  evenly: space-evenly,
 );
 
 @each $breakpoint in map-keys($screen-breakpoints) {
@@ -102,12 +89,7 @@ $justify-content-values: (
 // Flex Direction
 // ------------------------------------------------------------------
 
-$flex-direction-values: (
-  row,
-  row-reverse,
-  column,
-  column-reverse
-);
+$flex-direction-values: (row, row-reverse, column, column-reverse);
 
 @each $breakpoint in map-keys($screen-breakpoints) {
   $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
@@ -123,11 +105,7 @@ $flex-direction-values: (
 // Flex Wrap
 // ------------------------------------------------------------------
 
-$flex-wrap-values: (
-  wrap,
-  nowrap,
-  wrap-reverse
-);
+$flex-wrap-values: (wrap, nowrap, wrap-reverse);
 
 @each $value in $flex-wrap-values {
   // TODO(FW-6697): remove ion-wrap, ion-nowrap, ion-wrap-reverse
@@ -152,12 +130,7 @@ $flex-wrap-values: (
 // Flex Fill
 // ------------------------------------------------------------------
 
-$flex-fill-values: (
-  1,
-  auto,
-  initial,
-  none
-);
+$flex-fill-values: (1, auto, initial, none);
 
 @each $breakpoint in map-keys($screen-breakpoints) {
   $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
@@ -200,13 +173,19 @@ $flex-fill-values: (
 @each $breakpoint in map-keys($screen-breakpoints) {
   $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
   @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
-    .ion-order#{$infix}-first { order: -1 !important; }
-
-    @for $i from 0 through 12 {
-      .ion-order#{$infix}-#{$i} { order: #{$i} !important; }
+    .ion-order#{$infix}-first {
+      order: -1 !important;
     }
 
-    .ion-order#{$infix}-last { order: 13 !important; }
+    @for $i from 0 through 12 {
+      .ion-order#{$infix}-#{$i} {
+        order: #{$i} !important;
+      }
+    }
+
+    .ion-order#{$infix}-last {
+      order: 13 !important;
+    }
   }
 }
 
