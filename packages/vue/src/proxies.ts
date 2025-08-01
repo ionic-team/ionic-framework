@@ -833,9 +833,15 @@ export const IonReorder: StencilVueComponent<JSX.IonReorder> = /*@__PURE__*/ def
 
 export const IonReorderGroup: StencilVueComponent<JSX.IonReorderGroup> = /*@__PURE__*/ defineContainer<JSX.IonReorderGroup>('ion-reorder-group', defineIonReorderGroup, [
   'disabled',
-  'ionItemReorder'
+  'ionItemReorder',
+  'ionReorderStart',
+  'ionReorderMove',
+  'ionReorderEnd'
 ], [
-  'ionItemReorder'
+  'ionItemReorder',
+  'ionReorderStart',
+  'ionReorderMove',
+  'ionReorderEnd'
 ]);
 
 
