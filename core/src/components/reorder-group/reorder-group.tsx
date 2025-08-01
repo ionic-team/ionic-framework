@@ -153,7 +153,7 @@ export class ReorderGroup implements ComponentInterface {
     const heights = this.cachedHeights;
     heights.length = 0;
     const el = this.el;
-    const children: any = el.__children;
+    const children: any = el.__children || el.children;
     if (!children || children.length === 0) {
       return;
     }
@@ -259,7 +259,7 @@ export class ReorderGroup implements ComponentInterface {
   private completeReorder(listOrReorder?: boolean | any[]): any {
     const selectedItemEl = this.selectedItemEl;
     if (selectedItemEl && this.state === ReorderGroupState.Complete) {
-      const children: any = this.el.__children;
+      const children: any = this.el.__children || this.el.children;
       const len = children.length;
       const toIndex = this.lastToIndex;
       const fromIndex = indexForItem(selectedItemEl);
@@ -309,7 +309,7 @@ export class ReorderGroup implements ComponentInterface {
   /********* DOM WRITE ********* */
   private reorderMove(fromIndex: number, toIndex: number) {
     const itemHeight = this.selectedItemHeight;
-    const children: any = this.el.__children;
+    const children: any = this.el.__children || this.el.children;
     for (let i = 0; i < children.length; i++) {
       const style = (children[i] as any).style;
       let value = '';
