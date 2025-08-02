@@ -11,7 +11,7 @@ import {
   ionPageHidden,
   ionPageDoesNotExist,
   ionTabClick
-} from '../../utils/test-helpers';
+} from '../../utils/test-utils';
 
 test.describe('Tabs', () => {
   test.describe('With IonRouterOutlet', () => {

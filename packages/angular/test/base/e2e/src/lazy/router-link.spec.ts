@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { testForward, testRoot, testBack, testLifeCycle } from '../../utils/test-helpers';
+import { testForward, testRoot, testBack, testLifeCycle } from '../../utils/test-utils';
 
 // Helper function to escape regex special characters
 function escapeRegExp(string: string): string {
