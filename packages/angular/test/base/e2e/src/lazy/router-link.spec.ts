@@ -6,6 +6,11 @@ function escapeRegExp(string: string): string {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+// Helper function to escape regex special characters
+function escapeRegExp(string: string): string {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 test.describe('Router Link', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/lazy/router-link?ionic:_testing=true');
