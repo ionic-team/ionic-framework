@@ -13,10 +13,8 @@
     "build:ssr": "ng build --prod && ng run test-app:server:production",
     "dev:ssr": "ng run test-app:serve-ssr",
     "prerender": "ng run test-app:prerender",
-    "cy.open": "cypress open",
-    "cy.run": "cypress run",
-    "test": "concurrently \"npm run start -- --configuration production\" \"wait-on http-get://localhost:4200 && npm run cy.run\" --kill-others --success first",
-    "test.watch": "concurrently \"npm run start\" \"wait-on http-get://localhost:4200 && npm run cy.open\" --kill-others --success first"
+    "test": "concurrently \"npm run start -- --configuration production\" \"wait-on http-get://localhost:4200 && npm run test.e2e\" --kill-others --success first",
+    "test.e2e": "npx playwright test"
   },
   "dependencies": {
     "@angular/animations": "^19.0.0",
@@ -50,13 +48,13 @@
     "@angular/cli": "^19.0.1",
     "@angular/compiler-cli": "^19.0.0",
     "@angular/language-service": "^19.0.0",
+    "@playwright/test": "^1.54.2",
     "@types/express": "^4.17.21",
     "@types/node": "^22.9.3",
     "@types/ws": "8.5.3",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "concurrently": "^6.0.0",
-    "cypress": "^13.16.0",
     "eslint": "^8.57.0",
     "ts-loader": "^6.2.2",
     "ts-node": "^8.3.0",

@@ -1,11 +1,13 @@
-describe('Nav', () => {
-  beforeEach(() => {
-    cy.visit('/standalone/nav');
-  })
+import { test, expect } from '@playwright/test';
 
-  it('should mount the root component', () => {
-    cy.ionPageVisible('app-nav');
-
-    cy.contains('Page One');
+test.describe('Nav', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/standalone/nav');
   });
-})
+
+  test('should mount the root component', async ({ page }) => {
+    await expect(page.locator('app-nav')).toBeVisible();
+
+    await expect(page.locator('text=Page One')).toBeVisible();
+  });
+});

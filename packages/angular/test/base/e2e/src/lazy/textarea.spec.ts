@@ -1,18 +1,22 @@
-describe('Textarea', () => {
-  beforeEach(() => cy.visit('/lazy/textarea'));
+import { test, expect } from '@playwright/test';
 
-  it('should become valid', () => {
-    cy.get('#status').should('have.text', 'INVALID');
-
-    cy.get('ion-textarea').type('hello');
-
-    cy.get('#status').should('have.text', 'VALID');
+test.describe('Textarea', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/lazy/textarea');
   });
 
-  it('should update the form control value when typing', () => {
-    cy.get('#value').contains(`"textarea": ""`);
-    cy.get('ion-textarea').type('hello');
+  test('should become valid', async ({ page }) => {
+    await expect(page.locator('#status')).toHaveText('INVALID');
 
-    cy.get('#value').contains(`"textarea": "hello"`);
+    await page.locator('ion-textarea textarea').fill('hello');
+
+    await expect(page.locator('#status')).toHaveText('VALID');
+  });
+
+  test('should update the form control value when typing', async ({ page }) => {
+    await expect(page.locator('#value')).toContainText(`"textarea": ""`);
+    await page.locator('ion-textarea textarea').fill('hello');
+
+    await expect(page.locator('#value')).toContainText(`"textarea": "hello"`);
   });
 });

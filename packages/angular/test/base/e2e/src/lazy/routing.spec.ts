@@ -1,36 +1,39 @@
-describe('Routing', () => {
-  beforeEach(() => {
-    cy.visit('/lazy/router-link?ionic:mode=ios');
-  })
+import { test, expect } from '@playwright/test';
+import { ionSwipeToGoBack, ionPageVisible, ionPageHidden, ionPageDoesNotExist, testStack } from '../../utils/test-helpers';
 
-  it('should swipe and abort', () => {
-    cy.get('#routerLink').click();
-
-    cy.ionSwipeToGoBack();
-
-    cy.get('app-router-link').should('have.attr', 'aria-hidden').and('equal', 'true');
-    cy.get('app-router-link').should('have.attr', 'class').and('equal', 'ion-page ion-page-hidden');
-
-    cy.get('app-router-link-page').should('not.have.attr', 'aria-hidden');
-    cy.get('app-router-link-page').should('have.attr', 'class').and('equal', 'ion-page can-go-back');
+test.describe('Routing', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/lazy/router-link?ionic:mode=ios');
   });
 
-  it('should swipe and go back', () => {
-    cy.get('#routerLink').click();
+  test('should swipe and abort', async ({ page }) => {
+    await page.locator('#routerLink').click();
 
-    cy.ionPageHidden('app-router-link');
-    cy.ionPageVisible('app-router-link-page');
+    await ionSwipeToGoBack(page);
 
-    cy.testStack('ion-router-outlet', ['app-router-link', 'app-router-link-page']);
+    await expect(page.locator('app-router-link')).toHaveAttribute('aria-hidden', 'true');
+    await expect(page.locator('app-router-link')).toHaveAttribute('class', 'ion-page ion-page-hidden');
 
-    cy.ionSwipeToGoBack(true);
-
-    cy.ionPageVisible('app-router-link');
-    cy.ionPageDoesNotExist('app-router-link-page');
-
-    cy.testStack('ion-router-outlet', ['app-router-link']);
-
-    cy.get('app-router-link').should('not.have.attr', 'aria-hidden');
-    cy.get('app-router-link').should('have.attr', 'class').and('equal', 'ion-page');
+    await expect(page.locator('app-router-link-page')).not.toHaveAttribute('aria-hidden');
+    await expect(page.locator('app-router-link-page')).toHaveAttribute('class', 'ion-page can-go-back');
   });
-})
+
+  test('should swipe and go back', async ({ page }) => {
+    await page.locator('#routerLink').click();
+
+    await ionPageHidden(page, 'app-router-link');
+    await ionPageVisible(page, 'app-router-link-page');
+
+    await testStack(page, 'ion-router-outlet', ['app-router-link', 'app-router-link-page']);
+
+    await ionSwipeToGoBack(page, true);
+
+    await ionPageVisible(page, 'app-router-link');
+    await ionPageDoesNotExist(page, 'app-router-link-page');
+
+    await testStack(page, 'ion-router-outlet', ['app-router-link']);
+
+    await expect(page.locator('app-router-link')).not.toHaveAttribute('aria-hidden');
+    await expect(page.locator('app-router-link')).toHaveAttribute('class', 'ion-page');
+  });
+});

@@ -1,60 +1,62 @@
-describe('Providers', () => {
-  beforeEach(() => {
-    cy.visit('/lazy/providers');
+import { test, expect } from '@playwright/test';
+
+test.describe('Providers', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/lazy/providers');
   });
 
-  it('should load all providers', () => {
-    cy.get('#is-loaded').should('have.text', 'true');
-    cy.get('#is-ready').should('have.text', 'true');
-    cy.get('#is-paused').should('have.text', 'true');
-    cy.get('#is-resumed').should('have.text', 'true');
-    cy.get('#is-resized').should('have.text', 'true');
-    cy.get('#is-testing').should('have.text', 'false');
-    cy.get('#is-desktop').should('have.text', 'true');
-    cy.get('#is-mobile').should('have.text', 'false');
-    cy.get('#keyboard-height').should('have.text', '12345');
-    cy.get('#query-params').should('have.text', 'firstParam: null, firstParam: null');
+  test('should load all providers', async ({ page }) => {
+    await expect(page.locator('#is-loaded')).toHaveText('true');
+    await expect(page.locator('#is-ready')).toHaveText('true');
+    await expect(page.locator('#is-paused')).toHaveText('true');
+    await expect(page.locator('#is-resumed')).toHaveText('true');
+    await expect(page.locator('#is-resized')).toHaveText('true');
+    await expect(page.locator('#is-testing')).toHaveText('false');
+    await expect(page.locator('#is-desktop')).toHaveText('true');
+    await expect(page.locator('#is-mobile')).toHaveText('false');
+    await expect(page.locator('#keyboard-height')).toHaveText('12345');
+    await expect(page.locator('#query-params')).toHaveText('firstParam: null, firstParam: null');
   });
 
-  it('should detect testing mode', () => {
-    cy.visit('/lazy/providers?ionic:_testing=true');
+  test('should detect testing mode', async ({ page }) => {
+    await page.goto('/lazy/providers?ionic:_testing=true');
 
-    cy.get('#is-testing').should('have.text', 'true');
+    await expect(page.locator('#is-testing')).toHaveText('true');
   });
 
-  it('should get query params', () => {
-    cy.visit('/lazy/providers?firstParam=abc&secondParam=true');
+  test('should get query params', async ({ page }) => {
+    await page.goto('/lazy/providers?firstParam=abc&secondParam=true');
 
-    cy.get('#query-params').should('have.text', 'firstParam: abc, firstParam: true');
+    await expect(page.locator('#query-params')).toHaveText('firstParam: abc, firstParam: true');
   });
 
   // https://github.com/ionic-team/ionic-framework/issues/28337
-  it('should register menus correctly', () => {
-    cy.get('#set-menu-count').click();
-    cy.get('#registered-menu-count').should('have.text', '1');
+  test('should register menus correctly', async ({ page }) => {
+    await page.locator('#set-menu-count').click();
+    await expect(page.locator('#registered-menu-count')).toHaveText('1');
   });
 
-  it('should open an action sheet', () => {
-    cy.get('button#open-action-sheet').click();
+  test('should open an action sheet', async ({ page }) => {
+    await page.locator('button#open-action-sheet').click();
 
-    cy.get('ion-action-sheet').should('be.visible');
+    await expect(page.locator('ion-action-sheet')).toBeVisible();
   });
 
-  it('should open an alert', () => {
-    cy.get('button#open-alert').click();
+  test('should open an alert', async ({ page }) => {
+    await page.locator('button#open-alert').click();
 
-    cy.get('ion-alert').should('be.visible');
+    await expect(page.locator('ion-alert')).toBeVisible();
   });
 
-  it('should open a loading-indicator', () => {
-    cy.get('button#open-loading').click();
+  test('should open a loading-indicator', async ({ page }) => {
+    await page.locator('button#open-loading').click();
 
-    cy.get('ion-loading').should('be.visible');
+    await expect(page.locator('ion-loading')).toBeVisible();
   });
 
-  it('should open a picker', () => {
-    cy.get('button#open-picker').click();
+  test('should open a picker', async ({ page }) => {
+    await page.locator('button#open-picker').click();
 
-    cy.get('ion-picker-legacy').should('be.visible');
+    await expect(page.locator('ion-picker-legacy')).toBeVisible();
   });
 });

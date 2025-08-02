@@ -1,9 +1,11 @@
-describe('Router Outlet', () => {
-  beforeEach(() => {
-    cy.visit('/standalone/router-outlet');
-  })
+import { test, expect } from '@playwright/test';
 
-  it('should render a as a child page of the router outlet', () => {
-    cy.ionPageVisible('ion-router-outlet app-router-outlet');
+test.describe('Router Outlet', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/standalone/router-outlet');
   });
-})
+
+  test('should render a as a child page of the router outlet', async ({ page }) => {
+    await expect(page.locator('ion-router-outlet app-router-outlet')).toBeVisible();
+  });
+});
