@@ -13,8 +13,7 @@
     "build:ssr": "ng build --prod && ng run test-app:server:production",
     "dev:ssr": "ng run test-app:serve-ssr",
     "prerender": "ng run test-app:prerender",
-    "test": "concurrently \"npm run start -- --configuration production\" \"wait-on http-get://localhost:4200 && npm run test.e2e\" --kill-others --success first",
-    "test.e2e": "npx playwright test"
+    "test": "npx playwright test"
   },
   "dependencies": {
     "@angular/animations": "^20.0.0",

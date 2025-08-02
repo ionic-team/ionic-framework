@@ -18,7 +18,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm start',
+    command: 'npm start -- --configuration test --disable-host-check',
     url: 'http://localhost:4200',
     reuseExistingServer: !process.env['CI'],
   },
