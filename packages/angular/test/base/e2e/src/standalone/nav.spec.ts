@@ -8,6 +8,6 @@ test.describe('Nav', () => {
   test('should mount the root component', async ({ page }) => {
     await expect(page.locator('app-nav')).toBeVisible();
 
-    await expect(page.locator('text=Page One')).toBeVisible();
+    await expect(page.locator('ion-title')).toHaveText('Page One');
   });
 });
