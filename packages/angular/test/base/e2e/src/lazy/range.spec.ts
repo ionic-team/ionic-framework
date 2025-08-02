@@ -6,7 +6,7 @@ test.describe('Range', () => {
   });
 
   test('should have form control initial value', async ({ page }) => {
-    await expect(page.locator('ion-range input')).toHaveValue('5');
+    await expect(page.locator('ion-range')).toHaveJSProperty('value', 5);
   });
 
   test('should reflect Ionic form control status classes', async ({ page }) => {

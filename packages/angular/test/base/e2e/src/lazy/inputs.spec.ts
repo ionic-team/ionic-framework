@@ -89,17 +89,17 @@ test.describe('Inputs', () => {
   });
 
   test('should update values when erasing input', async ({ page }) => {
-    // Focus the input and use global keyboard to press backspace
-    await page.locator('ion-input').nth(0).locator('input').focus();
-    await page.keyboard.press('Backspace');
+    // Focus the input and press backspace to remove last character
+    await page.locator('ion-input').nth(0).locator('input').click();
+    await page.locator('ion-input').nth(0).locator('input').press('Backspace');
     // Check mirror element reflects the change
     await expect(page.locator('ion-input').nth(1)).toHaveJSProperty('value', 'some tex');
     // Check note text (Angular binding)
     await expect(page.locator('#input-note')).toHaveText('some tex');
 
-    // Focus the last OTP input and use global keyboard to press backspace
-    await page.locator('ion-input-otp input').last().focus();
-    await page.keyboard.press('Backspace');
+    // Focus the last OTP input and press backspace
+    await page.locator('ion-input-otp input').last().click();
+    await page.locator('ion-input-otp input').last().press('Backspace');
     // Check mirror element reflects the change
     await expect(page.locator('ion-input-otp').nth(1)).toHaveJSProperty('value', '123');
     // Check note text (Angular binding)

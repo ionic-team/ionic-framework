@@ -15,7 +15,7 @@ test.describe('Providers', () => {
     await expect(page.locator('#is-desktop')).toHaveText('true');
     await expect(page.locator('#is-mobile')).toHaveText('false');
     await expect(page.locator('#keyboard-height')).toHaveText('12345');
-    await expect(page.locator('#query-params')).toHaveText('firstParam: null, firstParam: null');
+    await expect(page.locator('#query-params')).toHaveText('firstParam: null, secondParam: null');
   });
 
   test('should detect testing mode', async ({ page }) => {
@@ -27,7 +27,7 @@ test.describe('Providers', () => {
   test('should get query params', async ({ page }) => {
     await page.goto('/lazy/providers?firstParam=abc&secondParam=true');
 
-    await expect(page.locator('#query-params')).toHaveText('firstParam: abc, firstParam: true');
+    await expect(page.locator('#query-params')).toHaveText('firstParam: abc, secondParam: true');
   });
 
   // https://github.com/ionic-team/ionic-framework/issues/28337

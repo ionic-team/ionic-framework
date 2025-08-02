@@ -30,7 +30,7 @@ test.describe('RouterLink', () => {
   // checking here that it is only removed from Ionic components.
   // https://github.com/ionic-team/ionic-framework/issues/20632
   test('should have tabindex="0" with a native span', async ({ page }) => {
-    await expect(page.locator('span[routerlink="/standalone/popover"]')).toHaveAttribute('tabindex', '0');
+    await expect(page.locator('span[routerlink]')).toHaveAttribute('tabindex', '0');
   });
 
   test('should not have tabindex set with an ionic button', async ({ page }) => {
