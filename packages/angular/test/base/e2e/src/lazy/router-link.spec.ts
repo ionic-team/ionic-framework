@@ -1,6 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { testForward, testRoot, testBack, testLifeCycle } from '../../utils/test-helpers';
 
+// Helper function to escape regex special characters
+function escapeRegExp(string: string): string {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 test.describe('Router Link', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/lazy/router-link?ionic:_testing=true');
@@ -19,9 +24,9 @@ test.describe('Router Link', () => {
       const expectedHash = `#${encodeURIComponent(fragment)}`;
 
       // Check that URL contains all expected parts
-      await expect(page).toHaveURL(new RegExp(expectedPath.replace(/=/g, '\\=')));
-      await expect(page).toHaveURL(new RegExp(expectedSearch.replace(/\?/g, '\\?')));
-      await expect(page).toHaveURL(new RegExp(expectedHash));
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedPath)));
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedSearch)));
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedHash)));
     });
 
     test('should return to a page with preserved query param and fragment', async ({ page }) => {
@@ -36,9 +41,9 @@ test.describe('Router Link', () => {
       const expectedSearch = `?token=${encodeURIComponent(queryParam)}`;
       const expectedHash = `#${encodeURIComponent(fragment)}`;
 
-      await expect(page).toHaveURL(new RegExp(expectedPath.replace(/=/g, '\\=')));
-      await expect(page).toHaveURL(new RegExp(expectedSearch.replace(/\?/g, '\\?')));
-      await expect(page).toHaveURL(new RegExp(expectedHash));
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedPath)));
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedSearch)));
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedHash)));
     });
 
     test('should preserve query param and fragment with defaultHref string', async ({ page }) => {
@@ -49,8 +54,8 @@ test.describe('Router Link', () => {
       const expectedSearch = '?token=ABC';
       const expectedHash = '#fragment';
 
-      await expect(page).toHaveURL(new RegExp(expectedSearch.replace(/\?/g, '\\?')));
-      await expect(page).toHaveURL(new RegExp(expectedHash));
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedSearch)));
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedHash)));
     });
   });
 
