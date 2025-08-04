@@ -17,21 +17,28 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     test('should switch the calendar header when moving to a month with a different number of days', async ({
       page,
     }) => {
-      await page.locator('.datetime-ready').waitFor();
-
       const monthYearToggle = page.locator('ion-datetime .calendar-month-year');
       const monthColumnItems = page.locator('ion-datetime .month-column ion-picker-column-option');
 
       await expect(monthYearToggle).toContainText('January 2022');
 
+      // Click to open the picker
       await monthYearToggle.click();
       await page.waitForChanges();
 
-      // Wait for the picker to be fully rendered
-      await page.locator('ion-picker').waitFor({ state: 'visible' });
+      // Wait for the picker to be open
+      await page.locator('.month-year-picker-open').waitFor();
 
-      // February
-      await monthColumnItems.nth(1).click();
+      // Wait a bit for the picker to fully load
+      await page.waitForTimeout(200);
+
+      const ionChange = await page.spyOnEvent('ionChange');
+
+      // Click on February
+      await monthColumnItems.filter({ hasText: 'February' }).click();
+
+      // Wait for changes
+      await ionChange.next();
       await page.waitForChanges();
 
       await expect(monthYearToggle).toContainText('February 2022');
@@ -43,13 +50,23 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const datetime = page.locator('ion-datetime');
       const ionChange = await page.spyOnEvent('ionChange');
 
+      // Click to open the picker
       await monthYearToggle.click();
       await page.waitForChanges();
 
-      // February
-      await monthColumnItems.nth(1).click();
+      // Wait for the picker to be open
+      await page.locator('.month-year-picker-open').waitFor();
 
+      // Wait a bit for the picker to fully load
+      await page.waitForTimeout(200);
+
+      // Click on February
+      await monthColumnItems.filter({ hasText: 'February' }).click();
+
+      // Wait for changes
       await ionChange.next();
+      await page.waitForChanges();
+
       await expect(ionChange).toHaveReceivedEventTimes(1);
       await expect(datetime).toHaveJSProperty('value', '2022-02-28');
     });
