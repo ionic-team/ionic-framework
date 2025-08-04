@@ -1,98 +1,192 @@
+@import "../themes/native/native.globals";
+@import "../themes/mixins";
+
 // Flex Utilities
-// --------------------------------------------------
-// Creates flex classes to align flex containers
-// and items
+// ------------------------------------------------------------------
+// Provides utility classes to control flexbox layout, alignment,
+// and sizing of elements. Includes responsive variants for managing
+// flex direction, alignment, justification, wrapping, growth,
+// shrinking, and ordering at different breakpoints.
 
-// Align Self
-// --------------------------------------------------
+// Align Content
+// ------------------------------------------------------------------
 
-.ion-align-self-start {
-  align-self: flex-start !important;
-}
+$align-content-values: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  between: space-between,
+  around: space-around,
+  stretch: stretch,
+);
 
-.ion-align-self-end {
-  align-self: flex-end !important;
-}
-
-.ion-align-self-center {
-  align-self: center !important;
-}
-
-.ion-align-self-stretch {
-  align-self: stretch !important;
-}
-
-.ion-align-self-baseline {
-  align-self: baseline !important;
-}
-
-.ion-align-self-auto {
-  align-self: auto !important;
-}
-
-// Flex Wrap
-// --------------------------------------------------
-
-.ion-wrap {
-  flex-wrap: wrap !important;
-}
-
-.ion-nowrap {
-  flex-wrap: nowrap !important;
-}
-
-.ion-wrap-reverse {
-  flex-wrap: wrap-reverse !important;
-}
-
-// Justify Content
-// --------------------------------------------------
-
-.ion-justify-content-start {
-  justify-content: flex-start !important;
-}
-
-.ion-justify-content-center {
-  justify-content: center !important;
-}
-
-.ion-justify-content-end {
-  justify-content: flex-end !important;
-}
-
-.ion-justify-content-around {
-  justify-content: space-around !important;
-}
-
-.ion-justify-content-between {
-  justify-content: space-between !important;
-}
-
-.ion-justify-content-evenly {
-  justify-content: space-evenly !important;
+@each $breakpoint in map-keys($screen-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    @each $key, $value in $align-content-values {
+      .ion-align-content#{$infix}-#{$key} {
+        align-content: #{$value} !important;
+      }
+    }
+  }
 }
 
 // Align Items
-// --------------------------------------------------
+// ------------------------------------------------------------------
 
-.ion-align-items-start {
-  align-items: flex-start !important;
+$align-items-values: (start, end, center, stretch, baseline);
+
+@each $breakpoint in map-keys($screen-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    @each $value in $align-items-values {
+      .ion-align-items#{$infix}-#{$value} {
+        align-items: #{$value} !important;
+      }
+    }
+  }
 }
 
-.ion-align-items-center {
-  align-items: center !important;
+// Align Self
+// ------------------------------------------------------------------
+
+$align-self-values: (start, end, center, stretch, baseline, auto);
+
+@each $breakpoint in map-keys($screen-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    @each $value in $align-self-values {
+      .ion-align-self#{$infix}-#{$value} {
+        align-self: #{$value} !important;
+      }
+    }
+  }
 }
 
-.ion-align-items-end {
-  align-items: flex-end !important;
+// Justify Content
+// ------------------------------------------------------------------
+
+$justify-content-values: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  between: space-between,
+  around: space-around,
+  evenly: space-evenly,
+);
+
+@each $breakpoint in map-keys($screen-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    @each $key, $value in $justify-content-values {
+      .ion-justify-content#{$infix}-#{$key} {
+        justify-content: #{$value} !important;
+      }
+    }
+  }
 }
 
-.ion-align-items-stretch {
-  align-items: stretch !important;
+// Flex Direction
+// ------------------------------------------------------------------
+
+$flex-direction-values: (row, row-reverse, column, column-reverse);
+
+@each $breakpoint in map-keys($screen-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    @each $value in $flex-direction-values {
+      .ion-flex#{$infix}-#{$value} {
+        flex-direction: #{$value} !important;
+      }
+    }
+  }
 }
 
-.ion-align-items-baseline {
-  align-items: baseline !important;
+// Flex Wrap
+// ------------------------------------------------------------------
+
+$flex-wrap-values: (wrap, nowrap, wrap-reverse);
+
+@each $value in $flex-wrap-values {
+  // TODO(FW-6697): remove ion-wrap, ion-nowrap, ion-wrap-reverse
+  // in favor of the new ion-flex-wrap, ion-flex-nowrap, and
+  // ion-flex-wrap-reverse classes
+  .ion-#{$value} {
+    flex-wrap: #{$value} !important;
+  }
+}
+
+@each $breakpoint in map-keys($screen-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    @each $value in $flex-wrap-values {
+      .ion-flex#{$infix}-#{$value} {
+        flex-wrap: #{$value} !important;
+      }
+    }
+  }
+}
+
+// Flex Fill
+// ------------------------------------------------------------------
+
+$flex-fill-values: (1, auto, initial, none);
+
+@each $breakpoint in map-keys($screen-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    @each $value in $flex-fill-values {
+      .ion-flex#{$infix}-#{$value} {
+        flex: #{$value} !important;
+      }
+    }
+  }
+}
+
+// Flex Grow and Shrink
+// ------------------------------------------------------------------
+
+@each $breakpoint in map-keys($screen-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    .ion-flex#{$infix}-grow-0 {
+      flex-grow: 0 !important;
+    }
+
+    .ion-flex#{$infix}-grow-1 {
+      flex-grow: 1 !important;
+    }
+
+    .ion-flex#{$infix}-shrink-0 {
+      flex-shrink: 0 !important;
+    }
+
+    .ion-flex#{$infix}-shrink-1 {
+      flex-shrink: 1 !important;
+    }
+  }
+}
+
+// Flex Order
+// ------------------------------------------------------------------
+
+@each $breakpoint in map-keys($screen-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    .ion-order#{$infix}-first {
+      order: -1 !important;
+    }
+
+    @for $i from 0 through 12 {
+      .ion-order#{$infix}-#{$i} {
+        order: #{$i} !important;
+      }
+    }
+
+    .ion-order#{$infix}-last {
+      order: 13 !important;
+    }
+  }
 }
 
 // Flex Direction
