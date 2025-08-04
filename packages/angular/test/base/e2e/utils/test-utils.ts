@@ -4,22 +4,26 @@ export async function testStack(page: Page, selector: string, expectedStack: str
   const elements = page.locator(`${selector} > *`);
   const count = await elements.count();
 
-  // Ensure we have at least the expected number of elements
-  expect(count).toBeGreaterThanOrEqual(expectedStack.length);
-
-  for (let i = 0; i < expectedStack.length; i++) {
-    const element = elements.nth(i);
-    // Check that the element tag name matches the expected component name
-    const tagName = await element.evaluate(el => el.tagName.toLowerCase());
-    expect(tagName).toBe(expectedStack[i]);
+  // Get the actual stack (tag names of child elements), filtering out non-components
+  const actualStack: string[] = [];
+  for (let i = 0; i < count; i++) {
+    const tagName = await elements.nth(i).evaluate(el => el.tagName.toLowerCase());
+    // Filter out non-component elements like 'slot', 'div', etc.
+    if (tagName.includes('-') || tagName.startsWith('app-') || tagName.startsWith('ion-')) {
+      actualStack.push(tagName);
+    }
   }
+
+  // Compare the actual stack with the expected stack
+  expect(actualStack).toEqual(expectedStack);
 }
 
 export async function testLifeCycle(page: Page, selector: string, expectedCounts: Record<string, number>) {
-  for (const [event, count] of Object.entries(expectedCounts)) {
-    // Look for text content within the specific selector
-    await expect(page.locator(selector).locator(`text=${event}: ${count}`)).toBeVisible();
-  }
+  await expect(page.locator(`${selector} #ngOnInit`)).toHaveText('1');
+  await expect(page.locator(`${selector} #ionViewWillEnter`)).toHaveText(expectedCounts.ionViewWillEnter.toString());
+  await expect(page.locator(`${selector} #ionViewDidEnter`)).toHaveText(expectedCounts.ionViewDidEnter.toString());
+  await expect(page.locator(`${selector} #ionViewWillLeave`)).toHaveText(expectedCounts.ionViewWillLeave.toString());
+  await expect(page.locator(`${selector} #ionViewDidLeave`)).toHaveText(expectedCounts.ionViewDidLeave.toString());
 }
 
 export async function ionPageVisible(page: Page, selector: string) {
@@ -39,21 +43,6 @@ export async function ionPageDoesNotExist(page: Page, selector: string) {
 
 export async function ionTabClick(page: Page, tabName: string) {
   await page.locator(`ion-tab-button`).filter({ hasText: tabName }).click();
-}
-
-export async function ionSwipeToGoBack(page: Page, shouldGoBack = false) {
-  // Simulate swipe gesture for going back
-  const viewport = page.viewportSize();
-  if (!viewport) return;
-
-  const startX = 50;
-  const endX = shouldGoBack ? viewport.width - 50 : 50;
-  const y = viewport.height / 2;
-
-  await page.mouse.move(startX, y);
-  await page.mouse.down();
-  await page.mouse.move(endX, y);
-  await page.mouse.up();
 }
 
 export async function testTabTitle(page: Page, title: string) {
@@ -104,6 +93,9 @@ export async function testUrlEquals(page: Page, url: string) {
 }
 
 export async function testForward(page: Page) {
+  // Wait for navigation to complete
+  await page.waitForTimeout(100);
+
   await testStack(page, 'ion-router-outlet', ['app-router-link', 'app-router-link-page']);
   await testLifeCycle(page, 'app-router-link-page', {
     ionViewWillEnter: 1,
@@ -114,6 +106,7 @@ export async function testForward(page: Page) {
   await expect(page.locator('app-router-link-page #canGoBack')).toHaveText('true');
 
   await page.goBack();
+  await page.waitForTimeout(100);
   await testStack(page, 'ion-router-outlet', ['app-router-link']);
   await testLifeCycle(page, 'app-router-link', {
     ionViewWillEnter: 2,
@@ -134,7 +127,7 @@ export async function testRoot(page: Page) {
   await expect(page.locator('app-router-link-page #canGoBack')).toHaveText('false');
 
   await page.goBack();
-  await page.waitForTimeout(100); // Wait for back navigation to complete
+  await page.waitForTimeout(100);
   await testStack(page, 'ion-router-outlet', ['app-router-link']);
   await testLifeCycle(page, 'app-router-link', {
     ionViewWillEnter: 1,
@@ -145,7 +138,6 @@ export async function testRoot(page: Page) {
 }
 
 export async function testBack(page: Page) {
-  // First check that we're on the router-link-page
   await testStack(page, 'ion-router-outlet', ['app-router-link-page']);
   await testLifeCycle(page, 'app-router-link-page', {
     ionViewWillEnter: 1,
@@ -155,7 +147,6 @@ export async function testBack(page: Page) {
   });
   await expect(page.locator('app-router-link-page #canGoBack')).toHaveText('false');
 
-  // Then go back
   await page.goBack();
   await page.waitForTimeout(100);
   await testStack(page, 'ion-router-outlet', ['app-router-link']);

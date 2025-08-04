@@ -132,6 +132,11 @@ test.describe('Router Link', () => {
     });
   });
 
+  // Angular sets the `tabindex` to `"0"` on any element that uses
+  // the `routerLink` directive. Ionic removes the `tabindex` from
+  // components that wrap an `a` or `button` element, so we are
+  // checking here that it is only removed from Ionic components.
+  // https://github.com/ionic-team/ionic-framework/issues/20632
   test.describe('tabindex', () => {
     test('should have tabindex="0" with a native span', async ({ page }) => {
       await expect(page.locator('#span')).toHaveAttribute('tabindex', '0');

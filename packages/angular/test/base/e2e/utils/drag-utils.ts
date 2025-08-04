@@ -1,5 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 
+// Drag an element by a given amount of pixels
 export const dragElementBy = async (
   element: Locator,
   page: Page,
@@ -21,3 +22,18 @@ export const dragElementBy = async (
   await page.mouse.move(endX, endY);
   await page.mouse.up();
 };
+
+// Simulate swipe gesture for going back
+export const ionSwipeToGoBack = async (page: Page, shouldGoBack = false) => {
+  const viewport = page.viewportSize();
+  if (!viewport) return;
+
+  const startX = 50;
+  const endX = shouldGoBack ? viewport.width - 50 : 50;
+  const y = viewport.height / 2;
+
+  await page.mouse.move(startX, y);
+  await page.mouse.down();
+  await page.mouse.move(endX, y);
+  await page.mouse.up();
+}

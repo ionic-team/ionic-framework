@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { ionSwipeToGoBack, ionPageVisible, ionPageHidden, ionPageDoesNotExist, testStack } from '../../utils/test-utils';
+import { ionSwipeToGoBack } from '../../utils/drag-utils';
+import { ionPageVisible, ionPageHidden, ionPageDoesNotExist, testStack } from '../../utils/test-utils';
 
 test.describe('Routing', () => {
   test.beforeEach(async ({ page }) => {
