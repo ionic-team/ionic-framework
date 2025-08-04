@@ -30,6 +30,8 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     test('should allow styling calendar days in grid style datetimes', async ({ page }) => {
       const datetime = page.locator('#custom-calendar-days');
 
+      await page.locator('.datetime-ready').waitFor();
+
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-custom-calendar-days`));
     });
   });

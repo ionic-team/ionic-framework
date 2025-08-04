@@ -17,6 +17,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     test('should switch the calendar header when moving to a month with a different number of days', async ({
       page,
     }) => {
+      await page.locator('.datetime-ready').waitFor();
+
       const monthYearToggle = page.locator('ion-datetime .calendar-month-year');
       const monthColumnItems = page.locator('ion-datetime .month-column ion-picker-column-option');
 
@@ -24,6 +26,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await monthYearToggle.click();
       await page.waitForChanges();
+
+      // Wait for the picker to be fully rendered
+      await page.locator('ion-picker').waitFor({ state: 'visible' });
 
       // February
       await monthColumnItems.nth(1).click();
