@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '@playwright/test';
-import { dragElementBy } from '../../utils/drag-element';
+import { dragElementBy } from '../../utils/drag-utils';
 
 test.describe('reorder-group: angular standalone', () => {
   test('should reorder the items', async ({ page }) => {
