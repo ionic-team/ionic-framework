@@ -17,6 +17,7 @@ import { matchPath } from './utils/matchPath';
 
 interface StackManagerProps {
   routeInfo: RouteInfo;
+  id?: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -46,7 +47,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     this.registerIonPage = this.registerIonPage.bind(this);
     this.transitionPage = this.transitionPage.bind(this);
     this.handlePageTransition = this.handlePageTransition.bind(this);
-    this.id = generateId('routerOutlet');
+    // Use provided id prop if available, otherwise generate one
+    this.id = props.id || generateId('routerOutlet');
+    console.log(`[StackManager] Creating new router outlet with ID: ${this.id} (${props.id ? 'explicit' : 'generated'}), received props.id: "${props.id}", pathname: ${props.routeInfo.pathname}`);
     this.prevProps = undefined;
     this.skipTransition = false;
   }
@@ -114,6 +117,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     } else {
       let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
       let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
+      
+      console.log(`[StackManager ${this.id}] Looking for view items:`);
+      console.log(`[StackManager ${this.id}] - enteringViewItem:`, enteringViewItem ? `${enteringViewItem.id}(outlet:${enteringViewItem.outletId}, path:${enteringViewItem.routeData?.childProps?.path})` : 'null');
+      console.log(`[StackManager ${this.id}] - leavingViewItem:`, leavingViewItem ? `${leavingViewItem.id}(outlet:${leavingViewItem.outletId}, path:${leavingViewItem.routeData?.childProps?.path})` : 'null');
 
       /**
        * If we don't have a leaving view item, but the route info indicates
@@ -144,12 +151,14 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
       // Match the route element to render
       const enteringRoute = findRouteByRouteInfo(this.ionRouterOutlet?.props.children, routeInfo) as React.ReactElement;
+      console.log(`[StackManager ${this.id}] Found route for ${routeInfo.pathname}: ${enteringRoute?.props?.path || 'no-path'} (element: ${enteringRoute?.props?.element?.type?.name || 'unknown'})`);
 
       /**
        * If we already have a view item for this route, update its element.
        * Otherwise, create a new view item for the route.
        */
-      if (enteringViewItem) {
+      if (enteringViewItem && enteringRoute) {
+        // Update existing view item
         enteringViewItem.reactElement = enteringRoute;
       } else if (enteringRoute) {
         enteringViewItem = this.context.createViewItem(this.id, enteringRoute, routeInfo);
@@ -178,7 +187,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
            * (like tab navigation), we prevent a  redundant transition in this
            * outlet to avoid flickering.
            */
-          if (enteringViewItem.routeData.match.pathname !== routeInfo.pathname) {
+          if (enteringViewItem.routeData.match?.pathname !== routeInfo.pathname) {
             return;
           }
         }
@@ -197,9 +206,11 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
          * If the entering view is already visible and the leaving view is not, the transition does not need to occur.
          */
         if (
+          enteringViewItem.ionPageElement &&
           isViewVisible(enteringViewItem.ionPageElement) &&
           leavingViewItem !== undefined &&
-          !isViewVisible(leavingViewItem.ionPageElement!)
+          leavingViewItem.ionPageElement &&
+          !isViewVisible(leavingViewItem.ionPageElement)
         ) {
           return;
         }
@@ -220,6 +231,28 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
          * /tabs/tab-1, we need to transition the /tabs page element into the view.
          */
         this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
+      } else if (enteringViewItem && !enteringViewItem.ionPageElement) {
+        /**
+         * We have a view item but no page element yet. This can happen during
+         * initial page load with nested routes where the view item is created
+         * but the component hasn't rendered yet.
+         *
+         * Schedule a retry in the next tick to allow the component to render.
+         */
+        setTimeout(() => {
+          if (enteringViewItem && enteringViewItem.ionPageElement) {
+            this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
+          }
+        }, 0);
+      } else if (!enteringViewItem && !enteringRoute) {
+        /**
+         * No view item and no route found. This can happen during initial page load
+         * with nested routes where the nested router outlet hasn't rendered its
+         * children yet. Schedule a retry to allow nested routes to be processed.
+         */
+        setTimeout(() => {
+          this.handlePageTransition(routeInfo);
+        }, 0);
       } else if (leavingViewItem && !enteringRoute && !enteringViewItem) {
         /**
          * If we have a leavingView but no entering view/route, we are probably
@@ -530,6 +563,7 @@ export default StackManager;
 /**
  * Finds the `<Route />` node matching the current route info.
  * If no `<Route />` can be matched, a fallback node is returned.
+ * Routes are prioritized by specificity (most specific first).
  *
  * @param node The root node to search for `<Route />` nodes.
  * @param routeInfo The route information to match against.
@@ -540,21 +574,75 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo) {
 
   // `<Route />` nodes are rendered inside of a <Routes /> node
   const routesNode = findRoutesNode(node) ?? node;
+  
+  // Collect all route children
+  const routeChildren = React.Children.toArray(routesNode).filter(
+    (child): child is React.ReactElement => 
+      React.isValidElement(child) && child.type === Route
+  );
 
-  console.log('Looking for route by route info', routeInfo);
-  for (const child of React.Children.toArray(routesNode) as React.ReactElement[]) {
-    // Check if the child is a `<Route />` node
-    if (child.type === Route) {
-      const match = matchPath({
-        pathname: routeInfo.pathname,
-        componentProps: child.props,
-      });
+  // Sort routes by specificity (most specific first)
+  const sortedRoutes = routeChildren.sort((a, b) => {
+    const pathA = a.props.path || '';
+    const pathB = b.props.path || '';
+    
+    // Index routes come first
+    if (a.props.index && !b.props.index) return -1;
+    if (!a.props.index && b.props.index) return 1;
+    
+    // Wildcard-only routes (*) should come LAST
+    const aIsWildcardOnly = pathA === '*';
+    const bIsWildcardOnly = pathB === '*';
+    
+    if (!aIsWildcardOnly && bIsWildcardOnly) return -1;
+    if (aIsWildcardOnly && !bIsWildcardOnly) return 1;
+    
+    // Exact matches (no wildcards/params) come before wildcard/param routes
+    const aHasWildcard = pathA.includes('*') || pathA.includes(':');
+    const bHasWildcard = pathB.includes('*') || pathB.includes(':');
+    
+    if (!aHasWildcard && bHasWildcard) return -1;
+    if (aHasWildcard && !bHasWildcard) return 1;
+    
+    // Among routes with same wildcard status, longer paths are more specific
+    if (pathA.length !== pathB.length) {
+      return pathB.length - pathA.length;
+    }
+    
+    return 0;
+  });
 
-      if (match) {
-        matchedNode = child;
-        console.log('Found matching child', child);
-        break;
-      }
+  // For nested routes, we need to extract the relative path segment
+  // that this outlet should be responsible for matching
+  let pathnameToMatch = routeInfo.pathname;
+  
+  // Simple heuristic: if we have nested routes (path doesn't start with '/'),
+  // try to extract the last segment for matching
+  const hasRelativeRoutes = sortedRoutes.some(r => r.props.path && !r.props.path.startsWith('/'));
+  if (hasRelativeRoutes && routeInfo.pathname.includes('/')) {
+    const pathSegments = routeInfo.pathname.split('/').filter(Boolean);
+    if (pathSegments.length > 1) {
+      // For nested routes, use just the last segment
+      pathnameToMatch = pathSegments[pathSegments.length - 1];
+      console.log(`[findRouteByRouteInfo] Adjusted pathname for nested matching: ${routeInfo.pathname} → ${pathnameToMatch}`);
+    }
+  }
+
+  // Find the first matching route
+  console.log(`[findRouteByRouteInfo] Trying to match ${pathnameToMatch} against routes:`, 
+    sortedRoutes.map(r => `${r.props.path || '(index)'} ${r.props.index ? '(index)' : ''}`));
+  
+  for (const child of sortedRoutes) {
+    const match = matchPath({
+      pathname: pathnameToMatch,
+      componentProps: child.props,
+    });
+
+    console.log(`[findRouteByRouteInfo] Route ${child.props.path || '(index)'} ${child.props.index ? '(index)' : ''} - match:`, !!match);
+    
+    if (match) {
+      matchedNode = child;
+      break;
     }
   }
 
@@ -562,20 +650,12 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo) {
     return matchedNode;
   }
 
-  // If we haven't found a node
-  // try to find one that doesn't have a path prop, that will be our not found route
-  for (const child of React.Children.toArray(routesNode) as React.ReactElement[]) {
-    if (child.type === Route) {
-      if (!child.props.path) {
-        fallbackNode = child;
-        console.log('Found fallback child', child);
-        break;
-      }
+  // If we haven't found a node, try to find one that doesn't have a path prop (fallback route)
+  for (const child of routeChildren) {
+    if (!child.props.path) {
+      fallbackNode = child;
+      break;
     }
-  }
-
-  if (!matchedNode && !fallbackNode) {
-    console.log('No match found at all, sad times :(');
   }
 
   return matchedNode ?? fallbackNode;
