@@ -28,17 +28,19 @@ export async function testLifeCycle(page: Page, selector: string, expectedCounts
 
 export async function ionPageVisible(page: Page, selector: string) {
   await expect(page.locator(selector)).toBeVisible();
+  await expect(page.locator(selector)).toHaveClass(/ion-page/);
+  await expect(page.locator(selector)).not.toHaveClass(/ion-page-hidden/);
+  await expect(page.locator(selector)).not.toHaveClass(/ion-page-invisible/);
   await expect(page.locator(selector)).not.toHaveAttribute('aria-hidden', 'true');
 }
 
 export async function ionPageHidden(page: Page, selector: string) {
+  await expect(page.locator(selector)).toHaveClass(/ion-page-hidden/);
   await expect(page.locator(selector)).toHaveAttribute('aria-hidden', 'true');
 }
 
 export async function ionPageDoesNotExist(page: Page, selector: string) {
-  // Check that no visible elements with this selector exist
-  const visibleElements = page.locator(`${selector}:visible`);
-  await expect(visibleElements).toHaveCount(0);
+  await expect(page.locator(selector)).toHaveCount(0);
 }
 
 export async function ionTabClick(page: Page, tabName: string) {
