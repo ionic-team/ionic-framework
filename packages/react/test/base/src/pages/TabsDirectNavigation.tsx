@@ -86,8 +86,8 @@ const TabsDirectNavigation: React.FC = () => {
           <IonIcon icon={searchOutline}></IonIcon>
           <IonLabel>Search</IonLabel>
         </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
+      </IonTabBar>
+    </IonTabs>
   );
 };
 
