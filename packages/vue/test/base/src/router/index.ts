@@ -87,6 +87,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Range.vue')
   },
   {
+    path: '/reorder-group',
+    component: () => import('@/views/ReorderGroup.vue')
+  },
+  {
     path: '/nested',
     component: () => import('@/views/RouterOutlet.vue'),
     children: [

@@ -46,6 +46,9 @@ const Main: React.FC<MainProps> = () => {
           <IonItem routerLink="/inputs">
             <IonLabel>Inputs</IonLabel>
           </IonItem>
+          <IonItem routerLink="/reorder-group">
+            <IonLabel>Reorder Group</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
