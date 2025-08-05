@@ -86,7 +86,9 @@ configs({ modes: ['ios', 'md', 'ionic-md'], palettes: ['light', 'dark'] }).forEa
       await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-icon-buttons`));
     });
 
-    test('should not have visual regressions with buttons with icons and text', async ({ page }) => {
+    test('should not have visual regressions with buttons with icons and text', async ({ page, skip }) => {
+      skip.browser('webkit', 'Safari does not consistently render overflowing text in a toolbar with icons and text.');
+
       await page.setContent(
         `
           <ion-header>
@@ -216,6 +218,10 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
           config
         );
 
+        // Wait for images to be visible
+        await page.locator('img').first().waitFor({ state: 'visible' });
+        await page.locator('ion-img').first().waitFor({ state: 'visible' });
+
         const header = page.locator('ion-header');
         await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-slotted-images`));
       });
@@ -237,6 +243,10 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
           `,
           config
         );
+
+        // Wait for images to be visible
+        await page.locator('img').first().waitFor({ state: 'visible' });
+        await page.locator('ion-img').first().waitFor({ state: 'visible' });
 
         const header = page.locator('ion-header');
         await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-nested-slotted-images`));

@@ -95,6 +95,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         el.separators = [2, 3];
       });
 
+      await page.waitForChanges();
+
       await expect(await hasSeparatorAfter(page, 0)).toBe(false);
       await expect(await hasSeparatorAfter(page, 1)).toBe(true);
       await expect(await hasSeparatorAfter(page, 2)).toBe(true);

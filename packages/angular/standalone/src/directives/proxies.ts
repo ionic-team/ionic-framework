@@ -1784,20 +1784,40 @@ export class IonReorderGroup {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionItemReorder']);
+    proxyOutputs(this, this.el, ['ionItemReorder', 'ionReorderStart', 'ionReorderMove', 'ionReorderEnd']);
   }
 }
 
 
 import type { ItemReorderEventDetail as IIonReorderGroupItemReorderEventDetail } from '@ionic/core/components';
+import type { ReorderMoveEventDetail as IIonReorderGroupReorderMoveEventDetail } from '@ionic/core/components';
+import type { ReorderEndEventDetail as IIonReorderGroupReorderEndEventDetail } from '@ionic/core/components';
 
 export declare interface IonReorderGroup extends Components.IonReorderGroup {
   /**
-   * Event that needs to be listened to in order to complete the reorder action.
+   * Event that needs to be listened to in order to complete the reorder action. @deprecated Use `ionReorderEnd` instead. If you are accessing
+`event.detail.from` or `event.detail.to` and relying on them
+being different you should now add checks as they are always emitted
+in `ionReorderEnd`, even when they are the same.
+   */
+  ionItemReorder: EventEmitter<CustomEvent<IIonReorderGroupItemReorderEventDetail>>;
+  /**
+   * Event that is emitted when the reorder gesture starts.
+   */
+  ionReorderStart: EventEmitter<CustomEvent<void>>;
+  /**
+   * Event that is emitted as the reorder gesture moves.
+   */
+  ionReorderMove: EventEmitter<CustomEvent<IIonReorderGroupReorderMoveEventDetail>>;
+  /**
+   * Event that is emitted when the reorder gesture ends.
+The from and to properties are always available, regardless of
+if the reorder gesture moved the item. If the item did not change
+from its start position, the from and to properties will be the same.
 Once the event has been emitted, the `complete()` method then needs
 to be called in order to finalize the reorder action.
    */
-  ionItemReorder: EventEmitter<CustomEvent<IIonReorderGroupItemReorderEventDetail>>;
+  ionReorderEnd: EventEmitter<CustomEvent<IIonReorderGroupReorderEndEventDetail>>;
 }
 
 
