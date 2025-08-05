@@ -26,7 +26,6 @@ describe('Tabs Direct Navigation', () => {
   it('should update tab selection when navigating between tabs', () => {
     cy.visit('/tabs-direct-navigation/home');
     cy.get('[data-testid="home-tab"]').should('have.class', 'tab-selected');
-    
     cy.get('[data-testid="radio-tab"]').click();
     cy.get('[data-testid="radio-tab"]').should('have.class', 'tab-selected');
     cy.get('[data-testid="home-tab"]').should('not.have.class', 'tab-selected');

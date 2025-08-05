@@ -44,7 +44,7 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route path="/" component={Main} />
+        <Route exact path="/" component={Main} />
         <Route path="/overlay-hooks" component={OverlayHooks} />
         <Route path="/overlay-components" component={OverlayComponents} />
         <Route path="/overlay-components/nested-popover" component={IonPopoverNested} />
