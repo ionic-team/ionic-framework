@@ -87,7 +87,7 @@ export class ProvidersComponent {
     });
     const firstQuery = platform.getQueryParam('firstParam');
     const secondQuery = platform.getQueryParam('secondParam');
-    this.queryParams = `firstParam: ${firstQuery}, firstParam: ${secondQuery}`;
+    this.queryParams = `firstParam: ${firstQuery}, secondParam: ${secondQuery}`;
 
     this.isDesktop = platform.is('desktop');
     this.isMobile = platform.is('mobile');

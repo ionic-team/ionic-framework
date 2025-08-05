@@ -32,6 +32,10 @@ runs:
       run: npm install
       shell: bash
       working-directory: ./packages/angular/test/build/${{ inputs.app }}
+    - name: Install Playwright Browsers
+      run: npx playwright install
+      shell: bash
+      working-directory: ./packages/angular/test/build/${{ inputs.app }}
     - name: Sync Built Changes
       run: npm run sync
       shell: bash

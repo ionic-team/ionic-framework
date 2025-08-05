@@ -1,66 +1,77 @@
-describe('overlays - keepContentsMounted', () => {
-  describe('modal', () => {
-    it('should not mount component if false', () => {
-      cy.visit('/lazy/modal-inline');
+import { test, expect } from '@playwright/test';
 
-      cy.get('ion-modal ion-content').should('not.exist');
+test.describe('Keep Contents Mounted', () => {
+  test.describe('Modal', () => {
+    test('should not mount component if false', async ({ page }) => {
+      await page.goto('/lazy/modal-inline');
+
+      await expect(page.locator('ion-modal ion-content')).not.toBeVisible();
     });
 
-    it('should mount component if true', () => {
-      cy.visit('/lazy/keep-contents-mounted');
+    test('should mount component if true', async ({ page }) => {
+      await page.goto('/lazy/keep-contents-mounted');
 
-      cy.get('ion-modal ion-content').should('exist');
+      // Check that the content exists in the DOM (mounted) but is not visible
+      await expect(page.locator('ion-modal ion-content')).toBeAttached();
+      await expect(page.locator('ion-modal ion-content')).not.toBeVisible();
     });
 
-    it('should keep component mounted after dismissing if true', () => {
-      cy.visit('/lazy/keep-contents-mounted');
+    test('should keep component mounted after dismissing if true', async ({ page }) => {
+      await page.goto('/lazy/keep-contents-mounted');
 
-      cy.get('#open-modal').click();
+      await page.locator('#open-modal').click();
 
-      cy.get('ion-modal ion-content').should('exist');
+      await expect(page.locator('ion-modal ion-content')).toBeVisible();
 
-      cy.get('ion-modal ion-button').click();
+      await page.locator('ion-modal ion-button').click();
 
-      cy.get('ion-modal')
-        .should('not.be.visible')
-        .should('have.class', 'overlay-hidden');
+      await expect(page.locator('ion-modal')).not.toBeVisible();
+      await expect(page.locator('ion-modal')).toHaveClass(/overlay-hidden/);
 
-      cy.get('ion-modal ion-content').should('exist');
+      // Content should be mounted but not visible after dismissal
+      await expect(page.locator('ion-modal ion-content')).toBeAttached();
+      await expect(page.locator('ion-modal ion-content')).not.toBeVisible();
     });
 
-    it('should has ion-delegate-host on mount', () => {
-      cy.visit('/lazy/keep-contents-mounted');
+    test('should have ion-delegate-host on mount', async ({ page }) => {
+      await page.goto('/lazy/keep-contents-mounted');
 
-      cy.get('ion-modal .ion-delegate-host').should('exist');
+      // Check that the delegate host exists in the DOM (mounted) but is not visible
+      await expect(page.locator('ion-modal .ion-delegate-host')).toBeAttached();
+      await expect(page.locator('ion-modal .ion-delegate-host')).not.toBeVisible();
     });
-  })
-  describe('popover', () => {
-    it('should not mount component if false', () => {
-      cy.visit('/lazy/popover-inline');
+  });
 
-      cy.get('ion-popover ion-content').should('not.exist');
-    });
+  test.describe('Popover', () => {
+    test('should not mount component if false', async ({ page }) => {
+      await page.goto('/lazy/popover-inline');
 
-    it('should mount component if true', () => {
-      cy.visit('/lazy/keep-contents-mounted');
-
-      cy.get('ion-popover ion-content').should('exist');
+      await expect(page.locator('ion-popover ion-content')).not.toBeVisible();
     });
 
-    it('should keep component mounted after dismissing if true', () => {
-      cy.visit('/lazy/keep-contents-mounted');
+    test('should mount component if true', async ({ page }) => {
+      await page.goto('/lazy/keep-contents-mounted');
 
-      cy.get('#open-popover').click();
+      // Check that the content exists in the DOM (mounted) but is not visible
+      await expect(page.locator('ion-popover ion-content')).toBeAttached();
+      await expect(page.locator('ion-popover ion-content')).not.toBeVisible();
+    });
 
-      cy.get('ion-popover ion-content').should('exist');
+    test('should keep component mounted after dismissing if true', async ({ page }) => {
+      await page.goto('/lazy/keep-contents-mounted');
 
-      cy.get('ion-popover ion-button').click();
+      await page.locator('#open-popover').click();
 
-      cy.get('ion-popover')
-        .should('not.be.visible')
-        .should('have.class', 'overlay-hidden');
+      await expect(page.locator('ion-popover ion-content')).toBeVisible();
 
-      cy.get('ion-popover ion-content').should('exist');
+      await page.locator('ion-popover ion-button').click();
+
+      await expect(page.locator('ion-popover')).not.toBeVisible();
+      await expect(page.locator('ion-popover')).toHaveClass(/overlay-hidden/);
+
+      // Content should be mounted but not visible after dismissal
+      await expect(page.locator('ion-popover ion-content')).toBeAttached();
+      await expect(page.locator('ion-popover ion-content')).not.toBeVisible();
     });
   });
 });
