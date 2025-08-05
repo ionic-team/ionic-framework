@@ -75,7 +75,11 @@
   @include margin(null, null, calc(globals.$ion-space-200 + globals.$ion-font-size-300), null);
 }
 
-.range-bar-active {
+.range-bar {
+  background: globals.$ion-bg-neutral-subtle-default;
+}
+
+.range-bar.range-bar-active {
   bottom: 0;
 
   width: auto;
@@ -216,11 +220,6 @@
 .range-knob-handle.ion-focused .range-knob {
   @include globals.focused-state();
 }
-
-.range-bar {
-  background: globals.$ion-bg-neutral-subtle-default;
-}
-
 
 // Range Pressed
 // ----------------------------------------------------------------
