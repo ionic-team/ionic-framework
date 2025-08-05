@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonTitle, IonToolbar, IonPage } from '@ionic/react';
 import { heart, heartCircleOutline, logoApple, logoTwitter, personCircleOutline, star, starOutline, trash } from 'ionicons/icons';
 
 interface IconsProps {}
@@ -14,10 +14,10 @@ const Icons: React.FC<IconsProps> = () => {
   }
 
   return (
-    <>
+    <IonPage>
       <IonHeader translucent={true}>
         <IonToolbar>
-          <IonButtons>
+          <IonButtons slot="start">
             <IonBackButton></IonBackButton>
           </IonButtons>
           <IonTitle>Icons</IonTitle>
@@ -88,7 +88,7 @@ const Icons: React.FC<IconsProps> = () => {
           </IonItem>
         </IonList>
       </IonContent>
-    </>
+    </IonPage>
   );
 };
 

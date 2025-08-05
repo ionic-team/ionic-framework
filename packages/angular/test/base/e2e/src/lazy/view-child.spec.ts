@@ -1,14 +1,15 @@
-describe('View Child', () => {
-  beforeEach(() => {
-    cy.visit('/lazy/view-child');
-  })
+import { test, expect } from '@playwright/test';
 
-  it('should get a reference to all children', () => {
+test.describe('View Child', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/lazy/view-child');
+  });
+
+  test('should get a reference to all children', async ({ page }) => {
     // button should be red
-    cy.get('#color-button').should('have.class', 'ion-color-danger');
+    await expect(page.locator('#color-button')).toHaveClass(/ion-color-danger/);
 
     // tabs should be found
-    cy.get('#tabs-result').should('have.text', 'all found');
+    await expect(page.locator('#tabs-result')).toHaveText('all found');
   });
 });
-

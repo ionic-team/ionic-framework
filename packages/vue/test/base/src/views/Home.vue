@@ -29,6 +29,9 @@
         <ion-item router-link="/navigation" id="navigation">
           <ion-label>Navigation</ion-label>
         </ion-item>
+        <ion-item router-link="/reorder-group">
+          <ion-label>Reorder Group</ion-label>
+        </ion-item>
         <ion-item router-link="/routing" id="routing">
           <ion-label>Routing</ion-label>
         </ion-item>

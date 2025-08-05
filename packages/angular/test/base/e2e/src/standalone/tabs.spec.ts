@@ -1,47 +1,49 @@
-describe('Tabs', () => {
-  describe('Without IonRouterOutlet', () => {
-    beforeEach(() => {
-      cy.visit('/standalone/tabs');
+import { test, expect } from '@playwright/test';
+
+test.describe('Tabs', () => {
+  test.describe('Without IonRouterOutlet', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/standalone/tabs');
     });
-  
-    it('should redirect to the default tab', () => {
-      cy.get('app-tab-one').should('be.visible');
-      cy.contains('Tab 1');
+
+    test('should redirect to the default tab', async ({ page }) => {
+      await expect(page.locator('app-tab-one')).toBeVisible();
+      await expect(page.locator('text=Tab 1')).toBeVisible();
     });
-  
-    it('should render new content when switching tabs', () => {
-      cy.get('#tab-button-tab-two').click();
-      cy.get('app-tab-two').should('be.visible');
-      cy.contains('Tab 2');
+
+    test('should render new content when switching tabs', async ({ page }) => {
+      await page.locator('#tab-button-tab-two').click();
+      await expect(page.locator('app-tab-two')).toBeVisible();
+      await expect(page.locator('text=Tab 2')).toBeVisible();
     });
-  
+
     // Issue: https://github.com/ionic-team/ionic-framework/issues/28417
-    it('parentOutlet should be defined', () => {
-      cy.get('#parent-outlet span').should('have.text', 'true');
+    test('parentOutlet should be defined', async ({ page }) => {
+      await expect(page.locator('#parent-outlet span')).toHaveText('true');
     });
   });
 
-  describe('Without IonRouterOutlet', () => {
-    beforeEach(() => {
-      cy.visit('/standalone/tabs-basic');
-    })
-
-    it('should show correct tab when clicking the tab button', () => {
-      cy.get('ion-tab[tab="tab1"]').should('be.visible');
-      cy.get('ion-tab[tab="tab2"]').should('not.be.visible');
-
-      cy.get('ion-tab-button[tab="tab2"]').click();
-
-      cy.get('ion-tab[tab="tab1"]').should('not.be.visible');
-      cy.get('ion-tab[tab="tab2"]').should('be.visible');
+  test.describe('Without IonRouterOutlet', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/standalone/tabs-basic');
     });
 
-    it('should not change the URL when clicking the tab button', () => {
-      cy.url().should('include', '/tabs-basic');
+    test('should show correct tab when clicking the tab button', async ({ page }) => {
+      await expect(page.locator('ion-tab[tab="tab1"]')).toBeVisible();
+      await expect(page.locator('ion-tab[tab="tab2"]')).not.toBeVisible();
 
-      cy.get('ion-tab-button[tab="tab2"]').click();
+      await page.locator('ion-tab-button[tab="tab2"]').click();
 
-      cy.url().should('include', '/tabs-basic');
+      await expect(page.locator('ion-tab[tab="tab1"]')).not.toBeVisible();
+      await expect(page.locator('ion-tab[tab="tab2"]')).toBeVisible();
+    });
+
+    test('should not change the URL when clicking the tab button', async ({ page }) => {
+      await expect(page).toHaveURL(/.*\/tabs-basic/);
+
+      await page.locator('ion-tab-button[tab="tab2"]').click();
+
+      await expect(page).toHaveURL(/.*\/tabs-basic/);
     });
   });
 });

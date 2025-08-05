@@ -1,35 +1,37 @@
-describe('Overlay Controllers', () => {
-  beforeEach(() => {
-    cy.visit('/standalone/overlay-controllers');
+import { test, expect } from '@playwright/test';
+
+test.describe('Overlay Controllers', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/standalone/overlay-controllers');
   });
 
-  it('should present an alert', () => {
-    cy.get('button#open-alert').click();
+  test('should present an alert', async ({ page }) => {
+    await page.locator('button#open-alert').click();
 
-    cy.get('ion-alert').should('be.visible');
+    await expect(page.locator('ion-alert')).toBeVisible();
   });
 
-  it('should present a loading indicator', () => {
-    cy.get('button#open-loading').click();
+  test('should present a loading indicator', async ({ page }) => {
+    await page.locator('button#open-loading').click();
 
-    cy.get('ion-loading').should('be.visible');
+    await expect(page.locator('ion-loading')).toBeVisible();
   });
 
-  it('should present a modal', () => {
-    cy.get('button#open-modal').click();
+  test('should present a modal', async ({ page }) => {
+    await page.locator('button#open-modal').click();
 
-    cy.get('ion-modal app-dialog-content').should('be.visible');
+    await expect(page.locator('ion-modal app-dialog-content')).toBeVisible();
   });
 
-  it('should present a picker', () => {
-    cy.get('button#open-picker').click();
+  test('should present a picker', async ({ page }) => {
+    await page.locator('button#open-picker').click();
 
-    cy.get('ion-picker-legacy .picker-button').should('be.visible');
+    await expect(page.locator('ion-picker-legacy .picker-button')).toBeVisible();
   });
 
-  it('should present a popover', () => {
-    cy.get('button#open-popover').click();
+  test('should present a popover', async ({ page }) => {
+    await page.locator('button#open-popover').click();
 
-    cy.get('ion-popover app-dialog-content').should('be.visible');
+    await expect(page.locator('ion-popover app-dialog-content')).toBeVisible();
   });
 });

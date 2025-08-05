@@ -1,20 +1,20 @@
-describe('Modal Nav Params', () => {
+import { test, expect } from '@playwright/test';
 
-  beforeEach(() => {
-    cy.visit('/lazy/version-test/modal-nav-params');
+test.describe('Modal Nav Params', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/lazy/version-test/modal-nav-params');
   });
 
-  it('should assign the rootParams when presented in a modal multiple times', () => {
-    cy.contains('Open Modal').click();
-    cy.get('ion-modal').should('exist').should('be.visible');
-    cy.get('ion-modal').contains('OK');
+  test('should assign the rootParams when presented in a modal multiple times', async ({ page }) => {
+    await page.locator('text=Open Modal').click();
+    await expect(page.locator('ion-modal')).toBeVisible();
+    await expect(page.locator('ion-modal')).toContainText('OK');
 
-    cy.contains("Close").click();
-    cy.get('ion-modal').should('not.be.visible');
+    await page.locator('text=Close').click();
+    await expect(page.locator('ion-modal')).not.toBeVisible();
 
-    cy.contains('Open Modal').click();
-    cy.get('ion-modal').should('exist').should('be.visible');
-    cy.get('ion-modal').contains('OK').should('exist');
+    await page.locator('text=Open Modal').click();
+    await expect(page.locator('ion-modal')).toBeVisible();
+    await expect(page.locator('ion-modal')).toContainText('OK');
   });
-
 });

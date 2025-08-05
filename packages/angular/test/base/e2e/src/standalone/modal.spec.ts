@@ -1,12 +1,14 @@
-describe('Modals: Inline', () => {
-  beforeEach(() => {
-    cy.visit('/standalone/modal');
+import { test, expect } from '@playwright/test';
+
+test.describe('Modals: Inline', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/standalone/modal');
   });
 
-  it('should render modal', () => {
-    cy.get('button#open-modal').click();
+  test('should render modal', async ({ page }) => {
+    await page.locator('button#open-modal').click();
 
-    cy.get('ion-modal').should('be.visible');
-    cy.get('ion-modal #modal-content').should('exist');
+    await expect(page.locator('ion-modal')).toBeVisible();
+    await expect(page.locator('ion-modal #modal-content')).toBeVisible();
   });
 });
