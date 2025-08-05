@@ -17,7 +17,7 @@ const Icons: React.FC<IconsProps> = () => {
     <IonPage>
       <IonHeader translucent={true}>
         <IonToolbar>
-          <IonButtons>
+          <IonButtons slot="start">
             <IonBackButton></IonBackButton>
           </IonButtons>
           <IonTitle>Icons</IonTitle>
