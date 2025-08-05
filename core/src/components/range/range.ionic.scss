@@ -119,11 +119,11 @@
 
   background: transparent;
 
+  color: globals.$ion-text-default;
+
   font-size: globals.$ion-font-size-300;
 
   text-align: center;
-
-  color: globals.$ion-text-default;
 }
 
 .range-knob {
@@ -145,9 +145,10 @@
   }
 
   .range-knob {
-    background: globals.$ion-bg-input-disabled;
     border-color: globals.$ion-border-input-default;
-  }   
+
+    background: globals.$ion-bg-input-disabled;
+  }
 }
 
 // Range Label Placement - Start
@@ -224,6 +225,6 @@
 // Range Pressed
 // ----------------------------------------------------------------
 .range-knob-handle.ion-activated .range-knob,
-.range-knob-handle.range-knob-pressed .range-knob{
+.range-knob-handle.range-knob-pressed .range-knob {
   background: globals.$ion-bg-input-press;
 }
