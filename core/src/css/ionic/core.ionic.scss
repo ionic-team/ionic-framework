@@ -290,7 +290,7 @@ ion-card-header.ion-color .ion-inherit-color {
 // The toggle icon is nested in the accordion item so we need to
 // style it from a global level.
 ion-accordion > [slot="header"] .ion-accordion-toggle-icon {
-  color: globals.$ion-primitives-neutral-1000;
+  color: globals.$ion-icon-default;
   font-size: globals.$ion-scale-600;
 }
 
