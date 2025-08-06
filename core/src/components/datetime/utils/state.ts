@@ -207,6 +207,7 @@ export const getHighlightStyles = (
       return {
         textColor: matchingHighlight.textColor,
         backgroundColor: matchingHighlight.backgroundColor,
+        border: matchingHighlight.border,
       } as DatetimeHighlightStyle;
     }
   } else {

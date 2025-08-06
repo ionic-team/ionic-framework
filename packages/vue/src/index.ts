@@ -84,6 +84,7 @@ export {
   InputOtpChangeEventDetail,
   InputOtpCompleteEventDetail,
   InputOtpInputEventDetail,
+  // TODO(FW-6590): Remove the next two lines once the deprecated event is removed
   ItemReorderEventDetail,
   ItemReorderCustomEvent,
   ItemSlidingCustomEvent,
@@ -107,6 +108,10 @@ export {
   RangeKnobMoveEndEventDetail,
   RefresherCustomEvent,
   RefresherEventDetail,
+  ReorderMoveCustomEvent,
+  ReorderMoveEventDetail,
+  ReorderEndCustomEvent,
+  ReorderEndEventDetail,
   RouterEventDetail,
   RouterCustomEvent,
   ScrollBaseCustomEvent,
