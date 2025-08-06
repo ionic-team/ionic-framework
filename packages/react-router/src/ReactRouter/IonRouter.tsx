@@ -88,6 +88,17 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     if (leavingUrl !== location.pathname) {
       // An external navigation was triggered.
       if (!incomingRouteParams.current) {
+        // Determine if the destination is a tab route by checking if it matches
+        // the pattern of tab routes (containing /tabs/ in the path)
+        const isTabRoute = /\/tabs\//.test(location.pathname);
+        let tabToUse = isTabRoute ? currentTab.current : undefined;
+        
+        // If we're leaving tabs entirely, clear the current tab
+        if (!isTabRoute && currentTab.current) {
+          currentTab.current = undefined;
+          tabToUse = undefined;
+        }
+        
         /**
          * A `REPLACE` action can be triggered by React Router's
          * `<Redirect />` component.
@@ -96,7 +107,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
           incomingRouteParams.current = {
             routeAction: 'replace',
             routeDirection: 'none',
-            tab: currentTab.current,
+            tab: tabToUse,
           };
         }
         /**
@@ -117,7 +128,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
             incomingRouteParams.current = {
               routeAction: 'pop',
               routeDirection: 'none',
-              tab: currentTab.current,
+              tab: tabToUse,
             };
           }
         }
@@ -127,12 +138,17 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
             routeAction: 'push',
             routeDirection: location.state?.direction || 'forward',
             routeOptions: location.state?.routerOptions,
-            tab: currentTab.current,
+            tab: tabToUse,
           };
         }
       }
 
       let routeInfo: RouteInfo;
+
+      // If we're navigating away from tabs to a non-tab route, clear the current tab
+      if (!/\/tabs\//.test(location.pathname) && currentTab.current) {
+        currentTab.current = undefined;
+      }
 
       /**
        * An existing id indicates that it's re-activating an existing route.
@@ -406,12 +422,42 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     routeOptions?: any,
     tab?: string
   ) => {
+    // When navigating from tabs context, we need to determine if the destination
+    // is also within tabs. If not, we should clear the tab context.
+    let navigationTab = tab;
+    
+    // If no explicit tab is provided and we're in a tab context,
+    // check if the destination path is outside of the current tab context
+    if (!tab && currentTab.current && path) {
+      // Get the current route info to understand where we are
+      const currentRoute = locationHistory.current.current();
+      
+      // If we're navigating from a tab route to a completely different path structure,
+      // we should clear the tab context. This is a simplified check that assumes
+      // tab routes share a common parent path.
+      if (currentRoute && currentRoute.pathname) {
+        // Extract the base tab path (e.g., /routing/tabs from /routing/tabs/home)
+        const tabBaseMatch = currentRoute.pathname.match(/^(.*\/tabs)/);
+        if (tabBaseMatch) {
+          const tabBasePath = tabBaseMatch[1];
+          // If the new path doesn't start with the tab base path, we're leaving tabs
+          if (!path.startsWith(tabBasePath)) {
+            currentTab.current = undefined;
+            navigationTab = undefined;
+          } else {
+            // Still within tabs, preserve the tab context
+            navigationTab = currentTab.current;
+          }
+        }
+      }
+    }
+    
     incomingRouteParams.current = Object.assign(incomingRouteParams.current || {}, {
       routeAction,
       routeDirection,
       routeOptions,
       routeAnimation,
-      tab,
+      tab: navigationTab,
     });
 
     navigate(path, { replace: routeAction !== 'push' });

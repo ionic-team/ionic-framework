@@ -17,7 +17,7 @@ const Tabs: React.FC = () => {
   return (
     <IonTabs>
       <IonRouterOutlet id="tabs">
-        <Route index element={<Navigate to="home" replace />} />
+        <Route index element={<Navigate to="/routing/tabs/home" />} />
         <Route path="home" element={<Tab1 />} />
         <Route path="home/details/:id" element={<Details />} />
         <Route path="settings" element={<Tab2 />} />
@@ -40,11 +40,11 @@ const Tabs: React.FC = () => {
           <IonIcon icon={triangle} />
           <IonLabel>Home</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="settings" href="/routing/tabs/settings">
+        <IonTabButton tab="settings" href="/routing/tabs/settings" routerOptions={{ unmount: true }}>
           <IonIcon icon={ellipse} />
           <IonLabel>Settings</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="tab3" href="/routing/tabs/tab3">
+        <IonTabButton tab="tab3" href="/routing/tabs/tab3" routerOptions={{ unmount: true }}>
           <IonIcon icon={square} />
           <IonLabel>Tab 3</IonLabel>
         </IonTabButton>

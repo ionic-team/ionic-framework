@@ -26,8 +26,25 @@ export const matchPath = ({ pathname, componentProps }: MatchPathOptions): PathM
 
   // Handle index routes
   if (index && !path) {
-    // For index routes, let React Router handle them naturally.
-    // Creating artificial matches here interferes with proper navigation.
+    // Index routes match when there's no additional path after the parent route
+    // For example, in a nested outlet at /routing/*, the index route matches
+    // when the relative path is empty (i.e., we're exactly at /routing)
+    
+    // If pathname is empty or just "/", it should match the index route
+    if (pathname === "" || pathname === "/") {
+      return {
+        params: {},
+        pathname: pathname,
+        pathnameBase: pathname || '/',
+        pattern: {
+          path: '',
+          caseSensitive: false,
+          end: true
+        }
+      };
+    }
+    
+    // Otherwise, index routes don't match when there's additional path
     return null;
   }
 
@@ -35,58 +52,67 @@ export const matchPath = ({ pathname, componentProps }: MatchPathOptions): PathM
     return null;
   }
 
-  // First, try to match as-is (this handles absolute paths)
-  let match = reactRouterMatchPath({ path, ...restProps }, pathname);
-
-  if (match) {
-    return match;
-  }
-
-  // If the path doesn't start with '/', it might be a relative path in a nested route
-  // Try to match it against different segments of the pathname
+  // For relative paths in nested routes (those that don't start with '/'),
+  // we need special handling
   if (!path.startsWith('/')) {
-    const pathSegments = pathname.split('/').filter(Boolean);
-
-    // Try matching from the end of the pathname backwards
-    // For example, if pathname is '/routing/favorites' and path is 'favorites',
-    // we want to check if 'favorites' matches the last segment
-    for (let i = pathSegments.length; i > 0; i--) {
-      const segment = pathSegments[i - 1];
-      
-      // Try exact match with the segment
-      if (segment === path) {
-        const partialPathname = '/' + segment;
-        const testPath = '/' + path;
-
-        match = reactRouterMatchPath({ path: testPath, ...restProps }, partialPathname);
-
-        if (match) {
-          // Adjust the match to reflect the full pathname
-          const adjustedMatch = {
-            ...match,
-            pathname: pathname,
-            pathnameBase: pathname.substring(0, pathname.lastIndexOf('/' + segment)) || '/',
-          };
-          return adjustedMatch;
-        }
-      }
-      
-      // Also try full path matching for complex relative paths
-      const partialPathname = '/' + pathSegments.slice(i - 1).join('/');
-      const testPath = '/' + path;
-
-      match = reactRouterMatchPath({ path: testPath, ...restProps }, partialPathname);
-
-      if (match) {
-        // Adjust the match to reflect the full pathname
-        const adjustedMatch = {
-          ...match,
+    // For relative paths, we match directly against the pathname
+    // which should already be the relative portion from the parent route
+    
+    // Handle wildcard routes like "tabs/*"
+    if (path.endsWith('/*')) {
+      const basePath = path.slice(0, -2); // Remove the /*
+      if (pathname === basePath || pathname.startsWith(basePath + '/')) {
+        // Match found for wildcard route
+        return {
+          params: { '*': pathname.slice(basePath.length + 1) }, // Capture the wildcard portion
           pathname: pathname,
-          pathnameBase: pathname.substring(0, pathname.lastIndexOf('/' + pathSegments[i - 1])) || '/',
+          pathnameBase: basePath,
+          pattern: {
+            path: path,
+            caseSensitive: restProps.caseSensitive || false,
+            end: restProps.end || false
+          }
         };
-        return adjustedMatch;
       }
     }
+    
+    // Handle exact matches for relative paths
+    if (pathname === path) {
+      return {
+        params: {},
+        pathname: pathname,
+        pathnameBase: pathname,
+        pattern: {
+          path: path,
+          caseSensitive: restProps.caseSensitive || false,
+          end: restProps.end !== false // Default to true for exact matches
+        }
+      };
+    }
+    
+    // Handle parameterized routes
+    // For now, try with React Router's matcher by prepending '/'
+    const testPath = '/' + path;
+    const testPathname = '/' + pathname;
+    const match = reactRouterMatchPath({ path: testPath, ...restProps }, testPathname);
+    
+    if (match) {
+      // Adjust the match to remove the leading '/' we added
+      return {
+        ...match,
+        pathname: pathname,
+        pathnameBase: match.pathnameBase.slice(1) || '',
+        pattern: {
+          ...match.pattern,
+          path: path
+        }
+      };
+    }
+    
+    // No match found
+    return null;
   }
-  return null;
+  
+  // For absolute paths, use React Router's matcher directly
+  return reactRouterMatchPath({ path, ...restProps }, pathname);
 };
