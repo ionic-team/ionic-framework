@@ -2343,6 +2343,7 @@ export class Datetime implements ComponentInterface {
                         `${dateStyle ? dateStyle.backgroundColor : ''}`,
                         'important'
                       );
+                      el.style.setProperty('border', `${dateStyle ? dateStyle.border : ''}`, 'important');
                     }
                   }}
                   tabindex="-1"

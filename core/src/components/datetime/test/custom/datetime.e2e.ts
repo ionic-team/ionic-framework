@@ -5,6 +5,8 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('datetime: custom'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/datetime/test/custom`, config);
+
+      await page.locator('.datetime-ready').last().waitFor();
     });
 
     test('should allow styling wheel style datetimes', async ({ page }) => {
@@ -29,6 +31,13 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
     test('should allow styling calendar days in grid style datetimes', async ({ page }) => {
       const datetime = page.locator('#custom-calendar-days');
+
+      // Wait for calendar days to be rendered
+      await page.waitForFunction(() => {
+        const datetime = document.querySelector('#custom-calendar-days');
+        const calendarDays = datetime?.shadowRoot?.querySelectorAll('.calendar-day');
+        return calendarDays && calendarDays.length > 0;
+      });
 
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-custom-calendar-days`));
     });

@@ -27,6 +27,7 @@ import Main from './pages/Main';
 import Tabs from './pages/Tabs';
 import TabsBasic from './pages/TabsBasic';
 import NavComponent from './pages/navigation/NavComponent';
+import TabsDirectNavigation from './pages/TabsDirectNavigation';
 import IonModalConditional from './pages/overlay-components/IonModalConditional';
 import IonModalConditionalSibling from './pages/overlay-components/IonModalConditionalSibling';
 import IonModalDatetimeButton from './pages/overlay-components/IonModalDatetimeButton';
@@ -63,6 +64,7 @@ const App: React.FC = () => (
         <Route path="/navigation" component={NavComponent} />
         <Route path="/tabs" component={Tabs} />
         <Route path="/tabs-basic" component={TabsBasic} />
+        <Route path="/tabs-direct-navigation" component={TabsDirectNavigation} />
         <Route path="/icons" component={Icons} />
         <Route path="/inputs" component={Inputs} />
       </IonRouterOutlet>
