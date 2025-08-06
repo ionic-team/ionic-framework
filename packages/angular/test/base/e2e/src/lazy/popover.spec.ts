@@ -1,35 +1,37 @@
-describe('Popovers: Inline', () => {
-  beforeEach(() => {
-    cy.visit('/lazy/popover-inline');
+import { test, expect } from '@playwright/test';
+
+test.describe('Popovers: Inline', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/lazy/popover-inline');
   });
 
-  it('should initially have no items', () => {
-    cy.get('ion-button').click();
+  test('should initially have no items', async ({ page }) => {
+    await page.locator('ion-button').click();
 
-    cy.get('ion-popover').should('be.visible');
-    cy.get('ion-list ion-item').should('not.exist');
+    await expect(page.locator('ion-popover')).toBeVisible();
+    await expect(page.locator('ion-list ion-item')).not.toBeVisible();
   });
 
-  it('should have items after 1500ms', () => {
-    cy.get('ion-button').click();
+  test('should have items after 1500ms', async ({ page }) => {
+    await page.locator('ion-button').click();
 
-    cy.get('ion-popover').should('be.visible');
+    await expect(page.locator('ion-popover')).toBeVisible();
 
-    cy.wait(1500);
+    await page.waitForTimeout(1500);
 
-    cy.get('ion-list ion-item:nth-child(1)').should('have.text', 'A');
-    cy.get('ion-list ion-item:nth-child(2)').should('have.text', 'B');
-    cy.get('ion-list ion-item:nth-child(3)').should('have.text', 'C');
-    cy.get('ion-list ion-item:nth-child(4)').should('have.text', 'D');
+    await expect(page.locator('ion-list ion-item:nth-child(1)')).toHaveText('A');
+    await expect(page.locator('ion-list ion-item:nth-child(2)')).toHaveText('B');
+    await expect(page.locator('ion-list ion-item:nth-child(3)')).toHaveText('C');
+    await expect(page.locator('ion-list ion-item:nth-child(4)')).toHaveText('D');
   });
 
-  it('should have an item with a disabled attribute', () => {
-    cy.get('ion-button').click();
+  test('should have an item with a disabled attribute', async ({ page }) => {
+    await page.locator('ion-button').click();
 
-    cy.get('ion-popover').should('be.visible');
+    await expect(page.locator('ion-popover')).toBeVisible();
 
-    cy.wait(1500);
+    await page.waitForTimeout(1500);
 
-    cy.get('ion-list ion-item:nth-child(3)').should('have.attr', 'disabled');
+    await expect(page.locator('ion-list ion-item:nth-child(3)')).toHaveAttribute('disabled');
   });
 });

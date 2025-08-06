@@ -5,8 +5,11 @@
 # You can see what browsers were selected by your queries by running:
 #   npx browserslist
 
-> 0.5%
-last 2 versions
-Firefox ESR
+# Compatible with Angular 16-20 - Main browsers only
+chrome >= 120
+firefox >= 115
+safari >= 17
+edge >= 120
+ios_saf >= 17
 not dead
 not IE 9-11 # For IE 9-11 support, remove 'not'.

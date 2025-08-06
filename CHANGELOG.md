@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.2](https://github.com/ionic-team/ionic-framework/compare/v8.7.1...v8.7.2) (2025-08-06)
+
+
+### Bug Fixes
+
+* **reorder-group:**  add children fallback for framework compatibility ([#30593](https://github.com/ionic-team/ionic-framework/issues/30593)) ([1cd81b9](https://github.com/ionic-team/ionic-framework/commit/1cd81b92301378d55bce63a01dfcf95a91c92652)), closes [#30592](https://github.com/ionic-team/ionic-framework/issues/30592)
+* **tabs:** add fallback to select tab if router integration fails ([#30599](https://github.com/ionic-team/ionic-framework/issues/30599)) ([a2e803a](https://github.com/ionic-team/ionic-framework/commit/a2e803a553dc58fc0e1599e515a56180a7ab263a)), closes [#30552](https://github.com/ionic-team/ionic-framework/issues/30552)
+
+
+
+
+
 ## [8.7.1](https://github.com/ionic-team/ionic-framework/compare/v8.7.0...v8.7.1) (2025-07-31)
 
 ### Dependencies

@@ -1,124 +1,131 @@
-describe('Modals', () => {
-  beforeEach(() => {
-    cy.visit('/lazy/modals');
-  })
+import { test, expect } from '@playwright/test';
 
-  it('should open standalone modal and close', () => {
-    cy.get('#action-button').click();
-
-    cy.get('ion-modal').should('exist').should('be.visible');
-
-    cy.get('app-modal-example h2').should('have.text', '123');
-    cy.get('app-modal-example h3').should('have.text', '321');
-    cy.get('#modalInstance').should('have.text', 'true');
-
-    cy.get('#onWillDismiss').should('have.text', 'false');
-    cy.get('#onDidDismiss').should('have.text', 'false');
-
-    cy.get('#close-modal').click();
-
-    cy.get('ion-modal').should('not.exist');
-
-    cy.get('#onWillDismiss').should('have.text', 'true');
-    cy.get('#onDidDismiss').should('have.text', 'true');
+test.describe('Modals', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/lazy/modals');
   });
 
-  it('should open nav modal and close', () => {
-    cy.get('#action-button-2').click();
+  test('should open standalone modal and close', async ({ page }) => {
+    await page.locator('#action-button').click();
 
-    cy.get('ion-modal').should('exist').should('be.visible');
+    await expect(page.locator('ion-modal')).toBeVisible();
 
-    cy.get('ion-nav > *:last-child h2').should('have.text', '123');
-    cy.get('ion-nav > *:last-child h3').should('have.text', '321');
+    await expect(page.locator('app-modal-example h2')).toHaveText('123');
+    await expect(page.locator('app-modal-example h3')).toHaveText('321');
+    await expect(page.locator('#modalInstance')).toHaveText('true');
 
-    cy.get('ion-nav > *:last-child .push-page').click();
+    await expect(page.locator('#onWillDismiss')).toHaveText('false');
+    await expect(page.locator('#onDidDismiss')).toHaveText('false');
 
-    cy.get('ion-nav > *:last-child h2').should('have.text', 'pushed!');
-    cy.get('ion-nav > *:last-child h3').should('have.text', '');
+    await page.locator('#close-modal').click();
 
-    cy.get('ion-nav > *:last-child .pop-page').click();
+    await expect(page.locator('ion-modal')).not.toBeVisible();
 
-    cy.get('ion-nav > *:last-child h2').should('have.text', '123');
+    await expect(page.locator('#onWillDismiss')).toHaveText('true');
+    await expect(page.locator('#onDidDismiss')).toHaveText('true');
   });
 
+  test('should open nav modal and close', async ({ page }) => {
+    await page.locator('#action-button-2').click();
+
+    await expect(page.locator('ion-modal')).toBeVisible();
+
+    await expect(page.locator('ion-nav > *:last-child h2')).toHaveText('123');
+    await expect(page.locator('ion-nav > *:last-child h3')).toHaveText('321');
+
+    await page.locator('ion-nav > *:last-child .push-page').click();
+
+    await expect(page.locator('ion-nav > *:last-child h2')).toHaveText('pushed!');
+    await expect(page.locator('ion-nav > *:last-child h3')).toHaveText('');
+
+    await page.locator('ion-nav > *:last-child .pop-page').click();
+
+    await expect(page.locator('ion-nav > *:last-child h2')).toHaveText('123');
+  });
 });
 
-describe('Modals: Inline', () => {
-  beforeEach(() => {
-    cy.visit('/lazy/modal-inline');
+test.describe('Modals: Inline', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/lazy/modal-inline');
   });
 
-  it('should initially have no items', () => {
-    cy.get('ion-list ion-item').should('not.exist');
+  test('should initially have no items', async ({ page }) => {
+    await expect(page.locator('ion-list ion-item')).not.toBeVisible();
   });
 
-  it('should have items after opening', () => {
-    cy.get('#open-modal').click();
+  test('should have items after opening', async ({ page }) => {
+    await page.locator('#open-modal').click();
 
-    cy.get('ion-list ion-item:nth-child(1)').should('have.text', 'A');
-    cy.get('ion-list ion-item:nth-child(2)').should('have.text', 'B');
-    cy.get('ion-list ion-item:nth-child(3)').should('have.text', 'C');
-    cy.get('ion-list ion-item:nth-child(4)').should('have.text', 'D');
+    await expect(page.locator('ion-list ion-item:nth-child(1)')).toHaveText('A');
+    await expect(page.locator('ion-list ion-item:nth-child(2)')).toHaveText('B');
+    await expect(page.locator('ion-list ion-item:nth-child(3)')).toHaveText('C');
+    await expect(page.locator('ion-list ion-item:nth-child(4)')).toHaveText('D');
   });
 
-  it('should have a div with .ion-page after opening', () => {
-    cy.get('#open-modal').click();
+  test('should have a div with .ion-page after opening', async ({ page }) => {
+    await page.locator('#open-modal').click();
 
-    cy.get('ion-modal').children('.ion-page').should('exist');
+    await expect(page.locator('ion-modal').locator('.ion-page')).toBeVisible();
   });
 
-  it('should remove .ion-page when closing the modal', () => {
-    cy.get('#open-modal').click();
+  test('should remove .ion-page when closing the modal', async ({ page }) => {
+    await page.locator('#open-modal').click();
 
-    cy.get('ion-modal').children('.ion-page').should('exist');
-    cy.get('ion-modal').trigger('click', 20, 20);
+    await expect(page.locator('ion-modal').locator('.ion-page')).toBeVisible();
+    await page.locator('ion-modal').click({ position: { x: 20, y: 20 } });
 
-    cy.get('ion-modal').children('.ion-page').should('not.exist');
+    await expect(page.locator('ion-modal').locator('.ion-page')).not.toBeVisible();
   });
 
-  describe('setting the current breakpoint', () => {
+  test.describe('Modals: setting the current breakpoint', () => {
+    test('should emit ionBreakpointDidChange', async ({ page }) => {
+      await page.locator('#open-modal').click();
 
-    it('should emit ionBreakpointDidChange', () => {
-      cy.get('#open-modal').click();
+      // Wait for the modal to be visible
+      await expect(page.locator('ion-modal')).toBeVisible();
 
-      cy.get('ion-modal').then(modal => {
-        (modal.get(0) as any).setCurrentBreakpoint(1);
+      // Wait for the modal to be fully presented and ready
+      await page.waitForTimeout(500);
+
+      await page.evaluate(() => {
+        const modal = document.querySelector('ion-modal') as any;
+        modal.setCurrentBreakpoint(1);
       });
 
-      cy.get('#breakpointDidChange').should('have.text', '1');
+      // Wait for the event to fire
+      await page.waitForTimeout(100);
+
+      await expect(page.locator('#breakpointDidChange')).toHaveText('1');
     });
-
   });
-
 });
 
-describe('when in a modal', () => {
-
-  beforeEach(() => {
-    cy.visit('/lazy/modals');
-    cy.get('#action-button').click();
-    cy.get('#close-modal').click();
-    cy.get('#action-button').click();
+test.describe('Modals: in a modal', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/lazy/modals');
+    await page.locator('#action-button').click();
+    await page.locator('#close-modal').click();
+    await page.locator('#action-button').click();
   });
 
-  it('should render ion-item item-has-value class when control value is set', () => {
-    cy.get('ion-select').click();
-    cy.get('ion-alert').should('exist').should('be.visible');
+  test('should render ion-item item-has-value class when control value is set', async ({ page }) => {
+    await page.locator('ion-select').click();
+    await expect(page.locator('ion-alert')).toBeVisible();
     // Option 0 option
-    cy.get('ion-alert .alert-radio-button:nth-of-type(1)').click();
+    await page.locator('ion-alert .alert-radio-button').nth(0).click();
     // Click confirm button
-    cy.get('ion-alert .alert-button:not(.alert-button-role-cancel)').click();
+    await page.locator('ion-alert .alert-button:not(.alert-button-role-cancel)').click();
 
-    cy.get('#inputWithFloatingLabel').should('have.class', 'item-has-value');
+    await expect(page.locator('#inputWithFloatingLabel')).toHaveClass(/item-has-value/);
   });
 
-  it('should not render ion-item item-has-value class when control value is undefined', () => {
-    cy.get('#set-to-undefined').click();
-    cy.get('#inputWithFloatingLabel').should('not.have.class', 'item-has-value');
+  test('should not render ion-item item-has-value class when control value is undefined', async ({ page }) => {
+    await page.locator('#set-to-undefined').click();
+    await expect(page.locator('#inputWithFloatingLabel')).not.toHaveClass(/item-has-value/);
   });
 
-  it('should not render ion-item item-has-value class when control value is null', () => {
-    cy.get('#set-to-null').click();
-    cy.get('#inputWithFloatingLabel').should('not.have.class', 'item-has-value');
+  test('should not render ion-item item-has-value class when control value is null', async ({ page }) => {
+    await page.locator('#set-to-null').click();
+    await expect(page.locator('#inputWithFloatingLabel')).not.toHaveClass(/item-has-value/);
   });
 });

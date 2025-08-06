@@ -1,35 +1,36 @@
-describe('Nested Outlet', () => {
-  beforeEach(() => {
-    cy.visit('/lazy/nested-outlet/page?ionic:_testing=true');
-  })
+import { test, expect } from '@playwright/test';
 
-  it('should navigate correctly', () => {
-    cy.get('ion-router-outlet ion-router-outlet app-nested-outlet-page h1').should('have.text', 'Nested page 1');
+test.describe('Nested Outlet', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/lazy/nested-outlet/page?ionic:_testing=true');
+  });
 
-    cy.get('#goto-tabs').click();
+  test('should navigate correctly', async ({ page }) => {
+    await expect(page.locator('ion-router-outlet ion-router-outlet app-nested-outlet-page h1')).toHaveText('Nested page 1');
 
-    cy.ionPageVisible('app-tabs');
-    cy.ionPageVisible('app-tabs-tab1');
+    await page.locator('#goto-tabs').click();
 
-    cy.get('#goto-nested-page1').click();
+    await expect(page.locator('app-tabs')).toBeVisible();
+    await expect(page.locator('app-tabs-tab1')).toBeVisible();
 
-    cy.ionPageVisible('app-nested-outlet-page');
-    cy.ionPageDoesNotExist('app-tabs');
+    await page.locator('#goto-nested-page1').click();
 
-    cy.get('#goto-nested-page2').click();
-    cy.ionPageVisible('app-nested-outlet-page2');
+    await expect(page.locator('app-nested-outlet-page')).toBeVisible();
+    await expect(page.locator('app-tabs')).not.toBeVisible();
 
-    cy.get('ion-router-outlet ion-router-outlet app-nested-outlet-page2 h1').should('have.text', 'Nested page 2');
+    await page.locator('#goto-nested-page2').click();
+    await expect(page.locator('app-nested-outlet-page2')).toBeVisible();
 
-    cy.get('#goto-nested-page1').click();
-    cy.ionPageVisible('app-nested-outlet-page');
+    await expect(page.locator('ion-router-outlet ion-router-outlet app-nested-outlet-page2 h1')).toHaveText('Nested page 2');
 
-    cy.get('#goto-nested-page2').click();
+    await page.locator('#goto-nested-page1').click();
+    await expect(page.locator('app-nested-outlet-page')).toBeVisible();
+
+    await page.locator('#goto-nested-page2').click();
   });
 
   // Fixes https://github.com/ionic-team/ionic-framework/issues/28417
-  it('parentOutlet should be defined', () => {
-    cy.get('#parent-outlet span').should('have.text', 'true');
+  test('parentOutlet should be defined', async ({ page }) => {
+    await expect(page.locator('#parent-outlet span')).toHaveText('true');
   });
 });
-

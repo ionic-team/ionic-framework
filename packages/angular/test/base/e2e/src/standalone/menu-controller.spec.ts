@@ -1,11 +1,13 @@
-describe('Menu Controller', () => {
-  beforeEach(() => {
-    cy.visit('/standalone/menu-controller');
-  })
+import { test, expect } from '@playwright/test';
+
+test.describe('Menu Controller', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/standalone/menu-controller');
+  });
 
   // https://github.com/ionic-team/ionic-framework/issues/28337
-  it('should register menus correctly', () => {
-    cy.get('#set-menu-count').click();
-    cy.get('#registered-menu-count').should('have.text', '1');
+  test('should register menus correctly', async ({ page }) => {
+    await page.locator('#set-menu-count').click();
+    await expect(page.locator('#registered-menu-count')).toHaveText('1');
   });
-})
+});
