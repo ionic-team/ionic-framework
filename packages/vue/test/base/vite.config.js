@@ -20,5 +20,8 @@ export default defineConfig({
   // Preview applies to "vite preview" command
   preview: {
     port: 8080
+  },
+  define: {
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false'
   }
 })

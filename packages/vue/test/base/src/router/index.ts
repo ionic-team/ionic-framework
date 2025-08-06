@@ -92,26 +92,26 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/nested',
-    component: () => import('@/views/RouterOutlet.vue'),
+    component: () => import('@/views/nested/RouterOutlet.vue'),
     children: [
       {
         path: '',
-        component: () => import('@/views/NestedChild.vue')
+        component: () => import('@/views/nested/NestedChild.vue')
       },
       {
         path: 'two',
-        component: () => import('@/views/NestedChildTwo.vue')
+        component: () => import('@/views/nested/NestedChildTwo.vue')
       },
       {
         path: ':id',
-        component: () => import('@/views/Folder.vue'),
+        component: () => import('@/views/nested/Folder.vue'),
         props: true
       }
     ]
   },
   {
     path: '/tabs/',
-    component: () => import('@/views/Tabs.vue'),
+    component: () => import('@/views/tabs/Tabs.vue'),
     children: [
       {
         path: '',
@@ -119,33 +119,33 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'tab1',
-        component: () => import('@/views/Tab1.vue'),
+        component: () => import('@/views/tabs/Tab1.vue'),
       },
       {
         path: 'tab1/:id',
-        component: () => import('@/views/Tab1Parameter.vue'),
+        component: () => import('@/views/tabs/Tab1Parameter.vue'),
         props: true
       },
       {
         path: 'tab2',
-        component: () => import('@/views/Tab2.vue')
+        component: () => import('@/views/tabs/Tab2.vue')
       },
       {
         path: 'tab3',
         beforeEnter: (to, from, next) => {
           next({ path: '/tabs/tab1' });
         },
-        component: () => import('@/views/Tab3.vue')
+        component: () => import('@/views/tabs/Tab3.vue')
       },
       {
         path: 'tab4',
-        component: () => import('@/views/Tab4.vue')
+        component: () => import('@/views/tabs/Tab4.vue')
       }
     ]
   },
   {
     path: '/tabs-secondary/',
-    component: () => import('@/views/TabsSecondary.vue'),
+    component: () => import('@/views/tabs-secondary/TabsSecondary.vue'),
     children: [
       {
         path: '',
@@ -153,15 +153,15 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'tab1',
-        component: () => import('@/views/Tab1Secondary.vue')
+        component: () => import('@/views/tabs-secondary/Tab1Secondary.vue')
       },
       {
         path: 'tab2',
-        component: () => import('@/views/Tab2Secondary.vue')
+        component: () => import('@/views/tabs-secondary/Tab2Secondary.vue')
       },
       {
         path: 'tab3',
-        component: () => import('@/views/Tab3Secondary.vue')
+        component: () => import('@/views/tabs-secondary/Tab3Secondary.vue')
       }
     ]
   },

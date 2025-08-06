@@ -2,8 +2,8 @@
   <ion-page data-pageid="routingchild">
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-buttons>
-          <ion-back-button></ion-back-button>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/routing"></ion-back-button>
         </ion-buttons>
         <ion-title>Routing Child</ion-title>
       </ion-toolbar>
