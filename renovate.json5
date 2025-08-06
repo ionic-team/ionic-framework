@@ -8,10 +8,18 @@
       groupName: "Download + Upload Artifacts"
     },
     {
-      matchPackagePatterns: ["@stencil/core", "@stencil/angular-output-target", "@stencil/react-output-target", "@stencil/sass", "@stencil/vue-output-target"],
+      matchPackagePatterns: ["@stencil/core", "@stencil/angular-output-target", "@stencil/react-output-target", "@stencil/sass"],
       groupName: "stencil",
       matchFileNames: [
         "core/package.json"
+      ]
+    },
+    {
+      matchPackagePatterns: ["@stencil/vue-output-target"],
+      groupName: "stencil-vue-output-target",
+      matchFileNames: [
+        "core/package.json",
+        "packages/vue/package.json",
       ]
     },
     // TODO(ROU-11172): unpin React output target version
