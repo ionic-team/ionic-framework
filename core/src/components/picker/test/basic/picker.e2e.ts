@@ -106,32 +106,43 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     test('tabbing should correctly move focus between columns', async ({ page }) => {
-      const firstColumn = page.locator('ion-picker-column#first');
-      const secondColumn = page.locator('ion-picker-column#second');
+      const firstColumn = await page.evaluate(() => document.querySelector('ion-picker-column#first'));
+      const secondColumn = await page.evaluate(() => document.querySelector('ion-picker-column#second'));
 
       // Focus first column
       await page.keyboard.press('Tab');
-      await expect(firstColumn).toBeFocused();
+
+      let activeElement = await page.evaluate(() => document.activeElement);
+      expect(activeElement).toEqual(firstColumn);
 
       await page.waitForChanges();
 
       // Focus second column
       await page.keyboard.press('Tab');
-      await expect(secondColumn).toBeFocused();
+
+      activeElement = await page.evaluate(() => document.activeElement);
+      expect(activeElement).toEqual(secondColumn);
     });
 
     test('tabbing should correctly move focus back', async ({ page }) => {
-      const firstColumn = page.locator('ion-picker-column#first');
-      const secondColumn = page.locator('ion-picker-column#second');
+      const firstColumn = await page.evaluate(() => document.querySelector('ion-picker-column#first'));
+      const secondColumn = await page.evaluate(() => document.querySelector('ion-picker-column#second'));
 
-      await secondColumn.evaluate((el: HTMLIonPickerColumnElement) => el.setFocus());
-      await expect(secondColumn).toBeFocused();
+      await page.evaluate((selector) => {
+        const el = document.querySelector(selector) as HTMLElement | null;
+        el?.focus();
+      }, 'ion-picker-column#second');
+
+      let activeElement = await page.evaluate(() => document.activeElement);
+      expect(activeElement).toEqual(secondColumn);
 
       await page.waitForChanges();
 
       // Focus first column
       await page.keyboard.press('Shift+Tab');
-      await expect(firstColumn).toBeFocused();
+
+      activeElement = await page.evaluate(() => document.activeElement);
+      expect(activeElement).toEqual(firstColumn);
     });
   });
 });

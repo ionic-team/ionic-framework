@@ -3,7 +3,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { PickerColumnOption } from '../picker-column-option';
 
 describe('picker column option', () => {
-  it('button should be enabled by default', async () => {
+  it('should be enabled by default', async () => {
     const page = await newSpecPage({
       components: [PickerColumnOption],
       html: `
@@ -12,12 +12,11 @@ describe('picker column option', () => {
     });
 
     const option = page.body.querySelector('ion-picker-column-option')!;
-    const button = option.shadowRoot!.querySelector('button')!;
 
-    await expect(button.hasAttribute('disabled')).toEqual(false);
+    await expect(option.classList.contains('option-disabled')).toEqual(false);
   });
 
-  it('button should be disabled if specified', async () => {
+  it('should be disabled if specified', async () => {
     const page = await newSpecPage({
       components: [PickerColumnOption],
       html: `
@@ -26,8 +25,7 @@ describe('picker column option', () => {
     });
 
     const option = page.body.querySelector('ion-picker-column-option')!;
-    const button = option.shadowRoot!.querySelector('button')!;
 
-    await expect(button.hasAttribute('disabled')).toEqual(true);
+    await expect(option.classList.contains('option-disabled')).toEqual(true);
   });
 });
