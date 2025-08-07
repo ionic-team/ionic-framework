@@ -71,10 +71,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Navigation.vue')
   },
   {
-    path: '/components',
-    component: () => import('@/views/Components.vue'),
-  },
-  {
     path: '/components/breadcrumbs',
     component: () => import('@/views/Breadcrumbs.vue')
   },
