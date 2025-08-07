@@ -6,15 +6,15 @@
 
 :host {
   --knob-border-radius: #{globals.$ion-border-radius-full};
-  --knob-background: #{globals.$ion-primitives-base-white};
+  --knob-background: #{globals.$ion-bg-input-default};
   --knob-box-shadow: none;
   --knob-size: #{globals.$ion-scale-600};
-  --knob-handle-size: #{globals.$ion-scale-1000};
+  --knob-handle-size: #{globals.$ion-scale-1100};
   --bar-height: #{globals.$ion-scale-200};
-  --bar-background: #{globals.$ion-primitives-neutral-100};
+  --bar-background: #{globals.$ion-bg-neutral-subtle-default};
   --bar-background-active: #{globals.ion-color(primary, base)};
   --bar-border-radius: #{globals.$ion-border-radius-400};
-  --height: #{globals.$ion-scale-1000};
+  --height: #{globals.$ion-scale-1100};
 
   @include globals.typography(globals.$ion-body-md-regular);
 
@@ -75,7 +75,7 @@
   @include margin(null, null, calc(globals.$ion-space-200 + globals.$ion-font-size-300), null);
 }
 
-.range-bar-active {
+.range-bar.range-bar-active {
   bottom: 0;
 
   width: auto;
@@ -115,6 +115,8 @@
 
   background: transparent;
 
+  color: globals.$ion-text-default;
+
   font-size: globals.$ion-font-size-300;
 
   text-align: center;
@@ -123,7 +125,7 @@
 .range-knob {
   border-width: globals.$ion-border-size-025;
   border-style: globals.$ion-border-style-solid;
-  border-color: globals.ion-color(primary, base);
+  border-color: globals.$ion-border-primary;
   box-sizing: border-box;
 }
 
@@ -134,7 +136,13 @@
 // icons need to receive the same opacity.
 
 :host(.range-disabled) {
-  opacity: 0.3;
+  --bar-background: #{globals.$ion-bg-neutral-subtle-default};
+
+  .range-knob {
+    border-color: globals.$ion-border-input-default;
+
+    background: globals.$ion-bg-input-disabled;
+  }
 }
 
 // Range Label Placement - Start
@@ -206,4 +214,11 @@
 
 .range-knob-handle.ion-focused .range-knob {
   @include globals.focused-state();
+}
+
+// Range Pressed
+// ----------------------------------------------------------------
+.range-knob-handle.ion-activated .range-knob,
+.range-knob-handle.range-knob-pressed .range-knob {
+  background: globals.$ion-bg-input-press;
 }
