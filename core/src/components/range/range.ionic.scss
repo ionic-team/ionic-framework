@@ -140,9 +140,7 @@
 // icons need to receive the same opacity.
 
 :host(.range-disabled) {
-  .range-bar {
-    background: globals.$ion-bg-neutral-subtle-default;
-  }
+  --bar-background: #{globals.$ion-bg-neutral-subtle-default};
 
   .range-knob {
     border-color: globals.$ion-border-input-default;
