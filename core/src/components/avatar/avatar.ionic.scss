@@ -96,19 +96,40 @@
 :host(.avatar-xxsmall.avatar-soft),
 :host(.avatar-xsmall.avatar-soft),
 :host(.avatar-small.avatar-soft) {
-  --border-radius: #{globals.$ion-border-radius-100};
+  --border-radius: #{globals.$ion-soft-2xs};
+}
+:host(.avatar-medium.avatar-soft){
+  --border-radius: #{globals.$ion-soft-xs};
+}
+:host(.avatar-large.avatar-soft),
+:host(.avatar-xlarge.avatar-soft){
+  --border-radius: #{globals.$ion-soft-md};
 }
 
-:host(.avatar-soft) {
-  --border-radius: #{globals.$ion-border-radius-200};
+:host(.avatar-xxsmall.avatar-round),
+:host(.avatar-xsmall.avatar-round),
+:host(.avatar-small.avatar-round) {
+  --border-radius: #{globals.$ion-round-2xs};
+}
+:host(.avatar-medium.avatar-round){
+  --border-radius: #{globals.$ion-round-xs};
+}
+:host(.avatar-large.avatar-round),
+:host(.avatar-xlarge.avatar-round){
+  --border-radius: #{globals.$ion-round-md};
 }
 
-:host(.avatar-round) {
-  --border-radius: #{globals.$ion-border-radius-full};
+:host(.avatar-xxsmall.avatar-rectangular),
+:host(.avatar-xsmall.avatar-rectangular),
+:host(.avatar-small.avatar-rectangular) {
+  --border-radius: #{globals.$ion-rectangular-2xs};
 }
-
-:host(.avatar-rectangular) {
-  --border-radius: #{globals.$ion-border-radius-0};
+:host(.avatar-medium.avatar-rectangular){
+  --border-radius: #{globals.$ion-rectangular-xs};
+}
+:host(.avatar-large.avatar-rectangular),
+:host(.avatar-xlarge.avatar-rectangular){
+  --border-radius: #{globals.$ion-rectangular-md};
 }
 
 // Avatar Icon
