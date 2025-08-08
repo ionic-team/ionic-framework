@@ -245,5 +245,6 @@
 // Avatar Disabled
 // --------------------------------------------------
 :host(.avatar-disabled)::before {
+  @include globals.border-radius(var(--border-radius));
   @include globals.disabled-state();
 }
