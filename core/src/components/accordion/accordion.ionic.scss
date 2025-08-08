@@ -59,7 +59,7 @@
 // --------------------------------------------------
 
 #content-wrapper {
-  @include globals.padding(null, globals.$ion-space-400, globals.$ion-space-300, globals.$ion-space-400);
+  @include globals.padding(globals.$ion-space-300, globals.$ion-space-400);
   @include globals.typography(globals.$ion-body-md-regular);
 
   color: globals.$ion-text-default;
