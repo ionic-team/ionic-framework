@@ -2,7 +2,7 @@
   <ion-page data-pageid="tab1">
     <ion-header>
       <ion-toolbar>
-        <ion-buttons>
+        <ion-buttons slot="start">
           <ion-back-button default-href="/"></ion-back-button>
         </ion-buttons>
         <ion-title>Tab 1</ion-title>

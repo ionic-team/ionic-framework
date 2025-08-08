@@ -2,7 +2,7 @@
   <ion-page data-pageid="overlays-automount">
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-buttons>
+        <ion-buttons slot="start">
           <ion-back-button></ion-back-button>
         </ion-buttons>
         <ion-title>Overlays - Auto Mount</ion-title>

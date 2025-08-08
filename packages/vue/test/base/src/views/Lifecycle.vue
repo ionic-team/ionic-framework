@@ -2,8 +2,8 @@
   <ion-page data-pageid="lifecycle">
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-buttons>
-          <ion-back-button></ion-back-button>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/"></ion-back-button>
         </ion-buttons>
         <ion-title>Lifecycle</ion-title>
       </ion-toolbar>
