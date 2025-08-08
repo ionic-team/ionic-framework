@@ -51,21 +51,21 @@
 
 /* Soft Badge */
 :host(.badge-soft) {
-  @include globals.border-radius(globals.$ion-border-radius-200);
+  @include globals.border-radius(globals.$ion-soft-xs);
 }
 
 :host(.badge-small.badge-soft) {
-  @include globals.border-radius(globals.$ion-border-radius-100);
+  @include globals.border-radius(globals.$ion-soft-2xs);
 }
 
 /* Round Badge */
 :host(.badge-round) {
-  @include globals.border-radius(globals.$ion-border-radius-full);
+  @include globals.border-radius(globals.$ion-round-sm);
 }
 
 /* Rectangular Badge */
 :host(.badge-rectangular) {
-  @include globals.border-radius(globals.$ion-border-radius-0);
+  @include globals.border-radius(globals.$ion-rectangular-sm);
 }
 
 // Badge Sizes
