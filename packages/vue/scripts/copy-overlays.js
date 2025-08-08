@@ -1,4 +1,4 @@
-const DocsJson = require('@ionic/core/dist/docs.json');
+const DocsJson = require('@ionic/core/docs.json');
 const fs = require('fs');
 
 function generateOverlays() {
