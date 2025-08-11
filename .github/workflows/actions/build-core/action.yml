@@ -31,4 +31,20 @@ runs:
       with:
         name: ionic-core
         output: core/CoreBuild.zip
-        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts core/api.txt
+        # Include generated proxy files from Stencil output targets so
+        # framework builds can detect when they need to be updated
+        paths: |
+          core/dist
+          core/components
+          core/css
+          core/hydrate
+          core/loader
+          core/src/components.d.ts
+          core/api.txt
+          packages/angular/src/directives/proxies.ts
+          packages/angular/src/directives/proxies-list.ts
+          packages/angular/standalone/src/directives/proxies.ts
+          packages/vue/src/proxies.ts
+          packages/react/src/components/proxies.ts
+          packages/react/src/components/inner-proxies.ts
+          packages/react/src/components/routing-proxies.ts
