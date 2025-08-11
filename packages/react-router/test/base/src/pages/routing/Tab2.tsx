@@ -13,7 +13,7 @@ import {
   IonButton,
 } from '@ionic/react';
 import './Tab2.css';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 const Tab2: React.FC = () => {
   const navigate = useNavigate();

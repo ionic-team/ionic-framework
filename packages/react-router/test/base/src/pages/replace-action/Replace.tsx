@@ -10,7 +10,7 @@ import {
   IonButtons,
   IonBackButton,
 } from '@ionic/react';
-import { Route, Navigate, useNavigate } from 'react-router';
+import { Route, Navigate, useNavigate } from 'react-router-dom';
 
 interface TopPageProps {}
 

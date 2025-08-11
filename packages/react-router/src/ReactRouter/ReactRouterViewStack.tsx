@@ -9,6 +9,7 @@ import type { RouteInfo, ViewItem } from '@ionic/react';
 import { IonRoute, ViewLifeCycleManager, ViewStacks } from '@ionic/react';
 import React from 'react';
 import type { PathMatch } from 'react-router';
+import { UNSAFE_RouteContext as RouteContext } from 'react-router-dom';
 
 import { matchPath } from './utils/matchPath';
 
@@ -260,13 +261,32 @@ export class ReactRouterViewStack extends ViewStacks {
     const routeElement = React.cloneElement(viewItem.reactElement);
     const componentElement = routeElement.props.element;
 
+    // Create the route context value for React Router v6
+    const routeMatch = viewItem.routeData?.match;
+    const routeContextValue = {
+      outlet: null,
+      matches: [{
+        params: routeMatch?.params || {},
+        pathname: routeMatch?.pathname || routeInfo.pathname,
+        pathnameBase: routeMatch?.pathnameBase || routeInfo.pathname,
+        route: {
+          id: viewItem.id,
+          path: routeElement.props.path,
+          element: componentElement,
+          hasErrorBoundary: false
+        }
+      }],
+      isDataRoute: false
+    };
+
     return (
       <ViewLifeCycleManager key={`view-${viewItem.id}`} mount={viewItem.mount} removeView={() => this.remove(viewItem)}>
         {/**
-         * Render the component element directly instead of wrapping in Routes
-         * The Routes component is handled at the IonRouterOutlet level
+         * Wrap component in RouteContext to provide params for React Router v6
          */}
-        {componentElement}
+        <RouteContext.Provider value={routeContextValue}>
+          {componentElement}
+        </RouteContext.Provider>
       </ViewLifeCycleManager>
     );
   };

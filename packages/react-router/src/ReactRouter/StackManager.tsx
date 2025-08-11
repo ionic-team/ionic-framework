@@ -7,7 +7,7 @@
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
 import { RouteManagerContext, StackContext, getConfig } from '@ionic/react';
 import React from 'react';
-import { Route } from 'react-router';
+import { Route } from 'react-router-dom';
 
 import { clonePageElement } from './clonePageElement';
 import { findRoutesNode } from './utils/findRoutesNode';

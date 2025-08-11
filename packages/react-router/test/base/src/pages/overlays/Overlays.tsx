@@ -1,6 +1,6 @@
 import { IonButton, IonContent, IonModal } from '@ionic/react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 const Overlays: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

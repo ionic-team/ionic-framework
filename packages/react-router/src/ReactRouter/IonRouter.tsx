@@ -170,7 +170,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
           incomingRouteParams.current.routeDirection === 'forward';
         routeInfo = {
           id: generateId('routeInfo'),
-          ...incomingRouteParams,
+          ...incomingRouteParams.current,
           lastPathname: leavingLocationInfo.pathname, // The URL we just came from
           pathname: location.pathname, // The current (destination) URL
           search: location.search,

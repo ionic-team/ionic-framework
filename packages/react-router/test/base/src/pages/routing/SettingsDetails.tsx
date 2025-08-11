@@ -10,7 +10,7 @@ import {
   IonLabel,
   IonButton,
 } from '@ionic/react';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 
 interface DetailsProps {}
 

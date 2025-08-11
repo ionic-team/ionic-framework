@@ -9,7 +9,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 
 const Page: React.FC = () => {
   const { id } = useParams<{ id: string }>();
