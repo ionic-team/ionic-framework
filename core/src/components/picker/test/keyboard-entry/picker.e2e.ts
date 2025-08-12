@@ -38,8 +38,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       );
 
       const column = page.locator('ion-picker-column');
+
+      const colShadowRoot = await column.evaluateHandle((el) => el.shadowRoot);
+      const columnPickerOpts = await colShadowRoot.evaluateHandle((root) => root?.querySelector('.picker-opts'));
+
       const ionChange = await page.spyOnEvent('ionChange');
-      await column.evaluate((el: HTMLIonPickerColumnElement) => el.setFocus());
+      await columnPickerOpts.evaluate((el) => el && (el as HTMLElement).focus());
 
       await page.keyboard.press('Digit2');
 
@@ -99,22 +103,24 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       );
       const firstColumn = page.locator('ion-picker-column#first');
       const secondColumn = page.locator('ion-picker-column#second');
-      const highlight = page.locator('ion-picker .picker-highlight');
       const firstIonChange = await (firstColumn as E2ELocator).spyOnEvent('ionChange');
       const secondIonChange = await (secondColumn as E2ELocator).spyOnEvent('ionChange');
 
-      const box = await highlight.boundingBox();
-      if (box !== null) {
-        await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
-      }
+      const firstColShadowRoot = await firstColumn.evaluateHandle((el) => el.shadowRoot);
+      const columnPickerOpts = await firstColShadowRoot.evaluateHandle((root) => root?.querySelector('.picker-opts'));
 
-      await expect(firstColumn).toHaveClass(/picker-column-active/);
-      await expect(secondColumn).toHaveClass(/picker-column-active/);
+      // Focus first column
+      await columnPickerOpts.evaluate((el) => el && (el as HTMLElement).focus());
 
       await page.keyboard.press('Digit2');
 
       await expect(firstIonChange).toHaveReceivedEventDetail({ value: 2 });
       await expect(firstColumn).toHaveJSProperty('value', 2);
+
+      // Focus second column
+      await page.keyboard.press('Tab');
+
+      await page.waitForChanges();
 
       await page.keyboard.press('Digit2+Digit4');
 
@@ -155,8 +161,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       );
 
       const column = page.locator('ion-picker-column');
+
+      const colShadowRoot = await column.evaluateHandle((el) => el.shadowRoot);
+      const columnPickerOpts = await colShadowRoot.evaluateHandle((root) => root?.querySelector('.picker-opts'));
+
       const ionChange = await page.spyOnEvent('ionChange');
-      await column.evaluate((el: HTMLIonPickerColumnElement) => el.setFocus());
+      await columnPickerOpts.evaluate((el) => el && (el as HTMLElement).focus());
 
       await page.keyboard.press('Digit0');
 
