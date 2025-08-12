@@ -27,6 +27,7 @@ import Main from './pages/Main';
 import Tabs from './pages/Tabs';
 import TabsBasic from './pages/TabsBasic';
 import NavComponent from './pages/navigation/NavComponent';
+import TabsDirectNavigation from './pages/TabsDirectNavigation';
 import IonModalConditional from './pages/overlay-components/IonModalConditional';
 import IonModalConditionalSibling from './pages/overlay-components/IonModalConditionalSibling';
 import IonModalDatetimeButton from './pages/overlay-components/IonModalDatetimeButton';
@@ -35,6 +36,7 @@ import IonPopoverNested from './pages/overlay-components/IonPopoverNested';
 import KeepContentsMounted from './pages/overlay-components/KeepContentsMounted';
 import OverlayComponents from './pages/overlay-components/OverlayComponents';
 import OverlayHooks from './pages/overlay-hooks/OverlayHooks';
+import ReorderGroup from './pages/ReorderGroup';
 
 setupIonicReact();
 
@@ -42,7 +44,7 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route path="/" component={Main} />
+        <Route exact path="/" component={Main} />
         <Route path="/overlay-hooks" component={OverlayHooks} />
         <Route path="/overlay-components" component={OverlayComponents} />
         <Route path="/overlay-components/nested-popover" component={IonPopoverNested} />
@@ -63,8 +65,10 @@ const App: React.FC = () => (
         <Route path="/navigation" component={NavComponent} />
         <Route path="/tabs" component={Tabs} />
         <Route path="/tabs-basic" component={TabsBasic} />
+        <Route path="/tabs-direct-navigation" component={TabsDirectNavigation} />
         <Route path="/icons" component={Icons} />
         <Route path="/inputs" component={Inputs} />
+        <Route path="/reorder-group" component={ReorderGroup} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

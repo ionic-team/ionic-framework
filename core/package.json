@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "8.6.5",
+  "version": "8.7.2",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -31,8 +31,8 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "4.33.1",
-    "ionicons": "^7.2.2",
+    "@stencil/core": "4.36.2",
+    "ionicons": "^8.0.13",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
@@ -44,7 +44,7 @@
     "@clack/prompts": "^0.11.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
-    "@playwright/test": "^1.54.1",
+    "@playwright/test": "^1.54.2",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.10.0",

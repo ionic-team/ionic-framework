@@ -1,91 +1,129 @@
-describe('Inputs', () => {
-  beforeEach(() => {
-    cy.visit('/lazy/inputs');
-  })
+import { test, expect } from '@playwright/test';
 
-  it('should have default values', () => {
-    cy.get('ion-checkbox').should('have.prop', 'checked').and('equal', true);
-    cy.get('ion-radio-group').should('have.prop', 'value').and('equal', 'nes');
-    cy.get('ion-toggle').should('have.prop', 'checked').and('equal', true);
-    cy.get('ion-input').should('have.prop', 'value').and('equal', 'some text');
-    cy.get('ion-input-otp').should('have.prop', 'value').and('equal', '1234');
-    cy.get('ion-datetime').should('have.prop', 'value').and('equal', '1994-03-15');
-    cy.get('ion-select').should('have.prop', 'value').and('equal', 'nes');
-    cy.get('ion-range').should('have.prop', 'value').and('equal', 50);
+test.describe('Inputs', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/lazy/inputs');
   });
 
-  it('should reset values', () => {
-    cy.get('#reset-button').click();
+  test('should have default values', async ({ page }) => {
+    // Check primary elements for default values
+    await expect(page.locator('ion-checkbox').first()).toHaveJSProperty('checked', true);
+    await expect(page.locator('ion-radio-group').first()).toHaveJSProperty('value', 'nes');
+    await expect(page.locator('ion-toggle').first()).toHaveJSProperty('checked', true);
+    await expect(page.locator('ion-input').first()).toHaveJSProperty('value', 'some text');
+    await expect(page.locator('ion-input-otp').first()).toHaveJSProperty('value', '1234');
+    await expect(page.locator('ion-datetime').first()).toHaveJSProperty('value', '1994-03-15');
+    await expect(page.locator('ion-select').first()).toHaveJSProperty('value', 'nes');
+    await expect(page.locator('ion-range').first()).toHaveJSProperty('value', 50);
+  });
 
-    cy.get('ion-checkbox').should('have.prop', 'checked').and('equal', false);
-    cy.get('ion-radio-group').should('not.have.prop', 'value');
-    cy.get('ion-toggle').should('have.prop', 'checked').and('equal', false);
+  test('should reset values', async ({ page }) => {
+    await page.locator('#reset-button').click();
+
+    // Check primary elements after reset
+    await expect(page.locator('ion-checkbox').first()).toHaveJSProperty('checked', false);
+    await expect(page.locator('ion-radio-group').first()).toHaveJSProperty('value', undefined);
+    await expect(page.locator('ion-toggle').first()).toHaveJSProperty('checked', false);
     /**
      * The `value` property gets set to undefined
      * for these components, so we need to check
-     * not.have.prop which will check that the
-     * value property is undefined.
+     * that the value property is undefined.
      */
-    cy.get('ion-input').should('not.have.prop', 'value');
-    cy.get('ion-input-otp').should('not.have.prop', 'value');
-    cy.get('ion-datetime').should('not.have.prop', 'value');
-    cy.get('ion-select').should('not.have.prop', 'value');
-    cy.get('ion-range').should('not.have.prop', 'value');
+    await expect(page.locator('ion-input').first()).toHaveJSProperty('value', undefined);
+    await expect(page.locator('ion-input-otp').first()).toHaveJSProperty('value', undefined);
+    await expect(page.locator('ion-datetime').first()).toHaveJSProperty('value', undefined);
+    await expect(page.locator('ion-select').first()).toHaveJSProperty('value', undefined);
+    await expect(page.locator('ion-range').first()).toHaveJSProperty('value', undefined);
   });
 
-  it('should set values', () => {
-    cy.get('#reset-button').click();
-    cy.get('#set-button').click();
+  test('should set values', async ({ page }) => {
+    await page.locator('#reset-button').click();
+    await page.locator('#set-button').click();
 
-    cy.get('ion-checkbox').should('have.prop', 'checked').and('equal', true);
-    cy.get('ion-radio-group').should('have.prop', 'value').and('equal', 'nes');
-    cy.get('ion-toggle').should('have.prop', 'checked').and('equal', true);
-    cy.get('ion-input').should('have.prop', 'value').and('equal', 'some text');
-    cy.get('ion-input-otp').should('have.prop', 'value').and('equal', '1234');
-    cy.get('ion-datetime').should('have.prop', 'value').and('equal', '1994-03-15');
-    cy.get('ion-select').should('have.prop', 'value').and('equal', 'nes');
-    cy.get('ion-range').should('have.prop', 'value').and('equal', 50);
+    // Check primary elements after setting values
+    await expect(page.locator('ion-checkbox').first()).toHaveJSProperty('checked', true);
+    await expect(page.locator('ion-radio-group').first()).toHaveJSProperty('value', 'nes');
+    await expect(page.locator('ion-toggle').first()).toHaveJSProperty('checked', true);
+    await expect(page.locator('ion-input').first()).toHaveJSProperty('value', 'some text');
+    await expect(page.locator('ion-input-otp').first()).toHaveJSProperty('value', '1234');
+    await expect(page.locator('ion-datetime').first()).toHaveJSProperty('value', '1994-03-15');
+    await expect(page.locator('ion-select').first()).toHaveJSProperty('value', 'nes');
+    await expect(page.locator('ion-range').first()).toHaveJSProperty('value', 50);
   });
 
-  it('should update angular when values change', () => {
-    cy.get('#reset-button').click();
+  test('should update angular when values change', async ({ page }) => {
+    await page.locator('#reset-button').click();
 
-    cy.get('ion-checkbox#first-checkbox').click();
-    cy.get('ion-radio').first().click();
-    cy.get('ion-toggle').first().click();
+    await page.locator('ion-checkbox#first-checkbox').click();
+    await page.locator('ion-radio').first().click();
+    await page.locator('ion-toggle').first().click();
 
-    cy.get('ion-input').eq(0).type('hola');
-    cy.focused().blur();
+    await page.locator('ion-input').nth(0).locator('input').fill('hola');
+    await page.locator('ion-input').nth(0).locator('input').blur();
 
-    cy.get('ion-input-otp input').eq(0).type('1234');
-    cy.focused().blur();
+    await page.locator('ion-input-otp input').nth(0).fill('1');
+    await page.locator('ion-input-otp input').nth(1).fill('2');
+    await page.locator('ion-input-otp input').nth(2).fill('3');
+    await page.locator('ion-input-otp input').nth(3).fill('4');
+    await page.locator('ion-input-otp input').nth(3).blur();
 
     // Set date to 1994-03-14
-    cy.get('ion-datetime').first().shadow().find('.calendar-day:not([disabled])').first().click();
+    await page.locator('ion-datetime').first().click();
+    await page.locator('ion-datetime').first().locator('.calendar-day:not([disabled])').first().click();
 
-    cy.get('ion-select#game-console').click();
-    cy.get('ion-alert').should('exist').should('be.visible');
+    await page.locator('ion-select#game-console').click();
+    await expect(page.locator('ion-alert')).toBeVisible();
     // Playstation option
-    cy.get('ion-alert .alert-radio-button:nth-of-type(4)').click();
+    await page.locator('ion-alert .alert-radio-button').nth(3).click();
     // Click confirm button
-    cy.get('ion-alert .alert-button:not(.alert-button-role-cancel)').click();
+    await page.locator('ion-alert .alert-button:not(.alert-button-role-cancel)').click();
 
-    cy.get('#checkbox-note').should('have.text', 'true');
-    cy.get('#radio-note').should('have.text', 'nes');
-    cy.get('#toggle-note').should('have.text', 'true');
-    cy.get('#input-note').should('have.text', 'hola');
-    cy.get('#input-otp-note').should('have.text', '1234');
-    cy.get('#datetime-note').should('have.text', '1994-03-14');
-    cy.get('#select-note').should('have.text', 'ps');
+    // Check note text (Angular binding updates)
+    await expect(page.locator('#checkbox-note')).toHaveText('true');
+    await expect(page.locator('#radio-note')).toHaveText('nes');
+    await expect(page.locator('#toggle-note')).toHaveText('true');
+    await expect(page.locator('#input-note')).toHaveText('hola');
+    await expect(page.locator('#input-otp-note')).toHaveText('1234');
+    await expect(page.locator('#datetime-note')).toHaveText('1994-03-14');
+    await expect(page.locator('#select-note')).toHaveText('ps');
   });
 
-  it('should update values when erasing input', () => {
-    cy.get('ion-input').eq(0).type('{backspace}');
-    cy.get('ion-input').should('have.prop', 'value').and('equal', 'some tex');
-    cy.get('#input-note').should('have.text', 'some tex');
+  test('should update values when erasing input', async ({ page }) => {
+    // Focus the input and press backspace to remove last character
+    await page.locator('ion-input').nth(0).locator('input').click();
+    await page.locator('ion-input').nth(0).locator('input').press('Backspace');
+    // Check mirror element reflects the change
+    await expect(page.locator('ion-input').nth(1)).toHaveJSProperty('value', 'some tex');
+    // Check note text (Angular binding)
+    await expect(page.locator('#input-note')).toHaveText('some tex');
 
-    cy.get('ion-input-otp input:last').eq(0).type('{backspace}');
-    cy.get('ion-input-otp').should('have.prop', 'value').and('equal', '123');
-    cy.get('#input-otp-note').should('have.text', '123');
+    // Focus the last OTP input and press backspace
+    await page.locator('ion-input-otp input').last().click();
+    await page.locator('ion-input-otp input').last().press('Backspace');
+    // Check mirror element reflects the change
+    await expect(page.locator('ion-input-otp').nth(1)).toHaveJSProperty('value', '123');
+    // Check note text (Angular binding)
+    await expect(page.locator('#input-otp-note')).toHaveText('123');
+  });
+
+  test.describe('updating text input refs', () => {
+    test('typing into input should update ref', async ({ page }) => {
+      await page.locator('ion-input').first().locator('input').fill('Hello Input');
+      // Check mirror element reflects the change
+      await expect(page.locator('ion-input').nth(1)).toHaveJSProperty('value', 'Hello Input');
+      // Check note text (Angular binding)
+      await expect(page.locator('#input-note')).toHaveText('Hello Input');
+    });
+
+    test('typing into input-otp should update ref', async ({ page }) => {
+      await page.locator('ion-input-otp input').nth(0).fill('1');
+      await page.locator('ion-input-otp input').nth(1).fill('2');
+      await page.locator('ion-input-otp input').nth(2).fill('3');
+      await page.locator('ion-input-otp input').nth(3).fill('4');
+      // Check mirror element reflects the change
+      await expect(page.locator('ion-input-otp').nth(1)).toHaveJSProperty('value', '1234');
+      // Check note text (Angular binding)
+      await expect(page.locator('#input-otp-note')).toHaveText('1234');
+    });
   });
 });

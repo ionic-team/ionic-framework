@@ -2,9 +2,14 @@
 @import "../themes/ionic.mixins";
 
 // Display
-// --------------------------------------------------
-// Modifies display of a particular element based on the given classes
+// ------------------------------------------------------------------
+// Provides utility classes to control the CSS display property
+// of elements. Includes responsive variants for toggling between
+// block, inline, flex, grid, and other display values at different
+// breakpoints.
 
+// TODO(FW-6697): remove ion-hide-* classes in favor of the new
+// ion-display-* classes
 .ion-hide {
   display: none !important;
 }
@@ -26,6 +31,32 @@
     // on the breakpoint
     .ion-hide#{$infix}-down {
       display: none !important;
+    }
+  }
+}
+
+$display-values: (
+  none,
+  inline,
+  inline-block,
+  block,
+  flex,
+  inline-flex,
+  grid,
+  inline-grid,
+  table,
+  table-cell,
+  table-row
+);
+
+@each $display in $display-values {
+  @each $breakpoint in map-keys($screen-breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+
+    @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+      .ion-display#{$infix}-#{$display} {
+        display: #{$display} !important;
+      }
     }
   }
 }

@@ -1,66 +1,67 @@
-describe('Router Link', () => {
-  beforeEach(() => {
-    cy.visit('/lazy/router-link?ionic:_testing=true');
+import { test, expect } from '@playwright/test';
+import { testForward, testRoot, testBack, testLifeCycle } from '../../utils/test-utils';
+
+// Helper function to escape regex special characters
+function escapeRegExp(string: string): string {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+test.describe('Router Link', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/lazy/router-link?ionic:_testing=true');
   });
 
-  describe('router-link params and fragments', () => {
+  test.describe('router-link params and fragments', () => {
     const queryParam = 'A&=#Y';
     const fragment = 'myDiv1';
     const id = 'MyPageID==';
 
-    it('should go to a page with properly encoded values', () => {
-      cy.get('#queryParamsFragment').click();
+    test('should go to a page with properly encoded values', async ({ page }) => {
+      await page.locator('#queryParamsFragment').click();
 
       const expectedPath = `${encodeURIComponent(id)}`;
       const expectedSearch = `?token=${encodeURIComponent(queryParam)}`;
       const expectedHash = `#${encodeURIComponent(fragment)}`;
 
-      cy.location().should((location) => {
-        expect(location.pathname).to.contain(expectedPath);
-        expect(location.search).to.eq(expectedSearch);
-        expect(location.hash).to.eq(expectedHash);
-      });
+      // Check that URL contains all expected parts
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedPath)));
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedSearch)));
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedHash)));
     });
 
-    it('should return to a page with preserved query param and fragment', () => {
-      cy.get('#queryParamsFragment').click();
-      cy.get('#goToPage3').click();
+    test('should return to a page with preserved query param and fragment', async ({ page }) => {
+      await page.locator('#queryParamsFragment').click();
+      await page.locator('#goToPage3').click();
 
-      cy.location().should((location) => {
-        expect(location.pathname).to.contain('router-link-page3');
-      });
+      await expect(page).toHaveURL(new RegExp('router-link-page3'));
 
-      cy.get('#goBackFromPage3').click();
+      await page.locator('#goBackFromPage3').click();
 
       const expectedPath = `${encodeURIComponent(id)}`;
       const expectedSearch = `?token=${encodeURIComponent(queryParam)}`;
       const expectedHash = `#${encodeURIComponent(fragment)}`;
 
-      cy.location().should((location) => {
-        expect(location.pathname).to.contain(expectedPath);
-        expect(location.search).to.eq(expectedSearch);
-        expect(location.hash).to.eq(expectedHash);
-      });
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedPath)));
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedSearch)));
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedHash)));
     });
 
-    it('should preserve query param and fragment with defaultHref string', () => {
-      cy.visit('/lazy/router-link-page3?ionic:_testing=true');
+    test('should preserve query param and fragment with defaultHref string', async ({ page }) => {
+      await page.goto('/lazy/router-link-page3?ionic:_testing=true');
 
-      cy.get('#goBackFromPage3').click();
+      await page.locator('#goBackFromPage3').click();
 
       const expectedSearch = '?token=ABC';
       const expectedHash = '#fragment';
 
-      cy.location().should((location) => {
-        expect(location.search).to.eq(expectedSearch);
-        expect(location.hash).to.eq(expectedHash);
-      });
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedSearch)));
+      await expect(page).toHaveURL(new RegExp(escapeRegExp(expectedHash)));
     });
   });
 
-  describe('router-link', () => {
-    it('should have correct lifecycle counts', () => {
-      cy.testLifeCycle('app-router-link', {
+  test.describe('router-link', () => {
+    test('should have correct lifecycle counts', async ({ page }) => {
+      await testLifeCycle(page, 'app-router-link', {
         ionViewWillEnter: 1,
         ionViewDidEnter: 1,
         ionViewWillLeave: 0,
@@ -69,58 +70,65 @@ describe('Router Link', () => {
     });
   });
 
-  describe('forward', () => {
-    it('should go forward with ion-button[routerLink]', () => {
-      cy.get('#routerLink').click();
-      testForward();
+  test.describe('forward', () => {
+    test('should go forward with ion-button[routerLink]', async ({ page }) => {
+      await page.locator('#routerLink').click();
+      await testForward(page);
     });
 
-    it('should go forward with a[routerLink]', () => {
-      cy.get('#a').click();
-      testForward();
+    test('should go forward with a[routerLink]', async ({ page }) => {
+      await page.locator('#a').click();
+      await testForward(page);
     });
 
-    it('should go forward with button + navigateByUrl()', () => {
-      cy.get('#button').click();
-      testForward();
+    test('should go forward with button + navigateByUrl()', async ({ page }) => {
+      await page.locator('#button').click();
+      await testForward(page);
     });
 
-    it('should go forward with button + navigateForward()', () => {
-      cy.get('#button-forward').click();
-      testForward();
-    });
-  });
-
-  describe('root', () => {
-    it('should go root with ion-button[routerLink][routerDirection=root]', () => {
-      cy.get('#routerLink-root').click();
-      testRoot();
-    });
-
-    it('should go root with a[routerLink][routerDirection=root]', () => {
-      cy.get('#a-root').click();
-      testRoot();
-    });
-
-    it('should go root with button + navigateRoot', () => {
-      cy.get('#button-root').click();
-      testRoot();
+    test('should go forward with button + navigateForward()', async ({ page }) => {
+      await page.locator('#button-forward').click();
+      await testForward(page);
     });
   });
 
-  describe('back', () => {
-    it('should go back with ion-button[routerLink][routerDirection=back]', () => {
-      cy.get('#routerLink-back').click();
+  test.describe('root', () => {
+    test('should go root with ion-button[routerLink][routerDirection=root]', async ({ page }) => {
+      await page.locator('#routerLink-root').click();
+      await page.waitForTimeout(100);
+      await testRoot(page);
     });
 
-    it('should go back with a[routerLink][routerDirection=back]', () => {
-      cy.get('#a-back').click();
-      testBack();
+    test('should go root with a[routerLink][routerDirection=root]', async ({ page }) => {
+      await page.locator('#a-root').click();
+      await page.waitForTimeout(100);
+      await testRoot(page);
     });
 
-    it('should go back with button + navigateBack', () => {
-      cy.get('#button-back').click();
-      testBack();
+    test('should go root with button + navigateRoot', async ({ page }) => {
+      await page.locator('#button-root').click();
+      await page.waitForTimeout(100);
+      await testRoot(page);
+    });
+  });
+
+  test.describe('back', () => {
+    test('should go back with ion-button[routerLink][routerDirection=back]', async ({ page }) => {
+      await page.locator('#routerLink-back').click();
+      await page.waitForTimeout(100);
+      await testBack(page);
+    });
+
+    test('should go back with a[routerLink][routerDirection=back]', async ({ page }) => {
+      await page.locator('#a-back').click();
+      await page.waitForTimeout(100);
+      await testBack(page);
+    });
+
+    test('should go back with button + navigateBack', async ({ page }) => {
+      await page.locator('#button-back').click();
+      await page.waitForTimeout(100);
+      await testBack(page);
     });
   });
 
@@ -129,73 +137,13 @@ describe('Router Link', () => {
   // components that wrap an `a` or `button` element, so we are
   // checking here that it is only removed from Ionic components.
   // https://github.com/ionic-team/ionic-framework/issues/20632
-  describe('tabindex', () => {
-    it('should have tabindex="0" with a native span', () => {
-      cy.get('#span').should('have.attr', 'tabindex', '0');
+  test.describe('tabindex', () => {
+    test('should have tabindex="0" with a native span', async ({ page }) => {
+      await expect(page.locator('#span')).toHaveAttribute('tabindex', '0');
     });
 
-    it('should not have tabindex set with an ionic button', () => {
-      cy.get('#routerLink').should('not.have.attr', 'tabindex');
+    test('should not have tabindex set with an ionic button', async ({ page }) => {
+      await expect(page.locator('#routerLink')).not.toHaveAttribute('tabindex');
     });
   });
 });
-
-function testForward() {
-  cy.testStack('ion-router-outlet', ['app-router-link', 'app-router-link-page']);
-  cy.testLifeCycle('app-router-link-page', {
-    ionViewWillEnter: 1,
-    ionViewDidEnter: 1,
-    ionViewWillLeave: 0,
-    ionViewDidLeave: 0,
-  });
-  cy.get('app-router-link-page #canGoBack').should('have.text', 'true');
-
-  cy.go('back');
-  cy.testStack('ion-router-outlet', ['app-router-link']);
-  cy.testLifeCycle('app-router-link', {
-    ionViewWillEnter: 2,
-    ionViewDidEnter: 2,
-    ionViewWillLeave: 1,
-    ionViewDidLeave: 1,
-  });
-}
-
-function testRoot() {
-  cy.testStack('ion-router-outlet', ['app-router-link-page']);
-  cy.testLifeCycle('app-router-link-page', {
-    ionViewWillEnter: 1,
-    ionViewDidEnter: 1,
-    ionViewWillLeave: 0,
-    ionViewDidLeave: 0,
-  });
-  cy.get('app-router-link-page #canGoBack').should('have.text', 'false');
-
-  cy.go('back');
-  cy.testStack('ion-router-outlet', ['app-router-link']);
-  cy.testLifeCycle('app-router-link', {
-    ionViewWillEnter: 1,
-    ionViewDidEnter: 1,
-    ionViewWillLeave: 0,
-    ionViewDidLeave: 0,
-  });
-}
-
-function testBack() {
-  cy.testStack('ion-router-outlet', ['app-router-link-page']);
-  cy.testLifeCycle('app-router-link-page', {
-    ionViewWillEnter: 1,
-    ionViewDidEnter: 1,
-    ionViewWillLeave: 0,
-    ionViewDidLeave: 0,
-  });
-  cy.get('app-router-link-page #canGoBack').should('have.text', 'false');
-
-  cy.go('back');
-  cy.testStack('ion-router-outlet', ['app-router-link']);
-  cy.testLifeCycle('app-router-link', {
-    ionViewWillEnter: 1,
-    ionViewDidEnter: 1,
-    ionViewWillLeave: 0,
-    ionViewDidLeave: 0,
-  });
-}

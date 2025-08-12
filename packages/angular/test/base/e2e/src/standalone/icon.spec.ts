@@ -1,20 +1,22 @@
-describe('Icons', () => {
-  it('should render an icon', () => {
-    cy.visit('/standalone/icon');
+import { test, expect } from '@playwright/test';
 
-    cy.get('ion-icon#icon-string').shadow().find('svg').should('exist');
-    cy.get('ion-icon#icon-binding').shadow().find('svg').should('exist');
+test.describe('Icons', () => {
+  test('should render an icon', async ({ page }) => {
+    await page.goto('/standalone/icon');
+
+    await expect(page.locator('ion-icon#icon-string').locator('svg')).toBeVisible();
+    await expect(page.locator('ion-icon#icon-binding').locator('svg')).toBeVisible();
   });
 
-  it('should render an icon on iOS mode', () => {
-    cy.visit('/standalone/icon?ionic:mode=ios');
+  test('should render an icon on iOS mode', async ({ page }) => {
+    await page.goto('/standalone/icon?ionic:mode=ios');
 
-    cy.get('ion-icon#icon-mode').shadow().find('svg').should('exist');
+    await expect(page.locator('ion-icon#icon-mode').locator('svg')).toBeVisible();
   });
 
-  it('should render an icon on MD mode', () => {
-    cy.visit('/standalone/icon?ionic:mode=md');
+  test('should render an icon on MD mode', async ({ page }) => {
+    await page.goto('/standalone/icon?ionic:mode=md');
 
-    cy.get('ion-icon#icon-mode').shadow().find('svg').should('exist');
+    await expect(page.locator('ion-icon#icon-mode').locator('svg')).toBeVisible();
   });
 });

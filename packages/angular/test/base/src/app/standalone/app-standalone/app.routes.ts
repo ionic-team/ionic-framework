@@ -11,6 +11,7 @@ export const routes: Routes = [
       { path: 'action-sheet-controller', loadComponent: () => import('../action-sheet-controller/action-sheet-controller.component').then(c => c.ActionSheetControllerComponent) },
       { path: 'popover', loadComponent: () => import('../popover/popover.component').then(c => c.PopoverComponent) },
       { path: 'modal', loadComponent: () => import('../modal/modal.component').then(c => c.ModalComponent) },
+      { path: 'programmatic-modal', loadComponent: () => import('../programmatic-modal/programmatic-modal.component').then(c => c.ProgrammaticModalComponent) },
       { path: 'router-outlet', loadComponent: () => import('../router-outlet/router-outlet.component').then(c => c.RouterOutletComponent) },
       { path: 'back-button', loadComponent: () => import('../back-button/back-button.component').then(c => c.BackButtonComponent) },
       { path: 'router-link', loadComponent: () => import('../router-link/router-link.component').then(c => c.RouterLinkComponent) },
@@ -18,6 +19,7 @@ export const routes: Routes = [
       { path: 'providers', loadComponent: () => import('../providers/providers.component').then(c => c.ProvidersComponent) },
       { path: 'overlay-controllers', loadComponent: () => import('../overlay-controllers/overlay-controllers.component').then(c => c.OverlayControllersComponent) },
       { path: 'button', loadComponent: () => import('../button/button.component').then(c => c.ButtonComponent) },
+      { path: 'reorder-group', loadComponent: () => import('../reorder-group/reorder-group.component').then(c => c.ReorderGroupComponent) },
       { path: 'icon', loadComponent: () => import('../icon/icon.component').then(c => c.IconComponent) },
       { path: 'split-pane', redirectTo: '/standalone/split-pane/inbox', pathMatch: 'full' },
       {

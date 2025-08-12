@@ -2,6 +2,9 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/"></ion-back-button>
+        </ion-buttons>
         <ion-title>Breadcrumbs</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -29,25 +32,16 @@
   </ion-page>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  IonPage,
+  IonBackButton,
+  IonBreadcrumb,
+  IonBreadcrumbs,
+  IonButtons,
+  IonContent,
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonContent,
-  IonBreadcrumbs,
+  IonPage,
 } from "@ionic/vue";
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  components: {
-    IonPage,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonBreadcrumbs,
-  },
-});
 </script>

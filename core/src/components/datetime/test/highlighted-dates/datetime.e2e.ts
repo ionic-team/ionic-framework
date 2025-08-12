@@ -21,16 +21,19 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
             date: '2023-01-01', // ensure selected date style overrides highlight
             textColor: '#800080',
             backgroundColor: '#ffc0cb',
+            border: '2px solid purple',
           },
           {
             date: '2023-01-02',
             textColor: '#b22222',
             backgroundColor: '#fa8072',
+            border: '2px solid purple',
           },
           {
             date: '2023-01-03',
             textColor: '#0000ff',
             backgroundColor: '#add8e6',
+            border: '2px solid purple',
           },
         ];
       });
@@ -52,6 +55,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
             return {
               textColor: '#b22222',
               backgroundColor: '#fa8072',
+              border: '2px solid purple',
             };
           }
 
@@ -59,6 +63,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
             return {
               textColor: '#800080',
               backgroundColor: '#ffc0cb',
+              border: '2px solid purple',
             };
           }
 
@@ -66,6 +71,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
             return {
               textColor: '#0000ff',
               backgroundColor: '#add8e6',
+              border: '2px solid purple',
             };
           }
 
@@ -77,7 +83,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-highlightedDates-callback`));
     });
 
-    test('should render highlights correctly when only using one color or the other', async ({ page }) => {
+    test('should render highlights correctly when only using only one color property', async ({ page }) => {
       const datetime = page.locator('ion-datetime');
 
       await datetime.evaluate((el: HTMLIonDatetimeElement) => {
@@ -89,6 +95,10 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           {
             date: '2023-01-03',
             textColor: '#0000ff',
+          },
+          {
+            date: '2023-01-04',
+            border: '2px solid purple',
           },
         ];
       });

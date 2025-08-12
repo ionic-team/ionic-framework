@@ -30,7 +30,7 @@ import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAct
 import { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 import { RefresherEventDetail } from "./components/refresher/refresher-interface";
-import { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
+import { ItemReorderEventDetail, ReorderEndEventDetail, ReorderMoveEventDetail } from "./components/reorder-group/reorder-group-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 import { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
@@ -68,7 +68,7 @@ export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAct
 export { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 export { RefresherEventDetail } from "./components/refresher/refresher-interface";
-export { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
+export { ItemReorderEventDetail, ReorderEndEventDetail, ReorderMoveEventDetail } from "./components/reorder-group/reorder-group-interface";
 export { NavigationHookCallback } from "./components/route/route-interface";
 export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 export { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
@@ -2783,7 +2783,7 @@ export namespace Components {
     }
     interface IonReorderGroup {
         /**
-          * Completes the reorder operation. Must be called by the `ionItemReorder` event. If a list of items is passed, the list will be reordered and returned in the proper order.  If no parameters are passed or if `true` is passed in, the reorder will complete and the item will remain in the position it was dragged to. If `false` is passed, the reorder will complete and the item will bounce back to its original position.
+          * Completes the reorder operation. Must be called by the `ionReorderEnd` event.  If a list of items is passed, the list will be reordered and returned in the proper order.  If no parameters are passed or if `true` is passed in, the reorder will complete and the item will remain in the position it was dragged to. If `false` is passed, the reorder will complete and the item will bounce back to its original position.
           * @param listOrReorder A list of items to be sorted and returned in the new order or a boolean of whether or not the reorder should reposition the item.
          */
         "complete": (listOrReorder?: boolean | any[]) => Promise<any>;
@@ -4769,6 +4769,9 @@ declare global {
     };
     interface HTMLIonReorderGroupElementEventMap {
         "ionItemReorder": ItemReorderEventDetail;
+        "ionReorderStart": void;
+        "ionReorderMove": ReorderMoveEventDetail;
+        "ionReorderEnd": ReorderEndEventDetail;
     }
     interface HTMLIonReorderGroupElement extends Components.IonReorderGroup, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonReorderGroupElementEventMap>(type: K, listener: (this: HTMLIonReorderGroupElement, ev: IonReorderGroupCustomEvent<HTMLIonReorderGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -8053,9 +8056,22 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * Event that needs to be listened to in order to complete the reorder action. Once the event has been emitted, the `complete()` method then needs to be called in order to finalize the reorder action.
+          * Event that needs to be listened to in order to complete the reorder action.
+          * @deprecated Use `ionReorderEnd` instead. If you are accessing `event.detail.from` or `event.detail.to` and relying on them being different you should now add checks as they are always emitted in `ionReorderEnd`, even when they are the same.
          */
         "onIonItemReorder"?: (event: IonReorderGroupCustomEvent<ItemReorderEventDetail>) => void;
+        /**
+          * Event that is emitted when the reorder gesture ends. The from and to properties are always available, regardless of if the reorder gesture moved the item. If the item did not change from its start position, the from and to properties will be the same. Once the event has been emitted, the `complete()` method then needs to be called in order to finalize the reorder action.
+         */
+        "onIonReorderEnd"?: (event: IonReorderGroupCustomEvent<ReorderEndEventDetail>) => void;
+        /**
+          * Event that is emitted as the reorder gesture moves.
+         */
+        "onIonReorderMove"?: (event: IonReorderGroupCustomEvent<ReorderMoveEventDetail>) => void;
+        /**
+          * Event that is emitted when the reorder gesture starts.
+         */
+        "onIonReorderStart"?: (event: IonReorderGroupCustomEvent<void>) => void;
     }
     interface IonRippleEffect {
         /**

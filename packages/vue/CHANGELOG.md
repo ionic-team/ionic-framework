@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.2](https://github.com/ionic-team/ionic-framework/compare/v8.7.1...v8.7.2) (2025-08-06)
+
+
+### Bug Fixes
+
+* **reorder-group:**  add children fallback for framework compatibility ([#30593](https://github.com/ionic-team/ionic-framework/issues/30593)) ([1cd81b9](https://github.com/ionic-team/ionic-framework/commit/1cd81b92301378d55bce63a01dfcf95a91c92652)), closes [#30592](https://github.com/ionic-team/ionic-framework/issues/30592)
+
+
+
+
+
+## [8.7.1](https://github.com/ionic-team/ionic-framework/compare/v8.7.0...v8.7.1) (2025-07-31)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+# [8.7.0](https://github.com/ionic-team/ionic-framework/compare/v8.6.7...v8.7.0) (2025-07-30)
+
+
+### Features
+
+* **deps:** update ionicons to v8 ([#30390](https://github.com/ionic-team/ionic-framework/issues/30390)) ([74cd71a](https://github.com/ionic-team/ionic-framework/commit/74cd71af243183aa738d11b280e155bdfd652126)), closes [#30445](https://github.com/ionic-team/ionic-framework/issues/30445)
+* **reorder-group:** add ionReorderStart, ionReorderMove, ionReorderEnd events ([#30471](https://github.com/ionic-team/ionic-framework/issues/30471)) ([b154f4e](https://github.com/ionic-team/ionic-framework/commit/b154f4ed095890f57ccab539fd9217976a5466e5)), closes [#23148](https://github.com/ionic-team/ionic-framework/issues/23148) [#27614](https://github.com/ionic-team/ionic-framework/issues/27614)
+
+
+
+
+
+## [8.6.7](https://github.com/ionic-team/ionic-framework/compare/v8.6.6...v8.6.7) (2025-07-30)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.6.6](https://github.com/ionic-team/ionic-framework/compare/v8.6.5...v8.6.6) (2025-07-30)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
 ## [8.6.5](https://github.com/ionic-team/ionic-framework/compare/v8.6.4...v8.6.5) (2025-07-16)
 
 **Note:** Version bump only for package @ionic/vue
