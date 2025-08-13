@@ -1,14 +1,18 @@
+@use "sass:map";
+
 // Gets the active color's css variable from a variation. Alpha is optional.
 // --------------------------------------------------------------------------------------------
 // Example usage:
 // current-color(base) => var(--ion-color-base)
 // current-color(contrast, 0.1) => rgba(var(--ion-color-contrast-rgb), 0.1)
 // --------------------------------------------------------------------------------------------
-@function current-color($variation, $alpha: null) {
+@function current-color($variation, $alpha: null, $subtle: false) {
+  $variable: if($subtle, "--ion-color-subtle-#{$variation}", "--ion-color-#{$variation}");
+
   @if $alpha == null {
-    @return var(--ion-color-#{$variation});
+    @return var(#{$variable});
   } @else {
-    @return rgba(var(--ion-color-#{$variation}-rgb), #{$alpha});
+    @return rgba(var(#{$variable}-rgb), #{$alpha});
   }
 }
 
@@ -19,19 +23,36 @@
 // ion-color(secondary, contrast) => var(--ion-color-secondary-contrast)
 // ion-color(primary, base, 0.5) => rgba(var(--ion-color-primary-rgb, 56, 128, 255), 0.5)
 // --------------------------------------------------------------------------------------------
-@function ion-color($name, $variation, $alpha: null, $rgb: null) {
-  $values: map-get($colors, $name);
-  $value: map-get($values, $variation);
-  $variable: --ion-color-#{$name}-#{$variation};
+@function ion-color($name, $variation, $alpha: null, $rgb: null, $subtle: false) {
+  $values: map.get($colors, $name);
+  $values: map.get($values, if($subtle, subtle, bold));
 
+  $value: map.get($values, $variation);
+
+  // TODO(FW-6417): this can be removed when foreground is required
+  // Fallback to "base" variant when "foreground" variant is undefined
+  @if ($variation == foreground and $value == null) {
+    $variation: base;
+    $value: map.get($values, $variation);
+  }
+
+  // If the color requested is subtle we return `--ion-color-{color}-subtle-contrast`,
+  // otherwise we return `--ion-color-{color}-contrast`.
+  $variable: if($subtle, "--ion-color-#{$name}-subtle-#{$variation}", "--ion-color-#{$name}-#{$variation}");
+
+  // If the variation being used is "base", we do not include the variant.
+  // If the color requested is subtle we return `--ion-color-{color}-subtle`,
+  // otherwise we return `--ion-color-{color}`.
   @if ($variation == base) {
-    $variable: --ion-color-#{$name};
+    $variable: if($subtle, "--ion-color-#{$name}-subtle", "--ion-color-#{$name}");
   }
 
   @if ($alpha) {
     $value: color-to-rgb-list($value);
+
     @return rgba(var(#{$variable}-rgb, $value), $alpha);
   }
+
   @if ($rgb) {
     $value: color-to-rgb-list($value);
     $variable: #{$variable}-rgb;
@@ -43,17 +64,181 @@
 // Mixes a color with black to create its shade.
 // --------------------------------------------------------------------------------------------
 @function get-color-shade($color) {
+  @if (type-of($color) != color) {
+    @return $color;
+  }
   @return mix(#000, $color, 12%);
 }
 
 // Mixes a color with white to create its tint.
 // --------------------------------------------------------------------------------------------
 @function get-color-tint($color) {
+  @if (type-of($color) != color) {
+    @return $color;
+  }
   @return mix(#fff, $color, 10%);
 }
 
 // Converts a color to a comma separated rgb.
 // --------------------------------------------------------------------------------------------
 @function color-to-rgb-list($color) {
-  @return #{red($color)},#{green($color)},#{blue($color)};
+  @if (type-of($color) != color) {
+    @return $color;
+  }
+  @return #{red($color)}, #{green($color)}, #{blue($color)};
+}
+
+// Generates color variants for the specified color based on the
+// colors map for whichever hue is passed (bold, subtle).
+// --------------------------------------------------------------------------------------------
+// Example usage (bold):
+// .ion-color-primary {
+//   @include generate-color-variants("primary");
+// }
+//
+// Example output (bold):
+// .ion-color-primary {
+//   --ion-color-base: var(--ion-color-primary-base, #105cef) !important;
+//   --ion-color-base-rgb: var(--ion-color-primary-base-rgb, 16, 92, 239) !important;
+//   --ion-color-contrast: var(--ion-color-primary-contrast, #fff) !important;
+//   --ion-color-contrast-rgb: var(--ion-color-primary-contrast-rgb, 255, 255, 255) !important;
+//   --ion-color-shade: var(--ion-color-primary-shade, #0f54da) !important;
+//   --ion-color-tint: var(--ion-color-primary-tint, #94a5f4) !important;
+// }
+// --------------------------------------------------------------------------------------------
+// Example usage (subtle):
+// .ion-color-primary {
+//   @include generate-color-variants("primary", "subtle")
+// }
+//
+// Example output (subtle):
+// .ion-color-primary {
+//   --ion-color-subtle-base: var(--ion-color-primary-subtle-base, #f2f4fd) !important;
+//   --ion-color-subtle-base-rgb: var(--ion-color-primary-subtle-base-rgb, 242, 244, 253) !important;
+//   --ion-color-subtle-contrast: var(--ion-color-primary-subtle-contrast, #105cef) !important;
+//   --ion-color-subtle-contrast-rgb: var(--ion-color-primary-subtle-contrast-rgb, 16, 92, 239) !important;
+//   --ion-color-subtle-shade: var(--ion-color-primary-subtle-shade, #d0d7fa) !important;
+//   --ion-color-subtle-tint: var(--ion-color-primary-subtle-tint, #e9ecfc) !important;
+// }
+// --------------------------------------------------------------------------------------------
+@mixin generate-color-variants($color-name, $hue: "bold") {
+  @if not($colors) {
+    @error 'No theme colors set. Please make sure to call set-theme-colors($colorsMap) before using ion-color()';
+  }
+
+  // Grab the different hue color maps for the
+  // specified color and then grab the map of color variants
+  $hue-colors: map.get($colors, $color-name);
+  $color-variants: map.get($hue-colors, $hue);
+
+  $prefix: if($hue == "subtle", "-subtle", "");
+
+  // TODO(FW-6417) this @if can be removed if we add subtle colors for ios and md
+  // Only proceed if the color variants exist
+  @if $color-variants {
+    // Grab the individual color variants
+    $base: map.get($color-variants, base);
+    $base-rgb: map.get($color-variants, base-rgb);
+    $contrast: map.get($color-variants, contrast);
+    $contrast-rgb: map.get($color-variants, contrast-rgb);
+    $shade: map.get($color-variants, shade);
+    $tint: map.get($color-variants, tint);
+    $foreground: map.get($color-variants, foreground);
+
+    // Generate CSS variables dynamically
+    --ion-color#{$prefix}-base: var(--ion-color-#{$color-name}#{$prefix}, #{$base}) !important;
+    --ion-color#{$prefix}-base-rgb: var(--ion-color-#{$color-name}#{$prefix}-rgb, #{$base-rgb}) !important;
+    --ion-color#{$prefix}-contrast: var(--ion-color-#{$color-name}#{$prefix}-contrast, #{$contrast}) !important;
+    --ion-color#{$prefix}-contrast-rgb: var(
+      --ion-color-#{$color-name}#{$prefix}-contrast-rgb,
+      #{$contrast-rgb}
+    ) !important;
+    --ion-color#{$prefix}-shade: var(--ion-color-#{$color-name}#{$prefix}-shade, #{$shade}) !important;
+    --ion-color#{$prefix}-tint: var(--ion-color-#{$color-name}#{$prefix}-tint, #{$tint}) !important;
+    // TODO(FW-6417): remove the fallback variable when the foreground variable is
+    // required by all palettes for all themes:
+    // --ion-color#{$prefix}-foreground: var(--ion-color-#{$color-name}#{$prefix}-foreground, #{$foreground}) !important;
+    --ion-color#{$prefix}-foreground: var(
+      --ion-color-#{$color-name}#{$prefix}-foreground,
+      var(--ion-color-#{$color-name}#{$prefix}, #{$foreground})
+    ) !important;
+  }
+}
+
+// Generates both bold and subtle color variables
+// for the specified color in the colors map.
+// --------------------------------------------------------------------------------------------
+@mixin generate-color($color-name) {
+  @include generate-color-variants($color-name);
+  @include generate-color-variants($color-name, "subtle");
+}
+
+// Generates color variables for all colors in the colors map for both hues (bold, subtle).
+// --------------------------------------------------------------------------------------------
+// Example usage:
+// :root {
+//   generate-color-variables()
+// }
+//
+// Example output:
+// :root {
+//   --ion-color-primary: #105cef;
+//   --ion-color-primary-rgb: 16, 92, 239;
+//   --ion-color-primary-contrast: #ffffff;
+//   --ion-color-primary-contrast-rgb: 255, 255, 255;
+//   --ion-color-primary-shade: #0f54da;
+//   --ion-color-primary-tint: #94a5f4;
+//   --ion-color-primary-foreground: #105cef;
+//   --ion-color-primary-subtle: #f2f4fd;
+//   --ion-color-primary-subtle-rgb: 242, 244, 253;
+//   --ion-color-primary-subtle-contrast: #105cef;
+//   --ion-color-primary-subtle-contrast-rgb: 16, 92, 239;
+//   --ion-color-primary-subtle-shade: #d0d7fa;
+//   --ion-color-primary-subtle-tint: #e9ecfc;
+//   --ion-color-primary-foreground: #105cef;
+//   ...
+//   --ion-color-dark: #292929;
+//   --ion-color-dark-rgb: 41, 41, 41;
+//   --ion-color-dark-contrast: #ffffff;
+//   --ion-color-dark-contrast-rgb: 255, 255, 255;
+//   --ion-color-dark-shade: #242424;
+//   --ion-color-dark-tint: #4e4e4e;
+//   --ion-color-dark-foreground: #242424;
+//   --ion-color-dark-subtle: #f5f5f5;
+//   --ion-color-dark-subtle-rgb: 245, 245, 245;
+//   --ion-color-dark-subtle-contrast: #292929;
+//   --ion-color-dark-subtle-contrast-rgb: 41, 41, 41;
+//   --ion-color-dark-subtle-shade: #e0e0e0;
+//   --ion-color-dark-subtle-tint: #efefef;
+//   --ion-color-dark-subtle-foreground: #242424;
+// }
+// --------------------------------------------------------------------------------------------
+@mixin generate-color-variables() {
+  @if not($colors) {
+    @error 'No theme colors set. Please make sure to call set-theme-colors($colorsMap) before using ion-color().';
+  }
+
+  @each $color-name, $value in $colors {
+    @each $hue in (bold, subtle) {
+      $colors: map.get($value, $hue);
+
+      @if $colors != null {
+        $prefix: if($hue == subtle, "-subtle", "");
+
+        --ion-color-#{$color-name}#{$prefix}: #{map.get($colors, base)};
+        --ion-color-#{$color-name}#{$prefix}-rgb: #{map.get($colors, base-rgb)};
+        --ion-color-#{$color-name}#{$prefix}-contrast: #{map.get($colors, contrast)};
+        --ion-color-#{$color-name}#{$prefix}-contrast-rgb: #{map.get($colors, contrast-rgb)};
+        --ion-color-#{$color-name}#{$prefix}-shade: #{map.get($colors, shade)};
+        --ion-color-#{$color-name}#{$prefix}-tint: #{map.get($colors, tint)};
+        // TODO(FW-6417): this "if" can be removed when foreground is defined for ios/md
+        // themes. It should not be added until we want foreground to be required for
+        // ios and md because this will be a breaking change, requiring users to add
+        // `--ion-color-{color}-foreground` in order to override the default colors
+        @if (map.get($colors, foreground)) {
+          --ion-color-#{$color-name}#{$prefix}-foreground: #{map.get($colors, foreground)};
+        }
+      }
+    }
+  }
 }

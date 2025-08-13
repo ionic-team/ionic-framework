@@ -11,61 +11,70 @@ $light: #222428;
 $medium: #989aa2;
 $dark: #f4f5f8;
 
-$colors:  (
+$colors: (
   primary: (
-    base:             $primary,
-    contrast:         #000,
-    shade:            get-color-shade($primary),
-    tint:             get-color-tint($primary)
+    base: $primary,
+    contrast: #000,
+    shade: get-color-shade($primary),
+    tint: get-color-tint($primary),
+    foreground: $primary,
   ),
   secondary: (
-    base:             $secondary,
-    contrast:         #000,
-    shade:            get-color-shade($secondary),
-    tint:             get-color-tint($secondary)
+    base: $secondary,
+    contrast: #000,
+    shade: get-color-shade($secondary),
+    tint: get-color-tint($secondary),
+    foreground: $secondary,
   ),
   tertiary: (
-    base:             $tertiary,
-    contrast:         #000,
-    shade:            get-color-shade($tertiary),
-    tint:             get-color-tint($tertiary)
+    base: $tertiary,
+    contrast: #000,
+    shade: get-color-shade($tertiary),
+    tint: get-color-tint($tertiary),
+    foreground: $tertiary,
   ),
   success: (
-    base:             $success,
-    contrast:         #000,
-    shade:            get-color-shade($success),
-    tint:             get-color-tint($success)
+    base: $success,
+    contrast: #000,
+    shade: get-color-shade($success),
+    tint: get-color-tint($success),
+    foreground: $success,
   ),
   warning: (
-    base:             $warning,
-    contrast:         #000,
-    shade:            get-color-shade($warning),
-    tint:             get-color-tint($warning)
+    base: $warning,
+    contrast: #000,
+    shade: get-color-shade($warning),
+    tint: get-color-tint($warning),
+    foreground: $warning,
   ),
   danger: (
-    base:             $danger,
-    contrast:         #000,
-    shade:            get-color-shade($danger),
-    tint:             get-color-tint($danger)
+    base: $danger,
+    contrast: #000,
+    shade: get-color-shade($danger),
+    tint: get-color-tint($danger),
+    foreground: $danger,
   ),
   light: (
-    base:             $light,
-    contrast:         #fff,
-    shade:            get-color-shade($light),
-    tint:             get-color-tint($light)
+    base: $light,
+    contrast: #fff,
+    shade: get-color-shade($light),
+    tint: get-color-tint($light),
+    foreground: $light,
   ),
   medium: (
-    base:             $medium,
-    contrast:         #000,
-    shade:            get-color-shade($medium),
-    tint:             get-color-tint($medium)
+    base: $medium,
+    contrast: #000,
+    shade: get-color-shade($medium),
+    tint: get-color-tint($medium),
+    foreground: $medium,
   ),
   dark: (
-    base:             $dark,
-    contrast:         #000,
-    shade:            get-color-shade($dark),
-    tint:             get-color-tint($dark)
-  )
+    base: $dark,
+    contrast: #000,
+    shade: get-color-shade($dark),
+    tint: get-color-tint($dark),
+    foreground: $dark,
+  ),
 );
 
 @mixin dark-base-palette() {

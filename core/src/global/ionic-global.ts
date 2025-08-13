@@ -1,11 +1,10 @@
 import { getMode, setMode } from '@stencil/core';
-import { printIonWarning } from '@utils/logging';
 
-import type { IonicConfig, Mode, Theme } from '../interface';
+import type { IonicConfig, Mode } from '../interface';
 import { defaultTheme as baseTheme } from '../themes/base/base.tokens';
 import type { Theme as BaseTheme } from '../themes/base/base.tokens';
 import { deepMerge, generateCSSVars } from '../themes/base/generate-css-vars';
-import { shouldUseCloseWatcher } from '../utils/hardware-back-button';
+import { printIonWarning } from '../utils/logging';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
 import { config, configFromSession, configFromURL, saveConfig } from './config';
@@ -13,6 +12,15 @@ import { config, configFromSession, configFromURL, saveConfig } from './config';
 // TODO(FW-2832): types
 
 let defaultMode: Mode;
+
+type Theme = 'ios' | 'md' | 'ionic';
+
+const getElement = (ref: any): HTMLElement => {
+  if (ref && typeof ref === 'object' && ref.tagName) {
+    return ref;
+  }
+  return document.documentElement;
+};
 
 /**
  * Prints a warning message to the developer to inform them of
@@ -85,11 +93,11 @@ const getDefaultThemeForMode = (mode: Mode): Theme => {
   return 'md';
 };
 
-const isModeSupported = (elmMode: string) => ['ios', 'md'].includes(elmMode);
+// const isModeSupported = (elmMode: string) => ['ios', 'md'].includes(elmMode);
 
-const isThemeSupported = (theme: string) => ['ios', 'md', 'ionic'].includes(theme);
+// const isThemeSupported = (theme: string) => ['ios', 'md', 'ionic'].includes(theme);
 
-const isIonicElement = (elm: HTMLElement) => elm.tagName?.startsWith('ION-');
+// const isIonicElement = (elm: HTMLElement) => elm.tagName?.startsWith('ION-');
 
 /**
  * Returns the mode value of the element reference or the closest
@@ -135,10 +143,6 @@ export const getIonTheme = (ref?: any): Theme => {
     return theme;
   }
 
-  /**
-   * If the theme cannot be detected, then fallback to using
-   * the `mode` attribute to determine the style sheets to use.
-   */
   const el = getElement(ref);
   const mode = ref?.mode ?? (el.closest('[mode]')?.getAttribute('mode') as Mode);
 
@@ -146,11 +150,8 @@ export const getIonTheme = (ref?: any): Theme => {
     return getDefaultThemeForMode(mode);
   }
 
-  /**
-   * If a mode is not detected, then fallback to using the
-   * default theme.
-   */
-  return defaultTheme;
+  // Return a default theme string, not the baseTheme object
+  return 'md'; // or 'ionic' as your default
 };
 
 export const getIonCustomTheme = (): any => {
@@ -158,7 +159,7 @@ export const getIonCustomTheme = (): any => {
   if (customTheme) {
     return customTheme;
   }
-  return defaultTheme;
+  return baseTheme;
 };
 
 export const rIC = (callback: () => void) => {
@@ -230,9 +231,10 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   doc.documentElement.setAttribute('mode', defaultMode);
   doc.documentElement.classList.add(defaultMode);
 
-  config.set('theme', defaultTheme);
-  doc.documentElement.setAttribute('theme', defaultTheme);
-  doc.documentElement.classList.add(defaultTheme);
+  // Remove this line as 'theme' is not a valid IonicConfig key
+  // config.set('theme', defaultTheme);
+  // doc.documentElement.setAttribute('theme', defaultTheme);
+  // doc.documentElement.classList.add(defaultTheme);
 
   const customTheme: BaseTheme | undefined = configObj.customTheme;
 

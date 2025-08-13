@@ -2079,10 +2079,12 @@ export namespace Components {
         "color"?: Color;
         /**
           * If `true`, the user cannot interact with the chip.
+          * @default false
          */
         "disabled": boolean;
         /**
           * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Only applies to the `ionic` theme.
+          * @default 'subtle'
          */
         "hue"?: 'bold' | 'subtle';
         /**
@@ -2091,14 +2093,17 @@ export namespace Components {
         "mode"?: "ios" | "md";
         /**
           * Display an outline style button.
+          * @default false
          */
         "outline": boolean;
         /**
           * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners. Defaults to `"round"` for the `"ionic"` theme and `"soft"` for all other themes.
+          * @default 'soft'
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+          * @default 'small'
          */
         "size"?: 'small' | 'large';
         /**
@@ -2242,6 +2247,10 @@ export namespace Components {
           * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
          */
         "componentProps"?: ComponentProps;
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
         /**
           * The transition animation when navigating to another page.
          */
@@ -7423,10 +7432,12 @@ declare namespace LocalJSX {
         "color"?: Color;
         /**
           * If `true`, the user cannot interact with the chip.
+          * @default false
          */
         "disabled"?: boolean;
         /**
           * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Only applies to the `ionic` theme.
+          * @default 'subtle'
          */
         "hue"?: 'bold' | 'subtle';
         /**
@@ -7435,14 +7446,17 @@ declare namespace LocalJSX {
         "mode"?: "ios" | "md";
         /**
           * Display an outline style button.
+          * @default false
          */
         "outline"?: boolean;
         /**
           * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners. Defaults to `"round"` for the `"ionic"` theme and `"soft"` for all other themes.
+          * @default 'soft'
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+          * @default 'small'
          */
         "size"?: 'small' | 'large';
         /**
@@ -7495,6 +7509,10 @@ declare namespace LocalJSX {
           * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
          */
         "componentProps"?: ComponentProps;
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
         /**
           * The transition animation when navigating to another page.
          */

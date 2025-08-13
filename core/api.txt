@@ -1214,11 +1214,27 @@ ion-my-chip,prop,outline,boolean,false,false,false
 ion-my-chip,prop,shape,"rectangular" | "round" | "soft" | undefined,'soft',false,false
 ion-my-chip,prop,size,"large" | "small" | undefined,'small',false,false
 ion-my-chip,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-my-chip,css-prop,--background
-ion-my-chip,css-prop,--border-radius
-ion-my-chip,css-prop,--color
-ion-my-chip,css-prop,--focus-ring-color
-ion-my-chip,css-prop,--focus-ring-width
+ion-my-chip,css-prop,--ion-chip-border-width
+ion-my-chip,css-prop,--ion-chip-focus-ring-color
+ion-my-chip,css-prop,--ion-chip-focus-ring-width
+ion-my-chip,css-prop,--ion-chip-font-weight
+ion-my-chip,css-prop,--ion-chip-gap
+ion-my-chip,css-prop,--ion-chip-hue-bold-bg
+ion-my-chip,css-prop,--ion-chip-hue-bold-border-color
+ion-my-chip,css-prop,--ion-chip-hue-bold-color
+ion-my-chip,css-prop,--ion-chip-hue-subtle-bg
+ion-my-chip,css-prop,--ion-chip-hue-subtle-border-color
+ion-my-chip,css-prop,--ion-chip-hue-subtle-color
+ion-my-chip,css-prop,--ion-chip-line-height
+ion-my-chip,css-prop,--ion-chip-padding-horizontal
+ion-my-chip,css-prop,--ion-chip-padding-vertical
+ion-my-chip,css-prop,--ion-chip-shape-rectangular-border-radius
+ion-my-chip,css-prop,--ion-chip-shape-round-border-radius
+ion-my-chip,css-prop,--ion-chip-shape-soft-border-radius
+ion-my-chip,css-prop,--ion-chip-size-large-font-size
+ion-my-chip,css-prop,--ion-chip-size-large-min-height
+ion-my-chip,css-prop,--ion-chip-size-small-font-size
+ion-my-chip,css-prop,--ion-chip-size-small-min-height
 
 ion-nav,shadow
 ion-nav,prop,animated,boolean,true,false,false
@@ -1246,6 +1262,7 @@ ion-nav,event,ionNavWillChange,void,false
 ion-nav-link,none
 ion-nav-link,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
 ion-nav-link,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
+ion-nav-link,prop,mode,"ios" | "md",undefined,false,false
 ion-nav-link,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-nav-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 

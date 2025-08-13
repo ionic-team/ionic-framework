@@ -1486,14 +1486,14 @@ export declare interface IonMyChip extends Components.IonMyChip {}
 
 
 @ProxyCmp({
-  inputs: ['component', 'componentProps', 'mode', 'routerAnimation', 'routerDirection', 'theme']
+  inputs: ['component', 'componentProps', 'mode', 'routerAnimation', 'routerDirection']
 })
 @Component({
   selector: 'ion-nav-link',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['component', 'componentProps', 'routerAnimation', 'routerDirection'],
+  inputs: ['component', 'componentProps', 'mode', 'routerAnimation', 'routerDirection'],
 })
 export class IonNavLink {
   protected el: HTMLIonNavLinkElement;

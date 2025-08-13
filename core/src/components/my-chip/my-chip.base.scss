@@ -1,5 +1,5 @@
-@use "../../themes/functions.color" as color;
-@use "../../themes/mixins" as mixins;
+@import "../../themes/ionic.functions.color";
+@import "../../themes/ionic.mixins";
 
 :host {
   /**
@@ -52,10 +52,10 @@
   --ion-chip-hue-bold-bg: var(--ion-color-gray-700);
   --ion-chip-hue-bold-color: var(--ion-color-white);
   --ion-chip-hue-bold-border-color: var(--ion-color-gray-800);
-  
-  @include mixins.font-smoothing();
-  @include mixins.padding(var(--ion-chip-padding-horizontal), var(--ion-chip-padding-vertical));
-  @include mixins.border-radius(var(--ion-chip-border-radius));
+
+  @include font-smoothing();
+  @include padding(var(--ion-chip-padding-horizontal), var(--ion-chip-padding-vertical));
+  @include border-radius(var(--ion-chip-border-radius));
 
   display: inline-flex;
 
@@ -153,18 +153,18 @@
 
 // Subtle
 :host(.chip-subtle.ion-color) {
-  background: color.current-color(
+  background: current-color(
     base,
     $subtle: true
   ); // these don't work because we need to update the function to use the new color system
-  color: color.current-color(
+  color: current-color(
     contrast,
     $subtle: true
   ); // these don't work because we need to update the function to use the new color system
 }
 
 :host(.chip-subtle.chip-outline.ion-color) {
-  border-color: color.current-color(
+  border-color: current-color(
     shade,
     $subtle: true
   ); // these don't work because we need to update the function to use the new color system
@@ -172,16 +172,16 @@
 
 // Bold
 :host(.chip-bold.ion-color) {
-  background: color.current-color(
+  background: current-color(
     base
   ); // these don't work because we need to update the function to use the new color system
-  color: color.current-color(
+  color: current-color(
     contrast
   ); // these don't work because we need to update the function to use the new color system
 }
 
 :host(.chip-bold.chip-outline.ion-color) {
-  border-color: color.current-color(
+  border-color: current-color(
     shade
   ); // these don't work because we need to update the function to use the new color system
 }
