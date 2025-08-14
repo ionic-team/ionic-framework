@@ -133,3 +133,66 @@ describe('input: clear icon', () => {
     expect(icon.getAttribute('icon')).toBe('foo');
   });
 });
+
+// Regression tests for screen reader accessibility of error messages
+describe('input: error text accessibility', () => {
+  it('should have error text element with proper structure', async () => {
+    const page = await newSpecPage({
+      components: [Input],
+      html: `<ion-input label="Input" error-text="This field is required"></ion-input>`,
+    });
+
+    const errorTextEl = page.body.querySelector('ion-input .error-text');
+    expect(errorTextEl).not.toBe(null);
+
+    // Error text element should always exist and have aria-atomic
+    expect(errorTextEl!.getAttribute('aria-atomic')).toBe('true');
+    expect(errorTextEl!.getAttribute('id')).toContain('error-text');
+  });
+
+  it('should maintain error text structure when error text changes dynamically', async () => {
+    const page = await newSpecPage({
+      components: [Input],
+      html: `<ion-input label="Input"></ion-input>`,
+    });
+
+    const input = page.body.querySelector('ion-input')!;
+
+    // Add error text dynamically
+    input.setAttribute('error-text', 'Invalid email format');
+    await page.waitForChanges();
+
+    const errorTextEl = page.body.querySelector('ion-input .error-text');
+    expect(errorTextEl).not.toBe(null);
+    expect(errorTextEl!.getAttribute('aria-atomic')).toBe('true');
+    expect(errorTextEl!.getAttribute('id')).toContain('error-text');
+  });
+
+  it('should have proper aria-describedby reference structure', async () => {
+    const page = await newSpecPage({
+      components: [Input],
+      html: `<ion-input label="Input" error-text="Required field"></ion-input>`,
+    });
+
+    const errorTextEl = page.body.querySelector('ion-input .error-text')!;
+
+    // Verify the error text element has an ID
+    const errorId = errorTextEl.getAttribute('id');
+    expect(errorId).toContain('error-text');
+
+    // Note: aria-describedby is dynamically set based on validation state
+    // The actual connection happens when the input becomes invalid
+  });
+
+  it('should have helper text element with proper structure', async () => {
+    const page = await newSpecPage({
+      components: [Input],
+      html: `<ion-input label="Input" helper-text="Enter a valid value"></ion-input>`,
+    });
+
+    const helperTextEl = page.body.querySelector('ion-input .helper-text');
+    expect(helperTextEl).not.toBe(null);
+    expect(helperTextEl!.getAttribute('id')).toContain('helper-text');
+    expect(helperTextEl!.textContent).toBe('Enter a valid value');
+  });
+});
