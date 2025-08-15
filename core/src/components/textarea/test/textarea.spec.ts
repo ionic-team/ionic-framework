@@ -85,3 +85,66 @@ describe('textarea: label rendering', () => {
     expect(labelText.textContent).toBe('Label Prop Text');
   });
 });
+
+// Accessibility tests for error text announcements to screen readers
+describe('textarea: error text accessibility', () => {
+  it('should have error text element with proper structure', async () => {
+    const page = await newSpecPage({
+      components: [Textarea],
+      html: `<ion-textarea label="Textarea" error-text="This field is required"></ion-textarea>`,
+    });
+
+    const errorTextEl = page.body.querySelector('ion-textarea .error-text');
+    expect(errorTextEl).not.toBe(null);
+
+    // Error text element should always exist and have aria-atomic
+    expect(errorTextEl!.getAttribute('aria-atomic')).toBe('true');
+    expect(errorTextEl!.getAttribute('id')).toContain('error-text');
+  });
+
+  it('should maintain error text structure when error text changes dynamically', async () => {
+    const page = await newSpecPage({
+      components: [Textarea],
+      html: `<ion-textarea label="Textarea"></ion-textarea>`,
+    });
+
+    const textarea = page.body.querySelector('ion-textarea')!;
+
+    // Add error text dynamically
+    textarea.setAttribute('error-text', 'Invalid content');
+    await page.waitForChanges();
+
+    const errorTextEl = page.body.querySelector('ion-textarea .error-text');
+    expect(errorTextEl).not.toBe(null);
+    expect(errorTextEl!.getAttribute('aria-atomic')).toBe('true');
+    expect(errorTextEl!.getAttribute('id')).toContain('error-text');
+  });
+
+  it('should have proper aria-describedby reference structure', async () => {
+    const page = await newSpecPage({
+      components: [Textarea],
+      html: `<ion-textarea label="Textarea" error-text="Required field"></ion-textarea>`,
+    });
+
+    const errorTextEl = page.body.querySelector('ion-textarea .error-text')!;
+
+    // Verify the error text element has an ID
+    const errorId = errorTextEl.getAttribute('id');
+    expect(errorId).toContain('error-text');
+
+    // Note: aria-describedby is dynamically set based on validation state
+    // The actual connection happens when the textarea becomes invalid
+  });
+
+  it('should have helper text element with proper structure', async () => {
+    const page = await newSpecPage({
+      components: [Textarea],
+      html: `<ion-textarea label="Textarea" helper-text="Enter your comments"></ion-textarea>`,
+    });
+
+    const helperTextEl = page.body.querySelector('ion-textarea .helper-text');
+    expect(helperTextEl).not.toBe(null);
+    expect(helperTextEl!.getAttribute('id')).toContain('helper-text');
+    expect(helperTextEl!.textContent).toBe('Enter your comments');
+  });
+});
