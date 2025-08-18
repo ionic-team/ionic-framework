@@ -492,7 +492,7 @@ export const IonInput: StencilVueComponent<JSX.IonInput, JSX.IonInput["value"]> 
 'value', 'ion-input');
 
 
-export const IonInputOtp: StencilVueComponent<JSX.IonInputOtp> = /*@__PURE__*/ defineContainer<JSX.IonInputOtp>('ion-input-otp', defineIonInputOtp, [
+export const IonInputOtp: StencilVueComponent<JSX.IonInputOtp, JSX.IonInputOtp["value"]> = /*@__PURE__*/ defineContainer<JSX.IonInputOtp, JSX.IonInputOtp["value"]>('ion-input-otp', defineIonInputOtp, [
   'autocapitalize',
   'color',
   'disabled',
@@ -517,7 +517,8 @@ export const IonInputOtp: StencilVueComponent<JSX.IonInputOtp> = /*@__PURE__*/ d
   'ionComplete',
   'ionBlur',
   'ionFocus'
-]);
+],
+'value', 'ion-input');
 
 
 export const IonInputPasswordToggle: StencilVueComponent<JSX.IonInputPasswordToggle> = /*@__PURE__*/ defineContainer<JSX.IonInputPasswordToggle>('ion-input-password-toggle', defineIonInputPasswordToggle, [
