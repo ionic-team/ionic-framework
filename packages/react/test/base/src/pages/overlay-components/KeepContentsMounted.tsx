@@ -1,16 +1,11 @@
+import React, { useState } from 'react';
 import {
   IonButton,
   IonContent,
-  IonHeader,
   IonPage,
   IonModal,
   IonPopover,
-  IonToolbar,
-  IonButtons,
-  IonBackButton,
-  IonTitle,
 } from '@ionic/react';
-import React, { useState } from 'react';
 
 const KeepContentsMounted: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
@@ -18,14 +13,6 @@ const KeepContentsMounted: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton></IonBackButton>
-          </IonButtons>
-          <IonTitle>Keep Contents Mounted</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent fullscreen>
         <IonButton id="open-modal" onClick={() => setShowModal(true)}>Open Modal</IonButton>
         <IonButton id="open-popover" onClick={() => setShowPopover(true)}>Open Popover</IonButton>
