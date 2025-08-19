@@ -203,7 +203,7 @@
         'review-textarea': (value) => {
           return value && value.length >= 50 && value.length <= 500;
         },
-        'notes-textarea': () => true // Always valid (optional)
+        'notes-textarea': () => true, // Always valid (optional)
       };
 
       function validateField(textarea) {
@@ -228,7 +228,7 @@
 
       function validateForm() {
         let allValid = true;
-        textareas.forEach(textarea => {
+        textareas.forEach((textarea) => {
           if (textarea.id !== 'notes-textarea') {
             const isValid = validateField(textarea);
             if (!isValid) {
@@ -241,13 +241,13 @@
       }
 
       // Add event listeners
-      textareas.forEach(textarea => {
+      textareas.forEach((textarea) => {
         // Mark as touched on blur
         textarea.addEventListener('ionBlur', (e) => {
           touchedFields.add(textarea.id);
           validateField(textarea);
           validateForm();
-          
+
           // Debug: Log to hidden aria-live region for testing
           const isInvalid = textarea.classList.contains('ion-invalid');
           if (isInvalid) {
@@ -277,7 +277,7 @@
 
       // Reset button
       resetBtn.addEventListener('click', () => {
-        textareas.forEach(textarea => {
+        textareas.forEach((textarea) => {
           textarea.value = '';
           textarea.classList.remove('ion-valid', 'ion-invalid', 'ion-touched');
         });

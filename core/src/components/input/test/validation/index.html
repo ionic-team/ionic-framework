@@ -202,7 +202,7 @@
           const age = parseInt(value);
           return age >= 18 && age <= 120;
         },
-        'optional-input': () => true // Always valid
+        'optional-input': () => true, // Always valid
       };
 
       function validateField(input) {
@@ -227,7 +227,7 @@
 
       function validateForm() {
         let allValid = true;
-        inputs.forEach(input => {
+        inputs.forEach((input) => {
           if (input.id !== 'optional-input') {
             const isValid = validateField(input);
             if (!isValid) {
@@ -240,13 +240,13 @@
       }
 
       // Add event listeners
-      inputs.forEach(input => {
+      inputs.forEach((input) => {
         // Mark as touched on blur
         input.addEventListener('ionBlur', (e) => {
           touchedFields.add(input.id);
           validateField(input);
           validateForm();
-          
+
           // Debug: Log to hidden aria-live region for testing
           const isInvalid = input.classList.contains('ion-invalid');
           if (isInvalid) {
@@ -276,7 +276,7 @@
 
       // Reset button
       resetBtn.addEventListener('click', () => {
-        inputs.forEach(input => {
+        inputs.forEach((input) => {
           input.value = '';
           input.classList.remove('ion-valid', 'ion-invalid', 'ion-touched');
         });

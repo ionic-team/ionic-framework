@@ -138,7 +138,7 @@ describe('textarea: error text accessibility', () => {
     // When not invalid, should point to helper text
     const helperId = helperTextEl.getAttribute('id');
     expect(nativeTextarea.getAttribute('aria-describedby')).toBe(helperId);
-    expect(nativeTextarea.getAttribute('aria-invalid')).toBe('false');
+    expect(nativeTextarea.getAttribute('aria-invalid')).toBeNull();
   });
 
   it('should have helper text element with proper structure', async () => {

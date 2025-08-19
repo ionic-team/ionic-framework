@@ -186,7 +186,7 @@ describe('input: error text accessibility', () => {
     // When not invalid, should point to helper text
     const helperId = helperTextEl.getAttribute('id');
     expect(nativeInput.getAttribute('aria-describedby')).toBe(helperId);
-    expect(nativeInput.getAttribute('aria-invalid')).toBe('false');
+    expect(nativeInput.getAttribute('aria-invalid')).toBeNull();
   });
 
   it('should have helper text element with proper structure', async () => {

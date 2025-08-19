@@ -902,7 +902,7 @@ export class Input implements ComponentInterface {
               onCompositionstart={this.onCompositionStart}
               onCompositionend={this.onCompositionEnd}
               aria-describedby={this.getHintTextID()}
-              aria-invalid={this.isInvalid ? 'true' : 'false'}
+              aria-invalid={this.isInvalid ? 'true' : undefined}
               {...this.inheritedAttributes}
             />
             {this.clearInput && !readonly && !disabled && (

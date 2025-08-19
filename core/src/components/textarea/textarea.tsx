@@ -816,7 +816,7 @@ export class Textarea implements ComponentInterface {
                 onFocus={this.onFocus}
                 onKeyDown={this.onKeyDown}
                 aria-describedby={this.getHintTextID()}
-                aria-invalid={this.isInvalid ? 'true' : 'false'}
+                aria-invalid={this.isInvalid ? 'true' : undefined}
                 {...this.inheritedAttributes}
               >
                 {value}
