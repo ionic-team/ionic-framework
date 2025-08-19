@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Textarea - Validation</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: var(--ion-color-step-600);
+
+        margin-top: 10px;
+        margin-bottom: 5px;
+      }
+
+      .aria-live-region {
+        position: absolute;
+        left: -10000px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+
+      .validation-info {
+        margin: 20px;
+        padding: 10px;
+        background: var(--ion-color-light);
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Textarea - Validation Test</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <div class="validation-info">
+          <h2>Screen Reader Testing Instructions:</h2>
+          <ol>
+            <li>Enable your screen reader (VoiceOver, NVDA, JAWS, etc.)</li>
+            <li>Tab through the form fields</li>
+            <li>When you tab away from an empty required field, the error should be announced immediately</li>
+            <li>The error text should be announced BEFORE the next field is announced</li>
+            <li>Test in Chrome, Safari, and Firefox to verify consistent behavior</li>
+          </ol>
+        </div>
+
+        <div class="grid">
+          <div>
+            <h2>Required Description (Min Length)</h2>
+            <ion-textarea
+              id="description-textarea"
+              label="Description"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Enter a description"
+              rows="4"
+              minlength="20"
+              helper-text="At least 20 characters"
+              error-text="Description must be at least 20 characters"
+              required
+            ></ion-textarea>
+          </div>
+
+          <div>
+            <h2>Required Comments</h2>
+            <ion-textarea
+              id="comments-textarea"
+              label="Comments"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Enter your comments"
+              rows="4"
+              helper-text="Please provide your feedback"
+              error-text="Comments are required"
+              required
+            ></ion-textarea>
+          </div>
+
+          <div>
+            <h2>Bio (Max Length)</h2>
+            <ion-textarea
+              id="bio-textarea"
+              label="Bio"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Tell us about yourself"
+              rows="4"
+              maxlength="200"
+              counter="true"
+              helper-text="Maximum 200 characters"
+              error-text="Bio is required"
+              required
+            ></ion-textarea>
+          </div>
+
+          <div>
+            <h2>Address (Pattern Validation)</h2>
+            <ion-textarea
+              id="address-textarea"
+              label="Address"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Enter your full address"
+              rows="3"
+              helper-text="Include street, city, state, and zip"
+              error-text="Please enter a complete address"
+              required
+            ></ion-textarea>
+          </div>
+
+          <div>
+            <h2>Review (Min/Max Length)</h2>
+            <ion-textarea
+              id="review-textarea"
+              label="Product Review"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Write your review"
+              rows="5"
+              minlength="50"
+              maxlength="500"
+              counter="true"
+              helper-text="Between 50-500 characters"
+              error-text="Review must be between 50-500 characters"
+              required
+            ></ion-textarea>
+          </div>
+
+          <div>
+            <h2>Optional Notes</h2>
+            <ion-textarea
+              id="notes-textarea"
+              label="Additional Notes"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Any additional notes (optional)"
+              rows="3"
+              helper-text="This field is optional"
+            ></ion-textarea>
+          </div>
+        </div>
+
+        <div class="ion-padding">
+          <ion-button id="submit-btn" expand="block" disabled>Submit Form</ion-button>
+          <ion-button id="reset-btn" expand="block" fill="outline">Reset Form</ion-button>
+        </div>
+
+        <!-- Hidden region for debugging screen reader announcements -->
+        <div aria-live="polite" aria-atomic="true" class="aria-live-region" id="debug-region"></div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      // Simple validation logic
+      const textareas = document.querySelectorAll('ion-textarea');
+      const submitBtn = document.getElementById('submit-btn');
+      const resetBtn = document.getElementById('reset-btn');
+      const debugRegion = document.getElementById('debug-region');
+
+      // Track which fields have been touched
+      const touchedFields = new Set();
+
+      // Validation functions
+      const validators = {
+        'description-textarea': (value) => {
+          return value && value.length >= 20;
+        },
+        'comments-textarea': (value) => {
+          return value && value.trim().length > 0;
+        },
+        'bio-textarea': (value) => {
+          return value && value.length > 0 && value.length <= 200;
+        },
+        'address-textarea': (value) => {
+          // Simple check for address - must contain at least some text with numbers
+          if (!value || value.length < 10) return false;
+          // Check if it contains at least one number (for street/zip)
+          return /\d/.test(value);
+        },
+        'review-textarea': (value) => {
+          return value && value.length >= 50 && value.length <= 500;
+        },
+        'notes-textarea': () => true // Always valid (optional)
+      };
+
+      function validateField(textarea) {
+        const textareaId = textarea.id;
+        const value = textarea.value;
+        const isValid = validators[textareaId] ? validators[textareaId](value) : true;
+
+        // Only show validation state if field has been touched
+        if (touchedFields.has(textareaId)) {
+          if (isValid) {
+            textarea.classList.remove('ion-invalid');
+            textarea.classList.add('ion-valid');
+          } else {
+            textarea.classList.remove('ion-valid');
+            textarea.classList.add('ion-invalid');
+          }
+          textarea.classList.add('ion-touched');
+        }
+
+        return isValid;
+      }
+
+      function validateForm() {
+        let allValid = true;
+        textareas.forEach(textarea => {
+          if (textarea.id !== 'notes-textarea') {
+            const isValid = validateField(textarea);
+            if (!isValid) {
+              allValid = false;
+            }
+          }
+        });
+        submitBtn.disabled = !allValid;
+        return allValid;
+      }
+
+      // Add event listeners
+      textareas.forEach(textarea => {
+        // Mark as touched on blur
+        textarea.addEventListener('ionBlur', (e) => {
+          touchedFields.add(textarea.id);
+          validateField(textarea);
+          validateForm();
+          
+          // Debug: Log to hidden aria-live region for testing
+          const isInvalid = textarea.classList.contains('ion-invalid');
+          if (isInvalid) {
+            debugRegion.textContent = `Field ${textarea.label} is invalid: ${textarea.errorText}`;
+            console.log('Field marked invalid:', textarea.label, textarea.errorText);
+          }
+        });
+
+        // Validate on input
+        textarea.addEventListener('ionInput', (e) => {
+          if (touchedFields.has(textarea.id)) {
+            validateField(textarea);
+            validateForm();
+          }
+        });
+
+        // Also validate on focus loss via native blur
+        textarea.addEventListener('focusout', (e) => {
+          // Small delay to ensure Ionic's classes are updated
+          setTimeout(() => {
+            touchedFields.add(textarea.id);
+            validateField(textarea);
+            validateForm();
+          }, 10);
+        });
+      });
+
+      // Reset button
+      resetBtn.addEventListener('click', () => {
+        textareas.forEach(textarea => {
+          textarea.value = '';
+          textarea.classList.remove('ion-valid', 'ion-invalid', 'ion-touched');
+        });
+        touchedFields.clear();
+        submitBtn.disabled = true;
+        debugRegion.textContent = '';
+      });
+
+      // Submit button
+      submitBtn.addEventListener('click', () => {
+        if (validateForm()) {
+          alert('Form submitted successfully!');
+        }
+      });
+
+      // Initial setup
+      validateForm();
+    </script>
+  </body>
+</html>

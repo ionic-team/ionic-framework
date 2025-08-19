@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Input - Validation</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: var(--ion-color-step-600);
+
+        margin-top: 10px;
+        margin-bottom: 5px;
+      }
+
+      .aria-live-region {
+        position: absolute;
+        left: -10000px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+
+      .validation-info {
+        margin: 20px;
+        padding: 10px;
+        background: var(--ion-color-light);
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Input - Validation Test</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <div class="validation-info">
+          <h2>Screen Reader Testing Instructions:</h2>
+          <ol>
+            <li>Enable your screen reader (VoiceOver, NVDA, JAWS, etc.)</li>
+            <li>Tab through the form fields</li>
+            <li>When you tab away from an empty required field, the error should be announced immediately</li>
+            <li>The error text should be announced BEFORE the next field is announced</li>
+            <li>Test in Chrome, Safari, and Firefox to verify consistent behavior</li>
+          </ol>
+        </div>
+
+        <div class="grid">
+          <div>
+            <h2>Required Email Field</h2>
+            <ion-input
+              id="email-input"
+              type="email"
+              label="Email"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Enter your email"
+              helper-text="We'll never share your email"
+              error-text="Please enter a valid email address"
+              required
+            ></ion-input>
+          </div>
+
+          <div>
+            <h2>Required Name Field</h2>
+            <ion-input
+              id="name-input"
+              type="text"
+              label="Full Name"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Enter your full name"
+              helper-text="First and last name"
+              error-text="Name is required"
+              required
+            ></ion-input>
+          </div>
+
+          <div>
+            <h2>Phone Number (Pattern Validation)</h2>
+            <ion-input
+              id="phone-input"
+              type="tel"
+              label="Phone"
+              label-placement="floating"
+              fill="outline"
+              placeholder="(555) 555-5555"
+              pattern="^\(\d{3}\) \d{3}-\d{4}$"
+              helper-text="Format: (555) 555-5555"
+              error-text="Please enter a valid phone number"
+              required
+            ></ion-input>
+          </div>
+
+          <div>
+            <h2>Password (Min Length)</h2>
+            <ion-input
+              id="password-input"
+              type="password"
+              label="Password"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Enter password"
+              minlength="8"
+              helper-text="At least 8 characters"
+              error-text="Password must be at least 8 characters"
+              required
+            ></ion-input>
+          </div>
+
+          <div>
+            <h2>Age (Number Range)</h2>
+            <ion-input
+              id="age-input"
+              type="number"
+              label="Age"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Enter your age"
+              min="18"
+              max="120"
+              helper-text="Must be 18 or older"
+              error-text="Please enter a valid age (18-120)"
+              required
+            ></ion-input>
+          </div>
+
+          <div>
+            <h2>Optional Field (No Validation)</h2>
+            <ion-input
+              id="optional-input"
+              type="text"
+              label="Optional Info"
+              label-placement="floating"
+              fill="outline"
+              placeholder="This field is optional"
+              helper-text="You can skip this field"
+            ></ion-input>
+          </div>
+        </div>
+
+        <div class="ion-padding">
+          <ion-button id="submit-btn" expand="block" disabled>Submit Form</ion-button>
+          <ion-button id="reset-btn" expand="block" fill="outline">Reset Form</ion-button>
+        </div>
+
+        <!-- Hidden region for debugging screen reader announcements -->
+        <div aria-live="polite" aria-atomic="true" class="aria-live-region" id="debug-region"></div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      // Simple validation logic
+      const inputs = document.querySelectorAll('ion-input');
+      const submitBtn = document.getElementById('submit-btn');
+      const resetBtn = document.getElementById('reset-btn');
+      const debugRegion = document.getElementById('debug-region');
+
+      // Track which fields have been touched
+      const touchedFields = new Set();
+
+      // Validation functions
+      const validators = {
+        'email-input': (value) => {
+          if (!value) return false;
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        },
+        'name-input': (value) => {
+          return value && value.trim().length > 0;
+        },
+        'phone-input': (value) => {
+          if (!value) return false;
+          return /^\(\d{3}\) \d{3}-\d{4}$/.test(value);
+        },
+        'password-input': (value) => {
+          return value && value.length >= 8;
+        },
+        'age-input': (value) => {
+          if (!value) return false;
+          const age = parseInt(value);
+          return age >= 18 && age <= 120;
+        },
+        'optional-input': () => true // Always valid
+      };
+
+      function validateField(input) {
+        const inputId = input.id;
+        const value = input.value;
+        const isValid = validators[inputId] ? validators[inputId](value) : true;
+
+        // Only show validation state if field has been touched
+        if (touchedFields.has(inputId)) {
+          if (isValid) {
+            input.classList.remove('ion-invalid');
+            input.classList.add('ion-valid');
+          } else {
+            input.classList.remove('ion-valid');
+            input.classList.add('ion-invalid');
+          }
+          input.classList.add('ion-touched');
+        }
+
+        return isValid;
+      }
+
+      function validateForm() {
+        let allValid = true;
+        inputs.forEach(input => {
+          if (input.id !== 'optional-input') {
+            const isValid = validateField(input);
+            if (!isValid) {
+              allValid = false;
+            }
+          }
+        });
+        submitBtn.disabled = !allValid;
+        return allValid;
+      }
+
+      // Add event listeners
+      inputs.forEach(input => {
+        // Mark as touched on blur
+        input.addEventListener('ionBlur', (e) => {
+          touchedFields.add(input.id);
+          validateField(input);
+          validateForm();
+          
+          // Debug: Log to hidden aria-live region for testing
+          const isInvalid = input.classList.contains('ion-invalid');
+          if (isInvalid) {
+            debugRegion.textContent = `Field ${input.label} is invalid: ${input.errorText}`;
+            console.log('Field marked invalid:', input.label, input.errorText);
+          }
+        });
+
+        // Validate on input
+        input.addEventListener('ionInput', (e) => {
+          if (touchedFields.has(input.id)) {
+            validateField(input);
+            validateForm();
+          }
+        });
+
+        // Also validate on focus loss via native blur
+        input.addEventListener('focusout', (e) => {
+          // Small delay to ensure Ionic's classes are updated
+          setTimeout(() => {
+            touchedFields.add(input.id);
+            validateField(input);
+            validateForm();
+          }, 10);
+        });
+      });
+
+      // Reset button
+      resetBtn.addEventListener('click', () => {
+        inputs.forEach(input => {
+          input.value = '';
+          input.classList.remove('ion-valid', 'ion-invalid', 'ion-touched');
+        });
+        touchedFields.clear();
+        submitBtn.disabled = true;
+        debugRegion.textContent = '';
+      });
+
+      // Submit button
+      submitBtn.addEventListener('click', () => {
+        if (validateForm()) {
+          alert('Form submitted successfully!');
+        }
+      });
+
+      // Initial setup
+      validateForm();
+    </script>
+  </body>
+</html>

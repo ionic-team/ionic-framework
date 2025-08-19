@@ -352,7 +352,7 @@ export class Textarea implements ComponentInterface {
     );
 
     // Watch for class changes to update validation state
-    if (Build.isBrowser) {
+    if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
       this.validationObserver = new MutationObserver(() => {
         const newIsInvalid = this.checkValidationState();
         if (this.isInvalid !== newIsInvalid) {
@@ -364,10 +364,10 @@ export class Textarea implements ComponentInterface {
         attributes: true,
         attributeFilter: ['class'],
       });
-
-      // Set initial state
-      this.isInvalid = this.checkValidationState();
     }
+
+    // Always set initial state
+    this.isInvalid = this.checkValidationState();
 
     this.debounceChanged();
     if (Build.isBrowser) {
@@ -667,20 +667,14 @@ export class Textarea implements ComponentInterface {
    * Renders the helper text or error text values
    */
   private renderHintText() {
-    const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
+    const { helperText, errorText, helperTextId, errorTextId } = this;
 
     return [
       <div id={helperTextId} class="helper-text">
         {helperText}
       </div>,
-      <div
-        id={errorTextId}
-        class="error-text"
-        role={isInvalid && errorText ? 'alert' : undefined}
-        aria-live={isInvalid && errorText ? 'polite' : 'off'}
-        aria-atomic="true"
-      >
-        {isInvalid && errorText ? errorText : ''}
+      <div id={errorTextId} class="error-text">
+        {errorText}
       </div>,
     ];
   }
@@ -822,7 +816,7 @@ export class Textarea implements ComponentInterface {
                 onFocus={this.onFocus}
                 onKeyDown={this.onKeyDown}
                 aria-describedby={this.getHintTextID()}
-                aria-invalid={this.getHintTextID() === this.errorTextId}
+                aria-invalid={this.isInvalid ? 'true' : 'false'}
                 {...this.inheritedAttributes}
               >
                 {value}

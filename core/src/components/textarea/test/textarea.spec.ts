@@ -96,13 +96,64 @@ describe('textarea: error text accessibility', () => {
 
     const errorTextEl = page.body.querySelector('ion-textarea .error-text');
     expect(errorTextEl).not.toBe(null);
-
-    // Error text element should always exist and have aria-atomic
-    expect(errorTextEl!.getAttribute('aria-atomic')).toBe('true');
     expect(errorTextEl!.getAttribute('id')).toContain('error-text');
+    expect(errorTextEl!.textContent).toBe('This field is required');
   });
 
-  it('should maintain error text structure when error text changes dynamically', async () => {
+  it('should set aria-invalid when textarea is invalid', async () => {
+    const page = await newSpecPage({
+      components: [Textarea],
+      html: `<ion-textarea label="Textarea" error-text="Required field" class="ion-touched ion-invalid"></ion-textarea>`,
+    });
+
+    const nativeTextarea = page.body.querySelector('ion-textarea textarea')!;
+
+    // Should be invalid because of the classes
+    expect(nativeTextarea.getAttribute('aria-invalid')).toBe('true');
+  });
+
+  it('should set aria-describedby to error text when invalid', async () => {
+    const page = await newSpecPage({
+      components: [Textarea],
+      html: `<ion-textarea label="Textarea" error-text="Required field" class="ion-touched ion-invalid"></ion-textarea>`,
+    });
+
+    const nativeTextarea = page.body.querySelector('ion-textarea textarea')!;
+    const errorTextEl = page.body.querySelector('ion-textarea .error-text')!;
+
+    // Verify aria-describedby points to error text
+    const errorId = errorTextEl.getAttribute('id');
+    expect(nativeTextarea.getAttribute('aria-describedby')).toBe(errorId);
+  });
+
+  it('should set aria-describedby to helper text when valid', async () => {
+    const page = await newSpecPage({
+      components: [Textarea],
+      html: `<ion-textarea label="Textarea" helper-text="Enter comments" error-text="Required field"></ion-textarea>`,
+    });
+
+    const nativeTextarea = page.body.querySelector('ion-textarea textarea')!;
+    const helperTextEl = page.body.querySelector('ion-textarea .helper-text')!;
+
+    // When not invalid, should point to helper text
+    const helperId = helperTextEl.getAttribute('id');
+    expect(nativeTextarea.getAttribute('aria-describedby')).toBe(helperId);
+    expect(nativeTextarea.getAttribute('aria-invalid')).toBe('false');
+  });
+
+  it('should have helper text element with proper structure', async () => {
+    const page = await newSpecPage({
+      components: [Textarea],
+      html: `<ion-textarea label="Textarea" helper-text="Enter your comments"></ion-textarea>`,
+    });
+
+    const helperTextEl = page.body.querySelector('ion-textarea .helper-text');
+    expect(helperTextEl).not.toBe(null);
+    expect(helperTextEl!.getAttribute('id')).toContain('helper-text');
+    expect(helperTextEl!.textContent).toBe('Enter your comments');
+  });
+
+  it('should maintain error text content when error text changes dynamically', async () => {
     const page = await newSpecPage({
       components: [Textarea],
       html: `<ion-textarea label="Textarea"></ion-textarea>`,
@@ -116,35 +167,7 @@ describe('textarea: error text accessibility', () => {
 
     const errorTextEl = page.body.querySelector('ion-textarea .error-text');
     expect(errorTextEl).not.toBe(null);
-    expect(errorTextEl!.getAttribute('aria-atomic')).toBe('true');
     expect(errorTextEl!.getAttribute('id')).toContain('error-text');
-  });
-
-  it('should have proper aria-describedby reference structure', async () => {
-    const page = await newSpecPage({
-      components: [Textarea],
-      html: `<ion-textarea label="Textarea" error-text="Required field"></ion-textarea>`,
-    });
-
-    const errorTextEl = page.body.querySelector('ion-textarea .error-text')!;
-
-    // Verify the error text element has an ID
-    const errorId = errorTextEl.getAttribute('id');
-    expect(errorId).toContain('error-text');
-
-    // Note: aria-describedby is dynamically set based on validation state
-    // The actual connection happens when the textarea becomes invalid
-  });
-
-  it('should have helper text element with proper structure', async () => {
-    const page = await newSpecPage({
-      components: [Textarea],
-      html: `<ion-textarea label="Textarea" helper-text="Enter your comments"></ion-textarea>`,
-    });
-
-    const helperTextEl = page.body.querySelector('ion-textarea .helper-text');
-    expect(helperTextEl).not.toBe(null);
-    expect(helperTextEl!.getAttribute('id')).toContain('helper-text');
-    expect(helperTextEl!.textContent).toBe('Enter your comments');
+    expect(errorTextEl!.textContent).toBe('Invalid content');
   });
 });
