@@ -494,8 +494,10 @@ export const setRootAriaHidden = (hidden = false) => {
 
   if (hidden) {
     viewContainer.setAttribute('aria-hidden', 'true');
+    viewContainer.setAttribute('inert', '');
   } else {
     viewContainer.removeAttribute('aria-hidden');
+    viewContainer.removeAttribute('inert');
   }
 };
 
