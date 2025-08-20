@@ -1,53 +1,70 @@
-describe('Overlays: Inline', () => {
-  beforeEach(() => {
-    cy.visit('/lazy/overlays-inline');
+import { test, expect } from '@playwright/test';
+
+test.describe('Overlays: Inline', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/lazy/overlays-inline');
   });
 
-  describe('Alert', () => {
-    it('should be visible when presenting', () => {
-      cy.get('ion-alert').should('not.be.visible');
+  test.describe('Alert', () => {
+    test('should be visible when presenting', async ({ page }) => {
+      await expect(page.locator('ion-alert')).not.toBeVisible();
 
-      cy.get('#open-alert').click();
-      cy.get('ion-alert').should('be.visible');
+      await page.locator('#open-alert').click();
+      await expect(page.locator('ion-alert')).toBeVisible();
 
-      cy.get('ion-alert ion-backdrop').click({ force: true });
-      cy.get('ion-alert').should('not.be.visible');
+      // Click the backdrop at a position that avoids the alert content
+      await page.locator('ion-alert ion-backdrop').click({ position: { x: 10, y: 10 } });
+
+      // Wait for dismissal animation to complete
+      await page.waitForTimeout(500);
+
+      await expect(page.locator('ion-alert')).not.toBeVisible();
     });
   });
 
-  describe('Action Sheet', () => {
-    it('should be visible when presenting', () => {
-      cy.get('ion-action-sheet').should('not.be.visible');
+  test.describe('Action Sheet', () => {
+    test('should be visible when presenting', async ({ page }) => {
+      await expect(page.locator('ion-action-sheet')).not.toBeVisible();
 
-      cy.get('#open-action-sheet').click();
-      cy.get('ion-action-sheet').should('be.visible');
+      await page.locator('#open-action-sheet').click();
+      await expect(page.locator('ion-action-sheet')).toBeVisible();
 
-      cy.get('ion-action-sheet ion-backdrop').click({ force: true });
-      cy.get('ion-action-sheet').should('not.be.visible');
+      // Ensure backdrop dismissal works by clicking the backdrop
+      await page.locator('ion-action-sheet ion-backdrop').click({ position: { x: 10, y: 10 } });
+
+      // Wait for dismissal animation
+      await page.waitForTimeout(500);
+
+      await expect(page.locator('ion-action-sheet')).not.toBeVisible();
     });
   });
 
-  describe('Loading', () => {
-    it('should be visible when presenting', () => {
-      cy.get('ion-loading').should('not.be.visible');
+  test.describe('Loading', () => {
+    test('should be visible when presenting', async ({ page }) => {
+      await expect(page.locator('ion-loading')).not.toBeVisible();
 
-      cy.get('#open-loading').click();
-      cy.get('ion-loading').should('be.visible');
+      await page.locator('#open-loading').click();
+      await expect(page.locator('ion-loading')).toBeVisible();
 
-      cy.get('ion-loading ion-backdrop').click({ force: true });
-      cy.get('ion-loading').should('not.be.visible');
+      // Ensure backdrop dismissal works by clicking the backdrop
+      await page.locator('ion-loading ion-backdrop').click({ position: { x: 10, y: 10 } });
+
+      // Wait for dismissal animation
+      await page.waitForTimeout(500);
+
+      await expect(page.locator('ion-loading')).not.toBeVisible();
     });
   });
 
-  describe('Toast', () => {
-    it('should be visible when presenting', () => {
-      cy.get('ion-toast').should('not.be.visible');
+  test.describe('Toast', () => {
+    test('should be visible when presenting', async ({ page }) => {
+      await expect(page.locator('ion-toast')).not.toBeVisible();
 
-      cy.get('#open-toast').click();
-      cy.get('ion-toast').shadow().find('.toast-wrapper').should('be.visible');
+      await page.locator('#open-toast').click();
+      await expect(page.locator('ion-toast .toast-wrapper')).toBeVisible();
 
-      cy.get('ion-toast').shadow().find('.toast-button').click();
-      cy.get('ion-toast').should('not.be.visible');
+      await page.locator('ion-toast .toast-button').click();
+      await expect(page.locator('ion-toast')).not.toBeVisible();
     });
   });
 });

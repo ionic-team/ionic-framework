@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.3](https://github.com/ionic-team/ionic-framework/compare/v8.7.2...v8.7.3) (2025-08-20)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.7.2](https://github.com/ionic-team/ionic-framework/compare/v8.7.1...v8.7.2) (2025-08-06)
+
+
+### Bug Fixes
+
+* **reorder-group:**  add children fallback for framework compatibility ([#30593](https://github.com/ionic-team/ionic-framework/issues/30593)) ([1cd81b9](https://github.com/ionic-team/ionic-framework/commit/1cd81b92301378d55bce63a01dfcf95a91c92652)), closes [#30592](https://github.com/ionic-team/ionic-framework/issues/30592)
+
+
+
+
+
 ## [8.7.1](https://github.com/ionic-team/ionic-framework/compare/v8.7.0...v8.7.1) (2025-07-31)
 
 **Note:** Version bump only for package @ionic/vue

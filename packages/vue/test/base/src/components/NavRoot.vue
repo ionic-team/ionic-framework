@@ -1,7 +1,7 @@
 <template>
   <ion-header>
     <ion-toolbar>
-      <ion-buttons>
+      <ion-buttons slot="end">
         <ion-button @click="dismiss">Dismiss</ion-button>
       </ion-buttons>
       <ion-title>Nav - Root</ion-title>
