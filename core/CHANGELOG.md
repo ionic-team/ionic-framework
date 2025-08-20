@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.3](https://github.com/ionic-team/ionic-framework/compare/v8.7.2...v8.7.3) (2025-08-20)
+
+
+### Bug Fixes
+
+* **checkbox:** add aria attributes to ignore checkbox icon ([#30633](https://github.com/ionic-team/ionic-framework/issues/30633)) ([e9e6605](https://github.com/ionic-team/ionic-framework/commit/e9e6605862a05a46d26c26a144ed1cf22133a2b7)), closes [#30231](https://github.com/ionic-team/ionic-framework/issues/30231)
+* **refresher:** prevent focus-related scroll jumps on refresh ([#30636](https://github.com/ionic-team/ionic-framework/issues/30636)) ([1899b49](https://github.com/ionic-team/ionic-framework/commit/1899b49d252abc6003f763cea8db2a51efa941ec))
+
+
+
+
+
 ## [8.7.2](https://github.com/ionic-team/ionic-framework/compare/v8.7.1...v8.7.2) (2025-08-06)
 
 

@@ -328,7 +328,7 @@ export class Checkbox implements ComponentInterface {
             {this.renderHintText()}
           </div>
           <div class="native-wrapper">
-            <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
+            <svg class="checkbox-icon" viewBox="0 0 24 24" part="container" aria-hidden="true">
               {path}
             </svg>
           </div>

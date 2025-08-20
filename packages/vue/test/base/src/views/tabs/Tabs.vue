@@ -37,7 +37,7 @@ export default defineComponent({
     ])
     const router = useRouter();
     const addTab = () => {
-      router.addRoute({ path: '/tabs/tab4', component: () => import('@/views/Tab4.vue') });
+      router.addRoute({ path: '/tabs/tab4', component: () => import('@/views/tabs/Tab4.vue') });
       tabs.value = [
         ...tabs.value,
         {
