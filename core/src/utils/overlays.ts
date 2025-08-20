@@ -32,6 +32,7 @@ import {
   getElementRoot,
   removeEventListener,
 } from './helpers';
+import { isPlatform } from './platform';
 
 let lastOverlayIndex = 0;
 let lastId = 0;
@@ -512,6 +513,8 @@ export const present = async <OverlayPresentOptions>(
     return;
   }
 
+  console.log("presenting overlay...");
+
   /**
    * Due to accessibility guidelines, toasts do not have
    * focus traps.
@@ -521,8 +524,10 @@ export const present = async <OverlayPresentOptions>(
    */
   if (overlay.el.tagName !== 'ION-TOAST') {
     setRootAriaHidden(true);
-    document.body.classList.add(BACKDROP_NO_SCROLL);
   }
+
+  hideUnderlyingOverlaysFromScreenReaders(overlay.el);
+  hideAnimatingOverlayFromScreenReaders(overlay.el);
 
   overlay.presented = true;
   overlay.willPresent.emit();
@@ -575,6 +580,7 @@ export const present = async <OverlayPresentOptions>(
    * screen readers.
    */
   overlay.el.removeAttribute('aria-hidden');
+  overlay.el.removeAttribute('inert');
 };
 
 /**
@@ -672,6 +678,13 @@ export const dismiss = async <OverlayDismissOptions>(
   overlay.presented = false;
 
   try {
+    /**
+     * There is no need to show the overlay to screen readers during
+     * the dismiss animation. This is because the overlay will be removed
+     * from the DOM after the animation is complete.
+     */
+    hideAnimatingOverlayFromScreenReaders(overlay.el);
+
     // Overlay contents should not be clickable during dismiss
     overlay.el.style.setProperty('pointer-events', 'none');
     overlay.willDismiss.emit({ data, role });
@@ -718,6 +731,8 @@ export const dismiss = async <OverlayDismissOptions>(
   }
 
   overlay.el.remove();
+
+  revealOverlaysToScreenReaders();
 
   return true;
 };
@@ -953,6 +968,103 @@ export const createTriggerController = () => {
     addClickListener,
     removeClickListener,
   };
+};
+
+/**
+ * The overlay that is being animated also needs to hide from screen
+ * readers during its animation. This ensures that assistive technologies
+ * like TalkBack do not announce or interact with the content until the
+ * animation is complete, avoiding confusion for users.
+ *
+ * When the overlay is presented on an Android device, TalkBack's focus rings
+ * may appear in the wrong position due to the transition (specifically
+ * `transform` styles). This occurs because the focus rings are initially
+ * displayed at the starting position of the elements before the transition
+ * begins. This workaround ensures the focus rings do not appear in the
+ * incorrect location.
+ *
+ * If this solution is applied to iOS devices, then it leads to a bug where
+ * the overlays cannot be accessed by screen readers. This is due to
+ * VoiceOver not being able to update the accessibility tree when the
+ * `aria-hidden` is removed.
+ *
+ * @param overlay - The overlay that is being animated.
+ */
+const hideAnimatingOverlayFromScreenReaders = (overlay: HTMLIonOverlayElement) => {
+  if (doc === undefined) return;
+
+  if (isPlatform('android')) {
+    /**
+     * Once the animation is complete, this attribute will be removed.
+     * This is done at the end of the `present` method.
+     */
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.setAttribute('inert', '');
+  }
+};
+
+/**
+ * Ensure that underlying overlays have aria-hidden if necessary so that screen readers
+ * cannot move focus to these elements. Note that we cannot rely on focus/focusin/focusout
+ * events here because those events do not fire when the screen readers moves to a non-focusable
+ * element such as text.
+ * Without this logic screen readers would be able to move focus outside of the top focus-trapped overlay.
+ *
+ * @param newTopMostOverlay - The overlay that is being presented. Since the overlay has not been
+ * fully presented yet at the time this function is called it will not be included in the getPresentedOverlays result.
+ */
+const hideUnderlyingOverlaysFromScreenReaders = (newTopMostOverlay: HTMLIonOverlayElement) => {
+  if (doc === undefined) return;
+
+  const overlays = getPresentedOverlays(doc);
+
+  for (let i = overlays.length - 1; i >= 0; i--) {
+    const presentedOverlay = overlays[i];
+    const nextPresentedOverlay = overlays[i + 1] ?? newTopMostOverlay;
+
+    /**
+     * If next overlay has aria-hidden then all remaining overlays will have it too.
+     * Or, if the next overlay is a Toast that does not have aria-hidden then current overlay
+     * should not have aria-hidden either so focus can remain in the current overlay.
+     */
+    if (nextPresentedOverlay.hasAttribute('aria-hidden') || nextPresentedOverlay.tagName !== 'ION-TOAST') {
+      presentedOverlay.setAttribute('aria-hidden', 'true');
+      presentedOverlay.setAttribute('inert', '');
+    }
+  }
+};
+
+/**
+ * When dismissing an overlay we need to reveal the new top-most overlay to screen readers.
+ * If the top-most overlay is a Toast we potentially need to reveal more overlays since
+ * focus is never automatically moved to the Toast.
+ */
+const revealOverlaysToScreenReaders = () => {
+  if (doc === undefined) return;
+
+  const overlays = getPresentedOverlays(doc);
+
+  for (let i = overlays.length - 1; i >= 0; i--) {
+    const currentOverlay = overlays[i];
+
+    /**
+     * If the current we are looking at is a Toast then we can remove aria-hidden.
+     * However, we potentially need to keep looking at the overlay stack because there
+     * could be more Toasts underneath. Additionally, we need to unhide the closest non-Toast
+     * overlay too so focus can move there since focus is never automatically moved to the Toast.
+     */
+    currentOverlay.removeAttribute('aria-hidden');
+    currentOverlay.removeAttribute('inert');
+
+    /**
+     * If we found a non-Toast element then we can just remove aria-hidden and stop searching entirely
+     * since this overlay should always receive focus. As a result, all underlying overlays should still
+     * be hidden from screen readers.
+     */
+    if (currentOverlay.tagName !== 'ION-TOAST') {
+      break;
+    }
+  }
 };
 
 export const FOCUS_TRAP_DISABLE_CLASS = 'ion-disable-focus-trap';
