@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-buttons>
+        <ion-buttons slot="end">
           <ion-button @click="dismiss" id="dismiss">Dismiss</ion-button>
         </ion-buttons>
         <ion-title>Modal</ion-title>

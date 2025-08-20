@@ -1,12 +1,14 @@
-describe('Popovers: Inline', () => {
-  beforeEach(() => {
-    cy.visit('/standalone/popover');
+import { test, expect } from '@playwright/test';
+
+test.describe('Popovers: Inline', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/standalone/popover');
   });
 
-  it('should render popover', () => {
-    cy.get('button#open-popover').click();
+  test('should render popover', async ({ page }) => {
+    await page.locator('button#open-popover').click();
 
-    cy.get('ion-popover').should('be.visible');
-    cy.get('ion-popover #popover-content').should('exist');
+    await expect(page.locator('ion-popover')).toBeVisible();
+    await expect(page.locator('ion-popover #popover-content')).toBeVisible();
   });
 });

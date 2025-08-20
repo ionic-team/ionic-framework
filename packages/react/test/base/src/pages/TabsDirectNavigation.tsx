@@ -78,7 +78,7 @@ const TabsDirectNavigation: React.FC = () => {
         </IonTabButton>
 
         <IonTabButton tab="library" href="/tabs-direct-navigation/library" data-testid="library-tab">
-          <IonIcon icon={libraryOutline}></IonIcon>  
+          <IonIcon icon={libraryOutline}></IonIcon>
           <IonLabel>Library</IonLabel>
         </IonTabButton>
 

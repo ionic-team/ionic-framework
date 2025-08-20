@@ -256,6 +256,15 @@ export class Refresher implements ComponentInterface {
             hapticImpact({ style: ImpactStyle.Light });
 
             /**
+             * Clear focus from any active element to prevent scroll jumps
+             * when the refresh completes
+             */
+            const activeElement = document.activeElement as HTMLElement;
+            if (activeElement?.blur !== undefined) {
+              activeElement.blur();
+            }
+
+            /**
              * Translate the content element otherwise when pointer is removed
              * from screen the scroll content will bounce back over the refresher
              */
@@ -734,6 +743,16 @@ export class Refresher implements ComponentInterface {
 
     // place the content in a hangout position while it thinks
     this.setCss(this.pullMin, this.snapbackDuration, true, '');
+
+    /**
+     * Clear focus from any active element to prevent the browser
+     * from restoring focus and causing scroll jumps after refresh.
+     * This ensures the view stays at the top after refresh completes.
+     */
+    const activeElement = document.activeElement as HTMLElement;
+    if (activeElement?.blur !== undefined) {
+      activeElement.blur();
+    }
 
     // emit "refresh" because it was pulled down far enough
     // and they let go to begin refreshing

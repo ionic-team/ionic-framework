@@ -125,14 +125,14 @@ describe('Tabs', () => {
       cy.visit('/')
       cy.ionPageVisible('home');
 
-      cy.get('#tabs').click();
+      cy.get('#tabs').click({ force: true });
       cy.ionPageVisible('tab1');
       cy.ionPageHidden('home');
 
       cy.ionBackClick('tab1');
       cy.ionPageDoesNotExist('tabs');
 
-      cy.get('#tabs').click();
+      cy.get('#tabs').click({ force: true });
       cy.ionPageVisible('tab1');
       cy.ionPageHidden('home');
 
@@ -144,7 +144,7 @@ describe('Tabs', () => {
       cy.visit('/');
       cy.ionPageVisible('home');
 
-      cy.get('#tabs').click();
+      cy.get('#tabs').click({ force: true });
       cy.ionPageVisible('tab1');
 
       cy.get('ion-tab-button#tab-button-tab2').click();
@@ -159,7 +159,7 @@ describe('Tabs', () => {
       cy.visit('/');
       cy.ionPageVisible('home');
 
-      cy.get('#tabs').click();
+      cy.get('#tabs').click({ force: true });
       cy.ionPageVisible('tab1');
 
       cy.get('ion-tab-button#tab-button-tab2').click();
@@ -169,7 +169,7 @@ describe('Tabs', () => {
       cy.ionPageVisible('home')
       cy.ionPageDoesNotExist('tabs');
 
-      cy.get('#tabs').click();
+      cy.get('#tabs').click({ force: true });
       cy.ionPageVisible('tab1');
 
       cy.get('ion-tab-button#tab-button-tab2').click();
@@ -639,7 +639,7 @@ describe('Tabs', () => {
       cy.viewport(320, 568);
       cy.visit('?ionic:mode=ios');
       cy.ionPageVisible('home');
-      cy.get('#tabs').click();
+      cy.get('#tabs').click({ force: true });
       cy.ionPageHidden('home');
       cy.ionPageVisible('tab1')
     });

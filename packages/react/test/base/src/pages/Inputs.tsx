@@ -98,7 +98,7 @@ const Inputs: React.FC<InputsProps> = () => {
     <IonPage data-pageid="inputs">
       <IonHeader translucent={true}>
         <IonToolbar>
-          <IonButtons>
+          <IonButtons slot="start">
             <IonBackButton></IonBackButton>
           </IonButtons>
           <IonTitle>Inputs</IonTitle>

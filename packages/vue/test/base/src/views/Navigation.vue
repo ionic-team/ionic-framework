@@ -2,8 +2,8 @@
   <ion-page data-pageid="navigation">
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-buttons>
-          <ion-back-button></ion-back-button>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/"></ion-back-button>
         </ion-buttons>
         <ion-title>Navigation</ion-title>
       </ion-toolbar>
