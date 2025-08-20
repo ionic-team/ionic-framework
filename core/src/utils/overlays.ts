@@ -512,8 +512,9 @@ export const present = async <OverlayPresentOptions>(
   if (overlay.presented) {
     return;
   }
-
+  
   console.log("presenting overlay...");
+  (document.activeElement as HTMLElement)?.blur();
 
   /**
    * Due to accessibility guidelines, toasts do not have
@@ -524,6 +525,7 @@ export const present = async <OverlayPresentOptions>(
    */
   if (overlay.el.tagName !== 'ION-TOAST') {
     setRootAriaHidden(true);
+    document.body.classList.add(BACKDROP_NO_SCROLL);
   }
 
   hideUnderlyingOverlaysFromScreenReaders(overlay.el);
@@ -648,6 +650,8 @@ export const dismiss = async <OverlayDismissOptions>(
   if (!overlay.presented) {
     return false;
   }
+
+  (document.activeElement as HTMLElement)?.blur();
 
   const presentedOverlays = doc !== undefined ? getPresentedOverlays(doc) : [];
 
