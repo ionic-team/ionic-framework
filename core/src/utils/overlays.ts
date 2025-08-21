@@ -512,8 +512,7 @@ export const present = async <OverlayPresentOptions>(
   if (overlay.presented) {
     return;
   }
-  
-  console.log("presenting overlay...");
+
   (document.activeElement as HTMLElement)?.blur();
 
   /**
