@@ -426,6 +426,8 @@ export class Input implements ComponentInterface {
         const newIsInvalid = this.checkValidationState();
         if (this.isInvalid !== newIsInvalid) {
           this.isInvalid = newIsInvalid;
+          // Force a re-render to update aria-describedby immediately
+          forceUpdate(this);
         }
       });
 
@@ -587,6 +589,20 @@ export class Input implements ComponentInterface {
     this.didInputClearOnEdit = false;
 
     this.ionBlur.emit(ev);
+
+    /**
+     * Check validation state after blur to handle framework-managed classes.
+     * Frameworks like Angular update classes asynchronously, often using
+     * requestAnimationFrame or promises. Using setTimeout ensures we check
+     * after all microtasks and animation frames have completed.
+     */
+    setTimeout(() => {
+      const newIsInvalid = this.checkValidationState();
+      if (this.isInvalid !== newIsInvalid) {
+        this.isInvalid = newIsInvalid;
+        forceUpdate(this);
+      }
+    }, 100);
   };
 
   private onFocus = (ev: FocusEvent) => {

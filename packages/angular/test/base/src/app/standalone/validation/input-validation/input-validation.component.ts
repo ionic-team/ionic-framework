@@ -1,32 +1,18 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   ReactiveFormsModule,
-  Validators,
-  AbstractControl,
-  ValidationErrors
+  Validators
 } from '@angular/forms';
 import {
-  IonInput,
   IonButton,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
-  IonApp,
-  IonButtons,
-  IonItem,
-  IonList
+  IonHeader,
+  IonInput,
+  IonTitle,
+  IonToolbar
 } from '@ionic/angular/standalone';
-
-// Custom validator for phone pattern
-function phoneValidator(control: AbstractControl): ValidationErrors | null {
-  const value = control.value;
-  if (!value) return null;
-  const phonePattern = /^\(\d{3}\) \d{3}-\d{4}$/;
-  return phonePattern.test(value) ? null : { invalidPhone: true };
-}
 
 @Component({
   selector: 'app-input-validation',
@@ -36,16 +22,12 @@ function phoneValidator(control: AbstractControl): ValidationErrors | null {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    IonApp,
     IonInput,
     IonButton,
     IonHeader,
     IonToolbar,
     IonTitle,
-    IonContent,
-    IonButtons,
-    IonItem,
-    IonList
+    IonContent
   ]
 })
 export class InputValidationComponent {
@@ -125,11 +107,11 @@ export class InputValidationComponent {
   onIonBlur(fieldName: string, inputElement: IonInput): void {
     this.markTouched(fieldName);
     this.updateValidationClasses(fieldName, inputElement);
-    
+
     // Update aria-live region if invalid
     if (this.isInvalid(fieldName) && this.debugRegion) {
       const metadata = this.fieldMetadata[fieldName as keyof typeof this.fieldMetadata];
-      this.debugRegion.nativeElement.textContent = 
+      this.debugRegion.nativeElement.textContent =
         `Field ${metadata.label} is invalid: ${metadata.errorText}`;
       console.log('Field marked invalid:', metadata.label, metadata.errorText);
     }
@@ -152,12 +134,19 @@ export class InputValidationComponent {
 
   // Update validation classes on the input element
   private updateValidationClasses(fieldName: string, inputElement: IonInput): void {
-    const element = inputElement as any;
-    
+    // Access the native element through the Angular component
+    const element = (inputElement as any).el || (inputElement as any).nativeElement;
+
+    // Ensure we have a valid element with classList
+    if (!element || !element.classList) {
+      console.warn('Could not access native element for validation classes');
+      return;
+    }
+
     if (this.isTouched(fieldName)) {
       // Add ion-touched class
       element.classList.add('ion-touched');
-      
+
       // Update ion-valid/ion-invalid classes
       if (this.isInvalid(fieldName)) {
         element.classList.remove('ion-valid');
@@ -189,16 +178,16 @@ export class InputValidationComponent {
   onReset(): void {
     // Reset form values
     this.form.reset();
-    
+
     // Clear touched fields
     this.touchedFields.clear();
-    
+
     // Remove validation classes from all inputs
     const inputs = document.querySelectorAll('ion-input');
     inputs.forEach(input => {
       input.classList.remove('ion-valid', 'ion-invalid', 'ion-touched');
     });
-    
+
     // Clear aria-live region
     if (this.debugRegion) {
       this.debugRegion.nativeElement.textContent = '';

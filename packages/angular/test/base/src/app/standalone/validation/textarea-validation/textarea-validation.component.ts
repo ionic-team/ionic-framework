@@ -1,23 +1,19 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   ReactiveFormsModule,
-  Validators,
-  AbstractControl,
-  ValidationErrors
+  ValidationErrors,
+  Validators
 } from '@angular/forms';
 import {
-  IonTextarea,
   IonButton,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
-  IonApp,
-  IonButtons,
-  IonItem,
-  IonList
+  IonHeader,
+  IonTextarea,
+  IonTitle,
+  IonToolbar
 } from '@ionic/angular/standalone';
 
 // Custom validator for address (must be at least 10 chars and contain a digit)
@@ -38,16 +34,12 @@ function addressValidator(control: AbstractControl): ValidationErrors | null {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    IonApp,
     IonTextarea,
     IonButton,
     IonHeader,
     IonToolbar,
     IonTitle,
-    IonContent,
-    IonButtons,
-    IonItem,
-    IonList
+    IonContent
   ]
 })
 export class TextareaValidationComponent {
@@ -135,11 +127,11 @@ export class TextareaValidationComponent {
   onIonBlur(fieldName: string, textareaElement: IonTextarea): void {
     this.markTouched(fieldName);
     this.updateValidationClasses(fieldName, textareaElement);
-    
+
     // Update aria-live region if invalid
     if (this.isInvalid(fieldName) && this.debugRegion) {
       const metadata = this.fieldMetadata[fieldName as keyof typeof this.fieldMetadata];
-      this.debugRegion.nativeElement.textContent = 
+      this.debugRegion.nativeElement.textContent =
         `Field ${metadata.label} is invalid: ${metadata.errorText}`;
       console.log('Field marked invalid:', metadata.label, metadata.errorText);
     }
@@ -162,12 +154,19 @@ export class TextareaValidationComponent {
 
   // Update validation classes on the textarea element
   private updateValidationClasses(fieldName: string, textareaElement: IonTextarea): void {
-    const element = textareaElement as any;
-    
+    // Access the native element through the Angular component
+    const element = (textareaElement as any).el || (textareaElement as any).nativeElement;
+
+    // Ensure we have a valid element with classList
+    if (!element || !element.classList) {
+      console.warn('Could not access native element for validation classes');
+      return;
+    }
+
     if (this.isTouched(fieldName)) {
       // Add ion-touched class
       element.classList.add('ion-touched');
-      
+
       // Update ion-valid/ion-invalid classes
       if (this.isInvalid(fieldName)) {
         element.classList.remove('ion-valid');
@@ -199,16 +198,16 @@ export class TextareaValidationComponent {
   onReset(): void {
     // Reset form values
     this.form.reset();
-    
+
     // Clear touched fields
     this.touchedFields.clear();
-    
+
     // Remove validation classes from all textareas
     const textareas = document.querySelectorAll('ion-textarea');
     textareas.forEach(textarea => {
       textarea.classList.remove('ion-valid', 'ion-invalid', 'ion-touched');
     });
-    
+
     // Clear aria-live region
     if (this.debugRegion) {
       this.debugRegion.nativeElement.textContent = '';
