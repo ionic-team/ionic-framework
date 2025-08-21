@@ -513,6 +513,7 @@ export const present = async <OverlayPresentOptions>(
     return;
   }
 
+  // Blur the active element to prevent it from being kept focused inside a container that will be set with aria-hidden="true"
   (document.activeElement as HTMLElement)?.blur();
 
   /**
@@ -650,6 +651,7 @@ export const dismiss = async <OverlayDismissOptions>(
     return false;
   }
 
+  // Blur the active element to prevent it from being kept focused inside the overlay, since it will be removed
   (document.activeElement as HTMLElement)?.blur();
 
   const presentedOverlays = doc !== undefined ? getPresentedOverlays(doc) : [];
