@@ -1,0 +1,172 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Textarea - Validation Test</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="validation-info">
+    <h2>Screen Reader Testing Instructions:</h2>
+    <ol>
+      <li>Enable your screen reader (VoiceOver, NVDA, JAWS, etc.)</li>
+      <li>Tab through the form fields</li>
+      <li>When you tab away from an empty required field, the error should be announced immediately</li>
+      <li>The error text should be announced BEFORE the next field is announced</li>
+      <li>Test in Chrome, Safari, and Firefox to verify consistent behavior</li>
+    </ol>
+  </div>
+
+  <form [formGroup]="form">
+    <div class="grid">
+      <div>
+        <h2>Required Description (Min Length)</h2>
+        <ion-textarea
+          #descriptionTextarea
+          id="description-textarea"
+          [label]="fieldMetadata.description.label"
+          labelPlacement="floating"
+          fill="outline"
+          placeholder="Enter a description"
+          [rows]="fieldMetadata.description.rows"
+          minlength="20"
+          [helperText]="fieldMetadata.description.helperText"
+          [errorText]="fieldMetadata.description.errorText"
+          formControlName="description"
+          required
+          [class.ion-touched]="isTouched('description')"
+          [class.ion-invalid]="isInvalid('description')"
+          [class.ion-valid]="isValid('description')"
+          (ionBlur)="onIonBlur('description', descriptionTextarea)"
+          (ionInput)="onIonInput('description', descriptionTextarea)"
+          (focusout)="onFocusOut('description', descriptionTextarea)"
+        ></ion-textarea>
+      </div>
+
+      <div>
+        <h2>Required Comments</h2>
+        <ion-textarea
+          #commentsTextarea
+          id="comments-textarea"
+          [label]="fieldMetadata.comments.label"
+          labelPlacement="floating"
+          fill="outline"
+          placeholder="Enter your comments"
+          [rows]="fieldMetadata.comments.rows"
+          [helperText]="fieldMetadata.comments.helperText"
+          [errorText]="fieldMetadata.comments.errorText"
+          formControlName="comments"
+          required
+          [class.ion-touched]="isTouched('comments')"
+          [class.ion-invalid]="isInvalid('comments')"
+          [class.ion-valid]="isValid('comments')"
+          (ionBlur)="onIonBlur('comments', commentsTextarea)"
+          (ionInput)="onIonInput('comments', commentsTextarea)"
+          (focusout)="onFocusOut('comments', commentsTextarea)"
+        ></ion-textarea>
+      </div>
+
+      <div>
+        <h2>Bio (Max Length)</h2>
+        <ion-textarea
+          #bioTextarea
+          id="bio-textarea"
+          [label]="fieldMetadata.bio.label"
+          labelPlacement="floating"
+          fill="outline"
+          placeholder="Tell us about yourself"
+          [rows]="fieldMetadata.bio.rows"
+          maxlength="200"
+          [counter]="fieldMetadata.bio.counter"
+          [helperText]="fieldMetadata.bio.helperText"
+          [errorText]="fieldMetadata.bio.errorText"
+          formControlName="bio"
+          required
+          [class.ion-touched]="isTouched('bio')"
+          [class.ion-invalid]="isInvalid('bio')"
+          [class.ion-valid]="isValid('bio')"
+          (ionBlur)="onIonBlur('bio', bioTextarea)"
+          (ionInput)="onIonInput('bio', bioTextarea)"
+          (focusout)="onFocusOut('bio', bioTextarea)"
+        ></ion-textarea>
+      </div>
+
+      <div>
+        <h2>Address (Pattern Validation)</h2>
+        <ion-textarea
+          #addressTextarea
+          id="address-textarea"
+          [label]="fieldMetadata.address.label"
+          labelPlacement="floating"
+          fill="outline"
+          placeholder="Enter your full address"
+          [rows]="fieldMetadata.address.rows"
+          [helperText]="fieldMetadata.address.helperText"
+          [errorText]="fieldMetadata.address.errorText"
+          formControlName="address"
+          required
+          [class.ion-touched]="isTouched('address')"
+          [class.ion-invalid]="isInvalid('address')"
+          [class.ion-valid]="isValid('address')"
+          (ionBlur)="onIonBlur('address', addressTextarea)"
+          (ionInput)="onIonInput('address', addressTextarea)"
+          (focusout)="onFocusOut('address', addressTextarea)"
+        ></ion-textarea>
+      </div>
+
+      <div>
+        <h2>Review (Min/Max Length)</h2>
+        <ion-textarea
+          #reviewTextarea
+          id="review-textarea"
+          [label]="fieldMetadata.review.label"
+          labelPlacement="floating"
+          fill="outline"
+          placeholder="Write your review"
+          [rows]="fieldMetadata.review.rows"
+          minlength="50"
+          maxlength="500"
+          [counter]="fieldMetadata.review.counter"
+          [helperText]="fieldMetadata.review.helperText"
+          [errorText]="fieldMetadata.review.errorText"
+          formControlName="review"
+          required
+          [class.ion-touched]="isTouched('review')"
+          [class.ion-invalid]="isInvalid('review')"
+          [class.ion-valid]="isValid('review')"
+          (ionBlur)="onIonBlur('review', reviewTextarea)"
+          (ionInput)="onIonInput('review', reviewTextarea)"
+          (focusout)="onFocusOut('review', reviewTextarea)"
+        ></ion-textarea>
+      </div>
+
+      <div>
+        <h2>Optional Notes</h2>
+        <ion-textarea
+          #notesTextarea
+          id="notes-textarea"
+          [label]="fieldMetadata.notes.label"
+          labelPlacement="floating"
+          fill="outline"
+          placeholder="Any additional notes (optional)"
+          [rows]="fieldMetadata.notes.rows"
+          [helperText]="fieldMetadata.notes.helperText"
+          formControlName="notes"
+          [class.ion-touched]="isTouched('notes')"
+          [class.ion-invalid]="isInvalid('notes')"
+          [class.ion-valid]="isValid('notes')"
+          (ionBlur)="onIonBlur('notes', notesTextarea)"
+          (ionInput)="onIonInput('notes', notesTextarea)"
+          (focusout)="onFocusOut('notes', notesTextarea)"
+        ></ion-textarea>
+      </div>
+    </div>
+  </form>
+
+  <div class="ion-padding">
+    <ion-button id="submit-btn" expand="block" [disabled]="!isFormValid()" (click)="onSubmit()">Submit Form</ion-button>
+    <ion-button id="reset-btn" expand="block" fill="outline" (click)="onReset()">Reset Form</ion-button>
+  </div>
+
+  <!-- Hidden region for debugging screen reader announcements -->
+  <div aria-live="polite" aria-atomic="true" class="aria-live-region" id="debug-region" #debugRegion></div>
+</ion-content>

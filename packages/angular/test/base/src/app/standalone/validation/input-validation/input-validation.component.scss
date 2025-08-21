@@ -1,0 +1,44 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-row-gap: 20px;
+  grid-column-gap: 20px;
+}
+
+h2 {
+  font-size: 12px;
+  font-weight: normal;
+  color: var(--ion-color-step-600);
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.aria-live-region {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.validation-info {
+  margin: 20px;
+  padding: 10px;
+  background: var(--ion-color-light);
+  border-radius: 4px;
+}
+
+.validation-info h2 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.validation-info ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.validation-info li {
+  margin-bottom: 5px;
+}
