@@ -339,7 +339,18 @@ export class Textarea implements ComponentInterface {
    * Checks if the textarea is in an invalid state based on validation classes
    */
   private checkValidationState(): boolean {
-    return this.el.classList.contains('ion-touched') && this.el.classList.contains('ion-invalid');
+    // Check for both Ionic and Angular validation classes on the element itself
+    // Angular applies ng-touched/ng-invalid directly to the host element with ngModel
+    const hasIonTouched = this.el.classList.contains('ion-touched');
+    const hasIonInvalid = this.el.classList.contains('ion-invalid');
+    const hasNgTouched = this.el.classList.contains('ng-touched');
+    const hasNgInvalid = this.el.classList.contains('ng-invalid');
+    
+    // Return true if we have both touched and invalid states from either framework
+    const isTouched = hasIonTouched || hasNgTouched;
+    const isInvalid = hasIonInvalid || hasNgInvalid;
+    
+    return isTouched && isInvalid;
   }
 
   connectedCallback() {
@@ -683,15 +694,25 @@ export class Textarea implements ComponentInterface {
    * Renders the helper text or error text values
    */
   private renderHintText() {
-    const { helperText, errorText, helperTextId, errorTextId } = this;
+    const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
     return [
-      <div id={helperTextId} class="helper-text">
-        {helperText}
-      </div>,
-      <div id={errorTextId} class="error-text">
-        {errorText}
-      </div>,
+      helperText && !isInvalid && (
+        <div id={helperTextId} class="helper-text" aria-live="polite">
+          {helperText}
+        </div>
+      ),
+      errorText && isInvalid && (
+        <div 
+          id={errorTextId} 
+          class="error-text" 
+          aria-live="assertive" 
+          aria-atomic="true"
+          role="alert"
+        >
+          {errorText}
+        </div>
+      ),
     ];
   }
 

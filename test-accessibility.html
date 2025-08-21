@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ionic Input/Textarea Accessibility Test</title>
+  <link rel="stylesheet" href="core/css/ionic.bundle.css">
+  <script type="module" src="core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="core/dist/ionic/ionic.js"></script>
+  <link rel="stylesheet" href="core/css/ionic.bundle.css">
+  <style>
+    body {
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+    }
+    ion-item {
+      margin-bottom: 20px;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .instructions {
+      background: #f0f0f0;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+    .instructions h2 {
+      margin-top: 0;
+      color: #666;
+      font-size: 18px;
+    }
+    .instructions ol {
+      margin: 10px 0;
+    }
+    .instructions li {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <ion-app>
+    <ion-content>
+      <div class="container">
+        <h1>Ionic Input/Textarea Accessibility Test</h1>
+        
+        <div class="instructions">
+          <h2>Testing Instructions with VoiceOver (macOS)</h2>
+          <ol>
+            <li>Enable VoiceOver: Press <strong>Cmd + F5</strong></li>
+            <li>Navigate to the first input field below</li>
+            <li>Leave the field empty and tab away (press Tab key)</li>
+            <li>Listen for the error message announcement</li>
+            <li>Navigate back to the field and enter valid text</li>
+            <li>Tab away again and confirm the error is cleared</li>
+            <li>Repeat for the textarea field</li>
+          </ol>
+          <p><strong>Expected behavior:</strong> VoiceOver should announce "Error: This field is required" when leaving an empty field, and the error should be cleared when valid text is entered.</p>
+        </div>
+
+        <div class="section">
+          <h2>Input Field Test</h2>
+          <ion-item>
+            <ion-input 
+              id="test-input"
+              label="Name (Required)" 
+              label-placement="floating"
+              helper-text="Enter your full name"
+              error-text="This field is required"
+              required>
+            </ion-input>
+          </ion-item>
+        </div>
+
+        <div class="section">
+          <h2>Textarea Field Test</h2>
+          <ion-item>
+            <ion-textarea 
+              id="test-textarea"
+              label="Comments (Required)" 
+              label-placement="floating"
+              helper-text="Enter your comments"
+              error-text="This field is required"
+              rows="4"
+              required>
+            </ion-textarea>
+          </ion-item>
+        </div>
+
+        <div class="section">
+          <ion-button id="submit-btn" expand="block">Submit Form</ion-button>
+        </div>
+
+        <div id="console-output" style="margin-top: 30px; padding: 15px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; font-size: 12px; max-height: 300px; overflow-y: auto;">
+          <strong>Console Output:</strong><br>
+        </div>
+      </div>
+    </ion-content>
+  </ion-app>
+
+  <script>
+    // Add validation logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const consoleOutput = document.getElementById('console-output');
+      
+      // Override console.log to show in page
+      const originalLog = console.log;
+      console.log = function(...args) {
+        originalLog.apply(console, args);
+        const message = args.map(arg => typeof arg === 'object' ? JSON.stringify(arg, null, 2) : arg).join(' ');
+        const timestamp = new Date().toLocaleTimeString();
+        consoleOutput.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+        consoleOutput.scrollTop = consoleOutput.scrollHeight;
+      };
+
+      const testInput = document.getElementById('test-input');
+      const testTextarea = document.getElementById('test-textarea');
+      const submitBtn = document.getElementById('submit-btn');
+
+      // Simple validation on blur
+      testInput.addEventListener('ionBlur', (e) => {
+        const value = e.target.value;
+        console.log('Input blur event - value:', value || '(empty)');
+        
+        if (!value || value.trim() === '') {
+          console.log('Input is invalid - adding classes');
+          testInput.classList.add('ion-touched', 'ion-invalid');
+          testInput.classList.remove('ion-valid');
+        } else {
+          console.log('Input is valid - updating classes');
+          testInput.classList.add('ion-touched', 'ion-valid');
+          testInput.classList.remove('ion-invalid');
+        }
+      });
+
+      testTextarea.addEventListener('ionBlur', (e) => {
+        const value = e.target.value;
+        console.log('Textarea blur event - value:', value || '(empty)');
+        
+        if (!value || value.trim() === '') {
+          console.log('Textarea is invalid - adding classes');
+          testTextarea.classList.add('ion-touched', 'ion-invalid');
+          testTextarea.classList.remove('ion-valid');
+        } else {
+          console.log('Textarea is valid - updating classes');
+          testTextarea.classList.add('ion-touched', 'ion-valid');
+          testTextarea.classList.remove('ion-invalid');
+        }
+      });
+
+      // Submit button handler
+      submitBtn.addEventListener('click', () => {
+        console.log('Submit button clicked');
+        
+        // Trigger validation on both fields
+        const inputValue = testInput.value;
+        const textareaValue = testTextarea.value;
+        
+        if (!inputValue || inputValue.trim() === '') {
+          testInput.classList.add('ion-touched', 'ion-invalid');
+          testInput.classList.remove('ion-valid');
+        } else {
+          testInput.classList.add('ion-touched', 'ion-valid');
+          testInput.classList.remove('ion-invalid');
+        }
+        
+        if (!textareaValue || textareaValue.trim() === '') {
+          testTextarea.classList.add('ion-touched', 'ion-invalid');
+          testTextarea.classList.remove('ion-valid');
+        } else {
+          testTextarea.classList.add('ion-touched', 'ion-valid');
+          testTextarea.classList.remove('ion-invalid');
+        }
+        
+        const isValid = (inputValue && inputValue.trim()) && (textareaValue && textareaValue.trim());
+        if (isValid) {
+          console.log('Form is valid! Values:', { input: inputValue, textarea: textareaValue });
+          alert('Form submitted successfully!');
+        } else {
+          console.log('Form has validation errors');
+        }
+      });
+
+      console.log('Test page loaded - ready for testing');
+      console.log('Components should conditionally render error messages based on validation state');
+    });
+  </script>
+</body>
+</html>
