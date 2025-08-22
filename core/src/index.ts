@@ -7,12 +7,11 @@ export { mdTransitionAnimation } from './utils/transition/md.transition';
 export { getTimeGivenProgression } from './utils/animation/cubic-bezier';
 export { createGesture } from './utils/gesture';
 export { initialize } from './global/ionic-global';
-export { componentOnReady } from './utils/helpers';
+export { componentOnReady, openURL } from './utils/helpers';
 export { LogLevel } from './utils/logging';
 export { isPlatform, Platforms, PlatformConfig, getPlatforms } from './utils/platform';
 export { IonicSafeString } from './utils/sanitization';
 export { IonicConfig, getMode, setupConfig } from './utils/config';
-export { openURL } from './utils/theme';
 export {
   LIFECYCLE_WILL_ENTER,
   LIFECYCLE_DID_ENTER,

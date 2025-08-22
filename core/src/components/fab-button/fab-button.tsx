@@ -2,9 +2,9 @@ import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import { inheritAriaAttributes } from '@utils/helpers';
+import { inheritAriaAttributes, openURL } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
-import { createColorClasses, hostContext, openURL } from '@utils/theme';
+import { createColorClasses, hostContext } from '@utils/theme';
 import { close } from 'ionicons/icons';
 
 import { config } from '../../global/config';

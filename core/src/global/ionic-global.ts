@@ -1,7 +1,10 @@
 import { Build, getMode, setMode, getElement } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
+import { applyGlobalTheme } from '@utils/theme';
 
 import type { IonicConfig, Mode, Theme } from '../interface';
+import { defaultTheme as baseTheme } from '../themes/base/default.tokens';
+import type { Theme as BaseTheme } from '../themes/base/default.tokens';
 import { shouldUseCloseWatcher } from '../utils/hardware-back-button';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
@@ -224,6 +227,16 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   config.set('theme', defaultTheme);
   doc.documentElement.setAttribute('theme', defaultTheme);
   doc.documentElement.classList.add(defaultTheme);
+
+  const customTheme: BaseTheme | undefined = configObj.customTheme;
+
+  // Apply base theme, or combine with custom theme if provided
+  if (customTheme) {
+    const combinedTheme = applyGlobalTheme(baseTheme, customTheme);
+    config.set('customTheme', combinedTheme);
+  } else {
+    applyGlobalTheme(baseTheme);
+  }
 
   if (config.getBoolean('_testing')) {
     config.set('animated', false);
