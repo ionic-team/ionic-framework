@@ -3,8 +3,8 @@ import dotsThreeRegular from '@phosphor-icons/core/assets/regular/dots-three.svg
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes } from '@utils/helpers';
-import { createColorClasses, hostContext, openURL } from '@utils/theme';
+import { inheritAriaAttributes, openURL } from '@utils/helpers';
+import { createColorClasses, hostContext } from '@utils/theme';
 import { chevronForwardOutline, ellipsisHorizontal } from 'ionicons/icons';
 
 import { config } from '../../global/config';
