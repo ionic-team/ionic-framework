@@ -79,7 +79,14 @@ export class Input implements ComponentInterface {
    */
   @State() hasFocus = false;
 
+  /**
+   * Track validation state for proper aria-live announcements
+   */
+  @State() isInvalid = false;
+
   @Element() el!: HTMLIonInputElement;
+
+  private validationObserver?: MutationObserver;
 
   /**
    * The color to use from your application's color palette.
@@ -396,6 +403,24 @@ export class Input implements ComponentInterface {
     };
   }
 
+  /**
+   * Checks if the input is in an invalid state based on validation classes
+   */
+  private checkValidationState(): boolean {
+    // Check for both Ionic and Angular validation classes on the element itself
+    // Angular applies ng-touched/ng-invalid directly to the host element with ngModel
+    const hasIonTouched = this.el.classList.contains('ion-touched');
+    const hasIonInvalid = this.el.classList.contains('ion-invalid');
+    const hasNgTouched = this.el.classList.contains('ng-touched');
+    const hasNgInvalid = this.el.classList.contains('ng-invalid');
+    
+    // Return true if we have both touched and invalid states from either framework
+    const isTouched = hasIonTouched || hasNgTouched;
+    const isInvalid = hasIonInvalid || hasNgInvalid;
+    
+    return isTouched && isInvalid;
+  }
+
   connectedCallback() {
     const { el } = this;
 
@@ -405,6 +430,26 @@ export class Input implements ComponentInterface {
       () => this.notchSpacerEl,
       () => this.labelSlot
     );
+
+    // Watch for class changes to update validation state
+    if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
+      this.validationObserver = new MutationObserver(() => {
+        const newIsInvalid = this.checkValidationState();
+        if (this.isInvalid !== newIsInvalid) {
+          this.isInvalid = newIsInvalid;
+          // Force a re-render to update aria-describedby immediately
+          forceUpdate(this);
+        }
+      });
+
+      this.validationObserver.observe(el, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    }
+
+    // Always set initial state
+    this.isInvalid = this.checkValidationState();
 
     this.debounceChanged();
     if (Build.isBrowser) {
@@ -450,6 +495,12 @@ export class Input implements ComponentInterface {
     if (this.notchController) {
       this.notchController.destroy();
       this.notchController = undefined;
+    }
+
+    // Clean up validation observer to prevent memory leaks
+    if (this.validationObserver) {
+      this.validationObserver.disconnect();
+      this.validationObserver = undefined;
     }
   }
 
@@ -549,6 +600,20 @@ export class Input implements ComponentInterface {
     this.didInputClearOnEdit = false;
 
     this.ionBlur.emit(ev);
+
+    /**
+     * Check validation state after blur to handle framework-managed classes.
+     * Frameworks like Angular update classes asynchronously, often using
+     * requestAnimationFrame or promises. Using setTimeout ensures we check
+     * after all microtasks and animation frames have completed.
+     */
+    setTimeout(() => {
+      const newIsInvalid = this.checkValidationState();
+      if (this.isInvalid !== newIsInvalid) {
+        this.isInvalid = newIsInvalid;
+        forceUpdate(this);
+      }
+    }, 100);
   };
 
   private onFocus = (ev: FocusEvent) => {
@@ -626,22 +691,33 @@ export class Input implements ComponentInterface {
    * Renders the helper text or error text values
    */
   private renderHintText() {
-    const { helperText, errorText, helperTextId, errorTextId } = this;
+    const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
     return [
-      <div id={helperTextId} class="helper-text">
-        {helperText}
-      </div>,
-      <div id={errorTextId} class="error-text">
-        {errorText}
-      </div>,
+      helperText && (
+        <div id={helperTextId} class="helper-text" aria-live="polite">
+          {helperText}
+        </div>
+      ),
+      errorText && (
+        <div 
+          id={errorTextId} 
+          class="error-text" 
+          aria-live="assertive" 
+          aria-atomic="true"
+          role="alert"
+          style={{ display: isInvalid ? 'block' : 'none' }}
+        >
+          {errorText}
+        </div>
+      ),
     ];
   }
 
   private getHintTextID(): string | undefined {
-    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+    const { isInvalid, helperText, errorText, helperTextId, errorTextId } = this;
 
-    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+    if (isInvalid && errorText) {
       return errorTextId;
     }
 
@@ -864,7 +940,7 @@ export class Input implements ComponentInterface {
               onCompositionstart={this.onCompositionStart}
               onCompositionend={this.onCompositionEnd}
               aria-describedby={this.getHintTextID()}
-              aria-invalid={this.getHintTextID() === this.errorTextId}
+              aria-invalid={this.isInvalid ? 'true' : undefined}
               {...this.inheritedAttributes}
             />
             {this.clearInput && !readonly && !disabled && (
