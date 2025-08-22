@@ -364,6 +364,9 @@ export interface IonicConfig {
   scrollAssist?: boolean;
   hideCaretOnScroll?: boolean;
 
+  // Theme configs
+  customTheme?: any;
+
   // INTERNAL configs
   // TODO(FW-2832): types
   persistConfig?: boolean;
