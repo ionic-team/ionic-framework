@@ -495,8 +495,10 @@ export const setRootAriaHidden = (hidden = false) => {
 
   if (hidden) {
     viewContainer.setAttribute('aria-hidden', 'true');
+    viewContainer.setAttribute('inert', '');
   } else {
     viewContainer.removeAttribute('aria-hidden');
+    viewContainer.removeAttribute('inert');
   }
 };
 
@@ -510,6 +512,9 @@ export const present = async <OverlayPresentOptions>(
   if (overlay.presented) {
     return;
   }
+
+  // Blur the active element to prevent it from being kept focused inside a container that will be set with aria-hidden="true"
+  (document.activeElement as HTMLElement)?.blur();
 
   /**
    * Due to accessibility guidelines, toasts do not have
@@ -577,6 +582,7 @@ export const present = async <OverlayPresentOptions>(
    * screen readers.
    */
   overlay.el.removeAttribute('aria-hidden');
+  overlay.el.removeAttribute('inert');
 };
 
 /**
@@ -644,6 +650,9 @@ export const dismiss = async <OverlayDismissOptions>(
   if (!overlay.presented) {
     return false;
   }
+
+  // Blur the active element to prevent it from being kept focused inside the overlay, since it will be removed
+  (document.activeElement as HTMLElement)?.blur();
 
   const presentedOverlays = doc !== undefined ? getPresentedOverlays(doc) : [];
 
@@ -995,6 +1004,7 @@ const hideAnimatingOverlayFromScreenReaders = (overlay: HTMLIonOverlayElement) =
      * This is done at the end of the `present` method.
      */
     overlay.setAttribute('aria-hidden', 'true');
+    overlay.setAttribute('inert', '');
   }
 };
 
@@ -1024,6 +1034,7 @@ const hideUnderlyingOverlaysFromScreenReaders = (newTopMostOverlay: HTMLIonOverl
      */
     if (nextPresentedOverlay.hasAttribute('aria-hidden') || nextPresentedOverlay.tagName !== 'ION-TOAST') {
       presentedOverlay.setAttribute('aria-hidden', 'true');
+      presentedOverlay.setAttribute('inert', '');
     }
   }
 };
@@ -1048,6 +1059,7 @@ const revealOverlaysToScreenReaders = () => {
      * overlay too so focus can move there since focus is never automatically moved to the Toast.
      */
     currentOverlay.removeAttribute('aria-hidden');
+    currentOverlay.removeAttribute('inert');
 
     /**
      * If we found a non-Toast element then we can just remove aria-hidden and stop searching entirely

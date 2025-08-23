@@ -418,6 +418,9 @@ export class Menu implements ComponentInterface, MenuI {
    */
   @Method()
   setOpen(shouldOpen: boolean, animated = true, role?: string): Promise<boolean> {
+    // Blur the active element to prevent it from being kept focused inside an element that will be set with aria-hidden="true"
+    (document.activeElement as HTMLElement)?.blur();
+
     return menuController._setOpen(this, shouldOpen, animated, role);
   }
 
