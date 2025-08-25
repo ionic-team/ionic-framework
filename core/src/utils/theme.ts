@@ -1,9 +1,7 @@
 import type { Color, CssClassMap } from '../interface';
-import type { Theme } from '../themes/base/default.tokens';
 
 import { deepMerge } from './helpers';
 
-// Global constants
 export const CSS_PROPS_PREFIX = '--ion-';
 export const CSS_ROOT_SELECTOR = ':root';
 
@@ -47,7 +45,7 @@ export const getClassMap = (classes: string | string[] | undefined): CssClassMap
  * @param prefix The CSS prefix to use (e.g., '--ion-')
  * @returns CSS string with custom properties
  */
-const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): string => {
+export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): string => {
   const cssProps = Object.entries(theme)
     .flatMap(([key, val]) => {
       // Skip invalid keys or values
@@ -95,7 +93,7 @@ const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): string 
  * @param css The CSS string to inject
  * @param target The target element to inject into
  */
-const injectCSS = (css: string, target: Element | ShadowRoot = document.head) => {
+export const injectCSS = (css: string, target: Element | ShadowRoot = document.head) => {
   const style = document.createElement('style');
   style.innerHTML = css;
   target.appendChild(style);
@@ -106,7 +104,7 @@ const injectCSS = (css: string, target: Element | ShadowRoot = document.head) =>
  * @param theme The theme object to generate CSS for
  * @returns The generated CSS string
  */
-const generateGlobalThemeCSS = (theme: Theme): string => {
+export const generateGlobalThemeCSS = (theme: any): string => {
   if (typeof theme !== 'object' || Array.isArray(theme)) {
     console.warn('generateGlobalThemeCSS: Invalid theme object provided', theme);
     return '';
@@ -156,7 +154,7 @@ const generateGlobalThemeCSS = (theme: Theme): string => {
  * @param userTheme The user's custom theme (optional)
  * @returns The combined theme object (or base theme if no user theme was provided)
  */
-export const applyGlobalTheme = (baseTheme: Theme, userTheme?: any): any => {
+export const applyGlobalTheme = (baseTheme: any, userTheme?: any): any => {
   // If no base theme provided, error
   if (typeof baseTheme !== 'object' || Array.isArray(baseTheme)) {
     console.error('applyGlobalTheme: Valid base theme object is required', baseTheme);
@@ -181,12 +179,12 @@ export const applyGlobalTheme = (baseTheme: Theme, userTheme?: any): any => {
 /**
  * Generates component's themed CSS class with CSS variables
  * from its theme object
- * @param theme The theme object to generate CSS for
+ * @param componentTheme The component's object to generate CSS for (e.g., IonChip { })
  * @param componentName The component name without any prefixes (e.g., 'chip')
  * @returns string containing the component's themed CSS variables
  */
-const generateComponentThemeCSS = (theme: Theme, componentName: string): string => {
-  const cssProps = generateCSSVars(theme, `${CSS_PROPS_PREFIX}${componentName}-`);
+export const generateComponentThemeCSS = (componentTheme: any, componentName: string): string => {
+  const cssProps = generateCSSVars(componentTheme, `${CSS_PROPS_PREFIX}${componentName}-`);
 
   return `
     :host(.${componentName}-themed) {
