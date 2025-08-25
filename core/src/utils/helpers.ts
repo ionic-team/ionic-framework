@@ -461,10 +461,9 @@ export const openURL = async (
  * Deep merges two objects, with source properties overriding target properties
  * @param target The target object to merge into
  * @param source The source object to merge from
- * @returns The merged object (new object, doesn't modify original)
+ * @returns The merged object
  */
 export const deepMerge = (target: any, source: any): any => {
-  // Create a new object to avoid modifying the original
   const result = { ...target };
 
   for (const key in source) {
