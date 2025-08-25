@@ -1,4 +1,4 @@
-import { inheritAriaAttributes } from './helpers';
+import { deepMerge, inheritAriaAttributes } from './helpers';
 
 describe('inheritAriaAttributes', () => {
   it('should inherit aria attributes', () => {
@@ -38,5 +38,28 @@ describe('inheritAriaAttributes', () => {
       'aria-label': 'parent',
       role: 'button',
     });
+  });
+});
+
+describe('deepMerge', () => {
+  it('should merge objects', () => {
+    const target = { a: 1, b: 2 };
+    const source = { b: 3, c: 4 };
+    const result = deepMerge(target, source);
+    expect(result).toEqual({ a: 1, b: 3, c: 4 });
+  });
+
+  it('should merge objects when target is undefined', () => {
+    const target = undefined;
+    const source = { a: 1, b: 2 };
+    const result = deepMerge(target, source);
+    expect(result).toEqual({ a: 1, b: 2 });
+  });
+
+  it('should merge objects when source is undefined', () => {
+    const target = { a: 1, b: 2 };
+    const source = undefined;
+    const result = deepMerge(target, source);
+    expect(result).toEqual({ a: 1, b: 2 });
   });
 });
