@@ -7,4 +7,6 @@
   display: flex;
 
   flex-wrap: wrap;
+
+  gap: var(--ion-col-gap, 0px);
 }

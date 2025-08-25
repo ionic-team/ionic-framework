@@ -55,73 +55,41 @@ export class Col implements ComponentInterface {
    */
   @Prop() offsetXl?: string;
 
-  /**
-   * The amount to pull the column, in terms of how many columns it should shift to the start of
-   * the total available.
+/**
+   * The order of the column, in terms of where the column should position itself in the columns renderer.
+   * If no value is passed, the column order implicit value will be the order in the html structure.
    */
-  @Prop() pull?: string;
+  @Prop() order?: string;
 
   /**
-   * The amount to pull the column for xs screens, in terms of how many columns it should shift
-   * to the start of the total available.
+   * The order of the column for xs screens, in terms of where the column should position itself in the columns renderer.
+   * If no value is passed, the column order implicit value will be the order in the html structure.
    */
-  @Prop() pullXs?: string;
-  /**
-   * The amount to pull the column for sm screens, in terms of how many columns it should shift
-   * to the start of the total available.
-   */
-  @Prop() pullSm?: string;
-  /**
-   * The amount to pull the column for md screens, in terms of how many columns it should shift
-   * to the start of the total available.
-   */
-  @Prop() pullMd?: string;
-  /**
-   * The amount to pull the column for lg screens, in terms of how many columns it should shift
-   * to the start of the total available.
-   */
-  @Prop() pullLg?: string;
-  /**
-   * The amount to pull the column for xl screens, in terms of how many columns it should shift
-   * to the start of the total available.
-   */
-  @Prop() pullXl?: string;
+  @Prop() orderXs?: string;
 
   /**
-   * The amount to push the column, in terms of how many columns it should shift to the end
-   * of the total available.
+   * The order of the column for sm screens, in terms of where the column should position itself in the columns renderer.
+   * If no value is passed, the column order implicit value will be the order in the html structure.
    */
-  @Prop() push?: string;
+  @Prop() orderSm?: string;
 
   /**
-   * The amount to push the column for xs screens, in terms of how many columns it should shift
-   * to the end of the total available.
+   * The order of the column for md screens, in terms of where the column should position itself in the columns renderer.
+   * If no value is passed, the column order implicit value will be the order in the html structure.
    */
-  @Prop() pushXs?: string;
+  @Prop() orderMd?: string;
 
   /**
-   * The amount to push the column for sm screens, in terms of how many columns it should shift
-   * to the end of the total available.
+   * The order of the column for lg screens, in terms of where the column should position itself in the columns renderer.
+   * If no value is passed, the column order implicit value will be the order in the html structure.
    */
-  @Prop() pushSm?: string;
+  @Prop() orderLg?: string;
 
   /**
-   * The amount to push the column for md screens, in terms of how many columns it should shift
-   * to the end of the total available.
+   * The order of the column for xl screens, in terms of where the column should position itself in the columns renderer.
+   * If no value is passed, the column order implicit value will be the order in the html structure.
    */
-  @Prop() pushMd?: string;
-
-  /**
-   * The amount to push the column for lg screens, in terms of how many columns it should shift
-   * to the end of the total available.
-   */
-  @Prop() pushLg?: string;
-
-  /**
-   * The amount to push the column for xl screens, in terms of how many columns it should shift
-   * to the end of the total available.
-   */
-  @Prop() pushXl?: string;
+  @Prop() orderXl?: string;
 
   /**
    * The size of the column, in terms of how many columns it should take up out of the total
@@ -186,84 +154,77 @@ export class Col implements ComponentInterface {
     return matched;
   }
 
-  private calculateSize() {
-    const columns = this.getColumns('size');
+  private getSizeClass(): string | undefined {
+    const colSize = this.getColumns('size');
 
     // If size wasn't set for any breakpoint
     // or if the user set the size without a value
     // it means we need to stick with the default and return
     // e.g. <ion-col size-md>
-    if (!columns || columns === '') {
+    if (!colSize || colSize === '') {
       return;
     }
 
-    // If the size is set to auto then don't calculate a size
-    const colSize =
-      columns === 'auto'
-        ? 'auto'
-        : // If CSS supports variables we should use the grid columns var
-        SUPPORTS_VARS
-        ? `calc(calc(${columns} / var(--ion-grid-columns, 12)) * 100%)`
-        : // Convert the columns to a percentage by dividing by the total number
-          // of columns (12) and then multiplying by 100
-          (columns / 12) * 100 + '%';
+    if (colSize === 'auto') {
+      return 'ion-grid-auto';
+    }
 
-    return {
-      flex: `0 0 ${colSize}`,
-      width: `${colSize}`,
-      'max-width': `${colSize}`,
-    };
-  }
+    const colNum = parseInt(colSize);
 
-  // Called by push, pull, and offset since they use the same calculations
-  private calculatePosition(property: string, modifier: string) {
-    const columns = this.getColumns(property);
-
-    if (!columns) {
+    if(isNaN(colNum)) {
       return;
     }
 
-    // If the number of columns passed are greater than 0 and less than
-    // 12 we can position the column, else default to auto
-    const amount = SUPPORTS_VARS
-      ? // If CSS supports variables we should use the grid columns var
-        `calc(calc(${columns} / var(--ion-grid-columns, 12)) * 100%)`
-      : // Convert the columns to a percentage by dividing by the total number
-      // of columns (12) and then multiplying by 100
-      columns > 0 && columns < 12
-      ? (columns / 12) * 100 + '%'
-      : 'auto';
-
-    return {
-      [modifier]: amount,
-    };
+    return `ion-grid-col-${colSize}`;
   }
 
-  private calculateOffset(isRTL: boolean) {
-    return this.calculatePosition('offset', isRTL ? 'margin-right' : 'margin-left');
+  private getOrderClass(): string | undefined {
+    const colOrder = this.getColumns('order');
+
+    if (!colOrder || colOrder === '') {
+      return;
+    }
+
+    const colNum = parseInt(colOrder);
+
+    if (isNaN(colNum)) {
+      return;
+    }
+
+    return `ion-grid-order-${colOrder}`;
   }
 
-  private calculatePull(isRTL: boolean) {
-    return this.calculatePosition('pull', isRTL ? 'left' : 'right');
-  }
 
-  private calculatePush(isRTL: boolean) {
-    return this.calculatePosition('push', isRTL ? 'right' : 'left');
+  private getOffsetClass(): string | undefined {
+    const colOffset = this.getColumns('offset');
+
+    if (!colOffset || colOffset === '') {
+      return;
+    }
+
+    const colNum = parseInt(colOffset);
+
+    if (isNaN(colNum)) {
+      return;
+    }
+
+    return `ion-grid-offset-col-${colOffset}`;
   }
 
   render() {
-    const isRTL = document.dir === 'rtl';
     const theme = getIonTheme(this);
+
+    const colSize = this.getSizeClass();
+    const colOrder = this.getOrderClass();
+    const colOffset = this.getOffsetClass();
+
     return (
       <Host
         class={{
           [theme]: true,
-        }}
-        style={{
-          ...this.calculateOffset(isRTL),
-          ...this.calculatePull(isRTL),
-          ...this.calculatePush(isRTL),
-          ...this.calculateSize(),
+          [`${colSize}`]: colSize !== undefined,
+          [`${colOrder}`]: colOrder !== undefined,
+          [`${colOffset}`]: colOffset !== undefined
         }}
       >
         <slot></slot>
