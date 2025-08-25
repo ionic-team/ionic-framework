@@ -212,8 +212,8 @@ export class RadioGroup implements ComponentInterface {
       }
 
       // Update the radio group value when a user presses the
-      // space bar on top of a selected radio
-      if ([' '].includes(ev.key)) {
+      // enter or space bar on top of a selected radio
+      if (['Enter', ' '].includes(ev.key)) {
         const previousValue = this.value;
         this.value = this.allowEmptySelection && this.value !== undefined ? undefined : current.value;
         if (previousValue !== this.value || this.allowEmptySelection) {
