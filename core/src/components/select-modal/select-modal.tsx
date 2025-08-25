@@ -94,12 +94,20 @@ export class SelectModal implements ComponentInterface {
               justify="start"
               labelPlacement="end"
               onClick={() => this.closeModal()}
-              onKeyUp={(ev) => {
-                if (ev.key === 'Enter' || ev.key === ' ') {
+              onKeyDown={(ev) => {
+                if (ev.key === 'Enter') {
                   /**
                    * Selecting a radio option with keyboard navigation,
-                   * either through the Enter or Space keys, should
-                   * dismiss the modal.
+                   * Enter key should dismiss the modal.
+                   */
+                  this.closeModal();
+                }
+              }}
+              onKeyUp={(ev) => {
+                if (ev.key === ' ') {
+                  /**
+                   * Selecting a radio option with keyboard navigation,
+                   * Space key should dismiss the modal.
                    */
                   this.closeModal();
                 }
