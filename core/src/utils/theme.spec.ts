@@ -1,3 +1,8 @@
+import { newSpecPage } from '@stencil/core/testing';
+
+import { CardContent } from '../components/card-content/card-content';
+import { Chip } from '../components/chip/chip';
+
 import { generateComponentThemeCSS, generateCSSVars, generateGlobalThemeCSS, injectCSS } from './theme';
 
 describe('generateCSSVars', () => {
@@ -71,6 +76,36 @@ describe('injectCSS', () => {
     const css = 'body { background-color: red; }';
     injectCSS(css);
     expect(document.head.innerHTML).toContain(`<style>${css}</style>`);
+  });
+
+  it('should inject CSS into an element', async () => {
+    const page = await newSpecPage({
+      components: [CardContent],
+      html: '<ion-card-content></ion-card-content>',
+    });
+
+    const target = page.body.querySelector('ion-card-content')!;
+
+    const css = ':host { background-color: red; }';
+    injectCSS(css, target);
+
+    expect(target.innerHTML).toContain(`<style>${css}</style>`);
+  });
+
+  it('should inject CSS into an element with a shadow root', async () => {
+    const page = await newSpecPage({
+      components: [Chip],
+      html: '<ion-chip></ion-chip>',
+    });
+
+    const target = page.body.querySelector('ion-chip')!;
+    const shadowRoot = target.shadowRoot;
+    expect(shadowRoot).toBeTruthy();
+
+    const css = ':host { background-color: red; }';
+    injectCSS(css, shadowRoot!);
+
+    expect(shadowRoot!.innerHTML).toContain(`<style>${css}</style>`);
   });
 });
 
