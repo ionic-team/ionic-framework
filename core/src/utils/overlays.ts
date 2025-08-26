@@ -516,7 +516,7 @@ export const present = async <OverlayPresentOptions>(
 
   // Set the responsible element for the action of presenting the overlay
   previousElement = document.activeElement as HTMLElement | null;
-  
+
   /**
    * Blur the active element to prevent it from being kept focused, since during the overlay opening process a11y
    * attributes such as `aria-hidden` and `inert` are applied to the activeElement parent container
