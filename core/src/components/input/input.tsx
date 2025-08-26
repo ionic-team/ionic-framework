@@ -413,11 +413,11 @@ export class Input implements ComponentInterface {
     const hasIonInvalid = this.el.classList.contains('ion-invalid');
     const hasNgTouched = this.el.classList.contains('ng-touched');
     const hasNgInvalid = this.el.classList.contains('ng-invalid');
-    
+
     // Return true if we have both touched and invalid states from either framework
     const isTouched = hasIonTouched || hasNgTouched;
     const isInvalid = hasIonInvalid || hasNgInvalid;
-    
+
     return isTouched && isInvalid;
   }
 
@@ -694,22 +694,12 @@ export class Input implements ComponentInterface {
     const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
     return [
-      helperText && !isInvalid && (
-        <div id={helperTextId} class="helper-text" aria-live="polite">
-          {helperText}
-        </div>
-      ),
-      errorText && isInvalid && (
-        <div 
-          id={errorTextId} 
-          class="error-text" 
-          aria-live="assertive" 
-          aria-atomic="true"
-          role="alert"
-        >
-          {errorText}
-        </div>
-      ),
+      <div id={helperTextId} class="helper-text" aria-live="polite">
+        {!isInvalid ? helperText : null}
+      </div>,
+      <div id={errorTextId} class="error-text" role="alert">
+        {isInvalid ? errorText : null}
+      </div>,
     ];
   }
 
