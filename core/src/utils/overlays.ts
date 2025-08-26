@@ -36,6 +36,7 @@ import { isPlatform } from './platform';
 
 let lastOverlayIndex = 0;
 let lastId = 0;
+let previousElement: HTMLElement | null;
 
 export const activeAnimations = new WeakMap<OverlayInterface, Animation[]>();
 
@@ -513,7 +514,13 @@ export const present = async <OverlayPresentOptions>(
     return;
   }
 
-  // Blur the active element to prevent it from being kept focused inside a container that will be set with aria-hidden="true"
+  // Set the responsible element for the action of presenting the overlay
+  previousElement = document.activeElement as HTMLElement | null;
+  
+  /**
+   * Blur the active element to prevent it from being kept focused, since during the overlay opening process a11y
+   * attributes such as `aria-hidden` and `inert` are applied to the activeElement parent container
+   */
   (document.activeElement as HTMLElement)?.blur();
 
   /**
@@ -596,7 +603,6 @@ export const present = async <OverlayPresentOptions>(
  * opened the overlay.
  */
 const restoreElementFocus = async (overlayEl: any) => {
-  let previousElement = document.activeElement as HTMLElement | null;
   if (!previousElement) {
     return;
   }
@@ -650,9 +656,6 @@ export const dismiss = async <OverlayDismissOptions>(
   if (!overlay.presented) {
     return false;
   }
-
-  // Blur the active element to prevent it from being kept focused inside the overlay, since it will be removed
-  (document.activeElement as HTMLElement)?.blur();
 
   const presentedOverlays = doc !== undefined ? getPresentedOverlays(doc) : [];
 
