@@ -36,7 +36,6 @@ import { isPlatform } from './platform';
 
 let lastOverlayIndex = 0;
 let lastId = 0;
-let previousElement: HTMLElement | null;
 
 export const activeAnimations = new WeakMap<OverlayInterface, Animation[]>();
 
@@ -514,15 +513,6 @@ export const present = async <OverlayPresentOptions>(
     return;
   }
 
-  // Set the responsible element for the action of presenting the overlay
-  previousElement = document.activeElement as HTMLElement | null;
-
-  /**
-   * Blur the active element to prevent it from being kept focused, since during the overlay opening process a11y
-   * attributes such as `aria-hidden` and `inert` are applied to the activeElement parent container
-   */
-  (document.activeElement as HTMLElement)?.blur();
-
   /**
    * Due to accessibility guidelines, toasts do not have
    * focus traps.
@@ -603,6 +593,7 @@ export const present = async <OverlayPresentOptions>(
  * opened the overlay.
  */
 const restoreElementFocus = async (overlayEl: any) => {
+  let previousElement = document.activeElement as HTMLElement | null;
   if (!previousElement) {
     return;
   }
@@ -639,7 +630,7 @@ const restoreElementFocus = async (overlayEl: any) => {
    * action sheet) then don't restore focus to
    * previous element
    */
-  if (previousElement !== null) {
+  if (document.activeElement === null || document.activeElement === document.body) {
     previousElement.focus();
   }
 };
