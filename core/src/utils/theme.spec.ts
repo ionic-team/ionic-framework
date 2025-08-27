@@ -6,24 +6,50 @@ import { Chip } from '../components/chip/chip';
 import { generateComponentThemeCSS, generateCSSVars, generateGlobalThemeCSS, getCustomTheme, injectCSS } from './theme';
 
 describe('getCustomTheme', () => {
-  it('should return the custom theme if no mode overrides exist', () => {
-    const customTheme = {
-      radii: {
-        sm: '14px',
-        md: '18px',
-        lg: '22px',
-      },
-      components: {
-        IonChip: {
-          hue: {
-            subtle: {
-              bg: 'red',
-              color: 'white',
-            },
+  const baseCustomTheme = {
+    radii: {
+      sm: '14px',
+      md: '18px',
+      lg: '22px',
+    },
+    components: {
+      IonChip: {
+        hue: {
+          subtle: {
+            bg: 'red',
+            color: 'white',
           },
         },
       },
-    };
+    },
+  };
+
+  const iosOverride = {
+    components: {
+      IonChip: {
+        hue: {
+          subtle: {
+            bg: 'blue',
+          },
+        },
+      },
+    },
+  };
+
+  const mdOverride = {
+    components: {
+      IonChip: {
+        hue: {
+          subtle: {
+            bg: 'green',
+          },
+        },
+      },
+    },
+  };
+
+  it('should return the custom theme if no mode overrides exist', () => {
+    const customTheme = { ...baseCustomTheme };
 
     const result = getCustomTheme(customTheme, 'ios');
 
@@ -32,53 +58,15 @@ describe('getCustomTheme', () => {
 
   it('should combine only with ios overrides if mode is ios', () => {
     const customTheme = {
-      radii: {
-        sm: '14px',
-        md: '18px',
-        lg: '22px',
-      },
-      components: {
-        IonChip: {
-          hue: {
-            subtle: {
-              bg: 'red',
-              color: 'white',
-            },
-          },
-        },
-      },
-      ios: {
-        components: {
-          IonChip: {
-            hue: {
-              subtle: {
-                bg: 'blue',
-              },
-            },
-          },
-        },
-      },
-      md: {
-        components: {
-          IonChip: {
-            hue: {
-              subtle: {
-                bg: 'green',
-              },
-            },
-          },
-        },
-      },
+      ...baseCustomTheme,
+      ios: iosOverride,
+      md: mdOverride,
     };
 
     const result = getCustomTheme(customTheme, 'ios');
 
     const expected = {
-      radii: {
-        sm: '14px',
-        md: '18px',
-        lg: '22px',
-      },
+      ...baseCustomTheme,
       components: {
         IonChip: {
           hue: {
@@ -96,53 +84,15 @@ describe('getCustomTheme', () => {
 
   it('should combine only with md overrides if mode is md', () => {
     const customTheme = {
-      radii: {
-        sm: '14px',
-        md: '18px',
-        lg: '22px',
-      },
-      components: {
-        IonChip: {
-          hue: {
-            subtle: {
-              bg: 'red',
-              color: 'white',
-            },
-          },
-        },
-      },
-      ios: {
-        components: {
-          IonChip: {
-            hue: {
-              subtle: {
-                bg: 'blue',
-              },
-            },
-          },
-        },
-      },
-      md: {
-        components: {
-          IonChip: {
-            hue: {
-              subtle: {
-                bg: 'green',
-              },
-            },
-          },
-        },
-      },
+      ...baseCustomTheme,
+      ios: iosOverride,
+      md: mdOverride,
     };
 
     const result = getCustomTheme(customTheme, 'md');
 
     const expected = {
-      radii: {
-        sm: '14px',
-        md: '18px',
-        lg: '22px',
-      },
+      ...baseCustomTheme,
       components: {
         IonChip: {
           hue: {
