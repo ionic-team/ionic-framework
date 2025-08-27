@@ -115,7 +115,8 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     return '';
   }
 
-  const { palette, ...defaultTokens } = theme;
+  // Exclude components and palette from the default tokens
+  const { palette, components, ...defaultTokens } = theme;
 
   // Generate CSS variables for the default design tokens
   const defaultTokensCSS = generateCSSVars(defaultTokens);
