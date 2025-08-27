@@ -204,6 +204,60 @@ describe('generateGlobalThemeCSS', () => {
     expect(css).toBe(expectedCSS);
   });
 
+  it('should not include component or palette variables in global CSS', () => {
+    const theme = {
+      palette: {
+        light: {},
+        dark: {
+          enabled: 'never',
+        },
+      },
+      borderWidth: {
+        sm: '4px',
+      },
+      spacing: {
+        md: '12px',
+      },
+      components: {
+        IonChip: {
+          hue: {
+            subtle: {
+              bg: 'red',
+            },
+          },
+          shape: {
+            round: {
+              borderRadius: '4px',
+            },
+          },
+        },
+        IonButton: {
+          color: {
+            primary: {
+              bg: 'blue',
+            },
+          },
+        },
+      },
+    };
+
+    const css = generateGlobalThemeCSS(theme);
+
+    // Should include global design tokens
+    expect(css).toContain('--ion-border-width-sm: 4px');
+    expect(css).toContain('--ion-spacing-md: 12px');
+
+    // Should NOT include component variables
+    expect(css).not.toContain('--ion-components-ion-chip-hue-subtle-bg');
+    expect(css).not.toContain('--ion-components-ion-chip-shape-round-border-radius');
+    expect(css).not.toContain('--ion-components-ion-button-color-primary-bg');
+    expect(css).not.toContain('components');
+
+    // Should NOT include palette variables
+    expect(css).not.toContain('--ion-color-palette-dark-enabled-never');
+    expect(css).not.toContain('palette');
+  });
+
   it('should generate global CSS for a given theme with dark palette enabled for system preference', () => {
     const theme = {
       palette: {
