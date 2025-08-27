@@ -12,6 +12,9 @@ echo "\n⚙️ Updating package.json with global path for @ionic/core..."
 CORE_PACKAGE=$(ls ionic-core-*.tgz | head -1)
 sed -i "" "s|\"@ionic/core\": \".*\"|\"@ionic/core\": \"file:$(pwd)/$CORE_PACKAGE\"|" package.json
 
+# Remove package-lock.json
+rm -f package-lock.json
+
 # Install Dependencies
 echo "\n🔧 Installing dependencies..."
 npm install
