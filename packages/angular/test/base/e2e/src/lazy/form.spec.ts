@@ -1,32 +1,33 @@
-describe('Form', () => {
-  beforeEach(() => {
-    cy.visit('/lazy/form');
-  })
+import { test, expect } from '@playwright/test';
 
-  describe('status updates', () => {
-    it('should update Ionic form classes when calling form methods programmatically', async () => {
-      cy.get('#input-touched').click();
-      cy.get('#touched-input-test').should('have.class', 'ion-touched');
-      cy.get('#input-otp-touched').click();
-      cy.get('#touched-input-otp-number-test').should('have.class', 'ion-touched');
-    });
-
-    describe('markAllAsTouched', () => {
-      it('should apply .ion-touched to nearest ion-item', () => {
-        cy.get('#mark-all-touched-button').click();
-        cy.get('form ion-item').each(item => {
-          cy.wrap(item).should('have.class', 'ion-touched');
-        });
-      });
-    });
-
+test.describe('Form', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/lazy/form');
   });
 
-  describe('change', () => {
-    it('should have default values', () => {
-      testStatus('INVALID');
-      cy.get('#submit').should('have.text', 'false');
-      testData({
+  test.describe('status updates', () => {
+    test('should update Ionic form classes when calling form methods programmatically', async ({ page }) => {
+      await page.locator('#input-touched').click();
+      await expect(page.locator('#touched-input-test')).toHaveClass(/ion-touched/);
+      await page.locator('#input-otp-touched').click();
+      await expect(page.locator('#touched-input-otp-number-test')).toHaveClass(/ion-touched/);
+    });
+
+    test('markAllAsTouched should apply .ion-touched to nearest ion-item', async ({ page }) => {
+      await page.locator('#mark-all-touched-button').click();
+      const items = page.locator('form ion-item');
+      const count = await items.count();
+      for (let i = 0; i < count; i++) {
+        await expect(items.nth(i)).toHaveClass(/ion-touched/);
+      }
+    });
+  });
+
+  test.describe('change', () => {
+    test('should have default values', async ({ page }) => {
+      await testStatus(page, 'INVALID');
+      await expect(page.locator('#submit')).toHaveText('false');
+      await testData(page, {
         datetime: '2010-08-20',
         select: null,
         toggle: false,
@@ -42,31 +43,38 @@ describe('Form', () => {
       });
     });
 
-    it('should become valid', () => {
-      cy.get('ion-input.required').type('Some value');
-      cy.get('ion-input.required input').blur();
+    test('should become valid', async ({ page }) => {
+      await page.locator('ion-input.required input').fill('Some value');
+      await page.locator('ion-input.required input').blur();
 
       // Test number OTP input
-      cy.get('#touched-input-otp-number-test input').first().type('5678');
-      cy.get('#touched-input-otp-number-test input').last().focus().blur();
-
+      await page.locator('#touched-input-otp-number-test input').nth(0).fill('5');
+      await page.locator('#touched-input-otp-number-test input').nth(1).fill('6');
+      await page.locator('#touched-input-otp-number-test input').nth(2).fill('7');
+      await page.locator('#touched-input-otp-number-test input').nth(3).fill('8');
+      await page.locator('#touched-input-otp-number-test input').last().focus();
+      await page.locator('#touched-input-otp-number-test input').last().blur();
 
       // Test text OTP input
-      cy.get('#touched-input-otp-text-test input').first().type('ABCD');
-      cy.get('#touched-input-otp-text-test input').last().focus().blur();
+      await page.locator('#touched-input-otp-text-test input').nth(0).fill('A');
+      await page.locator('#touched-input-otp-text-test input').nth(1).fill('B');
+      await page.locator('#touched-input-otp-text-test input').nth(2).fill('C');
+      await page.locator('#touched-input-otp-text-test input').nth(3).fill('D');
+      await page.locator('#touched-input-otp-text-test input').last().focus();
+      await page.locator('#touched-input-otp-text-test input').last().blur();
 
-      testStatus('INVALID');
+      await testStatus(page, 'INVALID');
 
-      cy.get('ion-select').click();
-      cy.get('ion-alert').should('exist').should('be.visible');
+      await page.locator('ion-select').click();
+      await expect(page.locator('ion-alert')).toBeVisible();
       // NES option
-      cy.get('ion-alert .alert-radio-button:nth-of-type(2)').click();
+      await page.locator('ion-alert .alert-radio-button').nth(1).click();
       // Click confirm button
-      cy.get('ion-alert .alert-button:not(.alert-button-role-cancel)').click();
+      await page.locator('ion-alert .alert-button:not(.alert-button-role-cancel)').click();
 
-      testStatus('VALID');
+      await testStatus(page, 'VALID');
 
-      testData({
+      await testData(page, {
         datetime: '2010-08-20',
         select: 'nes',
         toggle: false,
@@ -82,9 +90,9 @@ describe('Form', () => {
       });
     });
 
-    it('ion-toggle should change', () => {
-      cy.get('form ion-toggle').click();
-      testData({
+    test('ion-toggle should change', async ({ page }) => {
+      await page.locator('form ion-toggle').click();
+      await testData(page, {
         datetime: '2010-08-20',
         select: null,
         toggle: true,
@@ -100,9 +108,9 @@ describe('Form', () => {
       });
     });
 
-    it('ion-checkbox should change', () => {
-      cy.get('ion-checkbox').click();
-      testData({
+    test('ion-checkbox should change', async ({ page }) => {
+      await page.locator('ion-checkbox').click();
+      await testData(page, {
         datetime: '2010-08-20',
         select: null,
         toggle: false,
@@ -118,9 +126,9 @@ describe('Form', () => {
       });
     });
 
-    it('ion-radio should change', () => {
-      cy.get('ion-radio').click();
-      testData({
+    test('ion-radio should change', async ({ page }) => {
+      await page.locator('ion-radio').click();
+      await testData(page, {
         datetime: '2010-08-20',
         select: null,
         toggle: false,
@@ -136,16 +144,24 @@ describe('Form', () => {
       });
     });
 
-    it('ion-input-otp should change', () => {
+    test('ion-input-otp should change', async ({ page }) => {
       // Test number OTP input
-      cy.get('#touched-input-otp-number-test input').first().type('5678');
-      cy.get('#touched-input-otp-number-test input').last().focus().blur();
+      await page.locator('#touched-input-otp-number-test input').nth(0).fill('5');
+      await page.locator('#touched-input-otp-number-test input').nth(1).fill('6');
+      await page.locator('#touched-input-otp-number-test input').nth(2).fill('7');
+      await page.locator('#touched-input-otp-number-test input').nth(3).fill('8');
+      await page.locator('#touched-input-otp-number-test input').last().focus();
+      await page.locator('#touched-input-otp-number-test input').last().blur();
 
       // Test text OTP input
-      cy.get('#touched-input-otp-text-test input').first().type('ABCD');
-      cy.get('#touched-input-otp-text-test input').last().focus().blur();
+      await page.locator('#touched-input-otp-text-test input').nth(0).fill('A');
+      await page.locator('#touched-input-otp-text-test input').nth(1).fill('B');
+      await page.locator('#touched-input-otp-text-test input').nth(2).fill('C');
+      await page.locator('#touched-input-otp-text-test input').nth(3).fill('D');
+      await page.locator('#touched-input-otp-text-test input').last().focus();
+      await page.locator('#touched-input-otp-text-test input').last().blur();
 
-      testData({
+      await testData(page, {
         datetime: '2010-08-20',
         select: null,
         toggle: false,
@@ -161,49 +177,58 @@ describe('Form', () => {
       });
     });
 
-    it('should submit', () => {
-      cy.get('#set-values').click();
-      cy.get('#submit-button').click();
-      cy.get('#submit').should('have.text', 'true');
+    test('should submit', async ({ page }) => {
+      await page.locator('#set-values').click();
+      await page.locator('#submit-button').click();
+      await expect(page.locator('#submit')).toHaveText('true');
     });
 
-    it('ion-input-otp should validate both number and text types', () => {
+    test('ion-input-otp should validate both number and text types', async ({ page }) => {
       // Test number OTP validation
-      cy.get('#touched-input-otp-number-test').should('have.class', 'ng-invalid');
-      cy.get('#touched-input-otp-number-test input').first().type('5678');
-      cy.get('#touched-input-otp-number-test input').last().focus().blur();
-      cy.get('#touched-input-otp-number-test').should('have.class', 'ng-valid');
+      await expect(page.locator('#touched-input-otp-number-test')).toHaveClass(/ng-invalid/);
+      await page.locator('#touched-input-otp-number-test input').nth(0).fill('5');
+      await page.locator('#touched-input-otp-number-test input').nth(1).fill('6');
+      await page.locator('#touched-input-otp-number-test input').nth(2).fill('7');
+      await page.locator('#touched-input-otp-number-test input').nth(3).fill('8');
+      await page.locator('#touched-input-otp-number-test input').last().focus();
+      await page.locator('#touched-input-otp-number-test input').last().blur();
+      await expect(page.locator('#touched-input-otp-number-test')).toHaveClass(/ng-valid/);
 
       // Test text OTP validation
-      cy.get('#touched-input-otp-text-test').should('have.class', 'ng-invalid');
-      cy.get('#touched-input-otp-text-test input').first().type('ABCD');
-      cy.get('#touched-input-otp-text-test input').last().focus().blur();
-      cy.get('#touched-input-otp-text-test').should('have.class', 'ng-valid');
+      await expect(page.locator('#touched-input-otp-text-test')).toHaveClass(/ng-invalid/);
+      await page.locator('#touched-input-otp-text-test input').nth(0).fill('A');
+      await page.locator('#touched-input-otp-text-test input').nth(1).fill('B');
+      await page.locator('#touched-input-otp-text-test input').nth(2).fill('C');
+      await page.locator('#touched-input-otp-text-test input').nth(3).fill('D');
+      await page.locator('#touched-input-otp-text-test input').last().focus();
+      await page.locator('#touched-input-otp-text-test input').last().blur();
+      await expect(page.locator('#touched-input-otp-text-test')).toHaveClass(/ng-valid/);
     });
 
-    // Add test for partial OTP input validation
-    it('ion-input-otp should remain invalid when partially filled', () => {
+    test('ion-input-otp should remain invalid when partially filled', async ({ page }) => {
       // Test number OTP with only first digit
-      cy.get('#touched-input-otp-number-test').should('have.class', 'ng-invalid');
-      cy.get('#touched-input-otp-number-test input').first().type('5');
-      cy.get('#touched-input-otp-number-test input').eq(1).focus().blur();
-      cy.get('#touched-input-otp-number-test').should('have.class', 'ng-invalid');
+      await expect(page.locator('#touched-input-otp-number-test')).toHaveClass(/ng-invalid/);
+      await page.locator('#touched-input-otp-number-test input').nth(0).fill('5');
+      await page.locator('#touched-input-otp-number-test input').nth(1).focus();
+      await page.locator('#touched-input-otp-number-test input').nth(1).blur();
+      await expect(page.locator('#touched-input-otp-number-test')).toHaveClass(/ng-invalid/);
 
       // Test text OTP with only first character
-      cy.get('#touched-input-otp-text-test').should('have.class', 'ng-invalid');
-      cy.get('#touched-input-otp-text-test input').first().type('A');
-      cy.get('#touched-input-otp-text-test input').eq(1).focus().blur();
-      cy.get('#touched-input-otp-text-test').should('have.class', 'ng-invalid');
+      await expect(page.locator('#touched-input-otp-text-test')).toHaveClass(/ng-invalid/);
+      await page.locator('#touched-input-otp-text-test input').nth(0).fill('A');
+      await page.locator('#touched-input-otp-text-test input').nth(1).focus();
+      await page.locator('#touched-input-otp-text-test input').nth(1).blur();
+      await expect(page.locator('#touched-input-otp-text-test')).toHaveClass(/ng-invalid/);
 
       // Verify form status is still invalid
-      testStatus('INVALID');
+      await testStatus(page, 'INVALID');
     });
   });
 
-  describe('blur', () => {
-    it('ion-toggle should change only after blur', () => {
-      cy.get('form ion-toggle').click();
-      testData({
+  test.describe('blur', () => {
+    test('ion-toggle should change only after blur', async ({ page }) => {
+      await page.locator('form ion-toggle').click();
+      await testData(page, {
         datetime: '2010-08-20',
         select: null,
         toggle: true,
@@ -217,8 +242,8 @@ describe('Form', () => {
         checkbox: false,
         radio: null
       });
-      cy.get('ion-checkbox').click();
-      testData({
+      await page.locator('ion-checkbox').click();
+      await testData(page, {
         datetime: '2010-08-20',
         select: null,
         toggle: true,
@@ -235,42 +260,38 @@ describe('Form', () => {
     });
   });
 
-  describe('validators', () => {
+  test.describe('validators', () => {
+    test('ion-input should error with min set', async ({ page }) => {
+      const control = page.locator('form ion-input[formControlName="inputMin"]');
 
-    it('ion-input should error with min set', () => {
-      const control = cy.get('form ion-input[formControlName="inputMin"]');
+      await expect(control).toHaveClass(/ng-valid/);
 
-      control.should('have.class', 'ng-valid');
+      await control.locator('input').fill('0');
+      await control.locator('input').blur();
 
-      control.type('{backspace}0');
-
-      control.within(() => cy.get('input').blur());
-
-      control.should('have.class', 'ng-invalid');
+      await expect(control).toHaveClass(/ng-invalid/);
     });
 
-    it('ion-input should error with max set', () => {
-      const control = cy.get('form ion-input[formControlName="inputMax"]');
+    test('ion-input should error with max set', async ({ page }) => {
+      const control = page.locator('form ion-input[formControlName="inputMax"]');
 
-      control.should('have.class', 'ng-valid');
+      await expect(control).toHaveClass(/ng-valid/);
 
-      control.type('2');
-      control.within(() => cy.get('input').blur());
+      await control.locator('input').fill('2');
+      await control.locator('input').blur();
 
-      control.should('have.class', 'ng-invalid');
+      await expect(control).toHaveClass(/ng-invalid/);
     });
-
   });
+
+  // Helper functions
+  async function testStatus(page: any, status: string) {
+    await expect(page.locator('#status')).toHaveText(status);
+  }
+
+  async function testData(page: any, data: any) {
+    const text = await page.locator('#data').textContent();
+    const value = JSON.parse(text!);
+    expect(value).toEqual(data);
+  }
 });
-
-function testStatus(status) {
-  cy.get('#status').should('have.text', status);
-}
-
-function testData(data) {
-  cy.get('#data').invoke('text').then(text => {
-    const value = JSON.parse(text);
-    console.log(value, data);
-    expect(value).to.deep.equal(data);
-  })
-}

@@ -1,19 +1,21 @@
-describe('Accordion', () => {
-  beforeEach(() => {
-    cy.visit('/lazy/accordions');
+import { test, expect } from '@playwright/test';
+
+test.describe('Accordion', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/lazy/accordions');
   });
 
-  it('should correctly expand on multiple modal opens', () => {
-    cy.get('#open-modal').click();
+  test('should correctly expand on multiple modal opens', async ({ page }) => {
+    await page.locator('#open-modal').click();
 
-    cy.get('ion-accordion:first-of-type').should('have.class', 'accordion-expanded');
-    cy.get('ion-accordion:last-of-type').should('not.have.class', 'accordion-expanded');
+    await expect(page.locator('ion-accordion:first-of-type')).toHaveClass(/accordion-expanded/);
+    await expect(page.locator('ion-accordion:last-of-type')).not.toHaveClass(/accordion-expanded/);
 
-    cy.get('#dismiss').click();
+    await page.locator('#dismiss').click();
 
-    cy.get('#open-modal').click();
+    await page.locator('#open-modal').click();
 
-    cy.get('ion-accordion:first-of-type').should('have.class', 'accordion-expanded');
-    cy.get('ion-accordion:last-of-type').should('not.have.class', 'accordion-expanded');
+    await expect(page.locator('ion-accordion:first-of-type')).toHaveClass(/accordion-expanded/);
+    await expect(page.locator('ion-accordion:last-of-type')).not.toHaveClass(/accordion-expanded/);
   });
 });

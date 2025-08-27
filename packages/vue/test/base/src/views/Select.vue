@@ -2,6 +2,9 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/"></ion-back-button>
+        </ion-buttons>
         <ion-title>Select</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -25,6 +28,8 @@
 <script lang="ts">
 import {
   IonPage,
+  IonBackButton,
+  IonButtons,
   IonHeader,
   IonToolbar,
   IonTitle,
@@ -38,6 +43,8 @@ import { defineComponent } from "vue";
 export default defineComponent({
   components: {
     IonPage,
+    IonBackButton,
+    IonButtons,
     IonHeader,
     IonToolbar,
     IonTitle,

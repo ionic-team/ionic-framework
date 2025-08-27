@@ -2,7 +2,7 @@ describe('Routing', () => {
   it('should go to sibling page', () => {
     cy.visit('/');
     cy.ionPageVisible('home');
-    cy.get('ion-item#routing').click();
+    cy.get('ion-item#routing').click({ force: true });
 
     cy.ionPageVisible('routing');
     cy.ionPageHidden('home');
@@ -18,7 +18,7 @@ describe('Routing', () => {
   it('should go back home', () => {
     cy.visit('/');
     cy.ionPageVisible('home');
-    cy.get('ion-item#routing').click();
+    cy.get('ion-item#routing').click({ force: true });
 
     cy.ionBackClick('routing');
 
@@ -40,7 +40,7 @@ describe('Routing', () => {
     cy.visit('/');
     cy.ionPageVisible('home');
 
-    cy.get('#routing').click();
+    cy.get('#routing').click({ force: true });
     cy.get('#child').click();
 
     cy.ionBackClick('routingchild');
@@ -539,7 +539,7 @@ describe('Routing - Swipe to Go Back', () => {
     cy.viewport(320, 568);
     cy.visit('?ionic:mode=ios');
     cy.ionPageVisible('home');
-    cy.get('#routing').click();
+    cy.get('#routing').click({ force: true });
     cy.ionPageHidden('home');
     cy.ionPageVisible('routing')
   });
