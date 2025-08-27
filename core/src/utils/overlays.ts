@@ -639,7 +639,7 @@ const restoreElementFocus = async (overlayEl: any) => {
    * action sheet) then don't restore focus to
    * previous element
    */
-  if (document.activeElement === null || document.activeElement === document.body) {
+  if (previousElement) {
     previousElement.focus();
   }
 };
