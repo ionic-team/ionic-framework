@@ -12,7 +12,6 @@
   --padding-bottom: #{globals.$ion-space-100};
   --padding-start: #{globals.$ion-space-400};
 
-
   @include globals.typography(globals.$ion-body-action-xs);
 
   position: relative;
