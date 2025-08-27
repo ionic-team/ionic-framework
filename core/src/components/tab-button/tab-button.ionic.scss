@@ -7,6 +7,11 @@
 :host {
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-radius-025};
+  --padding-top: #{globals.$ion-space-100};
+  --padding-end: #{globals.$ion-space-400};
+  --padding-bottom: #{globals.$ion-space-100};
+  --padding-start: #{globals.$ion-space-400};
+
 
   @include globals.typography(globals.$ion-body-action-xs);
 
@@ -48,6 +53,7 @@
 
 .button-native {
   min-width: globals.$ion-scale-1200;
+  min-height: globals.$ion-scale-1200;
 
   overflow: visible;
 
@@ -106,10 +112,6 @@
 
 :host ::slotted(ion-badge.badge-vertical-top) {
   @include globals.position(-2px);
-}
-
-:host ::slotted(ion-badge.badge-vertical-top:empty) {
-  @include globals.position(calc(globals.$ion-scale-100 * -1));
 }
 
 :host ::slotted(ion-badge.badge-vertical-bottom) {

@@ -366,6 +366,38 @@
           </div>
         </ion-list>
 
+        <ion-list id="tab-button-icon-bottom">
+          <ion-list-header>
+            <ion-label> Inside Tab Button - Only Icon </ion-label>
+          </ion-list-header>
+
+          <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
+            <ion-tab-bar>
+              <ion-tab-button href="" tab="tab-one" layout="label-hide">
+                <ion-icon name="home"></ion-icon>
+                <ion-badge size="small" vertical="top" color="danger"></ion-badge>
+              </ion-tab-button>
+
+              <ion-tab-button tab="schedule" class="e2eTabTwoButton" layout="label-hide">
+                <ion-icon name="globe"></ion-icon>
+                <ion-badge size="small" vertical="top" color="primary">
+                  <ion-icon name="star"></ion-icon>
+                </ion-badge>
+              </ion-tab-button>
+
+              <ion-tab-button tab="tab-three" layout="label-hide">
+                <ion-icon name="logo-facebook"></ion-icon>
+                <ion-badge size="small" vertical="top" color="warning">999</ion-badge>
+              </ion-tab-button>
+
+              <ion-tab-button tab="tab-four" class="e2eTabFourButton" layout="label-hide">
+                <ion-icon name="chatbox"></ion-icon>
+                <ion-badge vertical="top" color="success" size="small"></ion-badge>
+              </ion-tab-button>
+            </ion-tab-bar>
+          </div>
+        </ion-list>
+
         <ion-list id="button-top">
           <ion-list-header>
             <ion-label> Inside Button - Top Placement </ion-label>
