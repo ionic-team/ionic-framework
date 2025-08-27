@@ -908,7 +908,7 @@ export class Nav implements NavOutlet {
         }
       : undefined;
     const theme = getIonTheme(this);
-    const mode = getIonMode(this, theme);
+    const mode = getIonMode(this);
     const enteringEl = enteringView.element!;
     // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     const leavingEl = leavingView && leavingView.element!;
