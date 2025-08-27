@@ -4,9 +4,7 @@ import { matchBreakpoint } from '@utils/media';
 
 import { getIonTheme } from '../../global/ionic-global';
 
-const win = typeof (window as any) !== 'undefined' ? (window as any) : undefined;
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-const SUPPORTS_VARS = win && !!(win.CSS && win.CSS.supports && win.CSS.supports('--a: 0'));
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
 /**
@@ -154,61 +152,40 @@ export class Col implements ComponentInterface {
     return matched;
   }
 
-  private getSizeClass(): string | undefined {
-    const colSize = this.getColumns('size');
+  private getStyleClass(property: string, className: string, acceptsAuto = false): string | undefined {
+    const colPropertyValue = this.getColumns(property);
 
     // If size wasn't set for any breakpoint
     // or if the user set the size without a value
     // it means we need to stick with the default and return
     // e.g. <ion-col size-md>
-    if (!colSize || colSize === '') {
+    if (!colPropertyValue || colPropertyValue === '') {
       return;
     }
 
-    if (colSize === 'auto') {
-      return 'ion-grid-auto';
+    if (acceptsAuto && colPropertyValue === 'auto') {
+      return 'ion-grid-col-auto';
     }
 
-    const colNum = parseInt(colSize);
+    const valueNumber = parseInt(colPropertyValue);
 
-    if(isNaN(colNum)) {
+    if (isNaN(valueNumber)) {
       return;
     }
 
-    return `ion-grid-col-${colSize}`;
+    return `${className}-col-${valueNumber}`;
+  }
+
+  private getSizeClass(): string | undefined {
+    return this.getStyleClass('size', 'ion-grid', true);
   }
 
   private getOrderClass(): string | undefined {
-    const colOrder = this.getColumns('order');
-
-    if (!colOrder || colOrder === '') {
-      return;
-    }
-
-    const colNum = parseInt(colOrder);
-
-    if (isNaN(colNum)) {
-      return;
-    }
-
-    return `ion-grid-order-${colOrder}`;
+    return this.getStyleClass('order', 'ion-grid-order');
   }
 
-
   private getOffsetClass(): string | undefined {
-    const colOffset = this.getColumns('offset');
-
-    if (!colOffset || colOffset === '') {
-      return;
-    }
-
-    const colNum = parseInt(colOffset);
-
-    if (isNaN(colNum)) {
-      return;
-    }
-
-    return `ion-grid-offset-col-${colOffset}`;
+    return this.getStyleClass('offset', 'ion-grid-offset');
   }
 
   render() {

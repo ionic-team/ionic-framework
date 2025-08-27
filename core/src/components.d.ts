@@ -928,53 +928,29 @@ export namespace Components {
          */
         "offsetXs"?: string;
         /**
-          * The amount to pull the column, in terms of how many columns it should shift to the start of the total available.
+          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
          */
-        "pull"?: string;
+        "order"?: string;
         /**
-          * The amount to pull the column for lg screens, in terms of how many columns it should shift to the start of the total available.
+          * The order of the column for lg screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
          */
-        "pullLg"?: string;
+        "orderLg"?: string;
         /**
-          * The amount to pull the column for md screens, in terms of how many columns it should shift to the start of the total available.
+          * The order of the column for md screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
          */
-        "pullMd"?: string;
+        "orderMd"?: string;
         /**
-          * The amount to pull the column for sm screens, in terms of how many columns it should shift to the start of the total available.
+          * The order of the column for sm screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
          */
-        "pullSm"?: string;
+        "orderSm"?: string;
         /**
-          * The amount to pull the column for xl screens, in terms of how many columns it should shift to the start of the total available.
+          * The order of the column for xl screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
          */
-        "pullXl"?: string;
+        "orderXl"?: string;
         /**
-          * The amount to pull the column for xs screens, in terms of how many columns it should shift to the start of the total available.
+          * The order of the column for xs screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
          */
-        "pullXs"?: string;
-        /**
-          * The amount to push the column, in terms of how many columns it should shift to the end of the total available.
-         */
-        "push"?: string;
-        /**
-          * The amount to push the column for lg screens, in terms of how many columns it should shift to the end of the total available.
-         */
-        "pushLg"?: string;
-        /**
-          * The amount to push the column for md screens, in terms of how many columns it should shift to the end of the total available.
-         */
-        "pushMd"?: string;
-        /**
-          * The amount to push the column for sm screens, in terms of how many columns it should shift to the end of the total available.
-         */
-        "pushSm"?: string;
-        /**
-          * The amount to push the column for xl screens, in terms of how many columns it should shift to the end of the total available.
-         */
-        "pushXl"?: string;
-        /**
-          * The amount to push the column for xs screens, in terms of how many columns it should shift to the end of the total available.
-         */
-        "pushXs"?: string;
+        "orderXs"?: string;
         /**
           * The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
          */
@@ -6862,53 +6838,29 @@ declare namespace LocalJSX {
          */
         "offsetXs"?: string;
         /**
-          * The amount to pull the column, in terms of how many columns it should shift to the start of the total available.
+          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
          */
-        "pull"?: string;
+        "order"?: string;
         /**
-          * The amount to pull the column for lg screens, in terms of how many columns it should shift to the start of the total available.
+          * The order of the column for lg screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
          */
-        "pullLg"?: string;
+        "orderLg"?: string;
         /**
-          * The amount to pull the column for md screens, in terms of how many columns it should shift to the start of the total available.
+          * The order of the column for md screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
          */
-        "pullMd"?: string;
+        "orderMd"?: string;
         /**
-          * The amount to pull the column for sm screens, in terms of how many columns it should shift to the start of the total available.
+          * The order of the column for sm screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
          */
-        "pullSm"?: string;
+        "orderSm"?: string;
         /**
-          * The amount to pull the column for xl screens, in terms of how many columns it should shift to the start of the total available.
+          * The order of the column for xl screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
          */
-        "pullXl"?: string;
+        "orderXl"?: string;
         /**
-          * The amount to pull the column for xs screens, in terms of how many columns it should shift to the start of the total available.
+          * The order of the column for xs screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
          */
-        "pullXs"?: string;
-        /**
-          * The amount to push the column, in terms of how many columns it should shift to the end of the total available.
-         */
-        "push"?: string;
-        /**
-          * The amount to push the column for lg screens, in terms of how many columns it should shift to the end of the total available.
-         */
-        "pushLg"?: string;
-        /**
-          * The amount to push the column for md screens, in terms of how many columns it should shift to the end of the total available.
-         */
-        "pushMd"?: string;
-        /**
-          * The amount to push the column for sm screens, in terms of how many columns it should shift to the end of the total available.
-         */
-        "pushSm"?: string;
-        /**
-          * The amount to push the column for xl screens, in terms of how many columns it should shift to the end of the total available.
-         */
-        "pushXl"?: string;
-        /**
-          * The amount to push the column for xs screens, in terms of how many columns it should shift to the end of the total available.
-         */
-        "pushXs"?: string;
+        "orderXs"?: string;
         /**
           * The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
          */
