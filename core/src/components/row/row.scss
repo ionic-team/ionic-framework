@@ -2,11 +2,9 @@
 
 // Row
 // --------------------------------------------------
-:root {
-  --ion-col-gap: 0px;
-}
-
 :host {
+  --ion-col-gap: 0px;
+
   display: flex;
 
   flex-wrap: wrap;
