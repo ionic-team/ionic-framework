@@ -533,7 +533,7 @@ export class Nav implements NavOutlet {
    */
   private async queueTrns(ti: TransitionInstruction, done: TransitionDoneFn | undefined): Promise<boolean> {
     this.blurActiveElement();
-    
+
     if (this.isTransitioning && ti.opts?.skipIfBusy) {
       return false;
     }
