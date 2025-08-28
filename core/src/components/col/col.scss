@@ -26,6 +26,8 @@
   width: 100%;
   max-width: 100%;
   min-height: 1px; // Prevent columns from collapsing when empty
+
+  --col-unit-size: calc((100% - (var(--ion-grid-columns, 12) - 1) * var(--ion-grid-gap)) / var(--ion-grid-columns, 12));
 }
 
 :host(.ion-grid-col-auto){
