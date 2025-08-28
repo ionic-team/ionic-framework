@@ -146,6 +146,19 @@ export class Nav implements NavOutlet {
     this.destroyed = false;
   }
 
+  /**
+   * Blur the active element before any transition between pages
+   * to prevent a11y issues since active element could be kept inside
+   * an element that will be set with aria-hidden="true" and/or inert
+   * which makes the element non-interactive.
+   */
+  blurActiveElement() {
+    const activeElement = document.activeElement as HTMLElement | null;
+    if (activeElement) {
+      activeElement.blur();
+    }
+  }
+
   disconnectedCallback() {
     for (const view of this.views) {
       lifecycle(view.element!, LIFECYCLE_WILL_UNLOAD);
@@ -179,6 +192,7 @@ export class Nav implements NavOutlet {
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {
+    this.blurActiveElement();
     return this.insert(-1, component, componentProps, opts, done);
   }
 
@@ -200,6 +214,7 @@ export class Nav implements NavOutlet {
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {
+    this.blurActiveElement();
     return this.insertPages(insertIndex, [{ component, componentProps }], opts, done);
   }
 
@@ -239,6 +254,7 @@ export class Nav implements NavOutlet {
    */
   @Method()
   pop(opts?: NavOptions | null, done?: TransitionDoneFn): Promise<boolean> {
+    this.blurActiveElement();
     return this.removeIndex(-1, 1, opts, done);
   }
 
@@ -273,6 +289,7 @@ export class Nav implements NavOutlet {
    */
   @Method()
   popToRoot(opts?: NavOptions | null, done?: TransitionDoneFn): Promise<boolean> {
+    this.blurActiveElement();
     return this.removeIndex(1, -1, opts, done);
   }
 
@@ -316,6 +333,7 @@ export class Nav implements NavOutlet {
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {
+    this.blurActiveElement();
     return this.setPages([{ component, componentProps }], opts, done);
   }
 
@@ -514,6 +532,8 @@ export class Nav implements NavOutlet {
    * @returns Whether the transition succeeds.
    */
   private async queueTrns(ti: TransitionInstruction, done: TransitionDoneFn | undefined): Promise<boolean> {
+    this.blurActiveElement();
+    
     if (this.isTransitioning && ti.opts?.skipIfBusy) {
       return false;
     }
