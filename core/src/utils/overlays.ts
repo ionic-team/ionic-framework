@@ -486,7 +486,7 @@ export const getPresentedOverlay = (
  */
 export const setRootAriaHidden = (hidden = false) => {
   const root = getAppRoot(document);
-  const viewContainer = root.querySelector('ion-router-outlet, ion-nav, #ion-view-container-root');
+  const viewContainer = root.querySelector('ion-router-outlet, #ion-view-container-root');
 
   if (!viewContainer) {
     return;
