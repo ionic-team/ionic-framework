@@ -118,11 +118,11 @@
   @include globals.position(globals.$ion-scale-050, null, null, calc(50% + globals.$ion-scale-250));
 }
 
-:host ::slotted(ion-badge.badge-vertical-bottom) {
+:host(.tab-layout-icon-top) ::slotted(ion-badge.badge-vertical-bottom) {
   @include globals.position(calc(50% - (globals.$ion-scale-050)));
 }
 
-:host ::slotted(ion-badge.badge-vertical-bottom:empty) {
+:host(.tab-layout-icon-top) ::slotted(ion-badge.badge-vertical-bottom:empty) {
   @include globals.position(50%, null, null, calc(50% + globals.$ion-scale-250));
 }
 
@@ -143,10 +143,12 @@
   @include globals.position(50%);
 }
 
-:host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom) {
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom),
+:host(.tab-layout-label-hide) ::slotted(ion-badge.badge-vertical-bottom) {
   @include globals.position(calc(100% - globals.$ion-scale-100));
 }
 
-:host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom:empty) {
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom:empty),
+:host(.tab-layout-label-hide) ::slotted(ion-badge.badge-vertical-bottom:empty) {
   @include globals.position(calc(100% - globals.$ion-scale-050), null, null, calc(50% + globals.$ion-scale-250));
 }
