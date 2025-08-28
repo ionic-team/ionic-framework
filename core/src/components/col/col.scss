@@ -5,6 +5,11 @@
 
 :host {
   /**
+   * @prop --col-unit-size: The size of each Column unit.
+   */
+  --col-unit-size: calc((100% - (var(--ion-grid-columns, 12) - 1) * var(--ion-grid-gap)) / var(--ion-grid-columns, 12));
+  
+  /**
    * @prop --ion-grid-columns: The number of total Columns in the Grid
    * @prop --ion-grid-column-padding: Padding for the Column
    * @prop --ion-grid-column-padding-xs: Padding for the Column on xs screens and up
@@ -26,8 +31,6 @@
   width: 100%;
   max-width: 100%;
   min-height: 1px; // Prevent columns from collapsing when empty
-
-  --col-unit-size: calc((100% - (var(--ion-grid-columns, 12) - 1) * var(--ion-grid-gap)) / var(--ion-grid-columns, 12));
 }
 
 :host(.ion-grid-col-auto){
@@ -46,14 +49,8 @@
   [class^="ion-grid-offset-col-"],
   [class*=" ion-grid-offset-col-"]) {
     --margin-calc: calc(var(--col-unit-size) * var(--ion-grid-col-margin) + (var(--ion-grid-gap) * var(--ion-grid-col-margin)));
-    margin-left: var(--margin-calc);
-}
-
-.rtl :host(
-  [class^="ion-grid-offset-col-"],
-  [class*=" ion-grid-offset-col-"]) {
-    margin-left: 0;
-    margin-right: var(--margin-calc);
+    
+    @include margin-horizontal(var(--margin-calc), 0);
 }
 
 $max: 12;
