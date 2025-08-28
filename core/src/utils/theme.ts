@@ -205,8 +205,8 @@ export const applyComponentTheme = (element: HTMLElement): void => {
   // Convert 'ION-CHIP' to 'ion-chip' and split into parts
   const parts = element.tagName.toLowerCase().split('-');
 
-  // Remove 'ion-' prefix to get 'chip'
-  const componentName = parts.slice(1).join('-');
+  // Get the component name 'chip' from the second part
+  const componentName = parts[1];
 
   // Convert to 'IonChip' by capitalizing each part
   const themeLookupName = parts.map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join('');
