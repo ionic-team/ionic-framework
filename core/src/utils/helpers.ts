@@ -3,7 +3,9 @@ import { focusElements } from '@utils/focus-visible';
 import { printIonError } from '@utils/logging';
 
 import type { Side } from '../components/menu/menu-interface';
+import type { RouterDirection } from '../components/router/utils/interface';
 import { config } from '../global/config';
+import type { AnimationBuilder } from '../interface';
 
 // TODO(FW-2832): types
 
@@ -433,4 +435,43 @@ export const shallowEqualStringMap = (
  */
 export const isSafeNumber = (input: unknown): input is number => {
   return typeof input === 'number' && !isNaN(input) && isFinite(input);
+};
+
+const SCHEME = /^[a-z][a-z0-9+\-.]*:/;
+
+export const openURL = async (
+  url: string | undefined | null,
+  ev: Event | undefined | null,
+  direction: RouterDirection,
+  animation?: AnimationBuilder
+): Promise<boolean> => {
+  if (url != null && url[0] !== '#' && !SCHEME.test(url)) {
+    const router = document.querySelector('ion-router');
+    if (router) {
+      if (ev != null) {
+        ev.preventDefault();
+      }
+      return router.push(url, direction, animation);
+    }
+  }
+  return false;
+};
+
+/**
+ * Deep merges two objects, with source properties overriding target properties
+ * @param target The target object to merge into
+ * @param source The source object to merge from
+ * @returns The merged object
+ */
+export const deepMerge = (target: any, source: any): any => {
+  const result = { ...target };
+
+  for (const key in source) {
+    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+      result[key] = deepMerge(result[key] ?? {}, source[key]);
+    } else {
+      result[key] = source[key];
+    }
+  }
+  return result;
 };
