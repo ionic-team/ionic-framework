@@ -14,35 +14,9 @@ jest.mock('@stencil/core', () => {
  * The implementation needs to be mocked before the implementation is imported.
  */
 // eslint-disable-next-line import/first
-import { getIonTheme, isModeValidForTheme, getIonMode } from '../ionic-global';
+import { getIonTheme, getIonMode } from '../ionic-global';
 
 describe('Ionic Global', () => {
-  describe('isModeValidForTheme', () => {
-    it('should return true for md mode with md theme', () => {
-      expect(isModeValidForTheme('md', 'md')).toBe(true);
-    });
-
-    it('should return true for md mode with ionic theme', () => {
-      expect(isModeValidForTheme('md', 'ionic')).toBe(true);
-    });
-
-    it('should return true for ios mode with ios theme', () => {
-      expect(isModeValidForTheme('ios', 'ios')).toBe(true);
-    });
-
-    it('should return true for ios mode with ionic theme', () => {
-      expect(isModeValidForTheme('ios', 'ionic')).toBe(true);
-    });
-
-    it('should return false for md mode with ios theme', () => {
-      expect(isModeValidForTheme('md', 'ios')).toBe(false);
-    });
-
-    it('should return false for ios mode with md theme', () => {
-      expect(isModeValidForTheme('ios', 'md')).toBe(false);
-    });
-  });
-
   describe('getIonMode', () => {
     const parentRef = { mode: 'md' };
     const ref = { parentElement: parentRef };
@@ -73,7 +47,7 @@ describe('Ionic Global', () => {
         }),
       }));
 
-      expect(getIonMode(ref, 'ios')).toBe('ios');
+      expect(getIonMode(ref)).toBe('ios');
     });
 
     it('should return the mode value of the closest parent with a valid mode', () => {
@@ -84,10 +58,9 @@ describe('Ionic Global', () => {
       expect(getIonMode()).toBe('md');
     });
 
-    it('should return the theme value if provided and no mode is found', () => {
+    it('should return the default theme if no mode is found', () => {
       const ref = { mode: undefined };
-      const theme = 'ios';
-      expect(getIonMode(ref, theme)).toBe('ios');
+      expect(getIonMode(ref)).toBe('md');
     });
   });
 

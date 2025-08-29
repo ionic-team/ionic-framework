@@ -1,6 +1,6 @@
 import { Build, getMode, setMode, getElement } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
-import { applyGlobalTheme } from '@utils/theme';
+import { applyGlobalTheme, getCustomTheme } from '@utils/theme';
 
 import type { IonicConfig, Mode, Theme } from '../interface';
 import { defaultTheme as baseTheme } from '../themes/base/default.tokens';
@@ -13,60 +13,6 @@ import { config, configFromSession, configFromURL, saveConfig } from './config';
 let defaultMode: Mode;
 let defaultTheme: Theme = 'md';
 
-/**
- * Prints a warning message to the developer to inform them of
- * an invalid configuration of mode and theme.
- * @param mode The invalid mode configuration.
- * @param theme The invalid theme configuration.
- */
-const printInvalidModeWarning = (mode: Mode, theme: Theme, ref?: any) => {
-  printIonWarning(
-    `Invalid mode and theme combination provided: mode: ${mode}, theme: ${theme}. Fallback mode ${getDefaultModeForTheme(
-      theme
-    )} will be used.`,
-    ref
-  );
-};
-
-/**
- * Validates if a mode is accepted for a theme configuration.
- * @param mode The mode to validate.
- * @param theme The theme the mode is being used with.
- * @returns `true` if the mode is valid for the theme, `false` if invalid.
- */
-export const isModeValidForTheme = (mode: Mode, theme: Theme) => {
-  if (mode === 'md') {
-    return theme === 'md' || theme === 'ionic';
-  } else if (mode === 'ios') {
-    return theme === 'ios' || theme === 'ionic';
-  }
-  return false;
-};
-
-/**
- * Returns the default mode for a specified theme.
- * @param theme The theme to return a default mode for.
- * @returns The default mode, either `ios` or `md`.
- */
-const getDefaultModeForTheme = (theme: Theme): Mode => {
-  if (theme === 'ios') {
-    return 'ios';
-  }
-  return 'md';
-};
-
-/**
- * Returns the default theme for a specified mode.
- * @param mode The mode to return a default theme for.
- * @returns The default theme.
- */
-const getDefaultThemeForMode = (mode: Mode): Theme => {
-  if (mode === 'ios') {
-    return 'ios';
-  }
-  return 'md';
-};
-
 const isModeSupported = (elmMode: string) => ['ios', 'md'].includes(elmMode);
 
 const isThemeSupported = (theme: string) => ['ios', 'md', 'ionic'].includes(theme);
@@ -75,32 +21,13 @@ const isIonicElement = (elm: HTMLElement) => elm.tagName?.startsWith('ION-');
 
 /**
  * Returns the mode value of the element reference or the closest
- * parent with a valid mode.
+ * parent with a valid mode. If no mode is set, then fallback
+ * to the default mode.
  * @param ref The element reference to look up the mode for.
- * @param theme Optionally can provide the theme to avoid an additional look-up.
  * @returns The mode value for the element reference.
  */
-export const getIonMode = (ref?: any, theme = getIonTheme(ref)): Mode => {
-  if (ref?.mode && isModeValidForTheme(ref?.mode, theme)) {
-    /**
-     * If the reference already has a mode configuration,
-     * use it instead of performing a look-up.
-     */
-    return ref.mode;
-  } else {
-    const el = getElement(ref);
-    const mode = (el.closest('[mode]')?.getAttribute('mode') as Mode) || defaultMode;
-
-    if (isModeValidForTheme(mode, theme)) {
-      /**
-       * The mode configuration is supported for the configured theme.
-       */
-      return mode;
-    } else {
-      printInvalidModeWarning(mode, theme, ref);
-    }
-  }
-  return getDefaultModeForTheme(theme);
+export const getIonMode = (ref?: any): Mode => {
+  return ref?.mode || (getElement(ref).closest('[mode]')?.getAttribute('mode') as Mode) || defaultMode;
 };
 
 /**
@@ -125,7 +52,7 @@ export const getIonTheme = (ref?: any): Theme => {
   const mode = ref?.mode ?? (el.closest('[mode]')?.getAttribute('mode') as Mode);
 
   if (mode) {
-    return getDefaultThemeForMode(mode);
+    return mode;
   }
 
   /**
@@ -210,15 +137,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
    * otherwise get the theme via config settings, and fallback to md.
    */
 
-  Ionic.theme = defaultTheme = config.get(
-    'theme',
-    doc.documentElement.getAttribute('theme') || getDefaultThemeForMode(defaultMode)
-  );
-
-  if (!isModeValidForTheme(defaultMode, defaultTheme)) {
-    printInvalidModeWarning(defaultMode, defaultTheme, configObj);
-    defaultMode = getDefaultModeForTheme(defaultTheme);
-  }
+  Ionic.theme = defaultTheme = config.get('theme', doc.documentElement.getAttribute('theme') || defaultMode);
 
   config.set('mode', defaultMode);
   doc.documentElement.setAttribute('mode', defaultMode);
@@ -228,7 +147,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   doc.documentElement.setAttribute('theme', defaultTheme);
   doc.documentElement.classList.add(defaultTheme);
 
-  const customTheme: BaseTheme | undefined = configObj.customTheme;
+  const customTheme: BaseTheme | undefined = getCustomTheme(configObj.customTheme, defaultMode);
 
   // Apply base theme, or combine with custom theme if provided
   if (customTheme) {
