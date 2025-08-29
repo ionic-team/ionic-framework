@@ -40,6 +40,32 @@ export const getClassMap = (classes: string | string[] | undefined): CssClassMap
 };
 
 /**
+ * Gets and merges custom themes based on mode
+ * @param customTheme The custom theme
+ * @param mode The current mode (ios | md)
+ * @returns The merged custom theme
+ */
+export const getCustomTheme = (customTheme: any, mode: string): any => {
+  if (!customTheme) return undefined;
+
+  // Check if the custom theme contains mode overrides (ios | md)
+  if (customTheme.ios || customTheme.md) {
+    const { ios, md, ...baseCustomTheme } = customTheme;
+
+    // Flatten the mode-specific overrides based on current mode
+    if (mode === 'ios' && ios) {
+      return deepMerge(baseCustomTheme, ios);
+    } else if (mode === 'md' && md) {
+      return deepMerge(baseCustomTheme, md);
+    }
+
+    return baseCustomTheme;
+  }
+
+  return customTheme;
+};
+
+/**
  * Flattens the theme object into CSS custom properties
  * @param theme The theme object to flatten
  * @param prefix The CSS prefix to use (e.g., '--ion-')
@@ -211,9 +237,10 @@ export const applyComponentTheme = (element: HTMLElement): void => {
   // Convert to 'IonChip' by capitalizing each part
   const themeLookupName = parts.map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join('');
 
-  if (customTheme?.components?.[themeLookupName]) {
-    const componentTheme = customTheme.components[themeLookupName];
+  // Get the component theme from the global custom theme if it exists
+  const componentTheme = customTheme?.components?.[themeLookupName];
 
+  if (componentTheme) {
     // Add the theme class to the element (e.g., 'chip-themed')
     const themeClass = `${componentName}-themed`;
     element.classList.add(themeClass);

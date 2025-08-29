@@ -3,7 +3,111 @@ import { newSpecPage } from '@stencil/core/testing';
 import { CardContent } from '../components/card-content/card-content';
 import { Chip } from '../components/chip/chip';
 
-import { generateComponentThemeCSS, generateCSSVars, generateGlobalThemeCSS, injectCSS } from './theme';
+import { generateComponentThemeCSS, generateCSSVars, generateGlobalThemeCSS, getCustomTheme, injectCSS } from './theme';
+
+describe('getCustomTheme', () => {
+  const baseCustomTheme = {
+    radii: {
+      sm: '14px',
+      md: '18px',
+      lg: '22px',
+    },
+    components: {
+      IonChip: {
+        hue: {
+          subtle: {
+            bg: 'red',
+            color: 'white',
+          },
+        },
+      },
+    },
+  };
+
+  const iosOverride = {
+    components: {
+      IonChip: {
+        hue: {
+          subtle: {
+            bg: 'blue',
+          },
+        },
+      },
+    },
+  };
+
+  const mdOverride = {
+    components: {
+      IonChip: {
+        hue: {
+          subtle: {
+            bg: 'green',
+          },
+        },
+      },
+    },
+  };
+
+  it('should return the custom theme if no mode overrides exist', () => {
+    const customTheme = { ...baseCustomTheme };
+
+    const result = getCustomTheme(customTheme, 'ios');
+
+    expect(result).toEqual(customTheme);
+  });
+
+  it('should combine only with ios overrides if mode is ios', () => {
+    const customTheme = {
+      ...baseCustomTheme,
+      ios: iosOverride,
+      md: mdOverride,
+    };
+
+    const result = getCustomTheme(customTheme, 'ios');
+
+    const expected = {
+      ...baseCustomTheme,
+      components: {
+        IonChip: {
+          hue: {
+            subtle: {
+              bg: 'blue',
+              color: 'white',
+            },
+          },
+        },
+      },
+    };
+
+    expect(result).toEqual(expected);
+  });
+
+  it('should combine only with md overrides if mode is md', () => {
+    const customTheme = {
+      ...baseCustomTheme,
+      ios: iosOverride,
+      md: mdOverride,
+    };
+
+    const result = getCustomTheme(customTheme, 'md');
+
+    const expected = {
+      ...baseCustomTheme,
+      components: {
+        IonChip: {
+          hue: {
+            subtle: {
+              bg: 'green',
+              color: 'white',
+            },
+          },
+        },
+      },
+    };
+
+    expect(result).toEqual(expected);
+  });
+});
 
 describe('generateCSSVars', () => {
   it('should not generate CSS variables for an empty theme', () => {

@@ -444,7 +444,7 @@ export class Content implements ComponentInterface {
     const { fixedSlotPlacement, inheritedAttributes, isMainContent, scrollX, scrollY, el } = this;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const theme = getIonTheme(this);
-    const mode = getIonMode(this, theme);
+    const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll(mode);
     const transitionShadow = theme === 'ios';
 
