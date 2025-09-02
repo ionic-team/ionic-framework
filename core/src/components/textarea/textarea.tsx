@@ -336,21 +336,13 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * Checks if the textarea is in an invalid state based on validation classes
+   * Checks if the textarea is in an invalid state based on Ionic validation classes
    */
   private checkValidationState(): boolean {
-    // Check for both Ionic and Angular validation classes on the element itself
-    // Angular applies ng-touched/ng-invalid directly to the host element with ngModel
     const hasIonTouched = this.el.classList.contains('ion-touched');
     const hasIonInvalid = this.el.classList.contains('ion-invalid');
-    const hasNgTouched = this.el.classList.contains('ng-touched');
-    const hasNgInvalid = this.el.classList.contains('ng-invalid');
 
-    // Return true if we have both touched and invalid states from either framework
-    const isTouched = hasIonTouched || hasNgTouched;
-    const isInvalid = hasIonInvalid || hasNgInvalid;
-
-    return isTouched && isInvalid;
+    return hasIonTouched && hasIonInvalid;
   }
 
   connectedCallback() {
@@ -586,19 +578,6 @@ export class Textarea implements ComponentInterface {
     this.didTextareaClearOnEdit = false;
     this.ionBlur.emit(ev);
 
-    /**
-     * Check validation state after blur to handle framework-managed classes.
-     * Frameworks like Angular update classes asynchronously, often using
-     * requestAnimationFrame or promises. Using setTimeout ensures we check
-     * after all microtasks and animation frames have completed.
-     */
-    setTimeout(() => {
-      const newIsInvalid = this.checkValidationState();
-      if (this.isInvalid !== newIsInvalid) {
-        this.isInvalid = newIsInvalid;
-        forceUpdate(this);
-      }
-    }, 100);
   };
 
   private onKeyDown = (ev: KeyboardEvent) => {
