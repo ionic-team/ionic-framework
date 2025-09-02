@@ -577,7 +577,6 @@ export class Textarea implements ComponentInterface {
     }
     this.didTextareaClearOnEdit = false;
     this.ionBlur.emit(ev);
-
   };
 
   private onKeyDown = (ev: KeyboardEvent) => {

@@ -592,7 +592,6 @@ export class Input implements ComponentInterface {
     this.didInputClearOnEdit = false;
 
     this.ionBlur.emit(ev);
-
   };
 
   private onFocus = (ev: FocusEvent) => {
