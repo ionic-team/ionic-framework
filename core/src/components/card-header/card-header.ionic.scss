@@ -5,6 +5,6 @@
 // --------------------------------------------------
 
 :host {
-  @include globals.padding(globals.$ion-space-400);
-  gap: globals.$ion-space-050;
+  @include globals.padding(globals.$token-space-400);
+  gap: globals.$token-space-050;
 }

@@ -6,40 +6,40 @@
 
 :host {
   @include globals.padding(0);
-  @include globals.typography(globals.$ion-body-action-sm);
+  @include globals.typography(globals.$token-body-action-sm);
 }
 
 .button-native {
-  @include globals.padding(globals.$ion-space-200);
+  @include globals.padding(globals.$token-space-200);
 
-  min-width: globals.$ion-scale-1600;
-  height: globals.$ion-scale-1600;
+  min-width: globals.$token-scale-1600;
+  height: globals.$token-scale-1600;
 }
 
 ::slotted([slot="top"]) {
-  @include globals.margin(0, 0, globals.$ion-space-100, 0);
+  @include globals.margin(0, 0, globals.$token-space-100, 0);
 }
 
 ::slotted([slot="bottom"]) {
-  @include globals.margin(globals.$ion-space-100, 0, 0, 0);
+  @include globals.margin(globals.$token-space-100, 0, 0, 0);
 }
 
 ::slotted([slot="start"]) {
-  @include globals.margin(0, globals.$ion-space-100, 0, 0);
+  @include globals.margin(0, globals.$token-space-100, 0, 0);
 }
 
 ::slotted([slot="end"]) {
-  @include globals.margin(0, 0, 0, globals.$ion-space-100);
+  @include globals.margin(0, 0, 0, globals.$token-space-100);
 }
 
 ::slotted(ion-icon),
 ::slotted([slot="icon-only"]) {
   @include globals.margin(0);
 
-  width: globals.$ion-scale-500;
+  width: globals.$token-scale-500;
 
   min-width: initial;
-  height: globals.$ion-scale-500;
+  height: globals.$token-scale-500;
 }
 
 // Item Option Shapes
@@ -47,17 +47,17 @@
 
 /* Round */
 :host(.item-option-round) {
-  @include globals.border-radius(globals.$ion-border-radius-300);
+  @include globals.border-radius(globals.$token-border-radius-300);
 }
 
 /* Soft */
 :host(.item-option-soft) {
-  @include globals.border-radius(globals.$ion-border-radius-200);
+  @include globals.border-radius(globals.$token-border-radius-200);
 }
 
 /* Rectangular */
 :host(.item-option-rectangular) {
-  @include globals.border-radius(globals.$ion-border-radius-0);
+  @include globals.border-radius(globals.$token-border-radius-0);
 }
 
 // Item Option States
@@ -104,5 +104,5 @@
 // --------------------------------------------------
 
 :host(.item-option-expandable) {
-  transition-timing-function: globals.$ion-transition-curve-expressive;
+  transition-timing-function: globals.$token-transition-curve-expressive;
 }

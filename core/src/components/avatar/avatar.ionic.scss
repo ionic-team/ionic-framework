@@ -5,18 +5,18 @@
 // --------------------------------------------------
 
 :host {
-  --padding-top: #{globals.$ion-space-0};
-  --padding-bottom: #{globals.$ion-space-0};
+  --padding-top: #{globals.$token-space-0};
+  --padding-bottom: #{globals.$token-space-0};
 
-  @include globals.typography(globals.$ion-heading-h6-medium);
+  @include globals.typography(globals.$token-heading-h6-medium);
 
   display: flex;
 
   align-items: center;
   justify-content: center;
 
-  background: globals.$ion-bg-neutral-subtle-default;
-  color: globals.$ion-text-subtlest;
+  background: globals.$token-bg-neutral-subtle-default;
+  color: globals.$token-text-subtlest;
 }
 
 :host(:not(.avatar-image)) {
@@ -28,66 +28,66 @@
 
 /* 2-Extra Small */
 :host(.avatar-xxsmall) {
-  --padding-end: #{globals.$ion-space-050};
-  --padding-start: #{globals.$ion-space-050};
+  --padding-end: #{globals.$token-space-050};
+  --padding-start: #{globals.$token-space-050};
 
-  @include globals.typography(globals.$ion-body-sm-medium);
+  @include globals.typography(globals.$token-body-sm-medium);
 
-  width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
+  width: globals.$token-scale-400;
+  height: globals.$token-scale-400;
 }
 
 /* Extra Small */
 :host(.avatar-xsmall) {
-  --padding-end: #{globals.$ion-space-050};
-  --padding-start: #{globals.$ion-space-050};
+  --padding-end: #{globals.$token-space-050};
+  --padding-start: #{globals.$token-space-050};
 
-  @include globals.typography(globals.$ion-body-sm-medium);
+  @include globals.typography(globals.$token-body-sm-medium);
 
-  width: globals.$ion-scale-600;
-  height: globals.$ion-scale-600;
+  width: globals.$token-scale-600;
+  height: globals.$token-scale-600;
 }
 
 /* Small */
 :host(.avatar-small) {
-  --padding-end: #{globals.$ion-space-150};
-  --padding-start: #{globals.$ion-space-150};
+  --padding-end: #{globals.$token-space-150};
+  --padding-start: #{globals.$token-space-150};
 
-  @include globals.typography(globals.$ion-body-lg-medium);
+  @include globals.typography(globals.$token-body-lg-medium);
 
-  width: globals.$ion-scale-800;
-  height: globals.$ion-scale-800;
+  width: globals.$token-scale-800;
+  height: globals.$token-scale-800;
 }
 
 /* Medium */
 :host(.avatar-medium) {
-  --padding-end: #{globals.$ion-space-200};
-  --padding-start: #{globals.$ion-space-200};
+  --padding-end: #{globals.$token-space-200};
+  --padding-start: #{globals.$token-space-200};
 
-  width: globals.$ion-scale-1000;
-  height: globals.$ion-scale-1000;
+  width: globals.$token-scale-1000;
+  height: globals.$token-scale-1000;
 }
 
 /* Large */
 :host(.avatar-large) {
-  --padding-end: #{globals.$ion-space-250};
-  --padding-start: #{globals.$ion-space-250};
+  --padding-end: #{globals.$token-space-250};
+  --padding-start: #{globals.$token-space-250};
 
-  @include globals.typography(globals.$ion-heading-h5-medium);
+  @include globals.typography(globals.$token-heading-h5-medium);
 
-  width: globals.$ion-scale-1200;
-  height: globals.$ion-scale-1200;
+  width: globals.$token-scale-1200;
+  height: globals.$token-scale-1200;
 }
 
 /* Extra Large */
 :host(.avatar-xlarge) {
-  --padding-end: #{globals.$ion-space-300};
-  --padding-start: #{globals.$ion-space-300};
+  --padding-end: #{globals.$token-space-300};
+  --padding-start: #{globals.$token-space-300};
 
-  @include globals.typography(globals.$ion-heading-h4-medium);
+  @include globals.typography(globals.$token-heading-h4-medium);
 
-  width: globals.$ion-scale-1400;
-  height: globals.$ion-scale-1400;
+  width: globals.$token-scale-1400;
+  height: globals.$token-scale-1400;
 }
 
 // Avatar Shapes
@@ -96,40 +96,40 @@
 :host(.avatar-xxsmall.avatar-soft),
 :host(.avatar-xsmall.avatar-soft),
 :host(.avatar-small.avatar-soft) {
-  --border-radius: #{globals.$ion-soft-2xs};
+  --border-radius: #{globals.$token-soft-2xs};
 }
 :host(.avatar-medium.avatar-soft) {
-  --border-radius: #{globals.$ion-soft-xs};
+  --border-radius: #{globals.$token-soft-xs};
 }
 :host(.avatar-large.avatar-soft),
 :host(.avatar-xlarge.avatar-soft) {
-  --border-radius: #{globals.$ion-soft-md};
+  --border-radius: #{globals.$token-soft-md};
 }
 
 :host(.avatar-xxsmall.avatar-round),
 :host(.avatar-xsmall.avatar-round),
 :host(.avatar-small.avatar-round) {
-  --border-radius: #{globals.$ion-round-2xs};
+  --border-radius: #{globals.$token-round-2xs};
 }
 :host(.avatar-medium.avatar-round) {
-  --border-radius: #{globals.$ion-round-xs};
+  --border-radius: #{globals.$token-round-xs};
 }
 :host(.avatar-large.avatar-round),
 :host(.avatar-xlarge.avatar-round) {
-  --border-radius: #{globals.$ion-round-md};
+  --border-radius: #{globals.$token-round-md};
 }
 
 :host(.avatar-xxsmall.avatar-rectangular),
 :host(.avatar-xsmall.avatar-rectangular),
 :host(.avatar-small.avatar-rectangular) {
-  --border-radius: #{globals.$ion-rectangular-2xs};
+  --border-radius: #{globals.$token-rectangular-2xs};
 }
 :host(.avatar-medium.avatar-rectangular) {
-  --border-radius: #{globals.$ion-rectangular-xs};
+  --border-radius: #{globals.$token-rectangular-xs};
 }
 :host(.avatar-large.avatar-rectangular),
 :host(.avatar-xlarge.avatar-rectangular) {
-  --border-radius: #{globals.$ion-rectangular-md};
+  --border-radius: #{globals.$token-rectangular-md};
 }
 
 // Avatar Icon
@@ -140,52 +140,52 @@
 }
 
 :host(.avatar-xxsmall) ::slotted(ion-icon) {
-  width: globals.$ion-scale-300;
-  height: globals.$ion-scale-300;
+  width: globals.$token-scale-300;
+  height: globals.$token-scale-300;
 }
 
 :host(.avatar-xsmall) ::slotted(ion-icon) {
-  width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
+  width: globals.$token-scale-400;
+  height: globals.$token-scale-400;
 }
 
 :host(.avatar-small) ::slotted(ion-icon) {
-  width: globals.$ion-scale-500;
-  height: globals.$ion-scale-500;
+  width: globals.$token-scale-500;
+  height: globals.$token-scale-500;
 }
 
 :host(.avatar-medium) ::slotted(ion-icon) {
-  width: globals.$ion-scale-600;
-  height: globals.$ion-scale-600;
+  width: globals.$token-scale-600;
+  height: globals.$token-scale-600;
 }
 
 :host(.avatar-large) ::slotted(ion-icon) {
-  width: globals.$ion-scale-700;
-  height: globals.$ion-scale-700;
+  width: globals.$token-scale-700;
+  height: globals.$token-scale-700;
 }
 
 :host(.avatar-xlarge) ::slotted(ion-icon) {
-  width: globals.$ion-scale-800;
-  height: globals.$ion-scale-800;
+  width: globals.$token-scale-800;
+  height: globals.$token-scale-800;
 }
 
 // Avatar Badge Empty (hint)
 // --------------------------------------------------
 
 :host ::slotted(ion-badge.badge-vertical-top:empty) {
-  @include globals.transform(translate(globals.$ion-scale-050, calc(globals.$ion-scale-050 * -1)));
+  @include globals.transform(translate(globals.$token-scale-050, calc(globals.$token-scale-050 * -1)));
 }
 
 :host(.avatar-xxsmall) ::slotted(ion-badge.badge-vertical-top:empty) {
-  @include globals.transform(translate(globals.$ion-scale-100, calc(globals.$ion-scale-100 * -1)));
+  @include globals.transform(translate(globals.$token-scale-100, calc(globals.$token-scale-100 * -1)));
 }
 
 :host ::slotted(ion-badge.badge-vertical-bottom:empty) {
-  @include globals.transform(translate(0, globals.$ion-scale-100));
+  @include globals.transform(translate(0, globals.$token-scale-100));
 }
 
 :host(.avatar-xxsmall) ::slotted(ion-badge.badge-vertical-bottom:empty) {
-  @include globals.transform(translate(globals.$ion-scale-100, globals.$ion-scale-100));
+  @include globals.transform(translate(globals.$token-scale-100, globals.$token-scale-100));
 }
 
 // Avatar Badge Bottom (hint)
@@ -196,22 +196,22 @@
 }
 
 :host(.avatar-xxsmall) ::slotted(ion-badge.badge-vertical-bottom:not(:empty)) {
-  @include globals.position(null, globals.$ion-scale-100, globals.$ion-scale-100, null);
+  @include globals.position(null, globals.$token-scale-100, globals.$token-scale-100, null);
   @include globals.transform(translate(100%, 100%));
 }
 
 :host(.avatar-xsmall) ::slotted(ion-badge.badge-vertical-bottom:not(:empty)) {
-  @include globals.position(null, calc(globals.$ion-scale-050 * -1), calc(globals.$ion-scale-050 * -1), null);
+  @include globals.position(null, calc(globals.$token-scale-050 * -1), calc(globals.$token-scale-050 * -1), null);
 }
 
 :host(.avatar-small) ::slotted(ion-badge.badge-vertical-bottom:not(:empty)),
 :host(.avatar-medium) ::slotted(ion-badge.badge-vertical-bottom:not(:empty)),
 :host(.avatar-large) ::slotted(ion-badge.badge-vertical-bottom:not(:empty)) {
-  @include globals.position(null, globals.$ion-scale-050, globals.$ion-scale-050, null);
+  @include globals.position(null, globals.$token-scale-050, globals.$token-scale-050, null);
 }
 
 :host(.avatar-xlarge) ::slotted(ion-badge.badge-vertical-bottom:not(:empty)) {
-  @include globals.position(null, globals.$ion-scale-150, globals.$ion-scale-150, null);
+  @include globals.position(null, globals.$token-scale-150, globals.$token-scale-150, null);
 }
 
 // Avatar Badge Top (hint)
@@ -222,24 +222,24 @@
 }
 
 :host(.avatar-xxsmall) ::slotted(ion-badge.badge-vertical-top:not(:empty)) {
-  @include globals.position(globals.$ion-scale-050, 0, null, null);
+  @include globals.position(globals.$token-scale-050, 0, null, null);
 }
 
 :host(.avatar-xsmall) ::slotted(ion-badge.badge-vertical-top:not(:empty)) {
-  @include globals.position(globals.$ion-scale-100, calc(globals.$ion-scale-050 * -1), null, null);
+  @include globals.position(globals.$token-scale-100, calc(globals.$token-scale-050 * -1), null, null);
 }
 
 :host(.avatar-small) ::slotted(ion-badge.badge-vertical-top:not(:empty)),
 :host(.avatar-medium) ::slotted(ion-badge.badge-vertical-top:not(:empty)) {
-  @include globals.position(globals.$ion-scale-150, 0, null, null);
+  @include globals.position(globals.$token-scale-150, 0, null, null);
 }
 
 :host(.avatar-large) ::slotted(ion-badge.badge-vertical-top:not(:empty)) {
-  @include globals.position(globals.$ion-scale-150, globals.$ion-scale-050, null, null);
+  @include globals.position(globals.$token-scale-150, globals.$token-scale-050, null, null);
 }
 
 :host(.avatar-xlarge) ::slotted(ion-badge.badge-vertical-top:not(:empty)) {
-  @include globals.position(globals.$ion-scale-150, globals.$ion-scale-150, null, null);
+  @include globals.position(globals.$token-scale-150, globals.$token-scale-150, null, null);
 }
 
 // Avatar Disabled

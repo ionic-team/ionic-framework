@@ -9,18 +9,18 @@
    * @prop --focus-ring-color: The color of the ring around the focused element.
    * @prop --focus-ring-width: The width of the ring around the focused element.
    */
-  --background: #{globals.$ion-bg-neutral-subtle-default};
-  --border-radius: #{globals.$ion-border-radius-400};
+  --background: #{globals.$token-bg-neutral-subtle-default};
+  --border-radius: #{globals.$token-border-radius-400};
   --box-shadow: none;
-  --cancel-button-color: #{globals.$ion-primitives-neutral-800};
-  --clear-button-color: #{globals.$ion-primitives-neutral-1000};
-  --color: #{globals.$ion-primitives-neutral-1200};
-  --icon-color: #{globals.$ion-icon-subtlest};
-  --placeholder-color: #{globals.$ion-text-subtlest};
-  --focus-ring-color: #{globals.$ion-border-focus-default};
-  --focus-ring-width: #{globals.$ion-border-size-050};
+  --cancel-button-color: #{globals.$token-primitives-neutral-800};
+  --clear-button-color: #{globals.$token-primitives-neutral-1000};
+  --color: #{globals.$token-primitives-neutral-1200};
+  --icon-color: #{globals.$token-icon-subtlest};
+  --placeholder-color: #{globals.$token-text-subtlest};
+  --focus-ring-color: #{globals.$token-border-focus-default};
+  --focus-ring-width: #{globals.$token-border-size-050};
 
-  @include globals.typography(globals.$ion-body-md-regular);
+  @include globals.typography(globals.$token-body-md-regular);
   @include globals.padding(0);
 }
 
@@ -28,15 +28,15 @@
 // -----------------------------------------
 
 .searchbar-search-icon {
-  width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
+  width: globals.$token-scale-400;
+  height: globals.$token-scale-400;
 }
 
 // Searchbar Input Field
 // -----------------------------------------
 
 .searchbar-input {
-  @include globals.padding(globals.$ion-space-300, null);
+  @include globals.padding(globals.$token-space-300, null);
 
   text-overflow: ellipsis;
 
@@ -47,12 +47,12 @@
 // -----------------------------------------
 
 .searchbar-clear-button {
-  width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
+  width: globals.$token-scale-400;
+  height: globals.$token-scale-400;
 
   background-color: transparent;
 
-  font-size: globals.$ion-scale-400;
+  font-size: globals.$token-scale-400;
 
   contain: strict;
 }
@@ -61,12 +61,12 @@
 // -----------------------------------------
 
 .searchbar-cancel-button {
-  width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
+  width: globals.$token-scale-400;
+  height: globals.$token-scale-400;
 
   background-color: transparent;
 
-  font-size: globals.$ion-font-size-400;
+  font-size: globals.$token-font-size-400;
 }
 
 // Searchbar Search Icon & Clear Icon & Cancel Icon
@@ -87,9 +87,9 @@
 
 .searchbar-clear-button:focus-visible,
 .searchbar-cancel-button:focus-visible ion-icon {
-  @include globals.border-radius(globals.$ion-border-radius-100);
+  @include globals.border-radius(globals.$token-border-radius-100);
 
-  outline: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-focus-default;
+  outline: globals.$token-border-size-050 globals.$token-border-style-solid globals.$token-border-focus-default;
 
   opacity: 1;
 }
@@ -97,11 +97,11 @@
 // Searchbar Search Icon & Cancel Icon
 // -----------------------------------------
 :host(:not(.searchbar-has-leading-icons)) {
-  $leading-icon-padding: #{globals.$ion-scale-0};
+  $leading-icon-padding: #{globals.$token-scale-0};
 }
 
 :host(.searchbar-has-value) {
-  --icon-color: #{globals.$ion-icon-default};
+  --icon-color: #{globals.$token-icon-default};
 }
 
 // Searchbar in Toolbar
@@ -115,7 +115,7 @@
    * is used in a toolbar regardless of
    * the searchbar size.
    */
-  @include globals.position-horizontal(globals.$ion-space-200, null);
+  @include globals.position-horizontal(globals.$token-space-200, null);
 }
 
 // Searchbar States
@@ -123,12 +123,12 @@
 
 /* Hover */
 :host(:hover) {
-  --background: #{globals.$ion-primitives-neutral-200};
+  --background: #{globals.$token-primitives-neutral-200};
 }
 
 /* Focus */
 :host(.searchbar-has-focus) .searchbar-input {
-  outline: var(--focus-ring-width) globals.$ion-border-style-solid var(--focus-ring-color);
+  outline: var(--focus-ring-width) globals.$token-border-style-solid var(--focus-ring-color);
 }
 
 :host(.searchbar-has-focus) .searchbar-search-icon,
@@ -144,9 +144,9 @@
 
 /* Disabled */
 :host(.searchbar-disabled) {
-  --color: #{globals.$ion-primitives-neutral-500};
-  --icon-color: #{globals.$ion-icon-disabled};
-  --placeholder-color: #{globals.$ion-text-disabled};
+  --color: #{globals.$token-primitives-neutral-500};
+  --icon-color: #{globals.$token-icon-disabled};
+  --placeholder-color: #{globals.$token-text-disabled};
 
   cursor: default;
   pointer-events: none;
@@ -156,15 +156,15 @@
 // --------------------------------------------------
 
 :host(.searchbar-shape-soft) {
-  --border-radius: #{globals.$ion-border-radius-200};
+  --border-radius: #{globals.$token-border-radius-200};
 }
 
 :host(.searchbar-shape-round) {
-  --border-radius: #{globals.$ion-border-radius-400};
+  --border-radius: #{globals.$token-border-radius-400};
 }
 
 :host(.searchbar-shape-rectangular) {
-  --border-radius: #{globals.$ion-border-radius-0};
+  --border-radius: #{globals.$token-border-radius-0};
 }
 
 // Searchbar Sizes
@@ -181,9 +181,9 @@
    * desired padding from design,
    * no trailing icons.
    */
-  @include globals.padding-horizontal(globals.$ion-space-300);
+  @include globals.padding-horizontal(globals.$token-space-300);
 
-  height: globals.$ion-scale-1000;
+  height: globals.$token-scale-1000;
 }
 
 /* Small with Leading Icons */
@@ -200,8 +200,8 @@
    * no trailing icons.
    */
   @include globals.padding-horizontal(
-    calc(globals.$ion-space-300 + globals.$ion-scale-400 + globals.$ion-space-200),
-    globals.$ion-space-300
+    calc(globals.$token-space-300 + globals.$token-scale-400 + globals.$token-space-200),
+    globals.$token-space-300
   );
 }
 
@@ -219,7 +219,7 @@
    * the size of the trailing icon (clear),
    * and the gap between the icon and the input.
    */
-  @include globals.padding-horizontal(calc(globals.$ion-space-300 + globals.$ion-scale-400 + globals.$ion-space-200));
+  @include globals.padding-horizontal(calc(globals.$token-space-300 + globals.$token-scale-400 + globals.$token-space-200));
 }
 
 /* Small with Trailing Icons */
@@ -235,20 +235,20 @@
    * and the gap between the icon and the input.
    */
   @include globals.padding-horizontal(
-    globals.$ion-space-300,
-    calc(globals.$ion-space-300 + globals.$ion-scale-400 + globals.$ion-space-200)
+    globals.$token-space-300,
+    calc(globals.$token-space-300 + globals.$token-scale-400 + globals.$token-space-200)
   );
 }
 
 :host(.searchbar-size-small) .searchbar-search-icon,
 :host(.searchbar-size-small) .searchbar-cancel-button {
   // Start is based on the desired padding start from design.
-  @include globals.position-horizontal(globals.$ion-space-300, null);
+  @include globals.position-horizontal(globals.$token-space-300, null);
 }
 
 :host(.searchbar-size-small) .searchbar-clear-button {
   // End is based on the desired padding end from design.
-  @include globals.position-horizontal(null, globals.$ion-space-300);
+  @include globals.position-horizontal(null, globals.$token-space-300);
 }
 
 /* Medium */
@@ -262,9 +262,9 @@
    * desired padding from design,
    * no trailing icons.
    */
-  @include globals.padding-horizontal(globals.$ion-space-400);
+  @include globals.padding-horizontal(globals.$token-space-400);
 
-  height: globals.$ion-scale-1200;
+  height: globals.$token-scale-1200;
 }
 
 /* Medium with Leading Icons */
@@ -281,8 +281,8 @@
    * no trailing icons.
    */
   @include globals.padding-horizontal(
-    calc(globals.$ion-space-400 + globals.$ion-scale-400 + globals.$ion-space-200),
-    globals.$ion-space-400
+    calc(globals.$token-space-400 + globals.$token-scale-400 + globals.$token-space-200),
+    globals.$token-space-400
   );
 }
 
@@ -300,7 +300,7 @@
    * the size of the trailing icon (clear),
    * and the gap between the icon and the input.
    */
-  @include globals.padding-horizontal(calc(globals.$ion-space-400 + globals.$ion-scale-400 + globals.$ion-space-200));
+  @include globals.padding-horizontal(calc(globals.$token-space-400 + globals.$token-scale-400 + globals.$token-space-200));
 }
 
 /* Medium with Trailing Icons */
@@ -316,20 +316,20 @@
    * and the gap between the icon and the input.
    */
   @include globals.padding-horizontal(
-    globals.$ion-space-400,
-    calc(globals.$ion-space-400 + globals.$ion-scale-400 + globals.$ion-space-200)
+    globals.$token-space-400,
+    calc(globals.$token-space-400 + globals.$token-scale-400 + globals.$token-space-200)
   );
 }
 
 :host(.searchbar-size-medium) .searchbar-search-icon,
 :host(.searchbar-size-medium) .searchbar-cancel-button {
   // Start is based on the desired padding start from design.
-  @include globals.position-horizontal(globals.$ion-space-400, null);
+  @include globals.position-horizontal(globals.$token-space-400, null);
 }
 
 :host(.searchbar-size-medium) .searchbar-clear-button {
   // End is based on the desired padding end from design.
-  @include globals.position-horizontal(null, globals.$ion-space-400);
+  @include globals.position-horizontal(null, globals.$token-space-400);
 }
 
 :host(.in-toolbar.searchbar-size-small.searchbar-should-show-cancel) .searchbar-input,
@@ -340,22 +340,22 @@
    * the size of the leading icon (search or cancel),
    * and the gap between the icon and the input.
    */
-  padding-inline-start: globals.$ion-space-800;
+  padding-inline-start: globals.$token-space-800;
 }
 
 /* Large */
 :host(.searchbar-size-large) .searchbar-search-icon,
 :host(.searchbar-size-large) .searchbar-cancel-button {
-  width: globals.$ion-scale-500;
-  height: globals.$ion-scale-500;
+  width: globals.$token-scale-500;
+  height: globals.$token-scale-500;
 }
 
 :host(.searchbar-size-large) .searchbar-cancel-button {
-  font-size: globals.$ion-font-size-500;
+  font-size: globals.$token-font-size-500;
 }
 
 :host(.searchbar-size-large) .searchbar-input {
-  @include globals.padding(globals.$ion-space-400, null);
+  @include globals.padding(globals.$token-space-400, null);
 
   /**
    * Padding start is based on
@@ -368,9 +368,9 @@
    * the size of the trailing icon (clear),
    * and the gap between the icon and the input.
    */
-  @include globals.padding-horizontal(globals.$ion-space-500);
+  @include globals.padding-horizontal(globals.$token-space-500);
 
-  height: globals.$ion-scale-1400;
+  height: globals.$token-scale-1400;
 }
 
 /* Large with Leading Icons */
@@ -387,8 +387,8 @@
    * no trailing icons.
    */
   @include globals.padding-horizontal(
-    calc(globals.$ion-space-500 + globals.$ion-scale-500 + globals.$ion-space-200),
-    globals.$ion-space-500
+    calc(globals.$token-space-500 + globals.$token-scale-500 + globals.$token-space-200),
+    globals.$token-space-500
   );
 }
 
@@ -407,8 +407,8 @@
    * and the gap between the icon and the input.
    */
   @include globals.padding-horizontal(
-    calc(globals.$ion-space-500 + globals.$ion-scale-500 + globals.$ion-space-200),
-    calc(globals.$ion-space-500 + globals.$ion-scale-400 + globals.$ion-space-200)
+    calc(globals.$token-space-500 + globals.$token-scale-500 + globals.$token-space-200),
+    calc(globals.$token-space-500 + globals.$token-scale-400 + globals.$token-space-200)
   );
 }
 
@@ -425,8 +425,8 @@
    * and the gap between the icon and the input.
    */
   @include globals.padding-horizontal(
-    globals.$ion-space-500,
-    calc(globals.$ion-space-500 + globals.$ion-scale-400 + globals.$ion-space-200)
+    globals.$token-space-500,
+    calc(globals.$token-space-500 + globals.$token-scale-400 + globals.$token-space-200)
   );
 }
 
@@ -437,16 +437,16 @@
    * the size of the leading icon (search or cancel),
    * and the gap between the icon and the input.
    */
-  padding-inline-start: globals.$ion-space-900;
+  padding-inline-start: globals.$token-space-900;
 }
 
 :host(.searchbar-size-large) .searchbar-search-icon,
 :host(.searchbar-size-large) .searchbar-cancel-button {
   // Start is based on the desired padding start from design.
-  @include globals.position-horizontal(globals.$ion-space-500, null);
+  @include globals.position-horizontal(globals.$token-space-500, null);
 }
 
 :host(.searchbar-size-large) .searchbar-clear-button {
   // End is based on the desired padding end from design.
-  @include globals.position-horizontal(null, globals.$ion-space-500);
+  @include globals.position-horizontal(null, globals.$token-space-500);
 }

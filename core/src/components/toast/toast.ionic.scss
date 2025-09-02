@@ -5,12 +5,12 @@
 // --------------------------------------------------
 
 :host {
-  --box-shadow: #{globals.$ion-elevation-4};
+  --box-shadow: #{globals.$token-elevation-4};
   --max-width: 343px;
-  --start: #{globals.$ion-space-200};
-  --end: #{globals.$ion-space-200};
+  --start: #{globals.$token-space-200};
+  --end: #{globals.$token-space-200};
 
-  @include globals.typography(globals.$ion-body-md-medium);
+  @include globals.typography(globals.$token-body-md-medium);
 
   // TODO(ROU-10853): replace this value with a layer token.
   z-index: 1001;
@@ -53,56 +53,56 @@
 // --------------------------------------------------
 
 .toast-container {
-  @include globals.padding(globals.$ion-space-300, globals.$ion-space-400);
+  @include globals.padding(globals.$token-space-300, globals.$token-space-400);
 }
 
 // Toast Shapes
 // --------------------------------------------------
 
 :host(.toast-shape-soft) {
-  --border-radius: #{globals.$ion-border-radius-200};
+  --border-radius: #{globals.$token-border-radius-200};
 }
 
 :host(.toast-shape-round) {
-  --border-radius: #{globals.$ion-border-radius-400};
+  --border-radius: #{globals.$token-border-radius-400};
 }
 
 :host(.toast-shape-rectangular) {
-  --border-radius: #{globals.$ion-border-radius-0};
+  --border-radius: #{globals.$token-border-radius-0};
 }
 
 // Toast Header
 // --------------------------------------------------
 
 .toast-header {
-  @include globals.typography(globals.$ion-heading-h6-medium);
+  @include globals.typography(globals.$token-heading-h6-medium);
 }
 
 // Toast Button
 // --------------------------------------------------
 
 .toast-layout-baseline .toast-button-group-start {
-  @include globals.margin-horizontal(null, globals.$ion-space-400);
+  @include globals.margin-horizontal(null, globals.$token-space-400);
 }
 
 .toast-layout-stacked .toast-button-group-start {
-  @include globals.margin(null, null, globals.$ion-space-400, null);
+  @include globals.margin(null, null, globals.$token-space-400, null);
 }
 
 .toast-layout-baseline .toast-button-group-end {
-  @include globals.margin-horizontal(globals.$ion-space-400, null);
+  @include globals.margin-horizontal(globals.$token-space-400, null);
 }
 
 .toast-layout-stacked .toast-button-group-end {
-  @include globals.margin(globals.$ion-space-400, null, null, null);
+  @include globals.margin(globals.$token-space-400, null, null, null);
 }
 
 .toast-button-group {
-  gap: globals.$ion-space-400;
+  gap: globals.$token-space-400;
 }
 
 .toast-button {
-  @include globals.typography(globals.$ion-body-md-regular);
+  @include globals.typography(globals.$token-body-md-regular);
   @include globals.padding(0);
 
   // necessary for ripple to work properly
@@ -119,7 +119,7 @@
 // --------------------------------------------------
 
 .toast-icon {
-  @include globals.margin-horizontal(0, globals.$ion-space-200);
+  @include globals.margin-horizontal(0, globals.$token-space-200);
 }
 
 // Toast Icon
@@ -127,17 +127,17 @@
 
 .toast-icon,
 .toast-button-icon {
-  font-size: globals.$ion-scale-600;
+  font-size: globals.$token-scale-600;
 }
 
 // Bold Toast
 // --------------------------------------------------
 
 :host(.toast-hue-bold) {
-  --background: #{globals.$ion-bg-neutral-boldest-default};
-  --background-activated: #{globals.$ion-bg-neutral-boldest-press};
-  --color: #{globals.$ion-text-inverse};
-  --button-color: #{globals.$ion-text-inverse};
+  --background: #{globals.$token-bg-neutral-boldest-default};
+  --background-activated: #{globals.$token-bg-neutral-boldest-press};
+  --color: #{globals.$token-text-inverse};
+  --button-color: #{globals.$token-text-inverse};
 }
 
 :host(.toast-hue-bold.ion-color) .toast-wrapper {
@@ -153,14 +153,14 @@
 // --------------------------------------------------
 
 :host(.toast-hue-subtle) {
-  --background: #{globals.$ion-bg-neutral-subtlest-default};
-  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
-  --color: #{globals.$ion-text-default};
-  --button-color: #{globals.$ion-text-link-default};
+  --background: #{globals.$token-bg-neutral-subtlest-default};
+  --background-activated: #{globals.$token-bg-neutral-subtlest-press};
+  --color: #{globals.$token-text-default};
+  --button-color: #{globals.$token-text-link-default};
 }
 
 :host(.toast-hue-subtle) .toast-button-cancel {
-  color: #{globals.$ion-icon-subtlest};
+  color: #{globals.$token-icon-subtlest};
 }
 
 :host(.toast-hue-subtle.ion-color) .toast-wrapper {
