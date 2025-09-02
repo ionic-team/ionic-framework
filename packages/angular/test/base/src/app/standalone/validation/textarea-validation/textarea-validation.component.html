@@ -33,12 +33,6 @@
           [errorText]="fieldMetadata.description.errorText"
           formControlName="description"
           required
-          [class.ion-touched]="isTouched('description')"
-          [class.ion-invalid]="isInvalid('description')"
-          [class.ion-valid]="isValid('description')"
-          (ionBlur)="onIonBlur('description', descriptionTextarea)"
-          (ionInput)="onIonInput('description', descriptionTextarea)"
-          (focusout)="onFocusOut('description', descriptionTextarea)"
         ></ion-textarea>
       </div>
 
@@ -56,12 +50,6 @@
           [errorText]="fieldMetadata.comments.errorText"
           formControlName="comments"
           required
-          [class.ion-touched]="isTouched('comments')"
-          [class.ion-invalid]="isInvalid('comments')"
-          [class.ion-valid]="isValid('comments')"
-          (ionBlur)="onIonBlur('comments', commentsTextarea)"
-          (ionInput)="onIonInput('comments', commentsTextarea)"
-          (focusout)="onFocusOut('comments', commentsTextarea)"
         ></ion-textarea>
       </div>
 
@@ -81,12 +69,6 @@
           [errorText]="fieldMetadata.bio.errorText"
           formControlName="bio"
           required
-          [class.ion-touched]="isTouched('bio')"
-          [class.ion-invalid]="isInvalid('bio')"
-          [class.ion-valid]="isValid('bio')"
-          (ionBlur)="onIonBlur('bio', bioTextarea)"
-          (ionInput)="onIonInput('bio', bioTextarea)"
-          (focusout)="onFocusOut('bio', bioTextarea)"
         ></ion-textarea>
       </div>
 
@@ -104,12 +86,6 @@
           [errorText]="fieldMetadata.address.errorText"
           formControlName="address"
           required
-          [class.ion-touched]="isTouched('address')"
-          [class.ion-invalid]="isInvalid('address')"
-          [class.ion-valid]="isValid('address')"
-          (ionBlur)="onIonBlur('address', addressTextarea)"
-          (ionInput)="onIonInput('address', addressTextarea)"
-          (focusout)="onFocusOut('address', addressTextarea)"
         ></ion-textarea>
       </div>
 
@@ -130,12 +106,6 @@
           [errorText]="fieldMetadata.review.errorText"
           formControlName="review"
           required
-          [class.ion-touched]="isTouched('review')"
-          [class.ion-invalid]="isInvalid('review')"
-          [class.ion-valid]="isValid('review')"
-          (ionBlur)="onIonBlur('review', reviewTextarea)"
-          (ionInput)="onIonInput('review', reviewTextarea)"
-          (focusout)="onFocusOut('review', reviewTextarea)"
         ></ion-textarea>
       </div>
 
@@ -151,12 +121,6 @@
           [rows]="fieldMetadata.notes.rows"
           [helperText]="fieldMetadata.notes.helperText"
           formControlName="notes"
-          [class.ion-touched]="isTouched('notes')"
-          [class.ion-invalid]="isInvalid('notes')"
-          [class.ion-valid]="isValid('notes')"
-          (ionBlur)="onIonBlur('notes', notesTextarea)"
-          (ionInput)="onIonInput('notes', notesTextarea)"
-          (focusout)="onFocusOut('notes', notesTextarea)"
         ></ion-textarea>
       </div>
     </div>
@@ -166,7 +130,4 @@
     <ion-button id="submit-btn" expand="block" [disabled]="!isFormValid()" (click)="onSubmit()">Submit Form</ion-button>
     <ion-button id="reset-btn" expand="block" fill="outline" (click)="onReset()">Reset Form</ion-button>
   </div>
-
-  <!-- Hidden region for debugging screen reader announcements -->
-  <div aria-live="polite" aria-atomic="true" class="aria-live-region" id="debug-region" #debugRegion></div>
 </ion-content>

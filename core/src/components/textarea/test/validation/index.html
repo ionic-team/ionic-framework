@@ -167,9 +167,6 @@
           <ion-button id="submit-btn" expand="block" disabled>Submit Form</ion-button>
           <ion-button id="reset-btn" expand="block" fill="outline">Reset Form</ion-button>
         </div>
-
-        <!-- Hidden region for debugging screen reader announcements -->
-        <div aria-live="polite" aria-atomic="true" class="aria-live-region" id="debug-region"></div>
       </ion-content>
     </ion-app>
 
@@ -178,7 +175,6 @@
       const textareas = document.querySelectorAll('ion-textarea');
       const submitBtn = document.getElementById('submit-btn');
       const resetBtn = document.getElementById('reset-btn');
-      const debugRegion = document.getElementById('debug-region');
 
       // Track which fields have been touched
       const touchedFields = new Set();
@@ -251,7 +247,6 @@
           // Debug: Log to hidden aria-live region for testing
           const isInvalid = textarea.classList.contains('ion-invalid');
           if (isInvalid) {
-            debugRegion.textContent = `Field ${textarea.label} is invalid: ${textarea.errorText}`;
             console.log('Field marked invalid:', textarea.label, textarea.errorText);
           }
         });
@@ -283,7 +278,6 @@
         });
         touchedFields.clear();
         submitBtn.disabled = true;
-        debugRegion.textContent = '';
       });
 
       // Submit button

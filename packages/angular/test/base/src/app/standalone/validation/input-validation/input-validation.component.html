@@ -32,12 +32,6 @@
           [errorText]="fieldMetadata.email.errorText"
           formControlName="email"
           required
-          [class.ion-touched]="isTouched('email')"
-          [class.ion-invalid]="isInvalid('email')"
-          [class.ion-valid]="isValid('email')"
-          (ionBlur)="onIonBlur('email', emailInput)"
-          (ionInput)="onIonInput('email', emailInput)"
-          (focusout)="onFocusOut('email', emailInput)"
         ></ion-input>
       </div>
 
@@ -55,12 +49,6 @@
           [errorText]="fieldMetadata.name.errorText"
           formControlName="name"
           required
-          [class.ion-touched]="isTouched('name')"
-          [class.ion-invalid]="isInvalid('name')"
-          [class.ion-valid]="isValid('name')"
-          (ionBlur)="onIonBlur('name', nameInput)"
-          (ionInput)="onIonInput('name', nameInput)"
-          (focusout)="onFocusOut('name', nameInput)"
         ></ion-input>
       </div>
 
@@ -79,12 +67,6 @@
           [errorText]="fieldMetadata.phone.errorText"
           formControlName="phone"
           required
-          [class.ion-touched]="isTouched('phone')"
-          [class.ion-invalid]="isInvalid('phone')"
-          [class.ion-valid]="isValid('phone')"
-          (ionBlur)="onIonBlur('phone', phoneInput)"
-          (ionInput)="onIonInput('phone', phoneInput)"
-          (focusout)="onFocusOut('phone', phoneInput)"
         ></ion-input>
       </div>
 
@@ -103,12 +85,6 @@
           [errorText]="fieldMetadata.password.errorText"
           formControlName="password"
           required
-          [class.ion-touched]="isTouched('password')"
-          [class.ion-invalid]="isInvalid('password')"
-          [class.ion-valid]="isValid('password')"
-          (ionBlur)="onIonBlur('password', passwordInput)"
-          (ionInput)="onIonInput('password', passwordInput)"
-          (focusout)="onFocusOut('password', passwordInput)"
         ></ion-input>
       </div>
 
@@ -128,12 +104,6 @@
           [errorText]="fieldMetadata.age.errorText"
           formControlName="age"
           required
-          [class.ion-touched]="isTouched('age')"
-          [class.ion-invalid]="isInvalid('age')"
-          [class.ion-valid]="isValid('age')"
-          (ionBlur)="onIonBlur('age', ageInput)"
-          (ionInput)="onIonInput('age', ageInput)"
-          (focusout)="onFocusOut('age', ageInput)"
         ></ion-input>
       </div>
 
@@ -149,12 +119,6 @@
           placeholder="This field is optional"
           [helperText]="fieldMetadata.optional.helperText"
           formControlName="optional"
-          [class.ion-touched]="isTouched('optional')"
-          [class.ion-invalid]="isInvalid('optional')"
-          [class.ion-valid]="isValid('optional')"
-          (ionBlur)="onIonBlur('optional', optionalInput)"
-          (ionInput)="onIonInput('optional', optionalInput)"
-          (focusout)="onFocusOut('optional', optionalInput)"
         ></ion-input>
       </div>
     </div>
@@ -164,7 +128,4 @@
     <ion-button id="submit-btn" expand="block" [disabled]="!isFormValid()" (click)="onSubmit()">Submit Form</ion-button>
     <ion-button id="reset-btn" expand="block" fill="outline" (click)="onReset()">Reset Form</ion-button>
   </div>
-
-  <!-- Hidden region for debugging screen reader announcements -->
-  <div aria-live="polite" aria-atomic="true" class="aria-live-region" id="debug-region" #debugRegion></div>
 </ion-content>
