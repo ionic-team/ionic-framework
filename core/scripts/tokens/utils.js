@@ -1,13 +1,13 @@
 let variablesPrefix; // Variable that holds the prefix used on all css and scss variables generated
 
 // Set the variable prefix value
-function setPrefixValue(prefix) {
+export function setPrefixValue(prefix) {
   variablesPrefix = prefix;
   return variablesPrefix;
 }
 
 // Generates a valid rgba() color
-function getRgbaValue(propValue) {
+export function getRgbaValue(propValue) {
   // Check if its rgba color
   const isRgba = hexToRgba(propValue);
   // If it is, then compose rgba() color, otherwise use the normal color
@@ -19,7 +19,7 @@ function getRgbaValue(propValue) {
 }
 
 // Translates an hex color value to rgb
-function hexToRgb(hex) {
+export function hexToRgb(hex) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? {
@@ -44,13 +44,13 @@ function hexToRgba(hex) {
 }
 
 // Utility function to remove consecutive repeated words
-function removeConsecutiveRepeatedWords(str) {
+export function removeConsecutiveRepeatedWords(str) {
     return str.replace(/(\b\w+\b)(-\1)+/g, '$1');
 }
 
 // Generates a reference variable for an alias token type
 // (e.g., $ion-border-default: var(--ion-border-default, #d5d5d5) → $ion-border-default: var(--ion-border-default, $ion-primitives-neutral-400))
-function getAliasReferenceVariable(prop) {
+export function getAliasReferenceVariable(prop) {
   if (typeof prop.$value === 'string' && prop.$value.startsWith('{') && prop.$value.endsWith('}')) {
     // Remove curly braces and replace dots with dashes
     let ref = prop.$value.slice(1, -1).replace(/\./g, '-');
@@ -62,7 +62,7 @@ function getAliasReferenceVariable(prop) {
 }
 
 // Generates a valid box-shadow value from a shadow Design Token structure
-function generateShadowValue(prop, propName) {
+export function generateShadowValue(prop, propName) {
   const cssShadow = prop.$value.map(shadow => {
     // Assuming shadow is an object with properties like offsetX, offsetY, blurRadius, spreadRadius, color
     const color = getRgbaValue(shadow.color);
@@ -73,7 +73,7 @@ function generateShadowValue(prop, propName) {
 }
 
 // Generates a valid font-size value from a font-size Design Token structure, while transforming the pixels to rem
-function generateFontSizeValue(prop, propName, variableType = 'css') {
+export function generateFontSizeValue(prop, propName, variableType = 'css') {
   return variableType === 'scss'
     ? `$${variablesPrefix}-${propName}: var(--${variablesPrefix}-${propName}, font.px-to-rem(${parseInt(
         prop.$value
@@ -82,7 +82,7 @@ function generateFontSizeValue(prop, propName, variableType = 'css') {
 }
 
 // Generates a valid font-family value from a font-family Design Token structure
-function generateFontFamilyValue(prop, propName, variableType = 'css') {
+export function generateFontFamilyValue(prop, propName, variableType = 'css') {
   // Remove the last word from the token, as it contains the name of the font, which we don't want to be included on the generated variables
   const _propName = propName.split('-').slice(0, -1).join('-');
 
@@ -92,7 +92,7 @@ function generateFontFamilyValue(prop, propName, variableType = 'css') {
 }
 
 // Generates a final value, based if the Design Token is of type color or not
-function generateValue(prop, propName) {
+export function generateValue(prop, propName) {
   // Use the original value to detect aliases
   const aliasVar = getAliasReferenceVariable({ $value: prop.original.$value });
 
@@ -115,7 +115,7 @@ function generateValue(prop, propName) {
 }
 
 // Generates a typography based css utility-class or scss variable from a typography token structure
-function generateTypographyOutput(prop, propName, isVariable) {
+export function generateTypographyOutput(prop, propName, isVariable) {
   const typography = prop.original.$value;
 
   // Extract the part after the last dot and trim any extraneous characters
@@ -141,7 +141,7 @@ function generateTypographyOutput(prop, propName, isVariable) {
 }
 
 // Generates a color based css utility-class from a color Design Token structure
-function generateColorUtilityClasses(prop, className) {
+export function generateColorUtilityClasses(prop, className) {
   const isBg = className.includes('bg');
   const cssProp = isBg ? 'background-color' : 'color';
   return `.${variablesPrefix}-${className} {
@@ -152,7 +152,7 @@ function generateColorUtilityClasses(prop, className) {
 
 // Generates margin and padding utility classes to match the token-agnostic
 // utilities provided by the Ionic Framework
-function generateDefaultSpaceUtilityClasses() {
+export function generateDefaultSpaceUtilityClasses() {
   const zeroMarginPaddingToken = 'space-0';
   const defaultMarginPaddingToken = 'space-400';
 
@@ -218,7 +218,7 @@ function generateDefaultSpaceUtilityClasses() {
 }
 
 // Generates a margin or padding based css utility-class from a space Design Token structure
-function generateSpaceUtilityClasses(prop, className) {
+export function generateSpaceUtilityClasses(prop, className) {
   // This exact format is needed so that it compiles the tokens with the expected lint rules
   // It will generate classes for margin and padding, for equal sizing on all side and each direction
   const marginPaddingTemplate = (type) => `
@@ -267,7 +267,7 @@ function generateSpaceUtilityClasses(prop, className) {
 }
 
 // Generates a valid box-shadow value from a shadow Design Token structure
-function generateRadiusUtilityClasses(propName) {
+export function generateRadiusUtilityClasses(propName) {
   return `.${variablesPrefix}-${propName} {
   --border-radius: $${variablesPrefix}-${propName};
   border-radius: $${variablesPrefix}-${propName};
@@ -275,7 +275,7 @@ function generateRadiusUtilityClasses(propName) {
 }
 
 // Generates a border based css utility-class from a font Design Token structure
-function generateBorderUtilityClasses(prop, propName) {
+export function generateBorderUtilityClasses(prop, propName) {
   let attribute;
 
   switch (prop.attributes.type) {
@@ -296,12 +296,12 @@ function generateBorderUtilityClasses(prop, propName) {
 }
 
 // Generates a font based css utility-class from a font Design Token structure
-function generateFontUtilityClasses(prop, propName) {
+export function generateFontUtilityClasses(prop, propName) {
   return `.${variablesPrefix}-${propName} {\n  ${prop.attributes.type}: $${variablesPrefix}-${propName};\n}`;
 }
 
 // Generates a valid box-shadow value from a shadow Design Token structure
-function generateShadowUtilityClasses(propName) {
+export function generateShadowUtilityClasses(propName) {
   return `.${variablesPrefix}-${propName} {
   --box-shadow: $${variablesPrefix}-${propName};
   box-shadow: $${variablesPrefix}-${propName};
@@ -309,27 +309,6 @@ function generateShadowUtilityClasses(propName) {
 }
 
 // Generates a utility class for a given token category and name
-function generateUtilityClasses(tokenCategory, propName){
+export function generateUtilityClasses(tokenCategory, propName){
   return `.${variablesPrefix}-${propName} {\n  ${tokenCategory}: $${variablesPrefix}-${propName};\n}`;
 }
-
-module.exports = {
-    getRgbaValue,
-    hexToRgb,
-    generateShadowValue,
-    generateFontSizeValue,
-    generateFontFamilyValue,
-    generateTypographyOutput,
-    generateValue,
-    getAliasReferenceVariable,
-    setPrefixValue,
-    generateRadiusUtilityClasses,
-    generateColorUtilityClasses,
-    generateDefaultSpaceUtilityClasses,
-    generateSpaceUtilityClasses,
-    removeConsecutiveRepeatedWords,
-    generateBorderUtilityClasses,
-    generateFontUtilityClasses,
-    generateShadowUtilityClasses,
-    generateUtilityClasses
-};
