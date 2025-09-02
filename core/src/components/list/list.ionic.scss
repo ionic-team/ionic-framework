@@ -39,7 +39,12 @@
      * The top of the list should not have a border radius because
      * that would include the header.
      */
-    @include globals.border-radius(initial, initial, globals.$token-border-radius-400, globals.$token-border-radius-400);
+    @include globals.border-radius(
+      initial,
+      initial,
+      globals.$token-border-radius-400,
+      globals.$token-border-radius-400
+    );
   }
 
   // Target the first element in the list after the header
@@ -49,7 +54,12 @@
      * The bottom of the first element should not have a border radius
      * because that would not look connected to the rest.
      */
-    @include globals.border-radius(globals.$token-border-radius-400, globals.$token-border-radius-400, initial, initial);
+    @include globals.border-radius(
+      globals.$token-border-radius-400,
+      globals.$token-border-radius-400,
+      initial,
+      initial
+    );
   }
 
   /* Soft */
@@ -59,7 +69,12 @@
      * The top of the list should not have a border radius because
      * that would include the header.
      */
-    @include globals.border-radius(initial, initial, globals.$token-border-radius-200, globals.$token-border-radius-200);
+    @include globals.border-radius(
+      initial,
+      initial,
+      globals.$token-border-radius-200,
+      globals.$token-border-radius-200
+    );
   }
 
   // Target the first element in the list after the header
@@ -69,7 +84,12 @@
      * The bottom of the first element should not have a border radius
      * because that would not look connected to the rest.
      */
-    @include globals.border-radius(globals.$token-border-radius-200, globals.$token-border-radius-200, initial, initial);
+    @include globals.border-radius(
+      globals.$token-border-radius-200,
+      globals.$token-border-radius-200,
+      initial,
+      initial
+    );
   }
 
   /* Rectangular */
@@ -130,6 +150,7 @@
 // --------------------------------------------------
 
 .list-ionic-lines-inset .item-lines-default {
-  --inner-border-width: #{globals.$token-border-size-0} #{globals.$token-border-size-0} #{globals.$token-border-size-025} #{globals.$token-border-size-0};
+  --inner-border-width: #{globals.$token-border-size-0} #{globals.$token-border-size-0} #{globals.$token-border-size-025}
+    #{globals.$token-border-size-0};
   --border-width: #{globals.$token-border-size-0};
 }

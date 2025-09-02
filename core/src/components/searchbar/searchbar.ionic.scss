@@ -219,7 +219,9 @@
    * the size of the trailing icon (clear),
    * and the gap between the icon and the input.
    */
-  @include globals.padding-horizontal(calc(globals.$token-space-300 + globals.$token-scale-400 + globals.$token-space-200));
+  @include globals.padding-horizontal(
+    calc(globals.$token-space-300 + globals.$token-scale-400 + globals.$token-space-200)
+  );
 }
 
 /* Small with Trailing Icons */
@@ -300,7 +302,9 @@
    * the size of the trailing icon (clear),
    * and the gap between the icon and the input.
    */
-  @include globals.padding-horizontal(calc(globals.$token-space-400 + globals.$token-scale-400 + globals.$token-space-200));
+  @include globals.padding-horizontal(
+    calc(globals.$token-space-400 + globals.$token-scale-400 + globals.$token-space-200)
+  );
 }
 
 /* Medium with Trailing Icons */
