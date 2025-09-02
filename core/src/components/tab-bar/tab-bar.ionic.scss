@@ -5,7 +5,7 @@
   --background: #{globals.$tabbar-ionic-background};
   --background-activated: #{globals.$tabbar-ionic-background-activated};
   --background-focused: #{globals.$tabbar-ionic-background-focused};
-  --border: #{globals.$ion-border-size-0} #{globals.$ion-border-style-solid} #{globals.$tabbar-ionic-border-color};
+  --border: #{globals.$token-border-size-0} #{globals.$token-border-style-solid} #{globals.$tabbar-ionic-border-color};
   --color: #{globals.$tabbar-ionic-color};
   --color-selected: #{globals.$tabbar-ionic-color-selected};
 
@@ -17,11 +17,11 @@
    * In order for the height to be calculated correctly, the padding
    * top and bottom must be excluded from the height calculation.
    */
-  min-height: calc(globals.$ion-scale-1400 - calc(globals.$ion-space-100 * 2));
+  min-height: calc(globals.$token-scale-1400 - calc(globals.$token-space-100 * 2));
 
-  gap: globals.$ion-space-300;
+  gap: globals.$token-space-300;
 
-  box-shadow: #{globals.$ion-elevation-2};
+  box-shadow: #{globals.$token-elevation-2};
 
   // TODO(ROU-10853): replace this value with a layer token
   z-index: 10;
@@ -33,22 +33,22 @@
 /* Full */
 :host(.tab-bar-full) {
   /* stylelint-disable */
-  padding-top: globals.$ion-space-100;
-  padding-bottom: calc(globals.$ion-space-100 + var(--ion-safe-area-bottom, 0));
+  padding-top: globals.$token-space-100;
+  padding-bottom: calc(globals.$token-space-100 + var(--ion-safe-area-bottom, 0));
 
-  padding-right: calc(globals.$ion-space-400 + var(--ion-safe-area-right, 0));
-  padding-left: calc(globals.$ion-space-400 + var(--ion-safe-area-left, 0));
+  padding-right: calc(globals.$token-space-400 + var(--ion-safe-area-right, 0));
+  padding-left: calc(globals.$token-space-400 + var(--ion-safe-area-left, 0));
   /* stylelint-enable */
 }
 
 :host([slot="top"].tab-bar-full) {
-  padding-top: calc(globals.$ion-space-100 + var(--ion-safe-area-top, 0));
-  padding-bottom: globals.$ion-space-100;
+  padding-top: calc(globals.$token-space-100 + var(--ion-safe-area-top, 0));
+  padding-bottom: globals.$token-space-100;
 }
 
 /* Compact */
 :host(.tab-bar-compact) {
-  @include globals.padding(globals.$ion-space-100, globals.$ion-space-400);
+  @include globals.padding(globals.$token-space-100, globals.$token-space-400);
 
   position: absolute;
 
@@ -60,11 +60,11 @@
 }
 
 :host([slot="top"].tab-bar-compact) {
-  top: calc(globals.$ion-space-100 + var(--ion-safe-area-top, 0));
+  top: calc(globals.$token-space-100 + var(--ion-safe-area-top, 0));
 }
 
 :host([slot="bottom"].tab-bar-compact) {
-  bottom: calc(globals.$ion-space-100 + var(--ion-safe-area-bottom, 0));
+  bottom: calc(globals.$token-space-100 + var(--ion-safe-area-bottom, 0));
 }
 
 // Tab Bar Shapes
@@ -72,15 +72,15 @@
 
 /* Soft */
 :host(.tab-bar-soft) {
-  @include globals.border-radius(globals.$ion-border-radius-400);
+  @include globals.border-radius(globals.$token-border-radius-400);
 }
 
 /* Round */
 :host(.tab-bar-round) {
-  @include globals.border-radius(globals.$ion-border-radius-full);
+  @include globals.border-radius(globals.$token-border-radius-full);
 }
 
 /* Rectangular */
 :host(.tab-bar-rectangular) {
-  @include globals.border-radius(globals.$ion-border-radius-0);
+  @include globals.border-radius(globals.$token-border-radius-0);
 }

@@ -5,13 +5,13 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ion-primitives-base-white};
-  --border-width: #{globals.$ion-border-size-025};
-  --border-color: #{globals.$ion-border-default};
-  --border-style: #{globals.$ion-border-style-solid};
-  --border-radius: #{globals.$ion-round-xl};
-  --color: #{globals.$ion-primitives-neutral-1200};
-  min-width: globals.$ion-scale-2400;
+  --background: #{globals.$token-primitives-base-white};
+  --border-width: #{globals.$token-border-size-025};
+  --border-color: #{globals.$token-border-default};
+  --border-style: #{globals.$token-border-style-solid};
+  --border-radius: #{globals.$token-round-xl};
+  --color: #{globals.$token-primitives-neutral-1200};
+  min-width: globals.$token-scale-2400;
 
   border: var(--border-width) var(--border-style) var(--border-color);
 }
@@ -24,13 +24,13 @@
 // ---------------------------------------------
 
 :host(.card-soft) {
-  --border-radius: #{globals.$ion-soft-xl};
+  --border-radius: #{globals.$token-soft-xl};
 }
 
 :host(.card-round) {
-  --border-radius: #{globals.$ion-round-xl};
+  --border-radius: #{globals.$token-round-xl};
 }
 
 :host(.card-rectangular) {
-  --border-radius: #{globals.$ion-rectangular-xl};
+  --border-radius: #{globals.$token-rectangular-xl};
 }

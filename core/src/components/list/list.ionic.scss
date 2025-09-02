@@ -8,7 +8,7 @@
 // --------------------------------------------------
 
 .list-ionic.list-inset {
-  @include globals.margin(globals.$ion-space-100);
+  @include globals.margin(globals.$token-space-100);
 }
 
 // Ionic No Lines List
@@ -39,7 +39,7 @@
      * The top of the list should not have a border radius because
      * that would include the header.
      */
-    @include globals.border-radius(initial, initial, globals.$ion-border-radius-400, globals.$ion-border-radius-400);
+    @include globals.border-radius(initial, initial, globals.$token-border-radius-400, globals.$token-border-radius-400);
   }
 
   // Target the first element in the list after the header
@@ -49,7 +49,7 @@
      * The bottom of the first element should not have a border radius
      * because that would not look connected to the rest.
      */
-    @include globals.border-radius(globals.$ion-border-radius-400, globals.$ion-border-radius-400, initial, initial);
+    @include globals.border-radius(globals.$token-border-radius-400, globals.$token-border-radius-400, initial, initial);
   }
 
   /* Soft */
@@ -59,7 +59,7 @@
      * The top of the list should not have a border radius because
      * that would include the header.
      */
-    @include globals.border-radius(initial, initial, globals.$ion-border-radius-200, globals.$ion-border-radius-200);
+    @include globals.border-radius(initial, initial, globals.$token-border-radius-200, globals.$token-border-radius-200);
   }
 
   // Target the first element in the list after the header
@@ -69,7 +69,7 @@
      * The bottom of the first element should not have a border radius
      * because that would not look connected to the rest.
      */
-    @include globals.border-radius(globals.$ion-border-radius-200, globals.$ion-border-radius-200, initial, initial);
+    @include globals.border-radius(globals.$token-border-radius-200, globals.$token-border-radius-200, initial, initial);
   }
 
   /* Rectangular */
@@ -79,7 +79,7 @@
      * The top of the list should not have a border radius because
      * that would include the header.
      */
-    @include globals.border-radius(initial, initial, globals.$ion-border-radius-0, globals.$ion-border-radius-0);
+    @include globals.border-radius(initial, initial, globals.$token-border-radius-0, globals.$token-border-radius-0);
   }
 
   // Target the first element in the list after the header
@@ -89,24 +89,24 @@
      * The bottom of the first element should not have a border radius
      * because that would not look connected to the rest.
      */
-    @include globals.border-radius(globals.$ion-border-radius-0, globals.$ion-border-radius-0, initial, initial);
+    @include globals.border-radius(globals.$token-border-radius-0, globals.$token-border-radius-0, initial, initial);
   }
 }
 
 .list-ionic:not(:has(ion-list-header)) {
   /* Round */
   &.list-round {
-    @include globals.border-radius(globals.$ion-border-radius-400);
+    @include globals.border-radius(globals.$token-border-radius-400);
   }
 
   /* Soft */
   &.list-soft {
-    @include globals.border-radius(globals.$ion-border-radius-200);
+    @include globals.border-radius(globals.$token-border-radius-200);
   }
 
   /* Rectangular */
   &.list-rectangular {
-    @include globals.border-radius(globals.$ion-border-radius-0);
+    @include globals.border-radius(globals.$token-border-radius-0);
   }
 }
 
@@ -114,22 +114,22 @@
 // --------------------------------------------------
 
 .list-ionic-lines-none .item-lines-default {
-  --inner-border-width: #{globals.$ion-border-size-0};
-  --border-width: #{globals.$ion-border-size-0};
+  --inner-border-width: #{globals.$token-border-size-0};
+  --border-width: #{globals.$token-border-size-0};
 }
 
 // Ionic Full Lines List
 // --------------------------------------------------
 
 .list-ionic-lines-full .item-lines-default {
-  --inner-border-width: #{globals.$ion-border-size-0};
-  --border-width: #{globals.$ion-border-size-0} #{globals.$ion-border-size-0} #{globals.$ion-border-size-025} #{globals.$ion-border-size-0};
+  --inner-border-width: #{globals.$token-border-size-0};
+  --border-width: #{globals.$token-border-size-0} #{globals.$token-border-size-0} #{globals.$token-border-size-025} #{globals.$token-border-size-0};
 }
 
 // Ionic Inset Lines List
 // --------------------------------------------------
 
 .list-ionic-lines-inset .item-lines-default {
-  --inner-border-width: #{globals.$ion-border-size-0} #{globals.$ion-border-size-0} #{globals.$ion-border-size-025} #{globals.$ion-border-size-0};
-  --border-width: #{globals.$ion-border-size-0};
+  --inner-border-width: #{globals.$token-border-size-0} #{globals.$token-border-size-0} #{globals.$token-border-size-025} #{globals.$token-border-size-0};
+  --border-width: #{globals.$token-border-size-0};
 }

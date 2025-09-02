@@ -17,7 +17,7 @@
 
   position: absolute;
 
-  background-color: tokens.$ion-state-press;
+  background-color: tokens.$token-state-press;
 
   content: "";
 }
@@ -34,7 +34,7 @@
 
   position: absolute;
 
-  background-color: tokens.$ion-state-disabled;
+  background-color: tokens.$token-state-disabled;
 
   content: "";
 
@@ -50,9 +50,9 @@
 // --------------------------------------------------
 @mixin focused-state($width: null, $style: null, $color: null, $addOffset: true) {
   // Use default values if null is passed
-  $width: if($width != null, $width, tokens.$ion-border-size-050);
-  $style: if($style != null, $style, tokens.$ion-border-style-solid);
-  $color: if($color != null, $color, tokens.$ion-border-focus-default);
+  $width: if($width != null, $width, tokens.$token-border-size-050);
+  $style: if($style != null, $style, tokens.$token-border-style-solid);
+  $color: if($color != null, $color, tokens.$token-border-focus-default);
 
   @if $addOffset {
     outline-offset: $width;

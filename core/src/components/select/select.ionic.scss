@@ -6,45 +6,45 @@
 // -------------------------------------------------
 
 :host {
-  --background: #{globals.$ion-primitives-base-white};
+  --background: #{globals.$token-primitives-base-white};
   // TODO(ROU-10778, ROU-10875): Sync the color names to the design system of
   // ios and md. This will allow us to have a single color map.
-  --border-color: #{globals.$ion-primitives-neutral-500};
-  --border-width: #{globals.$ion-border-size-025};
-  --padding-start: #{globals.$ion-space-400};
-  --padding-end: #{globals.$ion-space-400};
-  --padding-top: #{globals.$ion-space-300};
-  --padding-bottom: #{globals.$ion-space-300};
-  --placeholder-color: #{globals.$ion-primitives-neutral-800};
+  --border-color: #{globals.$token-primitives-neutral-500};
+  --border-width: #{globals.$token-border-size-025};
+  --padding-start: #{globals.$token-space-400};
+  --padding-end: #{globals.$token-space-400};
+  --padding-top: #{globals.$token-space-300};
+  --padding-bottom: #{globals.$token-space-300};
+  --placeholder-color: #{globals.$token-primitives-neutral-800};
   --placeholder-opacity: 1;
-  --highlight-color-focused: #{globals.$ion-border-focus-default};
-  --highlight-color-valid: #{globals.$ion-semantics-success-900};
-  --highlight-color-invalid: #{globals.$ion-semantics-danger-800};
+  --highlight-color-focused: #{globals.$token-border-focus-default};
+  --highlight-color-valid: #{globals.$token-semantics-success-900};
+  --highlight-color-invalid: #{globals.$token-semantics-danger-800};
 
-  min-height: globals.$ion-scale-1100;
+  min-height: globals.$token-scale-1100;
 }
 
 // Select Hint Text
 // ----------------------------------------------------------------
 
 .select-bottom {
-  @include globals.padding(globals.$ion-space-100, null, null, null);
-  @include globals.typography(globals.$ion-body-sm-medium);
+  @include globals.padding(globals.$token-space-100, null, null, null);
+  @include globals.typography(globals.$token-body-sm-medium);
 }
 
 .select-bottom .helper-text {
-  color: globals.$ion-primitives-neutral-800;
+  color: globals.$token-primitives-neutral-800;
 }
 
 .select-text {
-  min-width: globals.$ion-space-400;
+  min-width: globals.$token-space-400;
 }
 
 // Select Label
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
-  @include globals.typography(globals.$ion-body-sm-medium);
+  @include globals.typography(globals.$token-body-sm-medium);
 
   /**
    * Label text should not extend
@@ -54,12 +54,12 @@
    * only the label would show and users
    * would not be able to see what they are typing.
    */
-  max-width: globals.$ion-scale-5000;
+  max-width: globals.$token-scale-5000;
 
-  transition: color globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive,
-    transform globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive;
+  transition: color globals.$token-transition-time-150 globals.$token-transition-curve-expressive,
+    transform globals.$token-transition-time-150 globals.$token-transition-curve-expressive;
 
-  color: globals.$ion-primitives-neutral-1000;
+  color: globals.$token-primitives-neutral-1000;
 }
 
 // Select Label Placement - Start & Fixed
@@ -72,17 +72,17 @@
    * the select should be on the end
    * when the label sits at the start.
    */
-  @include globals.margin(0, globals.$ion-space-100, 0, 0);
+  @include globals.margin(0, globals.$token-space-100, 0, 0);
 }
 
 :host(.select-label-placement-fixed) .label-text-wrapper {
-  $text-wrapper-width: calc(globals.$ion-scale-2400 + globals.$ion-space-100);
+  $text-wrapper-width: calc(globals.$token-scale-2400 + globals.$token-space-100);
 
   flex: 0 0 $text-wrapper-width;
 
   width: $text-wrapper-width;
   min-width: $text-wrapper-width;
-  max-width: globals.$ion-scale-5000;
+  max-width: globals.$token-scale-5000;
 }
 
 // Select Label Placement - End
@@ -94,7 +94,7 @@
    * the select should be on the start
    * when the label sits at the end.
    */
-  @include globals.margin(0, 0, 0, globals.$ion-space-100);
+  @include globals.margin(0, 0, 0, globals.$token-space-100);
 }
 
 // Select Label Placement - Stacked & Floating
@@ -107,14 +107,14 @@
    * the select should be on the bottom
    * when the label sits at the top.
    */
-  @include globals.margin(0, 0, globals.$ion-space-100, 0);
+  @include globals.margin(0, 0, globals.$token-space-100, 0);
 }
 
 // Select Wrapper
 // ----------------------------------------------------------------
 
 .select-wrapper {
-  min-width: globals.$ion-scale-5000;
+  min-width: globals.$token-scale-5000;
 
   background: transparent;
 }
@@ -125,7 +125,7 @@
    * select, we need to fade the text out so that the
    * label does not overlap with the placeholder.
    */
-  transition: opacity globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive;
+  transition: opacity globals.$token-transition-time-150 globals.$token-transition-curve-expressive;
 }
 
 // Select Inner Wrapper
@@ -141,7 +141,7 @@
 
   box-sizing: border-box;
 
-  gap: globals.$ion-space-200;
+  gap: globals.$token-space-200;
 }
 
 :host(.select-label-placement-stacked) .select-wrapper-inner,
@@ -153,16 +153,16 @@
 // ----------------------------------------------------------------
 
 .native-wrapper {
-  @include globals.typography(globals.$ion-body-md-regular);
+  @include globals.typography(globals.$token-body-md-regular);
 
   /**
    * When the floating label appears on top of the
    * input, we need to fade the input out so that the
    * label does not overlap with the placeholder.
    */
-  transition: opacity globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive;
+  transition: opacity globals.$token-transition-time-150 globals.$token-transition-curve-expressive;
 
-  color: globals.$ion-primitives-neutral-1200;
+  color: globals.$token-primitives-neutral-1200;
 }
 
 :host(.select-label-placement-stacked) .native-wrapper,
@@ -172,7 +172,7 @@
    * This is done by setting the width to the full width minus
    * the icon width and the gap between the icon and the text.
    */
-  width: calc(100% - globals.$ion-scale-400 - globals.$ion-space-200);
+  width: calc(100% - globals.$token-scale-400 - globals.$token-space-200);
 }
 
 // Start/End Slots
@@ -189,10 +189,10 @@
 ::slotted(ion-button[slot="start"].button-has-icon-only),
 ::slotted(ion-button[slot="end"].button-has-icon-only) {
   --border-radius: 50%;
-  --padding-start: #{globals.$ion-space-200};
-  --padding-end: #{globals.$ion-space-200};
-  --padding-top: #{globals.$ion-space-200};
-  --padding-bottom: #{globals.$ion-space-200};
+  --padding-start: #{globals.$token-space-200};
+  --padding-end: #{globals.$token-space-200};
+  --padding-top: #{globals.$token-space-200};
+  --padding-bottom: #{globals.$token-space-200};
 
   aspect-ratio: 1;
 }
@@ -202,12 +202,12 @@
 
 .select-icon,
 ::slotted(ion-icon) {
-  width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
+  width: globals.$token-scale-400;
+  height: globals.$token-scale-400;
 }
 
 .select-icon {
-  transition: transform 0.15s globals.$ion-transition-curve-expressive;
+  transition: transform 0.15s globals.$token-transition-curve-expressive;
 }
 
 /**
@@ -220,7 +220,7 @@
 }
 
 .select-icon {
-  color: globals.$ion-primitives-neutral-800;
+  color: globals.$token-primitives-neutral-800;
 }
 
 // States
@@ -230,43 +230,43 @@
 // ---------------------------------------------
 
 :host(.select-disabled) {
-  --background: #{globals.$ion-primitives-neutral-100};
-  --border-color: #{globals.$ion-primitives-neutral-300};
+  --background: #{globals.$token-primitives-neutral-100};
+  --border-color: #{globals.$token-primitives-neutral-300};
 }
 
 :host(.select-disabled) .label-text-wrapper,
 // Targets the text inside the select and the placeholder
 :host(.select-disabled) .select-text,
 :host(.select-disabled) .select-icon {
-  color: globals.$ion-primitives-neutral-500;
+  color: globals.$token-primitives-neutral-500;
 }
 
 // Shapes
 // ----------------------------------------------------------------
 
 :host(.select-shape-soft) {
-  --border-radius: #{globals.$ion-border-radius-200};
+  --border-radius: #{globals.$token-border-radius-200};
 }
 
 :host(.select-shape-round) {
-  --border-radius: #{globals.$ion-border-radius-400};
+  --border-radius: #{globals.$token-border-radius-400};
 }
 
 :host(.select-shape-rectangular) {
-  --border-radius: #{globals.$ion-border-radius-0};
+  --border-radius: #{globals.$token-border-radius-0};
 }
 
 // Sizes
 // ----------------------------------------------------------------
 
 :host(.select-size-small) .select-wrapper-inner {
-  height: globals.$ion-scale-1000;
+  height: globals.$token-scale-1000;
 }
 
 :host(.select-size-medium) .select-wrapper-inner {
-  height: globals.$ion-scale-1200;
+  height: globals.$token-scale-1200;
 }
 
 :host(.select-size-large) .select-wrapper-inner {
-  height: globals.$ion-scale-1400;
+  height: globals.$token-scale-1400;
 }

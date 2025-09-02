@@ -3,19 +3,19 @@
 // Link: Shared Styles (Standalone & Underline)
 // -------------------------------------------------------------------------------
 @mixin link-shared {
-  @include globals.typography(globals.$ion-body-action-sm);
+  @include globals.typography(globals.$token-body-action-sm);
 
   display: inline-flex;
 
   align-items: center;
 
-  gap: globals.$ion-space-100;
+  gap: globals.$token-space-100;
 
-  transition: color globals.$ion-transition-time-200 ease-in-out;
+  transition: color globals.$token-transition-time-200 ease-in-out;
 
   text-decoration-color: inherit;
 
-  text-underline-offset: globals.$ion-scale-050;
+  text-underline-offset: globals.$token-scale-050;
 
   cursor: pointer;
 
@@ -23,7 +23,7 @@
   // -------------------------------------------------------------------------------
 
   &:visited {
-    color: globals.$ion-text-link-visited;
+    color: globals.$token-text-link-visited;
   }
 
   // Link: Focus
@@ -33,7 +33,7 @@
   &.ion-focused {
     @include globals.focused-state();
 
-    border-radius: globals.$ion-border-radius-100;
+    border-radius: globals.$token-border-radius-100;
   }
 
   // Link: Active
@@ -41,7 +41,7 @@
 
   &:active,
   &.ion-activated {
-    color: globals.$ion-text-link-press;
+    color: globals.$token-text-link-press;
 
     text-decoration: underline;
   }
@@ -51,7 +51,7 @@
 
   @media (any-hover: hover) {
     &:hover {
-      color: globals.$ion-text-link-press;
+      color: globals.$token-text-link-press;
 
       text-decoration: underline;
     }
@@ -62,7 +62,7 @@
 // -------------------------------------------------------------------------------
 
 @mixin ionic-link {
-  color: globals.$ion-text-link-default;
+  color: globals.$token-text-link-default;
 
   text-decoration: none;
 
@@ -78,7 +78,7 @@ a,
 // -------------------------------------------------------------------------------
 
 @mixin ionic-link-underline {
-  color: globals.$ion-text-default;
+  color: globals.$token-text-default;
 
   @include link-shared;
 
@@ -89,7 +89,7 @@ a,
 
   &:focus,
   &.ion-focused {
-    color: globals.$ion-text-default;
+    color: globals.$token-text-default;
 
     text-decoration: none;
   }

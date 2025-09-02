@@ -5,28 +5,28 @@
 // --------------------------------------------------
 
 :host {
-  --knob-border-radius: #{globals.$ion-border-radius-full};
-  --knob-background: #{globals.$ion-bg-input-default};
+  --knob-border-radius: #{globals.$token-border-radius-full};
+  --knob-background: #{globals.$token-bg-input-default};
   --knob-box-shadow: none;
-  --knob-size: #{globals.$ion-scale-600};
-  --knob-handle-size: #{globals.$ion-scale-1100};
-  --bar-height: #{globals.$ion-scale-200};
-  --bar-background: #{globals.$ion-bg-neutral-subtle-default};
+  --knob-size: #{globals.$token-scale-600};
+  --knob-handle-size: #{globals.$token-scale-1100};
+  --bar-height: #{globals.$token-scale-200};
+  --bar-background: #{globals.$token-bg-neutral-subtle-default};
   --bar-background-active: #{globals.ion-color(primary, base)};
-  --bar-border-radius: #{globals.$ion-border-radius-400};
-  --height: #{globals.$ion-scale-1100};
+  --bar-border-radius: #{globals.$token-border-radius-400};
+  --height: #{globals.$token-scale-1100};
 
-  @include globals.typography(globals.$ion-body-md-regular);
+  @include globals.typography(globals.$token-body-md-regular);
 
-  z-index: globals.$ion-z-index-100;
+  z-index: globals.$token-z-index-100;
 }
 
 :host(.range-item-start-adjustment) {
-  @include padding(null, null, null, globals.$ion-space-600);
+  @include padding(null, null, null, globals.$token-space-600);
 }
 
 :host(.range-item-end-adjustment) {
-  @include padding(null, globals.$ion-space-600, null, null);
+  @include padding(null, globals.$token-space-600, null, null);
 }
 
 :host(.ion-color) .range-bar-active,
@@ -35,19 +35,19 @@
 }
 
 ::slotted(ion-icon[slot]) {
-  font-size: globals.$ion-font-size-600;
+  font-size: globals.$token-font-size-600;
 }
 
 ::slotted([slot="start"]) {
-  @include margin(0, globals.$ion-space-400, 0, 0);
+  @include margin(0, globals.$token-space-400, 0, 0);
 }
 
 ::slotted([slot="end"]) {
-  @include margin(0, 0, 0, globals.$ion-space-400);
+  @include margin(0, 0, 0, globals.$token-space-400);
 }
 
 ::slotted([slot="label"]) {
-  max-width: globals.$ion-scale-5000;
+  max-width: globals.$token-scale-5000;
 }
 
 :host(.range-has-pin:not(.range-label-placement-stacked)) {
@@ -63,7 +63,7 @@
   * overlapping the range. The buffer is added to the
   * bottom of the range label instead of the host.
   */
-  @include padding(calc(globals.$ion-space-100 + globals.$ion-scale-600), null, null, null);
+  @include padding(calc(globals.$token-space-100 + globals.$token-scale-600), null, null, null);
 }
 
 :host(.range-has-pin.range-label-placement-stacked) .label-text-wrapper {
@@ -72,7 +72,7 @@
   * margin to the bottom of the label, it provides a buffer
   * for the pin to move into when it is pressed.
   */
-  @include margin(null, null, calc(globals.$ion-space-200 + globals.$ion-font-size-300), null);
+  @include margin(null, null, calc(globals.$token-space-200 + globals.$token-font-size-300), null);
 }
 
 .range-bar.range-bar-active {
@@ -84,21 +84,21 @@
 
   &.has-ticks {
     @include border-radius(0);
-    @include margin(null, calc(-1 * globals.$ion-scale-100 * 0.5), null, calc(-1 * globals.$ion-scale-100 * 0.5));
+    @include margin(null, calc(-1 * globals.$token-scale-100 * 0.5), null, calc(-1 * globals.$token-scale-100 * 0.5));
   }
 }
 
 .range-tick {
-  @include margin-horizontal(calc(globals.$ion-scale-100 * -0.5), null);
-  @include border-radius(globals.$ion-border-radius-0);
+  @include margin-horizontal(calc(globals.$token-scale-100 * -0.5), null);
+  @include border-radius(globals.$token-border-radius-0);
 
   position: absolute;
-  top: calc((var(--height) * 0.5) - (globals.$ion-scale-300 * 0.5));
+  top: calc((var(--height) * 0.5) - (globals.$token-scale-300 * 0.5));
 
-  width: globals.$ion-scale-100;
-  height: globals.$ion-scale-300;
+  width: globals.$token-scale-100;
+  height: globals.$token-scale-300;
 
-  background: globals.$ion-primitives-neutral-100;
+  background: globals.$token-primitives-neutral-100;
   pointer-events: none;
 }
 
@@ -107,25 +107,25 @@
 }
 
 .range-pin {
-  @include padding(null, null, globals.$ion-space-100, null);
+  @include padding(null, null, globals.$token-space-100, null);
 
-  min-width: globals.$ion-scale-700;
+  min-width: globals.$token-scale-700;
 
   transform: translate3d(0, calc(-100%), 0);
 
   background: transparent;
 
-  color: globals.$ion-text-default;
+  color: globals.$token-text-default;
 
-  font-size: globals.$ion-font-size-300;
+  font-size: globals.$token-font-size-300;
 
   text-align: center;
 }
 
 .range-knob {
-  border-width: globals.$ion-border-size-025;
-  border-style: globals.$ion-border-style-solid;
-  border-color: globals.$ion-border-primary;
+  border-width: globals.$token-border-size-025;
+  border-style: globals.$token-border-style-solid;
+  border-color: globals.$token-border-primary;
   box-sizing: border-box;
 }
 
@@ -136,12 +136,12 @@
 // icons need to receive the same opacity.
 
 :host(.range-disabled) {
-  --bar-background: #{globals.$ion-bg-neutral-subtle-default};
+  --bar-background: #{globals.$token-bg-neutral-subtle-default};
 
   .range-knob {
-    border-color: globals.$ion-border-input-default;
+    border-color: globals.$token-border-input-default;
 
-    background: globals.$ion-bg-input-disabled;
+    background: globals.$token-bg-input-disabled;
   }
 }
 
@@ -154,7 +154,7 @@
    * the range should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, globals.$ion-space-400, 0, 0);
+  @include margin(0, globals.$token-space-400, 0, 0);
 }
 
 // Range Label Placement - End
@@ -166,7 +166,7 @@
    * the range should be on the start
    * when the label sits at the end.
    */
-  @include margin(0, 0, 0, globals.$ion-space-400);
+  @include margin(0, 0, 0, globals.$token-space-400);
 }
 
 // Range Label Placement - Fixed
@@ -178,7 +178,7 @@
    * the range should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, globals.$ion-space-400, 0, 0);
+  @include margin(0, globals.$token-space-400, 0, 0);
 }
 
 // Range Label Placement - Stacked
@@ -192,7 +192,7 @@
   * the range should be on the bottom
   * when the label sits on top.
   */
-  @include margin(null, 0, globals.$ion-space-400, 0);
+  @include margin(null, 0, globals.$token-space-400, 0);
 
   /**
    * Label text should not extend
@@ -202,11 +202,11 @@
 }
 
 :host(.in-item.range-label-placement-stacked) .label-text-wrapper {
-  @include margin(globals.$ion-space-250, null, globals.$ion-space-400, null);
+  @include margin(globals.$token-space-250, null, globals.$token-space-400, null);
 }
 
 :host(.in-item.range-label-placement-stacked) .native-wrapper {
-  @include margin(null, null, globals.$ion-space-0, null);
+  @include margin(null, null, globals.$token-space-0, null);
 }
 
 // Range Focus
@@ -220,5 +220,5 @@
 // ----------------------------------------------------------------
 .range-knob-handle.ion-activated .range-knob,
 .range-knob-handle.range-knob-pressed .range-knob {
-  background: globals.$ion-bg-input-press;
+  background: globals.$token-bg-input-press;
 }

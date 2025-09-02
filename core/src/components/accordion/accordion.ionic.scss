@@ -12,16 +12,16 @@
 // to properly inset the border relative to the entire
 // accordion, rather than just the header.
 :host::after {
-  @include globals.margin(null, globals.$ion-space-400, null, globals.$ion-space-400);
+  @include globals.margin(null, globals.$token-space-400, null, globals.$token-space-400);
   @include globals.position(null, 0, 0, 0);
 
   display: block;
 
   position: absolute;
 
-  height: globals.$ion-border-size-025;
+  height: globals.$token-border-size-025;
 
-  background-color: globals.$ion-border-default;
+  background-color: globals.$token-border-default;
 
   content: "";
 
@@ -43,26 +43,26 @@
 // we are adding a border to the ::after element of the accordion.
 ::slotted(ion-item[slot="header"]) {
   --border-radius: inherit;
-  --color: #{globals.$ion-text-default};
-  --border-width: #{globals.$ion-border-size-0};
-  --inner-border-width: #{globals.$ion-scale-0};
-  --min-height: #{globals.$ion-scale-700};
-  --padding-top: #{globals.$ion-space-300};
-  --padding-end: #{globals.$ion-space-400};
-  --padding-bottom: #{globals.$ion-space-300};
-  --padding-start: #{globals.$ion-space-400};
+  --color: #{globals.$token-text-default};
+  --border-width: #{globals.$token-border-size-0};
+  --inner-border-width: #{globals.$token-scale-0};
+  --min-height: #{globals.$token-scale-700};
+  --padding-top: #{globals.$token-space-300};
+  --padding-end: #{globals.$token-space-400};
+  --padding-bottom: #{globals.$token-space-300};
+  --padding-start: #{globals.$token-space-400};
 
-  @include globals.typography(globals.$ion-heading-h6-medium);
+  @include globals.typography(globals.$token-heading-h6-medium);
 }
 
 // Accordion Content
 // --------------------------------------------------
 
 #content-wrapper {
-  @include globals.padding(globals.$ion-space-300, globals.$ion-space-400);
-  @include globals.typography(globals.$ion-body-md-regular);
+  @include globals.padding(globals.$token-space-300, globals.$token-space-400);
+  @include globals.typography(globals.$token-body-md-regular);
 
-  color: globals.$ion-text-default;
+  color: globals.$token-text-default;
 }
 
 // Disabled Accordion

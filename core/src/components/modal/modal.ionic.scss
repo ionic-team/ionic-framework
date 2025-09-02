@@ -5,42 +5,42 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ion-bg-surface-default};
-  --box-shadow: #{globals.$ion-elevation-3};
+  --background: #{globals.$token-bg-surface-default};
+  --box-shadow: #{globals.$token-elevation-3};
   // Backdrop opacity is 1 because the backdrop's background color has an alpha value
   --backdrop-opacity: 1;
 
-  color: globals.$ion-text-default;
+  color: globals.$token-text-default;
 }
 
 // Shape
 // -------------------------------------
 :host(.modal-round) {
-  --border-radius: #{globals.$ion-border-radius-1000};
+  --border-radius: #{globals.$token-border-radius-1000};
 }
 
 :host(.modal-soft) {
-  --border-radius: #{globals.$ion-border-radius-400};
+  --border-radius: #{globals.$token-border-radius-400};
 }
 
 :host(.modal-rectangular) {
-  --border-radius: #{globals.$ion-border-radius-0};
+  --border-radius: #{globals.$token-border-radius-0};
 }
 
 // Sheet Modal
 // --------------------------------------------------
 
 .modal-handle {
-  @include globals.position(globals.$ion-space-300, 0px, null, 0px);
-  @include globals.border-radius(globals.$ion-border-radius-100);
+  @include globals.position(globals.$token-space-300, 0px, null, 0px);
+  @include globals.border-radius(globals.$token-border-radius-100);
 
-  width: globals.$ion-scale-1100;
-  height: globals.$ion-scale-100;
+  width: globals.$token-scale-1100;
+  height: globals.$token-scale-100;
 
-  background-color: globals.$ion-primitives-neutral-300;
+  background-color: globals.$token-primitives-neutral-300;
 
   &::before {
-    @include globals.padding(globals.$ion-space-100);
+    @include globals.padding(globals.$token-space-100);
   }
 }
 
@@ -53,5 +53,5 @@
  * completely cover the content.
  */
 :host(.modal-sheet) {
-  --height: calc(100% - (var(--ion-safe-area-top) + #{globals.$ion-scale-250}));
+  --height: calc(100% - (var(--ion-safe-area-top) + #{globals.$token-scale-250}));
 }

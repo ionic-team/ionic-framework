@@ -20,7 +20,7 @@ ion-item.ion-focused::part(native)::after {
 // ----------------------------------------------------------------
 
 ion-toolbar {
-  @include globals.typography(globals.$ion-heading-h6-medium);
+  @include globals.typography(globals.$token-heading-h6-medium);
 }
 
 // Radio
@@ -39,7 +39,7 @@ ion-list ion-radio::part(label) {
 
 ion-list ion-radio::part(label),
 ion-list ion-checkbox::part(label) {
-  @include globals.typography(globals.$ion-body-lg-medium);
+  @include globals.typography(globals.$token-body-lg-medium);
 }
 
 // Radio and Checkbox: Checked
@@ -47,8 +47,8 @@ ion-list ion-checkbox::part(label) {
 
 .item-radio-checked,
 .item-checkbox-checked {
-  --background: #{globals.$ion-semantics-primary-100};
-  --border-radius: #{globals.$ion-border-radius-400};
+  --background: #{globals.$token-semantics-primary-100};
+  --border-radius: #{globals.$token-border-radius-400};
 }
 
 // Content
@@ -62,9 +62,9 @@ ion-content {
    * padding of the modal sheet in the core.
    */
   /* stylelint-disable-next-line declaration-no-important */
-  --padding-start: #{globals.$ion-space-400} !important;
+  --padding-start: #{globals.$token-space-400} !important;
   /* stylelint-disable-next-line declaration-no-important */
-  --padding-end: #{globals.$ion-space-400} !important;
+  --padding-end: #{globals.$token-space-400} !important;
   /* stylelint-disable-next-line declaration-no-important */
-  --padding-bottom: #{globals.$ion-space-1200} !important;
+  --padding-bottom: #{globals.$token-space-1200} !important;
 }
