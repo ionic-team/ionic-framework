@@ -7,7 +7,7 @@ configs().forEach(({ title, config }) => {
     test('should not have accessibility violations', async ({ page }) => {
       await page.goto(`/src/components/picker/test/a11y`, config);
 
-      const results = await new AxeBuilder({ page }).analyze();
+      const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
 
       const hasKnownViolations = results.violations.filter((violation) => violation.id === 'color-contrast');
       const violations = results.violations.filter((violation) => !hasKnownViolations.includes(violation));
