@@ -8,7 +8,7 @@
    * @prop --col-unit-size: The size of each Column unit.
    */
   --col-unit-size: calc((100% - (var(--ion-grid-columns) - 1) * var(--ion-grid-gap)) / var(--ion-grid-columns));
-  
+
   /**
    * @prop --ion-grid-columns: The number of total Columns in the Grid
    * @prop --ion-grid-column-padding: Padding for the Column
@@ -33,35 +33,33 @@
   min-height: 1px; // Prevent columns from collapsing when empty
 }
 
-:host(.ion-grid-col-auto){
+:host(.ion-grid-col-auto) {
   flex: 0 0 auto;
 }
 
-:host(
-  [class^="ion-grid-col-"], 
-  [class*=" ion-grid-col-"]) {
-    flex: 0 0
-      calc(var(--ion-grid-col-span) * var(--col-unit-size) + 
-      (var(--ion-grid-col-span) - 1) * var(--ion-grid-gap));
+:host([class^="ion-grid-col-"], [class*=" ion-grid-col-"]) {
+  flex: 0 0 calc(var(--ion-grid-col-span) * var(--col-unit-size) + (var(--ion-grid-col-span) - 1) * var(--ion-grid-gap));
 }
 
-:host(
-  [class^="ion-grid-offset-col-"],
-  [class*=" ion-grid-offset-col-"]) {
-    --margin-calc: calc(var(--col-unit-size) * var(--ion-grid-col-margin) + (var(--ion-grid-gap) * var(--ion-grid-col-margin)));
-    
-    @include margin-horizontal(var(--margin-calc), 0);
+:host([class^="ion-grid-offset-col-"], [class*=" ion-grid-offset-col-"]) {
+  --margin-calc: calc(
+    var(--col-unit-size) * var(--ion-grid-col-margin) + (var(--ion-grid-gap) * var(--ion-grid-col-margin))
+  );
+
+  @include margin-horizontal(var(--margin-calc), 0);
 }
 
 $max: 12;
 
 @for $i from 1 through $max {
   .ion-grid-col-#{$i} {
-    --ion-grid-col-span: #{$i}; 
+    --ion-grid-col-span: #{$i};
   }
+
   .ion-grid-order-col-#{$i} {
-    order: #{$i}; 
+    order: #{$i};
   }
+
   .ion-grid-offset-col-#{$i} {
     --ion-grid-col-margin: #{$i};
   }

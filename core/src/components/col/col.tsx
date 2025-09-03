@@ -5,7 +5,6 @@ import { matchBreakpoint } from '@utils/media';
 
 import { getIonTheme } from '../../global/ionic-global';
 
-
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
@@ -19,7 +18,6 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true,
 })
 export class Col implements ComponentInterface {
-
   @Element() el!: HTMLIonColElement;
   /**
    * The amount to offset the column, in terms of how many columns it should shift to the end
@@ -57,7 +55,7 @@ export class Col implements ComponentInterface {
    */
   @Prop() offsetXl?: string;
 
-/**
+  /**
    * The order of the column, in terms of where the column should position itself in the columns renderer.
    * If no value is passed, the column order implicit value will be the order in the html structure.
    */
@@ -266,9 +264,19 @@ export class Col implements ComponentInterface {
   }
 
   componentDidLoad() {
-    if(
-      this.pull || this.pullLg || this.pullMd || this.pullSm || this.pullXl || this.pullXs ||
-      this.push || this.pushLg || this.pushMd || this.pushSm || this.pushXl || this.pushXs
+    if (
+      this.pull ||
+      this.pullLg ||
+      this.pullMd ||
+      this.pullSm ||
+      this.pullXl ||
+      this.pullXs ||
+      this.push ||
+      this.pushLg ||
+      this.pushMd ||
+      this.pushSm ||
+      this.pushXl ||
+      this.pushXs
     ) {
       printIonWarning(
         '[ion-col] - The pull and push properties are deprecated and no longer work, in favor of the order and size properties.',
@@ -290,7 +298,7 @@ export class Col implements ComponentInterface {
           [theme]: true,
           [`${colSize}`]: colSize !== undefined,
           [`${colOrder}`]: colOrder !== undefined,
-          [`${colOffset}`]: colOffset !== undefined
+          [`${colOffset}`]: colOffset !== undefined,
         }}
       >
         <slot></slot>
