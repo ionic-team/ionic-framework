@@ -7,7 +7,7 @@
   /**
    * @prop --col-unit-size: The size of each Column unit.
    */
-  --col-unit-size: calc((100% - (var(--ion-grid-columns, 12) - 1) * var(--ion-grid-gap)) / var(--ion-grid-columns, 12));
+  --col-unit-size: calc((100% - (var(--ion-grid-columns) - 1) * var(--ion-grid-gap)) / var(--ion-grid-columns));
   
   /**
    * @prop --ion-grid-columns: The number of total Columns in the Grid
