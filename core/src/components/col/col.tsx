@@ -1,8 +1,10 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
+import { Component, Element, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
+import { printIonWarning } from '@utils/logging';
 import { matchBreakpoint } from '@utils/media';
 
 import { getIonTheme } from '../../global/ionic-global';
+
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
@@ -88,6 +90,67 @@ export class Col implements ComponentInterface {
    * If no value is passed, the column order implicit value will be the order in the html structure.
    */
   @Prop() orderXl?: string;
+
+  /**
+   * The amount to pull the column, in terms of how many columns it should shift to the start of
+   * the total available.
+   */
+  @Prop() pull?: string;
+  /**
+   * The amount to pull the column for xs screens, in terms of how many columns it should shift
+   * to the start of the total available.
+   */
+  @Prop() pullXs?: string;
+  /**
+   * The amount to pull the column for sm screens, in terms of how many columns it should shift
+   * to the start of the total available.
+   */
+  @Prop() pullSm?: string;
+  /**
+   * The amount to pull the column for md screens, in terms of how many columns it should shift
+   * to the start of the total available.
+   */
+  @Prop() pullMd?: string;
+  /**
+   * The amount to pull the column for lg screens, in terms of how many columns it should shift
+   * to the start of the total available.
+   */
+  @Prop() pullLg?: string;
+  /**
+   * The amount to pull the column for xl screens, in terms of how many columns it should shift
+   * to the start of the total available.
+   */
+  @Prop() pullXl?: string;
+  /**
+   * The amount to push the column, in terms of how many columns it should shift to the end
+   * of the total available.
+   */
+  @Prop() push?: string;
+  /**
+   * The amount to push the column for xs screens, in terms of how many columns it should shift
+   * to the end of the total available.
+   */
+  @Prop() pushXs?: string;
+  /**
+   * The amount to push the column for sm screens, in terms of how many columns it should shift
+   * to the end of the total available.
+   */
+  @Prop() pushSm?: string;
+  /**
+   * The amount to push the column for md screens, in terms of how many columns it should shift
+   * to the end of the total available.
+   */
+  @Prop() pushMd?: string;
+  /**
+   * The amount to push the column for lg screens, in terms of how many columns it should shift
+   * to the end of the total available.
+   */
+  @Prop() pushLg?: string;
+  /**
+   * The amount to push the column for xl screens, in terms of how many columns it should shift
+   * to the end of the total available.
+   */
+  @Prop() pushXl?: string;
 
   /**
    * The size of the column, in terms of how many columns it should take up out of the total
