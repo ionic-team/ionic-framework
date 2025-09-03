@@ -30,7 +30,8 @@
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
     "copy": "node scripts/copy.js",
     "test.spec": "jest --ci",
-    "sync": "sh ./scripts/sync.sh"
+    "sync": "sh ./scripts/sync.sh",
+    "local.sync.and.pack": "./scripts/sync-and-pack.sh"
   },
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
