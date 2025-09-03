@@ -2,8 +2,8 @@
   <ion-page :data-pageid="'routingparameter-' + $props.id">
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-buttons>
-          <ion-back-button></ion-back-button>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/routing"></ion-back-button>
         </ion-buttons>
         <ion-title>Routing Parameter</ion-title>
       </ion-toolbar>

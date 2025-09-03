@@ -1,11 +1,13 @@
-describe('Action Sheet Controller', () => {
-  beforeEach(() => {
-    cy.visit('/standalone/action-sheet-controller');
-  })
+import { test, expect } from '@playwright/test';
 
-  it('should open an action sheet', () => {
-    cy.get('button#open-action-sheet').click();
-
-    cy.get('ion-action-sheet').should('be.visible');
+test.describe('Action Sheet Controller', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/standalone/action-sheet-controller');
   });
-})
+
+  test('should open an action sheet', async ({ page }) => {
+    await page.locator('button#open-action-sheet').click();
+
+    await expect(page.locator('ion-action-sheet')).toBeVisible();
+  });
+});

@@ -1,224 +1,241 @@
-describe('Value Accessors', () => {
+import { test, expect } from '@playwright/test';
 
-  describe('Checkbox', () => {
-    beforeEach(() => cy.visit('/standalone/value-accessors/checkbox'));
+test.describe('Value Accessors', () => {
+  test.describe('Checkbox', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/standalone/value-accessors/checkbox');
+    });
 
-    it('should update the form value', () => {
-      cy.get('#formValue').should('have.text', JSON.stringify({ checkbox: false }, null, 2));
-      cy.get('ion-checkbox').should('have.class', 'ion-pristine');
+    test('should update the form value', async ({ page }) => {
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ checkbox: false }, null, 2));
+      await expect(page.locator('ion-checkbox')).toHaveClass(/ion-pristine/);
 
-      cy.get('ion-checkbox').click();
+      await page.locator('ion-checkbox').click();
 
-      cy.get('#formValue').should('have.text', JSON.stringify({ checkbox: true }, null, 2));
-      cy.get('ion-checkbox').should('have.class', 'ion-dirty');
-      cy.get('ion-checkbox').should('have.class', 'ion-valid');
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ checkbox: true }, null, 2));
+      await expect(page.locator('ion-checkbox')).toHaveClass(/ion-dirty/);
+      await expect(page.locator('ion-checkbox')).toHaveClass(/ion-valid/);
     });
   });
 
-  describe('Input', () => {
-    beforeEach(() => cy.visit('/standalone/value-accessors/input'));
+  test.describe('Input', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/standalone/value-accessors/input');
+    });
 
-    it('should update the form value', () => {
-      cy.get('#formValue').should('have.text', JSON.stringify({
+    test('should update the form value', async ({ page }) => {
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({
         inputString: '',
         inputNumber: ''
       }, null, 2));
-      cy.get('ion-input[formControlName="inputString"]').should('have.class', 'ion-pristine');
-      cy.get('ion-input[formControlName="inputNumber"]').should('have.class', 'ion-pristine');
+      await expect(page.locator('ion-input[formControlName="inputString"]')).toHaveClass(/ion-pristine/);
+      await expect(page.locator('ion-input[formControlName="inputNumber"]')).toHaveClass(/ion-pristine/);
 
-      cy.get('ion-input[formControlName="inputString"]').should('have.class', 'ion-invalid');
-      cy.get('ion-input[formControlName="inputNumber"]').should('have.class', 'ion-invalid');
+      await expect(page.locator('ion-input[formControlName="inputString"]')).toHaveClass(/ion-invalid/);
+      await expect(page.locator('ion-input[formControlName="inputNumber"]')).toHaveClass(/ion-invalid/);
 
-      cy.get('ion-input[formControlName="inputString"] input').type('test');
-      cy.get('ion-input[formControlName="inputString"] input').blur();
+      await page.locator('ion-input[formControlName="inputString"] input').fill('test');
+      await page.locator('ion-input[formControlName="inputString"] input').blur();
 
-      cy.get('ion-input[formControlName="inputNumber"] input').type(1);
-      cy.get('ion-input[formControlName="inputNumber"] input').blur();
+      await page.locator('ion-input[formControlName="inputNumber"] input').fill('1');
+      await page.locator('ion-input[formControlName="inputNumber"] input').blur();
 
-      cy.get('#formValue').should('have.text', JSON.stringify({
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({
         inputString: 'test',
         inputNumber: 1
       }, null, 2));
 
-      cy.get('ion-input[formControlName="inputString"]').should('have.class', 'ion-dirty');
-      cy.get('ion-input[formControlName="inputNumber"]').should('have.class', 'ion-dirty');
+      await expect(page.locator('ion-input[formControlName="inputString"]')).toHaveClass(/ion-dirty/);
+      await expect(page.locator('ion-input[formControlName="inputNumber"]')).toHaveClass(/ion-dirty/);
 
-      cy.get('ion-input[formControlName="inputString"]').should('have.class', 'ion-valid');
-      cy.get('ion-input[formControlName="inputNumber"]').should('have.class', 'ion-valid');
-
+      await expect(page.locator('ion-input[formControlName="inputString"]')).toHaveClass(/ion-valid/);
+      await expect(page.locator('ion-input[formControlName="inputNumber"]')).toHaveClass(/ion-valid/);
     });
   });
 
-  describe('Radio Group', () => {
-    beforeEach(() => cy.visit('/standalone/value-accessors/radio-group'));
+  test.describe('Radio Group', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/standalone/value-accessors/radio-group');
+    });
 
-    it('should update the form value', () => {
-      cy.get('#formValue').should('have.text', JSON.stringify({ radioGroup: '1' }, null, 2));
-      cy.get('ion-radio-group').should('have.class', 'ion-pristine');
+    test('should update the form value', async ({ page }) => {
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ radioGroup: '1' }, null, 2));
+      await expect(page.locator('ion-radio-group')).toHaveClass(/ion-pristine/);
 
-      cy.get('ion-radio').contains('Two').click();
+      await page.locator('ion-radio').filter({ hasText: 'Two' }).click();
 
-      cy.get('#formValue').should('have.text', JSON.stringify({ radioGroup: '2' }, null, 2));
-      cy.get('ion-radio-group').should('have.class', 'ion-dirty');
-      cy.get('ion-radio-group').should('have.class', 'ion-valid');
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ radioGroup: '2' }, null, 2));
+      await expect(page.locator('ion-radio-group')).toHaveClass(/ion-dirty/);
+      await expect(page.locator('ion-radio-group')).toHaveClass(/ion-valid/);
     });
   });
 
-  describe('Searchbar', () => {
-    beforeEach(() => cy.visit('/standalone/value-accessors/searchbar'));
+  test.describe('Searchbar', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/standalone/value-accessors/searchbar');
+    });
 
-    it('should update the form value', () => {
-      cy.get('#formValue').should('have.text', JSON.stringify({ searchbar: '' }, null, 2));
-      cy.get('ion-searchbar').should('have.class', 'ion-pristine');
-      cy.get('ion-searchbar').should('have.class', 'ion-invalid');
+    test('should update the form value', async ({ page }) => {
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ searchbar: '' }, null, 2));
+      await expect(page.locator('ion-searchbar')).toHaveClass(/ion-pristine/);
+      await expect(page.locator('ion-searchbar')).toHaveClass(/ion-invalid/);
 
-      cy.get('ion-searchbar').type('test');
-      cy.get('ion-searchbar input').blur();
+      await page.locator('ion-searchbar input').fill('test');
+      await page.locator('ion-searchbar input').blur();
 
-      cy.get('#formValue').should('have.text', JSON.stringify({ searchbar: 'test' }, null, 2));
-      cy.get('ion-searchbar').should('have.class', 'ion-dirty');
-      cy.get('ion-searchbar').should('have.class', 'ion-valid');
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ searchbar: 'test' }, null, 2));
+      await expect(page.locator('ion-searchbar')).toHaveClass(/ion-dirty/);
+      await expect(page.locator('ion-searchbar')).toHaveClass(/ion-valid/);
     });
   });
 
-  describe('Segment', () => {
-    beforeEach(() => cy.visit('/standalone/value-accessors/segment'));
+  test.describe('Segment', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/standalone/value-accessors/segment');
+    });
 
-    it('should update the form value', () => {
-      cy.get('#formValue').should('have.text', JSON.stringify({ segment: 'Paid' }, null, 2));
-      cy.get('ion-segment').should('have.class', 'ion-pristine');
+    test('should update the form value', async ({ page }) => {
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ segment: 'Paid' }, null, 2));
+      await expect(page.locator('ion-segment')).toHaveClass(/ion-pristine/);
 
-      cy.get('ion-segment-button').eq(1).click();
+      await page.locator('ion-segment-button').nth(1).click();
 
-      cy.get('#formValue').should('have.text', JSON.stringify({ segment: 'Free' }, null, 2));
-      cy.get('ion-segment').should('have.class', 'ion-dirty');
-      cy.get('ion-segment').should('have.class', 'ion-valid');
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ segment: 'Free' }, null, 2));
+      await expect(page.locator('ion-segment')).toHaveClass(/ion-dirty/);
+      await expect(page.locator('ion-segment')).toHaveClass(/ion-valid/);
     });
   });
 
-  describe('Select', () => {
-    beforeEach(() => cy.visit('/standalone/value-accessors/select'));
+  test.describe('Select', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/standalone/value-accessors/select');
+    });
 
-    it('should update the form value', () => {
-      cy.get('#formValue').should('have.text', JSON.stringify({ select: 'bananas' }, null, 2));
-      cy.get('ion-select').should('have.class', 'ion-pristine');
+    test('should update the form value', async ({ page }) => {
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ select: 'bananas' }, null, 2));
+      await expect(page.locator('ion-select')).toHaveClass(/ion-pristine/);
 
-      cy.get('ion-select').click();
-      cy.get('ion-popover').should('be.visible');
+      await page.locator('ion-select').click();
+      await expect(page.locator('ion-popover')).toBeVisible();
 
-      cy.get('ion-popover ion-radio-group ion-radio').first().click();
+      await page.locator('ion-popover ion-radio-group ion-radio').first().click();
 
-      cy.get('#formValue').should('have.text', JSON.stringify({ select: 'apples' }, null, 2));
-      cy.get('ion-select').should('have.class', 'ion-dirty');
-      cy.get('ion-select').should('have.class', 'ion-valid');
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ select: 'apples' }, null, 2));
+      await expect(page.locator('ion-select')).toHaveClass(/ion-dirty/);
+      await expect(page.locator('ion-select')).toHaveClass(/ion-valid/);
     });
   });
 
-  describe('Textarea', () => {
-    beforeEach(() => cy.visit('/standalone/value-accessors/textarea'));
+  test.describe('Textarea', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/standalone/value-accessors/textarea');
+    });
 
-    it('should update the form value', () => {
-      cy.get('#formValue').should('have.text', JSON.stringify({ textarea: '' }, null, 2));
-      cy.get('ion-textarea').should('have.class', 'ion-pristine');
-      cy.get('ion-textarea').should('have.class', 'ion-invalid');
+    test('should update the form value', async ({ page }) => {
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ textarea: '' }, null, 2));
+      await expect(page.locator('ion-textarea')).toHaveClass(/ion-pristine/);
+      await expect(page.locator('ion-textarea')).toHaveClass(/ion-invalid/);
 
-      cy.get('ion-textarea').click();
-      cy.get('ion-textarea').type('test');
+      await page.locator('ion-textarea').click();
+      await page.locator('ion-textarea textarea').fill('test');
 
-      cy.get('#formValue').should('have.text', JSON.stringify({ textarea: 'test' }, null, 2));
-      cy.get('ion-textarea').should('have.class', 'ion-dirty');
-      cy.get('ion-textarea').should('have.class', 'ion-valid');
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ textarea: 'test' }, null, 2));
+      await expect(page.locator('ion-textarea')).toHaveClass(/ion-dirty/);
+      await expect(page.locator('ion-textarea')).toHaveClass(/ion-valid/);
     });
   });
 
-  describe('Toggle', () => {
-    beforeEach(() => cy.visit('/standalone/value-accessors/toggle'));
+  test.describe('Toggle', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/standalone/value-accessors/toggle');
+    });
 
-    it('should update the form value', () => {
-      cy.get('#formValue').should('have.text', JSON.stringify({ toggle: false }, null, 2));
-      cy.get('ion-toggle').should('have.class', 'ion-pristine');
+    test('should update the form value', async ({ page }) => {
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ toggle: false }, null, 2));
+      await expect(page.locator('ion-toggle')).toHaveClass(/ion-pristine/);
 
-      cy.get('ion-toggle').click();
+      await page.locator('ion-toggle').click();
 
-      cy.get('#formValue').should('have.text', JSON.stringify({ toggle: true }, null, 2));
-      cy.get('ion-toggle').should('have.class', 'ion-dirty');
-      cy.get('ion-toggle').should('have.class', 'ion-valid');
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({ toggle: true }, null, 2));
+      await expect(page.locator('ion-toggle')).toHaveClass(/ion-dirty/);
+      await expect(page.locator('ion-toggle')).toHaveClass(/ion-valid/);
     });
   });
 
-  describe('Input OTP', () => {
-    beforeEach(() => cy.visit('/standalone/value-accessors/input-otp'));
+  test.describe('Input OTP', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/standalone/value-accessors/input-otp');
+    });
 
-    it('should update the form value', () => {
-      cy.get('#formValue').should('have.text', JSON.stringify({
+    test('should update the form value', async ({ page }) => {
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({
         inputOtpString: '',
         inputOtpNumber: ''
       }, null, 2));
-      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-pristine');
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-pristine');
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpString"]')).toHaveClass(/ion-pristine/);
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpNumber"]')).toHaveClass(/ion-pristine/);
 
-      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-invalid');
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-invalid');
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpString"]')).toHaveClass(/ion-invalid/);
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpNumber"]')).toHaveClass(/ion-invalid/);
 
       // Type into the string OTP input
-      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(0).type('a');
-      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(1).type('b');
-      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(2).type('c');
-      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(3).type('d');
-      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(3).blur();
+      await page.locator('ion-input-otp[formControlName="inputOtpString"] input').nth(0).fill('a');
+      await page.locator('ion-input-otp[formControlName="inputOtpString"] input').nth(1).fill('b');
+      await page.locator('ion-input-otp[formControlName="inputOtpString"] input').nth(2).fill('c');
+      await page.locator('ion-input-otp[formControlName="inputOtpString"] input').nth(3).fill('d');
+      await page.locator('ion-input-otp[formControlName="inputOtpString"] input').nth(3).blur();
 
       // Type into the number OTP input
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(0).type('1');
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(1).type('2');
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(2).type('3');
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(3).type('4');
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(3).blur();
+      await page.locator('ion-input-otp[formControlName="inputOtpNumber"] input').nth(0).fill('1');
+      await page.locator('ion-input-otp[formControlName="inputOtpNumber"] input').nth(1).fill('2');
+      await page.locator('ion-input-otp[formControlName="inputOtpNumber"] input').nth(2).fill('3');
+      await page.locator('ion-input-otp[formControlName="inputOtpNumber"] input').nth(3).fill('4');
+      await page.locator('ion-input-otp[formControlName="inputOtpNumber"] input').nth(3).blur();
 
-      cy.get('#formValue').should('have.text', JSON.stringify({
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({
         inputOtpString: 'abcd',
         inputOtpNumber: 1234
       }, null, 2));
 
-      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-dirty');
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-dirty');
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpString"]')).toHaveClass(/ion-dirty/);
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpNumber"]')).toHaveClass(/ion-dirty/);
 
-      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-valid');
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-valid');
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpString"]')).toHaveClass(/ion-valid/);
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpNumber"]')).toHaveClass(/ion-valid/);
     });
 
-    it('should remain invalid when partially filled', () => {
-      cy.get('#formValue').should('have.text', JSON.stringify({
+    test('should remain invalid when partially filled', async ({ page }) => {
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({
         inputOtpString: '',
         inputOtpNumber: ''
       }, null, 2));
-      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-pristine');
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-pristine');
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpString"]')).toHaveClass(/ion-pristine/);
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpNumber"]')).toHaveClass(/ion-pristine/);
 
-      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-invalid');
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-invalid');
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpString"]')).toHaveClass(/ion-invalid/);
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpNumber"]')).toHaveClass(/ion-invalid/);
 
       // Type only 2 characters into the string OTP input
-      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(0).type('a');
-      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(1).type('b');
-      cy.get('ion-input-otp[formControlName="inputOtpString"] input').eq(2).blur();
+      await page.locator('ion-input-otp[formControlName="inputOtpString"] input').nth(0).fill('a');
+      await page.locator('ion-input-otp[formControlName="inputOtpString"] input').nth(1).fill('b');
+      await page.locator('ion-input-otp[formControlName="inputOtpString"] input').nth(2).blur();
 
       // Type only 2 characters into the number OTP input
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(0).type('1');
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(1).type('2');
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"] input').eq(2).blur();
+      await page.locator('ion-input-otp[formControlName="inputOtpNumber"] input').nth(0).fill('1');
+      await page.locator('ion-input-otp[formControlName="inputOtpNumber"] input').nth(1).fill('2');
+      await page.locator('ion-input-otp[formControlName="inputOtpNumber"] input').nth(2).blur();
 
-      cy.get('#formValue').should('have.text', JSON.stringify({
+      await expect(page.locator('#formValue')).toHaveText(JSON.stringify({
         inputOtpString: 'ab',
         inputOtpNumber: 12
       }, null, 2));
 
-      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-dirty');
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-dirty');
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpString"]')).toHaveClass(/ion-dirty/);
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpNumber"]')).toHaveClass(/ion-dirty/);
 
       // Verify both inputs remain invalid when partially filled
-      cy.get('ion-input-otp[formControlName="inputOtpString"]').should('have.class', 'ion-invalid');
-      cy.get('ion-input-otp[formControlName="inputOtpNumber"]').should('have.class', 'ion-invalid');
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpString"]')).toHaveClass(/ion-invalid/);
+      await expect(page.locator('ion-input-otp[formControlName="inputOtpNumber"]')).toHaveClass(/ion-invalid/);
     });
   });
-
 });

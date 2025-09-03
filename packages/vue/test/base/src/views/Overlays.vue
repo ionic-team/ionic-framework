@@ -2,68 +2,69 @@
   <ion-page data-pageid="overlays">
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-buttons>
-          <ion-back-button></ion-back-button>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/"></ion-back-button>
         </ion-buttons>
         <ion-title>Overlays</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content class="ion-padding" :fullscreen="true">
-      <ion-radio-group v-model="componentType">
-        <ion-list-header>
-          <ion-label>
-            Component
-          </ion-label>
-        </ion-list-header>
+    <ion-content :fullscreen="true">
+      <ion-list>
+        <ion-radio-group v-model="componentType">
+          <ion-list-header>
+            <ion-label>
+              Component
+            </ion-label>
+          </ion-list-header>
 
-        <ion-item>
-          <ion-radio value="alert" id="ion-alert">Alert</ion-radio>
-        </ion-item>
-        <ion-item>
-          <ion-radio value="action-sheet" id="ion-action-sheet">Action Sheet</ion-radio>
-        </ion-item>
-        <ion-item>
-          <ion-radio value="loading" id="ion-loading">Loading</ion-radio>
-        </ion-item>
-        <ion-item>
-          <ion-radio value="modal" id="ion-modal">Modal</ion-radio>
-        </ion-item>
-        <ion-item>
-          <ion-radio value="popover" id="ion-popover">Popover</ion-radio>
-        </ion-item>
-        <ion-item>
-          <ion-radio value="toast" id="ion-toast">Toast</ion-radio>
-        </ion-item>
-      </ion-radio-group>
+          <ion-item>
+            <ion-radio value="alert" id="ion-alert">Alert</ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-radio value="action-sheet" id="ion-action-sheet">Action Sheet</ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-radio value="loading" id="ion-loading">Loading</ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-radio value="modal" id="ion-modal">Modal</ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-radio value="popover" id="ion-popover">Popover</ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-radio value="toast" id="ion-toast">Toast</ion-radio>
+          </ion-item>
+        </ion-radio-group>
 
-      <ion-radio-group v-model="presentationType">
-        <ion-list-header>
-          <ion-label>
-            Presentation Type
-          </ion-label>
-        </ion-list-header>
+        <ion-radio-group v-model="presentationType">
+          <ion-list-header>
+            <ion-label>
+              Presentation Type
+            </ion-label>
+          </ion-list-header>
 
-        <ion-item>
-          <ion-radio value="controller" id="controller">Controller</ion-radio>
-        </ion-item>
-        <ion-item>
-          <ion-radio value="component" id="component">Component</ion-radio>
-        </ion-item>
-      </ion-radio-group>
+          <ion-item>
+            <ion-radio value="controller" id="controller">Controller</ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-radio value="component" id="component">Component</ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
 
-      <br />
+      <div class="ion-display-flex ion-justify-content-center ion-flex-wrap ion-margin">
+        <ion-button @click="present($event)" id="present-overlay">Present Overlay</ion-button>
+        <ion-button @click="changeLoadingProps()" id="change-loading-props">Quickly Change Loading Props</ion-button>
+      </div>
 
-      <ion-button @click="present($event)" id="present-overlay">Present Overlay</ion-button>
-
-      <ion-button @click="changeLoadingProps()" id="change-loading-props">Quickly Change Loading Props</ion-button>
-
-      <br /><br />
-
-      Modal onWillPresent: <div id="willPresent">{{ willPresent }}</div><br />
-      Modal onDidPresent: <div id="didPresent">{{ didPresent }}</div><br />
-      Modal onWillDismiss: <div id="willDismiss">{{ willDismiss }}</div><br />
-      Modal onDidDismiss: <div id="didDismiss">{{ didDismiss }}</div><br />
+      <div class="ion-padding">
+        Modal onWillPresent: <div id="willPresent">{{ willPresent }}</div><br />
+        Modal onDidPresent: <div id="didPresent">{{ didPresent }}</div><br />
+        Modal onWillDismiss: <div id="willDismiss">{{ willDismiss }}</div><br />
+        Modal onDidDismiss: <div id="didDismiss">{{ didDismiss }}</div><br />
+      </div>
 
       <ion-action-sheet
         :is-open="isActionSheetOpen"
@@ -131,6 +132,7 @@ import {
   IonHeader,
   IonItem,
   IonLabel,
+  IonList,
   IonListHeader,
   IonPage,
   IonRadio,
@@ -166,6 +168,7 @@ export default defineComponent({
     IonHeader,
     IonItem,
     IonLabel,
+    IonList,
     IonListHeader,
     IonPage,
     IonRadio,

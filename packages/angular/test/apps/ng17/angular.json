@@ -71,6 +71,23 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "test": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "none",
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "progress": false,
+              "extractLicenses": false,
+              "vendorChunk": false,
+              "buildOptimizer": true
             }
           },
           "defaultConfiguration": "production"
@@ -86,6 +103,9 @@
             },
             "development": {
               "buildTarget": "test-app:build:development"
+            },
+            "test": {
+              "buildTarget": "test-app:build:test"
             }
           },
           "defaultConfiguration": "development"
