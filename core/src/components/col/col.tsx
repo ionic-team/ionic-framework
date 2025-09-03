@@ -94,61 +94,73 @@ export class Col implements ComponentInterface {
   /**
    * The amount to pull the column, in terms of how many columns it should shift to the start of
    * the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pull?: string;
   /**
    * The amount to pull the column for xs screens, in terms of how many columns it should shift
    * to the start of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pullXs?: string;
   /**
    * The amount to pull the column for sm screens, in terms of how many columns it should shift
    * to the start of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pullSm?: string;
   /**
    * The amount to pull the column for md screens, in terms of how many columns it should shift
    * to the start of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pullMd?: string;
   /**
    * The amount to pull the column for lg screens, in terms of how many columns it should shift
    * to the start of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pullLg?: string;
   /**
    * The amount to pull the column for xl screens, in terms of how many columns it should shift
    * to the start of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pullXl?: string;
   /**
    * The amount to push the column, in terms of how many columns it should shift to the end
    * of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() push?: string;
   /**
    * The amount to push the column for xs screens, in terms of how many columns it should shift
    * to the end of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pushXs?: string;
   /**
    * The amount to push the column for sm screens, in terms of how many columns it should shift
    * to the end of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pushSm?: string;
   /**
    * The amount to push the column for md screens, in terms of how many columns it should shift
    * to the end of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pushMd?: string;
   /**
    * The amount to push the column for lg screens, in terms of how many columns it should shift
    * to the end of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pushLg?: string;
   /**
    * The amount to push the column for xl screens, in terms of how many columns it should shift
    * to the end of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pushXl?: string;
 
