@@ -243,7 +243,6 @@
           validateField(input);
           validateForm();
 
-          // Debug: Log to hidden aria-live region for testing
           const isInvalid = input.classList.contains('ion-invalid');
           if (isInvalid) {
             console.log('Field marked invalid:', input.label, input.errorText);
