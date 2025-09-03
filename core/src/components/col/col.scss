@@ -54,8 +54,15 @@
 }
 
 $max: 12;
+
 @for $i from 1 through $max {
-  .ion-grid-col-#{$i} { --ion-grid-col-span: #{$i}; }
-  .ion-grid-order-col-#{$i} { order: #{$i}; }
-  .ion-grid-offset-col-#{$i} { --ion-grid-col-margin: #{$i};}
+  .ion-grid-col-#{$i} {
+    --ion-grid-col-span: #{$i}; 
+  }
+  .ion-grid-order-col-#{$i} {
+    order: #{$i}; 
+  }
+  .ion-grid-offset-col-#{$i} {
+    --ion-grid-col-margin: #{$i};
+  }
 }
