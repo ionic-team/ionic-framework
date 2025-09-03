@@ -19,6 +19,8 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true,
 })
 export class Col implements ComponentInterface {
+
+  @Element() el!: HTMLIonColElement;
   /**
    * The amount to offset the column, in terms of how many columns it should shift to the end
    * of the total available.
@@ -261,6 +263,18 @@ export class Col implements ComponentInterface {
 
   private getOffsetClass(): string | undefined {
     return this.getStyleClass('offset', 'ion-grid-offset');
+  }
+
+  componentDidLoad() {
+    if(
+      this.pull || this.pullLg || this.pullMd || this.pullSm || this.pullXl || this.pullXs ||
+      this.push || this.pushLg || this.pushMd || this.pushSm || this.pushXl || this.pushXs
+    ) {
+      printIonWarning(
+        '[ion-col] - The pull and push properties are deprecated and no longer work, in favor of the order and size properties.',
+        this.el
+      );
+    }
   }
 
   render() {
