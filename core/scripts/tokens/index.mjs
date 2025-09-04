@@ -24,9 +24,6 @@ const {
 } = utils;
 import StyleDictionary from 'style-dictionary';
 
-// Set the prefix for variables and classes
-setPrefixValue('token');
-
 // Register a custom file header
 StyleDictionary.registerFileHeader({
   name: 'custom-header',
@@ -40,6 +37,9 @@ StyleDictionary.registerFormat({
   name: 'scssVariablesFormat',
   format: function ({ dictionary }) { // Use 'format' for Style Dictionary v3
     console.log('Generating SCSS variables...');
+
+    // Set the prefix for variables
+    setPrefixValue('token');
 
     const primitiveProperties = dictionary.allTokens.filter((prop) => prop.path[0] === 'primitives');
     const scaleProperties = dictionary.allTokens.filter((prop) => prop.path[0] === 'scale');
@@ -93,6 +93,9 @@ StyleDictionary.registerFormat({
   name: 'cssUtilityClassesFormat',
   format: function ({ dictionary }) { // Use 'format' for Style Dictionary v3
     console.log('Generating Utility-Classes...');
+
+    // Set the prefix for classes
+    setPrefixValue('ion');
 
     // Arrays to store specific utility classes
     const typographyUtilityClasses = [];
