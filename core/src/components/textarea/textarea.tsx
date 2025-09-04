@@ -43,7 +43,7 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
     md: 'textarea.md.scss',
     ionic: 'textarea.ionic.scss',
   },
-  scoped: true,
+  shadow: true,
 })
 export class Textarea implements ComponentInterface {
   private nativeInput?: HTMLTextAreaElement;
