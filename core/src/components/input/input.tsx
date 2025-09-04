@@ -406,7 +406,7 @@ export class Input implements ComponentInterface {
   /**
    * Checks if the input is in an invalid state based on Ionic validation classes
    */
-  private checkValidationState(): boolean {
+  private checkInvalidState(): boolean {
     const hasIonTouched = this.el.classList.contains('ion-touched');
     const hasIonInvalid = this.el.classList.contains('ion-invalid');
 
@@ -426,7 +426,7 @@ export class Input implements ComponentInterface {
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
       this.validationObserver = new MutationObserver(() => {
-        const newIsInvalid = this.checkValidationState();
+        const newIsInvalid = this.checkInvalidState();
         if (this.isInvalid !== newIsInvalid) {
           this.isInvalid = newIsInvalid;
           // Force a re-render to update aria-describedby immediately
@@ -441,7 +441,7 @@ export class Input implements ComponentInterface {
     }
 
     // Always set initial state
-    this.isInvalid = this.checkValidationState();
+    this.isInvalid = this.checkInvalidState();
 
     this.debounceChanged();
     if (Build.isBrowser) {

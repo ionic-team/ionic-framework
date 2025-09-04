@@ -43,9 +43,6 @@ function addressValidator(control: AbstractControl): ValidationErrors | null {
   ]
 })
 export class TextareaValidationComponent {
-  // Track which fields have been touched (using Set like vanilla test)
-  touchedFields = new Set<string>();
-
   // Field metadata for labels and error messages
   fieldMetadata = {
     description: {
@@ -99,46 +96,10 @@ export class TextareaValidationComponent {
 
   constructor(private fb: FormBuilder) {}
 
-  // Check if a field is invalid
-  isInvalid(fieldName: string): boolean {
-    const control = this.form.get(fieldName);
-    return !!(control && control.invalid && control.touched);
-  }
-
-  // Check if a field is valid
-  isValid(fieldName: string): boolean {
-    const control = this.form.get(fieldName);
-    return !!(control && control.valid && control.touched);
-  }
-
-  // Check if form is valid (excluding optional field)
-  isFormValid(): boolean {
-    const requiredFields = ['description', 'comments', 'bio', 'address', 'review'];
-    return requiredFields.every(field => {
-      const control = this.form.get(field);
-      return control && control.valid;
-    });
-  }
-
   // Submit form
   onSubmit(): void {
-    if (this.isFormValid()) {
+    if (this.form.valid) {
       alert('Form submitted successfully!');
     }
-  }
-
-  // Reset form
-  onReset(): void {
-    // Reset form values
-    this.form.reset();
-
-    // Clear touched fields
-    this.touchedFields.clear();
-
-    // Remove validation classes from all textareas
-    const textareas = document.querySelectorAll('ion-textarea');
-    textareas.forEach(textarea => {
-      textarea.classList.remove('ion-valid', 'ion-invalid', 'ion-touched');
-    });
   }
 }

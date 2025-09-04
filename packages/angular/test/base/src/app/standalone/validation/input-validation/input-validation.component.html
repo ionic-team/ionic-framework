@@ -125,7 +125,7 @@
   </form>
 
   <div class="ion-padding">
-    <ion-button id="submit-btn" expand="block" [disabled]="!isFormValid()" (click)="onSubmit()">Submit Form</ion-button>
-    <ion-button id="reset-btn" expand="block" fill="outline" (click)="onReset()">Reset Form</ion-button>
+    <ion-button id="submit-btn" expand="block" [disabled]="form.invalid" (click)="onSubmit()">Submit Form</ion-button>
+    <ion-button id="reset-btn" expand="block" fill="outline" (click)="form.reset()">Reset Form</ion-button>
   </div>
 </ion-content>
