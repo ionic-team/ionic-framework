@@ -1921,14 +1921,14 @@ export declare interface IonSegmentView extends Components.IonSegmentView {
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSelectModal,
-  inputs: ['header', 'multiple', 'options']
+  inputs: ['cancelText', 'header', 'multiple', 'options']
 })
 @Component({
   selector: 'ion-select-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['header', 'multiple', 'options'],
+  inputs: ['cancelText', 'header', 'multiple', 'options'],
   standalone: true
 })
 export class IonSelectModal {
