@@ -46,7 +46,7 @@ import { getCounterText } from './input.utils';
     md: 'input.md.scss',
     ionic: 'input.ionic.scss',
   },
-  scoped: true,
+  shadow: true,
 })
 export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;

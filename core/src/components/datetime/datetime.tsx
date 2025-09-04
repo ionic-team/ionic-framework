@@ -2111,6 +2111,35 @@ export class Datetime implements ComponentInterface {
     );
   }
 
+  private asBlob= (icon: string) => new Blob(
+    [Uint8Array.from(
+        icon.split("").map(function(c) {
+            return c.charCodeAt(0);
+        })
+    )],
+    {type: "image/svg+xml"}
+  );
+
+  private getIconProps(icon: string | undefined) {
+    if (typeof icon === 'string' && icon.trim().startsWith('data:image/svg+xml')) {
+      // Extract and decode the SVG string from the data URL
+      const svgString = decodeURIComponent(
+        atob(icon.split(',')[1])
+          .split('')
+          .map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join('')
+      );
+      const url = URL.createObjectURL(this.asBlob(svgString));
+      console.log(url)
+      return { src:  url};
+    }
+    // Ionicons icon name/object or undefined
+    return { icon };
+}
+
+
   /**
    * Grid Render Methods
    */
@@ -2122,7 +2151,7 @@ export class Datetime implements ComponentInterface {
     const nextMonthDisabled = disabled || isNextMonthDisabled(this.workingParts, this.maxParts);
 
     // don't use the inheritAttributes util because it removes dir from the host, and we still need that
-    const hostDir = this.el.getAttribute('dir') || undefined;
+
 
     return (
       <div class="calendar-header">
@@ -2158,22 +2187,22 @@ export class Datetime implements ComponentInterface {
             <ion-buttons>
               <ion-button aria-label="Previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
                 <ion-icon
-                  dir={hostDir}
+                  //dir={hostDir}
                   aria-hidden="true"
                   slot="icon-only"
-                  icon={datetimePreviousIcon}
                   lazy={false}
                   flipRtl
+                  {...this.getIconProps(datetimePreviousIcon)}
                 ></ion-icon>
               </ion-button>
               <ion-button aria-label="Next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
                 <ion-icon
-                  dir={hostDir}
+                  //dir={hostDir}
                   aria-hidden="true"
                   slot="icon-only"
-                  icon={datetimeNextIcon}
                   lazy={false}
                   flipRtl
+                  {...this.getIconProps(datetimeNextIcon)}
                 ></ion-icon>
               </ion-button>
             </ion-buttons>

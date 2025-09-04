@@ -14,6 +14,7 @@ import { getIonTheme } from '../../global/ionic-global';
     md: 'card-content.md.scss',
     ionic: 'card-content.ionic.scss',
   },
+  shadow: true,
 })
 export class CardContent implements ComponentInterface {
   render() {

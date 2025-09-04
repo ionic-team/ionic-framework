@@ -504,7 +504,7 @@ ion-card,css-prop,--color,ios
 ion-card,css-prop,--color,md
 ion-card,part,native
 
-ion-card-content,none
+ion-card-content,shadow
 ion-card-content,prop,mode,"ios" | "md",undefined,false,false
 ion-card-content,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
@@ -931,7 +931,7 @@ ion-infinite-scroll-content,prop,loadingText,IonicSafeString | string | undefine
 ion-infinite-scroll-content,prop,mode,"ios" | "md",undefined,false,false
 ion-infinite-scroll-content,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
-ion-input,scoped
+ion-input,shadow
 ion-input,prop,autocapitalize,string,'off',false,false
 ion-input,prop,autocomplete,"name" | "url" | "off" | "on" | "additional-name" | "address-level1" | "address-level2" | "address-level3" | "address-level4" | "address-line1" | "address-line2" | "address-line3" | "bday-day" | "bday-month" | "bday-year" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-family-name" | "cc-given-name" | "cc-name" | "cc-number" | "cc-type" | "country" | "country-name" | "current-password" | "family-name" | "given-name" | "honorific-prefix" | "honorific-suffix" | "new-password" | "one-time-code" | "organization" | "postal-code" | "street-address" | "transaction-amount" | "transaction-currency" | "username" | "email" | "tel" | "tel-area-code" | "tel-country-code" | "tel-extension" | "tel-local" | "tel-national" | "nickname" | "organization-title" | "cc-additional-name" | "language" | "bday" | "sex" | "impp" | "photo",'off',false,false
 ion-input,prop,autocorrect,"off" | "on",'off',false,false
@@ -1028,7 +1028,7 @@ ion-input,css-prop,--placeholder-opacity,ionic
 ion-input,css-prop,--placeholder-opacity,ios
 ion-input,css-prop,--placeholder-opacity,md
 
-ion-input-otp,scoped
+ion-input-otp,shadow
 ion-input-otp,prop,autocapitalize,string,'off',false,false
 ion-input-otp,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-input-otp,prop,disabled,boolean,false,false,true
@@ -2415,7 +2415,7 @@ ion-text,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "second
 ion-text,prop,mode,"ios" | "md",undefined,false,false
 ion-text,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
-ion-textarea,scoped
+ion-textarea,shadow
 ion-textarea,prop,autoGrow,boolean,false,false,true
 ion-textarea,prop,autocapitalize,string,'none',false,false
 ion-textarea,prop,autofocus,boolean,false,false,false

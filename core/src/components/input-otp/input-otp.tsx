@@ -23,7 +23,7 @@ import type {
     md: 'input-otp.md.scss',
     ionic: 'input-otp.ionic.scss',
   },
-  scoped: true,
+  shadow: true,
 })
 export class InputOTP implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
