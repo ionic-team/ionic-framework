@@ -1,9 +1,15 @@
 let variablesPrefix; // Variable that holds the prefix used on all css and scss variables generated
+let classPrefix; // Variable that holds the prefix used on all css utility-classes generated  
 
 // Set the variable prefix value
-export function setPrefixValue(prefix) {
+export function setVariablePrefixValue(prefix) {
   variablesPrefix = prefix;
   return variablesPrefix;
+}
+
+export function setClassesPrefixValue(prefix) {
+  classPrefix = prefix;
+  return classPrefix;
 }
 
 // Generates a valid rgba() color
@@ -117,6 +123,7 @@ export function generateValue(prop, propName) {
 // Generates a typography based css utility-class or scss variable from a typography token structure
 export function generateTypographyOutput(prop, propName, isVariable) {
   const typography = prop.original.$value;
+  const outerPrefix = isVariable ? variablesPrefix : classPrefix;
 
   // Extract the part after the last dot and trim any extraneous characters
   const extractLastPart = (str) => str.split('.').pop().replace(/[^\w-]/g, '');
@@ -128,7 +135,7 @@ export function generateTypographyOutput(prop, propName, isVariable) {
 
   // This exact format is needed so that it compiles the tokens with the expected lint rules
   return `
-  ${_prefix}${variablesPrefix}-${propName}${_initialWrapper}
+  ${_prefix}${outerPrefix}-${propName}${_initialWrapper}
     font-size: $${variablesPrefix}-font-size-${extractLastPart(typography.fontSize)}${_endChar}
     font-style: ${prop.attributes.item?.toLowerCase() === 'italic' ? 'italic' : 'normal'}${_endChar}
     font-weight: $${variablesPrefix}-font-weight-${extractLastPart(typography.fontWeight)}${_endChar}
@@ -144,7 +151,7 @@ export function generateTypographyOutput(prop, propName, isVariable) {
 export function generateColorUtilityClasses(prop, className) {
   const isBg = className.includes('bg');
   const cssProp = isBg ? 'background-color' : 'color';
-  return `.${variablesPrefix}-${className} {
+  return `.${classPrefix}-${className} {
   --${cssProp}: $${variablesPrefix}-${prop.name};
   ${cssProp}: $${variablesPrefix}-${prop.name};
 }`;
@@ -157,7 +164,7 @@ export function generateDefaultSpaceUtilityClasses() {
   const defaultMarginPaddingToken = 'space-400';
 
   const marginPaddingTemplate = (type) => `
-.${variablesPrefix}-no-${type} {
+.${classPrefix}-no-${type} {
   --${type}-top: #{$${variablesPrefix}-${zeroMarginPaddingToken}};
   --${type}-end: #{$${variablesPrefix}-${zeroMarginPaddingToken}};
   --${type}-bottom: #{$${variablesPrefix}-${zeroMarginPaddingToken}};
@@ -166,7 +173,7 @@ export function generateDefaultSpaceUtilityClasses() {
   @include ${type}($${variablesPrefix}-${zeroMarginPaddingToken});
 };
 
-.${variablesPrefix}-${type} {
+.${classPrefix}-${type} {
   --${type}-top: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
   --${type}-end: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
   --${type}-bottom: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
@@ -175,38 +182,38 @@ export function generateDefaultSpaceUtilityClasses() {
   @include ${type}($${variablesPrefix}-${defaultMarginPaddingToken});
 };
 
-.${variablesPrefix}-${type}-top {
+.${classPrefix}-${type}-top {
   --${type}-top: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
 
   @include ${type}($${variablesPrefix}-${defaultMarginPaddingToken}, null, null, null);
 };
 
-.${variablesPrefix}-${type}-end {
+.${classPrefix}-${type}-end {
   --${type}-end: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
 
   @include ${type}(null, $${variablesPrefix}-${defaultMarginPaddingToken}, null, null);
 };
 
-.${variablesPrefix}-${type}-bottom {
+.${classPrefix}-${type}-bottom {
   --${type}-bottom: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
 
   @include ${type}(null, null, $${variablesPrefix}-${defaultMarginPaddingToken}, null);
 };
 
-.${variablesPrefix}-${type}-start {
+.${classPrefix}-${type}-start {
   --${type}-start: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
 
   @include ${type}(null, null, null, $${variablesPrefix}-${defaultMarginPaddingToken});
 };
 
-.${variablesPrefix}-${type}-vertical {
+.${classPrefix}-${type}-vertical {
   --${type}-top: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
   --${type}-bottom: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
 
   @include ${type}($${variablesPrefix}-${defaultMarginPaddingToken}, null, $${variablesPrefix}-${defaultMarginPaddingToken}, null);
 };
 
-.${variablesPrefix}-${type}-horizontal {
+.${classPrefix}-${type}-horizontal {
   --${type}-start: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
   --${type}-end: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
 
@@ -222,7 +229,7 @@ export function generateSpaceUtilityClasses(prop, className) {
   // This exact format is needed so that it compiles the tokens with the expected lint rules
   // It will generate classes for margin and padding, for equal sizing on all side and each direction
   const marginPaddingTemplate = (type) => `
-.${variablesPrefix}-${type}-${className} {
+.${classPrefix}-${type}-${className} {
   --${type}-top: #{$${variablesPrefix}-${prop.name}};
   --${type}-end: #{$${variablesPrefix}-${prop.name}};
   --${type}-bottom: #{$${variablesPrefix}-${prop.name}};
@@ -231,25 +238,25 @@ export function generateSpaceUtilityClasses(prop, className) {
   @include ${type}($${variablesPrefix}-${prop.name});
 };
 
-.${variablesPrefix}-${type}-top-${className} {
+.${classPrefix}-${type}-top-${className} {
   --${type}-top: #{$${variablesPrefix}-${prop.name}};
 
   @include ${type}($${variablesPrefix}-${prop.name}, null, null, null);
 };
 
-.${variablesPrefix}-${type}-end-${className} {
+.${classPrefix}-${type}-end-${className} {
   --${type}-end: #{$${variablesPrefix}-${prop.name}};
 
   @include ${type}(null, $${variablesPrefix}-${prop.name}, null, null);
 };
 
-.${variablesPrefix}-${type}-bottom-${className} {
+.${classPrefix}-${type}-bottom-${className} {
   --${type}-bottom: #{$${variablesPrefix}-${prop.name}};
 
   @include ${type}(null, null, $${variablesPrefix}-${prop.name}, null);
 };
 
-.${variablesPrefix}-${type}-start-${className} {
+.${classPrefix}-${type}-start-${className} {
   --${type}-start: #{$${variablesPrefix}-${prop.name}};
 
   @include ${type}(null, null, null, $${variablesPrefix}-${prop.name});
@@ -258,7 +265,7 @@ export function generateSpaceUtilityClasses(prop, className) {
 
   // Add gap utility classes for gap tokens
   const generateGapUtilityClasses = () =>`
-.${variablesPrefix}-gap-${prop.name} { 
+.${classPrefix}-gap-${prop.name} { 
   gap: #{$${variablesPrefix}-${prop.name}}; 
 };
 `;
@@ -268,7 +275,7 @@ export function generateSpaceUtilityClasses(prop, className) {
 
 // Generates a valid box-shadow value from a shadow Design Token structure
 export function generateRadiusUtilityClasses(propName) {
-  return `.${variablesPrefix}-${propName} {
+  return `.${classPrefix}-${propName} {
   --border-radius: $${variablesPrefix}-${propName};
   border-radius: $${variablesPrefix}-${propName};
 }`;
@@ -289,7 +296,7 @@ export function generateBorderUtilityClasses(prop, propName) {
     default:
       attribute = 'border-color';
   }
-  return `.${variablesPrefix}-${propName} {
+  return `.${classPrefix}-${propName} {
   --${attribute}: $${variablesPrefix}-${propName};
   ${attribute}: $${variablesPrefix}-${propName};
 }`;
@@ -297,12 +304,12 @@ export function generateBorderUtilityClasses(prop, propName) {
 
 // Generates a font based css utility-class from a font Design Token structure
 export function generateFontUtilityClasses(prop, propName) {
-  return `.${variablesPrefix}-${propName} {\n  ${prop.attributes.type}: $${variablesPrefix}-${propName};\n}`;
+  return `.${classPrefix}-${propName} {\n  ${prop.attributes.type}: $${variablesPrefix}-${propName};\n}`;
 }
 
 // Generates a valid box-shadow value from a shadow Design Token structure
 export function generateShadowUtilityClasses(propName) {
-  return `.${variablesPrefix}-${propName} {
+  return `.${classPrefix}-${propName} {
   --box-shadow: $${variablesPrefix}-${propName};
   box-shadow: $${variablesPrefix}-${propName};
 }`;
@@ -310,5 +317,5 @@ export function generateShadowUtilityClasses(propName) {
 
 // Generates a utility class for a given token category and name
 export function generateUtilityClasses(tokenCategory, propName){
-  return `.${variablesPrefix}-${propName} {\n  ${tokenCategory}: $${variablesPrefix}-${propName};\n}`;
+  return `.${classPrefix}-${propName} {\n  ${tokenCategory}: $${variablesPrefix}-${propName};\n}`;
 }

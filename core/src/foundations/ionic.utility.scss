@@ -2,3594 +2,3594 @@
 @import "../themes/mixins";
 
 .ion-display-sm-regular {
-  font-size: $ion-font-size-800;
+  font-size: $token-font-size-800;
   font-style: normal;
-  font-weight: $ion-font-weight-regular;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-1100;
+  font-weight: $token-font-weight-regular;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-1100;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-display-sm-light {
-  font-size: $ion-font-size-800;
+  font-size: $token-font-size-800;
   font-style: normal;
-  font-weight: $ion-font-weight-light;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-1100;
+  font-weight: $token-font-weight-light;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-1100;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-display-lg-regular {
-  font-size: $ion-font-size-900;
+  font-size: $token-font-size-900;
   font-style: normal;
-  font-weight: $ion-font-weight-regular;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-1200;
+  font-weight: $token-font-weight-regular;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-1200;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-display-lg-light {
-  font-size: $ion-font-size-900;
+  font-size: $token-font-size-900;
   font-style: normal;
-  font-weight: $ion-font-weight-light;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-1200;
+  font-weight: $token-font-weight-light;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-1200;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h1-regular {
-  font-size: $ion-font-size-700;
+  font-size: $token-font-size-700;
   font-style: normal;
-  font-weight: $ion-font-weight-regular;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-900;
+  font-weight: $token-font-weight-regular;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-900;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h1-medium {
-  font-size: $ion-font-size-700;
+  font-size: $token-font-size-700;
   font-style: normal;
-  font-weight: $ion-font-weight-medium;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-900;
+  font-weight: $token-font-weight-medium;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-900;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h1-semi-bold {
-  font-size: $ion-font-size-700;
+  font-size: $token-font-size-700;
   font-style: normal;
-  font-weight: $ion-font-weight-semi-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-900;
+  font-weight: $token-font-weight-semi-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-900;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h1-bold {
-  font-size: $ion-font-size-700;
+  font-size: $token-font-size-700;
   font-style: normal;
-  font-weight: $ion-font-weight-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-900;
+  font-weight: $token-font-weight-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-900;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h2-regular {
-  font-size: $ion-font-size-650;
+  font-size: $token-font-size-650;
   font-style: normal;
-  font-weight: $ion-font-weight-regular;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-900;
+  font-weight: $token-font-weight-regular;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-900;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h2-medium {
-  font-size: $ion-font-size-650;
+  font-size: $token-font-size-650;
   font-style: normal;
-  font-weight: $ion-font-weight-medium;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-900;
+  font-weight: $token-font-weight-medium;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-900;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h2-semi-bold {
-  font-size: $ion-font-size-650;
+  font-size: $token-font-size-650;
   font-style: normal;
-  font-weight: $ion-font-weight-semi-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-900;
+  font-weight: $token-font-weight-semi-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-900;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h2-bold {
-  font-size: $ion-font-size-650;
+  font-size: $token-font-size-650;
   font-style: normal;
-  font-weight: $ion-font-weight-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-900;
+  font-weight: $token-font-weight-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-900;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h3-regular {
-  font-size: $ion-font-size-600;
+  font-size: $token-font-size-600;
   font-style: normal;
-  font-weight: $ion-font-weight-regular;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-800;
+  font-weight: $token-font-weight-regular;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-800;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h3-medium {
-  font-size: $ion-font-size-600;
+  font-size: $token-font-size-600;
   font-style: normal;
-  font-weight: $ion-font-weight-medium;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-800;
+  font-weight: $token-font-weight-medium;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-800;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h3-semi-bold {
-  font-size: $ion-font-size-600;
+  font-size: $token-font-size-600;
   font-style: normal;
-  font-weight: $ion-font-weight-semi-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-800;
+  font-weight: $token-font-weight-semi-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-800;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h3-bold {
-  font-size: $ion-font-size-600;
+  font-size: $token-font-size-600;
   font-style: normal;
-  font-weight: $ion-font-weight-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-800;
+  font-weight: $token-font-weight-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-800;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h4-regular {
-  font-size: $ion-font-size-550;
+  font-size: $token-font-size-550;
   font-style: normal;
-  font-weight: $ion-font-weight-regular;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-700;
+  font-weight: $token-font-weight-regular;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-700;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h4-medium {
-  font-size: $ion-font-size-550;
+  font-size: $token-font-size-550;
   font-style: normal;
-  font-weight: $ion-font-weight-medium;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-700;
+  font-weight: $token-font-weight-medium;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-700;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h4-semi-bold {
-  font-size: $ion-font-size-550;
+  font-size: $token-font-size-550;
   font-style: normal;
-  font-weight: $ion-font-weight-semi-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-700;
+  font-weight: $token-font-weight-semi-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-700;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h4-bold {
-  font-size: $ion-font-size-550;
+  font-size: $token-font-size-550;
   font-style: normal;
-  font-weight: $ion-font-weight-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-700;
+  font-weight: $token-font-weight-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-700;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h5-regular {
-  font-size: $ion-font-size-500;
+  font-size: $token-font-size-500;
   font-style: normal;
-  font-weight: $ion-font-weight-regular;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-700;
+  font-weight: $token-font-weight-regular;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-700;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h5-medium {
-  font-size: $ion-font-size-500;
+  font-size: $token-font-size-500;
   font-style: normal;
-  font-weight: $ion-font-weight-medium;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-700;
+  font-weight: $token-font-weight-medium;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-700;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h5-semi-bold {
-  font-size: $ion-font-size-500;
+  font-size: $token-font-size-500;
   font-style: normal;
-  font-weight: $ion-font-weight-semi-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-700;
+  font-weight: $token-font-weight-semi-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-700;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h5-bold {
-  font-size: $ion-font-size-500;
+  font-size: $token-font-size-500;
   font-style: normal;
-  font-weight: $ion-font-weight-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-700;
+  font-weight: $token-font-weight-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-700;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h6-regular {
-  font-size: $ion-font-size-450;
+  font-size: $token-font-size-450;
   font-style: normal;
-  font-weight: $ion-font-weight-regular;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-700;
+  font-weight: $token-font-weight-regular;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-700;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h6-medium {
-  font-size: $ion-font-size-450;
+  font-size: $token-font-size-450;
   font-style: normal;
-  font-weight: $ion-font-weight-medium;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-700;
+  font-weight: $token-font-weight-medium;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-700;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h6-semi-bold {
-  font-size: $ion-font-size-450;
+  font-size: $token-font-size-450;
   font-style: normal;
-  font-weight: $ion-font-weight-semi-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-700;
+  font-weight: $token-font-weight-semi-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-700;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-heading-h6-bold {
-  font-size: $ion-font-size-450;
+  font-size: $token-font-size-450;
   font-style: normal;
-  font-weight: $ion-font-weight-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-700;
+  font-weight: $token-font-weight-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-700;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-action-lg {
-  font-size: $ion-font-size-500;
+  font-size: $token-font-size-500;
   font-style: normal;
-  font-weight: $ion-font-weight-medium;
-  letter-spacing: $ion-font-letter-spacing-1;
-  line-height: $ion-font-line-height-600;
+  font-weight: $token-font-weight-medium;
+  letter-spacing: $token-font-letter-spacing-1;
+  line-height: $token-font-line-height-600;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-action-md {
-  font-size: $ion-font-size-400;
+  font-size: $token-font-size-400;
   font-style: normal;
-  font-weight: $ion-font-weight-medium;
-  letter-spacing: $ion-font-letter-spacing-1;
-  line-height: $ion-font-line-height-600;
+  font-weight: $token-font-weight-medium;
+  letter-spacing: $token-font-letter-spacing-1;
+  line-height: $token-font-line-height-600;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-action-sm {
-  font-size: $ion-font-size-350;
+  font-size: $token-font-size-350;
   font-style: normal;
-  font-weight: $ion-font-weight-medium;
-  letter-spacing: $ion-font-letter-spacing-1;
-  line-height: $ion-font-line-height-500;
+  font-weight: $token-font-weight-medium;
+  letter-spacing: $token-font-letter-spacing-1;
+  line-height: $token-font-line-height-500;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-action-xs {
-  font-size: $ion-font-size-300;
+  font-size: $token-font-size-300;
   font-style: normal;
-  font-weight: $ion-font-weight-medium;
-  letter-spacing: $ion-font-letter-spacing-1;
-  line-height: $ion-font-line-height-500;
+  font-weight: $token-font-weight-medium;
+  letter-spacing: $token-font-letter-spacing-1;
+  line-height: $token-font-line-height-500;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-lg-regular {
-  font-size: $ion-font-size-400;
+  font-size: $token-font-size-400;
   font-style: normal;
-  font-weight: $ion-font-weight-regular;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-600;
+  font-weight: $token-font-weight-regular;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-600;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-lg-medium {
-  font-size: $ion-font-size-400;
+  font-size: $token-font-size-400;
   font-style: normal;
-  font-weight: $ion-font-weight-medium;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-600;
+  font-weight: $token-font-weight-medium;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-600;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-lg-semi-bold {
-  font-size: $ion-font-size-400;
+  font-size: $token-font-size-400;
   font-style: normal;
-  font-weight: $ion-font-weight-semi-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-600;
+  font-weight: $token-font-weight-semi-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-600;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-lg-bold {
-  font-size: $ion-font-size-400;
+  font-size: $token-font-size-400;
   font-style: normal;
-  font-weight: $ion-font-weight-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-600;
+  font-weight: $token-font-weight-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-600;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-md-regular {
-  font-size: $ion-font-size-350;
+  font-size: $token-font-size-350;
   font-style: normal;
-  font-weight: $ion-font-weight-regular;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-600;
+  font-weight: $token-font-weight-regular;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-600;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-md-medium {
-  font-size: $ion-font-size-350;
+  font-size: $token-font-size-350;
   font-style: normal;
-  font-weight: $ion-font-weight-medium;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-600;
+  font-weight: $token-font-weight-medium;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-600;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-md-semi-bold {
-  font-size: $ion-font-size-350;
+  font-size: $token-font-size-350;
   font-style: normal;
-  font-weight: $ion-font-weight-semi-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-600;
+  font-weight: $token-font-weight-semi-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-600;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-md-bold {
-  font-size: $ion-font-size-350;
+  font-size: $token-font-size-350;
   font-style: normal;
-  font-weight: $ion-font-weight-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-600;
+  font-weight: $token-font-weight-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-600;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-sm-regular {
-  font-size: $ion-font-size-300;
+  font-size: $token-font-size-300;
   font-style: normal;
-  font-weight: $ion-font-weight-regular;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-500;
+  font-weight: $token-font-weight-regular;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-500;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-sm-medium {
-  font-size: $ion-font-size-300;
+  font-size: $token-font-size-300;
   font-style: normal;
-  font-weight: $ion-font-weight-medium;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-500;
+  font-weight: $token-font-weight-medium;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-500;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-sm-semi-bold {
-  font-size: $ion-font-size-300;
+  font-size: $token-font-size-300;
   font-style: normal;
-  font-weight: $ion-font-weight-semi-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-500;
+  font-weight: $token-font-weight-semi-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-500;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-body-sm-bold {
-  font-size: $ion-font-size-300;
+  font-size: $token-font-size-300;
   font-style: normal;
-  font-weight: $ion-font-weight-bold;
-  letter-spacing: $ion-font-letter-spacing-0;
-  line-height: $ion-font-line-height-500;
+  font-weight: $token-font-weight-bold;
+  letter-spacing: $token-font-letter-spacing-0;
+  line-height: $token-font-line-height-500;
   text-transform: none;
   text-decoration: none;
 }
 
 .ion-overline-regular {
-  font-size: $ion-font-size-300;
+  font-size: $token-font-size-300;
   font-style: normal;
-  font-weight: $ion-font-weight-regular;
-  letter-spacing: $ion-font-letter-spacing-2;
-  line-height: $ion-font-line-height-500;
+  font-weight: $token-font-weight-regular;
+  letter-spacing: $token-font-letter-spacing-2;
+  line-height: $token-font-line-height-500;
   text-transform: uppercase;
   text-decoration: none;
 }
 
 .ion-overline-medium {
-  font-size: $ion-font-size-300;
+  font-size: $token-font-size-300;
   font-style: normal;
-  font-weight: $ion-font-weight-medium;
-  letter-spacing: $ion-font-letter-spacing-2;
-  line-height: $ion-font-line-height-500;
+  font-weight: $token-font-weight-medium;
+  letter-spacing: $token-font-letter-spacing-2;
+  line-height: $token-font-line-height-500;
   text-transform: uppercase;
   text-decoration: none;
 }
 
 .ion-overline-semi-bold {
-  font-size: $ion-font-size-300;
+  font-size: $token-font-size-300;
   font-style: normal;
-  font-weight: $ion-font-weight-semi-bold;
-  letter-spacing: $ion-font-letter-spacing-2;
-  line-height: $ion-font-line-height-500;
+  font-weight: $token-font-weight-semi-bold;
+  letter-spacing: $token-font-letter-spacing-2;
+  line-height: $token-font-line-height-500;
   text-transform: uppercase;
   text-decoration: none;
 }
 
 .ion-overline-bold {
-  font-size: $ion-font-size-300;
+  font-size: $token-font-size-300;
   font-style: normal;
-  font-weight: $ion-font-weight-bold;
-  letter-spacing: $ion-font-letter-spacing-2;
-  line-height: $ion-font-line-height-500;
+  font-weight: $token-font-weight-bold;
+  letter-spacing: $token-font-letter-spacing-2;
+  line-height: $token-font-line-height-500;
   text-transform: uppercase;
   text-decoration: none;
 }
 
 .ion-semantics-primary-100 {
-  --color: $ion-semantics-primary-100;
-  color: $ion-semantics-primary-100;
+  --color: $token-semantics-primary-100;
+  color: $token-semantics-primary-100;
 }
 .ion-semantics-primary-200 {
-  --color: $ion-semantics-primary-200;
-  color: $ion-semantics-primary-200;
+  --color: $token-semantics-primary-200;
+  color: $token-semantics-primary-200;
 }
 .ion-semantics-primary-300 {
-  --color: $ion-semantics-primary-300;
-  color: $ion-semantics-primary-300;
+  --color: $token-semantics-primary-300;
+  color: $token-semantics-primary-300;
 }
 .ion-semantics-primary-400 {
-  --color: $ion-semantics-primary-400;
-  color: $ion-semantics-primary-400;
+  --color: $token-semantics-primary-400;
+  color: $token-semantics-primary-400;
 }
 .ion-semantics-primary-500 {
-  --color: $ion-semantics-primary-500;
-  color: $ion-semantics-primary-500;
+  --color: $token-semantics-primary-500;
+  color: $token-semantics-primary-500;
 }
 .ion-semantics-primary-600 {
-  --color: $ion-semantics-primary-600;
-  color: $ion-semantics-primary-600;
+  --color: $token-semantics-primary-600;
+  color: $token-semantics-primary-600;
 }
 .ion-semantics-primary-700 {
-  --color: $ion-semantics-primary-700;
-  color: $ion-semantics-primary-700;
+  --color: $token-semantics-primary-700;
+  color: $token-semantics-primary-700;
 }
 .ion-semantics-primary-800 {
-  --color: $ion-semantics-primary-800;
-  color: $ion-semantics-primary-800;
+  --color: $token-semantics-primary-800;
+  color: $token-semantics-primary-800;
 }
 .ion-semantics-primary-900 {
-  --color: $ion-semantics-primary-900;
-  color: $ion-semantics-primary-900;
+  --color: $token-semantics-primary-900;
+  color: $token-semantics-primary-900;
 }
 .ion-semantics-primary-1000 {
-  --color: $ion-semantics-primary-1000;
-  color: $ion-semantics-primary-1000;
+  --color: $token-semantics-primary-1000;
+  color: $token-semantics-primary-1000;
 }
 .ion-semantics-primary-1100 {
-  --color: $ion-semantics-primary-1100;
-  color: $ion-semantics-primary-1100;
+  --color: $token-semantics-primary-1100;
+  color: $token-semantics-primary-1100;
 }
 .ion-semantics-primary-1200 {
-  --color: $ion-semantics-primary-1200;
-  color: $ion-semantics-primary-1200;
+  --color: $token-semantics-primary-1200;
+  color: $token-semantics-primary-1200;
 }
 .ion-semantics-primary-base {
-  --color: $ion-semantics-primary-base;
-  color: $ion-semantics-primary-base;
+  --color: $token-semantics-primary-base;
+  color: $token-semantics-primary-base;
 }
 .ion-semantics-info-100 {
-  --color: $ion-semantics-info-100;
-  color: $ion-semantics-info-100;
+  --color: $token-semantics-info-100;
+  color: $token-semantics-info-100;
 }
 .ion-semantics-info-200 {
-  --color: $ion-semantics-info-200;
-  color: $ion-semantics-info-200;
+  --color: $token-semantics-info-200;
+  color: $token-semantics-info-200;
 }
 .ion-semantics-info-300 {
-  --color: $ion-semantics-info-300;
-  color: $ion-semantics-info-300;
+  --color: $token-semantics-info-300;
+  color: $token-semantics-info-300;
 }
 .ion-semantics-info-400 {
-  --color: $ion-semantics-info-400;
-  color: $ion-semantics-info-400;
+  --color: $token-semantics-info-400;
+  color: $token-semantics-info-400;
 }
 .ion-semantics-info-500 {
-  --color: $ion-semantics-info-500;
-  color: $ion-semantics-info-500;
+  --color: $token-semantics-info-500;
+  color: $token-semantics-info-500;
 }
 .ion-semantics-info-600 {
-  --color: $ion-semantics-info-600;
-  color: $ion-semantics-info-600;
+  --color: $token-semantics-info-600;
+  color: $token-semantics-info-600;
 }
 .ion-semantics-info-700 {
-  --color: $ion-semantics-info-700;
-  color: $ion-semantics-info-700;
+  --color: $token-semantics-info-700;
+  color: $token-semantics-info-700;
 }
 .ion-semantics-info-800 {
-  --color: $ion-semantics-info-800;
-  color: $ion-semantics-info-800;
+  --color: $token-semantics-info-800;
+  color: $token-semantics-info-800;
 }
 .ion-semantics-info-900 {
-  --color: $ion-semantics-info-900;
-  color: $ion-semantics-info-900;
+  --color: $token-semantics-info-900;
+  color: $token-semantics-info-900;
 }
 .ion-semantics-info-1000 {
-  --color: $ion-semantics-info-1000;
-  color: $ion-semantics-info-1000;
+  --color: $token-semantics-info-1000;
+  color: $token-semantics-info-1000;
 }
 .ion-semantics-info-1100 {
-  --color: $ion-semantics-info-1100;
-  color: $ion-semantics-info-1100;
+  --color: $token-semantics-info-1100;
+  color: $token-semantics-info-1100;
 }
 .ion-semantics-info-1200 {
-  --color: $ion-semantics-info-1200;
-  color: $ion-semantics-info-1200;
+  --color: $token-semantics-info-1200;
+  color: $token-semantics-info-1200;
 }
 .ion-semantics-info-base {
-  --color: $ion-semantics-info-base;
-  color: $ion-semantics-info-base;
+  --color: $token-semantics-info-base;
+  color: $token-semantics-info-base;
 }
 .ion-semantics-success-100 {
-  --color: $ion-semantics-success-100;
-  color: $ion-semantics-success-100;
+  --color: $token-semantics-success-100;
+  color: $token-semantics-success-100;
 }
 .ion-semantics-success-200 {
-  --color: $ion-semantics-success-200;
-  color: $ion-semantics-success-200;
+  --color: $token-semantics-success-200;
+  color: $token-semantics-success-200;
 }
 .ion-semantics-success-300 {
-  --color: $ion-semantics-success-300;
-  color: $ion-semantics-success-300;
+  --color: $token-semantics-success-300;
+  color: $token-semantics-success-300;
 }
 .ion-semantics-success-400 {
-  --color: $ion-semantics-success-400;
-  color: $ion-semantics-success-400;
+  --color: $token-semantics-success-400;
+  color: $token-semantics-success-400;
 }
 .ion-semantics-success-500 {
-  --color: $ion-semantics-success-500;
-  color: $ion-semantics-success-500;
+  --color: $token-semantics-success-500;
+  color: $token-semantics-success-500;
 }
 .ion-semantics-success-600 {
-  --color: $ion-semantics-success-600;
-  color: $ion-semantics-success-600;
+  --color: $token-semantics-success-600;
+  color: $token-semantics-success-600;
 }
 .ion-semantics-success-700 {
-  --color: $ion-semantics-success-700;
-  color: $ion-semantics-success-700;
+  --color: $token-semantics-success-700;
+  color: $token-semantics-success-700;
 }
 .ion-semantics-success-800 {
-  --color: $ion-semantics-success-800;
-  color: $ion-semantics-success-800;
+  --color: $token-semantics-success-800;
+  color: $token-semantics-success-800;
 }
 .ion-semantics-success-900 {
-  --color: $ion-semantics-success-900;
-  color: $ion-semantics-success-900;
+  --color: $token-semantics-success-900;
+  color: $token-semantics-success-900;
 }
 .ion-semantics-success-1000 {
-  --color: $ion-semantics-success-1000;
-  color: $ion-semantics-success-1000;
+  --color: $token-semantics-success-1000;
+  color: $token-semantics-success-1000;
 }
 .ion-semantics-success-1100 {
-  --color: $ion-semantics-success-1100;
-  color: $ion-semantics-success-1100;
+  --color: $token-semantics-success-1100;
+  color: $token-semantics-success-1100;
 }
 .ion-semantics-success-1200 {
-  --color: $ion-semantics-success-1200;
-  color: $ion-semantics-success-1200;
+  --color: $token-semantics-success-1200;
+  color: $token-semantics-success-1200;
 }
 .ion-semantics-success-base {
-  --color: $ion-semantics-success-base;
-  color: $ion-semantics-success-base;
+  --color: $token-semantics-success-base;
+  color: $token-semantics-success-base;
 }
 .ion-semantics-danger-100 {
-  --color: $ion-semantics-danger-100;
-  color: $ion-semantics-danger-100;
+  --color: $token-semantics-danger-100;
+  color: $token-semantics-danger-100;
 }
 .ion-semantics-danger-200 {
-  --color: $ion-semantics-danger-200;
-  color: $ion-semantics-danger-200;
+  --color: $token-semantics-danger-200;
+  color: $token-semantics-danger-200;
 }
 .ion-semantics-danger-300 {
-  --color: $ion-semantics-danger-300;
-  color: $ion-semantics-danger-300;
+  --color: $token-semantics-danger-300;
+  color: $token-semantics-danger-300;
 }
 .ion-semantics-danger-400 {
-  --color: $ion-semantics-danger-400;
-  color: $ion-semantics-danger-400;
+  --color: $token-semantics-danger-400;
+  color: $token-semantics-danger-400;
 }
 .ion-semantics-danger-500 {
-  --color: $ion-semantics-danger-500;
-  color: $ion-semantics-danger-500;
+  --color: $token-semantics-danger-500;
+  color: $token-semantics-danger-500;
 }
 .ion-semantics-danger-600 {
-  --color: $ion-semantics-danger-600;
-  color: $ion-semantics-danger-600;
+  --color: $token-semantics-danger-600;
+  color: $token-semantics-danger-600;
 }
 .ion-semantics-danger-700 {
-  --color: $ion-semantics-danger-700;
-  color: $ion-semantics-danger-700;
+  --color: $token-semantics-danger-700;
+  color: $token-semantics-danger-700;
 }
 .ion-semantics-danger-800 {
-  --color: $ion-semantics-danger-800;
-  color: $ion-semantics-danger-800;
+  --color: $token-semantics-danger-800;
+  color: $token-semantics-danger-800;
 }
 .ion-semantics-danger-900 {
-  --color: $ion-semantics-danger-900;
-  color: $ion-semantics-danger-900;
+  --color: $token-semantics-danger-900;
+  color: $token-semantics-danger-900;
 }
 .ion-semantics-danger-1000 {
-  --color: $ion-semantics-danger-1000;
-  color: $ion-semantics-danger-1000;
+  --color: $token-semantics-danger-1000;
+  color: $token-semantics-danger-1000;
 }
 .ion-semantics-danger-1100 {
-  --color: $ion-semantics-danger-1100;
-  color: $ion-semantics-danger-1100;
+  --color: $token-semantics-danger-1100;
+  color: $token-semantics-danger-1100;
 }
 .ion-semantics-danger-1200 {
-  --color: $ion-semantics-danger-1200;
-  color: $ion-semantics-danger-1200;
+  --color: $token-semantics-danger-1200;
+  color: $token-semantics-danger-1200;
 }
 .ion-semantics-danger-base {
-  --color: $ion-semantics-danger-base;
-  color: $ion-semantics-danger-base;
+  --color: $token-semantics-danger-base;
+  color: $token-semantics-danger-base;
 }
 .ion-semantics-warning-100 {
-  --color: $ion-semantics-warning-100;
-  color: $ion-semantics-warning-100;
+  --color: $token-semantics-warning-100;
+  color: $token-semantics-warning-100;
 }
 .ion-semantics-warning-200 {
-  --color: $ion-semantics-warning-200;
-  color: $ion-semantics-warning-200;
+  --color: $token-semantics-warning-200;
+  color: $token-semantics-warning-200;
 }
 .ion-semantics-warning-300 {
-  --color: $ion-semantics-warning-300;
-  color: $ion-semantics-warning-300;
+  --color: $token-semantics-warning-300;
+  color: $token-semantics-warning-300;
 }
 .ion-semantics-warning-400 {
-  --color: $ion-semantics-warning-400;
-  color: $ion-semantics-warning-400;
+  --color: $token-semantics-warning-400;
+  color: $token-semantics-warning-400;
 }
 .ion-semantics-warning-500 {
-  --color: $ion-semantics-warning-500;
-  color: $ion-semantics-warning-500;
+  --color: $token-semantics-warning-500;
+  color: $token-semantics-warning-500;
 }
 .ion-semantics-warning-600 {
-  --color: $ion-semantics-warning-600;
-  color: $ion-semantics-warning-600;
+  --color: $token-semantics-warning-600;
+  color: $token-semantics-warning-600;
 }
 .ion-semantics-warning-700 {
-  --color: $ion-semantics-warning-700;
-  color: $ion-semantics-warning-700;
+  --color: $token-semantics-warning-700;
+  color: $token-semantics-warning-700;
 }
 .ion-semantics-warning-800 {
-  --color: $ion-semantics-warning-800;
-  color: $ion-semantics-warning-800;
+  --color: $token-semantics-warning-800;
+  color: $token-semantics-warning-800;
 }
 .ion-semantics-warning-900 {
-  --color: $ion-semantics-warning-900;
-  color: $ion-semantics-warning-900;
+  --color: $token-semantics-warning-900;
+  color: $token-semantics-warning-900;
 }
 .ion-semantics-warning-1000 {
-  --color: $ion-semantics-warning-1000;
-  color: $ion-semantics-warning-1000;
+  --color: $token-semantics-warning-1000;
+  color: $token-semantics-warning-1000;
 }
 .ion-semantics-warning-1100 {
-  --color: $ion-semantics-warning-1100;
-  color: $ion-semantics-warning-1100;
+  --color: $token-semantics-warning-1100;
+  color: $token-semantics-warning-1100;
 }
 .ion-semantics-warning-1200 {
-  --color: $ion-semantics-warning-1200;
-  color: $ion-semantics-warning-1200;
+  --color: $token-semantics-warning-1200;
+  color: $token-semantics-warning-1200;
 }
 .ion-semantics-warning-base {
-  --color: $ion-semantics-warning-base;
-  color: $ion-semantics-warning-base;
+  --color: $token-semantics-warning-base;
+  color: $token-semantics-warning-base;
 }
 .ion-bg-primary-base-default {
-  --background-color: $ion-bg-primary-base-default;
-  background-color: $ion-bg-primary-base-default;
+  --background-color: $token-bg-primary-base-default;
+  background-color: $token-bg-primary-base-default;
 }
 .ion-bg-primary-base-press {
-  --background-color: $ion-bg-primary-base-press;
-  background-color: $ion-bg-primary-base-press;
+  --background-color: $token-bg-primary-base-press;
+  background-color: $token-bg-primary-base-press;
 }
 .ion-bg-primary-subtle-default {
-  --background-color: $ion-bg-primary-subtle-default;
-  background-color: $ion-bg-primary-subtle-default;
+  --background-color: $token-bg-primary-subtle-default;
+  background-color: $token-bg-primary-subtle-default;
 }
 .ion-bg-primary-subtle-press {
-  --background-color: $ion-bg-primary-subtle-press;
-  background-color: $ion-bg-primary-subtle-press;
+  --background-color: $token-bg-primary-subtle-press;
+  background-color: $token-bg-primary-subtle-press;
 }
 .ion-bg-danger-base-default {
-  --background-color: $ion-bg-danger-base-default;
-  background-color: $ion-bg-danger-base-default;
+  --background-color: $token-bg-danger-base-default;
+  background-color: $token-bg-danger-base-default;
 }
 .ion-bg-danger-base-press {
-  --background-color: $ion-bg-danger-base-press;
-  background-color: $ion-bg-danger-base-press;
+  --background-color: $token-bg-danger-base-press;
+  background-color: $token-bg-danger-base-press;
 }
 .ion-bg-danger-subtle-default {
-  --background-color: $ion-bg-danger-subtle-default;
-  background-color: $ion-bg-danger-subtle-default;
+  --background-color: $token-bg-danger-subtle-default;
+  background-color: $token-bg-danger-subtle-default;
 }
 .ion-bg-danger-subtle-press {
-  --background-color: $ion-bg-danger-subtle-press;
-  background-color: $ion-bg-danger-subtle-press;
+  --background-color: $token-bg-danger-subtle-press;
+  background-color: $token-bg-danger-subtle-press;
 }
 .ion-bg-success-base-default {
-  --background-color: $ion-bg-success-base-default;
-  background-color: $ion-bg-success-base-default;
+  --background-color: $token-bg-success-base-default;
+  background-color: $token-bg-success-base-default;
 }
 .ion-bg-success-base-press {
-  --background-color: $ion-bg-success-base-press;
-  background-color: $ion-bg-success-base-press;
+  --background-color: $token-bg-success-base-press;
+  background-color: $token-bg-success-base-press;
 }
 .ion-bg-success-subtle-default {
-  --background-color: $ion-bg-success-subtle-default;
-  background-color: $ion-bg-success-subtle-default;
+  --background-color: $token-bg-success-subtle-default;
+  background-color: $token-bg-success-subtle-default;
 }
 .ion-bg-success-subtle-press {
-  --background-color: $ion-bg-success-subtle-press;
-  background-color: $ion-bg-success-subtle-press;
+  --background-color: $token-bg-success-subtle-press;
+  background-color: $token-bg-success-subtle-press;
 }
 .ion-bg-info-base-default {
-  --background-color: $ion-bg-info-base-default;
-  background-color: $ion-bg-info-base-default;
+  --background-color: $token-bg-info-base-default;
+  background-color: $token-bg-info-base-default;
 }
 .ion-bg-info-base-press {
-  --background-color: $ion-bg-info-base-press;
-  background-color: $ion-bg-info-base-press;
+  --background-color: $token-bg-info-base-press;
+  background-color: $token-bg-info-base-press;
 }
 .ion-bg-info-subtle-default {
-  --background-color: $ion-bg-info-subtle-default;
-  background-color: $ion-bg-info-subtle-default;
+  --background-color: $token-bg-info-subtle-default;
+  background-color: $token-bg-info-subtle-default;
 }
 .ion-bg-info-subtle-press {
-  --background-color: $ion-bg-info-subtle-press;
-  background-color: $ion-bg-info-subtle-press;
+  --background-color: $token-bg-info-subtle-press;
+  background-color: $token-bg-info-subtle-press;
 }
 .ion-bg-warning-base-default {
-  --background-color: $ion-bg-warning-base-default;
-  background-color: $ion-bg-warning-base-default;
+  --background-color: $token-bg-warning-base-default;
+  background-color: $token-bg-warning-base-default;
 }
 .ion-bg-warning-base-press {
-  --background-color: $ion-bg-warning-base-press;
-  background-color: $ion-bg-warning-base-press;
+  --background-color: $token-bg-warning-base-press;
+  background-color: $token-bg-warning-base-press;
 }
 .ion-bg-warning-subtle-default {
-  --background-color: $ion-bg-warning-subtle-default;
-  background-color: $ion-bg-warning-subtle-default;
+  --background-color: $token-bg-warning-subtle-default;
+  background-color: $token-bg-warning-subtle-default;
 }
 .ion-bg-warning-subtle-press {
-  --background-color: $ion-bg-warning-subtle-press;
-  background-color: $ion-bg-warning-subtle-press;
+  --background-color: $token-bg-warning-subtle-press;
+  background-color: $token-bg-warning-subtle-press;
 }
 .ion-bg-body {
-  --background-color: $ion-bg-body;
-  background-color: $ion-bg-body;
+  --background-color: $token-bg-body;
+  background-color: $token-bg-body;
 }
 .ion-bg-neutral-subtle-default {
-  --background-color: $ion-bg-neutral-subtle-default;
-  background-color: $ion-bg-neutral-subtle-default;
+  --background-color: $token-bg-neutral-subtle-default;
+  background-color: $token-bg-neutral-subtle-default;
 }
 .ion-bg-neutral-subtle-press {
-  --background-color: $ion-bg-neutral-subtle-press;
-  background-color: $ion-bg-neutral-subtle-press;
+  --background-color: $token-bg-neutral-subtle-press;
+  background-color: $token-bg-neutral-subtle-press;
 }
 .ion-bg-neutral-base-default {
-  --background-color: $ion-bg-neutral-base-default;
-  background-color: $ion-bg-neutral-base-default;
+  --background-color: $token-bg-neutral-base-default;
+  background-color: $token-bg-neutral-base-default;
 }
 .ion-bg-neutral-base-press {
-  --background-color: $ion-bg-neutral-base-press;
-  background-color: $ion-bg-neutral-base-press;
+  --background-color: $token-bg-neutral-base-press;
+  background-color: $token-bg-neutral-base-press;
 }
 .ion-bg-neutral-subtlest-default {
-  --background-color: $ion-bg-neutral-subtlest-default;
-  background-color: $ion-bg-neutral-subtlest-default;
+  --background-color: $token-bg-neutral-subtlest-default;
+  background-color: $token-bg-neutral-subtlest-default;
 }
 .ion-bg-neutral-subtlest-press {
-  --background-color: $ion-bg-neutral-subtlest-press;
-  background-color: $ion-bg-neutral-subtlest-press;
+  --background-color: $token-bg-neutral-subtlest-press;
+  background-color: $token-bg-neutral-subtlest-press;
 }
 .ion-bg-neutral-bold-default {
-  --background-color: $ion-bg-neutral-bold-default;
-  background-color: $ion-bg-neutral-bold-default;
+  --background-color: $token-bg-neutral-bold-default;
+  background-color: $token-bg-neutral-bold-default;
 }
 .ion-bg-neutral-bold-press {
-  --background-color: $ion-bg-neutral-bold-press;
-  background-color: $ion-bg-neutral-bold-press;
+  --background-color: $token-bg-neutral-bold-press;
+  background-color: $token-bg-neutral-bold-press;
 }
 .ion-bg-neutral-boldest-default {
-  --background-color: $ion-bg-neutral-boldest-default;
-  background-color: $ion-bg-neutral-boldest-default;
+  --background-color: $token-bg-neutral-boldest-default;
+  background-color: $token-bg-neutral-boldest-default;
 }
 .ion-bg-neutral-boldest-press {
-  --background-color: $ion-bg-neutral-boldest-press;
-  background-color: $ion-bg-neutral-boldest-press;
+  --background-color: $token-bg-neutral-boldest-press;
+  background-color: $token-bg-neutral-boldest-press;
 }
 .ion-bg-surface-default {
-  --background-color: $ion-bg-surface-default;
-  background-color: $ion-bg-surface-default;
+  --background-color: $token-bg-surface-default;
+  background-color: $token-bg-surface-default;
 }
 .ion-bg-surface-inverse {
-  --background-color: $ion-bg-surface-inverse;
-  background-color: $ion-bg-surface-inverse;
+  --background-color: $token-bg-surface-inverse;
+  background-color: $token-bg-surface-inverse;
 }
 .ion-bg-input-default {
-  --background-color: $ion-bg-input-default;
-  background-color: $ion-bg-input-default;
+  --background-color: $token-bg-input-default;
+  background-color: $token-bg-input-default;
 }
 .ion-bg-input-read-only {
-  --background-color: $ion-bg-input-read-only;
-  background-color: $ion-bg-input-read-only;
+  --background-color: $token-bg-input-read-only;
+  background-color: $token-bg-input-read-only;
 }
 .ion-bg-input-press {
-  --background-color: $ion-bg-input-press;
-  background-color: $ion-bg-input-press;
+  --background-color: $token-bg-input-press;
+  background-color: $token-bg-input-press;
 }
 .ion-bg-input-disabled {
-  --background-color: $ion-bg-input-disabled;
-  background-color: $ion-bg-input-disabled;
+  --background-color: $token-bg-input-disabled;
+  background-color: $token-bg-input-disabled;
 }
 .ion-bg-input-bold-default {
-  --background-color: $ion-bg-input-bold-default;
-  background-color: $ion-bg-input-bold-default;
+  --background-color: $token-bg-input-bold-default;
+  background-color: $token-bg-input-bold-default;
 }
 .ion-bg-input-bold-press {
-  --background-color: $ion-bg-input-bold-press;
-  background-color: $ion-bg-input-bold-press;
+  --background-color: $token-bg-input-bold-press;
+  background-color: $token-bg-input-bold-press;
 }
 .ion-bg-input-bold-read-only {
-  --background-color: $ion-bg-input-bold-read-only;
-  background-color: $ion-bg-input-bold-read-only;
+  --background-color: $token-bg-input-bold-read-only;
+  background-color: $token-bg-input-bold-read-only;
 }
 .ion-bg-input-bold-disabled {
-  --background-color: $ion-bg-input-bold-disabled;
-  background-color: $ion-bg-input-bold-disabled;
+  --background-color: $token-bg-input-bold-disabled;
+  background-color: $token-bg-input-bold-disabled;
 }
 .ion-bg-select-default {
-  --background-color: $ion-bg-select-default;
-  background-color: $ion-bg-select-default;
+  --background-color: $token-bg-select-default;
+  background-color: $token-bg-select-default;
 }
 .ion-bg-select-press {
-  --background-color: $ion-bg-select-press;
-  background-color: $ion-bg-select-press;
+  --background-color: $token-bg-select-press;
+  background-color: $token-bg-select-press;
 }
 .ion-bg-extended-pumpkin-base-default {
-  --background-color: $ion-bg-extended-pumpkin-base-default;
-  background-color: $ion-bg-extended-pumpkin-base-default;
+  --background-color: $token-bg-extended-pumpkin-base-default;
+  background-color: $token-bg-extended-pumpkin-base-default;
 }
 .ion-bg-extended-pumpkin-base-press {
-  --background-color: $ion-bg-extended-pumpkin-base-press;
-  background-color: $ion-bg-extended-pumpkin-base-press;
+  --background-color: $token-bg-extended-pumpkin-base-press;
+  background-color: $token-bg-extended-pumpkin-base-press;
 }
 .ion-bg-extended-pumpkin-subtle-default {
-  --background-color: $ion-bg-extended-pumpkin-subtle-default;
-  background-color: $ion-bg-extended-pumpkin-subtle-default;
+  --background-color: $token-bg-extended-pumpkin-subtle-default;
+  background-color: $token-bg-extended-pumpkin-subtle-default;
 }
 .ion-bg-extended-pumpkin-subtle-press {
-  --background-color: $ion-bg-extended-pumpkin-subtle-press;
-  background-color: $ion-bg-extended-pumpkin-subtle-press;
+  --background-color: $token-bg-extended-pumpkin-subtle-press;
+  background-color: $token-bg-extended-pumpkin-subtle-press;
 }
 .ion-bg-extended-orange-base-default {
-  --background-color: $ion-bg-extended-orange-base-default;
-  background-color: $ion-bg-extended-orange-base-default;
+  --background-color: $token-bg-extended-orange-base-default;
+  background-color: $token-bg-extended-orange-base-default;
 }
 .ion-bg-extended-orange-base-press {
-  --background-color: $ion-bg-extended-orange-base-press;
-  background-color: $ion-bg-extended-orange-base-press;
+  --background-color: $token-bg-extended-orange-base-press;
+  background-color: $token-bg-extended-orange-base-press;
 }
 .ion-bg-extended-orange-subtle-default {
-  --background-color: $ion-bg-extended-orange-subtle-default;
-  background-color: $ion-bg-extended-orange-subtle-default;
+  --background-color: $token-bg-extended-orange-subtle-default;
+  background-color: $token-bg-extended-orange-subtle-default;
 }
 .ion-bg-extended-orange-subtle-press {
-  --background-color: $ion-bg-extended-orange-subtle-press;
-  background-color: $ion-bg-extended-orange-subtle-press;
+  --background-color: $token-bg-extended-orange-subtle-press;
+  background-color: $token-bg-extended-orange-subtle-press;
 }
 .ion-bg-extended-lime-base-default {
-  --background-color: $ion-bg-extended-lime-base-default;
-  background-color: $ion-bg-extended-lime-base-default;
+  --background-color: $token-bg-extended-lime-base-default;
+  background-color: $token-bg-extended-lime-base-default;
 }
 .ion-bg-extended-lime-base-press {
-  --background-color: $ion-bg-extended-lime-base-press;
-  background-color: $ion-bg-extended-lime-base-press;
+  --background-color: $token-bg-extended-lime-base-press;
+  background-color: $token-bg-extended-lime-base-press;
 }
 .ion-bg-extended-lime-subtle-default {
-  --background-color: $ion-bg-extended-lime-subtle-default;
-  background-color: $ion-bg-extended-lime-subtle-default;
+  --background-color: $token-bg-extended-lime-subtle-default;
+  background-color: $token-bg-extended-lime-subtle-default;
 }
 .ion-bg-extended-lime-subtle-press {
-  --background-color: $ion-bg-extended-lime-subtle-press;
-  background-color: $ion-bg-extended-lime-subtle-press;
+  --background-color: $token-bg-extended-lime-subtle-press;
+  background-color: $token-bg-extended-lime-subtle-press;
 }
 .ion-bg-extended-teal-base-default {
-  --background-color: $ion-bg-extended-teal-base-default;
-  background-color: $ion-bg-extended-teal-base-default;
+  --background-color: $token-bg-extended-teal-base-default;
+  background-color: $token-bg-extended-teal-base-default;
 }
 .ion-bg-extended-teal-base-press {
-  --background-color: $ion-bg-extended-teal-base-press;
-  background-color: $ion-bg-extended-teal-base-press;
+  --background-color: $token-bg-extended-teal-base-press;
+  background-color: $token-bg-extended-teal-base-press;
 }
 .ion-bg-extended-teal-subtle-default {
-  --background-color: $ion-bg-extended-teal-subtle-default;
-  background-color: $ion-bg-extended-teal-subtle-default;
+  --background-color: $token-bg-extended-teal-subtle-default;
+  background-color: $token-bg-extended-teal-subtle-default;
 }
 .ion-bg-extended-teal-subtle-press {
-  --background-color: $ion-bg-extended-teal-subtle-press;
-  background-color: $ion-bg-extended-teal-subtle-press;
+  --background-color: $token-bg-extended-teal-subtle-press;
+  background-color: $token-bg-extended-teal-subtle-press;
 }
 .ion-bg-extended-aqua-base-default {
-  --background-color: $ion-bg-extended-aqua-base-default;
-  background-color: $ion-bg-extended-aqua-base-default;
+  --background-color: $token-bg-extended-aqua-base-default;
+  background-color: $token-bg-extended-aqua-base-default;
 }
 .ion-bg-extended-aqua-base-press {
-  --background-color: $ion-bg-extended-aqua-base-press;
-  background-color: $ion-bg-extended-aqua-base-press;
+  --background-color: $token-bg-extended-aqua-base-press;
+  background-color: $token-bg-extended-aqua-base-press;
 }
 .ion-bg-extended-aqua-subtle-default {
-  --background-color: $ion-bg-extended-aqua-subtle-default;
-  background-color: $ion-bg-extended-aqua-subtle-default;
+  --background-color: $token-bg-extended-aqua-subtle-default;
+  background-color: $token-bg-extended-aqua-subtle-default;
 }
 .ion-bg-extended-aqua-subtle-press {
-  --background-color: $ion-bg-extended-aqua-subtle-press;
-  background-color: $ion-bg-extended-aqua-subtle-press;
+  --background-color: $token-bg-extended-aqua-subtle-press;
+  background-color: $token-bg-extended-aqua-subtle-press;
 }
 .ion-bg-extended-indigo-base-default {
-  --background-color: $ion-bg-extended-indigo-base-default;
-  background-color: $ion-bg-extended-indigo-base-default;
+  --background-color: $token-bg-extended-indigo-base-default;
+  background-color: $token-bg-extended-indigo-base-default;
 }
 .ion-bg-extended-indigo-base-press {
-  --background-color: $ion-bg-extended-indigo-base-press;
-  background-color: $ion-bg-extended-indigo-base-press;
+  --background-color: $token-bg-extended-indigo-base-press;
+  background-color: $token-bg-extended-indigo-base-press;
 }
 .ion-bg-extended-indigo-subtle-default {
-  --background-color: $ion-bg-extended-indigo-subtle-default;
-  background-color: $ion-bg-extended-indigo-subtle-default;
+  --background-color: $token-bg-extended-indigo-subtle-default;
+  background-color: $token-bg-extended-indigo-subtle-default;
 }
 .ion-bg-extended-indigo-subtle-press {
-  --background-color: $ion-bg-extended-indigo-subtle-press;
-  background-color: $ion-bg-extended-indigo-subtle-press;
+  --background-color: $token-bg-extended-indigo-subtle-press;
+  background-color: $token-bg-extended-indigo-subtle-press;
 }
 .ion-bg-extended-violet-base-default {
-  --background-color: $ion-bg-extended-violet-base-default;
-  background-color: $ion-bg-extended-violet-base-default;
+  --background-color: $token-bg-extended-violet-base-default;
+  background-color: $token-bg-extended-violet-base-default;
 }
 .ion-bg-extended-violet-base-press {
-  --background-color: $ion-bg-extended-violet-base-press;
-  background-color: $ion-bg-extended-violet-base-press;
+  --background-color: $token-bg-extended-violet-base-press;
+  background-color: $token-bg-extended-violet-base-press;
 }
 .ion-bg-extended-violet-subtle-default {
-  --background-color: $ion-bg-extended-violet-subtle-default;
-  background-color: $ion-bg-extended-violet-subtle-default;
+  --background-color: $token-bg-extended-violet-subtle-default;
+  background-color: $token-bg-extended-violet-subtle-default;
 }
 .ion-bg-extended-violet-subtle-press {
-  --background-color: $ion-bg-extended-violet-subtle-press;
-  background-color: $ion-bg-extended-violet-subtle-press;
+  --background-color: $token-bg-extended-violet-subtle-press;
+  background-color: $token-bg-extended-violet-subtle-press;
 }
 .ion-bg-extended-purple-base-default {
-  --background-color: $ion-bg-extended-purple-base-default;
-  background-color: $ion-bg-extended-purple-base-default;
+  --background-color: $token-bg-extended-purple-base-default;
+  background-color: $token-bg-extended-purple-base-default;
 }
 .ion-bg-extended-purple-base-press {
-  --background-color: $ion-bg-extended-purple-base-press;
-  background-color: $ion-bg-extended-purple-base-press;
+  --background-color: $token-bg-extended-purple-base-press;
+  background-color: $token-bg-extended-purple-base-press;
 }
 .ion-bg-extended-purple-subtle-default {
-  --background-color: $ion-bg-extended-purple-subtle-default;
-  background-color: $ion-bg-extended-purple-subtle-default;
+  --background-color: $token-bg-extended-purple-subtle-default;
+  background-color: $token-bg-extended-purple-subtle-default;
 }
 .ion-bg-extended-purple-subtle-press {
-  --background-color: $ion-bg-extended-purple-subtle-press;
-  background-color: $ion-bg-extended-purple-subtle-press;
+  --background-color: $token-bg-extended-purple-subtle-press;
+  background-color: $token-bg-extended-purple-subtle-press;
 }
 .ion-bg-extended-magenta-base-default {
-  --background-color: $ion-bg-extended-magenta-base-default;
-  background-color: $ion-bg-extended-magenta-base-default;
+  --background-color: $token-bg-extended-magenta-base-default;
+  background-color: $token-bg-extended-magenta-base-default;
 }
 .ion-bg-extended-magenta-base-press {
-  --background-color: $ion-bg-extended-magenta-base-press;
-  background-color: $ion-bg-extended-magenta-base-press;
+  --background-color: $token-bg-extended-magenta-base-press;
+  background-color: $token-bg-extended-magenta-base-press;
 }
 .ion-bg-extended-magenta-subtle-default {
-  --background-color: $ion-bg-extended-magenta-subtle-default;
-  background-color: $ion-bg-extended-magenta-subtle-default;
+  --background-color: $token-bg-extended-magenta-subtle-default;
+  background-color: $token-bg-extended-magenta-subtle-default;
 }
 .ion-bg-extended-magenta-subtle-press {
-  --background-color: $ion-bg-extended-magenta-subtle-press;
-  background-color: $ion-bg-extended-magenta-subtle-press;
+  --background-color: $token-bg-extended-magenta-subtle-press;
+  background-color: $token-bg-extended-magenta-subtle-press;
 }
 .ion-bg-extended-pink-base-default {
-  --background-color: $ion-bg-extended-pink-base-default;
-  background-color: $ion-bg-extended-pink-base-default;
+  --background-color: $token-bg-extended-pink-base-default;
+  background-color: $token-bg-extended-pink-base-default;
 }
 .ion-bg-extended-pink-base-press {
-  --background-color: $ion-bg-extended-pink-base-press;
-  background-color: $ion-bg-extended-pink-base-press;
+  --background-color: $token-bg-extended-pink-base-press;
+  background-color: $token-bg-extended-pink-base-press;
 }
 .ion-bg-extended-pink-subtle-default {
-  --background-color: $ion-bg-extended-pink-subtle-default;
-  background-color: $ion-bg-extended-pink-subtle-default;
+  --background-color: $token-bg-extended-pink-subtle-default;
+  background-color: $token-bg-extended-pink-subtle-default;
 }
 .ion-bg-extended-pink-subtle-press {
-  --background-color: $ion-bg-extended-pink-subtle-press;
-  background-color: $ion-bg-extended-pink-subtle-press;
+  --background-color: $token-bg-extended-pink-subtle-press;
+  background-color: $token-bg-extended-pink-subtle-press;
 }
 .ion-text-default {
-  --color: $ion-text-default;
-  color: $ion-text-default;
+  --color: $token-text-default;
+  color: $token-text-default;
 }
 .ion-text-subtle {
-  --color: $ion-text-subtle;
-  color: $ion-text-subtle;
+  --color: $token-text-subtle;
+  color: $token-text-subtle;
 }
 .ion-text-subtlest {
-  --color: $ion-text-subtlest;
-  color: $ion-text-subtlest;
+  --color: $token-text-subtlest;
+  color: $token-text-subtlest;
 }
 .ion-text-primary {
-  --color: $ion-text-primary;
-  color: $ion-text-primary;
+  --color: $token-text-primary;
+  color: $token-text-primary;
 }
 .ion-text-disabled {
-  --color: $ion-text-disabled;
-  color: $ion-text-disabled;
+  --color: $token-text-disabled;
+  color: $token-text-disabled;
 }
 .ion-text-danger {
-  --color: $ion-text-danger;
-  color: $ion-text-danger;
+  --color: $token-text-danger;
+  color: $token-text-danger;
 }
 .ion-text-info {
-  --color: $ion-text-info;
-  color: $ion-text-info;
+  --color: $token-text-info;
+  color: $token-text-info;
 }
 .ion-text-warning {
-  --color: $ion-text-warning;
-  color: $ion-text-warning;
+  --color: $token-text-warning;
+  color: $token-text-warning;
 }
 .ion-text-success {
-  --color: $ion-text-success;
-  color: $ion-text-success;
+  --color: $token-text-success;
+  color: $token-text-success;
 }
 .ion-text-link-default {
-  --color: $ion-text-link-default;
-  color: $ion-text-link-default;
+  --color: $token-text-link-default;
+  color: $token-text-link-default;
 }
 .ion-text-link-press {
-  --color: $ion-text-link-press;
-  color: $ion-text-link-press;
+  --color: $token-text-link-press;
+  color: $token-text-link-press;
 }
 .ion-text-link-visited {
-  --color: $ion-text-link-visited;
-  color: $ion-text-link-visited;
+  --color: $token-text-link-visited;
+  color: $token-text-link-visited;
 }
 .ion-text-inverse {
-  --color: $ion-text-inverse;
-  color: $ion-text-inverse;
+  --color: $token-text-inverse;
+  color: $token-text-inverse;
 }
 .ion-text-select {
-  --color: $ion-text-select;
-  color: $ion-text-select;
+  --color: $token-text-select;
+  color: $token-text-select;
 }
 .ion-text-extended-pumpkin {
-  --color: $ion-text-extended-pumpkin;
-  color: $ion-text-extended-pumpkin;
+  --color: $token-text-extended-pumpkin;
+  color: $token-text-extended-pumpkin;
 }
 .ion-text-extended-orange {
-  --color: $ion-text-extended-orange;
-  color: $ion-text-extended-orange;
+  --color: $token-text-extended-orange;
+  color: $token-text-extended-orange;
 }
 .ion-text-extended-lime {
-  --color: $ion-text-extended-lime;
-  color: $ion-text-extended-lime;
+  --color: $token-text-extended-lime;
+  color: $token-text-extended-lime;
 }
 .ion-text-extended-teal {
-  --color: $ion-text-extended-teal;
-  color: $ion-text-extended-teal;
+  --color: $token-text-extended-teal;
+  color: $token-text-extended-teal;
 }
 .ion-text-extended-aqua {
-  --color: $ion-text-extended-aqua;
-  color: $ion-text-extended-aqua;
+  --color: $token-text-extended-aqua;
+  color: $token-text-extended-aqua;
 }
 .ion-text-extended-indigo {
-  --color: $ion-text-extended-indigo;
-  color: $ion-text-extended-indigo;
+  --color: $token-text-extended-indigo;
+  color: $token-text-extended-indigo;
 }
 .ion-text-extended-violet {
-  --color: $ion-text-extended-violet;
-  color: $ion-text-extended-violet;
+  --color: $token-text-extended-violet;
+  color: $token-text-extended-violet;
 }
 .ion-text-extended-purple {
-  --color: $ion-text-extended-purple;
-  color: $ion-text-extended-purple;
+  --color: $token-text-extended-purple;
+  color: $token-text-extended-purple;
 }
 .ion-text-extended-magenta {
-  --color: $ion-text-extended-magenta;
-  color: $ion-text-extended-magenta;
+  --color: $token-text-extended-magenta;
+  color: $token-text-extended-magenta;
 }
 .ion-text-extended-pink {
-  --color: $ion-text-extended-pink;
-  color: $ion-text-extended-pink;
+  --color: $token-text-extended-pink;
+  color: $token-text-extended-pink;
 }
 .ion-border-default {
-  --border-color: $ion-border-default;
-  border-color: $ion-border-default;
+  --border-color: $token-border-default;
+  border-color: $token-border-default;
 }
 .ion-border-boldest {
-  --border-color: $ion-border-boldest;
-  border-color: $ion-border-boldest;
+  --border-color: $token-border-boldest;
+  border-color: $token-border-boldest;
 }
 .ion-border-subtle {
-  --border-color: $ion-border-subtle;
-  border-color: $ion-border-subtle;
+  --border-color: $token-border-subtle;
+  border-color: $token-border-subtle;
 }
 .ion-border-subtlest {
-  --border-color: $ion-border-subtlest;
-  border-color: $ion-border-subtlest;
+  --border-color: $token-border-subtlest;
+  border-color: $token-border-subtlest;
 }
 .ion-border-primary {
-  --border-color: $ion-border-primary;
-  border-color: $ion-border-primary;
+  --border-color: $token-border-primary;
+  border-color: $token-border-primary;
 }
 .ion-border-success {
-  --border-color: $ion-border-success;
-  border-color: $ion-border-success;
+  --border-color: $token-border-success;
+  border-color: $token-border-success;
 }
 .ion-border-warning {
-  --border-color: $ion-border-warning;
-  border-color: $ion-border-warning;
+  --border-color: $token-border-warning;
+  border-color: $token-border-warning;
 }
 .ion-border-disabled {
-  --border-color: $ion-border-disabled;
-  border-color: $ion-border-disabled;
+  --border-color: $token-border-disabled;
+  border-color: $token-border-disabled;
 }
 .ion-border-focus-0 {
-  --border-color: $ion-border-focus-0;
-  border-color: $ion-border-focus-0;
+  --border-color: $token-border-focus-0;
+  border-color: $token-border-focus-0;
 }
 .ion-border-focus-default {
-  --border-color: $ion-border-focus-default;
-  border-color: $ion-border-focus-default;
+  --border-color: $token-border-focus-default;
+  border-color: $token-border-focus-default;
 }
 .ion-border-focus-error {
-  --border-color: $ion-border-focus-error;
-  border-color: $ion-border-focus-error;
+  --border-color: $token-border-focus-error;
+  border-color: $token-border-focus-error;
 }
 .ion-border-danger-default {
-  --border-color: $ion-border-danger-default;
-  border-color: $ion-border-danger-default;
+  --border-color: $token-border-danger-default;
+  border-color: $token-border-danger-default;
 }
 .ion-border-danger-press {
-  --border-color: $ion-border-danger-press;
-  border-color: $ion-border-danger-press;
+  --border-color: $token-border-danger-press;
+  border-color: $token-border-danger-press;
 }
 .ion-border-input-default {
-  --border-color: $ion-border-input-default;
-  border-color: $ion-border-input-default;
+  --border-color: $token-border-input-default;
+  border-color: $token-border-input-default;
 }
 .ion-border-input-press {
-  --border-color: $ion-border-input-press;
-  border-color: $ion-border-input-press;
+  --border-color: $token-border-input-press;
+  border-color: $token-border-input-press;
 }
 .ion-border-input-read-only {
-  --border-color: $ion-border-input-read-only;
-  border-color: $ion-border-input-read-only;
+  --border-color: $token-border-input-read-only;
+  border-color: $token-border-input-read-only;
 }
 .ion-border-style-none {
-  --border-style: $ion-border-style-none;
-  border-style: $ion-border-style-none;
+  --border-style: $token-border-style-none;
+  border-style: $token-border-style-none;
 }
 .ion-border-style-solid {
-  --border-style: $ion-border-style-solid;
-  border-style: $ion-border-style-solid;
+  --border-style: $token-border-style-solid;
+  border-style: $token-border-style-solid;
 }
 .ion-border-style-dashed {
-  --border-style: $ion-border-style-dashed;
-  border-style: $ion-border-style-dashed;
+  --border-style: $token-border-style-dashed;
+  border-style: $token-border-style-dashed;
 }
 .ion-border-style-dotted {
-  --border-style: $ion-border-style-dotted;
-  border-style: $ion-border-style-dotted;
+  --border-style: $token-border-style-dotted;
+  border-style: $token-border-style-dotted;
 }
 .ion-border-size-0 {
-  --border-width: $ion-border-size-0;
-  border-width: $ion-border-size-0;
+  --border-width: $token-border-size-0;
+  border-width: $token-border-size-0;
 }
 .ion-border-size-025 {
-  --border-width: $ion-border-size-025;
-  border-width: $ion-border-size-025;
+  --border-width: $token-border-size-025;
+  border-width: $token-border-size-025;
 }
 .ion-border-size-050 {
-  --border-width: $ion-border-size-050;
-  border-width: $ion-border-size-050;
+  --border-width: $token-border-size-050;
+  border-width: $token-border-size-050;
 }
 .ion-border-size-075 {
-  --border-width: $ion-border-size-075;
-  border-width: $ion-border-size-075;
+  --border-width: $token-border-size-075;
+  border-width: $token-border-size-075;
 }
 .ion-border-radius-0 {
-  --border-radius: $ion-border-radius-0;
-  border-radius: $ion-border-radius-0;
+  --border-radius: $token-border-radius-0;
+  border-radius: $token-border-radius-0;
 }
 .ion-border-radius-100 {
-  --border-radius: $ion-border-radius-100;
-  border-radius: $ion-border-radius-100;
+  --border-radius: $token-border-radius-100;
+  border-radius: $token-border-radius-100;
 }
 .ion-border-radius-200 {
-  --border-radius: $ion-border-radius-200;
-  border-radius: $ion-border-radius-200;
+  --border-radius: $token-border-radius-200;
+  border-radius: $token-border-radius-200;
 }
 .ion-border-radius-300 {
-  --border-radius: $ion-border-radius-300;
-  border-radius: $ion-border-radius-300;
+  --border-radius: $token-border-radius-300;
+  border-radius: $token-border-radius-300;
 }
 .ion-border-radius-400 {
-  --border-radius: $ion-border-radius-400;
-  border-radius: $ion-border-radius-400;
+  --border-radius: $token-border-radius-400;
+  border-radius: $token-border-radius-400;
 }
 .ion-border-radius-500 {
-  --border-radius: $ion-border-radius-500;
-  border-radius: $ion-border-radius-500;
+  --border-radius: $token-border-radius-500;
+  border-radius: $token-border-radius-500;
 }
 .ion-border-radius-800 {
-  --border-radius: $ion-border-radius-800;
-  border-radius: $ion-border-radius-800;
+  --border-radius: $token-border-radius-800;
+  border-radius: $token-border-radius-800;
 }
 .ion-border-radius-1000 {
-  --border-radius: $ion-border-radius-1000;
-  border-radius: $ion-border-radius-1000;
+  --border-radius: $token-border-radius-1000;
+  border-radius: $token-border-radius-1000;
 }
 .ion-border-radius-full {
-  --border-radius: $ion-border-radius-full;
-  border-radius: $ion-border-radius-full;
+  --border-radius: $token-border-radius-full;
+  border-radius: $token-border-radius-full;
 }
 .ion-border-radius-025 {
-  --border-radius: $ion-border-radius-025;
-  border-radius: $ion-border-radius-025;
+  --border-radius: $token-border-radius-025;
+  border-radius: $token-border-radius-025;
 }
 .ion-icon-default {
-  --color: $ion-icon-default;
-  color: $ion-icon-default;
+  --color: $token-icon-default;
+  color: $token-icon-default;
 }
 .ion-icon-subtle {
-  --color: $ion-icon-subtle;
-  color: $ion-icon-subtle;
+  --color: $token-icon-subtle;
+  color: $token-icon-subtle;
 }
 .ion-icon-subtlest {
-  --color: $ion-icon-subtlest;
-  color: $ion-icon-subtlest;
+  --color: $token-icon-subtlest;
+  color: $token-icon-subtlest;
 }
 .ion-icon-disabled {
-  --color: $ion-icon-disabled;
-  color: $ion-icon-disabled;
+  --color: $token-icon-disabled;
+  color: $token-icon-disabled;
 }
 .ion-icon-primary {
-  --color: $ion-icon-primary;
-  color: $ion-icon-primary;
+  --color: $token-icon-primary;
+  color: $token-icon-primary;
 }
 .ion-icon-select {
-  --color: $ion-icon-select;
-  color: $ion-icon-select;
+  --color: $token-icon-select;
+  color: $token-icon-select;
 }
 .ion-icon-info {
-  --color: $ion-icon-info;
-  color: $ion-icon-info;
+  --color: $token-icon-info;
+  color: $token-icon-info;
 }
 .ion-icon-success {
-  --color: $ion-icon-success;
-  color: $ion-icon-success;
+  --color: $token-icon-success;
+  color: $token-icon-success;
 }
 .ion-icon-danger {
-  --color: $ion-icon-danger;
-  color: $ion-icon-danger;
+  --color: $token-icon-danger;
+  color: $token-icon-danger;
 }
 .ion-icon-warning {
-  --color: $ion-icon-warning;
-  color: $ion-icon-warning;
+  --color: $token-icon-warning;
+  color: $token-icon-warning;
 }
 .ion-icon-inverse {
-  --color: $ion-icon-inverse;
-  color: $ion-icon-inverse;
+  --color: $token-icon-inverse;
+  color: $token-icon-inverse;
 }
 .ion-icon-link-default {
-  --color: $ion-icon-link-default;
-  color: $ion-icon-link-default;
+  --color: $token-icon-link-default;
+  color: $token-icon-link-default;
 }
 .ion-icon-link-press {
-  --color: $ion-icon-link-press;
-  color: $ion-icon-link-press;
+  --color: $token-icon-link-press;
+  color: $token-icon-link-press;
 }
 .ion-icon-link-visited {
-  --color: $ion-icon-link-visited;
-  color: $ion-icon-link-visited;
+  --color: $token-icon-link-visited;
+  color: $token-icon-link-visited;
 }
 .ion-icon-extended-pumpkin {
-  --color: $ion-icon-extended-pumpkin;
-  color: $ion-icon-extended-pumpkin;
+  --color: $token-icon-extended-pumpkin;
+  color: $token-icon-extended-pumpkin;
 }
 .ion-icon-extended-orange {
-  --color: $ion-icon-extended-orange;
-  color: $ion-icon-extended-orange;
+  --color: $token-icon-extended-orange;
+  color: $token-icon-extended-orange;
 }
 .ion-icon-extended-lime {
-  --color: $ion-icon-extended-lime;
-  color: $ion-icon-extended-lime;
+  --color: $token-icon-extended-lime;
+  color: $token-icon-extended-lime;
 }
 .ion-icon-extended-teal {
-  --color: $ion-icon-extended-teal;
-  color: $ion-icon-extended-teal;
+  --color: $token-icon-extended-teal;
+  color: $token-icon-extended-teal;
 }
 .ion-icon-extended-aqua {
-  --color: $ion-icon-extended-aqua;
-  color: $ion-icon-extended-aqua;
+  --color: $token-icon-extended-aqua;
+  color: $token-icon-extended-aqua;
 }
 .ion-icon-extended-indigo {
-  --color: $ion-icon-extended-indigo;
-  color: $ion-icon-extended-indigo;
+  --color: $token-icon-extended-indigo;
+  color: $token-icon-extended-indigo;
 }
 .ion-icon-extended-violet {
-  --color: $ion-icon-extended-violet;
-  color: $ion-icon-extended-violet;
+  --color: $token-icon-extended-violet;
+  color: $token-icon-extended-violet;
 }
 .ion-icon-extended-purple {
-  --color: $ion-icon-extended-purple;
-  color: $ion-icon-extended-purple;
+  --color: $token-icon-extended-purple;
+  color: $token-icon-extended-purple;
 }
 .ion-icon-extended-magenta {
-  --color: $ion-icon-extended-magenta;
-  color: $ion-icon-extended-magenta;
+  --color: $token-icon-extended-magenta;
+  color: $token-icon-extended-magenta;
 }
 .ion-icon-extended-pink {
-  --color: $ion-icon-extended-pink;
-  color: $ion-icon-extended-pink;
+  --color: $token-icon-extended-pink;
+  color: $token-icon-extended-pink;
 }
 .ion-state-disabled {
-  --color: $ion-state-disabled;
-  color: $ion-state-disabled;
+  --color: $token-state-disabled;
+  color: $token-state-disabled;
 }
 .ion-state-press {
-  --color: $ion-state-press;
-  color: $ion-state-press;
+  --color: $token-state-press;
+  color: $token-state-press;
 }
 .ion-elevation-1 {
-  --box-shadow: $ion-elevation-1;
-  box-shadow: $ion-elevation-1;
+  --box-shadow: $token-elevation-1;
+  box-shadow: $token-elevation-1;
 }
 .ion-elevation-2 {
-  --box-shadow: $ion-elevation-2;
-  box-shadow: $ion-elevation-2;
+  --box-shadow: $token-elevation-2;
+  box-shadow: $token-elevation-2;
 }
 .ion-elevation-3 {
-  --box-shadow: $ion-elevation-3;
-  box-shadow: $ion-elevation-3;
+  --box-shadow: $token-elevation-3;
+  box-shadow: $token-elevation-3;
 }
 .ion-elevation-4 {
-  --box-shadow: $ion-elevation-4;
-  box-shadow: $ion-elevation-4;
+  --box-shadow: $token-elevation-4;
+  box-shadow: $token-elevation-4;
 }
 
 .ion-gap-space-0 {
-  gap: #{$ion-space-0};
+  gap: #{$token-space-0};
 }
 
 .ion-margin-space-0 {
-  --margin-top: #{$ion-space-0};
-  --margin-end: #{$ion-space-0};
-  --margin-bottom: #{$ion-space-0};
-  --margin-start: #{$ion-space-0};
+  --margin-top: #{$token-space-0};
+  --margin-end: #{$token-space-0};
+  --margin-bottom: #{$token-space-0};
+  --margin-start: #{$token-space-0};
 
-  @include margin($ion-space-0);
+  @include margin($token-space-0);
 }
 
 .ion-margin-top-space-0 {
-  --margin-top: #{$ion-space-0};
+  --margin-top: #{$token-space-0};
 
-  @include margin($ion-space-0, null, null, null);
+  @include margin($token-space-0, null, null, null);
 }
 
 .ion-margin-end-space-0 {
-  --margin-end: #{$ion-space-0};
+  --margin-end: #{$token-space-0};
 
-  @include margin(null, $ion-space-0, null, null);
+  @include margin(null, $token-space-0, null, null);
 }
 
 .ion-margin-bottom-space-0 {
-  --margin-bottom: #{$ion-space-0};
+  --margin-bottom: #{$token-space-0};
 
-  @include margin(null, null, $ion-space-0, null);
+  @include margin(null, null, $token-space-0, null);
 }
 
 .ion-margin-start-space-0 {
-  --margin-start: #{$ion-space-0};
+  --margin-start: #{$token-space-0};
 
-  @include margin(null, null, null, $ion-space-0);
+  @include margin(null, null, null, $token-space-0);
 }
 
 .ion-padding-space-0 {
-  --padding-top: #{$ion-space-0};
-  --padding-end: #{$ion-space-0};
-  --padding-bottom: #{$ion-space-0};
-  --padding-start: #{$ion-space-0};
+  --padding-top: #{$token-space-0};
+  --padding-end: #{$token-space-0};
+  --padding-bottom: #{$token-space-0};
+  --padding-start: #{$token-space-0};
 
-  @include padding($ion-space-0);
+  @include padding($token-space-0);
 }
 
 .ion-padding-top-space-0 {
-  --padding-top: #{$ion-space-0};
+  --padding-top: #{$token-space-0};
 
-  @include padding($ion-space-0, null, null, null);
+  @include padding($token-space-0, null, null, null);
 }
 
 .ion-padding-end-space-0 {
-  --padding-end: #{$ion-space-0};
+  --padding-end: #{$token-space-0};
 
-  @include padding(null, $ion-space-0, null, null);
+  @include padding(null, $token-space-0, null, null);
 }
 
 .ion-padding-bottom-space-0 {
-  --padding-bottom: #{$ion-space-0};
+  --padding-bottom: #{$token-space-0};
 
-  @include padding(null, null, $ion-space-0, null);
+  @include padding(null, null, $token-space-0, null);
 }
 
 .ion-padding-start-space-0 {
-  --padding-start: #{$ion-space-0};
+  --padding-start: #{$token-space-0};
 
-  @include padding(null, null, null, $ion-space-0);
+  @include padding(null, null, null, $token-space-0);
 }
 
 .ion-gap-space-100 {
-  gap: #{$ion-space-100};
+  gap: #{$token-space-100};
 }
 
 .ion-margin-space-100 {
-  --margin-top: #{$ion-space-100};
-  --margin-end: #{$ion-space-100};
-  --margin-bottom: #{$ion-space-100};
-  --margin-start: #{$ion-space-100};
+  --margin-top: #{$token-space-100};
+  --margin-end: #{$token-space-100};
+  --margin-bottom: #{$token-space-100};
+  --margin-start: #{$token-space-100};
 
-  @include margin($ion-space-100);
+  @include margin($token-space-100);
 }
 
 .ion-margin-top-space-100 {
-  --margin-top: #{$ion-space-100};
+  --margin-top: #{$token-space-100};
 
-  @include margin($ion-space-100, null, null, null);
+  @include margin($token-space-100, null, null, null);
 }
 
 .ion-margin-end-space-100 {
-  --margin-end: #{$ion-space-100};
+  --margin-end: #{$token-space-100};
 
-  @include margin(null, $ion-space-100, null, null);
+  @include margin(null, $token-space-100, null, null);
 }
 
 .ion-margin-bottom-space-100 {
-  --margin-bottom: #{$ion-space-100};
+  --margin-bottom: #{$token-space-100};
 
-  @include margin(null, null, $ion-space-100, null);
+  @include margin(null, null, $token-space-100, null);
 }
 
 .ion-margin-start-space-100 {
-  --margin-start: #{$ion-space-100};
+  --margin-start: #{$token-space-100};
 
-  @include margin(null, null, null, $ion-space-100);
+  @include margin(null, null, null, $token-space-100);
 }
 
 .ion-padding-space-100 {
-  --padding-top: #{$ion-space-100};
-  --padding-end: #{$ion-space-100};
-  --padding-bottom: #{$ion-space-100};
-  --padding-start: #{$ion-space-100};
+  --padding-top: #{$token-space-100};
+  --padding-end: #{$token-space-100};
+  --padding-bottom: #{$token-space-100};
+  --padding-start: #{$token-space-100};
 
-  @include padding($ion-space-100);
+  @include padding($token-space-100);
 }
 
 .ion-padding-top-space-100 {
-  --padding-top: #{$ion-space-100};
+  --padding-top: #{$token-space-100};
 
-  @include padding($ion-space-100, null, null, null);
+  @include padding($token-space-100, null, null, null);
 }
 
 .ion-padding-end-space-100 {
-  --padding-end: #{$ion-space-100};
+  --padding-end: #{$token-space-100};
 
-  @include padding(null, $ion-space-100, null, null);
+  @include padding(null, $token-space-100, null, null);
 }
 
 .ion-padding-bottom-space-100 {
-  --padding-bottom: #{$ion-space-100};
+  --padding-bottom: #{$token-space-100};
 
-  @include padding(null, null, $ion-space-100, null);
+  @include padding(null, null, $token-space-100, null);
 }
 
 .ion-padding-start-space-100 {
-  --padding-start: #{$ion-space-100};
+  --padding-start: #{$token-space-100};
 
-  @include padding(null, null, null, $ion-space-100);
+  @include padding(null, null, null, $token-space-100);
 }
 
 .ion-gap-space-150 {
-  gap: #{$ion-space-150};
+  gap: #{$token-space-150};
 }
 
 .ion-margin-space-150 {
-  --margin-top: #{$ion-space-150};
-  --margin-end: #{$ion-space-150};
-  --margin-bottom: #{$ion-space-150};
-  --margin-start: #{$ion-space-150};
+  --margin-top: #{$token-space-150};
+  --margin-end: #{$token-space-150};
+  --margin-bottom: #{$token-space-150};
+  --margin-start: #{$token-space-150};
 
-  @include margin($ion-space-150);
+  @include margin($token-space-150);
 }
 
 .ion-margin-top-space-150 {
-  --margin-top: #{$ion-space-150};
+  --margin-top: #{$token-space-150};
 
-  @include margin($ion-space-150, null, null, null);
+  @include margin($token-space-150, null, null, null);
 }
 
 .ion-margin-end-space-150 {
-  --margin-end: #{$ion-space-150};
+  --margin-end: #{$token-space-150};
 
-  @include margin(null, $ion-space-150, null, null);
+  @include margin(null, $token-space-150, null, null);
 }
 
 .ion-margin-bottom-space-150 {
-  --margin-bottom: #{$ion-space-150};
+  --margin-bottom: #{$token-space-150};
 
-  @include margin(null, null, $ion-space-150, null);
+  @include margin(null, null, $token-space-150, null);
 }
 
 .ion-margin-start-space-150 {
-  --margin-start: #{$ion-space-150};
+  --margin-start: #{$token-space-150};
 
-  @include margin(null, null, null, $ion-space-150);
+  @include margin(null, null, null, $token-space-150);
 }
 
 .ion-padding-space-150 {
-  --padding-top: #{$ion-space-150};
-  --padding-end: #{$ion-space-150};
-  --padding-bottom: #{$ion-space-150};
-  --padding-start: #{$ion-space-150};
+  --padding-top: #{$token-space-150};
+  --padding-end: #{$token-space-150};
+  --padding-bottom: #{$token-space-150};
+  --padding-start: #{$token-space-150};
 
-  @include padding($ion-space-150);
+  @include padding($token-space-150);
 }
 
 .ion-padding-top-space-150 {
-  --padding-top: #{$ion-space-150};
+  --padding-top: #{$token-space-150};
 
-  @include padding($ion-space-150, null, null, null);
+  @include padding($token-space-150, null, null, null);
 }
 
 .ion-padding-end-space-150 {
-  --padding-end: #{$ion-space-150};
+  --padding-end: #{$token-space-150};
 
-  @include padding(null, $ion-space-150, null, null);
+  @include padding(null, $token-space-150, null, null);
 }
 
 .ion-padding-bottom-space-150 {
-  --padding-bottom: #{$ion-space-150};
+  --padding-bottom: #{$token-space-150};
 
-  @include padding(null, null, $ion-space-150, null);
+  @include padding(null, null, $token-space-150, null);
 }
 
 .ion-padding-start-space-150 {
-  --padding-start: #{$ion-space-150};
+  --padding-start: #{$token-space-150};
 
-  @include padding(null, null, null, $ion-space-150);
+  @include padding(null, null, null, $token-space-150);
 }
 
 .ion-gap-space-200 {
-  gap: #{$ion-space-200};
+  gap: #{$token-space-200};
 }
 
 .ion-margin-space-200 {
-  --margin-top: #{$ion-space-200};
-  --margin-end: #{$ion-space-200};
-  --margin-bottom: #{$ion-space-200};
-  --margin-start: #{$ion-space-200};
+  --margin-top: #{$token-space-200};
+  --margin-end: #{$token-space-200};
+  --margin-bottom: #{$token-space-200};
+  --margin-start: #{$token-space-200};
 
-  @include margin($ion-space-200);
+  @include margin($token-space-200);
 }
 
 .ion-margin-top-space-200 {
-  --margin-top: #{$ion-space-200};
+  --margin-top: #{$token-space-200};
 
-  @include margin($ion-space-200, null, null, null);
+  @include margin($token-space-200, null, null, null);
 }
 
 .ion-margin-end-space-200 {
-  --margin-end: #{$ion-space-200};
+  --margin-end: #{$token-space-200};
 
-  @include margin(null, $ion-space-200, null, null);
+  @include margin(null, $token-space-200, null, null);
 }
 
 .ion-margin-bottom-space-200 {
-  --margin-bottom: #{$ion-space-200};
+  --margin-bottom: #{$token-space-200};
 
-  @include margin(null, null, $ion-space-200, null);
+  @include margin(null, null, $token-space-200, null);
 }
 
 .ion-margin-start-space-200 {
-  --margin-start: #{$ion-space-200};
+  --margin-start: #{$token-space-200};
 
-  @include margin(null, null, null, $ion-space-200);
+  @include margin(null, null, null, $token-space-200);
 }
 
 .ion-padding-space-200 {
-  --padding-top: #{$ion-space-200};
-  --padding-end: #{$ion-space-200};
-  --padding-bottom: #{$ion-space-200};
-  --padding-start: #{$ion-space-200};
+  --padding-top: #{$token-space-200};
+  --padding-end: #{$token-space-200};
+  --padding-bottom: #{$token-space-200};
+  --padding-start: #{$token-space-200};
 
-  @include padding($ion-space-200);
+  @include padding($token-space-200);
 }
 
 .ion-padding-top-space-200 {
-  --padding-top: #{$ion-space-200};
+  --padding-top: #{$token-space-200};
 
-  @include padding($ion-space-200, null, null, null);
+  @include padding($token-space-200, null, null, null);
 }
 
 .ion-padding-end-space-200 {
-  --padding-end: #{$ion-space-200};
+  --padding-end: #{$token-space-200};
 
-  @include padding(null, $ion-space-200, null, null);
+  @include padding(null, $token-space-200, null, null);
 }
 
 .ion-padding-bottom-space-200 {
-  --padding-bottom: #{$ion-space-200};
+  --padding-bottom: #{$token-space-200};
 
-  @include padding(null, null, $ion-space-200, null);
+  @include padding(null, null, $token-space-200, null);
 }
 
 .ion-padding-start-space-200 {
-  --padding-start: #{$ion-space-200};
+  --padding-start: #{$token-space-200};
 
-  @include padding(null, null, null, $ion-space-200);
+  @include padding(null, null, null, $token-space-200);
 }
 
 .ion-gap-space-250 {
-  gap: #{$ion-space-250};
+  gap: #{$token-space-250};
 }
 
 .ion-margin-space-250 {
-  --margin-top: #{$ion-space-250};
-  --margin-end: #{$ion-space-250};
-  --margin-bottom: #{$ion-space-250};
-  --margin-start: #{$ion-space-250};
+  --margin-top: #{$token-space-250};
+  --margin-end: #{$token-space-250};
+  --margin-bottom: #{$token-space-250};
+  --margin-start: #{$token-space-250};
 
-  @include margin($ion-space-250);
+  @include margin($token-space-250);
 }
 
 .ion-margin-top-space-250 {
-  --margin-top: #{$ion-space-250};
+  --margin-top: #{$token-space-250};
 
-  @include margin($ion-space-250, null, null, null);
+  @include margin($token-space-250, null, null, null);
 }
 
 .ion-margin-end-space-250 {
-  --margin-end: #{$ion-space-250};
+  --margin-end: #{$token-space-250};
 
-  @include margin(null, $ion-space-250, null, null);
+  @include margin(null, $token-space-250, null, null);
 }
 
 .ion-margin-bottom-space-250 {
-  --margin-bottom: #{$ion-space-250};
+  --margin-bottom: #{$token-space-250};
 
-  @include margin(null, null, $ion-space-250, null);
+  @include margin(null, null, $token-space-250, null);
 }
 
 .ion-margin-start-space-250 {
-  --margin-start: #{$ion-space-250};
+  --margin-start: #{$token-space-250};
 
-  @include margin(null, null, null, $ion-space-250);
+  @include margin(null, null, null, $token-space-250);
 }
 
 .ion-padding-space-250 {
-  --padding-top: #{$ion-space-250};
-  --padding-end: #{$ion-space-250};
-  --padding-bottom: #{$ion-space-250};
-  --padding-start: #{$ion-space-250};
+  --padding-top: #{$token-space-250};
+  --padding-end: #{$token-space-250};
+  --padding-bottom: #{$token-space-250};
+  --padding-start: #{$token-space-250};
 
-  @include padding($ion-space-250);
+  @include padding($token-space-250);
 }
 
 .ion-padding-top-space-250 {
-  --padding-top: #{$ion-space-250};
+  --padding-top: #{$token-space-250};
 
-  @include padding($ion-space-250, null, null, null);
+  @include padding($token-space-250, null, null, null);
 }
 
 .ion-padding-end-space-250 {
-  --padding-end: #{$ion-space-250};
+  --padding-end: #{$token-space-250};
 
-  @include padding(null, $ion-space-250, null, null);
+  @include padding(null, $token-space-250, null, null);
 }
 
 .ion-padding-bottom-space-250 {
-  --padding-bottom: #{$ion-space-250};
+  --padding-bottom: #{$token-space-250};
 
-  @include padding(null, null, $ion-space-250, null);
+  @include padding(null, null, $token-space-250, null);
 }
 
 .ion-padding-start-space-250 {
-  --padding-start: #{$ion-space-250};
+  --padding-start: #{$token-space-250};
 
-  @include padding(null, null, null, $ion-space-250);
+  @include padding(null, null, null, $token-space-250);
 }
 
 .ion-gap-space-300 {
-  gap: #{$ion-space-300};
+  gap: #{$token-space-300};
 }
 
 .ion-margin-space-300 {
-  --margin-top: #{$ion-space-300};
-  --margin-end: #{$ion-space-300};
-  --margin-bottom: #{$ion-space-300};
-  --margin-start: #{$ion-space-300};
+  --margin-top: #{$token-space-300};
+  --margin-end: #{$token-space-300};
+  --margin-bottom: #{$token-space-300};
+  --margin-start: #{$token-space-300};
 
-  @include margin($ion-space-300);
+  @include margin($token-space-300);
 }
 
 .ion-margin-top-space-300 {
-  --margin-top: #{$ion-space-300};
+  --margin-top: #{$token-space-300};
 
-  @include margin($ion-space-300, null, null, null);
+  @include margin($token-space-300, null, null, null);
 }
 
 .ion-margin-end-space-300 {
-  --margin-end: #{$ion-space-300};
+  --margin-end: #{$token-space-300};
 
-  @include margin(null, $ion-space-300, null, null);
+  @include margin(null, $token-space-300, null, null);
 }
 
 .ion-margin-bottom-space-300 {
-  --margin-bottom: #{$ion-space-300};
+  --margin-bottom: #{$token-space-300};
 
-  @include margin(null, null, $ion-space-300, null);
+  @include margin(null, null, $token-space-300, null);
 }
 
 .ion-margin-start-space-300 {
-  --margin-start: #{$ion-space-300};
+  --margin-start: #{$token-space-300};
 
-  @include margin(null, null, null, $ion-space-300);
+  @include margin(null, null, null, $token-space-300);
 }
 
 .ion-padding-space-300 {
-  --padding-top: #{$ion-space-300};
-  --padding-end: #{$ion-space-300};
-  --padding-bottom: #{$ion-space-300};
-  --padding-start: #{$ion-space-300};
+  --padding-top: #{$token-space-300};
+  --padding-end: #{$token-space-300};
+  --padding-bottom: #{$token-space-300};
+  --padding-start: #{$token-space-300};
 
-  @include padding($ion-space-300);
+  @include padding($token-space-300);
 }
 
 .ion-padding-top-space-300 {
-  --padding-top: #{$ion-space-300};
+  --padding-top: #{$token-space-300};
 
-  @include padding($ion-space-300, null, null, null);
+  @include padding($token-space-300, null, null, null);
 }
 
 .ion-padding-end-space-300 {
-  --padding-end: #{$ion-space-300};
+  --padding-end: #{$token-space-300};
 
-  @include padding(null, $ion-space-300, null, null);
+  @include padding(null, $token-space-300, null, null);
 }
 
 .ion-padding-bottom-space-300 {
-  --padding-bottom: #{$ion-space-300};
+  --padding-bottom: #{$token-space-300};
 
-  @include padding(null, null, $ion-space-300, null);
+  @include padding(null, null, $token-space-300, null);
 }
 
 .ion-padding-start-space-300 {
-  --padding-start: #{$ion-space-300};
+  --padding-start: #{$token-space-300};
 
-  @include padding(null, null, null, $ion-space-300);
+  @include padding(null, null, null, $token-space-300);
 }
 
 .ion-gap-space-400 {
-  gap: #{$ion-space-400};
+  gap: #{$token-space-400};
 }
 
 .ion-margin-space-400 {
-  --margin-top: #{$ion-space-400};
-  --margin-end: #{$ion-space-400};
-  --margin-bottom: #{$ion-space-400};
-  --margin-start: #{$ion-space-400};
+  --margin-top: #{$token-space-400};
+  --margin-end: #{$token-space-400};
+  --margin-bottom: #{$token-space-400};
+  --margin-start: #{$token-space-400};
 
-  @include margin($ion-space-400);
+  @include margin($token-space-400);
 }
 
 .ion-margin-top-space-400 {
-  --margin-top: #{$ion-space-400};
+  --margin-top: #{$token-space-400};
 
-  @include margin($ion-space-400, null, null, null);
+  @include margin($token-space-400, null, null, null);
 }
 
 .ion-margin-end-space-400 {
-  --margin-end: #{$ion-space-400};
+  --margin-end: #{$token-space-400};
 
-  @include margin(null, $ion-space-400, null, null);
+  @include margin(null, $token-space-400, null, null);
 }
 
 .ion-margin-bottom-space-400 {
-  --margin-bottom: #{$ion-space-400};
+  --margin-bottom: #{$token-space-400};
 
-  @include margin(null, null, $ion-space-400, null);
+  @include margin(null, null, $token-space-400, null);
 }
 
 .ion-margin-start-space-400 {
-  --margin-start: #{$ion-space-400};
+  --margin-start: #{$token-space-400};
 
-  @include margin(null, null, null, $ion-space-400);
+  @include margin(null, null, null, $token-space-400);
 }
 
 .ion-padding-space-400 {
-  --padding-top: #{$ion-space-400};
-  --padding-end: #{$ion-space-400};
-  --padding-bottom: #{$ion-space-400};
-  --padding-start: #{$ion-space-400};
+  --padding-top: #{$token-space-400};
+  --padding-end: #{$token-space-400};
+  --padding-bottom: #{$token-space-400};
+  --padding-start: #{$token-space-400};
 
-  @include padding($ion-space-400);
+  @include padding($token-space-400);
 }
 
 .ion-padding-top-space-400 {
-  --padding-top: #{$ion-space-400};
+  --padding-top: #{$token-space-400};
 
-  @include padding($ion-space-400, null, null, null);
+  @include padding($token-space-400, null, null, null);
 }
 
 .ion-padding-end-space-400 {
-  --padding-end: #{$ion-space-400};
+  --padding-end: #{$token-space-400};
 
-  @include padding(null, $ion-space-400, null, null);
+  @include padding(null, $token-space-400, null, null);
 }
 
 .ion-padding-bottom-space-400 {
-  --padding-bottom: #{$ion-space-400};
+  --padding-bottom: #{$token-space-400};
 
-  @include padding(null, null, $ion-space-400, null);
+  @include padding(null, null, $token-space-400, null);
 }
 
 .ion-padding-start-space-400 {
-  --padding-start: #{$ion-space-400};
+  --padding-start: #{$token-space-400};
 
-  @include padding(null, null, null, $ion-space-400);
+  @include padding(null, null, null, $token-space-400);
 }
 
 .ion-gap-space-500 {
-  gap: #{$ion-space-500};
+  gap: #{$token-space-500};
 }
 
 .ion-margin-space-500 {
-  --margin-top: #{$ion-space-500};
-  --margin-end: #{$ion-space-500};
-  --margin-bottom: #{$ion-space-500};
-  --margin-start: #{$ion-space-500};
+  --margin-top: #{$token-space-500};
+  --margin-end: #{$token-space-500};
+  --margin-bottom: #{$token-space-500};
+  --margin-start: #{$token-space-500};
 
-  @include margin($ion-space-500);
+  @include margin($token-space-500);
 }
 
 .ion-margin-top-space-500 {
-  --margin-top: #{$ion-space-500};
+  --margin-top: #{$token-space-500};
 
-  @include margin($ion-space-500, null, null, null);
+  @include margin($token-space-500, null, null, null);
 }
 
 .ion-margin-end-space-500 {
-  --margin-end: #{$ion-space-500};
+  --margin-end: #{$token-space-500};
 
-  @include margin(null, $ion-space-500, null, null);
+  @include margin(null, $token-space-500, null, null);
 }
 
 .ion-margin-bottom-space-500 {
-  --margin-bottom: #{$ion-space-500};
+  --margin-bottom: #{$token-space-500};
 
-  @include margin(null, null, $ion-space-500, null);
+  @include margin(null, null, $token-space-500, null);
 }
 
 .ion-margin-start-space-500 {
-  --margin-start: #{$ion-space-500};
+  --margin-start: #{$token-space-500};
 
-  @include margin(null, null, null, $ion-space-500);
+  @include margin(null, null, null, $token-space-500);
 }
 
 .ion-padding-space-500 {
-  --padding-top: #{$ion-space-500};
-  --padding-end: #{$ion-space-500};
-  --padding-bottom: #{$ion-space-500};
-  --padding-start: #{$ion-space-500};
+  --padding-top: #{$token-space-500};
+  --padding-end: #{$token-space-500};
+  --padding-bottom: #{$token-space-500};
+  --padding-start: #{$token-space-500};
 
-  @include padding($ion-space-500);
+  @include padding($token-space-500);
 }
 
 .ion-padding-top-space-500 {
-  --padding-top: #{$ion-space-500};
+  --padding-top: #{$token-space-500};
 
-  @include padding($ion-space-500, null, null, null);
+  @include padding($token-space-500, null, null, null);
 }
 
 .ion-padding-end-space-500 {
-  --padding-end: #{$ion-space-500};
+  --padding-end: #{$token-space-500};
 
-  @include padding(null, $ion-space-500, null, null);
+  @include padding(null, $token-space-500, null, null);
 }
 
 .ion-padding-bottom-space-500 {
-  --padding-bottom: #{$ion-space-500};
+  --padding-bottom: #{$token-space-500};
 
-  @include padding(null, null, $ion-space-500, null);
+  @include padding(null, null, $token-space-500, null);
 }
 
 .ion-padding-start-space-500 {
-  --padding-start: #{$ion-space-500};
+  --padding-start: #{$token-space-500};
 
-  @include padding(null, null, null, $ion-space-500);
+  @include padding(null, null, null, $token-space-500);
 }
 
 .ion-gap-space-600 {
-  gap: #{$ion-space-600};
+  gap: #{$token-space-600};
 }
 
 .ion-margin-space-600 {
-  --margin-top: #{$ion-space-600};
-  --margin-end: #{$ion-space-600};
-  --margin-bottom: #{$ion-space-600};
-  --margin-start: #{$ion-space-600};
+  --margin-top: #{$token-space-600};
+  --margin-end: #{$token-space-600};
+  --margin-bottom: #{$token-space-600};
+  --margin-start: #{$token-space-600};
 
-  @include margin($ion-space-600);
+  @include margin($token-space-600);
 }
 
 .ion-margin-top-space-600 {
-  --margin-top: #{$ion-space-600};
+  --margin-top: #{$token-space-600};
 
-  @include margin($ion-space-600, null, null, null);
+  @include margin($token-space-600, null, null, null);
 }
 
 .ion-margin-end-space-600 {
-  --margin-end: #{$ion-space-600};
+  --margin-end: #{$token-space-600};
 
-  @include margin(null, $ion-space-600, null, null);
+  @include margin(null, $token-space-600, null, null);
 }
 
 .ion-margin-bottom-space-600 {
-  --margin-bottom: #{$ion-space-600};
+  --margin-bottom: #{$token-space-600};
 
-  @include margin(null, null, $ion-space-600, null);
+  @include margin(null, null, $token-space-600, null);
 }
 
 .ion-margin-start-space-600 {
-  --margin-start: #{$ion-space-600};
+  --margin-start: #{$token-space-600};
 
-  @include margin(null, null, null, $ion-space-600);
+  @include margin(null, null, null, $token-space-600);
 }
 
 .ion-padding-space-600 {
-  --padding-top: #{$ion-space-600};
-  --padding-end: #{$ion-space-600};
-  --padding-bottom: #{$ion-space-600};
-  --padding-start: #{$ion-space-600};
+  --padding-top: #{$token-space-600};
+  --padding-end: #{$token-space-600};
+  --padding-bottom: #{$token-space-600};
+  --padding-start: #{$token-space-600};
 
-  @include padding($ion-space-600);
+  @include padding($token-space-600);
 }
 
 .ion-padding-top-space-600 {
-  --padding-top: #{$ion-space-600};
+  --padding-top: #{$token-space-600};
 
-  @include padding($ion-space-600, null, null, null);
+  @include padding($token-space-600, null, null, null);
 }
 
 .ion-padding-end-space-600 {
-  --padding-end: #{$ion-space-600};
+  --padding-end: #{$token-space-600};
 
-  @include padding(null, $ion-space-600, null, null);
+  @include padding(null, $token-space-600, null, null);
 }
 
 .ion-padding-bottom-space-600 {
-  --padding-bottom: #{$ion-space-600};
+  --padding-bottom: #{$token-space-600};
 
-  @include padding(null, null, $ion-space-600, null);
+  @include padding(null, null, $token-space-600, null);
 }
 
 .ion-padding-start-space-600 {
-  --padding-start: #{$ion-space-600};
+  --padding-start: #{$token-space-600};
 
-  @include padding(null, null, null, $ion-space-600);
+  @include padding(null, null, null, $token-space-600);
 }
 
 .ion-gap-space-700 {
-  gap: #{$ion-space-700};
+  gap: #{$token-space-700};
 }
 
 .ion-margin-space-700 {
-  --margin-top: #{$ion-space-700};
-  --margin-end: #{$ion-space-700};
-  --margin-bottom: #{$ion-space-700};
-  --margin-start: #{$ion-space-700};
+  --margin-top: #{$token-space-700};
+  --margin-end: #{$token-space-700};
+  --margin-bottom: #{$token-space-700};
+  --margin-start: #{$token-space-700};
 
-  @include margin($ion-space-700);
+  @include margin($token-space-700);
 }
 
 .ion-margin-top-space-700 {
-  --margin-top: #{$ion-space-700};
+  --margin-top: #{$token-space-700};
 
-  @include margin($ion-space-700, null, null, null);
+  @include margin($token-space-700, null, null, null);
 }
 
 .ion-margin-end-space-700 {
-  --margin-end: #{$ion-space-700};
+  --margin-end: #{$token-space-700};
 
-  @include margin(null, $ion-space-700, null, null);
+  @include margin(null, $token-space-700, null, null);
 }
 
 .ion-margin-bottom-space-700 {
-  --margin-bottom: #{$ion-space-700};
+  --margin-bottom: #{$token-space-700};
 
-  @include margin(null, null, $ion-space-700, null);
+  @include margin(null, null, $token-space-700, null);
 }
 
 .ion-margin-start-space-700 {
-  --margin-start: #{$ion-space-700};
+  --margin-start: #{$token-space-700};
 
-  @include margin(null, null, null, $ion-space-700);
+  @include margin(null, null, null, $token-space-700);
 }
 
 .ion-padding-space-700 {
-  --padding-top: #{$ion-space-700};
-  --padding-end: #{$ion-space-700};
-  --padding-bottom: #{$ion-space-700};
-  --padding-start: #{$ion-space-700};
+  --padding-top: #{$token-space-700};
+  --padding-end: #{$token-space-700};
+  --padding-bottom: #{$token-space-700};
+  --padding-start: #{$token-space-700};
 
-  @include padding($ion-space-700);
+  @include padding($token-space-700);
 }
 
 .ion-padding-top-space-700 {
-  --padding-top: #{$ion-space-700};
+  --padding-top: #{$token-space-700};
 
-  @include padding($ion-space-700, null, null, null);
+  @include padding($token-space-700, null, null, null);
 }
 
 .ion-padding-end-space-700 {
-  --padding-end: #{$ion-space-700};
+  --padding-end: #{$token-space-700};
 
-  @include padding(null, $ion-space-700, null, null);
+  @include padding(null, $token-space-700, null, null);
 }
 
 .ion-padding-bottom-space-700 {
-  --padding-bottom: #{$ion-space-700};
+  --padding-bottom: #{$token-space-700};
 
-  @include padding(null, null, $ion-space-700, null);
+  @include padding(null, null, $token-space-700, null);
 }
 
 .ion-padding-start-space-700 {
-  --padding-start: #{$ion-space-700};
+  --padding-start: #{$token-space-700};
 
-  @include padding(null, null, null, $ion-space-700);
+  @include padding(null, null, null, $token-space-700);
 }
 
 .ion-gap-space-800 {
-  gap: #{$ion-space-800};
+  gap: #{$token-space-800};
 }
 
 .ion-margin-space-800 {
-  --margin-top: #{$ion-space-800};
-  --margin-end: #{$ion-space-800};
-  --margin-bottom: #{$ion-space-800};
-  --margin-start: #{$ion-space-800};
+  --margin-top: #{$token-space-800};
+  --margin-end: #{$token-space-800};
+  --margin-bottom: #{$token-space-800};
+  --margin-start: #{$token-space-800};
 
-  @include margin($ion-space-800);
+  @include margin($token-space-800);
 }
 
 .ion-margin-top-space-800 {
-  --margin-top: #{$ion-space-800};
+  --margin-top: #{$token-space-800};
 
-  @include margin($ion-space-800, null, null, null);
+  @include margin($token-space-800, null, null, null);
 }
 
 .ion-margin-end-space-800 {
-  --margin-end: #{$ion-space-800};
+  --margin-end: #{$token-space-800};
 
-  @include margin(null, $ion-space-800, null, null);
+  @include margin(null, $token-space-800, null, null);
 }
 
 .ion-margin-bottom-space-800 {
-  --margin-bottom: #{$ion-space-800};
+  --margin-bottom: #{$token-space-800};
 
-  @include margin(null, null, $ion-space-800, null);
+  @include margin(null, null, $token-space-800, null);
 }
 
 .ion-margin-start-space-800 {
-  --margin-start: #{$ion-space-800};
+  --margin-start: #{$token-space-800};
 
-  @include margin(null, null, null, $ion-space-800);
+  @include margin(null, null, null, $token-space-800);
 }
 
 .ion-padding-space-800 {
-  --padding-top: #{$ion-space-800};
-  --padding-end: #{$ion-space-800};
-  --padding-bottom: #{$ion-space-800};
-  --padding-start: #{$ion-space-800};
+  --padding-top: #{$token-space-800};
+  --padding-end: #{$token-space-800};
+  --padding-bottom: #{$token-space-800};
+  --padding-start: #{$token-space-800};
 
-  @include padding($ion-space-800);
+  @include padding($token-space-800);
 }
 
 .ion-padding-top-space-800 {
-  --padding-top: #{$ion-space-800};
+  --padding-top: #{$token-space-800};
 
-  @include padding($ion-space-800, null, null, null);
+  @include padding($token-space-800, null, null, null);
 }
 
 .ion-padding-end-space-800 {
-  --padding-end: #{$ion-space-800};
+  --padding-end: #{$token-space-800};
 
-  @include padding(null, $ion-space-800, null, null);
+  @include padding(null, $token-space-800, null, null);
 }
 
 .ion-padding-bottom-space-800 {
-  --padding-bottom: #{$ion-space-800};
+  --padding-bottom: #{$token-space-800};
 
-  @include padding(null, null, $ion-space-800, null);
+  @include padding(null, null, $token-space-800, null);
 }
 
 .ion-padding-start-space-800 {
-  --padding-start: #{$ion-space-800};
+  --padding-start: #{$token-space-800};
 
-  @include padding(null, null, null, $ion-space-800);
+  @include padding(null, null, null, $token-space-800);
 }
 
 .ion-gap-space-900 {
-  gap: #{$ion-space-900};
+  gap: #{$token-space-900};
 }
 
 .ion-margin-space-900 {
-  --margin-top: #{$ion-space-900};
-  --margin-end: #{$ion-space-900};
-  --margin-bottom: #{$ion-space-900};
-  --margin-start: #{$ion-space-900};
+  --margin-top: #{$token-space-900};
+  --margin-end: #{$token-space-900};
+  --margin-bottom: #{$token-space-900};
+  --margin-start: #{$token-space-900};
 
-  @include margin($ion-space-900);
+  @include margin($token-space-900);
 }
 
 .ion-margin-top-space-900 {
-  --margin-top: #{$ion-space-900};
+  --margin-top: #{$token-space-900};
 
-  @include margin($ion-space-900, null, null, null);
+  @include margin($token-space-900, null, null, null);
 }
 
 .ion-margin-end-space-900 {
-  --margin-end: #{$ion-space-900};
+  --margin-end: #{$token-space-900};
 
-  @include margin(null, $ion-space-900, null, null);
+  @include margin(null, $token-space-900, null, null);
 }
 
 .ion-margin-bottom-space-900 {
-  --margin-bottom: #{$ion-space-900};
+  --margin-bottom: #{$token-space-900};
 
-  @include margin(null, null, $ion-space-900, null);
+  @include margin(null, null, $token-space-900, null);
 }
 
 .ion-margin-start-space-900 {
-  --margin-start: #{$ion-space-900};
+  --margin-start: #{$token-space-900};
 
-  @include margin(null, null, null, $ion-space-900);
+  @include margin(null, null, null, $token-space-900);
 }
 
 .ion-padding-space-900 {
-  --padding-top: #{$ion-space-900};
-  --padding-end: #{$ion-space-900};
-  --padding-bottom: #{$ion-space-900};
-  --padding-start: #{$ion-space-900};
+  --padding-top: #{$token-space-900};
+  --padding-end: #{$token-space-900};
+  --padding-bottom: #{$token-space-900};
+  --padding-start: #{$token-space-900};
 
-  @include padding($ion-space-900);
+  @include padding($token-space-900);
 }
 
 .ion-padding-top-space-900 {
-  --padding-top: #{$ion-space-900};
+  --padding-top: #{$token-space-900};
 
-  @include padding($ion-space-900, null, null, null);
+  @include padding($token-space-900, null, null, null);
 }
 
 .ion-padding-end-space-900 {
-  --padding-end: #{$ion-space-900};
+  --padding-end: #{$token-space-900};
 
-  @include padding(null, $ion-space-900, null, null);
+  @include padding(null, $token-space-900, null, null);
 }
 
 .ion-padding-bottom-space-900 {
-  --padding-bottom: #{$ion-space-900};
+  --padding-bottom: #{$token-space-900};
 
-  @include padding(null, null, $ion-space-900, null);
+  @include padding(null, null, $token-space-900, null);
 }
 
 .ion-padding-start-space-900 {
-  --padding-start: #{$ion-space-900};
+  --padding-start: #{$token-space-900};
 
-  @include padding(null, null, null, $ion-space-900);
+  @include padding(null, null, null, $token-space-900);
 }
 
 .ion-gap-space-1000 {
-  gap: #{$ion-space-1000};
+  gap: #{$token-space-1000};
 }
 
 .ion-margin-space-1000 {
-  --margin-top: #{$ion-space-1000};
-  --margin-end: #{$ion-space-1000};
-  --margin-bottom: #{$ion-space-1000};
-  --margin-start: #{$ion-space-1000};
+  --margin-top: #{$token-space-1000};
+  --margin-end: #{$token-space-1000};
+  --margin-bottom: #{$token-space-1000};
+  --margin-start: #{$token-space-1000};
 
-  @include margin($ion-space-1000);
+  @include margin($token-space-1000);
 }
 
 .ion-margin-top-space-1000 {
-  --margin-top: #{$ion-space-1000};
+  --margin-top: #{$token-space-1000};
 
-  @include margin($ion-space-1000, null, null, null);
+  @include margin($token-space-1000, null, null, null);
 }
 
 .ion-margin-end-space-1000 {
-  --margin-end: #{$ion-space-1000};
+  --margin-end: #{$token-space-1000};
 
-  @include margin(null, $ion-space-1000, null, null);
+  @include margin(null, $token-space-1000, null, null);
 }
 
 .ion-margin-bottom-space-1000 {
-  --margin-bottom: #{$ion-space-1000};
+  --margin-bottom: #{$token-space-1000};
 
-  @include margin(null, null, $ion-space-1000, null);
+  @include margin(null, null, $token-space-1000, null);
 }
 
 .ion-margin-start-space-1000 {
-  --margin-start: #{$ion-space-1000};
+  --margin-start: #{$token-space-1000};
 
-  @include margin(null, null, null, $ion-space-1000);
+  @include margin(null, null, null, $token-space-1000);
 }
 
 .ion-padding-space-1000 {
-  --padding-top: #{$ion-space-1000};
-  --padding-end: #{$ion-space-1000};
-  --padding-bottom: #{$ion-space-1000};
-  --padding-start: #{$ion-space-1000};
+  --padding-top: #{$token-space-1000};
+  --padding-end: #{$token-space-1000};
+  --padding-bottom: #{$token-space-1000};
+  --padding-start: #{$token-space-1000};
 
-  @include padding($ion-space-1000);
+  @include padding($token-space-1000);
 }
 
 .ion-padding-top-space-1000 {
-  --padding-top: #{$ion-space-1000};
+  --padding-top: #{$token-space-1000};
 
-  @include padding($ion-space-1000, null, null, null);
+  @include padding($token-space-1000, null, null, null);
 }
 
 .ion-padding-end-space-1000 {
-  --padding-end: #{$ion-space-1000};
+  --padding-end: #{$token-space-1000};
 
-  @include padding(null, $ion-space-1000, null, null);
+  @include padding(null, $token-space-1000, null, null);
 }
 
 .ion-padding-bottom-space-1000 {
-  --padding-bottom: #{$ion-space-1000};
+  --padding-bottom: #{$token-space-1000};
 
-  @include padding(null, null, $ion-space-1000, null);
+  @include padding(null, null, $token-space-1000, null);
 }
 
 .ion-padding-start-space-1000 {
-  --padding-start: #{$ion-space-1000};
+  --padding-start: #{$token-space-1000};
 
-  @include padding(null, null, null, $ion-space-1000);
+  @include padding(null, null, null, $token-space-1000);
 }
 
 .ion-gap-space-1200 {
-  gap: #{$ion-space-1200};
+  gap: #{$token-space-1200};
 }
 
 .ion-margin-space-1200 {
-  --margin-top: #{$ion-space-1200};
-  --margin-end: #{$ion-space-1200};
-  --margin-bottom: #{$ion-space-1200};
-  --margin-start: #{$ion-space-1200};
+  --margin-top: #{$token-space-1200};
+  --margin-end: #{$token-space-1200};
+  --margin-bottom: #{$token-space-1200};
+  --margin-start: #{$token-space-1200};
 
-  @include margin($ion-space-1200);
+  @include margin($token-space-1200);
 }
 
 .ion-margin-top-space-1200 {
-  --margin-top: #{$ion-space-1200};
+  --margin-top: #{$token-space-1200};
 
-  @include margin($ion-space-1200, null, null, null);
+  @include margin($token-space-1200, null, null, null);
 }
 
 .ion-margin-end-space-1200 {
-  --margin-end: #{$ion-space-1200};
+  --margin-end: #{$token-space-1200};
 
-  @include margin(null, $ion-space-1200, null, null);
+  @include margin(null, $token-space-1200, null, null);
 }
 
 .ion-margin-bottom-space-1200 {
-  --margin-bottom: #{$ion-space-1200};
+  --margin-bottom: #{$token-space-1200};
 
-  @include margin(null, null, $ion-space-1200, null);
+  @include margin(null, null, $token-space-1200, null);
 }
 
 .ion-margin-start-space-1200 {
-  --margin-start: #{$ion-space-1200};
+  --margin-start: #{$token-space-1200};
 
-  @include margin(null, null, null, $ion-space-1200);
+  @include margin(null, null, null, $token-space-1200);
 }
 
 .ion-padding-space-1200 {
-  --padding-top: #{$ion-space-1200};
-  --padding-end: #{$ion-space-1200};
-  --padding-bottom: #{$ion-space-1200};
-  --padding-start: #{$ion-space-1200};
+  --padding-top: #{$token-space-1200};
+  --padding-end: #{$token-space-1200};
+  --padding-bottom: #{$token-space-1200};
+  --padding-start: #{$token-space-1200};
 
-  @include padding($ion-space-1200);
+  @include padding($token-space-1200);
 }
 
 .ion-padding-top-space-1200 {
-  --padding-top: #{$ion-space-1200};
+  --padding-top: #{$token-space-1200};
 
-  @include padding($ion-space-1200, null, null, null);
+  @include padding($token-space-1200, null, null, null);
 }
 
 .ion-padding-end-space-1200 {
-  --padding-end: #{$ion-space-1200};
+  --padding-end: #{$token-space-1200};
 
-  @include padding(null, $ion-space-1200, null, null);
+  @include padding(null, $token-space-1200, null, null);
 }
 
 .ion-padding-bottom-space-1200 {
-  --padding-bottom: #{$ion-space-1200};
+  --padding-bottom: #{$token-space-1200};
 
-  @include padding(null, null, $ion-space-1200, null);
+  @include padding(null, null, $token-space-1200, null);
 }
 
 .ion-padding-start-space-1200 {
-  --padding-start: #{$ion-space-1200};
+  --padding-start: #{$token-space-1200};
 
-  @include padding(null, null, null, $ion-space-1200);
+  @include padding(null, null, null, $token-space-1200);
 }
 
 .ion-gap-space-050 {
-  gap: #{$ion-space-050};
+  gap: #{$token-space-050};
 }
 
 .ion-margin-space-050 {
-  --margin-top: #{$ion-space-050};
-  --margin-end: #{$ion-space-050};
-  --margin-bottom: #{$ion-space-050};
-  --margin-start: #{$ion-space-050};
+  --margin-top: #{$token-space-050};
+  --margin-end: #{$token-space-050};
+  --margin-bottom: #{$token-space-050};
+  --margin-start: #{$token-space-050};
 
-  @include margin($ion-space-050);
+  @include margin($token-space-050);
 }
 
 .ion-margin-top-space-050 {
-  --margin-top: #{$ion-space-050};
+  --margin-top: #{$token-space-050};
 
-  @include margin($ion-space-050, null, null, null);
+  @include margin($token-space-050, null, null, null);
 }
 
 .ion-margin-end-space-050 {
-  --margin-end: #{$ion-space-050};
+  --margin-end: #{$token-space-050};
 
-  @include margin(null, $ion-space-050, null, null);
+  @include margin(null, $token-space-050, null, null);
 }
 
 .ion-margin-bottom-space-050 {
-  --margin-bottom: #{$ion-space-050};
+  --margin-bottom: #{$token-space-050};
 
-  @include margin(null, null, $ion-space-050, null);
+  @include margin(null, null, $token-space-050, null);
 }
 
 .ion-margin-start-space-050 {
-  --margin-start: #{$ion-space-050};
+  --margin-start: #{$token-space-050};
 
-  @include margin(null, null, null, $ion-space-050);
+  @include margin(null, null, null, $token-space-050);
 }
 
 .ion-padding-space-050 {
-  --padding-top: #{$ion-space-050};
-  --padding-end: #{$ion-space-050};
-  --padding-bottom: #{$ion-space-050};
-  --padding-start: #{$ion-space-050};
+  --padding-top: #{$token-space-050};
+  --padding-end: #{$token-space-050};
+  --padding-bottom: #{$token-space-050};
+  --padding-start: #{$token-space-050};
 
-  @include padding($ion-space-050);
+  @include padding($token-space-050);
 }
 
 .ion-padding-top-space-050 {
-  --padding-top: #{$ion-space-050};
+  --padding-top: #{$token-space-050};
 
-  @include padding($ion-space-050, null, null, null);
+  @include padding($token-space-050, null, null, null);
 }
 
 .ion-padding-end-space-050 {
-  --padding-end: #{$ion-space-050};
+  --padding-end: #{$token-space-050};
 
-  @include padding(null, $ion-space-050, null, null);
+  @include padding(null, $token-space-050, null, null);
 }
 
 .ion-padding-bottom-space-050 {
-  --padding-bottom: #{$ion-space-050};
+  --padding-bottom: #{$token-space-050};
 
-  @include padding(null, null, $ion-space-050, null);
+  @include padding(null, null, $token-space-050, null);
 }
 
 .ion-padding-start-space-050 {
-  --padding-start: #{$ion-space-050};
+  --padding-start: #{$token-space-050};
 
-  @include padding(null, null, null, $ion-space-050);
+  @include padding(null, null, null, $token-space-050);
 }
 
 .ion-transition-curve-linear {
-  transition: $ion-transition-curve-linear;
+  transition: $token-transition-curve-linear;
 }
 .ion-transition-curve-quick {
-  transition: $ion-transition-curve-quick;
+  transition: $token-transition-curve-quick;
 }
 .ion-transition-curve-base {
-  transition: $ion-transition-curve-base;
+  transition: $token-transition-curve-base;
 }
 .ion-transition-curve-expressive {
-  transition: $ion-transition-curve-expressive;
+  transition: $token-transition-curve-expressive;
 }
 .ion-transition-curve-bounce {
-  transition: $ion-transition-curve-bounce;
+  transition: $token-transition-curve-bounce;
 }
 .ion-transition-time-0 {
-  transition: $ion-transition-time-0;
+  transition: $token-transition-time-0;
 }
 .ion-transition-time-100 {
-  transition: $ion-transition-time-100;
+  transition: $token-transition-time-100;
 }
 .ion-transition-time-150 {
-  transition: $ion-transition-time-150;
+  transition: $token-transition-time-150;
 }
 .ion-transition-time-200 {
-  transition: $ion-transition-time-200;
+  transition: $token-transition-time-200;
 }
 .ion-transition-time-300 {
-  transition: $ion-transition-time-300;
+  transition: $token-transition-time-300;
 }
 .ion-transition-time-500 {
-  transition: $ion-transition-time-500;
+  transition: $token-transition-time-500;
 }
 .ion-transition-time-1000 {
-  transition: $ion-transition-time-1000;
+  transition: $token-transition-time-1000;
 }
 .ion-transition-time-1500 {
-  transition: $ion-transition-time-1500;
+  transition: $token-transition-time-1500;
 }
 .ion-font-weight-thin {
-  font-weight: $ion-font-weight-thin;
+  font-weight: $token-font-weight-thin;
 }
 .ion-font-weight-extra-light {
-  font-weight: $ion-font-weight-extra-light;
+  font-weight: $token-font-weight-extra-light;
 }
 .ion-font-weight-light {
-  font-weight: $ion-font-weight-light;
+  font-weight: $token-font-weight-light;
 }
 .ion-font-weight-regular {
-  font-weight: $ion-font-weight-regular;
+  font-weight: $token-font-weight-regular;
 }
 .ion-font-weight-medium {
-  font-weight: $ion-font-weight-medium;
+  font-weight: $token-font-weight-medium;
 }
 .ion-font-weight-semi-bold {
-  font-weight: $ion-font-weight-semi-bold;
+  font-weight: $token-font-weight-semi-bold;
 }
 .ion-font-weight-bold {
-  font-weight: $ion-font-weight-bold;
+  font-weight: $token-font-weight-bold;
 }
 .ion-font-weight-extra-bold {
-  font-weight: $ion-font-weight-extra-bold;
+  font-weight: $token-font-weight-extra-bold;
 }
 .ion-font-weight-black {
-  font-weight: $ion-font-weight-black;
+  font-weight: $token-font-weight-black;
 }
 .ion-font-size-275 {
-  font-size: $ion-font-size-275;
+  font-size: $token-font-size-275;
 }
 .ion-font-size-300 {
-  font-size: $ion-font-size-300;
+  font-size: $token-font-size-300;
 }
 .ion-font-size-350 {
-  font-size: $ion-font-size-350;
+  font-size: $token-font-size-350;
 }
 .ion-font-size-400 {
-  font-size: $ion-font-size-400;
+  font-size: $token-font-size-400;
 }
 .ion-font-size-450 {
-  font-size: $ion-font-size-450;
+  font-size: $token-font-size-450;
 }
 .ion-font-size-500 {
-  font-size: $ion-font-size-500;
+  font-size: $token-font-size-500;
 }
 .ion-font-size-550 {
-  font-size: $ion-font-size-550;
+  font-size: $token-font-size-550;
 }
 .ion-font-size-600 {
-  font-size: $ion-font-size-600;
+  font-size: $token-font-size-600;
 }
 .ion-font-size-650 {
-  font-size: $ion-font-size-650;
+  font-size: $token-font-size-650;
 }
 .ion-font-size-700 {
-  font-size: $ion-font-size-700;
+  font-size: $token-font-size-700;
 }
 .ion-font-size-800 {
-  font-size: $ion-font-size-800;
+  font-size: $token-font-size-800;
 }
 .ion-font-size-900 {
-  font-size: $ion-font-size-900;
+  font-size: $token-font-size-900;
 }
 .ion-font-letter-spacing-0 {
-  letter-spacing: $ion-font-letter-spacing-0;
+  letter-spacing: $token-font-letter-spacing-0;
 }
 .ion-font-letter-spacing-1 {
-  letter-spacing: $ion-font-letter-spacing-1;
+  letter-spacing: $token-font-letter-spacing-1;
 }
 .ion-font-letter-spacing-2 {
-  letter-spacing: $ion-font-letter-spacing-2;
+  letter-spacing: $token-font-letter-spacing-2;
 }
 .ion-font-line-height-300 {
-  line-height: $ion-font-line-height-300;
+  line-height: $token-font-line-height-300;
 }
 .ion-font-line-height-400 {
-  line-height: $ion-font-line-height-400;
+  line-height: $token-font-line-height-400;
 }
 .ion-font-line-height-500 {
-  line-height: $ion-font-line-height-500;
+  line-height: $token-font-line-height-500;
 }
 .ion-font-line-height-600 {
-  line-height: $ion-font-line-height-600;
+  line-height: $token-font-line-height-600;
 }
 .ion-font-line-height-700 {
-  line-height: $ion-font-line-height-700;
+  line-height: $token-font-line-height-700;
 }
 .ion-font-line-height-800 {
-  line-height: $ion-font-line-height-800;
+  line-height: $token-font-line-height-800;
 }
 .ion-font-line-height-900 {
-  line-height: $ion-font-line-height-900;
+  line-height: $token-font-line-height-900;
 }
 .ion-font-line-height-1100 {
-  line-height: $ion-font-line-height-1100;
+  line-height: $token-font-line-height-1100;
 }
 .ion-font-line-height-1200 {
-  line-height: $ion-font-line-height-1200;
+  line-height: $token-font-line-height-1200;
 }
 .ion-font-line-height-full {
-  line-height: $ion-font-line-height-full;
+  line-height: $token-font-line-height-full;
 }
 .ion-z-index-0 {
-  z-index: $ion-z-index-0;
+  z-index: $token-z-index-0;
 }
 .ion-z-index-100 {
-  z-index: $ion-z-index-100;
+  z-index: $token-z-index-100;
 }
 .ion-z-index-200 {
-  z-index: $ion-z-index-200;
+  z-index: $token-z-index-200;
 }
 .ion-z-index-300 {
-  z-index: $ion-z-index-300;
+  z-index: $token-z-index-300;
 }
 .ion-z-index-400 {
-  z-index: $ion-z-index-400;
+  z-index: $token-z-index-400;
 }
 .ion-z-index-500 {
-  z-index: $ion-z-index-500;
+  z-index: $token-z-index-500;
 }
 .ion-z-index-bottom {
-  z-index: $ion-z-index-bottom;
+  z-index: $token-z-index-bottom;
 }
 .ion-z-index-top {
-  z-index: $ion-z-index-top;
+  z-index: $token-z-index-top;
 }
 .ion-rectangular-2xs {
-  --border-radius: $ion-rectangular-2xs;
-  border-radius: $ion-rectangular-2xs;
+  --border-radius: $token-rectangular-2xs;
+  border-radius: $token-rectangular-2xs;
 }
 .ion-rectangular-xs {
-  --border-radius: $ion-rectangular-xs;
-  border-radius: $ion-rectangular-xs;
+  --border-radius: $token-rectangular-xs;
+  border-radius: $token-rectangular-xs;
 }
 .ion-rectangular-sm {
-  --border-radius: $ion-rectangular-sm;
-  border-radius: $ion-rectangular-sm;
+  --border-radius: $token-rectangular-sm;
+  border-radius: $token-rectangular-sm;
 }
 .ion-rectangular-md {
-  --border-radius: $ion-rectangular-md;
-  border-radius: $ion-rectangular-md;
+  --border-radius: $token-rectangular-md;
+  border-radius: $token-rectangular-md;
 }
 .ion-rectangular-lg {
-  --border-radius: $ion-rectangular-lg;
-  border-radius: $ion-rectangular-lg;
+  --border-radius: $token-rectangular-lg;
+  border-radius: $token-rectangular-lg;
 }
 .ion-rectangular-xl {
-  --border-radius: $ion-rectangular-xl;
-  border-radius: $ion-rectangular-xl;
+  --border-radius: $token-rectangular-xl;
+  border-radius: $token-rectangular-xl;
 }
 .ion-rectangular-2xl {
-  --border-radius: $ion-rectangular-2xl;
-  border-radius: $ion-rectangular-2xl;
+  --border-radius: $token-rectangular-2xl;
+  border-radius: $token-rectangular-2xl;
 }
 .ion-round-2xs {
-  --border-radius: $ion-round-2xs;
-  border-radius: $ion-round-2xs;
+  --border-radius: $token-round-2xs;
+  border-radius: $token-round-2xs;
 }
 .ion-round-xs {
-  --border-radius: $ion-round-xs;
-  border-radius: $ion-round-xs;
+  --border-radius: $token-round-xs;
+  border-radius: $token-round-xs;
 }
 .ion-round-sm {
-  --border-radius: $ion-round-sm;
-  border-radius: $ion-round-sm;
+  --border-radius: $token-round-sm;
+  border-radius: $token-round-sm;
 }
 .ion-round-md {
-  --border-radius: $ion-round-md;
-  border-radius: $ion-round-md;
+  --border-radius: $token-round-md;
+  border-radius: $token-round-md;
 }
 .ion-round-lg {
-  --border-radius: $ion-round-lg;
-  border-radius: $ion-round-lg;
+  --border-radius: $token-round-lg;
+  border-radius: $token-round-lg;
 }
 .ion-round-xl {
-  --border-radius: $ion-round-xl;
-  border-radius: $ion-round-xl;
+  --border-radius: $token-round-xl;
+  border-radius: $token-round-xl;
 }
 .ion-round-2xl {
-  --border-radius: $ion-round-2xl;
-  border-radius: $ion-round-2xl;
+  --border-radius: $token-round-2xl;
+  border-radius: $token-round-2xl;
 }
 .ion-soft-2xs {
-  --border-radius: $ion-soft-2xs;
-  border-radius: $ion-soft-2xs;
+  --border-radius: $token-soft-2xs;
+  border-radius: $token-soft-2xs;
 }
 .ion-soft-xs {
-  --border-radius: $ion-soft-xs;
-  border-radius: $ion-soft-xs;
+  --border-radius: $token-soft-xs;
+  border-radius: $token-soft-xs;
 }
 .ion-soft-sm {
-  --border-radius: $ion-soft-sm;
-  border-radius: $ion-soft-sm;
+  --border-radius: $token-soft-sm;
+  border-radius: $token-soft-sm;
 }
 .ion-soft-md {
-  --border-radius: $ion-soft-md;
-  border-radius: $ion-soft-md;
+  --border-radius: $token-soft-md;
+  border-radius: $token-soft-md;
 }
 .ion-soft-lg {
-  --border-radius: $ion-soft-lg;
-  border-radius: $ion-soft-lg;
+  --border-radius: $token-soft-lg;
+  border-radius: $token-soft-lg;
 }
 .ion-soft-xl {
-  --border-radius: $ion-soft-xl;
-  border-radius: $ion-soft-xl;
+  --border-radius: $token-soft-xl;
+  border-radius: $token-soft-xl;
 }
 .ion-soft-2xl {
-  --border-radius: $ion-soft-2xl;
-  border-radius: $ion-soft-2xl;
+  --border-radius: $token-soft-2xl;
+  border-radius: $token-soft-2xl;
 }
 .ion-primitives-neutral-100 {
-  --color: $ion-primitives-neutral-100;
-  color: $ion-primitives-neutral-100;
+  --color: $token-primitives-neutral-100;
+  color: $token-primitives-neutral-100;
 }
 .ion-primitives-neutral-200 {
-  --color: $ion-primitives-neutral-200;
-  color: $ion-primitives-neutral-200;
+  --color: $token-primitives-neutral-200;
+  color: $token-primitives-neutral-200;
 }
 .ion-primitives-neutral-300 {
-  --color: $ion-primitives-neutral-300;
-  color: $ion-primitives-neutral-300;
+  --color: $token-primitives-neutral-300;
+  color: $token-primitives-neutral-300;
 }
 .ion-primitives-neutral-400 {
-  --color: $ion-primitives-neutral-400;
-  color: $ion-primitives-neutral-400;
+  --color: $token-primitives-neutral-400;
+  color: $token-primitives-neutral-400;
 }
 .ion-primitives-neutral-500 {
-  --color: $ion-primitives-neutral-500;
-  color: $ion-primitives-neutral-500;
+  --color: $token-primitives-neutral-500;
+  color: $token-primitives-neutral-500;
 }
 .ion-primitives-neutral-600 {
-  --color: $ion-primitives-neutral-600;
-  color: $ion-primitives-neutral-600;
+  --color: $token-primitives-neutral-600;
+  color: $token-primitives-neutral-600;
 }
 .ion-primitives-neutral-700 {
-  --color: $ion-primitives-neutral-700;
-  color: $ion-primitives-neutral-700;
+  --color: $token-primitives-neutral-700;
+  color: $token-primitives-neutral-700;
 }
 .ion-primitives-neutral-800 {
-  --color: $ion-primitives-neutral-800;
-  color: $ion-primitives-neutral-800;
+  --color: $token-primitives-neutral-800;
+  color: $token-primitives-neutral-800;
 }
 .ion-primitives-neutral-900 {
-  --color: $ion-primitives-neutral-900;
-  color: $ion-primitives-neutral-900;
+  --color: $token-primitives-neutral-900;
+  color: $token-primitives-neutral-900;
 }
 .ion-primitives-neutral-1000 {
-  --color: $ion-primitives-neutral-1000;
-  color: $ion-primitives-neutral-1000;
+  --color: $token-primitives-neutral-1000;
+  color: $token-primitives-neutral-1000;
 }
 .ion-primitives-neutral-1100 {
-  --color: $ion-primitives-neutral-1100;
-  color: $ion-primitives-neutral-1100;
+  --color: $token-primitives-neutral-1100;
+  color: $token-primitives-neutral-1100;
 }
 .ion-primitives-neutral-1200 {
-  --color: $ion-primitives-neutral-1200;
-  color: $ion-primitives-neutral-1200;
+  --color: $token-primitives-neutral-1200;
+  color: $token-primitives-neutral-1200;
 }
 .ion-primitives-base-white {
-  --color: $ion-primitives-base-white;
-  color: $ion-primitives-base-white;
+  --color: $token-primitives-base-white;
+  color: $token-primitives-base-white;
 }
 .ion-primitives-base-black {
-  --color: $ion-primitives-base-black;
-  color: $ion-primitives-base-black;
+  --color: $token-primitives-base-black;
+  color: $token-primitives-base-black;
 }
 .ion-primitives-red-100 {
-  --color: $ion-primitives-red-100;
-  color: $ion-primitives-red-100;
+  --color: $token-primitives-red-100;
+  color: $token-primitives-red-100;
 }
 .ion-primitives-red-200 {
-  --color: $ion-primitives-red-200;
-  color: $ion-primitives-red-200;
+  --color: $token-primitives-red-200;
+  color: $token-primitives-red-200;
 }
 .ion-primitives-red-300 {
-  --color: $ion-primitives-red-300;
-  color: $ion-primitives-red-300;
+  --color: $token-primitives-red-300;
+  color: $token-primitives-red-300;
 }
 .ion-primitives-red-400 {
-  --color: $ion-primitives-red-400;
-  color: $ion-primitives-red-400;
+  --color: $token-primitives-red-400;
+  color: $token-primitives-red-400;
 }
 .ion-primitives-red-500 {
-  --color: $ion-primitives-red-500;
-  color: $ion-primitives-red-500;
+  --color: $token-primitives-red-500;
+  color: $token-primitives-red-500;
 }
 .ion-primitives-red-600 {
-  --color: $ion-primitives-red-600;
-  color: $ion-primitives-red-600;
+  --color: $token-primitives-red-600;
+  color: $token-primitives-red-600;
 }
 .ion-primitives-red-700 {
-  --color: $ion-primitives-red-700;
-  color: $ion-primitives-red-700;
+  --color: $token-primitives-red-700;
+  color: $token-primitives-red-700;
 }
 .ion-primitives-red-800 {
-  --color: $ion-primitives-red-800;
-  color: $ion-primitives-red-800;
+  --color: $token-primitives-red-800;
+  color: $token-primitives-red-800;
 }
 .ion-primitives-red-900 {
-  --color: $ion-primitives-red-900;
-  color: $ion-primitives-red-900;
+  --color: $token-primitives-red-900;
+  color: $token-primitives-red-900;
 }
 .ion-primitives-red-1000 {
-  --color: $ion-primitives-red-1000;
-  color: $ion-primitives-red-1000;
+  --color: $token-primitives-red-1000;
+  color: $token-primitives-red-1000;
 }
 .ion-primitives-red-1100 {
-  --color: $ion-primitives-red-1100;
-  color: $ion-primitives-red-1100;
+  --color: $token-primitives-red-1100;
+  color: $token-primitives-red-1100;
 }
 .ion-primitives-red-1200 {
-  --color: $ion-primitives-red-1200;
-  color: $ion-primitives-red-1200;
+  --color: $token-primitives-red-1200;
+  color: $token-primitives-red-1200;
 }
 .ion-primitives-pumpkin-100 {
-  --color: $ion-primitives-pumpkin-100;
-  color: $ion-primitives-pumpkin-100;
+  --color: $token-primitives-pumpkin-100;
+  color: $token-primitives-pumpkin-100;
 }
 .ion-primitives-pumpkin-200 {
-  --color: $ion-primitives-pumpkin-200;
-  color: $ion-primitives-pumpkin-200;
+  --color: $token-primitives-pumpkin-200;
+  color: $token-primitives-pumpkin-200;
 }
 .ion-primitives-pumpkin-300 {
-  --color: $ion-primitives-pumpkin-300;
-  color: $ion-primitives-pumpkin-300;
+  --color: $token-primitives-pumpkin-300;
+  color: $token-primitives-pumpkin-300;
 }
 .ion-primitives-pumpkin-400 {
-  --color: $ion-primitives-pumpkin-400;
-  color: $ion-primitives-pumpkin-400;
+  --color: $token-primitives-pumpkin-400;
+  color: $token-primitives-pumpkin-400;
 }
 .ion-primitives-pumpkin-500 {
-  --color: $ion-primitives-pumpkin-500;
-  color: $ion-primitives-pumpkin-500;
+  --color: $token-primitives-pumpkin-500;
+  color: $token-primitives-pumpkin-500;
 }
 .ion-primitives-pumpkin-600 {
-  --color: $ion-primitives-pumpkin-600;
-  color: $ion-primitives-pumpkin-600;
+  --color: $token-primitives-pumpkin-600;
+  color: $token-primitives-pumpkin-600;
 }
 .ion-primitives-pumpkin-700 {
-  --color: $ion-primitives-pumpkin-700;
-  color: $ion-primitives-pumpkin-700;
+  --color: $token-primitives-pumpkin-700;
+  color: $token-primitives-pumpkin-700;
 }
 .ion-primitives-pumpkin-800 {
-  --color: $ion-primitives-pumpkin-800;
-  color: $ion-primitives-pumpkin-800;
+  --color: $token-primitives-pumpkin-800;
+  color: $token-primitives-pumpkin-800;
 }
 .ion-primitives-pumpkin-900 {
-  --color: $ion-primitives-pumpkin-900;
-  color: $ion-primitives-pumpkin-900;
+  --color: $token-primitives-pumpkin-900;
+  color: $token-primitives-pumpkin-900;
 }
 .ion-primitives-pumpkin-1000 {
-  --color: $ion-primitives-pumpkin-1000;
-  color: $ion-primitives-pumpkin-1000;
+  --color: $token-primitives-pumpkin-1000;
+  color: $token-primitives-pumpkin-1000;
 }
 .ion-primitives-pumpkin-1100 {
-  --color: $ion-primitives-pumpkin-1100;
-  color: $ion-primitives-pumpkin-1100;
+  --color: $token-primitives-pumpkin-1100;
+  color: $token-primitives-pumpkin-1100;
 }
 .ion-primitives-pumpkin-1200 {
-  --color: $ion-primitives-pumpkin-1200;
-  color: $ion-primitives-pumpkin-1200;
+  --color: $token-primitives-pumpkin-1200;
+  color: $token-primitives-pumpkin-1200;
 }
 .ion-primitives-orange-100 {
-  --color: $ion-primitives-orange-100;
-  color: $ion-primitives-orange-100;
+  --color: $token-primitives-orange-100;
+  color: $token-primitives-orange-100;
 }
 .ion-primitives-orange-200 {
-  --color: $ion-primitives-orange-200;
-  color: $ion-primitives-orange-200;
+  --color: $token-primitives-orange-200;
+  color: $token-primitives-orange-200;
 }
 .ion-primitives-orange-300 {
-  --color: $ion-primitives-orange-300;
-  color: $ion-primitives-orange-300;
+  --color: $token-primitives-orange-300;
+  color: $token-primitives-orange-300;
 }
 .ion-primitives-orange-400 {
-  --color: $ion-primitives-orange-400;
-  color: $ion-primitives-orange-400;
+  --color: $token-primitives-orange-400;
+  color: $token-primitives-orange-400;
 }
 .ion-primitives-orange-500 {
-  --color: $ion-primitives-orange-500;
-  color: $ion-primitives-orange-500;
+  --color: $token-primitives-orange-500;
+  color: $token-primitives-orange-500;
 }
 .ion-primitives-orange-600 {
-  --color: $ion-primitives-orange-600;
-  color: $ion-primitives-orange-600;
+  --color: $token-primitives-orange-600;
+  color: $token-primitives-orange-600;
 }
 .ion-primitives-orange-700 {
-  --color: $ion-primitives-orange-700;
-  color: $ion-primitives-orange-700;
+  --color: $token-primitives-orange-700;
+  color: $token-primitives-orange-700;
 }
 .ion-primitives-orange-800 {
-  --color: $ion-primitives-orange-800;
-  color: $ion-primitives-orange-800;
+  --color: $token-primitives-orange-800;
+  color: $token-primitives-orange-800;
 }
 .ion-primitives-orange-900 {
-  --color: $ion-primitives-orange-900;
-  color: $ion-primitives-orange-900;
+  --color: $token-primitives-orange-900;
+  color: $token-primitives-orange-900;
 }
 .ion-primitives-orange-1000 {
-  --color: $ion-primitives-orange-1000;
-  color: $ion-primitives-orange-1000;
+  --color: $token-primitives-orange-1000;
+  color: $token-primitives-orange-1000;
 }
 .ion-primitives-orange-1100 {
-  --color: $ion-primitives-orange-1100;
-  color: $ion-primitives-orange-1100;
+  --color: $token-primitives-orange-1100;
+  color: $token-primitives-orange-1100;
 }
 .ion-primitives-orange-1200 {
-  --color: $ion-primitives-orange-1200;
-  color: $ion-primitives-orange-1200;
+  --color: $token-primitives-orange-1200;
+  color: $token-primitives-orange-1200;
 }
 .ion-primitives-yellow-100 {
-  --color: $ion-primitives-yellow-100;
-  color: $ion-primitives-yellow-100;
+  --color: $token-primitives-yellow-100;
+  color: $token-primitives-yellow-100;
 }
 .ion-primitives-yellow-200 {
-  --color: $ion-primitives-yellow-200;
-  color: $ion-primitives-yellow-200;
+  --color: $token-primitives-yellow-200;
+  color: $token-primitives-yellow-200;
 }
 .ion-primitives-yellow-300 {
-  --color: $ion-primitives-yellow-300;
-  color: $ion-primitives-yellow-300;
+  --color: $token-primitives-yellow-300;
+  color: $token-primitives-yellow-300;
 }
 .ion-primitives-yellow-400 {
-  --color: $ion-primitives-yellow-400;
-  color: $ion-primitives-yellow-400;
+  --color: $token-primitives-yellow-400;
+  color: $token-primitives-yellow-400;
 }
 .ion-primitives-yellow-500 {
-  --color: $ion-primitives-yellow-500;
-  color: $ion-primitives-yellow-500;
+  --color: $token-primitives-yellow-500;
+  color: $token-primitives-yellow-500;
 }
 .ion-primitives-yellow-600 {
-  --color: $ion-primitives-yellow-600;
-  color: $ion-primitives-yellow-600;
+  --color: $token-primitives-yellow-600;
+  color: $token-primitives-yellow-600;
 }
 .ion-primitives-yellow-700 {
-  --color: $ion-primitives-yellow-700;
-  color: $ion-primitives-yellow-700;
+  --color: $token-primitives-yellow-700;
+  color: $token-primitives-yellow-700;
 }
 .ion-primitives-yellow-800 {
-  --color: $ion-primitives-yellow-800;
-  color: $ion-primitives-yellow-800;
+  --color: $token-primitives-yellow-800;
+  color: $token-primitives-yellow-800;
 }
 .ion-primitives-yellow-900 {
-  --color: $ion-primitives-yellow-900;
-  color: $ion-primitives-yellow-900;
+  --color: $token-primitives-yellow-900;
+  color: $token-primitives-yellow-900;
 }
 .ion-primitives-yellow-1000 {
-  --color: $ion-primitives-yellow-1000;
-  color: $ion-primitives-yellow-1000;
+  --color: $token-primitives-yellow-1000;
+  color: $token-primitives-yellow-1000;
 }
 .ion-primitives-yellow-1100 {
-  --color: $ion-primitives-yellow-1100;
-  color: $ion-primitives-yellow-1100;
+  --color: $token-primitives-yellow-1100;
+  color: $token-primitives-yellow-1100;
 }
 .ion-primitives-yellow-1200 {
-  --color: $ion-primitives-yellow-1200;
-  color: $ion-primitives-yellow-1200;
+  --color: $token-primitives-yellow-1200;
+  color: $token-primitives-yellow-1200;
 }
 .ion-primitives-lime-100 {
-  --color: $ion-primitives-lime-100;
-  color: $ion-primitives-lime-100;
+  --color: $token-primitives-lime-100;
+  color: $token-primitives-lime-100;
 }
 .ion-primitives-lime-200 {
-  --color: $ion-primitives-lime-200;
-  color: $ion-primitives-lime-200;
+  --color: $token-primitives-lime-200;
+  color: $token-primitives-lime-200;
 }
 .ion-primitives-lime-300 {
-  --color: $ion-primitives-lime-300;
-  color: $ion-primitives-lime-300;
+  --color: $token-primitives-lime-300;
+  color: $token-primitives-lime-300;
 }
 .ion-primitives-lime-400 {
-  --color: $ion-primitives-lime-400;
-  color: $ion-primitives-lime-400;
+  --color: $token-primitives-lime-400;
+  color: $token-primitives-lime-400;
 }
 .ion-primitives-lime-500 {
-  --color: $ion-primitives-lime-500;
-  color: $ion-primitives-lime-500;
+  --color: $token-primitives-lime-500;
+  color: $token-primitives-lime-500;
 }
 .ion-primitives-lime-600 {
-  --color: $ion-primitives-lime-600;
-  color: $ion-primitives-lime-600;
+  --color: $token-primitives-lime-600;
+  color: $token-primitives-lime-600;
 }
 .ion-primitives-lime-700 {
-  --color: $ion-primitives-lime-700;
-  color: $ion-primitives-lime-700;
+  --color: $token-primitives-lime-700;
+  color: $token-primitives-lime-700;
 }
 .ion-primitives-lime-800 {
-  --color: $ion-primitives-lime-800;
-  color: $ion-primitives-lime-800;
+  --color: $token-primitives-lime-800;
+  color: $token-primitives-lime-800;
 }
 .ion-primitives-lime-900 {
-  --color: $ion-primitives-lime-900;
-  color: $ion-primitives-lime-900;
+  --color: $token-primitives-lime-900;
+  color: $token-primitives-lime-900;
 }
 .ion-primitives-lime-1000 {
-  --color: $ion-primitives-lime-1000;
-  color: $ion-primitives-lime-1000;
+  --color: $token-primitives-lime-1000;
+  color: $token-primitives-lime-1000;
 }
 .ion-primitives-lime-1100 {
-  --color: $ion-primitives-lime-1100;
-  color: $ion-primitives-lime-1100;
+  --color: $token-primitives-lime-1100;
+  color: $token-primitives-lime-1100;
 }
 .ion-primitives-lime-1200 {
-  --color: $ion-primitives-lime-1200;
-  color: $ion-primitives-lime-1200;
+  --color: $token-primitives-lime-1200;
+  color: $token-primitives-lime-1200;
 }
 .ion-primitives-green-100 {
-  --color: $ion-primitives-green-100;
-  color: $ion-primitives-green-100;
+  --color: $token-primitives-green-100;
+  color: $token-primitives-green-100;
 }
 .ion-primitives-green-200 {
-  --color: $ion-primitives-green-200;
-  color: $ion-primitives-green-200;
+  --color: $token-primitives-green-200;
+  color: $token-primitives-green-200;
 }
 .ion-primitives-green-300 {
-  --color: $ion-primitives-green-300;
-  color: $ion-primitives-green-300;
+  --color: $token-primitives-green-300;
+  color: $token-primitives-green-300;
 }
 .ion-primitives-green-400 {
-  --color: $ion-primitives-green-400;
-  color: $ion-primitives-green-400;
+  --color: $token-primitives-green-400;
+  color: $token-primitives-green-400;
 }
 .ion-primitives-green-500 {
-  --color: $ion-primitives-green-500;
-  color: $ion-primitives-green-500;
+  --color: $token-primitives-green-500;
+  color: $token-primitives-green-500;
 }
 .ion-primitives-green-600 {
-  --color: $ion-primitives-green-600;
-  color: $ion-primitives-green-600;
+  --color: $token-primitives-green-600;
+  color: $token-primitives-green-600;
 }
 .ion-primitives-green-700 {
-  --color: $ion-primitives-green-700;
-  color: $ion-primitives-green-700;
+  --color: $token-primitives-green-700;
+  color: $token-primitives-green-700;
 }
 .ion-primitives-green-800 {
-  --color: $ion-primitives-green-800;
-  color: $ion-primitives-green-800;
+  --color: $token-primitives-green-800;
+  color: $token-primitives-green-800;
 }
 .ion-primitives-green-900 {
-  --color: $ion-primitives-green-900;
-  color: $ion-primitives-green-900;
+  --color: $token-primitives-green-900;
+  color: $token-primitives-green-900;
 }
 .ion-primitives-green-1000 {
-  --color: $ion-primitives-green-1000;
-  color: $ion-primitives-green-1000;
+  --color: $token-primitives-green-1000;
+  color: $token-primitives-green-1000;
 }
 .ion-primitives-green-1100 {
-  --color: $ion-primitives-green-1100;
-  color: $ion-primitives-green-1100;
+  --color: $token-primitives-green-1100;
+  color: $token-primitives-green-1100;
 }
 .ion-primitives-green-1200 {
-  --color: $ion-primitives-green-1200;
-  color: $ion-primitives-green-1200;
+  --color: $token-primitives-green-1200;
+  color: $token-primitives-green-1200;
 }
 .ion-primitives-teal-100 {
-  --color: $ion-primitives-teal-100;
-  color: $ion-primitives-teal-100;
+  --color: $token-primitives-teal-100;
+  color: $token-primitives-teal-100;
 }
 .ion-primitives-teal-200 {
-  --color: $ion-primitives-teal-200;
-  color: $ion-primitives-teal-200;
+  --color: $token-primitives-teal-200;
+  color: $token-primitives-teal-200;
 }
 .ion-primitives-teal-300 {
-  --color: $ion-primitives-teal-300;
-  color: $ion-primitives-teal-300;
+  --color: $token-primitives-teal-300;
+  color: $token-primitives-teal-300;
 }
 .ion-primitives-teal-400 {
-  --color: $ion-primitives-teal-400;
-  color: $ion-primitives-teal-400;
+  --color: $token-primitives-teal-400;
+  color: $token-primitives-teal-400;
 }
 .ion-primitives-teal-500 {
-  --color: $ion-primitives-teal-500;
-  color: $ion-primitives-teal-500;
+  --color: $token-primitives-teal-500;
+  color: $token-primitives-teal-500;
 }
 .ion-primitives-teal-600 {
-  --color: $ion-primitives-teal-600;
-  color: $ion-primitives-teal-600;
+  --color: $token-primitives-teal-600;
+  color: $token-primitives-teal-600;
 }
 .ion-primitives-teal-700 {
-  --color: $ion-primitives-teal-700;
-  color: $ion-primitives-teal-700;
+  --color: $token-primitives-teal-700;
+  color: $token-primitives-teal-700;
 }
 .ion-primitives-teal-800 {
-  --color: $ion-primitives-teal-800;
-  color: $ion-primitives-teal-800;
+  --color: $token-primitives-teal-800;
+  color: $token-primitives-teal-800;
 }
 .ion-primitives-teal-900 {
-  --color: $ion-primitives-teal-900;
-  color: $ion-primitives-teal-900;
+  --color: $token-primitives-teal-900;
+  color: $token-primitives-teal-900;
 }
 .ion-primitives-teal-1000 {
-  --color: $ion-primitives-teal-1000;
-  color: $ion-primitives-teal-1000;
+  --color: $token-primitives-teal-1000;
+  color: $token-primitives-teal-1000;
 }
 .ion-primitives-teal-1100 {
-  --color: $ion-primitives-teal-1100;
-  color: $ion-primitives-teal-1100;
+  --color: $token-primitives-teal-1100;
+  color: $token-primitives-teal-1100;
 }
 .ion-primitives-teal-1200 {
-  --color: $ion-primitives-teal-1200;
-  color: $ion-primitives-teal-1200;
+  --color: $token-primitives-teal-1200;
+  color: $token-primitives-teal-1200;
 }
 .ion-primitives-aqua-100 {
-  --color: $ion-primitives-aqua-100;
-  color: $ion-primitives-aqua-100;
+  --color: $token-primitives-aqua-100;
+  color: $token-primitives-aqua-100;
 }
 .ion-primitives-aqua-200 {
-  --color: $ion-primitives-aqua-200;
-  color: $ion-primitives-aqua-200;
+  --color: $token-primitives-aqua-200;
+  color: $token-primitives-aqua-200;
 }
 .ion-primitives-aqua-300 {
-  --color: $ion-primitives-aqua-300;
-  color: $ion-primitives-aqua-300;
+  --color: $token-primitives-aqua-300;
+  color: $token-primitives-aqua-300;
 }
 .ion-primitives-aqua-400 {
-  --color: $ion-primitives-aqua-400;
-  color: $ion-primitives-aqua-400;
+  --color: $token-primitives-aqua-400;
+  color: $token-primitives-aqua-400;
 }
 .ion-primitives-aqua-500 {
-  --color: $ion-primitives-aqua-500;
-  color: $ion-primitives-aqua-500;
+  --color: $token-primitives-aqua-500;
+  color: $token-primitives-aqua-500;
 }
 .ion-primitives-aqua-600 {
-  --color: $ion-primitives-aqua-600;
-  color: $ion-primitives-aqua-600;
+  --color: $token-primitives-aqua-600;
+  color: $token-primitives-aqua-600;
 }
 .ion-primitives-aqua-700 {
-  --color: $ion-primitives-aqua-700;
-  color: $ion-primitives-aqua-700;
+  --color: $token-primitives-aqua-700;
+  color: $token-primitives-aqua-700;
 }
 .ion-primitives-aqua-800 {
-  --color: $ion-primitives-aqua-800;
-  color: $ion-primitives-aqua-800;
+  --color: $token-primitives-aqua-800;
+  color: $token-primitives-aqua-800;
 }
 .ion-primitives-aqua-900 {
-  --color: $ion-primitives-aqua-900;
-  color: $ion-primitives-aqua-900;
+  --color: $token-primitives-aqua-900;
+  color: $token-primitives-aqua-900;
 }
 .ion-primitives-aqua-1000 {
-  --color: $ion-primitives-aqua-1000;
-  color: $ion-primitives-aqua-1000;
+  --color: $token-primitives-aqua-1000;
+  color: $token-primitives-aqua-1000;
 }
 .ion-primitives-aqua-1100 {
-  --color: $ion-primitives-aqua-1100;
-  color: $ion-primitives-aqua-1100;
+  --color: $token-primitives-aqua-1100;
+  color: $token-primitives-aqua-1100;
 }
 .ion-primitives-aqua-1200 {
-  --color: $ion-primitives-aqua-1200;
-  color: $ion-primitives-aqua-1200;
+  --color: $token-primitives-aqua-1200;
+  color: $token-primitives-aqua-1200;
 }
 .ion-primitives-blue-100 {
-  --color: $ion-primitives-blue-100;
-  color: $ion-primitives-blue-100;
+  --color: $token-primitives-blue-100;
+  color: $token-primitives-blue-100;
 }
 .ion-primitives-blue-200 {
-  --color: $ion-primitives-blue-200;
-  color: $ion-primitives-blue-200;
+  --color: $token-primitives-blue-200;
+  color: $token-primitives-blue-200;
 }
 .ion-primitives-blue-300 {
-  --color: $ion-primitives-blue-300;
-  color: $ion-primitives-blue-300;
+  --color: $token-primitives-blue-300;
+  color: $token-primitives-blue-300;
 }
 .ion-primitives-blue-400 {
-  --color: $ion-primitives-blue-400;
-  color: $ion-primitives-blue-400;
+  --color: $token-primitives-blue-400;
+  color: $token-primitives-blue-400;
 }
 .ion-primitives-blue-500 {
-  --color: $ion-primitives-blue-500;
-  color: $ion-primitives-blue-500;
+  --color: $token-primitives-blue-500;
+  color: $token-primitives-blue-500;
 }
 .ion-primitives-blue-600 {
-  --color: $ion-primitives-blue-600;
-  color: $ion-primitives-blue-600;
+  --color: $token-primitives-blue-600;
+  color: $token-primitives-blue-600;
 }
 .ion-primitives-blue-700 {
-  --color: $ion-primitives-blue-700;
-  color: $ion-primitives-blue-700;
+  --color: $token-primitives-blue-700;
+  color: $token-primitives-blue-700;
 }
 .ion-primitives-blue-800 {
-  --color: $ion-primitives-blue-800;
-  color: $ion-primitives-blue-800;
+  --color: $token-primitives-blue-800;
+  color: $token-primitives-blue-800;
 }
 .ion-primitives-blue-900 {
-  --color: $ion-primitives-blue-900;
-  color: $ion-primitives-blue-900;
+  --color: $token-primitives-blue-900;
+  color: $token-primitives-blue-900;
 }
 .ion-primitives-blue-1000 {
-  --color: $ion-primitives-blue-1000;
-  color: $ion-primitives-blue-1000;
+  --color: $token-primitives-blue-1000;
+  color: $token-primitives-blue-1000;
 }
 .ion-primitives-blue-1100 {
-  --color: $ion-primitives-blue-1100;
-  color: $ion-primitives-blue-1100;
+  --color: $token-primitives-blue-1100;
+  color: $token-primitives-blue-1100;
 }
 .ion-primitives-blue-1200 {
-  --color: $ion-primitives-blue-1200;
-  color: $ion-primitives-blue-1200;
+  --color: $token-primitives-blue-1200;
+  color: $token-primitives-blue-1200;
 }
 .ion-primitives-indigo-100 {
-  --color: $ion-primitives-indigo-100;
-  color: $ion-primitives-indigo-100;
+  --color: $token-primitives-indigo-100;
+  color: $token-primitives-indigo-100;
 }
 .ion-primitives-indigo-200 {
-  --color: $ion-primitives-indigo-200;
-  color: $ion-primitives-indigo-200;
+  --color: $token-primitives-indigo-200;
+  color: $token-primitives-indigo-200;
 }
 .ion-primitives-indigo-300 {
-  --color: $ion-primitives-indigo-300;
-  color: $ion-primitives-indigo-300;
+  --color: $token-primitives-indigo-300;
+  color: $token-primitives-indigo-300;
 }
 .ion-primitives-indigo-400 {
-  --color: $ion-primitives-indigo-400;
-  color: $ion-primitives-indigo-400;
+  --color: $token-primitives-indigo-400;
+  color: $token-primitives-indigo-400;
 }
 .ion-primitives-indigo-500 {
-  --color: $ion-primitives-indigo-500;
-  color: $ion-primitives-indigo-500;
+  --color: $token-primitives-indigo-500;
+  color: $token-primitives-indigo-500;
 }
 .ion-primitives-indigo-600 {
-  --color: $ion-primitives-indigo-600;
-  color: $ion-primitives-indigo-600;
+  --color: $token-primitives-indigo-600;
+  color: $token-primitives-indigo-600;
 }
 .ion-primitives-indigo-700 {
-  --color: $ion-primitives-indigo-700;
-  color: $ion-primitives-indigo-700;
+  --color: $token-primitives-indigo-700;
+  color: $token-primitives-indigo-700;
 }
 .ion-primitives-indigo-800 {
-  --color: $ion-primitives-indigo-800;
-  color: $ion-primitives-indigo-800;
+  --color: $token-primitives-indigo-800;
+  color: $token-primitives-indigo-800;
 }
 .ion-primitives-indigo-900 {
-  --color: $ion-primitives-indigo-900;
-  color: $ion-primitives-indigo-900;
+  --color: $token-primitives-indigo-900;
+  color: $token-primitives-indigo-900;
 }
 .ion-primitives-indigo-1000 {
-  --color: $ion-primitives-indigo-1000;
-  color: $ion-primitives-indigo-1000;
+  --color: $token-primitives-indigo-1000;
+  color: $token-primitives-indigo-1000;
 }
 .ion-primitives-indigo-1100 {
-  --color: $ion-primitives-indigo-1100;
-  color: $ion-primitives-indigo-1100;
+  --color: $token-primitives-indigo-1100;
+  color: $token-primitives-indigo-1100;
 }
 .ion-primitives-indigo-1200 {
-  --color: $ion-primitives-indigo-1200;
-  color: $ion-primitives-indigo-1200;
+  --color: $token-primitives-indigo-1200;
+  color: $token-primitives-indigo-1200;
 }
 .ion-primitives-violet-100 {
-  --color: $ion-primitives-violet-100;
-  color: $ion-primitives-violet-100;
+  --color: $token-primitives-violet-100;
+  color: $token-primitives-violet-100;
 }
 .ion-primitives-violet-200 {
-  --color: $ion-primitives-violet-200;
-  color: $ion-primitives-violet-200;
+  --color: $token-primitives-violet-200;
+  color: $token-primitives-violet-200;
 }
 .ion-primitives-violet-300 {
-  --color: $ion-primitives-violet-300;
-  color: $ion-primitives-violet-300;
+  --color: $token-primitives-violet-300;
+  color: $token-primitives-violet-300;
 }
 .ion-primitives-violet-400 {
-  --color: $ion-primitives-violet-400;
-  color: $ion-primitives-violet-400;
+  --color: $token-primitives-violet-400;
+  color: $token-primitives-violet-400;
 }
 .ion-primitives-violet-500 {
-  --color: $ion-primitives-violet-500;
-  color: $ion-primitives-violet-500;
+  --color: $token-primitives-violet-500;
+  color: $token-primitives-violet-500;
 }
 .ion-primitives-violet-600 {
-  --color: $ion-primitives-violet-600;
-  color: $ion-primitives-violet-600;
+  --color: $token-primitives-violet-600;
+  color: $token-primitives-violet-600;
 }
 .ion-primitives-violet-700 {
-  --color: $ion-primitives-violet-700;
-  color: $ion-primitives-violet-700;
+  --color: $token-primitives-violet-700;
+  color: $token-primitives-violet-700;
 }
 .ion-primitives-violet-800 {
-  --color: $ion-primitives-violet-800;
-  color: $ion-primitives-violet-800;
+  --color: $token-primitives-violet-800;
+  color: $token-primitives-violet-800;
 }
 .ion-primitives-violet-900 {
-  --color: $ion-primitives-violet-900;
-  color: $ion-primitives-violet-900;
+  --color: $token-primitives-violet-900;
+  color: $token-primitives-violet-900;
 }
 .ion-primitives-violet-1000 {
-  --color: $ion-primitives-violet-1000;
-  color: $ion-primitives-violet-1000;
+  --color: $token-primitives-violet-1000;
+  color: $token-primitives-violet-1000;
 }
 .ion-primitives-violet-1100 {
-  --color: $ion-primitives-violet-1100;
-  color: $ion-primitives-violet-1100;
+  --color: $token-primitives-violet-1100;
+  color: $token-primitives-violet-1100;
 }
 .ion-primitives-violet-1200 {
-  --color: $ion-primitives-violet-1200;
-  color: $ion-primitives-violet-1200;
+  --color: $token-primitives-violet-1200;
+  color: $token-primitives-violet-1200;
 }
 .ion-primitives-purple-100 {
-  --color: $ion-primitives-purple-100;
-  color: $ion-primitives-purple-100;
+  --color: $token-primitives-purple-100;
+  color: $token-primitives-purple-100;
 }
 .ion-primitives-purple-200 {
-  --color: $ion-primitives-purple-200;
-  color: $ion-primitives-purple-200;
+  --color: $token-primitives-purple-200;
+  color: $token-primitives-purple-200;
 }
 .ion-primitives-purple-300 {
-  --color: $ion-primitives-purple-300;
-  color: $ion-primitives-purple-300;
+  --color: $token-primitives-purple-300;
+  color: $token-primitives-purple-300;
 }
 .ion-primitives-purple-400 {
-  --color: $ion-primitives-purple-400;
-  color: $ion-primitives-purple-400;
+  --color: $token-primitives-purple-400;
+  color: $token-primitives-purple-400;
 }
 .ion-primitives-purple-500 {
-  --color: $ion-primitives-purple-500;
-  color: $ion-primitives-purple-500;
+  --color: $token-primitives-purple-500;
+  color: $token-primitives-purple-500;
 }
 .ion-primitives-purple-600 {
-  --color: $ion-primitives-purple-600;
-  color: $ion-primitives-purple-600;
+  --color: $token-primitives-purple-600;
+  color: $token-primitives-purple-600;
 }
 .ion-primitives-purple-700 {
-  --color: $ion-primitives-purple-700;
-  color: $ion-primitives-purple-700;
+  --color: $token-primitives-purple-700;
+  color: $token-primitives-purple-700;
 }
 .ion-primitives-purple-800 {
-  --color: $ion-primitives-purple-800;
-  color: $ion-primitives-purple-800;
+  --color: $token-primitives-purple-800;
+  color: $token-primitives-purple-800;
 }
 .ion-primitives-purple-900 {
-  --color: $ion-primitives-purple-900;
-  color: $ion-primitives-purple-900;
+  --color: $token-primitives-purple-900;
+  color: $token-primitives-purple-900;
 }
 .ion-primitives-purple-1000 {
-  --color: $ion-primitives-purple-1000;
-  color: $ion-primitives-purple-1000;
+  --color: $token-primitives-purple-1000;
+  color: $token-primitives-purple-1000;
 }
 .ion-primitives-purple-1100 {
-  --color: $ion-primitives-purple-1100;
-  color: $ion-primitives-purple-1100;
+  --color: $token-primitives-purple-1100;
+  color: $token-primitives-purple-1100;
 }
 .ion-primitives-purple-1200 {
-  --color: $ion-primitives-purple-1200;
-  color: $ion-primitives-purple-1200;
+  --color: $token-primitives-purple-1200;
+  color: $token-primitives-purple-1200;
 }
 .ion-primitives-magenta-100 {
-  --color: $ion-primitives-magenta-100;
-  color: $ion-primitives-magenta-100;
+  --color: $token-primitives-magenta-100;
+  color: $token-primitives-magenta-100;
 }
 .ion-primitives-magenta-200 {
-  --color: $ion-primitives-magenta-200;
-  color: $ion-primitives-magenta-200;
+  --color: $token-primitives-magenta-200;
+  color: $token-primitives-magenta-200;
 }
 .ion-primitives-magenta-300 {
-  --color: $ion-primitives-magenta-300;
-  color: $ion-primitives-magenta-300;
+  --color: $token-primitives-magenta-300;
+  color: $token-primitives-magenta-300;
 }
 .ion-primitives-magenta-400 {
-  --color: $ion-primitives-magenta-400;
-  color: $ion-primitives-magenta-400;
+  --color: $token-primitives-magenta-400;
+  color: $token-primitives-magenta-400;
 }
 .ion-primitives-magenta-500 {
-  --color: $ion-primitives-magenta-500;
-  color: $ion-primitives-magenta-500;
+  --color: $token-primitives-magenta-500;
+  color: $token-primitives-magenta-500;
 }
 .ion-primitives-magenta-600 {
-  --color: $ion-primitives-magenta-600;
-  color: $ion-primitives-magenta-600;
+  --color: $token-primitives-magenta-600;
+  color: $token-primitives-magenta-600;
 }
 .ion-primitives-magenta-700 {
-  --color: $ion-primitives-magenta-700;
-  color: $ion-primitives-magenta-700;
+  --color: $token-primitives-magenta-700;
+  color: $token-primitives-magenta-700;
 }
 .ion-primitives-magenta-800 {
-  --color: $ion-primitives-magenta-800;
-  color: $ion-primitives-magenta-800;
+  --color: $token-primitives-magenta-800;
+  color: $token-primitives-magenta-800;
 }
 .ion-primitives-magenta-900 {
-  --color: $ion-primitives-magenta-900;
-  color: $ion-primitives-magenta-900;
+  --color: $token-primitives-magenta-900;
+  color: $token-primitives-magenta-900;
 }
 .ion-primitives-magenta-1000 {
-  --color: $ion-primitives-magenta-1000;
-  color: $ion-primitives-magenta-1000;
+  --color: $token-primitives-magenta-1000;
+  color: $token-primitives-magenta-1000;
 }
 .ion-primitives-magenta-1100 {
-  --color: $ion-primitives-magenta-1100;
-  color: $ion-primitives-magenta-1100;
+  --color: $token-primitives-magenta-1100;
+  color: $token-primitives-magenta-1100;
 }
 .ion-primitives-magenta-1200 {
-  --color: $ion-primitives-magenta-1200;
-  color: $ion-primitives-magenta-1200;
+  --color: $token-primitives-magenta-1200;
+  color: $token-primitives-magenta-1200;
 }
 .ion-primitives-pink-100 {
-  --color: $ion-primitives-pink-100;
-  color: $ion-primitives-pink-100;
+  --color: $token-primitives-pink-100;
+  color: $token-primitives-pink-100;
 }
 .ion-primitives-pink-200 {
-  --color: $ion-primitives-pink-200;
-  color: $ion-primitives-pink-200;
+  --color: $token-primitives-pink-200;
+  color: $token-primitives-pink-200;
 }
 .ion-primitives-pink-300 {
-  --color: $ion-primitives-pink-300;
-  color: $ion-primitives-pink-300;
+  --color: $token-primitives-pink-300;
+  color: $token-primitives-pink-300;
 }
 .ion-primitives-pink-400 {
-  --color: $ion-primitives-pink-400;
-  color: $ion-primitives-pink-400;
+  --color: $token-primitives-pink-400;
+  color: $token-primitives-pink-400;
 }
 .ion-primitives-pink-500 {
-  --color: $ion-primitives-pink-500;
-  color: $ion-primitives-pink-500;
+  --color: $token-primitives-pink-500;
+  color: $token-primitives-pink-500;
 }
 .ion-primitives-pink-600 {
-  --color: $ion-primitives-pink-600;
-  color: $ion-primitives-pink-600;
+  --color: $token-primitives-pink-600;
+  color: $token-primitives-pink-600;
 }
 .ion-primitives-pink-700 {
-  --color: $ion-primitives-pink-700;
-  color: $ion-primitives-pink-700;
+  --color: $token-primitives-pink-700;
+  color: $token-primitives-pink-700;
 }
 .ion-primitives-pink-800 {
-  --color: $ion-primitives-pink-800;
-  color: $ion-primitives-pink-800;
+  --color: $token-primitives-pink-800;
+  color: $token-primitives-pink-800;
 }
 .ion-primitives-pink-900 {
-  --color: $ion-primitives-pink-900;
-  color: $ion-primitives-pink-900;
+  --color: $token-primitives-pink-900;
+  color: $token-primitives-pink-900;
 }
 .ion-primitives-pink-1000 {
-  --color: $ion-primitives-pink-1000;
-  color: $ion-primitives-pink-1000;
+  --color: $token-primitives-pink-1000;
+  color: $token-primitives-pink-1000;
 }
 .ion-primitives-pink-1100 {
-  --color: $ion-primitives-pink-1100;
-  color: $ion-primitives-pink-1100;
+  --color: $token-primitives-pink-1100;
+  color: $token-primitives-pink-1100;
 }
 .ion-primitives-pink-1200 {
-  --color: $ion-primitives-pink-1200;
-  color: $ion-primitives-pink-1200;
+  --color: $token-primitives-pink-1200;
+  color: $token-primitives-pink-1200;
 }
 .ion-shadow-1 {
-  --box-shadow: $ion-shadow-1;
-  box-shadow: $ion-shadow-1;
+  --box-shadow: $token-shadow-1;
+  box-shadow: $token-shadow-1;
 }
 .ion-shadow-2 {
-  --box-shadow: $ion-shadow-2;
-  box-shadow: $ion-shadow-2;
+  --box-shadow: $token-shadow-2;
+  box-shadow: $token-shadow-2;
 }
 .ion-shadow-3 {
-  --box-shadow: $ion-shadow-3;
-  box-shadow: $ion-shadow-3;
+  --box-shadow: $token-shadow-3;
+  box-shadow: $token-shadow-3;
 }
 .ion-shadow-4 {
-  --box-shadow: $ion-shadow-4;
-  box-shadow: $ion-shadow-4;
+  --box-shadow: $token-shadow-4;
+  box-shadow: $token-shadow-4;
 }
 .ion-shadow-5 {
-  --box-shadow: $ion-shadow-5;
-  box-shadow: $ion-shadow-5;
+  --box-shadow: $token-shadow-5;
+  box-shadow: $token-shadow-5;
 }
 .ion-shadow-6 {
-  --box-shadow: $ion-shadow-6;
-  box-shadow: $ion-shadow-6;
+  --box-shadow: $token-shadow-6;
+  box-shadow: $token-shadow-6;
 }
 .ion-shadow-7 {
-  --box-shadow: $ion-shadow-7;
-  box-shadow: $ion-shadow-7;
+  --box-shadow: $token-shadow-7;
+  box-shadow: $token-shadow-7;
 }
 
 .ion-no-margin {
-  --margin-top: #{$ion-space-0};
-  --margin-end: #{$ion-space-0};
-  --margin-bottom: #{$ion-space-0};
-  --margin-start: #{$ion-space-0};
+  --margin-top: #{$token-space-0};
+  --margin-end: #{$token-space-0};
+  --margin-bottom: #{$token-space-0};
+  --margin-start: #{$token-space-0};
 
-  @include margin($ion-space-0);
+  @include margin($token-space-0);
 }
 
 .ion-margin {
-  --margin-top: #{$ion-space-400};
-  --margin-end: #{$ion-space-400};
-  --margin-bottom: #{$ion-space-400};
-  --margin-start: #{$ion-space-400};
+  --margin-top: #{$token-space-400};
+  --margin-end: #{$token-space-400};
+  --margin-bottom: #{$token-space-400};
+  --margin-start: #{$token-space-400};
 
-  @include margin($ion-space-400);
+  @include margin($token-space-400);
 }
 
 .ion-margin-top {
-  --margin-top: #{$ion-space-400};
+  --margin-top: #{$token-space-400};
 
-  @include margin($ion-space-400, null, null, null);
+  @include margin($token-space-400, null, null, null);
 }
 
 .ion-margin-end {
-  --margin-end: #{$ion-space-400};
+  --margin-end: #{$token-space-400};
 
-  @include margin(null, $ion-space-400, null, null);
+  @include margin(null, $token-space-400, null, null);
 }
 
 .ion-margin-bottom {
-  --margin-bottom: #{$ion-space-400};
+  --margin-bottom: #{$token-space-400};
 
-  @include margin(null, null, $ion-space-400, null);
+  @include margin(null, null, $token-space-400, null);
 }
 
 .ion-margin-start {
-  --margin-start: #{$ion-space-400};
+  --margin-start: #{$token-space-400};
 
-  @include margin(null, null, null, $ion-space-400);
+  @include margin(null, null, null, $token-space-400);
 }
 
 .ion-margin-vertical {
-  --margin-top: #{$ion-space-400};
-  --margin-bottom: #{$ion-space-400};
+  --margin-top: #{$token-space-400};
+  --margin-bottom: #{$token-space-400};
 
-  @include margin($ion-space-400, null, $ion-space-400, null);
+  @include margin($token-space-400, null, $token-space-400, null);
 }
 
 .ion-margin-horizontal {
-  --margin-start: #{$ion-space-400};
-  --margin-end: #{$ion-space-400};
+  --margin-start: #{$token-space-400};
+  --margin-end: #{$token-space-400};
 
-  @include margin(null, $ion-space-400, null, $ion-space-400);
+  @include margin(null, $token-space-400, null, $token-space-400);
 }
 
 .ion-no-padding {
-  --padding-top: #{$ion-space-0};
-  --padding-end: #{$ion-space-0};
-  --padding-bottom: #{$ion-space-0};
-  --padding-start: #{$ion-space-0};
+  --padding-top: #{$token-space-0};
+  --padding-end: #{$token-space-0};
+  --padding-bottom: #{$token-space-0};
+  --padding-start: #{$token-space-0};
 
-  @include padding($ion-space-0);
+  @include padding($token-space-0);
 }
 
 .ion-padding {
-  --padding-top: #{$ion-space-400};
-  --padding-end: #{$ion-space-400};
-  --padding-bottom: #{$ion-space-400};
-  --padding-start: #{$ion-space-400};
+  --padding-top: #{$token-space-400};
+  --padding-end: #{$token-space-400};
+  --padding-bottom: #{$token-space-400};
+  --padding-start: #{$token-space-400};
 
-  @include padding($ion-space-400);
+  @include padding($token-space-400);
 }
 
 .ion-padding-top {
-  --padding-top: #{$ion-space-400};
+  --padding-top: #{$token-space-400};
 
-  @include padding($ion-space-400, null, null, null);
+  @include padding($token-space-400, null, null, null);
 }
 
 .ion-padding-end {
-  --padding-end: #{$ion-space-400};
+  --padding-end: #{$token-space-400};
 
-  @include padding(null, $ion-space-400, null, null);
+  @include padding(null, $token-space-400, null, null);
 }
 
 .ion-padding-bottom {
-  --padding-bottom: #{$ion-space-400};
+  --padding-bottom: #{$token-space-400};
 
-  @include padding(null, null, $ion-space-400, null);
+  @include padding(null, null, $token-space-400, null);
 }
 
 .ion-padding-start {
-  --padding-start: #{$ion-space-400};
+  --padding-start: #{$token-space-400};
 
-  @include padding(null, null, null, $ion-space-400);
+  @include padding(null, null, null, $token-space-400);
 }
 
 .ion-padding-vertical {
-  --padding-top: #{$ion-space-400};
-  --padding-bottom: #{$ion-space-400};
+  --padding-top: #{$token-space-400};
+  --padding-bottom: #{$token-space-400};
 
-  @include padding($ion-space-400, null, $ion-space-400, null);
+  @include padding($token-space-400, null, $token-space-400, null);
 }
 
 .ion-padding-horizontal {
-  --padding-start: #{$ion-space-400};
-  --padding-end: #{$ion-space-400};
+  --padding-start: #{$token-space-400};
+  --padding-end: #{$token-space-400};
 
-  @include padding(null, $ion-space-400, null, $ion-space-400);
+  @include padding(null, $token-space-400, null, $token-space-400);
 }

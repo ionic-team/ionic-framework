@@ -15,7 +15,8 @@ const {
   generateDefaultSpaceUtilityClasses,
   generateSpaceUtilityClasses,
   removeConsecutiveRepeatedWords,
-  setPrefixValue,
+  setVariablePrefixValue,
+  setClassesPrefixValue,
   generateRadiusUtilityClasses,
   generateBorderUtilityClasses,
   generateFontUtilityClasses,
@@ -39,7 +40,7 @@ StyleDictionary.registerFormat({
     console.log('Generating SCSS variables...');
 
     // Set the prefix for variables
-    setPrefixValue('token');
+    setVariablePrefixValue('token');
 
     const primitiveProperties = dictionary.allTokens.filter((prop) => prop.path[0] === 'primitives');
     const scaleProperties = dictionary.allTokens.filter((prop) => prop.path[0] === 'scale');
@@ -95,7 +96,7 @@ StyleDictionary.registerFormat({
     console.log('Generating Utility-Classes...');
 
     // Set the prefix for classes
-    setPrefixValue('ion');
+    setClassesPrefixValue('ion');
 
     // Arrays to store specific utility classes
     const typographyUtilityClasses = [];
