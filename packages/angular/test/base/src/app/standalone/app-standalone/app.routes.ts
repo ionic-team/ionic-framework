@@ -41,6 +41,14 @@ export const routes: Routes = [
       },
       { path: 'tabs-basic', loadComponent: () => import('../tabs-basic/tabs-basic.component').then(c => c.TabsBasicComponent) },
       {
+        path: 'validation',
+        children: [
+          { path: 'input-validation', loadComponent: () => import('../validation/input-validation/input-validation.component').then(c => c.InputValidationComponent) },
+          { path: 'textarea-validation', loadComponent: () => import('../validation/textarea-validation/textarea-validation.component').then(c => c.TextareaValidationComponent) },
+          { path: '**', redirectTo: 'input-validation' }
+        ]
+      },
+      {
         path: 'value-accessors',
         children: [
           { path: 'checkbox', loadComponent: () => import('../value-accessors/checkbox/checkbox.component').then(c => c.CheckboxComponent) },
