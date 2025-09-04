@@ -42,7 +42,7 @@
   flex: 0 0 calc(var(--ion-grid-col-span) * var(--col-unit-size) + (var(--ion-grid-col-span) - 1) * var(--ion-grid-gap));
 }
 
-:host([class^="ion-grid-offset-col-"]), 
+:host([class^="ion-grid-offset-col-"]),
 :host([class*=" ion-grid-offset-col-"]) {
   --margin-calc: calc(
     var(--col-unit-size) * var(--ion-grid-col-margin) + (var(--ion-grid-gap) * var(--ion-grid-col-margin))
