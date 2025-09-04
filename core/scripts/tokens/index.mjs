@@ -25,13 +25,7 @@ const {
 } = utils;
 import StyleDictionary from 'style-dictionary';
 
-// Register a custom file header
-StyleDictionary.registerFileHeader({
-  name: 'custom-header',
-  fileHeader: (defaultMessages = []) => {
-    return [...defaultMessages, 'Do not edit directly, this file was auto-generated.'];
-  },
-});
+const customHeader = `// Do not edit directly, this file was auto-generated.`;
 
 // SCSS variables format
 StyleDictionary.registerFormat({
@@ -83,6 +77,7 @@ StyleDictionary.registerFormat({
     // In v3, the header is added automatically by Style Dictionary.
     // The format function should only return the file content.
     return [
+      customHeader + '\n\n',
       '@use "../themes/functions.sizes" as font;\n',
       prefixedVariables.join('\n') + '\n',
     ].join('');
@@ -162,6 +157,7 @@ StyleDictionary.registerFormat({
     // In v3, the header is added automatically by Style Dictionary.
     // The format function should only return the file content.
     return [
+      customHeader + '\n\n',
       '@import "./ionic.vars";\n@import "../themes/mixins";\n',
       finalOutput,
     ].join('');
@@ -179,16 +175,10 @@ const config = {
         {
           destination: "ionic.vars.scss",
           format: "scssVariablesFormat",
-          options: {
-            fileHeader: `custom-header`,
-          },
         },
         {
           destination: "ionic.utility.scss",
           format: "cssUtilityClassesFormat",
-          options: {
-            fileHeader: `custom-header`
-          }
         }
       ]
     }
