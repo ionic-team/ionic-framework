@@ -37,11 +37,13 @@
   flex: 0 0 auto;
 }
 
-:host([class^="ion-grid-col-"], [class*=" ion-grid-col-"]) {
+:host([class^="ion-grid-col-"]),
+:host([class*=" ion-grid-col-"]) {
   flex: 0 0 calc(var(--ion-grid-col-span) * var(--col-unit-size) + (var(--ion-grid-col-span) - 1) * var(--ion-grid-gap));
 }
 
-:host([class^="ion-grid-offset-col-"], [class*=" ion-grid-offset-col-"]) {
+:host([class^="ion-grid-offset-col-"]), 
+:host([class*=" ion-grid-offset-col-"]) {
   --margin-calc: calc(
     var(--col-unit-size) * var(--ion-grid-col-margin) + (var(--ion-grid-gap) * var(--ion-grid-col-margin))
   );
@@ -49,18 +51,18 @@
   @include margin-horizontal(var(--margin-calc), 0);
 }
 
-$max: 12;
+$grid-col-number: 12;
 
-@for $i from 1 through $max {
-  .ion-grid-col-#{$i} {
+@for $i from 1 through $grid-col-number {
+  :host(.ion-grid-col-#{$i}) {
     --ion-grid-col-span: #{$i};
   }
 
-  .ion-grid-order-col-#{$i} {
+  :host(.ion-grid-order-col-#{$i}) {
     order: #{$i};
   }
 
-  .ion-grid-offset-col-#{$i} {
+  :host(.ion-grid-offset-col-#{$i}) {
     --ion-grid-col-margin: #{$i};
   }
 }
