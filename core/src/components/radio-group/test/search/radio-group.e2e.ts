@@ -17,7 +17,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const searchbarInput = page.locator('ion-searchbar input');
 
       // select radio
-      const radio = await radioFixture.checkRadio('mouse', 'ion-radio[value=two]');
+      const radio = await radioFixture.checkRadio({ method: 'mouse', selector: 'ion-radio[value=two]' });
       await radioFixture.expectChecked(true);
 
       // filter radio so it is not in DOM
