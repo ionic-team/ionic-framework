@@ -7,7 +7,7 @@
   /**
    * @prop --col-unit-size: The size of each Column unit.
    */
-  --col-unit-size: calc((100% - (var(--ion-grid-columns) - 1) * var(--ion-grid-gap)) / var(--ion-grid-columns));
+  --col-unit-size: calc((100% - (var(--ion-grid-columns, 12) - 1) * var(--ion-grid-gap, 0px)) / var(--ion-grid-columns, 12));
 
   /**
    * @prop --ion-grid-columns: The number of total Columns in the Grid
@@ -40,12 +40,13 @@
 :host([class^="ion-grid-col-"]),
 :host([class*=" ion-grid-col-"]) {
   flex: 0 0 calc(var(--ion-grid-col-span) * var(--col-unit-size) + (var(--ion-grid-col-span) - 1) * var(--ion-grid-gap));
+  flex: 0 0 calc(var(--ion-grid-col-span) * var(--col-unit-size) + (var(--ion-grid-col-span) - 1) * var(--ion-grid-gap, 0px));
 }
 
 :host([class^="ion-grid-offset-col-"]),
 :host([class*=" ion-grid-offset-col-"]) {
   --margin-calc: calc(
-    var(--col-unit-size) * var(--ion-grid-col-margin) + (var(--ion-grid-gap) * var(--ion-grid-col-margin))
+    var(--col-unit-size) * var(--ion-grid-col-margin) + (var(--ion-grid-gap, 0px) * var(--ion-grid-col-margin))
   );
 
   @include margin-horizontal(var(--margin-calc), 0);
