@@ -82,3 +82,56 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+<h5>Example 3: Push</h5>
+```html
+<ion-grid>
+  <ion-row>
+    <ion-col size="auto" push="1">
+      <div>ion-col push 1</div>
+    </ion-col>
+    <ion-col size="auto" push="1">
+      <div>ion-col push 1</div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+```
+**Version 9.x+**
+```html
+<ion-grid>
+  <ion-row>
+    <ion-col size="auto" offset="1">
+      <div>ion-col push 1</div>
+    </ion-col>
+    <ion-col size="auto">
+      <div>ion-col push 1</div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+```
+
+<h5>Example 4: Push and Pull</h5>
+```html
+<ion-grid>
+  <ion-row>
+    <ion-col size="3" size-md="6" push="9" push-md="6">
+      <div>ion-col size="3" size-md="6" push="9" push-md="6"</div>
+    </ion-col>
+    <ion-col size="9" size-md="6" pull="3" pull-md="6">
+      <div>ion-col size="9" size-md="6" pull="3" pull-md="6"</div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+```
+**Version 9.x+**
+```html
+<ion-grid>
+  <ion-row>
+    <ion-col size="auto" order="2" order-md="2">
+      <div>ion-col size="3" size-md="6" order="9" order-md="6"</div>
+    </ion-col>
+    <ion-col size="auto" order="1" order-md="1">
+      <div>ion-col size="9" size-md="6" order="3" order-md="6"</div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+```
