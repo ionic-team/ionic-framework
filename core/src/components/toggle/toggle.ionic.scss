@@ -5,22 +5,22 @@
 // -----------------------------------------
 
 :host {
-  --track-background: #{globals.$token-primitives-neutral-500};
+  --track-background: #{globals.$ion-primitives-neutral-500};
   --track-background-checked: #{globals.ion-color(primary, base)};
-  --border-radius: #{globals.$token-border-radius-full};
-  --focus-ring-color: #{globals.$token-border-focus-default};
-  --focus-ring-width: #{globals.$token-border-size-050};
-  --handle-background: #{globals.$token-primitives-base-white};
-  --handle-background-checked: #{globals.$token-primitives-base-white};
-  --handle-border-radius: #{globals.$token-border-radius-full};
-  --handle-height: #{globals.$token-scale-500};
-  --handle-max-height: #{globals.$token-scale-500};
-  --handle-width: #{globals.$token-scale-500};
-  --handle-spacing: #{globals.$token-space-050};
+  --border-radius: #{globals.$ion-border-radius-full};
+  --focus-ring-color: #{globals.$ion-border-focus-default};
+  --focus-ring-width: #{globals.$ion-border-size-050};
+  --handle-background: #{globals.$ion-primitives-base-white};
+  --handle-background-checked: #{globals.$ion-primitives-base-white};
+  --handle-border-radius: #{globals.$ion-border-radius-full};
+  --handle-height: #{globals.$ion-scale-500};
+  --handle-max-height: #{globals.$ion-scale-500};
+  --handle-width: #{globals.$ion-scale-500};
+  --handle-spacing: #{globals.$ion-space-050};
   --handle-transition: transform 300ms, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms,
     right 110ms ease-in-out 80ms;
 
-  @include globals.typography(globals.$token-body-md-regular);
+  @include globals.typography(globals.$ion-body-md-regular);
 
   width: 100%;
 
@@ -33,15 +33,15 @@
 .toggle-wrapper {
   align-items: center;
 
-  min-height: globals.$token-scale-1200;
+  min-height: globals.$ion-scale-1200;
 }
 
 // Toggle Native Wrapper
 // ----------------------------------------------------------------
 
 .native-wrapper .toggle-icon {
-  width: globals.$token-scale-1100;
-  height: globals.$token-scale-600;
+  width: globals.$ion-scale-1100;
+  height: globals.$ion-scale-600;
 
   /**
    * The handle box shadow should not
@@ -58,25 +58,25 @@
 // ----------------------------------------------------------------
 
 .toggle-bottom {
-  @include globals.typography(globals.$token-body-md-regular);
+  @include globals.typography(globals.$ion-body-md-regular);
 }
 
 // Toggle Hint Text
 // ----------------------------------------------------------------
 
 .toggle-bottom .error-text {
-  color: globals.$token-semantics-danger-900;
+  color: globals.$ion-semantics-danger-900;
 }
 
 .toggle-bottom .helper-text {
-  color: globals.$token-primitives-neutral-900;
+  color: globals.$ion-primitives-neutral-900;
 }
 
 // Toggle Native Wrapper: Focused
 // ----------------------------------------------------------------
 
 :host(.ion-focused) .toggle-icon {
-  outline: var(--focus-ring-width) globals.$token-border-style-solid var(--focus-ring-color);
+  outline: var(--focus-ring-width) globals.$ion-border-style-solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-width);
 }
 
@@ -86,11 +86,11 @@
 // Toggle Native Wrapper: Pressed
 // ----------------------------------------------------------------
 :host(.ion-activated) .toggle-icon {
-  background: globals.$token-bg-neutral-base-press;
+  background: globals.$ion-bg-neutral-base-press;
 }
 
 :host(.ion-activated.toggle-checked) .toggle-icon {
-  background: globals.$token-bg-primary-base-press;
+  background: globals.$ion-bg-primary-base-press;
 }
 
 // Ionic Toggle: Disabled
@@ -111,12 +111,12 @@
   align-items: center;
   justify-content: center;
 
-  color: globals.$token-primitives-neutral-1200;
+  color: globals.$ion-primitives-neutral-1200;
 }
 
 .toggle-inner .toggle-switch-icon {
-  width: globals.$token-scale-400;
-  height: globals.$token-scale-400;
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 }
 
 // Toggle Label Placement - Start/Default
@@ -136,8 +136,8 @@
   * the input should be on the end
   * when the label sits at the start.
   */
-  @include globals.margin(null, globals.$token-space-400, null, 0);
-  color: globals.$token-primitives-neutral-1200;
+  @include globals.margin(null, globals.$ion-space-400, null, 0);
+  color: globals.$ion-primitives-neutral-1200;
 }
 
 // Toggle Label Placement - End
@@ -157,5 +157,5 @@
 * when the label sits at the end.
 */
 :host(.toggle-label-placement-end) .label-text-wrapper {
-  @include globals.margin(null, 0, null, globals.$token-space-400);
+  @include globals.margin(null, 0, null, globals.$ion-space-400);
 }

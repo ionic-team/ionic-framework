@@ -5,19 +5,19 @@
 // --------------------------------------------------
 
 :host {
-  --color: #{globals.$token-primitives-neutral-500};
-  --color-checked: #{globals.$token-semantics-primary-base};
-  --border-width: #{globals.$token-border-size-025};
-  --border-style: #{globals.$token-border-style-solid};
-  --border-radius: #{globals.$token-border-radius-full};
-  --focus-ring-color: #{globals.$token-border-focus-default};
-  --focus-ring-width: #{globals.$token-border-size-050};
+  --color: #{globals.$ion-primitives-neutral-500};
+  --color-checked: #{globals.$ion-semantics-primary-base};
+  --border-width: #{globals.$ion-border-size-025};
+  --border-style: #{globals.$ion-border-style-solid};
+  --border-radius: #{globals.$ion-border-radius-full};
+  --focus-ring-color: #{globals.$ion-border-focus-default};
+  --focus-ring-width: #{globals.$ion-border-size-050};
 
-  @include globals.typography(globals.$token-body-md-regular);
+  @include globals.typography(globals.$ion-body-md-regular);
 
-  min-height: globals.$token-scale-1200;
+  min-height: globals.$ion-scale-1200;
 
-  color: globals.$token-primitives-neutral-1200;
+  color: globals.$ion-primitives-neutral-1200;
 }
 
 // Radio Color
@@ -33,15 +33,15 @@
 // ----------------------------------------------------------------
 
 :host(.in-item.radio-label-placement-stacked) .native-wrapper {
-  @include globals.margin(null, null, globals.$token-space-250, null);
+  @include globals.margin(null, null, globals.$ion-space-250, null);
 }
 
 // Radio Native Wrapper
 // ----------------------------------------------------------------
 
 .native-wrapper .radio-icon {
-  width: globals.$token-scale-600;
-  height: globals.$token-scale-600;
+  width: globals.$ion-scale-600;
+  height: globals.$ion-scale-600;
 }
 
 // Ionic Radio Outer Circle: Unchecked
@@ -55,7 +55,7 @@
   border-style: var(--border-style);
   border-color: var(--color);
 
-  background-color: globals.$token-primitives-base-white;
+  background-color: globals.$ion-primitives-base-white;
 }
 
 // Ionic Radio Inner Circle: Unchecked
@@ -67,7 +67,7 @@
   width: calc(32% + var(--border-width));
   height: calc(32% + var(--border-width));
 
-  background-color: globals.$token-primitives-base-white;
+  background-color: globals.$ion-primitives-base-white;
 }
 
 // Ionic Radio Outer Circle: Checked
@@ -89,7 +89,7 @@
    * the radio should be on the end
    * when the label sits at the start.
    */
-  @include globals.margin(null, globals.$token-space-400, null, 0);
+  @include globals.margin(null, globals.$ion-space-400, null, 0);
 }
 
 // Radio Label Placement - End
@@ -101,7 +101,7 @@
  * when the label sits at the end.
  */
 :host(.radio-label-placement-end) .label-text-wrapper {
-  @include globals.margin(null, 0, null, globals.$token-space-400);
+  @include globals.margin(null, 0, null, globals.$ion-space-400);
 }
 
 // Radio Label Placement - Stacked
@@ -115,7 +115,7 @@
    * the radio should be on the bottom
    * when the label sits on top.
    */
-  @include globals.margin(null, 0, globals.$token-space-400, 0);
+  @include globals.margin(null, 0, globals.$ion-space-400, 0);
 
   /**
    * Label text should not extend
@@ -128,7 +128,7 @@
 // -----------------------------------------
 
 :host(:not(.in-item):not(:last-of-type)) {
-  @include globals.margin(null, null, globals.$token-space-200, null);
+  @include globals.margin(null, null, globals.$ion-space-200, null);
 }
 
 // Ionic Radio: Disabled

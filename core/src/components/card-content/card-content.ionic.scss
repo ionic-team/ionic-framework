@@ -5,17 +5,17 @@
 // --------------------------------------------------
 
 .card-content-ionic {
-  @include globals.padding(globals.$token-space-400);
-  @include globals.typography(globals.$token-body-md-regular);
+  @include globals.padding(globals.$ion-space-400);
+  @include globals.typography(globals.$ion-body-md-regular);
 
   display: flex;
 
   flex-direction: column;
 
-  gap: globals.$token-space-400;
+  gap: globals.$ion-space-400;
 
   img {
-    @include globals.margin(globals.$token-space-200, 0, globals.$token-space-200, 0);
+    @include globals.margin(globals.$ion-space-200, 0, globals.$ion-space-200, 0);
   }
 }
 

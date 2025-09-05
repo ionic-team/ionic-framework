@@ -4,12 +4,12 @@
 // --------------------------------------------------
 
 .swiper {
-  --bullet-background: #{globals.$token-primitives-neutral-800};
-  --bullet-background-active: #{globals.$token-semantics-primary-base};
-  --progress-bar-background: #{globals.$token-bg-neutral-boldest-default-rgb};
-  --progress-bar-background-active: #{globals.$token-semantics-primary-600};
-  --scroll-bar-background: #{globals.$token-bg-neutral-boldest-default-rgb};
-  --scroll-bar-background-active: #{globals.$token-bg-neutral-boldest-press-rgb};
+  --bullet-background: #{globals.$ion-primitives-neutral-800};
+  --bullet-background-active: #{globals.$ion-semantics-primary-base};
+  --progress-bar-background: #{globals.$ion-bg-neutral-boldest-default-rgb};
+  --progress-bar-background-active: #{globals.$ion-semantics-primary-600};
+  --scroll-bar-background: #{globals.$ion-bg-neutral-boldest-default-rgb};
+  --scroll-bar-background-active: #{globals.$ion-bg-neutral-boldest-press-rgb};
   /**
    * @prop --bullet-background: Background of the pagination bullets
    * @prop --bullet-background-active: Background of the active pagination bullet
@@ -70,7 +70,7 @@
 }
 
 .swiper .swiper-slide {
-  @include globals.typography(globals.$token-heading-h6-bold);
+  @include globals.typography(globals.$ion-heading-h6-bold);
 
   // Center slide text vertically
   display: flex;

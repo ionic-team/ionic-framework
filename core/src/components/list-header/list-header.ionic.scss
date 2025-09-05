@@ -3,11 +3,11 @@
 
 :host {
   --background: transparent;
-  --color: #{globals.$token-primitives-neutral-1200};
+  --color: #{globals.$ion-primitives-neutral-1200};
 
-  @include globals.typography(globals.$token-body-md-medium);
+  @include globals.typography(globals.$ion-body-md-medium);
 
-  min-height: calc(#{globals.$token-scale-1400} + #{globals.$token-scale-050});
+  min-height: calc(#{globals.$ion-scale-1400} + #{globals.$ion-scale-050});
 
   /**
    * The focus rings from components like buttons and links
@@ -18,13 +18,13 @@
 
   /* stylelint-disable */
   @include ltr() {
-    padding-right: calc(var(--ion-safe-area-right, 0px) + #{globals.$token-space-400});
-    padding-left: calc(var(--ion-safe-area-left, 0px) + #{globals.$token-space-400});
+    padding-right: calc(var(--ion-safe-area-right, 0px) + #{globals.$ion-space-400});
+    padding-left: calc(var(--ion-safe-area-left, 0px) + #{globals.$ion-space-400});
   }
 
   @include rtl() {
-    padding-right: calc(var(--ion-safe-area-right, 0px) + #{globals.$token-space-400});
-    padding-left: calc(var(--ion-safe-area-left, 0px) + #{globals.$token-space-400});
+    padding-right: calc(var(--ion-safe-area-right, 0px) + #{globals.$ion-space-400});
+    padding-left: calc(var(--ion-safe-area-left, 0px) + #{globals.$ion-space-400});
   }
   /* stylelint-enable */
 }
@@ -39,5 +39,5 @@
 
 // Label
 ::slotted(ion-label) ::slotted(p) {
-  font-weight: globals.$token-font-weight-regular;
+  font-weight: globals.$ion-font-weight-regular;
 }

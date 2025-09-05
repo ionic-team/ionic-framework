@@ -76,8 +76,8 @@ Usage example (Chip Component):
 @use '../../themes/ionic/ionic.globals.scss' as globals;
 
 :host {
-  --background: #{globals.$token-primitives-neutral-100};
-  color: globals.$token-primitives-neutral-900;
+  --background: #{globals.$ion-primitives-neutral-100};
+  color: globals.$ion-primitives-neutral-900;
   @include globals.font-smoothing;
 }
 ```

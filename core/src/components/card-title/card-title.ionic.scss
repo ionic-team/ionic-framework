@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --color: #{globals.$token-primitives-neutral-1200};
+  --color: #{globals.$ion-primitives-neutral-1200};
 
-  @include globals.typography(globals.$token-heading-h5-medium);
+  @include globals.typography(globals.$ion-heading-h5-medium);
 }

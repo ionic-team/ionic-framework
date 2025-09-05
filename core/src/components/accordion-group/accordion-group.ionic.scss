@@ -5,9 +5,9 @@
 // --------------------------------------------------
 
 :host {
-  min-width: calc(#{globals.$token-scale-6200} + #{globals.$token-space-600});
+  min-width: calc(#{globals.$ion-scale-6200} + #{globals.$ion-space-600});
 
-  background-color: globals.$token-bg-neutral-subtlest-default;
+  background-color: globals.$ion-bg-neutral-subtlest-default;
 }
 
 // Inset Accordion Group
@@ -15,23 +15,23 @@
 // Shape and padding only apply if the group is inset
 
 :host(.accordion-group-expand-inset) {
-  @include globals.padding(globals.$token-space-100);
+  @include globals.padding(globals.$ion-space-100);
 }
 
 :host(.accordion-group-expand-inset.accordion-group-shape-round) {
-  --border-radius: #{globals.$token-round-xl};
+  --border-radius: #{globals.$ion-round-xl};
 
-  @include globals.border-radius(globals.$token-round-xl);
+  @include globals.border-radius(globals.$ion-round-xl);
 }
 
 :host(.accordion-group-expand-inset.accordion-group-shape-soft) {
-  --border-radius: #{globals.$token-soft-xl};
+  --border-radius: #{globals.$ion-soft-xl};
 
-  @include globals.border-radius(globals.$token-soft-xl);
+  @include globals.border-radius(globals.$ion-soft-xl);
 }
 
 :host(.accordion-group-expand-inset.accordion-group-shape-rectangular) {
-  --border-radius: #{globals.$token-rectangular-xl};
+  --border-radius: #{globals.$ion-rectangular-xl};
 
-  @include globals.border-radius(globals.$token-rectangular-xl);
+  @include globals.border-radius(globals.$ion-rectangular-xl);
 }

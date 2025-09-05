@@ -5,22 +5,22 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$token-primitives-base-white};
-  --background-activated: #{globals.$token-primitives-neutral-200};
-  --border-color: #{globals.$token-primitives-neutral-300};
-  --border-style: #{globals.$token-border-style-solid};
-  --border-width: #{0 0 globals.$token-border-size-025 0};
-  --color: #{globals.$token-primitives-neutral-1200};
-  --detail-icon-color: #{globals.$token-primitives-neutral-800};
-  --detail-icon-font-size: #{globals.$token-scale-600};
+  --background: #{globals.$ion-primitives-base-white};
+  --background-activated: #{globals.$ion-primitives-neutral-200};
+  --border-color: #{globals.$ion-primitives-neutral-300};
+  --border-style: #{globals.$ion-border-style-solid};
+  --border-width: #{0 0 globals.$ion-border-size-025 0};
+  --color: #{globals.$ion-primitives-neutral-1200};
+  --detail-icon-color: #{globals.$ion-primitives-neutral-800};
+  --detail-icon-font-size: #{globals.$ion-scale-600};
   --detail-icon-opacity: 1;
-  --min-height: #{globals.$token-scale-1800};
-  --padding-top: #{globals.$token-space-200};
-  --padding-end: #{globals.$token-space-400};
-  --padding-bottom: #{globals.$token-space-200};
-  --padding-start: #{globals.$token-space-400};
+  --min-height: #{globals.$ion-scale-1800};
+  --padding-top: #{globals.$ion-space-200};
+  --padding-end: #{globals.$ion-space-400};
+  --padding-bottom: #{globals.$ion-space-200};
+  --padding-start: #{globals.$ion-space-400};
 
-  @include globals.typography(globals.$token-body-lg-medium);
+  @include globals.typography(globals.$ion-body-lg-medium);
 }
 
 // Inner Item
@@ -43,17 +43,17 @@
 // --------------------------------------------------
 
 slot[name="start"]::slotted(*) {
-  @include globals.margin(null, #{globals.$token-space-400}, null, null);
+  @include globals.margin(null, #{globals.$ion-space-400}, null, null);
 }
 
 slot[name="end"]::slotted(*) {
-  @include globals.margin(null, null, null, #{globals.$token-space-400});
+  @include globals.margin(null, null, null, #{globals.$ion-space-400});
 }
 
 ::slotted(ion-icon:not(.item-detail-icon)) {
-  color: globals.$token-primitives-neutral-1000;
+  color: globals.$ion-primitives-neutral-1000;
 
-  font-size: globals.$token-scale-1000;
+  font-size: globals.$ion-scale-1000;
 }
 
 // Item: Disabled
@@ -79,9 +79,9 @@ slot[name="end"]::slotted(*) {
 
   position: absolute;
 
-  border-width: globals.$token-border-size-050;
-  border-style: globals.$token-border-style-solid;
-  border-color: globals.$token-border-focus-default;
+  border-width: globals.$ion-border-size-050;
+  border-style: globals.$ion-border-style-solid;
+  border-color: globals.$ion-border-focus-default;
 
   content: "";
 }
@@ -92,13 +92,13 @@ slot[name="end"]::slotted(*) {
 // Full lines - apply the border to the item
 // Inset lines - apply the border to the item inner
 :host(.item-lines-full) {
-  --border-width: #{globals.$token-border-size-0 globals.$token-border-size-0 globals.$token-border-size-025
-    globals.$token-border-size-0};
+  --border-width: #{globals.$ion-border-size-0 globals.$ion-border-size-0 globals.$ion-border-size-025
+    globals.$ion-border-size-0};
 }
 
 :host(.item-lines-inset) {
-  --inner-border-width: #{globals.$token-border-size-0 globals.$token-border-size-0 globals.$token-border-size-025
-    globals.$token-border-size-0};
+  --inner-border-width: #{globals.$ion-border-size-0 globals.$ion-border-size-0 globals.$ion-border-size-025
+    globals.$ion-border-size-0};
 }
 
 // Full lines - remove the border from the item inner (inset list items)
@@ -106,10 +106,10 @@ slot[name="end"]::slotted(*) {
 // No lines - remove the border on both (full / inset list items)
 :host(.item-lines-inset),
 :host(.item-lines-none) {
-  --border-width: #{globals.$token-border-size-0};
+  --border-width: #{globals.$ion-border-size-0};
 }
 
 :host(.item-lines-full),
 :host(.item-lines-none) {
-  --inner-border-width: #{globals.$token-border-size-0};
+  --inner-border-width: #{globals.$ion-border-size-0};
 }

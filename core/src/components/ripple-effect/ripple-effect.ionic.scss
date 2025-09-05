@@ -14,7 +14,7 @@
 
 @keyframes rippleAnimation {
   from {
-    animation-timing-function: globals.$token-transition-curve-expressive;
+    animation-timing-function: globals.$ion-transition-curve-expressive;
 
     transform: scale(1);
   }

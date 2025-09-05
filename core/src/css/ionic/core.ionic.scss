@@ -23,7 +23,7 @@ html {
 }
 
 body {
-  background: var(--ion-background-color, #{globals.$token-bg-body});
+  background: var(--ion-background-color, #{globals.$ion-bg-body});
   color: var(--ion-text-color);
 }
 
@@ -49,7 +49,7 @@ html.ionic ion-modal.modal-card ion-header ion-toolbar:first-of-type,
 html.ionic ion-modal.modal-sheet ion-header ion-toolbar:first-of-type,
 html.ionic ion-modal ion-footer ion-toolbar:first-of-type,
 html.ionic ion-footer.modal-footer-moving ion-toolbar:first-of-type {
-  padding-top: globals.$token-space-400;
+  padding-top: globals.$ion-space-400;
 }
 
 /**
@@ -60,7 +60,7 @@ html.ionic ion-footer.modal-footer-moving ion-toolbar:first-of-type {
 html.ionic ion-modal.modal-card ion-header ion-toolbar:last-of-type,
 html.ionic ion-modal.modal-sheet ion-header ion-toolbar:last-of-type,
 html.ionic ion-modal ion-footer ion-toolbar:last-of-type {
-  padding-bottom: globals.$token-space-400;
+  padding-bottom: globals.$ion-space-400;
 }
 
 /**
@@ -70,8 +70,8 @@ html.ionic ion-modal ion-footer ion-toolbar:last-of-type {
 */
 html.ionic ion-modal ion-toolbar,
 html.ionic .modal-footer-moving ion-toolbar {
-  padding-right: calc(var(--ion-safe-area-right) + #{globals.$token-space-400});
-  padding-left: calc(var(--ion-safe-area-left) + #{globals.$token-space-400});
+  padding-right: calc(var(--ion-safe-area-right) + #{globals.$ion-space-400});
+  padding-left: calc(var(--ion-safe-area-left) + #{globals.$ion-space-400});
 }
 
 /**
@@ -79,9 +79,9 @@ html.ionic .modal-footer-moving ion-toolbar {
 * within a modal.
 */
 html.ionic ion-modal.modal-sheet ion-content {
-  --padding-start: #{globals.$token-space-400};
-  --padding-end: #{globals.$token-space-400};
-  --padding-bottom: #{globals.$token-space-400};
+  --padding-start: #{globals.$ion-space-400};
+  --padding-end: #{globals.$ion-space-400};
+  --padding-bottom: #{globals.$ion-space-400};
 }
 
 /**
@@ -207,7 +207,7 @@ ion-toast-controller,
 
 html.plt-ios.plt-hybrid,
 html.plt-ios.plt-pwa {
-  --ion-statusbar-padding: #{globals.$token-space-500};
+  --ion-statusbar-padding: #{globals.$ion-space-500};
 }
 
 @supports (padding-top: 20px) {
@@ -277,11 +277,11 @@ ion-card-header.ion-color .ion-inherit-color {
 }
 
 .menu-content-reveal {
-  box-shadow: #{globals.$token-elevation-1};
+  box-shadow: #{globals.$ion-elevation-1};
 }
 
 .menu-content-push {
-  box-shadow: #{globals.$token-elevation-1};
+  box-shadow: #{globals.$ion-elevation-1};
 }
 
 // Accordion Styles
@@ -290,12 +290,12 @@ ion-card-header.ion-color .ion-inherit-color {
 // The toggle icon is nested in the accordion item so we need to
 // style it from a global level.
 ion-accordion > [slot="header"] .ion-accordion-toggle-icon {
-  color: globals.$token-icon-default;
-  font-size: globals.$token-scale-600;
+  color: globals.$ion-icon-default;
+  font-size: globals.$ion-scale-600;
 }
 
 ion-accordion.accordion-animated > [slot="header"] .ion-accordion-toggle-icon {
-  transition: globals.$token-transition-time-300 transform globals.$token-transition-curve-quick;
+  transition: globals.$ion-transition-time-300 transform globals.$ion-transition-curve-quick;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -319,15 +319,15 @@ ion-accordion.accordion-expanded > [slot="header"] .ion-accordion-toggle-icon {
 // Items inside of an accordion should have reduced padding
 // due to the padding added to the accordion content.
 ion-accordion > [slot="content"] ion-item {
-  @include globals.typography(globals.$token-body-md-regular);
+  @include globals.typography(globals.$ion-body-md-regular);
 
-  color: globals.$token-primitives-neutral-1000;
+  color: globals.$ion-primitives-neutral-1000;
 
   --padding-start: 0;
-  --padding-top: #{globals.$token-space-300};
-  --padding-bottom: #{globals.$token-space-300};
+  --padding-top: #{globals.$ion-space-300};
+  --padding-bottom: #{globals.$ion-space-300};
   --padding-end: 0;
-  --min-height: #{globals.$token-scale-700};
+  --min-height: #{globals.$ion-scale-700};
 }
 
 // Datetime Styles
@@ -359,8 +359,8 @@ ion-input input::-webkit-date-and-time-value {
  * sized grid interface.
  */
 .ion-datetime-button-overlay ion-datetime.datetime-grid {
-  width: calc(#{globals.$token-scale-7400} + #{globals.$token-space-600});
-  min-height: calc(#{globals.$token-scale-7400} + #{globals.$token-space-600});
+  width: calc(#{globals.$ion-scale-7400} + #{globals.$ion-space-600});
+  min-height: calc(#{globals.$ion-scale-7400} + #{globals.$ion-space-600});
 }
 
 // Popover Styles

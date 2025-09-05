@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  @include globals.typography(globals.$token-heading-h6-medium);
+  @include globals.typography(globals.$ion-heading-h6-medium);
 
   box-sizing: border-box;
   pointer-events: none;
@@ -15,5 +15,5 @@
 // --------------------------------------------------
 
 :host(.title-large) {
-  @include globals.typography(globals.$token-heading-h1-medium);
+  @include globals.typography(globals.$ion-heading-h1-medium);
 }

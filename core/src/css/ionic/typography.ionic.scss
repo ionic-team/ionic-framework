@@ -2,34 +2,34 @@
 
 // TODO(ROU-10833): add font loading solution here, as a @font-face, base64 or cdn
 html {
-  font-family: globals.$token-font-family;
+  font-family: globals.$ion-font-family;
 }
 
 body {
-  @include globals.typography(globals.$token-body-md-regular);
+  @include globals.typography(globals.$ion-body-md-regular);
 }
 
 /* Override html headings based on heading tokens */
 h1 {
-  @include globals.typography(globals.$token-heading-h1-regular);
+  @include globals.typography(globals.$ion-heading-h1-regular);
 }
 
 h2 {
-  @include globals.typography(globals.$token-heading-h2-regular);
+  @include globals.typography(globals.$ion-heading-h2-regular);
 }
 
 h3 {
-  @include globals.typography(globals.$token-heading-h3-regular);
+  @include globals.typography(globals.$ion-heading-h3-regular);
 }
 
 h4 {
-  @include globals.typography(globals.$token-heading-h4-regular);
+  @include globals.typography(globals.$ion-heading-h4-regular);
 }
 
 h5 {
-  @include globals.typography(globals.$token-heading-h5-regular);
+  @include globals.typography(globals.$ion-heading-h5-regular);
 }
 
 h6 {
-  @include globals.typography(globals.$token-heading-h6-regular);
+  @include globals.typography(globals.$ion-heading-h6-regular);
 }

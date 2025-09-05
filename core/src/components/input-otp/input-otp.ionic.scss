@@ -5,112 +5,112 @@
 // --------------------------------------------------
 
 :host {
-  --padding-top: #{globals.$token-space-400};
-  --padding-end: #{globals.$token-space-0};
-  --padding-bottom: #{globals.$token-space-400};
-  --padding-start: #{globals.$token-space-0};
-  --color: #{globals.$token-text-default};
-  --min-width: #{globals.$token-scale-1000};
-  --border-width: #{globals.$token-border-size-025};
-  --border-style: #{globals.$token-border-style-solid};
-  --border-color: #{globals.$token-border-input-default};
-  --separator-width: #{globals.$token-scale-200};
-  --separator-border-radius: #{globals.$token-border-radius-full};
-  --separator-color: #{globals.$token-bg-neutral-subtle-press};
-  --highlight-color-focused: #{globals.$token-border-focus-default};
-  --highlight-color-valid: #{globals.$token-border-success};
-  --highlight-color-invalid: #{globals.$token-border-danger-default};
+  --padding-top: #{globals.$ion-space-400};
+  --padding-end: #{globals.$ion-space-0};
+  --padding-bottom: #{globals.$ion-space-400};
+  --padding-start: #{globals.$ion-space-0};
+  --color: #{globals.$ion-text-default};
+  --min-width: #{globals.$ion-scale-1000};
+  --border-width: #{globals.$ion-border-size-025};
+  --border-style: #{globals.$ion-border-style-solid};
+  --border-color: #{globals.$ion-border-input-default};
+  --separator-width: #{globals.$ion-scale-200};
+  --separator-border-radius: #{globals.$ion-border-radius-full};
+  --separator-color: #{globals.$ion-bg-neutral-subtle-press};
+  --highlight-color-focused: #{globals.$ion-border-focus-default};
+  --highlight-color-valid: #{globals.$ion-border-success};
+  --highlight-color-invalid: #{globals.$ion-border-danger-default};
 
-  @include globals.typography(globals.$token-body-md-regular);
+  @include globals.typography(globals.$ion-body-md-regular);
 }
 
 :host(.has-focus) .native-input:focus {
-  --border-width: #{globals.$token-border-size-050};
+  --border-width: #{globals.$ion-border-size-050};
 }
 
 // Input Description
 // ----------------------------------------------------------------
 
 .input-otp-description {
-  @include globals.typography(globals.$token-body-sm-medium);
+  @include globals.typography(globals.$ion-body-sm-medium);
 
-  color: globals.$token-text-subtlest;
+  color: globals.$ion-text-subtlest;
 }
 
 // Sizes
 // --------------------------------------------------
 
 :host(.input-otp-size-small) {
-  --width: #{globals.$token-scale-1000};
-  --height: #{globals.$token-scale-1000};
+  --width: #{globals.$ion-scale-1000};
+  --height: #{globals.$ion-scale-1000};
 }
 
 :host(.input-otp-size-small) .input-otp-group {
-  gap: globals.$token-space-200;
+  gap: globals.$ion-space-200;
 }
 
 :host(.input-otp-size-medium) {
-  --width: #{globals.$token-scale-1200};
-  --height: #{globals.$token-scale-1200};
+  --width: #{globals.$ion-scale-1200};
+  --height: #{globals.$ion-scale-1200};
 }
 
 :host(.input-otp-size-large) {
-  --width: #{globals.$token-scale-1400};
-  --height: #{globals.$token-scale-1400};
+  --width: #{globals.$ion-scale-1400};
+  --height: #{globals.$ion-scale-1400};
 }
 
 :host(.input-otp-size-medium) .input-otp-group,
 :host(.input-otp-size-large) .input-otp-group {
-  gap: globals.$token-space-300;
+  gap: globals.$ion-space-300;
 }
 
 // Shapes
 // --------------------------------------------------
 
 :host(.input-otp-shape-round) {
-  --border-radius: #{globals.$token-border-radius-400};
+  --border-radius: #{globals.$ion-border-radius-400};
 }
 
 :host(.input-otp-shape-soft) {
-  --border-radius: #{globals.$token-border-radius-200};
+  --border-radius: #{globals.$ion-border-radius-200};
 }
 
 :host(.input-otp-shape-rectangular) {
-  --border-radius: #{globals.$token-border-radius-0};
+  --border-radius: #{globals.$ion-border-radius-0};
 }
 
 // Fills
 // --------------------------------------------------
 
 :host(.input-otp-fill-solid) {
-  --border-color: #{globals.$token-bg-input-bold-default};
-  --background: #{globals.$token-bg-input-bold-default};
+  --border-color: #{globals.$ion-bg-input-bold-default};
+  --background: #{globals.$ion-bg-input-bold-default};
 }
 
 // States
 // --------------------------------------------------
 
 :host(.input-otp-disabled) {
-  --color: #{globals.$token-text-disabled};
+  --color: #{globals.$ion-text-disabled};
 }
 
 :host(.input-otp-fill-outline.input-otp-disabled) {
-  --background: #{globals.$token-bg-input-disabled};
-  --border-color: #{globals.$token-border-disabled};
+  --background: #{globals.$ion-bg-input-disabled};
+  --border-color: #{globals.$ion-border-disabled};
 }
 
 :host(.input-otp-fill-outline.input-otp-readonly) {
-  --background: #{globals.$token-bg-input-read-only};
+  --background: #{globals.$ion-bg-input-read-only};
 }
 
 :host(.input-otp-fill-solid.input-otp-disabled) {
-  --border-color: #{globals.$token-bg-input-bold-disabled};
-  --background: #{globals.$token-bg-input-bold-disabled};
+  --border-color: #{globals.$ion-bg-input-bold-disabled};
+  --background: #{globals.$ion-bg-input-bold-disabled};
 }
 
 :host(.input-otp-fill-solid.input-otp-readonly) {
-  --border-color: #{globals.$token-bg-input-bold-read-only};
-  --background: #{globals.$token-bg-input-bold-read-only};
+  --border-color: #{globals.$ion-bg-input-bold-read-only};
+  --background: #{globals.$ion-bg-input-bold-read-only};
 }
 
 // Colors

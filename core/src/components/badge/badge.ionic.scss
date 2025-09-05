@@ -5,19 +5,19 @@
 // --------------------------------------------------
 
 :host {
-  --padding-start: #{globals.$token-space-200};
-  --padding-end: #{globals.$token-space-200};
-  --padding-top: #{globals.$token-space-0};
-  --padding-bottom: #{globals.$token-space-0};
+  --padding-start: #{globals.$ion-space-200};
+  --padding-end: #{globals.$ion-space-200};
+  --padding-top: #{globals.$ion-space-0};
+  --padding-bottom: #{globals.$ion-space-0};
 
-  @include globals.typography(globals.$token-body-sm-medium);
+  @include globals.typography(globals.$ion-body-sm-medium);
 
   display: inline-flex;
 
   align-items: center;
   justify-content: center;
 
-  min-width: globals.$token-scale-250;
+  min-width: globals.$ion-scale-250;
 }
 
 // Bold Badge
@@ -51,21 +51,21 @@
 
 /* Soft Badge */
 :host(.badge-soft) {
-  @include globals.border-radius(globals.$token-soft-xs);
+  @include globals.border-radius(globals.$ion-soft-xs);
 }
 
 :host(.badge-small.badge-soft) {
-  @include globals.border-radius(globals.$token-soft-2xs);
+  @include globals.border-radius(globals.$ion-soft-2xs);
 }
 
 /* Round Badge */
 :host(.badge-round) {
-  @include globals.border-radius(globals.$token-round-sm);
+  @include globals.border-radius(globals.$ion-round-sm);
 }
 
 /* Rectangular Badge */
 :host(.badge-rectangular) {
-  @include globals.border-radius(globals.$token-rectangular-sm);
+  @include globals.border-radius(globals.$ion-rectangular-sm);
 }
 
 // Badge Sizes
@@ -73,35 +73,35 @@
 
 /* Small Badge */
 :host(.badge-small) {
-  --padding-start: #{globals.$token-space-050};
-  --padding-end: #{globals.$token-space-050};
+  --padding-start: #{globals.$ion-space-050};
+  --padding-end: #{globals.$ion-space-050};
 
-  min-width: globals.$token-scale-400;
-  height: globals.$token-scale-400;
+  min-width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 }
 
 :host(.badge-small) ::slotted(ion-icon) {
-  width: globals.$token-scale-300;
-  height: globals.$token-scale-300;
+  width: globals.$ion-scale-300;
+  height: globals.$ion-scale-300;
 }
 
 /* Medium Badge */
 /* Large size defaults to the medium size to avoid styles breakage */
 :host(.badge-medium),
 :host(.badge-large) {
-  --padding-start: #{globals.$token-space-100};
-  --padding-end: #{globals.$token-space-100};
+  --padding-start: #{globals.$ion-space-100};
+  --padding-end: #{globals.$ion-space-100};
 
-  @include globals.typography(globals.$token-body-md-medium);
+  @include globals.typography(globals.$ion-body-md-medium);
 
-  min-width: globals.$token-scale-600;
-  height: globals.$token-scale-600;
+  min-width: globals.$ion-scale-600;
+  height: globals.$ion-scale-600;
 }
 
 :host(.badge-medium) ::slotted(ion-icon),
 :host(.badge-large) ::slotted(ion-icon) {
-  width: globals.$token-scale-400;
-  height: globals.$token-scale-400;
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 }
 
 // Badge (hint)
@@ -113,10 +113,10 @@
 }
 
 :host([vertical]:not(:empty)) {
-  --padding-start: #{globals.$token-scale-100};
-  --padding-end: #{globals.$token-scale-100};
-  --padding-top: #{globals.$token-scale-100};
-  --padding-bottom: #{globals.$token-scale-100};
+  --padding-start: #{globals.$ion-scale-100};
+  --padding-end: #{globals.$ion-scale-100};
+  --padding-top: #{globals.$ion-scale-100};
+  --padding-bottom: #{globals.$ion-scale-100};
 }
 
 // Badge (hint) Sizes
@@ -124,20 +124,20 @@
 
 /* sm */
 :host(.badge-small:empty) {
-  min-width: globals.$token-scale-200;
-  height: globals.$token-scale-200;
+  min-width: globals.$ion-scale-200;
+  height: globals.$ion-scale-200;
 }
 
 /* md */
 :host(.badge-medium:empty) {
-  min-width: globals.$token-scale-300;
-  height: globals.$token-scale-300;
+  min-width: globals.$ion-scale-300;
+  height: globals.$ion-scale-300;
 }
 
 /* lg */
 :host(.badge-large:empty) {
-  min-width: globals.$token-scale-400;
-  height: globals.$token-scale-400;
+  min-width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 }
 
 // Badge Inside Tab Button
@@ -161,16 +161,16 @@
 // --------------------------------------------------
 
 :host(:not(:empty).in-button) {
-  --padding-start: #{globals.$token-scale-050};
-  --padding-end: #{globals.$token-scale-050};
+  --padding-start: #{globals.$ion-scale-050};
+  --padding-end: #{globals.$ion-scale-050};
 
-  @include globals.typography(globals.$token-body-action-xs);
+  @include globals.typography(globals.$ion-body-action-xs);
 
-  min-width: globals.$token-scale-400;
-  height: globals.$token-scale-400;
+  min-width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 
   ::slotted(ion-icon) {
-    width: globals.$token-scale-300;
-    height: globals.$token-scale-300;
+    width: globals.$ion-scale-300;
+    height: globals.$ion-scale-300;
   }
 }

@@ -2,7 +2,7 @@
 @use "./backdrop.common";
 
 :host {
-  background-color: rgba(globals.$token-primitives-base-black-rgb, 0.7);
+  background-color: rgba(globals.$ion-primitives-base-black-rgb, 0.7);
 
   z-index: 2;
 }

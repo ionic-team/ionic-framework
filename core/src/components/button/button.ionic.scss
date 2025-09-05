@@ -4,12 +4,12 @@
 // Ionic Button
 // -------------------------------------------------------------------------------
 :host {
-  --padding-top: #{globals.$token-space-0};
-  --padding-end: #{globals.$token-space-0};
+  --padding-top: #{globals.$ion-space-0};
+  --padding-end: #{globals.$ion-space-0};
   --padding-bottom: var(--padding-top);
   --padding-start: var(--padding-end);
-  --focus-ring-color: #{globals.$token-border-focus-default};
-  --focus-ring-width: #{globals.$token-border-size-050};
+  --focus-ring-color: #{globals.$ion-border-focus-default};
+  --focus-ring-width: #{globals.$ion-border-size-050};
 
   position: relative;
 
@@ -19,7 +19,7 @@
     position: absolute;
 
     height: 100%;
-    min-height: globals.$token-scale-1200;
+    min-height: globals.$ion-scale-1200;
 
     transform: translateY(-50%);
 
@@ -57,11 +57,11 @@
 // --------------------------------------------------
 
 :host(.button-outline) {
-  --border-width: #{globals.$token-border-size-025};
-  --border-style: #{globals.$token-border-style-solid};
-  --background-activated: #{globals.$token-bg-neutral-subtlest-press};
+  --border-width: #{globals.$ion-border-size-025};
+  --border-style: #{globals.$ion-border-style-solid};
+  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
   --background-focused: transparent;
-  --background-hover: #{globals.$token-bg-neutral-subtlest-press};
+  --background-hover: #{globals.$ion-bg-neutral-subtlest-press};
   --background-hover-opacity: 1;
   --border-color: #{globals.ion-color(primary, base)};
   --color: #{globals.ion-color(primary, base)};
@@ -73,9 +73,9 @@
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --background-activated: #{globals.$token-bg-neutral-subtlest-press};
+  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
   --background-focused: transparent;
-  --background-hover: #{globals.$token-bg-neutral-subtlest-press};
+  --background-hover: #{globals.$ion-bg-neutral-subtlest-press};
   --background-hover-opacity: 1;
   --color: #{globals.ion-color(primary, foreground)};
   --ripple-opacity: var(--background-activated-opacity, 1);
@@ -91,7 +91,7 @@
 
 :host(.button-outline.ion-color) ion-ripple-effect,
 :host(.button-clear.ion-color) ion-ripple-effect {
-  color: globals.$token-primitives-neutral-200;
+  color: globals.$ion-primitives-neutral-200;
 }
 
 // Button Sizes
@@ -99,32 +99,32 @@
 
 /* Small Button */
 :host(.button-small) {
-  --padding-end: #{globals.$token-space-400};
+  --padding-end: #{globals.$ion-space-400};
 
-  @include globals.typography(globals.$token-body-action-sm);
-  min-width: globals.$token-scale-1600;
+  @include globals.typography(globals.$ion-body-action-sm);
+  min-width: globals.$ion-scale-1600;
 
-  min-height: #{globals.$token-scale-1000};
+  min-height: #{globals.$ion-scale-1000};
 }
 
 /* Medium Button */
 :host(.button-medium) {
-  --padding-end: #{globals.$token-space-500};
+  --padding-end: #{globals.$ion-space-500};
 
-  @include globals.typography(globals.$token-body-action-md);
-  min-width: globals.$token-scale-1800;
+  @include globals.typography(globals.$ion-body-action-md);
+  min-width: globals.$ion-scale-1800;
 
-  min-height: #{globals.$token-scale-1200};
+  min-height: #{globals.$ion-scale-1200};
 }
 
 /* Large Button */
 :host(.button-large) {
-  --padding-end: #{globals.$token-space-700};
+  --padding-end: #{globals.$ion-space-700};
 
-  @include globals.typography(globals.$token-body-action-lg);
-  min-width: globals.$token-scale-2000;
+  @include globals.typography(globals.$ion-body-action-lg);
+  min-width: globals.$ion-scale-2000;
 
-  min-height: #{globals.$token-scale-1400};
+  min-height: #{globals.$ion-scale-1400};
 }
 
 // Button with Icons
@@ -136,8 +136,8 @@
   ::slotted(ion-icon[slot="start"]),
   ::slotted(ion-icon[slot="end"]),
   ::slotted(ion-icon[slot="icon-only"]) {
-    width: globals.$token-scale-500;
-    height: globals.$token-scale-500;
+    width: globals.$ion-scale-500;
+    height: globals.$ion-scale-500;
   }
 }
 
@@ -145,8 +145,8 @@
   ::slotted(ion-icon[slot="start"]),
   ::slotted(ion-icon[slot="end"]),
   ::slotted(ion-icon[slot="icon-only"]) {
-    width: globals.$token-scale-600;
-    height: globals.$token-scale-600;
+    width: globals.$ion-scale-600;
+    height: globals.$ion-scale-600;
   }
 }
 
@@ -167,8 +167,8 @@
 ::slotted(ion-spinner[slot="start"]),
 ::slotted(ion-spinner[slot="end"]),
 ::slotted(ion-spinner[slot="icon-only"]) {
-  width: globals.$token-scale-500;
-  height: globals.$token-scale-500;
+  width: globals.$ion-scale-500;
+  height: globals.$ion-scale-500;
 }
 
 // Button Shapes
@@ -178,21 +178,21 @@
 // --------------------------------------------------
 
 :host(.button-soft) {
-  --border-radius: #{globals.$token-border-radius-200};
+  --border-radius: #{globals.$ion-border-radius-200};
 }
 
 // Round Button
 // --------------------------------------------------
 
 :host(.button-round) {
-  --border-radius: #{globals.$token-border-radius-full};
+  --border-radius: #{globals.$ion-border-radius-full};
 }
 
 // Rectangular Button
 // --------------------------------------------------
 
 :host(.button-rectangular) {
-  --border-radius: #{globals.$token-border-radius-0};
+  --border-radius: #{globals.$ion-border-radius-0};
 }
 
 // Button: Focus
@@ -200,8 +200,8 @@
 
 // Only show the focus ring when the button is focused
 :host(.ion-focused) .button-native {
-  outline: var(--focus-ring-width) globals.$token-border-style-solid var(--focus-ring-color);
-  outline-offset: globals.$token-border-size-050;
+  outline: var(--focus-ring-width) globals.$ion-border-style-solid var(--focus-ring-color);
+  outline-offset: globals.$ion-border-size-050;
 }
 
 // Button: Activated
@@ -239,79 +239,79 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-  font-size: globals.$token-font-size-500;
+  font-size: globals.$ion-font-size-500;
 }
 
 :host(.button-small) ::slotted(ion-icon[slot="start"]),
 :host(.button-small) ::slotted(ion-spinner[slot="start"]) {
-  @include globals.margin-horizontal(null, globals.$token-space-200);
+  @include globals.margin-horizontal(null, globals.$ion-space-200);
 }
 
 ::slotted(ion-icon[slot="start"]),
 ::slotted(ion-spinner[slot="start"]) {
-  @include globals.margin-horizontal(null, globals.$token-space-250);
+  @include globals.margin-horizontal(null, globals.$ion-space-250);
 }
 
 :host(.button-large) ::slotted(ion-icon[slot="start"]),
 :host(.button-large) ::slotted(ion-spinner[slot="start"]) {
-  @include globals.margin-horizontal(null, globals.$token-space-300);
+  @include globals.margin-horizontal(null, globals.$ion-space-300);
 }
 
 :host(.button-small) ::slotted(ion-icon[slot="end"]),
 :host(.button-small) ::slotted(ion-spinner[slot="end"]) {
-  @include globals.margin-horizontal(globals.$token-space-200, null);
+  @include globals.margin-horizontal(globals.$ion-space-200, null);
 }
 
 ::slotted(ion-icon[slot="end"]),
 ::slotted(ion-spinner[slot="end"]) {
-  @include globals.margin-horizontal(globals.$token-space-250, null);
+  @include globals.margin-horizontal(globals.$ion-space-250, null);
 }
 
 :host(.button-large) ::slotted(ion-icon[slot="end"]),
 :host(.button-large) ::slotted(ion-spinner[slot="end"]) {
-  @include globals.margin-horizontal(globals.$token-space-300, null);
+  @include globals.margin-horizontal(globals.$ion-space-300, null);
 }
 
 // Button with Badge
 // --------------------------------------------------
 
 :host(.button-has-badge) {
-  --padding-top: #{globals.$token-space-0};
-  --padding-bottom: #{globals.$token-space-0};
+  --padding-top: #{globals.$ion-space-0};
+  --padding-bottom: #{globals.$ion-space-0};
 }
 
 :host(.button-small) ::slotted(ion-badge) {
-  @include globals.position(null, calc(-1 * globals.$token-space-050), null, null);
+  @include globals.position(null, calc(-1 * globals.$ion-space-050), null, null);
 }
 
 :host(.button-medium) {
   ::slotted(ion-badge.long-badge.badge-vertical-top) {
-    @include globals.position($top: globals.$token-space-100);
+    @include globals.position($top: globals.$ion-space-100);
   }
   ::slotted(ion-badge.long-badge.badge-vertical-bottom) {
-    @include globals.position($bottom: globals.$token-space-100);
+    @include globals.position($bottom: globals.$ion-space-100);
   }
 
   ::slotted(ion-badge:not(.long-badge).badge-vertical-top) {
-    @include globals.position(globals.$token-space-100, globals.$token-space-150, null, null);
+    @include globals.position(globals.$ion-space-100, globals.$ion-space-150, null, null);
   }
   ::slotted(ion-badge:not(.long-badge).badge-vertical-bottom) {
-    @include globals.position(null, globals.$token-space-150, globals.$token-space-100, null);
+    @include globals.position(null, globals.$ion-space-150, globals.$ion-space-100, null);
   }
 }
 
 :host(.button-large) {
   ::slotted(ion-badge.long-badge.badge-vertical-top) {
-    @include globals.position($top: globals.$token-space-200);
+    @include globals.position($top: globals.$ion-space-200);
   }
   ::slotted(ion-badge.long-badge.badge-vertical-bottom) {
-    @include globals.position($bottom: globals.$token-space-200);
+    @include globals.position($bottom: globals.$ion-space-200);
   }
 
   ::slotted(ion-badge:not(.long-badge).badge-vertical-top) {
-    @include globals.position(globals.$token-space-200, globals.$token-space-200, null, null);
+    @include globals.position(globals.$ion-space-200, globals.$ion-space-200, null, null);
   }
   ::slotted(ion-badge:not(.long-badge).badge-vertical-bottom) {
-    @include globals.position(null, globals.$token-space-200, globals.$token-space-200, null);
+    @include globals.position(null, globals.$ion-space-200, globals.$ion-space-200, null);
   }
 }

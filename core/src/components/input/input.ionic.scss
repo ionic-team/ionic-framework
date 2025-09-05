@@ -6,14 +6,14 @@
 // --------------------------------------------------
 
 :host {
-  --color: #{globals.$token-primitives-neutral-1200};
-  --border-width: #{globals.$token-border-size-025};
-  --highlight-color-valid: #{globals.$token-semantics-success-900};
-  --highlight-color-invalid: #{globals.$token-border-danger-default};
-  --placeholder-color: #{globals.$token-primitives-neutral-800};
+  --color: #{globals.$ion-primitives-neutral-1200};
+  --border-width: #{globals.$ion-border-size-025};
+  --highlight-color-valid: #{globals.$ion-semantics-success-900};
+  --highlight-color-invalid: #{globals.$ion-border-danger-default};
+  --placeholder-color: #{globals.$ion-primitives-neutral-800};
   --placeholder-opacity: 1;
 
-  @include globals.typography(globals.$token-body-md-regular);
+  @include globals.typography(globals.$ion-body-md-regular);
 }
 
 // Input Outline Container
@@ -39,7 +39,7 @@
 // This makes the label sit above the input.
 :host(.label-floating.input-label-placement-stacked) .label-text-wrapper {
   @include globals.margin(0);
-  @include globals.padding(globals.$token-space-100, null);
+  @include globals.padding(globals.$ion-space-100, null);
 }
 
 .input-wrapper {
@@ -96,7 +96,7 @@
   @include globals.border-radius(inherit);
   @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
-  min-height: globals.$token-scale-1000;
+  min-height: globals.$ion-scale-1000;
 
   /**
   * Apply the background to the native input
@@ -109,60 +109,60 @@
 // --------------------------------------------------
 
 :host(.input-size-medium) {
-  --padding-start: #{globals.$token-space-300};
-  --padding-end: #{globals.$token-space-300};
+  --padding-start: #{globals.$ion-space-300};
+  --padding-end: #{globals.$ion-space-300};
 }
 
 :host(.input-size-large) {
-  --padding-start: #{globals.$token-space-400};
-  --padding-end: #{globals.$token-space-400};
+  --padding-start: #{globals.$ion-space-400};
+  --padding-end: #{globals.$ion-space-400};
 }
 
 :host(.input-size-xlarge) {
-  --padding-start: #{globals.$token-space-500};
-  --padding-end: #{globals.$token-space-500};
+  --padding-start: #{globals.$ion-space-500};
+  --padding-end: #{globals.$ion-space-500};
 }
 
 :host(.input-size-medium) .native-wrapper {
-  min-height: globals.$token-scale-1000;
+  min-height: globals.$ion-scale-1000;
 }
 
 :host(.input-size-large) .native-wrapper {
-  min-height: globals.$token-scale-1200;
+  min-height: globals.$ion-scale-1200;
 }
 
 :host(.input-size-xlarge) .native-wrapper {
-  min-height: globals.$token-scale-1400;
+  min-height: globals.$ion-scale-1400;
 }
 
 // Input Shapes
 // --------------------------------------------------
 
 :host(.input-shape-soft) {
-  --border-radius: #{globals.$token-soft-xl};
+  --border-radius: #{globals.$ion-soft-xl};
 }
 
 :host(.input-shape-round) {
-  --border-radius: #{globals.$token-round-xl};
+  --border-radius: #{globals.$ion-round-xl};
 }
 
 :host(.input-shape-rectangular) {
-  --border-radius: #{globals.$token-rectangular-xl};
+  --border-radius: #{globals.$ion-rectangular-xl};
 }
 
 // Ionic Input Password Toggle Sizes
 // --------------------------------------------------
 
 :host(.input-size-medium) ion-input-password-toggle {
-  --size: #{globals.$token-scale-1000};
+  --size: #{globals.$ion-scale-1000};
 }
 
 :host(.input-size-large) ion-input-password-toggle {
-  --size: #{globals.$token-scale-1200};
+  --size: #{globals.$ion-scale-1200};
 }
 
 :host(.input-size-xlarge) ion-input-password-toggle {
-  --size: #{globals.$token-scale-1400};
+  --size: #{globals.$ion-scale-1400};
 }
 
 // Target area
@@ -174,7 +174,7 @@
   position: absolute;
 
   height: 100%;
-  min-height: globals.$token-scale-1200;
+  min-height: globals.$ion-scale-1200;
 
   transform: translateY(-50%);
 
@@ -200,27 +200,27 @@
 // ----------------------------------------------------------------
 
 ::slotted([slot="start"]) {
-  margin-inline-end: globals.$token-space-200;
+  margin-inline-end: globals.$ion-space-200;
 }
 
 ::slotted([slot="end"]) {
-  margin-inline-start: globals.$token-space-200;
+  margin-inline-start: globals.$ion-space-200;
 }
 
 // Input Clear Button
 // ----------------------------------------------------------------
 
 .input-clear-icon {
-  width: globals.$token-scale-400;
-  height: globals.$token-scale-400;
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 
-  color: globals.$token-primitives-neutral-1000;
+  color: globals.$ion-primitives-neutral-1000;
 }
 
 .input-clear-icon:focus-visible {
-  @include globals.border-radius(globals.$token-border-radius-100);
+  @include globals.border-radius(globals.$ion-border-radius-100);
 
-  outline: globals.$token-border-size-050 globals.$token-border-style-solid globals.$token-border-focus-default;
+  outline: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-focus-default;
 
   opacity: 1;
 }
@@ -249,9 +249,9 @@
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
-  @include globals.typography(globals.$token-body-sm-medium);
+  @include globals.typography(globals.$ion-body-sm-medium);
 
-  color: globals.$token-primitives-neutral-1000;
+  color: globals.$ion-primitives-neutral-1000;
 }
 
 :host(.label-floating) .label-text-wrapper {
@@ -262,13 +262,13 @@
 // ----------------------------------------------------------------
 
 .input-bottom {
-  @include globals.padding(globals.$token-space-100, 0, 0, 0);
-  @include globals.typography(globals.$token-body-sm-medium);
+  @include globals.padding(globals.$ion-space-100, 0, 0, 0);
+  @include globals.typography(globals.$ion-body-sm-medium);
 }
 
 .input-bottom .helper-text,
 .input-bottom .counter {
-  color: globals.$token-primitives-neutral-800;
+  color: globals.$ion-primitives-neutral-800;
 }
 
 :host(.has-focus.ion-valid) .helper-text {
@@ -277,7 +277,7 @@
 
 :host(.has-focus.ion-valid),
 :host(.ion-touched.ion-invalid) {
-  --border-width: #{globals.$token-border-size-025};
+  --border-width: #{globals.$ion-border-size-025};
 }
 
 // Input Hover
@@ -285,7 +285,7 @@
 
 @media (any-hover: hover) {
   :host(:hover) {
-    --border-color: #{globals.$token-primitives-neutral-600};
+    --border-color: #{globals.$ion-primitives-neutral-600};
   }
 }
 
@@ -293,10 +293,10 @@
 // ----------------------------------------------------------------
 
 :host(.input-disabled) {
-  --color: #{globals.$token-primitives-neutral-500};
-  --background: #{globals.$token-primitives-neutral-100};
-  --border-color: #{globals.$token-primitives-neutral-300};
-  --placeholder-color: #{globals.$token-primitives-neutral-500};
+  --color: #{globals.$ion-primitives-neutral-500};
+  --background: #{globals.$ion-primitives-neutral-100};
+  --border-color: #{globals.$ion-primitives-neutral-300};
+  --placeholder-color: #{globals.$ion-primitives-neutral-500};
 
   pointer-events: none;
 }
@@ -304,15 +304,15 @@
 :host(.input-disabled:not(.ion-valid)) .input-bottom .helper-text,
 :host(.input-disabled) .input-bottom .counter,
 :host(.input-disabled) .label-text-wrapper {
-  color: globals.$token-text-disabled;
+  color: globals.$ion-text-disabled;
 }
 
 :host(.input-disabled.has-focus.ion-valid) {
-  --border-color: rgba(#{globals.$token-semantics-success-base-rgb}, 0.6);
+  --border-color: rgba(#{globals.$ion-semantics-success-base-rgb}, 0.6);
 }
 
 :host(.input-disabled.ion-touched.ion-invalid) {
-  --border-color: rgba(#{globals.$token-semantics-danger-base-rgb}, 0.6);
+  --border-color: rgba(#{globals.$ion-semantics-danger-base-rgb}, 0.6);
 }
 
 :host(.input-disabled.ion-color) {
@@ -328,15 +328,15 @@
 // ----------------------------------------------------------------
 
 :host(.input-readonly) {
-  --background: #{globals.$token-primitives-neutral-100};
+  --background: #{globals.$ion-primitives-neutral-100};
 }
 
 // Input Focus
 // ----------------------------------------------------------------
 
 :host(.has-focus) {
-  --border-color: #{globals.$token-border-focus-default};
-  --border-width: #{globals.$token-border-size-050};
+  --border-color: #{globals.$ion-border-focus-default};
+  --border-width: #{globals.$ion-border-size-050};
 }
 
 :host(.has-focus) .input-highlight {

@@ -3,8 +3,8 @@
 // ----------------------------------------------------------------
 
 :host(.input-fill-solid) {
-  --background: #{globals.$token-bg-input-bold-default};
-  --border-color: #{globals.$token-bg-input-bold-default};
+  --background: #{globals.$ion-bg-input-bold-default};
+  --border-color: #{globals.$ion-bg-input-bold-default};
 }
 
 /**
@@ -22,7 +22,7 @@
  */
 @media (any-hover: hover) {
   :host(:hover) {
-    --border-color: #{globals.$token-border-focus-default};
+    --border-color: #{globals.$ion-border-focus-default};
   }
 }
 
@@ -30,16 +30,16 @@
 // ----------------------------------------------------------------
 
 :host(.input-fill-solid.input-disabled) {
-  --background: #{globals.$token-bg-input-bold-disabled};
-  --placeholder-color: #{globals.$token-text-disabled};
+  --background: #{globals.$ion-bg-input-bold-disabled};
+  --placeholder-color: #{globals.$ion-text-disabled};
 }
 
 // Input - Readonly
 // ----------------------------------------------------------------
 
 :host(.input-fill-solid.input-readonly) {
-  --background: #{globals.$token-bg-input-bold-read-only};
-  --border-color: #{globals.$token-bg-input-bold-read-only};
+  --background: #{globals.$ion-bg-input-bold-read-only};
+  --border-color: #{globals.$ion-bg-input-bold-read-only};
 }
 
 /**
@@ -47,5 +47,5 @@
  * much darker on focus.
  */
 :host(.input-fill-solid.has-focus) {
-  --border-color: #{globals.$token-border-focus-default};
+  --border-color: #{globals.$ion-border-focus-default};
 }

@@ -5,17 +5,17 @@
 // --------------------------------------------------------------
 
 :host {
-  --focus-ring-color: #{globals.$token-border-focus-default};
-  --focus-ring-width: #{globals.$token-border-radius-025};
+  --focus-ring-color: #{globals.$ion-border-focus-default};
+  --focus-ring-width: #{globals.$ion-border-radius-025};
 
-  @include globals.typography(globals.$token-body-action-xs);
+  @include globals.typography(globals.$ion-body-action-xs);
 
   position: relative;
 
   align-content: center;
 
-  min-height: globals.$token-scale-1200;
-  max-height: globals.$token-scale-1800;
+  min-height: globals.$ion-scale-1200;
+  max-height: globals.$ion-scale-1800;
 }
 
 // Tab Button: Native
@@ -47,7 +47,7 @@
 // -------------------------------------------------------------------------------
 
 .button-native {
-  min-width: globals.$token-scale-1200;
+  min-width: globals.$ion-scale-1200;
 
   overflow: visible;
 
@@ -78,30 +78,30 @@
 // Icon
 
 ::slotted(ion-icon) {
-  width: globals.$token-scale-600;
-  height: globals.$token-scale-600;
+  width: globals.$ion-scale-600;
+  height: globals.$ion-scale-600;
 }
 
 // Tab Button Shapes
 // -------------------------------------------------------------------------------
 
 :host(.tab-button-shape-soft) {
-  @include globals.border-radius(globals.$token-border-radius-200);
+  @include globals.border-radius(globals.$ion-border-radius-200);
 }
 
 :host(.tab-button-shape-round) {
-  @include globals.border-radius(globals.$token-border-radius-400);
+  @include globals.border-radius(globals.$ion-border-radius-400);
 }
 
 :host(.tab-button-shape-rectangular) {
-  @include globals.border-radius(globals.$token-border-radius-0);
+  @include globals.border-radius(globals.$ion-border-radius-0);
 }
 
 // Tab Button: Badge
 // --------------------------------------------------
 
 :host ::slotted(ion-badge) {
-  @include globals.position(null, null, null, calc(50% + globals.$token-scale-300));
+  @include globals.position(null, null, null, calc(50% + globals.$ion-scale-300));
 }
 
 :host ::slotted(ion-badge.badge-vertical-top) {
@@ -109,19 +109,19 @@
 }
 
 :host ::slotted(ion-badge.badge-vertical-top:empty) {
-  @include globals.position(calc(globals.$token-scale-100 * -1));
+  @include globals.position(calc(globals.$ion-scale-100 * -1));
 }
 
 :host ::slotted(ion-badge.badge-vertical-bottom) {
-  @include globals.position(calc(50% - globals.$token-scale-200));
+  @include globals.position(calc(50% - globals.$ion-scale-200));
 }
 
 :host ::slotted(ion-badge.badge-vertical-bottom:empty) {
-  @include globals.position(calc(50% - globals.$token-scale-100));
+  @include globals.position(calc(50% - globals.$ion-scale-100));
 }
 
 :host ::slotted(ion-badge[vertical]:not(:empty)) {
-  @include globals.padding(globals.$token-scale-100);
+  @include globals.padding(globals.$ion-scale-100);
 
   display: flex;
 
@@ -130,11 +130,11 @@
 }
 
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-top) {
-  @include globals.position(calc(50% - globals.$token-scale-100));
+  @include globals.position(calc(50% - globals.$ion-scale-100));
 }
 
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom) {
-  @include globals.position(calc(50% + globals.$token-scale-100));
+  @include globals.position(calc(50% + globals.$ion-scale-100));
 }
 
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom:empty) {

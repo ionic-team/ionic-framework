@@ -4,8 +4,8 @@
 // ----------------------------------------------------------------
 
 :host(.textarea-fill-outline) {
-  --border-width: #{globals.$token-border-size-025};
-  --border-color: #{globals.$token-primitives-neutral-500};
+  --border-width: #{globals.$ion-border-size-025};
+  --border-color: #{globals.$ion-primitives-neutral-500};
 }
 
 // Textarea Fill: Outline, Textarea Wrapper
@@ -57,12 +57,12 @@
 // ----------------------------------------------------------------
 
 :host(.textarea-fill-outline) textarea {
-  margin-top: globals.$token-space-100;
+  margin-top: globals.$ion-space-100;
 }
 
 // Input Focus
 // ----------------------------------------------------------------
 
 :host(.textarea-fill-outline.has-focus) {
-  --border-width: #{globals.$token-border-size-050};
+  --border-width: #{globals.$ion-border-size-050};
 }

@@ -5,21 +5,21 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$token-bg-neutral-subtle-default};
+  --background: #{globals.$ion-bg-neutral-subtle-default};
   --progress-background: #{globals.ion-color(primary, base)};
 
-  height: globals.$token-scale-100;
+  height: globals.$ion-scale-100;
 }
 
 // Progress Bar Shapes
 // -------------------------------------------------------------------------------
 
 :host(.progress-bar-shape-round) {
-  @include globals.border-radius(globals.$token-round-xs);
+  @include globals.border-radius(globals.$ion-round-xs);
 }
 
 :host(.progress-bar-shape-rectangular) {
-  @include globals.border-radius(globals.$token-rectangular-xs);
+  @include globals.border-radius(globals.$ion-rectangular-xs);
 }
 
 // Progress Bar: Color

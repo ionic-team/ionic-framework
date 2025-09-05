@@ -5,18 +5,18 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$token-primitives-base-white};
-  --color: #{globals.$token-primitives-neutral-1200};
+  --background: #{globals.$ion-primitives-base-white};
+  --color: #{globals.$ion-primitives-neutral-1200};
   --border-color: currentColor;
-  --padding-top: #{globals.$token-space-200};
-  --padding-bottom: #{globals.$token-space-200};
-  --padding-start: #{globals.$token-space-200};
-  --padding-end: #{globals.$token-space-200};
-  --min-height: #{globals.$token-scale-1400};
+  --padding-top: #{globals.$ion-space-200};
+  --padding-bottom: #{globals.$ion-space-200};
+  --padding-start: #{globals.$ion-space-200};
+  --padding-end: #{globals.$ion-space-200};
+  --min-height: #{globals.$ion-scale-1400};
 }
 
 .toolbar-container {
-  gap: globals.$token-space-400;
+  gap: globals.$ion-space-400;
   // TODO(ROU-10853): replace this value with a layer token
   z-index: 10;
 }
@@ -49,14 +49,14 @@
 // --------------------------------------------------
 
 ::slotted(ion-buttons) {
-  gap: globals.$token-space-200;
+  gap: globals.$ion-space-200;
 }
 
 // Toolbar: Title
 // --------------------------------------------------
 
 ::slotted(ion-title) {
-  @include globals.padding-horizontal(globals.$token-space-200);
+  @include globals.padding-horizontal(globals.$ion-space-200);
 }
 
 :host(.toolbar-title-default) ::slotted(ion-title) {
@@ -64,7 +64,7 @@
 }
 
 :host(.toolbar-title-large) ::slotted(ion-title) {
-  @include globals.padding-horizontal(globals.$token-space-400);
+  @include globals.padding-horizontal(globals.$ion-space-400);
 }
 
 // Ionic Toolbar Slot Placement

@@ -2,46 +2,46 @@
 @use "./divider.common.scss";
 
 :host hr {
-  border-top: globals.$token-border-size-025 globals.$token-border-style-solid globals.$token-border-default;
+  border-top: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-border-default;
 }
 
 // Divider Inset
 // --------------------------------------------------
 
 :host(.divider-inset) {
-  --padding-start: #{globals.$token-space-400};
-  --padding-end: #{globals.$token-space-400};
+  --padding-start: #{globals.$ion-space-400};
+  --padding-end: #{globals.$ion-space-400};
 }
 
 // Divider Spacing
 // --------------------------------------------------
 
 :host(.divider-spacing-xsmall) {
-  --margin-top: #{globals.$token-space-200};
-  --margin-bottom: #{globals.$token-space-200};
+  --margin-top: #{globals.$ion-space-200};
+  --margin-bottom: #{globals.$ion-space-200};
 }
 
 :host(.divider-spacing-small) {
-  --margin-top: #{globals.$token-space-300};
-  --margin-bottom: #{globals.$token-space-300};
+  --margin-top: #{globals.$ion-space-300};
+  --margin-bottom: #{globals.$ion-space-300};
 }
 
 :host(.divider-spacing-medium) {
-  --margin-top: #{globals.$token-space-400};
-  --margin-bottom: #{globals.$token-space-400};
+  --margin-top: #{globals.$ion-space-400};
+  --margin-bottom: #{globals.$ion-space-400};
 }
 
 :host(.divider-spacing-large) {
-  --margin-top: #{globals.$token-space-600};
-  --margin-bottom: #{globals.$token-space-600};
+  --margin-top: #{globals.$ion-space-600};
+  --margin-bottom: #{globals.$ion-space-600};
 }
 
 :host(.divider-spacing-xlarge) {
-  --margin-top: #{globals.$token-space-800};
-  --margin-bottom: #{globals.$token-space-800};
+  --margin-top: #{globals.$ion-space-800};
+  --margin-bottom: #{globals.$ion-space-800};
 }
 
 :host(.divider-spacing-xxlarge) {
-  --margin-top: #{globals.$token-space-1000};
-  --margin-bottom: #{globals.$token-space-1000};
+  --margin-top: #{globals.$ion-space-1000};
+  --margin-bottom: #{globals.$ion-space-1000};
 }

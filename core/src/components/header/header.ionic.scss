@@ -5,18 +5,17 @@
 // --------------------------------------------------
 
 ion-header {
-  box-shadow: #{globals.$token-elevation-2};
+  box-shadow: #{globals.$ion-elevation-2};
   z-index: 10; // TODO(ROU-10853): replace this value with a layer token.
 
   &.header-divider {
-    border-bottom: globals.$token-border-size-025 globals.$token-border-style-solid
-      globals.$token-primitives-neutral-300;
+    border-bottom: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-primitives-neutral-300;
   }
 }
 
 ion-toolbar + ion-toolbar {
-  --padding-start: #{globals.$token-space-400};
-  --padding-end: #{globals.$token-space-400};
+  --padding-start: #{globals.$ion-space-400};
+  --padding-end: #{globals.$ion-space-400};
 }
 
 @supports (backdrop-filter: blur(0)) {
@@ -25,7 +24,7 @@ ion-toolbar + ion-toolbar {
 
     position: absolute;
 
-    backdrop-filter: saturate(180%) blur(globals.$token-scale-100);
+    backdrop-filter: saturate(180%) blur(globals.$ion-scale-100);
   }
   .header-translucent-ionic ion-toolbar {
     --opacity: 0.7;

@@ -14,23 +14,23 @@
    */
 
   // Border
-  --border-width: #{globals.$token-border-size-025};
-  --border-style: #{globals.$token-border-style-solid};
-  --border-color: #{globals.$token-primitives-neutral-800};
-  --checkmark-width: #{globals.$token-scale-400};
+  --border-width: #{globals.$ion-border-size-025};
+  --border-style: #{globals.$ion-border-style-solid};
+  --border-color: #{globals.$ion-primitives-neutral-800};
+  --checkmark-width: #{globals.$ion-scale-400};
   --checkmark-height: var(--checkmark-width);
 
   // Focus
-  --focus-ring-color: #{globals.$token-border-focus-default};
-  --focus-ring-width: #{globals.$token-border-size-050};
-  --focus-ring-offset: #{globals.$token-space-050};
+  --focus-ring-color: #{globals.$ion-border-focus-default};
+  --focus-ring-width: #{globals.$ion-border-size-050};
+  --focus-ring-offset: #{globals.$ion-space-050};
 
   // Size
-  --size: #{globals.$token-scale-600};
-  --checkbox-background: #{globals.$token-bg-input-default};
-  --checkbox-background-checked: #{globals.$token-bg-primary-base-default};
-  --border-color-checked: #{globals.$token-semantics-primary-base};
-  --checkmark-color: #{globals.$token-primitives-base-white};
+  --size: #{globals.$ion-scale-600};
+  --checkbox-background: #{globals.$ion-bg-input-default};
+  --checkbox-background-checked: #{globals.$ion-bg-primary-base-default};
+  --border-color-checked: #{globals.$ion-semantics-primary-base};
+  --checkmark-color: #{globals.$ion-primitives-base-white};
   --transition: none;
 
   z-index: 2;
@@ -43,7 +43,7 @@
     position: absolute;
 
     height: 100%;
-    min-height: globals.$token-scale-1200;
+    min-height: globals.$ion-scale-1200;
 
     transform: translateY(-50%);
 
@@ -60,19 +60,19 @@
 }
 
 .label-text-wrapper {
-  color: globals.$token-primitives-neutral-1200;
+  color: globals.$ion-primitives-neutral-1200;
 }
 
 :host(.in-item) .label-text-wrapper {
-  @include globals.margin(globals.$token-space-250, null, globals.$token-space-250, null);
+  @include globals.margin(globals.$ion-space-250, null, globals.$ion-space-250, null);
 }
 
 :host(.in-item.checkbox-label-placement-stacked) .label-text-wrapper {
-  @include globals.margin(globals.$token-space-250, null, globals.$token-space-400, null);
+  @include globals.margin(globals.$ion-space-250, null, globals.$ion-space-400, null);
 }
 
 :host(.in-item.checkbox-label-placement-stacked) .native-wrapper {
-  @include globals.margin(null, null, globals.$token-space-250, null);
+  @include globals.margin(null, null, globals.$ion-space-250, null);
 }
 
 input {
@@ -113,15 +113,15 @@ input {
 // ----------------------------------------------------------------
 
 .checkbox-bottom {
-  @include globals.typography(globals.$token-body-md-regular);
+  @include globals.typography(globals.$ion-body-md-regular);
 }
 
 .checkbox-bottom .error-text {
-  color: globals.$token-semantics-danger-800;
+  color: globals.$ion-semantics-danger-800;
 }
 
 .checkbox-bottom .helper-text {
-  color: globals.$token-text-subtlest;
+  color: globals.$ion-text-subtlest;
 }
 
 // Label Placement - Start
@@ -133,7 +133,7 @@ input {
    * the checkbox should be on the end
    * when the label sits at the start.
    */
-  @include globals.margin(null, globals.$token-space-400, null, 0);
+  @include globals.margin(null, globals.$ion-space-400, null, 0);
 }
 
 // Label Placement - End
@@ -145,7 +145,7 @@ input {
  * when the label sits at the end.
  */
 :host(.checkbox-label-placement-end) .label-text-wrapper {
-  @include globals.margin(null, 0, null, globals.$token-space-400);
+  @include globals.margin(null, 0, null, globals.$ion-space-400);
 }
 
 // Label Placement - Fixed
@@ -157,7 +157,7 @@ input {
    * the checkbox should be on the end
    * when the label sits at the start.
    */
-  @include globals.margin(null, globals.$token-space-400, null, 0);
+  @include globals.margin(null, globals.$ion-space-400, null, 0);
 }
 
 // Label Placement - Stacked
@@ -171,7 +171,7 @@ input {
    * the checkbox should be on the bottom
    * when the label sits at the top.
    */
-  @include globals.margin(null, 0, globals.$token-space-400, 0);
+  @include globals.margin(null, 0, globals.$ion-space-400, 0);
 
   /**
    * Label text should not extend
@@ -183,7 +183,7 @@ input {
 // Ionic Design Checkbox Sizes
 // --------------------------------------------------
 :host(.checkbox-size-small) {
-  --size: #{globals.$token-scale-400};
+  --size: #{globals.$ion-scale-400};
 }
 
 // Checked / Indeterminate Checkbox
@@ -198,13 +198,13 @@ input {
 // Ionic Design Checkbox Invalid
 // --------------------------------------------------
 :host(.ion-invalid) {
-  --focus-ring-color: #{globals.$token-border-focus-error};
+  --focus-ring-color: #{globals.$ion-border-focus-error};
 }
 
 :host(.ion-invalid:not(.checkbox-checked)),
 :host(.ion-invalid:not(.checkbox-checked).checkbox-disabled) {
   .native-wrapper {
-    border-color: globals.$token-border-danger-default;
+    border-color: globals.$ion-border-danger-default;
   }
 }
 
@@ -223,23 +223,23 @@ input {
 
 // disabled, checked checkbox
 :host(.checkbox-disabled.checkbox-checked) .native-wrapper {
-  border-width: globals.$token-border-size-0;
+  border-width: globals.$ion-border-size-0;
 
-  background-color: globals.$token-bg-primary-base-default;
+  background-color: globals.$ion-bg-primary-base-default;
 }
 
 // Checkbox Hover
 // --------------------------------------------------------
 @media (any-hover: hover) {
   :host(:hover) .native-wrapper {
-    background-color: globals.$token-primitives-neutral-100;
+    background-color: globals.$ion-primitives-neutral-100;
   }
 
   :host(:hover.checkbox-checked) .native-wrapper,
   :host(:hover.checkbox-checked) .checkbox-icon,
   :host(:hover.checkbox-indeterminate) .native-wrapper,
   :host(:hover.checkbox-indeterminate) .checkbox-icon {
-    background-color: globals.$token-semantics-primary-800;
+    background-color: globals.$ion-semantics-primary-800;
   }
 }
 
@@ -247,44 +247,44 @@ input {
 // --------------------------------------------------
 // Only show the focus ring when the checkbox is focused and not disabled
 :host(.ion-focused:not(.checkbox-disabled)) .native-wrapper {
-  @include globals.focused-state(var(--focus-ring-width), globals.$token-border-style-solid, var(--focus-ring-color));
+  @include globals.focused-state(var(--focus-ring-width), globals.$ion-border-style-solid, var(--focus-ring-color));
 }
 
 // Checkbox: Active
 // --------------------------------------------------------
 :host(.ion-activated) .native-wrapper {
-  background-color: globals.$token-bg-input-press;
+  background-color: globals.$ion-bg-input-press;
 }
 
 :host(.ion-activated.checkbox-checked) .native-wrapper,
 :host(.ion-activated.checkbox-checked) .checkbox-icon,
 :host(.ion-activated.checkbox-indeterminate) .native-wrapper,
 :host(.ion-activated.checkbox-indeterminate) .checkbox-icon {
-  background-color: globals.$token-bg-primary-base-press;
+  background-color: globals.$ion-bg-primary-base-press;
 }
 
 :host(.ion-activated.ion-invalid:not(.checkbox-checked)) {
-  background-color: globals.$token-bg-input-press;
+  background-color: globals.$ion-bg-input-press;
 
   .native-wrapper {
-    border-color: globals.$token-border-danger-press;
+    border-color: globals.$ion-border-danger-press;
   }
 }
 
 // Ionic Design Checkbox Shapes
 // --------------------------------------------------
 :host(.checkbox-shape-soft) {
-  --border-radius: #{globals.$token-border-radius-100};
+  --border-radius: #{globals.$ion-border-radius-100};
 }
 
 :host(.checkbox-size-small.checkbox-shape-soft) {
-  --border-radius: #{globals.$token-border-radius-025};
+  --border-radius: #{globals.$ion-border-radius-025};
 }
 
 :host(.checkbox-shape-rectangular) {
-  --border-radius: #{globals.$token-border-radius-0};
+  --border-radius: #{globals.$ion-border-radius-0};
 }
 
 .checkbox-wrapper {
-  min-height: #{globals.$token-scale-1200};
+  min-height: #{globals.$ion-scale-1200};
 }

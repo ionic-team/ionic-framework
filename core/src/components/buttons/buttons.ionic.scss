@@ -13,7 +13,7 @@
 // --------------------------------------------------
 
 ::slotted(*) .button-clear {
-  --color: #{globals.$token-primitives-neutral-1200};
+  --color: #{globals.$ion-primitives-neutral-1200};
   --background: transparent;
   --background-activated: transparent;
   --background-focused: transparent;
@@ -24,10 +24,10 @@
 // --------------------------------------------------
 
 ::slotted(*) .button-has-icon-only {
-  width: globals.$token-scale-1000;
-  height: globals.$token-scale-1000;
+  width: globals.$ion-scale-1000;
+  height: globals.$ion-scale-1000;
 }
 
 ::slotted(*) ion-icon[slot="icon-only"] {
-  font-size: globals.$token-font-size-600;
+  font-size: globals.$ion-font-size-600;
 }
