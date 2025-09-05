@@ -1,5 +1,5 @@
-let variablesPrefix; // Variable that holds the prefix used on all css and scss variables generated
-let classPrefix; // Variable that holds the prefix used on all css utility-classes generated  
+let variablesPrefix; // Variable that holds the prefix used on all css variables generated
+let classAndScssPrefix; // Variable that holds the prefix used on all css utility-classes and scss variables generated  
 
 // Set the variable prefix value
 export function setVariablePrefixValue(prefix) {
@@ -7,9 +7,9 @@ export function setVariablePrefixValue(prefix) {
   return variablesPrefix;
 }
 
-export function setClassesPrefixValue(prefix) {
-  classPrefix = prefix;
-  return classPrefix;
+export function setClassesAndScssPrefixValue(prefix) {
+  classAndScssPrefix = prefix;
+  return classAndScssPrefix;
 }
 
 // Generates a valid rgba() color
@@ -62,7 +62,7 @@ export function getAliasReferenceVariable(prop) {
     let ref = prop.$value.slice(1, -1).replace(/\./g, '-');
     // Remove consecutive repeated words (e.g., border-border-radius-0 → border-radius-0)
     ref = removeConsecutiveRepeatedWords(ref);
-    return `$${variablesPrefix}-${ref}`;
+    return `$${classAndScssPrefix}-${ref}`;
   }
   return null;
 }
@@ -75,13 +75,13 @@ export function generateShadowValue(prop, propName) {
     return `${shadow.x}px ${shadow.y}px ${shadow.blur}px ${shadow.spread}px ${color}`;
 }).join(', ');
 
-  return `$${variablesPrefix}-${propName}: var(--${variablesPrefix}-${propName}, ${cssShadow});`;
+  return `$${classAndScssPrefix}-${propName}: var(--${variablesPrefix}-${propName}, ${cssShadow});`;
 }
 
 // Generates a valid font-size value from a font-size Design Token structure, while transforming the pixels to rem
 export function generateFontSizeValue(prop, propName, variableType = 'css') {
   return variableType === 'scss'
-    ? `$${variablesPrefix}-${propName}: var(--${variablesPrefix}-${propName}, font.px-to-rem(${parseInt(
+    ? `$${classAndScssPrefix}-${propName}: var(--${variablesPrefix}-${propName}, font.px-to-rem(${parseInt(
         prop.$value
       )}));`
     : `--${propName}: #{font.px-to-rem(${parseInt(prop.$value)})};`;
@@ -93,7 +93,7 @@ export function generateFontFamilyValue(prop, propName, variableType = 'css') {
   const _propName = propName.split('-').slice(0, -1).join('-');
 
   return variableType === 'scss'
-    ? `$${variablesPrefix}-${_propName}: var(--${variablesPrefix}-${_propName}, "${prop.$value}", sans-serif);`
+    ? `$${classAndScssPrefix}-${_propName}: var(--${variablesPrefix}-${_propName}, "${prop.$value}", sans-serif);`
     : `--${variablesPrefix}-${_propName}: "${prop.$value}", sans-serif;`;
 }
 
@@ -105,16 +105,16 @@ export function generateValue(prop, propName) {
   // Always generate the main variable
   let mainValue;
   if (aliasVar) {
-    mainValue = `$${variablesPrefix}-${propName}: var(--${variablesPrefix}-${propName}, ${aliasVar});`;
+    mainValue = `$${classAndScssPrefix}-${propName}: var(--${variablesPrefix}-${propName}, ${aliasVar});`;
   } else {
-    mainValue = `$${variablesPrefix}-${propName}: var(--${variablesPrefix}-${propName}, ${prop.$value});`;
+    mainValue = `$${classAndScssPrefix}-${propName}: var(--${variablesPrefix}-${propName}, ${prop.$value});`;
   }
 
   // Always generate the -rgb variable if it's a color
   const rgb = hexToRgb(prop.$value);
   let rgbDeclaration = '';
   if (rgb) {
-    rgbDeclaration = `\n$${variablesPrefix}-${propName}-rgb: var(--${variablesPrefix}-${propName}-rgb, ${rgb.r}, ${rgb.g}, ${rgb.b});`;
+    rgbDeclaration = `\n$${classAndScssPrefix}-${propName}-rgb: var(--${variablesPrefix}-${propName}-rgb, ${rgb.r}, ${rgb.g}, ${rgb.b});`;
   }
 
   return `${mainValue}${rgbDeclaration}`;
@@ -123,7 +123,6 @@ export function generateValue(prop, propName) {
 // Generates a typography based css utility-class or scss variable from a typography token structure
 export function generateTypographyOutput(prop, propName, isVariable) {
   const typography = prop.original.$value;
-  const outerPrefix = isVariable ? variablesPrefix : classPrefix;
 
   // Extract the part after the last dot and trim any extraneous characters
   const extractLastPart = (str) => str.split('.').pop().replace(/[^\w-]/g, '');
@@ -135,12 +134,12 @@ export function generateTypographyOutput(prop, propName, isVariable) {
 
   // This exact format is needed so that it compiles the tokens with the expected lint rules
   return `
-  ${_prefix}${outerPrefix}-${propName}${_initialWrapper}
-    font-size: $${variablesPrefix}-font-size-${extractLastPart(typography.fontSize)}${_endChar}
+  ${_prefix}${classAndScssPrefix}-${propName}${_initialWrapper}
+    font-size: $${classAndScssPrefix}-font-size-${extractLastPart(typography.fontSize)}${_endChar}
     font-style: ${prop.attributes.item?.toLowerCase() === 'italic' ? 'italic' : 'normal'}${_endChar}
-    font-weight: $${variablesPrefix}-font-weight-${extractLastPart(typography.fontWeight)}${_endChar}
-    letter-spacing: $${variablesPrefix}-font-letter-spacing-${extractLastPart(typography.letterSpacing) || 0}${_endChar}
-    line-height: $${variablesPrefix}-font-line-height-${extractLastPart(typography.lineHeight)}${_endChar}
+    font-weight: $${classAndScssPrefix}-font-weight-${extractLastPart(typography.fontWeight)}${_endChar}
+    letter-spacing: $${classAndScssPrefix}-font-letter-spacing-${extractLastPart(typography.letterSpacing) || 0}${_endChar}
+    line-height: $${classAndScssPrefix}-font-line-height-${extractLastPart(typography.lineHeight)}${_endChar}
     text-transform: ${typography.textCase}${_endChar}
     text-decoration: ${typography.textDecoration}${_endChar}
   ${_endWrapper};
@@ -151,9 +150,9 @@ export function generateTypographyOutput(prop, propName, isVariable) {
 export function generateColorUtilityClasses(prop, className) {
   const isBg = className.includes('bg');
   const cssProp = isBg ? 'background-color' : 'color';
-  return `.${classPrefix}-${className} {
-  --${cssProp}: $${variablesPrefix}-${prop.name};
-  ${cssProp}: $${variablesPrefix}-${prop.name};
+  return `.${classAndScssPrefix}-${className} {
+  --${cssProp}: $${classAndScssPrefix}-${prop.name};
+  ${cssProp}: $${classAndScssPrefix}-${prop.name};
 }`;
 }
 
@@ -164,60 +163,60 @@ export function generateDefaultSpaceUtilityClasses() {
   const defaultMarginPaddingToken = 'space-400';
 
   const marginPaddingTemplate = (type) => `
-.${classPrefix}-no-${type} {
-  --${type}-top: #{$${variablesPrefix}-${zeroMarginPaddingToken}};
-  --${type}-end: #{$${variablesPrefix}-${zeroMarginPaddingToken}};
-  --${type}-bottom: #{$${variablesPrefix}-${zeroMarginPaddingToken}};
-  --${type}-start: #{$${variablesPrefix}-${zeroMarginPaddingToken}};
+.${classAndScssPrefix}-no-${type} {
+  --${type}-top: #{$${classAndScssPrefix}-${zeroMarginPaddingToken}};
+  --${type}-end: #{$${classAndScssPrefix}-${zeroMarginPaddingToken}};
+  --${type}-bottom: #{$${classAndScssPrefix}-${zeroMarginPaddingToken}};
+  --${type}-start: #{$${classAndScssPrefix}-${zeroMarginPaddingToken}};
 
-  @include ${type}($${variablesPrefix}-${zeroMarginPaddingToken});
+  @include ${type}($${classAndScssPrefix}-${zeroMarginPaddingToken});
 };
 
-.${classPrefix}-${type} {
-  --${type}-top: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
-  --${type}-end: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
-  --${type}-bottom: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
-  --${type}-start: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+.${classAndScssPrefix}-${type} {
+  --${type}-top: #{$${classAndScssPrefix}-${defaultMarginPaddingToken}};
+  --${type}-end: #{$${classAndScssPrefix}-${defaultMarginPaddingToken}};
+  --${type}-bottom: #{$${classAndScssPrefix}-${defaultMarginPaddingToken}};
+  --${type}-start: #{$${classAndScssPrefix}-${defaultMarginPaddingToken}};
 
-  @include ${type}($${variablesPrefix}-${defaultMarginPaddingToken});
+  @include ${type}($${classAndScssPrefix}-${defaultMarginPaddingToken});
 };
 
-.${classPrefix}-${type}-top {
-  --${type}-top: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+.${classAndScssPrefix}-${type}-top {
+  --${type}-top: #{$${classAndScssPrefix}-${defaultMarginPaddingToken}};
 
-  @include ${type}($${variablesPrefix}-${defaultMarginPaddingToken}, null, null, null);
+  @include ${type}($${classAndScssPrefix}-${defaultMarginPaddingToken}, null, null, null);
 };
 
-.${classPrefix}-${type}-end {
-  --${type}-end: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+.${classAndScssPrefix}-${type}-end {
+  --${type}-end: #{$${classAndScssPrefix}-${defaultMarginPaddingToken}};
 
-  @include ${type}(null, $${variablesPrefix}-${defaultMarginPaddingToken}, null, null);
+  @include ${type}(null, $${classAndScssPrefix}-${defaultMarginPaddingToken}, null, null);
 };
 
-.${classPrefix}-${type}-bottom {
-  --${type}-bottom: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+.${classAndScssPrefix}-${type}-bottom {
+  --${type}-bottom: #{$${classAndScssPrefix}-${defaultMarginPaddingToken}};
 
-  @include ${type}(null, null, $${variablesPrefix}-${defaultMarginPaddingToken}, null);
+  @include ${type}(null, null, $${classAndScssPrefix}-${defaultMarginPaddingToken}, null);
 };
 
-.${classPrefix}-${type}-start {
-  --${type}-start: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+.${classAndScssPrefix}-${type}-start {
+  --${type}-start: #{$${classAndScssPrefix}-${defaultMarginPaddingToken}};
 
-  @include ${type}(null, null, null, $${variablesPrefix}-${defaultMarginPaddingToken});
+  @include ${type}(null, null, null, $${classAndScssPrefix}-${defaultMarginPaddingToken});
 };
 
-.${classPrefix}-${type}-vertical {
-  --${type}-top: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
-  --${type}-bottom: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+.${classAndScssPrefix}-${type}-vertical {
+  --${type}-top: #{$${classAndScssPrefix}-${defaultMarginPaddingToken}};
+  --${type}-bottom: #{$${classAndScssPrefix}-${defaultMarginPaddingToken}};
 
-  @include ${type}($${variablesPrefix}-${defaultMarginPaddingToken}, null, $${variablesPrefix}-${defaultMarginPaddingToken}, null);
+  @include ${type}($${classAndScssPrefix}-${defaultMarginPaddingToken}, null, $${classAndScssPrefix}-${defaultMarginPaddingToken}, null);
 };
 
-.${classPrefix}-${type}-horizontal {
-  --${type}-start: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
-  --${type}-end: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+.${classAndScssPrefix}-${type}-horizontal {
+  --${type}-start: #{$${classAndScssPrefix}-${defaultMarginPaddingToken}};
+  --${type}-end: #{$${classAndScssPrefix}-${defaultMarginPaddingToken}};
 
-  @include ${type}(null, $${variablesPrefix}-${defaultMarginPaddingToken}, null, $${variablesPrefix}-${defaultMarginPaddingToken});
+  @include ${type}(null, $${classAndScssPrefix}-${defaultMarginPaddingToken}, null, $${classAndScssPrefix}-${defaultMarginPaddingToken});
 };
 `;
 
@@ -229,44 +228,44 @@ export function generateSpaceUtilityClasses(prop, className) {
   // This exact format is needed so that it compiles the tokens with the expected lint rules
   // It will generate classes for margin and padding, for equal sizing on all side and each direction
   const marginPaddingTemplate = (type) => `
-.${classPrefix}-${type}-${className} {
-  --${type}-top: #{$${variablesPrefix}-${prop.name}};
-  --${type}-end: #{$${variablesPrefix}-${prop.name}};
-  --${type}-bottom: #{$${variablesPrefix}-${prop.name}};
-  --${type}-start: #{$${variablesPrefix}-${prop.name}};
+.${classAndScssPrefix}-${type}-${className} {
+  --${type}-top: #{$${classAndScssPrefix}-${prop.name}};
+  --${type}-end: #{$${classAndScssPrefix}-${prop.name}};
+  --${type}-bottom: #{$${classAndScssPrefix}-${prop.name}};
+  --${type}-start: #{$${classAndScssPrefix}-${prop.name}};
 
-  @include ${type}($${variablesPrefix}-${prop.name});
+  @include ${type}($${classAndScssPrefix}-${prop.name});
 };
 
-.${classPrefix}-${type}-top-${className} {
-  --${type}-top: #{$${variablesPrefix}-${prop.name}};
+.${classAndScssPrefix}-${type}-top-${className} {
+  --${type}-top: #{$${classAndScssPrefix}-${prop.name}};
 
-  @include ${type}($${variablesPrefix}-${prop.name}, null, null, null);
+  @include ${type}($${classAndScssPrefix}-${prop.name}, null, null, null);
 };
 
-.${classPrefix}-${type}-end-${className} {
-  --${type}-end: #{$${variablesPrefix}-${prop.name}};
+.${classAndScssPrefix}-${type}-end-${className} {
+  --${type}-end: #{$${classAndScssPrefix}-${prop.name}};
 
-  @include ${type}(null, $${variablesPrefix}-${prop.name}, null, null);
+  @include ${type}(null, $${classAndScssPrefix}-${prop.name}, null, null);
 };
 
-.${classPrefix}-${type}-bottom-${className} {
-  --${type}-bottom: #{$${variablesPrefix}-${prop.name}};
+.${classAndScssPrefix}-${type}-bottom-${className} {
+  --${type}-bottom: #{$${classAndScssPrefix}-${prop.name}};
 
-  @include ${type}(null, null, $${variablesPrefix}-${prop.name}, null);
+  @include ${type}(null, null, $${classAndScssPrefix}-${prop.name}, null);
 };
 
-.${classPrefix}-${type}-start-${className} {
-  --${type}-start: #{$${variablesPrefix}-${prop.name}};
+.${classAndScssPrefix}-${type}-start-${className} {
+  --${type}-start: #{$${classAndScssPrefix}-${prop.name}};
 
-  @include ${type}(null, null, null, $${variablesPrefix}-${prop.name});
+  @include ${type}(null, null, null, $${classAndScssPrefix}-${prop.name});
 };
 `;
 
   // Add gap utility classes for gap tokens
   const generateGapUtilityClasses = () =>`
-.${classPrefix}-gap-${prop.name} { 
-  gap: #{$${variablesPrefix}-${prop.name}}; 
+.${classAndScssPrefix}-gap-${prop.name} { 
+  gap: #{$${classAndScssPrefix}-${prop.name}}; 
 };
 `;
 
@@ -275,9 +274,9 @@ export function generateSpaceUtilityClasses(prop, className) {
 
 // Generates a valid box-shadow value from a shadow Design Token structure
 export function generateRadiusUtilityClasses(propName) {
-  return `.${classPrefix}-${propName} {
-  --border-radius: $${variablesPrefix}-${propName};
-  border-radius: $${variablesPrefix}-${propName};
+  return `.${classAndScssPrefix}-${propName} {
+  --border-radius: $${classAndScssPrefix}-${propName};
+  border-radius: $${classAndScssPrefix}-${propName};
 }`;
 }
 
@@ -296,26 +295,26 @@ export function generateBorderUtilityClasses(prop, propName) {
     default:
       attribute = 'border-color';
   }
-  return `.${classPrefix}-${propName} {
-  --${attribute}: $${variablesPrefix}-${propName};
-  ${attribute}: $${variablesPrefix}-${propName};
+  return `.${classAndScssPrefix}-${propName} {
+  --${attribute}: $${classAndScssPrefix}-${propName};
+  ${attribute}: $${classAndScssPrefix}-${propName};
 }`;
 }
 
 // Generates a font based css utility-class from a font Design Token structure
 export function generateFontUtilityClasses(prop, propName) {
-  return `.${classPrefix}-${propName} {\n  ${prop.attributes.type}: $${variablesPrefix}-${propName};\n}`;
+  return `.${classAndScssPrefix}-${propName} {\n  ${prop.attributes.type}: $${classAndScssPrefix}-${propName};\n}`;
 }
 
 // Generates a valid box-shadow value from a shadow Design Token structure
 export function generateShadowUtilityClasses(propName) {
-  return `.${classPrefix}-${propName} {
-  --box-shadow: $${variablesPrefix}-${propName};
-  box-shadow: $${variablesPrefix}-${propName};
+  return `.${classAndScssPrefix}-${propName} {
+  --box-shadow: $${classAndScssPrefix}-${propName};
+  box-shadow: $${classAndScssPrefix}-${propName};
 }`;
 }
 
 // Generates a utility class for a given token category and name
 export function generateUtilityClasses(tokenCategory, propName){
-  return `.${classPrefix}-${propName} {\n  ${tokenCategory}: $${variablesPrefix}-${propName};\n}`;
+  return `.${classAndScssPrefix}-${propName} {\n  ${tokenCategory}: $${classAndScssPrefix}-${propName};\n}`;
 }

@@ -16,7 +16,7 @@ const {
   generateSpaceUtilityClasses,
   removeConsecutiveRepeatedWords,
   setVariablePrefixValue,
-  setClassesPrefixValue,
+  setClassesAndScssPrefixValue: setClassesPrefixValue,
   generateRadiusUtilityClasses,
   generateBorderUtilityClasses,
   generateFontUtilityClasses,
@@ -26,15 +26,16 @@ const {
 import StyleDictionary from 'style-dictionary';
 
 const customHeader = `// Do not edit directly, this file was auto-generated.`;
+// Set the prefix for classes
+setClassesPrefixValue('ion');
+// Set the prefix for variables
+setVariablePrefixValue('token');
 
 // SCSS variables format
 StyleDictionary.registerFormat({
   name: 'scssVariablesFormat',
   format: function ({ dictionary }) { // Use 'format' for Style Dictionary v3
     console.log('Generating SCSS variables...');
-
-    // Set the prefix for variables
-    setVariablePrefixValue('token');
 
     const primitiveProperties = dictionary.allTokens.filter((prop) => prop.path[0] === 'primitives');
     const scaleProperties = dictionary.allTokens.filter((prop) => prop.path[0] === 'scale');
@@ -89,9 +90,6 @@ StyleDictionary.registerFormat({
   name: 'cssUtilityClassesFormat',
   format: function ({ dictionary }) { // Use 'format' for Style Dictionary v3
     console.log('Generating Utility-Classes...');
-
-    // Set the prefix for classes
-    setClassesPrefixValue('ion');
 
     // Arrays to store specific utility classes
     const typographyUtilityClasses = [];
