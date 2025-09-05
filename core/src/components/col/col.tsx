@@ -248,7 +248,7 @@ export class Col implements ComponentInterface {
       return;
     }
 
-    return `${className}-col-${valueNumber}`;
+    return `${className}-col--${valueNumber}`;
   }
 
   private getSizeClass(): string | undefined {
