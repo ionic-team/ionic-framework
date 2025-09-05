@@ -1,12 +1,11 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
+import { Component, Element, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
+import { printIonWarning } from '@utils/logging';
 import { matchBreakpoint } from '@utils/media';
 
 import { getIonTheme } from '../../global/ionic-global';
 
-const win = typeof (window as any) !== 'undefined' ? (window as any) : undefined;
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-const SUPPORTS_VARS = win && !!(win.CSS && win.CSS.supports && win.CSS.supports('--a: 0'));
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
 /**
@@ -19,6 +18,7 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true,
 })
 export class Col implements ComponentInterface {
+  @Element() el!: HTMLIonColElement;
   /**
    * The amount to offset the column, in terms of how many columns it should shift to the end
    * of the total available.
@@ -56,70 +56,111 @@ export class Col implements ComponentInterface {
   @Prop() offsetXl?: string;
 
   /**
+   * The order of the column, in terms of where the column should position itself in the columns renderer.
+   * If no value is passed, the column order implicit value will be the order in the html structure.
+   */
+  @Prop() order?: string;
+
+  /**
+   * The order of the column for xs screens, in terms of where the column should position itself in the columns renderer.
+   * If no value is passed, the column order implicit value will be the order in the html structure.
+   */
+  @Prop() orderXs?: string;
+
+  /**
+   * The order of the column for sm screens, in terms of where the column should position itself in the columns renderer.
+   * If no value is passed, the column order implicit value will be the order in the html structure.
+   */
+  @Prop() orderSm?: string;
+
+  /**
+   * The order of the column for md screens, in terms of where the column should position itself in the columns renderer.
+   * If no value is passed, the column order implicit value will be the order in the html structure.
+   */
+  @Prop() orderMd?: string;
+
+  /**
+   * The order of the column for lg screens, in terms of where the column should position itself in the columns renderer.
+   * If no value is passed, the column order implicit value will be the order in the html structure.
+   */
+  @Prop() orderLg?: string;
+
+  /**
+   * The order of the column for xl screens, in terms of where the column should position itself in the columns renderer.
+   * If no value is passed, the column order implicit value will be the order in the html structure.
+   */
+  @Prop() orderXl?: string;
+
+  /**
    * The amount to pull the column, in terms of how many columns it should shift to the start of
    * the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pull?: string;
-
   /**
    * The amount to pull the column for xs screens, in terms of how many columns it should shift
    * to the start of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pullXs?: string;
   /**
    * The amount to pull the column for sm screens, in terms of how many columns it should shift
    * to the start of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pullSm?: string;
   /**
    * The amount to pull the column for md screens, in terms of how many columns it should shift
    * to the start of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pullMd?: string;
   /**
    * The amount to pull the column for lg screens, in terms of how many columns it should shift
    * to the start of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pullLg?: string;
   /**
    * The amount to pull the column for xl screens, in terms of how many columns it should shift
    * to the start of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pullXl?: string;
-
   /**
    * The amount to push the column, in terms of how many columns it should shift to the end
    * of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() push?: string;
-
   /**
    * The amount to push the column for xs screens, in terms of how many columns it should shift
    * to the end of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pushXs?: string;
-
   /**
    * The amount to push the column for sm screens, in terms of how many columns it should shift
    * to the end of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pushSm?: string;
-
   /**
    * The amount to push the column for md screens, in terms of how many columns it should shift
    * to the end of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pushMd?: string;
-
   /**
    * The amount to push the column for lg screens, in terms of how many columns it should shift
    * to the end of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pushLg?: string;
-
   /**
    * The amount to push the column for xl screens, in terms of how many columns it should shift
    * to the end of the total available.
+   * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pushXl?: string;
 
@@ -186,84 +227,78 @@ export class Col implements ComponentInterface {
     return matched;
   }
 
-  private calculateSize() {
-    const columns = this.getColumns('size');
+  private getStyleClass(property: string, className: string, acceptsAuto = false): string | undefined {
+    const colPropertyValue = this.getColumns(property);
 
     // If size wasn't set for any breakpoint
     // or if the user set the size without a value
     // it means we need to stick with the default and return
     // e.g. <ion-col size-md>
-    if (!columns || columns === '') {
+    if (!colPropertyValue || colPropertyValue === '') {
       return;
     }
 
-    // If the size is set to auto then don't calculate a size
-    const colSize =
-      columns === 'auto'
-        ? 'auto'
-        : // If CSS supports variables we should use the grid columns var
-        SUPPORTS_VARS
-        ? `calc(calc(${columns} / var(--ion-grid-columns, 12)) * 100%)`
-        : // Convert the columns to a percentage by dividing by the total number
-          // of columns (12) and then multiplying by 100
-          (columns / 12) * 100 + '%';
+    if (acceptsAuto && colPropertyValue === 'auto') {
+      return 'ion-grid-col-auto';
+    }
 
-    return {
-      flex: `0 0 ${colSize}`,
-      width: `${colSize}`,
-      'max-width': `${colSize}`,
-    };
-  }
+    const valueNumber = parseInt(colPropertyValue);
 
-  // Called by push, pull, and offset since they use the same calculations
-  private calculatePosition(property: string, modifier: string) {
-    const columns = this.getColumns(property);
-
-    if (!columns) {
+    if (isNaN(valueNumber)) {
       return;
     }
 
-    // If the number of columns passed are greater than 0 and less than
-    // 12 we can position the column, else default to auto
-    const amount = SUPPORTS_VARS
-      ? // If CSS supports variables we should use the grid columns var
-        `calc(calc(${columns} / var(--ion-grid-columns, 12)) * 100%)`
-      : // Convert the columns to a percentage by dividing by the total number
-      // of columns (12) and then multiplying by 100
-      columns > 0 && columns < 12
-      ? (columns / 12) * 100 + '%'
-      : 'auto';
-
-    return {
-      [modifier]: amount,
-    };
+    return `${className}-col--${valueNumber}`;
   }
 
-  private calculateOffset(isRTL: boolean) {
-    return this.calculatePosition('offset', isRTL ? 'margin-right' : 'margin-left');
+  private getSizeClass(): string | undefined {
+    return this.getStyleClass('size', 'ion-grid', true);
   }
 
-  private calculatePull(isRTL: boolean) {
-    return this.calculatePosition('pull', isRTL ? 'left' : 'right');
+  private getOrderClass(): string | undefined {
+    return this.getStyleClass('order', 'ion-grid-order');
   }
 
-  private calculatePush(isRTL: boolean) {
-    return this.calculatePosition('push', isRTL ? 'right' : 'left');
+  private getOffsetClass(): string | undefined {
+    return this.getStyleClass('offset', 'ion-grid-offset');
+  }
+
+  componentDidLoad() {
+    if (
+      this.pull ||
+      this.pullLg ||
+      this.pullMd ||
+      this.pullSm ||
+      this.pullXl ||
+      this.pullXs ||
+      this.push ||
+      this.pushLg ||
+      this.pushMd ||
+      this.pushSm ||
+      this.pushXl ||
+      this.pushXs
+    ) {
+      printIonWarning(
+        '[ion-col] - The pull and push properties are deprecated and no longer work, in favor of the order and size properties.',
+        this.el
+      );
+    }
   }
 
   render() {
-    const isRTL = document.dir === 'rtl';
     const theme = getIonTheme(this);
+
+    const colSize = this.getSizeClass();
+    const colOrder = this.getOrderClass();
+    const colOffset = this.getOffsetClass();
+
     return (
       <Host
         class={{
           [theme]: true,
-        }}
-        style={{
-          ...this.calculateOffset(isRTL),
-          ...this.calculatePull(isRTL),
-          ...this.calculatePush(isRTL),
-          ...this.calculateSize(),
+          [`${colSize}`]: colSize !== undefined,
+          [`${colOrder}`]: colOrder !== undefined,
+          [`${colOffset}`]: colOffset !== undefined,
         }}
       >
         <slot></slot>
