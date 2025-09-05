@@ -92,7 +92,9 @@
           var currentOffsetMd = dynamicOffsetCol.offsetMd;
           dynamicOffsetCol.offset = currentOffset === '2' ? '4' : '2';
           dynamicOffsetCol.offsetMd = currentOffsetMd === '5' ? '2' : '5';
-          console.log(`Updating offset from ${currentOffset} to ${dynamicOffsetCol.offset} and offset-md from ${currentOffsetMd} to ${dynamicOffsetCol.offsetMd}`);
+          console.log(
+            `Updating offset from ${currentOffset} to ${dynamicOffsetCol.offset} and offset-md from ${currentOffsetMd} to ${dynamicOffsetCol.offsetMd}`
+          );
         }
       </script>
 
