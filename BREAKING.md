@@ -35,7 +35,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - The `border-radius` of the `ios` and `md` chip now defaults to `10px` and `8px`, respectively, instead of `16px` in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"round"`, or override the `--border-radius` CSS variable to specify a different value.
 
 <h4 id="version-9x-grid">Grid</h4>
-- The properties `pull` and `push`, have been removed. The similar look can be achieved with the newly added property `order`.
+
+- The properties `pull` and `push` have been deprecated and no longer work. A similar look can be achieved with the newly added property `order`.
 
 <h5>Example 1: Swap two columns</h5>
 
