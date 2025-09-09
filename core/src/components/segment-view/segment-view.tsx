@@ -39,7 +39,8 @@ export class SegmentView implements ComponentInterface {
   @Listen('scroll')
   handleScroll(ev: Event) {
     const { scrollLeft, scrollWidth, clientWidth } = ev.target as HTMLElement;
-    const scrollRatio = scrollLeft / (scrollWidth - clientWidth);
+    const isRTL = window.getComputedStyle(this.el).direction === 'rtl';
+    const scrollRatio = (isRTL ? -1 : 1) * scrollLeft / (scrollWidth - clientWidth);
 
     this.ionSegmentViewScroll.emit({
       scrollRatio,
@@ -118,6 +119,7 @@ export class SegmentView implements ComponentInterface {
   async setContent(id: string, smoothScroll = true) {
     const contents = this.getSegmentContents();
     const index = contents.findIndex((content) => content.id === id);
+    const isRTL = window.getComputedStyle(this.el).direction === 'rtl';
 
     if (index === -1) return;
 
@@ -127,7 +129,7 @@ export class SegmentView implements ComponentInterface {
     const contentWidth = this.el.offsetWidth;
     this.el.scrollTo({
       top: 0,
-      left: index * contentWidth,
+      left: (isRTL ? -1 : 1) * index * contentWidth,
       behavior: smoothScroll ? 'smooth' : 'instant',
     });
   }
