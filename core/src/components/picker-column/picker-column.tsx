@@ -80,6 +80,16 @@ export class PickerColumn implements ComponentInterface {
    */
   @Event() ionChange!: EventEmitter<PickerColumnChangeEventDetail>;
 
+  /**
+   * Emitted when the user begins scrolling the wheel.
+   */
+  @Event() ionScrollStart!: EventEmitter<void>;
+
+  /**
+   * Emitted when the user stops scrolling the wheel and the value has settled.
+   */
+  @Event() ionScrollEnd!: EventEmitter<void>;
+
   @Watch('value')
   valueChange() {
     if (this.isColumnVisible) {
@@ -330,6 +340,7 @@ export class PickerColumn implements ComponentInterface {
         if (!this.isScrolling) {
           enableHaptics && hapticSelectionStart();
           this.isScrolling = true;
+          this.ionScrollStart.emit();
         }
 
         /**
@@ -472,7 +483,12 @@ export class PickerColumn implements ComponentInterface {
            */
           this.canExitInputMode = true;
 
+          /**
+           * Commit the value first so listeners to ionScrollEnd
+           * can read the up-to-date value.
+           */
           this.setValue(newActiveElement.value);
+          this.ionScrollEnd.emit();
         }, 250);
       });
     };
