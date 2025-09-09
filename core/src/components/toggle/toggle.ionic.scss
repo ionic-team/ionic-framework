@@ -10,8 +10,8 @@
   --border-radius: #{globals.$ion-border-radius-full};
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-size-050};
-  --handle-background: #{globals.$ion-primitives-base-white};
-  --handle-background-checked: #{globals.$ion-primitives-base-white};
+  --handle-background: #{globals.$ion-bg-surface-default};
+  --handle-background-checked: #{globals.$ion-bg-surface-default};
   --handle-border-radius: #{globals.$ion-border-radius-full};
   --handle-height: #{globals.$ion-scale-500};
   --handle-max-height: #{globals.$ion-scale-500};
@@ -111,7 +111,7 @@
   align-items: center;
   justify-content: center;
 
-  color: globals.$ion-primitives-neutral-1200;
+  color: globals.$ion-text-default;
 }
 
 .toggle-inner .toggle-switch-icon {
@@ -137,7 +137,7 @@
   * when the label sits at the start.
   */
   @include globals.margin(null, globals.$ion-space-400, null, 0);
-  color: globals.$ion-primitives-neutral-1200;
+  color: globals.$ion-text-default;
 }
 
 // Toggle Label Placement - End

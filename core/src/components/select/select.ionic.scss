@@ -6,7 +6,7 @@
 // -------------------------------------------------
 
 :host {
-  --background: #{globals.$ion-primitives-base-white};
+  --background: #{globals.$ion-bg-surface-default};
   // TODO(ROU-10778, ROU-10875): Sync the color names to the design system of
   // ios and md. This will allow us to have a single color map.
   --border-color: #{globals.$ion-primitives-neutral-500};
@@ -162,7 +162,7 @@
    */
   transition: opacity globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive;
 
-  color: globals.$ion-primitives-neutral-1200;
+  color: globals.$ion-text-default;
 }
 
 :host(.select-label-placement-stacked) .native-wrapper,
