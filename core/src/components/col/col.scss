@@ -40,7 +40,10 @@
 :host([class*=" ion-grid-col--"]) {
   flex: 0 0
     calc(var(--ion-grid-col-span) * var(--col-unit-size) + (var(--ion-grid-col-span) - 1) * var(--ion-grid-gap, 0px));
-  max-width: calc(var(--ion-grid-col-span) * var(--col-unit-size) + (var(--ion-grid-col-span) - 1) * var(--ion-grid-gap, 0px))
+
+  max-width: calc(
+    var(--ion-grid-col-span) * var(--col-unit-size) + (var(--ion-grid-col-span) - 1) * var(--ion-grid-gap, 0px)
+  );
 }
 
 :host([class^="ion-grid-offset-col--"]),
