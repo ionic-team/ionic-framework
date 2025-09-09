@@ -40,7 +40,7 @@ export class SegmentView implements ComponentInterface {
   handleScroll(ev: Event) {
     const { scrollLeft, scrollWidth, clientWidth } = ev.target as HTMLElement;
     const isRTL = window.getComputedStyle(this.el).direction === 'rtl';
-    const scrollRatio = (isRTL ? -1 : 1) * scrollLeft / (scrollWidth - clientWidth);
+    const scrollRatio = (isRTL ? -1 : 1) * (scrollLeft / (scrollWidth - clientWidth));
 
     this.ionSegmentViewScroll.emit({
       scrollRatio,

@@ -2,9 +2,9 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * This behavior does not vary across modes/directions
+ * This behavior does not vary across modes
  */
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['md'] }).forEach(({ title, config }) => {
   test.describe(title('segment-view: basic'), () => {
     test('should show the first content with no initial value', async ({ page }) => {
       await page.setContent(
