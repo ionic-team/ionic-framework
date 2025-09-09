@@ -1,0 +1,131 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Input - Validation Test</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="validation-info">
+    <h2>Screen Reader Testing Instructions:</h2>
+    <ol>
+      <li>Enable your screen reader (VoiceOver, NVDA, JAWS, etc.)</li>
+      <li>Tab through the form fields</li>
+      <li>When you tab away from an empty required field, the error should be announced immediately</li>
+      <li>The error text should be announced BEFORE the next field is announced</li>
+      <li>Test in Chrome, Safari, and Firefox to verify consistent behavior</li>
+    </ol>
+  </div>
+
+  <form [formGroup]="form">
+    <div class="grid">
+      <div>
+        <h2>Required Email Field</h2>
+        <ion-input
+          #emailInput
+          id="email-input"
+          type="email"
+          label="Email"
+          labelPlacement="floating"
+          fill="outline"
+          placeholder="Enter your email"
+          [helperText]="fieldMetadata.email.helperText"
+          [errorText]="fieldMetadata.email.errorText"
+          formControlName="email"
+          required
+        ></ion-input>
+      </div>
+
+      <div>
+        <h2>Required Name Field</h2>
+        <ion-input
+          #nameInput
+          id="name-input"
+          type="text"
+          label="Full Name"
+          labelPlacement="floating"
+          fill="outline"
+          placeholder="Enter your full name"
+          [helperText]="fieldMetadata.name.helperText"
+          [errorText]="fieldMetadata.name.errorText"
+          formControlName="name"
+          required
+        ></ion-input>
+      </div>
+
+      <div>
+        <h2>Phone Number (Pattern Validation)</h2>
+        <ion-input
+          #phoneInput
+          id="phone-input"
+          type="tel"
+          label="Phone"
+          labelPlacement="floating"
+          fill="outline"
+          placeholder="(555) 555-5555"
+          pattern="^\(\d{3}\) \d{3}-\d{4}$"
+          [helperText]="fieldMetadata.phone.helperText"
+          [errorText]="fieldMetadata.phone.errorText"
+          formControlName="phone"
+          required
+        ></ion-input>
+      </div>
+
+      <div>
+        <h2>Password (Min Length)</h2>
+        <ion-input
+          #passwordInput
+          id="password-input"
+          type="password"
+          label="Password"
+          labelPlacement="floating"
+          fill="outline"
+          placeholder="Enter password"
+          minlength="8"
+          [helperText]="fieldMetadata.password.helperText"
+          [errorText]="fieldMetadata.password.errorText"
+          formControlName="password"
+          required
+        ></ion-input>
+      </div>
+
+      <div>
+        <h2>Age (Number Range)</h2>
+        <ion-input
+          #ageInput
+          id="age-input"
+          type="number"
+          label="Age"
+          labelPlacement="floating"
+          fill="outline"
+          placeholder="Enter your age"
+          min="18"
+          max="120"
+          [helperText]="fieldMetadata.age.helperText"
+          [errorText]="fieldMetadata.age.errorText"
+          formControlName="age"
+          required
+        ></ion-input>
+      </div>
+
+      <div>
+        <h2>Optional Field (No Validation)</h2>
+        <ion-input
+          #optionalInput
+          id="optional-input"
+          type="text"
+          label="Optional Info"
+          labelPlacement="floating"
+          fill="outline"
+          placeholder="This field is optional"
+          [helperText]="fieldMetadata.optional.helperText"
+          formControlName="optional"
+        ></ion-input>
+      </div>
+    </div>
+  </form>
+
+  <div class="ion-padding">
+    <ion-button id="submit-btn" expand="block" [disabled]="form.invalid" (click)="onSubmit()">Submit Form</ion-button>
+    <ion-button id="reset-btn" expand="block" fill="outline" (click)="form.reset()">Reset Form</ion-button>
+  </div>
+</ion-content>
