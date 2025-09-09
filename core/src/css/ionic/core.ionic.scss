@@ -16,6 +16,9 @@
       @include globals.generate-color($color-name);
     }
   }
+
+  /* Default background color of all components to default background surface token */
+  --background: #{globals.$ion-bg-surface-default};
 }
 
 html {
@@ -24,7 +27,7 @@ html {
 
 body {
   background: var(--ion-background-color, #{globals.$ion-bg-body});
-  color: var(--ion-text-color);
+  color: var(--ion-text-color, #{globals.$ion-text-default});
 }
 
 body.backdrop-no-scroll {

@@ -5,12 +5,12 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ion-primitives-base-white};
+  --background: #{globals.$ion-bg-surface-default};
   --background-activated: #{globals.$ion-primitives-neutral-200};
   --border-color: #{globals.$ion-primitives-neutral-300};
   --border-style: #{globals.$ion-border-style-solid};
   --border-width: #{0 0 globals.$ion-border-size-025 0};
-  --color: #{globals.$ion-primitives-neutral-1200};
+  --color: #{globals.$ion-text-default};
   --detail-icon-color: #{globals.$ion-primitives-neutral-800};
   --detail-icon-font-size: #{globals.$ion-scale-600};
   --detail-icon-opacity: 1;
