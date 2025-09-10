@@ -88,86 +88,86 @@ configs({ modes: ['md'] }).forEach(({ title, config }) => {
       const segmentContent = page.locator('ion-segment-content[id="top"]');
       await expect(segmentContent).toBeInViewport();
     });
-  });
 
-  test('should set correct segment button as checked when changing the value by scrolling the segment content', async ({
-    page,
-  }) => {
-    await page.setContent(
-      `
-      <ion-segment value="free">
-        <ion-segment-button content-id="paid" value="paid">
-          <ion-label>Paid</ion-label>
-        </ion-segment-button>
-        <ion-segment-button content-id="free" value="free">
-          <ion-label>Free</ion-label>
-        </ion-segment-button>
-        <ion-segment-button content-id="top" value="top">
-          <ion-label>Top</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-      <ion-segment-view>
-        <ion-segment-content id="paid">Paid</ion-segment-content>
-        <ion-segment-content id="free">Free</ion-segment-content>
-        <ion-segment-content id="top">Top</ion-segment-content>
-      </ion-segment-view>
-    `,
-      config
-    );
-
-    await page
-      .locator('ion-segment-view')
-      .evaluate(
-        (segmentView: HTMLIonSegmentViewElement) => !segmentView.classList.contains('segment-view-scroll-disabled')
+    test('should set correct segment button as checked when changing the value by scrolling the segment content', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+        <ion-segment value="free">
+          <ion-segment-button content-id="paid" value="paid">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="free" value="free">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="top" value="top">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view>
+          <ion-segment-content id="paid">Paid</ion-segment-content>
+          <ion-segment-content id="free">Free</ion-segment-content>
+          <ion-segment-content id="top">Top</ion-segment-content>
+        </ion-segment-view>
+      `,
+        config
       );
 
-    await page.waitForChanges();
+      await page
+        .locator('ion-segment-view')
+        .evaluate(
+          (segmentView: HTMLIonSegmentViewElement) => !segmentView.classList.contains('segment-view-scroll-disabled')
+        );
 
-    await page.locator('ion-segment-content[id="top"]').scrollIntoViewIfNeeded();
+      await page.waitForChanges();
 
-    const segmentButton = page.locator('ion-segment-button[value="top"]');
-    await expect(segmentButton).toHaveClass(/segment-button-checked/);
-  });
+      await page.locator('ion-segment-content[id="top"]').scrollIntoViewIfNeeded();
 
-  test('should set correct segment button as checked and show correct content when programmatically setting the segment vale', async ({
-    page,
-  }) => {
-    await page.setContent(
-      `
-      <ion-segment value="free">
-        <ion-segment-button content-id="paid" value="paid">
-          <ion-label>Paid</ion-label>
-        </ion-segment-button>
-        <ion-segment-button content-id="free" value="free">
-          <ion-label>Free</ion-label>
-        </ion-segment-button>
-        <ion-segment-button content-id="top" value="top">
-          <ion-label>Top</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-      <ion-segment-view>
-        <ion-segment-content id="paid">Paid</ion-segment-content>
-        <ion-segment-content id="free">Free</ion-segment-content>
-        <ion-segment-content id="top">Top</ion-segment-content>
-      </ion-segment-view>
-    `,
-      config
-    );
+      const segmentButton = page.locator('ion-segment-button[value="top"]');
+      await expect(segmentButton).toHaveClass(/segment-button-checked/);
+    });
 
-    await page
-      .locator('ion-segment-view')
-      .evaluate(
-        (segmentView: HTMLIonSegmentViewElement) => !segmentView.classList.contains('segment-view-scroll-disabled')
+    test('should set correct segment button as checked and show correct content when programmatically setting the segment vale', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+        <ion-segment value="free">
+          <ion-segment-button content-id="paid" value="paid">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="free" value="free">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="top" value="top">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view>
+          <ion-segment-content id="paid">Paid</ion-segment-content>
+          <ion-segment-content id="free">Free</ion-segment-content>
+          <ion-segment-content id="top">Top</ion-segment-content>
+        </ion-segment-view>
+      `,
+        config
       );
 
-    await page.waitForChanges();
+      await page
+        .locator('ion-segment-view')
+        .evaluate(
+          (segmentView: HTMLIonSegmentViewElement) => !segmentView.classList.contains('segment-view-scroll-disabled')
+        );
 
-    await page.locator('ion-segment').evaluate((segment: HTMLIonSegmentElement) => (segment.value = 'top'));
+      await page.waitForChanges();
 
-    const segmentButton = page.locator('ion-segment-button[value="top"]');
-    await expect(segmentButton).toHaveClass(/segment-button-checked/);
+      await page.locator('ion-segment').evaluate((segment: HTMLIonSegmentElement) => (segment.value = 'top'));
 
-    const segmentContent = page.locator('ion-segment-content[id="top"]');
-    await expect(segmentContent).toBeInViewport();
+      const segmentButton = page.locator('ion-segment-button[value="top"]');
+      await expect(segmentButton).toHaveClass(/segment-button-checked/);
+
+      const segmentContent = page.locator('ion-segment-content[id="top"]');
+      await expect(segmentContent).toBeInViewport();
+    });
   });
 });
