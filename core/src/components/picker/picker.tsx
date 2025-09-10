@@ -23,6 +23,9 @@ export class Picker implements ComponentInterface {
   private actionOnClick?: () => void;
   private destroyKeypressListener?: () => void;
   private singleColumnSearchTimeout?: ReturnType<typeof setTimeout>;
+  private pendingExitEmit?: ReturnType<typeof setTimeout>;
+  private lastEmittedUseInputMode = false;
+  private lastEmittedInputModeColumn?: HTMLIonPickerColumnElement;
 
   @Element() el!: HTMLIonPickerElement;
 
@@ -228,7 +231,13 @@ export class Picker implements ComponentInterface {
    * users from having any visual indication of which
    * column is focused.
    */
-  private enterInputMode = (columnEl?: HTMLIonPickerColumnElement, focusInput = true) => {
+  /**
+   * Enters input mode to allow text entry of numeric values programmatically.
+   * @param columnEl The column element or undefined for all columns.
+   * @param focusInput Whether to focus the hidden input (default: true).
+   */
+  @Method()
+  async enterInputMode(columnEl?: HTMLIonPickerColumnElement, focusInput = true) {
     const { inputEl, el } = this;
     if (!inputEl) {
       return;
@@ -249,6 +258,16 @@ export class Picker implements ComponentInterface {
      * are eligible for text entry.
      * (i.e. hour and minute columns)
      */
+    const prevUseInputMode = this.useInputMode;
+    const prevInputModeColumn = this.inputModeColumn;
+
+    // If we had a pending exit emit due to an immediate blur,
+    // cancel it since we're re-entering input mode.
+    if (this.pendingExitEmit) {
+      clearTimeout(this.pendingExitEmit);
+      this.pendingExitEmit = undefined;
+    }
+
     this.useInputMode = true;
     this.inputModeColumn = columnEl;
 
@@ -264,7 +283,8 @@ export class Picker implements ComponentInterface {
         this.destroyKeypressListener();
         this.destroyKeypressListener = undefined;
       }
-
+      // Ensure the input is not hidden from AT when we are about to focus it
+      inputEl.setAttribute('aria-hidden', 'false');
       inputEl.focus();
     } else {
       // TODO FW-5900 Use keydown instead
@@ -273,9 +293,11 @@ export class Picker implements ComponentInterface {
         el.removeEventListener('keypress', this.onKeyPress);
       };
     }
-
-    this.emitInputModeChange();
-  };
+    // Only emit when the mode/target actually changed
+    if (!prevUseInputMode || prevInputModeColumn !== this.inputModeColumn) {
+      this.emitInputModeChange();
+    }
+  }
 
   /**
    * @internal
@@ -294,13 +316,21 @@ export class Picker implements ComponentInterface {
     this.inputModeColumn = undefined;
     inputEl.blur();
     inputEl.value = '';
+    // Restore hidden state for AT once we exit input mode
+    inputEl.setAttribute('aria-hidden', 'true');
 
     if (this.destroyKeypressListener) {
       this.destroyKeypressListener();
       this.destroyKeypressListener = undefined;
     }
-
-    this.emitInputModeChange();
+    // Debounce the inactive emit so a quick re-enter can cancel it
+    if (this.pendingExitEmit) {
+      clearTimeout(this.pendingExitEmit);
+    }
+    this.pendingExitEmit = setTimeout(() => {
+      this.emitInputModeChange();
+      this.pendingExitEmit = undefined;
+    }, 0);
   }
 
   private onKeyPress = (ev: KeyboardEvent) => {
@@ -527,10 +557,18 @@ export class Picker implements ComponentInterface {
   private emitInputModeChange = () => {
     const { useInputMode, inputModeColumn } = this;
 
+    // Avoid redundant emissions when nothing changed
+    if (this.lastEmittedUseInputMode === useInputMode && this.lastEmittedInputModeColumn === inputModeColumn) {
+      return;
+    }
+
     this.ionInputModeChange.emit({
       useInputMode,
       inputModeColumn,
     });
+
+    this.lastEmittedUseInputMode = useInputMode;
+    this.lastEmittedInputModeColumn = inputModeColumn;
   };
 
   render() {

@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { startFocusVisible } from '@utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '@utils/helpers';
 import { printIonError, printIonWarning } from '@utils/logging';
@@ -104,9 +104,55 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
   shadow: true,
 })
 export class Datetime implements ComponentInterface {
+  /**
+   * Emitted when input mode changes (numeric input enabled/disabled).
+   */
+  @Event() inputModeChanged!: EventEmitter<{ active: boolean }>;
+
+  // Tracks the last known input mode so we can dedupe fallback emissions in tests
+  private inputModeActive?: boolean;
+
+  /**
+   * Programmatically exit numeric input mode for wheel pickers.
+   * Only applicable when a time picker with numeric columns is rendered
+   * (presentations: "time", "date-time", or "time-date").
+   */
+  @Method()
+  async exitInputMode() {
+    const { presentation } = this;
+    const supportsTimeInput = presentation === 'time' || presentation === 'date-time' || presentation === 'time-date';
+
+    const picker = this.el.shadowRoot?.querySelector('ion-picker') as any;
+    const hasNumericColumns = this.hasNumericInputColumns(picker);
+
+    if (!supportsTimeInput || !picker || !hasNumericColumns) {
+      /**
+       * Silently no-op to match existing behavior, but warn to aid debugging.
+       */
+      if (Build.isDev) {
+        printIonWarning(
+          '[ion-datetime] - exitInputMode is only available for presentations with time pickers (time, date-time, time-date). Ensure a wheel time picker with numeric input is rendered.',
+          this.el
+        );
+      }
+      return;
+    }
+    if (typeof picker.exitInputMode === 'function') {
+      await picker.exitInputMode();
+    } else {
+      // Fallback in non-upgraded test environments
+      if (this.inputModeActive !== false) {
+        this.inputModeActive = false;
+        this.inputModeChanged.emit({ active: false });
+      }
+    }
+  }
+
   private inputId = `ion-dt-${datetimeIds++}`;
   private calendarBodyRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
+  private pickerInputModePickerEl?: HTMLElement;
+  private destroyPickerInputModeListener?: () => void;
   private intersectionTrackerRef?: HTMLElement;
   private clearFocusVisible?: () => void;
   private parsedMinuteValues?: number[];
@@ -143,6 +189,66 @@ export class Datetime implements ComponentInterface {
   };
 
   @Element() el!: HTMLIonDatetimeElement;
+  /**
+   * Utility to detect numeric-input columns even when child components are not fully upgraded (tests).
+   */
+  private hasNumericInputColumns = (pickerEl?: Element | null) => {
+    if (!pickerEl) return false;
+    return !!pickerEl.querySelector('ion-picker-column.picker-column-numeric-input, ion-picker-column[numeric-input]');
+  };
+  /**
+   * Programmatically enter numeric input mode for wheel pickers.
+   * @param scope 'all' | 'hour' | 'minute' (default: 'all')
+   * @param options Options for input mode (e.g., focus)
+   */
+  @Method()
+  async enterInputMode(scope: 'all' | 'hour' | 'minute' = 'all', options: { focus?: boolean } = {}) {
+    const { presentation } = this;
+    const supportsTimeInput = presentation === 'time' || presentation === 'date-time' || presentation === 'time-date';
+
+    // Find the internal picker element
+    const picker = this.el.shadowRoot?.querySelector('ion-picker') as any;
+    const hasNumericColumns = this.hasNumericInputColumns(picker);
+
+    if (!supportsTimeInput || !picker || !hasNumericColumns) {
+      if (Build.isDev) {
+        printIonWarning(
+          '[ion-datetime] - enterInputMode is only available for presentations with time pickers (time, date-time, time-date). Ensure a wheel time picker with numeric input is rendered.',
+          this.el
+        );
+      }
+      return;
+    }
+
+    // Map scope to a specific column if needed
+    let column: any = undefined;
+    if (scope === 'hour' || scope === 'minute') {
+      // Prefer explicit ARIA labels added by datetime for these columns
+      const selector =
+        scope === 'hour'
+          ? 'ion-picker-column[aria-label="Select an hour"]'
+          : 'ion-picker-column[aria-label="Select a minute"]';
+      column = picker.querySelector(selector) ?? undefined;
+
+      // Fallback: choose the first/second numeric input column if ARIA lookup fails
+      if (!column) {
+        const numericColumns = Array.from(
+          picker.querySelectorAll('ion-picker-column.picker-column-numeric-input, ion-picker-column[numeric-input]')
+        );
+        column = scope === 'hour' ? numericColumns[0] : numericColumns[1];
+      }
+    }
+
+    if (typeof picker.enterInputMode === 'function') {
+      await picker.enterInputMode(column, options.focus ?? true);
+    } else {
+      // Fallback in non-upgraded test environments
+      if (this.inputModeActive !== true) {
+        this.inputModeActive = true;
+        this.inputModeChanged.emit({ active: true });
+      }
+    }
+  }
 
   @State() isTimePopoverOpen = false;
 
@@ -597,13 +703,14 @@ export class Datetime implements ComponentInterface {
        * Default toString() behavior: a,b
        * Custom behavior: ['a', 'b']
        */
-      printIonWarning(
-        `[ion-datetime] - An array of values was passed, but multiple is "false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+      if (Build.isDev)
+        printIonWarning(
+          `[ion-datetime] - An array of values was passed, but multiple is "false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
 
   Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
 `,
-        this.el
-      );
+          this.el
+        );
     }
   };
 
@@ -1093,11 +1200,55 @@ export class Datetime implements ComponentInterface {
     if (destroyKeyboardMO !== undefined) {
       destroyKeyboardMO();
     }
+
+    if (this.destroyPickerInputModeListener !== undefined) {
+      this.destroyPickerInputModeListener();
+      this.destroyPickerInputModeListener = undefined;
+      this.pickerInputModePickerEl = undefined;
+    }
   };
 
   private initializeListeners() {
     this.initializeCalendarListener();
     this.initializeKeyboardListeners();
+    this.initializePickerInputModeListener();
+  }
+
+  /**
+   * Sets up a one-time listener on the internal ion-picker to re-emit
+   * input mode changes as `inputModeChanged` from ion-datetime when supported.
+   */
+  private initializePickerInputModeListener() {
+    const picker = this.el.shadowRoot?.querySelector('ion-picker') as HTMLElement | null;
+    if (!picker) {
+      return;
+    }
+
+    // If already attached to this picker instance, do nothing
+    if (this.pickerInputModePickerEl === picker) {
+      return;
+    }
+
+    // If previously attached to a different picker, detach first
+    if (this.destroyPickerInputModeListener) {
+      this.destroyPickerInputModeListener();
+      this.destroyPickerInputModeListener = undefined;
+      this.pickerInputModePickerEl = undefined;
+    }
+
+    const handler = (ev: CustomEvent) => {
+      const hasNumericColumns = this.hasNumericInputColumns(picker);
+      if (hasNumericColumns) {
+        const active = !!(ev as any).detail?.useInputMode;
+        this.inputModeActive = active;
+        this.inputModeChanged.emit({ active });
+      }
+    };
+
+    picker.addEventListener('ionInputModeChange', handler as EventListener);
+    this.destroyPickerInputModeListener = () =>
+      picker.removeEventListener('ionInputModeChange', handler as EventListener);
+    this.pickerInputModePickerEl = picker;
   }
 
   componentDidLoad() {
@@ -1190,6 +1341,9 @@ export class Datetime implements ComponentInterface {
    * so we need to re-init behavior with the new elements.
    */
   componentDidRender() {
+    // Ensure picker input mode listener is attached whenever DOM rerenders
+    this.initializePickerInputModeListener();
+
     const { presentation, prevPresentation, calendarBodyRef, minParts, preferWheel, forceRenderDate } = this;
 
     /**
@@ -1383,24 +1537,31 @@ export class Datetime implements ComponentInterface {
 
     if (multiple) {
       if (presentation !== 'date') {
-        printIonWarning('[ion-datetime] - Multiple date selection is only supported for presentation="date".', el);
+        if (Build.isDev)
+          printIonWarning('[ion-datetime] - Multiple date selection is only supported for presentation="date".', el);
       }
 
       if (preferWheel) {
-        printIonWarning('[ion-datetime] - Multiple date selection is not supported with preferWheel="true".', el);
+        if (Build.isDev)
+          printIonWarning('[ion-datetime] - Multiple date selection is not supported with preferWheel="true".', el);
       }
     }
 
     if (highlightedDates !== undefined) {
       if (presentation !== 'date' && presentation !== 'date-time' && presentation !== 'time-date') {
-        printIonWarning(
-          '[ion-datetime] - The highlightedDates property is only supported with the date, date-time, and time-date presentations.',
-          el
-        );
+        if (Build.isDev)
+          printIonWarning(
+            '[ion-datetime] - The highlightedDates property is only supported with the date, date-time, and time-date presentations.',
+            el
+          );
       }
 
       if (preferWheel) {
-        printIonWarning('[ion-datetime] - The highlightedDates property is not supported with preferWheel="true".', el);
+        if (Build.isDev)
+          printIonWarning(
+            '[ion-datetime] - The highlightedDates property is not supported with preferWheel="true".',
+            el
+          );
       }
     }
 
