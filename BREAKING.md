@@ -100,10 +100,10 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 <ion-grid>
   <ion-row>
     <ion-col size="auto" offset="1">
-      <div>ion-col push 1</div>
+      <div>ion-col size="auto" offset="1"</div>
     </ion-col>
     <ion-col size="auto">
-      <div>ion-col push 1</div>
+      <div>ion-col size="auto"</div>
     </ion-col>
   </ion-row>
 </ion-grid>
@@ -127,10 +127,10 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 <ion-grid>
   <ion-row>
     <ion-col size="auto" order="2" order-md="2">
-      <div>ion-col size="3" size-md="6" order="9" order-md="6"</div>
+      <div>ion-col size="auto" order="2" order-md="2"</div>
     </ion-col>
     <ion-col size="auto" order="1" order-md="1">
-      <div>ion-col size="9" size-md="6" order="3" order-md="6"</div>
+      <div>ion-col size="auto" order="1" order-md="1"</div>
     </ion-col>
   </ion-row>
 </ion-grid>
