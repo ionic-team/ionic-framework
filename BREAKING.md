@@ -100,7 +100,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 <ion-grid>
   <ion-row>
     <ion-col size="auto" offset="1">
-      <div>ion-col push 1</div>
+      <div>ion-col size="auto" offset="1"</div>
     </ion-col>
     <ion-col size="auto">
       <div>ion-col push 1</div>
