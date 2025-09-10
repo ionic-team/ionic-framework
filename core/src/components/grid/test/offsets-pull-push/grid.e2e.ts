@@ -7,7 +7,7 @@ import { configs, test } from '@utils/test/playwright';
 configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('grid: offsets'), () => {
     test('should not have visual regressions', async ({ page }) => {
-      await page.goto(`/src/components/grid/test/offsets`, config);
+      await page.goto(`/src/components/grid/test/offsets-pull-push`, config);
 
       await page.setIonViewport();
 
