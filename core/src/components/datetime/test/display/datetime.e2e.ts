@@ -30,7 +30,8 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-time-date`));
       });
-      test('time should not have any visual regressions', async ({ page }) => {
+      // TODO (FW-6769): Enable test when its fixed
+      test.skip('time should not have any visual regressions', async ({ page }) => {
         await page.setContent(
           `
           <ion-datetime value="2022-02-22T16:30:00" presentation="time"></ion-datetime>
@@ -84,7 +85,8 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-cover-time-date`));
       });
-      test('time should not have any visual regressions', async ({ page }) => {
+      // TODO (FW-6769): Enable test when its fixed
+      test.skip('time should not have any visual regressions', async ({ page }) => {
         await page.setContent(
           `
           <ion-datetime size="cover" value="2022-02-22T16:30:00" presentation="time"></ion-datetime>

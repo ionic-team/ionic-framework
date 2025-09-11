@@ -5,8 +5,8 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ion-primitives-base-white};
-  --color: #{globals.$ion-primitives-neutral-1200};
+  --background: #{globals.$ion-bg-surface-default};
+  --color: #{globals.$ion-text-default};
   --border-color: currentColor;
   --padding-top: #{globals.$ion-space-200};
   --padding-bottom: #{globals.$ion-space-200};

@@ -9,7 +9,7 @@
    * @prop --focus-ring-color: The color of the ring around the focused element.
    * @prop --focus-ring-width: The width of the ring around the focused element.
    */
-  --background: #{globals.$ion-primitives-base-white};
+  --background: #{globals.$ion-bg-surface-default};
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-radius-025};
 }
@@ -140,7 +140,7 @@
 
   height: globals.$ion-scale-1200;
 
-  color: globals.$ion-primitives-neutral-1200;
+  color: globals.$ion-text-default;
 }
 
 // Disabled Day
@@ -211,7 +211,7 @@
   height: globals.$ion-scale-800;
 
   background-color: globals.$ion-primitives-neutral-100;
-  color: globals.$ion-primitives-neutral-1200;
+  color: globals.$ion-text-default;
 }
 
 // Calendar / Footer / Action Buttons

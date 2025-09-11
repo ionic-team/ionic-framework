@@ -6,7 +6,7 @@
 // --------------------------------------------------
 
 :host {
-  --color: #{globals.$ion-primitives-neutral-1200};
+  --color: #{globals.$ion-text-default};
   --border-width: #{globals.$ion-border-size-025};
   --highlight-color-valid: #{globals.$ion-semantics-success-900};
   --highlight-color-invalid: #{globals.$ion-border-danger-default};

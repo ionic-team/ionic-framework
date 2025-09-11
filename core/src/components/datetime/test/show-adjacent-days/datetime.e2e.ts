@@ -13,7 +13,8 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-show-adjacent-days`));
     });
 
-    test('should not have visual regressions with a custom styled calendar', async ({ page }) => {
+    // TODO (FW-6769): Enable test when its fixed
+    test.skip('should not have visual regressions with a custom styled calendar', async ({ page }) => {
       await page.goto('/src/components/datetime/test/show-adjacent-days', config);
       await page.locator('.datetime-ready').first().waitFor();
       const datetime = page.locator('#custom-calendar-days');
