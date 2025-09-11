@@ -128,7 +128,7 @@ configs({ modes: ['md'] }).forEach(({ title, config }) => {
       await expect(segmentButton).toHaveClass(/segment-button-checked/);
     });
 
-    test('should set correct segment button as checked and show correct content when programmatically setting the segment vale', async ({
+    test('should set correct segment button as checked and show correct content when programmatically setting the segment value', async ({
       page,
     }) => {
       await page.setContent(
