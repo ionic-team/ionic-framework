@@ -43,7 +43,6 @@ export class SegmentView implements ComponentInterface {
     const max = scrollWidth - clientWidth;
     const scrollRatio = (isRTL(this.el) ? -1 : 1) * (scrollLeft / max);
 
-
     this.ionSegmentViewScroll.emit({
       scrollRatio,
       isManualScroll: this.isManualScroll ?? true,
