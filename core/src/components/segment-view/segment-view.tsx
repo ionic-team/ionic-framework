@@ -40,7 +40,7 @@ export class SegmentView implements ComponentInterface {
   @Listen('scroll')
   handleScroll(ev: Event) {
     const { scrollLeft, scrollWidth, clientWidth } = ev.target as HTMLElement;
-    const max = scrollWidth - clientWidth; 
+    const max = scrollWidth - clientWidth;
     const scrollRatio = (isRTL(this.el) ? -1 : 1) * (scrollLeft / max);
 
 
@@ -128,11 +128,11 @@ export class SegmentView implements ComponentInterface {
     this.resetScrollEndTimeout();
 
     const contentWidth = this.el.offsetWidth;
-    const offset = index * contentWidth; 
+    const offset = index * contentWidth;
 
     this.el.scrollTo({
       top: 0,
-      left: (isRTL(this.el) ? -1 : 1 ) * offset,
+      left: (isRTL(this.el) ? -1 : 1) * offset,
       behavior: smoothScroll ? 'smooth' : 'instant',
     });
   }
