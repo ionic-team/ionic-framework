@@ -55,6 +55,16 @@
   @include margin-horizontal(var(--margin-calc), 0);
 }
 
+// Although the number of columns is customizable, we generate
+// a default of 12 columns worth of classes. This will in the 
+// future be customizable, even on the generation, when the 
+// Ionic becomes modular and configurable by the developer.
+// For now, this is a reasonable default. If the developer
+// changes the number of columns, they can still use the
+// col-span and offset classes that are generated here, and
+// if more than 12 columns are needed, they can always
+// write their own CSS to handle those cases, since we cover
+// the general case here.
 $grid-col-number: 12;
 
 @for $i from 1 through $grid-col-number {
