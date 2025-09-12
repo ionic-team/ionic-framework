@@ -2,9 +2,12 @@
 
 // Row
 // --------------------------------------------------
-
 :host {
+  --ion-grid-gap: 0px;
+
   display: flex;
 
   flex-wrap: wrap;
+
+  gap: var(--ion-grid-gap);
 }

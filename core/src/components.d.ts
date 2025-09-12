@@ -928,51 +928,87 @@ export namespace Components {
          */
         "offsetXs"?: string;
         /**
+          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+         */
+        "order"?: string;
+        /**
+          * The order of the column for lg screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+         */
+        "orderLg"?: string;
+        /**
+          * The order of the column for md screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+         */
+        "orderMd"?: string;
+        /**
+          * The order of the column for sm screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+         */
+        "orderSm"?: string;
+        /**
+          * The order of the column for xl screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+         */
+        "orderXl"?: string;
+        /**
+          * The order of the column for xs screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+         */
+        "orderXs"?: string;
+        /**
           * The amount to pull the column, in terms of how many columns it should shift to the start of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pull"?: string;
         /**
           * The amount to pull the column for lg screens, in terms of how many columns it should shift to the start of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pullLg"?: string;
         /**
           * The amount to pull the column for md screens, in terms of how many columns it should shift to the start of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pullMd"?: string;
         /**
           * The amount to pull the column for sm screens, in terms of how many columns it should shift to the start of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pullSm"?: string;
         /**
           * The amount to pull the column for xl screens, in terms of how many columns it should shift to the start of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pullXl"?: string;
         /**
           * The amount to pull the column for xs screens, in terms of how many columns it should shift to the start of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pullXs"?: string;
         /**
           * The amount to push the column, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "push"?: string;
         /**
           * The amount to push the column for lg screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pushLg"?: string;
         /**
           * The amount to push the column for md screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pushMd"?: string;
         /**
           * The amount to push the column for sm screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pushSm"?: string;
         /**
           * The amount to push the column for xl screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pushXl"?: string;
         /**
           * The amount to push the column for xs screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pushXs"?: string;
         /**
@@ -6862,51 +6898,87 @@ declare namespace LocalJSX {
          */
         "offsetXs"?: string;
         /**
+          * The order of the column, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+         */
+        "order"?: string;
+        /**
+          * The order of the column for lg screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+         */
+        "orderLg"?: string;
+        /**
+          * The order of the column for md screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+         */
+        "orderMd"?: string;
+        /**
+          * The order of the column for sm screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+         */
+        "orderSm"?: string;
+        /**
+          * The order of the column for xl screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+         */
+        "orderXl"?: string;
+        /**
+          * The order of the column for xs screens, in terms of where the column should position itself in the columns renderer. If no value is passed, the column order implicit value will be the order in the html structure.
+         */
+        "orderXs"?: string;
+        /**
           * The amount to pull the column, in terms of how many columns it should shift to the start of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pull"?: string;
         /**
           * The amount to pull the column for lg screens, in terms of how many columns it should shift to the start of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pullLg"?: string;
         /**
           * The amount to pull the column for md screens, in terms of how many columns it should shift to the start of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pullMd"?: string;
         /**
           * The amount to pull the column for sm screens, in terms of how many columns it should shift to the start of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pullSm"?: string;
         /**
           * The amount to pull the column for xl screens, in terms of how many columns it should shift to the start of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pullXl"?: string;
         /**
           * The amount to pull the column for xs screens, in terms of how many columns it should shift to the start of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pullXs"?: string;
         /**
           * The amount to push the column, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "push"?: string;
         /**
           * The amount to push the column for lg screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pushLg"?: string;
         /**
           * The amount to push the column for md screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pushMd"?: string;
         /**
           * The amount to push the column for sm screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pushSm"?: string;
         /**
           * The amount to push the column for xl screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pushXl"?: string;
         /**
           * The amount to push the column for xs screens, in terms of how many columns it should shift to the end of the total available.
+          * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
          */
         "pushXs"?: string;
         /**
