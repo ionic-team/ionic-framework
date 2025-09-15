@@ -3,11 +3,12 @@
 // Row
 // --------------------------------------------------
 :host {
-  --ion-grid-gap: 0px;
-
   display: flex;
 
   flex-wrap: wrap;
 
-  gap: var(--ion-grid-gap);
+  /**
+   * @prop --ion-grid-gap: The gap between grid items
+   */
+  gap: var(--ion-grid-gap, 0px);
 }
