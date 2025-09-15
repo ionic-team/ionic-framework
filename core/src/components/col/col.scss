@@ -30,6 +30,8 @@
   flex: 1;
 
   min-height: 1px; // Prevent columns from collapsing when empty
+
+  overflow: auto;
 }
 
 :host(.ion-grid-col-auto) {
