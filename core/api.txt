@@ -2013,6 +2013,7 @@ ion-router-outlet,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-row,shadow
 ion-row,prop,mode,"ios" | "md",undefined,false,false
 ion-row,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-row,css-prop,--ion-grid-gap
 
 ion-searchbar,scoped
 ion-searchbar,prop,animated,boolean,false,false,false
