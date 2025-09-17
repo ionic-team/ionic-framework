@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Template-Driven Form Validation Test</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #templateForm="ngForm" (ngSubmit)="onSubmit(templateForm)">
+    <ion-list>
+      <!-- Test ion-input with required validation -->
+      <ion-item>
+        <ion-input 
+          label="Required Input" 
+          [(ngModel)]="inputValue" 
+          name="inputField"
+          required
+          #inputField="ngModel"
+          id="template-input-test"
+          errorText="This field is required"
+          helperText="Enter some text">
+        </ion-input>
+      </ion-item>
+      
+      <!-- Display validation state for debugging -->
+      <ion-item>
+        <ion-label>
+          <p>Input Touched: <span id="input-touched">{{inputField.touched}}</span></p>
+          <p>Input Invalid: <span id="input-invalid">{{inputField.invalid}}</span></p>
+          <p>Input Errors: <span id="input-errors">{{inputField.errors | json}}</span></p>
+        </ion-label>
+      </ion-item>
+
+      <!-- Test ion-textarea with required validation -->
+      <ion-item>
+        <ion-textarea 
+          label="Required Textarea" 
+          [(ngModel)]="textareaValue" 
+          name="textareaField"
+          required
+          #textareaField="ngModel"
+          id="template-textarea-test"
+          errorText="This field is required"
+          helperText="Enter some text"
+          rows="4">
+        </ion-textarea>
+      </ion-item>
+      
+      <!-- Display validation state for debugging -->
+      <ion-item>
+        <ion-label>
+          <p>Textarea Touched: <span id="textarea-touched">{{textareaField.touched}}</span></p>
+          <p>Textarea Invalid: <span id="textarea-invalid">{{textareaField.invalid}}</span></p>
+          <p>Textarea Errors: <span id="textarea-errors">{{textareaField.errors | json}}</span></p>
+        </ion-label>
+      </ion-item>
+
+      <!-- Additional test with minlength validation -->
+      <ion-item>
+        <ion-input 
+          label="Min Length Input (3 chars)" 
+          [(ngModel)]="minLengthValue" 
+          name="minLengthField"
+          required
+          minlength="3"
+          #minLengthField="ngModel"
+          id="template-minlength-test"
+          errorText="Minimum 3 characters required"
+          helperText="Enter at least 3 characters">
+        </ion-input>
+      </ion-item>
+      
+      <!-- Display validation state for minlength field -->
+      <ion-item>
+        <ion-label>
+          <p>MinLength Touched: <span id="minlength-touched">{{minLengthField.touched}}</span></p>
+          <p>MinLength Invalid: <span id="minlength-invalid">{{minLengthField.invalid}}</span></p>
+          <p>MinLength Errors: <span id="minlength-errors">{{minLengthField.errors | json}}</span></p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <div class="ion-padding">
+      <p>Form Valid: <span id="form-valid">{{templateForm.valid}}</span></p>
+      <p>Form Submitted: <span id="form-submitted">{{submitted}}</span></p>
+      
+      <ion-button type="submit" id="submit-button" [disabled]="!templateForm.valid">
+        Submit Form
+      </ion-button>
+      
+      <ion-button type="button" id="reset-button" (click)="resetForm(templateForm)">
+        Reset Form
+      </ion-button>
+      
+      <ion-button type="button" id="touch-all-button" (click)="templateForm.form.markAllAsTouched()">
+        Mark All as Touched
+      </ion-button>
+    </div>
+    
+    <div class="ion-padding">
+      <h3>Form Values:</h3>
+      <pre id="form-values">{{templateForm.value | json}}</pre>
+    </div>
+  </form>
+  
+  <div class="ion-padding">
+    <h3>Instructions to reproduce issue:</h3>
+    <ol>
+      <li>Click in the "Required Input" field</li>
+      <li>Click outside without entering text</li>
+      <li>The field should show as touched and invalid</li>
+      <li>The error text should appear below the input</li>
+      <li>For screen readers, the validation state should be announced</li>
+    </ol>
+    <p><strong>Note:</strong> With template-driven forms, Angular applies validation classes to the wrapper element, not directly to ion-input/ion-textarea.</p>
+  </div>
+</ion-content>

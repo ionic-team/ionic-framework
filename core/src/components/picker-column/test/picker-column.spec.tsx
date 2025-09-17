@@ -1,10 +1,10 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { PickerColumn } from '../picker-column';
 import { PickerColumnOption } from '../../picker-column-option/picker-column-option';
+import { PickerColumn } from '../picker-column';
 
-describe('picker-column: assistive element', () => {
+describe('picker-column', () => {
   beforeEach(() => {
     const mockIntersectionObserver = jest.fn();
     mockIntersectionObserver.mockReturnValue({
@@ -22,9 +22,9 @@ describe('picker-column: assistive element', () => {
     });
 
     const pickerCol = page.body.querySelector('ion-picker-column')!;
-    const assistiveFocusable = pickerCol.shadowRoot!.querySelector('.assistive-focusable')!;
+    const pickerOpts = pickerCol.shadowRoot!.querySelector('.picker-opts')!;
 
-    expect(assistiveFocusable.getAttribute('aria-label')).not.toBe(null);
+    expect(pickerOpts.getAttribute('aria-label')).not.toBe(null);
   });
 
   it('should have a custom label', async () => {
@@ -34,9 +34,9 @@ describe('picker-column: assistive element', () => {
     });
 
     const pickerCol = page.body.querySelector('ion-picker-column')!;
-    const assistiveFocusable = pickerCol.shadowRoot!.querySelector('.assistive-focusable')!;
+    const pickerOpts = pickerCol.shadowRoot!.querySelector('.picker-opts')!;
 
-    expect(assistiveFocusable.getAttribute('aria-label')).toBe('my label');
+    expect(pickerOpts.getAttribute('aria-label')).toBe('my label');
   });
 
   it('should update a custom label', async () => {
@@ -46,12 +46,12 @@ describe('picker-column: assistive element', () => {
     });
 
     const pickerCol = page.body.querySelector('ion-picker-column')!;
-    const assistiveFocusable = pickerCol.shadowRoot!.querySelector('.assistive-focusable')!;
+    const pickerOpts = pickerCol.shadowRoot!.querySelector('.picker-opts')!;
 
     pickerCol.setAttribute('aria-label', 'my label');
     await page.waitForChanges();
 
-    expect(assistiveFocusable.getAttribute('aria-label')).toBe('my label');
+    expect(pickerOpts.getAttribute('aria-label')).toBe('my label');
   });
 
   it('should receive keyboard focus when enabled', async () => {
@@ -61,9 +61,9 @@ describe('picker-column: assistive element', () => {
     });
 
     const pickerCol = page.body.querySelector('ion-picker-column')!;
-    const assistiveFocusable = pickerCol.shadowRoot!.querySelector<HTMLElement>('.assistive-focusable')!;
+    const pickerOpts = pickerCol.shadowRoot!.querySelector<HTMLElement>('.picker-opts')!;
 
-    expect(assistiveFocusable.tabIndex).toBe(0);
+    expect(pickerOpts.tabIndex).toBe(0);
   });
 
   it('should not receive keyboard focus when disabled', async () => {
@@ -73,9 +73,9 @@ describe('picker-column: assistive element', () => {
     });
 
     const pickerCol = page.body.querySelector('ion-picker-column')!;
-    const assistiveFocusable = pickerCol.shadowRoot!.querySelector<HTMLElement>('.assistive-focusable')!;
+    const pickerOpts = pickerCol.shadowRoot!.querySelector<HTMLElement>('.picker-opts')!;
 
-    expect(assistiveFocusable.tabIndex).toBe(-1);
+    expect(pickerOpts.tabIndex).toBe(-1);
   });
 
   it('should use option aria-label as assistive element aria-valuetext', async () => {
@@ -91,9 +91,9 @@ describe('picker-column: assistive element', () => {
     });
 
     const pickerCol = page.body.querySelector('ion-picker-column')!;
-    const assistiveFocusable = pickerCol.shadowRoot!.querySelector('.assistive-focusable')!;
+    const pickerOpts = pickerCol.shadowRoot!.querySelector('.picker-opts')!;
 
-    expect(assistiveFocusable.getAttribute('aria-valuetext')).toBe('My Label');
+    expect(pickerOpts.getAttribute('aria-valuetext')).toBe('My Label');
   });
 
   it('should use option text as assistive element aria-valuetext when no label provided', async () => {
@@ -107,8 +107,8 @@ describe('picker-column: assistive element', () => {
     });
 
     const pickerCol = page.body.querySelector('ion-picker-column')!;
-    const assistiveFocusable = pickerCol.shadowRoot!.querySelector('.assistive-focusable')!;
+    const pickerOpts = pickerCol.shadowRoot!.querySelector('.picker-opts')!;
 
-    expect(assistiveFocusable.getAttribute('aria-valuetext')).toBe('My Text');
+    expect(pickerOpts.getAttribute('aria-valuetext')).toBe('My Text');
   });
 });
