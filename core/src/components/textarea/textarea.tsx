@@ -82,6 +82,13 @@ export class Textarea implements ComponentInterface {
   @State() hasFocus = false;
 
   /**
+   * Track validation state for proper aria-live announcements
+   */
+  @State() isInvalid = false;
+
+  private validationObserver?: MutationObserver;
+
+  /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
@@ -328,6 +335,16 @@ export class Textarea implements ComponentInterface {
     }
   }
 
+  /**
+   * Checks if the textarea is in an invalid state based on Ionic validation classes
+   */
+  private checkValidationState(): boolean {
+    const hasIonTouched = this.el.classList.contains('ion-touched');
+    const hasIonInvalid = this.el.classList.contains('ion-invalid');
+
+    return hasIonTouched && hasIonInvalid;
+  }
+
   connectedCallback() {
     const { el } = this;
     this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => forceUpdate(this));
@@ -336,6 +353,27 @@ export class Textarea implements ComponentInterface {
       () => this.notchSpacerEl,
       () => this.labelSlot
     );
+
+    // Watch for class changes to update validation state
+    if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
+      this.validationObserver = new MutationObserver(() => {
+        const newIsInvalid = this.checkValidationState();
+        if (this.isInvalid !== newIsInvalid) {
+          this.isInvalid = newIsInvalid;
+          // Force a re-render to update aria-describedby immediately
+          forceUpdate(this);
+        }
+      });
+
+      this.validationObserver.observe(el, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    }
+
+    // Always set initial state
+    this.isInvalid = this.checkValidationState();
+
     this.debounceChanged();
     if (Build.isBrowser) {
       document.dispatchEvent(
@@ -363,6 +401,12 @@ export class Textarea implements ComponentInterface {
     if (this.notchController) {
       this.notchController.destroy();
       this.notchController = undefined;
+    }
+
+    // Clean up validation observer to prevent memory leaks
+    if (this.validationObserver) {
+      this.validationObserver.disconnect();
+      this.validationObserver = undefined;
     }
   }
 
@@ -628,22 +672,22 @@ export class Textarea implements ComponentInterface {
    * Renders the helper text or error text values
    */
   private renderHintText() {
-    const { helperText, errorText, helperTextId, errorTextId } = this;
+    const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
     return [
-      <div id={helperTextId} class="helper-text">
-        {helperText}
+      <div id={helperTextId} class="helper-text" aria-live="polite">
+        {!isInvalid ? helperText : null}
       </div>,
-      <div id={errorTextId} class="error-text">
-        {errorText}
+      <div id={errorTextId} class="error-text" role="alert">
+        {isInvalid ? errorText : null}
       </div>,
     ];
   }
 
   private getHintTextID(): string | undefined {
-    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+    const { isInvalid, helperText, errorText, helperTextId, errorTextId } = this;
 
-    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+    if (isInvalid && errorText) {
       return errorTextId;
     }
 
@@ -777,7 +821,7 @@ export class Textarea implements ComponentInterface {
                 onFocus={this.onFocus}
                 onKeyDown={this.onKeyDown}
                 aria-describedby={this.getHintTextID()}
-                aria-invalid={this.getHintTextID() === this.errorTextId}
+                aria-invalid={this.isInvalid ? 'true' : undefined}
                 {...this.inheritedAttributes}
               >
                 {value}
