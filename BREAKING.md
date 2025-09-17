@@ -18,6 +18,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Button](#version-9x-button)
   - [Card](#version-9x-card)
   - [Chip](#version-9x-chip)
+  - [Grid](#version-9x-grid)
 
 <h2 id="version-9x-components">Components</h2>
 
@@ -32,3 +33,105 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 <h4 id="version-9x-chip">Chip</h4>
 
 - The `border-radius` of the `ios` and `md` chip now defaults to `10px` and `8px`, respectively, instead of `16px` in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"round"`, or override the `--border-radius` CSS variable to specify a different value.
+
+<h4 id="version-9x-grid">Grid</h4>
+
+- The properties `pull` and `push` have been deprecated and no longer work. A similar look can be achieved with the newly added property `order`.
+
+<h5>Example 1: Swap two columns</h5>
+
+**Version up to 8.x**
+```html
+<ion-grid>
+  <ion-row>
+    <ion-col push="4">1</ion-col>
+    <ion-col pull="4">2</ion-col>
+    <ion-col>3</ion-col>
+  </ion-row>
+</ion-grid>
+```
+**Version 9.x+**
+```html
+<ion-grid>
+  <ion-row>
+    <ion-col order="2">1</ion-col>
+    <ion-col order="1">2</ion-col>
+    <ion-col order="3">3</ion-col>
+  </ion-row>
+</ion-grid>
+```
+
+<h5>Example 2: Reorder columns with specific sizes</h5>
+To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `size="3" pull="9"`:
+
+**Version up to 8.x**
+```html
+<ion-grid>
+  <ion-row>
+    <ion-col push="3">1</ion-col>
+    <ion-col pull="9">2</ion-col>
+  </ion-row>
+</ion-grid>
+```
+**Version 9.x+**
+```html
+<ion-grid>
+  <ion-row>
+    <ion-col order="2">1</ion-col>
+    <ion-col size="3" order="1">2</ion-col>
+  </ion-row>
+</ion-grid>
+```
+<h5>Example 3: Push</h5>
+```html
+<ion-grid>
+  <ion-row>
+    <ion-col size="auto" push="1">
+      <div>ion-col push 1</div>
+    </ion-col>
+    <ion-col size="auto" push="1">
+      <div>ion-col push 1</div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+```
+**Version 9.x+**
+```html
+<ion-grid>
+  <ion-row>
+    <ion-col size="auto" offset="1">
+      <div>ion-col size="auto" offset="1"</div>
+    </ion-col>
+    <ion-col size="auto">
+      <div>ion-col size="auto"</div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+```
+
+<h5>Example 4: Push and Pull</h5>
+```html
+<ion-grid>
+  <ion-row>
+    <ion-col size="3" size-md="6" push="9" push-md="6">
+      <div>ion-col size="3" size-md="6" push="9" push-md="6"</div>
+    </ion-col>
+    <ion-col size="9" size-md="6" pull="3" pull-md="6">
+      <div>ion-col size="9" size-md="6" pull="3" pull-md="6"</div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+```
+**Version 9.x+**
+```html
+<ion-grid>
+  <ion-row>
+    <ion-col size="auto" order="2" order-md="2">
+      <div>ion-col size="auto" order="2" order-md="2"</div>
+    </ion-col>
+    <ion-col size="auto" order="1" order-md="1">
+      <div>ion-col size="auto" order="1" order-md="1"</div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+```
