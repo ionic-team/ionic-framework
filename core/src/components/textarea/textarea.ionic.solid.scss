@@ -26,7 +26,7 @@
 }
 
 :host(.textarea-fill-solid) .textarea-bottom {
-    --border-width: #{globals.$ion-scale-0};
+  --border-width: #{globals.$ion-scale-0};
 }
 
 // Focus
@@ -36,7 +36,6 @@
   --border-width: #{globals.$ion-border-size-050};
   --border-color: #{globals.$ion-border-focus-default};
 }
-
 
 // Ionic Textarea - Readonly
 // ----------------------------------------------------------------
@@ -49,7 +48,6 @@
 :host(.textarea-fill-solid.textarea-readonly.ion-invalid) {
   --border-color: rgba(#{globals.$ion-semantics-danger-base-rgb}, 0.6);
 }
-
 
 // Textarea - Disabled
 // ----------------------------------------------------------------
