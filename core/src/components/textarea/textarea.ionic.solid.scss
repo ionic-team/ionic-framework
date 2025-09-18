@@ -10,15 +10,19 @@
 
 :host(.textarea-fill-solid) .textarea-wrapper {
   border-bottom: none;
+
   background: none;
 }
 
 :host(.textarea-fill-solid) .textarea-wrapper-inner {
   --border-width: #{globals.$ion-border-size-050};
+
   @include globals.border-radius(var(--border-radius));
   position: relative;
-  background: var(--background);
+
   border: var(--border-width) var(--border-style) var(--border-color);
+
+  background: var(--background);
 }
 
 :host(.textarea-fill-solid) .textarea-bottom {
