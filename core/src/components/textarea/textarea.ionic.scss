@@ -1,6 +1,7 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "./textarea.common";
 @use "./textarea.ionic.outline.scss" as outline;
+@use "./textarea.ionic.solid.scss" as solid;
 
 // Ionic Textarea
 // --------------------------------------------------
@@ -122,7 +123,7 @@
 // ----------------------------------------------------------------
 
 ion-icon {
-  color: globals.$ion-primitives-neutral-800;
+  --color: globals.$ion-icon-subtlest;
 
   font-size: globals.$ion-scale-400;
 }
@@ -188,7 +189,7 @@ ion-icon {
 
 @media (any-hover: hover) {
   :host(:hover) {
-    --border-color: #{globals.$ion-primitives-neutral-600};
+    --border-color: #{globals.$ion-border-focus-default};
   }
 }
 
@@ -196,10 +197,10 @@ ion-icon {
 // ----------------------------------------------------------------
 
 :host(.textarea-disabled) {
-  --color: #{globals.$ion-primitives-neutral-500};
-  --background: #{globals.$ion-primitives-neutral-100};
-  --border-color: #{globals.$ion-primitives-neutral-300};
-  --placeholder-color: #{globals.$ion-primitives-neutral-500};
+  --color: #{globals.$ion-text-disabled};
+  --background: #{globals.$ion-bg-input-disabled};
+  --border-color: #{globals.$ion-border-disabled};
+  --placeholder-color: #{globals.$ion-text-disabled};
 }
 
 :host(.textarea-disabled:not(.ion-valid)) .textarea-bottom .helper-text,
@@ -229,7 +230,7 @@ ion-icon {
 // ----------------------------------------------------------------
 
 :host(.textarea-readonly) {
-  --background: #{globals.$ion-primitives-neutral-100};
+  --background: #{globals.$ion-border-input-read-only};
 }
 
 /**

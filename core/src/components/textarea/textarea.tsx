@@ -776,7 +776,7 @@ export class Textarea implements ComponentInterface {
     const shape = this.getShape();
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
-    const shouldRenderHighlight = (theme === 'md' || theme === 'ionic') && fill !== 'outline' && !inItem;
+    const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
