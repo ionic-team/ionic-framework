@@ -30,7 +30,7 @@
   --checkbox-background: #{globals.$ion-bg-input-default};
   --checkbox-background-checked: #{globals.$ion-bg-primary-base-default};
   --border-color-checked: #{globals.$ion-semantics-primary-base};
-  --checkmark-color: #{globals.$ion-primitives-base-white};
+  --checkmark-color: #{globals.$ion-bg-surface-default};
   --transition: none;
 
   z-index: 2;
@@ -60,7 +60,7 @@
 }
 
 .label-text-wrapper {
-  color: globals.$ion-primitives-neutral-1200;
+  color: globals.$ion-text-default;
 }
 
 :host(.in-item) .label-text-wrapper {

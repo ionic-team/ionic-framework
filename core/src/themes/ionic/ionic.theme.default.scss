@@ -210,8 +210,8 @@ $ionic-colors: (
 // Ionic Tabs & Tab Bar
 // --------------------------------------------------
 
-$tabbar-ionic-background: var(--ion-tab-bar-background, globals.$ion-primitives-base-white);
-$tabbar-ionic-background-activated: var(--ion-tab-bar-background-activated, globals.$ion-primitives-neutral-100);
+$tabbar-ionic-background: var(--ion-tab-bar-background, globals.$ion-bg-surface-default);
+$tabbar-ionic-background-activated: var(--ion-tab-bar-background-activated, globals.$ion-bg-select-default);
 $tabbar-ionic-background-focused: var(--ion-tab-bar-background-focused, transparent);
 $tabbar-ionic-color: var(--ion-tab-bar-color, globals.$ion-primitives-neutral-800);
 $tabbar-ionic-color-selected: var(--ion-tab-bar-color-selected, globals.$ion-text-primary);

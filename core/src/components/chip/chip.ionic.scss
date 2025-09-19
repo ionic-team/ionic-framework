@@ -117,13 +117,13 @@
 
 :host(.chip-bold) {
   --background: #{globals.$ion-bg-neutral-bold-default};
-  --color: #{globals.$ion-primitives-base-white};
+  --color: #{globals.$ion-bg-surface-default};
 }
 
 :host(.chip-outline.chip-bold) {
   // TODO(FW-6450): this is a made up design choice based on a
   // darker shade of the background color
-  border-color: globals.$ion-primitives-neutral-1200;
+  border-color: globals.$ion-text-default;
 }
 
 // Chip Colors
