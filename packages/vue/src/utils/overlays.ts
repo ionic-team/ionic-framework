@@ -1,5 +1,5 @@
-import type { VNode, ComponentOptions } from "vue";
-import { defineComponent, h, ref, onMounted } from "vue";
+import type { ComponentOptions, VNode } from "vue";
+import { defineComponent, h, onMounted, ref } from "vue";
 
 // TODO(FW-2969): types
 
@@ -147,23 +147,30 @@ export const defineOverlayContainer = <Props extends object>(
       const elementRef = ref();
 
       onMounted(() => {
+        // Convert name from kebab-case to camelCase
+        const componentName = name.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
         elementRef.value.addEventListener("ionMount", (ev: Event) => {
           emit("ionMount", ev);
+          emit(componentName + "IonMount", ev);
           isOpen.value = true;
         });
         elementRef.value.addEventListener("willPresent", (ev: Event) => {
           emit("willPresent", ev);
+          emit(componentName + "WillPresent", ev);
           isOpen.value = true;
         });
         elementRef.value.addEventListener("didDismiss", (ev: Event) => {
           emit("didDismiss", ev);
+          emit(componentName + "DidDismiss", ev);
           isOpen.value = false;
         });
         elementRef.value.addEventListener("willDismiss", (ev: Event) => {
           emit("willDismiss", ev);
+          emit(componentName + "WillDismiss", ev);
         });
         elementRef.value.addEventListener("didPresent", (ev: Event) => {
           emit("didPresent", ev);
+          emit(componentName + "DidPresent", ev);
         });
       });
 
