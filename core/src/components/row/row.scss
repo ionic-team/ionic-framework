@@ -2,9 +2,13 @@
 
 // Row
 // --------------------------------------------------
-
 :host {
   display: flex;
 
   flex-wrap: wrap;
+
+  /**
+   * @prop --ion-grid-gap: The gap between grid items
+   */
+  gap: var(--ion-grid-gap, 0px);
 }
