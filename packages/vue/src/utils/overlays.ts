@@ -148,7 +148,9 @@ export const defineOverlayContainer = <Props extends object>(
 
       onMounted(() => {
         // Convert name from kebab-case to camelCase
-        const componentName = name.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+        const componentName = name.replace(/-([a-z])/g, (_, letter) =>
+          letter.toUpperCase()
+        );
         elementRef.value.addEventListener("ionMount", (ev: Event) => {
           emit("ionMount", ev);
           emit(componentName + "IonMount", ev);
