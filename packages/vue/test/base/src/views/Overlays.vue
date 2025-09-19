@@ -64,6 +64,10 @@
         Modal onDidPresent: <div id="didPresent">{{ didPresent }}</div><br />
         Modal onWillDismiss: <div id="willDismiss">{{ willDismiss }}</div><br />
         Modal onDidDismiss: <div id="didDismiss">{{ didDismiss }}</div><br />
+        Modal ionModalWillPresent: <div id="ionModalWillPresent">{{ ionModalWillPresent }}</div><br />
+        Modal ionModalDidPresent: <div id="ionModalDidPresent">{{ ionModalDidPresent }}</div><br />
+        Modal ionModalWillDismiss: <div id="ionModalWillDismiss">{{ ionModalWillDismiss }}</div><br />
+        Modal ionModalDidDismiss: <div id="ionModalDidDismiss">{{ ionModalDidDismiss }}</div><br />
       </div>
 
       <ion-action-sheet
@@ -98,6 +102,10 @@
         @didPresent="onModalDidPresent"
         @willDismiss="onModalWillDismiss"
         @didDismiss="onModalDidDismiss"
+        @ionModalWillPresent="onModalIonWillPresent"
+        @ionModalDidPresent="onModalIonDidPresent"
+        @ionModalWillDismiss="onModalIonWillDismiss"
+        @ionModalDidDismiss="onModalIonDidDismiss"
       >
         <ModalContent :title="overlayProps.title"></ModalContent>
       </ion-modal>
@@ -335,21 +343,37 @@ export default defineComponent({
     const didPresent = ref(0);
     const willDismiss = ref(0);
     const didDismiss = ref(0);
+    const ionModalWillPresent = ref(0);
+    const ionModalDidPresent = ref(0);
+    const ionModalWillDismiss = ref(0);
+    const ionModalDidDismiss = ref(0);
 
     const onModalWillPresent = () => willPresent.value += 1;
     const onModalDidPresent = () => { didPresent.value += 1; setModalRef(true); }
     const onModalWillDismiss = () => willDismiss.value += 1;
     const onModalDidDismiss = () => { didDismiss.value += 1; setModalRef(false); }
+    const onModalIonWillPresent = () => ionModalWillPresent.value += 1;
+    const onModalIonDidPresent = () => ionModalDidPresent.value += 1;
+    const onModalIonWillDismiss = () => ionModalWillDismiss.value += 1;
+    const onModalIonDidDismiss = () => ionModalDidDismiss.value += 1;
 
     return {
       onModalWillPresent,
       onModalDidPresent,
       onModalWillDismiss,
       onModalDidDismiss,
+      onModalIonWillPresent,
+      onModalIonDidPresent,
+      onModalIonWillDismiss,
+      onModalIonDidDismiss,
       willPresent,
       didPresent,
       willDismiss,
       didDismiss,
+      ionModalWillPresent,
+      ionModalDidPresent,
+      ionModalWillDismiss,
+      ionModalDidDismiss,
       changeLoadingProps,
       overlayProps,
       present,
