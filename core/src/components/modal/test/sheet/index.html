@@ -151,6 +151,53 @@
           >
             Backdrop is inactive
           </button>
+          <button id="present-inline-sheet-modal">Present Inline Sheet Modal</button>
+
+          <div id="inline-sheet-modal-container">
+            <ion-modal id="inline-sheet-modal" mode="md">
+              <ion-content>
+                <ion-searchbar id="inline-sheet-searchbar" placeholder="Search"></ion-searchbar>
+                <ion-list>
+                  <ion-item>
+                    <ion-avatar slot="start">
+                      <ion-img src="https://i.pravatar.cc/300?u=b"></ion-img>
+                    </ion-avatar>
+                    <ion-label>
+                      <h2>Connor Smith</h2>
+                      <p>Sales Rep</p>
+                    </ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-avatar slot="start">
+                      <ion-img src="https://i.pravatar.cc/300?u=a"></ion-img>
+                    </ion-avatar>
+                    <ion-label>
+                      <h2>Daniel Smith</h2>
+                      <p>Product Designer</p>
+                    </ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-avatar slot="start">
+                      <ion-img src="https://i.pravatar.cc/300?u=d"></ion-img>
+                    </ion-avatar>
+                    <ion-label>
+                      <h2>Greg Smith</h2>
+                      <p>Director of Operations</p>
+                    </ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-avatar slot="start">
+                      <ion-img src="https://i.pravatar.cc/300?u=e"></ion-img>
+                    </ion-avatar>
+                    <ion-label>
+                      <h2>Zoey Smith</h2>
+                      <p>CEO</p>
+                    </ion-label>
+                  </ion-item>
+                </ion-list>
+              </ion-content>
+            </ion-modal>
+          </div>
 
           <div class="grid">
             <div class="grid-item red"></div>
@@ -172,6 +219,36 @@
       window.addEventListener('ionModalWillDismiss', function (e) {
         console.log('WillDismiss', e);
       });
+
+      const inlineSheetModal = document.querySelector('#inline-sheet-modal');
+      const inlineSheetTrigger = document.querySelector('#present-inline-sheet-modal');
+      const inlineSheetSearchbar = document.querySelector('#inline-sheet-searchbar');
+
+      if (inlineSheetModal) {
+        inlineSheetModal.initialBreakpoint = 0.2;
+        inlineSheetModal.breakpoints = [0, 0.2, 0.75, 1];
+        inlineSheetModal.backdropDismiss = false;
+        inlineSheetModal.backdropBreakpoint = 0.5;
+        inlineSheetModal.focusTrap = false;
+        inlineSheetModal.handleBehavior = 'cycle';
+        inlineSheetModal.presentingElement = document.querySelector('.ion-page');
+
+        inlineSheetModal.addEventListener('ionModalDidDismiss', () => {
+          inlineSheetModal.isOpen = false;
+        });
+
+        if (inlineSheetTrigger) {
+          inlineSheetTrigger.addEventListener('click', () => {
+            inlineSheetModal.isOpen = true;
+          });
+        }
+
+        if (inlineSheetSearchbar) {
+          inlineSheetSearchbar.addEventListener('click', () => {
+            inlineSheetModal.setCurrentBreakpoint(0.75);
+          });
+        }
+      }
 
       function createModal(options) {
         let items = '';
