@@ -664,7 +664,9 @@ export const dismiss = async <OverlayDismissOptions>(
    * from the root element when the last focus-trapping overlay
    * is dismissed.
    */
-  const overlaysTrappingFocus = presentedOverlays.filter((o) => o.tagName !== 'ION-TOAST' && (o as any).focusTrap !== false);
+  const overlaysTrappingFocus = presentedOverlays.filter(
+    (o) => o.tagName !== 'ION-TOAST' && (o as any).focusTrap !== false
+  );
   const overlayEl = overlay.el as HTMLIonOverlayElement & { focusTrap?: boolean };
   const trapsFocus = overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false;
 
