@@ -529,9 +529,14 @@ export const present = async <OverlayPresentOptions>(
    * focus traps.
    *
    * All other overlays should have focus traps to prevent
-   * the keyboard focus from leaving the overlay.
+   * the keyboard focus from leaving the overlay unless
+   * developers explicitly opt out (for example, sheet
+   * modals that should permit background interaction).
    */
-  if (overlay.el.tagName !== 'ION-TOAST') {
+  const overlayEl = overlay.el as HTMLIonOverlayElement & { focusTrap?: boolean };
+  const shouldTrapFocus = overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false;
+
+  if (shouldTrapFocus) {
     setRootAriaHidden(true);
     document.body.classList.add(BACKDROP_NO_SCROLL);
   }
@@ -653,22 +658,24 @@ export const dismiss = async <OverlayDismissOptions>(
    * For accessibility, toasts lack focus traps and don't receive
    * `aria-hidden` on the root element when presented.
    *
-   * All other overlays use focus traps to keep keyboard focus
-   * within the overlay, setting `aria-hidden` on the root element
-   * to enhance accessibility.
-   *
-   * Therefore, we must remove `aria-hidden` from the root element
-   * when the last non-toast overlay is dismissed.
+   * Overlays that opt into focus trapping set `aria-hidden`
+   * on the root element to keep keyboard focus and pointer
+   * events inside the overlay. We must remove `aria-hidden`
+   * from the root element when the last focus-trapping overlay
+   * is dismissed.
    */
-  const overlaysNotToast = presentedOverlays.filter((o) => o.tagName !== 'ION-TOAST');
-
-  const lastOverlayNotToast = overlaysNotToast.length === 1 && overlaysNotToast[0].id === overlay.el.id;
+  const overlaysTrappingFocus = presentedOverlays.filter((o) => o.tagName !== 'ION-TOAST' && (o as any).focusTrap !== false);
+  const overlayEl = overlay.el as HTMLIonOverlayElement & { focusTrap?: boolean };
+  const trapsFocus = overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false;
 
   /**
-   * If this is the last visible overlay that is not a toast
+   * If this is the last visible overlay that is trapping focus
    * then we want to re-add the root to the accessibility tree.
    */
-  if (lastOverlayNotToast) {
+  const lastOverlayTrappingFocus =
+    trapsFocus && overlaysTrappingFocus.length === 1 && overlaysTrappingFocus[0].id === overlayEl.id;
+
+  if (lastOverlayTrappingFocus) {
     setRootAriaHidden(false);
     document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
