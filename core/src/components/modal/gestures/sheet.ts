@@ -95,6 +95,11 @@ export const createSheetGesture = (
   const contentAnimation = animation.childAnimations.find((ani) => ani.id === 'contentAnimation');
 
   const enableBackdrop = () => {
+    // Respect explicit opt-out of focus trapping/backdrop interactions
+    // If focusTrap is false, do not enable the backdrop or re-enable focus trap
+    if ((baseEl as HTMLIonModalElement & { focusTrap?: boolean }).focusTrap === false) {
+      return;
+    }
     baseEl.style.setProperty('pointer-events', 'auto');
     backdropEl.style.setProperty('pointer-events', 'auto');
 
@@ -235,7 +240,9 @@ export const createSheetGesture = (
      * ion-backdrop and .modal-wrapper always have pointer-events: auto
      * applied, so the modal content can still be interacted with.
      */
-    const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
+    const shouldEnableBackdrop =
+      currentBreakpoint > backdropBreakpoint &&
+      (baseEl as HTMLIonModalElement & { focusTrap?: boolean }).focusTrap !== false;
     if (shouldEnableBackdrop) {
       enableBackdrop();
     } else {
@@ -582,7 +589,9 @@ export const createSheetGesture = (
                    * Backdrop should become enabled
                    * after the backdropBreakpoint value
                    */
-                  const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
+                  const shouldEnableBackdrop =
+                    currentBreakpoint > backdropBreakpoint &&
+                    (baseEl as HTMLIonModalElement & { focusTrap?: boolean }).focusTrap !== false;
                   if (shouldEnableBackdrop) {
                     enableBackdrop();
                   } else {
