@@ -102,10 +102,10 @@
         @didPresent="onModalDidPresent"
         @willDismiss="onModalWillDismiss"
         @didDismiss="onModalDidDismiss"
-        @ionModalWillPresent="onModalIonWillPresent"
-        @ionModalDidPresent="onModalIonDidPresent"
-        @ionModalWillDismiss="onModalIonWillDismiss"
-        @ionModalDidDismiss="onModalIonDidDismiss"
+        @ionModalWillPresent="onIonModalWillPresent"
+        @ionModalDidPresent="onIonModalDidPresent"
+        @ionModalWillDismiss="onIonModalWillDismiss"
+        @ionModalDidDismiss="onIonModalDidDismiss"
       >
         <ModalContent :title="overlayProps.title"></ModalContent>
       </ion-modal>
@@ -365,20 +365,20 @@ export default defineComponent({
     const onModalDidPresent = () => { didPresent.value += 1; setModalRef(true); }
     const onModalWillDismiss = () => willDismiss.value += 1;
     const onModalDidDismiss = () => { didDismiss.value += 1; setModalRef(false); }
-    const onModalIonWillPresent = () => ionModalWillPresent.value += 1;
-    const onModalIonDidPresent = () => ionModalDidPresent.value += 1;
-    const onModalIonWillDismiss = () => ionModalWillDismiss.value += 1;
-    const onModalIonDidDismiss = () => ionModalDidDismiss.value += 1;
+    const onIonModalWillPresent = () => ionModalWillPresent.value += 1;
+    const onIonModalDidPresent = () => ionModalDidPresent.value += 1;
+    const onIonModalWillDismiss = () => ionModalWillDismiss.value += 1;
+    const onIonModalDidDismiss = () => ionModalDidDismiss.value += 1;
 
     return {
       onModalWillPresent,
       onModalDidPresent,
       onModalWillDismiss,
       onModalDidDismiss,
-      onModalIonWillPresent,
-      onModalIonDidPresent,
-      onModalIonWillDismiss,
-      onModalIonDidDismiss,
+      onIonModalWillPresent,
+      onIonModalDidPresent,
+      onIonModalWillDismiss,
+      onIonModalDidDismiss,
       willPresent,
       didPresent,
       willDismiss,
