@@ -25,9 +25,6 @@
   background: var(--background);
 }
 
-:host(.textarea-fill-solid) .textarea-bottom {
-  --border-width: #{globals.$ion-scale-0};
-}
 
 // Focus
 // ----------------------------------------------------------------
