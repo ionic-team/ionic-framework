@@ -179,7 +179,6 @@ ion-icon {
 :host(.has-focus) {
   --border-color: #{globals.$ion-border-focus-default};
   --border-width: #{globals.$ion-border-size-050};
-  
 }
 
 :host(.has-focus) .textarea-highlight {

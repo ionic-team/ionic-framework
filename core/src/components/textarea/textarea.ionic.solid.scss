@@ -35,7 +35,7 @@
   --border-color: #{globals.$ion-border-focus-default};
 }
 
-:host(.textarea-fill-solid.has-focus.ion-valid){
+:host(.textarea-fill-solid.has-focus.ion-valid) {
   --border-width: #{globals.$ion-border-size-050};
 }
 
