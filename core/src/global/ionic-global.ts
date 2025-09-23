@@ -4,7 +4,7 @@ import { applyGlobalTheme, getCustomTheme } from '@utils/theme';
 
 import type { IonicConfig, Mode, Theme } from '../interface';
 import { defaultTheme as baseTheme } from '../themes/base/default.tokens';
-import type { Theme as BaseTheme } from '../themes/base/default.tokens';
+import type { BaseTheme } from '../themes/themes.interfaces';
 import { shouldUseCloseWatcher } from '../utils/hardware-back-button';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
