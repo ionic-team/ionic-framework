@@ -8,13 +8,13 @@
 
 :host {
   --border-color: #{globals.$ion-primitives-neutral-500};
-  --color: #{globals.$ion-primitives-neutral-1200};
+  --color: #{globals.$ion-text-default};
   --highlight-color-valid: #{globals.$ion-semantics-success-900};
   --highlight-color-invalid: #{globals.$ion-semantics-danger-800};
   --highlight-color-focused: #{globals.ion-color(primary, base)};
   --placeholder-color: #{globals.$ion-primitives-neutral-800};
   --placeholder-opacity: 1;
-  --background: #{globals.$ion-primitives-base-white};
+  --background: #{globals.$ion-bg-surface-default};
   --padding-bottom: #{globals.$ion-space-200};
 
   @include globals.typography(globals.$ion-body-md-regular);

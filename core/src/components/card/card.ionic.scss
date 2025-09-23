@@ -5,12 +5,12 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ion-primitives-base-white};
+  --background: #{globals.$ion-bg-surface-default};
   --border-width: #{globals.$ion-border-size-025};
   --border-color: #{globals.$ion-border-default};
   --border-style: #{globals.$ion-border-style-solid};
   --border-radius: #{globals.$ion-round-xl};
-  --color: #{globals.$ion-primitives-neutral-1200};
+  --color: #{globals.$ion-text-default};
   min-width: globals.$ion-scale-2400;
 
   border: var(--border-width) var(--border-style) var(--border-color);
