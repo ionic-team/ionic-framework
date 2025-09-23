@@ -90,7 +90,9 @@ export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): 
       }
 
       // Generate rgb variables for base and contrast color variants
-      if (key === 'bold' || key === 'subtle') {
+      // These are only generated when processing global color objects,
+      // not component-level color overrides
+      if ((key === 'bold' || key === 'subtle') && prefix.includes('color')) {
         if (typeof val === 'object' && val !== null) {
           return Object.entries(val).flatMap(([property, hexValue]) => {
             if (typeof hexValue === 'string' && hexValue.startsWith('#')) {
@@ -255,6 +257,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
   }
 
   // Exclude components and palette from the default tokens
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { palette, components, ...defaultTokens } = theme;
 
   // Generate CSS variables for the default design tokens
