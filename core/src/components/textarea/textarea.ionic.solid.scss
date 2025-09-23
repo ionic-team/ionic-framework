@@ -37,7 +37,6 @@
 
 :host(.textarea-fill-solid.has-focus.ion-valid),
 :host(.textarea-fill-solid.ion-touched.ion-invalid) {
-  
   --border-width: #{globals.$ion-border-size-050};
   --border-color: var(--highlight-color);
 }
