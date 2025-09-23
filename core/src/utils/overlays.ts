@@ -494,10 +494,8 @@ export const setRootAriaHidden = (hidden = false) => {
 
   if (hidden) {
     viewContainer.setAttribute('aria-hidden', 'true');
-    viewContainer.setAttribute('inert', '');
   } else {
     viewContainer.removeAttribute('aria-hidden');
-    viewContainer.removeAttribute('inert');
   }
 };
 
@@ -532,17 +530,34 @@ export const present = async <OverlayPresentOptions>(
    * the keyboard focus from leaving the overlay unless
    * developers explicitly opt out (for example, sheet
    * modals that should permit background interaction).
+   *
+   * Note: Some apps move inline overlays to a specific container
+   * during the willPresent lifecycle (e.g., React portals via
+   * onWillPresent). Defer applying aria-hidden/inert to the app
+   * root until after willPresent so we can detect where the
+   * overlay is finally inserted. If the overlay is inside the
+   * view container subtree, skip adding aria-hidden/inert there
+   * to avoid disabling the overlay.
    */
-  const overlayEl = overlay.el as HTMLIonOverlayElement & { focusTrap?: boolean };
+  const overlayEl = overlay.el as HTMLIonOverlayElement & { focusTrap?: boolean; showBackdrop?: boolean };
   const shouldTrapFocus = overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false;
-
-  if (shouldTrapFocus) {
-    setRootAriaHidden(true);
-    document.body.classList.add(BACKDROP_NO_SCROLL);
-  }
+  // Only lock out root content when backdrop is active. Developers relying on showBackdrop=false
+  // expect background interaction to remain enabled.
+  const shouldLockRoot = shouldTrapFocus && overlayEl.showBackdrop !== false;
 
   overlay.presented = true;
   overlay.willPresent.emit();
+
+  if (shouldLockRoot) {
+    const root = getAppRoot(document);
+    const viewContainer = root.querySelector('ion-router-outlet, #ion-view-container-root');
+    const overlayInsideViewContainer = viewContainer ? viewContainer.contains(overlayEl) : false;
+
+    if (!overlayInsideViewContainer) {
+      setRootAriaHidden(true);
+    }
+    document.body.classList.add(BACKDROP_NO_SCROLL);
+  }
   overlay.willPresentShorthand?.emit();
 
   const mode = getIonMode(overlay);
@@ -664,18 +679,19 @@ export const dismiss = async <OverlayDismissOptions>(
    * from the root element when the last focus-trapping overlay
    * is dismissed.
    */
-  const overlaysTrappingFocus = presentedOverlays.filter(
-    (o) => o.tagName !== 'ION-TOAST' && (o as any).focusTrap !== false
-  );
-  const overlayEl = overlay.el as HTMLIonOverlayElement & { focusTrap?: boolean };
-  const trapsFocus = overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false;
+  const overlaysLockingRoot = presentedOverlays.filter((o) => {
+    const el = o as HTMLIonOverlayElement & { focusTrap?: boolean; showBackdrop?: boolean };
+    return el.tagName !== 'ION-TOAST' && el.focusTrap !== false && el.showBackdrop !== false;
+  });
+  const overlayEl = overlay.el as HTMLIonOverlayElement & { focusTrap?: boolean; showBackdrop?: boolean };
+  const locksRoot = overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false && overlayEl.showBackdrop !== false;
 
   /**
    * If this is the last visible overlay that is trapping focus
    * then we want to re-add the root to the accessibility tree.
    */
   const lastOverlayTrappingFocus =
-    trapsFocus && overlaysTrappingFocus.length === 1 && overlaysTrappingFocus[0].id === overlayEl.id;
+    locksRoot && overlaysLockingRoot.length === 1 && overlaysLockingRoot[0].id === overlayEl.id;
 
   if (lastOverlayTrappingFocus) {
     setRootAriaHidden(false);

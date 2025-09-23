@@ -96,8 +96,9 @@ export const createSheetGesture = (
 
   const enableBackdrop = () => {
     // Respect explicit opt-out of focus trapping/backdrop interactions
-    // If focusTrap is false, do not enable the backdrop or re-enable focus trap
-    if ((baseEl as HTMLIonModalElement & { focusTrap?: boolean }).focusTrap === false) {
+    // If focusTrap is false or showBackdrop is false, do not enable the backdrop or re-enable focus trap
+    const el = baseEl as HTMLIonModalElement & { focusTrap?: boolean; showBackdrop?: boolean };
+    if (el.focusTrap === false || el.showBackdrop === false) {
       return;
     }
     baseEl.style.setProperty('pointer-events', 'auto');
@@ -242,7 +243,8 @@ export const createSheetGesture = (
      */
     const shouldEnableBackdrop =
       currentBreakpoint > backdropBreakpoint &&
-      (baseEl as HTMLIonModalElement & { focusTrap?: boolean }).focusTrap !== false;
+      (baseEl as HTMLIonModalElement & { focusTrap?: boolean }).focusTrap !== false &&
+      (baseEl as HTMLIonModalElement & { showBackdrop?: boolean }).showBackdrop !== false;
     if (shouldEnableBackdrop) {
       enableBackdrop();
     } else {
@@ -591,7 +593,8 @@ export const createSheetGesture = (
                    */
                   const shouldEnableBackdrop =
                     currentBreakpoint > backdropBreakpoint &&
-                    (baseEl as HTMLIonModalElement & { focusTrap?: boolean }).focusTrap !== false;
+                    (baseEl as HTMLIonModalElement & { focusTrap?: boolean }).focusTrap !== false &&
+                    (baseEl as HTMLIonModalElement & { showBackdrop?: boolean }).showBackdrop !== false;
                   if (shouldEnableBackdrop) {
                     enableBackdrop();
                   } else {
