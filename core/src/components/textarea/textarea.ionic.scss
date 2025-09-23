@@ -230,7 +230,7 @@ ion-icon {
 // ----------------------------------------------------------------
 
 :host(.textarea-readonly) {
-  --background: #{globals.$ion-border-input-read-only};
+  --background: #{globals.$ion-bg-input-read-only};
 }
 
 /**
