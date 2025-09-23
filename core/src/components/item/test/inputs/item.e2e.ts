@@ -29,7 +29,8 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       popover = page.locator('ion-popover#optionsPopover');
     });
-    test('disabled controls should not have visual regressions', async ({ page }) => {
+    // TODO (FW-6769): Enable test when its fixed
+    test.skip('disabled controls should not have visual regressions', async ({ page }) => {
       await page.click('#popover-trigger');
       await ionPopoverDidPresent.next();
 

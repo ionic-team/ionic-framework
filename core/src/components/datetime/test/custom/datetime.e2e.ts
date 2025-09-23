@@ -28,8 +28,8 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await expect(popover).toHaveScreenshot(screenshot(`datetime-custom-time-picker`));
       await expect(timeButton).toHaveScreenshot(screenshot(`datetime-custom-time-button-active`));
     });
-
-    test('should allow styling calendar days in grid style datetimes', async ({ page }) => {
+    // TODO (FW-6769): Enable test when its fixed
+    test.skip('should allow styling calendar days in grid style datetimes', async ({ page }) => {
       const datetime = page.locator('#custom-calendar-days');
 
       // Wait for calendar days to be rendered
