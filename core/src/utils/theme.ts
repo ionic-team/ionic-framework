@@ -151,7 +151,7 @@ export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): 
  *   --ion-color-contrast-rgb: var(--ion-color-primary-contrast-rgb, var(--ion-color-primary-bold-contrast-rgb));
  *   --ion-color-shade: var(--ion-color-primary-shade, var(--ion-color-primary-bold-shade));
  *   --ion-color-tint: var(--ion-color-primary-tint, var(--ion-color-primary-bold-tint));
- *   --ion-color-foreground: var(--ion-color-primary, var(--ion-color-primary-bold-foreground));
+ *   --ion-color-foreground: var(--ion-color-primary, var(--ion-color-primary-foreground, var(--ion-color-primary-bold-foreground)));
  *
  *   --ion-color-subtle-base: var(--ion-color-primary-subtle);
  *   --ion-color-subtle-base-rgb: var(--ion-color-primary-subtle-rgb);
@@ -187,6 +187,7 @@ export const generateColorClasses = (theme: any): string => {
     // Includes base color variables without the bold modifier for
     // backwards compatibility. The foreground variables falls back to the
     // base color because it is new.
+    // TODO: Remove the fallbacks once the bold variables are the default
     if (colorVariants.bold) {
       cssVariableRules.push(
         `--ion-color-base: var(--ion-color-${colorName}, var(--ion-color-${colorName}-bold)) !important;`,
@@ -195,7 +196,7 @@ export const generateColorClasses = (theme: any): string => {
         `--ion-color-contrast-rgb: var(--ion-color-${colorName}-contrast-rgb, var(--ion-color-${colorName}-bold-contrast-rgb)) !important;`,
         `--ion-color-shade: var(--ion-color-${colorName}-shade, var(--ion-color-${colorName}-bold-shade)) !important;`,
         `--ion-color-tint: var(--ion-color-${colorName}-tint, var(--ion-color-${colorName}-bold-tint)) !important;`,
-        `--ion-color-foreground: var(--ion-color-${colorName}, var(--ion-color-${colorName}-bold-foreground)) !important;`
+        `--ion-color-foreground: var(--ion-color-${colorName}, var(--ion-color-${colorName}-foreground, var(--ion-color-${colorName}-bold-foreground))) !important;`
       );
     }
 

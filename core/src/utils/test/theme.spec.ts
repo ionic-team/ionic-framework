@@ -362,16 +362,38 @@ describe('generateGlobalThemeCSS', () => {
         --ion-dynamic-font: -apple-system-body;
 
         --ion-color-primary-bold: #0054e9;
+        --ion-color-primary-bold-rgb: 0, 84, 233;
         --ion-color-primary-bold-contrast: #ffffff;
+        --ion-color-primary-bold-contrast-rgb: 255, 255, 255;
         --ion-color-primary-bold-shade: #0041c4;
         --ion-color-primary-bold-tint: #0065ff;
         --ion-color-primary-subtle: #0054e9;
+        --ion-color-primary-subtle-rgb: 0, 84, 233;
         --ion-color-primary-subtle-contrast: #ffffff;
+        --ion-color-primary-subtle-contrast-rgb: 255, 255, 255;
         --ion-color-primary-subtle-shade: #0041c4;
         --ion-color-primary-subtle-tint: #0065ff;
         --ion-color-red-50: #ffebee;
         --ion-color-red-100: #ffcdd2;
         --ion-color-red-200: #ef9a9a;
+      }
+
+      :root .ion-color-primary {
+        --ion-color-base: var(--ion-color-primary, var(--ion-color-primary-bold)) !important;
+        --ion-color-base-rgb: var(--ion-color-primary-rgb, var(--ion-color-primary-bold-rgb)) !important;
+        --ion-color-contrast: var(--ion-color-primary-contrast, var(--ion-color-primary-bold-contrast)) !important;
+        --ion-color-contrast-rgb: var(--ion-color-primary-contrast-rgb, var(--ion-color-primary-bold-contrast-rgb)) !important;
+        --ion-color-shade: var(--ion-color-primary-shade, var(--ion-color-primary-bold-shade)) !important;
+        --ion-color-tint: var(--ion-color-primary-tint, var(--ion-color-primary-bold-tint)) !important;
+        --ion-color-foreground: var(--ion-color-primary, var(--ion-color-primary-foreground, var(--ion-color-primary-bold-foreground))) !important;
+
+        --ion-color-subtle-base: var(--ion-color-primary-subtle) !important;
+        --ion-color-subtle-base-rgb: var(--ion-color-primary-subtle-rgb) !important;
+        --ion-color-subtle-contrast: var(--ion-color-primary-subtle-contrast) !important;
+        --ion-color-subtle-contrast-rgb: var(--ion-color-primary-subtle-contrast-rgb) !important;
+        --ion-color-subtle-shade: var(--ion-color-primary-subtle-shade) !important;
+        --ion-color-subtle-tint: var(--ion-color-primary-subtle-tint) !important;
+        --ion-color-subtle-foreground: var(--ion-color-primary-subtle-foreground) !important;
       }
     `.replace(/\s/g, '');
 
@@ -483,11 +505,15 @@ describe('generateGlobalThemeCSS', () => {
         :root {
           --ion-enabled: system;
           --ion-color-primary-bold: #0054e9;
+          --ion-color-primary-bold-rgb: 0, 84, 233;
           --ion-color-primary-bold-contrast: #ffffff;
+          --ion-color-primary-bold-contrast-rgb: 255, 255, 255;
           --ion-color-primary-bold-shade: #0041c4;
           --ion-color-primary-bold-tint: #0065ff;
           --ion-color-primary-subtle: #0054e9;
+          --ion-color-primary-subtle-rgb: 0, 84, 233;
           --ion-color-primary-subtle-contrast: #ffffff;
+          --ion-color-primary-subtle-contrast-rgb: 255, 255, 255;
           --ion-color-primary-subtle-shade: #0041c4;
           --ion-color-primary-subtle-tint: #0065ff;
           --ion-color-red-50: #ffebee;
