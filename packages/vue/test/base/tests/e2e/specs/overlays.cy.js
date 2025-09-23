@@ -269,6 +269,92 @@ describe('Overlays', () => {
     });
   });
 
+  it('should fire lifecycle events on controller overlays', () => {
+    cy.get('ion-radio#ion-modal').click();
+    cy.get('ion-radio#controller').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    testLifecycle('overlays', {
+      willPresent: 1,
+      didPresent: 1,
+      willDismiss: 0,
+      didDismiss: 0
+    });
+
+    cy.get('ion-modal #dismiss').click();
+
+    testLifecycle('overlays', {
+      willPresent: 1,
+      didPresent: 1,
+      willDismiss: 1,
+      didDismiss: 1
+    });
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    testLifecycle('overlays', {
+      willPresent: 2,
+      didPresent: 2,
+      willDismiss: 1,
+      didDismiss: 1
+    });
+
+    cy.get('ion-modal #dismiss').click();
+
+    testLifecycle('overlays', {
+      willPresent: 2,
+      didPresent: 2,
+      willDismiss: 2,
+      didDismiss: 2
+    });
+  });
+
+  it('should fire long-form lifecycle events on controller overlays', () => {
+    cy.get('ion-radio#ion-modal').click();
+    cy.get('ion-radio#controller').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    testLongLifecycle('overlays', {
+      willPresent: 1,
+      didPresent: 1,
+      willDismiss: 0,
+      didDismiss: 0
+    });
+
+    cy.get('ion-modal #dismiss').click();
+
+    testLongLifecycle('overlays', {
+      willPresent: 1,
+      didPresent: 1,
+      willDismiss: 1,
+      didDismiss: 1
+    });
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    testLongLifecycle('overlays', {
+      willPresent: 2,
+      didPresent: 2,
+      willDismiss: 1,
+      didDismiss: 1
+    });
+
+    cy.get('ion-modal #dismiss').click();
+
+    testLongLifecycle('overlays', {
+      willPresent: 2,
+      didPresent: 2,
+      willDismiss: 2,
+      didDismiss: 2
+    });
+  });
+
   it('should unmount modal via component', () => {
     cy.get('ion-radio#ion-modal').click();
     cy.get('ion-radio#component').click();

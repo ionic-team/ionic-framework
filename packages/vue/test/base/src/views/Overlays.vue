@@ -274,6 +274,19 @@ export default defineComponent({
 
     const openModal = async () => {
       const modal = await modalController.create({ cssClass: "ion-modal-controller", component: ModalContent, componentProps: overlayProps });
+
+      // Attach lifecycle listeners for controller-created modal
+      modal.addEventListener('willPresent', () => { willPresent.value += 1; });
+      modal.addEventListener('didPresent', () => { didPresent.value += 1; });
+      modal.addEventListener('willDismiss', () => { willDismiss.value += 1; });
+      modal.addEventListener('didDismiss', () => { didDismiss.value += 1; });
+
+      // Long-form event names
+      modal.addEventListener('ionModalWillPresent', () => { ionModalWillPresent.value += 1; });
+      modal.addEventListener('ionModalDidPresent', () => { ionModalDidPresent.value += 1; });
+      modal.addEventListener('ionModalWillDismiss', () => { ionModalWillDismiss.value += 1; });
+      modal.addEventListener('ionModalDidDismiss', () => { ionModalDidDismiss.value += 1; });
+
       await modal.present();
     }
 
