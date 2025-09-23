@@ -684,7 +684,8 @@ export const dismiss = async <OverlayDismissOptions>(
     return el.tagName !== 'ION-TOAST' && el.focusTrap !== false && el.showBackdrop !== false;
   });
   const overlayEl = overlay.el as HTMLIonOverlayElement & { focusTrap?: boolean; showBackdrop?: boolean };
-  const locksRoot = overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false && overlayEl.showBackdrop !== false;
+  const locksRoot =
+    overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false && overlayEl.showBackdrop !== false;
 
   /**
    * If this is the last visible overlay that is trapping focus
