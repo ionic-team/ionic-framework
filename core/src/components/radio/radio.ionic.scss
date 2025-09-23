@@ -17,7 +17,7 @@
 
   min-height: globals.$ion-scale-1200;
 
-  color: globals.$ion-primitives-neutral-1200;
+  color: globals.$ion-text-default;
 }
 
 // Radio Color
@@ -55,7 +55,7 @@
   border-style: var(--border-style);
   border-color: var(--color);
 
-  background-color: globals.$ion-primitives-base-white;
+  background-color: globals.$ion-bg-surface-default;
 }
 
 // Ionic Radio Inner Circle: Unchecked
@@ -67,7 +67,7 @@
   width: calc(32% + var(--border-width));
   height: calc(32% + var(--border-width));
 
-  background-color: globals.$ion-primitives-base-white;
+  background-color: globals.$ion-bg-surface-default;
 }
 
 // Ionic Radio Outer Circle: Checked

@@ -3,7 +3,7 @@
 
 :host {
   --background: transparent;
-  --color: #{globals.$ion-primitives-neutral-1200};
+  --color: #{globals.$ion-text-default};
 
   @include globals.typography(globals.$ion-body-md-medium);
 
