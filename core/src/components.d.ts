@@ -1458,10 +1458,18 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Text that is placed under the input boxes and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
           * The fill for the input boxes. If `"solid"` the input boxes will have a background. If `"outline"` the input boxes will be transparent with a border.
           * @default 'outline'
          */
         "fill"?: 'outline' | 'solid';
+        /**
+          * Text that is placed under the input and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.  For numbers (type="number"): "numeric" For text (type="text"): "text"
          */
@@ -6740,10 +6748,18 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Text that is placed under the input boxes and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
           * The fill for the input boxes. If `"solid"` the input boxes will have a background. If `"outline"` the input boxes will be transparent with a border.
           * @default 'outline'
          */
         "fill"?: 'outline' | 'solid';
+        /**
+          * Text that is placed under the input and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.  For numbers (type="number"): "numeric" For text (type="text"): "text"
          */

@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Fragment, Host, Prop, State, h, Watch } from '@stencil/core';
+import { Build, Component, Element, Event, Fragment, Host, Prop, State, h, Watch, forceUpdate } from '@stencil/core';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -28,7 +28,10 @@ export class InputOTP implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private inputRefs: HTMLInputElement[] = [];
   private inputId = `ion-input-otp-${inputIds++}`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
   private parsedSeparators: number[] = [];
+  private validationObserver?: MutationObserver;
 
   /**
    * Stores the initial value of the input when it receives focus.
@@ -49,6 +52,11 @@ export class InputOTP implements ComponentInterface {
   @State() private inputValues: string[] = [];
   @State() hasFocus = false;
   @State() private previousInputValues: string[] = [];
+
+  /**
+   * Track validation state for proper aria-live announcements
+   */
+  @State() isInvalid = false;
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
@@ -135,6 +143,16 @@ export class InputOTP implements ComponentInterface {
    * The value of the input group.
    */
   @Prop({ mutable: true }) value?: string | number | null = '';
+
+  /**
+   * Text that is placed under the input and displayed when no error is detected.
+   */
+  @Prop() helperText?: string;
+
+  /**
+   * Text that is placed under the input boxes and displayed when an error is detected.
+   */
+  @Prop() errorText?: string;
 
   /**
    * The `ionInput` event is fired each time the user modifies the input's value.
@@ -261,6 +279,30 @@ export class InputOTP implements ComponentInterface {
     }
 
     this.parsedSeparators = separatorValues.filter((pos) => pos <= length);
+  }
+
+  connectedCallback() {
+    const { el } = this;
+
+    // Watch for class changes to update validation state
+    if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
+      this.validationObserver = new MutationObserver(() => {
+        const newIsInvalid = this.checkInvalidState();
+        if (this.isInvalid !== newIsInvalid) {
+          this.isInvalid = newIsInvalid;
+          // Force a re-render to update aria-describedby immediately
+          forceUpdate(this);
+        }
+      });
+
+      this.validationObserver.observe(el, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    }
+
+    // Always set initial state
+    this.isInvalid = this.checkInvalidState();
   }
 
   componentWillLoad() {
@@ -781,6 +823,70 @@ export class InputOTP implements ComponentInterface {
     return this.parsedSeparators.includes(index + 1) && index < length - 1;
   }
 
+  /**
+   * Renders the helper text or error text values
+   */
+  private renderHintText() {
+    const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
+
+    return [
+      <div id={helperTextId} class="helper-text" aria-live="polite">
+        {!isInvalid ? helperText : null}
+      </div>,
+      <div id={errorTextId} class="error-text" role="alert">
+        {isInvalid ? errorText : null}
+      </div>,
+    ];
+  }
+
+  private getHintTextID(): string | undefined {
+    const { isInvalid, helperText, errorText, helperTextId, errorTextId } = this;
+
+    if (isInvalid && errorText) {
+      return errorTextId;
+    }
+
+    if (helperText) {
+      return helperTextId;
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Responsible for rendering helper text and
+   * error text. This element should only
+   * be rendered if hint text is set.
+   * It will not conflict with
+   * the description slot since the description
+   * will always be rendered regardless of
+   * whether helper or error text is present.
+   */
+  private renderBottomContent() {
+    const { helperText, errorText } = this;
+
+    /**
+     * undefined and empty string values should
+     * be treated as not having helper/error text.
+     */
+    const hasHintText = !!helperText || !!errorText;
+    if (!hasHintText) {
+      return;
+    }
+
+    return <div class="input-otp-bottom">{this.renderHintText()}</div>;
+  }
+
+  /**
+   * Checks if the input otp is in an invalid state based on Ionic validation classes
+   */
+  private checkInvalidState(): boolean {
+    const hasIonTouched = this.el.classList.contains('ion-touched');
+    const hasIonInvalid = this.el.classList.contains('ion-invalid');
+
+    return hasIonTouched && hasIonInvalid;
+  }
+
   render() {
     const {
       autocapitalize,
@@ -823,6 +929,8 @@ export class InputOTP implements ComponentInterface {
                 <input
                   class="native-input"
                   id={`${inputId}-${index}`}
+                  aria-describedby={this.getHintTextID()}
+                  aria-invalid={this.isInvalid ? 'true' : undefined}
                   aria-label={`Input ${index + 1} of ${length}`}
                   type="text"
                   autoCapitalize={autocapitalize}
@@ -853,6 +961,7 @@ export class InputOTP implements ComponentInterface {
         >
           <slot></slot>
         </div>
+        {this.renderBottomContent()}
       </Host>
     );
   }
