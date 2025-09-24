@@ -20,10 +20,11 @@
 // --------------------------------------------------------------------------------------------
 // Example usage:
 // ion-color(primary, base) => var(--ion-color-primary, var(--ion-color-primary-bold))
-// ion-color(secondary, contrast) => var(--ion-color-secondary-contrast)
-// ion-color(primary, base, 0.5) => rgba(var(--ion-color-primary-rgb), 0.5)
-// ion-color(primary, base, null, true) => var(--ion-color-primary-rgb)
+// ion-color(primary, contrast) => var(--ion-color-primary-contrast, var(--ion-color-primary-bold-contrast))
+// ion-color(primary, base, 0.5) => rgba(var(--ion-color-primary-rgb, var(--ion-color-primary-bold-rgb)), 0.5)
+// ion-color(primary, base, null, true) => var(--ion-color-primary-rgb, var(--ion-color-primary-bold-rgb))
 // ion-color(primary, base, null, null, true) => var(--ion-color-primary-subtle)
+// ion-color(primary, foreground, null, null, true) => var(--ion-color-primary-subtle-foreground)
 // --------------------------------------------------------------------------------------------
 @function ion-color($name, $variation, $alpha: null, $rgb: null, $subtle: false) {
   // Build base variable name
