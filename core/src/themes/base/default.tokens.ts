@@ -63,7 +63,6 @@ export const defaultTheme: DefaultTheme = {
     xxl: '32px',
   },
 
-  fontFamily: 'Roboto, "Helvetica Neue", sans-serif',
   dynamicFont: '-apple-system-body',
 
   fontSize: {
