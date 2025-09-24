@@ -66,7 +66,7 @@ export const lightTheme: LightTheme = {
     success: {
       bold: {
         base: colors.success,
-        contrast: '#fff',
+        contrast: '#000',
         foreground: mix(colors.success, '#000', '12%'),
         shade: mix(colors.success, '#000', '12%'),
         tint: mix(colors.success, '#fff', '10%'),
@@ -82,7 +82,7 @@ export const lightTheme: LightTheme = {
     warning: {
       bold: {
         base: colors.warning,
-        contrast: '#fff',
+        contrast: '#000',
         foreground: mix(colors.warning, '#000', '12%'),
         shade: mix(colors.warning, '#000', '12%'),
         tint: mix(colors.warning, '#fff', '10%'),

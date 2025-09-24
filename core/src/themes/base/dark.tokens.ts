@@ -19,7 +19,7 @@ export const darkTheme: DarkTheme = {
     primary: {
       bold: {
         base: colors.primary,
-        contrast: '#fff',
+        contrast: '#000',
         foreground: mix(colors.primary, '#000', '4%'),
         shade: mix(colors.primary, '#000', '4%'),
         tint: mix(colors.primary, '#fff', '12%'),
@@ -35,7 +35,7 @@ export const darkTheme: DarkTheme = {
     secondary: {
       bold: {
         base: colors.secondary,
-        contrast: '#fff',
+        contrast: '#000',
         foreground: mix(colors.secondary, '#000', '4%'),
         shade: mix(colors.secondary, '#000', '4%'),
         tint: mix(colors.secondary, '#fff', '12%'),
@@ -51,7 +51,7 @@ export const darkTheme: DarkTheme = {
     tertiary: {
       bold: {
         base: colors.tertiary,
-        contrast: '#fff',
+        contrast: '#000',
         foreground: mix(colors.tertiary, '#000', '4%'),
         shade: mix(colors.tertiary, '#000', '4%'),
         tint: mix(colors.tertiary, '#fff', '12%'),
@@ -67,7 +67,7 @@ export const darkTheme: DarkTheme = {
     success: {
       bold: {
         base: colors.success,
-        contrast: '#fff',
+        contrast: '#000',
         foreground: mix(colors.success, '#000', '4%'),
         shade: mix(colors.success, '#000', '4%'),
         tint: mix(colors.success, '#fff', '12%'),
@@ -83,7 +83,7 @@ export const darkTheme: DarkTheme = {
     warning: {
       bold: {
         base: colors.warning,
-        contrast: '#fff',
+        contrast: '#000',
         foreground: mix(colors.warning, '#000', '4%'),
         shade: mix(colors.warning, '#000', '4%'),
         tint: mix(colors.warning, '#fff', '12%'),
@@ -99,7 +99,7 @@ export const darkTheme: DarkTheme = {
     danger: {
       bold: {
         base: colors.danger,
-        contrast: '#fff',
+        contrast: '#000',
         foreground: mix(colors.danger, '#000', '4%'),
         shade: mix(colors.danger, '#000', '4%'),
         tint: mix(colors.danger, '#fff', '12%'),
@@ -115,7 +115,7 @@ export const darkTheme: DarkTheme = {
     light: {
       bold: {
         base: colors.light,
-        contrast: '#000',
+        contrast: '#fff',
         foreground: mix(colors.light, '#000', '4%'),
         shade: mix(colors.light, '#000', '4%'),
         tint: mix(colors.light, '#fff', '12%'),
@@ -131,7 +131,7 @@ export const darkTheme: DarkTheme = {
     medium: {
       bold: {
         base: colors.medium,
-        contrast: '#fff',
+        contrast: '#000',
         foreground: mix(colors.medium, '#000', '4%'),
         shade: mix(colors.medium, '#000', '4%'),
         tint: mix(colors.medium, '#fff', '12%'),
@@ -147,7 +147,7 @@ export const darkTheme: DarkTheme = {
     dark: {
       bold: {
         base: colors.dark,
-        contrast: '#fff',
+        contrast: '#000',
         foreground: mix(colors.dark, '#000', '4%'),
         shade: mix(colors.dark, '#000', '4%'),
         tint: mix(colors.dark, '#fff', '12%'),
