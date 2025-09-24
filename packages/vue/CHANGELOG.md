@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.5](https://github.com/ionic-team/ionic-framework/compare/v8.7.4...v8.7.5) (2025-09-24)
+
+
+### Bug Fixes
+
+* **vue:** emit component-specific overlay events ([#30688](https://github.com/ionic-team/ionic-framework/issues/30688)) ([024d090](https://github.com/ionic-team/ionic-framework/commit/024d090122548e26ec2cdcfae4637dde8f288278)), closes [#30641](https://github.com/ionic-team/ionic-framework/issues/30641)
+
+
+
+
+
 ## [8.7.4](https://github.com/ionic-team/ionic-framework/compare/v8.7.3...v8.7.4) (2025-09-17)
 
 

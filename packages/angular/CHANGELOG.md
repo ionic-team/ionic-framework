@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.5](https://github.com/ionic-team/ionic-framework/compare/v8.7.4...v8.7.5) (2025-09-24)
+
+
+### Bug Fixes
+
+* **modal:** allow sheet modals to skip focus trap ([#30689](https://github.com/ionic-team/ionic-framework/issues/30689)) ([a40d957](https://github.com/ionic-team/ionic-framework/commit/a40d957ad9c1897af365a91b45b00228a00d614c)), closes [#30684](https://github.com/ionic-team/ionic-framework/issues/30684)
+
+
+
+
+
 ## [8.7.4](https://github.com/ionic-team/ionic-framework/compare/v8.7.3...v8.7.4) (2025-09-17)
 
 
