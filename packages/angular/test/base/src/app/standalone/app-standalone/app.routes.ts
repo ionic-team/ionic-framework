@@ -11,6 +11,8 @@ export const routes: Routes = [
       { path: 'action-sheet-controller', loadComponent: () => import('../action-sheet-controller/action-sheet-controller.component').then(c => c.ActionSheetControllerComponent) },
       { path: 'popover', loadComponent: () => import('../popover/popover.component').then(c => c.PopoverComponent) },
       { path: 'modal', loadComponent: () => import('../modal/modal.component').then(c => c.ModalComponent) },
+      { path: 'modal-sheet-inline', loadComponent: () => import('../modal-sheet-inline/modal-sheet-inline.component').then(c => c.ModalSheetInlineComponent) },
+      { path: 'modal-dynamic-wrapper', loadComponent: () => import('../modal-dynamic-wrapper/modal-dynamic-wrapper.component').then(c => c.ModalDynamicWrapperComponent) },
       { path: 'programmatic-modal', loadComponent: () => import('../programmatic-modal/programmatic-modal.component').then(c => c.ProgrammaticModalComponent) },
       { path: 'router-outlet', loadComponent: () => import('../router-outlet/router-outlet.component').then(c => c.RouterOutletComponent) },
       { path: 'back-button', loadComponent: () => import('../back-button/back-button.component').then(c => c.BackButtonComponent) },
