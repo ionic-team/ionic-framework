@@ -1,7 +1,7 @@
 describe('keepContentsMounted', () => {
   describe('modal', () => {
     it('should not mount component if false', () => {
-      cy.visit('/overlay-components/modal');
+      cy.visit('/overlay-components/modal-basic');
 
       cy.get('ion-modal ion-content').should('not.exist');
     });
