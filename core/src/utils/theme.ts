@@ -265,26 +265,40 @@ export const generateGlobalThemeCSS = (theme: any): string => {
   // Generate CSS variables for the light color palette
   const lightTokensCSS = generateCSSVars(palette.light);
 
+  // Generate CSS variables for the dark color palette
+  const darkTokensCSS = generateCSSVars(palette.dark);
+
+  // Include CSS variables for the dark color palette instead of
+  // the light palette if dark palette enabled is 'always'
+  const paletteTokensCSS = palette.dark.enabled === 'always' ? darkTokensCSS : lightTokensCSS;
+
   let css = `
     ${CSS_ROOT_SELECTOR} {
       ${defaultTokensCSS}
-      ${lightTokensCSS}
+      ${paletteTokensCSS}
     }
   `;
 
-  // Generate CSS variables for the dark color palette if it
-  // is enabled for system preference
+  // Include CSS variables for the dark color palette inside of a
+  // class if dark palette enabled is 'class'
+  if (palette.dark.enabled === 'class') {
+    css += `
+      .ion-palette-dark {
+        ${darkTokensCSS}
+      }
+    `;
+  }
+
+  // Include CSS variables for the dark color palette inside of the
+  // dark color scheme media query if dark palette enabled is 'system'
   if (palette.dark.enabled === 'system') {
-    const darkTokensCSS = generateCSSVars(palette.dark);
-    if (darkTokensCSS.length > 0) {
-      css += `
-        @media (prefers-color-scheme: dark) {
-          ${CSS_ROOT_SELECTOR} {
-            ${darkTokensCSS}
-          }
+    css += `
+      @media (prefers-color-scheme: dark) {
+        ${CSS_ROOT_SELECTOR} {
+          ${darkTokensCSS}
         }
-      `;
-    }
+      }
+    `;
   }
 
   // Add color classes
