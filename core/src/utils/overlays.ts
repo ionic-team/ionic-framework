@@ -494,10 +494,8 @@ export const setRootAriaHidden = (hidden = false) => {
 
   if (hidden) {
     viewContainer.setAttribute('aria-hidden', 'true');
-    viewContainer.setAttribute('inert', '');
   } else {
     viewContainer.removeAttribute('aria-hidden');
-    viewContainer.removeAttribute('inert');
   }
 };
 
@@ -529,15 +527,37 @@ export const present = async <OverlayPresentOptions>(
    * focus traps.
    *
    * All other overlays should have focus traps to prevent
-   * the keyboard focus from leaving the overlay.
+   * the keyboard focus from leaving the overlay unless
+   * developers explicitly opt out (for example, sheet
+   * modals that should permit background interaction).
+   *
+   * Note: Some apps move inline overlays to a specific container
+   * during the willPresent lifecycle (e.g., React portals via
+   * onWillPresent). Defer applying aria-hidden/inert to the app
+   * root until after willPresent so we can detect where the
+   * overlay is finally inserted. If the overlay is inside the
+   * view container subtree, skip adding aria-hidden/inert there
+   * to avoid disabling the overlay.
    */
-  if (overlay.el.tagName !== 'ION-TOAST') {
-    setRootAriaHidden(true);
-    document.body.classList.add(BACKDROP_NO_SCROLL);
-  }
+  const overlayEl = overlay.el as HTMLIonOverlayElement & { focusTrap?: boolean; showBackdrop?: boolean };
+  const shouldTrapFocus = overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false;
+  // Only lock out root content when backdrop is active. Developers relying on showBackdrop=false
+  // expect background interaction to remain enabled.
+  const shouldLockRoot = shouldTrapFocus && overlayEl.showBackdrop !== false;
 
   overlay.presented = true;
   overlay.willPresent.emit();
+
+  if (shouldLockRoot) {
+    const root = getAppRoot(document);
+    const viewContainer = root.querySelector('ion-router-outlet, #ion-view-container-root');
+    const overlayInsideViewContainer = viewContainer ? viewContainer.contains(overlayEl) : false;
+
+    if (!overlayInsideViewContainer) {
+      setRootAriaHidden(true);
+    }
+    document.body.classList.add(BACKDROP_NO_SCROLL);
+  }
   overlay.willPresentShorthand?.emit();
 
   const mode = getIonMode(overlay);
@@ -653,22 +673,28 @@ export const dismiss = async <OverlayDismissOptions>(
    * For accessibility, toasts lack focus traps and don't receive
    * `aria-hidden` on the root element when presented.
    *
-   * All other overlays use focus traps to keep keyboard focus
-   * within the overlay, setting `aria-hidden` on the root element
-   * to enhance accessibility.
-   *
-   * Therefore, we must remove `aria-hidden` from the root element
-   * when the last non-toast overlay is dismissed.
+   * Overlays that opt into focus trapping set `aria-hidden`
+   * on the root element to keep keyboard focus and pointer
+   * events inside the overlay. We must remove `aria-hidden`
+   * from the root element when the last focus-trapping overlay
+   * is dismissed.
    */
-  const overlaysNotToast = presentedOverlays.filter((o) => o.tagName !== 'ION-TOAST');
-
-  const lastOverlayNotToast = overlaysNotToast.length === 1 && overlaysNotToast[0].id === overlay.el.id;
+  const overlaysLockingRoot = presentedOverlays.filter((o) => {
+    const el = o as HTMLIonOverlayElement & { focusTrap?: boolean; showBackdrop?: boolean };
+    return el.tagName !== 'ION-TOAST' && el.focusTrap !== false && el.showBackdrop !== false;
+  });
+  const overlayEl = overlay.el as HTMLIonOverlayElement & { focusTrap?: boolean; showBackdrop?: boolean };
+  const locksRoot =
+    overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false && overlayEl.showBackdrop !== false;
 
   /**
-   * If this is the last visible overlay that is not a toast
+   * If this is the last visible overlay that is trapping focus
    * then we want to re-add the root to the accessibility tree.
    */
-  if (lastOverlayNotToast) {
+  const lastOverlayTrappingFocus =
+    locksRoot && overlaysLockingRoot.length === 1 && overlaysLockingRoot[0].id === overlayEl.id;
+
+  if (lastOverlayTrappingFocus) {
     setRootAriaHidden(false);
     document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
