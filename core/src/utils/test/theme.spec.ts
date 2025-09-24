@@ -385,7 +385,7 @@ describe('generateGlobalThemeCSS', () => {
         --ion-color-contrast-rgb: var(--ion-color-primary-contrast-rgb, var(--ion-color-primary-bold-contrast-rgb)) !important;
         --ion-color-shade: var(--ion-color-primary-shade, var(--ion-color-primary-bold-shade)) !important;
         --ion-color-tint: var(--ion-color-primary-tint, var(--ion-color-primary-bold-tint)) !important;
-        --ion-color-foreground: var(--ion-color-primary, var(--ion-color-primary-foreground, var(--ion-color-primary-bold-foreground))) !important;
+        --ion-color-foreground: var(--ion-color-primary-foreground, var(--ion-color-primary-bold-foreground)) !important;
 
         --ion-color-subtle-base: var(--ion-color-primary-subtle) !important;
         --ion-color-subtle-base-rgb: var(--ion-color-primary-subtle-rgb) !important;

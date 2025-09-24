@@ -187,8 +187,7 @@ export const generateColorClasses = (theme: any): string => {
 
     // Generate CSS variables for bold variant
     // Includes base color variables without the bold modifier for
-    // backwards compatibility. The foreground variables falls back to the
-    // base color because it is new.
+    // backwards compatibility.
     // TODO: Remove the fallbacks once the bold variables are the default
     if (colorVariants.bold) {
       cssVariableRules.push(
@@ -198,7 +197,7 @@ export const generateColorClasses = (theme: any): string => {
         `--ion-color-contrast-rgb: var(--ion-color-${colorName}-contrast-rgb, var(--ion-color-${colorName}-bold-contrast-rgb)) !important;`,
         `--ion-color-shade: var(--ion-color-${colorName}-shade, var(--ion-color-${colorName}-bold-shade)) !important;`,
         `--ion-color-tint: var(--ion-color-${colorName}-tint, var(--ion-color-${colorName}-bold-tint)) !important;`,
-        `--ion-color-foreground: var(--ion-color-${colorName}, var(--ion-color-${colorName}-foreground, var(--ion-color-${colorName}-bold-foreground))) !important;`
+        `--ion-color-foreground: var(--ion-color-${colorName}-foreground, var(--ion-color-${colorName}-bold-foreground)) !important;`
       );
     }
 
