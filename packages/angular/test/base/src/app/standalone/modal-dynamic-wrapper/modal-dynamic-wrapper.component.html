@@ -1,0 +1,8 @@
+<ion-button id="open-dynamic-modal" (click)="openModal()">Open Dynamic Sheet Modal</ion-button>
+<ion-button id="open-focused-modal" color="primary" (click)="openFocusedModal()">Open Focus-Trapped Sheet Modal</ion-button>
+<ion-button id="background-action" (click)="onBackgroundActionClick()">Background Action</ion-button>
+<p>
+  Background action count: <span id="background-action-count">{{ backgroundActionCount }}</span>
+</p>
+
+<ng-template #modalHost></ng-template>
