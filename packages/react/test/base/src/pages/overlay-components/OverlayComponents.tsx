@@ -30,7 +30,7 @@ const OverlayHooks: React.FC<OverlayHooksProps> = () => {
         <Route path="/overlay-components/actionsheet" component={ActionSheetComponent} />
         <Route path="/overlay-components/alert" component={AlertComponent} />
         <Route path="/overlay-components/loading" component={LoadingComponent} />
-        <Route path="/overlay-components/modal" component={ModalComponent} />
+        <Route path="/overlay-components/modal-basic" component={ModalComponent} />
         <Route path="/overlay-components/modal-focus-trap" component={ModalFocusTrap} />
         <Route path="/overlay-components/modal-teleport" component={ModalTeleport} />
         <Route path="/overlay-components/picker" component={PickerComponent} />
@@ -50,7 +50,7 @@ const OverlayHooks: React.FC<OverlayHooksProps> = () => {
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Loading</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="modal" href="/overlay-components/modal">
+        <IonTabButton tab="modal" href="/overlay-components/modal-basic">
           <IonIcon icon={star} />
           <IonLabel>Modal</IonLabel>
         </IonTabButton>
