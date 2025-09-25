@@ -16,4 +16,3 @@
 // Default Theme
 @use "./ionic.theme.default" as ionicTheme;
 @forward "./ionic.theme.default";
-@include color.set-theme-colors(ionicTheme.$ionic-colors);

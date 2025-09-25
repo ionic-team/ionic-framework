@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Themes - Typography</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic/bundle.ionic.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <link id="palette" rel="stylesheet" />
+
+    <style>
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin: 40px 0;
+      }
+
+      .column {
+        min-width: 400px;
+        max-width: 500px;
+      }
+
+      h2 {
+        margin: 0;
+      }
+
+      /* Font Size */
+      .ion-font-size-xs {
+        font-size: var(--ion-font-size-xs);
+      }
+
+      .ion-font-size-sm {
+        font-size: var(--ion-font-size-sm);
+      }
+
+      .ion-font-size-md {
+        font-size: var(--ion-font-size-md);
+      }
+
+      .ion-font-size-lg {
+        font-size: var(--ion-font-size-lg);
+      }
+
+      .ion-font-size-xl {
+        font-size: var(--ion-font-size-xl);
+      }
+
+      .ion-font-size-xxl {
+        font-size: var(--ion-font-size-xxl);
+      }
+
+      /* Font Weight */
+      .ion-font-weight-thin {
+        font-weight: var(--ion-font-weight-thin);
+      }
+
+      .ion-font-weight-extra-light {
+        font-weight: var(--ion-font-weight-extra-light);
+      }
+
+      .ion-font-weight-light {
+        font-weight: var(--ion-font-weight-light);
+      }
+
+      .ion-font-weight-normal {
+        font-weight: var(--ion-font-weight-normal);
+      }
+
+      .ion-font-weight-medium {
+        font-weight: var(--ion-font-weight-medium);
+      }
+
+      .ion-font-weight-semi-bold {
+        font-weight: var(--ion-font-weight-semi-bold);
+      }
+
+      .ion-font-weight-bold {
+        font-weight: var(--ion-font-weight-bold);
+      }
+
+      .ion-font-weight-extra-bold {
+        font-weight: var(--ion-font-weight-extra-bold);
+      }
+
+      .ion-font-weight-black {
+        font-weight: var(--ion-font-weight-black);
+      }
+
+      /* Line Height */
+      [class^='ion-line-height-'] {
+        border: 1px solid #ddd;
+      }
+
+      .ion-line-height-xxs {
+        line-height: var(--ion-line-height-xxs);
+      }
+
+      .ion-line-height-xs {
+        line-height: var(--ion-line-height-xs);
+      }
+
+      .ion-line-height-sm {
+        line-height: var(--ion-line-height-sm);
+      }
+
+      .ion-line-height-md {
+        line-height: var(--ion-line-height-md);
+      }
+
+      .ion-line-height-lg {
+        line-height: var(--ion-line-height-lg);
+      }
+
+      .ion-line-height-xl {
+        line-height: var(--ion-line-height-xl);
+      }
+
+      .ion-line-height-xxl {
+        line-height: var(--ion-line-height-xxl);
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Themes - Typography</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" class="ion-text-center">
+        <div class="grid">
+          <div class="column">
+            <h2>Font Size</h2>
+            <p class="ion-font-size-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+            <p class="ion-font-size-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+            <p class="ion-font-size-md">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+            <p class="ion-font-size-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+            <p class="ion-font-size-xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+            <p class="ion-font-size-xxl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+          </div>
+          <div class="column">
+            <h2>Font Weight</h2>
+            <p class="ion-font-weight-thin">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+            <p class="ion-font-weight-extra-light">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+            </p>
+            <p class="ion-font-weight-light">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+            </p>
+            <p class="ion-font-weight-normal">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+            </p>
+            <p class="ion-font-weight-medium">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+            </p>
+            <p class="ion-font-weight-semi-bold">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+            </p>
+            <p class="ion-font-weight-bold">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+            <p class="ion-font-weight-extra-bold">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+            </p>
+            <p class="ion-font-weight-black">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+            </p>
+          </div>
+          <div class="column">
+            <h2>Line Height</h2>
+            <p class="ion-line-height-xxs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+            <p class="ion-line-height-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+            <p class="ion-line-height-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+            <p class="ion-line-height-md">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+            <p class="ion-line-height-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+            <p class="ion-line-height-xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+            <p class="ion-line-height-xxl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

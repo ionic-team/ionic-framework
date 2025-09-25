@@ -1,4 +1,4 @@
-import { deepMerge, inheritAriaAttributes } from './helpers';
+import { deepMerge, inheritAriaAttributes } from '../helpers';
 
 describe('inheritAriaAttributes', () => {
   it('should inherit aria attributes', () => {

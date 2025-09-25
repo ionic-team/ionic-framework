@@ -4,19 +4,6 @@
 // --------------------------------------------------
 
 :root {
-  /**
-   * Set the theme colors from the
-   * `ionic.theme.default.scss` file.
-   */
-  @include globals.set-theme-colors(globals.$ionic-colors);
-  @include globals.generate-color-variables();
-
-  @each $color-name, $value in globals.$ionic-colors {
-    .ion-color-#{$color-name} {
-      @include globals.generate-color($color-name);
-    }
-  }
-
   /* Default background color of all components to default background surface token */
   --background: #{globals.$ion-bg-surface-default};
 }

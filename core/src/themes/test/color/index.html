@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Themes - Color</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic/bundle.ionic.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <link id="palette" rel="stylesheet" />
+
+    <style>
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin: 40px 0;
+      }
+
+      .column {
+        min-width: 400px;
+        max-width: 500px;
+      }
+
+      .row {
+        display: flex;
+        justify-content: center;
+        margin: 16px 10px;
+        gap: 10px;
+      }
+
+      h2 {
+        margin: 0;
+      }
+
+      .ion-color {
+        padding: 10px;
+        display: inline-block;
+        min-width: 80px;
+      }
+
+      /* Bold Colors */
+      .ion-color.ion-color-bold {
+        background: var(--ion-color-base);
+        color: var(--ion-color-contrast);
+      }
+
+      .ion-color.ion-color-bold.ion-color-foreground {
+        background: transparent;
+        color: var(--ion-color-foreground);
+      }
+
+      .ion-color.ion-color-bold.ion-color-shade {
+        background: var(--ion-color-shade);
+        color: var(--ion-color-contrast);
+      }
+
+      .ion-color.ion-color-bold.ion-color-tint {
+        background: var(--ion-color-tint);
+        color: var(--ion-color-contrast);
+      }
+
+      /* Subtle Colors */
+      .ion-color.ion-color-subtle {
+        background: var(--ion-color-subtle-base);
+        color: var(--ion-color-subtle-contrast);
+      }
+
+      .ion-color.ion-color-subtle.ion-color-foreground {
+        background: transparent;
+        color: var(--ion-color-subtle-foreground);
+      }
+
+      .ion-color.ion-color-subtle.ion-color-shade {
+        background: var(--ion-color-subtle-shade);
+        color: var(--ion-color-subtle-contrast);
+      }
+
+      .ion-color.ion-color-subtle.ion-color-tint {
+        background: var(--ion-color-subtle-tint);
+        color: var(--ion-color-subtle-contrast);
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Themes - Color</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" class="ion-text-center">
+        <div class="grid">
+          <div class="column">
+            <h2>Bold Colors</h2>
+
+            <div class="row">
+              <span class="ion-color ion-color-bold ion-color-primary">Base</span>
+              <span class="ion-color ion-color-bold ion-color-primary ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-bold ion-color-primary ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-bold ion-color-primary ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-bold ion-color-secondary">Base</span>
+              <span class="ion-color ion-color-bold ion-color-secondary ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-bold ion-color-secondary ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-bold ion-color-secondary ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-bold ion-color-tertiary">Base</span>
+              <span class="ion-color ion-color-bold ion-color-tertiary ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-bold ion-color-tertiary ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-bold ion-color-tertiary ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-bold ion-color-success">Base</span>
+              <span class="ion-color ion-color-bold ion-color-success ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-bold ion-color-success ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-bold ion-color-success ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-bold ion-color-warning">Base</span>
+              <span class="ion-color ion-color-bold ion-color-warning ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-bold ion-color-warning ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-bold ion-color-warning ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-bold ion-color-danger">Base</span>
+              <span class="ion-color ion-color-bold ion-color-danger ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-bold ion-color-danger ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-bold ion-color-danger ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-bold ion-color-light">Base</span>
+              <span class="ion-color ion-color-bold ion-color-light ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-bold ion-color-light ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-bold ion-color-light ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-bold ion-color-medium">Base</span>
+              <span class="ion-color ion-color-bold ion-color-medium ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-bold ion-color-medium ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-bold ion-color-medium ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-bold ion-color-dark">Base</span>
+              <span class="ion-color ion-color-bold ion-color-dark ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-bold ion-color-dark ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-bold ion-color-dark ion-color-foreground">Foreground</span>
+            </div>
+          </div>
+
+          <div class="column">
+            <h2>Subtle Colors</h2>
+
+            <div class="row">
+              <span class="ion-color ion-color-subtle ion-color-primary">Base</span>
+              <span class="ion-color ion-color-subtle ion-color-primary ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-subtle ion-color-primary ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-subtle ion-color-primary ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-subtle ion-color-secondary">Base</span>
+              <span class="ion-color ion-color-subtle ion-color-secondary ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-subtle ion-color-secondary ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-subtle ion-color-secondary ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-subtle ion-color-tertiary">Base</span>
+              <span class="ion-color ion-color-subtle ion-color-tertiary ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-subtle ion-color-tertiary ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-subtle ion-color-tertiary ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-subtle ion-color-success">Base</span>
+              <span class="ion-color ion-color-subtle ion-color-success ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-subtle ion-color-success ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-subtle ion-color-success ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-subtle ion-color-warning">Base</span>
+              <span class="ion-color ion-color-subtle ion-color-warning ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-subtle ion-color-warning ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-subtle ion-color-warning ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-subtle ion-color-danger">Base</span>
+              <span class="ion-color ion-color-subtle ion-color-danger ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-subtle ion-color-danger ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-subtle ion-color-danger ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-subtle ion-color-light">Base</span>
+              <span class="ion-color ion-color-subtle ion-color-light ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-subtle ion-color-light ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-subtle ion-color-light ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-subtle ion-color-medium">Base</span>
+              <span class="ion-color ion-color-subtle ion-color-medium ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-subtle ion-color-medium ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-subtle ion-color-medium ion-color-foreground">Foreground</span>
+            </div>
+
+            <div class="row">
+              <span class="ion-color ion-color-subtle ion-color-dark">Base</span>
+              <span class="ion-color ion-color-subtle ion-color-dark ion-color-shade">Shade</span>
+              <span class="ion-color ion-color-subtle ion-color-dark ion-color-tint">Tint</span>
+              <span class="ion-color ion-color-subtle ion-color-dark ion-color-foreground">Foreground</span>
+            </div>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>
