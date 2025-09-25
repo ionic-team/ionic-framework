@@ -151,6 +151,31 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
           await expect(container).toHaveScreenshot(screenshot(`textarea-readonly-no-fill`));
         });
       });
+
+      test.describe(title('solid'), () => {
+        test('should render readonly invalid textarea correctly', async ({ page }) => {
+          await page.setContent(
+            `
+            <div class="container">
+              <ion-textarea
+                label="Email"
+                label-placement="stacked"
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                class="ion-touched ion-invalid"
+                readonly="true"
+              ></ion-textarea>
+            </div>
+          `,
+            config
+          );
+
+          const container = page.locator('.container');
+          await expect(container).toHaveScreenshot(screenshot(`textarea-readonly-solid-invalid`));
+        });
+      });
     });
   });
 });
