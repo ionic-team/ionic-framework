@@ -37,6 +37,8 @@ export const routes: Routes = [
       { path: 'template-form', component: TemplateFormComponent },
       { path: 'modals', component: ModalComponent },
       { path: 'modal-inline', loadChildren: () => import('../modal-inline').then(m => m.ModalInlineModule) },
+      { path: 'modal-sheet-inline', loadChildren: () => import('../modal-sheet-inline').then(m => m.ModalSheetInlineModule) },
+      { path: 'modal-dynamic-wrapper', loadChildren: () => import('../modal-dynamic-wrapper').then(m => m.ModalDynamicWrapperModule) },
       { path: 'view-child', component: ViewChildComponent },
       { path: 'keep-contents-mounted', loadChildren: () => import('../keep-contents-mounted').then(m => m.OverlayAutoMountModule) },
       { path: 'overlays-inline', loadChildren: () => import('../overlays-inline').then(m => m.OverlaysInlineModule) },
@@ -90,4 +92,3 @@ export const routes: Routes = [
     ]
   },
 ];
-
