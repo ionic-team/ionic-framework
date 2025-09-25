@@ -86,6 +86,7 @@ $colors: (
       --ion-color-#{$color-name}-contrast-rgb: #{color-to-rgb-list(map.get($value, contrast))};
       --ion-color-#{$color-name}-shade: #{map.get($value, shade)};
       --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
+      --ion-color-#{$color-name}-foreground: #{map.get($value, foreground)};
     }
   }
 }
