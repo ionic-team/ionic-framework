@@ -1,0 +1,62 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+// Ionic Textarea Fill: Solid
+// ----------------------------------------------------------------
+
+:host(.textarea-fill-solid) {
+  --border-color: #{globals.$ion-bg-input-bold-default};
+  --border-width: #{globals.$ion-border-size-050};
+  --background: #{globals.$ion-bg-input-bold-default};
+}
+
+:host(.textarea-fill-solid) .textarea-wrapper {
+  border-bottom: none;
+
+  background: none;
+}
+
+:host(.textarea-fill-solid) .textarea-wrapper-inner {
+  @include globals.border-radius(var(--border-radius));
+  position: relative;
+
+  border: var(--border-width) var(--border-style) var(--border-color);
+
+  background: var(--background);
+}
+
+:host(.textarea-fill-solid) .textarea-bottom {
+  --border-width: #{globals.$ion-scale-0};
+}
+
+// Focus
+// ----------------------------------------------------------------
+
+:host(.textarea-fill-solid.has-focus) {
+  --border-color: #{globals.$ion-border-focus-default};
+}
+
+:host(.textarea-fill-solid.has-focus.ion-valid),
+:host(.textarea-fill-solid.ion-touched.ion-invalid) {
+  --border-width: #{globals.$ion-border-size-050};
+  --border-color: var(--highlight-color);
+}
+
+// Ionic Textarea - Readonly
+// ----------------------------------------------------------------
+
+:host(.textarea-fill-solid.textarea-readonly) {
+  --background: #{globals.$ion-bg-input-bold-read-only};
+  --border-color: #{globals.$ion-bg-input-bold-read-only};
+}
+
+:host(.textarea-fill-solid.textarea-readonly.ion-invalid) {
+  --border-color: rgba(#{globals.$ion-semantics-danger-base-rgb}, 0.6);
+}
+
+// Textarea - Disabled
+// ----------------------------------------------------------------
+
+:host(.textarea-fill-solid.textarea-disabled) {
+  --background: #{globals.$ion-bg-input-bold-disabled};
+  --border-color: #{globals.$ion-bg-input-bold-disabled};
+}

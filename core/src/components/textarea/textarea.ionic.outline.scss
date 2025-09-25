@@ -60,9 +60,18 @@
   margin-top: globals.$ion-space-100;
 }
 
-// Input Focus
+// Focus
 // ----------------------------------------------------------------
 
-:host(.textarea-fill-outline.has-focus) {
-  --border-width: #{globals.$ion-border-size-050};
+:host(.textarea-fill-outline.has-focus.ion-valid),
+:host(.textarea-fill-outline.ion-touched.ion-invalid) {
+  --border-color: var(--highlight-color);
+}
+
+// Ionic Textarea - Readonly
+// ----------------------------------------------------------------
+
+:host(.textarea-fill-outline.textarea-readonly) {
+  --border-color: #{globals.$ion-border-input-default};
+  --border-width: #{globals.$ion-border-size-025};
 }
