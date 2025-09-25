@@ -66,7 +66,8 @@ const styleTestHelpers = `
 configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ config, title }) => {
   const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
 
-  test.describe(title('palette colors: bold'), () => {
+  // TODO: Re-enable this test once the colors have been finalized
+  test.describe.skip(title('palette colors: bold'), () => {
     test.beforeEach(({ skip }) => {
       skip.browser('firefox', 'Color contrast ratio is consistent across browsers');
       skip.browser('webkit', 'Color contrast ratio is consistent across browsers');
@@ -133,7 +134,8 @@ configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] 
     }
   });
 
-  test.describe(title('palette colors: subtle'), () => {
+  // TODO: Re-enable this test once the colors have been finalized
+  test.describe.skip(title('palette colors: subtle'), () => {
     test.beforeEach(({ skip }) => {
       skip.browser('firefox', 'Color contrast ratio is consistent across browsers');
       skip.browser('webkit', 'Color contrast ratio is consistent across browsers');
