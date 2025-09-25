@@ -16,6 +16,10 @@ import type {
   InputOtpInputEventDetail,
 } from './input-otp-interface';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @slot - The default slot is for the input-otp's description.
+ */
 @Component({
   tag: 'ion-input-otp',
   styleUrls: {
@@ -922,15 +926,20 @@ export class InputOTP implements ComponentInterface {
           'input-otp-readonly': readonly,
         })}
       >
-        <div role="group" aria-label="One-time password input" class="input-otp-group" {...inheritedAttributes}>
+        <div
+          role="group"
+          aria-describedby={this.getHintTextID()}
+          aria-invalid={this.isInvalid ? 'true' : undefined}
+          aria-label="One-time password input"
+          class="input-otp-group"
+          {...inheritedAttributes}
+        >
           {Array.from({ length }).map((_, index) => (
             <>
               <div class="native-wrapper">
                 <input
                   class="native-input"
                   id={`${inputId}-${index}`}
-                  aria-describedby={this.getHintTextID()}
-                  aria-invalid={this.isInvalid ? 'true' : undefined}
                   aria-label={`Input ${index + 1} of ${length}`}
                   type="text"
                   autoCapitalize={autocapitalize}

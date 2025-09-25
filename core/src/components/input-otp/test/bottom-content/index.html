@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Input OTP - Bottom Content</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Input OTP - Bottom Content</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Description: No Hint</h2>
+            <ion-input-otp> Description </ion-input-otp>
+          </div>
+
+          <div class="grid-item">
+            <h2>Description: Helper Text</h2>
+            <ion-input-otp helper-text="Helper text" error-text="Error text">Description</ion-input-otp>
+          </div>
+
+          <div class="grid-item">
+            <h2>Description: Error Text</h2>
+            <ion-input-otp helper-text="Helper text" error-text="Error text" class="ion-invalid ion-touched"
+              >Description</ion-input-otp
+            >
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Description: No Hint</h2>
+            <ion-input-otp></ion-input-otp>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Description: Helper Text</h2>
+            <ion-input-otp helper-text="Helper text" error-text="Error text"></ion-input-otp>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Description: Error Text</h2>
+            <ion-input-otp
+              helper-text="Helper text"
+              error-text="Error text"
+              class="ion-invalid ion-touched"
+            ></ion-input-otp>
+          </div>
+        </div>
+
+        <button onclick="toggleValid()" class="expand">Toggle error</button>
+
+        <script>
+          const otps = document.querySelectorAll('ion-input-otp[helper-text]');
+
+          function toggleValid() {
+            otps.forEach((otp) => {
+              otp.classList.toggle('ion-invalid');
+              otp.classList.toggle('ion-touched');
+            });
+          }
+        </script>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

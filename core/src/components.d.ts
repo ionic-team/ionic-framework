@@ -1480,6 +1480,10 @@ export namespace Components {
          */
         "length": number;
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * A regex pattern string for allowed characters. Defaults based on type.  For numbers (`type="number"`): `"[\p{N}]"` For text (`type="text"`): `"[\p{L}\p{N}]"`
          */
         "pattern"?: string;
@@ -6769,6 +6773,10 @@ declare namespace LocalJSX {
           * @default 4
          */
         "length"?: number;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
         /**
           * Emitted when the input group loses focus.
          */

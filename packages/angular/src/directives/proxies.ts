@@ -1018,7 +1018,7 @@ This event will not emit when programmatically setting the `value` property.
 
 
 @ProxyCmp({
-  inputs: ['autocapitalize', 'color', 'disabled', 'errorText', 'fill', 'helperText', 'inputmode', 'length', 'pattern', 'readonly', 'separators', 'shape', 'size', 'type', 'value'],
+  inputs: ['autocapitalize', 'color', 'disabled', 'errorText', 'fill', 'helperText', 'inputmode', 'length', 'mode', 'pattern', 'readonly', 'separators', 'shape', 'size', 'type', 'value'],
   methods: ['setFocus']
 })
 @Component({
@@ -1026,7 +1026,7 @@ This event will not emit when programmatically setting the `value` property.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['autocapitalize', 'color', 'disabled', 'errorText', 'fill', 'helperText', 'inputmode', 'length', 'pattern', 'readonly', 'separators', 'shape', 'size', 'type', 'value'],
+  inputs: ['autocapitalize', 'color', 'disabled', 'errorText', 'fill', 'helperText', 'inputmode', 'length', 'mode', 'pattern', 'readonly', 'separators', 'shape', 'size', 'type', 'value'],
 })
 export class IonInputOtp {
   protected el: HTMLIonInputOtpElement;
