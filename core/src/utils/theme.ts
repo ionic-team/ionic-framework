@@ -92,6 +92,7 @@ export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): 
       // Generate rgb variables for base and contrast color variants
       // These are only generated when processing global color objects,
       // not component-level color overrides
+      // TODO(): this only works with hex values
       if ((key === 'bold' || key === 'subtle') && prefix.includes('color')) {
         if (typeof val === 'object' && val !== null) {
           return Object.entries(val).flatMap(([property, hexValue]) => {
