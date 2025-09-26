@@ -120,7 +120,15 @@
 // Input Description
 // ----------------------------------------------------------------
 
-.input-otp-description {
+.input-otp-description-hidden {
+  display: none;
+}
+
+// Input Description & Bottom Content
+// ----------------------------------------------------------------
+
+.input-otp-description,
+.input-otp-bottom {
   color: $text-color-step-300;
 
   font-size: dynamic-font(12px);
@@ -128,10 +136,6 @@
   line-height: dynamic-font(20px);
 
   text-align: center;
-}
-
-.input-otp-description-hidden {
-  display: none;
 }
 
 // Input Separator
@@ -269,6 +273,34 @@
 :host(.has-focus.ion-valid),
 :host(.ion-touched.ion-invalid) {
   --border-color: var(--highlight-color);
+}
+
+// Input Hint Text
+// ----------------------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is
+ * present on the input. Otherwise the helper text should
+ * be shown.
+ */
+.input-otp-bottom .error-text {
+  display: none;
+
+  color: var(--highlight-color-invalid);
+}
+
+.input-otp-bottom .helper-text {
+  display: block;
+
+  color: $text-color-step-300;
+}
+
+:host(.ion-touched.ion-invalid) .input-otp-bottom .error-text {
+  display: block;
+}
+
+:host(.ion-touched.ion-invalid) .input-otp-bottom .helper-text {
+  display: none;
 }
 
 // Colors
