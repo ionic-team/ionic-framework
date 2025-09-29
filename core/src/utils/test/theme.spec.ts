@@ -1,5 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 
+import { Buttons } from '../../components/buttons/buttons';
 import { CardContent } from '../../components/card-content/card-content';
 import { Chip } from '../../components/chip/chip';
 import {
@@ -283,6 +284,20 @@ describe('injectCSS', () => {
     injectCSS(css, shadowRoot!);
 
     expect(shadowRoot!.innerHTML).toContain(`<style>${css}</style>`);
+  });
+
+  it('should inject CSS into a scoped element', async () => {
+    const page = await newSpecPage({
+      components: [Buttons],
+      html: '<ion-buttons></ion-buttons>',
+    });
+
+    const target = page.body.querySelector('ion-buttons')!;
+
+    const css = ':host { background-color: red; }';
+    injectCSS(css, target);
+
+    expect(target.innerHTML).toContain(`<style>${css}</style>`);
   });
 });
 
