@@ -1,0 +1,46 @@
+<ion-button id="present-inline-sheet-modal" (click)="presentInlineSheetModal()">
+  Present Inline Sheet Modal
+</ion-button>
+
+<p>
+  Current breakpoint: <span id="current-breakpoint">{{ currentBreakpoint }}</span>
+</p>
+
+<ion-button id="background-action" (click)="onBackgroundActionClick()">
+  Background Action
+</ion-button>
+
+<p>
+  Background action count: <span id="background-action-count">{{ backgroundActionCount }}</span>
+</p>
+
+<ion-modal
+  #inlineSheetModal
+  mode="md"
+  [isOpen]="isSheetOpen"
+  [initialBreakpoint]="0.2"
+  [breakpoints]="breakpoints"
+  [backdropDismiss]="false"
+  [backdropBreakpoint]="0.5"
+  [focusTrap]="false"
+  handleBehavior="cycle"
+  (ionBreakpointDidChange)="onSheetBreakpointDidChange($event)"
+  (didDismiss)="onSheetDidDismiss()"
+>
+  <ng-template>
+    <ion-content>
+      <ion-searchbar placeholder="Search" (click)="expandInlineSheet()"></ion-searchbar>
+      <ion-list>
+        <ion-item *ngFor="let contact of contacts">
+          <ion-avatar slot="start">
+            <ion-img [src]="contact.avatar"></ion-img>
+          </ion-avatar>
+          <ion-label>
+            <h2>{{ contact.name }}</h2>
+            <p>{{ contact.title }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>

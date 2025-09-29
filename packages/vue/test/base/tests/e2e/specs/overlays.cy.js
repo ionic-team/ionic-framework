@@ -1,7 +1,11 @@
 const testController = (overlay, shadow = false) => {
   const selector = `.${overlay}-controller`;
-  cy.get(`ion-radio#${overlay}`).click();
-  cy.get('ion-radio#controller').click();
+  cy.get(`ion-radio#${overlay}`)
+    .scrollIntoView({ offset: { top: -100, left: 0 } })
+    .click({ force: true });
+  cy.get('ion-radio#controller')
+    .scrollIntoView({ offset: { top: -100, left: 0 } })
+    .click({ force: true });
 
   cy.get('ion-button#present-overlay').click();
   cy.get(selector).should('exist').should('be.visible');
@@ -16,8 +20,12 @@ const testController = (overlay, shadow = false) => {
 }
 
 const testComponent = (overlay, shadow = false) => {
-  cy.get(`ion-radio#${overlay}`).click();
-  cy.get('ion-radio#component').click();
+  cy.get(`ion-radio#${overlay}`)
+    .scrollIntoView({ offset: { top: -100, left: 0 } })
+    .click({ force: true });
+  cy.get('ion-radio#component')
+    .scrollIntoView({ offset: { top: -100, left: 0 } })
+    .click({ force: true });
 
   cy.get('ion-button#present-overlay').click();
   cy.get(overlay).should('exist').should('be.visible');
@@ -40,8 +48,12 @@ const testComponent = (overlay, shadow = false) => {
 }
 
 const testInlineOverlay = (overlay, shadow = false) => {
-  cy.get(`ion-radio#${overlay}`).click();
-  cy.get('ion-radio#component').click();
+  cy.get(`ion-radio#${overlay}`)
+    .scrollIntoView({ offset: { top: -100, left: 0 } })
+    .click({ force: true });
+  cy.get('ion-radio#component')
+    .scrollIntoView({ offset: { top: -100, left: 0 } })
+    .click({ force: true });
 
   cy.get('ion-button#present-overlay').click();
   cy.get(overlay).should('exist').should('be.visible');
@@ -214,6 +226,135 @@ describe('Overlays', () => {
     });
   });
 
+  it('should fire long-form lifecycle events on overlays', () => {
+    cy.get('ion-radio#ion-modal').click();
+    cy.get('ion-radio#component').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    testLongLifecycle('overlays', {
+      willPresent: 1,
+      didPresent: 1,
+      willDismiss: 0,
+      didDismiss: 0
+    });
+
+    cy.get('ion-modal #dismiss').click();
+
+    testLongLifecycle('overlays', {
+      willPresent: 1,
+      didPresent: 1,
+      willDismiss: 1,
+      didDismiss: 1
+    });
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    testLongLifecycle('overlays', {
+      willPresent: 2,
+      didPresent: 2,
+      willDismiss: 1,
+      didDismiss: 1
+    });
+
+    cy.get('ion-modal #dismiss').click();
+
+    testLongLifecycle('overlays', {
+      willPresent: 2,
+      didPresent: 2,
+      willDismiss: 2,
+      didDismiss: 2
+    });
+  });
+
+  it('should fire lifecycle events on controller overlays', () => {
+    cy.get('ion-radio#ion-modal').click();
+    cy.get('ion-radio#controller').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    testLifecycle('overlays', {
+      willPresent: 1,
+      didPresent: 1,
+      willDismiss: 0,
+      didDismiss: 0
+    });
+
+    cy.get('ion-modal #dismiss').click();
+
+    testLifecycle('overlays', {
+      willPresent: 1,
+      didPresent: 1,
+      willDismiss: 1,
+      didDismiss: 1
+    });
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    testLifecycle('overlays', {
+      willPresent: 2,
+      didPresent: 2,
+      willDismiss: 1,
+      didDismiss: 1
+    });
+
+    cy.get('ion-modal #dismiss').click();
+
+    testLifecycle('overlays', {
+      willPresent: 2,
+      didPresent: 2,
+      willDismiss: 2,
+      didDismiss: 2
+    });
+  });
+
+  it('should fire long-form lifecycle events on controller overlays', () => {
+    cy.get('ion-radio#ion-modal').click();
+    cy.get('ion-radio#controller').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    testLongLifecycle('overlays', {
+      willPresent: 1,
+      didPresent: 1,
+      willDismiss: 0,
+      didDismiss: 0
+    });
+
+    cy.get('ion-modal #dismiss').click();
+
+    testLongLifecycle('overlays', {
+      willPresent: 1,
+      didPresent: 1,
+      willDismiss: 1,
+      didDismiss: 1
+    });
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    testLongLifecycle('overlays', {
+      willPresent: 2,
+      didPresent: 2,
+      willDismiss: 1,
+      didDismiss: 1
+    });
+
+    cy.get('ion-modal #dismiss').click();
+
+    testLongLifecycle('overlays', {
+      willPresent: 2,
+      didPresent: 2,
+      willDismiss: 2,
+      didDismiss: 2
+    });
+  });
+
   it('should unmount modal via component', () => {
     cy.get('ion-radio#ion-modal').click();
     cy.get('ion-radio#component').click();
@@ -260,3 +401,9 @@ const testLifecycle = (selector, expected = {}) => {
   cy.get(`[data-pageid=${selector}] #didDismiss`).should('have.text', expected.didDismiss);
 }
 
+const testLongLifecycle = (selector, expected = {}) => {
+  cy.get(`[data-pageid=${selector}] #ionModalWillPresent`).should('have.text', expected.willPresent);
+  cy.get(`[data-pageid=${selector}] #ionModalDidPresent`).should('have.text', expected.didPresent);
+  cy.get(`[data-pageid=${selector}] #ionModalWillDismiss`).should('have.text', expected.willDismiss);
+  cy.get(`[data-pageid=${selector}] #ionModalDidDismiss`).should('have.text', expected.didDismiss);
+}
