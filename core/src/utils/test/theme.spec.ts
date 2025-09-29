@@ -750,11 +750,19 @@ describe('mix()', () => {
   it('should handle 3-digit hex colors', () => {
     expect(mix('#000', '#fff', '50%')).toBe('#808080');
     expect(mix('#f00', '#0f0', '50%')).toBe('#808000');
+
+    // 3-digit + 6-digit
+    expect(mix('#000', '#ffffff', '50%')).toBe('#808080');
+    expect(mix('#000000', '#fff', '50%')).toBe('#808080');
   });
 
   it('should handle hex colors without hash prefix', () => {
     expect(mix('000000', 'ffffff', '50%')).toBe('#808080');
     expect(mix('f00', '0f0', '50%')).toBe('#808000');
+
+    // With and without hash prefix
+    expect(mix('#000000', 'ffffff', '50%')).toBe('#808080');
+    expect(mix('f00', '#0f0', '50%')).toBe('#808000');
   });
 
   it('should handle fractional percentages', () => {
