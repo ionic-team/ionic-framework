@@ -10,7 +10,9 @@ import {
   getClassList,
   getClassMap,
   getCustomTheme,
+  hexToRgb,
   injectCSS,
+  mix,
 } from '../theme';
 
 describe('getClassList()', () => {
@@ -647,5 +649,80 @@ describe('generateColorClasses', () => {
     const css = generateColorClasses(theme).replace(/\s/g, '');
 
     expect(css).toBe('');
+  });
+});
+
+describe('hexToRgb()', () => {
+  it('should convert 6-digit hex colors to RGB strings', () => {
+    expect(hexToRgb('#ffffff')).toBe('255, 255, 255');
+    expect(hexToRgb('#000000')).toBe('0, 0, 0');
+    expect(hexToRgb('#ff0000')).toBe('255, 0, 0');
+    expect(hexToRgb('#00ff00')).toBe('0, 255, 0');
+    expect(hexToRgb('#0000ff')).toBe('0, 0, 255');
+    expect(hexToRgb('#3880ff')).toBe('56, 128, 255');
+  });
+
+  it('should convert 3-digit hex colors to RGB strings', () => {
+    expect(hexToRgb('#fff')).toBe('255, 255, 255');
+    expect(hexToRgb('#000')).toBe('0, 0, 0');
+    expect(hexToRgb('#f00')).toBe('255, 0, 0');
+    expect(hexToRgb('#0f0')).toBe('0, 255, 0');
+    expect(hexToRgb('#00f')).toBe('0, 0, 255');
+    expect(hexToRgb('#abc')).toBe('170, 187, 204');
+  });
+
+  it('should handle hex colors without hash prefix', () => {
+    expect(hexToRgb('ffffff')).toBe('255, 255, 255');
+    expect(hexToRgb('fff')).toBe('255, 255, 255');
+    expect(hexToRgb('3880ff')).toBe('56, 128, 255');
+  });
+});
+
+describe('mix()', () => {
+  it('should mix two hex colors by weight percentage', () => {
+    // Mix white into black
+    expect(mix('#000000', '#ffffff', '0%')).toBe('#000000');
+    expect(mix('#000000', '#ffffff', '50%')).toBe('#808080');
+    expect(mix('#000000', '#ffffff', '100%')).toBe('#ffffff');
+  });
+
+  it('should mix colors with different percentages', () => {
+    // Mix red into blue
+    expect(mix('#0000ff', '#ff0000', '25%')).toBe('#4000bf');
+    expect(mix('#0000ff', '#ff0000', '75%')).toBe('#bf0040');
+  });
+
+  it('should handle 3-digit hex colors', () => {
+    expect(mix('#000', '#fff', '50%')).toBe('#808080');
+    expect(mix('#f00', '#0f0', '50%')).toBe('#808000');
+  });
+
+  it('should handle hex colors without hash prefix', () => {
+    expect(mix('000000', 'ffffff', '50%')).toBe('#808080');
+    expect(mix('f00', '0f0', '50%')).toBe('#808000');
+  });
+
+  it('should handle fractional percentages', () => {
+    expect(mix('#000000', '#ffffff', '12.5%')).toBe('#202020');
+    expect(mix('#ffffff', '#000000', '87.5%')).toBe('#202020');
+  });
+
+  it('should work with real-world color examples', () => {
+    // Mix primary Ionic blue with white
+    expect(mix('#3880ff', '#ffffff', '10%')).toBe('#4c8dff');
+
+    // Mix primary Ionic blue with black for shade
+    expect(mix('#3880ff', '#000000', '12%')).toBe('#3171e0');
+  });
+
+  it('should handle edge cases', () => {
+    // Same colors should return base color regardless of weight
+    expect(mix('#ff0000', '#ff0000', '50%')).toBe('#ff0000');
+
+    // Zero weight should return base color
+    expect(mix('#123456', '#abcdef', '0%')).toBe('#123456');
+
+    // 100% weight should return mix color
+    expect(mix('#123456', '#abcdef', '100%')).toBe('#abcdef');
   });
 });
