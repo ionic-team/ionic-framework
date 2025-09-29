@@ -580,6 +580,18 @@ describe('generateComponentThemeCSS', () => {
 });
 
 describe('generateColorClasses', () => {
+  let consoleWarnSpy: jest.SpyInstance;
+
+  beforeEach(() => {
+    consoleWarnSpy = jest.spyOn(console, 'warn');
+    // Suppress console.warn output from polluting the test output
+    consoleWarnSpy.mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    consoleWarnSpy.mockRestore();
+  });
+
   it('should generate color classes for a given theme', () => {
     const theme = {
       palette: {
@@ -648,7 +660,7 @@ describe('generateColorClasses', () => {
     expect(css).toBe('');
   });
 
-  it('should not generate color classes for a given theme with an invalid color value', () => {
+  it('should not generate color classes for a given theme with an invalid string color value', () => {
     const theme = {
       spacing: {
         xs: '12px',
@@ -662,6 +674,34 @@ describe('generateColorClasses', () => {
     };
 
     const css = generateColorClasses(theme).replace(/\s/g, '');
+
+    // Only check the first log to get the string message
+    expect(consoleWarnSpy.mock.calls[0][0]).toContain(
+      '[Ionic Warning]: Invalid color configuration in theme. Expected color to be an object, but found string.'
+    );
+
+    expect(css).toBe('');
+  });
+
+  it('should not generate color classes for a given theme with an invalid array color value', () => {
+    const theme = {
+      spacing: {
+        xs: '12px',
+        sm: '12px',
+        md: '12px',
+        lg: '12px',
+        xl: '12px',
+        xxl: '12px',
+      },
+      color: ['red', 'blue', 'yellow'],
+    };
+
+    const css = generateColorClasses(theme).replace(/\s/g, '');
+
+    // Only check the first log to get the string message
+    expect(consoleWarnSpy.mock.calls[0][0]).toContain(
+      '[Ionic Warning]: Invalid color configuration in theme. Expected color to be an object, but found array.'
+    );
 
     expect(css).toBe('');
   });
