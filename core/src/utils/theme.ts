@@ -1,3 +1,5 @@
+import { printIonWarning } from '@utils/logging';
+
 import type { Color, CssClassMap } from '../interface';
 
 import { deepMerge } from './helpers';
@@ -174,7 +176,17 @@ export const generateColorClasses = (theme: any): string => {
   // direct color property if there is no light palette
   const colors = theme?.palette?.light?.color || theme?.color;
 
-  if (!colors || typeof colors !== 'object') {
+  if (!colors) {
+    return '';
+  }
+
+  if (typeof colors !== 'object' || Array.isArray(colors)) {
+    const colorsType = Array.isArray(colors) ? 'array' : typeof colors;
+    printIonWarning(
+      `Invalid color configuration in theme. Expected color to be an object, but found ${colorsType}.`,
+      theme
+    );
+
     return '';
   }
 
@@ -389,61 +401,57 @@ export const applyComponentTheme = (element: HTMLElement): void => {
 };
 
 /**
- * Converts a hex color to RGB comma-separated values
- * @param hex Hex color (e.g., '#ffffff' or '#fff')
- * @returns RGB string (e.g., '255, 255, 255')
+ * Parses a hex color string and returns RGB values as an array.
+ *
+ * @param hex Hex color (e.g. `'#ffffff'` or `'#fff'`)
+ *
+ * @returns RGB values as `[r, g, b]` array
  */
-export const hexToRgb = (hex: string): string => {
+const parseHex = (hex: string): [number, number, number] => {
   const cleanHex = hex.replace('#', '');
 
-  let r: number, g: number, b: number;
-
+  // Short hex format like 'fff' → expand to 'ffffff'
   if (cleanHex.length === 3) {
-    // Short hex format like 'fff' → expand to 'ffffff'
-    r = parseInt(cleanHex[0] + cleanHex[0], 16);
-    g = parseInt(cleanHex[1] + cleanHex[1], 16);
-    b = parseInt(cleanHex[2] + cleanHex[2], 16);
-  } else {
+    return [
+      parseInt(cleanHex[0] + cleanHex[0], 16),
+      parseInt(cleanHex[1] + cleanHex[1], 16),
+      parseInt(cleanHex[2] + cleanHex[2], 16),
+    ];
     // Full hex format like 'ffffff'
-    r = parseInt(cleanHex.substr(0, 2), 16);
-    g = parseInt(cleanHex.substr(2, 2), 16);
-    b = parseInt(cleanHex.substr(4, 2), 16);
+  } else {
+    return [
+      parseInt(cleanHex.substring(0, 2), 16),
+      parseInt(cleanHex.substring(2, 4), 16),
+      parseInt(cleanHex.substring(4, 6), 16),
+    ];
   }
+};
 
+/**
+ * Converts a hex color to a string of RGB comma-separated values.
+ *
+ * @param hex Hex color (e.g. `'#ffffff'` or `'#fff'`)
+ *
+ * @returns RGB string (e.g. `'255, 255, 255'`)
+ */
+export const hexToRgb = (hex: string): string => {
+  const [r, g, b] = parseHex(hex);
   return `${r}, ${g}, ${b}`;
 };
 
 /**
- * Mixes two hex colors by a given weight percentage
- * @param baseColor Base color (e.g., '#0054e9')
- * @param mixColor Color to mix in (e.g., '#000000' or '#fff')
- * @param weight Weight percentage as string - how much of mixColor to mix into baseColor (e.g., '12%')
- * @returns Mixed hex color
+ * Mixes two hex colors by a given weight percentage and returns
+ * it as a hex color.
+ *
+ * @param baseColor Base color (e.g. `'#0054e9'`)
+ * @param mixColor Color to mix in (e.g. `'#000000'` or `'#fff'`)
+ * @param weight Weight percentage as string - how much of mixColor to mix into baseColor (e.g. `'12%'`)
+ *
+ * @returns Mixed hex color (e.g. `'#004acd'`)
  */
 export const mix = (baseColor: string, mixColor: string, weight: string): string => {
   // Parse weight percentage
   const w = parseFloat(weight.replace('%', '')) / 100;
-
-  // Parse hex colors
-  const parseHex = (hex: string): [number, number, number] => {
-    const cleanHex = hex.replace('#', '');
-
-    // Short hex format like 'fff' → expand to 'ffffff'
-    if (cleanHex.length === 3) {
-      return [
-        parseInt(cleanHex[0] + cleanHex[0], 16),
-        parseInt(cleanHex[1] + cleanHex[1], 16),
-        parseInt(cleanHex[2] + cleanHex[2], 16),
-      ];
-      // Full hex format like 'ffffff'
-    } else {
-      return [
-        parseInt(cleanHex.substr(0, 2), 16),
-        parseInt(cleanHex.substr(2, 2), 16),
-        parseInt(cleanHex.substr(4, 2), 16),
-      ];
-    }
-  };
 
   // Parse both colors
   const [baseR, baseG, baseB] = parseHex(baseColor);
