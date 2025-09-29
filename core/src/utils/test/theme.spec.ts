@@ -3,6 +3,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { CardContent } from '../../components/card-content/card-content';
 import { Chip } from '../../components/chip/chip';
 import {
+  generateColorClasses,
   generateComponentThemeCSS,
   generateCSSVars,
   generateGlobalThemeCSS,
@@ -558,5 +559,93 @@ describe('generateComponentThemeCSS', () => {
     `.replace(/\s/g, '');
 
     expect(css).toBe(expectedCSS);
+  });
+});
+
+describe('generateColorClasses', () => {
+  it('should generate color classes for a given theme', () => {
+    const theme = {
+      palette: {
+        light: {
+          color: {
+            primary: {
+              bold: {
+                base: '#0054e9',
+                contrast: '#ffffff',
+                foreground: '#000000',
+                shade: '#0041c4',
+                tint: '#0065ff',
+              },
+              subtle: {
+                base: '#0054e9',
+                contrast: '#ffffff',
+                foreground: '#000000',
+                shade: '#0041c4',
+                tint: '#0065ff',
+              },
+            },
+          },
+        },
+      },
+    };
+
+    const css = generateColorClasses(theme).replace(/\s/g, '');
+
+    const expectedCSS = `
+      :root .ion-color-primary {
+        --ion-color-base: var(--ion-color-primary, var(--ion-color-primary-bold)) !important;
+        --ion-color-base-rgb: var(--ion-color-primary-rgb, var(--ion-color-primary-bold-rgb)) !important;
+        --ion-color-contrast: var(--ion-color-primary-contrast, var(--ion-color-primary-bold-contrast)) !important;
+        --ion-color-contrast-rgb: var(--ion-color-primary-contrast-rgb, var(--ion-color-primary-bold-contrast-rgb)) !important;
+        --ion-color-shade: var(--ion-color-primary-shade, var(--ion-color-primary-bold-shade)) !important;
+        --ion-color-tint: var(--ion-color-primary-tint, var(--ion-color-primary-bold-tint)) !important;
+        --ion-color-foreground: var(--ion-color-primary-foreground, var(--ion-color-primary-bold-foreground)) !important;
+
+        --ion-color-subtle-base: var(--ion-color-primary-subtle) !important;
+        --ion-color-subtle-base-rgb: var(--ion-color-primary-subtle-rgb) !important;
+        --ion-color-subtle-contrast: var(--ion-color-primary-subtle-contrast) !important;
+        --ion-color-subtle-contrast-rgb: var(--ion-color-primary-subtle-contrast-rgb) !important;
+        --ion-color-subtle-shade: var(--ion-color-primary-subtle-shade) !important;
+        --ion-color-subtle-tint: var(--ion-color-primary-subtle-tint) !important;
+        --ion-color-subtle-foreground: var(--ion-color-primary-subtle-foreground) !important;
+      }
+    `.replace(/\s/g, '');
+
+    expect(css).toBe(expectedCSS);
+  });
+
+  it('should not generate color classes for a given theme without colors', () => {
+    const theme = {
+      spacing: {
+        xs: '12px',
+        sm: '12px',
+        md: '12px',
+        lg: '12px',
+        xl: '12px',
+        xxl: '12px',
+      },
+    };
+
+    const css = generateColorClasses(theme).replace(/\s/g, '');
+
+    expect(css).toBe('');
+  });
+
+  it('should not generate color classes for a given theme with an invalid color value', () => {
+    const theme = {
+      spacing: {
+        xs: '12px',
+        sm: '12px',
+        md: '12px',
+        lg: '12px',
+        xl: '12px',
+        xxl: '12px',
+      },
+      color: 'red',
+    };
+
+    const css = generateColorClasses(theme).replace(/\s/g, '');
+
+    expect(css).toBe('');
   });
 });

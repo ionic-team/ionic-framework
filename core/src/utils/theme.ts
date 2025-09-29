@@ -1,3 +1,5 @@
+import { printIonWarning } from '@utils/logging';
+
 import type { Color, CssClassMap } from '../interface';
 
 import { deepMerge } from './helpers';
@@ -174,7 +176,17 @@ export const generateColorClasses = (theme: any): string => {
   // direct color property if there is no light palette
   const colors = theme?.palette?.light?.color || theme?.color;
 
-  if (!colors || typeof colors !== 'object') {
+  if (!colors) {
+    return '';
+  }
+
+  if (typeof colors !== 'object' || Array.isArray(colors)) {
+    const colorsType = Array.isArray(colors) ? 'array' : typeof colors;
+    printIonWarning(
+      `Invalid color configuration in theme. Expected color to be an object, but found ${colorsType}.`,
+      theme
+    );
+
     return '';
   }
 
