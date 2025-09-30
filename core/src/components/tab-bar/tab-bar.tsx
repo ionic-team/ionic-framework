@@ -46,7 +46,7 @@ export class TabBar implements ComponentInterface {
     if (!this.didLoad) {
       return;
     }
-    
+
     if (this.selectedTab !== undefined) {
       this.ionTabBarChanged.emit({
         tab: this.selectedTab,
@@ -77,7 +77,7 @@ export class TabBar implements ComponentInterface {
     // Set the flag to indicate the component has loaded
     // This allows the watcher to emit changes from this point forward
     this.didLoad = true;
-    
+
     // Emit the initial selected tab after the component is fully loaded
     // This ensures all child components (ion-tab-button) are ready
     if (this.selectedTab !== undefined) {
