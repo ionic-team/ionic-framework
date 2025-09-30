@@ -65,7 +65,10 @@ export class TabBar implements ComponentInterface {
    */
   @Event() ionTabBarLoaded!: EventEmitter<void>;
 
-  componentWillLoad() {
+  componentDidLoad() {
+    this.ionTabBarLoaded.emit();
+    // Emit the initial selected tab after the component is fully loaded
+    // This ensures all child components (ion-tab-button) are ready
     this.selectedTabChanged();
   }
 
@@ -88,10 +91,6 @@ export class TabBar implements ComponentInterface {
     if (this.keyboardCtrl) {
       this.keyboardCtrl.destroy();
     }
-  }
-
-  componentDidLoad() {
-    this.ionTabBarLoaded.emit();
   }
 
   render() {
