@@ -75,10 +75,23 @@ export class Tabs implements NavOutlet {
 
   private updateTabBar() {
     const tabBar = this.el.querySelector('ion-tab-bar');
-    if (tabBar) {
-      const tab = this.selectedTab ? this.selectedTab.tab : undefined;
-      tabBar.selectedTab = tab;
+    if (!tabBar) {
+      return;
     }
+
+    const tab = this.selectedTab ? this.selectedTab.tab : undefined;
+
+    // If tabs has no selected tab but tab-bar already has a selected-tab set,
+    // don't overwrite it. This handles cases where tab-bar is used without ion-tab elements.
+    if (tab === undefined) {
+      return;
+    }
+
+    if (tabBar.selectedTab === tab) {
+      return;
+    }
+
+    tabBar.selectedTab = tab;
   }
 
   /**

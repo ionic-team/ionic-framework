@@ -85,6 +85,15 @@ export class TabButton implements ComponentInterface, AnchorInterface {
    */
   @Event() ionTabButtonClick!: EventEmitter<TabButtonClickEventDetail>;
 
+  @Listen('ionTabBarLoaded', { target: 'window' })
+  onTabBarLoaded(ev: Event) {
+    // Only respond to events from our direct parent tab-bar
+    const parent = this.el.parentElement;
+    if (parent && parent.tagName === 'ION-TAB-BAR' && ev.target === parent) {
+      this.syncWithTabBar();
+    }
+  }
+
   @Listen('ionTabBarChanged', { target: 'window' })
   onTabBarChanged(ev: CustomEvent<TabBarChangedEventDetail>) {
     const dispatchedFrom = ev.target as HTMLElement;
@@ -103,12 +112,16 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     if (this.layout === undefined) {
       this.layout = config.get('tabButtonLayout', 'icon-top');
     }
+  }
 
-    // Check if this tab button should be initially selected based on parent tab-bar's selectedTab prop
-    // This handles the case where selected-tab is set via HTML attribute before events fire
+  private syncWithTabBar() {
     const tabBar = this.el.parentElement as HTMLIonTabBarElement | null;
-    if (tabBar && tabBar.tagName === 'ION-TAB-BAR' && tabBar.selectedTab !== undefined) {
-      this.selected = this.tab === tabBar.selectedTab;
+    if (tabBar && tabBar.tagName === 'ION-TAB-BAR') {
+      // Check both the property and attribute to handle all initialization scenarios
+      const selectedTab = tabBar.selectedTab ?? tabBar.getAttribute('selected-tab');
+      if (selectedTab !== null && selectedTab !== undefined) {
+        this.selected = this.tab === selectedTab;
+      }
     }
   }
 
