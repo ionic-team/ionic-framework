@@ -103,6 +103,13 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     if (this.layout === undefined) {
       this.layout = config.get('tabButtonLayout', 'icon-top');
     }
+
+    // Check if this tab button should be initially selected based on parent tab-bar's selectedTab prop
+    // This handles the case where selected-tab is set via HTML attribute before events fire
+    const tabBar = this.el.parentElement as HTMLIonTabBarElement | null;
+    if (tabBar && tabBar.tagName === 'ION-TAB-BAR' && tabBar.selectedTab !== undefined) {
+      this.selected = this.tab === tabBar.selectedTab;
+    }
   }
 
   private selectTab(ev: Event | KeyboardEvent) {
