@@ -4,7 +4,10 @@
 // - It also works very well out of the box with any kind of Design Tokens formats, like Figma Tokens, as well as APIs to adjust to more custom ones.
 // - It is probably the most well-known and widely used Design Tokens tool. It has also been regularly maintained for a long time.
 // - It can easily scale to different necessities we might have in the future.
+import StyleDictionary from 'style-dictionary';
+
 import * as utils from './utils.mjs';
+
 const {
   generateShadowValue,
   generateFontSizeValue,
@@ -23,7 +26,6 @@ const {
   generateShadowUtilityClasses,
   generateUtilityClasses
 } = utils;
-import StyleDictionary from 'style-dictionary';
 
 const customHeader = `// Do not edit directly, this file was auto-generated.`;
 // Set the prefix for classes
