@@ -56,6 +56,7 @@ html.ios.ios {
 html.ionic,
 html.ionic.ios,
 html.ionic.md {
+  /* TODO: remove this with the ionic theme updates */
   --ion-background-color: var(--background);
   --ion-font-family: initial;
 }

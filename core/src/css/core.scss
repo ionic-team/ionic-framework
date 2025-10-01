@@ -4,24 +4,6 @@
 @import "../components/menu/menu.md.vars";
 @import "../components/modal/modal.native.vars";
 
-// Ionic Colors
-// --------------------------------------------------
-
-:root {
-  /**
-   * Set the theme colors from the
-   * `native.theme.default.scss` file.
-   */
-  @include set-theme-colors($colors);
-  @include generate-color-variables();
-
-  @each $color-name, $value in $colors {
-    .ion-color-#{$color-name} {
-      @include generate-color($color-name);
-    }
-  }
-}
-
 // Ionic Font Family
 // --------------------------------------------------
 

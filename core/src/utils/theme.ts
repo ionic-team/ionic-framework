@@ -1,3 +1,5 @@
+import { printIonWarning } from '@utils/logging';
+
 import type { Color, CssClassMap } from '../interface';
 
 import { deepMerge } from './helpers';
@@ -89,6 +91,31 @@ export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): 
         return [`${prefix.slice(0, -1)}: ${val};`];
       }
 
+      // Generate rgb variables for base and contrast color variants
+      // These are only generated when processing global color objects,
+      // not component-level color overrides
+      // TODO(): this only works with hex values
+      if ((key === 'bold' || key === 'subtle') && prefix.includes('color')) {
+        if (typeof val === 'object' && val !== null) {
+          return Object.entries(val).flatMap(([property, hexValue]) => {
+            if (typeof hexValue === 'string' && hexValue.startsWith('#')) {
+              // For 'base' property, don't include the property name in the CSS variable
+              const varName = property === 'base' ? `${prefix}${key}` : `${prefix}${key}-${property}`;
+              const cssVars = [`${varName}: ${hexValue};`];
+
+              // Only add RGB values for base and contrast
+              if (property === 'base' || property === 'contrast') {
+                const rgbVarName = property === 'base' ? `${prefix}${key}-rgb` : `${prefix}${key}-${property}-rgb`;
+                cssVars.push(`${rgbVarName}: ${hexToRgb(hexValue)};`);
+              }
+
+              return cssVars;
+            }
+            return [];
+          });
+        }
+      }
+
       // If it's a font-sizes key, create rem version
       // This is necessary to support the dynamic font size feature
       if (key === 'font-sizes' && typeof val === 'object' && val !== null) {
@@ -112,6 +139,106 @@ export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): 
     .filter(Boolean);
 
   return cssProps.join('\n');
+};
+
+/**
+ * Generates a CSS class containing the CSS variables for each color
+ * in the theme. Each color has generic bold and subtle variables that are mapped
+ * to the specific color's bold and subtle variables. The bold colors will temporarily
+ * include a fallback to remove the bold prefix. For example, the primary
+ * color will return the following CSS class:
+ *
+ * ```css
+ * :root .ion-color-primary {
+ *   --ion-color-base: var(--ion-color-primary, var(--ion-color-primary-bold));
+ *   --ion-color-base-rgb: var(--ion-color-primary-rgb, var(--ion-color-primary-bold-rgb));
+ *   --ion-color-contrast: var(--ion-color-primary-contrast, var(--ion-color-primary-bold-contrast));
+ *   --ion-color-contrast-rgb: var(--ion-color-primary-contrast-rgb, var(--ion-color-primary-bold-contrast-rgb));
+ *   --ion-color-shade: var(--ion-color-primary-shade, var(--ion-color-primary-bold-shade));
+ *   --ion-color-tint: var(--ion-color-primary-tint, var(--ion-color-primary-bold-tint));
+ *   --ion-color-foreground: var(--ion-color-primary, var(--ion-color-primary-foreground, var(--ion-color-primary-bold-foreground)));
+ *
+ *   --ion-color-subtle-base: var(--ion-color-primary-subtle);
+ *   --ion-color-subtle-base-rgb: var(--ion-color-primary-subtle-rgb);
+ *   --ion-color-subtle-contrast: var(--ion-color-primary-subtle-contrast);
+ *   --ion-color-subtle-contrast-rgb: var(--ion-color-primary-subtle-contrast-rgb);
+ *   --ion-color-subtle-shade: var(--ion-color-primary-subtle-shade);
+ *   --ion-color-subtle-tint: var(--ion-color-primary-subtle-tint);
+ *   --ion-color-subtle-foreground: var(--ion-color-primary-subtle-foreground);
+ * }
+ * ```
+ *
+ * @param theme The theme object containing color definitions
+ * @returns CSS string with .ion-color-{colorName} utility classes
+ */
+export const generateColorClasses = (theme: any): string => {
+  // Look for colors in the light palette first, then fallback to the
+  // direct color property if there is no light palette
+  const colors = theme?.palette?.light?.color || theme?.color;
+
+  if (!colors) {
+    return '';
+  }
+
+  if (typeof colors !== 'object' || Array.isArray(colors)) {
+    const colorsType = Array.isArray(colors) ? 'array' : typeof colors;
+    printIonWarning(
+      `Invalid color configuration in theme. Expected color to be an object, but found ${colorsType}.`,
+      theme
+    );
+
+    return '';
+  }
+
+  const generatedColorClasses: string[] = [];
+
+  Object.keys(colors).forEach((colorName) => {
+    const colorVariants = colors[colorName];
+    if (!colorVariants || typeof colorVariants !== 'object') return;
+
+    const cssVariableRules: string[] = [];
+
+    // Generate CSS variables for bold variant
+    // Includes base color variables without the bold modifier for
+    // backwards compatibility.
+    // TODO: Remove the fallbacks once the bold variables are the default
+    if (colorVariants.bold) {
+      cssVariableRules.push(
+        `--ion-color-base: var(--ion-color-${colorName}, var(--ion-color-${colorName}-bold)) !important;`,
+        `--ion-color-base-rgb: var(--ion-color-${colorName}-rgb, var(--ion-color-${colorName}-bold-rgb)) !important;`,
+        `--ion-color-contrast: var(--ion-color-${colorName}-contrast, var(--ion-color-${colorName}-bold-contrast)) !important;`,
+        `--ion-color-contrast-rgb: var(--ion-color-${colorName}-contrast-rgb, var(--ion-color-${colorName}-bold-contrast-rgb)) !important;`,
+        `--ion-color-shade: var(--ion-color-${colorName}-shade, var(--ion-color-${colorName}-bold-shade)) !important;`,
+        `--ion-color-tint: var(--ion-color-${colorName}-tint, var(--ion-color-${colorName}-bold-tint)) !important;`,
+        `--ion-color-foreground: var(--ion-color-${colorName}-foreground, var(--ion-color-${colorName}-bold-foreground)) !important;`
+      );
+    }
+
+    // Generate CSS variables for subtle variant
+    if (colorVariants.subtle) {
+      cssVariableRules.push(
+        `--ion-color-subtle-base: var(--ion-color-${colorName}-subtle) !important;`,
+        `--ion-color-subtle-base-rgb: var(--ion-color-${colorName}-subtle-rgb) !important;`,
+        `--ion-color-subtle-contrast: var(--ion-color-${colorName}-subtle-contrast) !important;`,
+        `--ion-color-subtle-contrast-rgb: var(--ion-color-${colorName}-subtle-contrast-rgb) !important;`,
+        `--ion-color-subtle-shade: var(--ion-color-${colorName}-subtle-shade) !important;`,
+        `--ion-color-subtle-tint: var(--ion-color-${colorName}-subtle-tint) !important;`,
+        `--ion-color-subtle-foreground: var(--ion-color-${colorName}-subtle-foreground) !important;`
+      );
+    }
+
+    if (cssVariableRules.length > 0) {
+      const colorUtilityClass = `
+        :root .ion-color-${colorName} {
+          ${cssVariableRules.join('\n  ')}
+        }
+      `;
+
+      generatedColorClasses.push(colorUtilityClass);
+    }
+  });
+
+  return generatedColorClasses.join('\n');
 };
 
 /**
@@ -142,6 +269,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
   }
 
   // Exclude components and palette from the default tokens
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { palette, components, ...defaultTokens } = theme;
 
   // Generate CSS variables for the default design tokens
@@ -150,29 +278,46 @@ export const generateGlobalThemeCSS = (theme: any): string => {
   // Generate CSS variables for the light color palette
   const lightTokensCSS = generateCSSVars(palette.light);
 
+  // Generate CSS variables for the dark color palette
+  const darkTokensCSS = generateCSSVars(palette.dark);
+
+  // Include CSS variables for the dark color palette instead of
+  // the light palette if dark palette enabled is 'always'
+  const paletteTokensCSS = palette.dark.enabled === 'always' ? darkTokensCSS : lightTokensCSS;
+
   let css = `
     ${CSS_ROOT_SELECTOR} {
       ${defaultTokensCSS}
-      ${lightTokensCSS}
+      ${paletteTokensCSS}
     }
   `;
 
-  // Generate CSS variables for the dark color palette if it
-  // is enabled for system preference
-  if (palette.dark.enabled === 'system') {
-    const darkTokensCSS = generateCSSVars(palette.dark);
-    if (darkTokensCSS.length > 0) {
-      css += `
-        @media (prefers-color-scheme: dark) {
-          ${CSS_ROOT_SELECTOR} {
-            ${darkTokensCSS}
-          }
-        }
-      `;
-    }
+  // Include CSS variables for the dark color palette inside of a
+  // class if dark palette enabled is 'class'
+  if (palette.dark.enabled === 'class') {
+    css += `
+      .ion-palette-dark {
+        ${darkTokensCSS}
+      }
+    `;
   }
 
-  return css;
+  // Include CSS variables for the dark color palette inside of the
+  // dark color scheme media query if dark palette enabled is 'system'
+  if (palette.dark.enabled === 'system') {
+    css += `
+      @media (prefers-color-scheme: dark) {
+        ${CSS_ROOT_SELECTOR} {
+          ${darkTokensCSS}
+        }
+      }
+    `;
+  }
+
+  // Add color classes
+  const colorClasses = generateColorClasses(theme);
+
+  return css + '\n' + colorClasses;
 };
 
 /**
@@ -253,4 +398,70 @@ export const applyComponentTheme = (element: HTMLElement): void => {
     const root = element.shadowRoot ?? element;
     injectCSS(css, root);
   }
+};
+
+/**
+ * Parses a hex color string and returns RGB values as an array.
+ *
+ * @param hex Hex color (e.g. `'#ffffff'` or `'#fff'`)
+ *
+ * @returns RGB values as `[r, g, b]` array
+ */
+const parseHex = (hex: string): [number, number, number] => {
+  const cleanHex = hex.replace('#', '');
+
+  // Short hex format like 'fff' → expand to 'ffffff'
+  if (cleanHex.length === 3) {
+    return [
+      parseInt(cleanHex[0] + cleanHex[0], 16),
+      parseInt(cleanHex[1] + cleanHex[1], 16),
+      parseInt(cleanHex[2] + cleanHex[2], 16),
+    ];
+    // Full hex format like 'ffffff'
+  } else {
+    return [
+      parseInt(cleanHex.substring(0, 2), 16),
+      parseInt(cleanHex.substring(2, 4), 16),
+      parseInt(cleanHex.substring(4, 6), 16),
+    ];
+  }
+};
+
+/**
+ * Converts a hex color to a string of RGB comma-separated values.
+ *
+ * @param hex Hex color (e.g. `'#ffffff'` or `'#fff'`)
+ *
+ * @returns RGB string (e.g. `'255, 255, 255'`)
+ */
+export const hexToRgb = (hex: string): string => {
+  const [r, g, b] = parseHex(hex);
+  return `${r}, ${g}, ${b}`;
+};
+
+/**
+ * Mixes two hex colors by a given weight percentage and returns
+ * it as a hex color.
+ *
+ * @param baseColor Base color (e.g. `'#0054e9'`)
+ * @param mixColor Color to mix in (e.g. `'#000000'` or `'#fff'`)
+ * @param weight Weight percentage as string - how much of mixColor to mix into baseColor (e.g. `'12%'`)
+ *
+ * @returns Mixed hex color (e.g. `'#004acd'`)
+ */
+export const mix = (baseColor: string, mixColor: string, weight: string): string => {
+  // Parse weight percentage
+  const w = parseFloat(weight.replace('%', '')) / 100;
+
+  // Parse both colors
+  const [baseR, baseG, baseB] = parseHex(baseColor);
+  const [mixR, mixG, mixB] = parseHex(mixColor);
+
+  // Mix mixColor into baseColor by weight
+  const r = Math.round(baseR * (1 - w) + mixR * w);
+  const g = Math.round(baseG * (1 - w) + mixG * w);
+  const b = Math.round(baseB * (1 - w) + mixB * w);
+
+  const toHex = (n: number) => n.toString(16).padStart(2, '0');
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 };
