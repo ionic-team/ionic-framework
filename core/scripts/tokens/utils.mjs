@@ -93,8 +93,8 @@ export function generateFontFamilyValue(prop, propName, variableType = 'css') {
   const _propName = propName.split('-').slice(0, -1).join('-');
 
   return variableType === 'scss'
-    ? `$${classAndScssPrefix}-${_propName}: var(--${variablesPrefix}-${_propName}, "${prop.$value}", sans-serif);`
-    : `--${variablesPrefix}-${_propName}: "${prop.$value}", sans-serif;`;
+    ? `$${classAndScssPrefix}-${_propName}: var(--${variablesPrefix}-${_propName}, ${prop.$value});`
+    : `--${variablesPrefix}-${_propName}: ${prop.$value};`;
 }
 
 // Generates a final value, based if the Design Token is of type color or not
