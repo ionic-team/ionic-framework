@@ -37,6 +37,26 @@ describe('overlays: scroll blocking', () => {
     expect(body).not.toHaveClass('backdrop-no-scroll');
   });
 
+  it('should not block scroll when focus-trap attribute is set to "false"', async () => {
+    const page = await newSpecPage({
+      components: [Modal],
+      html: `
+        <ion-modal focus-trap="false"></ion-modal>
+      `,
+    });
+
+    const modal = page.body.querySelector('ion-modal')!;
+    const body = page.doc.querySelector('body')!;
+
+    await modal.present();
+
+    expect(body).not.toHaveClass('backdrop-no-scroll');
+
+    await modal.dismiss();
+
+    expect(body).not.toHaveClass('backdrop-no-scroll');
+  });
+
   it('should not block scroll when the overlay is dismissed', async () => {
     const page = await newSpecPage({
       components: [Modal],

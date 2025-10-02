@@ -687,6 +687,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
     const { onLifecycle, parentPopover, dismissOnSelect, side, arrow, htmlAttributes, focusTrap } = this;
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover;
+    const focusTrapAttr = this.el.getAttribute('focus-trap');
 
     return (
       <Host
@@ -704,7 +705,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
           'overlay-hidden': true,
           'popover-desktop': desktop,
           [`popover-side-${side}`]: true,
-          [FOCUS_TRAP_DISABLE_CLASS]: focusTrap === false,
+          [FOCUS_TRAP_DISABLE_CLASS]: focusTrap === false || focusTrapAttr === 'false',
           'popover-nested': !!parentPopover,
         }}
         onIonPopoverDidPresent={onLifecycle}
