@@ -39,6 +39,15 @@
   --opacity-scale: inherit;
 }
 
+/**
+ * Override styles applied during the page transition to prevent
+ * header flickering.
+ */
+.header-collapse-fade.header-transitioning ion-toolbar {
+  --background: transparent;
+  --border-style: none;
+}
+
 // iOS Header - Collapse Condense
 // --------------------------------------------------
 .header-collapse-condense {
