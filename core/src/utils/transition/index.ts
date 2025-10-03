@@ -18,34 +18,51 @@ const focusController = createFocusController();
 
 // TODO(FW-2832): types
 
+/**
+ * Executes the main page transition.
+ * It also manages the lifecycle of header visibility (if any)
+ * to prevent visual flickering in iOS. The flickering only
+ * occurs for a condensed header that is placed above the content.
+ *
+ * @param opts Options for the transition.
+ * @returns A promise that resolves when the transition is complete.
+ */
 export const transition = (opts: TransitionOptions): Promise<TransitionResult> => {
   return new Promise((resolve, reject) => {
     writeTask(() => {
-      beforeTransition(opts);
-      runTransition(opts).then(
-        (result) => {
-          if (result.animation) {
-            result.animation.destroy();
+      const transitioningInactiveHeader = getIosIonHeader(opts);
+      beforeTransition(opts, transitioningInactiveHeader);
+      runTransition(opts)
+        .then(
+          (result) => {
+            if (result.animation) {
+              result.animation.destroy();
+            }
+            afterTransition(opts);
+            resolve(result);
+          },
+          (error) => {
+            afterTransition(opts);
+            reject(error);
           }
-          afterTransition(opts);
-          resolve(result);
-        },
-        (error) => {
-          afterTransition(opts);
-          reject(error);
-        }
-      );
+        )
+        .finally(() => {
+          // Ensure that the header is restored to its original state.
+          setHeaderTransitionClass(transitioningInactiveHeader, false);
+        });
     });
   });
 };
 
-const beforeTransition = (opts: TransitionOptions) => {
+const beforeTransition = (opts: TransitionOptions, transitioningInactiveHeader: HTMLElement | null) => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
 
   focusController.saveViewFocus(leavingEl);
 
   setZIndex(enteringEl, leavingEl, opts.direction);
+  // Prevent flickering of the header by adding a class.
+  setHeaderTransitionClass(transitioningInactiveHeader, true);
 
   if (opts.showGoBack) {
     enteringEl.classList.add('can-go-back');
@@ -278,6 +295,36 @@ const setZIndex = (
   }
 };
 
+/**
+ * Add a class to ensure that the inactive header (if any)
+ * does not flicker during the transition. By adding the
+ * transitioning class, we ensure that the header has
+ * the necessary styles to prevent the following flickers:
+ * 1. When entering a page with a condensed header, the
+ * inactive header should never be visible. However,
+ * it briefly renders the background color while
+ * the transition is occurring.
+ * 2. When leaving a page with a condensed header, the
+ * inactive header has an opacity of 0 and the pages
+ * have a z-index which causes the entering page to
+ * briefly show it's content underneath the leaving page.
+ *
+ * @param header The header element to modify.
+ * @param isTransitioning Whether the transition is occurring.
+ */
+const setHeaderTransitionClass = (header: HTMLElement | null, isTransitioning: boolean) => {
+  if (!header) {
+    return;
+  }
+
+  const transitionClass = 'header-transitioning';
+  if (isTransitioning) {
+    header.classList.add(transitionClass);
+  } else {
+    header.classList.remove(transitionClass);
+  }
+};
+
 export const getIonPageElement = (element: HTMLElement) => {
   if (element.classList.contains('ion-page')) {
     return element;
@@ -289,6 +336,32 @@ export const getIonPageElement = (element: HTMLElement) => {
   }
   // idk, return the original element so at least something animates and we don't have a null pointer
   return element;
+};
+
+/**
+ * Retrieves the ion-header element from a page based on the
+ * direction of the transition.
+ *
+ * @param opts Options for the transition.
+ * @returns The ion-header element or null if not found or not in 'ios' mode.
+ */
+const getIosIonHeader = (opts: TransitionOptions): HTMLElement | null => {
+  const enteringEl = opts.enteringEl;
+  const leavingEl = opts.leavingEl;
+  const direction = opts.direction;
+  const mode = opts.mode;
+
+  if (mode !== 'ios') {
+    return null;
+  }
+
+  const element = direction === 'back' ? leavingEl : enteringEl;
+
+  if (!element) {
+    return null;
+  }
+
+  return element.querySelector('ion-header');
 };
 
 export interface TransitionOptions extends NavOptions {
