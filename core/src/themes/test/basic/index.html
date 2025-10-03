@@ -17,10 +17,24 @@
     <style>
       .grid {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
         margin: 40px 0;
+      }
+
+      .top-row {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        justify-content: center;
+      }
+
+      .bottom-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        justify-content: center;
       }
 
       .column {
@@ -31,31 +45,35 @@
         margin: 0;
       }
 
-      [class^='ion-scaling-'],
-      [class^='ion-spacing-'],
-      [class^='ion-radii-'],
-      [class^='ion-border-width-'] {
+      .ion-border-width,
+      .ion-radius,
+      .ion-scale,
+      .ion-space {
         margin: 10px;
       }
 
-      [class^='ion-scaling-'] {
+      /* Scale Elements */
+      .ion-scale {
         background: #ededed;
       }
 
-      [class^='ion-spacing-'] {
+      /* Space Elements */
+      .ion-space {
         background: #e0ee99;
       }
 
-      .spacing-inner {
+      .space-inner {
         background: #ededed;
       }
 
-      [class^='ion-radii-'] {
+      /* Radii Elements */
+      .ion-radius {
         border-width: 2px;
       }
 
-      [class^='ion-radii-'],
-      [class^='ion-border-width-'] {
+      /* Border Width and Radii Elements */
+      .ion-border-width,
+      .ion-radius {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -63,140 +81,6 @@
         border-color: #ddd;
         height: 100px;
         width: 100px;
-      }
-
-      /* Scaling */
-      .ion-scaling-0 {
-        height: var(--ion-scaling-0);
-      }
-      .ion-scaling-100 {
-        height: var(--ion-scaling-100);
-      }
-      .ion-scaling-150 {
-        height: var(--ion-scaling-150);
-      }
-      .ion-scaling-200 {
-        height: var(--ion-scaling-200);
-      }
-      .ion-scaling-250 {
-        height: var(--ion-scaling-250);
-      }
-      .ion-scaling-300 {
-        height: var(--ion-scaling-300);
-      }
-      .ion-scaling-350 {
-        height: var(--ion-scaling-350);
-      }
-      .ion-scaling-400 {
-        height: var(--ion-scaling-400);
-      }
-      .ion-scaling-450 {
-        height: var(--ion-scaling-450);
-      }
-      .ion-scaling-500 {
-        height: var(--ion-scaling-500);
-      }
-      .ion-scaling-550 {
-        height: var(--ion-scaling-550);
-      }
-      .ion-scaling-600 {
-        height: var(--ion-scaling-600);
-      }
-      .ion-scaling-650 {
-        height: var(--ion-scaling-650);
-      }
-      .ion-scaling-700 {
-        height: var(--ion-scaling-700);
-      }
-      .ion-scaling-750 {
-        height: var(--ion-scaling-750);
-      }
-      .ion-scaling-800 {
-        height: var(--ion-scaling-800);
-      }
-      .ion-scaling-850 {
-        height: var(--ion-scaling-850);
-      }
-      .ion-scaling-900 {
-        height: var(--ion-scaling-900);
-      }
-
-      /* Spacing */
-      .ion-spacing-none {
-        padding: var(--ion-spacing-none);
-      }
-      .ion-spacing-xxs {
-        padding: var(--ion-spacing-xxs);
-      }
-      .ion-spacing-xs {
-        padding: var(--ion-spacing-xs);
-      }
-      .ion-spacing-sm {
-        padding: var(--ion-spacing-sm);
-      }
-      .ion-spacing-md {
-        padding: var(--ion-spacing-md);
-      }
-      .ion-spacing-lg {
-        padding: var(--ion-spacing-lg);
-      }
-      .ion-spacing-xl {
-        padding: var(--ion-spacing-xl);
-      }
-      .ion-spacing-xxl {
-        padding: var(--ion-spacing-xxl);
-      }
-
-      /* Radii */
-      .ion-radii-none {
-        border-radius: var(--ion-radii-none);
-      }
-      .ion-radii-xxs {
-        border-radius: var(--ion-radii-xxs);
-      }
-      .ion-radii-xs {
-        border-radius: var(--ion-radii-xs);
-      }
-      .ion-radii-sm {
-        border-radius: var(--ion-radii-sm);
-      }
-      .ion-radii-md {
-        border-radius: var(--ion-radii-md);
-      }
-      .ion-radii-lg {
-        border-radius: var(--ion-radii-lg);
-      }
-      .ion-radii-xl {
-        border-radius: var(--ion-radii-xl);
-      }
-      .ion-radii-xxl {
-        border-radius: var(--ion-radii-xxl);
-      }
-
-      /* Border Width */
-      .ion-border-width-none {
-        border-width: var(--ion-border-width-none);
-      }
-      .ion-border-width-xxs {
-        border-width: var(--ion-border-width-xxs);
-      }
-      .ion-border-width-xs {
-        border-width: var(--ion-border-width-xs);
-      }
-      .ion-border-width-sm {
-        border-width: var(--ion-border-width-sm);
-      }
-      .ion-border-width-md {
-        border-width: var(--ion-border-width-md);
-      }
-      .ion-border-width-lg {
-        border-width: var(--ion-border-width-lg);
-      }
-      .ion-border-width-xl {
-        border-width: var(--ion-border-width-xl);
-      }
-      .ion-border-width-xxl {
-        border-width: var(--ion-border-width-xxl);
       }
     </style>
   </head>
@@ -211,78 +95,74 @@
 
       <ion-content id="content" class="ion-text-center">
         <div class="grid">
-          <div class="column">
-            <h2>Scaling</h2>
-            <div class="ion-scaling-0"></div>
-            <div class="ion-scaling-100"></div>
-            <div class="ion-scaling-150"></div>
-            <div class="ion-scaling-200"></div>
-            <div class="ion-scaling-250"></div>
-            <div class="ion-scaling-300"></div>
-            <div class="ion-scaling-350"></div>
-            <div class="ion-scaling-400"></div>
-            <div class="ion-scaling-450"></div>
-            <div class="ion-scaling-500"></div>
-            <div class="ion-scaling-550"></div>
-            <div class="ion-scaling-600"></div>
-            <div class="ion-scaling-650"></div>
-            <div class="ion-scaling-700"></div>
-            <div class="ion-scaling-750"></div>
-            <div class="ion-scaling-800"></div>
-            <div class="ion-scaling-850"></div>
-            <div class="ion-scaling-900"></div>
-          </div>
-          <div class="column">
-            <h2>Spacing</h2>
-            <div class="ion-spacing-none">
-              <div class="spacing-inner">none</div>
+          <div class="top-row">
+            <div class="column">
+              <h2>Border Width</h2>
+              <div class="ion-border-widths"></div>
             </div>
-            <div class="ion-spacing-xxs">
-              <div class="spacing-inner">xxs</div>
-            </div>
-            <div class="ion-spacing-xs">
-              <div class="spacing-inner">xs</div>
-            </div>
-            <div class="ion-spacing-sm">
-              <div class="spacing-inner">sm</div>
-            </div>
-            <div class="ion-spacing-md">
-              <div class="spacing-inner">md</div>
-            </div>
-            <div class="ion-spacing-lg">
-              <div class="spacing-inner">lg</div>
-            </div>
-            <div class="ion-spacing-xl">
-              <div class="spacing-inner">xl</div>
-            </div>
-            <div class="ion-spacing-xxl">
-              <div class="spacing-inner">xxl</div>
+            <div class="column">
+              <h2>Radii</h2>
+              <div class="ion-radii"></div>
             </div>
           </div>
-          <div class="column">
-            <h2>Radii</h2>
-            <div class="ion-radii-none">none</div>
-            <div class="ion-radii-xxs">xxs</div>
-            <div class="ion-radii-xs">xs</div>
-            <div class="ion-radii-sm">sm</div>
-            <div class="ion-radii-md">md</div>
-            <div class="ion-radii-lg">lg</div>
-            <div class="ion-radii-xl">xl</div>
-            <div class="ion-radii-xxl">xxl</div>
-          </div>
-          <div class="column">
-            <h2>Border Width</h2>
-            <div class="ion-border-width-none">none</div>
-            <div class="ion-border-width-xxs">xxs</div>
-            <div class="ion-border-width-xs">xs</div>
-            <div class="ion-border-width-sm">sm</div>
-            <div class="ion-border-width-md">md</div>
-            <div class="ion-border-width-lg">lg</div>
-            <div class="ion-border-width-xl">xl</div>
-            <div class="ion-border-width-xxl">xxl</div>
+          <div class="bottom-row">
+            <div class="column">
+              <h2>Scaling</h2>
+              <div class="ion-scales"></div>
+            </div>
+            <div class="column">
+              <h2>Spacing</h2>
+              <div class="ion-spaces"></div>
+            </div>
           </div>
         </div>
       </ion-content>
     </ion-app>
+
+    <script>
+      const borderWidths = [0, 25, 50, 75, 100, 150, 200, 250, 300, 350, 400];
+      const radii = [0, 25, 100, 200, 300, 400, 500, 800, 1000, 'full'];
+      const scales = [0, 25, 50, 75, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1400, 1600, 1800, 2000, 2400, 2800, 3200, 3400, 3600, 4000];
+      const spaces = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200];
+
+      // Generate the border width elements
+      borderWidths.forEach(borderWidth => {
+        const borderWidthEl = document.createElement('div');
+        borderWidthEl.className = `ion-border-width`;
+        borderWidthEl.innerHTML = `${borderWidth}`;
+        document.querySelector('.ion-border-widths').appendChild(borderWidthEl);
+        borderWidthEl.style.borderWidth = `var(--ion-border-width-${borderWidth})`;
+      });
+
+      // Generate the radii elements
+      radii.forEach(radius => {
+        const radiusEl = document.createElement('div');
+        radiusEl.className = `ion-radius`;
+        radiusEl.innerHTML = `${radius}`;
+        document.querySelector('.ion-radii').appendChild(radiusEl);
+        radiusEl.style.borderRadius = `var(--ion-radii-${radius})`;
+      });
+
+      // Generate the scale elements
+      scales.forEach(scale => {
+        const scaleEl = document.createElement('div');
+        scaleEl.className = `ion-scale`;
+        document.querySelector('.ion-scales').appendChild(scaleEl);
+        scaleEl.style.height = `var(--ion-scaling-${scale})`;
+      });
+
+      // Generate the space elements
+      spaces.forEach(space => {
+        const spaceEl = document.createElement('div');
+        spaceEl.className = `ion-space`;
+        const spaceInnerEl = document.createElement('div');
+        spaceInnerEl.className = `space-inner`;
+        spaceInnerEl.innerHTML = `${space}`;
+        spaceEl.appendChild(spaceInnerEl);
+
+        document.querySelector('.ion-spaces').appendChild(spaceEl);
+        spaceEl.style.padding = `var(--ion-spacing-${space})`;
+      });
+    </script>
   </body>
 </html>
