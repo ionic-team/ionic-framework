@@ -36,29 +36,19 @@
   --ion-dynamic-font: var(--ion-default-dynamic-font);
 }
 
+/* TODO(FW-6745): Remove this after adding the md tokens */
 :root,
 html,
-html.md.md {
+html.md.md:not(.ionic) {
   --ion-font-family: Roboto, "mdTestingFont", sans-serif;
   font-family: Roboto, "mdTestingFont", sans-serif;
 }
 
+/* TODO(FW-6744): Remove this after adding the ios tokens */
 :root.ios.ios,
 html.ios.ios {
   --ion-font-family: -apple-system, BlinkMacSystemFont, "iosTestingFont", sans-serif;
   font-family: -apple-system, BlinkMacSystemFont, "iosTestingFont", sans-serif;
-}
-
-/* Override above styles for testing scopes */
-:root.ionic,
-:root.ionic.ios,
-:root.ionic.md,
-html.ionic,
-html.ionic.ios,
-html.ionic.md {
-  /* TODO: remove this with the ionic theme updates */
-  --ion-background-color: var(--background);
-  --ion-font-family: initial;
 }
 
 /**

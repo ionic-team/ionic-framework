@@ -17,6 +17,9 @@ export const defaultTheme: DefaultTheme = {
   formHighlight: false,
   rippleEffect: false,
 
+  // TODO(FW-6745): see if we can remove this after the md tokens are added
+  fontFamily: 'initial',
+
   spacing: {
     0: '0px',
     50: '2px',
