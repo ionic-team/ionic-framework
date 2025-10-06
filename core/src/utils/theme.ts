@@ -81,6 +81,12 @@ export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): 
         return [];
       }
 
+      // Do not generate CSS variables for excluded keys
+      const excludedKeys = ['enabled', 'ripple-effect', 'form-highlight'];
+      if (excludedKeys.includes(key)) {
+        return [];
+      }
+
       // if key is camelCase, convert to kebab-case
       if (key.match(/([a-z])([A-Z])/g)) {
         key = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();

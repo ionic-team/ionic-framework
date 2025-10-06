@@ -204,6 +204,8 @@ describe('generateCSSVars', () => {
           enabled: 'system',
         },
       },
+      rippleEffect: true,
+      formHighlight: true,
       borderWidth: {
         sm: '4px',
       },
@@ -233,7 +235,6 @@ describe('generateCSSVars', () => {
 
     const css = generateCSSVars(theme);
 
-    expect(css).toContain('--ion-palette-dark-enabled: system;');
     expect(css).toContain('--ion-border-width-sm: 4px;');
     expect(css).toContain('--ion-spacing-md: 12px;');
     expect(css).toContain('--ion-scaling-0: 0;');
@@ -521,7 +522,6 @@ describe('generateGlobalThemeCSS', () => {
 
       @media(prefers-color-scheme: dark) {
         :root {
-          --ion-enabled: system;
           --ion-color-primary-bold: #0054e9;
           --ion-color-primary-bold-rgb: 0, 84, 233;
           --ion-color-primary-bold-contrast: #ffffff;
