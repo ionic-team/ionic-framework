@@ -296,18 +296,22 @@ const setZIndex = (
 };
 
 /**
- * Add a class to ensure that the inactive header (if any)
+ * Add a class to ensure that the header (if any)
  * does not flicker during the transition. By adding the
  * transitioning class, we ensure that the header has
  * the necessary styles to prevent the following flickers:
  * 1. When entering a page with a condensed header, the
- * inactive header should never be visible. However,
+ * header should never be visible. However,
  * it briefly renders the background color while
  * the transition is occurring.
  * 2. When leaving a page with a condensed header, the
- * inactive header has an opacity of 0 and the pages
+ * header has an opacity of 0 and the pages
  * have a z-index which causes the entering page to
  * briefly show it's content underneath the leaving page.
+ * 3. When entering a page or leaving a page with a fade
+ * header, the header should not have a background color.
+ * However, it briefly shows the background color while
+ * the transition is occurring.
  *
  * @param header The header element to modify.
  * @param isTransitioning Whether the transition is occurring.
