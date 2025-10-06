@@ -102,7 +102,7 @@ export const defaultTheme: DefaultTheme = {
     500: '20px',
     800: '32px',
     1000: '40px',
-    'full': '999px',
+    full: '999px',
   },
 
   borderWidth: {

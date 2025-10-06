@@ -18,6 +18,6 @@ export const lightTheme: LightTheme = {
       color: 'var(--ion-tab-bar-color, #626262)',
       colorSelected: 'var(--ion-tab-bar-color-selected, #0d4bc3)',
       borderColor: 'var(--ion-tab-bar-border-color, transparent)',
-    }
-  }
+    },
+  },
 };

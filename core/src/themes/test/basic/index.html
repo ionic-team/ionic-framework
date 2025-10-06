@@ -122,11 +122,17 @@
     <script>
       const borderWidths = [0, 25, 50, 75, 100, 150, 200, 250, 300, 350, 400];
       const radii = [0, 25, 100, 200, 300, 400, 500, 800, 1000, 'full'];
-      const scales = [0, 25, 50, 75, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1400, 1600, 1800, 2000, 2400, 2800, 3200, 3400, 3600, 4000];
-      const spaces = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200];
+      const scales = [
+        0, 25, 50, 75, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000,
+        1050, 1100, 1150, 1200, 1400, 1600, 1800, 2000, 2400, 2800, 3200, 3400, 3600, 4000,
+      ];
+      const spaces = [
+        0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000, 1050,
+        1100, 1150, 1200,
+      ];
 
       // Generate the border width elements
-      borderWidths.forEach(borderWidth => {
+      borderWidths.forEach((borderWidth) => {
         const borderWidthEl = document.createElement('div');
         borderWidthEl.className = `ion-border-width`;
         borderWidthEl.innerHTML = `${borderWidth}`;
@@ -135,7 +141,7 @@
       });
 
       // Generate the radii elements
-      radii.forEach(radius => {
+      radii.forEach((radius) => {
         const radiusEl = document.createElement('div');
         radiusEl.className = `ion-radius`;
         radiusEl.innerHTML = `${radius}`;
@@ -144,7 +150,7 @@
       });
 
       // Generate the scale elements
-      scales.forEach(scale => {
+      scales.forEach((scale) => {
         const scaleEl = document.createElement('div');
         scaleEl.className = `ion-scale`;
         document.querySelector('.ion-scales').appendChild(scaleEl);
@@ -152,7 +158,7 @@
       });
 
       // Generate the space elements
-      spaces.forEach(space => {
+      spaces.forEach((space) => {
         const spaceEl = document.createElement('div');
         spaceEl.className = `ion-space`;
         const spaceInnerEl = document.createElement('div');

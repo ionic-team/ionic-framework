@@ -14,10 +14,10 @@ export type BaseTheme = {
   textColorRgb?: string;
   backgroundColorStep?: {
     [key: string]: string;
-  }
+  };
   textColorStep?: {
     [key: string]: string;
-  }
+  };
 
   // SPACE TOKENS
   spacing?: {

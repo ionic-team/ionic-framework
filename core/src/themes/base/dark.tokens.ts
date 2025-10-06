@@ -218,5 +218,5 @@ export const darkTheme: DarkTheme = {
     IonItem: {
       background: '#000000',
     },
-  }
+  },
 };
