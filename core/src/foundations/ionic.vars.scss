@@ -875,9 +875,16 @@ $ion-transition-time-1000: var(--token-transition-time-1000, 1000ms);
 $ion-transition-time-1500: var(--token-transition-time-1500, 1500ms);
 $ion-font-family: var(
   --token-font-family,
-  "-apple-system, system-ui, " Segoe UI ", Roboto, Helvetica, Arial, sans-serif, " Apple Color Emoji ", " Segoe UI Emoji
-    ", " Segoe UI Symbol "",
-  sans-serif
+  -apple-system,
+  system-ui,
+  "Segoe UI",
+  Roboto,
+  Helvetica,
+  Arial,
+  sans-serif,
+  "Apple Color Emoji",
+  "Segoe UI Emoji",
+  "Segoe UI Symbol"
 );
 $ion-font-weight-thin: var(--token-font-weight-thin, 100);
 $ion-font-weight-extra-light: var(--token-font-weight-extra-light, 200);

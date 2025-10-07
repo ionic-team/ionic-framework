@@ -80,7 +80,7 @@
     "build.css": "npm run css.sass && npm run css.minify",
     "build.debug": "npm run clean && stencil build --debug",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
-    "build.tokens": "npx build.tokens --config scripts/tokens/index.mjs && npm run prettier.tokens",
+    "build.tokens": "node ./node_modules/outsystems-design-tokens/scripts/index.js --config ./scripts/tokens/index.mjs && npm run prettier.tokens",
     "clean": "node scripts/clean.js",
     "css.minify": "cleancss -O2 -o ./css/ionic.bundle.css ./css/ionic.bundle.css",
     "css.sass": "sass --embed-sources --style compressed src/css:./css",
