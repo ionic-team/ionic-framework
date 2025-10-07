@@ -4,7 +4,6 @@ import { applyGlobalTheme, getCustomTheme } from '@utils/theme';
 
 import type { IonicConfig, Mode, Theme } from '../interface';
 import { defaultTheme as baseTheme } from '../themes/base/default.tokens';
-import { defaultTheme as ionicTheme } from '../themes/ionic/default.tokens';
 import type { BaseTheme } from '../themes/themes.interfaces';
 import { shouldUseCloseWatcher } from '../utils/hardware-back-button';
 import { isPlatform, setupPlatforms } from '../utils/platform';
@@ -156,11 +155,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
     config.set('customTheme', combinedTheme);
   } else {
     applyGlobalTheme(baseTheme);
-  }
-
-  // TODO(): remove this when we update the ionic theme
-  if (defaultTheme === 'ionic') {
-    applyGlobalTheme(ionicTheme);
+    config.set('customTheme', baseTheme);
   }
 
   if (config.getBoolean('_testing')) {
