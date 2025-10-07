@@ -76,7 +76,7 @@
     "stylelint-order": "^4.1.0"
   },
   "scripts": {
-    "build": "npm run clean && npm run build.css && stencil build --es5 --docs-json dist/docs.json",
+    "build": "npm run clean && npm run build.css && npm run build.newTokens && stencil build --es5 --docs-json dist/docs.json",
     "build.css": "npm run css.sass && npm run css.minify",
     "build.debug": "npm run clean && stencil build --debug",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
