@@ -12,7 +12,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
         await page.setContent(
           `
           <style>
-            :root {
+            .ionic {
               --ion-background-color: #ccc7c7;
             }
           </style>
@@ -48,7 +48,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
         await page.setContent(
           `
           <style>
-            :root {
+            .ionic {
               --ion-background-color: #ccc7c7;
             }
           </style>
@@ -84,7 +84,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
         await page.setContent(
           `
           <style>
-            :root {
+            .ionic {
               --ion-background-color: #ccc7c7;
             }
           </style>

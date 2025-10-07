@@ -9,7 +9,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
           `
           <style>
             /* Background styles to show the border radius */
-            :root {
+            .ionic {
               --ion-background-color: #ccc7c7;
             }
           </style>
@@ -47,7 +47,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
           `
           <style>
             /* Background styles to show the border radius */
-            :root {
+            .ionic {
               --ion-background-color: #ccc7c7;
             }
           </style>
@@ -87,7 +87,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
           `
           <style>
             /* Background styles to show the border radius */
-            :root {
+            .ionic {
               --ion-background-color: #ccc7c7;
             }
           </style>
@@ -125,7 +125,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
           `
           <style>
             /* Background styles to show the border radius */
-            :root {
+            .ionic {
               --ion-background-color: #ccc7c7;
             }
           </style>

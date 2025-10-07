@@ -9,7 +9,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
           `
           <style>
             /* Background styles to show the border radius */
-            :root {
+            .ionic {
               --ion-background-color: #222;
             }
           </style>
