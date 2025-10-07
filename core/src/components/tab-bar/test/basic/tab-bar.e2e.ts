@@ -11,7 +11,7 @@ configs({ modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, conf
         `
         <style>
           :root {
-            --background: #ccc7c7;
+            --ion-background-color: #ccc7c7;
           }
         </style>
 
