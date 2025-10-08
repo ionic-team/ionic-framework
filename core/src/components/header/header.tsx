@@ -15,6 +15,7 @@ import {
   handleToolbarIntersection,
   setHeaderActive,
   setToolbarBackgroundOpacity,
+  getRoleType,
 } from './header.utils';
 
 /**
@@ -210,7 +211,7 @@ export class Header implements ComponentInterface {
     const collapse = this.collapse || 'none';
 
     // banner role must be at top level, so remove role if inside a menu
-    const roleType = hostContext('ion-menu', this.el) ? 'none' : 'banner';
+    const roleType = getRoleType(hostContext('ion-menu', this.el));
 
     return (
       <Host
