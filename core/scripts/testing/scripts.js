@@ -49,15 +49,15 @@
   const paletteQuery = window.location.search.match(/palette=([a-z]+)/);
   const paletteName = paletteQuery?.[1] || 'light';
 
-  // Load theme tokens dynamically instead of stylesheets
+  // Load theme tokens if the theme is valid
   if (themeName && ['ionic', 'ios', 'md'].includes(themeName)) {
     loadThemeTokens(themeName, paletteName);
   }
 
   async function loadThemeTokens(themeName, paletteName) {
     try {
-      // Dynamically import the theme tokens
-      const defaultTokens = await import(`/dist/themes/${themeName}/default.tokens.js`);
+      // Load the default tokens for the theme
+      const defaultTokens = await import(`/themes/${themeName}/default.tokens.js`);
       const theme = defaultTokens.defaultTheme;
 
       // If a specific palette is requested, modify the palette structure
@@ -73,16 +73,11 @@
 
       // Re-apply the global theme
       if (window.Ionic.config.get && window.Ionic.config.set) {
-        import('/dist/themes/utils/theme.js').then(themeModule => {
-          themeModule.applyGlobalTheme(theme);
-        }).catch(() => {
-          console.warn('Could not reapply theme - theme module not found');
-        });
+        const themeModule = await import('/themes/utils/theme.js');
+        themeModule.applyGlobalTheme(theme);
       }
-
-      console.info(`Loaded ${themeName} theme with palette ${paletteName}:`, theme);
     } catch (error) {
-      console.warn(`Failed to load theme tokens for ${themeName}:`, error);
+      console.error(`Failed to load theme tokens for ${themeName}:`, error);
     }
   }
 
