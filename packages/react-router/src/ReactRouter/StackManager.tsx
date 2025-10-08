@@ -41,6 +41,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
   private clearOutletTimeout: any;
   private pendingPageTransition = false;
+  private waitingForIonPage = false;
+  private ionPageWaitTimeout?: ReturnType<typeof setTimeout>;
 
   constructor(props: StackManagerProps) {
     super(props);
@@ -53,7 +55,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     this.skipTransition = false;
   }
 
-  private parentPathCache: { [key: string]: string | undefined } = {};
   private outletMountPath: string | undefined = undefined;
 
   /**
@@ -69,17 +70,16 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       // Check if this outlet has relative routes (routes that don't start with /)
       const routesNode = findRoutesNode(this.ionRouterOutlet.props.children) ?? this.ionRouterOutlet.props.children;
       const routeChildren = React.Children.toArray(routesNode).filter(
-        (child): child is React.ReactElement =>
-          React.isValidElement(child) && child.type === Route
+        (child): child is React.ReactElement => React.isValidElement(child) && child.type === Route
       );
 
-      const hasRelativeRoutes = routeChildren.some(route => {
+      const hasRelativeRoutes = routeChildren.some((route) => {
         const path = route.props.path;
         const isRelative = path && !path.startsWith('/') && path !== '*';
         return isRelative;
       });
 
-      const hasIndexRoute = routeChildren.some(route => route.props.index);
+      const hasIndexRoute = routeChildren.some((route) => route.props.index);
 
       if ((hasRelativeRoutes || hasIndexRoute) && currentPathname.includes('/')) {
         const segments = currentPathname.split('/').filter(Boolean);
@@ -93,7 +93,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
               const testParentPath = '/' + segments.slice(0, i).join('/');
               const testRemainingPath = segments.slice(i).join('/');
 
-              const hasMatch = routeChildren.some(route => {
+              const hasMatch = routeChildren.some((route) => {
                 if (route.props.index && testRemainingPath === '') return true;
                 const routePath = route.props.path;
                 if (!routePath || routePath.startsWith('/')) return false;
@@ -126,7 +126,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             const remainingPath = segments.slice(i).join('/');
 
             // Check if any relative route could match the remaining path
-            const couldMatchRemaining = routeChildren.some(route => {
+            const couldMatchRemaining = routeChildren.some((route) => {
               const routePath = route.props.path;
 
               // Index routes match when remaining path is empty
@@ -149,7 +149,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             });
 
             if (couldMatchRemaining) {
-              // this.parentPathCache[currentPathname] = parentPath;
               return parentPath;
             }
           }
@@ -161,7 +160,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         }
       }
     }
-    // this.parentPathCache[currentPathname] = undefined;
     return undefined;
   }
 
@@ -188,12 +186,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     const { pathname } = this.props.routeInfo;
     const { pathname: prevPathname } = prevProps.routeInfo;
 
-    // Clear cache if the pathname changed to avoid stale cached values
-    // Temporarily disabled while debugging infinite loop issues
-    // if (prevPathname !== pathname) {
-    //   this.parentPathCache = {};
-    // }
-
     if (pathname !== prevPathname) {
       this.prevProps = prevProps;
       this.handlePageTransition(this.props.routeInfo);
@@ -204,6 +196,11 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   componentWillUnmount() {
+    if (this.ionPageWaitTimeout) {
+      clearTimeout(this.ionPageWaitTimeout);
+      this.ionPageWaitTimeout = undefined;
+    }
+    this.waitingForIonPage = false;
     this.clearOutletTimeout = this.context.clearOutlet(this.id);
   }
 
@@ -235,7 +232,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
       let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
 
-      console.log(`[StackManager] handlePageTransition in outlet ${this.id}: pathname=${routeInfo.pathname}, entering=${enteringViewItem?.id}, leaving=${leavingViewItem?.id}`);
+      console.log(
+        `[StackManager] handlePageTransition in outlet ${this.id}: pathname=${routeInfo.pathname}, entering=${enteringViewItem?.id}, leaving=${leavingViewItem?.id}`
+      );
 
       /**
        * If we don't have a leaving view item, but the route info indicates
@@ -252,17 +251,26 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
        * - Navigating forward but not pushing a new view (e.g., back navigation or non-animated transition) and the leaving view is not the same as the entering view
        * - The routeOptions explicitly says unmount
        */
-      if (leavingViewItem) {
-        if (routeInfo.routeAction === 'replace') {
-          leavingViewItem.mount = false;
-        } else if (!(routeInfo.routeAction === 'push' && (routeInfo as any).routeDirection === 'forward')) {
-          if (routeInfo.routeDirection !== 'none' && enteringViewItem !== leavingViewItem) {
-            leavingViewItem.mount = false;
-          }
-        } else if (routeInfo.routeOptions?.unmount) {
-          leavingViewItem.mount = false;
+      const shouldUnmountLeavingViewItem = (() => {
+        if (!leavingViewItem) {
+          return false;
         }
-      }
+
+        if (routeInfo.routeOptions?.unmount) {
+          return true;
+        }
+
+        if (routeInfo.routeAction === 'replace') {
+          return true;
+        }
+
+        const isForwardPush = routeInfo.routeAction === 'push' && (routeInfo as any).routeDirection === 'forward';
+        if (!isForwardPush && routeInfo.routeDirection !== 'none' && enteringViewItem !== leavingViewItem) {
+          return true;
+        }
+
+        return false;
+      })();
 
       // Match the route element to render
       // For nested outlets, we need to pass parent path info
@@ -282,11 +290,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       if (this.id !== 'routerOutlet' && parentPath === undefined && this.ionRouterOutlet) {
         const routesNode = findRoutesNode(this.ionRouterOutlet.props.children) ?? this.ionRouterOutlet.props.children;
         const routeChildren = React.Children.toArray(routesNode).filter(
-          (child): child is React.ReactElement =>
-            React.isValidElement(child) && child.type === Route
+          (child): child is React.ReactElement => React.isValidElement(child) && child.type === Route
         );
 
-        const hasRelativeRoutes = routeChildren.some(route => {
+        const hasRelativeRoutes = routeChildren.some((route) => {
           const path = route.props.path;
           return path && !path.startsWith('/') && path !== '*';
         });
@@ -305,7 +312,11 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         }
       }
 
-      const enteringRoute = findRouteByRouteInfo(this.ionRouterOutlet?.props.children, routeInfo, parentPath) as React.ReactElement;
+      const enteringRoute = findRouteByRouteInfo(
+        this.ionRouterOutlet?.props.children,
+        routeInfo,
+        parentPath
+      ) as React.ReactElement;
 
       // If this is a nested outlet (has an explicit ID) and no route matches,
       // it means this outlet shouldn't handle this route
@@ -338,15 +349,34 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       /**
        * Begin transition only if we have an ionPageElement (i.e., the page has rendered).
        */
-      console.log(`[StackManager] Checking for transition: enteringViewItem=${enteringViewItem?.id}, hasIonPage=${!!enteringViewItem?.ionPageElement}, leavingViewItem=${leavingViewItem?.id}, hasIonPage=${!!leavingViewItem?.ionPageElement}`);
+      console.log(
+        `[StackManager] Checking for transition: enteringViewItem=${
+          enteringViewItem?.id
+        }, hasIonPage=${!!enteringViewItem?.ionPageElement}, leavingViewItem=${
+          leavingViewItem?.id
+        }, hasIonPage=${!!leavingViewItem?.ionPageElement}`
+      );
 
       if (enteringViewItem && enteringViewItem.ionPageElement) {
-        console.log(`[StackManager] Transitioning pages - entering: ${enteringViewItem.id}, leaving: ${leavingViewItem?.id || 'none'}`);
+        if (this.waitingForIonPage) {
+          this.waitingForIonPage = false;
+        }
+        if (this.ionPageWaitTimeout) {
+          clearTimeout(this.ionPageWaitTimeout);
+          this.ionPageWaitTimeout = undefined;
+        }
+        console.log(
+          `[StackManager] Transitioning pages - entering: ${enteringViewItem.id}, leaving: ${
+            leavingViewItem?.id || 'none'
+          }`
+        );
 
         // Ensure the entering view is not hidden by ion-page-hidden from previous navigations
         const enteringEl = enteringViewItem.ionPageElement as HTMLElement;
         if (enteringEl.classList.contains('ion-page-hidden')) {
-          console.log(`[StackManager] Removing ion-page-hidden from entering view ${enteringViewItem.id} before transition`);
+          console.log(
+            `[StackManager] Removing ion-page-hidden from entering view ${enteringViewItem.id} before transition`
+          );
           enteringEl.classList.remove('ion-page-hidden');
           enteringEl.removeAttribute('aria-hidden');
         }
@@ -356,20 +386,27 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
          * then we don't need to transition.
          */
         if (enteringViewItem === leavingViewItem) {
-          /**
-           * If the entering view item is the same as the leaving view item,
-           * we are either transitioning using parameterized routes to the same
-           * view (e.g., `/user/1` → `/user/2`)
-           * or a parent router outlet is re-rendering as a result of React props
-           * changing (e.g., tab navigation).
-           *
-           * If the route data does not match the current path, it indicates a
-           * situation where the view within this nested outlet might already be
-           * visible due to the parent's re-render. In such cases
-           * (like tab navigation), we prevent a  redundant transition in this
-           * outlet to avoid flickering.
-           */
-          if (enteringViewItem.routeData.match?.pathname !== routeInfo.pathname) {
+          const routePath = enteringViewItem.reactElement?.props?.path as string | undefined;
+          const isParameterizedRoute = routePath ? routePath.includes(':') : false;
+
+          if (isParameterizedRoute) {
+            /**
+             * When the same view instance handles the new route (e.g. navigating between
+             * parameterised URLs), refresh its match metadata so the component receives
+             * the updated params, then skip triggering another transition.
+             */
+            const updatedMatch = matchComponent(enteringViewItem.reactElement, routeInfo.pathname, true);
+            if (updatedMatch) {
+              enteringViewItem.routeData.match = updatedMatch;
+            }
+
+            const enteringEl = enteringViewItem.ionPageElement;
+            if (enteringEl) {
+              enteringEl.classList.remove('ion-page-hidden', 'ion-page-invisible');
+              enteringEl.removeAttribute('aria-hidden');
+            }
+
+            this.forceUpdate();
             return;
           }
         }
@@ -413,31 +450,73 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
          * /tabs/tab-1, we need to transition the /tabs page element into the view.
          */
         this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
+
+        if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
+          leavingViewItem.mount = false;
+        }
       } else if (enteringViewItem && !enteringViewItem.ionPageElement) {
         /**
          * We have a view item but no page element yet. This can happen during
          * initial page load with nested routes where the view item is created
          * but the component hasn't rendered yet.
          *
-         * Hide the leaving view immediately if it exists, then schedule retry for transition.
+         * Hide the leaving view immediately to avoid duplicate/overlapping content
+         * while we wait for the entering view's IonPage to mount, then retry the
+         * transition once the page is ready.
          */
-        console.log(`[StackManager] Entering view ${enteringViewItem.id} has no ionPageElement yet, will hide leaving view and retry`);
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(
+            `[StackManager] Entering view ${enteringViewItem.id} has no ionPageElement yet, will hide leaving view and retry`
+          );
+        }
 
-        // Hide leaving view immediately to avoid duplicate/overlapping content while waiting
         if (leavingViewItem?.ionPageElement) {
           leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
           leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
-          console.log(`[StackManager] HIDING leaving view ${leavingViewItem.id} (no entering ionPage yet)`);
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(`[StackManager] HIDING leaving view ${leavingViewItem.id} (no entering ionPage yet)`);
+          }
         }
 
-        setTimeout(() => {
-          if (enteringViewItem && enteringViewItem.ionPageElement) {
-            console.log(`[StackManager] Retrying transition for ${enteringViewItem.id}`);
-            this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
-          } else {
-            console.log(`[StackManager] Still no ionPageElement for ${enteringViewItem?.id}, giving up`);
+        this.waitingForIonPage = true;
+
+        if (this.ionPageWaitTimeout) {
+          clearTimeout(this.ionPageWaitTimeout);
+        }
+
+        this.ionPageWaitTimeout = setTimeout(() => {
+          this.ionPageWaitTimeout = undefined;
+
+          if (!this.waitingForIonPage) {
+            return;
+          }
+          this.waitingForIonPage = false;
+
+          const latestEnteringView = this.context.findViewItemByRouteInfo(routeInfo, this.id) ?? enteringViewItem;
+          const latestLeavingView =
+            this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id) ?? leavingViewItem;
+
+          if (latestEnteringView?.ionPageElement) {
+            if (process.env.NODE_ENV !== 'production') {
+              console.log(`[StackManager] Retrying transition for ${latestEnteringView.id}`);
+            }
+
+            this.transitionPage(routeInfo, latestEnteringView, latestLeavingView ?? undefined);
+
+            if (shouldUnmountLeavingViewItem && latestLeavingView && latestEnteringView !== latestLeavingView) {
+              latestLeavingView.mount = false;
+            }
+
+            this.forceUpdate();
+          } else if (process.env.NODE_ENV !== 'production') {
+            console.log(
+              `[StackManager] Still no ionPageElement for ${latestEnteringView?.id ?? enteringViewItem.id}, skipping transition`
+            );
           }
         }, 50);
+
+        this.forceUpdate();
+        return;
       } else if (!enteringViewItem && !enteringRoute) {
         /**
          * No view item and no route found. This can happen during initial page load
@@ -453,6 +532,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           if (leavingViewItem.ionPageElement) {
             leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
             leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
+          }
+          if (shouldUnmountLeavingViewItem && leavingViewItem) {
+            leavingViewItem.mount = false;
           }
         } else {
           // No entering or leaving view - this might be a routing issue
@@ -474,6 +556,12 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
    */
   registerIonPage(page: HTMLElement, routeInfo: RouteInfo) {
     console.log(`[StackManager] registerIonPage called for outlet ${this.id}, pathname=${routeInfo.pathname}`);
+    this.waitingForIonPage = false;
+    if (this.ionPageWaitTimeout) {
+      clearTimeout(this.ionPageWaitTimeout);
+      this.ionPageWaitTimeout = undefined;
+    }
+    this.pendingPageTransition = false;
     const foundView = this.context.findViewItemByRouteInfo(routeInfo, this.id);
     if (foundView) {
       console.log(`[StackManager] Found view ${foundView.id} for IonPage registration`);
@@ -775,8 +863,7 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
 
   // Collect all route children
   const routeChildren = React.Children.toArray(routesNode).filter(
-    (child): child is React.ReactElement =>
-      React.isValidElement(child) && child.type === Route
+    (child): child is React.ReactElement => React.isValidElement(child) && child.type === Route
   );
 
   // Sort routes by specificity (most specific first)
@@ -815,8 +902,8 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
   let pathnameToMatch = routeInfo.pathname;
 
   // Check if we have relative routes (routes that don't start with '/')
-  const hasRelativeRoutes = sortedRoutes.some(r => r.props.path && !r.props.path.startsWith('/'));
-  const hasIndexRoute = sortedRoutes.some(r => r.props.index);
+  const hasRelativeRoutes = sortedRoutes.some((r) => r.props.path && !r.props.path.startsWith('/'));
+  const hasIndexRoute = sortedRoutes.some((r) => r.props.index);
 
   // For nested outlets with relative routes, we need to determine if this outlet
   // should even attempt to handle this route
@@ -838,7 +925,6 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
 
     // For nested routing, we need to compute the relative path
     // This is the part of the pathname that comes after the parent's matched path
-
 
     // Try to determine the parent path from the context
     // In React Router 6, nested outlets match against the remaining path segment
@@ -863,7 +949,7 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
         const remainingPath = remainingSegments.join('/');
 
         // Check if any route in this outlet could match the remaining path
-        const couldMatchRemaining = sortedRoutes.some(r => {
+        const couldMatchRemaining = sortedRoutes.some((r) => {
           // Index routes match when remaining path is empty
           if (r.props.index && remainingPath === '') {
             return true;
@@ -905,7 +991,7 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
       // This handles the common case where we directly navigate to /parent/child
       if (pathnameToMatch === routeInfo.pathname && pathSegments.length > 0) {
         const lastSegment = pathSegments[pathSegments.length - 1];
-        const couldMatchLastSegment = sortedRoutes.some(r => {
+        const couldMatchLastSegment = sortedRoutes.some((r) => {
           if (!r.props.path || r.props.path.startsWith('/')) return false;
           // Only match if there's an exact match, be more conservative
           return r.props.path === lastSegment;

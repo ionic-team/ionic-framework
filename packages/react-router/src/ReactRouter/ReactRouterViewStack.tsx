@@ -32,11 +32,11 @@ export class ReactRouterViewStack extends ViewStacks {
     // Check if we already have a view item for this exact route that we can reuse
     // Include wildcard routes like tabs/* since they should be reused
     // Also check unmounted items that might have been preserved for browser navigation
-    const existingViewItem = this.getViewItemsForOutlet(outletId).find(v => {
+    const existingViewItem = this.getViewItemsForOutlet(outletId).find((v) => {
       const existingPath = v.reactElement?.props?.path || '';
       const existingElement = v.reactElement?.props?.element;
       const newElement = reactElement.props.element;
-      
+
       // For Navigate components, match by destination
       if (existingElement?.type?.name === 'Navigate' && newElement?.type?.name === 'Navigate') {
         const existingTo = existingElement.props?.to;
@@ -45,7 +45,7 @@ export class ReactRouterViewStack extends ViewStacks {
           return true;
         }
       }
-      
+
       // Reuse view items with the same path
       // Special case: reuse tabs/* and other specific wildcard routes
       // Don't reuse index routes (empty path) or generic catch-all wildcards (*)
@@ -60,7 +60,9 @@ export class ReactRouterViewStack extends ViewStacks {
     });
 
     if (existingViewItem) {
-      console.log(`[ReactRouterViewStack] Reusing existing view item ${existingViewItem.id} for route ${routeInfo.pathname}`);
+      console.log(
+        `[ReactRouterViewStack] Reusing existing view item ${existingViewItem.id} for route ${routeInfo.pathname}`
+      );
       // Update and ensure the existing view item is properly configured
       existingViewItem.reactElement = reactElement;
       existingViewItem.mount = true;
@@ -80,14 +82,16 @@ export class ReactRouterViewStack extends ViewStacks {
     this.viewItemCounter++;
     const id = `${outletId}-${this.viewItemCounter}`;
 
-    console.log(`[ReactRouterViewStack] Creating new view item ${id} for route ${routeInfo.pathname} with path: ${routePath}`);
+    console.log(
+      `[ReactRouterViewStack] Creating new view item ${id} for route ${routeInfo.pathname} with path: ${routePath}`
+    );
 
     // Add infinite loop detection with a more reasonable limit
     // In complex navigation flows, we may have many view items across different outlets
     if (this.viewItemCounter > 100) {
       console.warn(`[ReactRouterViewStack] Many view items created (${this.viewItemCounter}). Performing cleanup.`);
       // Clean up all outlets to prevent memory leaks
-      this.getStackIds().forEach(stackId => this.cleanupStaleViewItems(stackId));
+      this.getStackIds().forEach((stackId) => this.cleanupStaleViewItems(stackId));
       // Reset counter to a lower value after cleanup
       if (this.viewItemCounter > 100) {
         this.viewItemCounter = 50;
@@ -135,7 +139,6 @@ export class ReactRouterViewStack extends ViewStacks {
     let pathnameToMatch = routeInfo.pathname;
     const routePath = viewItem.reactElement.props.path || '';
 
-
     // If this is a relative route (doesn't start with '/'), we need to extract the relative portion
     if (routePath && !routePath.startsWith('/')) {
       // Find the relative portion of the pathname for this nested outlet
@@ -146,7 +149,7 @@ export class ReactRouterViewStack extends ViewStacks {
         if (routePath.endsWith('/*') || routePath.includes('*')) {
           // Extract the base path (everything before /*) and find its position in the segments
           const baseRoutePath = routePath.replace('/*', '');
-          const baseSegmentIndex = pathSegments.findIndex(segment => segment === baseRoutePath);
+          const baseSegmentIndex = pathSegments.findIndex((segment) => segment === baseRoutePath);
 
           if (baseSegmentIndex >= 0 && baseSegmentIndex < pathSegments.length - 1) {
             // Take all segments from the base route onwards
@@ -202,9 +205,10 @@ export class ReactRouterViewStack extends ViewStacks {
     if (!match && viewItem.mount && !viewItem.ionPageElement) {
       // Check if this view item should be preserved for browser navigation
       // We'll keep it if it was recently active (within the last navigation)
-      const shouldPreserve = viewItem.routeData.lastPathname === routeInfo.pathname ||
-                           viewItem.routeData.match?.pathname === routeInfo.lastPathname;
-      
+      const shouldPreserve =
+        viewItem.routeData.lastPathname === routeInfo.pathname ||
+        viewItem.routeData.match?.pathname === routeInfo.lastPathname;
+
       if (!shouldPreserve) {
         // This view item doesn't match and doesn't have an IonPage
         // It's likely a utility component that performs an action and navigates away
@@ -233,7 +237,7 @@ export class ReactRouterViewStack extends ViewStacks {
     // This prevents "Not found" from showing alongside valid routes
     if (routePath === '*') {
       // Check if any other view in this outlet has a match for the current route
-      const hasSpecificMatch = this.getViewItemsForOutlet(viewItem.outletId).some(v => {
+      const hasSpecificMatch = this.getViewItemsForOutlet(viewItem.outletId).some((v) => {
         if (v.id === viewItem.id) return false; // Skip self
         const vRoutePath = v.reactElement?.props?.path || '';
         if (vRoutePath === '*' || vRoutePath === '') return false; // Skip other wildcard/empty routes
@@ -265,18 +269,20 @@ export class ReactRouterViewStack extends ViewStacks {
     const routeMatch = viewItem.routeData?.match;
     const routeContextValue = {
       outlet: null,
-      matches: [{
-        params: routeMatch?.params || {},
-        pathname: routeMatch?.pathname || routeInfo.pathname,
-        pathnameBase: routeMatch?.pathnameBase || routeInfo.pathname,
-        route: {
-          id: viewItem.id,
-          path: routeElement.props.path,
-          element: componentElement,
-          hasErrorBoundary: false
-        }
-      }],
-      isDataRoute: false
+      matches: [
+        {
+          params: routeMatch?.params || {},
+          pathname: routeMatch?.pathname || routeInfo.pathname,
+          pathnameBase: routeMatch?.pathnameBase || routeInfo.pathname,
+          route: {
+            id: viewItem.id,
+            path: routeElement.props.path,
+            element: componentElement,
+            hasErrorBoundary: false,
+          },
+        },
+      ],
+      isDataRoute: false,
     };
 
     return (
@@ -284,9 +290,7 @@ export class ReactRouterViewStack extends ViewStacks {
         {/**
          * Wrap component in RouteContext to provide params for React Router v6
          */}
-        <RouteContext.Provider value={routeContextValue}>
-          {componentElement}
-        </RouteContext.Provider>
+        <RouteContext.Provider value={routeContextValue}>{componentElement}</RouteContext.Provider>
       </ViewLifeCycleManager>
     );
   };
@@ -325,7 +329,7 @@ export class ReactRouterViewStack extends ViewStacks {
     // Filter out duplicate view items by ID (but keep all mounted items)
     const uniqueViewItems = viewItems.filter((viewItem, index, array) => {
       // Remove duplicates by ID (keep first occurrence)
-      const isFirstOccurrence = array.findIndex(v => v.id === viewItem.id) === index;
+      const isFirstOccurrence = array.findIndex((v) => v.id === viewItem.id) === index;
       return isFirstOccurrence;
     });
 
@@ -435,8 +439,12 @@ export class ReactRouterViewStack extends ViewStacks {
 
     if (!viewItem && process.env.NODE_ENV !== 'production') {
       const allViewItems = this.getAllViewItems();
-      console.warn(`[ReactRouterViewStack] No matching view item found for: ${pathname}. Available views:`,
-        allViewItems.map(v => `${v.id}(outlet:${v.outletId}, path:${v.routeData?.childProps?.path || 'undefined'})`).join(', '));
+      console.warn(
+        `[ReactRouterViewStack] No matching view item found for: ${pathname}. Available views:`,
+        allViewItems
+          .map((v) => `${v.id}(outlet:${v.outletId}, path:${v.routeData?.childProps?.path || 'undefined'})`)
+          .join(', ')
+      );
     }
 
     return { viewItem, match };
@@ -463,7 +471,7 @@ export class ReactRouterViewStack extends ViewStacks {
           if (viewItemPath.endsWith('/*') || viewItemPath.includes('*')) {
             // Extract the base path (everything before /*) and find its position in the segments
             const baseRoutePath = viewItemPath.replace(/\/?\*$/, '');
-            const baseSegmentIndex = pathSegments.findIndex(segment => segment === baseRoutePath);
+            const baseSegmentIndex = pathSegments.findIndex((segment) => segment === baseRoutePath);
 
             if (baseSegmentIndex >= 0 && baseSegmentIndex < pathSegments.length - 1) {
               // Take all segments from the base route onwards
@@ -561,35 +569,6 @@ export class ReactRouterViewStack extends ViewStacks {
   }
 
   /**
-   * Unmounts a view by clearing its match and setting mount to false.
-   */
-  private _deactivateView = (viewItem: ViewItem) => {
-    // Clear any pending deactivation
-    const timeoutId = this.deactivationQueue.get(viewItem.id);
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-
-    // Schedule deactivation with a delay to prevent race conditions
-    const timeout = setTimeout(() => {
-      // Double-check the view should still be deactivated
-      const currentMatch = matchPath({
-        pathname: viewItem.routeData.match?.pathname || '',
-        componentProps: viewItem.routeData.childProps,
-      });
-
-      if (!currentMatch) {
-        viewItem.routeData.match = undefined;
-        viewItem.mount = false;
-      }
-
-      this.deactivationQueue.delete(viewItem.id);
-    }, 100); // 100ms delay to allow for re-renders
-
-    this.deactivationQueue.set(viewItem.id, timeout);
-  };
-
-  /**
    * Clean up old, unmounted view items to prevent memory leaks
    */
   private cleanupStaleViewItems = (outletId: string) => {
@@ -597,12 +576,12 @@ export class ReactRouterViewStack extends ViewStacks {
 
     // Keep only the most recent mounted views and a few unmounted ones for history
     const maxUnmountedItems = 3;
-    const unmountedItems = viewItems.filter(v => !v.mount);
+    const unmountedItems = viewItems.filter((v) => !v.mount);
 
     if (unmountedItems.length > maxUnmountedItems) {
       // Remove oldest unmounted items
       const itemsToRemove = unmountedItems.slice(0, unmountedItems.length - maxUnmountedItems);
-      itemsToRemove.forEach(item => {
+      itemsToRemove.forEach((item) => {
         this.remove(item);
       });
     }
@@ -613,8 +592,7 @@ export class ReactRouterViewStack extends ViewStacks {
    * But allow multiple view items for the same route path (for navigation history)
    */
   add = (viewItem: ViewItem) => {
-    const existingViewItem = this.getViewItemsForOutlet(viewItem.outletId)
-      .find(v => v.id === viewItem.id);
+    const existingViewItem = this.getViewItemsForOutlet(viewItem.outletId).find((v) => v.id === viewItem.id);
 
     if (existingViewItem) {
       return;

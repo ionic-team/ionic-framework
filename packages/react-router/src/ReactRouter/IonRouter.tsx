@@ -44,6 +44,16 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
   });
 
   useEffect(() => {
+    if (didMountRef.current) {
+      return;
+    }
+
+    // Seed the history stack with the initial location and begin listening
+    // for future navigations once React has committed the mount. This avoids
+    // duplicate entries when React StrictMode runs an extra render pre-commit.
+    locationHistory.current.add(routeInfo);
+    registerHistoryListener(handleHistoryChange);
+
     didMountRef.current = true;
   }, []);
 
@@ -62,7 +72,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
      * A programmatic navigation was triggered.
      * e.g., `<Redirect />`, `history.push()`, or `handleNavigate()`
      */
-    if (incomingRouteParams) {
+    if (incomingRouteParams.current) {
       /**
        * The current history entry is overwritten, so the previous entry
        * is the one we are leaving.
@@ -90,15 +100,15 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
       if (!incomingRouteParams.current) {
         // Determine if the destination is a tab route by checking if it matches
         // the pattern of tab routes (containing /tabs/ in the path)
-        const isTabRoute = /\/tabs\//.test(location.pathname);
+        const isTabRoute = /\/tabs(\/|$)/.test(location.pathname);
         let tabToUse = isTabRoute ? currentTab.current : undefined;
-        
+
         // If we're leaving tabs entirely, clear the current tab
         if (!isTabRoute && currentTab.current) {
           currentTab.current = undefined;
           tabToUse = undefined;
         }
-        
+
         /**
          * A `REPLACE` action can be triggered by React Router's
          * `<Redirect />` component.
@@ -146,7 +156,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
       let routeInfo: RouteInfo;
 
       // If we're navigating away from tabs to a non-tab route, clear the current tab
-      if (!/\/tabs\//.test(location.pathname) && currentTab.current) {
+      if (!/\/tabs(\/|$)/.test(location.pathname) && currentTab.current) {
         currentTab.current = undefined;
       }
 
@@ -422,16 +432,19 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     routeOptions?: any,
     tab?: string
   ) => {
+    const normalizedRouteDirection =
+      routeAction === 'push' && routeDirection === undefined ? 'forward' : routeDirection;
+
     // When navigating from tabs context, we need to determine if the destination
     // is also within tabs. If not, we should clear the tab context.
     let navigationTab = tab;
-    
+
     // If no explicit tab is provided and we're in a tab context,
     // check if the destination path is outside of the current tab context
     if (!tab && currentTab.current && path) {
       // Get the current route info to understand where we are
       const currentRoute = locationHistory.current.current();
-      
+
       // If we're navigating from a tab route to a completely different path structure,
       // we should clear the tab context. This is a simplified check that assumes
       // tab routes share a common parent path.
@@ -451,23 +464,19 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
         }
       }
     }
-    
-    incomingRouteParams.current = Object.assign(incomingRouteParams.current || {}, {
+
+    const baseParams = incomingRouteParams.current ?? {};
+    incomingRouteParams.current = {
+      ...baseParams,
       routeAction,
-      routeDirection,
+      routeDirection: normalizedRouteDirection,
       routeOptions,
       routeAnimation,
       tab: navigationTab,
-    });
+    };
 
     navigate(path, { replace: routeAction !== 'push' });
   };
-
-  if (!didMountRef.current) {
-    locationHistory.current.add(routeInfo);
-
-    registerHistoryListener(handleHistoryChange);
-  }
 
   const routeMangerContextValue: RouteManagerContextState = {
     canGoBack: () => locationHistory.current.canGoBack(),

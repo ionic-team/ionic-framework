@@ -41,6 +41,7 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
       if (this.context.isInOutlet()) {
         this.ionPageElementRef.current.classList.add('ion-page-invisible');
       }
+      console.log('[PageManager] componentDidMount for', this.props.routeInfo?.pathname);
       this.context.registerIonPage(this.ionPageElementRef.current, this.props.routeInfo!);
       this.ionPageElementRef.current.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler);
       this.ionPageElementRef.current.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler);
