@@ -81,7 +81,7 @@
     "build.debug": "npm run clean && stencil build --debug",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
     "build.tokens": "npx build.tokens --config scripts/tokens/index.mjs && npm run prettier.tokens",
-    "build.newTokens": "esbuild src/themes/*/*.tokens.ts --bundle --format=esm --platform=browser --target=es2017 --outdir=www/themes --outbase=src/themes && esbuild src/utils/theme.ts --bundle --format=esm --platform=browser --target=es2017 --outfile=www/themes/utils/theme.js",
+    "build.newTokens": "esbuild src/themes/*/*.tokens.ts --bundle --format=esm --platform=browser --target=es2017 --outdir=dist/themes --outbase=src/themes && esbuild src/utils/theme.ts --bundle --format=esm --platform=browser --target=es2017 --outfile=dist/themes/utils/theme.js",
     "clean": "node scripts/clean.js",
     "css.minify": "cleancss -O2 -o ./css/ionic.bundle.css ./css/ionic.bundle.css",
     "css.sass": "sass --embed-sources --style compressed src/css:./css",

@@ -57,7 +57,7 @@
   async function loadThemeTokens(themeName, paletteName) {
     try {
       // Dynamically import the theme tokens
-      const defaultTokens = await import(`/www/themes/${themeName}/default.tokens.js`);
+      const defaultTokens = await import(`/dist/themes/${themeName}/default.tokens.js`);
       const theme = defaultTokens.defaultTheme;
 
       // If a specific palette is requested, modify the palette structure
@@ -73,7 +73,7 @@
 
       // Re-apply the global theme
       if (window.Ionic.config.get && window.Ionic.config.set) {
-        import('/www/themes/utils/theme.js').then(themeModule => {
+        import('/dist/themes/utils/theme.js').then(themeModule => {
           themeModule.applyGlobalTheme(theme);
         }).catch(() => {
           console.warn('Could not reapply theme - theme module not found');
