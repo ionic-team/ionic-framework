@@ -8,12 +8,11 @@ import type { Action as HistoryAction, Location as HistoryLocation } from 'histo
 import type { PropsWithChildren } from 'react';
 import React, { useEffect, useRef } from 'react';
 import type { MemoryRouterProps } from 'react-router';
-import { MemoryRouter } from 'react-router';
-import { useLocation, useNavigationType } from 'react-router-dom';
+import { MemoryRouter, useLocation, useNavigationType } from 'react-router';
 
 import { IonRouter } from './IonRouter';
 
-export const IonReactMemoryRouter = ({ children }: PropsWithChildren<MemoryRouterProps>) => {
+const RouterContent = ({ children }: PropsWithChildren<{}>) => {
   const location = useLocation();
   const navigationType = useNavigationType();
 
@@ -45,9 +44,13 @@ export const IonReactMemoryRouter = ({ children }: PropsWithChildren<MemoryRoute
     handleHistoryChange(location, navigationType);
   }, [location, navigationType]);
 
+  return <IonRouter registerHistoryListener={registerHistoryListener}>{children}</IonRouter>;
+};
+
+export const IonReactMemoryRouter = ({ children, ...routerProps }: PropsWithChildren<MemoryRouterProps>) => {
   return (
-    <MemoryRouter>
-      <IonRouter registerHistoryListener={registerHistoryListener}>{children}</IonRouter>
+    <MemoryRouter {...routerProps}>
+      <RouterContent>{children}</RouterContent>
     </MemoryRouter>
   );
 };

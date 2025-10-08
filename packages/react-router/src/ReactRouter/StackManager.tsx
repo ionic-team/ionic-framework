@@ -5,7 +5,7 @@
  */
 
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
-import { RouteManagerContext, StackContext, getConfig } from '@ionic/react';
+import { RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
 import React from 'react';
 import { Route } from 'react-router-dom';
 
@@ -47,9 +47,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     this.registerIonPage = this.registerIonPage.bind(this);
     this.transitionPage = this.transitionPage.bind(this);
     this.handlePageTransition = this.handlePageTransition.bind(this);
-    // Use provided id prop if available; otherwise use a stable default id so
-    // view items are associated to the same outlet across re-renders.
-    this.id = props.id || 'routerOutlet';
+    // Use provided id prop if available; otherwise generate a unique id.
+    this.id = props.id || `routerOutlet-${generateId('routerOutlet')}`;
     this.prevProps = undefined;
     this.skipTransition = false;
   }

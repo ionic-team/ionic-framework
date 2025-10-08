@@ -535,9 +535,27 @@ export class ReactRouterViewStack extends ViewStacks {
     /**
      * Matches a view with no path prop (default fallback route) or index route.
      */
-    function matchDefaultRoute(): boolean {
-      // Don't use view items with no path as default matches for different pathnames
-      // This prevents index routes from incorrectly matching other routes
+    function matchDefaultRoute(v: ViewItem): boolean {
+      const childProps = v.routeData.childProps;
+
+      const isDefaultRoute = childProps.path === undefined || childProps.path === '';
+      const isIndexRoute = !!childProps.index;
+
+      if (isDefaultRoute || isIndexRoute) {
+        match = {
+          params: {},
+          pathname,
+          pathnameBase: pathname === '' ? '/' : pathname,
+          pattern: {
+            path: '',
+            caseSensitive: childProps.caseSensitive ?? false,
+            end: true,
+          },
+        };
+        viewItem = v;
+        return true;
+      }
+
       return false;
     }
   }

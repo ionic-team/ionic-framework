@@ -11,7 +11,7 @@ import { HashRouter, useLocation, useNavigationType } from 'react-router-dom';
 
 import { IonRouter } from './IonRouter';
 
-export const IonReactHashRouter = ({ children }: PropsWithChildren<HashRouterProps>) => {
+const RouterContent = ({ children }: PropsWithChildren<{}>) => {
   const location = useLocation();
   const navigationType = useNavigationType();
 
@@ -43,9 +43,13 @@ export const IonReactHashRouter = ({ children }: PropsWithChildren<HashRouterPro
     handleHistoryChange(location, navigationType);
   }, [location, navigationType]);
 
+  return <IonRouter registerHistoryListener={registerHistoryListener}>{children}</IonRouter>;
+};
+
+export const IonReactHashRouter = ({ children, ...routerProps }: PropsWithChildren<HashRouterProps>) => {
   return (
-    <HashRouter>
-      <IonRouter registerHistoryListener={registerHistoryListener}>{children}</IonRouter>
+    <HashRouter {...routerProps}>
+      <RouterContent>{children}</RouterContent>
     </HashRouter>
   );
 };
