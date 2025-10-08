@@ -28,6 +28,7 @@ import { AlertComponent } from '../alert/alert.component';
 import { AccordionComponent } from '../accordion/accordion.component';
 import { AccordionModalComponent } from '../accordion/accordion-modal/accordion-modal.component';
 import { TabsBasicComponent } from '../tabs-basic/tabs-basic.component';
+import { TemplateFormComponent } from '../template-form/template-form.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { TabsBasicComponent } from '../tabs-basic/tabs-basic.component';
     AlertComponent,
     AccordionComponent,
     AccordionModalComponent,
-    TabsBasicComponent
+    TabsBasicComponent,
+    TemplateFormComponent
   ],
   imports: [
     CommonModule,

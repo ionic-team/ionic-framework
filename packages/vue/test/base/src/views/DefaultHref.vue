@@ -2,7 +2,7 @@
   <ion-page data-pageid="defaulthref">
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-buttons>
+        <ion-buttons slot="start">
           <ion-back-button default-href="/"></ion-back-button>
         </ion-buttons>
         <ion-title>DefaultHref</ion-title>

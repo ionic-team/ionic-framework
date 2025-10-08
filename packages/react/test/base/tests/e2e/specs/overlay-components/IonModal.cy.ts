@@ -1,6 +1,6 @@
 describe('IonModal', () => {
   beforeEach(() => {
-    cy.visit('/overlay-components/modal');
+    cy.visit('/overlay-components/modal-basic');
   });
 
   it('display modal', () => {

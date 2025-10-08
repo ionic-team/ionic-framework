@@ -48,7 +48,7 @@ jobs:
     needs: [release-ionic]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
       with:
         token: ${{ secrets.IONITRON_TOKEN }}
         fetch-depth: 0
@@ -76,7 +76,7 @@ jobs:
     needs: [finalize-release]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         # Pull the latest version of the reference
         # branch instead of the revision that triggered
         # the workflow otherwise we won't get the commit

@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.5](https://github.com/ionic-team/ionic-framework/compare/v8.7.4...v8.7.5) (2025-09-24)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.7.4](https://github.com/ionic-team/ionic-framework/compare/v8.7.3...v8.7.4) (2025-09-17)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.7.3](https://github.com/ionic-team/ionic-framework/compare/v8.7.2...v8.7.3) (2025-08-20)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [8.7.2](https://github.com/ionic-team/ionic-framework/compare/v8.7.1...v8.7.2) (2025-08-06)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
 ## [8.7.1](https://github.com/ionic-team/ionic-framework/compare/v8.7.0...v8.7.1) (2025-07-31)
 
 **Note:** Version bump only for package @ionic/angular-server

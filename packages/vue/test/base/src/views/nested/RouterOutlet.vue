@@ -3,7 +3,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button id="routeroutlet-back-button" text="Back to main outlet"></ion-back-button>
+          <ion-back-button id="routeroutlet-back-button" text="Back to main outlet" default-href="/"></ion-back-button>
           <ion-button id="inbox" router-link="/nested/inbox" router-direction="root">Inbox</ion-button>
           <ion-button id="trash" router-link="/nested/trash" router-direction="root">Trash</ion-button>
           <ion-button id="outbox" router-link="/nested/outbox" router-direction="root">Outbox</ion-button>

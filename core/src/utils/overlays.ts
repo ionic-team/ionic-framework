@@ -32,7 +32,6 @@ import {
   getElementRoot,
   removeEventListener,
 } from './helpers';
-import { isPlatform } from './platform';
 
 let lastOverlayIndex = 0;
 let lastId = 0;
@@ -487,7 +486,7 @@ export const getPresentedOverlay = (
  */
 export const setRootAriaHidden = (hidden = false) => {
   const root = getAppRoot(document);
-  const viewContainer = root.querySelector('ion-router-outlet, ion-nav, #ion-view-container-root');
+  const viewContainer = root.querySelector('ion-router-outlet, #ion-view-container-root');
 
   if (!viewContainer) {
     return;
@@ -512,22 +511,53 @@ export const present = async <OverlayPresentOptions>(
   }
 
   /**
+   * When an overlay that steals focus
+   * is dismissed, focus should be returned
+   * to the element that was focused
+   * prior to the overlay opening. Toast
+   * does not steal focus and is excluded
+   * from returning focus as a result.
+   */
+  if (overlay.el.tagName !== 'ION-TOAST') {
+    restoreElementFocus(overlay.el);
+  }
+
+  /**
    * Due to accessibility guidelines, toasts do not have
    * focus traps.
    *
    * All other overlays should have focus traps to prevent
-   * the keyboard focus from leaving the overlay.
+   * the keyboard focus from leaving the overlay unless
+   * developers explicitly opt out (for example, sheet
+   * modals that should permit background interaction).
+   *
+   * Note: Some apps move inline overlays to a specific container
+   * during the willPresent lifecycle (e.g., React portals via
+   * onWillPresent). Defer applying aria-hidden/inert to the app
+   * root until after willPresent so we can detect where the
+   * overlay is finally inserted. If the overlay is inside the
+   * view container subtree, skip adding aria-hidden/inert there
+   * to avoid disabling the overlay.
    */
-  if (overlay.el.tagName !== 'ION-TOAST') {
-    setRootAriaHidden(true);
-    document.body.classList.add(BACKDROP_NO_SCROLL);
-  }
-
-  hideUnderlyingOverlaysFromScreenReaders(overlay.el);
-  hideAnimatingOverlayFromScreenReaders(overlay.el);
+  const overlayEl = overlay.el as HTMLIonOverlayElement & { focusTrap?: boolean; showBackdrop?: boolean };
+  const shouldTrapFocus = overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false;
+  // Only lock out root content when backdrop is active. Developers relying on showBackdrop=false
+  // expect background interaction to remain enabled.
+  const shouldLockRoot = shouldTrapFocus && overlayEl.showBackdrop !== false;
 
   overlay.presented = true;
   overlay.willPresent.emit();
+
+  if (shouldLockRoot) {
+    const root = getAppRoot(document);
+    const viewContainer = root.querySelector('ion-router-outlet, #ion-view-container-root');
+    const overlayInsideViewContainer = viewContainer ? viewContainer.contains(overlayEl) : false;
+
+    if (!overlayInsideViewContainer) {
+      setRootAriaHidden(true);
+    }
+    document.body.classList.add(BACKDROP_NO_SCROLL);
+  }
   overlay.willPresentShorthand?.emit();
 
   const mode = getIonMode(overlay);
@@ -540,18 +570,6 @@ export const present = async <OverlayPresentOptions>(
   if (completed) {
     overlay.didPresent.emit();
     overlay.didPresentShorthand?.emit();
-  }
-
-  /**
-   * When an overlay that steals focus
-   * is dismissed, focus should be returned
-   * to the element that was focused
-   * prior to the overlay opening. Toast
-   * does not steal focus and is excluded
-   * from returning focus as a result.
-   */
-  if (overlay.el.tagName !== 'ION-TOAST') {
-    restoreElementFocus(overlay.el);
   }
 
   /**
@@ -577,6 +595,7 @@ export const present = async <OverlayPresentOptions>(
    * screen readers.
    */
   overlay.el.removeAttribute('aria-hidden');
+  overlay.el.removeAttribute('inert');
 };
 
 /**
@@ -594,6 +613,9 @@ const restoreElementFocus = async (overlayEl: any) => {
   if (!previousElement) {
     return;
   }
+
+  // Ensure active element is blurred to prevent a11y warning issues
+  previousElement.blur();
 
   const shadowRoot = previousElement?.shadowRoot;
   if (shadowRoot) {
@@ -651,22 +673,28 @@ export const dismiss = async <OverlayDismissOptions>(
    * For accessibility, toasts lack focus traps and don't receive
    * `aria-hidden` on the root element when presented.
    *
-   * All other overlays use focus traps to keep keyboard focus
-   * within the overlay, setting `aria-hidden` on the root element
-   * to enhance accessibility.
-   *
-   * Therefore, we must remove `aria-hidden` from the root element
-   * when the last non-toast overlay is dismissed.
+   * Overlays that opt into focus trapping set `aria-hidden`
+   * on the root element to keep keyboard focus and pointer
+   * events inside the overlay. We must remove `aria-hidden`
+   * from the root element when the last focus-trapping overlay
+   * is dismissed.
    */
-  const overlaysNotToast = presentedOverlays.filter((o) => o.tagName !== 'ION-TOAST');
-
-  const lastOverlayNotToast = overlaysNotToast.length === 1 && overlaysNotToast[0].id === overlay.el.id;
+  const overlaysLockingRoot = presentedOverlays.filter((o) => {
+    const el = o as HTMLIonOverlayElement & { focusTrap?: boolean; showBackdrop?: boolean };
+    return el.tagName !== 'ION-TOAST' && el.focusTrap !== false && el.showBackdrop !== false;
+  });
+  const overlayEl = overlay.el as HTMLIonOverlayElement & { focusTrap?: boolean; showBackdrop?: boolean };
+  const locksRoot =
+    overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false && overlayEl.showBackdrop !== false;
 
   /**
-   * If this is the last visible overlay that is not a toast
+   * If this is the last visible overlay that is trapping focus
    * then we want to re-add the root to the accessibility tree.
    */
-  if (lastOverlayNotToast) {
+  const lastOverlayTrappingFocus =
+    locksRoot && overlaysLockingRoot.length === 1 && overlaysLockingRoot[0].id === overlayEl.id;
+
+  if (lastOverlayTrappingFocus) {
     setRootAriaHidden(false);
     document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
@@ -674,13 +702,6 @@ export const dismiss = async <OverlayDismissOptions>(
   overlay.presented = false;
 
   try {
-    /**
-     * There is no need to show the overlay to screen readers during
-     * the dismiss animation. This is because the overlay will be removed
-     * from the DOM after the animation is complete.
-     */
-    hideAnimatingOverlayFromScreenReaders(overlay.el);
-
     // Overlay contents should not be clickable during dismiss
     overlay.el.style.setProperty('pointer-events', 'none');
     overlay.willDismiss.emit({ data, role });
@@ -727,8 +748,6 @@ export const dismiss = async <OverlayDismissOptions>(
   }
 
   overlay.el.remove();
-
-  revealOverlaysToScreenReaders();
 
   return true;
 };
@@ -964,100 +983,6 @@ export const createTriggerController = () => {
     addClickListener,
     removeClickListener,
   };
-};
-
-/**
- * The overlay that is being animated also needs to hide from screen
- * readers during its animation. This ensures that assistive technologies
- * like TalkBack do not announce or interact with the content until the
- * animation is complete, avoiding confusion for users.
- *
- * When the overlay is presented on an Android device, TalkBack's focus rings
- * may appear in the wrong position due to the transition (specifically
- * `transform` styles). This occurs because the focus rings are initially
- * displayed at the starting position of the elements before the transition
- * begins. This workaround ensures the focus rings do not appear in the
- * incorrect location.
- *
- * If this solution is applied to iOS devices, then it leads to a bug where
- * the overlays cannot be accessed by screen readers. This is due to
- * VoiceOver not being able to update the accessibility tree when the
- * `aria-hidden` is removed.
- *
- * @param overlay - The overlay that is being animated.
- */
-const hideAnimatingOverlayFromScreenReaders = (overlay: HTMLIonOverlayElement) => {
-  if (doc === undefined) return;
-
-  if (isPlatform('android')) {
-    /**
-     * Once the animation is complete, this attribute will be removed.
-     * This is done at the end of the `present` method.
-     */
-    overlay.setAttribute('aria-hidden', 'true');
-  }
-};
-
-/**
- * Ensure that underlying overlays have aria-hidden if necessary so that screen readers
- * cannot move focus to these elements. Note that we cannot rely on focus/focusin/focusout
- * events here because those events do not fire when the screen readers moves to a non-focusable
- * element such as text.
- * Without this logic screen readers would be able to move focus outside of the top focus-trapped overlay.
- *
- * @param newTopMostOverlay - The overlay that is being presented. Since the overlay has not been
- * fully presented yet at the time this function is called it will not be included in the getPresentedOverlays result.
- */
-const hideUnderlyingOverlaysFromScreenReaders = (newTopMostOverlay: HTMLIonOverlayElement) => {
-  if (doc === undefined) return;
-
-  const overlays = getPresentedOverlays(doc);
-
-  for (let i = overlays.length - 1; i >= 0; i--) {
-    const presentedOverlay = overlays[i];
-    const nextPresentedOverlay = overlays[i + 1] ?? newTopMostOverlay;
-
-    /**
-     * If next overlay has aria-hidden then all remaining overlays will have it too.
-     * Or, if the next overlay is a Toast that does not have aria-hidden then current overlay
-     * should not have aria-hidden either so focus can remain in the current overlay.
-     */
-    if (nextPresentedOverlay.hasAttribute('aria-hidden') || nextPresentedOverlay.tagName !== 'ION-TOAST') {
-      presentedOverlay.setAttribute('aria-hidden', 'true');
-    }
-  }
-};
-
-/**
- * When dismissing an overlay we need to reveal the new top-most overlay to screen readers.
- * If the top-most overlay is a Toast we potentially need to reveal more overlays since
- * focus is never automatically moved to the Toast.
- */
-const revealOverlaysToScreenReaders = () => {
-  if (doc === undefined) return;
-
-  const overlays = getPresentedOverlays(doc);
-
-  for (let i = overlays.length - 1; i >= 0; i--) {
-    const currentOverlay = overlays[i];
-
-    /**
-     * If the current we are looking at is a Toast then we can remove aria-hidden.
-     * However, we potentially need to keep looking at the overlay stack because there
-     * could be more Toasts underneath. Additionally, we need to unhide the closest non-Toast
-     * overlay too so focus can move there since focus is never automatically moved to the Toast.
-     */
-    currentOverlay.removeAttribute('aria-hidden');
-
-    /**
-     * If we found a non-Toast element then we can just remove aria-hidden and stop searching entirely
-     * since this overlay should always receive focus. As a result, all underlying overlays should still
-     * be hidden from screen readers.
-     */
-    if (currentOverlay.tagName !== 'ION-TOAST') {
-      break;
-    }
-  }
 };
 
 export const FOCUS_TRAP_DISABLE_CLASS = 'ion-disable-focus-trap';

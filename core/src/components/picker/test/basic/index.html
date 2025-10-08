@@ -177,6 +177,10 @@
         'onion'
       );
 
+      const columnDualNumericFirst = document.querySelector('ion-picker-column#dual-numeric-first');
+      columnDualNumericFirst.addEventListener('ionChange', (ev) => {
+        console.log('Column change', ev.detail);
+      });
       setPickerColumn(
         '#dual-numeric-first',
         [
@@ -195,6 +199,10 @@
         ],
         3
       );
+      const columnDualNumericSecond = document.querySelector('ion-picker-column#dual-numeric-second');
+      columnDualNumericSecond.addEventListener('ionChange', (ev) => {
+        console.log('Column change', ev.detail);
+      });
       setPickerColumn('#dual-numeric-second', minutes, 3);
 
       setPickerColumn(

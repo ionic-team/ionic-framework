@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.5](https://github.com/ionic-team/ionic-framework/compare/v8.7.4...v8.7.5) (2025-09-24)
+
+
+### Bug Fixes
+
+* **vue:** emit component-specific overlay events ([#30688](https://github.com/ionic-team/ionic-framework/issues/30688)) ([024d090](https://github.com/ionic-team/ionic-framework/commit/024d090122548e26ec2cdcfae4637dde8f288278)), closes [#30641](https://github.com/ionic-team/ionic-framework/issues/30641)
+
+
+
+
+
+## [8.7.4](https://github.com/ionic-team/ionic-framework/compare/v8.7.3...v8.7.4) (2025-09-17)
+
+
+### Bug Fixes
+
+* **overlays,picker:** remove invalid aria-hidden attribute ([#30563](https://github.com/ionic-team/ionic-framework/issues/30563)) ([49f96d7](https://github.com/ionic-team/ionic-framework/commit/49f96d7f1e9050a95e3e33a821c0467ecc0bed64)), closes [#30040](https://github.com/ionic-team/ionic-framework/issues/30040)
+
+
+
+
+
+## [8.7.3](https://github.com/ionic-team/ionic-framework/compare/v8.7.2...v8.7.3) (2025-08-20)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.7.2](https://github.com/ionic-team/ionic-framework/compare/v8.7.1...v8.7.2) (2025-08-06)
+
+
+### Bug Fixes
+
+* **reorder-group:**  add children fallback for framework compatibility ([#30593](https://github.com/ionic-team/ionic-framework/issues/30593)) ([1cd81b9](https://github.com/ionic-team/ionic-framework/commit/1cd81b92301378d55bce63a01dfcf95a91c92652)), closes [#30592](https://github.com/ionic-team/ionic-framework/issues/30592)
+
+
+
+
+
 ## [8.7.1](https://github.com/ionic-team/ionic-framework/compare/v8.7.0...v8.7.1) (2025-07-31)
 
 **Note:** Version bump only for package @ionic/vue
