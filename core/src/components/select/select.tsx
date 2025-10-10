@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
 import { compareOptions, createNotchController, isOptionSelected } from '@utils/forms';
 import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
@@ -64,6 +64,7 @@ export class Select implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private nativeWrapperEl: HTMLElement | undefined;
   private notchSpacerEl: HTMLElement | undefined;
+  private validationObserver?: MutationObserver;
 
   private notchController?: NotchController;
 
@@ -80,6 +81,13 @@ export class Select implements ComponentInterface {
    * is applied in both cases.
    */
   @State() hasFocus = false;
+
+  /**
+   * Track validation state for proper aria-live announcements.
+   */
+  @State() isInvalid = false;
+
+  @State() private hintTextID?: string;
 
   /**
    * The text to display on the cancel button.
@@ -298,10 +306,49 @@ export class Select implements ComponentInterface {
        */
       forceUpdate(this);
     });
+
+    // Watch for class changes to update validation state.
+    if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
+      this.validationObserver = new MutationObserver(() => {
+        const newIsInvalid = this.checkInvalidState();
+        if (this.isInvalid !== newIsInvalid) {
+          this.isInvalid = newIsInvalid;
+          /**
+           * Screen readers tend to announce changes
+           * to `aria-describedby` when the attribute
+           * is changed during a blur event for a
+           * native form control.
+           * However, the announcement can be spotty
+           * when using a non-native form control
+           * and `forceUpdate()`.
+           * This is due to `forceUpdate()` not being
+           * high priority enough to guarantee
+           * the DOM is updated before the screen reader
+           * announces the attribute change.
+           * By using a promise, it makes sure to
+           * announce the change before the next frame
+           * since promises are high priority.
+           */
+          Promise.resolve().then(() => {
+            this.hintTextID = this.getHintTextID();
+          });
+        }
+      });
+
+      this.validationObserver.observe(el, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    }
+
+    // Always set initial state
+    this.isInvalid = this.checkInvalidState();
   }
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+
+    this.hintTextID = this.getHintTextID();
   }
 
   componentDidLoad() {
@@ -327,6 +374,12 @@ export class Select implements ComponentInterface {
     if (this.notchController) {
       this.notchController.destroy();
       this.notchController = undefined;
+    }
+
+    // Clean up validation observer to prevent memory leaks.
+    if (this.validationObserver) {
+      this.validationObserver.disconnect();
+      this.validationObserver = undefined;
     }
   }
 
@@ -1056,8 +1109,8 @@ export class Select implements ComponentInterface {
         aria-label={this.ariaLabel}
         aria-haspopup="dialog"
         aria-expanded={`${isExpanded}`}
-        aria-describedby={this.getHintTextID()}
-        aria-invalid={this.getHintTextID() === this.errorTextId}
+        aria-describedby={this.hintTextID}
+        aria-invalid={this.isInvalid ? 'true' : undefined}
         aria-required={`${required}`}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
@@ -1067,9 +1120,9 @@ export class Select implements ComponentInterface {
   }
 
   private getHintTextID(): string | undefined {
-    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+    const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
-    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+    if (isInvalid && errorText) {
       return errorTextId;
     }
 
@@ -1084,14 +1137,14 @@ export class Select implements ComponentInterface {
    * Renders the helper text or error text values
    */
   private renderHintText() {
-    const { helperText, errorText, helperTextId, errorTextId } = this;
+    const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
     return [
-      <div id={helperTextId} class="helper-text" part="supporting-text helper-text">
-        {helperText}
+      <div id={helperTextId} class="helper-text" part="supporting-text helper-text" aria-live="polite">
+        {!isInvalid ? helperText : null}
       </div>,
-      <div id={errorTextId} class="error-text" part="supporting-text error-text">
-        {errorText}
+      <div id={errorTextId} class="error-text" part="supporting-text error-text" role="alert">
+        {isInvalid ? errorText : null}
       </div>,
     ];
   }
@@ -1113,6 +1166,17 @@ export class Select implements ComponentInterface {
     }
 
     return <div class="select-bottom">{this.renderHintText()}</div>;
+  }
+
+  /**
+   * Checks if the input is in an invalid state based
+   * on Ionic validation classes.
+   */
+  private checkInvalidState(): boolean {
+    const hasIonTouched = this.el.classList.contains('ion-touched');
+    const hasIonInvalid = this.el.classList.contains('ion-invalid');
+
+    return hasIonTouched && hasIonInvalid;
   }
 
   render() {

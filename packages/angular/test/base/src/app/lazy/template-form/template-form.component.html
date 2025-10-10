@@ -77,6 +77,31 @@
           <p>MinLength Errors: <span id="minlength-errors">{{minLengthField.errors | json}}</span></p>
         </ion-label>
       </ion-item>
+
+      <!-- Test ion-select with required validation -->
+      <ion-item>
+        <ion-select
+          label="Required Select"
+          [(ngModel)]="selectValue"
+          name="selectField"
+          required
+          #selectField="ngModel"
+          id="template-select-test"
+          errorText="This field is required"
+          helperText="Select an option">
+          <ion-select-option value="option1">Option 1</ion-select-option>
+          <ion-select-option value="option2">Option 2</ion-select-option>
+        </ion-select>
+      </ion-item>
+      
+      <!-- Display validation state for debugging -->
+      <ion-item>
+        <ion-label>
+          <p>Select Touched: <span id="select-touched">{{selectField.touched}}</span></p>
+          <p>Select Invalid: <span id="select-invalid">{{selectField.invalid}}</span></p>
+          <p>Select Errors: <span id="select-errors">{{selectField.errors | json}}</span></p>
+        </ion-label>
+      </ion-item>
     </ion-list>
 
     <div class="ion-padding">
