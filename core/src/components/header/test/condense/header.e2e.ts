@@ -60,3 +60,25 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
     });
   });
 });
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('header: condense'), () => {
+    test('should only have the banner role on the small header', async ({ page }) => {
+      await page.goto('/src/components/header/test/condense', config);
+      const largeTitleHeader = page.locator('#largeTitleHeader');
+      const smallTitleHeader = page.locator('#smallTitleHeader');
+      const content = page.locator('ion-content');
+
+      await expect(smallTitleHeader).toHaveAttribute('role', 'banner');
+      await expect(largeTitleHeader).toHaveAttribute('role', 'none');
+
+      await content.evaluate(async (el: HTMLIonContentElement) => {
+        await el.scrollToBottom();
+      });
+      await page.waitForChanges();
+
+      await expect(smallTitleHeader).toHaveAttribute('role', 'banner');
+      await expect(largeTitleHeader).toHaveAttribute('role', 'none');
+    });
+  });
+});
