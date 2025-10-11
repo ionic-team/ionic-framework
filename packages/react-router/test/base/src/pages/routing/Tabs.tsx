@@ -17,7 +17,7 @@ const Tabs: React.FC = () => {
   return (
     <IonTabs>
       <IonRouterOutlet id="tabs">
-        <Route index element={<Navigate to="/routing/tabs/home" />} />
+        <Route index element={<Navigate to="/routing/tabs/home" replace />} />
         <Route path="home" element={<Tab1 />} />
         <Route path="home/details/:id" element={<Details />} />
         <Route path="settings" element={<Tab2 />} />

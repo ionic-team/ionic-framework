@@ -20,7 +20,7 @@ const Routing: React.FC<RoutingProps> = () => {
     <IonSplitPane contentId="main">
       <Menu />
       <IonRouterOutlet id="main">
-        <Route index element={<Navigate to="/routing/tabs" />} />
+        <Route index element={<Navigate to="/routing/tabs" replace />} />
 
         <Route path="tabs/*" element={<Tabs />} />
         <Route path="favorites" element={<Favorites />} />
