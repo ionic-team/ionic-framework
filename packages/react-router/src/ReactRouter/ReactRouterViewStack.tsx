@@ -13,6 +13,59 @@ import { UNSAFE_RouteContext as RouteContext } from 'react-router-dom';
 
 import { matchPath } from './utils/matchPath';
 
+const derivePathnameToMatch = (fullPathname: string, routePath?: string): string => {
+  if (!routePath || routePath === '' || routePath.startsWith('/')) {
+    return fullPathname;
+  }
+
+  const trimmedPath = fullPathname.startsWith('/') ? fullPathname.slice(1) : fullPathname;
+  if (!trimmedPath) {
+    return '';
+  }
+
+  const fullSegments = trimmedPath.split('/').filter(Boolean);
+  if (fullSegments.length === 0) {
+    return '';
+  }
+
+  const routeSegments = routePath.split('/').filter(Boolean);
+  if (routeSegments.length === 0) {
+    return trimmedPath;
+  }
+
+  const wildcardIndex = routeSegments.findIndex((segment) => segment === '*' || segment === '**');
+
+  if (wildcardIndex >= 0) {
+    const baseSegments = routeSegments.slice(0, wildcardIndex);
+    if (baseSegments.length === 0) {
+      return trimmedPath;
+    }
+
+    const startIndex = fullSegments.findIndex((_, idx) =>
+      baseSegments.every((seg, segIdx) => {
+        const target = fullSegments[idx + segIdx];
+        if (!target) {
+          return false;
+        }
+        if (seg.startsWith(':')) {
+          return true;
+        }
+        return target === seg;
+      })
+    );
+
+    if (startIndex >= 0) {
+      return fullSegments.slice(startIndex).join('/');
+    }
+  }
+
+  if (routeSegments.length <= fullSegments.length) {
+    return fullSegments.slice(fullSegments.length - routeSegments.length).join('/');
+  }
+
+  return fullSegments[fullSegments.length - 1] ?? trimmedPath;
+};
+
 export class ReactRouterViewStack extends ViewStacks {
   private pendingViewItems: Map<string, ViewItem> = new Map();
   private deactivationQueue: Map<string, NodeJS.Timeout> = new Map();
@@ -68,10 +121,7 @@ export class ReactRouterViewStack extends ViewStacks {
       existingViewItem.mount = true;
       existingViewItem.ionPageElement = page || existingViewItem.ionPageElement;
       existingViewItem.routeData = {
-        match: matchPath({
-          pathname: routeInfo.pathname,
-          componentProps: reactElement.props,
-        }),
+        match: matchComponent(reactElement, routeInfo.pathname),
         childProps: reactElement.props,
         lastPathname: existingViewItem.routeData?.lastPathname, // Preserve navigation history
       };
@@ -112,10 +162,7 @@ export class ReactRouterViewStack extends ViewStacks {
     }
 
     viewItem.routeData = {
-      match: matchPath({
-        pathname: routeInfo.pathname,
-        componentProps: reactElement.props,
-      }),
+      match: matchComponent(reactElement, routeInfo.pathname),
       childProps: reactElement.props,
     };
 
@@ -135,41 +182,8 @@ export class ReactRouterViewStack extends ViewStacks {
    * - Adds a unique key to <Routes> so React Router remounts routes when switching
    */
   private renderViewItem = (viewItem: ViewItem, routeInfo: RouteInfo) => {
-    // For relative paths in nested outlets, we need to compute the relative pathname
-    let pathnameToMatch = routeInfo.pathname;
     const routePath = viewItem.reactElement.props.path || '';
-
-    // If this is a relative route (doesn't start with '/'), we need to extract the relative portion
-    if (routePath && !routePath.startsWith('/')) {
-      // Find the relative portion of the pathname for this nested outlet
-      const pathSegments = routeInfo.pathname.split('/').filter(Boolean);
-      if (pathSegments.length > 1) {
-        // For wildcard routes like "tabs/*", we need to match the remaining path segments
-        // that would be captured by the wildcard
-        if (routePath.endsWith('/*') || routePath.includes('*')) {
-          // Extract the base path (everything before /*) and find its position in the segments
-          const baseRoutePath = routePath.replace('/*', '');
-          const baseSegmentIndex = pathSegments.findIndex((segment) => segment === baseRoutePath);
-
-          if (baseSegmentIndex >= 0 && baseSegmentIndex < pathSegments.length - 1) {
-            // Take all segments from the base route onwards
-            // e.g., for "tabs/*" with "/routing/tabs/home", we want "tabs/home"
-            const remainingSegments = pathSegments.slice(baseSegmentIndex);
-            pathnameToMatch = remainingSegments.join('/');
-          } else {
-            // Fallback: for simple cases, take the last segment
-            pathnameToMatch = pathSegments[pathSegments.length - 1];
-          }
-        } else {
-          // For non-wildcard routes like "otherpage", take the last segment
-          // e.g., for "otherpage" in outlet "main" with pathname "/routing/otherpage"
-          // we want to match "otherpage" against "otherpage" (the last segment)
-          pathnameToMatch = pathSegments[pathSegments.length - 1];
-        }
-      }
-    }
-
-    const match = matchComponent(viewItem.reactElement, pathnameToMatch);
+    const match = matchComponent(viewItem.reactElement, routeInfo.pathname);
 
     // Cancel any pending deactivation if we have a match
     if (match) {
@@ -243,15 +257,7 @@ export class ReactRouterViewStack extends ViewStacks {
         if (vRoutePath === '*' || vRoutePath === '') return false; // Skip other wildcard/empty routes
 
         // Check if this view item would match the current route
-        let vPathnameToMatch = routeInfo.pathname;
-        if (vRoutePath && !vRoutePath.startsWith('/')) {
-          const pathSegments = routeInfo.pathname.split('/').filter(Boolean);
-          if (pathSegments.length > 1) {
-            vPathnameToMatch = pathSegments[pathSegments.length - 1];
-          }
-        }
-
-        const vMatch = matchComponent(v.reactElement, vPathnameToMatch);
+        const vMatch = v.reactElement ? matchComponent(v.reactElement, routeInfo.pathname) : null;
         const hasMatch = !!vMatch;
 
         return hasMatch;
@@ -456,48 +462,7 @@ export class ReactRouterViewStack extends ViewStacks {
       if (mustBeIonRoute && !v.ionRoute) return false;
 
       const viewItemPath = v.routeData.childProps.path || '';
-
-      // For relative paths in nested outlets, we need to match against the appropriate pathname
-      let pathnameToMatch = pathname;
-
-      // If the view item has a relative path (doesn't start with '/'),
-      // we should match it against the relative portion of the pathname
-      if (viewItemPath && !viewItemPath.startsWith('/')) {
-        // Extract the relative portion from the full pathname
-        const pathSegments = pathname.split('/').filter(Boolean);
-        if (pathSegments.length > 1) {
-          // For wildcard routes like "tabs/*", we need to match the remaining path segments
-          // that would be captured by the wildcard
-          if (viewItemPath.endsWith('/*') || viewItemPath.includes('*')) {
-            // Extract the base path (everything before /*) and find its position in the segments
-            const baseRoutePath = viewItemPath.replace(/\/?\*$/, '');
-            const baseSegmentIndex = pathSegments.findIndex((segment) => segment === baseRoutePath);
-
-            if (baseSegmentIndex >= 0 && baseSegmentIndex < pathSegments.length - 1) {
-              // Take all segments from the base route onwards
-              // e.g., for "tabs/*" with "/routing/tabs/home", we want "tabs/home"
-              const remainingSegments = pathSegments.slice(baseSegmentIndex);
-              pathnameToMatch = remainingSegments.join('/');
-            } else {
-              // Fallback: for simple cases, take the last segment
-              pathnameToMatch = pathSegments[pathSegments.length - 1];
-            }
-          } else {
-            // For non-wildcard routes like "otherpage", take the last segment
-            // e.g., for "otherpage" in outlet "main" with pathname "/routing/otherpage"
-            // we want to match "otherpage" against "otherpage" (the last segment)
-            const lastSegment = pathSegments[pathSegments.length - 1];
-            if (viewItemPath === lastSegment) {
-              pathnameToMatch = lastSegment;
-            }
-          }
-        }
-      }
-
-      const result = matchPath({
-        pathname: pathnameToMatch,
-        componentProps: v.routeData.childProps,
-      });
+      const result = v.reactElement ? matchComponent(v.reactElement, pathname) : null;
 
       if (result) {
         const hasParams = result.params && Object.keys(result.params).length > 0;
@@ -510,30 +475,19 @@ export class ReactRouterViewStack extends ViewStacks {
           return false;
         }
 
-        // Accept matches in these cases:
-        // - No params (exact string matches)
-        // - Same path as previous match (parameter changes on same route)
-        // - No previous match (first time matching this view)
-        // - Previous match is compatible with current path
         if (!hasParams || isSamePath || !previousMatch) {
           match = result;
           viewItem = v;
           return true;
-        } else {
-          // For parameterized routes with previous matches, be more flexible
-          // Allow the match if it's a related path or wildcard route
-          const isWildcardRoute = viewItemPath.includes('*');
-          const isParameterRoute = viewItemPath.includes(':');
+        }
 
-          if (isParameterRoute) {
-            match = result;
-            viewItem = v;
-            return true;
-          } else if (isWildcardRoute) {
-            match = result;
-            viewItem = v;
-            return true;
-          }
+        const isWildcardRoute = viewItemPath.includes('*');
+        const isParameterRoute = viewItemPath.includes(':');
+
+        if (isParameterRoute || isWildcardRoute) {
+          match = result;
+          viewItem = v;
+          return true;
         }
       }
 
@@ -621,8 +575,11 @@ export class ReactRouterViewStack extends ViewStacks {
  * Utility to apply matchPath to a React element and return its match state.
  */
 function matchComponent(node: React.ReactElement, pathname: string) {
+  const routePath: string | undefined = node?.props?.path;
+  const pathnameToMatch = derivePathnameToMatch(pathname, routePath);
+
   return matchPath({
-    pathname,
+    pathname: pathnameToMatch,
     componentProps: node.props,
   });
 }
