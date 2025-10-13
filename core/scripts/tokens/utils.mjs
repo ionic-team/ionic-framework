@@ -151,7 +151,7 @@ export function generateColorUtilityClasses(prop, className) {
   const isBg = className.includes('bg');
   const cssProp = isBg ? 'background-color' : 'color';
   return `.${classAndScssPrefix}-${className} {
-  --${cssProp}: $${classAndScssPrefix}-${prop.name};
+  --${cssProp}: #{$${classAndScssPrefix}-${prop.name}};
   ${cssProp}: $${classAndScssPrefix}-${prop.name};
 }`;
 }
