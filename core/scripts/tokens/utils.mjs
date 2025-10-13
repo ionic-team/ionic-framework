@@ -275,7 +275,7 @@ export function generateSpaceUtilityClasses(prop, className) {
 // Generates a valid box-shadow value from a shadow Design Token structure
 export function generateRadiusUtilityClasses(propName) {
   return `.${classAndScssPrefix}-${propName} {
-  --border-radius: $${classAndScssPrefix}-${propName};
+  --border-radius: #{$${classAndScssPrefix}-${propName}};
   border-radius: $${classAndScssPrefix}-${propName};
 }`;
 }
@@ -296,7 +296,7 @@ export function generateBorderUtilityClasses(prop, propName) {
       attribute = 'border-color';
   }
   return `.${classAndScssPrefix}-${propName} {
-  --${attribute}: $${classAndScssPrefix}-${propName};
+  --${attribute}: #{$${classAndScssPrefix}-${propName}};
   ${attribute}: $${classAndScssPrefix}-${propName};
 }`;
 }
@@ -309,7 +309,7 @@ export function generateFontUtilityClasses(prop, propName) {
 // Generates a valid box-shadow value from a shadow Design Token structure
 export function generateShadowUtilityClasses(propName) {
   return `.${classAndScssPrefix}-${propName} {
-  --box-shadow: $${classAndScssPrefix}-${propName};
+  --box-shadow: #{$${classAndScssPrefix}-${propName}};
   box-shadow: $${classAndScssPrefix}-${propName};
 }`;
 }

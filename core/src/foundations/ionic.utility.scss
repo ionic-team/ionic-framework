@@ -1172,139 +1172,139 @@
   color: $ion-text-extended-pink;
 }
 .ion-border-default {
-  --border-color: $ion-border-default;
+  --border-color: #{$ion-border-default};
   border-color: $ion-border-default;
 }
 .ion-border-boldest {
-  --border-color: $ion-border-boldest;
+  --border-color: #{$ion-border-boldest};
   border-color: $ion-border-boldest;
 }
 .ion-border-subtle {
-  --border-color: $ion-border-subtle;
+  --border-color: #{$ion-border-subtle};
   border-color: $ion-border-subtle;
 }
 .ion-border-subtlest {
-  --border-color: $ion-border-subtlest;
+  --border-color: #{$ion-border-subtlest};
   border-color: $ion-border-subtlest;
 }
 .ion-border-primary {
-  --border-color: $ion-border-primary;
+  --border-color: #{$ion-border-primary};
   border-color: $ion-border-primary;
 }
 .ion-border-success {
-  --border-color: $ion-border-success;
+  --border-color: #{$ion-border-success};
   border-color: $ion-border-success;
 }
 .ion-border-warning {
-  --border-color: $ion-border-warning;
+  --border-color: #{$ion-border-warning};
   border-color: $ion-border-warning;
 }
 .ion-border-disabled {
-  --border-color: $ion-border-disabled;
+  --border-color: #{$ion-border-disabled};
   border-color: $ion-border-disabled;
 }
 .ion-border-focus-0 {
-  --border-color: $ion-border-focus-0;
+  --border-color: #{$ion-border-focus-0};
   border-color: $ion-border-focus-0;
 }
 .ion-border-focus-default {
-  --border-color: $ion-border-focus-default;
+  --border-color: #{$ion-border-focus-default};
   border-color: $ion-border-focus-default;
 }
 .ion-border-focus-error {
-  --border-color: $ion-border-focus-error;
+  --border-color: #{$ion-border-focus-error};
   border-color: $ion-border-focus-error;
 }
 .ion-border-danger-default {
-  --border-color: $ion-border-danger-default;
+  --border-color: #{$ion-border-danger-default};
   border-color: $ion-border-danger-default;
 }
 .ion-border-danger-press {
-  --border-color: $ion-border-danger-press;
+  --border-color: #{$ion-border-danger-press};
   border-color: $ion-border-danger-press;
 }
 .ion-border-input-default {
-  --border-color: $ion-border-input-default;
+  --border-color: #{$ion-border-input-default};
   border-color: $ion-border-input-default;
 }
 .ion-border-input-press {
-  --border-color: $ion-border-input-press;
+  --border-color: #{$ion-border-input-press};
   border-color: $ion-border-input-press;
 }
 .ion-border-input-read-only {
-  --border-color: $ion-border-input-read-only;
+  --border-color: #{$ion-border-input-read-only};
   border-color: $ion-border-input-read-only;
 }
 .ion-border-style-none {
-  --border-style: $ion-border-style-none;
+  --border-style: #{$ion-border-style-none};
   border-style: $ion-border-style-none;
 }
 .ion-border-style-solid {
-  --border-style: $ion-border-style-solid;
+  --border-style: #{$ion-border-style-solid};
   border-style: $ion-border-style-solid;
 }
 .ion-border-style-dashed {
-  --border-style: $ion-border-style-dashed;
+  --border-style: #{$ion-border-style-dashed};
   border-style: $ion-border-style-dashed;
 }
 .ion-border-style-dotted {
-  --border-style: $ion-border-style-dotted;
+  --border-style: #{$ion-border-style-dotted};
   border-style: $ion-border-style-dotted;
 }
 .ion-border-size-0 {
-  --border-width: $ion-border-size-0;
+  --border-width: #{$ion-border-size-0};
   border-width: $ion-border-size-0;
 }
 .ion-border-size-025 {
-  --border-width: $ion-border-size-025;
+  --border-width: #{$ion-border-size-025};
   border-width: $ion-border-size-025;
 }
 .ion-border-size-050 {
-  --border-width: $ion-border-size-050;
+  --border-width: #{$ion-border-size-050};
   border-width: $ion-border-size-050;
 }
 .ion-border-size-075 {
-  --border-width: $ion-border-size-075;
+  --border-width: #{$ion-border-size-075};
   border-width: $ion-border-size-075;
 }
 .ion-border-radius-0 {
-  --border-radius: $ion-border-radius-0;
+  --border-radius: #{$ion-border-radius-0};
   border-radius: $ion-border-radius-0;
 }
 .ion-border-radius-100 {
-  --border-radius: $ion-border-radius-100;
+  --border-radius: #{$ion-border-radius-100};
   border-radius: $ion-border-radius-100;
 }
 .ion-border-radius-200 {
-  --border-radius: $ion-border-radius-200;
+  --border-radius: #{$ion-border-radius-200};
   border-radius: $ion-border-radius-200;
 }
 .ion-border-radius-300 {
-  --border-radius: $ion-border-radius-300;
+  --border-radius: #{$ion-border-radius-300};
   border-radius: $ion-border-radius-300;
 }
 .ion-border-radius-400 {
-  --border-radius: $ion-border-radius-400;
+  --border-radius: #{$ion-border-radius-400};
   border-radius: $ion-border-radius-400;
 }
 .ion-border-radius-500 {
-  --border-radius: $ion-border-radius-500;
+  --border-radius: #{$ion-border-radius-500};
   border-radius: $ion-border-radius-500;
 }
 .ion-border-radius-800 {
-  --border-radius: $ion-border-radius-800;
+  --border-radius: #{$ion-border-radius-800};
   border-radius: $ion-border-radius-800;
 }
 .ion-border-radius-1000 {
-  --border-radius: $ion-border-radius-1000;
+  --border-radius: #{$ion-border-radius-1000};
   border-radius: $ion-border-radius-1000;
 }
 .ion-border-radius-full {
-  --border-radius: $ion-border-radius-full;
+  --border-radius: #{$ion-border-radius-full};
   border-radius: $ion-border-radius-full;
 }
 .ion-border-radius-025 {
-  --border-radius: $ion-border-radius-025;
+  --border-radius: #{$ion-border-radius-025};
   border-radius: $ion-border-radius-025;
 }
 .ion-icon-default {
@@ -1412,19 +1412,19 @@
   color: $ion-state-press;
 }
 .ion-elevation-1 {
-  --box-shadow: $ion-elevation-1;
+  --box-shadow: #{$ion-elevation-1};
   box-shadow: $ion-elevation-1;
 }
 .ion-elevation-2 {
-  --box-shadow: $ion-elevation-2;
+  --box-shadow: #{$ion-elevation-2};
   box-shadow: $ion-elevation-2;
 }
 .ion-elevation-3 {
-  --box-shadow: $ion-elevation-3;
+  --box-shadow: #{$ion-elevation-3};
   box-shadow: $ion-elevation-3;
 }
 .ion-elevation-4 {
-  --box-shadow: $ion-elevation-4;
+  --box-shadow: #{$ion-elevation-4};
   box-shadow: $ion-elevation-4;
 }
 
@@ -2644,87 +2644,87 @@
   z-index: $ion-z-index-top;
 }
 .ion-rectangular-2xs {
-  --border-radius: $ion-rectangular-2xs;
+  --border-radius: #{$ion-rectangular-2xs};
   border-radius: $ion-rectangular-2xs;
 }
 .ion-rectangular-xs {
-  --border-radius: $ion-rectangular-xs;
+  --border-radius: #{$ion-rectangular-xs};
   border-radius: $ion-rectangular-xs;
 }
 .ion-rectangular-sm {
-  --border-radius: $ion-rectangular-sm;
+  --border-radius: #{$ion-rectangular-sm};
   border-radius: $ion-rectangular-sm;
 }
 .ion-rectangular-md {
-  --border-radius: $ion-rectangular-md;
+  --border-radius: #{$ion-rectangular-md};
   border-radius: $ion-rectangular-md;
 }
 .ion-rectangular-lg {
-  --border-radius: $ion-rectangular-lg;
+  --border-radius: #{$ion-rectangular-lg};
   border-radius: $ion-rectangular-lg;
 }
 .ion-rectangular-xl {
-  --border-radius: $ion-rectangular-xl;
+  --border-radius: #{$ion-rectangular-xl};
   border-radius: $ion-rectangular-xl;
 }
 .ion-rectangular-2xl {
-  --border-radius: $ion-rectangular-2xl;
+  --border-radius: #{$ion-rectangular-2xl};
   border-radius: $ion-rectangular-2xl;
 }
 .ion-round-2xs {
-  --border-radius: $ion-round-2xs;
+  --border-radius: #{$ion-round-2xs};
   border-radius: $ion-round-2xs;
 }
 .ion-round-xs {
-  --border-radius: $ion-round-xs;
+  --border-radius: #{$ion-round-xs};
   border-radius: $ion-round-xs;
 }
 .ion-round-sm {
-  --border-radius: $ion-round-sm;
+  --border-radius: #{$ion-round-sm};
   border-radius: $ion-round-sm;
 }
 .ion-round-md {
-  --border-radius: $ion-round-md;
+  --border-radius: #{$ion-round-md};
   border-radius: $ion-round-md;
 }
 .ion-round-lg {
-  --border-radius: $ion-round-lg;
+  --border-radius: #{$ion-round-lg};
   border-radius: $ion-round-lg;
 }
 .ion-round-xl {
-  --border-radius: $ion-round-xl;
+  --border-radius: #{$ion-round-xl};
   border-radius: $ion-round-xl;
 }
 .ion-round-2xl {
-  --border-radius: $ion-round-2xl;
+  --border-radius: #{$ion-round-2xl};
   border-radius: $ion-round-2xl;
 }
 .ion-soft-2xs {
-  --border-radius: $ion-soft-2xs;
+  --border-radius: #{$ion-soft-2xs};
   border-radius: $ion-soft-2xs;
 }
 .ion-soft-xs {
-  --border-radius: $ion-soft-xs;
+  --border-radius: #{$ion-soft-xs};
   border-radius: $ion-soft-xs;
 }
 .ion-soft-sm {
-  --border-radius: $ion-soft-sm;
+  --border-radius: #{$ion-soft-sm};
   border-radius: $ion-soft-sm;
 }
 .ion-soft-md {
-  --border-radius: $ion-soft-md;
+  --border-radius: #{$ion-soft-md};
   border-radius: $ion-soft-md;
 }
 .ion-soft-lg {
-  --border-radius: $ion-soft-lg;
+  --border-radius: #{$ion-soft-lg};
   border-radius: $ion-soft-lg;
 }
 .ion-soft-xl {
-  --border-radius: $ion-soft-xl;
+  --border-radius: #{$ion-soft-xl};
   border-radius: $ion-soft-xl;
 }
 .ion-soft-2xl {
-  --border-radius: $ion-soft-2xl;
+  --border-radius: #{$ion-soft-2xl};
   border-radius: $ion-soft-2xl;
 }
 .ion-primitives-neutral-100 {
@@ -3456,31 +3456,31 @@
   color: $ion-primitives-pink-1200;
 }
 .ion-shadow-1 {
-  --box-shadow: $ion-shadow-1;
+  --box-shadow: #{$ion-shadow-1};
   box-shadow: $ion-shadow-1;
 }
 .ion-shadow-2 {
-  --box-shadow: $ion-shadow-2;
+  --box-shadow: #{$ion-shadow-2};
   box-shadow: $ion-shadow-2;
 }
 .ion-shadow-3 {
-  --box-shadow: $ion-shadow-3;
+  --box-shadow: #{$ion-shadow-3};
   box-shadow: $ion-shadow-3;
 }
 .ion-shadow-4 {
-  --box-shadow: $ion-shadow-4;
+  --box-shadow: #{$ion-shadow-4};
   box-shadow: $ion-shadow-4;
 }
 .ion-shadow-5 {
-  --box-shadow: $ion-shadow-5;
+  --box-shadow: #{$ion-shadow-5};
   box-shadow: $ion-shadow-5;
 }
 .ion-shadow-6 {
-  --box-shadow: $ion-shadow-6;
+  --box-shadow: #{$ion-shadow-6};
   box-shadow: $ion-shadow-6;
 }
 .ion-shadow-7 {
-  --box-shadow: $ion-shadow-7;
+  --box-shadow: #{$ion-shadow-7};
   box-shadow: $ion-shadow-7;
 }
 
