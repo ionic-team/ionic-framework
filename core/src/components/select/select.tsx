@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
-import { compareOptions, createNotchController, isOptionSelected } from '@utils/forms';
+import { compareOptions, createNotchController, isOptionSelected, checkInvalidState } from '@utils/forms';
 import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -310,7 +310,7 @@ export class Select implements ComponentInterface {
     // Watch for class changes to update validation state.
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
       this.validationObserver = new MutationObserver(() => {
-        const newIsInvalid = this.checkInvalidState();
+        const newIsInvalid = checkInvalidState(this.el);
         if (this.isInvalid !== newIsInvalid) {
           this.isInvalid = newIsInvalid;
           /**
@@ -342,7 +342,7 @@ export class Select implements ComponentInterface {
     }
 
     // Always set initial state
-    this.isInvalid = this.checkInvalidState();
+    this.isInvalid = checkInvalidState(this.el);
   }
 
   componentWillLoad() {
@@ -1166,17 +1166,6 @@ export class Select implements ComponentInterface {
     }
 
     return <div class="select-bottom">{this.renderHintText()}</div>;
-  }
-
-  /**
-   * Checks if the input is in an invalid state based
-   * on Ionic validation classes.
-   */
-  private checkInvalidState(): boolean {
-    const hasIonTouched = this.el.classList.contains('ion-touched');
-    const hasIonInvalid = this.el.classList.contains('ion-invalid');
-
-    return hasIonTouched && hasIonInvalid;
   }
 
   render() {
