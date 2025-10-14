@@ -321,13 +321,15 @@ export class Select implements ComponentInterface {
            * However, the announcement can be spotty
            * when using a non-native form control
            * and `forceUpdate()`.
-           * This is due to `forceUpdate()` not being
-           * high priority enough to guarantee
-           * the DOM is updated before the screen reader
-           * announces the attribute change.
-           * By using a promise, it makes sure to
-           * announce the change before the next frame
-           * since promises are high priority.
+           * This is due to `forceUpdate()` internally
+           * rescheduling the DOM update to a lower
+           * priority queue regardless if it's called
+           * inside a Promise or not, thus causing
+           * the screen reader to potentially miss the
+           * change.
+           * By using a State variable inside a Promise,
+           * it guarantees a re-render immediately at
+           * a higher priority.
            */
           Promise.resolve().then(() => {
             this.hintTextID = this.getHintTextID();
