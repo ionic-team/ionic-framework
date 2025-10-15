@@ -233,20 +233,24 @@ describe('generateCSSVars', () => {
       components: {},
     };
 
-    const css = generateCSSVars(theme);
+    const css = generateCSSVars(theme).replace(/\s/g, '');
 
-    expect(css).toContain('--ion-border-width-sm: 4px;');
-    expect(css).toContain('--ion-spacing-md: 12px;');
-    expect(css).toContain('--ion-scaling-0: 0;');
-    expect(css).toContain('--ion-radii-lg: 8px;');
-    expect(css).toContain('--ion-dynamic-font: -apple-system-body;');
-    expect(css).toContain('--ion-font-family: Roboto, "Helvetica Neue", sans-serif;');
-    expect(css).toContain('--ion-font-weights-semi-bold: 600;');
-    expect(css).toContain('--ion-font-sizes-sm: 14px;');
-    expect(css).toContain('--ion-font-sizes-sm-rem: 0.875rem;');
-    expect(css).toContain('--ion-font-sizes-md: 16px;');
-    expect(css).toContain('--ion-font-sizes-md-rem: 1rem;');
-    expect(css).toContain('--ion-line-heights-sm: 1.2;');
+    const expectedCSS = `
+      --ion-border-width-sm: 4px;
+      --ion-spacing-md: 12px;
+      --ion-scaling-0: 0;
+      --ion-radii-lg: 8px;
+      --ion-dynamic-font: -apple-system-body;
+      --ion-font-family: Roboto, "Helvetica Neue", sans-serif;
+      --ion-font-weights-semi-bold: 600;
+      --ion-font-sizes-sm: 14px;
+      --ion-font-sizes-sm-rem: 0.875rem;
+      --ion-font-sizes-md: 16px;
+      --ion-font-sizes-md-rem: 1rem;
+      --ion-line-heights-sm: 1.2;
+    `.replace(/\s/g, '');
+
+    expect(css).toBe(expectedCSS);
   });
 });
 
