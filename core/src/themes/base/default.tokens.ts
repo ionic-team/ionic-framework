@@ -87,6 +87,7 @@ export const defaultTheme: DefaultTheme = {
   },
 
   borderWidth: {
+    0: '0',
     25: '1px',
     50: '2px',
     75: '3px',
