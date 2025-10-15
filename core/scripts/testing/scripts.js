@@ -18,7 +18,7 @@
   * The `theme` query param is used to load a specific theme.
   * This can be `ionic`, `ios`, or `md`. Default to `md` for tests.
   */
-  const themeQuery = window.location.search.match(/ionic:theme=([a-z]+)/);
+  const themeQuery = window.location.search.match(/ionic:theme=([a-z0-9]+)/i);
   const themeAttr = document.documentElement.getAttribute('theme');
   const themeName = themeQuery?.[1] || themeAttr || 'md';
 
@@ -50,8 +50,13 @@
   const paletteName = paletteQuery?.[1] || 'light';
 
   // Load theme tokens if the theme is valid
-  if (themeName && ['ionic', 'ios', 'md'].includes(themeName)) {
+  const validThemes = ['ionic', 'ios', 'md'];
+  if (themeName && validThemes.includes(themeName)) {
     loadThemeTokens(themeName, paletteName);
+  } else if(themeName) {
+    console.warn(
+      `Unsupported theme "${themeName}". Supported themes are: ${validThemes.join(', ')}.`
+    );
   }
 
   async function loadThemeTokens(themeName, paletteName) {
