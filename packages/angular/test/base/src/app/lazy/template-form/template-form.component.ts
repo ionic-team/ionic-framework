@@ -9,6 +9,7 @@ export class TemplateFormComponent {
   inputValue = '';
   textareaValue = '';
   minLengthValue = '';
+  selectValue = '';
   
   // Track if form has been submitted
   submitted = false;

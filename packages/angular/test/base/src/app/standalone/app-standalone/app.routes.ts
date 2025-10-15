@@ -47,6 +47,7 @@ export const routes: Routes = [
         children: [
           { path: 'input-validation', loadComponent: () => import('../validation/input-validation/input-validation.component').then(c => c.InputValidationComponent) },
           { path: 'textarea-validation', loadComponent: () => import('../validation/textarea-validation/textarea-validation.component').then(c => c.TextareaValidationComponent) },
+          { path: 'select-validation', loadComponent: () => import('../validation/select-validation/select-validation.component').then(c => c.SelectValidationComponent) },
           { path: '**', redirectTo: 'input-validation' }
         ]
       },

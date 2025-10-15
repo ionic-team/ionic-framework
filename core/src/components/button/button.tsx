@@ -361,11 +361,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
             target,
           };
     let fill = this.fill;
-    /**
-     * We check both undefined and null to
-     * work around https://github.com/ionic-team/stencil/issues/3586.
-     */
-    if (fill == null) {
+    if (fill === undefined) {
       fill = this.inToolbar || this.inListHeader ? 'clear' : 'solid';
     }
 
