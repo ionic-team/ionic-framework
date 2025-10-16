@@ -12,8 +12,8 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
         await page.setContent(
           `
           <style>
-            :root {
-              --background: #ccc7c7;
+            .ionic {
+              --ion-background-color: #ccc7c7;
             }
           </style>
 
@@ -22,12 +22,12 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
               <ion-icon name="triangle-outline"></ion-icon>
               <ion-label>Label</ion-label>
             </ion-tab-button>
-  
+
             <ion-tab-button tab="2">
               <ion-icon name="triangle-outline"></ion-icon>
               <ion-label>Label</ion-label>
             </ion-tab-button>
-  
+
             <ion-tab-button tab="3">
               <ion-icon name="triangle-outline"></ion-icon>
               <ion-label>Label</ion-label>
@@ -48,8 +48,8 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
         await page.setContent(
           `
           <style>
-            :root {
-              --background: #ccc7c7;
+            .ionic {
+              --ion-background-color: #ccc7c7;
             }
           </style>
 
@@ -58,12 +58,12 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
               <ion-icon name="triangle-outline"></ion-icon>
               <ion-label>Label</ion-label>
             </ion-tab-button>
-  
+
             <ion-tab-button tab="2">
               <ion-icon name="triangle-outline"></ion-icon>
               <ion-label>Label</ion-label>
             </ion-tab-button>
-  
+
             <ion-tab-button tab="3">
               <ion-icon name="triangle-outline"></ion-icon>
               <ion-label>Label</ion-label>
@@ -84,8 +84,8 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
         await page.setContent(
           `
           <style>
-            :root {
-              --background: #ccc7c7;
+            .ionic {
+              --ion-background-color: #ccc7c7;
             }
           </style>
 
@@ -94,12 +94,12 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
               <ion-icon name="triangle-outline"></ion-icon>
               <ion-label>Label</ion-label>
             </ion-tab-button>
-  
+
             <ion-tab-button tab="2">
               <ion-icon name="triangle-outline"></ion-icon>
               <ion-label>Label</ion-label>
             </ion-tab-button>
-  
+
             <ion-tab-button tab="3">
               <ion-icon name="triangle-outline"></ion-icon>
               <ion-label>Label</ion-label>

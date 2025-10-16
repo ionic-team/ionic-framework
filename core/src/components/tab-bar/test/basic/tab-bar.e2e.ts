@@ -10,8 +10,8 @@ configs({ modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, conf
       await page.setContent(
         `
         <style>
-          :root {
-            --background: #ccc7c7;
+          .ionic {
+            --ion-background-color: #ccc7c7;
           }
         </style>
 

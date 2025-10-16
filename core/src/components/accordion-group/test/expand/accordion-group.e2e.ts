@@ -9,8 +9,8 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
           `
           <style>
             /* Background styles to show the border radius */
-            :root {
-              --background: #ccc7c7;
+            .ionic {
+              --ion-background-color: #ccc7c7;
             }
           </style>
           <ion-accordion-group>
@@ -47,8 +47,8 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
           `
           <style>
             /* Background styles to show the border radius */
-            :root {
-              --background: #ccc7c7;
+            .ionic {
+              --ion-background-color: #ccc7c7;
             }
           </style>
           <ion-accordion-group value="first">
@@ -87,8 +87,8 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
           `
           <style>
             /* Background styles to show the border radius */
-            :root {
-              --background: #ccc7c7;
+            .ionic {
+              --ion-background-color: #ccc7c7;
             }
           </style>
           <ion-accordion-group expand="inset">
@@ -125,8 +125,8 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
           `
           <style>
             /* Background styles to show the border radius */
-            :root {
-              --background: #ccc7c7;
+            .ionic {
+              --ion-background-color: #ccc7c7;
             }
           </style>
           <ion-accordion-group value="first" expand="inset">

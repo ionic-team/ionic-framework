@@ -76,11 +76,12 @@
     "stylelint-order": "^4.1.0"
   },
   "scripts": {
-    "build": "npm run clean && npm run build.css && stencil build --es5 --docs-json dist/docs.json",
+    "build": "npm run clean && npm run build.css && npm run build.themes && stencil build --es5 --docs-json dist/docs.json",
     "build.css": "npm run css.sass && npm run css.minify",
     "build.debug": "npm run clean && stencil build --debug",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
     "build.tokens": "npx build.tokens --config scripts/tokens/index.mjs && npm run prettier.tokens",
+    "build.themes": "esbuild src/themes/*/*.tokens.ts --bundle --format=esm --platform=browser --target=es2017 --outdir=themes --outbase=src/themes && esbuild src/utils/theme.ts --bundle --format=esm --platform=browser --target=es2017 --outfile=themes/utils/theme.js",
     "clean": "node scripts/clean.js",
     "css.minify": "cleancss -O2 -o ./css/ionic.bundle.css ./css/ionic.bundle.css",
     "css.sass": "sass --embed-sources --style compressed src/css:./css",
@@ -94,7 +95,7 @@
     "prerender.e2e": "node scripts/testing/prerender.js",
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx,scss}\"",
     "prettier.tokens": "prettier \"./src/foundations/*.{scss, html}\" --write --cache",
-    "start": "npm run build.css && stencil build --dev --watch --serve",
+    "start": "npm run build.css && npm run build.themes && stencil build --dev --watch --serve",
     "test": "npm run test.spec && npm run test.e2e",
     "test.spec": "stencil test --spec --max-workers=2",
     "test.e2e": "npx playwright test",

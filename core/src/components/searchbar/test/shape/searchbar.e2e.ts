@@ -13,8 +13,8 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
           `
           <style>
             /* Background styles to show the border radius */
-            :root {
-              --background: #000;
+            .ionic {
+              --ion-background-color: #000;
             }
           </style>
 

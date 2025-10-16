@@ -7,8 +7,8 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       await page.setContent(
         `
           <style>
-            :root {
-              --background: #ccc7c7;
+            .ionic {
+              --ion-background-color: #ccc7c7;
             }
 
             .container {
@@ -32,8 +32,8 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       await page.setContent(
         `
           <style>
-            :root {
-              --background: #ccc7c7;
+            .ionic {
+              --ion-background-color: #ccc7c7;
             }
 
             .container {

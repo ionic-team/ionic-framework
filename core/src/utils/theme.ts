@@ -86,6 +86,12 @@ export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): 
         key = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
       }
 
+      // Do not generate CSS variables for excluded keys
+      const excludedKeys = ['enabled', 'ripple-effect', 'form-highlight'];
+      if (excludedKeys.includes(key)) {
+        return [];
+      }
+
       // Special handling for 'base' property - don't add suffix
       if (key === 'base') {
         return [`${prefix.slice(0, -1)}: ${val};`];

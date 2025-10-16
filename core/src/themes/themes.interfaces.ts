@@ -3,20 +3,26 @@ export type PlatformTheme = Omit<BaseTheme, 'ios' | 'md'>;
 
 // Base tokens for all palettes
 export type BaseTheme = {
-  // SPACE TOKENS
-  spacing?: {
-    none?: string;
-    xxs?: string;
-    xs?: string;
-    sm?: string;
-    md?: string;
-    lg?: string;
-    xl?: string;
-    xxl?: string;
+  // CONFIG TOKENS
+  rippleEffect?: boolean;
+  formHighlight?: boolean;
+
+  // GLOBAL THEME TOKENS
+  backgroundColor?: string;
+  backgroundColorRgb?: string;
+  textColor?: string;
+  textColorRgb?: string;
+  backgroundColorStep?: {
+    [key: string]: string;
+  };
+  textColorStep?: {
+    [key: string]: string;
   };
 
-  scaling?: {
+  // SPACE TOKENS
+  spacing?: {
     0?: string;
+    50?: string;
     100?: string;
     150?: string;
     200?: string;
@@ -34,29 +40,84 @@ export type BaseTheme = {
     800?: string;
     850?: string;
     900?: string;
+    950?: string;
+    1000?: string;
+    1050?: string;
+    1100?: string;
+    1150?: string;
+    1200?: string;
+  };
+
+  scaling?: {
+    0?: string;
+    25?: string;
+    50?: string;
+    75?: string;
+    100?: string;
+    150?: string;
+    200?: string;
+    250?: string;
+    300?: string;
+    350?: string;
+    400?: string;
+    450?: string;
+    500?: string;
+    550?: string;
+    600?: string;
+    650?: string;
+    700?: string;
+    750?: string;
+    800?: string;
+    850?: string;
+    900?: string;
+    950?: string;
+    1000?: string;
+    1050?: string;
+    1100?: string;
+    1150?: string;
+    1200?: string;
+    1400?: string;
+    1600?: string;
+    1800?: string;
+    2000?: string;
+    2400?: string;
+    2800?: string;
+    3200?: string;
+    3400?: string;
+    3600?: string;
+    4000?: string;
+    5000?: string;
+    6200?: string;
+    7400?: string;
+    9000?: string;
   };
 
   // APPEARANCE TOKENS
   borderWidth?: {
-    none?: string;
-    xxs?: string;
-    xs?: string;
-    sm?: string;
-    md?: string;
-    lg?: string;
-    xl?: string;
-    xxl?: string;
+    0?: string;
+    25?: string;
+    50?: string;
+    75?: string;
+    100?: string;
+    150?: string;
+    200?: string;
+    250?: string;
+    300?: string;
+    350?: string;
+    400?: string;
   };
 
   radii?: {
-    none?: string;
-    xxs?: string;
-    xs?: string;
-    sm?: string;
-    md?: string;
-    lg?: string;
-    xl?: string;
-    xxl?: string;
+    0?: string;
+    25?: string;
+    100?: string;
+    200?: string;
+    300?: string;
+    400?: string;
+    500?: string;
+    800?: string;
+    1000?: string;
+    full?: string;
   };
 
   // TYPOGRAPHY TOKENS
@@ -138,6 +199,8 @@ export type LightTheme = BaseTheme;
 
 // Default theme interface
 export type DefaultTheme = BaseTheme & {
+  name?: string;
+
   palette?: {
     light?: LightTheme;
     dark?: DarkTheme;
