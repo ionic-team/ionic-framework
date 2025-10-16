@@ -1,5 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 
+import type { AccordionGroupChangeEventDetail } from '../../accordion-group/accordion-group-interface';
 import { AccordionGroup } from '../../accordion-group/accordion-group';
 import { Item } from '../../item/item';
 import { Accordion } from '../accordion';
@@ -198,6 +199,41 @@ it('should set default values if not provided', async () => {
   await page.waitForChanges();
 
   expect(accordion.classList.contains('accordion-collapsed')).toEqual(false);
+});
+
+it('should not animate when initial value is set before load', async () => {
+  const page = await newSpecPage({
+    components: [Item, Accordion, AccordionGroup],
+  });
+
+  const accordionGroup = page.doc.createElement('ion-accordion-group');
+  accordionGroup.innerHTML = `
+    <ion-accordion value="first">
+      <ion-item slot="header">Label</ion-item>
+      <div slot="content">Content</div>
+    </ion-accordion>
+    <ion-accordion value="second">
+      <ion-item slot="header">Label</ion-item>
+      <div slot="content">Content</div>
+    </ion-accordion>
+  `;
+
+  const details: AccordionGroupChangeEventDetail[] = [];
+  accordionGroup.addEventListener('ionValueChange', (event: CustomEvent<AccordionGroupChangeEventDetail>) => {
+    details.push(event.detail);
+  });
+
+  accordionGroup.value = 'first';
+  page.body.appendChild(accordionGroup);
+
+  await page.waitForChanges();
+
+  expect(details[0]?.initial).toBe(true);
+
+  const firstAccordion = accordionGroup.querySelector('ion-accordion[value="first"]')!;
+
+  expect(firstAccordion.classList.contains('accordion-expanded')).toEqual(true);
+  expect(firstAccordion.classList.contains('accordion-expanding')).toEqual(false);
 });
 
 // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/27047

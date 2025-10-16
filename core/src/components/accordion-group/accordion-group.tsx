@@ -75,31 +75,7 @@ export class AccordionGroup implements ComponentInterface {
 
   @Watch('value')
   valueChanged() {
-    const { value, multiple } = this;
-
-    if (!multiple && Array.isArray(value)) {
-      /**
-       * We do some processing on the `value` array so
-       * that it looks more like an array when logged to
-       * the console.
-       * Example given ['a', 'b']
-       * Default toString() behavior: a,b
-       * Custom behavior: ['a', 'b']
-       */
-      printIonWarning(
-        `[ion-accordion-group] - An array of values was passed, but multiple is "false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
-
-  Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
-`,
-        this.el
-      );
-    }
-
-    /**
-     * Do not use `value` here as that will be
-     * not account for the adjustment we make above.
-     */
-    this.ionValueChange.emit({ value: this.value });
+    this.emitValueChange(false);
   }
 
   @Watch('disabled')
@@ -184,11 +160,10 @@ export class AccordionGroup implements ComponentInterface {
      * it is possible for the value to be set after the Web Component
      * initializes but before the value watcher is set up in Stencil.
      * As a result, the watcher callback may not be fired.
-     * We work around this by manually calling the watcher
-     * callback when the component has loaded and the watcher
-     * is configured.
+     * We work around this by manually emitting a value change when the component
+     * has loaded and the watcher is configured.
      */
-    this.valueChanged();
+    this.emitValueChange(true);
   }
 
   /**
@@ -274,6 +249,34 @@ export class AccordionGroup implements ComponentInterface {
   @Method()
   async getAccordions() {
     return Array.from(this.el.querySelectorAll(':scope > ion-accordion')) as HTMLIonAccordionElement[];
+  }
+
+  private emitValueChange(initial: boolean) {
+    const { value, multiple } = this;
+
+    if (!multiple && Array.isArray(value)) {
+      /**
+       * We do some processing on the `value` array so
+       * that it looks more like an array when logged to
+       * the console.
+       * Example given ['a', 'b']
+       * Default toString() behavior: a,b
+       * Custom behavior: ['a', 'b']
+       */
+      printIonWarning(
+        `[ion-accordion-group] - An array of values was passed, but multiple is "false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+
+  Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
+`,
+        this.el
+      );
+    }
+
+    /**
+     * Do not use `value` here as that will not account
+     * for the adjustment we make above.
+     */
+    this.ionValueChange.emit({ value: this.value, initial });
   }
 
   render() {
