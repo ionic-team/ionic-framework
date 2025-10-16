@@ -1,3 +1,4 @@
+const DEFAULT_THEME = 'md';
 
 (function() {
 
@@ -20,7 +21,7 @@
   */
   const themeQuery = window.location.search.match(/ionic:theme=([a-z0-9]+)/i);
   const themeAttr = document.documentElement.getAttribute('theme');
-  const themeName = themeQuery?.[1] || themeAttr || 'md';
+  const themeName = themeQuery?.[1] || themeAttr || DEFAULT_THEME;
 
   // TODO(): Remove this when the tokens are working for all components
   // and the themes all use the same bundle
@@ -55,7 +56,7 @@
     loadThemeTokens(themeName, paletteName);
   } else if(themeName) {
     console.warn(
-      `Unsupported theme "${themeName}". Supported themes are: ${validThemes.join(', ')}.`
+      `Unsupported theme "${themeName}". Supported themes are: ${validThemes.join(', ')}. Defaulting to ${DEFAULT_THEME}.`
     );
   }
 
