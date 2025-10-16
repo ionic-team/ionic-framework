@@ -73,6 +73,8 @@ export class AccordionGroup implements ComponentInterface {
    */
   @Event() ionValueChange!: EventEmitter<AccordionGroupChangeEventDetail>;
 
+  private hasEmittedInitialValue = false;
+
   @Watch('value')
   valueChanged() {
     this.emitValueChange(false);
@@ -163,7 +165,9 @@ export class AccordionGroup implements ComponentInterface {
      * We work around this by manually emitting a value change when the component
      * has loaded and the watcher is configured.
      */
-    this.emitValueChange(true);
+    if (!this.hasEmittedInitialValue) {
+      this.emitValueChange(true);
+    }
   }
 
   /**
@@ -273,10 +277,16 @@ export class AccordionGroup implements ComponentInterface {
     }
 
     /**
-     * Do not use `value` here as that will not account
-     * for the adjustment we make above.
+     * Track if this is the initial value update so accordions
+     * can skip transition animations when they first render.
      */
-    this.ionValueChange.emit({ value: this.value, initial });
+    const shouldMarkInitial = initial || (!this.hasEmittedInitialValue && value !== undefined);
+
+    this.ionValueChange.emit({ value, initial: shouldMarkInitial });
+
+    if (value !== undefined) {
+      this.hasEmittedInitialValue = true;
+    }
   }
 
   render() {

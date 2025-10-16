@@ -236,6 +236,43 @@ it('should not animate when initial value is set before load', async () => {
   expect(firstAccordion.classList.contains('accordion-expanding')).toEqual(false);
 });
 
+it('should not animate when initial value is set after load', async () => {
+  const page = await newSpecPage({
+    components: [Item, Accordion, AccordionGroup],
+  });
+
+  const accordionGroup = page.doc.createElement('ion-accordion-group');
+  accordionGroup.innerHTML = `
+    <ion-accordion value="first">
+      <ion-item slot="header">Label</ion-item>
+      <div slot="content">Content</div>
+    </ion-accordion>
+    <ion-accordion value="second">
+      <ion-item slot="header">Label</ion-item>
+      <div slot="content">Content</div>
+    </ion-accordion>
+  `;
+
+  const details: AccordionGroupChangeEventDetail[] = [];
+  accordionGroup.addEventListener('ionValueChange', (event: CustomEvent<AccordionGroupChangeEventDetail>) => {
+    details.push(event.detail);
+  });
+
+  page.body.appendChild(accordionGroup);
+  await page.waitForChanges();
+
+  accordionGroup.value = 'first';
+  await page.waitForChanges();
+
+  const firstDetail = details.find((detail) => detail.value === 'first');
+  expect(firstDetail?.initial).toBe(true);
+
+  const firstAccordion = accordionGroup.querySelector('ion-accordion[value="first"]')!;
+
+  expect(firstAccordion.classList.contains('accordion-expanded')).toEqual(true);
+  expect(firstAccordion.classList.contains('accordion-expanding')).toEqual(false);
+});
+
 // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/27047
 it('should not have animated class when animated="false"', async () => {
   const page = await newSpecPage({
