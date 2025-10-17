@@ -1,12 +1,10 @@
+import type { IonicConfig } from '../utils/config';
+
 // Platform-specific theme
 export type PlatformTheme = Omit<BaseTheme, 'ios' | 'md'>;
 
 // Base tokens for all palettes
 export type BaseTheme = {
-  // CONFIG TOKENS
-  rippleEffect?: boolean;
-  formHighlight?: boolean;
-
   // GLOBAL THEME TOKENS
   backgroundColor?: string;
   backgroundColorRgb?: string;
@@ -205,4 +203,6 @@ export type DefaultTheme = BaseTheme & {
     light?: LightTheme;
     dark?: DarkTheme;
   };
+
+  config?: IonicConfig;
 };

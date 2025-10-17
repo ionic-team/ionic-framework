@@ -14,8 +14,9 @@ export const defaultTheme: DefaultTheme = {
     dark: darkTheme,
   },
 
-  formHighlight: false,
-  rippleEffect: false,
+  config: {
+    formHighlight: true,
+  },
 
   // TODO(FW-6745): see if we can remove this after the md tokens are added
   fontFamily: 'initial',

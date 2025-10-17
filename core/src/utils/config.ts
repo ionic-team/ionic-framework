@@ -13,6 +13,12 @@ export interface IonicConfig {
   animated?: boolean;
 
   /**
+   * When it's set to `false`, it disables the form highlight effect across the app.
+   * Defaults to `false`.
+   */
+  formHighlight?: boolean;
+
+  /**
    * When it's set to `false`, it disables all material-design ripple-effects across the app.
    * Defaults to `true`.
    */

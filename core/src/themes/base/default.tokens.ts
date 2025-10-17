@@ -11,8 +11,10 @@ export const defaultTheme: DefaultTheme = {
     dark: darkTheme,
   },
 
-  formHighlight: false,
-  rippleEffect: false,
+  config: {
+    formHighlight: false,
+    rippleEffect: false,
+  },
 
   spacing: {
     0: '0px',
