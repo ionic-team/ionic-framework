@@ -147,9 +147,7 @@ export class Checkbox implements ComponentInterface {
   /** @internal */
   @Method()
   async setFocus() {
-    if (this.focusEl) {
-      this.focusEl.focus();
-    }
+    this.el.focus();
   }
 
   /**
@@ -169,7 +167,6 @@ export class Checkbox implements ComponentInterface {
   private toggleChecked = (ev: Event) => {
     ev.preventDefault();
 
-    this.setFocus();
     this.setChecked(!this.checked);
     this.indeterminate = false;
   };
@@ -285,6 +282,9 @@ export class Checkbox implements ComponentInterface {
         aria-disabled={disabled ? 'true' : null}
         tabindex={disabled ? undefined : 0}
         onKeyDown={this.onKeyDown}
+        onFocus={() => this.onFocus()}
+        onBlur={() => this.onBlur()}
+        onClick={this.onClick}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -296,7 +296,6 @@ export class Checkbox implements ComponentInterface {
           [`checkbox-alignment-${alignment}`]: alignment !== undefined,
           [`checkbox-label-placement-${labelPlacement}`]: true,
         })}
-        onClick={this.onClick}
       >
         <label class="checkbox-wrapper" htmlFor={inputId}>
           {/*
@@ -309,9 +308,6 @@ export class Checkbox implements ComponentInterface {
             disabled={disabled}
             id={inputId}
             onChange={this.toggleChecked}
-            onFocus={() => this.onFocus()}
-            onBlur={() => this.onBlur()}
-            ref={(focusEl) => (this.focusEl = focusEl)}
             required={required}
             {...inheritedAttributes}
           />
