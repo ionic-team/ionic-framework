@@ -36,17 +36,17 @@ export const defaultTheme: DefaultTheme = {
   },
 
   scaling: {
-    xxxxs: 'var(--ion-spacing-300)',
-    xxxs: 'var(--ion-spacing-400)',
-    xxs: 'var(--ion-spacing-500)',
-    xs: 'var(--ion-spacing-600)',
-    sm: 'var(--ion-spacing-700)',
-    md: 'var(--ion-spacing-800)',
-    lg: 'var(--ion-spacing-1000)',
-    xl: 'var(--ion-spacing-1200)',
-    xxl: 'var(--ion-spacing-1400)',
-    xxxl: 'var(--ion-spacing-1800)',
-    xxxxl: 'var(--ion-spacing-2000)',
+    xxxxs: 'var(--ion-scaling-300)',
+    xxxs: 'var(--ion-scaling-400)',
+    xxs: 'var(--ion-scaling-500)',
+    xs: 'var(--ion-scaling-600)',
+    sm: 'var(--ion-scaling-700)',
+    md: 'var(--ion-scaling-800)',
+    lg: 'var(--ion-scaling-1000)',
+    xl: 'var(--ion-scaling-1200)',
+    xxl: 'var(--ion-scaling-1400)',
+    xxxl: 'var(--ion-scaling-1800)',
+    xxxxl: 'var(--ion-scaling-2000)',
   },
 
   borderWidth: {
