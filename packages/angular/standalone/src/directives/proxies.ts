@@ -1442,7 +1442,8 @@ export declare interface IonNote extends Components.IonNote {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonPicker,
-  inputs: ['mode']
+  inputs: ['mode'],
+  methods: ['enterInputMode']
 })
 @Component({
   selector: 'ion-picker',
