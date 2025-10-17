@@ -87,7 +87,7 @@ export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): 
       }
 
       // Do not generate CSS variables for excluded keys
-      const excludedKeys = ['enabled', 'ripple-effect', 'form-highlight'];
+      const excludedKeys = ['name', 'enabled', 'config'];
       if (excludedKeys.includes(key)) {
         return [];
       }

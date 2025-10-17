@@ -186,6 +186,7 @@ describe('getCustomTheme', () => {
 describe('generateCSSVars', () => {
   it('should not generate CSS variables for an empty theme', () => {
     const theme = {
+      name: 'test',
       palette: {
         light: {},
         dark: {},
@@ -198,14 +199,17 @@ describe('generateCSSVars', () => {
 
   it('should generate CSS variables for a given theme', () => {
     const theme = {
+      name: 'test',
       palette: {
         light: {},
         dark: {
           enabled: 'system',
         },
       },
-      rippleEffect: true,
-      formHighlight: true,
+      config: {
+        rippleEffect: true,
+        formHighlight: true,
+      },
       borderWidth: {
         sm: '4px',
       },
@@ -309,6 +313,7 @@ describe('injectCSS', () => {
 describe('generateGlobalThemeCSS', () => {
   it('should generate global CSS for a given theme', () => {
     const theme = {
+      name: 'test',
       palette: {
         light: {},
         dark: {
@@ -339,6 +344,7 @@ describe('generateGlobalThemeCSS', () => {
 
   it('should generate global CSS for a given theme with light palette', () => {
     const theme = {
+      name: 'test',
       palette: {
         light: {
           color: {
@@ -425,6 +431,7 @@ describe('generateGlobalThemeCSS', () => {
 
   it('should not include component or palette variables in global CSS', () => {
     const theme = {
+      name: 'test',
       palette: {
         light: {},
         dark: {
@@ -479,6 +486,7 @@ describe('generateGlobalThemeCSS', () => {
 
   it('should generate global CSS for a given theme with dark palette enabled for system preference', () => {
     const theme = {
+      name: 'test',
       palette: {
         light: {},
         dark: {
@@ -598,6 +606,7 @@ describe('generateColorClasses', () => {
 
   it('should generate color classes for a given theme', () => {
     const theme = {
+      name: 'test',
       palette: {
         light: {
           color: {

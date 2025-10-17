@@ -8,10 +8,6 @@
   --background: #{globals.$ion-bg-surface-default};
 }
 
-html {
-  --ionic-dynamic-font: -apple-system-body;
-}
-
 body {
   background: var(--ion-background-color, #{globals.$ion-bg-body});
   color: var(--ion-text-color, #{globals.$ion-text-default});

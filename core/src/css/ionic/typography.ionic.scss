@@ -2,7 +2,7 @@
 
 // TODO(ROU-10833): add font loading solution here, as a @font-face, base64 or cdn
 html {
-  font-family: globals.$ion-font-family;
+  font-family: var(--ion-font-family);
 }
 
 body {
