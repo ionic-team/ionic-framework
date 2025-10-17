@@ -28,6 +28,18 @@ describe('modal: focus trap', () => {
 
     expect(modal.classList.contains(FOCUS_TRAP_DISABLE_CLASS)).toBe(true);
   });
+  it('should set the focus trap class when disabled via attribute string', async () => {
+    const page = await newSpecPage({
+      components: [Modal],
+      html: `
+        <ion-modal focus-trap="false"></ion-modal>
+      `,
+    });
+
+    const modal = page.body.querySelector('ion-modal')!;
+
+    expect(modal.classList.contains(FOCUS_TRAP_DISABLE_CLASS)).toBe(true);
+  });
   it('should not set the focus trap class by default', async () => {
     const page = await newSpecPage({
       components: [Modal],
