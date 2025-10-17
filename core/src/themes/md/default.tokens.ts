@@ -13,4 +13,6 @@ export const defaultTheme: DefaultTheme = {
     light: lightTheme,
     dark: darkTheme,
   },
+
+  fontFamily: '"Roboto", "Helvetica Neue", sans-serif',
 };

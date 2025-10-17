@@ -7,16 +7,13 @@
 // Ionic Font Family
 // --------------------------------------------------
 
+// TODO(FW-6744): Remove this after adding the ios tokens
 html.ios {
-  --ion-default-font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif;
-}
-html.md {
-  --ion-default-font: "Roboto", "Helvetica Neue", sans-serif;
+  --ion-font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif;
 }
 
 html {
   --ion-dynamic-font: -apple-system-body;
-  --ion-font-family: var(--ion-default-font);
 }
 
 body {

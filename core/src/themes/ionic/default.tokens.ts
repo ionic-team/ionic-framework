@@ -18,8 +18,8 @@ export const defaultTheme: DefaultTheme = {
     formHighlight: true,
   },
 
-  // TODO(FW-6745): see if we can remove this after the md tokens are added
-  fontFamily: 'initial',
+  fontFamily:
+    '-apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
 
   spacing: {
     xxxxs: 'var(--ion-spacing-25)',
