@@ -746,7 +746,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
               not interrupt the user which is why this has
               a "status" role and a "polite" presentation.
             */}
-            <div class="toast-content" role="status" aria-atomic="true" aria-live="polite">
+            <div class="toast-content" part="content" role="status" aria-atomic="true" aria-live="polite">
               {/*
                 This logic below is done to improve consistency
                 across platforms when showing and updating live regions.
