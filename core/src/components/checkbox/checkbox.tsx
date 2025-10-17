@@ -34,7 +34,6 @@ export class Checkbox implements ComponentInterface {
   private inputLabelId = `${this.inputId}-lbl`;
   private helperTextId = `${this.inputId}-helper-text`;
   private errorTextId = `${this.inputId}-error-text`;
-  private focusEl?: HTMLElement;
   private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLIonCheckboxElement;
