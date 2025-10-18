@@ -40,7 +40,6 @@ export class Toggle implements ComponentInterface {
   private helperTextId = `${this.inputId}-helper-text`;
   private errorTextId = `${this.inputId}-error-text`;
   private gesture?: Gesture;
-  private focusEl?: HTMLElement;
   private lastDrag = 0;
   private inheritedAttributes: Attributes = {};
   private toggleTrack?: HTMLElement;
@@ -162,7 +161,6 @@ export class Toggle implements ComponentInterface {
     const isNowChecked = !checked;
     this.checked = isNowChecked;
 
-    this.setFocus();
     this.ionChange.emit({
       checked: isNowChecked,
       value,
@@ -243,9 +241,7 @@ export class Toggle implements ComponentInterface {
   }
 
   private setFocus() {
-    if (this.focusEl) {
-      this.focusEl.focus();
-    }
+    this.el.focus();
   }
 
   private onKeyDown = (ev: KeyboardEvent) => {
@@ -417,6 +413,8 @@ export class Toggle implements ComponentInterface {
         aria-disabled={disabled ? 'true' : null}
         tabindex={disabled ? undefined : 0}
         onKeyDown={this.onKeyDown}
+        onFocus={() => this.onFocus()}
+        onBlur={() => this.onBlur()}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -441,9 +439,6 @@ export class Toggle implements ComponentInterface {
             checked={checked}
             disabled={disabled}
             id={inputId}
-            onFocus={() => this.onFocus()}
-            onBlur={() => this.onBlur()}
-            ref={(focusEl) => (this.focusEl = focusEl)}
             required={required}
             {...inheritedAttributes}
           />

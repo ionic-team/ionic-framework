@@ -50,6 +50,20 @@
         <ion-checkbox checked style="width: 200px">Specified width</ion-checkbox><br />
         <ion-checkbox checked style="width: 100%">Full-width</ion-checkbox><br />
       </ion-content>
+
+      <script>
+        document.addEventListener('ionBlur', (ev) => {
+          console.log('ionBlur', ev);
+        });
+
+        document.addEventListener('ionChange', (ev) => {
+          console.log('ionChange', ev);
+        });
+
+        document.addEventListener('ionFocus', (ev) => {
+          console.log('ionFocus', ev);
+        });
+      </script>
     </ion-app>
   </body>
 </html>
