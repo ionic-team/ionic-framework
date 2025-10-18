@@ -92,6 +92,48 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
   });
 
   test.describe(title('toggle: ionFocus'), () => {
+    test('should not have visual regressions', async ({ page, pageUtils }) => {
+      await page.setContent(
+        `
+        <style>
+          #container {
+            display: inline-block;
+            padding: 10px;
+          }
+        </style>
+
+        <div id="container">
+          <ion-toggle>Unchecked</ion-toggle>
+        </div>
+      `,
+        config
+      );
+
+      await pageUtils.pressKeys('Tab');
+
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot(`toggle-focus`));
+    });
+
+    test('should not have visual regressions when interacting with toggle in item', async ({ page, pageUtils }) => {
+      await page.setContent(
+        `
+        <ion-item class="ion-focused">
+          <ion-toggle>Unchecked</ion-toggle>
+        </ion-item>
+      `,
+        config
+      );
+
+      // Test focus with keyboard navigation.
+      await pageUtils.pressKeys('Tab');
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveScreenshot(screenshot(`toggle-in-item-focus`));
+    });
+
     test('should fire ionFocus when toggle is focused', async ({ page, pageUtils }) => {
       await page.setContent(
         `
@@ -168,30 +210,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       await toggle.evaluate((el: HTMLIonToggleElement) => (el.checked = true));
       expect(ionFocus).not.toHaveReceivedEvent();
-    });
-
-    test('should not have visual regressions', async ({ page, pageUtils }) => {
-      await page.setContent(
-        `
-        <style>
-          #container {
-            display: inline-block;
-            padding: 10px;
-          }
-        </style>
-
-        <div id="container">
-          <ion-toggle>Unchecked</ion-toggle>
-        </div>
-      `,
-        config
-      );
-
-      await pageUtils.pressKeys('Tab');
-
-      const container = page.locator('#container');
-
-      await expect(container).toHaveScreenshot(screenshot(`toggle-focus`));
     });
   });
 });
