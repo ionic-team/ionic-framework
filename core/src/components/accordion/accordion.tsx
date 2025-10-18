@@ -5,6 +5,7 @@ import { chevronDown } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
+import type { AccordionGroupChangeEventDetail } from '../accordion-group/accordion-group-interface';
 
 const enum AccordionState {
   Collapsed = 1 << 0,
@@ -38,7 +39,10 @@ const enum AccordionState {
 })
 export class Accordion implements ComponentInterface {
   private accordionGroupEl?: HTMLIonAccordionGroupElement | null;
-  private updateListener = () => this.updateState(false);
+  private updateListener = (ev: CustomEvent<AccordionGroupChangeEventDetail>) => {
+    const initialUpdate = ev.detail?.initial ?? false;
+    this.updateState(initialUpdate);
+  };
   private contentEl: HTMLDivElement | undefined;
   private contentElWrapper: HTMLDivElement | undefined;
   private headerEl: HTMLDivElement | undefined;
