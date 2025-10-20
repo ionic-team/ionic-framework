@@ -5,6 +5,7 @@ import {
   IonPage,
   IonRouterOutlet,
   IonTitle,
+  IonText,
   IonToolbar,
 } from "@ionic/react";
 import { Route } from "react-router";
@@ -30,7 +31,11 @@ const RefsFC: React.FC<RefsProps> = () => {
           <IonTitle>Refs FC</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent ref={contentRef} className="ref-test"></IonContent>
+      <IonContent ref={contentRef} className="ref-test">
+        <IonText>
+          <p>This view is used for automated ref regression tests.</p>
+        </IonText>
+      </IonContent>
     </IonPage>
   );
 };
@@ -45,7 +50,11 @@ class RefsClass extends React.Component {
             <IonTitle>Refs Class</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent ref={this.ref} className="ref-test"></IonContent>
+        <IonContent ref={this.ref} className="ref-test">
+          <IonText>
+            <p>This view is used for automated ref regression tests.</p>
+          </IonText>
+        </IonContent>
       </IonPage>
     );
   }
