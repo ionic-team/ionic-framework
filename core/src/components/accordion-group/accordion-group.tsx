@@ -74,10 +74,12 @@ export class AccordionGroup implements ComponentInterface {
   @Event() ionValueChange!: EventEmitter<AccordionGroupChangeEventDetail>;
 
   private hasEmittedInitialValue = false;
+  private isUserInitiatedChange = false;
 
   @Watch('value')
   valueChanged() {
-    this.emitValueChange(false);
+    this.emitValueChange(false, this.isUserInitiatedChange);
+    this.isUserInitiatedChange = false;
   }
 
   @Watch('disabled')
@@ -179,6 +181,7 @@ export class AccordionGroup implements ComponentInterface {
    * accordion group to an array.
    */
   private setValue(accordionValue: string | string[] | null | undefined) {
+    this.isUserInitiatedChange = true;
     const value = (this.value = accordionValue);
     this.ionChange.emit({ value });
   }
@@ -255,7 +258,7 @@ export class AccordionGroup implements ComponentInterface {
     return Array.from(this.el.querySelectorAll(':scope > ion-accordion')) as HTMLIonAccordionElement[];
   }
 
-  private emitValueChange(initial: boolean) {
+  private emitValueChange(initial: boolean, isUserInitiated = false) {
     const { value, multiple } = this;
 
     if (!multiple && Array.isArray(value)) {
@@ -280,7 +283,7 @@ export class AccordionGroup implements ComponentInterface {
      * Track if this is the initial value update so accordions
      * can skip transition animations when they first render.
      */
-    const shouldMarkInitial = initial || (!this.hasEmittedInitialValue && value !== undefined);
+    const shouldMarkInitial = initial || (!this.hasEmittedInitialValue && value !== undefined && !isUserInitiated);
 
     this.ionValueChange.emit({ value, initial: shouldMarkInitial });
 

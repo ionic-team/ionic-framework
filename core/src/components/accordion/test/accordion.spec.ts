@@ -273,6 +273,33 @@ it('should not animate when initial value is set after load', async () => {
   expect(firstAccordion.classList.contains('accordion-expanding')).toEqual(false);
 });
 
+it('should animate when accordion is first opened by user', async () => {
+  const page = await newSpecPage({
+    components: [Item, Accordion, AccordionGroup],
+    html: `
+      <ion-accordion-group>
+        <ion-accordion value="first">
+          <ion-item slot="header">Label</ion-item>
+          <div slot="content">Content</div>
+        </ion-accordion>
+      </ion-accordion-group>
+    `,
+  });
+
+  const accordionGroup = page.body.querySelector('ion-accordion-group')!;
+
+  const details: AccordionGroupChangeEventDetail[] = [];
+  accordionGroup.addEventListener('ionValueChange', (event: CustomEvent<AccordionGroupChangeEventDetail>) => {
+    details.push(event.detail);
+  });
+
+  await accordionGroup.requestAccordionToggle('first', true);
+  await page.waitForChanges();
+
+  const lastDetail = details[details.length - 1];
+  expect(lastDetail?.initial).toBe(false);
+});
+
 // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/27047
 it('should not have animated class when animated="false"', async () => {
   const page = await newSpecPage({
