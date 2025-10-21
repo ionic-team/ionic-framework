@@ -7,6 +7,8 @@
 :host {
   --background: #{globals.$ion-bg-surface-default};
   --background-activated: #{globals.$ion-bg-select-default};
+  --background-focused: #{globals.$ion-primitives-neutral-200};
+  --background-focused-opacity: 1;
   --border-color: #{globals.$ion-primitives-neutral-300};
   --border-style: #{globals.$ion-border-style-solid};
   --border-width: #{0 0 globals.$ion-border-size-025 0};
@@ -72,17 +74,21 @@ slot[name="end"]::slotted(*) {
 // Item: Focused
 // --------------------------------------------------
 
-:host(.ion-focused) .item-native::after {
-  @include globals.border-radius(inherit);
-  @include globals.position(0, 0, 0, 0);
+:host(.ion-focused) .item-native{
+  --border-radius: #{globals.$ion-border-radius-400};
+  
+  &::after {
+    @include globals.border-radius(inherit);
+    @include globals.position(0, 0, 0, 0);
 
-  position: absolute;
+    position: absolute;
 
-  border-width: globals.$ion-border-size-050;
-  border-style: globals.$ion-border-style-solid;
-  border-color: globals.$ion-border-focus-default;
+    border-width: globals.$ion-border-size-050;
+    border-style: globals.$ion-border-style-solid;
+    border-color: globals.$ion-border-focus-default;
 
-  content: "";
+    content: "";
+  }
 }
 
 // Ionic Item Lines
