@@ -48,6 +48,7 @@ export class Accordion implements ComponentInterface {
   private headerEl: HTMLDivElement | undefined;
 
   private currentRaf: number | undefined;
+  private skipNextAnimation = false;
 
   @Element() el?: HTMLElement;
 
@@ -295,6 +296,10 @@ export class Accordion implements ComponentInterface {
    * of what is set in the config.
    */
   private shouldAnimate = () => {
+    if (this.skipNextAnimation) {
+      return false;
+    }
+
     if (typeof (window as any) === 'undefined') {
       return false;
     }
@@ -316,6 +321,14 @@ export class Accordion implements ComponentInterface {
     return true;
   };
 
+  private disableAnimationTemporarily() {
+    this.skipNextAnimation = true;
+  }
+
+  componentDidRender() {
+    this.skipNextAnimation = false;
+  }
+
   private updateState = async (initialUpdate = false) => {
     const accordionGroup = this.accordionGroupEl;
     const accordionValue = this.value;
@@ -327,6 +340,11 @@ export class Accordion implements ComponentInterface {
     const value = accordionGroup.value;
 
     const shouldExpand = Array.isArray(value) ? value.includes(accordionValue) : value === accordionValue;
+    const shouldDisableAnimation = initialUpdate && shouldExpand;
+
+    if (shouldDisableAnimation) {
+      this.disableAnimationTemporarily();
+    }
 
     if (shouldExpand) {
       this.expandAccordion(initialUpdate);

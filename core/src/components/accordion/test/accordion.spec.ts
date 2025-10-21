@@ -234,6 +234,7 @@ it('should not animate when initial value is set before load', async () => {
 
   expect(firstAccordion.classList.contains('accordion-expanded')).toEqual(true);
   expect(firstAccordion.classList.contains('accordion-expanding')).toEqual(false);
+  expect(firstAccordion.classList.contains('accordion-animated')).toEqual(false);
 });
 
 it('should not animate when initial value is set after load', async () => {
@@ -271,6 +272,7 @@ it('should not animate when initial value is set after load', async () => {
 
   expect(firstAccordion.classList.contains('accordion-expanded')).toEqual(true);
   expect(firstAccordion.classList.contains('accordion-expanding')).toEqual(false);
+  expect(firstAccordion.classList.contains('accordion-animated')).toEqual(false);
 });
 
 it('should animate when accordion is first opened by user', async () => {
@@ -298,6 +300,9 @@ it('should animate when accordion is first opened by user', async () => {
 
   const lastDetail = details[details.length - 1];
   expect(lastDetail?.initial).toBe(false);
+
+  const firstAccordion = accordionGroup.querySelector('ion-accordion[value="first"]')!;
+  expect(firstAccordion.classList.contains('accordion-animated')).toEqual(true);
 });
 
 // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/27047
