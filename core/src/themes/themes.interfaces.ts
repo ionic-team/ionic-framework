@@ -1,12 +1,10 @@
+import type { IonicConfig } from '../utils/config';
+
 // Platform-specific theme
 export type PlatformTheme = Omit<BaseTheme, 'ios' | 'md'>;
 
 // Base tokens for all palettes
 export type BaseTheme = {
-  // CONFIG TOKENS
-  rippleEffect?: boolean;
-  formHighlight?: boolean;
-
   // GLOBAL THEME TOKENS
   backgroundColor?: string;
   backgroundColorRgb?: string;
@@ -22,7 +20,9 @@ export type BaseTheme = {
   // SPACE TOKENS
   spacing?: {
     0?: string;
+    25?: string;
     50?: string;
+    75?: string;
     100?: string;
     150?: string;
     200?: string;
@@ -46,6 +46,17 @@ export type BaseTheme = {
     1100?: string;
     1150?: string;
     1200?: string;
+    xxxxs?: string;
+    xxxs?: string;
+    xxs?: string;
+    xs?: string;
+    sm?: string;
+    md?: string;
+    lg?: string;
+    xl?: string;
+    xxl?: string;
+    xxxl?: string;
+    xxxxl?: string;
   };
 
   scaling?: {
@@ -90,6 +101,17 @@ export type BaseTheme = {
     6200?: string;
     7400?: string;
     9000?: string;
+    xxxxs?: string;
+    xxxs?: string;
+    xxs?: string;
+    xs?: string;
+    sm?: string;
+    md?: string;
+    lg?: string;
+    xl?: string;
+    xxl?: string;
+    xxxl?: string;
+    xxxxl?: string;
   };
 
   // APPEARANCE TOKENS
@@ -105,18 +127,49 @@ export type BaseTheme = {
     300?: string;
     350?: string;
     400?: string;
+    xxxxs?: string;
+    xxxs?: string;
+    xxs?: string;
+    xs?: string;
+    sm?: string;
+    md?: string;
+    lg?: string;
+    xl?: string;
+    xxl?: string;
+    xxxl?: string;
+    xxxxl?: string;
+    hairline?: string;
   };
 
   radii?: {
     0?: string;
     25?: string;
+    50?: string;
+    75?: string;
     100?: string;
+    150?: string;
     200?: string;
+    250?: string;
     300?: string;
+    350?: string;
     400?: string;
     500?: string;
+    600?: string;
+    700?: string;
     800?: string;
+    900?: string;
     1000?: string;
+    xxxxs?: string;
+    xxxs?: string;
+    xxs?: string;
+    xs?: string;
+    sm?: string;
+    md?: string;
+    lg?: string;
+    xl?: string;
+    xxl?: string;
+    xxxl?: string;
+    xxxxl?: string;
     full?: string;
   };
 
@@ -205,4 +258,6 @@ export type DefaultTheme = BaseTheme & {
     light?: LightTheme;
     dark?: DarkTheme;
   };
+
+  config?: IonicConfig;
 };
