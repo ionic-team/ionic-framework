@@ -32,7 +32,7 @@ export const darkTheme: DarkTheme = {
   },
 
   textColorStep: {
-    50: '#f33f33',
+    50: '#f3f3f3',
     100: '#e7e7e7',
     150: '#dbdbdb',
     200: '#d0d0d0',
