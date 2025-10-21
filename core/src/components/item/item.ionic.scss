@@ -74,9 +74,9 @@ slot[name="end"]::slotted(*) {
 // Item: Focused
 // --------------------------------------------------
 
-:host(.ion-focused) .item-native{
+:host(.ion-focused) .item-native {
   --border-radius: #{globals.$ion-border-radius-400};
-  
+
   &::after {
     @include globals.border-radius(inherit);
     @include globals.position(0, 0, 0, 0);
