@@ -48,6 +48,13 @@ export class Accordion implements ComponentInterface {
   private headerEl: HTMLDivElement | undefined;
 
   private currentRaf: number | undefined;
+  /**
+   * If true, the next animation will be skipped.
+   * We want to skip the animation when the accordion
+   * is expanded or collapsed on the initial load.
+   * This prevents the accordion from animating when
+   * it starts expanded or collapsed.
+   */
   private skipNextAnimation = false;
 
   @Element() el?: HTMLElement;
@@ -122,6 +129,10 @@ export class Accordion implements ComponentInterface {
       const expanded = this.state === AccordionState.Expanded || this.state === AccordionState.Expanding;
       this.setAria(expanded);
     });
+  }
+
+  componentDidRender() {
+    this.skipNextAnimation = false;
   }
 
   private setItemDefaults = () => {
@@ -321,14 +332,6 @@ export class Accordion implements ComponentInterface {
     return true;
   };
 
-  private disableAnimationTemporarily() {
-    this.skipNextAnimation = true;
-  }
-
-  componentDidRender() {
-    this.skipNextAnimation = false;
-  }
-
   private updateState = async (initialUpdate = false) => {
     const accordionGroup = this.accordionGroupEl;
     const accordionValue = this.value;
@@ -343,7 +346,7 @@ export class Accordion implements ComponentInterface {
     const shouldDisableAnimation = initialUpdate && shouldExpand;
 
     if (shouldDisableAnimation) {
-      this.disableAnimationTemporarily();
+      this.skipNextAnimation = true;
     }
 
     if (shouldExpand) {
