@@ -235,3 +235,9 @@ jobs:
           curl -H "Content-Type:application/json" \
           -d '{"embeds": [{"title": "❌ Workflow ${{github.workflow}} #${{github.run_number}} Failed", "color": 16711680, "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"}]}' \
           ${{secrets.DISCORD_NOTIFY_WEBHOOK}}
+      - name: Notify on Slack
+        if: failure()
+        run: |
+          curl -H "Content-Type:application/json" \
+          -d '{"title": "❌ Workflow ${{github.workflow}} #${{github.run_number}} Failed", "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"}' \
+          ${{secrets.SLACK_NOTIFY_WEBHOOK}}
