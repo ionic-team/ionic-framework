@@ -234,7 +234,6 @@ it('should not animate when initial value is set before load', async () => {
 
   expect(firstAccordion.classList.contains('accordion-expanded')).toEqual(true);
   expect(firstAccordion.classList.contains('accordion-expanding')).toEqual(false);
-  expect(firstAccordion.classList.contains('accordion-animated')).toEqual(false);
 });
 
 it('should not animate when initial value is set after load', async () => {
@@ -272,7 +271,6 @@ it('should not animate when initial value is set after load', async () => {
 
   expect(firstAccordion.classList.contains('accordion-expanded')).toEqual(true);
   expect(firstAccordion.classList.contains('accordion-expanding')).toEqual(false);
-  expect(firstAccordion.classList.contains('accordion-animated')).toEqual(false);
 });
 
 it('should animate when accordion is first opened by user', async () => {

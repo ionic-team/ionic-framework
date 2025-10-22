@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Component, Element, Host, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import { addEventListener, getElementRoot, raf, removeEventListener, transitionEndAsync } from '@utils/helpers';
 import { chevronDown } from 'ionicons/icons';
 
@@ -132,7 +132,15 @@ export class Accordion implements ComponentInterface {
   }
 
   componentDidRender() {
-    this.skipNextAnimation = false;
+    if (this.skipNextAnimation) {
+      this.skipNextAnimation = false;
+      /**
+       * The initial render disables animations so framework-provided
+       * values do not cause the accordion to animate. Force a repaint
+       * so subsequent user interactions animate as expected.
+       */
+      forceUpdate(this);
+    }
   }
 
   private setItemDefaults = () => {
