@@ -281,8 +281,8 @@ export class Checkbox implements ComponentInterface {
         aria-disabled={disabled ? 'true' : null}
         tabindex={disabled ? undefined : 0}
         onKeyDown={this.onKeyDown}
-        onFocus={() => this.onFocus()}
-        onBlur={() => this.onBlur()}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
         onClick={this.onClick}
         class={createColorClasses(color, {
           [mode]: true,
