@@ -413,8 +413,8 @@ export class Toggle implements ComponentInterface {
         aria-disabled={disabled ? 'true' : null}
         tabindex={disabled ? undefined : 0}
         onKeyDown={this.onKeyDown}
-        onFocus={() => this.onFocus()}
-        onBlur={() => this.onBlur()}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
