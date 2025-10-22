@@ -44,6 +44,9 @@ configs().forEach(({ title, screenshot, config }) => {
   });
 });
 
+/**
+ * This behavior does not vary across modes/directions
+ */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: ionChange'), () => {
     test('should fire ionChange when interacting with checkbox', async ({ page }) => {
