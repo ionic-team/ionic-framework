@@ -28,9 +28,6 @@ export const spyOnEvent = async (page: E2EPage, eventName: string): Promise<Even
         input.style.pointerEvents = 'none';
         document.body.appendChild(input);
 
-        // Add console warning to indicate presence of hidden input.
-        console.warn('[Ionic Warning]: Hidden input for ionBlur added to the page for Playwright testing.');
-
         // Clean up the element when the page is unloaded.
         window.addEventListener('unload', () => {
           input.remove();
