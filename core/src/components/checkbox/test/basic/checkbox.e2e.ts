@@ -172,7 +172,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
         config
       );
 
-      // Test focus with keyboard navigation.
+      // Test focus with keyboard navigation
       await pageUtils.pressKeys('Tab');
 
       const item = page.locator('ion-item');
@@ -190,17 +190,17 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       const ionFocus = await page.spyOnEvent('ionFocus');
 
-      // Test focus with keyboard navigation.
+      // Test focus with keyboard navigation
       await pageUtils.pressKeys('Tab');
 
       expect(ionFocus).toHaveReceivedEventTimes(1);
 
-      // Reset focus.
+      // Reset focus
       const checkbox = page.locator('ion-checkbox');
       const checkboxBoundingBox = (await checkbox.boundingBox())!;
       await page.mouse.click(0, checkboxBoundingBox.height + 1);
 
-      // Test focus with click.
+      // Test focus with click
       await checkbox.click();
 
       expect(ionFocus).toHaveReceivedEventTimes(2);
@@ -218,27 +218,27 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       const ionFocus = await page.spyOnEvent('ionFocus');
 
-      // Test focus with keyboard navigation.
+      // Test focus with keyboard navigation
       await pageUtils.pressKeys('Tab');
 
       expect(ionFocus).toHaveReceivedEventTimes(1);
 
-      // Verify that the event target is the checkbox and not the item.
+      // Verify that the event target is the checkbox and not the item
       const eventByKeyboard = ionFocus.events[0];
       expect((eventByKeyboard.target as HTMLElement).tagName.toLowerCase()).toBe('ion-checkbox');
 
-      // Reset focus.
+      // Reset focus
       const checkbox = page.locator('ion-checkbox');
       const checkboxBoundingBox = (await checkbox.boundingBox())!;
       await page.mouse.click(0, checkboxBoundingBox.height + 1);
 
-      // Test focus with click.
+      // Test focus with click
       const item = page.locator('ion-item');
       await item.click();
 
       expect(ionFocus).toHaveReceivedEventTimes(2);
 
-      // Verify that the event target is the checkbox and not the item.
+      // Verify that the event target is the checkbox and not the item
       const eventByClick = ionFocus.events[0];
       expect((eventByClick.target as HTMLElement).tagName.toLowerCase()).toBe('ion-checkbox');
     });
@@ -270,19 +270,19 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       const ionBlur = await page.spyOnEvent('ionBlur');
 
-      // Test blur with keyboard navigation.
-      // Focus the checkbox.
+      // Test blur with keyboard navigation
+      // Focus the checkbox
       await pageUtils.pressKeys('Tab');
-      // Blur the checkbox.
+      // Blur the checkbox
       await pageUtils.pressKeys('Tab');
 
       expect(ionBlur).toHaveReceivedEventTimes(1);
 
-      // Test blur with click.
+      // Test blur with click
       const checkbox = page.locator('ion-checkbox');
-      // Focus the checkbox.
+      // Focus the checkbox
       await checkbox.click();
-      // Blur the checkbox by clicking outside of it.
+      // Blur the checkbox by clicking outside of it
       const checkboxBoundingBox = (await checkbox.boundingBox())!;
       await page.mouse.click(0, checkboxBoundingBox.height + 1);
 
@@ -301,28 +301,28 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       const ionBlur = await page.spyOnEvent('ionBlur');
 
-      // Test blur with keyboard navigation.
-      // Focus the checkbox.
+      // Test blur with keyboard navigation
+      // Focus the checkbox
       await pageUtils.pressKeys('Tab');
-      // Blur the checkbox.
+      // Blur the checkbox
       await pageUtils.pressKeys('Tab');
 
       expect(ionBlur).toHaveReceivedEventTimes(1);
 
-      // Verify that the event target is the checkbox and not the item.
+      // Verify that the event target is the checkbox and not the item
       const event = ionBlur.events[0];
       expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-checkbox');
 
-      // Test blur with click.
+      // Test blur with click
       const item = page.locator('ion-item');
       await item.click();
-      // Blur the checkbox by clicking outside of it.
+      // Blur the checkbox by clicking outside of it
       const itemBoundingBox = (await item.boundingBox())!;
       await page.mouse.click(0, itemBoundingBox.height + 1);
 
       expect(ionBlur).toHaveReceivedEventTimes(2);
 
-      // Verify that the event target is the checkbox and not the item.
+      // Verify that the event target is the checkbox and not the item
       const eventByClick = ionBlur.events[0];
       expect((eventByClick.target as HTMLElement).tagName.toLowerCase()).toBe('ion-checkbox');
     });

@@ -129,7 +129,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
         config
       );
 
-      // Test focus with keyboard navigation.
+      // Test focus with keyboard navigation
       await pageUtils.pressKeys('Tab');
 
       const item = page.locator('ion-item');
@@ -147,17 +147,17 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       const ionFocus = await page.spyOnEvent('ionFocus');
 
-      // Test focus with keyboard navigation.
+      // Test focus with keyboard navigation
       await pageUtils.pressKeys('Tab');
 
       expect(ionFocus).toHaveReceivedEventTimes(1);
 
-      // Reset focus.
+      // Reset focus
       const toggle = page.locator('ion-toggle');
       const toggleBoundingBox = (await toggle.boundingBox())!;
       await page.mouse.click(0, toggleBoundingBox.height + 1);
 
-      // Test focus with click.
+      // Test focus with click
       await toggle.click();
 
       expect(ionFocus).toHaveReceivedEventTimes(2);
@@ -175,27 +175,27 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       const ionFocus = await page.spyOnEvent('ionFocus');
 
-      // Test focus with keyboard navigation.
+      // Test focus with keyboard navigation
       await pageUtils.pressKeys('Tab');
 
       expect(ionFocus).toHaveReceivedEventTimes(1);
 
-      // Verify that the event target is the toggle and not the item.
+      // Verify that the event target is the toggle and not the item
       const eventByKeyboard = ionFocus.events[0];
       expect((eventByKeyboard.target as HTMLElement).tagName.toLowerCase()).toBe('ion-toggle');
 
-      // Reset focus.
+      // Reset focus
       const toggle = page.locator('ion-toggle');
       const toggleBoundingBox = (await toggle.boundingBox())!;
       await page.mouse.click(0, toggleBoundingBox.height + 1);
 
-      // Test focus with click.
+      // Test focus with click
       const item = page.locator('ion-item');
       await item.click();
 
       expect(ionFocus).toHaveReceivedEventTimes(2);
 
-      // Verify that the event target is the toggle and not the item.
+      // Verify that the event target is the toggle and not the item
       const eventByClick = ionFocus.events[0];
       expect((eventByClick.target as HTMLElement).tagName.toLowerCase()).toBe('ion-toggle');
     });
@@ -227,19 +227,19 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       const ionBlur = await page.spyOnEvent('ionBlur');
 
-      // Test blur with keyboard navigation.
-      // Focus the toggle.
+      // Test blur with keyboard navigation
+      // Focus the toggle
       await pageUtils.pressKeys('Tab');
-      // Blur the toggle.
+      // Blur the toggle
       await pageUtils.pressKeys('Tab');
 
       expect(ionBlur).toHaveReceivedEventTimes(1);
 
-      // Test blur with click.
+      // Test blur with click
       const toggle = page.locator('ion-toggle');
-      // Focus the toggle.
+      // Focus the toggle
       await toggle.click();
-      // Blur the toggle by clicking outside of it.
+      // Blur the toggle by clicking outside of it
       const toggleBoundingBox = (await toggle.boundingBox())!;
       await page.mouse.click(0, toggleBoundingBox.height + 1);
 
@@ -258,28 +258,28 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       const ionBlur = await page.spyOnEvent('ionBlur');
 
-      // Test blur with keyboard navigation.
-      // Focus the toggle.
+      // Test blur with keyboard navigation
+      // Focus the toggle
       await pageUtils.pressKeys('Tab');
-      // Blur the toggle.
+      // Blur the toggle
       await pageUtils.pressKeys('Tab');
 
       expect(ionBlur).toHaveReceivedEventTimes(1);
 
-      // Verify that the event target is the toggle and not the item.
+      // Verify that the event target is the toggle and not the item
       const event = ionBlur.events[0];
       expect((event.target as HTMLElement).tagName.toLowerCase()).toBe('ion-toggle');
 
-      // Test blur with click.
+      // Test blur with click
       const item = page.locator('ion-item');
       await item.click();
-      // Blur the toggle by clicking outside of it.
+      // Blur the toggle by clicking outside of it
       const itemBoundingBox = (await item.boundingBox())!;
       await page.mouse.click(0, itemBoundingBox.height + 1);
 
       expect(ionBlur).toHaveReceivedEventTimes(2);
 
-      // Verify that the event target is the toggle and not the item.
+      // Verify that the event target is the toggle and not the item
       const eventByClick = ionBlur.events[0];
       expect((eventByClick.target as HTMLElement).tagName.toLowerCase()).toBe('ion-toggle');
     });
