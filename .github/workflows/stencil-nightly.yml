@@ -230,7 +230,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify success on Discord
-        if: failure()
+        if: success()
         run: |
           curl -H "Content-Type:application/json" \
           -d '{"content": "Alerting <@1347593178580254761>!", "embeds": [{"title": "✅ Workflow ${{github.workflow}} #${{github.run_number}} finished successfully", "color": 65280, "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"}]}' \
