@@ -229,15 +229,27 @@ jobs:
   send-results-messages:
     runs-on: ubuntu-latest
     steps:
-      - name: Notify on Discord
+      - name: Notify success on Discord
         if: failure()
         run: |
           curl -H "Content-Type:application/json" \
-          -d '{"embeds": [{"title": "❌ Workflow ${{github.workflow}} #${{github.run_number}} Failed", "color": 16711680, "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"}]}' \
+          -d '{"content": "Alerting <@1347593178580254761>!", "embeds": [{"title": "✅ Workflow ${{github.workflow}} #${{github.run_number}} finished successfully", "color": 65280, "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"}]}' \
           ${{secrets.DISCORD_NOTIFY_WEBHOOK}}
-      - name: Notify on Slack
+      - name: Notify failure on Discord
         if: failure()
         run: |
           curl -H "Content-Type:application/json" \
-          -d '{"title": "❌ Workflow ${{github.workflow}} #${{github.run_number}} Failed", "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"}' \
-          ${{secrets.SLACK_NOTIFY_WEBHOOK}}
+          -d '{"embeds": [{"title": "❌ Workflow ${{github.workflow}} #${{github.run_number}} failed", "color": 16711680, "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"}]}' \
+          ${{secrets.DISCORD_NOTIFY_WEBHOOK}}
+      - name: Notify success on Slack
+        if: success()
+        run: |
+          curl -H "Content-Type:application/json" \
+          -d '{"title": "✅ Workflow ${{github.workflow}} #${{github.run_number}} finished successfully", "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"}' \
+          ${{secrets.SLACK_NOTIFY_SUCCESS_WEBHOOK}}
+      - name: Notify failure on Slack
+        if: failure()
+        run: |
+          curl -H "Content-Type:application/json" \
+          -d '{"title": "❌ Workflow ${{github.workflow}} #${{github.run_number}} failed", "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"}' \
+          ${{secrets.SLACK_NOTIFY_FAILURE_WEBHOOK}}
