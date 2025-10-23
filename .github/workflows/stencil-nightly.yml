@@ -226,7 +226,7 @@ jobs:
         if: ${{ needs.test-react-e2e.result != 'success' }}
         run: exit 1
 
-  send-results-massages:
+  send-results-messages:
     runs-on: ubuntu-latest
     steps:
       - name: Notify on Discord
