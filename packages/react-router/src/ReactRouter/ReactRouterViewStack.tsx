@@ -11,59 +11,60 @@ import React from 'react';
 import type { PathMatch } from 'react-router';
 import { UNSAFE_RouteContext as RouteContext } from 'react-router-dom';
 
+import { derivePathnameToMatch } from './utils/derivePathnameToMatch';
 import { matchPath } from './utils/matchPath';
 
-const derivePathnameToMatch = (fullPathname: string, routePath?: string): string => {
-  if (!routePath || routePath === '' || routePath.startsWith('/')) {
-    return fullPathname;
+const createDefaultMatch = (
+  fullPathname: string,
+  routeProps: { path?: string; caseSensitive?: boolean; end?: boolean; index?: boolean }
+): PathMatch<string> => {
+  const isIndexRoute = !!routeProps.index;
+  const patternPath = routeProps.path ?? '';
+  const pathnameBase = fullPathname === '' ? '/' : fullPathname;
+  const computedEnd =
+    routeProps.end !== undefined ? routeProps.end : patternPath !== '' ? !patternPath.endsWith('*') : true;
+
+  return {
+    params: {},
+    pathname: isIndexRoute ? '' : fullPathname,
+    pathnameBase,
+    pattern: {
+      path: patternPath,
+      caseSensitive: routeProps.caseSensitive ?? false,
+      end: isIndexRoute ? true : computedEnd,
+    },
+  };
+};
+
+const ensureLeadingSlash = (value: string): string => {
+  if (value === '') {
+    return '/';
+  }
+  return value.startsWith('/') ? value : `/${value}`;
+};
+
+const normalizePathnameForComparison = (value: string | undefined): string => {
+  if (!value || value === '') {
+    return '/';
+  }
+  const withLeadingSlash = ensureLeadingSlash(value);
+  return withLeadingSlash.length > 1 && withLeadingSlash.endsWith('/') ? withLeadingSlash.slice(0, -1) : withLeadingSlash;
+};
+
+const resolveIndexRouteMatch = (viewItem: ViewItem, pathname: string): PathMatch<string> | null => {
+  if (!viewItem.routeData?.childProps?.index) {
+    return null;
   }
 
-  const trimmedPath = fullPathname.startsWith('/') ? fullPathname.slice(1) : fullPathname;
-  if (!trimmedPath) {
-    return '';
+  const previousMatch = viewItem.routeData?.match;
+  if (!previousMatch) {
+    return null;
   }
 
-  const fullSegments = trimmedPath.split('/').filter(Boolean);
-  if (fullSegments.length === 0) {
-    return '';
-  }
+  const normalizedPathname = normalizePathnameForComparison(pathname);
+  const normalizedBase = normalizePathnameForComparison(previousMatch.pathnameBase || previousMatch.pathname || '');
 
-  const routeSegments = routePath.split('/').filter(Boolean);
-  if (routeSegments.length === 0) {
-    return trimmedPath;
-  }
-
-  const wildcardIndex = routeSegments.findIndex((segment) => segment === '*' || segment === '**');
-
-  if (wildcardIndex >= 0) {
-    const baseSegments = routeSegments.slice(0, wildcardIndex);
-    if (baseSegments.length === 0) {
-      return trimmedPath;
-    }
-
-    const startIndex = fullSegments.findIndex((_, idx) =>
-      baseSegments.every((seg, segIdx) => {
-        const target = fullSegments[idx + segIdx];
-        if (!target) {
-          return false;
-        }
-        if (seg.startsWith(':')) {
-          return true;
-        }
-        return target === seg;
-      })
-    );
-
-    if (startIndex >= 0) {
-      return fullSegments.slice(startIndex).join('/');
-    }
-  }
-
-  if (routeSegments.length <= fullSegments.length) {
-    return fullSegments.slice(fullSegments.length - routeSegments.length).join('/');
-  }
-
-  return fullSegments[fullSegments.length - 1] ?? trimmedPath;
+  return normalizedPathname === normalizedBase ? previousMatch : null;
 };
 
 export class ReactRouterViewStack extends ViewStacks {
@@ -86,9 +87,12 @@ export class ReactRouterViewStack extends ViewStacks {
     // Include wildcard routes like tabs/* since they should be reused
     // Also check unmounted items that might have been preserved for browser navigation
     const existingViewItem = this.getViewItemsForOutlet(outletId).find((v) => {
-      const existingPath = v.reactElement?.props?.path || '';
-      const existingElement = v.reactElement?.props?.element;
+      const existingRouteProps = v.reactElement?.props ?? {};
+      const existingPath = existingRouteProps.path || '';
+      const existingElement = existingRouteProps.element;
       const newElement = reactElement.props.element;
+      const existingIsIndexRoute = !!existingRouteProps.index;
+      const newIsIndexRoute = !!reactElement.props.index;
 
       // For Navigate components, match by destination
       if (existingElement?.type?.name === 'Navigate' && newElement?.type?.name === 'Navigate') {
@@ -97,6 +101,10 @@ export class ReactRouterViewStack extends ViewStacks {
         if (existingTo === newTo) {
           return true;
         }
+      }
+
+      if (existingIsIndexRoute && newIsIndexRoute) {
+        return true;
       }
 
       // Reuse view items with the same path
@@ -120,8 +128,13 @@ export class ReactRouterViewStack extends ViewStacks {
       existingViewItem.reactElement = reactElement;
       existingViewItem.mount = true;
       existingViewItem.ionPageElement = page || existingViewItem.ionPageElement;
+      const updatedMatch =
+        matchComponent(reactElement, routeInfo.pathname, false) ||
+        existingViewItem.routeData?.match ||
+        createDefaultMatch(routeInfo.pathname, reactElement.props);
+
       existingViewItem.routeData = {
-        match: matchComponent(reactElement, routeInfo.pathname),
+        match: updatedMatch,
         childProps: reactElement.props,
         lastPathname: existingViewItem.routeData?.lastPathname, // Preserve navigation history
       };
@@ -161,8 +174,11 @@ export class ReactRouterViewStack extends ViewStacks {
       viewItem.disableIonPageManagement = reactElement.props.disableIonPageManagement;
     }
 
+    const initialMatch =
+      matchComponent(reactElement, routeInfo.pathname, true) || createDefaultMatch(routeInfo.pathname, reactElement.props);
+
     viewItem.routeData = {
-      match: matchComponent(reactElement, routeInfo.pathname),
+      match: initialMatch,
       childProps: reactElement.props,
     };
 
@@ -183,7 +199,14 @@ export class ReactRouterViewStack extends ViewStacks {
    */
   private renderViewItem = (viewItem: ViewItem, routeInfo: RouteInfo) => {
     const routePath = viewItem.reactElement.props.path || '';
-    const match = matchComponent(viewItem.reactElement, routeInfo.pathname);
+    let match = matchComponent(viewItem.reactElement, routeInfo.pathname);
+
+    if (!match) {
+      const indexMatch = resolveIndexRouteMatch(viewItem, routeInfo.pathname);
+      if (indexMatch) {
+        match = indexMatch;
+      }
+    }
 
     // Cancel any pending deactivation if we have a match
     if (match) {
@@ -270,34 +293,66 @@ export class ReactRouterViewStack extends ViewStacks {
 
     const routeElement = React.cloneElement(viewItem.reactElement);
     const componentElement = routeElement.props.element;
-
-    // Create the route context value for React Router v6
-    const routeMatch = viewItem.routeData?.match;
-    const routeContextValue = {
-      outlet: null,
-      matches: [
-        {
-          params: routeMatch?.params || {},
-          pathname: routeMatch?.pathname || routeInfo.pathname,
-          pathnameBase: routeMatch?.pathnameBase || routeInfo.pathname,
-          route: {
-            id: viewItem.id,
-            path: routeElement.props.path,
-            element: componentElement,
-            hasErrorBoundary: false,
-          },
-        },
-      ],
-      isDataRoute: false,
-    };
+    if (match && viewItem.routeData.match !== match) {
+      viewItem.routeData.match = match;
+    }
+    const routeMatch = match || viewItem.routeData?.match;
 
     return (
-      <ViewLifeCycleManager key={`view-${viewItem.id}`} mount={viewItem.mount} removeView={() => this.remove(viewItem)}>
-        {/**
-         * Wrap component in RouteContext to provide params for React Router v6
-         */}
-        <RouteContext.Provider value={routeContextValue}>{componentElement}</RouteContext.Provider>
-      </ViewLifeCycleManager>
+      <RouteContext.Consumer key={`view-context-${viewItem.id}`}>
+        {(parentContext) => {
+          const parentMatches = parentContext?.matches ?? [];
+          const accumulatedParentParams = parentMatches.reduce<Record<string, string | string[] | undefined>>(
+            (acc, match) => {
+              return { ...acc, ...match.params };
+            },
+            {}
+          );
+
+          const combinedParams = {
+            ...accumulatedParentParams,
+            ...(routeMatch?.params ?? {}),
+          };
+
+          const contextMatches = [
+            ...parentMatches,
+            {
+              params: combinedParams,
+              pathname: routeMatch?.pathname || routeInfo.pathname,
+              pathnameBase: routeMatch?.pathnameBase || routeInfo.pathname,
+              route: {
+                id: viewItem.id,
+                path: routeElement.props.path,
+                element: componentElement,
+                index: !!routeElement.props.index,
+                caseSensitive: routeElement.props.caseSensitive,
+                hasErrorBoundary: false,
+              },
+            },
+          ];
+
+          const routeContextValue = parentContext
+            ? {
+                ...parentContext,
+                matches: contextMatches,
+              }
+            : {
+                outlet: null,
+                matches: contextMatches,
+                isDataRoute: false,
+              };
+
+          return (
+            <ViewLifeCycleManager
+              key={`view-${viewItem.id}`}
+              mount={viewItem.mount}
+              removeView={() => this.remove(viewItem)}
+            >
+              <RouteContext.Provider value={routeContextValue}>{componentElement}</RouteContext.Provider>
+            </ViewLifeCycleManager>
+          );
+        }}
+      </RouteContext.Consumer>
     );
   };
 
@@ -384,7 +439,12 @@ export class ReactRouterViewStack extends ViewStacks {
    * Core function that matches a given pathname against all view items.
    * Returns both the matched view item and match metadata.
    */
-  private findViewItemByPath(pathname: string, outletId?: string, mustBeIonRoute?: boolean) {
+  private findViewItemByPath(
+    pathname: string,
+    outletId?: string,
+    mustBeIonRoute?: boolean,
+    allowDefaultMatch = true
+  ) {
     let viewItem: ViewItem | undefined;
     let match: PathMatch<string> | null = null;
     let viewStack: ViewItem[];
@@ -429,11 +489,11 @@ export class ReactRouterViewStack extends ViewStacks {
     if (outletId) {
       viewStack = sortBySpecificity(this.getViewItemsForOutlet(outletId));
       viewStack.some(matchView);
-      if (!viewItem) viewStack.some(matchDefaultRoute);
+      if (!viewItem && allowDefaultMatch) viewStack.some(matchDefaultRoute);
     } else {
       const viewItems = sortBySpecificity(this.getAllViewItems());
       viewItems.some(matchView);
-      if (!viewItem) viewItems.some(matchDefaultRoute);
+      if (!viewItem && allowDefaultMatch) viewItems.some(matchDefaultRoute);
     }
 
     // If we still have not found a view item for this outlet, try to find a matching
@@ -462,16 +522,26 @@ export class ReactRouterViewStack extends ViewStacks {
       if (mustBeIonRoute && !v.ionRoute) return false;
 
       const viewItemPath = v.routeData.childProps.path || '';
-      const result = v.reactElement ? matchComponent(v.reactElement, pathname) : null;
+      const isIndexRoute = !!v.routeData.childProps.index;
+      const previousMatch = v.routeData?.match;
+      let result = v.reactElement ? matchComponent(v.reactElement, pathname) : null;
+
+      if (!result) {
+        const indexMatch = resolveIndexRouteMatch(v, pathname);
+        if (indexMatch) {
+          match = indexMatch;
+          viewItem = v;
+          return true;
+        }
+      }
 
       if (result) {
         const hasParams = result.params && Object.keys(result.params).length > 0;
-        const previousMatch = v.routeData?.match;
         const isSamePath = result.pathname === previousMatch?.pathname;
 
         // Don't allow view items with undefined paths to match specific routes
         // This prevents broken index route view items from interfering with navigation
-        if (!viewItemPath && pathname !== '/' && pathname !== '') {
+        if (!viewItemPath && !isIndexRoute && pathname !== '/' && pathname !== '') {
           return false;
         }
 
@@ -503,7 +573,17 @@ export class ReactRouterViewStack extends ViewStacks {
       const isDefaultRoute = childProps.path === undefined || childProps.path === '';
       const isIndexRoute = !!childProps.index;
 
-      if (isDefaultRoute || isIndexRoute) {
+      if (isIndexRoute) {
+        const indexMatch = resolveIndexRouteMatch(v, pathname);
+        if (indexMatch) {
+          match = indexMatch;
+          viewItem = v;
+          return true;
+        }
+        return false;
+      }
+
+      if (isDefaultRoute) {
         match = {
           params: {},
           pathname,
@@ -574,14 +654,29 @@ export class ReactRouterViewStack extends ViewStacks {
 /**
  * Utility to apply matchPath to a React element and return its match state.
  */
-function matchComponent(node: React.ReactElement, pathname: string) {
-  const routePath: string | undefined = node?.props?.path;
+function matchComponent(node: React.ReactElement, pathname: string, allowFallback = false) {
+  const routeProps = node?.props ?? {};
+  const routePath: string | undefined = routeProps.path;
   const pathnameToMatch = derivePathnameToMatch(pathname, routePath);
 
-  return matchPath({
+  const match = matchPath({
     pathname: pathnameToMatch,
-    componentProps: node.props,
+    componentProps: routeProps,
   });
-}
 
-// Note: createDefaultMatch function removed as it was unused
+  if (match || !allowFallback) {
+    return match;
+  }
+
+  const isIndexRoute = !!routeProps.index;
+
+  if (isIndexRoute) {
+    return createDefaultMatch(pathname, routeProps);
+  }
+
+  if (!routePath || routePath === '') {
+    return createDefaultMatch(pathname, routeProps);
+  }
+
+  return null;
+}

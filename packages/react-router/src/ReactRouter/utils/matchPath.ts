@@ -53,55 +53,26 @@ export const matchPath = ({ pathname, componentProps }: MatchPathOptions): PathM
   }
 
   // For relative paths in nested routes (those that don't start with '/'),
-  // we need special handling
+  // use React Router's matcher against a normalized path.
   if (!path.startsWith('/')) {
-    // For relative paths, we match directly against the pathname
-    // which should already be the relative portion from the parent route
+    const matchOptions: Parameters<typeof reactRouterMatchPath>[0] = {
+      path: `/${path}`,
+      ...restProps,
+    };
 
-    // Handle wildcard routes like "tabs/*"
-    if (path.endsWith('/*')) {
-      const basePath = path.slice(0, -2); // Remove the /*
-      if (pathname === basePath || pathname.startsWith(basePath + '/')) {
-        // Match found for wildcard route
-        return {
-          params: { '*': pathname.slice(basePath.length + 1) }, // Capture the wildcard portion
-          pathname: pathname,
-          pathnameBase: basePath,
-          pattern: {
-            path: path,
-            caseSensitive: restProps.caseSensitive || false,
-            end: restProps.end || false,
-          },
-        };
-      }
+    if (matchOptions?.end === undefined) {
+      matchOptions.end = !path.endsWith('*');
     }
 
-    // Handle exact matches for relative paths
-    if (pathname === path) {
-      return {
-        params: {},
-        pathname: pathname,
-        pathnameBase: pathname,
-        pattern: {
-          path: path,
-          caseSensitive: restProps.caseSensitive || false,
-          end: restProps.end !== false, // Default to true for exact matches
-        },
-      };
-    }
-
-    // Handle parameterized routes
-    // For now, try with React Router's matcher by prepending '/'
-    const testPath = '/' + path;
-    const testPathname = '/' + pathname;
-    const match = reactRouterMatchPath({ path: testPath, ...restProps }, testPathname);
+    const normalizedPathname = pathname.startsWith('/') ? pathname : `/${pathname}`;
+    const match = reactRouterMatchPath(matchOptions, normalizedPathname);
 
     if (match) {
       // Adjust the match to remove the leading '/' we added
       return {
         ...match,
         pathname: pathname,
-        pathnameBase: match.pathnameBase.slice(1) || '',
+        pathnameBase: match.pathnameBase === '/' ? '' : match.pathnameBase.slice(1),
         pattern: {
           ...match.pattern,
           path: path,

@@ -11,7 +11,7 @@ import { LocationHistory, NavManager, RouteManagerContext, generateId, getConfig
 import type { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import type { PropsWithChildren } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { IonRouteInner } from './IonRouteInner';
 import { ReactRouterViewStack } from './ReactRouterViewStack';
@@ -26,9 +26,33 @@ interface IonRouterProps {
   registerHistoryListener: (cb: (location: HistoryLocation<any>, action: HistoryAction) => void) => void;
 }
 
+type RouteParams = Record<string, string | string[] | undefined>;
+
+const areParamsEqual = (a?: RouteParams, b?: RouteParams) => {
+  const paramsA = a || {};
+  const paramsB = b || {};
+  const keysA = Object.keys(paramsA);
+  const keysB = Object.keys(paramsB);
+
+  if (keysA.length !== keysB.length) {
+    return false;
+  }
+
+  return keysA.every((key) => {
+    const valueA = paramsA[key];
+    const valueB = paramsB[key];
+    if (Array.isArray(valueA) && Array.isArray(valueB)) {
+      if (valueA.length !== valueB.length) {
+        return false;
+      }
+      return valueA.every((entry, idx) => entry === valueB[idx]);
+    }
+    return valueA === valueB;
+  });
+};
+
 export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildren<IonRouterProps>) => {
   const location = useLocation();
-  const params = useParams();
   const navigate = useNavigate();
 
   const didMountRef = useRef(false);
@@ -41,6 +65,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     id: generateId('routeInfo'),
     pathname: location.pathname,
     search: location.search,
+    params: {},
   });
 
   useEffect(() => {
@@ -56,6 +81,25 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
 
     didMountRef.current = true;
   }, []);
+
+  useEffect(() => {
+    const activeView = viewStack.current.findViewItemByRouteInfo(routeInfo, undefined, true);
+    const matchedParams = activeView?.routeData.match?.params as RouteParams | undefined;
+
+    if (matchedParams) {
+      const paramsCopy = { ...matchedParams };
+      if (areParamsEqual(routeInfo.params as RouteParams | undefined, paramsCopy)) {
+        return;
+      }
+
+      const updatedRouteInfo: RouteInfo = {
+        ...routeInfo,
+        params: paramsCopy,
+      };
+      locationHistory.current.update(updatedRouteInfo);
+      setRouteInfo(updatedRouteInfo);
+    }
+  }, [routeInfo]);
 
   /**
    * Triggered whenever the history changes, either through user navigation
@@ -184,7 +228,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
           lastPathname: leavingLocationInfo.pathname, // The URL we just came from
           pathname: location.pathname, // The current (destination) URL
           search: location.search,
-          params: params as { [key: string]: string | string[] },
+          params: (incomingRouteParams.current?.params as RouteParams | undefined) ?? {},
           prevRouteLastPathname: leavingLocationInfo.lastPathname, // The lastPathname of the route we are leaving
         };
         // It's a linear navigation.

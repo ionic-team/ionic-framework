@@ -38,6 +38,7 @@ import Tabs from './pages/tabs/Tabs';
 import TabsSecondary from './pages/tabs/TabsSecondary';
 import Params from './pages/params/Params';
 import Overlays from './pages/overlays/Overlays';
+import NestedParams from './pages/nested-params/NestedParams';
 
 setupIonicReact();
 
@@ -57,12 +58,13 @@ const App: React.FC = () => {
           <Route path="/tab-context" element={<TabsContext />} />
           <Route path="/outlet-ref" element={<OutletRef />} />
           <Route path="/swipe-to-go-back" element={<SwipeToGoBack />} />
-          <Route path="/dynamic-ionpage-classnames" element={<DynamicIonpageClassnames/ >} />
+          <Route path="/dynamic-ionpage-classnames" element={<DynamicIonpageClassnames />} />
           <Route path="/tabs" element={<Tabs />} />
           <Route path="/tabs-secondary" element={<TabsSecondary />} />
           <Route path="/refs" element={<Refs />} />
           <Route path="/overlays" element={<Overlays />} />
           <Route path="/params/:id" element={<Params />} />
+          <Route path="/nested-params/*" element={<NestedParams />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

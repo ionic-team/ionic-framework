@@ -11,7 +11,26 @@ import { Route } from 'react-router-dom';
 
 import { clonePageElement } from './clonePageElement';
 import { findRoutesNode } from './utils/findRoutesNode';
+import { derivePathnameToMatch } from './utils/derivePathnameToMatch';
 import { matchPath } from './utils/matchPath';
+
+const doesRouteMatchRemainingPath = (route: React.ReactElement, remainingPath: string) => {
+  const routePath = route.props.path;
+  const isWildcardOnly = routePath === '*' || routePath === '/*';
+
+  if (isWildcardOnly) {
+    // Treat wildcard-only routes as matching only when we're already at the outlet root.
+    // This prevents them from forcing parent paths to resolve too early (e.g. "/routing"
+    // instead of "/routing/tabs") while still letting them act as fallbacks when no
+    // additional segments remain.
+    return remainingPath === '' || remainingPath === '/';
+  }
+
+  return !!matchPath({
+    pathname: remainingPath,
+    componentProps: route.props,
+  });
+};
 
 // TODO(FW-2959): types
 
@@ -92,19 +111,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             for (let i = 1; i <= segments.length; i++) {
               const testParentPath = '/' + segments.slice(0, i).join('/');
               const testRemainingPath = segments.slice(i).join('/');
-
-              const hasMatch = routeChildren.some((route) => {
-                if (route.props.index && testRemainingPath === '') return true;
-                const routePath = route.props.path;
-                if (!routePath || routePath.startsWith('/')) return false;
-
-                if (routePath.endsWith('/*')) {
-                  const basePath = routePath.slice(0, -2);
-                  return testRemainingPath === basePath || testRemainingPath.startsWith(basePath + '/');
-                }
-
-                return testRemainingPath === routePath || testRemainingPath.startsWith(routePath + '/');
-              });
+              const hasMatch = routeChildren.some((route) => doesRouteMatchRemainingPath(route, testRemainingPath));
 
               if (hasMatch) {
                 this.outletMountPath = testParentPath;
@@ -126,27 +133,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             const remainingPath = segments.slice(i).join('/');
 
             // Check if any relative route could match the remaining path
-            const couldMatchRemaining = routeChildren.some((route) => {
-              const routePath = route.props.path;
-
-              // Index routes match when remaining path is empty
-              if (route.props.index && remainingPath === '') {
-                return true;
-              }
-
-              if (!routePath || routePath.startsWith('/')) return false;
-
-              // Handle wildcard routes like "tabs/*"
-              if (routePath.endsWith('/*')) {
-                const baseRoutePath = routePath.slice(0, -2);
-                const matches = remainingPath.startsWith(baseRoutePath);
-                return matches;
-              }
-
-              // Handle exact routes like "tabs"
-              const matches = remainingPath === routePath || remainingPath.startsWith(routePath + '/');
-              return matches;
-            });
+            const couldMatchRemaining = routeChildren.some((route) => doesRouteMatchRemainingPath(route, remainingPath));
 
             if (couldMatchRemaining) {
               return parentPath;
@@ -160,7 +147,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         }
       }
     }
-    return undefined;
+    return this.outletMountPath;
   }
 
   componentDidMount() {
@@ -949,30 +936,7 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
         const remainingPath = remainingSegments.join('/');
 
         // Check if any route in this outlet could match the remaining path
-        const couldMatchRemaining = sortedRoutes.some((r) => {
-          // Index routes match when remaining path is empty
-          if (r.props.index && remainingPath === '') {
-            return true;
-          }
-
-          if (!r.props.path) return false;
-
-          const routePath = r.props.path;
-
-          // Skip absolute paths - they should be handled by parent outlets
-          if (routePath.startsWith('/')) return false;
-
-          // Handle wildcard routes like "tabs/*"
-          if (routePath.endsWith('/*')) {
-            const baseRoutePath = routePath.slice(0, -2);
-            const matches = remainingPath === baseRoutePath || remainingPath.startsWith(baseRoutePath + '/');
-            return matches;
-          }
-
-          // Handle exact routes
-          const matches = remainingPath === routePath || remainingPath.startsWith(routePath + '/');
-          return matches;
-        });
+        const couldMatchRemaining = sortedRoutes.some((route) => doesRouteMatchRemainingPath(route, remainingPath));
 
         if (couldMatchRemaining) {
           pathnameToMatch = remainingPath;
@@ -991,11 +955,7 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
       // This handles the common case where we directly navigate to /parent/child
       if (pathnameToMatch === routeInfo.pathname && pathSegments.length > 0) {
         const lastSegment = pathSegments[pathSegments.length - 1];
-        const couldMatchLastSegment = sortedRoutes.some((r) => {
-          if (!r.props.path || r.props.path.startsWith('/')) return false;
-          // Only match if there's an exact match, be more conservative
-          return r.props.path === lastSegment;
-        });
+        const couldMatchLastSegment = sortedRoutes.some((route) => doesRouteMatchRemainingPath(route, lastSegment));
 
         if (couldMatchLastSegment) {
           pathnameToMatch = lastSegment;
@@ -1012,6 +972,13 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
     });
 
     if (match) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(
+          `[findRouteByRouteInfo] Matched route for ${routeInfo.pathname} in outlet ${parentPath ?? 'root'} with path="${
+            child.props.path ?? '(index)'
+          }"`
+        );
+      }
       matchedNode = child;
       break;
     }
@@ -1033,8 +1000,11 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
 }
 
 function matchComponent(node: React.ReactElement, pathname: string, forceExact?: boolean) {
+  const routePath: string | undefined = node?.props?.path;
+  const pathnameToMatch = derivePathnameToMatch(pathname, routePath);
+
   return matchPath({
-    pathname,
+    pathname: pathnameToMatch,
     componentProps: {
       ...node.props,
       end: forceExact,

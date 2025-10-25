@@ -73,6 +73,9 @@ const Main: React.FC<MainProps> = () => {
           <IonItem routerLink="/params/0">
             <IonLabel>Params</IonLabel>
           </IonItem>
+          <IonItem routerLink="/nested-params">
+            <IonLabel>Nested Params</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
