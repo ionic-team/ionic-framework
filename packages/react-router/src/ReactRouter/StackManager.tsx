@@ -7,7 +7,7 @@
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
 import { RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Navigate, Route } from 'react-router-dom';
 
 import { clonePageElement } from './clonePageElement';
 import { findRoutesNode } from './utils/findRoutesNode';
@@ -442,6 +442,25 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           leavingViewItem.mount = false;
         }
       } else if (enteringViewItem && !enteringViewItem.ionPageElement) {
+        const enteringRouteElement = enteringViewItem.reactElement?.props?.element;
+        const isNavigateElement = React.isValidElement(enteringRouteElement) && enteringRouteElement.type === Navigate;
+
+        if (isNavigateElement) {
+          /**
+           * `<Navigate />` components never render an IonPage. They perform an immediate
+           * history change instead, so waiting for `ionPageElement` would stall the redirect
+           * and repeatedly hide the leaving view. Treat this as a no-op transition and allow
+           * the follow-up navigation to proceed.
+           */
+          this.waitingForIonPage = false;
+          if (this.ionPageWaitTimeout) {
+            clearTimeout(this.ionPageWaitTimeout);
+            this.ionPageWaitTimeout = undefined;
+          }
+          this.pendingPageTransition = false;
+          return;
+        }
+
         /**
          * We have a view item but no page element yet. This can happen during
          * initial page load with nested routes where the view item is created
