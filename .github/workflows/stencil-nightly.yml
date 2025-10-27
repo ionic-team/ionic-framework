@@ -245,7 +245,7 @@ jobs:
   send-failure-messages:
     needs: [test-core-clean-build, test-core-lint, test-core-spec, verify-screenshots, verify-test-vue-e2e, verify-test-angular-e2e, verify-test-react-router-e2e, verify-test-react-e2e]
     runs-on: ubuntu-latest
-    if: ${{ !cancelled() && contains(needs.*.result, 'success') }}
+    if: ${{ !cancelled() && contains(needs.*.result, 'failure') }}
     steps:
       - name: Notify failure on Discord
         run: |
