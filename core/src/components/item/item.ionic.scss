@@ -7,7 +7,7 @@
 :host {
   --background: #{globals.$ion-bg-surface-default};
   --background-activated: #{globals.$ion-bg-select-default};
-  --background-focused: #{globals.$ion-primitives-neutral-200};
+  --background-focused: #{globals.$ion-bg-neutral-subtlest-press};
   --background-focused-opacity: 0;
   --border-color: #{globals.$ion-primitives-neutral-300};
   --border-style: #{globals.$ion-border-style-solid};
