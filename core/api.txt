@@ -179,7 +179,7 @@ ion-alert,css-prop,--width,ionic
 ion-alert,css-prop,--width,ios
 ion-alert,css-prop,--width,md
 
-ion-app,none
+ion-app,shadow
 ion-app,prop,mode,"ios" | "md",undefined,false,false
 ion-app,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-app,method,setFocus,setFocus(elements: HTMLElement[]) => Promise<void>
@@ -504,7 +504,7 @@ ion-card,css-prop,--color,ios
 ion-card,css-prop,--color,md
 ion-card,part,native
 
-ion-card-content,none
+ion-card-content,shadow
 ion-card-content,prop,mode,"ios" | "md",undefined,false,false
 ion-card-content,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
