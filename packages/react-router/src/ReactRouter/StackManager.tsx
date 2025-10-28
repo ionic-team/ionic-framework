@@ -304,6 +304,16 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         routeInfo,
         parentPath
       ) as React.ReactElement;
+      
+      if (enteringRoute && process.env.NODE_ENV !== 'production') {
+        const routeElement = enteringRoute.props?.element;
+        const isNavigate = React.isValidElement(routeElement) && routeElement.type === Navigate;
+        console.log(
+          `[StackManager] Found entering route for ${routeInfo.pathname} in outlet ${this.id}: path="${
+            enteringRoute.props?.path ?? '(index)'
+          }", isNavigate=${isNavigate}`
+        );
+      }
 
       // If this is a nested outlet (has an explicit ID) and no route matches,
       // it means this outlet shouldn't handle this route
@@ -452,12 +462,23 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
            * and repeatedly hide the leaving view. Treat this as a no-op transition and allow
            * the follow-up navigation to proceed.
            */
+          console.log(
+            `[StackManager] Detected Navigate element for ${enteringViewItem.id}, skipping ionPageElement wait`
+          );
           this.waitingForIonPage = false;
           if (this.ionPageWaitTimeout) {
             clearTimeout(this.ionPageWaitTimeout);
             this.ionPageWaitTimeout = undefined;
           }
           this.pendingPageTransition = false;
+          
+          // Unmount the leaving view immediately for replace actions
+          if (shouldUnmountLeavingViewItem && leavingViewItem) {
+            console.log(`[StackManager] Unmounting leaving view ${leavingViewItem.id} for Navigate redirect`);
+            leavingViewItem.mount = false;
+          }
+          
+          this.forceUpdate();
           return;
         }
 

@@ -3,11 +3,11 @@ import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
 import OutletPageManager from '../routing/OutletPageManager';
+import { generateId } from '../utils/generateId';
 
 import type { IonicReactProps } from './IonicReactProps';
 import { IonRouterOutletInner } from './inner-proxies';
 import { createForwardRef } from './utils';
-import { generateId } from '../utils/generateId';
 
 type Props = LocalJSX.IonRouterOutlet & {
   basePath?: string;

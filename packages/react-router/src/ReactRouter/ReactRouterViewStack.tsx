@@ -9,10 +9,11 @@ import type { RouteInfo, ViewItem } from '@ionic/react';
 import { IonRoute, ViewLifeCycleManager, ViewStacks } from '@ionic/react';
 import React from 'react';
 import type { PathMatch } from 'react-router';
-import { UNSAFE_RouteContext as RouteContext } from 'react-router-dom';
+import { Navigate, Route, UNSAFE_RouteContext as RouteContext } from 'react-router-dom';
 
 import { derivePathnameToMatch } from './utils/derivePathnameToMatch';
 import { matchPath } from './utils/matchPath';
+import { findRoutesNode } from './utils/findRoutesNode';
 
 const createDefaultMatch = (
   fullPathname: string,
@@ -51,11 +52,42 @@ const normalizePathnameForComparison = (value: string | undefined): string => {
   return withLeadingSlash.length > 1 && withLeadingSlash.endsWith('/') ? withLeadingSlash.slice(0, -1) : withLeadingSlash;
 };
 
-const resolveIndexRouteMatch = (viewItem: ViewItem, pathname: string): PathMatch<string> | null => {
+const computeRelativeToParent = (pathname: string, parentPath?: string): string | null => {
+  if (!parentPath) return null;
+  const normalizedParent = normalizePathnameForComparison(parentPath);
+  const normalizedPathname = normalizePathnameForComparison(pathname);
+
+  if (normalizedPathname === normalizedParent) {
+    return '';
+  }
+
+  const withSlash = normalizedParent === '/' ? '/' : normalizedParent + '/';
+  if (normalizedPathname.startsWith(withSlash)) {
+    return normalizedPathname.slice(withSlash.length);
+  }
+  return null;
+};
+
+const resolveIndexRouteMatch = (
+  viewItem: ViewItem,
+  pathname: string,
+  parentPath?: string
+): PathMatch<string> | null => {
   if (!viewItem.routeData?.childProps?.index) {
     return null;
   }
 
+  // Prefer computing against the parent path when available to align with RRv6 semantics
+  const relative = computeRelativeToParent(pathname, parentPath);
+  if (relative !== null) {
+    // Index routes match only when there is no remaining path
+    if (relative === '' || relative === '/') {
+      return createDefaultMatch(parentPath || pathname, viewItem.routeData.childProps);
+    }
+    return null;
+  }
+
+  // Fallback: use previously computed match base for equality check
   const previousMatch = viewItem.routeData?.match;
   if (!previousMatch) {
     return null;
@@ -197,12 +229,12 @@ export class ReactRouterViewStack extends ViewStacks {
    * - Wraps the route element in <Routes> to support nested routing and ensure remounting
    * - Adds a unique key to <Routes> so React Router remounts routes when switching
    */
-  private renderViewItem = (viewItem: ViewItem, routeInfo: RouteInfo) => {
+  private renderViewItem = (viewItem: ViewItem, routeInfo: RouteInfo, parentPath?: string) => {
     const routePath = viewItem.reactElement.props.path || '';
     let match = matchComponent(viewItem.reactElement, routeInfo.pathname);
 
     if (!match) {
-      const indexMatch = resolveIndexRouteMatch(viewItem, routeInfo.pathname);
+      const indexMatch = resolveIndexRouteMatch(viewItem, routeInfo.pathname, parentPath);
       if (indexMatch) {
         match = indexMatch;
       }
@@ -223,10 +255,19 @@ export class ReactRouterViewStack extends ViewStacks {
 
     // Special handling for Navigate components - they should unmount after redirecting
     const elementComponent = viewItem.reactElement?.props?.element;
-    if (elementComponent?.type?.name === 'Navigate') {
+    const isNavigateComponent =
+      React.isValidElement(elementComponent) &&
+      (elementComponent.type === Navigate ||
+        (typeof elementComponent.type === 'function' && elementComponent.type.name === 'Navigate'));
+
+    if (isNavigateComponent) {
+      console.log(
+        `[ReactRouterViewStack] Navigate component detected for ${viewItem.id}, match=${!!match}, mount=${viewItem.mount}`
+      );
       // Navigate components should only be mounted when they match
       // Once they redirect (no longer match), they should be removed completely
       if (!match && viewItem.mount) {
+        console.log(`[ReactRouterViewStack] Unmounting Navigate component ${viewItem.id} after redirect`);
         viewItem.mount = false;
         // Schedule removal of the Navigate view item after a short delay
         // This ensures the redirect completes before removal
@@ -369,6 +410,59 @@ export class ReactRouterViewStack extends ViewStacks {
   getChildrenToRender = (outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo) => {
     const viewItems = this.getViewItemsForOutlet(outletId);
 
+    // Determine parentPath for nested outlets to properly evaluate index routes
+    let parentPath: string | undefined = undefined;
+    try {
+      // Only attempt parent path computation for non-root outlets
+      if (outletId !== 'routerOutlet') {
+        const routesNode = findRoutesNode(ionRouterOutlet.props.children) ?? ionRouterOutlet.props.children;
+        const routeChildren = React.Children.toArray(routesNode).filter(
+          (child): child is React.ReactElement => React.isValidElement(child) && child.type === Route
+        );
+
+        const hasRelativeRoutes = routeChildren.some((route) => {
+          const path = (route.props as any).path as string | undefined;
+          return path && !path.startsWith('/') && path !== '*';
+        });
+        const hasIndexRoute = routeChildren.some((route) => !!(route.props as any).index);
+
+        if (hasRelativeRoutes || hasIndexRoute) {
+          const segments = routeInfo.pathname.split('/').filter(Boolean);
+          for (let i = 1; i <= segments.length; i++) {
+            const testParentPath = '/' + segments.slice(0, i).join('/');
+            const testRemainingPath = segments.slice(i).join('/');
+
+            const couldMatchRemaining = routeChildren.some((route) => {
+              const props = route.props as any;
+              const routePath = props.path as string | undefined;
+              const isIndex = !!props.index;
+
+              // Index routes only match at the outlet root
+              if (isIndex) {
+                return testRemainingPath === '' || testRemainingPath === '/';
+              }
+
+              // Treat wildcard-only routes as matching only at the outlet root
+              const isWildcardOnly = routePath === '*' || routePath === '/*';
+              if (isWildcardOnly) {
+                return testRemainingPath === '' || testRemainingPath === '/';
+              }
+
+              const m = matchPath({ pathname: testRemainingPath, componentProps: props });
+              return !!m;
+            });
+
+            if (couldMatchRemaining) {
+              parentPath = testParentPath;
+              break;
+            }
+          }
+        }
+      }
+    } catch (e) {
+      // Non-fatal: if we fail to compute parentPath, fall back to previous behavior
+    }
+
     // Sync child elements with stored viewItems (e.g. to reflect new props)
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
       // Ensure the child is a valid React element since we
@@ -395,7 +489,7 @@ export class ReactRouterViewStack extends ViewStacks {
     });
 
     // Render all view items using renderViewItem
-    const renderedItems = uniqueViewItems.map((viewItem) => this.renderViewItem(viewItem, routeInfo));
+    const renderedItems = uniqueViewItems.map((viewItem) => this.renderViewItem(viewItem, routeInfo, parentPath));
     return renderedItems;
   };
 
@@ -527,7 +621,7 @@ export class ReactRouterViewStack extends ViewStacks {
       let result = v.reactElement ? matchComponent(v.reactElement, pathname) : null;
 
       if (!result) {
-        const indexMatch = resolveIndexRouteMatch(v, pathname);
+        const indexMatch = resolveIndexRouteMatch(v, pathname, undefined);
         if (indexMatch) {
           match = indexMatch;
           viewItem = v;
@@ -574,7 +668,7 @@ export class ReactRouterViewStack extends ViewStacks {
       const isIndexRoute = !!childProps.index;
 
       if (isIndexRoute) {
-        const indexMatch = resolveIndexRouteMatch(v, pathname);
+        const indexMatch = resolveIndexRouteMatch(v, pathname, undefined);
         if (indexMatch) {
           match = indexMatch;
           viewItem = v;
