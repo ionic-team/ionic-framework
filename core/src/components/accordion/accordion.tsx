@@ -55,7 +55,7 @@ export class Accordion implements ComponentInterface {
    * This prevents the accordion from animating when
    * it starts expanded or collapsed.
    */
-  private skipNextAnimation = false;
+  private skipNextAnimation = true;
 
   @Element() el?: HTMLElement;
 
