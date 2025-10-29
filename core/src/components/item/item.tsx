@@ -407,6 +407,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'item-control-needs-pointer-cursor': firstInteractiveNeedsPointerCursor,
             'item-disabled': disabled,
             'in-list': inList,
+            'in-select-modal': hostContext('ion-select-modal', this.el),
             'item-multiple-inputs': this.multipleInputs,
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
