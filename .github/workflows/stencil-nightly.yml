@@ -225,3 +225,35 @@ jobs:
       - name: Check build matrix status
         if: ${{ needs.test-react-e2e.result != 'success' }}
         run: exit 1
+
+  send-success-messages:
+    needs: [test-core-clean-build, test-core-lint, test-core-spec, verify-screenshots, verify-test-vue-e2e, verify-test-angular-e2e, verify-test-react-router-e2e, verify-test-react-e2e]
+    runs-on: ubuntu-latest
+    if: ${{ !cancelled() && contains(needs.*.result, 'success') }}
+    steps:
+      - name: Notify success on Discord
+        run: |
+          curl -H "Content-Type:application/json" \
+          -d '{"embeds": [{"title": "✅ Workflow ${{github.workflow}} #${{github.run_number}} finished successfully", "color": 65280, "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"}]}' \
+          ${{secrets.DISCORD_NOTIFY_WEBHOOK}}
+      - name: Notify success on Slack
+        run: |
+          curl -H "Content-Type:application/json" \
+          -d '{"title": "✅ Workflow ${{github.workflow}} #${{github.run_number}} finished successfully", "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"}' \
+          ${{secrets.SLACK_NOTIFY_SUCCESS_WEBHOOK}}
+
+  send-failure-messages:
+    needs: [test-core-clean-build, test-core-lint, test-core-spec, verify-screenshots, verify-test-vue-e2e, verify-test-angular-e2e, verify-test-react-router-e2e, verify-test-react-e2e]
+    runs-on: ubuntu-latest
+    if: ${{ !cancelled() && contains(needs.*.result, 'failure') }}
+    steps:
+      - name: Notify failure on Discord
+        run: |
+          curl -H "Content-Type:application/json" \
+          -d '{"content": "Alerting <@&1347593178580254761>!", "embeds": [{"title": "❌ Workflow ${{github.workflow}} #${{github.run_number}} failed", "color": 16711680, "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"}]}' \
+          ${{secrets.DISCORD_NOTIFY_WEBHOOK}}
+      - name: Notify failure on Slack
+        run: |
+          curl -H "Content-Type:application/json" \
+          -d '{"title": "❌ Workflow ${{github.workflow}} #${{github.run_number}} failed", "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"}' \
+          ${{secrets.SLACK_NOTIFY_FAILURE_WEBHOOK}}
