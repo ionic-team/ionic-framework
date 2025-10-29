@@ -112,7 +112,8 @@ slot[name="end"]::slotted(*) {
   --inner-border-width: #{globals.$ion-border-size-0};
 }
 
-// Inside a Select Modal
+// Item in Select Modal
+// --------------------------------------------------
 :host(.in-select-modal) {
   --background-focused: #{globals.$ion-bg-neutral-subtlest-press};
   --background-focused-opacity: 0;
