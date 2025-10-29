@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
-import { compareOptions, createNotchController, isOptionSelected } from '@utils/forms';
+import { compareOptions, createNotchController, isOptionSelected, checkInvalidState } from '@utils/forms';
 import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -64,6 +64,7 @@ export class Select implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private nativeWrapperEl: HTMLElement | undefined;
   private notchSpacerEl: HTMLElement | undefined;
+  private validationObserver?: MutationObserver;
 
   private notchController?: NotchController;
 
@@ -85,6 +86,8 @@ export class Select implements ComponentInterface {
    * Track validation state for proper aria-live announcements.
    */
   @State() isInvalid = false;
+
+  @State() private hintTextID?: string;
 
   /**
    * The text to display on the cancel button.
@@ -304,12 +307,50 @@ export class Select implements ComponentInterface {
       forceUpdate(this);
     });
 
-    // Always set initial state.
-    this.isInvalid = this.checkInvalidState();
+    // Watch for class changes to update validation state.
+    if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
+      this.validationObserver = new MutationObserver(() => {
+        const newIsInvalid = checkInvalidState(this.el);
+        if (this.isInvalid !== newIsInvalid) {
+          this.isInvalid = newIsInvalid;
+          /**
+           * Screen readers tend to announce changes
+           * to `aria-describedby` when the attribute
+           * is changed during a blur event for a
+           * native form control.
+           * However, the announcement can be spotty
+           * when using a non-native form control
+           * and `forceUpdate()`.
+           * This is due to `forceUpdate()` internally
+           * rescheduling the DOM update to a lower
+           * priority queue regardless if it's called
+           * inside a Promise or not, thus causing
+           * the screen reader to potentially miss the
+           * change.
+           * By using a State variable inside a Promise,
+           * it guarantees a re-render immediately at
+           * a higher priority.
+           */
+          Promise.resolve().then(() => {
+            this.hintTextID = this.getHintTextID();
+          });
+        }
+      });
+
+      this.validationObserver.observe(el, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    }
+
+    // Always set initial state
+    this.isInvalid = checkInvalidState(this.el);
   }
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+
+    this.hintTextID = this.getHintTextID();
   }
 
   componentDidLoad() {
@@ -335,6 +376,12 @@ export class Select implements ComponentInterface {
     if (this.notchController) {
       this.notchController.destroy();
       this.notchController = undefined;
+    }
+
+    // Clean up validation observer to prevent memory leaks.
+    if (this.validationObserver) {
+      this.validationObserver.disconnect();
+      this.validationObserver = undefined;
     }
   }
 
@@ -876,14 +923,7 @@ export class Select implements ComponentInterface {
   };
 
   private onBlur = () => {
-    const newIsInvalid = this.checkInvalidState();
     this.hasFocus = false;
-
-    if (this.isInvalid !== newIsInvalid) {
-      this.isInvalid = newIsInvalid;
-      // Force a re-render to update aria-describedby immediately.
-      forceUpdate(this);
-    }
 
     this.ionBlur.emit();
   };
@@ -1071,8 +1111,8 @@ export class Select implements ComponentInterface {
         aria-label={this.ariaLabel}
         aria-haspopup="dialog"
         aria-expanded={`${isExpanded}`}
-        aria-describedby={this.getHintTextID()}
-        aria-invalid={this.getHintTextID() === this.errorTextId}
+        aria-describedby={this.hintTextID}
+        aria-invalid={this.isInvalid ? 'true' : undefined}
         aria-required={`${required}`}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
@@ -1103,7 +1143,7 @@ export class Select implements ComponentInterface {
 
     return [
       <div id={helperTextId} class="helper-text" part="supporting-text helper-text" aria-live="polite">
-        {isInvalid ? helperText : null}
+        {!isInvalid ? helperText : null}
       </div>,
       <div id={errorTextId} class="error-text" part="supporting-text error-text" role="alert">
         {isInvalid ? errorText : null}
@@ -1128,16 +1168,6 @@ export class Select implements ComponentInterface {
     }
 
     return <div class="select-bottom">{this.renderHintText()}</div>;
-  }
-
-  /**
-   * Checks if the input is in an invalid state based on Ionic validation classes
-   */
-  private checkInvalidState(): boolean {
-    const hasIonTouched = this.el.classList.contains('ion-touched');
-    const hasIonInvalid = this.el.classList.contains('ion-invalid');
-
-    return hasIonTouched && hasIonInvalid;
   }
 
   render() {

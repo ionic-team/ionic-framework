@@ -63,8 +63,8 @@
           <div>
             <h2>Required Field</h2>
             <ion-select
-              id="alert-select"
-              label="Alert"
+              id="fruits-select"
+              label="Fruits"
               placeholder="Select one"
               interface="alert"
               helper-text="You must select an option to continue"
@@ -79,7 +79,17 @@
 
           <div>
             <h2>Optional Field (No Validation)</h2>
-            <ion-checkbox id="optional-checkbox" helper-text="You can skip this field">Optional Checkbox</ion-checkbox>
+            <ion-select
+              id="optional-select"
+              label="Colors"
+              placeholder="Select one"
+              interface="alert"
+              helper-text="You can skip this field"
+            >
+              <ion-select-option value="red">Red</ion-select-option>
+              <ion-select-option value="blue">Blue</ion-select-option>
+              <ion-select-option value="green">Green</ion-select-option>
+            </ion-select>
           </div>
         </div>
 
@@ -92,7 +102,7 @@
 
     <script>
       // Simple validation logic
-      const checkboxes = document.querySelectorAll('ion-checkbox');
+      const selects = document.querySelectorAll('ion-select');
       const submitBtn = document.getElementById('submit-btn');
       const resetBtn = document.getElementById('reset-btn');
 
@@ -101,27 +111,27 @@
 
       // Validation functions
       const validators = {
-        'terms-checkbox': (checked) => {
-          return checked === true;
+        'fruits-select': (value) => {
+          return value !== '' && value !== undefined;
         },
-        'optional-checkbox': () => true, // Always valid
+        'optional-select': () => true, // Always valid
       };
 
-      function validateField(checkbox) {
-        const checkboxId = checkbox.id;
-        const checked = checkbox.checked;
-        const isValid = validators[checkboxId] ? validators[checkboxId](checked) : true;
+      function validateField(select) {
+        const selectId = select.id;
+        const value = select.value;
+        const isValid = validators[selectId] ? validators[selectId](value) : true;
 
         // Only show validation state if field has been touched
-        if (touchedFields.has(checkboxId)) {
+        if (touchedFields.has(selectId)) {
           if (isValid) {
-            checkbox.classList.remove('ion-invalid');
-            checkbox.classList.add('ion-valid');
+            select.classList.remove('ion-invalid');
+            select.classList.add('ion-valid');
           } else {
-            checkbox.classList.remove('ion-valid');
-            checkbox.classList.add('ion-invalid');
+            select.classList.remove('ion-valid');
+            select.classList.add('ion-invalid');
           }
-          checkbox.classList.add('ion-touched');
+          select.classList.add('ion-touched');
         }
 
         return isValid;
@@ -129,9 +139,9 @@
 
       function validateForm() {
         let allValid = true;
-        checkboxes.forEach((checkbox) => {
-          if (checkbox.id !== 'optional-checkbox') {
-            const isValid = validateField(checkbox);
+        selects.forEach((select) => {
+          if (select.id !== 'optional-select') {
+            const isValid = validateField(select);
             if (!isValid) {
               allValid = false;
             }
@@ -142,25 +152,25 @@
       }
 
       // Add event listeners
-      checkboxes.forEach((checkbox) => {
+      selects.forEach((select) => {
         // Mark as touched on blur
-        checkbox.addEventListener('ionBlur', (e) => {
-          console.log('Blur event on:', checkbox.id);
-          touchedFields.add(checkbox.id);
-          validateField(checkbox);
+        select.addEventListener('ionBlur', (e) => {
+          console.log('Blur event on:', select.id);
+          touchedFields.add(select.id);
+          validateField(select);
           validateForm();
 
-          const isInvalid = checkbox.classList.contains('ion-invalid');
+          const isInvalid = select.classList.contains('ion-invalid');
           if (isInvalid) {
-            console.log('Field marked invalid:', checkbox.label, checkbox.errorText);
+            console.log('Field marked invalid:', select.label, select.errorText);
           }
         });
 
         // Validate on change
-        checkbox.addEventListener('ionChange', (e) => {
-          console.log('Change event on:', checkbox.id);
-          if (touchedFields.has(checkbox.id)) {
-            validateField(checkbox);
+        select.addEventListener('ionChange', (e) => {
+          console.log('Change event on:', select.id);
+          if (touchedFields.has(select.id)) {
+            validateField(select);
             validateForm();
           }
         });
@@ -168,9 +178,9 @@
 
       // Reset button
       resetBtn.addEventListener('click', () => {
-        checkboxes.forEach((checkbox) => {
-          checkbox.checked = false;
-          checkbox.classList.remove('ion-valid', 'ion-invalid', 'ion-touched');
+        selects.forEach((select) => {
+          select.value = '';
+          select.classList.remove('ion-valid', 'ion-invalid', 'ion-touched');
         });
         touchedFields.clear();
         submitBtn.disabled = true;
