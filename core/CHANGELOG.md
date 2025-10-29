@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.8](https://github.com/ionic-team/ionic-framework/compare/v8.7.7...v8.7.8) (2025-10-29)
+
+
+### Bug Fixes
+
+* **checkbox, toggle:** fire ionFocus and ionBlur ([#30733](https://github.com/ionic-team/ionic-framework/issues/30733)) ([54a1c86](https://github.com/ionic-team/ionic-framework/commit/54a1c86d6a5d533b0c8c2d18edc62454a7c17bab))
+
+
+
+
+
 ## [8.7.7](https://github.com/ionic-team/ionic-framework/compare/v8.7.6...v8.7.7) (2025-10-15)
 
 
