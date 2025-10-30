@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, h, forceUpdate } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, h, forceUpdate, Build } from '@stencil/core';
+import { checkInvalidState } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -35,6 +36,7 @@ export class Checkbox implements ComponentInterface {
   private helperTextId = `${this.inputId}-helper-text`;
   private errorTextId = `${this.inputId}-error-text`;
   private inheritedAttributes: Attributes = {};
+  private validationObserver?: MutationObserver;
 
   @Element() el!: HTMLIonCheckboxElement;
 
@@ -125,6 +127,8 @@ export class Checkbox implements ComponentInterface {
    */
   @State() isInvalid = false;
 
+  @State() private hintTextID?: string;
+
   /**
    * Emitted when the checked property has changed as a result of a user action such as a click.
    *
@@ -143,7 +147,45 @@ export class Checkbox implements ComponentInterface {
   @Event() ionBlur!: EventEmitter<void>;
 
   connectedCallback() {
-    // Always set initial state.
+    const { el } = this;
+
+    // Watch for class changes to update validation state.
+    if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
+      this.validationObserver = new MutationObserver(() => {
+        const newIsInvalid = checkInvalidState(el);
+        if (this.isInvalid !== newIsInvalid) {
+          this.isInvalid = newIsInvalid;
+          /**
+           * Screen readers tend to announce changes
+           * to `aria-describedby` when the attribute
+           * is changed during a blur event for a
+           * native form control.
+           * However, the announcement can be spotty
+           * when using a non-native form control
+           * and `forceUpdate()`.
+           * This is due to `forceUpdate()` internally
+           * rescheduling the DOM update to a lower
+           * priority queue regardless if it's called
+           * inside a Promise or not, thus causing
+           * the screen reader to potentially miss the
+           * change.
+           * By using a State variable inside a Promise,
+           * it guarantees a re-render immediately at
+           * a higher priority.
+           */
+          Promise.resolve().then(() => {
+            this.hintTextID = this.getHintTextID();
+          });
+        }
+      });
+
+      this.validationObserver.observe(el, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    }
+
+    // Always set initial state
     this.isInvalid = this.checkInvalidState();
   }
 
@@ -151,6 +193,14 @@ export class Checkbox implements ComponentInterface {
     this.inheritedAttributes = {
       ...inheritAriaAttributes(this.el),
     };
+  }
+
+  disconnectedCallback() {
+    // Clean up validation observer to prevent memory leaks.
+    if (this.validationObserver) {
+      this.validationObserver.disconnect();
+      this.validationObserver = undefined;
+    }
   }
 
   /** @internal */
@@ -301,7 +351,7 @@ export class Checkbox implements ComponentInterface {
       <Host
         role="checkbox"
         aria-checked={indeterminate ? 'mixed' : `${checked}`}
-        aria-describedby={this.getHintTextID()}
+        aria-describedby={this.hintTextID}
         aria-invalid={this.isInvalid ? 'true' : undefined}
         aria-labelledby={hasLabelContent ? this.inputLabelId : null}
         aria-label={inheritedAttributes['aria-label'] || null}
