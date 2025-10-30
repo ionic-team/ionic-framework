@@ -59,39 +59,56 @@
 :host(.button-outline) {
   --border-width: #{globals.$ion-border-size-025};
   --border-style: #{globals.$ion-border-style-solid};
-  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-activated: var(--ion-color-subtle-shade, #{globals.current-color(shade, $subtle: true)});
   --background-focused: transparent;
-  --background-hover: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-hover: var(--ion-color-subtle-shade, #{globals.current-color(shade, $subtle: true)});
   --background-hover-opacity: 1;
-  --border-color: #{globals.ion-color(primary, base)};
-  --color: #{globals.ion-color(primary, base)};
+  --border-color: var(--ion-color-base, #{globals.ion-color(primary, base)});
+  --color: var(--ion-color-base, #{globals.ion-color(primary, base)});
   --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
 }
+
+// Provide fallbacks for ion-color-base for all colors
+:host(.button-outline.ion-color.ion-color-warning){
+  .button-native {
+    --ion-color-base: #{globals.$ion-text-warning};
+  }
+  ion-ripple-effect {
+    --ion-color-base: var(--ion-color-base, #{globals.current-color(shade, $subtle: true)});
+  }
+} 
+
 
 // Clear Button
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-activated: var(--ion-color-subtle-shade, #{globals.current-color( shade, $subtle: true)});
   --background-focused: transparent;
-  --background-hover: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-hover: var(--ion-color-subtle-shade, #{globals.current-color( shade, $subtle: true)});
   --background-hover-opacity: 1;
   --color: #{globals.ion-color(primary, foreground)};
   --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
 }
 
+:host(.button-clear.ion-color) {
+  .button-native {
+    --ion-color-base: var(--ion-color-foreground, #{globals.current-color(foreground)});
+  }
+}
+
 // Ripple Effect
 // -------------------------------------------------------------------------------
 
 :host(.button-solid.ion-color) ion-ripple-effect {
-  color: globals.current-color(shade);
+  color: var(--ion-color-shade, #{globals.ion-color(primary, shade)});
 }
 
 :host(.button-outline.ion-color) ion-ripple-effect,
 :host(.button-clear.ion-color) ion-ripple-effect {
-  color: globals.$ion-primitives-neutral-200;
+  color: var(--ion-color-subtle-shade, #{globals.current-color(shade, $subtle: true)});
 }
 
 // Button Sizes
