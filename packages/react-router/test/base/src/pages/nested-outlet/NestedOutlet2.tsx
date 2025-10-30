@@ -124,8 +124,8 @@ const Home: React.FC = () => {
 
 const NestedOutlet2: React.FC = () => (
   <IonRouterOutlet id="main">
-    <Route path="/nested-outlet2/list" element={<ListPage />} />
-    <Route path="/nested-outlet2/home" element={<HomePage />} />
+    <Route path="/nested-outlet2/list/*" element={<ListPage />} />
+    <Route path="/nested-outlet2/home/*" element={<HomePage />} />
     <Route
       path="/nested-outlet2"
       element={<Navigate to="/nested-outlet2/home" replace />}

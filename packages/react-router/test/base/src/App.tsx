@@ -51,9 +51,9 @@ const App: React.FC = () => {
           <Route path="/routing/*" element={<Routing />} />
           <Route path="/dynamic-routes/*" element={<DynamicRoutes />} />
           <Route path="/multiple-tabs" element={<MultipleTabs />} />
-          <Route path="/dynamic-tabs" element={<DynamicTabs />} />
-          <Route path="/nested-outlet" element={<NestedOutlet />} />
-          <Route path="/nested-outlet2" element={<NestedOutlet2 />} />
+          <Route path="/dynamic-tabs/*" element={<DynamicTabs />} />
+          <Route path="/nested-outlet/*" element={<NestedOutlet />} />
+          <Route path="/nested-outlet2/*" element={<NestedOutlet2 />} />
           <Route path="/replace-action" element={<ReplaceAction />} />
           <Route path="/tab-context" element={<TabsContext />} />
           <Route path="/outlet-ref" element={<OutletRef />} />

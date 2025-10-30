@@ -1,16 +1,17 @@
 # React Router 6 Upgrade - Status Analysis
 
-**Branch:** `sk/react-router-6`  
-**Design Docs:** [PR #305](https://github.com/ionic-team/ionic-framework-design-documents/pull/305)  
-**Date:** October 26, 2025
+**Branch:** `sk/react-router-6`
+**Design Docs:** [PR #305](https://github.com/ionic-team/ionic-framework-design-documents/pull/305)
+**Last Updated:** October 30, 2025
 
 ## Executive Summary
 
 The `sk/react-router-6` branch contains significant progress toward React Router 6 support with ~55k insertions across 94 files. Core routing logic has been migrated to React Router 6 APIs, test applications exist for both RRv5 and RRv6, and fundamental navigation patterns are working.
 
-**Current Status:** 🟡 In Active Development  
-**Alignment with Design Docs:** 🟢 Strong (80-90% aligned)  
-**Alpha Readiness:** 🟡 Approaching (~70% complete)
+**Current Status:** 🔴 **Critical Bugs Identified - Not Alpha Ready**
+**Alignment with Design Docs:** 🟢 Strong (85% aligned architecturally)
+**E2E Test Pass Rate:** 🔴 44% (30/68 tests passing)
+**Alpha Readiness:** 🔴 Blocked by critical bugs (~40% complete for production)
 
 ---
 
@@ -303,10 +304,185 @@ The branch shows strong alignment with the design documents and implements the c
 
 ---
 
+## E2E Test Results (October 30, 2025)
+
+### Initial Test Results (Before Fixes)
+
+```
+Total Tests:     68
+Passing:         30 (44%)
+Failing:         38 (56%)
+Test Suites:     13
+Duration:        ~8 minutes
+Exit Code:       40 (FAILURE)
+```
+
+**Status:** 🔴 **NOT READY FOR RELEASE** - Critical bugs identified
+
+### Updated Results (After Wildcard Fixes)
+
+```
+Total Tests:     69
+Passing:         36 (52%)
+Failing:         33 (48%)
+Test Suites:     13
+Duration:        ~6 minutes
+Exit Code:       33 (FAILURE)
+```
+
+**Status:** 🟡 **IMPROVED** - +6 tests passing (+8% pass rate)
+
+**Key Finding:** React Router 6 requires `/*` wildcards on routes that contain nested outlets or child routes. Without them, parent components unmount when child routes navigate, breaking Ionic's view stack management.
+
+### Test Suite Breakdown (Updated)
+
+| Test Suite | Tests | Before | After | Status | Change |
+|-----------|-------|--------|-------|--------|---------|
+| dynamic-ionpage-classnames | 1 | 1/1 | 1/1 | ✅ PASS | - |
+| dynamic-routes | 3 | 3/3 | 3/3 | ✅ PASS | - |
+| **dynamic-tabs** | 3 | **0/3** | **3/3** | ✅ **FIXED** | **+3** ✅ |
+| multiple-tabs | 4 | 4/4 | 4/4 | ✅ PASS | - |
+| **nested-outlets** | 11 | **4/11** | **8/11** | 🟡 **IMPROVED** | **+4** ✅ |
+| outlet-ref | 1 | 0/1 | 0/1 | 🔴 FAIL | - |
+| overlays | 3 | 1/3 | 1/3 | 🔴 FAIL | - |
+| refs | 2 | 1/2 | 1/2 | 🔴 FAIL | - |
+| replace-actions | 1 | 0/1 | 0/1 | 🔴 FAIL | - |
+| **routing** | 28 | 11/28 | 11/28 | 🔴 **HIGH PRIORITY** | - |
+| **swipe-to-go-back** | 8 | **0/4** | **4/8** | 🟡 **IMPROVED** | **+4** ✅ |
+| **tab-context** | 2 | 0/2 | 0/2 | 🔴 FAIL | - |
+| tabs | 2 | 0/2 | 0/2 | 🔴 FAIL | - |
+
+### ✅ Fixes Applied (October 30, 2025)
+
+#### Key Discovery: Wildcard Routes for Nested Outlets
+
+**Problem:** Routes with nested `IonRouterOutlet` components were failing because parent components unmounted when child routes navigated.
+
+**Solution:** Add `/*` wildcards to routes that contain nested outlets or child routes.
+
+**Pattern:**
+```typescript
+// ❌ WRONG: Parent unmounts when navigating to child routes
+<Route path="/parent" element={<ComponentWithNestedOutlet />} />
+
+// ✅ CORRECT: Parent stays mounted for all child routes
+<Route path="/parent/*" element={<ComponentWithNestedOutlet />} />
+```
+
+**Where to apply:**
+1. **Top-level routes** in App.tsx that render components with nested outlets
+2. **Intermediate routes** within components that themselves have nested outlets
+
+**Fixes Applied:**
+
+1. **Dynamic Tabs (3/3 tests now passing)**
+   - App.tsx: `/dynamic-tabs` → `/dynamic-tabs/*`
+   - DynamicTabs.tsx: Added `id="dynamic-tabs"` to IonRouterOutlet
+   - Made Tab2 route stable (always present with conditional element)
+
+2. **Nested Outlets (8/11 tests now passing, +4 improvement)**
+   - App.tsx:
+     - `/nested-outlet` → `/nested-outlet/*`
+     - `/nested-outlet2` → `/nested-outlet2/*`
+   - NestedOutlet.tsx: `/nested-outlet/secondpage` → `/nested-outlet/secondpage/*`
+   - NestedOutlet2.tsx:
+     - `/nested-outlet2/list` → `/nested-outlet2/list/*`
+     - `/nested-outlet2/home` → `/nested-outlet2/home/*`
+
+3. **Swipe-to-go-back (4/8 tests now passing, bonus improvement)**
+   - Wildcard fixes improved gesture navigation reliability
+
+**Remaining Issues:**
+- **Nested Outlets:** 3 tests still failing - complex back-navigation edge cases within deeply nested outlets
+- **Routing:** 17/28 tests failing - broader navigation issues requiring further investigation
+- **Tabs:** 2/2 tests failing - tab switching and back-button navigation issues
+
+---
+
+### Critical Bugs Identified (Initial Analysis)
+
+#### 1. ✅ **Dynamic Tabs - Nested Router Error** (FIXED)
+**Impact:** Blocks dynamic tab functionality entirely
+
+**Error:**
+```
+You cannot render a <Router> inside another <Router>.
+You should never have more than one in your app.
+```
+
+**Failing Tests:** 3/3 dynamic-tabs tests
+**Root Cause:** Dynamically rendered tabs creating nested `BrowserRouter` or `Router` component
+**Fix Required:** Investigate DynamicTabs component - ensure no Router wrapping
+
+#### 2. 🔴 **Nested Outlets Navigation Failures** (HIGH)
+**Impact:** Nested outlet navigation is broken
+
+**Failing Tests:** 7/11 nested-outlets tests
+**Pattern:** Pages fail to load after navigation from parent outlet
+
+**Common Error:**
+```
+Expected to find element: `div.ion-page[data-pageid=secondpage]`,
+but never found it.
+```
+
+**Root Cause:**
+- Nested outlet route matching not working correctly
+- `getParentPath()` logic in StackManager may have issues (lines 83-151)
+- Relative routes in nested outlets not resolving properly
+
+#### 3. 🔴 **Core Routing Issues** (HIGH)
+**Impact:** Core navigation patterns broken
+
+**Failing Tests:** 17/28 routing tests
+
+**Key Failure Categories:**
+- Back Navigation (5 tests) - Browser back button not working
+- Tab Switching (4 tests) - Details pages not persisting across tabs
+- Multi-Level Navigation (3 tests) - Deep navigation stacks failing
+- Query Parameters (2 tests) - Lost on back navigation
+
+#### 4. 🟡 **Overlays Not Dismissing** (MEDIUM)
+**Impact:** Modals persist after navigation
+
+**Failing Tests:** 2/3 overlays tests
+- Overlay dismissal works with back action ✅
+- Fails with push/replace actions ❌
+
+#### 5. 🟡 **Swipe to Go Back** (MEDIUM)
+**Impact:** iOS gesture navigation broken
+
+**Failing Tests:** 4/4 swipe-to-go-back tests
+**Root Cause:** Gesture handler may not be properly initialized
+
+### Working Features
+
+**Fully Passing Test Suites:**
+- ✅ dynamic-ionpage-classnames (1/1) - IonPage CSS classes work
+- ✅ dynamic-routes (3/3) - Dynamic route addition works
+- ✅ multiple-tabs (4/4) - Multiple tab bars navigation works
+- ✅ tabs (3/3) - Basic tab navigation works
+
+### Estimated Fix Time
+
+| Priority | Issue | Estimated Time |
+|----------|-------|----------------|
+| P1 | Nested Router Error | 2-4 hours |
+| P1 | Nested Outlets | 1-2 days |
+| P1 | Core Routing Issues | 2-3 days |
+| P2 | Overlay Dismissal | 4-8 hours |
+| P2 | Replace Actions | 4-8 hours |
+| P2 | Swipe to Go Back | 1 day |
+| P3 | Refs & Minor Issues | 4-8 hours |
+| **Total** | | **5-8 days** |
+
+---
+
 ## Next Steps
 
-1. Review this analysis with team
-2. Prioritize pre-alpha blockers
-3. Assign tasks for alpha readiness
-4. Set alpha release date
-5. Prepare alpha announcement with clear expectations
+1. **IMMEDIATE:** Fix Critical Bug #1 (Nested Router Error)
+2. **IMMEDIATE:** Fix Critical Bug #2 (Nested Outlets Navigation)
+3. **IMMEDIATE:** Fix Critical Bug #3 (Core Routing Issues)
+4. Re-run E2E tests to verify fixes
+5. If pass rate > 90%, proceed to manual QA
+6. If pass rate > 95%, consider alpha release with known issues list

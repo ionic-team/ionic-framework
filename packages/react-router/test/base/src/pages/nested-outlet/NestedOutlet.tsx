@@ -81,7 +81,7 @@ const FirstPage: React.FC = () => {
 const NestedOutlet: React.FC = () => (
   <IonRouterOutlet>
     <Route path="/nested-outlet" element={<FirstPage />} />
-    <Route path="/nested-outlet/secondpage" element={<SecondPage />} />
+    <Route path="/nested-outlet/secondpage/*" element={<SecondPage />} />
   </IonRouterOutlet>
 );
 
