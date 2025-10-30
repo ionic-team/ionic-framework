@@ -49,7 +49,9 @@ import type {
  *
  * @part button - Any button element that is displayed inside of the toast.
  * @part button cancel - Any button element with role "cancel" that is displayed inside of the toast.
- * @part container - The element that wraps all child elements.
+ * @part wrapper - The outer wrapper for the toast overlay.
+ * @part container - Groups the icon, content, and buttons.
+ * @part content - The live region that contains the header and message.
  * @part header - The header text of the toast.
  * @part message - The body text of the toast.
  * @part icon - The icon that appears next to the toast content.
@@ -727,7 +729,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
         })}
         onIonToastWillDismiss={this.dispatchCancelHandler}
       >
-        <div class={wrapperClass}>
+        <div class={wrapperClass} part="wrapper">
           <div class="toast-container" part="container">
             {this.renderButtons(startButtons, 'start')}
 
