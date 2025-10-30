@@ -1,6 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
 
-import type { AccordionGroupChangeEventDetail } from '../../accordion-group/accordion-group-interface';
 import { AccordionGroup } from '../../accordion-group/accordion-group';
 import { Item } from '../../item/item';
 import { Accordion } from '../accordion';
@@ -218,17 +217,10 @@ it('should not animate when initial value is set before load', async () => {
     </ion-accordion>
   `;
 
-  const details: AccordionGroupChangeEventDetail[] = [];
-  accordionGroup.addEventListener('ionValueChange', (event: CustomEvent<AccordionGroupChangeEventDetail>) => {
-    details.push(event.detail);
-  });
-
   accordionGroup.value = 'first';
   page.body.appendChild(accordionGroup);
 
   await page.waitForChanges();
-
-  expect(details[0]?.initial).toBe(true);
 
   const firstAccordion = accordionGroup.querySelector('ion-accordion[value="first"]')!;
 
@@ -253,19 +245,11 @@ it('should not animate when initial value is set after load', async () => {
     </ion-accordion>
   `;
 
-  const details: AccordionGroupChangeEventDetail[] = [];
-  accordionGroup.addEventListener('ionValueChange', (event: CustomEvent<AccordionGroupChangeEventDetail>) => {
-    details.push(event.detail);
-  });
-
   page.body.appendChild(accordionGroup);
   await page.waitForChanges();
 
   accordionGroup.value = 'first';
   await page.waitForChanges();
-
-  const firstDetail = details.find((detail) => detail.value === 'first');
-  expect(firstDetail?.initial).toBe(true);
 
   const firstAccordion = accordionGroup.querySelector('ion-accordion[value="first"]')!;
 
@@ -273,7 +257,7 @@ it('should not animate when initial value is set after load', async () => {
   expect(firstAccordion.classList.contains('accordion-expanding')).toEqual(false);
 });
 
-it('should animate when accordion is first opened by user', async () => {
+it('should not have animated class on first expansion', async () => {
   const page = await newSpecPage({
     components: [Item, Accordion, AccordionGroup],
     html: `
@@ -287,20 +271,14 @@ it('should animate when accordion is first opened by user', async () => {
   });
 
   const accordionGroup = page.body.querySelector('ion-accordion-group')!;
+  const firstAccordion = page.body.querySelector('ion-accordion[value="first"]')!;
 
-  const details: AccordionGroupChangeEventDetail[] = [];
-  accordionGroup.addEventListener('ionValueChange', (event: CustomEvent<AccordionGroupChangeEventDetail>) => {
-    details.push(event.detail);
-  });
-
-  await accordionGroup.requestAccordionToggle('first', true);
+  // First expansion should not have the animated class
+  accordionGroup.value = 'first';
   await page.waitForChanges();
 
-  const lastDetail = details[details.length - 1];
-  expect(lastDetail?.initial).toBe(false);
-
-  const firstAccordion = accordionGroup.querySelector('ion-accordion[value="first"]')!;
-  expect(firstAccordion.classList.contains('accordion-animated')).toEqual(true);
+  expect(firstAccordion.classList.contains('accordion-animated')).toEqual(false);
+  expect(firstAccordion.classList.contains('accordion-expanded')).toEqual(true);
 });
 
 // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/27047

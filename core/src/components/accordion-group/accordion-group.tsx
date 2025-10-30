@@ -73,13 +73,28 @@ export class AccordionGroup implements ComponentInterface {
    */
   @Event() ionValueChange!: EventEmitter<AccordionGroupChangeEventDetail>;
 
-  private hasEmittedInitialValue = false;
-  private isUserInitiatedChange = false;
-
   @Watch('value')
   valueChanged() {
-    this.emitValueChange(false, this.isUserInitiatedChange);
-    this.isUserInitiatedChange = false;
+    const { value, multiple } = this;
+
+    if (!multiple && Array.isArray(value)) {
+      /**
+       * We do some processing on the `value` array so
+       * that it looks more like an array when logged to
+       * the console.
+       * Example given ['a', 'b']
+       * Default toString() behavior: a,b
+       * Custom behavior: ['a', 'b']
+       */
+      printIonWarning(
+        `[ion-accordion-group] - An array of values was passed, but multiple is "false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+  Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
+`,
+        this.el
+      );
+    }
+
+    this.ionValueChange.emit({ value: this.value });
   }
 
   @Watch('disabled')
@@ -164,12 +179,11 @@ export class AccordionGroup implements ComponentInterface {
      * it is possible for the value to be set after the Web Component
      * initializes but before the value watcher is set up in Stencil.
      * As a result, the watcher callback may not be fired.
-     * We work around this by manually emitting a value change when the component
-     * has loaded and the watcher is configured.
+     * We work around this by manually calling the watcher
+     * callback when the component has loaded and the watcher
+     * is configured.
      */
-    if (!this.hasEmittedInitialValue) {
-      this.emitValueChange(true);
-    }
+    this.valueChanged();
   }
 
   /**
@@ -181,7 +195,6 @@ export class AccordionGroup implements ComponentInterface {
    * accordion group to an array.
    */
   private setValue(accordionValue: string | string[] | null | undefined) {
-    this.isUserInitiatedChange = true;
     const value = (this.value = accordionValue);
     this.ionChange.emit({ value });
   }
@@ -256,40 +269,6 @@ export class AccordionGroup implements ComponentInterface {
   @Method()
   async getAccordions() {
     return Array.from(this.el.querySelectorAll(':scope > ion-accordion')) as HTMLIonAccordionElement[];
-  }
-
-  private emitValueChange(initial: boolean, isUserInitiated = false) {
-    const { value, multiple } = this;
-
-    if (!multiple && Array.isArray(value)) {
-      /**
-       * We do some processing on the `value` array so
-       * that it looks more like an array when logged to
-       * the console.
-       * Example given ['a', 'b']
-       * Default toString() behavior: a,b
-       * Custom behavior: ['a', 'b']
-       */
-      printIonWarning(
-        `[ion-accordion-group] - An array of values was passed, but multiple is "false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
-
-  Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
-`,
-        this.el
-      );
-    }
-
-    /**
-     * Track if this is the initial value update so accordions
-     * can skip transition animations when they first render.
-     */
-    const shouldMarkInitial = initial || (!this.hasEmittedInitialValue && value !== undefined && !isUserInitiated);
-
-    this.ionValueChange.emit({ value, initial: shouldMarkInitial });
-
-    if (value !== undefined) {
-      this.hasEmittedInitialValue = true;
-    }
   }
 
   render() {
