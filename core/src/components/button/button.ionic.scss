@@ -70,7 +70,7 @@
 }
 
 // Provide fallbacks for ion-color-base for all colors
-:host(.button-outline.ion-color.ion-color-warning){
+:host(.button-outline.ion-color.ion-color-warning) {
   .button-native {
     --ion-color-base: #{globals.$ion-text-warning};
   }
@@ -79,14 +79,13 @@
   }
 } 
 
-
 // Clear Button
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --background-activated: var(--ion-color-subtle-shade, #{globals.current-color( shade, $subtle: true)});
+  --background-activated: var(--ion-color-subtle-shade, #{globals.current-color(shade, $subtle: true)});
   --background-focused: transparent;
-  --background-hover: var(--ion-color-subtle-shade, #{globals.current-color( shade, $subtle: true)});
+  --background-hover: var(--ion-color-subtle-shade, #{globals.current-color(shade, $subtle: true)});
   --background-hover-opacity: 1;
   --color: #{globals.ion-color(primary, foreground)};
   --ripple-opacity: var(--background-activated-opacity, 1);
