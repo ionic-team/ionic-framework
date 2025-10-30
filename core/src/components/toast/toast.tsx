@@ -47,14 +47,14 @@ import type {
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @part button - Any button element that is displayed inside of the toast.
- * @part button cancel - Any button element with role "cancel" that is displayed inside of the toast.
  * @part wrapper - The outer wrapper for the toast overlay.
  * @part container - Groups the icon, content, and buttons.
  * @part content - The live region that contains the header and message.
  * @part header - The header text of the toast.
  * @part message - The body text of the toast.
  * @part icon - The icon that appears next to the toast content.
+ * @part button - Any button element that is displayed inside of the toast.
+ * @part button cancel - Any button element with role "cancel" that is displayed inside of the toast.*
  */
 @Component({
   tag: 'ion-toast',
