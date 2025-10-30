@@ -57,6 +57,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
         </div>
 
         <style>
+          ion-select::part(text),
           ion-select::part(container) {
             color: purple;
           }
