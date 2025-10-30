@@ -355,12 +355,42 @@ export class ReactRouterViewStack extends ViewStacks {
             ...(routeMatch?.params ?? {}),
           };
 
+          // For relative route paths, we need to compute an absolute pathnameBase
+          // by combining the parent's pathnameBase with the matched portion
+          let absolutePathnameBase = routeMatch?.pathnameBase || routeInfo.pathname;
+          const routePath = routeElement.props.path;
+          const isRelativePath = routePath && !routePath.startsWith('/');
+          const isIndexRoute = !!routeElement.props.index;
+
+          if (isRelativePath || isIndexRoute) {
+            // Get the parent's pathnameBase to build the absolute path
+            const parentPathnameBase = parentMatches.length > 0
+              ? parentMatches[parentMatches.length - 1].pathnameBase
+              : '/';
+
+            // For relative paths, the matchPath returns a relative pathnameBase
+            // We need to make it absolute by prepending the parent's base
+            if (routeMatch?.pathnameBase && isRelativePath) {
+              // Strip leading slash if present in the relative match
+              const relativeBase = routeMatch.pathnameBase.startsWith('/')
+                ? routeMatch.pathnameBase.slice(1)
+                : routeMatch.pathnameBase;
+
+              absolutePathnameBase = parentPathnameBase === '/'
+                ? `/${relativeBase}`
+                : `${parentPathnameBase}/${relativeBase}`;
+            } else if (isIndexRoute) {
+              // Index routes should use the parent's base as their base
+              absolutePathnameBase = parentPathnameBase;
+            }
+          }
+
           const contextMatches = [
             ...parentMatches,
             {
               params: combinedParams,
               pathname: routeMatch?.pathname || routeInfo.pathname,
-              pathnameBase: routeMatch?.pathnameBase || routeInfo.pathname,
+              pathnameBase: absolutePathnameBase,
               route: {
                 id: viewItem.id,
                 path: routeElement.props.path,
@@ -639,16 +669,20 @@ export class ReactRouterViewStack extends ViewStacks {
           return false;
         }
 
+        // For routes without params, or when navigating to the exact same path,
+        // or when there's no previous match, reuse the view item
         if (!hasParams || isSamePath || !previousMatch) {
           match = result;
           viewItem = v;
           return true;
         }
 
+        // For parameterized/wildcard routes, only reuse if the pathname exactly matches
+        // This prevents reusing /details/1 when navigating to /details/2
         const isWildcardRoute = viewItemPath.includes('*');
         const isParameterRoute = viewItemPath.includes(':');
 
-        if (isParameterRoute || isWildcardRoute) {
+        if ((isParameterRoute || isWildcardRoute) && isSamePath) {
           match = result;
           viewItem = v;
           return true;
