@@ -54,7 +54,7 @@ import type {
  * @part message - The body text of the toast.
  * @part icon - The icon that appears next to the toast content.
  * @part button - Any button element that is displayed inside of the toast.
- * @part button cancel - Any button element with role "cancel" that is displayed inside of the toast.*
+ * @part button cancel - Any button element with role "cancel" that is displayed inside of the toast.
  */
 @Component({
   tag: 'ion-toast',
