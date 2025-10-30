@@ -5,7 +5,7 @@ runs:
   steps:
     - uses: actions/setup-node@v6
       with:
-        node-version: 22.x
+        node-version: 24.x
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
