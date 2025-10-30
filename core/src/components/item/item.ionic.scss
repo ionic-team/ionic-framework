@@ -71,7 +71,6 @@ slot[name="end"]::slotted(*) {
 
 // Item: Focused
 // --------------------------------------------------
-
 :host(.ion-focused) .item-native::after {
   @include globals.border-radius(inherit);
   @include globals.position(0, 0, 0, 0);
@@ -111,4 +110,15 @@ slot[name="end"]::slotted(*) {
 :host(.item-lines-full),
 :host(.item-lines-none) {
   --inner-border-width: #{globals.$ion-border-size-0};
+}
+
+// Item in Select Modal
+// --------------------------------------------------
+:host(.in-select-modal) {
+  --background-focused: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-focused-opacity: 0;
+}
+
+:host(.in-select-modal.ion-focused) .item-native {
+  --border-radius: #{globals.$ion-border-radius-400};
 }
