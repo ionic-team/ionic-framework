@@ -83,7 +83,7 @@
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --background-activated: var(--ion-color-subtle-shade, #{globals.current-color(shade, $subtle: true)});
+  --background-activated: #{globals.current-color(shade, $subtle: true)};
   --background-focused: transparent;
   --background-hover: var(--ion-color-subtle-shade, #{globals.current-color(shade, $subtle: true)});
   --background-hover-opacity: 1;
