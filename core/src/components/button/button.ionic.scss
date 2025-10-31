@@ -102,7 +102,7 @@
 // -------------------------------------------------------------------------------
 
 :host(.button-solid.ion-color) ion-ripple-effect {
-  color: var(--ion-color-shade, #{globals.ion-color(primary, shade)});
+  color: globals.ion-color(primary, shade);
 }
 
 :host(.button-outline.ion-color) ion-ripple-effect,
