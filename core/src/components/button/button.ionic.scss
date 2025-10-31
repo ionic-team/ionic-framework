@@ -59,7 +59,7 @@
 :host(.button-outline) {
   --border-width: #{globals.$ion-border-size-025};
   --border-style: #{globals.$ion-border-style-solid};
-  --background-activated: var(--ion-color-subtle-shade, #{globals.current-color(shade, $subtle: true)});
+  --background-activated: #{globals.current-color(shade, $subtle: true)};
   --background-focused: transparent;
   --background-hover: #{globals.current-color(shade, $subtle: true)};
   --background-hover-opacity: 1;
