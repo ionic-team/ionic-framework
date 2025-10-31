@@ -63,8 +63,8 @@
   --background-focused: transparent;
   --background-hover: #{globals.current-color(shade, $subtle: true)};
   --background-hover-opacity: 1;
-  --border-color: var(--ion-color-base, #{globals.ion-color(primary, base)});
-  --color: var(--ion-color-base, #{globals.ion-color(primary, base)});
+  --border-color: #{globals.ion-color(primary, base)};
+  --color: #{globals.ion-color(primary, base)};
   --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
 }
