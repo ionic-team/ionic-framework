@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 import { checkInvalidState } from '@utils/forms';
-import { inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
+import { renderHiddenInput } from '@utils/helpers';
 
 import { getIonMode } from '../../global/ionic-global';
 
