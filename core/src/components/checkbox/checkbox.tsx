@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, h, forceUpdate, Build } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, h, Build } from '@stencil/core';
 import { checkInvalidState } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
@@ -186,7 +186,7 @@ export class Checkbox implements ComponentInterface {
     }
 
     // Always set initial state
-    this.isInvalid = this.checkInvalidState();
+    this.isInvalid = checkInvalidState(el);
   }
 
   componentWillLoad() {
@@ -235,13 +235,6 @@ export class Checkbox implements ComponentInterface {
   };
 
   private onBlur = () => {
-    const newIsInvalid = this.checkInvalidState();
-    if (this.isInvalid !== newIsInvalid) {
-      this.isInvalid = newIsInvalid;
-      // Force a re-render to update aria-describedby immediately.
-      forceUpdate(this);
-    }
-
     this.ionBlur.emit();
   };
 
@@ -310,16 +303,6 @@ export class Checkbox implements ComponentInterface {
         </div>
       </div>
     );
-  }
-
-  /**
-   * Checks if the input is in an invalid state based on Ionic validation classes
-   */
-  private checkInvalidState(): boolean {
-    const hasIonTouched = this.el.classList.contains('ion-touched');
-    const hasIonInvalid = this.el.classList.contains('ion-invalid');
-
-    return hasIonTouched && hasIonInvalid;
   }
 
   render() {
