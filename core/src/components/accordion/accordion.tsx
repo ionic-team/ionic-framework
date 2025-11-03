@@ -38,16 +38,16 @@ const enum AccordionState {
 })
 export class Accordion implements ComponentInterface {
   private accordionGroupEl?: HTMLIonAccordionGroupElement | null;
-  private updateListener = () => {
+  private accordionGroupUpdateHandler = () => {
     /**
      * Determine if this update will cause an actual state change.
      * We only want to mark as "interacted" if the state is changing.
      */
     const accordionGroup = this.accordionGroupEl;
     if (accordionGroup) {
-      const groupValue = accordionGroup.value;
-      const value = this.value;
-      const shouldExpand = Array.isArray(groupValue) ? groupValue.includes(value) : groupValue === value;
+      const value = accordionGroup.value;
+      const accordionValue = this.value;
+      const shouldExpand = Array.isArray(value) ? value.includes(accordionValue) : value === accordionValue;
       const isExpanded = this.state === AccordionState.Expanded || this.state === AccordionState.Expanding;
       const stateWillChange = shouldExpand !== isExpanded;
 
@@ -65,7 +65,7 @@ export class Accordion implements ComponentInterface {
        * This prevents the initial undefined value from the group's componentDidLoad
        * from being treated as the first real update.
        */
-      if (groupValue !== undefined) {
+      if (value !== undefined) {
         this.hasReceivedFirstUpdate = true;
       }
     }
@@ -141,14 +141,14 @@ export class Accordion implements ComponentInterface {
     const accordionGroupEl = (this.accordionGroupEl = this.el?.closest('ion-accordion-group'));
     if (accordionGroupEl) {
       this.updateState();
-      addEventListener(accordionGroupEl, 'ionValueChange', this.updateListener);
+      addEventListener(accordionGroupEl, 'ionValueChange', this.accordionGroupUpdateHandler);
     }
   }
 
   disconnectedCallback() {
     const accordionGroupEl = this.accordionGroupEl;
     if (accordionGroupEl) {
-      removeEventListener(accordionGroupEl, 'ionValueChange', this.updateListener);
+      removeEventListener(accordionGroupEl, 'ionValueChange', this.accordionGroupUpdateHandler);
     }
   }
 
