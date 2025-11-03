@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import { checkInvalidState } from '@utils/forms';
 import { renderHiddenInput, inheritAriaAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { hapticSelection } from '@utils/native/haptic';
@@ -44,10 +45,18 @@ export class Toggle implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private toggleTrack?: HTMLElement;
   private didLoad = false;
+  private validationObserver?: MutationObserver;
 
   @Element() el!: HTMLIonToggleElement;
 
   @State() activated = false;
+
+  /**
+   * Track validation state for proper aria-live announcements.
+   */
+  @State() isInvalid = false;
+
+  @State() private hintTextID?: string;
 
   /**
    * The color to use from your application's color palette.
@@ -168,15 +177,56 @@ export class Toggle implements ComponentInterface {
   }
 
   async connectedCallback() {
+    const { didLoad, el } = this;
+
     /**
      * If we have not yet rendered
      * ion-toggle, then toggleTrack is not defined.
      * But if we are moving ion-toggle via appendChild,
      * then toggleTrack will be defined.
      */
-    if (this.didLoad) {
+    if (didLoad) {
       this.setupGesture();
     }
+
+    // Watch for class changes to update validation state.
+    if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
+      this.validationObserver = new MutationObserver(() => {
+        const newIsInvalid = checkInvalidState(el);
+        if (this.isInvalid !== newIsInvalid) {
+          this.isInvalid = newIsInvalid;
+          /**
+           * Screen readers tend to announce changes
+           * to `aria-describedby` when the attribute
+           * is changed during a blur event for a
+           * native form control.
+           * However, the announcement can be spotty
+           * when using a non-native form control
+           * and `forceUpdate()`.
+           * This is due to `forceUpdate()` internally
+           * rescheduling the DOM update to a lower
+           * priority queue regardless if it's called
+           * inside a Promise or not, thus causing
+           * the screen reader to potentially miss the
+           * change.
+           * By using a State variable inside a Promise,
+           * it guarantees a re-render immediately at
+           * a higher priority.
+           */
+          Promise.resolve().then(() => {
+            this.hintTextID = this.getHintTextID();
+          });
+        }
+      });
+
+      this.validationObserver.observe(el, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    }
+
+    // Always set initial state
+    this.isInvalid = checkInvalidState(el);
   }
 
   componentDidLoad() {
@@ -206,6 +256,12 @@ export class Toggle implements ComponentInterface {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
+    }
+
+    // Clean up validation observer to prevent memory leaks.
+    if (this.validationObserver) {
+      this.validationObserver.disconnect();
+      this.validationObserver = undefined;
     }
   }
 
@@ -336,9 +392,9 @@ export class Toggle implements ComponentInterface {
   }
 
   private getHintTextID(): string | undefined {
-    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+    const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
-    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+    if (isInvalid && errorText) {
       return errorTextId;
     }
 
@@ -354,7 +410,7 @@ export class Toggle implements ComponentInterface {
    * This element should only be rendered if hint text is set.
    */
   private renderHintText() {
-    const { helperText, errorText, helperTextId, errorTextId } = this;
+    const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
     /**
      * undefined and empty string values should
@@ -367,11 +423,11 @@ export class Toggle implements ComponentInterface {
 
     return (
       <div class="toggle-bottom">
-        <div id={helperTextId} class="helper-text" part="supporting-text helper-text">
-          {helperText}
+        <div id={helperTextId} class="helper-text" part="supporting-text helper-text" aria-live="polite">
+          {!isInvalid ? helperText : null}
         </div>
-        <div id={errorTextId} class="error-text" part="supporting-text error-text">
-          {errorText}
+        <div id={errorTextId} class="error-text" part="supporting-text error-text" role="alert">
+          {isInvalid ? errorText : null}
         </div>
       </div>
     );
@@ -385,7 +441,6 @@ export class Toggle implements ComponentInterface {
       color,
       disabled,
       el,
-      errorTextId,
       hasLabel,
       inheritedAttributes,
       inputId,
@@ -405,12 +460,13 @@ export class Toggle implements ComponentInterface {
       <Host
         role="switch"
         aria-checked={`${checked}`}
-        aria-describedby={this.getHintTextID()}
-        aria-invalid={this.getHintTextID() === errorTextId}
+        aria-describedby={this.hintTextID}
+        aria-invalid={this.isInvalid ? 'true' : undefined}
         onClick={this.onClick}
         aria-labelledby={hasLabel ? inputLabelId : null}
         aria-label={inheritedAttributes['aria-label'] || null}
         aria-disabled={disabled ? 'true' : null}
+        aria-required={required ? 'true' : undefined}
         tabindex={disabled ? undefined : 0}
         onKeyDown={this.onKeyDown}
         onFocus={this.onFocus}

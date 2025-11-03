@@ -1,4 +1,9 @@
-type FormElement = HTMLIonInputElement | HTMLIonTextareaElement | HTMLIonSelectElement | HTMLIonCheckboxElement;
+type FormElement =
+  | HTMLIonInputElement
+  | HTMLIonTextareaElement
+  | HTMLIonSelectElement
+  | HTMLIonCheckboxElement
+  | HTMLIonToggleElement;
 
 /**
  * Checks if the form element is in an invalid state based on

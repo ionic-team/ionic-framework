@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, h, Build } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
 import { checkInvalidState } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
