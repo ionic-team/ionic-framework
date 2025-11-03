@@ -37,6 +37,7 @@ import KeepContentsMounted from './pages/overlay-components/KeepContentsMounted'
 import OverlayComponents from './pages/overlay-components/OverlayComponents';
 import OverlayHooks from './pages/overlay-hooks/OverlayHooks';
 import ReorderGroup from './pages/ReorderGroup';
+import AccordionGroup from './pages/AccordionGroup';
 
 setupIonicReact();
 
@@ -69,6 +70,7 @@ const App: React.FC = () => (
         <Route path="/icons" component={Icons} />
         <Route path="/inputs" component={Inputs} />
         <Route path="/reorder-group" component={ReorderGroup} />
+        <Route path="/accordion-group" component={AccordionGroup} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
