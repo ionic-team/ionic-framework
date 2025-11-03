@@ -45,9 +45,9 @@ export class Accordion implements ComponentInterface {
      */
     const accordionGroup = this.accordionGroupEl;
     if (accordionGroup) {
-      const value = accordionGroup.value;
-      const accordionValue = this.value;
-      const shouldExpand = Array.isArray(value) ? value.includes(accordionValue) : value === accordionValue;
+      const groupValue = accordionGroup.value;
+      const value = this.value;
+      const shouldExpand = Array.isArray(groupValue) ? groupValue.includes(value) : groupValue === value;
       const isExpanded = this.state === AccordionState.Expanded || this.state === AccordionState.Expanding;
       const stateWillChange = shouldExpand !== isExpanded;
 
@@ -65,7 +65,7 @@ export class Accordion implements ComponentInterface {
        * This prevents the initial undefined value from the group's componentDidLoad
        * from being treated as the first real update.
        */
-      if (value !== undefined) {
+      if (groupValue !== undefined) {
         this.hasReceivedFirstUpdate = true;
       }
     }
