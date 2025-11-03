@@ -43,12 +43,12 @@
 // --------------------------------------------------
 
 :host(.button-solid) {
-  --background-activated: #{globals.current-color(shade)};
-  --background-hover: #{globals.ion-color(primary, shade)};
+  --background-activated: var(--ion-color-shade, #{globals.ion-color(primary, shade)});
+  --background-hover: var(--ion-color-shade, #{globals.ion-color(primary, shade)});
   --background-focused: transparent;
   --background-hover-opacity: 1;
-  --background: #{globals.ion-color(primary, base)};
-  --color: #{globals.ion-color(primary, contrast)};
+  --background: var(--ion-color-base, #{globals.ion-color(primary, base)});
+  --color: var(--ion-color-contrast, #{globals.ion-color(primary, contrast)});
   --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
 }
@@ -59,23 +59,28 @@
 :host(.button-outline) {
   --border-width: #{globals.$ion-border-size-025};
   --border-style: #{globals.$ion-border-style-solid};
-  --background-activated: #{globals.current-color(shade, $subtle: true)};
+  --background-activated: var(--ion-color-subtle-shade, #{globals.ion-color(primary, shade, $subtle: true)});
   --background-focused: transparent;
-  --background-hover: #{globals.current-color(shade, $subtle: true)};
+  --background-hover: var(--ion-color-subtle-shade, #{globals.ion-color(primary, shade, $subtle: true)});
   --background-hover-opacity: 1;
-  --border-color: #{globals.ion-color(primary, base)};
-  --color: #{globals.ion-color(primary, base)};
+  --border-color: var(--ion-color-base, #{globals.ion-color(primary, base)});
+  --color: var(--ion-color-base, #{globals.ion-color(primary, base)});
   --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
+}
+
+// Warning Outline Button - use foreground color for text and border
+:host(.button-outline.ion-color-warning) .button-native {
+  --ion-color-base: var(--ion-color-warning-foreground);
 }
 
 // Clear Button
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --background-activated: #{globals.current-color(shade, $subtle: true)};
+  --background-activated: var(--ion-color-subtle-shade, #{globals.ion-color(primary, shade, $subtle: true)});
   --background-focused: transparent;
-  --background-hover: #{globals.current-color(shade, $subtle: true)};
+  --background-hover: var(--ion-color-subtle-shade, #{globals.ion-color(primary, shade, $subtle: true)});
   --background-hover-opacity: 1;
   --color: #{globals.ion-color(primary, foreground)};
   --ripple-opacity: var(--background-activated-opacity, 1);
