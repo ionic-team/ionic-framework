@@ -88,12 +88,17 @@ export class AccordionGroup implements ComponentInterface {
        */
       printIonWarning(
         `[ion-accordion-group] - An array of values was passed, but multiple is "false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+
   Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
 `,
         this.el
       );
     }
 
+    /**
+     * Do not use `value` here as that will be
+     * not account for the adjustment we make above.
+     */
     this.ionValueChange.emit({ value: this.value });
   }
 
