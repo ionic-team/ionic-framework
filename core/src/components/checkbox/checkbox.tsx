@@ -174,6 +174,7 @@ export class Checkbox implements ComponentInterface {
            * a higher priority.
            */
           Promise.resolve().then(() => {
+            console.log('updating hint text id');
             this.hintTextID = this.getHintTextID();
           });
         }
@@ -193,6 +194,8 @@ export class Checkbox implements ComponentInterface {
     this.inheritedAttributes = {
       ...inheritAriaAttributes(this.el),
     };
+
+    this.hintTextID = this.getHintTextID();
   }
 
   disconnectedCallback() {

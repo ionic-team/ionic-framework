@@ -269,6 +269,8 @@ export class Toggle implements ComponentInterface {
     this.inheritedAttributes = {
       ...inheritAriaAttributes(this.el),
     };
+
+    this.hintTextID = this.getHintTextID();
   }
 
   private onStart() {

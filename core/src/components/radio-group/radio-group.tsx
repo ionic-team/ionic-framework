@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 import { checkInvalidState } from '@utils/forms';
-import { renderHiddenInput } from '@utils/helpers';
+import { inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -169,6 +169,10 @@ export class RadioGroup implements ComponentInterface {
 
     // Always set initial state
     this.isInvalid = checkInvalidState(this.el);
+  }
+
+  componentWillLoad() {
+    this.hintTextID = this.getHintTextID();
   }
 
   disconnectedCallback() {
