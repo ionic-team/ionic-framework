@@ -3,7 +3,8 @@ type FormElement =
   | HTMLIonTextareaElement
   | HTMLIonSelectElement
   | HTMLIonCheckboxElement
-  | HTMLIonToggleElement;
+  | HTMLIonToggleElement
+  | HTMLElement;
 
 /**
  * Checks if the form element is in an invalid state based on

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Radrio Group - Validation</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-row-gap: 30px;
+        grid-column-gap: 30px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: var(--ion-color-step-600);
+
+        margin-top: 10px;
+        margin-bottom: 5px;
+      }
+
+      .validation-info {
+        margin: 20px;
+        padding: 10px;
+        background: var(--ion-color-light);
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Radio Group - Validation Test</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <div class="validation-info">
+          <h2>Screen Reader Testing Instructions:</h2>
+          <ol>
+            <li>Enable your screen reader (VoiceOver, NVDA, JAWS, etc.)</li>
+            <li>Tab through the form fields</li>
+            <li>When you tab away from an empty required field, the error should be announced immediately</li>
+            <li>The error text should be announced BEFORE the next field is announced</li>
+            <li>Test in Chrome, Safari, and Firefox to verify consistent behavior</li>
+          </ol>
+        </div>
+
+        <div class="grid">
+          <div>
+            <h2>Required Field</h2>
+            <ion-radio-group
+              id="fruits-radio-group"
+              helper-text="You must select one to continue"
+              error-text="Please select a fruit"
+              allow-empty-selection="true"
+              required
+            >
+              <ion-radio value="grapes">Grapes</ion-radio><br />
+              <ion-radio value="strawberries">Strawberries</ion-radio>
+            </ion-radio-group>
+          </div>
+
+          <div>
+            <h2>Optional Field (No Validation)</h2>
+            <ion-radio-group
+              id="optional-radio-group"
+              helper-text="You can skip this field"
+              allow-empty-selection="true"
+              required
+            >
+              <ion-radio value="cucumbers">Cucumbers</ion-radio><br />
+              <ion-radio value="tomatoes">Tomatoes</ion-radio>
+            </ion-radio-group>
+          </div>
+        </div>
+
+        <div class="ion-padding">
+          <ion-button id="submit-btn" expand="block" disabled>Submit Form</ion-button>
+          <ion-button id="reset-btn" expand="block" fill="outline">Reset Form</ion-button>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      // Simple validation logic
+      const radioGroups = document.querySelectorAll('ion-radio-group');
+      const submitBtn = document.getElementById('submit-btn');
+      const resetBtn = document.getElementById('reset-btn');
+
+      // Track which fields have been touched
+      const touchedFields = new Set();
+
+      // Validation functions
+      const validators = {
+        'fruits-radio-group': (value) => {
+          return value !== undefined;
+        },
+        'optional-checkbox': () => true, // Always valid
+      };
+
+      function validateField(radioGroup) {
+        const radioGroupId = radioGroup.id;
+        const value = radioGroup.value;
+        const isValid = validators[radioGroupId] ? validators[radioGroupId](value) : true;
+
+        // Only show validation state if field has been touched
+        if (touchedFields.has(radioGroupId)) {
+          if (isValid) {
+            radioGroup.classList.remove('ion-invalid');
+            radioGroup.classList.add('ion-valid');
+          } else {
+            radioGroup.classList.remove('ion-valid');
+            radioGroup.classList.add('ion-invalid');
+          }
+          radioGroup.classList.add('ion-touched');
+        }
+
+        return isValid;
+      }
+
+      function validateForm() {
+        let allValid = true;
+        radioGroups.forEach((radioGroup) => {
+          if (radioGroup.id !== 'optional-radio-group') {
+            const isValid = validateField(radioGroup);
+            if (!isValid) {
+              allValid = false;
+            }
+          }
+        });
+        submitBtn.disabled = !allValid;
+        return allValid;
+      }
+
+      // Add event listeners
+      radioGroups.forEach((radioGroup) => {
+        // Mark as touched on blur
+        radioGroup.addEventListener('ionBlur', (e) => {
+          console.log('Blur event on:', radioGroup.id);
+          touchedFields.add(radioGroup.id);
+          validateField(radioGroup);
+          validateForm();
+
+          const isInvalid = radioGroup.classList.contains('ion-invalid');
+          if (isInvalid) {
+            console.log('Field marked invalid:', radioGroup.label, radioGroup.errorText);
+          }
+        });
+
+        // Validate on change
+        radioGroup.addEventListener('ionChange', (e) => {
+          console.log('Change event on:', radioGroup.id);
+          if (touchedFields.has(radioGroup.id)) {
+            validateField(radioGroup);
+            validateForm();
+          }
+        });
+      });
+
+      // Reset button
+      resetBtn.addEventListener('click', () => {
+        radioGroups.forEach((radioGroup) => {
+          radioGroup.value = '';
+          radioGroup.classList.remove('ion-valid', 'ion-invalid', 'ion-touched');
+        });
+        touchedFields.clear();
+        submitBtn.disabled = true;
+      });
+
+      // Submit button
+      submitBtn.addEventListener('click', () => {
+        if (validateForm()) {
+          alert('Form submitted successfully!');
+        }
+      });
+
+      // Initial setup
+      validateForm();
+    </script>
+  </body>
+</html>
