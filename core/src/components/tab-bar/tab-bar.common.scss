@@ -7,7 +7,6 @@
   display: flex;
 
   align-items: center;
-  justify-content: center;
 
   border-top: var(--border);
 
@@ -20,6 +19,8 @@
 
   /* stylelint-disable-next-line declaration-no-important */
   box-sizing: content-box !important;
+
+  overflow: auto;
 }
 
 :host(.ion-color) ::slotted(ion-tab-button.ion-focused),
