@@ -566,9 +566,7 @@ export class Select implements ComponentInterface {
         handler: () => {
           this.setValue(value);
         },
-        htmlAttributes: {
-          'aria-selected': isSelected ? 'true' : undefined,
-        },
+        ...(isSelected ? { htmlAttributes: { 'aria-description': 'selected' } } : {}),
       } as ActionSheetButton;
     });
 
