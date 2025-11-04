@@ -13,9 +13,13 @@
   position: relative;
 
   align-content: center;
+  
+  flex: 1;
 
   min-height: globals.$ion-scale-1200;
   max-height: globals.$ion-scale-1800;
+
+  min-width: globals.$ion-scale-1200;
 }
 
 // Tab Button: Native
