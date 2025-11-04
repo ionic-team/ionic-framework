@@ -152,19 +152,6 @@
       </ion-item>
 
       <!-- Test ion-radio-group with required validation -->
-      <ion-item>
-        <ion-checkbox
-          [(ngModel)]="checkboxValue"
-          name="checkboxField"
-          required
-          #checkboxField="ngModel"
-          id="template-checkbox-test"
-          helper-text="You must agree to continue"
-          error-text="Please accept the terms and conditions"
-        >
-          I agree to the terms and conditions
-        </ion-checkbox>
-
         <ion-radio-group
           [(ngModel)]="radioGroupValue"
           name="radioGroupField"
