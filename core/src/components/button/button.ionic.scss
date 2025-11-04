@@ -43,14 +43,21 @@
 // --------------------------------------------------
 
 :host(.button-solid) {
-  --background-activated: var(--ion-color-shade, #{globals.ion-color(primary, shade)});
-  --background-hover: var(--ion-color-shade, #{globals.ion-color(primary, shade)});
+  --background-activated: #{globals.$ion-bg-primary-base-press};
+  --background-hover: #{globals.$ion-bg-primary-base-press};
   --background-focused: transparent;
   --background-hover-opacity: 1;
-  --background: var(--ion-color-base, #{globals.ion-color(primary, base)});
-  --color: var(--ion-color-contrast, #{globals.ion-color(primary, contrast)});
+  --background: #{globals.ion-color(primary, base)};
+  --color: #{globals.ion-color(primary, contrast)};
   --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
+}
+
+:host(.button-solid.ion-color) {
+  --background-activated: #{globals.current-color(shade)};
+  --background-hover: #{globals.current-color(shade)};
+  --background: #{globals.current-color(base)};
+  --color: #{globals.current-color(contrast)};
 }
 
 // Outline Button
@@ -59,28 +66,35 @@
 :host(.button-outline) {
   --border-width: #{globals.$ion-border-size-025};
   --border-style: #{globals.$ion-border-style-solid};
-  --background-activated: var(--ion-color-subtle-shade, #{globals.ion-color(primary, shade, $subtle: true)});
+  --background-activated: #{globals.$ion-bg-primary-subtle-press};
   --background-focused: transparent;
-  --background-hover: var(--ion-color-subtle-shade, #{globals.ion-color(primary, shade, $subtle: true)});
+  --background-hover: #{globals.$ion-bg-primary-subtle-press};
   --background-hover-opacity: 1;
-  --border-color: var(--ion-color-base, #{globals.ion-color(primary, base)});
-  --color: var(--ion-color-base, #{globals.ion-color(primary, base)});
+  --border-color: #{globals.ion-color(primary, base)};
+  --color: #{globals.ion-color(primary, base)};
   --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
 }
 
+:host(.button-outline.ion-color) {
+  --background-activated: #{globals.current-color(shade, $subtle: true)};
+  --background-hover: #{globals.current-color(shade, $subtle: true)};
+  --border-color: #{globals.current-color(base)};
+  --color: #{globals.current-color(base)};
+}
+
 // Warning Outline Button - use foreground color for text and border
 :host(.button-outline.ion-color-warning) .button-native {
-  --ion-color-base: var(--ion-color-warning-foreground);
+  --ion-color-base: #{globals.ion-color(warning, foreground)};
 }
 
 // Clear Button
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --background-activated: var(--ion-color-subtle-shade, #{globals.ion-color(primary, shade, $subtle: true)});
+  --background-activated: #{globals.$ion-bg-primary-subtle-press};
   --background-focused: transparent;
-  --background-hover: var(--ion-color-subtle-shade, #{globals.ion-color(primary, shade, $subtle: true)});
+  --background-hover: #{globals.$ion-bg-primary-subtle-press};
   --background-hover-opacity: 1;
   --color: #{globals.ion-color(primary, foreground)};
   --ripple-opacity: var(--background-activated-opacity, 1);
@@ -88,8 +102,11 @@
 }
 
 :host(.button-clear.ion-color) {
+  --background-activated: #{globals.current-color(shade, $subtle: true)};
+  --background-hover: #{globals.current-color(shade, $subtle: true)};
+
   .button-native {
-    --ion-color-base: var(--ion-color-foreground, #{globals.current-color(foreground)});
+    --ion-color-base: #{globals.current-color(foreground)};
   }
 }
 
