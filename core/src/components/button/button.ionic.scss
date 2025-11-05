@@ -68,7 +68,7 @@
   --border-style: #{globals.$ion-border-style-solid};
   --background-activated: #{globals.ion-color(primary, shade, $subtle: true)};
   --background-focused: transparent;
-  --background-hover: #{globals.$ion-bg-primary-subtle-press};
+  --background-hover: #{globals.ion-color(primary, shade, $subtle: true)};
   --background-hover-opacity: 1;
   --border-color: #{globals.ion-color(primary, base)};
   --color: #{globals.ion-color(primary, base)};
