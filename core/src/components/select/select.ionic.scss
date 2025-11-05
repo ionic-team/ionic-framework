@@ -38,6 +38,12 @@
 
 .select-text {
   min-width: globals.$ion-space-400;
+
+  color: globals.$ion-text-subtlest;
+}
+
+:host(.has-value) .select-text {
+  color: globals.$ion-text-default;
 }
 
 // Select Label
@@ -208,6 +214,12 @@
 
 .select-icon {
   transition: transform 0.15s globals.$ion-transition-curve-expressive;
+
+  color: globals.$ion-text-subtlest;
+}
+
+:host(.has-value) .select-icon {
+  color: globals.$ion-text-subtle;
 }
 
 /**
@@ -219,12 +231,14 @@
   @include globals.transform(rotate(180deg));
 }
 
-.select-icon {
-  color: globals.$ion-primitives-neutral-800;
-}
-
 // States
 // ----------------------------------------------------------------
+
+// Fill types
+// ----------------------------------------------------------------
+:host(.select-fill-solid) {
+  --background: #{globals.$ion-bg-input-bold-default};
+}
 
 // Disabled
 // ---------------------------------------------
