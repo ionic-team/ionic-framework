@@ -54,6 +54,12 @@
   @include margin(10px, 8px, 10px, 0);
 }
 
+// These styles are copied from buttons.ios.scss
+:host ion-button {
+  font-size: dynamic-font-clamp(1, 17px, 1.24);
+  font-weight: 400;
+}
+
 :host .calendar-action-buttons .calendar-month-year-toggle ion-icon,
 :host .calendar-action-buttons ion-button {
   color: current-color(base);
