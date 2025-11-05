@@ -548,7 +548,6 @@ export class Select implements ComponentInterface {
   }
 
   private createActionSheetButtons(data: HTMLIonSelectOptionElement[], selectValue: any): ActionSheetButton[] {
-    console.log('createActionSheetButtons', data, selectValue);
     const actionSheetButtons = data.map((option) => {
       const value = getOptionValue(option);
 
