@@ -65,6 +65,11 @@
 // Time / Header
 // -----------------------------------
 
+:host .calendar-next-prev {
+  display: flex;
+  align-items: start;
+}
+
 :host(.datetime-presentation-time) .datetime-time {
   @include globals.padding(0);
 }
