@@ -43,8 +43,8 @@
 // --------------------------------------------------
 
 :host(.button-solid) {
-  --background-activated: #{globals.$ion-bg-primary-base-press};
-  --background-hover: #{globals.$ion-bg-primary-base-press};
+  --background-activated: #{globals.ion-color(primary, shade)};
+  --background-hover: #{globals.ion-color(primary, shade)};
   --background-focused: transparent;
   --background-hover-opacity: 1;
   --background: #{globals.ion-color(primary, base)};
@@ -85,17 +85,17 @@
 
 // Warning Outline Button - use foreground color for text and border
 :host(.button-outline.ion-color-warning) .button-native {
-  --color: #{globals.ion-color(warning, foreground)};
-  --border-color: #{globals.ion-color(warning, foreground)};
+  color: #{globals.current-color(foreground)};
+  border-color: #{globals.current-color(foreground)};
 }
 
 // Clear Button
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --background-activated: #{globals.current-color(shade, $subtle: true)};
+  --background-activated: #{globals.ion-color(primary, shade, $subtle: true)};
   --background-focused: transparent;
-  --background-hover: #{globals.current-color(shade, $subtle: true)};
+  --background-hover: #{globals.ion-color(primary, shade, $subtle: true)};
   --background-hover-opacity: 1;
   --color: #{globals.ion-color(primary, foreground)};
   --ripple-opacity: var(--background-activated-opacity, 1);
@@ -105,10 +105,6 @@
 :host(.button-clear.ion-color) {
   --background-activated: #{globals.current-color(shade, $subtle: true)};
   --background-hover: #{globals.current-color(shade, $subtle: true)};
-
-  .button-native {
-    --ion-color-base: #{globals.current-color(foreground)};
-  }
 }
 
 // Button Sizes
