@@ -85,7 +85,8 @@
 
 // Warning Outline Button - use foreground color for text and border
 :host(.button-outline.ion-color-warning) .button-native {
-  --ion-color-base: #{globals.ion-color(warning, foreground)};
+  --color: #{globals.ion-color(warning, foreground)};
+  --border-color: #{globals.ion-color(warning, foreground)};
 }
 
 // Clear Button
