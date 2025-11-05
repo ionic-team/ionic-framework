@@ -93,7 +93,7 @@
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --background-activated: #{globals.$ion-bg-primary-subtle-press};
+  --background-activated: #{globals.current-color(shade, $subtle: true)};
   --background-focused: transparent;
   --background-hover: #{globals.$ion-bg-primary-subtle-press};
   --background-hover-opacity: 1;
