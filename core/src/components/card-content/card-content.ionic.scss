@@ -13,8 +13,8 @@
   flex-direction: column;
 
   gap: globals.$ion-space-400;
+}
 
-  img {
-    @include globals.margin(globals.$ion-space-200, 0, globals.$ion-space-200, 0);
-  }
+::slotted(img) {
+  @include globals.margin(globals.$ion-space-200, 0, globals.$ion-space-200, 0);
 }

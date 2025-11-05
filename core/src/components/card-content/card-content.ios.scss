@@ -10,34 +10,34 @@
   font-size: $card-ios-font-size;
 
   line-height: 1.4;
+}
 
-  h1 {
-    @include margin(0, 0, 2px);
+::slotted(h1) {
+  @include margin(0, 0, 2px);
 
-    font-size: dynamic-font(24px);
-    font-weight: normal;
-  }
+  font-size: dynamic-font(24px);
+  font-weight: normal;
+}
 
-  h2 {
-    @include margin(2px, 0);
+::slotted(h2) {
+  @include margin(2px, 0);
 
-    font-size: dynamic-font(16px);
-    font-weight: normal;
-  }
+  font-size: dynamic-font(16px);
+  font-weight: normal;
+}
 
-  h3,
-  h4,
-  h5,
-  h6 {
-    @include margin(2px, 0);
+::slotted(h3),
+::slotted(h4),
+::slotted(h5),
+::slotted(h6) {
+  @include margin(2px, 0);
 
-    font-size: dynamic-font(14px);
-    font-weight: normal;
-  }
+  font-size: dynamic-font(14px);
+  font-weight: normal;
+}
 
-  p {
-    @include margin(0, 0, 2px);
+::slotted(p) {
+  @include margin(0, 0, 2px);
 
-    font-size: dynamic-font(14px);
-  }
+  font-size: dynamic-font(14px);
 }
