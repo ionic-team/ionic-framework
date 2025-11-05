@@ -43,6 +43,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 <h5>Example 1: Swap two columns</h5>
 
 **Version up to 8.x**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -52,7 +53,9 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -64,9 +67,11 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 ```
 
 <h5>Example 2: Reorder columns with specific sizes</h5>
+
 To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `size="3" pull="9"`:
 
 **Version up to 8.x**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -75,7 +80,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -84,7 +91,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 <h5>Example 3: Push</h5>
+
 ```html
 <ion-grid>
   <ion-row>
@@ -97,7 +106,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -112,6 +123,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 ```
 
 <h5>Example 4: Push and Pull</h5>
+
 ```html
 <ion-grid>
   <ion-row>
@@ -124,7 +136,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
