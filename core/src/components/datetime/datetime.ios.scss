@@ -55,16 +55,41 @@
 }
 
 :host .calendar-action-buttons .calendar-month-year-toggle ion-icon,
-:host .calendar-action-buttons ion-buttons ion-button {
+:host .calendar-action-buttons ion-button {
   color: current-color(base);
 }
 
-:host .calendar-action-buttons ion-buttons {
+:host .calendar-action-buttons ion-button {
+  @include margin(0, 0, 0, 0);
+}
+
+:host .calendar-next-prev {
   @include padding($datetime-ios-padding * 0.5, 0, 0, 0);
 }
 
-:host .calendar-action-buttons ion-buttons ion-button {
-  @include margin(0, 0, 0, 0);
+// These styles are copied from buttons.ios.scss
+.calendar-next-prev ion-button {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 5px;
+  --padding-end: 5px;
+
+  @include margin-horizontal(2px, 2px);
+
+  min-height: 32px;
+}
+
+// These styles are copied from buttons.ios.scss
+.calendar-next-prev ion-button ion-icon[slot="icon-only"] {
+  @include padding(0);
+  @include margin(0);
+
+  // This value is calculated by dividing the font size the
+  // icon should be in px (28px) by the font size of its
+  // parent button (17px). e.g. 28 / 17 = 1.647
+  font-size: 1.65em;
+
+  line-height: 0.67;
 }
 
 // Calendar / Header / Days of Week
@@ -297,6 +322,7 @@
 
 // Footer
 // -----------------------------------
+
 :host .datetime-buttons {
   @include padding(
     $datetime-ios-padding * 0.5,
@@ -308,8 +334,7 @@
   border-top: $datetime-ios-border-color;
 }
 
-:host .datetime-buttons ::slotted(ion-buttons),
-:host .datetime-buttons ion-buttons {
+:host .datetime-buttons {
   display: flex;
 
   align-items: center;
@@ -318,4 +343,16 @@
 
 :host .datetime-action-buttons {
   width: 100%;
+}
+
+// These styles are copied from buttons.ios.scss
+:host .datetime-action-buttons ion-button {
+  --padding-top: 3px;
+  --padding-bottom: 3px;
+  --padding-start: 5px;
+  --padding-end: 5px;
+
+  @include margin(0px, 2px, 0px, 2px);
+
+  min-height: 32px;
 }

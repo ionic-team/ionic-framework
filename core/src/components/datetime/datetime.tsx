@@ -1,5 +1,3 @@
-import caretLeftRegular from '@phosphor-icons/core/assets/regular/caret-left.svg';
-import caretRightRegular from '@phosphor-icons/core/assets/regular/caret-right.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { startFocusVisible } from '@utils/focus-visible';
@@ -1519,7 +1517,7 @@ export class Datetime implements ComponentInterface {
      * is disabled or readonly.
      */
     const isButtonDisabled = disabled || readonly;
-    const confirmFill = theme === 'ionic' ? 'solid' : undefined;
+    const confirmFill = theme === 'ionic' ? 'solid' : 'clear';
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (!hasSlottedButtons && !showDefaultButtons && !showClearButton) {
       return;
@@ -1547,41 +1545,41 @@ export class Datetime implements ComponentInterface {
             }}
           >
             <slot name="buttons">
-              <ion-buttons>
-                {showDefaultButtons && (
+              {showDefaultButtons && (
+                <ion-button
+                  id="cancel-button"
+                  fill="clear"
+                  color={this.color}
+                  onClick={() => this.cancel(true)}
+                  disabled={isButtonDisabled}
+                >
+                  {this.cancelText}
+                </ion-button>
+              )}
+              <div class="datetime-action-buttons-container">
+                {showClearButton && (
                   <ion-button
-                    id="cancel-button"
+                    id="clear-button"
+                    fill="clear"
                     color={this.color}
-                    onClick={() => this.cancel(true)}
+                    onClick={() => clearButtonClick()}
                     disabled={isButtonDisabled}
                   >
-                    {this.cancelText}
+                    {this.clearText}
                   </ion-button>
                 )}
-                <div class="datetime-action-buttons-container">
-                  {showClearButton && (
-                    <ion-button
-                      id="clear-button"
-                      color={this.color}
-                      onClick={() => clearButtonClick()}
-                      disabled={isButtonDisabled}
-                    >
-                      {this.clearText}
-                    </ion-button>
-                  )}
-                  {showDefaultButtons && (
-                    <ion-button
-                      id="confirm-button"
-                      color={this.color}
-                      onClick={() => this.confirm(true)}
-                      disabled={isButtonDisabled}
-                      fill={confirmFill}
-                    >
-                      {this.doneText}
-                    </ion-button>
-                  )}
-                </div>
-              </ion-buttons>
+                {showDefaultButtons && (
+                  <ion-button
+                    id="confirm-button"
+                    fill={confirmFill}
+                    color={this.color}
+                    onClick={() => this.confirm(true)}
+                    disabled={isButtonDisabled}
+                  >
+                    {this.doneText}
+                  </ion-button>
+                )}
+              </div>
             </slot>
           </div>
         </div>
@@ -2156,28 +2154,26 @@ export class Datetime implements ComponentInterface {
           </div>
 
           <div class="calendar-next-prev">
-            <ion-buttons>
-              <ion-button aria-label="Previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
-                <ion-icon
-                  dir={hostDir}
-                  aria-hidden="true"
-                  slot="icon-only"
-                  icon={datetimePreviousIcon}
-                  lazy={false}
-                  flipRtl
-                ></ion-icon>
-              </ion-button>
-              <ion-button aria-label="Next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
-                <ion-icon
-                  dir={hostDir}
-                  aria-hidden="true"
-                  slot="icon-only"
-                  icon={datetimeNextIcon}
-                  lazy={false}
-                  flipRtl
-                ></ion-icon>
-              </ion-button>
-            </ion-buttons>
+            <ion-button aria-label="Previous month" fill="clear" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
+              <ion-icon
+                dir={hostDir}
+                aria-hidden="true"
+                slot="icon-only"
+                icon={datetimePreviousIcon}
+                lazy={false}
+                flipRtl
+              ></ion-icon>
+            </ion-button>
+            <ion-button aria-label="Next month" fill="clear" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
+              <ion-icon
+                dir={hostDir}
+                aria-hidden="true"
+                slot="icon-only"
+                icon={datetimeNextIcon}
+                lazy={false}
+                flipRtl
+              ></ion-icon>
+            </ion-button>
           </div>
         </div>
         <div class="calendar-days-of-week" aria-hidden="true">
@@ -2621,45 +2617,19 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * Get the icon to use for the next icon.
-   * Otherwise, use the icon set in the config.
+   * Get the next month icon from the config.
    * If no icon is set in the config, use the default icon.
    */
   get datetimeNextIcon(): string {
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: chevronForward,
-      ionic: caretRightRegular,
-      md: chevronForward,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured datetime next icon or the default icon
-    return config.get('datetimeNextIcon', defaultIcon);
+    return config.get('datetimeNextIcon', chevronForward);
   }
 
   /**
-   * Get the icon to use for the previous icon.
-   * Otherwise, use the icon set in the config.
+   * Get the previous month icon from the config.
    * If no icon is set in the config, use the default icon.
    */
   get datetimePreviousIcon(): string {
-    // Determine the theme and map to default icons
-    const theme = getIonTheme(this);
-    const defaultIcons = {
-      ios: chevronBack,
-      ionic: caretLeftRegular,
-      md: chevronBack,
-    };
-
-    // Get the default icon based on the theme, falling back to 'md' icon if necessary
-    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
-
-    // Return the configured datetime previous icon or the default icon
-    return config.get('datetimePreviousIcon', defaultIcon);
+    return config.get('datetimePreviousIcon', chevronBack);
   }
 
   /**
