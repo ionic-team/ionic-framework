@@ -297,7 +297,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         `
         <ion-datetime value="2022-05-03">
           <div slot="buttons">
-            <ion-button id="custom-button" color="primary">Hello!</ion-button>
+            <ion-button id="custom-button" fill="clear" color="primary">Hello!</ion-button>
           </div>
         </ion-datetime>
       `,
