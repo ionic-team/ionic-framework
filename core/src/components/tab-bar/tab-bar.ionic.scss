@@ -25,6 +25,20 @@
 
   // TODO(ROU-10853): replace this value with a layer token
   z-index: 10;
+
+  /*
+   * In case there are more tab buttons than can fit in the tab bar, enable
+   * horizontal scrolling.
+   */
+  overflow: auto hidden;
+  justify-content: unset;
+
+  /*
+   * Ensure the tab bar does not grow larger than the viewport width.
+   * Useful for when the tab buttons have large labels, allowing the space
+   * to be evenly divided among the buttons.
+   */
+  max-width: 100%;
 }
 
 // Tab Bar Expand
