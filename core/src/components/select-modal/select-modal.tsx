@@ -2,7 +2,7 @@ import { getIonMode } from '@global/ionic-global';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, forceUpdate, h } from '@stencil/core';
 import { safeCall } from '@utils/overlays';
-import { getClassMap } from '@utils/theme';
+import { getClassMap, hostContext } from '@utils/theme';
 
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
@@ -74,6 +74,14 @@ export class SelectModal implements ComponentInterface {
     }
   }
 
+  private getModalContextClasses() {
+    const el = this.el;
+    return {
+      'in-modal-default': hostContext('ion-modal.modal-default', el),
+      'in-modalsheet': hostContext('ion-modal.modal-sheet', el),
+    };
+  }
+
   private renderRadioOptions() {
     const checked = this.options.filter((o) => o.checked).map((o) => o.value)[0];
 
@@ -143,7 +151,10 @@ export class SelectModal implements ComponentInterface {
 
   render() {
     return (
-      <Host class={getIonMode(this)}>
+      <Host class={{
+        [getIonMode(this)]: true,
+        ...this.getModalContextClasses(),
+      }}>
         <ion-header>
           <ion-toolbar>
             {this.header !== undefined && <ion-title>{this.header}</ion-title>}
