@@ -78,7 +78,7 @@ export class SelectModal implements ComponentInterface {
     const el = this.el;
     return {
       'in-modal-default': hostContext('ion-modal.modal-default', el),
-      'in-modalsheet': hostContext('ion-modal.modal-sheet', el),
+      'in-modal-sheet': hostContext('ion-modal.modal-sheet', el),
     };
   }
 
