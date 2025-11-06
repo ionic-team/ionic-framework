@@ -151,10 +151,12 @@ export class SelectModal implements ComponentInterface {
 
   render() {
     return (
-      <Host class={{
-        [getIonMode(this)]: true,
-        ...this.getModalContextClasses(),
-      }}>
+      <Host
+        class={{
+          [getIonMode(this)]: true,
+          ...this.getModalContextClasses(),
+        }}
+      >
         <ion-header>
           <ion-toolbar>
             {this.header !== undefined && <ion-title>{this.header}</ion-title>}
