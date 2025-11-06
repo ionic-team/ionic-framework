@@ -78,7 +78,7 @@
 }
 
 :host([slot="bottom"].tab-bar-compact) {
-  bottom: calc(globals.$ion-space-100 + var(--ion-safe-area-bottom, 0));
+  bottom: calc(globals.$ion-space-400 + var(--ion-safe-area-bottom, 0));
 }
 
 // Tab Bar Shapes
