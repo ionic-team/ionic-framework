@@ -147,8 +147,8 @@ $ionic-colors: (
   ),
   light: (
     bold: (
-      base: globals.$ion-bg-neutral-base-default,
-      base-rgb: globals.$ion-bg-neutral-base-default-rgb,
+      base: globals.$ion-primitives-base-white,
+      base-rgb: globals.$ion-primitives-base-white-rgb,
       contrast: globals.$ion-text-default,
       contrast-rgb: globals.$ion-text-default-rgb,
       shade: globals.$ion-primitives-neutral-600,
