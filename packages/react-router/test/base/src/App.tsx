@@ -59,8 +59,8 @@ const App: React.FC = () => {
           <Route path="/outlet-ref" element={<OutletRef />} />
           <Route path="/swipe-to-go-back" element={<SwipeToGoBack />} />
           <Route path="/dynamic-ionpage-classnames" element={<DynamicIonpageClassnames />} />
-          <Route path="/tabs" element={<Tabs />} />
-          <Route path="/tabs-secondary" element={<TabsSecondary />} />
+          <Route path="/tabs/*" element={<Tabs />} />
+          <Route path="/tabs-secondary/*" element={<TabsSecondary />} />
           <Route path="/refs" element={<Refs />} />
           <Route path="/overlays" element={<Overlays />} />
           <Route path="/params/:id" element={<Params />} />

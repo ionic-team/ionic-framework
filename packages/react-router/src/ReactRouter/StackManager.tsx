@@ -78,7 +78,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
   /**
    * Determines the parent path that was matched to reach this outlet.
-   * This is crucial for nested routing in React Router 6.
+   * This helps with nested routing in React Router 6.
    */
   private getParentPath(): string | undefined {
     const currentPathname = this.props.routeInfo.pathname;
@@ -266,7 +266,19 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       // CRITICAL: If we have a mount path and current route is outside of it,
       // don't process any routes in this outlet - it's completely out of scope
       if (this.outletMountPath && !routeInfo.pathname.startsWith(this.outletMountPath)) {
-        // Don't unmount views - just skip processing
+        // Hide any visible views in this outlet since it's out of scope
+        if (leavingViewItem && leavingViewItem.ionPageElement) {
+          leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
+          leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
+        }
+
+        // Also check if there's an entering view that needs to be hidden
+        if (enteringViewItem && enteringViewItem.ionPageElement && enteringViewItem !== leavingViewItem) {
+          enteringViewItem.ionPageElement.classList.add('ion-page-hidden');
+          enteringViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
+        }
+
+        // Don't unmount views - just hide them and skip processing
         // The views should be preserved for when we return to this outlet
         this.forceUpdate();
         return;
@@ -304,7 +316,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         routeInfo,
         parentPath
       ) as React.ReactElement;
-      
+
       if (enteringRoute && process.env.NODE_ENV !== 'production') {
         const routeElement = enteringRoute.props?.element;
         const isNavigate = React.isValidElement(routeElement) && routeElement.type === Navigate;
@@ -471,13 +483,13 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             this.ionPageWaitTimeout = undefined;
           }
           this.pendingPageTransition = false;
-          
+
           // Unmount the leaving view immediately for replace actions
           if (shouldUnmountLeavingViewItem && leavingViewItem) {
             console.log(`[StackManager] Unmounting leaving view ${leavingViewItem.id} for Navigate redirect`);
             leavingViewItem.mount = false;
           }
-          
+
           this.forceUpdate();
           return;
         }
@@ -537,7 +549,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             this.forceUpdate();
           } else if (process.env.NODE_ENV !== 'production') {
             console.log(
-              `[StackManager] Still no ionPageElement for ${latestEnteringView?.id ?? enteringViewItem.id}, skipping transition`
+              `[StackManager] Still no ionPageElement for ${latestEnteringView?.id ?? enteringViewItem?.id ?? 'unknown'}, skipping transition`
             );
           }
         }, 50);
@@ -932,74 +944,23 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
   const hasRelativeRoutes = sortedRoutes.some((r) => r.props.path && !r.props.path.startsWith('/'));
   const hasIndexRoute = sortedRoutes.some((r) => r.props.index);
 
-  // For nested outlets with relative routes, we need to determine if this outlet
-  // should even attempt to handle this route
-  if (hasRelativeRoutes || hasIndexRoute) {
-    // If we have a parent path, check if the current pathname is within scope
-    if (parentPath) {
-      const parentPrefix = parentPath.replace('/*', '');
-      // If the current path doesn't start with the parent prefix, this outlet shouldn't handle it
-      if (!routeInfo.pathname.startsWith(parentPrefix + '/') && routeInfo.pathname !== parentPrefix) {
-        // This nested outlet is out of scope for this pathname
-        return null;
-      }
-    } else if (hasIndexRoute && !hasRelativeRoutes) {
-      // Special case: if we only have an index route and no relative routes,
-      // and we couldn't determine a parent path, this outlet likely shouldn't
-      // handle this route (the index route would only match at the outlet's root)
-      return null;
-    }
+  // SIMPLIFIED: Trust React Router 6's matching more, compute relative path when parent is known
+  if ((hasRelativeRoutes || hasIndexRoute) && parentPath) {
+    const parentPrefix = parentPath.replace('/*', '');
+    const normalizedParent = parentPrefix.endsWith('/') ? parentPrefix.slice(0, -1) : parentPrefix;
+    const normalizedPathname = routeInfo.pathname.endsWith('/') ? routeInfo.pathname.slice(0, -1) : routeInfo.pathname;
 
-    // For nested routing, we need to compute the relative path
-    // This is the part of the pathname that comes after the parent's matched path
-
-    // Try to determine the parent path from the context
-    // In React Router 6, nested outlets match against the remaining path segment
-    const pathSegments = routeInfo.pathname.split('/').filter(Boolean);
-
-    // If we have a parentPath, use it to compute the relative path
-    if (parentPath) {
-      const parentSegments = parentPath.replace('/*', '').split('/').filter(Boolean);
-
-      // Remove parent segments from the full path to get the relative path
+    // Only compute relative path if pathname is within parent scope
+    if (normalizedPathname.startsWith(normalizedParent + '/') || normalizedPathname === normalizedParent) {
+      const pathSegments = routeInfo.pathname.split('/').filter(Boolean);
+      const parentSegments = normalizedParent.split('/').filter(Boolean);
       const relativeSegments = pathSegments.slice(parentSegments.length);
-      pathnameToMatch = relativeSegments.join('/'); // This can be empty string, which is correct for index routes
-    } else if (pathSegments.length > 0) {
-      // If we have relative routes but couldn't determine a parent path,
-      // this likely means the current pathname is not within this outlet's scope
-      // Check if we can find any route that could match
-      let foundMatch = false;
+      pathnameToMatch = relativeSegments.join('/'); // Empty string is valid for index routes
 
-      // Check each possible parent path length starting from the longest
-      for (let parentLength = pathSegments.length - 1; parentLength > 0; parentLength--) {
-        const remainingSegments = pathSegments.slice(parentLength);
-        const remainingPath = remainingSegments.join('/');
-
-        // Check if any route in this outlet could match the remaining path
-        const couldMatchRemaining = sortedRoutes.some((route) => doesRouteMatchRemainingPath(route, remainingPath));
-
-        if (couldMatchRemaining) {
-          pathnameToMatch = remainingPath;
-          foundMatch = true;
-          break;
-        }
-      }
-
-      // If we couldn't find any match and we have relative routes,
-      // this outlet shouldn't handle this route
-      if (!foundMatch && (hasRelativeRoutes || hasIndexRoute)) {
-        return null;
-      }
-
-      // If no parent could be inferred, try matching the last segment only
-      // This handles the common case where we directly navigate to /parent/child
-      if (pathnameToMatch === routeInfo.pathname && pathSegments.length > 0) {
-        const lastSegment = pathSegments[pathSegments.length - 1];
-        const couldMatchLastSegment = sortedRoutes.some((route) => doesRouteMatchRemainingPath(route, lastSegment));
-
-        if (couldMatchLastSegment) {
-          pathnameToMatch = lastSegment;
-        }
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(
+          `[findRouteByRouteInfo] Computed relative path: "${pathnameToMatch}" from pathname="${routeInfo.pathname}" parentPath="${parentPath}"`
+        );
       }
     }
   }

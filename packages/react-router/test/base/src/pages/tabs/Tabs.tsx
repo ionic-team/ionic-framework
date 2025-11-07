@@ -24,11 +24,11 @@ const Tabs: React.FC<TabsProps> = () => {
   return (
     <IonTabs data-pageid="tabs">
       <IonRouterOutlet id="tabs">
-        <Route path="/tabs/tab1" element={<Tab1 />} />
-        <Route path="/tabs/tab2" element={<Tab2 />} />
-        <Route path="/tabs/tab1/child" element={<Tab1Child1 />} />
-        <Route path="/tabs/tab1/child2" element={<Tab1Child2 />} />
-        <Route path="/tabs" element={<Navigate to="/tabs/tab1" replace />} />
+        <Route index element={<Navigate to="/tabs/tab1" replace />} />
+        <Route path="tab1" element={<Tab1 />} />
+        <Route path="tab2" element={<Tab2 />} />
+        <Route path="tab1/child" element={<Tab1Child1 />} />
+        <Route path="tab1/child2" element={<Tab1Child2 />} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="tab1" href="/tabs/tab1">
