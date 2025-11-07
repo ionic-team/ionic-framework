@@ -111,7 +111,7 @@
   @include globals.typography(globals.$ion-body-action-sm);
   min-width: globals.$ion-scale-1600;
 
-  min-height: #{globals.$ion-scale-1000};
+  min-height: #{globals.$ion-space-1000};
 }
 
 /* Medium Button */
@@ -121,7 +121,7 @@
   @include globals.typography(globals.$ion-body-action-md);
   min-width: globals.$ion-scale-1800;
 
-  min-height: #{globals.$ion-scale-1200};
+  min-height: #{globals.$ion-space-1200};
 }
 
 /* Large Button */
@@ -131,7 +131,7 @@
   @include globals.typography(globals.$ion-body-action-lg);
   min-width: globals.$ion-scale-2000;
 
-  min-height: #{globals.$ion-scale-1400};
+  min-height: #{globals.$ion-space-1400};
 }
 
 // Button with Icons
@@ -185,21 +185,21 @@
 // --------------------------------------------------
 
 :host(.button-soft) {
-  --border-radius: #{globals.$ion-border-radius-200};
+  --border-radius: #{globals.$ion-soft-xs};
 }
 
 // Round Button
 // --------------------------------------------------
 
 :host(.button-round) {
-  --border-radius: #{globals.$ion-border-radius-full};
+  --border-radius: #{globals.$ion-round-xs};
 }
 
 // Rectangular Button
 // --------------------------------------------------
 
 :host(.button-rectangular) {
-  --border-radius: #{globals.$ion-border-radius-0};
+  --border-radius: #{globals.$ion-rectangular-xs};
 }
 
 // Button: Focus
