@@ -9,6 +9,18 @@
   --color: #{globals.$tabbar-ionic-color};
   --color-selected: #{globals.$tabbar-ionic-color-selected};
 
+  /*
+   * In case there's scrolling, justify the content to the start.
+   */
+  justify-content: unset;
+
+  /*
+   * Ensure the tab bar does not grow larger than the viewport width.
+   * Useful for when the tab buttons have large labels, allowing the space
+   * to be evenly divided among the buttons.
+   */
+  max-width: 100%;
+
   /**
    * Tab bar has a box sizing of content-box to ensure the padding
    * is not included in the height. This is important for the
@@ -23,22 +35,14 @@
 
   box-shadow: #{globals.$ion-elevation-2};
 
-  // TODO(ROU-10853): replace this value with a layer token
-  z-index: 10;
-
   /*
    * In case there are more tab buttons than can fit in the tab bar, enable
    * horizontal scrolling.
    */
   overflow: auto hidden;
-  justify-content: unset;
 
-  /*
-   * Ensure the tab bar does not grow larger than the viewport width.
-   * Useful for when the tab buttons have large labels, allowing the space
-   * to be evenly divided among the buttons.
-   */
-  max-width: 100%;
+  // TODO(ROU-10853): replace this value with a layer token
+  z-index: 10;
 }
 
 // Tab Bar Expand
