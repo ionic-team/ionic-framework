@@ -111,7 +111,7 @@
   @include globals.typography(globals.$ion-body-action-sm);
   min-width: globals.$ion-scale-1600;
 
-  min-height: #{globals.$ion-space-1000};
+  min-height: #{globals.$ion-scale-1000};
 }
 
 /* Medium Button */
@@ -121,7 +121,7 @@
   @include globals.typography(globals.$ion-body-action-md);
   min-width: globals.$ion-scale-1800;
 
-  min-height: #{globals.$ion-space-1200};
+  min-height: #{globals.$ion-scale-1200};
 }
 
 /* Large Button */
@@ -131,7 +131,7 @@
   @include globals.typography(globals.$ion-body-action-lg);
   min-width: globals.$ion-scale-2000;
 
-  min-height: #{globals.$ion-space-1400};
+  min-height: #{globals.$ion-scale-1400};
 }
 
 // Button with Icons
