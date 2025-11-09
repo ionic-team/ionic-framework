@@ -14,9 +14,10 @@ on:
       preid:
         description: 'The prerelease identifier used when doing a prerelease.'
         type: string
-    secrets:
-      NPM_TOKEN:
-        required: true
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   release-core:
@@ -30,7 +31,6 @@ jobs:
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
         working-directory: 'core'
-        token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/core
       uses: ./.github/workflows/actions/upload-archive
       with:
@@ -62,7 +62,6 @@ jobs:
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
         working-directory: 'packages/docs'
-        token: ${{ secrets.NPM_TOKEN }}
 
   release-angular:
     needs: [release-core]
@@ -83,7 +82,6 @@ jobs:
         preid: ${{ inputs.preid }}
         working-directory: 'packages/angular'
         folder: './dist'
-        token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/angular
       uses: ./.github/workflows/actions/upload-archive
       with:
@@ -109,7 +107,6 @@ jobs:
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
         working-directory: 'packages/react'
-        token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/react
       uses: ./.github/workflows/actions/upload-archive
       with:
@@ -135,7 +132,6 @@ jobs:
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
         working-directory: 'packages/vue'
-        token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/vue
       uses: ./.github/workflows/actions/upload-archive
       with:
@@ -162,7 +158,12 @@ jobs:
         preid: ${{ inputs.preid }}
         working-directory: 'packages/angular-server'
         folder: './dist'
-        token: ${{ secrets.NPM_TOKEN }}
+    - name: Cache Built @ionic/angular-server
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-angular-server
+        output: packages/angular-server/AngularServerBuild.zip
+        paths: packages/angular-server/dist
 
   release-react-router:
     needs: [release-react]
@@ -188,7 +189,6 @@ jobs:
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
         working-directory: 'packages/react-router'
-        token: ${{ secrets.NPM_TOKEN }}
 
   release-vue-router:
     needs: [release-vue]
@@ -214,4 +214,3 @@ jobs:
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
         working-directory: 'packages/vue-router'
-        token: ${{ secrets.NPM_TOKEN }}

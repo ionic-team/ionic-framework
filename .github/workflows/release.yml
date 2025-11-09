@@ -23,26 +23,19 @@ on:
           - latest
           - next
       preid:
-        type: choice
+        type: string
         description: Which prerelease identifier should be used? This is only needed when version is "prepatch", "preminor", "premajor", or "prerelease".
-        options:
-          - ''
-          - alpha
-          - beta
-          - rc
-          - next
 
 jobs:
   release-ionic:
     permissions:
+      contents: read
       id-token: write
     uses: ./.github/workflows/release-ionic.yml
     with:
       tag: ${{ inputs.tag }}
       version: ${{ inputs.version }}
       preid: ${{ inputs.preid }}
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   finalize-release:
     needs: [release-ionic]
