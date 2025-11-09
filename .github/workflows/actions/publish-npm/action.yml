@@ -45,7 +45,7 @@ runs:
       working-directory: ${{ inputs.working-directory }}
     - name: 🏷️ Set Version
       run: |
-        if [ "${{ inputs.preid }}" = "none" ] || [ -z "${{ inputs.preid }}" ]; then
+        if [ -z "${{ inputs.preid }}" ]; then
           npx lerna@5 version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version
         else
           npx lerna@5 version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version --preid=${{ inputs.preid }}
