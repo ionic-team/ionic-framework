@@ -3,7 +3,7 @@ description: 'Test Core Clean Build'
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@v6
+    - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
       with:
         node-version: 24.x
 
@@ -12,7 +12,7 @@ runs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - name: Check Diff
+    - name: 🔍 Check Diff
       run: |
         git diff --exit-code || {
           echo -e "\033[1;31m⚠️ Error: Differences Detected ⚠️\033[0m"

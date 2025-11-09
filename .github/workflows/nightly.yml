@@ -12,7 +12,7 @@ jobs:
     outputs:
       nightly-hash: ${{ steps.create-nightly-hash.outputs.NIGHTLY_HASH }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       # A 1 is required before the timestamp
       # as lerna will fail when there is a leading 0
       # See https://github.com/lerna/lerna/issues/2840
