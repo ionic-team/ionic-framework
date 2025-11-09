@@ -17,7 +17,7 @@ inputs:
   node-version:
     description: 'Node.js version to use when publishing.'
     required: false
-    default: '20'
+    default: '24.x'
   registry-url:
     description: 'Registry URL used for npm publish.'
     required: false
