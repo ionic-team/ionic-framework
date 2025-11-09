@@ -8,7 +8,7 @@ inputs:
   tag:
     description: 'The tag to publish to on NPM.'
   preid:
-    description: "Prerelase identifier such as 'alpha', 'beta', 'rc', or 'next'. Leave blank to skip prerelease tagging."
+    description: "Prerelease identifier such as 'alpha', 'beta', 'rc', or 'next'. Leave blank to skip prerelease tagging."
   working-directory:
     description: 'The directory of the package.'
   folder:
