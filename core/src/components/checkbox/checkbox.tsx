@@ -127,7 +127,7 @@ export class Checkbox implements ComponentInterface {
    */
   @State() isInvalid = false;
 
-  @State() private hintTextID?: string;
+  @State() private hintTextId?: string;
 
   /**
    * Emitted when the checked property has changed as a result of a user action such as a click.
@@ -174,7 +174,7 @@ export class Checkbox implements ComponentInterface {
            * a higher priority.
            */
           Promise.resolve().then(() => {
-            this.hintTextID = this.getHintTextID();
+            this.hintTextId = this.getHintTextId();
           });
         }
       });
@@ -194,7 +194,7 @@ export class Checkbox implements ComponentInterface {
       ...inheritAriaAttributes(this.el),
     };
 
-    this.hintTextID = this.getHintTextID();
+    this.hintTextId = this.getHintTextId();
   }
 
   disconnectedCallback() {
@@ -265,7 +265,7 @@ export class Checkbox implements ComponentInterface {
     ev.stopPropagation();
   };
 
-  private getHintTextID(): string | undefined {
+  private getHintTextId(): string | undefined {
     const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
     if (isInvalid && errorText) {
@@ -336,7 +336,7 @@ export class Checkbox implements ComponentInterface {
       <Host
         role="checkbox"
         aria-checked={indeterminate ? 'mixed' : `${checked}`}
-        aria-describedby={this.hintTextID}
+        aria-describedby={this.hintTextId}
         aria-invalid={this.isInvalid ? 'true' : undefined}
         aria-labelledby={hasLabelContent ? this.inputLabelId : null}
         aria-label={inheritedAttributes['aria-label'] || null}

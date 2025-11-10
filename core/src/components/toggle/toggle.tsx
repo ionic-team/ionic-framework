@@ -56,7 +56,7 @@ export class Toggle implements ComponentInterface {
    */
   @State() isInvalid = false;
 
-  @State() private hintTextID?: string;
+  @State() private hintTextId?: string;
 
   /**
    * The color to use from your application's color palette.
@@ -214,7 +214,7 @@ export class Toggle implements ComponentInterface {
            * a higher priority.
            */
           Promise.resolve().then(() => {
-            this.hintTextID = this.getHintTextID();
+            this.hintTextId = this.getHintTextId();
           });
         }
       });
@@ -270,7 +270,7 @@ export class Toggle implements ComponentInterface {
       ...inheritAriaAttributes(this.el),
     };
 
-    this.hintTextID = this.getHintTextID();
+    this.hintTextId = this.getHintTextId();
   }
 
   private onStart() {
@@ -393,7 +393,7 @@ export class Toggle implements ComponentInterface {
     return this.el.textContent !== '';
   }
 
-  private getHintTextID(): string | undefined {
+  private getHintTextId(): string | undefined {
     const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
     if (isInvalid && errorText) {
@@ -462,7 +462,7 @@ export class Toggle implements ComponentInterface {
       <Host
         role="switch"
         aria-checked={`${checked}`}
-        aria-describedby={this.hintTextID}
+        aria-describedby={this.hintTextId}
         aria-invalid={this.isInvalid ? 'true' : undefined}
         onClick={this.onClick}
         aria-labelledby={hasLabel ? inputLabelId : null}

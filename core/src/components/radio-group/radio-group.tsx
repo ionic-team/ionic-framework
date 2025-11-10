@@ -29,7 +29,7 @@ export class RadioGroup implements ComponentInterface {
    */
   @State() isInvalid = false;
 
-  @State() private hintTextID?: string;
+  @State() private hintTextId?: string;
 
   /**
    * If `true`, the radios can be deselected.
@@ -156,7 +156,7 @@ export class RadioGroup implements ComponentInterface {
            * a higher priority.
            */
           Promise.resolve().then(() => {
-            this.hintTextID = this.getHintTextID();
+            this.hintTextId = this.getHintTextId();
           });
         }
       });
@@ -172,7 +172,7 @@ export class RadioGroup implements ComponentInterface {
   }
 
   componentWillLoad() {
-    this.hintTextID = this.getHintTextID();
+    this.hintTextId = this.getHintTextId();
   }
 
   disconnectedCallback() {
@@ -323,7 +323,7 @@ export class RadioGroup implements ComponentInterface {
     );
   }
 
-  private getHintTextID(): string | undefined {
+  private getHintTextId(): string | undefined {
     const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
     if (isInvalid && errorText) {
@@ -347,7 +347,7 @@ export class RadioGroup implements ComponentInterface {
       <Host
         role="radiogroup"
         aria-labelledby={label ? labelId : null}
-        aria-describedby={this.hintTextID}
+        aria-describedby={this.hintTextId}
         aria-invalid={this.isInvalid ? 'true' : undefined}
         onClick={this.onClick}
         class={mode}
