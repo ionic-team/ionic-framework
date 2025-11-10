@@ -87,7 +87,7 @@ export class Select implements ComponentInterface {
    */
   @State() isInvalid = false;
 
-  @State() private?: string;
+  @State() private hintTextId?: string;
 
   /**
    * The text to display on the cancel button.
