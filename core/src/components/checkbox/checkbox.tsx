@@ -174,7 +174,6 @@ export class Checkbox implements ComponentInterface {
            * a higher priority.
            */
           Promise.resolve().then(() => {
-            console.log('updating hint text id');
             this.hintTextID = this.getHintTextID();
           });
         }
