@@ -109,7 +109,7 @@ export class Input implements ComponentInterface {
   /**
    * Whether auto correction should be enabled when the user is entering/editing the text value.
    */
-  @Prop() autocorrect: 'on' | 'off' = 'off';
+  @Prop() autocorrect: boolean = false;
 
   /**
    * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.
@@ -871,7 +871,7 @@ export class Input implements ComponentInterface {
               disabled={disabled}
               autoCapitalize={this.autocapitalize}
               autoComplete={this.autocomplete}
-              autoCorrect={this.autocorrect}
+              autoCorrect={this.autocorrect? 'on' : 'off'}
               autoFocus={this.autofocus}
               enterKeyHint={this.enterkeyhint}
               inputMode={this.inputmode}
