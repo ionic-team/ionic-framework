@@ -30,8 +30,6 @@ jobs:
     with:
       tag: dev
       version: ${{ needs.create-dev-hash.outputs.dev-hash }}
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   get-build:
     name: Get your dev build!

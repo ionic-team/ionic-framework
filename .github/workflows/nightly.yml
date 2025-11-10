@@ -35,5 +35,3 @@ jobs:
     with:
       tag: nightly
       version: ${{ needs.create-nightly-hash.outputs.nightly-hash }}
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
