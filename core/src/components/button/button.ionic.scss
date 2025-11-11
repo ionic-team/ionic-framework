@@ -185,21 +185,21 @@
 // --------------------------------------------------
 
 :host(.button-soft) {
-  --border-radius: #{globals.$ion-border-radius-200};
+  --border-radius: #{globals.$ion-soft-xs};
 }
 
 // Round Button
 // --------------------------------------------------
 
 :host(.button-round) {
-  --border-radius: #{globals.$ion-border-radius-full};
+  --border-radius: #{globals.$ion-round-xs};
 }
 
 // Rectangular Button
 // --------------------------------------------------
 
 :host(.button-rectangular) {
-  --border-radius: #{globals.$ion-border-radius-0};
+  --border-radius: #{globals.$ion-rectangular-xs};
 }
 
 // Button: Focus
