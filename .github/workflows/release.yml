@@ -23,8 +23,15 @@ on:
           - latest
           - next
       preid:
-        type: string
+        type: choice
         description: Which prerelease identifier should be used? This is only needed when version is "prepatch", "preminor", "premajor", or "prerelease".
+        default: ''
+        options:
+          - ''
+          - alpha
+          - beta
+          - rc
+          - next
 
 jobs:
   release-ionic:

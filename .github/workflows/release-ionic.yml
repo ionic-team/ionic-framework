@@ -158,12 +158,6 @@ jobs:
         preid: ${{ inputs.preid }}
         working-directory: 'packages/angular-server'
         folder: './dist'
-    - name: Cache Built @ionic/angular-server
-      uses: ./.github/workflows/actions/upload-archive
-      with:
-        name: ionic-angular-server
-        output: packages/angular-server/AngularServerBuild.zip
-        paths: packages/angular-server/dist
 
   release-react-router:
     needs: [release-react]
