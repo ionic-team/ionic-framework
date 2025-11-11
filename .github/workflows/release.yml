@@ -25,6 +25,7 @@ on:
       preid:
         type: choice
         description: Which prerelease identifier should be used? This is only needed when version is "prepatch", "preminor", "premajor", or "prerelease".
+        default: ''
         options:
           - ''
           - alpha
@@ -35,20 +36,19 @@ on:
 jobs:
   release-ionic:
     permissions:
+      contents: read
       id-token: write
     uses: ./.github/workflows/release-ionic.yml
     with:
       tag: ${{ inputs.tag }}
       version: ${{ inputs.version }}
       preid: ${{ inputs.preid }}
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   finalize-release:
     needs: [release-ionic]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       with:
         token: ${{ secrets.IONITRON_TOKEN }}
         fetch-depth: 0
@@ -76,7 +76,7 @@ jobs:
     needs: [finalize-release]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         # Pull the latest version of the reference
         # branch instead of the revision that triggered
         # the workflow otherwise we won't get the commit
