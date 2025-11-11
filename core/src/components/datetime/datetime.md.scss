@@ -43,6 +43,28 @@
   --color: #{$text-color-step-350};
 }
 
+// These styles are copied from buttons.md.scss
+.calendar-next-prev ion-button {
+  --padding-top: 12px;
+  --padding-end: 12px;
+  --padding-bottom: 12px;
+  --padding-start: 12px;
+  --border-radius: 50%;
+
+  @include margin(0);
+
+  width: 3rem;
+  height: 3rem;
+}
+
+// These styles are copied from buttons.md.scss
+.calendar-next-prev ion-button ion-icon[slot="icon-only"] {
+  @include padding(0);
+  @include margin(0);
+
+  font-size: 1.8em;
+}
+
 .calendar-month-year-toggle {
   @include padding(12px, 16px, 12px, #{$datetime-md-header-padding});
 
@@ -166,6 +188,7 @@
 
 // Footer
 // -----------------------------------
+
 :host .datetime-buttons {
   @include padding(10px, 10px, 10px, 10px);
 
@@ -174,4 +197,17 @@
   align-items: center;
 
   justify-content: flex-end;
+}
+
+// These styles are copied from buttons.md.scss
+:host .datetime-action-buttons ion-button {
+  --padding-top: 3px;
+  --padding-bottom: 3px;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --box-shadow: none;
+
+  @include margin(0px, 2px, 0px, 2px);
+
+  min-height: 32px;
 }

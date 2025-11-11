@@ -65,6 +65,12 @@
 // Time / Header
 // -----------------------------------
 
+:host .calendar-next-prev {
+  display: flex;
+
+  align-items: start;
+}
+
 :host(.datetime-presentation-time) .datetime-time {
   @include globals.padding(0);
 }
@@ -128,6 +134,6 @@ ion-picker {
 // Calendar / Footer / Action Buttons
 // -----------------------------------
 
-:host .datetime-action-buttons ion-buttons {
+:host .datetime-action-buttons {
   justify-content: space-between;
 }
