@@ -17,7 +17,7 @@ inputs:
   node-version:
     description: 'Node.js version to use when publishing.'
     required: false
-    default: '20'
+    default: '24.x'
 runs:
   using: 'composite'
   steps:
