@@ -17,11 +17,7 @@ inputs:
   node-version:
     description: 'Node.js version to use when publishing.'
     required: false
-    default: '24.x'
-  registry-url:
-    description: 'Registry URL used for npm publish.'
-    required: false
-    default: 'https://registry.npmjs.org'
+    default: '20'
 runs:
   using: 'composite'
   steps:
@@ -29,7 +25,7 @@ runs:
       uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
       with:
         node-version: ${{ inputs.node-version }}
-        registry-url: ${{ inputs.registry-url }}
+        registry-url: 'https://registry.npmjs.org'
     # Provenance requires npm 9.5.0+
     - name: 📦 Install latest npm
       run: npm install -g npm@latest
