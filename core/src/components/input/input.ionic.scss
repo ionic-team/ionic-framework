@@ -108,30 +108,30 @@
 // Ionic Input Sizes
 // --------------------------------------------------
 
-:host(.input-size-medium) {
+:host(.input-size-small) {
   --padding-start: #{globals.$ion-space-300};
   --padding-end: #{globals.$ion-space-300};
 }
 
-:host(.input-size-large) {
+:host(.input-size-medium) {
   --padding-start: #{globals.$ion-space-400};
   --padding-end: #{globals.$ion-space-400};
 }
 
-:host(.input-size-xlarge) {
+:host(.input-size-large) {
   --padding-start: #{globals.$ion-space-500};
   --padding-end: #{globals.$ion-space-500};
 }
 
-:host(.input-size-medium) .native-wrapper {
+:host(.input-size-small) .native-wrapper {
   min-height: globals.$ion-scale-1000;
 }
 
-:host(.input-size-large) .native-wrapper {
+:host(.input-size-medium) .native-wrapper {
   min-height: globals.$ion-scale-1200;
 }
 
-:host(.input-size-xlarge) .native-wrapper {
+:host(.input-size-large) .native-wrapper {
   min-height: globals.$ion-scale-1400;
 }
 
