@@ -19,7 +19,7 @@ export interface ActionSheetOptions {
 
 export interface ActionSheetButton<T = any> {
   text?: string;
-  role?: LiteralUnion<'cancel' | 'destructive' | 'selected', string>;
+  role?: LiteralUnion<'cancel' | 'destructive' | 'selected' | 'radio', string>;
   icon?: string;
   cssClass?: string | string[];
   id?: string;

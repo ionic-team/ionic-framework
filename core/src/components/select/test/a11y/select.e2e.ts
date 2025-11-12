@@ -111,39 +111,3 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
     });
   });
 });
-
-/**
- * This behavior does not vary across modes/directions.
- */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('select: aria attributes'), () => {
-    test('should have a aria-description on the selected option when action sheet interface is open', async ({
-      page,
-    }) => {
-      await page.setContent(
-        `
-          <ion-select label="Fruit" value="apple" interface="action-sheet">
-            <ion-select-option value="apple">Apple</ion-select-option>
-            <ion-select-option value="banana">Banana</ion-select-option>
-            <ion-select-option value="orange">Orange</ion-select-option>
-          </ion-select>
-        `,
-        config
-      );
-
-      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
-
-      const select = page.locator('ion-select');
-
-      await select.click();
-      await ionActionSheetDidPresent.next();
-
-      const selectedOption = page.locator('.action-sheet-selected');
-      await expect(selectedOption).toHaveAttribute('aria-description', 'selected');
-
-      // Check that the attribut is not added to non-selected option
-      const nonSelectedOption = page.locator('.select-interface-option:not(.action-sheet-selected)').first();
-      await expect(nonSelectedOption).not.toHaveAttribute('aria-description');
-    });
-  });
-});
