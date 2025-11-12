@@ -576,7 +576,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { header, htmlAttributes, overlayIndex, activeRadioId, hasRadioButtons } = this;
+    const { header, htmlAttributes, overlayIndex, hasRadioButtons } = this;
     const mode = getIonMode(this);
     const allButtons = this.getButtons();
     const cancelButton = allButtons.find((b) => b.role === 'cancel');
