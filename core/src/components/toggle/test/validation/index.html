@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toggle - Validation</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-row-gap: 30px;
+        grid-column-gap: 30px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: var(--ion-color-step-600);
+
+        margin-top: 10px;
+        margin-bottom: 5px;
+      }
+
+      .validation-info {
+        margin: 20px;
+        padding: 10px;
+        background: var(--ion-color-light);
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Toggle - Validation Test</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <div class="validation-info">
+          <h2>Screen Reader Testing Instructions:</h2>
+          <ol>
+            <li>Enable your screen reader (VoiceOver, NVDA, JAWS, etc.)</li>
+            <li>Tab through the form fields</li>
+            <li>When you tab away from an empty required field, the error should be announced immediately</li>
+            <li>The error text should be announced BEFORE the next field is announced</li>
+            <li>Test in Chrome, Safari, and Firefox to verify consistent behavior</li>
+          </ol>
+        </div>
+
+        <div class="grid">
+          <div>
+            <h2>Required Field</h2>
+            <ion-toggle
+              id="terms-toggle"
+              helper-text="You must turn on to continue"
+              error-text="Please turn on this toggle"
+              required
+              >Tap to turn on</ion-toggle
+            >
+          </div>
+
+          <div>
+            <h2>Optional Field (No Validation)</h2>
+            <ion-toggle id="optional-toggle" helper-text="You can skip this field">Optional Toggle</ion-toggle>
+          </div>
+        </div>
+
+        <div class="ion-padding">
+          <ion-button id="submit-btn" expand="block" disabled>Submit Form</ion-button>
+          <ion-button id="reset-btn" expand="block" fill="outline">Reset Form</ion-button>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      // Simple validation logic
+      const toggles = document.querySelectorAll('ion-toggle');
+      const submitBtn = document.getElementById('submit-btn');
+      const resetBtn = document.getElementById('reset-btn');
+
+      // Track which fields have been touched
+      const touchedFields = new Set();
+
+      // Validation functions
+      const validators = {
+        'terms-toggle': (checked) => {
+          return checked === true;
+        },
+        'optional-toggle': () => true, // Always valid
+      };
+
+      function validateField(toggle) {
+        const toggleId = toggle.id;
+        const checked = toggle.checked;
+        const isValid = validators[toggleId] ? validators[toggleId](checked) : true;
+
+        // Only show validation state if field has been touched
+        if (touchedFields.has(toggleId)) {
+          if (isValid) {
+            toggle.classList.remove('ion-invalid');
+            toggle.classList.add('ion-valid');
+          } else {
+            toggle.classList.remove('ion-valid');
+            toggle.classList.add('ion-invalid');
+          }
+          toggle.classList.add('ion-touched');
+        }
+
+        return isValid;
+      }
+
+      function validateForm() {
+        let allValid = true;
+        toggles.forEach((toggle) => {
+          if (toggle.id !== 'optional-toggle') {
+            const isValid = validateField(toggle);
+            if (!isValid) {
+              allValid = false;
+            }
+          }
+        });
+        submitBtn.disabled = !allValid;
+        return allValid;
+      }
+
+      // Add event listeners
+      toggles.forEach((toggle) => {
+        // Mark as touched on blur
+        toggle.addEventListener('ionBlur', (e) => {
+          console.log('Blur event on:', toggle.id);
+          touchedFields.add(toggle.id);
+          validateField(toggle);
+          validateForm();
+
+          const isInvalid = toggle.classList.contains('ion-invalid');
+          if (isInvalid) {
+            console.log('Field marked invalid:', toggle.innerText, toggle.errorText);
+          }
+        });
+
+        // Validate on change
+        toggle.addEventListener('ionChange', (e) => {
+          console.log('Change event on:', toggle.id);
+          if (touchedFields.has(toggle.id)) {
+            validateField(toggle);
+            validateForm();
+          }
+        });
+      });
+
+      // Reset button
+      resetBtn.addEventListener('click', () => {
+        toggles.forEach((toggle) => {
+          toggle.checked = false;
+          toggle.classList.remove('ion-valid', 'ion-invalid', 'ion-touched');
+        });
+        touchedFields.clear();
+        submitBtn.disabled = true;
+      });
+
+      // Submit button
+      submitBtn.addEventListener('click', () => {
+        if (validateForm()) {
+          alert('Form submitted successfully!');
+        }
+      });
+
+      // Initial setup
+      validateForm();
+    </script>
+  </body>
+</html>
