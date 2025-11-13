@@ -106,7 +106,7 @@
       // Validation functions
       const validators = {
         'fruits-radio-group': (value) => {
-          return value !== undefined;
+          return value !== '' && value !== undefined;
         },
         'optional-radio-group': () => true, // Always valid
       };
