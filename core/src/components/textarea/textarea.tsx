@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import {
+  AttachInternals,
   Build,
   Component,
   Element,
@@ -15,7 +16,7 @@ import {
   writeTask,
 } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
-import { createNotchController } from '@utils/forms';
+import { createNotchController, reportValidityToElementInternals } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
@@ -43,7 +44,8 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
     md: 'textarea.md.scss',
     ionic: 'textarea.ionic.scss',
   },
-  scoped: true,
+  shadow: true,
+  formAssociated: true
 })
 export class Textarea implements ComponentInterface {
   private nativeInput?: HTMLTextAreaElement;
@@ -72,6 +74,8 @@ export class Textarea implements ComponentInterface {
   private focusedValue?: string | null;
 
   @Element() el!: HTMLIonTextareaElement;
+
+  @AttachInternals() internals!: ElementInternals;
 
   /**
    * The `hasFocus` state ensures the focus class is
@@ -184,7 +188,7 @@ export class Textarea implements ComponentInterface {
   /**
    * If `true`, the user must fill in a value before submitting a form.
    */
-  @Prop() required = false;
+  @Prop({ reflect: true }) required = false;
 
   /**
    * If `true`, the element will have its spelling and grammar checked.
@@ -288,6 +292,15 @@ export class Textarea implements ComponentInterface {
       nativeInput.value = value;
     }
     this.runAutoGrow();
+    this.reportValidity();
+  }
+
+  /**
+   * Update validation state when required prop changes
+   */
+  @Watch('required')
+  protected requiredChanged() {
+    this.reportValidity();
   }
 
   /**
@@ -433,6 +446,7 @@ export class Textarea implements ComponentInterface {
   componentDidLoad() {
     this.originalIonInput = this.ionInput;
     this.runAutoGrow();
+    this.reportValidity();
   }
 
   componentDidRender() {
@@ -554,6 +568,15 @@ export class Textarea implements ComponentInterface {
     return this.value || '';
   }
 
+  /**
+   * Reports the validity state to the browser via ElementInternals.
+   * This delegates to the native textarea's built-in validation,
+   * which automatically handles the required prop and other constraints.
+   */
+  private reportValidity() {
+    reportValidityToElementInternals(this.nativeInput, this.internals);
+  }
+
   // `Event` type is used instead of `InputEvent`
   // since the types from Stencil are not derived
   // from the element (e.g. textarea and input
@@ -568,6 +591,11 @@ export class Textarea implements ComponentInterface {
   };
 
   private onChange = (ev: Event) => {
+    const input = ev.target as HTMLTextAreaElement | null;
+    if (input) {
+      this.internals.setFormValue(input.value);
+      this.reportValidity();
+    }
     this.emitValueChange(ev);
   };
 
