@@ -29,6 +29,18 @@ describe('popover: focus trap', () => {
 
     expect(popover.classList.contains(FOCUS_TRAP_DISABLE_CLASS)).toBe(true);
   });
+  it('should set the focus trap class when disabled via attribute string', async () => {
+    const page = await newSpecPage({
+      components: [Popover],
+      html: `
+        <ion-popover focus-trap="false"></ion-popover>
+      `,
+    });
+
+    const popover = page.body.querySelector('ion-popover')!;
+
+    expect(popover.classList.contains(FOCUS_TRAP_DISABLE_CLASS)).toBe(true);
+  });
   it('should not set the focus trap class by default', async () => {
     const page = await newSpecPage({
       components: [Popover],
