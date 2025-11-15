@@ -503,7 +503,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   private renderActionSheetButtons(filteredButtons: ActionSheetButton[]) {
     const mode = getIonMode(this);
     const { activeRadioId } = this;
-    console.log('Rendering buttons with activeRadioId:', activeRadioId);
 
     return filteredButtons.map((b, index) => {
       const isRadio = b.role === 'radio';
