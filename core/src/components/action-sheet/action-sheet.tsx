@@ -90,12 +90,15 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Prop() buttons: (ActionSheetButton | string)[] = [];
   @Watch('buttons')
   buttonsChanged() {
+    const radioButtons = this.getRadioButtons();
+    this.hasRadioButtons = radioButtons.length > 0;
+
     // Initialize activeRadioId when buttons change
     if (this.hasRadioButtons) {
-      const allButtons = this.getButtons();
-      const radioButtons = this.getRadioButtons();
       const checkedButton = radioButtons.find((b) => b.htmlAttributes?.['aria-checked'] === 'true');
+
       if (checkedButton) {
+        const allButtons = this.getButtons();
         const checkedIndex = allButtons.indexOf(checkedButton);
         this.activeRadioId = this.getButtonId(checkedButton, checkedIndex);
       }
@@ -439,8 +442,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   connectedCallback() {
     prepareOverlay(this.el);
     this.triggerChanged();
-
-    this.hasRadioButtons = this.getButtons().some((b) => b.role === 'radio');
   }
 
   disconnectedCallback() {
