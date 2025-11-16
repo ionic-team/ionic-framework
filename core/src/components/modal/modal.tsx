@@ -1237,6 +1237,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const isHandleCycle = handleBehavior === 'cycle';
     const isSheetModalWithHandle = isSheetModal && showHandle;
 
+    const focusTrapAttr = this.el.getAttribute('focus-trap');
+
     return (
       <Host
         no-router
@@ -1253,7 +1255,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           [`modal-sheet`]: isSheetModal,
           [`modal-no-expand-scroll`]: isSheetModal && !expandToScroll,
           'overlay-hidden': true,
-          [FOCUS_TRAP_DISABLE_CLASS]: focusTrap === false,
+          [FOCUS_TRAP_DISABLE_CLASS]: focusTrap === false || focusTrapAttr === 'false',
           ...getClassMap(this.cssClass),
         }}
         onIonBackdropTap={this.onBackdropTap}

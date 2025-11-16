@@ -57,6 +57,58 @@ describe('overlays: scroll blocking', () => {
     expect(body).not.toHaveClass('backdrop-no-scroll');
   });
 
+  it('should not block scroll when focus trapping is disabled via string prop', async () => {
+    const page = await newSpecPage({
+      components: [Modal],
+      html: `
+        <ion-modal></ion-modal>
+      `,
+    });
+
+    const modal = page.body.querySelector('ion-modal')! as any;
+    const body = page.doc.querySelector('body')!;
+
+    // Simulate frameworks passing the boolean as a string prop, e.g. focusTrap="false" in Angular
+    modal.focusTrap = 'false';
+    await page.waitForChanges();
+
+    await modal.present();
+
+    // With focus trapping disabled, scroll should not be locked.
+    // This currently fails because overlays.ts only checks for focusTrap !== false
+    // and treats the string "false" as truthy.
+    expect(body).not.toHaveClass('backdrop-no-scroll');
+
+    await modal.dismiss();
+
+    expect(body).not.toHaveClass('backdrop-no-scroll');
+  });
+
+  it('should not block scroll when backdrop is disabled via string prop', async () => {
+    const page = await newSpecPage({
+      components: [Modal],
+      html: `
+        <ion-modal></ion-modal>
+      `,
+    });
+
+    const modal = page.body.querySelector('ion-modal')! as any;
+    const body = page.doc.querySelector('body')!;
+
+    // Simulate frameworks passing showBackdrop="false" as a string
+    modal.showBackdrop = 'false';
+    await page.waitForChanges();
+
+    await modal.present();
+
+    // With backdrop disabled, scroll should not be locked.
+    expect(body).not.toHaveClass('backdrop-no-scroll');
+
+    await modal.dismiss();
+
+    expect(body).not.toHaveClass('backdrop-no-scroll');
+  });
+
   it('should not enable scroll until last overlay is dismissed', async () => {
     const page = await newSpecPage({
       components: [Modal],

@@ -98,7 +98,11 @@ export const createSheetGesture = (
     // Respect explicit opt-out of focus trapping/backdrop interactions
     // If focusTrap is false or showBackdrop is false, do not enable the backdrop or re-enable focus trap
     const el = baseEl as HTMLIonModalElement & { focusTrap?: boolean; showBackdrop?: boolean };
-    if (el.focusTrap === false || el.showBackdrop === false) {
+    const focusTrapAttr = el.getAttribute?.('focus-trap');
+    const showBackdropAttr = el.getAttribute?.('show-backdrop');
+    const focusTrapDisabled = el.focusTrap === false || focusTrapAttr === 'false';
+    const backdropDisabled = el.showBackdrop === false || showBackdropAttr === 'false';
+    if (focusTrapDisabled || backdropDisabled) {
       return;
     }
     baseEl.style.setProperty('pointer-events', 'auto');
@@ -241,10 +245,12 @@ export const createSheetGesture = (
      * ion-backdrop and .modal-wrapper always have pointer-events: auto
      * applied, so the modal content can still be interacted with.
      */
-    const shouldEnableBackdrop =
-      currentBreakpoint > backdropBreakpoint &&
-      (baseEl as HTMLIonModalElement & { focusTrap?: boolean }).focusTrap !== false &&
-      (baseEl as HTMLIonModalElement & { showBackdrop?: boolean }).showBackdrop !== false;
+    const modalEl = baseEl as HTMLIonModalElement & { focusTrap?: boolean; showBackdrop?: boolean };
+    const focusTrapAttr = modalEl.getAttribute?.('focus-trap');
+    const showBackdropAttr = modalEl.getAttribute?.('show-backdrop');
+    const focusTrapDisabled = modalEl.focusTrap === false || focusTrapAttr === 'false';
+    const backdropDisabled = modalEl.showBackdrop === false || showBackdropAttr === 'false';
+    const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint && !focusTrapDisabled && !backdropDisabled;
     if (shouldEnableBackdrop) {
       enableBackdrop();
     } else {
@@ -591,10 +597,16 @@ export const createSheetGesture = (
                    * Backdrop should become enabled
                    * after the backdropBreakpoint value
                    */
+                  const modalEl = baseEl as HTMLIonModalElement & {
+                    focusTrap?: boolean;
+                    showBackdrop?: boolean;
+                  };
+                  const focusTrapAttr = modalEl.getAttribute?.('focus-trap');
+                  const showBackdropAttr = modalEl.getAttribute?.('show-backdrop');
+                  const focusTrapDisabled = modalEl.focusTrap === false || focusTrapAttr === 'false';
+                  const backdropDisabled = modalEl.showBackdrop === false || showBackdropAttr === 'false';
                   const shouldEnableBackdrop =
-                    currentBreakpoint > backdropBreakpoint &&
-                    (baseEl as HTMLIonModalElement & { focusTrap?: boolean }).focusTrap !== false &&
-                    (baseEl as HTMLIonModalElement & { showBackdrop?: boolean }).showBackdrop !== false;
+                    currentBreakpoint > backdropBreakpoint && !focusTrapDisabled && !backdropDisabled;
                   if (shouldEnableBackdrop) {
                     enableBackdrop();
                   } else {
