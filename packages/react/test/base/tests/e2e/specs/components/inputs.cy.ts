@@ -78,7 +78,13 @@ describe('Inputs', () => {
       cy.get('ion-input input').focus().blur();
       cy.get('ion-input').should('have.class', 'ion-invalid');
 
-      cy.get('ion-textarea').shadow().find('textarea').focus().blur();
+      // Use cy.focused().blur() instead of directly targeting ion-textarea or
+      // the native textarea element because:
+      // React 17/18 moves focus to the ion-textarea component
+      // React 19 moves focus to the native textarea element
+      // cy.focused() adapts to whichever element is actually focused
+      cy.get('ion-textarea').shadow().find('textarea').focus();
+      cy.focused().blur();
       cy.get('ion-textarea').should('have.class', 'ion-invalid');
     });
 
