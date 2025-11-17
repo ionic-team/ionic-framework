@@ -20,7 +20,10 @@ export const getValidityFlags = (validity: ValidityState): ValidityStateFlags =>
  * This delegates to the native element's built-in validation, which automatically
  * handles required, minlength, maxlength, and other constraints.
  */
-export const reportValidityToElementInternals = (nativeElement: HTMLInputElement | HTMLTextAreaElement | null | undefined, internals: ElementInternals): void => {
+export const reportValidityToElementInternals = (
+  nativeElement: HTMLInputElement | HTMLTextAreaElement | null | undefined,
+  internals: ElementInternals
+): void => {
   if (!nativeElement) {
     return;
   }
