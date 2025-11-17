@@ -49,6 +49,23 @@
   width: 100%;
 }
 
+/**
+ * The intersection tracker participates in layout so
+ * IntersectionObserver has a non-zero rect to observe.
+ * A negative margin keeps the effective host height
+ * unchanged so pages embedding ion-datetime (such as
+ * item input demos) do not grow by 1px.
+ */
+:host .intersection-tracker {
+  width: 100%;
+  height: 1px;
+
+  margin-bottom: -1px;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
 :host .calendar-body,
 :host .datetime-year {
   opacity: 0;

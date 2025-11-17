@@ -1101,6 +1101,31 @@ export class Datetime implements ComponentInterface {
     this.initializeKeyboardListeners();
   }
 
+  /**
+   * Fallback to ensure the datetime becomes ready even if
+   * IntersectionObserver never reports it as intersecting.
+   *
+   * This is primarily used in environments where the observer
+   * might not fire as expected, such as when running under
+   * synthetic tests that stub IntersectionObserver.
+   */
+  private ensureReadyIfVisible = () => {
+    if (this.el.classList.contains('datetime-ready')) {
+      return;
+    }
+
+    const rect = this.el.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) {
+      return;
+    }
+
+    this.initializeListeners();
+
+    writeTask(() => {
+      this.el.classList.add('datetime-ready');
+    });
+  };
+
   componentDidLoad() {
     const { el, intersectionTrackerRef } = this;
 
@@ -1140,6 +1165,21 @@ export class Datetime implements ComponentInterface {
      * triggering the `hiddenIO` observer below.
      */
     raf(() => visibleIO?.observe(intersectionTrackerRef!));
+
+    /**
+     * Fallback: If IntersectionObserver never reports that the
+     * datetime is visible but the host clearly has layout, ensure
+     * we still initialize listeners and mark the component as ready.
+     *
+     * We schedule this a couple of frames after load so that any
+     * initial layout/animations (such as a parent modal presenting)
+     * have had a chance to run.
+     */
+    raf(() => {
+      raf(() => {
+        this.ensureReadyIfVisible();
+      });
+    });
 
     /**
      * We need to clean up listeners when the datetime is hidden
@@ -2664,9 +2704,9 @@ export class Datetime implements ComponentInterface {
 
           We can work around this by observing .intersection-tracker and using the host
           (ion-datetime) as the "root". This allows the IO callback to fire the moment
-          the datetime is visible. The .intersection-tracker element should not have
-          dimensions or additional styles, and it should not be positioned absolutely
-          otherwise the IO callback may fire at unexpected times.
+          the datetime is visible. The .intersection-tracker element uses a minimal,
+          invisible block size so it participates in layout, and it should not be
+          positioned absolutely otherwise the IO callback may fire at unexpected times.
         */}
         <div class="intersection-tracker" ref={(el) => (this.intersectionTrackerRef = el)}></div>
         {this.renderDatetime(mode)}

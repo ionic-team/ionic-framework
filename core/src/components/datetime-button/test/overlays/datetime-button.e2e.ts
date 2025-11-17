@@ -176,5 +176,26 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionModalDidPresent.next();
       await expect(datetime).toBeVisible();
     });
+    test('should set datetime ready state and keep calendar interactive when reopening modal', async ({ page }) => {
+      const openAndInteract = async () => {
+        await page.click('#date-button');
+        await ionModalDidPresent.next();
+
+        await page.locator('ion-datetime.datetime-ready').waitFor();
+
+        const calendarBody = datetime.locator('.calendar-body');
+        await expect(calendarBody).toBeVisible();
+
+        const firstEnabledDay = datetime.locator('.calendar-day:not([disabled])').first();
+        await firstEnabledDay.click();
+        await page.waitForChanges();
+
+        await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
+        await ionModalDidDismiss.next();
+      };
+
+      await openAndInteract();
+      await openAndInteract();
+    });
   });
 });
