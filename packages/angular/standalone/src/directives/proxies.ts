@@ -1482,7 +1482,7 @@ export class IonPickerColumn {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange']);
+    proxyOutputs(this, this.el, ['ionChange', 'ionScrollStart', 'ionScrollEnd']);
   }
 }
 
@@ -1496,6 +1496,14 @@ export declare interface IonPickerColumn extends Components.IonPickerColumn {
 This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonPickerColumnPickerColumnChangeEventDetail>>;
+  /**
+   * Emitted when the user begins scrolling the wheel.
+   */
+  ionScrollStart: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted when the user stops scrolling the wheel and the value has settled.
+   */
+  ionScrollEnd: EventEmitter<CustomEvent<void>>;
 }
 
 
