@@ -1,7 +1,6 @@
 name: 'Ionic Dev Build'
 
 on:
-  workflow_dispatch:
   workflow_call:
 
 permissions:
@@ -30,6 +29,7 @@ jobs:
   release-ionic:
     needs: [create-dev-hash]
     permissions:
+      contents: read
       id-token: write
     uses: ./.github/workflows/release-ionic.yml
     with:
