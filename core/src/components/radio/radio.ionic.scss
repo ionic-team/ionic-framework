@@ -5,8 +5,8 @@
 // --------------------------------------------------
 
 :host {
-  --color: #{globals.$ion-primitives-neutral-500};
-  --color-checked: #{globals.$ion-semantics-primary-base};
+  --color:  #{globals.$ion-border-input-default};
+  --color-checked: #{globals.$ion-bg-primary-base-default};
   --border-width: #{globals.$ion-border-size-025};
   --border-style: #{globals.$ion-border-style-solid};
   --border-radius: #{globals.$ion-border-radius-full};
@@ -55,7 +55,7 @@
   border-style: var(--border-style);
   border-color: var(--color);
 
-  background-color: globals.$ion-bg-surface-default;
+  background-color: globals.$ion-bg-input-default;
 }
 
 // Ionic Radio Inner Circle: Unchecked
@@ -67,7 +67,7 @@
   width: calc(32% + var(--border-width));
   height: calc(32% + var(--border-width));
 
-  background-color: globals.$ion-bg-surface-default;
+  background-color: globals.$ion-bg-surface-inverse;
 }
 
 // Ionic Radio Outer Circle: Checked
