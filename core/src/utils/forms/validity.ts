@@ -24,7 +24,7 @@ export const reportValidityToElementInternals = (
   nativeElement: HTMLInputElement | HTMLTextAreaElement | null | undefined,
   internals: ElementInternals
 ): void => {
-  if (!nativeElement) {
+  if (!nativeElement?.validity) {
     return;
   }
 
