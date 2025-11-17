@@ -1,10 +1,6 @@
 name: 'Ionic Nightly Build'
 
 on:
-  schedule:
-    # Run every Monday-Friday
-    # at 6:00 UTC (6:00 am UTC)
-    - cron: '00 06 * * 1-5'
   workflow_call:
 
 permissions:
@@ -35,6 +31,7 @@ jobs:
   release-ionic:
     needs: [create-nightly-hash]
     permissions:
+      contents: read
       id-token: write
     uses: ./.github/workflows/release-ionic.yml
     with:
