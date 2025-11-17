@@ -5,6 +5,11 @@ on:
     # Run every Monday-Friday
     # at 6:00 UTC (6:00 am UTC)
     - cron: '00 06 * * 1-5'
+  workflow_call:
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   create-nightly-hash:
