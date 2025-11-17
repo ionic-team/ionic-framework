@@ -67,9 +67,39 @@ describe('Inputs', () => {
     });
 
     it('typing into textarea should update ref', () => {
-      cy.get('ion-textarea textarea').type('Hello Textarea', { scrollBehavior: false });
+      cy.get('ion-textarea').shadow().find('textarea').type('Hello Textarea', { scrollBehavior: false });
 
       cy.get('#textarea-ref').should('have.text', 'Hello Textarea');
+    });
+  });
+
+  describe('validation', () => {
+    it('should show invalid state for required inputs when empty and touched', () => {
+      cy.get('ion-input input').focus().blur();
+      cy.get('ion-input').should('have.class', 'ion-invalid');
+
+      cy.get('ion-textarea').shadow().find('textarea').focus().blur();
+      cy.get('ion-textarea').should('have.class', 'ion-invalid');
+
+      cy.get('ion-input-otp input').first().focus().blur();
+      cy.get('ion-input-otp').should('have.class', 'ion-invalid');
+    });
+
+    it('should show invalid state for required input-otp when partially filled', () => {
+      cy.get('ion-input-otp input').first().focus().blur();
+      cy.get('ion-input-otp input').eq(0).type('12', { scrollBehavior: false });
+      cy.get('ion-input-otp').should('have.class', 'ion-invalid');
+    });
+
+    it('should show valid state for required inputs when filled', () => {
+      cy.get('ion-input input').type('Test value', { scrollBehavior: false });
+      cy.get('ion-input').should('have.class', 'ion-valid');
+
+      cy.get('ion-textarea').shadow().find('textarea').type('Test value', { scrollBehavior: false });
+      cy.get('ion-textarea').should('have.class', 'ion-valid');
+
+      cy.get('ion-input-otp input').eq(0).type('1234', { scrollBehavior: false });
+      cy.get('ion-input-otp').should('have.class', 'ion-valid');
     });
   });
 })
