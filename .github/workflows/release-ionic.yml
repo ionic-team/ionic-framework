@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: ./.github/workflows/publish-npm.yml
       with:
         scope: '@ionic/core'
         tag: ${{ inputs.tag }}
@@ -55,7 +55,7 @@ jobs:
         name: ionic-docs
         path: ./packages/docs
         filename: DocsBuild.zip
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: ./.github/workflows/publish-npm.yml
       with:
         scope: '@ionic/docs'
         tag: ${{ inputs.tag }}
@@ -74,7 +74,7 @@ jobs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: ./.github/workflows/publish-npm.yml
       with:
         scope: '@ionic/angular'
         tag: ${{ inputs.tag }}
@@ -100,7 +100,7 @@ jobs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: ./.github/workflows/publish-npm.yml
       with:
         scope: '@ionic/react'
         tag: ${{ inputs.tag }}
@@ -125,7 +125,7 @@ jobs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: ./.github/workflows/publish-npm.yml
       with:
         scope: '@ionic/vue'
         tag: ${{ inputs.tag }}
@@ -150,7 +150,7 @@ jobs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: ./.github/workflows/publish-npm.yml
       with:
         scope: '@ionic/angular-server'
         tag: ${{ inputs.tag }}
@@ -176,7 +176,7 @@ jobs:
         name: ionic-react
         path: ./packages/react
         filename: ReactBuild.zip
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: ./.github/workflows/publish-npm.yml
       with:
         scope: '@ionic/react-router'
         tag: ${{ inputs.tag }}
@@ -201,7 +201,7 @@ jobs:
         name: ionic-vue
         path: ./packages/vue
         filename: VueBuild.zip
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: ./.github/workflows/publish-npm.yml
       with:
         scope: '@ionic/vue-router'
         tag: ${{ inputs.tag }}

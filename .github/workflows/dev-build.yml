@@ -2,6 +2,11 @@ name: 'Ionic Dev Build'
 
 on:
   workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   create-dev-hash:
