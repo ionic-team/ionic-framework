@@ -1,40 +1,47 @@
 name: 'Ionic Production Release'
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       version:
+        description: 'Which version should be published?'
         required: true
-        type: choice
-        description: Which version should be published?
-        options:
-          - patch
-          - minor
-          - major
-          - prepatch
-          - preminor
-          - premajor
-          - prerelease
+        type: string
       tag:
+        description: 'Which npm tag should this be published to?'
         required: true
-        type: choice
-        description: Which npm tag should this be published to?
-        options:
-          - latest
-          - next
+        type: string
       preid:
-        type: choice
-        description: Which prerelease identifier should be used? This is only needed when version is "prepatch", "preminor", "premajor", or "prerelease".
-        default: ''
-        options:
-          - ''
-          - alpha
-          - beta
-          - rc
-          - next
+        description: 'Which prerelease identifier should be used? This is only needed when version is "prepatch", "preminor", "premajor", or "prerelease".'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
+  validate_version:
+    name: ✅ Validate Version Input
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔎 Ensure version is allowed
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          case "$VERSION" in
+            patch|minor|major|prepatch|preminor|premajor|prerelease)
+              exit 0
+              ;;
+            *)
+              echo "::error::Invalid version input: '$VERSION'. Allowed values: patch, minor, major, prepatch, preminor, premajor, prerelease."
+              exit 1
+              ;;
+          esac
+        shell: bash
+
   release-ionic:
+    needs: [validate_version]
     permissions:
       contents: read
       id-token: write

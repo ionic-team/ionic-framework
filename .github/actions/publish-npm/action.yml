@@ -26,6 +26,7 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
         registry-url: 'https://registry.npmjs.org'
+        scope: '@ionic'
     # Provenance requires npm 9.5.0+
     - name: 📦 Install latest npm
       run: npm install -g npm@latest
@@ -56,3 +57,4 @@ runs:
       run: npm publish ${{ inputs.folder }} --tag ${{ inputs.tag }} --provenance
       shell: bash
       working-directory: ${{ inputs.working-directory }}
+
