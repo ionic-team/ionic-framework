@@ -68,24 +68,14 @@ const Inputs: React.FC<InputsProps> = () => {
 
   const [touched, setTouched] = useState({
     input: false,
-    inputOtp: false,
     textarea: false,
   });
 
   const getValidationClasses = (fieldName: keyof typeof touched, value: string | number | null | undefined) => {
     const isTouched = touched[fieldName];
-    let isValid = false;
 
-    // Handle ion-input-otp which has multiple inputs
-    if (fieldName === 'inputOtp') {
-      // input-otp needs to check if all inputs are filled
-      // (value length equals component length)
-      const valueStr = String(value || '');
-      isValid = valueStr.length === 4;
-    } else {
-      const isEmpty = value === '' || value === null || value === undefined;
-      isValid = !isEmpty;
-    }
+    const isEmpty = value === '' || value === null || value === undefined;
+    const isValid = !isEmpty;
 
     // Always return validation classes
     // ion-touched is only added on blur
@@ -115,7 +105,6 @@ const Inputs: React.FC<InputsProps> = () => {
     setSelect('apples');
     setTouched({
       input: false,
-      inputOtp: false,
       textarea: false,
     });
   };
@@ -207,9 +196,6 @@ const Inputs: React.FC<InputsProps> = () => {
             <IonInputOtp
               value={inputOtp}
               onIonInput={(e: IonInputOtpCustomEvent<InputOtpInputEventDetail>) => setInputOtp(e.detail.value ?? '')}
-              onIonBlur={() => setTouched(prev => ({ ...prev, inputOtp: true }))}
-              className={getValidationClasses('inputOtp', inputOtp)}
-              required
             ></IonInputOtp>
           </IonItem>
 

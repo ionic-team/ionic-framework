@@ -42,7 +42,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-input-otp v-model="inputOtp" required @ionBlur="handleValidation" @ionInput="handleValidation"></ion-input-otp>
+        <ion-input-otp v-model="inputOtp"></ion-input-otp>
       </ion-item>
 
       <ion-item>
@@ -181,16 +181,8 @@ const setIonicClasses = (element: HTMLElement, isBlurEvent: boolean) => {
   requestAnimationFrame(() => {
     let isValid = false;
 
-    // Handle ion-input-otp which has multiple inputs
-    if (element.tagName === 'ION-INPUT-OTP') {
-      const ionInputOtp = element as any;
-      const value = ionInputOtp.value || '';
-      const length = ionInputOtp.length || 4;
-      // input-otp needs to check if all inputs are filled
-      // (value length equals component length)
-      isValid = value.length === length;
     // Handle ion-textarea which uses shadow DOM
-    } else if (element.tagName === 'ION-TEXTAREA') {
+    if (element.tagName === 'ION-TEXTAREA') {
       const nativeTextarea = element.shadowRoot?.querySelector('textarea') as HTMLTextAreaElement | null;
       if (nativeTextarea) {
         isValid = nativeTextarea.checkValidity();

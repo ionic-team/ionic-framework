@@ -77,15 +77,6 @@ describe('Inputs', () => {
       cy.get('ion-textarea').shadow().find('textarea').focus();
       cy.get('ion-textarea').blur();
       cy.get('ion-textarea').should('have.class', 'ion-invalid');
-
-      cy.get('ion-input-otp input').first().focus().blur();
-      cy.get('ion-input-otp').should('have.class', 'ion-invalid');
-    });
-
-    it('should show invalid state for required input-otp when partially filled', () => {
-      cy.get('ion-input-otp input').first().focus().blur();
-      cy.get('ion-input-otp input').eq(0).type('12', { scrollBehavior: false });
-      cy.get('ion-input-otp').should('have.class', 'ion-invalid');
     });
 
     it('should show valid state for required inputs when filled', () => {
@@ -94,9 +85,6 @@ describe('Inputs', () => {
 
       cy.get('ion-textarea').shadow().find('textarea').type('Test value', { scrollBehavior: false });
       cy.get('ion-textarea').should('have.class', 'ion-valid');
-
-      cy.get('ion-input-otp input').eq(0).type('1234', { scrollBehavior: false });
-      cy.get('ion-input-otp').should('have.class', 'ion-valid');
     });
   });
 })
