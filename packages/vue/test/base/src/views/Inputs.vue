@@ -38,11 +38,11 @@
       </ion-item>
 
       <ion-item>
-        <ion-input v-model="input" label="Input"></ion-input>
+        <ion-input v-model="input" label="Input" required @ionBlur="handleValidation" @ionInput="handleValidation"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input-otp v-model="inputOtp"></ion-input-otp>
+        <ion-input-otp v-model="inputOtp" required @ionBlur="handleValidation" @ionInput="handleValidation"></ion-input-otp>
       </ion-item>
 
       <ion-item>
@@ -50,7 +50,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-textarea label="Textarea" v-model="textarea"></ion-textarea>
+        <ion-textarea label="Textarea" v-model="textarea" required @ionBlur="handleValidation" @ionInput="handleValidation"></ion-textarea>
       </ion-item>
 
       <ion-item>
@@ -99,7 +99,7 @@
   </ion-page>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
   IonBackButton,
   IonButton,
@@ -126,101 +126,105 @@ import {
   IonToggle,
   IonToolbar
 } from '@ionic/vue';
-import { defineComponent, ref } from 'vue';
+import { ref } from 'vue';
 
-export default defineComponent({
-  components: {
-    IonBackButton,
-    IonButton,
-    IonButtons,
-    IonCheckbox,
-    IonContent,
-    IonDatetime,
-    IonHeader,
-    IonInput,
-    IonInputOtp,
-    IonItem,
-    IonLabel,
-    IonPage,
-    IonRadio,
-    IonRadioGroup,
-    IonRange,
-    IonSearchbar,
-    IonSegment,
-    IonSegmentButton,
-    IonSelect,
-    IonSelectOption,
-    IonTextarea,
-    IonTitle,
-    IonToggle,
-    IonToolbar
-  },
-  setup() {
-    const checkbox = ref(false);
-    const toggle = ref(false);
-    const input = ref('');
-    const inputOtp = ref('');
-    const range = ref({
-      lower: 30,
-      upper: 70
-    });
-    const textarea = ref('');
-    const searchbar = ref('');
-    const datetime = ref('');
-    const radio = ref('red');
-    const segment = ref('dogs');
-    const select = ref('apples');
-
-    const reset = () => {
-      checkbox.value = false;
-      toggle.value = false;
-      input.value = '';
-      inputOtp.value = '';
-      range.value = {
-        lower: 30,
-        upper: 70
-      };
-      textarea.value = '';
-      searchbar.value = '';
-      datetime.value = '';
-      radio.value = 'red';
-      segment.value = 'dogs';
-      select.value = 'apples';
-    }
-
-    const set = () => {
-      checkbox.value = true;
-      toggle.value = true;
-      input.value = 'Hello World';
-      inputOtp.value = '1234';
-      range.value = {
-        lower: 10,
-        upper: 90
-      }
-      textarea.value = 'Lorem Ipsum';
-      searchbar.value = 'Search Query';
-      datetime.value = '2019-01-31';
-      radio.value = 'blue';
-      segment.value = 'cats';
-      select.value = 'bananas';
-    }
-
-    return {
-      checkbox,
-      toggle,
-      input,
-      inputOtp,
-      range,
-      textarea,
-      searchbar,
-      datetime,
-      radio,
-      segment,
-      select,
-
-      reset,
-      set
-    }
-  }
+const checkbox = ref(false);
+const toggle = ref(false);
+const input = ref('');
+const inputOtp = ref('');
+const range = ref({
+  lower: 30,
+  upper: 70
 });
+const textarea = ref('');
+const searchbar = ref('');
+const datetime = ref('');
+const radio = ref('red');
+const segment = ref('dogs');
+const select = ref('apples');
+
+const reset = () => {
+  checkbox.value = false;
+  toggle.value = false;
+  input.value = '';
+  inputOtp.value = '';
+  range.value = {
+    lower: 30,
+    upper: 70
+  };
+  textarea.value = '';
+  searchbar.value = '';
+  datetime.value = '';
+  radio.value = 'red';
+  segment.value = 'dogs';
+  select.value = 'apples';
+}
+
+const set = () => {
+  checkbox.value = true;
+  toggle.value = true;
+  input.value = 'Hello World';
+  inputOtp.value = '1234';
+  range.value = {
+    lower: 10,
+    upper: 90
+  }
+  textarea.value = 'Lorem Ipsum';
+  searchbar.value = 'Search Query';
+  datetime.value = '2019-01-31';
+  radio.value = 'blue';
+  segment.value = 'cats';
+  select.value = 'bananas';
+}
+
+const setIonicClasses = (element: HTMLElement, isBlurEvent: boolean) => {
+  requestAnimationFrame(() => {
+    let isValid = false;
+
+    // Handle ion-input-otp which has multiple inputs
+    if (element.tagName === 'ION-INPUT-OTP') {
+      const ionInputOtp = element as any;
+      const value = ionInputOtp.value || '';
+      const length = ionInputOtp.length || 4;
+      // input-otp needs to check if all inputs are filled
+      // (value length equals component length)
+      isValid = value.length === length;
+    // Handle ion-textarea which uses shadow DOM
+    } else if (element.tagName === 'ION-TEXTAREA') {
+      const nativeTextarea = element.shadowRoot?.querySelector('textarea') as HTMLTextAreaElement | null;
+      if (nativeTextarea) {
+        isValid = nativeTextarea.checkValidity();
+      }
+    // Handle ion-input which uses scoped encapsulation
+    } else if (element.tagName === 'ION-INPUT') {
+      const nativeInput = element.querySelector('input') as HTMLInputElement | null;
+      if (nativeInput) {
+        isValid = nativeInput.checkValidity();
+      }
+    }
+
+    // Remove validation classes
+    element.classList.remove('ion-valid', 'ion-invalid', 'ion-untouched');
+
+    // Mark as touched only on blur
+    if (isBlurEvent) {
+      element.classList.add('ion-touched');
+    }
+
+    // Add validation classes based on validity state
+    if (isValid) {
+      element.classList.add('ion-valid');
+    } else {
+      element.classList.add('ion-invalid');
+    }
+  });
+};
+
+const handleValidation = (event: CustomEvent) => {
+  const element = event.target as HTMLElement;
+  if (!element) return;
+
+  const isBlurEvent = event.type === 'ionBlur';
+  setIonicClasses(element, isBlurEvent);
+};
 </script>
