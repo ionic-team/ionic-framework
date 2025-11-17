@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Link - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic/bundle.ionic.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .links div {
+        padding: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Link - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ionic-padding-space-m">
+        <h3>Standalone (.ion-link)</h3>
+        <div class="links" id="standalone">
+          <div><a href="#test-visited-link">Link - Default</a></div>
+          <div><a class="ion-activated" href="#">Link - Active</a></div>
+          <div><a class="ion-focused" href="#">Link - Focused</a></div>
+          <div><a href="">Link - Visited</a></div>
+          <div>
+            <a href="#">Link with Icon <ion-icon name="open-outline"></ion-icon></a>
+          </div>
+        </div>
+
+        <h3>Underline (.ion-link-underline)</h3>
+        <div class="links" id="underline">
+          <div><a class="ion-link-underline" href="#test-visited-link">Underline - Default</a></div>
+          <div><a class="ion-link-underline ion-activated" href="#">Underline - Active</a></div>
+          <div><a class="ion-link-underline ion-focused" href="#">Underline - Focused</a></div>
+          <div><a class="ion-link-underline" href="">Underline - Visited</a></div>
+          <div>
+            <a class="ion-link-underline" href="#">Link with Icon <ion-icon name="open-outline"></ion-icon></a>
+          </div>
+        </div>
+
+        <h3>Links in Content</h3>
+        <div class="links" id="links-in-content">
+          <div>
+            Lorem ipsum dolor sit amet consectetur, <a class="ion-link" href="#">default link</a> adipisicing elit.
+          </div>
+          <div>
+            Lorem ipsum dolor sit amet consectetur,
+            <a class="ion-link-underline" href="#">underline link</a> adipisicing elit.
+          </div>
+        </div>
+
+        <h3>Parent Element</h3>
+        <div class="links">
+          <div class="ion-link" id="standalone-nested">
+            <p>Lorem ipsum dolor sit amet consectetur, <a href="#">default link</a> adipisicing elit.</p>
+          </div>
+          <div class="ion-link-underline" id="underline-nested">
+            <p>Lorem ipsum dolor sit amet consectetur, <a href="#">underline link</a> adipisicing elit.</p>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>
