@@ -2423,7 +2423,7 @@ ion-text,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "second
 ion-text,prop,mode,"ios" | "md",undefined,false,false
 ion-text,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
-ion-textarea,scoped
+ion-textarea,shadow
 ion-textarea,prop,autoGrow,boolean,false,false,true
 ion-textarea,prop,autocapitalize,string,'none',false,false
 ion-textarea,prop,autofocus,boolean,false,false,false
@@ -2447,7 +2447,7 @@ ion-textarea,prop,mode,"ios" | "md",undefined,false,false
 ion-textarea,prop,name,string,this.inputId,false,false
 ion-textarea,prop,placeholder,string | undefined,undefined,false,false
 ion-textarea,prop,readonly,boolean,false,false,false
-ion-textarea,prop,required,boolean,false,false,false
+ion-textarea,prop,required,boolean,false,false,true
 ion-textarea,prop,rows,number | undefined,undefined,false,false
 ion-textarea,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-textarea,prop,size,"large" | "medium" | "small" | undefined,'medium',false,false
