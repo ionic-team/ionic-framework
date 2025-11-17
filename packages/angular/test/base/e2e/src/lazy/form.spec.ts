@@ -31,6 +31,8 @@ test.describe('Form', () => {
         datetime: '2010-08-20',
         select: null,
         toggle: false,
+        textarea: '',
+        textarea2: 'Default Value',
         input: '',
         input2: 'Default Value',
         inputMin: 1,
@@ -46,6 +48,9 @@ test.describe('Form', () => {
     test('should become valid', async ({ page }) => {
       await page.locator('ion-input.required input').fill('Some value');
       await page.locator('ion-input.required input').blur();
+
+      await page.locator('ion-textarea.required textarea').fill('Some value');
+      await page.locator('ion-textarea.required textarea').blur();
 
       // Test number OTP input
       await page.locator('#touched-input-otp-number-test input').nth(0).fill('5');
@@ -78,6 +83,8 @@ test.describe('Form', () => {
         datetime: '2010-08-20',
         select: 'nes',
         toggle: false,
+        textarea: 'Some value',
+        textarea2: 'Default Value',
         input: 'Some value',
         input2: 'Default Value',
         inputMin: 1,
@@ -96,6 +103,8 @@ test.describe('Form', () => {
         datetime: '2010-08-20',
         select: null,
         toggle: true,
+        textarea: '',
+        textarea2: 'Default Value',
         input: '',
         input2: 'Default Value',
         inputMin: 1,
@@ -114,6 +123,8 @@ test.describe('Form', () => {
         datetime: '2010-08-20',
         select: null,
         toggle: false,
+        textarea: '',
+        textarea2: 'Default Value',
         input: '',
         input2: 'Default Value',
         inputMin: 1,
@@ -132,6 +143,8 @@ test.describe('Form', () => {
         datetime: '2010-08-20',
         select: null,
         toggle: false,
+        textarea: '',
+        textarea2: 'Default Value',
         input: '',
         input2: 'Default Value',
         inputMin: 1,
@@ -165,6 +178,8 @@ test.describe('Form', () => {
         datetime: '2010-08-20',
         select: null,
         toggle: false,
+        textarea: '',
+        textarea2: 'Default Value',
         input: '',
         input2: 'Default Value',
         inputMin: 1,
@@ -232,6 +247,8 @@ test.describe('Form', () => {
         datetime: '2010-08-20',
         select: null,
         toggle: true,
+        textarea: '',
+        textarea2: 'Default Value',
         input: '',
         input2: 'Default Value',
         inputMin: 1,
@@ -247,6 +264,8 @@ test.describe('Form', () => {
         datetime: '2010-08-20',
         select: null,
         toggle: true,
+        textarea: '',
+        textarea2: 'Default Value',
         input: '',
         input2: 'Default Value',
         inputMin: 1,

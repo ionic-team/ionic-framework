@@ -30,6 +30,21 @@
       </ion-item>
 
       <ion-item>
+        <ion-textarea
+          label="Textarea (required)"
+          formControlName="textarea"
+          class="required"
+          id="touched-textarea-test"
+        ></ion-textarea>
+      </ion-item>
+
+      <ion-button id="textarea-touched" (click)="setTextareaTouched()">Set Textarea Touched</ion-button>
+
+      <ion-item>
+        <ion-input label="Textarea" formControlName="textarea2"></ion-input>
+      </ion-item>
+
+      <ion-item>
         <ion-input
           label="Input (required)"
           formControlName="input"
@@ -38,7 +53,7 @@
         ></ion-input>
       </ion-item>
 
-      <ion-button id="input-touched" (click)="setTouched()">Set Input Touched</ion-button>
+      <ion-button id="input-touched" (click)="setInputTouched()">Set Input Touched</ion-button>
 
       <ion-item>
         <ion-input label="Input" formControlName="input2"></ion-input>
