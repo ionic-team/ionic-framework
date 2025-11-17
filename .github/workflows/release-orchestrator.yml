@@ -1,4 +1,4 @@
-name: 'Ionic Release'
+name: 'Release - Ionic Framework'
 
 on:
   schedule:
