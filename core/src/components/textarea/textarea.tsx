@@ -36,6 +36,15 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
  * @slot label - The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
  * @slot start - Content to display at the leading edge of the textarea. (EXPERIMENTAL)
  * @slot end - Content to display at the trailing edge of the textarea. (EXPERIMENTAL)
+ *
+ * @part container - The wrapper element for the textarea.
+ * @part label - The label text describing the textarea.
+ * @part native - The native textarea element.
+ * @part supporting-text - Supporting text displayed beneath the textarea label.
+ * @part helper-text - Supporting text displayed beneath the textarea label when the textarea is valid.
+ * @part error-text - Supporting text displayed beneath the textarea label when the textarea is invalid and touched.
+ * @part counter - The character counter displayed when the counter property is set.
+ * @part bottom - The container element for helper text, error text, and counter.
  */
 @Component({
   tag: 'ion-textarea',
@@ -633,6 +642,7 @@ export class Textarea implements ComponentInterface {
           'label-text-wrapper': true,
           'label-text-wrapper-hidden': !this.hasLabel,
         }}
+        part="label"
       >
         {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}
       </div>
@@ -739,10 +749,10 @@ export class Textarea implements ComponentInterface {
     const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
     return [
-      <div id={helperTextId} class="helper-text" aria-live="polite">
+      <div id={helperTextId} class="helper-text" part="supporting-text helper-text" aria-live="polite">
         {!isInvalid ? helperText : null}
       </div>,
-      <div id={errorTextId} class="error-text" role="alert">
+      <div id={errorTextId} class="error-text" part="supporting-text error-text" role="alert">
         {isInvalid ? errorText : null}
       </div>,
     ];
@@ -768,7 +778,11 @@ export class Textarea implements ComponentInterface {
       return;
     }
 
-    return <div class="counter">{getCounterText(value, maxlength, counterFormatter)}</div>;
+    return (
+      <div class="counter" part="counter">
+        {getCounterText(value, maxlength, counterFormatter)}
+      </div>
+    );
   }
 
   /**
@@ -790,7 +804,7 @@ export class Textarea implements ComponentInterface {
     }
 
     return (
-      <div class="textarea-bottom">
+      <div class="textarea-bottom" part="bottom">
         {this.renderHintText()}
         {this.renderCounter()}
       </div>
@@ -875,9 +889,10 @@ export class Textarea implements ComponentInterface {
             <div class="start-slot-wrapper">
               <slot name="start"></slot>
             </div>
-            <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+            <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)} part="container">
               <textarea
                 class="native-textarea"
+                part="native"
                 ref={(el) => (this.nativeInput = el)}
                 id={inputId}
                 disabled={disabled}

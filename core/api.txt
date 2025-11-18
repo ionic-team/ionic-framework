@@ -2515,6 +2515,14 @@ ion-textarea,css-prop,--placeholder-font-weight,md
 ion-textarea,css-prop,--placeholder-opacity,ionic
 ion-textarea,css-prop,--placeholder-opacity,ios
 ion-textarea,css-prop,--placeholder-opacity,md
+ion-textarea,part,bottom
+ion-textarea,part,container
+ion-textarea,part,counter
+ion-textarea,part,error-text
+ion-textarea,part,helper-text
+ion-textarea,part,label
+ion-textarea,part,native
+ion-textarea,part,supporting-text
 
 ion-thumbnail,shadow
 ion-thumbnail,prop,mode,"ios" | "md",undefined,false,false
