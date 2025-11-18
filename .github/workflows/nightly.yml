@@ -34,6 +34,7 @@ jobs:
       contents: read
       id-token: write
     uses: ./.github/workflows/release-ionic.yml
+    secrets: inherit
     with:
       tag: nightly
       version: ${{ needs.create-nightly-hash.outputs.nightly-hash }}
