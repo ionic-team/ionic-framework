@@ -48,6 +48,15 @@
       document.head.appendChild(linkTag);
     }
 
+    const utilsBundleLinkTag = document.querySelector('link[href*="css/utils.bundle.css"]');
+    if (!utilsBundleLinkTag) {
+      const linkTag = document.createElement('link');
+      linkTag.setAttribute('rel', 'stylesheet');
+      linkTag.setAttribute('type', 'text/css');
+      linkTag.setAttribute('href', '/css/utils.bundle.css');
+      document.head.appendChild(linkTag);
+    }
+
     const defaultThemeLinkTag = document.querySelector('link[href*="css/ionic.bundle.css"]');
     if (defaultThemeLinkTag) {
       defaultThemeLinkTag.remove();
