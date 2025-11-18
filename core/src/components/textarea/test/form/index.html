@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Textarea - Form</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Textarea - Form</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" class="ion-padding">
+        <form onsubmit="return onSubmit(event)">
+          <ion-textarea
+            fill="outline"
+            label="Label"
+            label-placement="stacked"
+            placeholder="Placeholder"
+            helper-text="Helper message"
+            counter="true"
+            maxlength="999"
+            required
+          >
+            <ion-icon slot="end" name="square-outline"></ion-icon>
+          </ion-textarea>
+
+          <p>
+            Clicking the button below should show a popup saying textarea is required in Chrome, Safari, and Firefox
+            when the textarea is empty.
+          </p>
+          <button>Submit</button>
+        </form>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      function onSubmit(event) {
+        event.preventDefault();
+        console.log('Form submitted');
+        return true;
+      }
+    </script>
+  </body>
+</html>
