@@ -1171,15 +1171,11 @@ export class Datetime implements ComponentInterface {
      * datetime is visible but the host clearly has layout, ensure
      * we still initialize listeners and mark the component as ready.
      *
-     * We schedule this a couple of frames after load so that any
-     * initial layout/animations (such as a parent modal presenting)
-     * have had a chance to run.
+     * We schedule this after everything has had a chance to run.
      */
-    raf(() => {
-      raf(() => {
-        this.ensureReadyIfVisible();
-      });
-    });
+    setTimeout(() => {
+      this.ensureReadyIfVisible();
+    }, 100);
 
     /**
      * We need to clean up listeners when the datetime is hidden
@@ -2704,9 +2700,9 @@ export class Datetime implements ComponentInterface {
 
           We can work around this by observing .intersection-tracker and using the host
           (ion-datetime) as the "root". This allows the IO callback to fire the moment
-          the datetime is visible. The .intersection-tracker element uses a minimal,
-          invisible block size so it participates in layout, and it should not be
-          positioned absolutely otherwise the IO callback may fire at unexpected times.
+          the datetime is visible. The .intersection-tracker element should not have
+          dimensions or additional styles, and it should not be positioned absolutely
+          otherwise the IO callback may fire at unexpected times.
         */}
         <div class="intersection-tracker" ref={(el) => (this.intersectionTrackerRef = el)}></div>
         {this.renderDatetime(mode)}
