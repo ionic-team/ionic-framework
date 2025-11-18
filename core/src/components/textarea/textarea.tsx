@@ -854,6 +854,7 @@ export class Textarea implements ComponentInterface {
           [`textarea-shape-${shape}`]: shape !== undefined,
           [`textarea-size-${size}`]: true,
           [`textarea-label-placement-${labelPlacement}`]: true,
+          'in-item': inItem,
           'textarea-disabled': disabled,
           'textarea-readonly': readonly,
         })}

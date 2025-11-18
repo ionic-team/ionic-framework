@@ -82,12 +82,12 @@
 // Textarea Within An Item
 // --------------------------------------------------
 
-:host-context(ion-item) {
+:host(.in-item) {
   align-self: baseline;
 }
 
-:host-context(ion-item)[slot="start"],
-:host-context(ion-item)[slot="end"] {
+:host(.in-item[slot="start"]),
+:host(.in-item[slot="end"]) {
   width: auto;
 }
 
@@ -311,6 +311,8 @@
 
   width: 100%;
   min-height: inherit;
+
+  box-sizing: border-box;
 }
 
 // Textarea Highlight
