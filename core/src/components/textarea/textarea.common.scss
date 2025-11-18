@@ -434,6 +434,10 @@
   overflow: hidden;
 }
 
+.textarea-outline {
+  box-sizing: border-box;
+}
+
 /**
  * If no label text is placed into the slot
  * then the element should be hidden otherwise
