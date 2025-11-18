@@ -11,10 +11,9 @@ on:
         description: 'Which Ionic release workflow should run?'
         required: true
         type: choice
-        default: nightly
+        default: dev
         options:
           - dev
-          - nightly
           - production
       version:
         description: 'Which version should be published? (Only for production releases)'
@@ -54,7 +53,7 @@ permissions:
 
 jobs:
   run-nightly:
-    if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.release-type == 'nightly') }}
+    if: ${{ github.event_name == 'schedule' }}
     permissions:
       contents: read
       id-token: write
