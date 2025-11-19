@@ -191,15 +191,16 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         const calendarBody = datetime.locator('.calendar-body');
         await expect(calendarBody).toBeVisible();
 
-        const firstEnabledDay = datetime.locator('.calendar-day:not([disabled])').first();
-        await firstEnabledDay.click();
-        await page.waitForChanges();
-
         await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
         await ionModalDidDismiss.next();
       };
 
       await openAndInteract();
+
+      const firstEnabledDay = datetime.locator('.calendar-day:not([disabled])').first();
+      await firstEnabledDay.click();
+      await page.waitForChanges();
+
       await openAndInteract();
     });
   });
