@@ -11,23 +11,23 @@ runs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - name: Install Angular Dependencies
+    - name: 🕸️ Install Angular Dependencies
       run: npm ci
       shell: bash
       working-directory: ./packages/angular
-    - name: Sync
+    - name: 🔄 Sync
       run: npm run sync
       shell: bash
       working-directory: ./packages/angular
-    - name: Lint
+    - name: 🖌️ Lint
       run: npm run lint
       shell: bash
       working-directory: ./packages/angular
-    - name: Build
+    - name: 🏗️ Build
       run: npm run build
       shell: bash
       working-directory: ./packages/angular
-    - name: Check Diff
+    - name: 🔍 Check Diff
       run: git diff --exit-code
       shell: bash
       working-directory: ./packages/angular

@@ -3,7 +3,7 @@ description: 'Build Ionic Angular Server'
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@v6
+    - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
       with:
         node-version: 24.x
     - uses: ./.github/workflows/actions/download-archive
@@ -11,15 +11,15 @@ runs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - name: Install Angular Server Dependencies
+    - name: 🕸️ Install Angular Server Dependencies
       run: npm ci
       shell: bash
       working-directory: ./packages/angular-server
-    - name: Sync
+    - name: 🔄 Sync
       run: npm run sync
       shell: bash
       working-directory: ./packages/angular-server
-    - name: Build
+    - name: 🏗️ Build
       run: npm run build.prod
       shell: bash
       working-directory: ./packages/angular-server

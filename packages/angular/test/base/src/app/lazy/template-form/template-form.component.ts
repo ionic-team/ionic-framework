@@ -10,6 +10,9 @@ export class TemplateFormComponent {
   textareaValue = '';
   minLengthValue = '';
   selectValue = '';
+  checkboxValue = false;
+  toggleValue = false;
+  radioGroupValue = '';
   
   // Track if form has been submitted
   submitted = false;

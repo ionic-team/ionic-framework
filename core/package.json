@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "8.7.9",
+  "version": "8.7.10",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -52,7 +52,7 @@
     "@stencil/sass": "^3.0.9",
     "@stencil/vue-output-target": "0.10.8",
     "@types/jest": "^29.5.6",
-    "@types/node": "^14.6.0",
+    "@types/node": "^16.18.126",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.7.2",
     "chalk": "^5.3.0",

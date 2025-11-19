@@ -10,7 +10,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Create Archive
+    - name: 🗄️ Create Archive
       run: zip -q -r ${{ inputs.output }} ${{ inputs.paths }}
       shell: bash
     - uses: actions/upload-artifact@v5

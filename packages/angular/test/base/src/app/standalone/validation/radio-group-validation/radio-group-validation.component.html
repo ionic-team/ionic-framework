@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Radio Group - Validation Test</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="validation-info">
+    <h2>Screen Reader Testing Instructions:</h2>
+    <ol>
+      <li>Enable your screen reader (VoiceOver, NVDA, JAWS, etc.)</li>
+      <li>Tab through the form fields</li>
+      <li>When you tab away from an empty required field, the error should be announced immediately</li>
+      <li>The error text should be announced BEFORE the next field is announced</li>
+      <li>Test in Chrome, Safari, and Firefox to verify consistent behavior</li>
+    </ol>
+  </div>
+
+  <form [formGroup]="form">
+    <div class="grid">
+      <div>
+        <h2>Required Field</h2>
+        <ion-radio-group
+          #fruitsRadioGroup
+          id="fruits-radio-group"
+          [helperText]="fieldMetadata.fruits.helperText"
+          [errorText]="fieldMetadata.fruits.errorText"
+          formControlName="fruits"
+          allow-empty-selection="true"
+          required
+        >
+          <ion-radio [value]="fieldMetadata.fruits.firstRadio">{{ fieldMetadata.fruits.firstRadio }}</ion-radio><br />
+          <ion-radio [value]="fieldMetadata.fruits.secondRadio">{{ fieldMetadata.fruits.secondRadio }}</ion-radio>
+        </ion-radio-group>
+      </div>
+
+      <div>
+        <h2>Optional Field (No Validation)</h2>
+        <ion-radio-group
+          #optionalRadioGroup
+          id="optional-radio-group"
+          [helperText]="fieldMetadata.optional.helperText"
+          formControlName="optional"
+          allow-empty-selection="true"
+        >
+          <ion-radio [value]="fieldMetadata.optional.firstRadio">{{ fieldMetadata.optional.firstRadio }}</ion-radio><br />
+          <ion-radio [value]="fieldMetadata.optional.secondRadio">{{ fieldMetadata.optional.secondRadio }}</ion-radio>
+        </ion-radio-group>
+      </div>
+    </div>
+  </form>
+
+  <div class="ion-padding">
+    <ion-button id="submit-btn" expand="block" [disabled]="form.invalid" (click)="onSubmit()">Submit Form</ion-button>
+    <ion-button id="reset-btn" expand="block" fill="outline" (click)="form.reset()">Reset Form</ion-button>
+  </div>
+</ion-content>
