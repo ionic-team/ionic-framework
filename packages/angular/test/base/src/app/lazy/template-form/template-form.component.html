@@ -77,6 +77,105 @@
           <p>MinLength Errors: <span id="minlength-errors">{{minLengthField.errors | json}}</span></p>
         </ion-label>
       </ion-item>
+
+      <!-- Test ion-select with required validation -->
+      <ion-item>
+        <ion-select
+          label="Required Select"
+          [(ngModel)]="selectValue"
+          name="selectField"
+          required
+          #selectField="ngModel"
+          id="template-select-test"
+          errorText="This field is required"
+          helperText="Select an option">
+          <ion-select-option value="option1">Option 1</ion-select-option>
+          <ion-select-option value="option2">Option 2</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Display validation state for debugging -->
+      <ion-item>
+        <ion-label>
+          <p>Select Touched: <span id="select-touched">{{selectField.touched}}</span></p>
+          <p>Select Invalid: <span id="select-invalid">{{selectField.invalid}}</span></p>
+          <p>Select Errors: <span id="select-errors">{{selectField.errors | json}}</span></p>
+        </ion-label>
+      </ion-item>
+
+      <!-- Test ion-checkbox with required validation -->
+      <ion-item>
+        <ion-checkbox
+          [(ngModel)]="checkboxValue"
+          name="checkboxField"
+          required
+          #checkboxField="ngModel"
+          id="template-checkbox-test"
+          helper-text="You must agree to continue"
+          error-text="Please accept the terms and conditions"
+        >
+          I agree to the terms and conditions
+        </ion-checkbox>
+      </ion-item>
+
+      <!-- Display validation state for debugging -->
+      <ion-item>
+        <ion-label>
+          <p>Checkbox Touched: <span id="checkbox-touched">{{checkboxField.touched}}</span></p>
+          <p>Checkbox Invalid: <span id="checkbox-invalid">{{checkboxField.invalid}}</span></p>
+          <p>Checkbox Errors: <span id="checkbox-errors">{{checkboxField.errors | json}}</span></p>
+        </ion-label>
+      </ion-item>
+
+      <!-- Test ion-toggle with required validation -->
+      <ion-item>
+        <ion-toggle
+          [(ngModel)]="toggleValue"
+          name="toggleField"
+          required
+          #toggleField="ngModel"
+          id="template-toggle-test"
+          helper-text="You must turn on to continue"
+          error-text="Please turn on this toggle"
+        >
+          Tap to turn on
+        </ion-toggle>
+      </ion-item>
+
+      <!-- Display validation state for debugging -->
+      <ion-item>
+        <ion-label>
+          <p>Toggle Touched: <span id="toggle-touched">{{toggleField.touched}}</span></p>
+          <p>Toggle Invalid: <span id="toggle-invalid">{{toggleField.invalid}}</span></p>
+          <p>Toggle Errors: <span id="toggle-errors">{{toggleField.errors | json}}</span></p>
+        </ion-label>
+      </ion-item>
+
+      <!-- Test ion-radio-group with required validation -->
+      <ion-item>
+        <ion-radio-group
+          [(ngModel)]="radioGroupValue"
+          name="radioGroupField"
+          required
+          #radioGroupField="ngModel"
+          id="template-radio-group-test"
+          helper-text="You must select one to continue"
+          error-text="Please select a fruit"
+          allow-empty-selection="true"
+        >
+          <ion-radio value="grapes">Grapes</ion-radio><br />
+          <ion-radio value="strawberries">Strawberries</ion-radio>
+        </ion-radio-group>
+      </ion-item>
+
+      <!-- Display validation state for debugging -->
+      <ion-item>
+        <ion-label>
+          <p>Radio Group Touched: <span id="radio-group-touched">{{radioGroupField.touched}}</span></p>
+          <p>Radio Group Invalid: <span id="radio-group-invalid">{{radioGroupField.invalid}}</span></p>
+          <p>Radio Group Errors: <span id="radio-group-errors">{{radioGroupField.errors | json}}</span></p>
+        </ion-label>
+      </ion-item>
     </ion-list>
 
     <div class="ion-padding">
