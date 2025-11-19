@@ -12,6 +12,17 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      .required-label {
+        display: none;
+      }
+
+      .textarea-required .required-label {
+        display: inline;
+        color: red;
+      }
+    </style>
   </head>
 
   <body>
@@ -26,22 +37,23 @@
         <form onsubmit="return onSubmit(event)">
           <ion-textarea
             fill="outline"
-            label="Label"
             label-placement="stacked"
             placeholder="Placeholder"
             helper-text="Helper message"
             counter="true"
             maxlength="999"
-            required
           >
+            <div slot="label">Label <span class="required-label">(Required) *</span></div>
             <ion-icon slot="end" name="square-outline"></ion-icon>
           </ion-textarea>
 
           <p>
-            Clicking the button below should show a popup saying textarea is required in Chrome, Safari, and Firefox
-            when the textarea is empty.
+            Click the first button below to toggle the required prop and then click the submit button to attempt to
+            submit the form. It should show a popup warning to fill out the field when textarea is required and empty.
+            When the textarea is not required, or the field is filled, the form should submit by sending a console log.
           </p>
-          <button>Submit</button>
+          <button type="button" onClick="toggleRequired()">Toggle Required</button>
+          <button type="submit">Submit</button>
         </form>
       </ion-content>
     </ion-app>
@@ -49,8 +61,16 @@
     <script>
       function onSubmit(event) {
         event.preventDefault();
-        console.log('Form submitted');
+        const textarea = document.querySelector('ion-textarea');
+        console.log('Form submitted with value:', textarea.value);
         return true;
+      }
+
+      function toggleRequired() {
+        const textarea = document.querySelector('ion-textarea');
+        textarea.required = textarea.required ? false : true;
+        textarea.classList.toggle('textarea-required', textarea.required);
+        console.log('Textarea required set to:', textarea.required);
       }
     </script>
   </body>

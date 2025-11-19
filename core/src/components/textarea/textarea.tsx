@@ -149,6 +149,11 @@ export class Textarea implements ComponentInterface {
    */
   @Prop() disabled = false;
 
+  @Watch('disabled')
+  protected disabledChanged() {
+    this.updateElementInternals();
+  }
+
   /**
    * The fill for the item. If `"solid"` the item will have a background. If
    * `"outline"` the item will be transparent with a border. Only available when the theme is `"md"`.
@@ -300,8 +305,8 @@ export class Textarea implements ComponentInterface {
     if (nativeInput && nativeInput.value !== value) {
       nativeInput.value = value;
     }
+    this.updateElementInternals();
     this.runAutoGrow();
-    this.reportValidity();
   }
 
   /**
@@ -309,7 +314,14 @@ export class Textarea implements ComponentInterface {
    */
   @Watch('required')
   protected requiredChanged() {
-    this.reportValidity();
+    // Explicitly update the native element's required attribute to ensure
+    // browser validation works correctly when required changes dynamically.
+    // While the template binding should handle this, we need to update it
+    // synchronously for the browser's validation to recognize the change.
+    if (this.nativeInput) {
+      this.nativeInput.required = this.required;
+    }
+    this.updateElementInternals();
   }
 
   /**
@@ -454,8 +466,8 @@ export class Textarea implements ComponentInterface {
 
   componentDidLoad() {
     this.originalIonInput = this.ionInput;
+    this.updateElementInternals();
     this.runAutoGrow();
-    this.reportValidity();
   }
 
   componentDidRender() {
@@ -578,11 +590,16 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * Reports the validity state to the browser via ElementInternals.
-   * This delegates to the native textarea's built-in validation,
-   * which automatically handles the required prop and other constraints.
+   * Updates the form value and reports validity state to the browser via
+   * ElementInternals. This should be called when the component loads, when
+   * the required prop changes, when the disabled prop changes, and when the value
+   * changes to ensure the form value stays in sync and validation state is updated.
    */
-  private reportValidity() {
+  private updateElementInternals() {
+    // Disabled form controls should not be included in form data
+    // Pass null to setFormValue when disabled to exclude it from form submission
+    const value = this.disabled ? null : this.getValue();
+    this.internals.setFormValue(value);
     reportValidityToElementInternals(this.nativeInput, this.internals);
   }
 
@@ -600,11 +617,6 @@ export class Textarea implements ComponentInterface {
   };
 
   private onChange = (ev: Event) => {
-    const input = ev.target as HTMLTextAreaElement | null;
-    if (input) {
-      this.internals.setFormValue(input.value);
-      this.reportValidity();
-    }
     this.emitValueChange(ev);
   };
 
