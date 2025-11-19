@@ -64,7 +64,7 @@ $action-sheet-md-sub-title-padding-start: $action-sheet-md-sub-title-padding-end
 $action-sheet-md-button-height: 52px;
 
 /// @prop - Text color of the action sheet button
-$action-sheet-md-button-text-color: $text-color-step-150;
+$action-sheet-md-button-text-color: var(--ion-color-gray-850);
 
 /// @prop - Font size of the action sheet button
 $action-sheet-md-button-font-size: dynamic-font(16px);
