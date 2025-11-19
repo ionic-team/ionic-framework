@@ -1,4 +1,3 @@
-import { generateColorSteps } from '../../utils/theme';
 import type { DefaultTheme } from '../themes.interfaces';
 
 import { darkTheme } from './dark.tokens';
@@ -160,9 +159,5 @@ export const defaultTheme: DefaultTheme = {
     lg: '1.8',
     xl: '2',
     xxl: '2.4',
-  },
-
-  color: {
-    gray: generateColorSteps('#fff', '#000'),
   },
 };

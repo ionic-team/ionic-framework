@@ -485,17 +485,21 @@ export const mix = (baseColor: string, mixColor: string, weight: string): string
  *
  * @param {string} lightColor - The lighter base color hex value.
  * @param {string} darkColor - The darker base color hex value.
+ * @param {boolean} isInverted - If true, generates the scale in reverse (dark to light).
  * @returns {NumberStringKeys} An object of color shades.
  *
  * @example
  * mix('#ffffff', '#000000', 5%) results in the color for key '50'
  * mix('#ffffff', '#000000', 95%) results in the color for key '950'
  */
-export const generateColorSteps = (lightColor: string, darkColor: string): NumberStringKeys => {
-  const colorSteps: NumberStringKeys = {};
+export const generateColorSteps = (lightColor: string, darkColor: string, isInverted = false): NumberStringKeys => {
+  const colorSteps: NumberStringKeys = {
+    0: isInverted ? darkColor : lightColor,
+    1000: isInverted ? lightColor : darkColor,
+  };
 
   for (let i = 50; i <= 950; i += 50) {
-    const weight = `${i / 10}%`;
+    const weight = isInverted ? `${100 - i / 10}%` : `${i / 10}%`;
 
     colorSteps[i.toString() as keyof NumberStringKeys] = mix(lightColor, darkColor, weight);
   }
