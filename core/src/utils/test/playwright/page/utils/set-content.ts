@@ -43,6 +43,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
     theme === 'ionic'
       ? `
     <link href="${baseUrl}/css/ionic/bundle.ionic.css" rel="stylesheet" />
+    <link href="${baseUrl}/css/utils.bundle.css" rel="stylesheet" />
   `
       : `
     <link href="${baseUrl}/css/ionic.bundle.css" rel="stylesheet" />
@@ -56,6 +57,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
       theme === 'ionic'
         ? `
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic/bundle.ionic.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/utils.bundle.css" />
     `
         : `
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
