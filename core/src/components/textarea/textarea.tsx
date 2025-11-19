@@ -149,6 +149,9 @@ export class Textarea implements ComponentInterface {
    */
   @Prop() disabled = false;
 
+  /**
+   * Update element internals when disabled prop changes
+   */
   @Watch('disabled')
   protected disabledChanged() {
     this.updateElementInternals();
@@ -310,7 +313,7 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * Update validation state when required prop changes
+   * Update native input and element internals when required prop changes
    */
   @Watch('required')
   protected requiredChanged() {
@@ -599,7 +602,11 @@ export class Textarea implements ComponentInterface {
     // Disabled form controls should not be included in form data
     // Pass null to setFormValue when disabled to exclude it from form submission
     const value = this.disabled ? null : this.getValue();
-    this.internals.setFormValue(value);
+    // ElementInternals may not be fully available in test environments
+    // so we need to check if the method exists before calling it
+    if (typeof this.internals.setFormValue === 'function') {
+      this.internals.setFormValue(value);
+    }
     reportValidityToElementInternals(this.nativeInput, this.internals);
   }
 
