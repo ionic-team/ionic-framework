@@ -263,20 +263,20 @@ export const handleHeaderFade = (scrollEl: HTMLElement, baseEl: HTMLElement, con
  *
  * @param isInsideMenu If ion-header is inside ion-menu.
  * @param isCondensed If ion-header has collapse="condense".
- * @param mode The current mode.
+ * @param theme The current theme.
  * @returns 'none' if inside ion-menu or if condensed in md
- * mode, otherwise 'banner'.
+ * theme, otherwise 'banner'.
  */
-export const getRoleType = (isInsideMenu: boolean, isCondensed: boolean, mode: 'ios' | 'md') => {
+export const getRoleType = (isInsideMenu: boolean, isCondensed: boolean, theme: 'ios' | 'md' | 'ionic') => {
   // If the header is inside a menu, it should not have the banner role.
   if (isInsideMenu) {
     return ROLE_NONE;
   }
   /**
-   * Only apply role="none" to `md` mode condensed headers
+   * Only apply role="none" to `md` & `ionic` theme condensed headers
    * since the large header is never shown.
    */
-  if (isCondensed && mode === 'md') {
+  if (isCondensed && theme !== 'ios') {
     return ROLE_NONE;
   }
   // Default to banner role.

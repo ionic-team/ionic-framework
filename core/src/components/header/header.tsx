@@ -223,7 +223,7 @@ export class Header implements ComponentInterface {
     const isCondensed = collapse === 'condense';
 
     // banner role must be at top level, so remove role if inside a menu
-    const roleType = getRoleType(hostContext('ion-menu', this.el), isCondensed, mode);
+    const roleType = getRoleType(hostContext('ion-menu', this.el), isCondensed, theme);
 
     return (
       <Host
