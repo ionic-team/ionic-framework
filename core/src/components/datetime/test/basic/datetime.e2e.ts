@@ -403,7 +403,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: IO fallback'), () => {
-    test('should become ready even if IntersectionObserver never reports visible', async ({ page }) => {
+    test('should become ready even if IntersectionObserver never reports visible', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30706',
+      });
+
       await page.addInitScript(() => {
         const OriginalIO = window.IntersectionObserver;
         (window as any).IntersectionObserver = function (callback: any, options: any) {

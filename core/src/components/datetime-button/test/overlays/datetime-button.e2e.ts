@@ -1,7 +1,7 @@
-import { expect } from '@playwright/test';
 import type { Locator } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { expect } from '@playwright/test';
 import type { EventSpy } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
 /**
  * This behavior does not vary across directions.
@@ -176,7 +176,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionModalDidPresent.next();
       await expect(datetime).toBeVisible();
     });
-    test('should set datetime ready state and keep calendar interactive when reopening modal', async ({ page }) => {
+    test('should set datetime ready state and keep calendar interactive when reopening modal', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30706',
+      });
+
       const openAndInteract = async () => {
         await page.click('#date-button');
         await ionModalDidPresent.next();
