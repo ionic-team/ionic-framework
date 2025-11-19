@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, config }) => {
-  test.describe(title('textarea: a11y'), () => {
+  test.describe(title('select: a11y'), () => {
     test('default layout should not have accessibility violations', async ({ page }) => {
       await page.setContent(
         `

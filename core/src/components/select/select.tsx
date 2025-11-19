@@ -556,13 +556,17 @@ export class Select implements ComponentInterface {
         .filter((cls) => cls !== 'hydrated')
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
+      const isSelected = isOptionSelected(selectValue, value, this.compareWith);
 
       return {
-        role: isOptionSelected(selectValue, value, this.compareWith) ? 'selected' : '',
+        role: 'radio',
         text: option.textContent,
         cssClass: optClass,
         handler: () => {
           this.setValue(value);
+        },
+        htmlAttributes: {
+          'aria-checked': isSelected ? 'true' : 'false',
         },
       } as ActionSheetButton;
     });
