@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.10](https://github.com/ionic-team/ionic-framework/compare/v8.7.9...v8.7.10) (2025-11-19)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
 ## [8.7.9](https://github.com/ionic-team/ionic-framework/compare/v8.7.8...v8.7.9) (2025-11-05)
 
 **Note:** Version bump only for package @ionic/vue
