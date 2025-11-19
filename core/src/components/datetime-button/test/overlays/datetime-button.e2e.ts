@@ -176,7 +176,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionModalDidPresent.next();
       await expect(datetime).toBeVisible();
     });
-    test('should set datetime ready state and keep calendar interactive when reopening modal', async ({ page }, testInfo) => {
+    test('should set datetime ready state and keep calendar interactive when reopening modal', async ({
+      page,
+    }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30706',
