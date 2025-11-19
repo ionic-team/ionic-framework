@@ -113,7 +113,7 @@ $text-color-step-100: var(
 $text-color-step-150: var(
   --ion-color-step-850,
   var(--ion-text-color-step-150, mix($background-color-value, $text-color-value, 15%))
-); // 262626 gray-850
+);
 $text-color-step-200: var(
   --ion-color-step-800,
   var(--ion-text-color-step-200, mix($background-color-value, $text-color-value, 20%))
