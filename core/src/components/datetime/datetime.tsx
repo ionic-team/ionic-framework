@@ -1102,6 +1102,7 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
+   * TODO(FW-6931): Remove this fallback upon solving the root cause
    * Fallback to ensure the datetime becomes ready even if
    * IntersectionObserver never reports it as intersecting.
    *
@@ -1167,7 +1168,8 @@ export class Datetime implements ComponentInterface {
     raf(() => visibleIO?.observe(intersectionTrackerRef!));
 
     /**
-     * Fallback: If IntersectionObserver never reports that the
+   * TODO(FW-6931): Remove this fallback upon solving the root cause
+   * Fallback: If IntersectionObserver never reports that the
      * datetime is visible but the host clearly has layout, ensure
      * we still initialize listeners and mark the component as ready.
      *
