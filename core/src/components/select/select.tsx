@@ -87,7 +87,7 @@ export class Select implements ComponentInterface {
    */
   @State() isInvalid = false;
 
-  @State() private hintTextID?: string;
+  @State() private hintTextId?: string;
 
   /**
    * The text to display on the cancel button.
@@ -332,7 +332,7 @@ export class Select implements ComponentInterface {
            * a higher priority.
            */
           Promise.resolve().then(() => {
-            this.hintTextID = this.getHintTextID();
+            this.hintTextId = this.getHintTextId();
           });
         }
       });
@@ -350,7 +350,7 @@ export class Select implements ComponentInterface {
   componentWillLoad() {
     this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
 
-    this.hintTextID = this.getHintTextID();
+    this.hintTextId = this.getHintTextId();
   }
 
   componentDidLoad() {
@@ -1111,7 +1111,7 @@ export class Select implements ComponentInterface {
         aria-label={this.ariaLabel}
         aria-haspopup="dialog"
         aria-expanded={`${isExpanded}`}
-        aria-describedby={this.hintTextID}
+        aria-describedby={this.hintTextId}
         aria-invalid={this.isInvalid ? 'true' : undefined}
         aria-required={`${required}`}
         onFocus={this.onFocus}
@@ -1121,7 +1121,7 @@ export class Select implements ComponentInterface {
     );
   }
 
-  private getHintTextID(): string | undefined {
+  private getHintTextId(): string | undefined {
     const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
     if (isInvalid && errorText) {
