@@ -6,9 +6,9 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@v5
+    - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
       with:
-        node-version: 22.x
+        node-version: 24.x
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
@@ -24,23 +24,23 @@ runs:
         name: ionic-react-router
         path: ./packages/react-router
         filename: ReactRouterBuild.zip
-    - name: Create Test App
+    - name: 🧪 Create Test App
       run: ./build.sh ${{ inputs.app }}
       shell: bash
       working-directory: ./packages/react-router/test
-    - name: Install Dependencies
+    - name: 🕸️ Install Dependencies
       run: npm install
       shell: bash
       working-directory: ./packages/react-router/test/build/${{ inputs.app }}
-    - name: Sync Built Changes
+    - name: 🔄 Sync Built Changes
       run: npm run sync
       shell: bash
       working-directory: ./packages/react-router/test/build/${{ inputs.app }}
-    - name: Build
+    - name: 🏗️ Build
       run: npm run build
       shell: bash
       working-directory: ./packages/react-router/test/build/${{ inputs.app }}
-    - name: Run Tests
+    - name: 🧪 Run Tests
       run: npm run e2e
       shell: bash
       working-directory: ./packages/react-router/test/build/${{ inputs.app }}

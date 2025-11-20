@@ -45,6 +45,20 @@
         <ion-toggle style="width: 100%"> Full-width </ion-toggle><br />
         <ion-toggle> Long Label Long Label Long Label Long Label Long Label Long Label </ion-toggle><br />
       </ion-content>
+
+      <script>
+        document.addEventListener('ionBlur', (ev) => {
+          console.log('ionBlur', ev);
+        });
+
+        document.addEventListener('ionChange', (ev) => {
+          console.log('ionChange', ev);
+        });
+
+        document.addEventListener('ionFocus', (ev) => {
+          console.log('ionFocus', ev);
+        });
+      </script>
     </ion-app>
   </body>
 </html>
