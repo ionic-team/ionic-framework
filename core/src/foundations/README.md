@@ -10,10 +10,9 @@ Design tokens represent small, repeated design decisions that make up a design s
 
 The Ionic Design Tokens come from the [outsystems-design-tokens repo](https://github.com/OutSystems/outsystems-design-tokens). 
 
-Using the [outsystems-design-tokens package](https://www.npmjs.com/package/outsystems-design-tokens), we use its `npx run build.tokens` to pass our configuration file, that will generate 2 files inside `core/src/foundations`:
+Using the [outsystems-design-tokens package](https://www.npmjs.com/package/outsystems-design-tokens), we use its `npx run build.tokens` to pass our configuration file, that will generate one file inside `core/src/foundations`:
 
 - `ionic.vars.scss` - SCSS variables, based on the native ones, that are used internally on all CSS/SCSS code.
-- `ionic.utility.scss` - list of utility classes based on each Design Token.
 
 This refers, more or less, to what's known as System Tokens, which are decisions that systematize the design language for a specific theme or context.
 
@@ -48,12 +47,6 @@ SCSS Variable:
 
 ```scss
 $ion-semantics-primary-300
-```
-
-Utility class:
-
-```css
-.ion-semantics-primary-300
 ```
 
 ## Managing the Design Tokens
