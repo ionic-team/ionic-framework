@@ -62,6 +62,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   private pendingPageTransition = false;
   private waitingForIonPage = false;
   private ionPageWaitTimeout?: ReturnType<typeof setTimeout>;
+  private outOfScopeUnmountTimeout?: ReturnType<typeof setTimeout>;
 
   constructor(props: StackManagerProps) {
     super(props);
@@ -82,6 +83,14 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
    */
   private getParentPath(): string | undefined {
     const currentPathname = this.props.routeInfo.pathname;
+
+    // If this outlet previously established a mount path and the current
+    // pathname is outside of that scope, do not attempt to re-compute a new
+    // parent path. This prevents out-of-scope outlets from "adopting"
+    // unrelated routes (e.g., matching their index route under /overlays).
+    if (this.outletMountPath && !currentPathname.startsWith(this.outletMountPath)) {
+      return undefined;
+    }
 
     // If this is a nested outlet (has an explicit ID like "main"),
     // we need to figure out what part of the path was already matched
@@ -187,6 +196,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       clearTimeout(this.ionPageWaitTimeout);
       this.ionPageWaitTimeout = undefined;
     }
+    if (this.outOfScopeUnmountTimeout) {
+      clearTimeout(this.outOfScopeUnmountTimeout);
+      this.outOfScopeUnmountTimeout = undefined;
+    }
     this.waitingForIonPage = false;
     this.clearOutletTimeout = this.context.clearOutlet(this.id);
   }
@@ -266,22 +279,38 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       // CRITICAL: If we have a mount path and current route is outside of it,
       // don't process any routes in this outlet - it's completely out of scope
       if (this.outletMountPath && !routeInfo.pathname.startsWith(this.outletMountPath)) {
-        // Hide any visible views in this outlet since it's out of scope
-        if (leavingViewItem && leavingViewItem.ionPageElement) {
-          leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
-          leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
+        // Clear any pending unmount timeout to avoid conflicts
+        if (this.outOfScopeUnmountTimeout) {
+          clearTimeout(this.outOfScopeUnmountTimeout);
+          this.outOfScopeUnmountTimeout = undefined;
         }
 
-        // Also check if there's an entering view that needs to be hidden
-        if (enteringViewItem && enteringViewItem.ionPageElement && enteringViewItem !== leavingViewItem) {
-          enteringViewItem.ionPageElement.classList.add('ion-page-hidden');
-          enteringViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
-        }
+        // When an outlet is out of scope, unmount its views immediately
+        // No transition is happening in this outlet - the transition is in the parent
+        const allViewsInOutlet = this.context.getViewItemsForOutlet
+          ? this.context.getViewItemsForOutlet(this.id)
+          : [];
 
-        // Don't unmount views - just hide them and skip processing
-        // The views should be preserved for when we return to this outlet
+        // Unmount and remove all views in this outlet immediately to avoid leftover content
+        allViewsInOutlet.forEach((viewItem) => {
+          if (viewItem.ionPageElement) {
+            viewItem.ionPageElement.classList.add('ion-page-hidden');
+            viewItem.ionPageElement.setAttribute('aria-hidden', 'true');
+          }
+          // Remove the view from the stack so it is no longer rendered
+          this.context.unMountViewItem(viewItem);
+        });
+
+        // Do not reset outletMountPath here; keeping it prevents this outlet
+        // from re-adopting an unrelated parent path on subsequent navigations.
         this.forceUpdate();
         return;
+      }
+
+      // Clear any pending out-of-scope unmount timeout since we're processing an in-scope route
+      if (this.outOfScopeUnmountTimeout) {
+        clearTimeout(this.outOfScopeUnmountTimeout);
+        this.outOfScopeUnmountTimeout = undefined;
       }
 
       // If this is a nested outlet with relative routes but no valid parent path,

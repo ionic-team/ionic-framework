@@ -527,6 +527,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     clearOutlet: viewStack.current.clear,
     findViewItemByPathname: viewStack.current.findViewItemByPathname,
     getChildrenToRender: viewStack.current.getChildrenToRender,
+    getViewItemsForOutlet: viewStack.current.getViewItemsForOutlet.bind(viewStack.current),
     goBack: () => handleNavigateBack(),
     createViewItem: viewStack.current.createViewItem,
     findViewItemByRouteInfo: viewStack.current.findViewItemByRouteInfo,
