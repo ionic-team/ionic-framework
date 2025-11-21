@@ -16,7 +16,7 @@ import {
   writeTask,
 } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
-import { createNotchController, reportValidityToElementInternals } from '@utils/forms';
+import { createNotchController, checkInvalidState, reportValidityToElementInternals } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
@@ -385,16 +385,6 @@ export class Textarea implements ComponentInterface {
     }
   }
 
-  /**
-   * Checks if the textarea is in an invalid state based on Ionic validation classes
-   */
-  private checkValidationState(): boolean {
-    const hasIonTouched = this.el.classList.contains('ion-touched');
-    const hasIonInvalid = this.el.classList.contains('ion-invalid');
-
-    return hasIonTouched && hasIonInvalid;
-  }
-
   connectedCallback() {
     const { el } = this;
     this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => forceUpdate(this));
@@ -407,7 +397,7 @@ export class Textarea implements ComponentInterface {
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
       this.validationObserver = new MutationObserver(() => {
-        const newIsInvalid = this.checkValidationState();
+        const newIsInvalid = checkInvalidState(this.el);
         if (this.isInvalid !== newIsInvalid) {
           this.isInvalid = newIsInvalid;
           // Force a re-render to update aria-describedby immediately
@@ -422,7 +412,7 @@ export class Textarea implements ComponentInterface {
     }
 
     // Always set initial state
-    this.isInvalid = this.checkValidationState();
+    this.isInvalid = checkInvalidState(this.el);
 
     this.debounceChanged();
     if (Build.isBrowser) {
