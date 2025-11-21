@@ -268,10 +268,10 @@ export type NumberStringKeys = {
 };
 
 // Primitive color keys
-type PrimitiveColors = 'gray';
+export type PrimitiveColors = 'gray' | 'black' | 'white';
 
 // Colors interface
-type Colors = {
+export type Colors = {
   [K in PredefinedColors]?: SemanticHue;
 } & {
   [K in PrimitiveColors]?: NumberStringKeys;

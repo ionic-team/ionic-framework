@@ -1,6 +1,8 @@
 import { mix } from '../../utils/theme';
 import type { DarkTheme } from '../themes.interfaces';
 
+import { defaultPrimitiveColors } from './default.tokens.primitives';
+
 const colors = {
   primary: '#4d8dff',
   secondary: '#46b1ff',
@@ -217,6 +219,9 @@ export const darkTheme: DarkTheme = {
     },
     IonItem: {
       background: '#000000',
+    },
+    IonDatetime: {
+      background: defaultPrimitiveColors.gray['50']!,
     },
   },
 };
