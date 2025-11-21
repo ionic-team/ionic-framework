@@ -40,6 +40,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     ref: React.RefObject<HTMLIonOverlayElement>;
     wrapperRef: React.RefObject<HTMLElement>;
     stableMergedRefs: React.RefCallback<HTMLElement>;
+    mutationObserver: MutationObserver | null = null;
 
     constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
@@ -59,6 +60,51 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       this.ref.current?.addEventListener('ionMount', this.handleIonMount);
       this.ref.current?.addEventListener('willPresent', this.handleWillPresent);
       this.ref.current?.addEventListener('didDismiss', this.handleDidDismiss);
+
+      /**
+       * Watch for when ancestor pages become hidden (ion-page-hidden class).
+       * This handles React Router 6 where pages stay mounted on forward PUSH.
+       * When a page is hidden, we dismiss any open overlays within it.
+       */
+      this.setupPageVisibilityObserver();
+    }
+
+    setupPageVisibilityObserver() {
+      /**
+       * Watch for when ANY element in the document gets the ion-page-hidden class.
+       * We use a subtree observer on a parent container because:
+       * 1. The overlay's component might not have an IonPage wrapper
+       * 2. Pages might be added dynamically after this component mounts
+       * 3. We want to dismiss overlays when ANY navigation occurs
+       *
+       * This handles React Router 6 where pages stay mounted but get hidden.
+       */
+      this.mutationObserver = new MutationObserver((mutations) => {
+        if (!this.state.isOpen) return;
+
+        for (const mutation of mutations) {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            const target = mutation.target as HTMLElement;
+            // If any element gets the ion-page-hidden or ion-page-invisible class, dismiss overlay
+            if (
+              target.classList.contains('ion-page-hidden') ||
+              target.classList.contains('ion-page-invisible')
+            ) {
+              this.dismissOverlay();
+              return;
+            }
+          }
+        }
+      });
+
+      // Observe a parent container with subtree: true to catch all descendant class changes
+      // This works even if pages are added after mount or if the current route has no IonPage
+      const appRoot = document.querySelector('#root') || document.body;
+      this.mutationObserver.observe(appRoot, {
+        attributes: true,
+        attributeFilter: ['class'],
+        subtree: true, // Watch all descendants
+      });
     }
 
     componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
@@ -95,6 +141,25 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
          * before dismissing the overlay, to prevent the callback handlers
          * executing after the component has been unmounted. This is to
          * avoid memory leaks.
+         */
+        node.removeEventListener('didDismiss', this.handleDidDismiss);
+        node.remove();
+        detachProps(node, this.props);
+      }
+
+      // Clean up mutation observer
+      if (this.mutationObserver) {
+        this.mutationObserver.disconnect();
+        this.mutationObserver = null;
+      }
+    }
+
+    dismissOverlay() {
+      const node = this.ref.current;
+      if (node && this.state.isOpen) {
+        /**
+         * Dismiss the overlay without animation when the page is hidden.
+         * This matches the behavior in componentWillUnmount.
          */
         node.removeEventListener('didDismiss', this.handleDidDismiss);
         node.remove();
