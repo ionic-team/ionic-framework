@@ -8,11 +8,7 @@ import type { IonicConfig } from '@ionic/core/components';
 import { ModalController } from './modal-controller';
 import { PopoverController } from './popover-controller';
 
-type OptInAngularFeatures = {
-  useSetInputAPI?: boolean;
-};
-
-export const provideIonicAngular = (config: IonicConfig & OptInAngularFeatures = {}): EnvironmentProviders => {
+export const provideIonicAngular = (config: IonicConfig = {}): EnvironmentProviders => {
   return makeEnvironmentProviders([
     {
       provide: ConfigToken,

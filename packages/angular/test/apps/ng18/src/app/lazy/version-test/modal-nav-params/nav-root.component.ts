@@ -1,5 +1,4 @@
-import { JsonPipe } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 
 import { IonicModule } from "@ionic/angular";
 
@@ -19,11 +18,11 @@ let rootParamsException = false;
     {{ hasException ? 'ERROR' : 'OK' }}
   `,
   standalone: true,
-  imports: [IonicModule, JsonPipe]
+  imports: [IonicModule]
 })
 export class NavRootComponent implements OnInit {
 
-  params: any;
+  @Input() params: any;
 
   ngOnInit() {
     if (this.params === undefined) {

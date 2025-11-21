@@ -52,10 +52,6 @@ const DECLARATIONS = [
   IonMaxValidator,
 ];
 
-type OptInAngularFeatures = {
-  useSetInputAPI?: boolean;
-};
-
 @NgModule({
   declarations: DECLARATIONS,
   exports: DECLARATIONS,
@@ -63,7 +59,7 @@ type OptInAngularFeatures = {
   imports: [CommonModule],
 })
 export class IonicModule {
-  static forRoot(config: IonicConfig & OptInAngularFeatures = {}): ModuleWithProviders<IonicModule> {
+  static forRoot(config: IonicConfig = {}): ModuleWithProviders<IonicModule> {
     return {
       ngModule: IonicModule,
       providers: [
