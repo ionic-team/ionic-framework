@@ -1,3 +1,4 @@
+import { generateColorSteps } from '../../utils/theme';
 import type { DefaultTheme } from '../themes.interfaces';
 
 import { darkTheme } from './dark.tokens';
@@ -159,5 +160,10 @@ export const defaultTheme: DefaultTheme = {
     lg: '1.8',
     xl: '2',
     xxl: '2.4',
+  },
+
+  color: {
+    // TODO: Update hex values to use the text color variable and background color variable
+    gray: generateColorSteps('#fff', '#000'),
   },
 };

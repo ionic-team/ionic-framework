@@ -1,3 +1,4 @@
+import { generateColorSteps } from '../../utils/theme';
 import { darkTheme as baseDarkTheme } from '../base/dark.tokens';
 import type { DarkTheme } from '../themes.interfaces';
 
@@ -49,6 +50,11 @@ export const darkTheme: DarkTheme = {
     850: '#262626',
     900: '#1a1a1a',
     950: '#0d0d0d',
+  },
+
+  color: {
+    // TODO: Update hex values to use the text color variable and background color variable
+    gray: generateColorSteps('#ffffff', '#000000', true),
   },
 
   components: {

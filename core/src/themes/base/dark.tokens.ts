@@ -1,4 +1,4 @@
-import { mix, generateColorSteps } from '../../utils/theme';
+import { mix } from '../../utils/theme';
 import type { DarkTheme } from '../themes.interfaces';
 
 const colors = {
@@ -160,7 +160,6 @@ export const darkTheme: DarkTheme = {
         tint: mix('#000', colors.dark, '12%'),
       },
     },
-    gray: generateColorSteps('#fff', '#000', true),
   },
 
   backgroundColor: '#000000',

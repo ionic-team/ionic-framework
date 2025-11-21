@@ -1,4 +1,4 @@
-import { mix, generateColorSteps } from '../../utils/theme';
+import { mix } from '../../utils/theme';
 import type { LightTheme } from '../themes.interfaces';
 
 const colors = {
@@ -159,6 +159,5 @@ export const lightTheme: LightTheme = {
         tint: mix('#fff', colors.dark, '4%'),
       },
     },
-    gray: generateColorSteps('#fff', '#000'),
   },
 };
