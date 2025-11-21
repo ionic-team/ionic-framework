@@ -67,9 +67,33 @@ describe('Inputs', () => {
     });
 
     it('typing into textarea should update ref', () => {
-      cy.get('ion-textarea textarea').type('Hello Textarea', { scrollBehavior: false });
+      cy.get('ion-textarea').shadow().find('textarea').type('Hello Textarea', { scrollBehavior: false });
 
       cy.get('#textarea-ref').should('have.text', 'Hello Textarea');
+    });
+  });
+
+  describe('validation', () => {
+    it('should show invalid state for required inputs when empty and touched', () => {
+      cy.get('ion-input input').focus().blur();
+      cy.get('ion-input').should('have.class', 'ion-invalid');
+
+      // Use cy.focused().blur() instead of directly targeting ion-textarea or
+      // the native textarea element because:
+      // React 17/18 moves focus to the ion-textarea component
+      // React 19 moves focus to the native textarea element
+      // cy.focused() adapts to whichever element is actually focused
+      cy.get('ion-textarea').shadow().find('textarea').focus();
+      cy.focused().blur();
+      cy.get('ion-textarea').should('have.class', 'ion-invalid');
+    });
+
+    it('should show valid state for required inputs when filled', () => {
+      cy.get('ion-input input').type('Test value', { scrollBehavior: false });
+      cy.get('ion-input').should('have.class', 'ion-valid');
+
+      cy.get('ion-textarea').shadow().find('textarea').type('Test value', { scrollBehavior: false });
+      cy.get('ion-textarea').should('have.class', 'ion-valid');
     });
   });
 })
