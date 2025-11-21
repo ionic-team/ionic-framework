@@ -518,8 +518,25 @@ export class ReactRouterViewStack extends ViewStacks {
       return isFirstOccurrence;
     });
 
+    // Filter out unmounted Navigate components to prevent them from being rendered
+    // and triggering unwanted redirects
+    const renderableViewItems = uniqueViewItems.filter((viewItem) => {
+      const elementComponent = viewItem.reactElement?.props?.element;
+      const isNavigateComponent =
+        React.isValidElement(elementComponent) &&
+        (elementComponent.type === Navigate ||
+          (typeof elementComponent.type === 'function' && elementComponent.type.name === 'Navigate'));
+
+      // Exclude unmounted Navigate components from rendering
+      if (isNavigateComponent && !viewItem.mount) {
+        return false;
+      }
+
+      return true;
+    });
+
     // Render all view items using renderViewItem
-    const renderedItems = uniqueViewItems.map((viewItem) => this.renderViewItem(viewItem, routeInfo, parentPath));
+    const renderedItems = renderableViewItems.map((viewItem) => this.renderViewItem(viewItem, routeInfo, parentPath));
     return renderedItems;
   };
 

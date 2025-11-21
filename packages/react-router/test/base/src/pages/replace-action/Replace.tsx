@@ -6,24 +6,16 @@ import {
   IonTitle,
   IonToolbar,
   IonButton,
-  IonRouterOutlet,
   IonButtons,
   IonBackButton,
 } from '@ionic/react';
-import { Route, Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface TopPageProps {}
 
-const ReplaceAction: React.FC<TopPageProps> = () => {
-  return (
-    <IonRouterOutlet>
-      <Route path="/replace-action/page1" element={<Page1 />} />
-      <Route path="/replace-action/page2" element={<Page2 />} />
-      <Route path="/replace-action/page3" element={<Page3 />} />
-      <Route path="/replace-action" element={<Navigate to="/replace-action/page1" replace />} />
-    </IonRouterOutlet>
-  );
-};
+// ReplaceAction is no longer used as a component wrapper
+// Routes are defined directly in App.tsx
+const ReplaceAction: React.FC<TopPageProps> = () => null;
 
 const Page1: React.FC = () => (
   <IonPage data-pageid="page1">
@@ -84,3 +76,4 @@ const Page3: React.FC = () => {
 };
 
 export default ReplaceAction;
+export { Page1, Page2, Page3 };

@@ -1,6 +1,6 @@
 import { IonApp, setupIonicReact, IonRouterOutlet } from '@ionic/react';
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Navigate } from 'react-router-dom';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -28,7 +28,7 @@ import MultipleTabs from './pages/muiltiple-tabs/MultipleTabs';
 import DynamicTabs from './pages/dynamic-tabs/DynamicTabs';
 import NestedOutlet from './pages/nested-outlet/NestedOutlet';
 import NestedOutlet2 from './pages/nested-outlet/NestedOutlet2';
-import ReplaceAction from './pages/replace-action/Replace';
+import ReplaceAction, { Page1, Page2, Page3 } from './pages/replace-action/Replace';
 import TabsContext from './pages/tab-context/TabContext';
 import { OutletRef } from './pages/outlet-ref/OutletRef';
 import { SwipeToGoBack } from './pages/swipe-to-go-back/SwipToGoBack';
@@ -54,7 +54,10 @@ const App: React.FC = () => {
           <Route path="/dynamic-tabs/*" element={<DynamicTabs />} />
           <Route path="/nested-outlet/*" element={<NestedOutlet />} />
           <Route path="/nested-outlet2/*" element={<NestedOutlet2 />} />
-          <Route path="/replace-action" element={<ReplaceAction />} />
+          <Route path="/replace-action/page1" element={<Page1 />} />
+          <Route path="/replace-action/page2" element={<Page2 />} />
+          <Route path="/replace-action/page3" element={<Page3 />} />
+          <Route path="/replace-action" element={<Navigate to="/replace-action/page1" replace />} />
           <Route path="/tab-context" element={<TabsContext />} />
           <Route path="/outlet-ref" element={<OutletRef />} />
           <Route path="/swipe-to-go-back" element={<SwipeToGoBack />} />

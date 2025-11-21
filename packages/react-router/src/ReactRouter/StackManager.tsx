@@ -491,6 +491,15 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
         if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
           leavingViewItem.mount = false;
+          // For replace actions, remove actual pages (with ionPageElement) from the stack entirely
+          // Don't remove utility components like Navigate that don't have ionPageElement
+          if (routeInfo.routeAction === 'replace' && leavingViewItem.ionPageElement) {
+            console.log(`[StackManager] Removing page view ${leavingViewItem.id} from stack after replace action`);
+            setTimeout(() => {
+              // Use a timeout to ensure the transition completes before removal
+              this.context.unMountViewItem(leavingViewItem);
+            }, 250);
+          }
         }
       } else if (enteringViewItem && !enteringViewItem.ionPageElement) {
         const enteringRouteElement = enteringViewItem.reactElement?.props?.element;
