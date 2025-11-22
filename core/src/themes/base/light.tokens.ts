@@ -164,7 +164,8 @@ export const lightTheme: LightTheme = {
   },
   components: {
     IonDatetime: {
-      background: defaultPrimitiveColors.gray['50']!,
+      bg: defaultPrimitiveColors.white,
+      timeBodyBg: '#edeef0',
     },
   },
 };

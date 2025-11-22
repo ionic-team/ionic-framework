@@ -75,7 +75,8 @@ export const darkTheme: DarkTheme = {
       background: '#1f1f1f',
     },
     IonDatetime: {
-      background: graySteps['100']!,
+      bg: graySteps['100']!,
+      timeBodyBg: graySteps['300']!,
     },
   },
 };

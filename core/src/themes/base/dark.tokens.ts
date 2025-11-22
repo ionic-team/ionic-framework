@@ -221,7 +221,8 @@ export const darkTheme: DarkTheme = {
       background: '#000000',
     },
     IonDatetime: {
-      background: defaultPrimitiveColors.gray['50']!,
+      bg: defaultPrimitiveColors.gray['50']!,
+      timeBodyBg: defaultPrimitiveColors.gray['650']!,
     },
   },
 };
