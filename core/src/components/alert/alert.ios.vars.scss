@@ -57,7 +57,7 @@ $alert-ios-title-font-weight: 600;
 $alert-ios-sub-title-font-size: dynamic-font-min(1, 14px);
 
 /// @prop - Text color of the alert sub title
-$alert-ios-sub-title-text-color: $text-color-step-400;
+$alert-ios-sub-title-text-color: var(--ion-color-gray-600);
 
 /// @prop - Padding top of the alert message
 $alert-ios-message-padding-top: 0;
@@ -114,7 +114,7 @@ $alert-ios-input-padding-start: $alert-ios-input-padding-end;
 $alert-ios-input-placeholder-color: $placeholder-text-color;
 
 /// @prop - Border color of the alert input
-$alert-ios-input-border-color: $background-color-step-250;
+$alert-ios-input-border-color: var(--ion-color-gray-250);
 
 /// @prop - Border of the alert input
 $alert-ios-input-border: $hairlines-width solid $alert-ios-input-border-color;

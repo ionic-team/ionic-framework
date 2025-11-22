@@ -1,5 +1,8 @@
+import { generateColorSteps } from '../../utils/theme';
 import { darkTheme as baseDarkTheme } from '../base/dark.tokens';
 import type { DarkTheme } from '../themes.interfaces';
+
+const graySteps = generateColorSteps('#ffffff', '#121212', true);
 
 export const darkTheme: DarkTheme = {
   ...baseDarkTheme,
@@ -53,6 +56,11 @@ export const darkTheme: DarkTheme = {
     950: '#1e1e1e',
   },
 
+  color: {
+    // TODO: Update hex values to use the text color variable and background color variable
+    gray: graySteps,
+  },
+
   components: {
     IonCard: {
       background: '#1e1e1e',
@@ -65,6 +73,10 @@ export const darkTheme: DarkTheme = {
     },
     IonTabBar: {
       background: '#1f1f1f',
+    },
+    IonDatetime: {
+      bg: graySteps['100']!,
+      timeBodyBg: graySteps['300']!,
     },
   },
 };

@@ -181,7 +181,7 @@
 
 .alert-button.ion-focused,
 .alert-tappable.ion-focused {
-  background: $background-color-step-100;
+  background: var(--ion-color-gray-100);
 }
 
 .alert-button-inner {

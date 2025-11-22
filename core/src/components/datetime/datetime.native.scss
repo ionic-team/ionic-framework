@@ -77,7 +77,7 @@
   @include globals.border-radius(8px);
   @include globals.padding(6px, 12px, 6px, 12px);
 
-  background: var(--ion-color-step-300, var(--ion-background-color-step-300, #edeef0));
+  background: var(--ion-components-ion-datetime-time-body-bg);
 
   color: globals.$text-color;
 }

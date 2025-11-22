@@ -1,6 +1,7 @@
 import type { DefaultTheme } from '../themes.interfaces';
 
 import { darkTheme } from './dark.tokens';
+import { defaultPrimitiveColors } from './default.tokens.primitives';
 import { lightTheme } from './light.tokens';
 
 export const defaultTheme: DefaultTheme = {
@@ -159,5 +160,9 @@ export const defaultTheme: DefaultTheme = {
     lg: '1.8',
     xl: '2',
     xxl: '2.4',
+  },
+
+  color: {
+    ...defaultPrimitiveColors,
   },
 };
