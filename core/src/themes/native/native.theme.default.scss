@@ -29,155 +29,155 @@ $text-color-rgb: var(--ion-text-color-rgb, $text-color-rgb-value);
 $background-color-step-50: var(
   --ion-color-step-50,
   var(--ion-background-color-step-50, mix($text-color-value, $background-color-value, 5%))
-); // f2f2f2 --ion-color-gray-50
+);
 $background-color-step-100: var(
   --ion-color-step-100,
   var(--ion-background-color-step-100, mix($text-color-value, $background-color-value, 10%))
-); // e6e6e6 --ion-color-gray-100
+);
 $background-color-step-150: var(
   --ion-color-step-150,
   var(--ion-background-color-step-150, mix($text-color-value, $background-color-value, 15%))
-); // d9d9d9 --ion-color-gray-150
+);
 $background-color-step-200: var(
   --ion-color-step-200,
   var(--ion-background-color-step-200, mix($text-color-value, $background-color-value, 20%))
-); // cccccc --ion-color-gray-200
+);
 $background-color-step-250: var(
   --ion-color-step-250,
   var(--ion-background-color-step-250, mix($text-color-value, $background-color-value, 25%))
-); // bfbfbf --ion-color-gray-250
+);
 $background-color-step-300: var(
   --ion-color-step-300,
   var(--ion-background-color-step-300, mix($text-color-value, $background-color-value, 30%))
-); // b3b3b3 --ion-color-gray-300
+);
 $background-color-step-350: var(
   --ion-color-step-350,
   var(--ion-background-color-step-350, mix($text-color-value, $background-color-value, 35%))
-); // a6a6a6 --ion-color-gray-350
+);
 $background-color-step-400: var(
   --ion-color-step-400,
   var(--ion-background-color-step-400, mix($text-color-value, $background-color-value, 40%))
-); // 999999 --ion-color-gray-400
+);
 $background-color-step-450: var(
   --ion-color-step-450,
   var(--ion-background-color-step-450, mix($text-color-value, $background-color-value, 45%))
-); // 8c8c8c --ion-color-gray-450
+);
 $background-color-step-500: var(
   --ion-color-step-500,
   var(--ion-background-color-step-500, mix($text-color-value, $background-color-value, 50%))
-); // 808080 --ion-color-gray-500
+);
 $background-color-step-550: var(
   --ion-color-step-550,
   var(--ion-background-color-step-550, mix($text-color-value, $background-color-value, 55%))
-); // 737373 --ion-color-gray-550
+);
 $background-color-step-600: var(
   --ion-color-step-600,
   var(--ion-background-color-step-600, mix($text-color-value, $background-color-value, 60%))
-); // 666666 --ion-color-gray-600
+);
 $background-color-step-650: var(
   --ion-color-step-650,
   var(--ion-background-color-step-650, mix($text-color-value, $background-color-value, 65%))
-); // 595959 --ion-color-gray-650
+);
 $background-color-step-700: var(
   --ion-color-step-700,
   var(--ion-background-color-step-700, mix($text-color-value, $background-color-value, 70%))
-); // 4d4d4d --ion-color-gray-700
+);
 $background-color-step-750: var(
   --ion-color-step-750,
   var(--ion-background-color-step-750, mix($text-color-value, $background-color-value, 75%))
-); // 404040 --ion-color-gray-750
+);
 $background-color-step-800: var(
   --ion-color-step-800,
   var(--ion-background-color-step-800, mix($text-color-value, $background-color-value, 80%))
-); // 333333 --ion-color-gray-800
+);
 $background-color-step-850: var(
   --ion-color-step-850,
   var(--ion-background-color-step-850, mix($text-color-value, $background-color-value, 85%))
-); // 262626 --ion-color-gray-850
+);
 $background-color-step-900: var(
   --ion-color-step-900,
   var(--ion-background-color-step-900, mix($text-color-value, $background-color-value, 90%))
-); // 191919 --ion-color-gray-900
+);
 $background-color-step-950: var(
   --ion-color-step-950,
   var(--ion-background-color-step-950, mix($text-color-value, $background-color-value, 95%))
-); // 0d0d0d --ion-color-gray-950
+);
 $text-color-step-50: var(
   --ion-color-step-950,
   var(--ion-text-color-step-50, mix($background-color-value, $text-color-value, 5%))
-); // 0d0d0d --ion-color-gray-950
+);
 $text-color-step-100: var(
   --ion-color-step-900,
   var(--ion-text-color-step-100, mix($background-color-value, $text-color-value, 10%))
-); // 191919 --ion-color-gray-900
+);
 $text-color-step-150: var(
   --ion-color-step-850,
   var(--ion-text-color-step-150, mix($background-color-value, $text-color-value, 15%))
-); // 262626 --ion-color-gray-850
+);
 $text-color-step-200: var(
   --ion-color-step-800,
   var(--ion-text-color-step-200, mix($background-color-value, $text-color-value, 20%))
-); // 333333 --ion-color-gray-800
+);
 $text-color-step-250: var(
   --ion-color-step-750,
   var(--ion-text-color-step-250, mix($background-color-value, $text-color-value, 25%))
-); // 404040 --ion-color-gray-750
+);
 $text-color-step-300: var(
   --ion-color-step-700,
   var(--ion-text-color-step-300, mix($background-color-value, $text-color-value, 30%))
-); // 4d4d4d --ion-color-gray-700
+);
 $text-color-step-350: var(
   --ion-color-step-650,
   var(--ion-text-color-step-350, mix($background-color-value, $text-color-value, 35%))
-); // 595959 --ion-color-gray-650
+);
 $text-color-step-400: var(
   --ion-color-step-600,
   var(--ion-text-color-step-400, mix($background-color-value, $text-color-value, 40%))
-); // 666666 --ion-color-gray-600
+);
 $text-color-step-450: var(
   --ion-color-step-550,
   var(--ion-text-color-step-450, mix($background-color-value, $text-color-value, 45%))
-); // 737373 --ion-color-gray-550
+);
 $text-color-step-500: var(
   --ion-color-step-500,
   var(--ion-text-color-step-500, mix($background-color-value, $text-color-value, 50%))
-); // 808080 --ion-color-gray-500
+);
 $text-color-step-550: var(
   --ion-color-step-450,
   var(--ion-text-color-step-550, mix($background-color-value, $text-color-value, 55%))
-); // 8c8c8c --ion-color-gray-450
+);
 $text-color-step-600: var(
   --ion-color-step-400,
   var(--ion-text-color-step-600, mix($background-color-value, $text-color-value, 60%))
-); // 999999 --ion-color-gray-400
+);
 $text-color-step-650: var(
   --ion-color-step-350,
   var(--ion-text-color-step-650, mix($background-color-value, $text-color-value, 65%))
-); // a6a6a6 --ion-color-gray-350
+);
 $text-color-step-700: var(
   --ion-color-step-300,
   var(--ion-text-color-step-700, mix($background-color-value, $text-color-value, 70%))
-); // b3b3b3 --ion-color-gray-300
+);
 $text-color-step-750: var(
   --ion-color-step-250,
   var(--ion-text-color-step-750, mix($background-color-value, $text-color-value, 75%))
-); // bfbfbf --ion-color-gray-250
+);
 $text-color-step-800: var(
   --ion-color-step-200,
   var(--ion-text-color-step-800, mix($background-color-value, $text-color-value, 80%))
-); // cccccc --ion-color-gray-200
+);
 $text-color-step-850: var(
   --ion-color-step-150,
   var(--ion-text-color-step-850, mix($background-color-value, $text-color-value, 85%))
-); // d9d9d9 --ion-color-gray-150
+);
 $text-color-step-900: var(
   --ion-color-step-100,
   var(--ion-text-color-step-900, mix($background-color-value, $text-color-value, 90%))
-); // e6e6e6 --ion-color-gray-100
+);
 $text-color-step-950: var(
   --ion-color-step-50,
   var(--ion-text-color-step-950, mix($background-color-value, $text-color-value, 95%))
-); // f2f2f2 --ion-color-gray-50
+);
 
 // Default General Colors
 // --------------------------------------------------
