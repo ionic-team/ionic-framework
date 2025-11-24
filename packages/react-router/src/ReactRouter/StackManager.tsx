@@ -235,6 +235,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       console.log(
         `[StackManager] handlePageTransition in outlet ${this.id}: pathname=${routeInfo.pathname}, entering=${enteringViewItem?.id}, leaving=${leavingViewItem?.id}`
       );
+      console.log(`[StackManager] routeInfo: action=${routeInfo.routeAction}, direction=${routeInfo.routeDirection}, pushedBy=${routeInfo.pushedByRoute}`);
 
       /**
        * If we don't have a leaving view item, but the route info indicates
@@ -682,8 +683,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       // Find the view item for the route we are going back to
       const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
 
-      return (
-        !!enteringViewItem &&
+      const canStartSwipe = !!enteringViewItem &&
         /**
          * The root url '/' is treated as
          * the first view item (but is never mounted),
@@ -699,8 +699,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
          * Make sure that we are not swiping back to the same
          * instances of a view.
          */
-        enteringViewItem.routeData.match.pattern.path !== routeInfo.pathname
-      );
+        enteringViewItem.routeData.match.pattern.path !== routeInfo.pathname;
+
+      console.log(`[StackManager] canStart swipe in outlet ${this.id}: ${canStartSwipe}, pathname=${routeInfo.pathname}, enteringView=${enteringViewItem?.id}, pushedBy=${routeInfo.pushedByRoute}`);
+      return canStartSwipe;
     };
 
     const onStart = async () => {
