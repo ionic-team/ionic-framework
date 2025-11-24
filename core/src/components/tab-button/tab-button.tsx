@@ -167,10 +167,10 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     const theme = getIonTheme(this);
     const mode = getIonMode(this);
     if (theme !== 'ionic') {
-        return true;
+      return true;
     }
     return mode === 'md';
-}
+  }
 
   render() {
     const { disabled, hasIcon, hasLabel, href, rel, target, layout, selected, tab, inheritedAttributes } = this;

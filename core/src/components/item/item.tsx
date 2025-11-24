@@ -250,7 +250,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const mode = getIonMode(this);
     const shouldActivate = this.isClickable() || this.hasCover();
     if (theme !== 'ionic') {
-        return shouldActivate;
+      return shouldActivate;
     }
     return mode === 'md' && shouldActivate;
   }
