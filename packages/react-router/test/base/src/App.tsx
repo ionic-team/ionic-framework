@@ -58,7 +58,7 @@ const App: React.FC = () => {
           <Route path="/replace-action/page2" element={<Page2 />} />
           <Route path="/replace-action/page3" element={<Page3 />} />
           <Route path="/replace-action" element={<Navigate to="/replace-action/page1" replace />} />
-          <Route path="/tab-context" element={<TabsContext />} />
+          <Route path="/tab-context/*" element={<TabsContext />} />
           <Route path="/outlet-ref" element={<OutletRef />} />
           <Route path="/swipe-to-go-back" element={<SwipeToGoBack />} />
           <Route path="/dynamic-ionpage-classnames" element={<DynamicIonpageClassnames />} />
