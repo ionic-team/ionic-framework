@@ -63,6 +63,11 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   private waitingForIonPage = false;
   private ionPageWaitTimeout?: ReturnType<typeof setTimeout>;
   private outOfScopeUnmountTimeout?: ReturnType<typeof setTimeout>;
+  /**
+   * Track the last transition's entering and leaving view IDs to prevent
+   * duplicate transitions during rapid navigation (e.g., Navigate redirects)
+   */
+  private lastTransition?: { enteringId: string; leavingId?: string };
 
   constructor(props: StackManagerProps) {
     super(props);
@@ -488,6 +493,35 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
          * route or on an initial page load (i.e. refreshing). In cases when loading
          * /tabs/tab-1, we need to transition the /tabs page element into the view.
          */
+
+        /**
+         * Check if we've already started a transition for the same entering/leaving pair.
+         * This can happen during rapid navigation (e.g., Navigate redirects) where
+         * multiple handlePageTransition calls occur before the first transition completes.
+         *
+         * Only skip if there's an actual leaving view involved - we don't want to skip
+         * transitions where leaving is undefined as those could be legitimate initial loads
+         * or transitions to new views.
+         */
+        const currentTransition = {
+          enteringId: enteringViewItem.id,
+          leavingId: leavingViewItem?.id,
+        };
+
+        if (
+          leavingViewItem &&
+          this.lastTransition &&
+          this.lastTransition.leavingId &&
+          this.lastTransition.enteringId === currentTransition.enteringId &&
+          this.lastTransition.leavingId === currentTransition.leavingId
+        ) {
+          console.log(
+            `[StackManager] Skipping duplicate transition: entering=${currentTransition.enteringId}, leaving=${currentTransition.leavingId}`
+          );
+          return;
+        }
+
+        this.lastTransition = currentTransition;
         this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
 
         if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
@@ -495,11 +529,23 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           // For replace actions, remove actual pages (with ionPageElement) from the stack entirely
           // Don't remove utility components like Navigate that don't have ionPageElement
           if (routeInfo.routeAction === 'replace' && leavingViewItem.ionPageElement) {
-            console.log(`[StackManager] Removing page view ${leavingViewItem.id} from stack after replace action`);
-            setTimeout(() => {
-              // Use a timeout to ensure the transition completes before removal
-              this.context.unMountViewItem(leavingViewItem);
-            }, 250);
+            // Check if the entering view contains a nested outlet that's responsible for the replace.
+            // If the entering view's route has a wildcard (e.g., /tabs/*), it means this outlet
+            // is showing a container view and the replace is happening inside the nested outlet.
+            // In this case, we should NOT remove the leaving view from this outlet's stack,
+            // as it may be needed for back navigation.
+            const enteringRoutePath = enteringViewItem.reactElement?.props?.path as string | undefined;
+            const isEnteringContainerRoute = enteringRoutePath && enteringRoutePath.endsWith('/*');
+
+            if (isEnteringContainerRoute) {
+              console.log(`[StackManager] Skipping removal of ${leavingViewItem.id} - entering route ${enteringRoutePath} is a container with nested outlet`);
+            } else {
+              console.log(`[StackManager] Removing page view ${leavingViewItem.id} from stack after replace action`);
+              setTimeout(() => {
+                // Use a timeout to ensure the transition completes before removal
+                this.context.unMountViewItem(leavingViewItem);
+              }, 250);
+            }
           }
         }
       } else if (enteringViewItem && !enteringViewItem.ionPageElement) {

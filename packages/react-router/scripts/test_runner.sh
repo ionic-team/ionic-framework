@@ -64,6 +64,5 @@ fi
 echo "Server is healthy."
 
 echo "Running Cypress tests..."
-# Run specific failing tests first
-npm run cypress -- --spec "tests/e2e/specs/swipe-to-go-back.cy.js"
+npm run cypress
 
