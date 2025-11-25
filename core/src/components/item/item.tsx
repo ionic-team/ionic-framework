@@ -8,7 +8,7 @@ import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonTheme } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, StyleEventDetail } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
@@ -246,7 +246,13 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   private canActivate(): boolean {
-    return this.isClickable() || this.hasCover();
+    const theme = getIonTheme(this);
+    const mode = getIonMode(this);
+    const shouldActivate = this.isClickable() || this.hasCover();
+    if (theme !== 'ionic') {
+      return shouldActivate;
+    }
+    return mode === 'md' && shouldActivate;
   }
 
   private isFocusable(): boolean {
