@@ -50,7 +50,7 @@
     "@stencil/angular-output-target": "^0.10.0",
     "@stencil/react-output-target": "0.5.3",
     "@stencil/sass": "^3.0.9",
-    "@stencil/vue-output-target": "0.10.8",
+    "@stencil/vue-output-target": "0.11.8",
     "@types/jest": "^29.5.6",
     "@types/node": "^16.18.126",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
