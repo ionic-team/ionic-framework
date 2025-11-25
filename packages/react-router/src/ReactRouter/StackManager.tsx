@@ -14,16 +14,44 @@ import { findRoutesNode } from './utils/findRoutesNode';
 import { derivePathnameToMatch } from './utils/derivePathnameToMatch';
 import { matchPath } from './utils/matchPath';
 
+/**
+ * Checks if a route matches the remaining path.
+ * Note: This function is used for checking if ANY route could match, not for determining priority.
+ * Wildcard routes are handled specially - they're always considered potential matches but should
+ * be used as fallbacks when no specific route matches.
+ */
 const doesRouteMatchRemainingPath = (route: React.ReactElement, remainingPath: string) => {
   const routePath = route.props.path;
   const isWildcardOnly = routePath === '*' || routePath === '/*';
+  const isIndex = route.props.index;
 
-  if (isWildcardOnly) {
-    // Treat wildcard-only routes as matching only when we're already at the outlet root.
-    // This prevents them from forcing parent paths to resolve too early (e.g. "/routing"
-    // instead of "/routing/tabs") while still letting them act as fallbacks when no
-    // additional segments remain.
+  // Index routes only match when remaining path is empty
+  if (isIndex) {
     return remainingPath === '' || remainingPath === '/';
+  }
+
+  // Wildcard routes can match any path (used as fallback)
+  if (isWildcardOnly) {
+    return true; // Wildcards can always potentially match
+  }
+
+  return !!matchPath({
+    pathname: remainingPath,
+    componentProps: route.props,
+  });
+};
+
+/**
+ * Checks if a route is a specific match (not wildcard or index).
+ */
+const isSpecificRouteMatch = (route: React.ReactElement, remainingPath: string) => {
+  const routePath = route.props.path;
+  const isWildcardOnly = routePath === '*' || routePath === '/*';
+  const isIndex = route.props.index;
+
+  // Skip wildcards and index routes
+  if (isIndex || isWildcardOnly) {
+    return false;
   }
 
   return !!matchPath({
@@ -118,18 +146,31 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         const segments = currentPathname.split('/').filter(Boolean);
 
         if (segments.length >= 1) {
+          let wildcardFallbackPath: string | undefined = undefined;
+          let foundPath: string | undefined = undefined;
+
           // Store the mount path when we first successfully match a route
           // This helps us determine our scope for future navigations
+          // We need to find specific matches, not just wildcard fallbacks
           if (!this.outletMountPath) {
-            // Try to find the mount path by looking for successful matches
             for (let i = 1; i <= segments.length; i++) {
               const testParentPath = '/' + segments.slice(0, i).join('/');
               const testRemainingPath = segments.slice(i).join('/');
-              const hasMatch = routeChildren.some((route) => doesRouteMatchRemainingPath(route, testRemainingPath));
 
-              if (hasMatch) {
+              // Check for specific matches first
+              const hasSpecific = routeChildren.some((route) => isSpecificRouteMatch(route, testRemainingPath));
+              if (hasSpecific) {
                 this.outletMountPath = testParentPath;
                 break;
+              }
+
+              // Check for index match when remaining is empty
+              if (testRemainingPath === '' || testRemainingPath === '/') {
+                const hasIndex = routeChildren.some((route) => route.props.index);
+                if (hasIndex) {
+                  this.outletMountPath = testParentPath;
+                  break;
+                }
               }
             }
           }
@@ -141,23 +182,69 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           }
 
           // Try different parent path possibilities
-          // Start with shorter parent paths first to find the most appropriate match
+          // Prefer specific routes over wildcards and index routes
           for (let i = 1; i <= segments.length; i++) {
             const parentPath = '/' + segments.slice(0, i).join('/');
             const remainingPath = segments.slice(i).join('/');
 
-            // Check if any relative route could match the remaining path
-            const couldMatchRemaining = routeChildren.some((route) => doesRouteMatchRemainingPath(route, remainingPath));
+            // Check for specific (non-wildcard, non-index) route matches
+            const hasSpecificMatch = routeChildren.some((route) => isSpecificRouteMatch(route, remainingPath));
+            if (hasSpecificMatch) {
+              foundPath = parentPath;
+              break;
+            }
 
-            if (couldMatchRemaining) {
-              return parentPath;
+            // Check for index route match (only when remaining path is empty AND no wildcard fallback)
+            // If we already found a wildcard fallback at a shorter path, it means
+            // the remaining path at that level didn't match any routes, so the
+            // index match at this longer path is not valid.
+            if (!wildcardFallbackPath && (remainingPath === '' || remainingPath === '/')) {
+              const hasIndexMatch = routeChildren.some((route) => route.props.index);
+              if (hasIndexMatch) {
+                foundPath = parentPath;
+                break;
+              }
+            }
+
+            // Track wildcard fallback only if:
+            // 1. Remaining is non-empty (wildcard matches something)
+            // 2. No specific route could even START to match the remaining path
+            if (!wildcardFallbackPath && remainingPath !== '' && remainingPath !== '/') {
+              const hasWildcard = routeChildren.some((route) => {
+                const routePath = route.props.path;
+                return routePath === '*' || routePath === '/*';
+              });
+
+              if (hasWildcard) {
+                // Check if any specific route could plausibly match this remaining path
+                const remainingFirstSegment = remainingPath.split('/')[0];
+                const couldAnyRouteMatch = routeChildren.some((route) => {
+                  const routePath = route.props.path as string | undefined;
+                  if (!routePath || routePath === '*' || routePath === '/*') return false;
+                  if (route.props.index) return false;
+
+                  const routeFirstSegment = routePath.split('/')[0].replace(/[*:]/g, '');
+                  if (!routeFirstSegment) return false;
+
+                  // Check for prefix overlap (either direction)
+                  return routeFirstSegment.startsWith(remainingFirstSegment.slice(0, 3)) ||
+                         remainingFirstSegment.startsWith(routeFirstSegment.slice(0, 3));
+                });
+
+                // Only save wildcard fallback if no specific route could match
+                if (!couldAnyRouteMatch) {
+                  wildcardFallbackPath = parentPath;
+                }
+              }
             }
           }
 
-          // If we couldn't find any parent path that makes sense for our relative routes,
-          // it means this outlet is being rendered outside its expected routing context
-          // Return undefined to signal that this outlet shouldn't handle routes
-          return undefined;
+          // If no specific match found, use wildcard fallback
+          if (!foundPath && wildcardFallbackPath) {
+            return wildcardFallbackPath;
+          }
+
+          return foundPath;
         }
       }
     }

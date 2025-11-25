@@ -458,34 +458,104 @@ export class ReactRouterViewStack extends ViewStacks {
 
         if (hasRelativeRoutes || hasIndexRoute) {
           const segments = routeInfo.pathname.split('/').filter(Boolean);
+
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(`[ReactRouterViewStack] getChildrenToRender outlet=${outletId}: computing parentPath for ${routeInfo.pathname}`);
+          }
+
+          // Two-pass algorithm:
+          // Pass 1: Look for specific route matches OR index routes (prefer real routes)
+          // Pass 2: If no match found, use wildcard fallback
+          //
+          // Key insight: Index routes should match when remaining is empty at the longest
+          // valid parent path. Wildcards should only be used when no specific/index match exists.
+
+          let wildcardFallbackPath: string | undefined = undefined;
+
+          // Pass 1: Look for specific or index matches, tracking wildcard fallback
           for (let i = 1; i <= segments.length; i++) {
             const testParentPath = '/' + segments.slice(0, i).join('/');
             const testRemainingPath = segments.slice(i).join('/');
 
-            const couldMatchRemaining = routeChildren.some((route) => {
+            // Check for specific (non-wildcard, non-index) route matches
+            const hasSpecificMatch = routeChildren.some((route) => {
               const props = route.props as any;
               const routePath = props.path as string | undefined;
               const isIndex = !!props.index;
-
-              // Index routes only match at the outlet root
-              if (isIndex) {
-                return testRemainingPath === '' || testRemainingPath === '/';
-              }
-
-              // Treat wildcard-only routes as matching only at the outlet root
               const isWildcardOnly = routePath === '*' || routePath === '/*';
-              if (isWildcardOnly) {
-                return testRemainingPath === '' || testRemainingPath === '/';
+
+              if (isIndex || isWildcardOnly) {
+                return false;
               }
 
               const m = matchPath({ pathname: testRemainingPath, componentProps: props });
               return !!m;
             });
 
-            if (couldMatchRemaining) {
+            if (hasSpecificMatch) {
+              if (process.env.NODE_ENV !== 'production') {
+                console.log(`[ReactRouterViewStack] Found specific match at parentPath=${testParentPath}, remaining=${testRemainingPath}`);
+              }
               parentPath = testParentPath;
               break;
             }
+
+            // Check for index match (only when remaining is empty AND no wildcard fallback)
+            // If we already found a wildcard fallback at a shorter path, it means
+            // the remaining path at that level didn't match any routes, so the
+            // index match at this longer path is not valid.
+            if (!wildcardFallbackPath && (testRemainingPath === '' || testRemainingPath === '/')) {
+              const hasIndexMatch = routeChildren.some((route) => !!(route.props as any).index);
+              if (hasIndexMatch) {
+                if (process.env.NODE_ENV !== 'production') {
+                  console.log(`[ReactRouterViewStack] Found index match at parentPath=${testParentPath}`);
+                }
+                parentPath = testParentPath;
+                break;
+              }
+            }
+
+            // Track wildcard fallback at first level where remaining is non-empty
+            // and no specific route could even START to match the remaining path
+            if (!wildcardFallbackPath && testRemainingPath !== '' && testRemainingPath !== '/') {
+              const hasWildcard = routeChildren.some((route) => {
+                const routePath = (route.props as any).path;
+                return routePath === '*' || routePath === '/*';
+              });
+
+              if (hasWildcard) {
+                // Check if any specific route could plausibly match this remaining path
+                // by checking if the first segment overlaps with any route's first segment
+                const remainingFirstSegment = testRemainingPath.split('/')[0];
+                const couldAnyRouteMatch = routeChildren.some((route) => {
+                  const props = route.props as any;
+                  const routePath = props.path as string | undefined;
+                  if (!routePath || routePath === '*' || routePath === '/*') return false;
+                  if (props.index) return false;
+
+                  // Get the route's first segment (before any / or *)
+                  const routeFirstSegment = routePath.split('/')[0].replace(/[*:]/g, '');
+                  if (!routeFirstSegment) return false;
+
+                  // Check for prefix overlap (either direction)
+                  return routeFirstSegment.startsWith(remainingFirstSegment.slice(0, 3)) ||
+                         remainingFirstSegment.startsWith(routeFirstSegment.slice(0, 3));
+                });
+
+                // Only save wildcard fallback if no specific route could match
+                if (!couldAnyRouteMatch) {
+                  wildcardFallbackPath = testParentPath;
+                }
+              }
+            }
+          }
+
+          // Pass 2: If no specific/index match found, use wildcard fallback
+          if (!parentPath && wildcardFallbackPath) {
+            if (process.env.NODE_ENV !== 'production') {
+              console.log(`[ReactRouterViewStack] Using wildcard fallback at parentPath=${wildcardFallbackPath}`);
+            }
+            parentPath = wildcardFallbackPath;
           }
         }
       }
