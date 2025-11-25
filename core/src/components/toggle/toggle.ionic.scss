@@ -22,8 +22,6 @@
 
   @include globals.typography(globals.$ion-body-md-regular);
 
-  width: 100%;
-
   z-index: 2; // TODO(ROU-10853): replace this value with a layer token.
 }
 
