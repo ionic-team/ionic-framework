@@ -1,8 +1,6 @@
 import { mix } from '../../utils/theme';
 import type { LightTheme } from '../themes.interfaces';
 
-import { defaultPrimitiveColors } from './default.tokens.primitives';
-
 const colors = {
   primary: '#0054e9',
   secondary: '#0163aa',
@@ -160,12 +158,6 @@ export const lightTheme: LightTheme = {
         shade: mix('#fff', colors.dark, '12%'),
         tint: mix('#fff', colors.dark, '4%'),
       },
-    },
-  },
-  components: {
-    IonDatetime: {
-      bg: defaultPrimitiveColors.white,
-      timeBodyBg: '#edeef0',
     },
   },
 };

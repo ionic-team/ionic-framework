@@ -1,7 +1,5 @@
-import { mix } from '../../utils/theme';
+import { mix, generateColorSteps } from '../../utils/theme';
 import type { DarkTheme } from '../themes.interfaces';
-
-import { defaultPrimitiveColors } from './default.tokens.primitives';
 
 const colors = {
   primary: '#4d8dff',
@@ -13,6 +11,7 @@ const colors = {
   light: '#222428',
   medium: '#989aa2',
   dark: '#f4f5f8',
+  gray: generateColorSteps('#000000', '#ffffff', true),
 };
 
 export const darkTheme: DarkTheme = {
@@ -162,6 +161,7 @@ export const darkTheme: DarkTheme = {
         tint: mix('#000', colors.dark, '12%'),
       },
     },
+    gray: colors.gray,
   },
 
   backgroundColor: '#000000',
@@ -219,10 +219,6 @@ export const darkTheme: DarkTheme = {
     },
     IonItem: {
       background: '#000000',
-    },
-    IonDatetime: {
-      bg: defaultPrimitiveColors.gray['50']!,
-      timeBodyBg: defaultPrimitiveColors.gray['650']!,
     },
   },
 };

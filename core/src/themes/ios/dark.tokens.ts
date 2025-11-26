@@ -1,8 +1,9 @@
-import { generateColorSteps } from '../../utils/theme';
 import { darkTheme as baseDarkTheme } from '../base/dark.tokens';
 import type { DarkTheme } from '../themes.interfaces';
 
-const graySteps = generateColorSteps('#ffffff', '#000000', true);
+const colors = {
+  gray: baseDarkTheme.color!.gray!,
+};
 
 export const darkTheme: DarkTheme = {
   ...baseDarkTheme,
@@ -56,7 +57,7 @@ export const darkTheme: DarkTheme = {
 
   color: {
     // TODO: Update hex values to use the text color variable and background color variable
-    gray: graySteps,
+    gray: colors.gray,
   },
 
   components: {
@@ -72,7 +73,18 @@ export const darkTheme: DarkTheme = {
       toolbarBorderColor: 'var(--ion-background-color-step-250)',
     },
     IonDatetime: {
-      timeBodyBg: graySteps['300']!,
+      bg: colors.gray['950']!,
+      timeBodyBg: colors.gray['300']!,
+    },
+    IonBreadcrumb: {
+      color: colors.gray['850']!,
+      bgFocused: colors.gray['50']!,
+      iconColor: colors.gray['400']!,
+      iconColorActive: colors.gray['850']!,
+      iconColorFocused: colors.gray['750']!, // Available only in iOS
+      indicatorBg: colors.gray['100']!,
+      indicatorBgFocused: colors.gray['150']!,
+      separatorColor: colors.gray['550']!,
     },
   },
 };

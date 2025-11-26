@@ -2,7 +2,9 @@ import { generateColorSteps } from '../../utils/theme';
 import { darkTheme as baseDarkTheme } from '../base/dark.tokens';
 import type { DarkTheme } from '../themes.interfaces';
 
-const graySteps = generateColorSteps('#ffffff', '#121212', true);
+const colors = {
+  gray: generateColorSteps('#ffffff', '#121212', true),
+};
 
 export const darkTheme: DarkTheme = {
   ...baseDarkTheme,
@@ -58,7 +60,7 @@ export const darkTheme: DarkTheme = {
 
   color: {
     // TODO: Update hex values to use the text color variable and background color variable
-    gray: graySteps,
+    gray: colors.gray,
   },
 
   components: {
@@ -75,8 +77,18 @@ export const darkTheme: DarkTheme = {
       background: '#1f1f1f',
     },
     IonDatetime: {
-      bg: graySteps['100']!,
-      timeBodyBg: graySteps['300']!,
+      bg: colors.gray['100']!,
+      timeBodyBg: colors.gray['300']!,
+    },
+    IonBreadcrumb: {
+      color: colors.gray['600']!,
+      bgFocused: colors.gray['50']!,
+      iconColor: colors.gray['550']!,
+      iconColorActive: colors.gray['850']!,
+      indicatorBg: colors.gray['100']!,
+      indicatorBgFocused: colors.gray['150']!,
+      colorFocused: colors.gray['800']!, // Available only in md
+      separatorColor: colors.gray['550']!,
     },
   },
 };
