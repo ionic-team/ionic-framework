@@ -143,6 +143,16 @@ export class ReactRouterViewStack extends ViewStacks {
       // Special case: reuse tabs/* and other specific wildcard routes
       // Don't reuse index routes (empty path) or generic catch-all wildcards (*)
       if (existingPath === routePath && existingPath !== '' && existingPath !== '*') {
+        // For parameterized routes (containing :param), only reuse if the ACTUAL pathname matches
+        // This ensures /details/1 and /details/2 get separate view items and component instances
+        const hasParams = routePath.includes(':');
+        if (hasParams) {
+          // Check if the existing view item's pathname matches the new pathname
+          const existingPathname = v.routeData?.match?.pathname;
+          if (existingPathname !== routeInfo.pathname) {
+            return false; // Different param values, don't reuse
+          }
+        }
         return true;
       }
       // Also reuse specific wildcard routes like tabs/*
@@ -153,9 +163,6 @@ export class ReactRouterViewStack extends ViewStacks {
     });
 
     if (existingViewItem) {
-      console.log(
-        `[ReactRouterViewStack] Reusing existing view item ${existingViewItem.id} for route ${routeInfo.pathname}`
-      );
       // Update and ensure the existing view item is properly configured
       existingViewItem.reactElement = reactElement;
       existingViewItem.mount = true;
@@ -176,10 +183,6 @@ export class ReactRouterViewStack extends ViewStacks {
     // Create a truly unique ID by combining outlet ID with an incrementing counter
     this.viewItemCounter++;
     const id = `${outletId}-${this.viewItemCounter}`;
-
-    console.log(
-      `[ReactRouterViewStack] Creating new view item ${id} for route ${routeInfo.pathname} with path: ${routePath}`
-    );
 
     // Add infinite loop detection with a more reasonable limit
     // In complex navigation flows, we may have many view items across different outlets
@@ -240,6 +243,15 @@ export class ReactRouterViewStack extends ViewStacks {
       }
     }
 
+    // For parameterized routes, check if this is a navigation to a different path instance
+    // In that case, we should NOT reuse this view - a new view should be created
+    const isParameterRoute = routePath.includes(':');
+    const previousMatch = viewItem.routeData?.match;
+    const isSamePath = match?.pathname === previousMatch?.pathname;
+
+    // Flag to indicate this view should not be reused for this different parameterized path
+    const shouldSkipForDifferentParam = isParameterRoute && match && previousMatch && !isSamePath;
+
     // Cancel any pending deactivation if we have a match
     if (match) {
       const timeoutId = this.deactivationQueue.get(viewItem.id);
@@ -261,13 +273,9 @@ export class ReactRouterViewStack extends ViewStacks {
         (typeof elementComponent.type === 'function' && elementComponent.type.name === 'Navigate'));
 
     if (isNavigateComponent) {
-      console.log(
-        `[ReactRouterViewStack] Navigate component detected for ${viewItem.id}, match=${!!match}, mount=${viewItem.mount}`
-      );
       // Navigate components should only be mounted when they match
       // Once they redirect (no longer match), they should be removed completely
       if (!match && viewItem.mount) {
-        console.log(`[ReactRouterViewStack] Unmounting Navigate component ${viewItem.id} after redirect`);
         viewItem.mount = false;
         // Schedule removal of the Navigate view item after a short delay
         // This ensures the redirect completes before removal
@@ -306,7 +314,8 @@ export class ReactRouterViewStack extends ViewStacks {
     }
 
     // Reactivate view if it matches but was previously deactivated
-    if (match && !viewItem.mount) {
+    // Don't reactivate if this is a parameterized route navigating to a different path instance
+    if (match && !viewItem.mount && !shouldSkipForDifferentParam) {
       viewItem.mount = true;
       viewItem.routeData.match = match;
     }
@@ -334,10 +343,12 @@ export class ReactRouterViewStack extends ViewStacks {
 
     const routeElement = React.cloneElement(viewItem.reactElement);
     const componentElement = routeElement.props.element;
-    if (match && viewItem.routeData.match !== match) {
+    // Don't update match for parameterized routes navigating to different path instances
+    // This preserves the original match so that findViewItemByPath can correctly skip this view
+    if (match && viewItem.routeData.match !== match && !shouldSkipForDifferentParam) {
       viewItem.routeData.match = match;
     }
-    const routeMatch = match || viewItem.routeData?.match;
+    const routeMatch = shouldSkipForDifferentParam ? viewItem.routeData?.match : (match || viewItem.routeData?.match);
 
     return (
       <RouteContext.Consumer key={`view-context-${viewItem.id}`}>
@@ -756,6 +767,13 @@ export class ReactRouterViewStack extends ViewStacks {
           return false;
         }
 
+        // For parameterized routes, never reuse if the pathname is different
+        // This ensures /details/1 and /details/2 get separate view items
+        const isParameterRoute = viewItemPath.includes(':');
+        if (isParameterRoute && !isSamePath) {
+          return false;
+        }
+
         // For routes without params, or when navigating to the exact same path,
         // or when there's no previous match, reuse the view item
         if (!hasParams || isSamePath || !previousMatch) {
@@ -764,12 +782,9 @@ export class ReactRouterViewStack extends ViewStacks {
           return true;
         }
 
-        // For parameterized/wildcard routes, only reuse if the pathname exactly matches
-        // This prevents reusing /details/1 when navigating to /details/2
+        // For wildcard routes, only reuse if the pathname exactly matches
         const isWildcardRoute = viewItemPath.includes('*');
-        const isParameterRoute = viewItemPath.includes(':');
-
-        if ((isParameterRoute || isWildcardRoute) && isSamePath) {
+        if (isWildcardRoute && isSamePath) {
           match = result;
           viewItem = v;
           return true;

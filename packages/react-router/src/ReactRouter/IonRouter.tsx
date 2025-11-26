@@ -253,7 +253,6 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
           // If this is the first time entering this tab from a different context,
           // use the leaving route's pathname as the pushedByRoute to maintain the back stack.
           routeInfo.pushedByRoute = lastRoute?.pushedByRoute ?? leavingLocationInfo.pathname;
-          console.log('[IonRouter TAB SWITCH] pathname=' + routeInfo.pathname + ' tab=' + routeInfo.tab + ' leavingTab=' + leavingLocationInfo.tab + ' leavingPathname=' + leavingLocationInfo.pathname + ' lastRoutePushedBy=' + (lastRoute?.pushedByRoute || 'undefined') + ' FINAL_pushedByRoute=' + routeInfo.pushedByRoute);
           // Triggered by `history.replace()` or a `<Redirect />` component, etc.
         } else if (routeInfo.routeAction === 'replace') {
           /**
@@ -408,11 +407,9 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     const config = getConfig();
     defaultHref = defaultHref ? defaultHref : config && config.get('backButtonDefaultHref' as any);
     const routeInfo = locationHistory.current.current();
-    console.log('[IonRouter BACK] START currentPath=' + (routeInfo?.pathname || 'undefined') + ' currentTab=' + (routeInfo?.tab || 'undefined') + ' pushedByRoute=' + (routeInfo?.pushedByRoute || 'undefined'));
     // It's a linear navigation.
     if (routeInfo && routeInfo.pushedByRoute) {
       const prevInfo = locationHistory.current.findLastLocation(routeInfo);
-      console.log('[IonRouter BACK] findLastLocation result: prevPath=' + (prevInfo?.pathname || 'undefined') + ' prevTab=' + (prevInfo?.tab || 'undefined'));
       if (prevInfo) {
         /**
          * This needs to be passed to handleNavigate
@@ -432,16 +429,13 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
          */
         const condition1 = routeInfo.lastPathname === routeInfo.pushedByRoute;
         const condition2 = prevInfo.pathname === routeInfo.pushedByRoute && routeInfo.tab === '' && prevInfo.tab === '';
-        console.log('[IonRouter BACK] Decision: condition1=' + condition1 + ' (lastPathname=' + routeInfo.lastPathname + ' == pushedByRoute=' + routeInfo.pushedByRoute + ') condition2=' + condition2 + ' (prevPath=' + prevInfo.pathname + ' == pushedByRoute=' + routeInfo.pushedByRoute + ' && currentTab=' + routeInfo.tab + ' && prevTab=' + prevInfo.tab + ')');
         if (condition1 || condition2) {
-          console.log('[IonRouter BACK] Using navigate(-1) - LINEAR navigation');
           navigate(-1);
         } else {
           /**
            * It's a non-linear back navigation.
            * e.g., direct link or tab switch or nested navigation with redirects
            */
-          console.log('[IonRouter BACK] Using handleNavigate - NON-LINEAR navigation to: ' + prevInfo.pathname);
           handleNavigate(prevInfo.pathname + (prevInfo.search || ''), 'pop', 'back', incomingAnimation);
         }
         /**
@@ -449,7 +443,6 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
          * the history stack.
          */
       } else {
-        console.log('[IonRouter BACK] No prevInfo found! Using defaultHref: ' + defaultHref);
         handleNavigate(defaultHref as string, 'pop', 'back', routeAnimation);
       }
       /**

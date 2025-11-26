@@ -27,24 +27,24 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('ionPageVisible', (pageId) => {
-  // cy.get(`div.ion-page[data-pageid=${pageId}]`)
-  //   .should('exist')
-  //   .should('not.have.class', 'ion-page-hidden')
-  //   .should('not.have.class', 'ion-page-visible')
+  cy.log(`[ionPageVisible] Checking for visible page: ${pageId}`);
+
+  // First, log all current ion-page elements for debugging
+  cy.get('div.ion-page').then(($pages) => {
+    const pageStates = [];
+    $pages.each((i, el) => {
+      const id = el.getAttribute('data-pageid') || 'unknown';
+      const classes = el.className;
+      const ariaHidden = el.getAttribute('aria-hidden');
+      pageStates.push(`${id}: classes="${classes}" aria-hidden="${ariaHidden}"`);
+    });
+    cy.log(`[ionPageVisible] All ion-page elements: ${pageStates.join(' | ')}`);
+  });
 
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('not.have.class', 'ion-page-hidden')
     .should('not.have.class', 'ion-page-invisible')
     .should('have.length', 1);
-
-  // cy.get(`div.ion-page[data-pageid=${pageId}]`)
-  //   .should('not.have.class', 'ion-page')
-  //   .should('have.length', 1)
-  // .not('')
-  // .should('have.length', 1)
-
-  // cy.get(`div.ion-page[data-pageid=${pageId}]`).should('not.have.class', 'ion-page-visible')
-  // cy.get(`div.ion-page[data-pageid=${pageId}]`).should('have.attr', 'style', 'z-index: 101;')
 });
 
 Cypress.Commands.add('ionPageHidden', (pageId) => {
@@ -82,6 +82,7 @@ Cypress.Commands.add('ionMenuNav', (contains) => {
   // cy.get('ion-menu.show-menu').should('exist');
   // cy.wait(1000)
   cy.contains('ion-item', contains).click({ force: true });
+  cy.wait(250);
   // cy.get('div.ion-page').click();
   // cy.get('ion-menu').then(menu => {
   //   cy.wait(1000)

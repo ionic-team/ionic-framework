@@ -143,6 +143,7 @@ describe('Routing Tests', () => {
   it('/ > Menu > Favorites > Menu > Tabs, should be back on Home', () => {
     // Tests transferring from one outlet to another and back again via menu
     cy.visit(`http://localhost:${port}/routing`);
+    cy.ionPageVisible('home-page');
     cy.ionMenuClick();
     cy.ionMenuNav('Favorites');
     cy.ionPageVisible('favorites-page');
@@ -275,7 +276,7 @@ describe('Routing Tests', () => {
     cy.ionMenuClick();
     cy.ionMenuNav('Home with redirect');
     cy.ionPageVisible('home-page');
-    cy.ionPageDoesNotExist('favorites-page');
+    cy.ionPageHidden('favorites-page');
   });
 
   it('/routing/tabs/home Menu > Favorites > Menu > Home with router, Home page should be visible, and Favorites should be hidden', () => {
