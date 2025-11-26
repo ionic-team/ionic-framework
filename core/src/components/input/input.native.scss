@@ -55,7 +55,7 @@
   width: 30px;
   height: 30px;
 
-  color: $text-color-step-400;
+  color: var(--ion-color-gray-600);
 }
 
 /**
@@ -108,14 +108,14 @@
 // ----------------------------------------------------------------
 
 .input-bottom .helper-text {
-  color: $text-color-step-300;
+  color: var(--ion-color-gray-700);
 }
 
 // Input Max Length Counter
 // ----------------------------------------------------------------
 
 .input-bottom .counter {
-  color: $text-color-step-300;
+  color: var(--ion-color-gray-700);
 
   padding-inline-start: 16px;
 }
