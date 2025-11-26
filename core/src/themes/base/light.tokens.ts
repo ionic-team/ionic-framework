@@ -164,5 +164,8 @@ export const lightTheme: LightTheme = {
     IonBreadcrumb: {
       separatorColor: '#73849a',
     },
+    IonDatetimeButton: {
+      bg: '#edeef0',
+    },
   },
 };

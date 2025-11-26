@@ -225,5 +225,8 @@ export const darkTheme: DarkTheme = {
     IonBreadcrumb: {
       separatorColor: colors.gray['550']!,
     },
+    IonDatetimeButton: {
+      bg: colors.gray['300']!,
+    },
   },
 };

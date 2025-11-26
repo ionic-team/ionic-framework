@@ -8,5 +8,5 @@
 }
 
 :host button.ion-activated {
-  color: $text-color-step-400;
+  color: var(--ion-color-gray-600);
 }

@@ -90,5 +90,8 @@ export const darkTheme: DarkTheme = {
       colorFocused: colors.gray['800']!, // Available only in md
       separatorColor: colors.gray['550']!,
     },
+    IonDatetimeButton: {
+      bg: colors.gray['300']!,
+    },
   },
 };
