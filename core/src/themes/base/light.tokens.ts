@@ -160,4 +160,9 @@ export const lightTheme: LightTheme = {
       },
     },
   },
+  components: {
+    IonBreadcrumb: {
+      separatorColor: '#73849a',
+    },
+  },
 };

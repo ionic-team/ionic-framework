@@ -1,8 +1,9 @@
 import { darkTheme as baseDarkTheme } from '../base/dark.tokens';
+import { darkPrimitiveColors as baseDarkPrimitiveColors } from '../base/dark.tokens.primitives';
 import type { DarkTheme } from '../themes.interfaces';
 
 const colors = {
-  gray: baseDarkTheme.color!.gray!,
+  gray: baseDarkPrimitiveColors.gray,
 };
 
 export const darkTheme: DarkTheme = {
@@ -56,7 +57,6 @@ export const darkTheme: DarkTheme = {
   },
 
   color: {
-    // TODO: Update hex values to use the text color variable and background color variable
     gray: colors.gray,
   },
 

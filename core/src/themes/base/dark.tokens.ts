@@ -1,5 +1,7 @@
-import { mix, generateColorSteps } from '../../utils/theme';
+import { mix } from '../../utils/theme';
 import type { DarkTheme } from '../themes.interfaces';
+
+import { darkPrimitiveColors } from './dark.tokens.primitives';
 
 const colors = {
   primary: '#4d8dff',
@@ -11,7 +13,7 @@ const colors = {
   light: '#222428',
   medium: '#989aa2',
   dark: '#f4f5f8',
-  gray: generateColorSteps('#000000', '#ffffff', true),
+  ...darkPrimitiveColors,
 };
 
 export const darkTheme: DarkTheme = {
@@ -219,6 +221,9 @@ export const darkTheme: DarkTheme = {
     },
     IonItem: {
       background: '#000000',
+    },
+    IonBreadcrumb: {
+      separatorColor: colors.gray['550']!,
     },
   },
 };
