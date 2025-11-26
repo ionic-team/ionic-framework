@@ -8,7 +8,10 @@
 
 import type { AnimationBuilder, RouteAction, RouteInfo, RouteManagerContextState, RouterDirection } from '@ionic/react';
 import { LocationHistory, NavManager, RouteManagerContext, generateId, getConfig } from '@ionic/react';
-import type { Action as HistoryAction, Location as HistoryLocation } from 'history';
+import type { Action as HistoryAction, Location } from 'history';
+
+// Use Location directly - state is typed as `unknown` in history v5
+type HistoryLocation = Location;
 import type { PropsWithChildren } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -23,10 +26,22 @@ export interface LocationState {
 }
 
 interface IonRouterProps {
-  registerHistoryListener: (cb: (location: HistoryLocation<any>, action: HistoryAction) => void) => void;
+  registerHistoryListener: (cb: (location: HistoryLocation, action: HistoryAction) => void) => void;
 }
 
 type RouteParams = Record<string, string | string[] | undefined>;
+type SafeRouteParams = Record<string, string | string[]>;
+
+const filterUndefinedParams = (params: RouteParams): SafeRouteParams => {
+  const result: SafeRouteParams = {};
+  for (const key of Object.keys(params)) {
+    const value = params[key];
+    if (value !== undefined) {
+      result[key] = value;
+    }
+  }
+  return result;
+};
 
 const areParamsEqual = (a?: RouteParams, b?: RouteParams) => {
   const paramsA = a || {};
@@ -61,7 +76,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
   const viewStack = useRef(new ReactRouterViewStack());
   const incomingRouteParams = useRef<Partial<RouteInfo> | null>(null);
 
-  const [routeInfo, setRouteInfo] = useState({
+  const [routeInfo, setRouteInfo] = useState<RouteInfo>({
     id: generateId('routeInfo'),
     pathname: location.pathname,
     search: location.search,
@@ -87,7 +102,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     const matchedParams = activeView?.routeData.match?.params as RouteParams | undefined;
 
     if (matchedParams) {
-      const paramsCopy = { ...matchedParams };
+      const paramsCopy = filterUndefinedParams({ ...matchedParams });
       if (areParamsEqual(routeInfo.params as RouteParams | undefined, paramsCopy)) {
         return;
       }
@@ -110,7 +125,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
    * @param location The current location object from the history.
    * @param action The action that triggered the history change.
    */
-  const handleHistoryChange = (location: HistoryLocation<LocationState>, action: HistoryAction) => {
+  const handleHistoryChange = (location: HistoryLocation, action: HistoryAction) => {
     let leavingLocationInfo: RouteInfo;
     /**
      * A programmatic navigation was triggered.
@@ -188,10 +203,11 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
         }
         // Still found no params, set it to a default state of forward.
         if (!incomingRouteParams.current) {
+          const state = location.state as LocationState | null;
           incomingRouteParams.current = {
             routeAction: 'push',
-            routeDirection: location.state?.direction || 'forward',
-            routeOptions: location.state?.routerOptions,
+            routeDirection: state?.direction || 'forward',
+            routeOptions: state?.routerOptions,
             tab: tabToUse,
           };
         }
@@ -228,7 +244,9 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
           lastPathname: leavingLocationInfo.pathname, // The URL we just came from
           pathname: location.pathname, // The current (destination) URL
           search: location.search,
-          params: (incomingRouteParams.current?.params as RouteParams | undefined) ?? {},
+          params: incomingRouteParams.current?.params
+            ? filterUndefinedParams(incomingRouteParams.current.params as RouteParams)
+            : {},
           prevRouteLastPathname: leavingLocationInfo.lastPathname, // The lastPathname of the route we are leaving
         };
         // It's a linear navigation.

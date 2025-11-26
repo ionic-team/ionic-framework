@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -10,11 +9,10 @@ import {
   IonLabel,
   IonButton,
 } from '@ionic/react';
+import React, { useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
-interface DetailsProps {}
-
-const Details: React.FC<DetailsProps> = () => {
+const Details: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
   const location = useLocation();

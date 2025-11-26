@@ -1,4 +1,3 @@
-import React, { useRef } from "react";
 import {
   IonContent,
   IonHeader,
@@ -8,9 +7,8 @@ import {
   IonText,
   IonToolbar,
 } from "@ionic/react";
+import React, { useRef } from "react";
 import { Route } from "react-router";
-
-interface RefsProps {}
 
 const Refs: React.FC = () => {
   return (
@@ -22,7 +20,7 @@ const Refs: React.FC = () => {
   );
 };
 
-const RefsFC: React.FC<RefsProps> = () => {
+const RefsFC: React.FC = () => {
   const contentRef = useRef<HTMLIonContentElement>(null);
   return (
     <IonPage data-pageid="refs-fc">

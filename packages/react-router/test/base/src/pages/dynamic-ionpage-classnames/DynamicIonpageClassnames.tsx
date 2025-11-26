@@ -1,4 +1,3 @@
-import React, { useEffect, useRef, useState } from 'react';
 import {
   IonButton,
   IonContent,
@@ -8,11 +7,10 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Route } from 'react-router';
 
-interface DynamicIonpageClassnamesProps {}
-
-const DynamicIonpageClassnames: React.FC<DynamicIonpageClassnamesProps> = () => {
+const DynamicIonpageClassnames: React.FC = () => {
   return (
     <IonRouterOutlet>
       <Route path="/dynamic-ionpage-classnames" element={<Page />} />
@@ -27,8 +25,9 @@ const Page: React.FC = (props) => {
   const [divClasses, setDivClasses] = useState<string>();
   const ref = useRef<HTMLDivElement>();
   useEffect(() => {
+    let observer: MutationObserver | undefined;
     if(ref.current) {
-      var observer = new MutationObserver(function (event) {
+      observer = new MutationObserver(function (event) {
         setDivClasses(ref.current?.className)
       })
 
@@ -39,7 +38,7 @@ const Page: React.FC = (props) => {
         characterData: false
       })
     }
-    return () => observer.disconnect()
+    return () => observer?.disconnect()
   }, [])
 
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   IonButtons,
   IonBackButton,
@@ -9,6 +8,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
 const Page: React.FC = () => {

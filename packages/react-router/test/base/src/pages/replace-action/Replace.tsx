@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   IonContent,
   IonHeader,
@@ -9,13 +8,12 @@ import {
   IonButtons,
   IonBackButton,
 } from '@ionic/react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
-interface TopPageProps {}
 
 // ReplaceAction is no longer used as a component wrapper
 // Routes are defined directly in App.tsx
-const ReplaceAction: React.FC<TopPageProps> = () => null;
+const ReplaceAction: React.FC = () => null;
 
 const Page1: React.FC = () => (
   <IonPage data-pageid="page1">

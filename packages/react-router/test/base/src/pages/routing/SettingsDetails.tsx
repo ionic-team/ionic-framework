@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -10,11 +9,10 @@ import {
   IonLabel,
   IonButton,
 } from '@ionic/react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-interface DetailsProps {}
-
-const SettingsDetails: React.FC<DetailsProps> = () => {
+const SettingsDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {

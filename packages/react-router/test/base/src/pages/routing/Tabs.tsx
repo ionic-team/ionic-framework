@@ -1,14 +1,15 @@
-import React from 'react';
 import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonPage, IonContent } from '@ionic/react';
+import { triangle, ellipse, square } from 'ionicons/icons';
+import React from 'react';
 import { Route, Navigate } from 'react-router';
-import Tab1 from './Tab1';
+
 import Details from './Details';
+import SettingsDetails from './SettingsDetails';
+import Tab1 from './Tab1';
 import Tab2 from './Tab2';
 import Tab3 from './Tab3';
-import { triangle, ellipse, square } from 'ionicons/icons';
-import SettingsDetails from './SettingsDetails';
 
-interface TabsProps {}
+
 
 const Tabs: React.FC = () => {
   return (

@@ -14,44 +14,6 @@ import { findRoutesNode } from './utils/findRoutesNode';
 import { derivePathnameToMatch } from './utils/derivePathnameToMatch';
 import { matchPath } from './utils/matchPath';
 
-// Debug helper to check if a view item contains a Navigate component
-const isNavigateViewItem = (viewItem: ViewItem | undefined): boolean => {
-  if (!viewItem) return false;
-  const elementComponent = viewItem.reactElement?.props?.element;
-  return (
-    React.isValidElement(elementComponent) &&
-    (elementComponent.type === Navigate ||
-      (typeof elementComponent.type === 'function' && elementComponent.type.name === 'Navigate'))
-  );
-};
-
-/**
- * Checks if a route matches the remaining path.
- * Note: This function is used for checking if ANY route could match, not for determining priority.
- * Wildcard routes are handled specially - they're always considered potential matches but should
- * be used as fallbacks when no specific route matches.
- */
-const doesRouteMatchRemainingPath = (route: React.ReactElement, remainingPath: string) => {
-  const routePath = route.props.path;
-  const isWildcardOnly = routePath === '*' || routePath === '/*';
-  const isIndex = route.props.index;
-
-  // Index routes only match when remaining path is empty
-  if (isIndex) {
-    return remainingPath === '' || remainingPath === '/';
-  }
-
-  // Wildcard routes can match any path (used as fallback)
-  if (isWildcardOnly) {
-    return true; // Wildcards can always potentially match
-  }
-
-  return !!matchPath({
-    pathname: remainingPath,
-    componentProps: route.props,
-  });
-};
-
 /**
  * Checks if a route is a specific match (not wildcard or index).
  */
@@ -650,9 +612,12 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             // Skip removal only for container-to-container transitions (nested outlet redirects)
             // Remove the leaving view if it's a specific route being replaced
             if (!(isEnteringContainerRoute && !isLeavingSpecificRoute)) {
+              // Capture leavingViewItem for the closure since TypeScript can't
+              // track the outer if-block's null check through the setTimeout
+              const viewToUnmount = leavingViewItem;
               setTimeout(() => {
                 // Use a timeout to ensure the transition completes before removal
-                this.context.unMountViewItem(leavingViewItem);
+                this.context.unMountViewItem(viewToUnmount);
               }, 250);
             }
           }

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   IonTabs,
   IonRouterOutlet,
@@ -15,12 +14,11 @@ import {
   IonContent,
   IonButton,
 } from '@ionic/react';
-import { Route, Navigate } from 'react-router';
 import { triangle, square } from 'ionicons/icons';
+import React from 'react';
+import { Route, Navigate } from 'react-router';
 
-interface TabsProps {}
-
-const Tabs: React.FC<TabsProps> = () => {
+const Tabs: React.FC = () => {
   return (
     <IonTabs data-pageid="tabs">
       <IonRouterOutlet id="tabs">

@@ -21,24 +21,26 @@ import '@ionic/react/css/text-transformation.css';
 /* Theme variables */
 import './theme/variables.css';
 import Main from './pages/Main';
+
 import { IonReactRouter } from '@ionic/react-router';
+
+import DynamicIonpageClassnames from './pages/dynamic-ionpage-classnames/DynamicIonpageClassnames';
 import DynamicRoutes from './pages/dynamic-routes/DynamicRoutes';
-import Routing from './pages/routing/Routing';
-import MultipleTabs from './pages/muiltiple-tabs/MultipleTabs';
 import DynamicTabs from './pages/dynamic-tabs/DynamicTabs';
+import MultipleTabs from './pages/muiltiple-tabs/MultipleTabs';
 import NestedOutlet from './pages/nested-outlet/NestedOutlet';
 import NestedOutlet2 from './pages/nested-outlet/NestedOutlet2';
-import ReplaceAction, { Page1, Page2, Page3 } from './pages/replace-action/Replace';
-import TabsContext from './pages/tab-context/TabContext';
+import NestedParams from './pages/nested-params/NestedParams';
 import { OutletRef } from './pages/outlet-ref/OutletRef';
-import { SwipeToGoBack } from './pages/swipe-to-go-back/SwipToGoBack';
+import Params from './pages/params/Params';
 import Refs from './pages/refs/Refs';
-import DynamicIonpageClassnames from './pages/dynamic-ionpage-classnames/DynamicIonpageClassnames';
+import { Page1, Page2, Page3 } from './pages/replace-action/Replace';
+import Routing from './pages/routing/Routing';
+import { SwipeToGoBack } from './pages/swipe-to-go-back/SwipToGoBack';
+import TabsContext from './pages/tab-context/TabContext';
 import Tabs from './pages/tabs/Tabs';
 import TabsSecondary from './pages/tabs/TabsSecondary';
-import Params from './pages/params/Params';
 import Overlays from './pages/overlays/Overlays';
-import NestedParams from './pages/nested-params/NestedParams';
 
 setupIonicReact();
 

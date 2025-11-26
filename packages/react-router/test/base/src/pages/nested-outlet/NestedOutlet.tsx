@@ -7,8 +7,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { useEffect } from 'react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Navigate } from 'react-router';
 
 const Page: React.FC = () => {

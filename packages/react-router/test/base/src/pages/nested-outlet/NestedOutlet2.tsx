@@ -1,5 +1,3 @@
-import React from 'react';
-import { Navigate, Route, useParams } from 'react-router-dom';
 import {
   IonBackButton,
   IonButtons,
@@ -13,6 +11,8 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import React from 'react';
+import { Navigate, Route, useParams } from 'react-router-dom';
 
 const ListPage: React.FC = () => {
   return (

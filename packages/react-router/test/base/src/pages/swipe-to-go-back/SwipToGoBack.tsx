@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   IonRouterOutlet,
   IonPage,
@@ -10,11 +9,10 @@ import {
   IonButtons,
   IonBackButton,
 } from '@ionic/react';
+import React from 'react';
 import { Route } from 'react-router';
 
-interface SwipeToGoBackProps {}
-
-export const SwipeToGoBack: React.FC<SwipeToGoBackProps> = () => {
+export const SwipeToGoBack: React.FC = () => {
   return (
     <IonRouterOutlet id="swipe-to-go-back">
       <Route path="/swipe-to-go-back" element={<Main />} />

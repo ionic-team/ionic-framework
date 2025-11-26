@@ -1,21 +1,20 @@
-import React from 'react';
 import {
   IonContent,
   IonPage,
   IonRouterOutlet,
   IonSplitPane,
 } from '@ionic/react';
-import Menu from './Menu';
+import React from 'react';
 import { Route, Navigate } from 'react-router';
-import Tabs from './Tabs';
+
 import Favorites from './Favorites';
+import Menu from './Menu';
 import OtherPage from './OtherPage';
 import PropsTest from './PropsTest';
 import RedirectRouting from './RedirectRouting';
+import Tabs from './Tabs';
 
-interface RoutingProps {}
-
-const Routing: React.FC<RoutingProps> = () => {
+const Routing: React.FC = () => {
   return (
     <IonSplitPane contentId="main">
       <Menu />

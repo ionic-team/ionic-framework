@@ -2,6 +2,12 @@
   "name": "react-router-new",
   "version": "0.0.1",
   "private": true,
+  "overrides": {
+    "@ionic/react-router": {
+      "react-router": "$react-router",
+      "react-router-dom": "$react-router-dom"
+    }
+  },
   "dependencies": {
     "@ionic/react": "^8.6.1",
     "@ionic/react-router": "^8.6.1",

@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -12,6 +11,7 @@ import {
   IonMenuButton,
   IonButton,
 } from '@ionic/react';
+import React, { useEffect } from 'react';
 import './Tab2.css';
 import { useNavigate } from 'react-router-dom';
 

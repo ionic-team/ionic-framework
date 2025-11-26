@@ -1,6 +1,3 @@
-import React from 'react';
-import { Navigate, Route } from 'react-router';
-import { useParams } from 'react-router-dom';
 import {
   IonButton,
   IonContent,
@@ -11,6 +8,9 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import React from 'react';
+import { Navigate, Route } from 'react-router';
+import { useParams } from 'react-router-dom';
 
 const NestedParamsRoot: React.FC = () => (
   <IonPage data-pageid="nested-params-root">

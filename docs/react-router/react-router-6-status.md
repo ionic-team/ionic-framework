@@ -103,7 +103,7 @@ This aligns with React Router 6's nested routing semantics where child routes ar
 
 ### Before Alpha Release
 
-1. **Run a TypeScript strict check** on the `@ionic/react-router` package to catch any type regressions
+1. ~~**Run a TypeScript strict check** on the `@ionic/react-router` package~~ Complete - all type errors resolved
 2. **Manual testing pass** through the test app to verify animations and gestures feel correct
 
 ### Documentation

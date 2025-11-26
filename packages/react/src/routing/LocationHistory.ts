@@ -90,7 +90,6 @@ export class LocationHistory {
 
   private _replace(routeInfo: RouteInfo) {
     const routeInfos = this._getRouteInfosByKey(routeInfo.tab);
-    const hadPreviousTabHistory = routeInfos && routeInfos.length > 0;
     routeInfos && routeInfos.pop();
 
     // Get the current route that's being replaced

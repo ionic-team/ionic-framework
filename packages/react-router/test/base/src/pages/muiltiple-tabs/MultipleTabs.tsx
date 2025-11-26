@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   IonSplitPane,
   IonRouterOutlet,
@@ -15,10 +14,12 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-
-import { Route, Navigate } from 'react-router';
-import { Menu } from './Menu';
 import { triangle, ellipse, square, rocket } from 'ionicons/icons';
+import React from 'react';
+import { Route, Navigate } from 'react-router';
+
+import { Menu } from './Menu';
+
 
 const MultipleTabs: React.FC = () => {
   return (

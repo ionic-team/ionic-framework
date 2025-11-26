@@ -1,4 +1,3 @@
-import React, { useContext } from 'react';
 import {
   IonTabs,
   IonRouterOutlet,
@@ -16,12 +15,11 @@ import {
   IonTabsContext,
   IonButton,
 } from '@ionic/react';
-import { Route, Navigate } from 'react-router';
 import { triangle, square } from 'ionicons/icons';
+import React, { useContext } from 'react';
+import { Route, Navigate } from 'react-router';
 
-interface TabsContextProps {}
-
-const TabsContext: React.FC<TabsContextProps> = () => {
+const TabsContext: React.FC = () => {
   return (
     <IonTabs>
       <IonRouterOutlet id="tabs">

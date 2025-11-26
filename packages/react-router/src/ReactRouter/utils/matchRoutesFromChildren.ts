@@ -1,7 +1,10 @@
 import React from 'react';
-import type { RouteObject, AgnosticRouteMatch } from 'react-router';
+import type { RouteObject } from 'react-router';
 import { matchRoutes } from 'react-router-dom';
 import { Route } from 'react-router-dom';
+
+// Type for the result of matchRoutes - inferred from the function return type
+type RouteMatch = NonNullable<ReturnType<typeof matchRoutes>>[number];
 
 /**
  * Sorts routes by specificity. React Router's matchRoutes respects route order,
@@ -98,7 +101,7 @@ export function createRouteObjectsFromChildren(children: React.ReactNode): Route
 export function findMatchingRoutes(
   children: React.ReactNode,
   pathname: string
-): AgnosticRouteMatch<string, RouteObject>[] | null {
+): RouteMatch[] | null {
   const routes = createRouteObjectsFromChildren(children);
   return matchRoutes(routes, pathname);
 }

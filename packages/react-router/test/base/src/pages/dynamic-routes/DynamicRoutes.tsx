@@ -1,4 +1,3 @@
-import React, { useState, ReactElement } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -7,6 +6,8 @@ import {
   IonToolbar,
   IonRouterOutlet,
 } from '@ionic/react';
+import React, { useState } from 'react';
+import type { ReactElement } from 'react';
 import { Route, Navigate } from 'react-router';
 import { Link } from 'react-router-dom';
 

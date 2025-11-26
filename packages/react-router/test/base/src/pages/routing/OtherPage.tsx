@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -10,10 +9,9 @@ import {
   useIonViewWillEnter,
   IonButton,
 } from '@ionic/react';
+import React, { useEffect } from 'react';
 
-interface OtherPageProps {}
-
-const OtherPage: React.FC<OtherPageProps> = () => {
+const OtherPage: React.FC = () => {
   useIonViewWillEnter(() => {
     console.log('IVWE on otherpage');
   });

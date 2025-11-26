@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   IonContent,
   IonHeader,
@@ -9,12 +8,11 @@ import {
   IonItem,
   IonLabel,
 } from '@ionic/react';
+import React from 'react';
 
 import packageJson from '../../package.json';
 
-interface MainProps {}
-
-const Main: React.FC<MainProps> = () => {
+const Main: React.FC = () => {
   const majorVersion = packageJson.dependencies['react-router'].match(
     /(\d+)\.(\d+)\.(\d+)/
   )?.[1];

@@ -1,5 +1,6 @@
-import React, { useEffect, useContext } from 'react';
 import { IonRouterContext } from '@ionic/react';
+import type React from 'react';
+import { useEffect, useContext } from 'react';
 
 const RedirectRouting: React.FC = () => {
   const ionRouterContext = useContext(IonRouterContext);

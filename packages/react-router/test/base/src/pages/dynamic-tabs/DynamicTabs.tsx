@@ -1,4 +1,3 @@
-import React, { useState, useCallback } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -13,8 +12,9 @@ import {
   IonLabel,
   IonButton,
 } from '@ionic/react';
-import { Route, Navigate } from 'react-router';
 import { triangle, square } from 'ionicons/icons';
+import React, { useState, useCallback } from 'react';
+import { Route, Navigate } from 'react-router';
 
 const DynamicTabs: React.FC = () => {
   const [display2ndTab, setDisplayThirdTab] = useState<boolean>(false);

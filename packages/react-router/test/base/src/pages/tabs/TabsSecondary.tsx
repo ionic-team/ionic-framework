@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   IonTabs,
   IonRouterOutlet,
@@ -14,12 +13,11 @@ import {
   IonTitle,
   IonContent,
 } from '@ionic/react';
-import { Route, Navigate } from 'react-router';
 import { triangle, square } from 'ionicons/icons';
+import React from 'react';
+import { Route, Navigate } from 'react-router';
 
-interface TabsSecondaryProps {}
-
-const TabsSecondary: React.FC<TabsSecondaryProps> = () => {
+const TabsSecondary: React.FC = () => {
   return (
     <IonTabs>
       <IonRouterOutlet id="tabs-secondary">

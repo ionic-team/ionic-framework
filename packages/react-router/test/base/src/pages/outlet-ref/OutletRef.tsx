@@ -1,4 +1,3 @@
-import React, { useRef, useEffect, useState } from 'react';
 import {
   IonRouterOutlet,
   IonPage,
@@ -7,11 +6,10 @@ import {
   IonTitle,
   IonContent,
 } from '@ionic/react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Route } from 'react-router';
 
-interface OutletRefProps {}
-
-export const OutletRef: React.FC<OutletRefProps> = () => {
+export const OutletRef: React.FC = () => {
   const ref = useRef<HTMLIonRouterOutletElement>(null);
   const [outletId, setOutletId] = useState<string | undefined>(undefined);
 
