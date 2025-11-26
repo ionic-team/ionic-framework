@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.11](https://github.com/ionic-team/ionic-framework/compare/v8.7.10...v8.7.11) (2025-11-26)
+
+
+### Bug Fixes
+
+* **datetime:** ensure datetime is shown when intersection observer fails to report visibility ([#30793](https://github.com/ionic-team/ionic-framework/issues/30793)) ([9d781db](https://github.com/ionic-team/ionic-framework/commit/9d781db662d213090d0b7198d0cdc5abb16fed1b)), closes [#30706](https://github.com/ionic-team/ionic-framework/issues/30706)
+
+
+
+
+
 ## [8.7.10](https://github.com/ionic-team/ionic-framework/compare/v8.7.9...v8.7.10) (2025-11-19)
 
 
