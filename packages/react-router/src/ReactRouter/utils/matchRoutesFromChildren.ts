@@ -142,12 +142,6 @@ export function computeParentPathFromRoutes(
         continue;
       }
 
-      if (process.env.NODE_ENV !== 'production') {
-        console.log(
-          `[matchRoutesFromChildren] Found match for ${pathname}: parentPath=${testParentPath}, matchedRoute.path=${matchedRoute.path ?? '(index)'}, pathnameBase=${lastMatch.pathnameBase}`
-        );
-      }
-
       return {
         parentPath: testParentPath,
         matchedRoute,
@@ -164,11 +158,6 @@ export function computeParentPathFromRoutes(
     // Only consider this if it's an index route (we're exactly at the parent)
     if (lastMatch.route.index) {
       const parentPath = '/' + segments.join('/');
-      if (process.env.NODE_ENV !== 'production') {
-        console.log(
-          `[matchRoutesFromChildren] Index route match for ${pathname}: parentPath=${parentPath}`
-        );
-      }
       return {
         parentPath,
         matchedRoute: lastMatch.route,

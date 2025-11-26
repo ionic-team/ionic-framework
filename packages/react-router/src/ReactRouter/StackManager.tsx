@@ -239,13 +239,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             bestPath = indexMatchAtMount;
           }
 
-          if (process.env.NODE_ENV !== 'production') {
-            console.log(
-              `[getParentPath] outlet=${this.id}, pathname=${currentPathname}: ` +
-              `specific=${firstSpecificMatch}, wildcard=${firstWildcardMatch}, index=${indexMatchAtMount}, best=${bestPath}`
-            );
-          }
-
           // Store the mount path when we first successfully match a route
           if (!this.outletMountPath && bestPath) {
             this.outletMountPath = bestPath;
@@ -331,17 +324,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
        * Set a flag to indicate that we should transition the page after
        * the component has updated (i.e., in `componentDidUpdate`).
        */
-      if (process.env.NODE_ENV !== 'production') {
-        console.log(`[StackManager] Outlet ${this.id} not ready yet, setting pendingPageTransition=true for ${routeInfo.pathname}`);
-      }
       this.pendingPageTransition = true;
     } else {
       let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
       let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
-
-      if (process.env.NODE_ENV !== 'production') {
-        console.log(`[StackManager:handlePageTransition] outlet=${this.id}, pathname=${routeInfo.pathname}, entering=${enteringViewItem?.id}, leaving=${leavingViewItem?.id}, enteringIsNav=${isNavigateViewItem(enteringViewItem)}, leavingIsNav=${isNavigateViewItem(leavingViewItem)}`);
-      }
 
       /**
        * If we don't have a leaving view item, but the route info indicates
@@ -443,13 +429,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           : [];
 
         // Unmount and remove all views in this outlet immediately to avoid leftover content
-        if (process.env.NODE_ENV !== 'production') {
-          console.log(`[StackManager:outOfScope] outlet=${this.id} is out of scope, removing ${allViewsInOutlet.length} views`);
-        }
         allViewsInOutlet.forEach((viewItem) => {
-          if (process.env.NODE_ENV !== 'production') {
-            console.log(`[StackManager:outOfScope] Removing view ${viewItem.id} from outlet ${this.id}, isNavigate=${isNavigateViewItem(viewItem)}`);
-          }
           if (viewItem.ionPageElement) {
             viewItem.ionPageElement.classList.add('ion-page-hidden');
             viewItem.ionPageElement.setAttribute('aria-hidden', 'true');
@@ -490,9 +470,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
           }
           if (leavingViewItem) {
-            if (isNavigateViewItem(leavingViewItem) && process.env.NODE_ENV !== 'production') {
-              console.log(`[StackManager:hasRelativeRoutes] Setting mount=false on Navigate ${leavingViewItem.id}, outlet=${this.id}, pathname=${routeInfo.pathname}`);
-            }
             leavingViewItem.mount = false;
           }
           this.forceUpdate();
@@ -506,22 +483,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         parentPath
       ) as React.ReactElement;
 
-      if (enteringRoute && process.env.NODE_ENV !== 'production') {
-        const routeElement = enteringRoute.props?.element;
-        const isNavigate = React.isValidElement(routeElement) && routeElement.type === Navigate;
-        console.log(
-          `[StackManager] Found entering route for ${routeInfo.pathname} in outlet ${this.id}: path="${
-            enteringRoute.props?.path ?? '(index)'
-          }", isNavigate=${isNavigate}`
-        );
-      }
-
       // If this is a nested outlet (has an explicit ID) and no route matches,
       // it means this outlet shouldn't handle this route
       if (this.id !== 'routerOutlet' && !enteringRoute && !enteringViewItem) {
-        if (process.env.NODE_ENV !== 'production') {
-          console.log(`[StackManager:noMatchingRoute] outlet=${this.id} has no matching route for ${routeInfo.pathname}, leavingViewItem=${leavingViewItem?.id}`);
-        }
         // Hide any visible views in this outlet since it has no matching route
         if (leavingViewItem && leavingViewItem.ionPageElement) {
           leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
@@ -529,9 +493,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         }
         // Unmount the leaving view to prevent components from staying active
         if (leavingViewItem) {
-          if (isNavigateViewItem(leavingViewItem) && process.env.NODE_ENV !== 'production') {
-            console.log(`[StackManager:noMatchingRoute] Setting mount=false on Navigate ${leavingViewItem.id}, outlet=${this.id}, pathname=${routeInfo.pathname}`);
-          }
           leavingViewItem.mount = false;
         }
         this.forceUpdate();
@@ -545,18 +506,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       if (enteringViewItem && enteringRoute) {
         // Update existing view item
         enteringViewItem.reactElement = enteringRoute;
-        if (process.env.NODE_ENV !== 'production') {
-          console.log(`[StackManager] Updated existing view item ${enteringViewItem.id} for outlet ${this.id}`);
-        }
       } else if (enteringRoute) {
-        if (process.env.NODE_ENV !== 'production') {
-          console.log(`[StackManager] Creating new view item for outlet ${this.id}, route path="${enteringRoute.props?.path ?? '(index)'}"`);
-        }
         enteringViewItem = this.context.createViewItem(this.id, enteringRoute, routeInfo);
         this.context.addViewItem(enteringViewItem);
-        if (process.env.NODE_ENV !== 'production') {
-          console.log(`[StackManager] Added view item ${enteringViewItem.id} to outlet ${this.id}`);
-        }
       }
 
       /**
@@ -716,9 +668,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
            * and repeatedly hide the leaving view. Treat this as a no-op transition and allow
            * the follow-up navigation to proceed.
            */
-          if (process.env.NODE_ENV !== 'production') {
-            console.log(`[StackManager:Navigate] outlet=${this.id}, entering=${enteringViewItem?.id}, leaving=${leavingViewItem?.id}, shouldUnmount=${shouldUnmountLeavingViewItem}, pathname=${routeInfo.pathname}`);
-          }
           this.waitingForIonPage = false;
           if (this.ionPageWaitTimeout) {
             clearTimeout(this.ionPageWaitTimeout);
@@ -735,9 +684,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           // This happens during chained Navigate redirects where the same Navigate view item
           // is being processed multiple times before it can render and trigger the redirect
           if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
-            if (isNavigateViewItem(leavingViewItem) && process.env.NODE_ENV !== 'production') {
-              console.log(`[StackManager:Navigate:unmountLeaving] Setting mount=false on Navigate ${leavingViewItem.id}, outlet=${this.id}`);
-            }
             leavingViewItem.mount = false;
           }
 
@@ -754,18 +700,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
          * while we wait for the entering view's IonPage to mount, then retry the
          * transition once the page is ready.
          */
-        if (process.env.NODE_ENV !== 'production') {
-          console.log(
-            `[StackManager] Entering view ${enteringViewItem.id} has no ionPageElement yet, will hide leaving view and retry`
-          );
-        }
-
         if (leavingViewItem?.ionPageElement) {
           leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
           leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
-          if (process.env.NODE_ENV !== 'production') {
-            console.log(`[StackManager] HIDING leaving view ${leavingViewItem.id} (no entering ionPage yet)`);
-          }
         }
 
         this.waitingForIonPage = true;
@@ -787,10 +724,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id) ?? leavingViewItem;
 
           if (latestEnteringView?.ionPageElement) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log(`[StackManager] Retrying transition for ${latestEnteringView.id}`);
-            }
-
             this.transitionPage(routeInfo, latestEnteringView, latestLeavingView ?? undefined);
 
             if (shouldUnmountLeavingViewItem && latestLeavingView && latestEnteringView !== latestLeavingView) {
@@ -798,10 +731,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             }
 
             this.forceUpdate();
-          } else if (process.env.NODE_ENV !== 'production') {
-            console.log(
-              `[StackManager] Still no ionPageElement for ${latestEnteringView?.id ?? enteringViewItem?.id ?? 'unknown'}, skipping transition`
-            );
           }
         }, 50);
 
@@ -1205,12 +1134,6 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
       const parentSegments = normalizedParent.split('/').filter(Boolean);
       const relativeSegments = pathSegments.slice(parentSegments.length);
       pathnameToMatch = relativeSegments.join('/'); // Empty string is valid for index routes
-
-      if (process.env.NODE_ENV !== 'production') {
-        console.log(
-          `[findRouteByRouteInfo] Computed relative path: "${pathnameToMatch}" from pathname="${routeInfo.pathname}" parentPath="${parentPath}"`
-        );
-      }
     }
   }
 
@@ -1222,13 +1145,6 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
     });
 
     if (match) {
-      if (process.env.NODE_ENV !== 'production') {
-        console.log(
-          `[findRouteByRouteInfo] Matched route for ${routeInfo.pathname} in outlet ${parentPath ?? 'root'} with path="${
-            child.props.path ?? '(index)'
-          }"`
-        );
-      }
       matchedNode = child;
       break;
     }

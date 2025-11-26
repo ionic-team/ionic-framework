@@ -37,8 +37,6 @@ class IonRouterOutletContainer extends React.Component<InternalProps, InternalSt
     const { children, forwardedRef, ...props } = this.props;
     const outletId = props.id ?? this.outletId;
 
-    console.log(`[IonRouterOutlet] Rendering with id: "${outletId}", all props:`, Object.keys(props));
-
     return this.context.hasIonicRouter() ? (
       props.ionPage ? (
         <OutletPageManager StackManager={StackManager} routeInfo={this.context.routeInfo} {...props}>

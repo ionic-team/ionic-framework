@@ -187,7 +187,6 @@ export class ReactRouterViewStack extends ViewStacks {
     // Add infinite loop detection with a more reasonable limit
     // In complex navigation flows, we may have many view items across different outlets
     if (this.viewItemCounter > 100) {
-      console.warn(`[ReactRouterViewStack] Many view items created (${this.viewItemCounter}). Performing cleanup.`);
       // Clean up all outlets to prevent memory leaks
       this.getStackIds().forEach((stackId) => this.cleanupStaleViewItems(stackId));
       // Reset counter to a lower value after cleanup
@@ -477,10 +476,6 @@ export class ReactRouterViewStack extends ViewStacks {
         if (hasRelativeRoutes || hasIndexRoute) {
           const segments = routeInfo.pathname.split('/').filter(Boolean);
 
-          if (process.env.NODE_ENV !== 'production') {
-            console.log(`[ReactRouterViewStack] getChildrenToRender outlet=${outletId}: computing parentPath for ${routeInfo.pathname}`);
-          }
-
           // Two-pass algorithm:
           // Pass 1: Look for specific route matches OR index routes (prefer real routes)
           // Pass 2: If no match found, use wildcard fallback
@@ -511,9 +506,6 @@ export class ReactRouterViewStack extends ViewStacks {
             });
 
             if (hasSpecificMatch) {
-              if (process.env.NODE_ENV !== 'production') {
-                console.log(`[ReactRouterViewStack] Found specific match at parentPath=${testParentPath}, remaining=${testRemainingPath}`);
-              }
               parentPath = testParentPath;
               break;
             }
@@ -525,9 +517,6 @@ export class ReactRouterViewStack extends ViewStacks {
             if (!wildcardFallbackPath && (testRemainingPath === '' || testRemainingPath === '/')) {
               const hasIndexMatch = routeChildren.some((route) => !!(route.props as any).index);
               if (hasIndexMatch) {
-                if (process.env.NODE_ENV !== 'production') {
-                  console.log(`[ReactRouterViewStack] Found index match at parentPath=${testParentPath}`);
-                }
                 parentPath = testParentPath;
                 break;
               }
@@ -570,9 +559,6 @@ export class ReactRouterViewStack extends ViewStacks {
 
           // Pass 2: If no specific/index match found, use wildcard fallback
           if (!parentPath && wildcardFallbackPath) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log(`[ReactRouterViewStack] Using wildcard fallback at parentPath=${wildcardFallbackPath}`);
-            }
             parentPath = wildcardFallbackPath;
           }
         }
@@ -646,9 +632,6 @@ export class ReactRouterViewStack extends ViewStacks {
   findLeavingViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: string, mustBeIonRoute = true) => {
     // If the lastPathname is not set, we cannot find a leaving view item
     if (!routeInfo.lastPathname) {
-      if (process.env.NODE_ENV !== 'production') {
-        console.warn(`[ReactRouterViewStack] No matching leaving view item found for: ${routeInfo.pathname}`);
-      }
       return undefined;
     }
 
@@ -731,16 +714,6 @@ export class ReactRouterViewStack extends ViewStacks {
     // with the previous outlet id.
     // Do not adopt across outlets; if we didn't find a view for this outlet,
     // defer to route matching to create a new one.
-
-    if (!viewItem && process.env.NODE_ENV !== 'production') {
-      const allViewItems = this.getAllViewItems();
-      console.warn(
-        `[ReactRouterViewStack] No matching view item found for: ${pathname}. Available views:`,
-        allViewItems
-          .map((v) => `${v.id}(outlet:${v.outletId}, path:${v.routeData?.childProps?.path || 'undefined'})`)
-          .join(', ')
-      );
-    }
 
     return { viewItem, match };
 

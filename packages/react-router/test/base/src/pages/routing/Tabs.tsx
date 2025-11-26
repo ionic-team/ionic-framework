@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonPage, IonContent } from '@ionic/react';
 import { Route, Navigate } from 'react-router';
 import Tab1 from './Tab1';
@@ -11,9 +11,6 @@ import SettingsDetails from './SettingsDetails';
 interface TabsProps {}
 
 const Tabs: React.FC = () => {
-  useEffect(() => {
-    console.log('[Tabs] Mounted');
-  }, []);
   return (
     <IonTabs>
       <IonRouterOutlet id="tabs">
