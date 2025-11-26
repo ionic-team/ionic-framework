@@ -385,11 +385,31 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     const radios = Array.from(this.el.querySelectorAll('.action-sheet-button[role="radio"]')).filter(
       (el) => !(el as HTMLButtonElement).disabled
     ) as HTMLButtonElement[];
-
     const currentIndex = radios.findIndex((radio) => radio.id === target.id);
+
     if (currentIndex === -1) {
       return;
     }
+
+    const allButtons = this.getButtons();
+    const radioButtons = this.getRadioButtons();
+    /**
+     * Build a map of button element IDs to their ActionSheetButton
+     * config objects.
+     * This allows us to quickly look up which button config corresponds
+     * to a DOM element when handling keyboard navigation
+     * (e.g., whenuser presses Space/Enter or arrow keys).
+     * The key is the ID that was set on the DOM element during render,
+     * and the value is the ActionSheetButton config that contains the
+     * handler and other properties.
+     */
+    const buttonIdMap = new Map<string, ActionSheetButton>();
+
+    radioButtons.forEach((b) => {
+      const allIndex = allButtons.indexOf(b);
+      const buttonId = this.getButtonId(b, allIndex);
+      buttonIdMap.set(buttonId, b);
+    });
 
     let nextEl: HTMLButtonElement | undefined;
 
@@ -407,16 +427,10 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
       ev.preventDefault();
       ev.stopPropagation();
 
-      const allButtons = this.getButtons();
-      const radioButtons = this.getRadioButtons();
-      const buttonIndex = radioButtons.findIndex((b) => {
-        const buttonId = this.getButtonId(b, allButtons.indexOf(b));
-        return buttonId === target.id;
-      });
-
-      if (buttonIndex !== -1) {
-        this.selectRadioButton(radioButtons[buttonIndex]);
-        this.buttonClick(radioButtons[buttonIndex]);
+      const button = buttonIdMap.get(target.id);
+      if (button) {
+        this.selectRadioButton(button);
+        this.buttonClick(button);
       }
 
       return;
@@ -424,16 +438,9 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
     // Focus the next radio button
     if (nextEl) {
-      const allButtons = this.getButtons();
-      const radioButtons = this.getRadioButtons();
-
-      const buttonIndex = radioButtons.findIndex((b) => {
-        const buttonId = this.getButtonId(b, allButtons.indexOf(b));
-        return buttonId === nextEl?.id;
-      });
-
-      if (buttonIndex !== -1) {
-        this.selectRadioButton(radioButtons[buttonIndex]);
+      const button = buttonIdMap.get(nextEl.id);
+      if (button) {
+        this.selectRadioButton(button);
         nextEl.focus();
       }
     }
