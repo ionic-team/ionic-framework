@@ -12,8 +12,8 @@ import type { PathMatch } from 'react-router';
 import { Navigate, Route, UNSAFE_RouteContext as RouteContext } from 'react-router-dom';
 
 import { derivePathnameToMatch } from './utils/derivePathnameToMatch';
-import { matchPath } from './utils/matchPath';
 import { findRoutesNode } from './utils/findRoutesNode';
+import { matchPath } from './utils/matchPath';
 
 const createDefaultMatch = (
   fullPathname: string,
@@ -49,7 +49,9 @@ const normalizePathnameForComparison = (value: string | undefined): string => {
     return '/';
   }
   const withLeadingSlash = ensureLeadingSlash(value);
-  return withLeadingSlash.length > 1 && withLeadingSlash.endsWith('/') ? withLeadingSlash.slice(0, -1) : withLeadingSlash;
+  return withLeadingSlash.length > 1 && withLeadingSlash.endsWith('/')
+    ? withLeadingSlash.slice(0, -1)
+    : withLeadingSlash;
 };
 
 const computeRelativeToParent = (pathname: string, parentPath?: string): string | null => {
@@ -209,7 +211,8 @@ export class ReactRouterViewStack extends ViewStacks {
     }
 
     const initialMatch =
-      matchComponent(reactElement, routeInfo.pathname, true) || createDefaultMatch(routeInfo.pathname, reactElement.props);
+      matchComponent(reactElement, routeInfo.pathname, true) ||
+      createDefaultMatch(routeInfo.pathname, reactElement.props);
 
     viewItem.routeData = {
       match: initialMatch,
@@ -276,7 +279,9 @@ export class ReactRouterViewStack extends ViewStacks {
       // Once they redirect (no longer match), they should be removed completely
       // IMPORTANT: For index routes, we need to check indexMatch too since matchComponent
       // may not properly match index routes without explicit parent path context
-      const indexMatch = viewItem.routeData?.childProps?.index ? resolveIndexRouteMatch(viewItem, routeInfo.pathname, parentPath) : null;
+      const indexMatch = viewItem.routeData?.childProps?.index
+        ? resolveIndexRouteMatch(viewItem, routeInfo.pathname, parentPath)
+        : null;
       const hasValidMatch = match || indexMatch;
 
       if (!hasValidMatch && viewItem.mount) {
@@ -354,7 +359,7 @@ export class ReactRouterViewStack extends ViewStacks {
     if (match && viewItem.routeData.match !== match && !shouldSkipForDifferentParam) {
       viewItem.routeData.match = match;
     }
-    const routeMatch = shouldSkipForDifferentParam ? viewItem.routeData?.match : (match || viewItem.routeData?.match);
+    const routeMatch = shouldSkipForDifferentParam ? viewItem.routeData?.match : match || viewItem.routeData?.match;
 
     return (
       <RouteContext.Consumer key={`view-context-${viewItem.id}`}>
@@ -381,9 +386,8 @@ export class ReactRouterViewStack extends ViewStacks {
 
           if (isRelativePath || isIndexRoute) {
             // Get the parent's pathnameBase to build the absolute path
-            const parentPathnameBase = parentMatches.length > 0
-              ? parentMatches[parentMatches.length - 1].pathnameBase
-              : '/';
+            const parentPathnameBase =
+              parentMatches.length > 0 ? parentMatches[parentMatches.length - 1].pathnameBase : '/';
 
             // For relative paths, the matchPath returns a relative pathnameBase
             // We need to make it absolute by prepending the parent's base
@@ -393,9 +397,8 @@ export class ReactRouterViewStack extends ViewStacks {
                 ? routeMatch.pathnameBase.slice(1)
                 : routeMatch.pathnameBase;
 
-              absolutePathnameBase = parentPathnameBase === '/'
-                ? `/${relativeBase}`
-                : `${parentPathnameBase}/${relativeBase}`;
+              absolutePathnameBase =
+                parentPathnameBase === '/' ? `/${relativeBase}` : `${parentPathnameBase}/${relativeBase}`;
             } else if (isIndexRoute) {
               // Index routes should use the parent's base as their base
               absolutePathnameBase = parentPathnameBase;
@@ -545,8 +548,10 @@ export class ReactRouterViewStack extends ViewStacks {
                   if (!routeFirstSegment) return false;
 
                   // Check for prefix overlap (either direction)
-                  return routeFirstSegment.startsWith(remainingFirstSegment.slice(0, 3)) ||
-                         remainingFirstSegment.startsWith(routeFirstSegment.slice(0, 3));
+                  return (
+                    routeFirstSegment.startsWith(remainingFirstSegment.slice(0, 3)) ||
+                    remainingFirstSegment.startsWith(routeFirstSegment.slice(0, 3))
+                  );
                 });
 
                 // Only save wildcard fallback if no specific route could match
@@ -651,12 +656,7 @@ export class ReactRouterViewStack extends ViewStacks {
    * Core function that matches a given pathname against all view items.
    * Returns both the matched view item and match metadata.
    */
-  private findViewItemByPath(
-    pathname: string,
-    outletId?: string,
-    mustBeIonRoute?: boolean,
-    allowDefaultMatch = true
-  ) {
+  private findViewItemByPath(pathname: string, outletId?: string, mustBeIonRoute?: boolean, allowDefaultMatch = true) {
     let viewItem: ViewItem | undefined;
     let match: PathMatch<string> | null = null;
     let viewStack: ViewItem[];
@@ -726,7 +726,7 @@ export class ReactRouterViewStack extends ViewStacks {
       const viewItemPath = v.routeData.childProps.path || '';
       const isIndexRoute = !!v.routeData.childProps.index;
       const previousMatch = v.routeData?.match;
-      let result = v.reactElement ? matchComponent(v.reactElement, pathname) : null;
+      const result = v.reactElement ? matchComponent(v.reactElement, pathname) : null;
 
       if (!result) {
         const indexMatch = resolveIndexRouteMatch(v, pathname, undefined);

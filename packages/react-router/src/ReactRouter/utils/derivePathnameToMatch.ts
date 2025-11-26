@@ -55,4 +55,3 @@ export const derivePathnameToMatch = (fullPathname: string, routePath?: string):
 
   return fullSegments[fullSegments.length - 1] ?? trimmedPath;
 };
-

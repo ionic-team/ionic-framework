@@ -1,7 +1,6 @@
 import React from 'react';
 import type { RouteObject } from 'react-router';
-import { matchRoutes } from 'react-router-dom';
-import { Route } from 'react-router-dom';
+import { matchRoutes, Route } from 'react-router-dom';
 
 // Type for the result of matchRoutes - inferred from the function return type
 type RouteMatch = NonNullable<ReturnType<typeof matchRoutes>>[number];
@@ -98,10 +97,7 @@ export function createRouteObjectsFromChildren(children: React.ReactNode): Route
  * @param pathname The pathname to match against
  * @returns The matched routes or null if no match
  */
-export function findMatchingRoutes(
-  children: React.ReactNode,
-  pathname: string
-): RouteMatch[] | null {
+export function findMatchingRoutes(children: React.ReactNode, pathname: string): RouteMatch[] | null {
   const routes = createRouteObjectsFromChildren(children);
   return matchRoutes(routes, pathname);
 }

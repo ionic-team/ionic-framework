@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
+import { checkInvalidState } from '@utils/forms';
 import { renderHiddenInput } from '@utils/helpers';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -19,8 +20,16 @@ export class RadioGroup implements ComponentInterface {
   private errorTextId = `${this.inputId}-error-text`;
   private labelId = `${this.inputId}-lbl`;
   private label?: HTMLIonLabelElement | null;
+  private validationObserver?: MutationObserver;
 
   @Element() el!: HTMLElement;
+
+  /**
+   * Track validation state for proper aria-live announcements.
+   */
+  @State() isInvalid = false;
+
+  @State() private hintTextId?: string;
 
   /**
    * If `true`, the radios can be deselected.
@@ -120,6 +129,57 @@ export class RadioGroup implements ComponentInterface {
       if (label) {
         this.labelId = label.id = this.name + '-lbl';
       }
+    }
+
+    // Watch for class changes to update validation state.
+    if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
+      this.validationObserver = new MutationObserver(() => {
+        const newIsInvalid = checkInvalidState(this.el);
+        if (this.isInvalid !== newIsInvalid) {
+          this.isInvalid = newIsInvalid;
+          /**
+           * Screen readers tend to announce changes
+           * to `aria-describedby` when the attribute
+           * is changed during a blur event for a
+           * native form control.
+           * However, the announcement can be spotty
+           * when using a non-native form control
+           * and `forceUpdate()`.
+           * This is due to `forceUpdate()` internally
+           * rescheduling the DOM update to a lower
+           * priority queue regardless if it's called
+           * inside a Promise or not, thus causing
+           * the screen reader to potentially miss the
+           * change.
+           * By using a State variable inside a Promise,
+           * it guarantees a re-render immediately at
+           * a higher priority.
+           */
+          Promise.resolve().then(() => {
+            this.hintTextId = this.getHintTextId();
+          });
+        }
+      });
+
+      this.validationObserver.observe(this.el, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    }
+
+    // Always set initial state
+    this.isInvalid = checkInvalidState(this.el);
+  }
+
+  componentWillLoad() {
+    this.hintTextId = this.getHintTextId();
+  }
+
+  disconnectedCallback() {
+    // Clean up validation observer to prevent memory leaks.
+    if (this.validationObserver) {
+      this.validationObserver.disconnect();
+      this.validationObserver = undefined;
     }
   }
 
@@ -244,7 +304,7 @@ export class RadioGroup implements ComponentInterface {
    * Renders the helper text or error text values
    */
   private renderHintText() {
-    const { helperText, errorText, helperTextId, errorTextId } = this;
+    const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
     const hasHintText = !!helperText || !!errorText;
     if (!hasHintText) {
@@ -253,20 +313,20 @@ export class RadioGroup implements ComponentInterface {
 
     return (
       <div class="radio-group-top">
-        <div id={helperTextId} class="helper-text">
-          {helperText}
+        <div id={helperTextId} class="helper-text" aria-live="polite">
+          {!isInvalid ? helperText : null}
         </div>
-        <div id={errorTextId} class="error-text">
-          {errorText}
+        <div id={errorTextId} class="error-text" role="alert">
+          {isInvalid ? errorText : null}
         </div>
       </div>
     );
   }
 
-  private getHintTextID(): string | undefined {
-    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+  private getHintTextId(): string | undefined {
+    const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
-    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+    if (isInvalid && errorText) {
       return errorTextId;
     }
 
@@ -287,8 +347,8 @@ export class RadioGroup implements ComponentInterface {
       <Host
         role="radiogroup"
         aria-labelledby={label ? labelId : null}
-        aria-describedby={this.getHintTextID()}
-        aria-invalid={this.getHintTextID() === this.errorTextId}
+        aria-describedby={this.hintTextId}
+        aria-invalid={this.isInvalid ? 'true' : undefined}
         onClick={this.onClick}
         class={mode}
       >

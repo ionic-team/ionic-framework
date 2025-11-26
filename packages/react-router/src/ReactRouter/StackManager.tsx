@@ -10,8 +10,8 @@ import React from 'react';
 import { Navigate, Route } from 'react-router-dom';
 
 import { clonePageElement } from './clonePageElement';
-import { findRoutesNode } from './utils/findRoutesNode';
 import { derivePathnameToMatch } from './utils/derivePathnameToMatch';
+import { findRoutesNode } from './utils/findRoutesNode';
 import { matchPath } from './utils/matchPath';
 
 /**
@@ -157,8 +157,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
                 if (!routeFirstSegment) return false;
 
                 // Check for prefix overlap (either direction)
-                return routeFirstSegment.startsWith(remainingFirstSegment.slice(0, 3)) ||
-                       remainingFirstSegment.startsWith(routeFirstSegment.slice(0, 3));
+                return (
+                  routeFirstSegment.startsWith(remainingFirstSegment.slice(0, 3)) ||
+                  remainingFirstSegment.startsWith(routeFirstSegment.slice(0, 3))
+                );
               });
 
               // Only save wildcard match if no specific route could match
@@ -386,9 +388,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
         // When an outlet is out of scope, unmount its views immediately
         // No transition is happening in this outlet - the transition is in the parent
-        const allViewsInOutlet = this.context.getViewItemsForOutlet
-          ? this.context.getViewItemsForOutlet(this.id)
-          : [];
+        const allViewsInOutlet = this.context.getViewItemsForOutlet ? this.context.getViewItemsForOutlet(this.id) : [];
 
         // Unmount and remove all views in this outlet immediately to avoid leftover content
         allViewsInOutlet.forEach((viewItem) => {
@@ -603,7 +603,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             const enteringRoutePath = enteringViewItem.reactElement?.props?.path as string | undefined;
             const leavingRoutePath = leavingViewItem.reactElement?.props?.path as string | undefined;
             const isEnteringContainerRoute = enteringRoutePath && enteringRoutePath.endsWith('/*');
-            const isLeavingSpecificRoute = leavingRoutePath &&
+            const isLeavingSpecificRoute =
+              leavingRoutePath &&
               leavingRoutePath !== '' &&
               leavingRoutePath !== '*' &&
               !leavingRoutePath.endsWith('/*') &&
@@ -685,8 +686,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           this.waitingForIonPage = false;
 
           const latestEnteringView = this.context.findViewItemByRouteInfo(routeInfo, this.id) ?? enteringViewItem;
-          const latestLeavingView =
-            this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id) ?? leavingViewItem;
+          const latestLeavingView = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id) ?? leavingViewItem;
 
           if (latestEnteringView?.ionPageElement) {
             this.transitionPage(routeInfo, latestEnteringView, latestLeavingView ?? undefined);
@@ -787,7 +787,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       // Find the view item for the route we are going back to
       const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
 
-      const canStartSwipe = !!enteringViewItem &&
+      const canStartSwipe =
+        !!enteringViewItem &&
         /**
          * The root url '/' is treated as
          * the first view item (but is never mounted),
