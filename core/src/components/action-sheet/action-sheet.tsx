@@ -321,7 +321,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    *
    * @param button The radio button that was selected.
    */
-  private async selectRadioButton(button: ActionSheetButton) {
+  private selectRadioButton(button: ActionSheetButton) {
     const buttonId = this.getButtonId(button);
 
     // Set the active radio ID (this will trigger a re-render and update aria-checked)
