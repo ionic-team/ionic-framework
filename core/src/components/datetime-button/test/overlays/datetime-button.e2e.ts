@@ -1,7 +1,7 @@
-import { expect } from '@playwright/test';
 import type { Locator } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { expect } from '@playwright/test';
 import type { EventSpy } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
 /**
  * This behavior does not vary across directions.
@@ -175,6 +175,35 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.click('#date-button');
       await ionModalDidPresent.next();
       await expect(datetime).toBeVisible();
+    });
+    test('should set datetime ready state and keep calendar interactive when reopening modal', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30706',
+      });
+
+      const openAndInteract = async () => {
+        await page.click('#date-button');
+        await ionModalDidPresent.next();
+
+        await page.locator('ion-datetime.datetime-ready').waitFor();
+
+        const calendarBody = datetime.locator('.calendar-body');
+        await expect(calendarBody).toBeVisible();
+      };
+
+      await openAndInteract();
+
+      const firstEnabledDay = datetime.locator('.calendar-day:not([disabled])').first();
+      await firstEnabledDay.click();
+      await page.waitForChanges();
+
+      await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
+      await ionModalDidDismiss.next();
+
+      await openAndInteract();
     });
   });
 });
