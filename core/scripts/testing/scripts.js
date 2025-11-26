@@ -14,8 +14,8 @@
  * The following URL parameters are supported:
  * - `rtl`: Set to `true` to enable right-to-left directionality.
  * - `ionic:_testing`: Set to `true` to identify testing environments.
- * - `ionic:mode`: Set to `ionic`, `ios`, or `md` to load a specific 
- * mode. Defaults to `md`.
+ * - `ionic:mode`: Set to `ios` or `md` to load a specific mode.
+ * Defaults to `md`.
  * - `palette`: Set to `light`, `dark`, `high-contrast`, or 
  * `high-contrast-dark` to load a specific palette. Defaults to `light`.
  */
