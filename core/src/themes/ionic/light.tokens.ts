@@ -19,5 +19,8 @@ export const lightTheme: LightTheme = {
       colorSelected: 'var(--ion-tab-bar-color-selected, #0d4bc3)',
       borderColor: 'var(--ion-tab-bar-border-color, transparent)',
     },
+    IonBreadcrumb: {
+      separatorColor: '#a0a0a0',
+    },
   },
 };
