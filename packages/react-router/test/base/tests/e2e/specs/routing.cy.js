@@ -345,6 +345,16 @@ describe('Routing Tests', () => {
     cy.get('div.ion-page[data-pageid=home-details-page-1] [data-testid="details-input"]').should('have.value', '1');
   });
 
+  it('should complete chained Navigate redirects from root to /routing/tabs/home', () => {
+    // Tests that chained Navigate redirects work correctly:
+    // / > click Routing link > /routing (Navigate to tabs) > /routing/tabs (Navigate to home) > /routing/tabs/home
+    // This was a bug where the second Navigate would be unmounted before it could trigger
+    cy.visit(`http://localhost:${port}/`);
+    cy.ionNav('ion-item', 'Routing');
+    cy.ionPageVisible('home-page');
+    cy.url().should('include', '/routing/tabs/home');
+  });
+
   /*
     Tests to add:
     Test that lifecycle events fire

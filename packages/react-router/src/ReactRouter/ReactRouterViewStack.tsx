@@ -275,7 +275,12 @@ export class ReactRouterViewStack extends ViewStacks {
     if (isNavigateComponent) {
       // Navigate components should only be mounted when they match
       // Once they redirect (no longer match), they should be removed completely
-      if (!match && viewItem.mount) {
+      // IMPORTANT: For index routes, we need to check indexMatch too since matchComponent
+      // may not properly match index routes without explicit parent path context
+      const indexMatch = viewItem.routeData?.childProps?.index ? resolveIndexRouteMatch(viewItem, routeInfo.pathname, parentPath) : null;
+      const hasValidMatch = match || indexMatch;
+
+      if (!hasValidMatch && viewItem.mount) {
         viewItem.mount = false;
         // Schedule removal of the Navigate view item after a short delay
         // This ensures the redirect completes before removal
@@ -288,7 +293,9 @@ export class ReactRouterViewStack extends ViewStacks {
     // Components that don't have IonPage elements and no longer match should be cleaned up
     // BUT we need to be careful not to remove them if they're part of browser navigation history
     // This handles components that perform immediate actions like programmatic navigation
-    if (!match && viewItem.mount && !viewItem.ionPageElement) {
+    // EXCEPTION: Navigate components should ALWAYS remain mounted until they redirect
+    // since they need to be rendered to trigger the navigation
+    if (!match && viewItem.mount && !viewItem.ionPageElement && !isNavigateComponent) {
       // Check if this view item should be preserved for browser navigation
       // We'll keep it if it was recently active (within the last navigation)
       const shouldPreserve =

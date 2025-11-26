@@ -14,6 +14,17 @@ import { findRoutesNode } from './utils/findRoutesNode';
 import { derivePathnameToMatch } from './utils/derivePathnameToMatch';
 import { matchPath } from './utils/matchPath';
 
+// Debug helper to check if a view item contains a Navigate component
+const isNavigateViewItem = (viewItem: ViewItem | undefined): boolean => {
+  if (!viewItem) return false;
+  const elementComponent = viewItem.reactElement?.props?.element;
+  return (
+    React.isValidElement(elementComponent) &&
+    (elementComponent.type === Navigate ||
+      (typeof elementComponent.type === 'function' && elementComponent.type.name === 'Navigate'))
+  );
+};
+
 /**
  * Checks if a route matches the remaining path.
  * Note: This function is used for checking if ANY route could match, not for determining priority.
@@ -320,10 +331,17 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
        * Set a flag to indicate that we should transition the page after
        * the component has updated (i.e., in `componentDidUpdate`).
        */
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(`[StackManager] Outlet ${this.id} not ready yet, setting pendingPageTransition=true for ${routeInfo.pathname}`);
+      }
       this.pendingPageTransition = true;
     } else {
       let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
       let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
+
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(`[StackManager:handlePageTransition] outlet=${this.id}, pathname=${routeInfo.pathname}, entering=${enteringViewItem?.id}, leaving=${leavingViewItem?.id}, enteringIsNav=${isNavigateViewItem(enteringViewItem)}, leavingIsNav=${isNavigateViewItem(leavingViewItem)}`);
+      }
 
       /**
        * If we don't have a leaving view item, but the route info indicates
@@ -425,7 +443,13 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           : [];
 
         // Unmount and remove all views in this outlet immediately to avoid leftover content
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(`[StackManager:outOfScope] outlet=${this.id} is out of scope, removing ${allViewsInOutlet.length} views`);
+        }
         allViewsInOutlet.forEach((viewItem) => {
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(`[StackManager:outOfScope] Removing view ${viewItem.id} from outlet ${this.id}, isNavigate=${isNavigateViewItem(viewItem)}`);
+          }
           if (viewItem.ionPageElement) {
             viewItem.ionPageElement.classList.add('ion-page-hidden');
             viewItem.ionPageElement.setAttribute('aria-hidden', 'true');
@@ -466,6 +490,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
           }
           if (leavingViewItem) {
+            if (isNavigateViewItem(leavingViewItem) && process.env.NODE_ENV !== 'production') {
+              console.log(`[StackManager:hasRelativeRoutes] Setting mount=false on Navigate ${leavingViewItem.id}, outlet=${this.id}, pathname=${routeInfo.pathname}`);
+            }
             leavingViewItem.mount = false;
           }
           this.forceUpdate();
@@ -492,6 +519,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       // If this is a nested outlet (has an explicit ID) and no route matches,
       // it means this outlet shouldn't handle this route
       if (this.id !== 'routerOutlet' && !enteringRoute && !enteringViewItem) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(`[StackManager:noMatchingRoute] outlet=${this.id} has no matching route for ${routeInfo.pathname}, leavingViewItem=${leavingViewItem?.id}`);
+        }
         // Hide any visible views in this outlet since it has no matching route
         if (leavingViewItem && leavingViewItem.ionPageElement) {
           leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
@@ -499,6 +529,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         }
         // Unmount the leaving view to prevent components from staying active
         if (leavingViewItem) {
+          if (isNavigateViewItem(leavingViewItem) && process.env.NODE_ENV !== 'production') {
+            console.log(`[StackManager:noMatchingRoute] Setting mount=false on Navigate ${leavingViewItem.id}, outlet=${this.id}, pathname=${routeInfo.pathname}`);
+          }
           leavingViewItem.mount = false;
         }
         this.forceUpdate();
@@ -512,9 +545,18 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       if (enteringViewItem && enteringRoute) {
         // Update existing view item
         enteringViewItem.reactElement = enteringRoute;
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(`[StackManager] Updated existing view item ${enteringViewItem.id} for outlet ${this.id}`);
+        }
       } else if (enteringRoute) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(`[StackManager] Creating new view item for outlet ${this.id}, route path="${enteringRoute.props?.path ?? '(index)'}"`);
+        }
         enteringViewItem = this.context.createViewItem(this.id, enteringRoute, routeInfo);
         this.context.addViewItem(enteringViewItem);
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(`[StackManager] Added view item ${enteringViewItem.id} to outlet ${this.id}`);
+        }
       }
 
       /**
@@ -674,6 +716,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
            * and repeatedly hide the leaving view. Treat this as a no-op transition and allow
            * the follow-up navigation to proceed.
            */
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(`[StackManager:Navigate] outlet=${this.id}, entering=${enteringViewItem?.id}, leaving=${leavingViewItem?.id}, shouldUnmount=${shouldUnmountLeavingViewItem}, pathname=${routeInfo.pathname}`);
+          }
           this.waitingForIonPage = false;
           if (this.ionPageWaitTimeout) {
             clearTimeout(this.ionPageWaitTimeout);
@@ -686,7 +731,13 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
             leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
           }
-          if (shouldUnmountLeavingViewItem && leavingViewItem) {
+          // IMPORTANT: Don't unmount if entering and leaving are the same view item
+          // This happens during chained Navigate redirects where the same Navigate view item
+          // is being processed multiple times before it can render and trigger the redirect
+          if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
+            if (isNavigateViewItem(leavingViewItem) && process.env.NODE_ENV !== 'production') {
+              console.log(`[StackManager:Navigate:unmountLeaving] Setting mount=false on Navigate ${leavingViewItem.id}, outlet=${this.id}`);
+            }
             leavingViewItem.mount = false;
           }
 
