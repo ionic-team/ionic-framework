@@ -46,6 +46,44 @@ interface StackManagerState {}
 const isViewVisible = (el: HTMLElement) =>
   !el.classList.contains('ion-page-invisible') && !el.classList.contains('ion-page-hidden');
 
+/**
+ * Finds the longest common prefix among an array of paths.
+ * Used to determine the scope of an outlet with absolute routes.
+ */
+const computeCommonPrefix = (paths: string[]): string => {
+  if (paths.length === 0) return '';
+  if (paths.length === 1) {
+    // For a single path, extract the directory-like prefix
+    // e.g., /dynamic-routes/home -> /dynamic-routes
+    const segments = paths[0].split('/').filter(Boolean);
+    if (segments.length > 1) {
+      return '/' + segments.slice(0, -1).join('/');
+    }
+    return '/' + segments[0];
+  }
+
+  // Split all paths into segments
+  const segmentArrays = paths.map((p) => p.split('/').filter(Boolean));
+  const minLength = Math.min(...segmentArrays.map((s) => s.length));
+
+  const commonSegments: string[] = [];
+  for (let i = 0; i < minLength; i++) {
+    const segment = segmentArrays[0][i];
+    // Skip segments with route parameters or wildcards
+    if (segment.includes(':') || segment.includes('*')) {
+      break;
+    }
+    const allMatch = segmentArrays.every((s) => s[i] === segment);
+    if (allMatch) {
+      commonSegments.push(segment);
+    } else {
+      break;
+    }
+  }
+
+  return commonSegments.length > 0 ? '/' + commonSegments.join('/') : '';
+};
+
 export class StackManager extends React.PureComponent<StackManagerProps, StackManagerState> {
   id: string; // Unique id for the router outlet aka outletId
   context!: React.ContextType<typeof RouteManagerContext>;
@@ -216,6 +254,34 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           return bestPath;
         }
       }
+
+      // Handle outlets with ONLY absolute routes (no relative routes or index routes)
+      // Compute the common prefix of all absolute routes to determine the outlet's scope
+      if (!hasRelativeRoutes && !hasIndexRoute) {
+        const absolutePathRoutes = routeChildren.filter((route) => {
+          const path = route.props.path;
+          return path && path.startsWith('/');
+        });
+
+        if (absolutePathRoutes.length > 0) {
+          const absolutePaths = absolutePathRoutes.map((r) => r.props.path as string);
+          const commonPrefix = computeCommonPrefix(absolutePaths);
+
+          if (commonPrefix && commonPrefix !== '/') {
+            // Set the mount path based on common prefix of absolute routes
+            if (!this.outletMountPath) {
+              this.outletMountPath = commonPrefix;
+            }
+
+            // Check if current pathname is within scope
+            if (!currentPathname.startsWith(commonPrefix)) {
+              return undefined;
+            }
+
+            return commonPrefix;
+          }
+        }
+      }
     }
     return this.outletMountPath;
   }
@@ -262,6 +328,22 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       this.outOfScopeUnmountTimeout = undefined;
     }
     this.waitingForIonPage = false;
+
+    // Hide all views in this outlet before clearing.
+    // This is critical for nested outlets - when the parent component unmounts,
+    // the nested outlet's componentDidUpdate won't be called, so we must hide
+    // the ion-page elements here to prevent them from remaining visible on top
+    // of other content after navigation to a different route.
+    const allViewsInOutlet = this.context.getViewItemsForOutlet
+      ? this.context.getViewItemsForOutlet(this.id)
+      : [];
+    allViewsInOutlet.forEach((viewItem) => {
+      if (viewItem.ionPageElement) {
+        viewItem.ionPageElement.classList.add('ion-page-hidden');
+        viewItem.ionPageElement.setAttribute('aria-hidden', 'true');
+      }
+    });
+
     this.clearOutletTimeout = this.context.clearOutlet(this.id);
   }
 
@@ -1121,14 +1203,73 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
   }
 
   // If we haven't found a node, try to find one that doesn't have a path prop (fallback route)
-  for (const child of routeChildren) {
-    if (!child.props.path) {
-      fallbackNode = child;
-      break;
+  // BUT only return the fallback if the current pathname is within the outlet's scope.
+  // For outlets with absolute paths, compute the common prefix to determine scope.
+  const absolutePathRoutes = routeChildren.filter((r) => r.props.path && r.props.path.startsWith('/'));
+
+  // Determine if pathname is within scope before returning fallback
+  let isPathnameInScope = true;
+
+  if (absolutePathRoutes.length > 0) {
+    // Find common prefix of all absolute paths to determine outlet scope
+    const absolutePaths = absolutePathRoutes.map((r) => r.props.path as string);
+    const commonPrefix = findCommonPrefix(absolutePaths);
+
+    // If we have a common prefix, check if the current pathname is within that scope
+    if (commonPrefix && commonPrefix !== '/') {
+      isPathnameInScope = routeInfo.pathname.startsWith(commonPrefix);
+    }
+  }
+
+  // Only look for fallback route if pathname is within scope
+  if (isPathnameInScope) {
+    for (const child of routeChildren) {
+      if (!child.props.path) {
+        fallbackNode = child;
+        break;
+      }
     }
   }
 
   return matchedNode ?? fallbackNode;
+}
+
+/**
+ * Finds the longest common prefix among an array of paths.
+ * Used to determine the scope of an outlet with absolute routes.
+ */
+function findCommonPrefix(paths: string[]): string {
+  if (paths.length === 0) return '';
+  if (paths.length === 1) {
+    // For a single path, extract the directory-like prefix
+    // e.g., /dynamic-routes/home -> /dynamic-routes
+    const segments = paths[0].split('/').filter(Boolean);
+    if (segments.length > 1) {
+      return '/' + segments.slice(0, -1).join('/');
+    }
+    return '/' + segments[0];
+  }
+
+  // Split all paths into segments
+  const segmentArrays = paths.map((p) => p.split('/').filter(Boolean));
+  const minLength = Math.min(...segmentArrays.map((s) => s.length));
+
+  const commonSegments: string[] = [];
+  for (let i = 0; i < minLength; i++) {
+    const segment = segmentArrays[0][i];
+    // Skip segments with route parameters or wildcards
+    if (segment.includes(':') || segment.includes('*')) {
+      break;
+    }
+    const allMatch = segmentArrays.every((s) => s[i] === segment);
+    if (allMatch) {
+      commonSegments.push(segment);
+    } else {
+      break;
+    }
+  }
+
+  return commonSegments.length > 0 ? '/' + commonSegments.join('/') : '';
 }
 
 function matchComponent(node: React.ReactElement, pathname: string, forceExact?: boolean) {

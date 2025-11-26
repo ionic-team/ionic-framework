@@ -331,9 +331,9 @@ export class ReactRouterViewStack extends ViewStacks {
       viewItem.routeData.match = match;
     }
 
-    // Deactivate wildcard routes when we have specific route matches
-    // This prevents "Not found" from showing alongside valid routes
-    if (routePath === '*') {
+    // Deactivate wildcard routes and catch-all routes (empty path) when we have specific route matches
+    // This prevents "Not found" or fallback pages from showing alongside valid routes
+    if (routePath === '*' || routePath === '') {
       // Check if any other view in this outlet has a match for the current route
       const hasSpecificMatch = this.getViewItemsForOutlet(viewItem.outletId).some((v) => {
         if (v.id === viewItem.id) return false; // Skip self
@@ -349,6 +349,11 @@ export class ReactRouterViewStack extends ViewStacks {
 
       if (hasSpecificMatch) {
         viewItem.mount = false;
+        // Also hide the ion-page element immediately to prevent visual overlap
+        if (viewItem.ionPageElement) {
+          viewItem.ionPageElement.classList.add('ion-page-hidden');
+          viewItem.ionPageElement.setAttribute('aria-hidden', 'true');
+        }
       }
     }
 
