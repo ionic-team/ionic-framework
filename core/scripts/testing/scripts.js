@@ -14,14 +14,16 @@
  * The following URL parameters are supported:
  * - `rtl`: Set to `true` to enable right-to-left directionality.
  * - `ionic:_testing`: Set to `true` to identify testing environments.
- * - `ionic:mode`: Set to `ios` or `md` to load a specific mode.
- * Defaults to `md`.
+ * - `ionic:theme`: Set to `ionic`, `ios`, or `md` to load a specific 
+ * theme. Defaults to `md`.
  * - `palette`: Set to `light`, `dark`, `high-contrast`, or 
  * `high-contrast-dark` to load a specific palette. Defaults to `light`.
  */
 
-(function() {
+const DEFAULT_THEME = 'md';
 
+(function() {
+  
   /**
    * The `rtl` param is used to set the directionality of the 
    * document. This can be `true` or `false`.
@@ -49,6 +51,34 @@
   }
 
   /**
+   * The `theme` param is used to load a specific theme.
+   * This can be `ionic`, `ios`, or `md`. Default to `md` for tests.
+   */
+  const themeQuery = window.location.search.match(/ionic:theme=([a-z0-9]+)/i);
+  const themeHash = window.location.hash.match(/ionic:theme=([a-z0-9]+)/i);
+  const themeAttr = document.documentElement.getAttribute('theme');
+  const themeName = themeQuery?.[1] || themeHash?.[1] || themeAttr || DEFAULT_THEME;
+
+  // TODO(): Remove this when the tokens are working for all components
+  // and the themes all use the same bundle
+  if ((themeQuery && themeQuery[1] === 'ionic') || themeAttr === 'ionic') {
+    const ionicThemeLinkTag = document.querySelector('link[href*="css/ionic/bundle.ionic.css"]');
+
+    if (!ionicThemeLinkTag) {
+      const linkTag = document.createElement('link');
+      linkTag.setAttribute('rel', 'stylesheet');
+      linkTag.setAttribute('type', 'text/css');
+      linkTag.setAttribute('href', '/css/ionic/bundle.ionic.css');
+      document.head.appendChild(linkTag);
+    }
+
+    const defaultThemeLinkTag = document.querySelector('link[href*="css/ionic.bundle.css"]');
+    if (defaultThemeLinkTag) {
+      defaultThemeLinkTag.remove();
+    }
+  }
+
+  /**
    * The `palette` param is used to load a specific palette
    * for the theme.
    * The dark class will load the dark palette automatically
@@ -63,46 +93,40 @@
 
   const paletteName = paletteQuery?.[1] || paletteHash?.[1] || darkClass || 'light';
 
-  if (paletteName !== 'light') {
-    const linkTag = document.createElement('link');
-    linkTag.setAttribute('rel', 'stylesheet');
-    linkTag.setAttribute('type', 'text/css');
-    linkTag.setAttribute('href', `/css/palettes/${paletteName}.always.css`);
-    document.head.appendChild(linkTag);
+  // Load theme tokens if the theme is valid
+  const validThemes = ['ionic', 'ios', 'md'];
+  if (themeName && validThemes.includes(themeName)) {
+    loadThemeTokens(themeName, paletteName);
+  } else if(themeName) {
+    console.warn(
+      `Unsupported theme "${themeName}". Supported themes are: ${validThemes.join(', ')}. Defaulting to ${DEFAULT_THEME}.`
+    );
   }
 
-  /**
-  * The `ionic` theme uses a different stylesheet than the `iOS` and `md` themes.
-  * This is to ensure that the `ionic` theme is loaded when the `ionic:theme=ionic`
-  * or when the HTML tag has the `theme="ionic"` attribute. This is useful for
-  * the snapshot tests, where the `ionic` theme is not loaded by default.
-  */
-  const themeQuery = window.location.search.match(/ionic:theme=([a-z]+)/);
-  const themeAttr = document.documentElement.getAttribute('theme');
+  async function loadThemeTokens(themeName, paletteName) {
+    try {
+      // Load the default tokens for the theme
+      const defaultTokens = await import(`/themes/${themeName}/default.tokens.js`);
+      const theme = defaultTokens.defaultTheme;
 
-  if ((themeQuery && themeQuery[1] === 'ionic') || themeAttr === 'ionic') {
-    const ionicThemeLinkTag = document.querySelector('link[href*="css/ionic/bundle.ionic.css"]');
+      // If a specific palette is requested, modify the palette structure
+      // to set the enabled property to 'always'
+      if (paletteName === 'dark' && theme.palette?.dark) {
+        theme.palette.dark.enabled = 'always';
+      }
 
-    if (!ionicThemeLinkTag) {
-      const linkTag = document.createElement('link');
-      linkTag.setAttribute('rel', 'stylesheet');
-      linkTag.setAttribute('type', 'text/css');
-      linkTag.setAttribute('href', '/css/ionic/bundle.ionic.css');
-      document.head.appendChild(linkTag);
-    }
+      // Apply the theme tokens to Ionic config
+      window.Ionic = window.Ionic || {};
+      window.Ionic.config = window.Ionic.config || {};
+      window.Ionic.config.customTheme = theme;
 
-    const utilsBundleLinkTag = document.querySelector('link[href*="css/utils.bundle.css"]');
-    if (!utilsBundleLinkTag) {
-      const linkTag = document.createElement('link');
-      linkTag.setAttribute('rel', 'stylesheet');
-      linkTag.setAttribute('type', 'text/css');
-      linkTag.setAttribute('href', '/css/utils.bundle.css');
-      document.head.appendChild(linkTag);
-    }
-
-    const defaultThemeLinkTag = document.querySelector('link[href*="css/ionic.bundle.css"]');
-    if (defaultThemeLinkTag) {
-      defaultThemeLinkTag.remove();
+      // Re-apply the global theme
+      if (window.Ionic.config.get && window.Ionic.config.set) {
+        const themeModule = await import('/themes/utils/theme.js');
+        themeModule.applyGlobalTheme(theme);
+      }
+    } catch (error) {
+      console.error(`Failed to load theme tokens for ${themeName}:`, error);
     }
   }
 
