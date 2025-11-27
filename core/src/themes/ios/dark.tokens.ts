@@ -66,6 +66,7 @@ export const darkTheme: DarkTheme = {
     },
     IonItem: {
       background: '#000000',
+      paragraphTextColor: colors.gray['450']!,
     },
     IonModal: {
       background: 'var(--ion-background-color-step-100)',

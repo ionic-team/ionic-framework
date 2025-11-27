@@ -7,7 +7,7 @@
 $item-md-min-height: 48px;
 
 /// @prop - Color of the item paragraph
-$item-md-paragraph-text-color: $text-color-step-400;
+$item-md-paragraph-text-color: var(--ion-color-gray-600);
 
 /// @prop - Font size of the item
 $item-md-font-size: 16px;

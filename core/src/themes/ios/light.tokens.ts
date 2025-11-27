@@ -24,5 +24,8 @@ export const lightTheme: LightTheme = {
       indicatorBgFocused: '#d9e0ea',
       separatorColor: '#73849a',
     },
+    IonItem: {
+      paragraphTextColor: '#a3a3a3',
+    },
   },
 };
