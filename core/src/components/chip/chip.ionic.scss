@@ -36,27 +36,6 @@
   @include globals.focused-state(null, null, var(--focus-ring-color));
 }
 
-// Chip: Hover
-// ---------------------------------------------
-
-@media (any-hover: hover) {
-  :host(.chip-subtle:hover) {
-    --background: #{globals.$ion-primitives-neutral-200};
-  }
-
-  :host(.chip-bold:hover) {
-    --background: #{globals.$ion-primitives-neutral-1100};
-  }
-
-  :host(.chip-subtle.ion-color:hover) {
-    background: globals.current-color(tint, $subtle: true);
-  }
-
-  :host(.chip-bold.ion-color:hover) {
-    background: globals.current-color(shade);
-  }
-}
-
 // Chip: Disabled
 // ---------------------------------------------
 
