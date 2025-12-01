@@ -39,5 +39,8 @@ export const lightTheme: LightTheme = {
     IonRefresher: {
       nativeSpinnerColor: '#747577', // Available only in iOS
     },
+    IonSegmentButton: {
+      checkedIndicatorBg: defaultPrimitiveColors.white, // Available only in iOS
+    },
   },
 };

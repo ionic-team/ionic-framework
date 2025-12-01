@@ -97,5 +97,8 @@ export const darkTheme: DarkTheme = {
     IonRefresher: {
       nativeSpinnerColor: colors.gray['450']!, // Available only in iOS
     },
+    IonSegmentButton: {
+      checkedIndicatorBg: colors.gray['350']!, // Available only in iOS
+    },
   },
 };
