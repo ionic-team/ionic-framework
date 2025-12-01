@@ -19,18 +19,18 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
 
   let mode: Mode;
   let direction: Direction;
-  let themeName: Theme;
+  let theme: Theme;
   let palette: Palette;
 
   if (options == undefined) {
     mode = testInfo.project.metadata.mode;
     direction = testInfo.project.metadata.rtl ? 'rtl' : 'ltr';
-    themeName = testInfo.project.metadata.theme;
+    theme = testInfo.project.metadata.theme;
     palette = testInfo.project.metadata.palette;
   } else {
     mode = options.mode;
     direction = options.direction;
-    themeName = options.theme;
+    theme = options.theme;
     palette = options.palette;
   }
 
@@ -40,7 +40,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
   // config passes in the importIonicFromCDN option. This is useful
   // when testing with the CDN version of Ionic.
   let ionicCSSImports =
-    themeName === 'ionic'
+    theme === 'ionic'
       ? `
     <link href="${baseUrl}/css/ionic/bundle.ionic.css" rel="stylesheet" />
     <link href="${baseUrl}/css/utils.bundle.css" rel="stylesheet" />
@@ -54,7 +54,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
 
   if (options?.importIonicFromCDN) {
     ionicCSSImports =
-      themeName === 'ionic'
+      theme === 'ionic'
         ? `
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic/bundle.ionic.css" />
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/utils.bundle.css" />
@@ -77,13 +77,14 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
         ${ionicCSSImports}
         <link href="${baseUrl}/scripts/testing/styles.css" rel="stylesheet" />
+        ${palette !== 'light' ? `<link href="${baseUrl}/css/palettes/${palette}.always.css" rel="stylesheet" />` : ''}
         <script src="${baseUrl}/scripts/testing/scripts.js"></script>
         ${ionicJSImports}
         <script>
           window.Ionic = {
             config: {
               mode: '${mode}',
-              theme: '${themeName}',
+              theme: '${theme}',
             }
           }
         </script>
@@ -106,7 +107,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
 
   testInfo.annotations.push({
     type: 'theme',
-    description: themeName,
+    description: theme,
   });
 
   if (baseUrl) {
