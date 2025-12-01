@@ -616,6 +616,42 @@ export class ReactRouterViewStack extends ViewStacks {
         return false;
       }
 
+      // Filter out views that are unmounted, have no ionPageElement, and don't match the current route.
+      // These are "stale" views from previous routes that should not be rendered.
+      // Views WITH ionPageElement are handled by the normal lifecycle events.
+      // Views that MATCH the current route should be kept (they might be transitioning).
+      if (!viewItem.mount && !viewItem.ionPageElement) {
+        // Check if this view's route path matches the current pathname
+        const viewRoutePath = viewItem.reactElement?.props?.path as string | undefined;
+        if (viewRoutePath) {
+          // First try exact match using matchComponent
+          const routeMatch = matchComponent(viewItem.reactElement, routeInfo.pathname);
+          if (routeMatch) {
+            // View matches current route, keep it
+            return true;
+          }
+
+          // For parent routes (like /multiple-tabs or /routing), check if current pathname
+          // starts with this route's path. This handles views with IonSplitPane/IonTabs
+          // that don't have IonPage but should remain mounted while navigating within their children.
+          const normalizedViewPath = normalizePathnameForComparison(viewRoutePath.replace(/\/?\*$/, '')); // Remove trailing wildcard
+          const normalizedCurrentPath = normalizePathnameForComparison(routeInfo.pathname);
+
+          // Check if current pathname is within this view's route hierarchy
+          const isWithinRouteHierarchy =
+            normalizedCurrentPath === normalizedViewPath ||
+            normalizedCurrentPath.startsWith(normalizedViewPath + '/');
+
+          if (!isWithinRouteHierarchy) {
+            // View is outside current route hierarchy, remove it
+            setTimeout(() => {
+              this.remove(viewItem);
+            }, 0);
+            return false;
+          }
+        }
+      }
+
       return true;
     });
 

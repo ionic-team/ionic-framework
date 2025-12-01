@@ -40,6 +40,12 @@ export class ViewLifeCycleManager extends React.Component<ViewTransitionManagerP
     this._isMounted = true;
   }
 
+  componentDidUpdate(_prevProps: ViewTransitionManagerProps) {
+    // View lifecycle is managed through ionViewDidLeave events.
+    // Components with IonPage will receive these events and be destroyed accordingly.
+    // The StackManager handles cleanup of views that no longer match routes.
+  }
+
   componentWillUnmount() {
     this._isMounted = false;
   }
