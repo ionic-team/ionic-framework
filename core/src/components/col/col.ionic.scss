@@ -1,0 +1,9 @@
+@import "./col.scss";
+
+// Column
+// --------------------------------------------------
+
+:host {
+  // Override default padding for Ionic mode
+  --ion-grid-column-padding: 0;
+}

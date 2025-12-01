@@ -14,7 +14,11 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
  */
 @Component({
   tag: 'ion-col',
-  styleUrl: 'col.scss',
+  styleUrls: {
+    ios: 'col.scss',
+    md: 'col.scss',
+    ionic: 'col.ionic.scss',
+  },
   shadow: true,
 })
 export class Col implements ComponentInterface {
