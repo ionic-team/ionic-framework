@@ -65,6 +65,7 @@
     "fs-extra": "^9.0.1",
     "jest": "^29.7.0",
     "jest-cli": "^29.7.0",
+    "playwright-core": "^1.56.1",
     "prettier": "^2.6.1",
     "rollup": "^2.26.4",
     "sass": "^1.33.0",
