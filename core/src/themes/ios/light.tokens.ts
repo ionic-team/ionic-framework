@@ -30,5 +30,8 @@ export const lightTheme: LightTheme = {
     IonModal: {
       handleBg: '#c0c0be',
     },
+    IonPicker: {
+      highlightBg: '#eeeeef', // Available only in iOS
+    },
   },
 };

@@ -88,5 +88,8 @@ export const darkTheme: DarkTheme = {
       indicatorBgFocused: colors.gray['150']!,
       separatorColor: colors.gray['550']!,
     },
+    IonPicker: {
+      highlightBg: colors.gray['150']!, // Available only in iOS
+    },
   },
 };
