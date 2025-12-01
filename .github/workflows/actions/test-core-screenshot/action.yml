@@ -13,19 +13,19 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@v5
+    - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
       with:
-        node-version: 22.x
+        node-version: 24.x
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - name: Install Dependencies
+    - name: 🕸️ Install Dependencies
       run: npm install
       shell: bash
       working-directory: ./core
-    - name: Test
+    - name: 🧪 Test
       if: inputs.update != 'true'
       run: npm run test.e2e.docker.ci ${{ inputs.component }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
@@ -60,13 +60,13 @@ runs:
         fi
       shell: bash
       working-directory: ./core
-    - name: Archive Updated Screenshots
+    - name: 📦 Archive Updated Screenshots
       if: inputs.update == 'true' && steps.test-and-update.outputs.hasUpdatedScreenshots == 'true'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: updated-screenshots-${{ inputs.shard }}-${{ inputs.totalShards }}
         path: UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
-    - name: Archive Test Results
+    - name: 📦 Archive Test Results
       # The always() ensures that this step
       # runs even if the previous step fails.
       # We want the test results to be archived

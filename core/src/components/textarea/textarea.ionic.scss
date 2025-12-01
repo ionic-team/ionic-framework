@@ -7,12 +7,12 @@
 // --------------------------------------------------
 
 :host {
-  --border-color: #{globals.$ion-primitives-neutral-500};
+  --border-color: #{globals.$ion-border-input-default};
   --color: #{globals.$ion-text-default};
-  --highlight-color-valid: #{globals.$ion-semantics-success-900};
+  --highlight-color-valid: #{globals.$ion-text-success};
   --highlight-color-invalid: #{globals.$ion-semantics-danger-800};
   --highlight-color-focused: #{globals.ion-color(primary, base)};
-  --placeholder-color: #{globals.$ion-primitives-neutral-800};
+  --placeholder-color: #{globals.$ion-text-subtlest};
   --placeholder-opacity: 1;
   --background: #{globals.$ion-bg-surface-default};
   --padding-bottom: #{globals.$ion-space-200};
@@ -64,15 +64,15 @@
 // --------------------------------------------------
 
 :host(.textarea-shape-soft) {
-  --border-radius: #{globals.$ion-border-radius-200};
+  --border-radius: #{globals.$ion-soft-xl};
 }
 
 :host(.textarea-shape-round) {
-  --border-radius: #{globals.$ion-border-radius-400};
+  --border-radius: #{globals.$ion-round-xl};
 }
 
 :host(.textarea-shape-rectangular) {
-  --border-radius: #{globals.$ion-border-radius-0};
+  --border-radius: #{globals.$ion-rectangular-xl};
 }
 
 // Textarea Wrapper
@@ -112,7 +112,7 @@
   transition: color globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive,
     transform globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive;
 
-  color: globals.$ion-primitives-neutral-1000;
+  color: globals.$ion-text-subtle;
 }
 
 :host(.label-floating) .label-text-wrapper {
@@ -143,7 +143,7 @@ ion-icon {
 
 .textarea-bottom .helper-text,
 .textarea-bottom .counter {
-  color: globals.$ion-primitives-neutral-800;
+  color: globals.$ion-text-subtlest;
 }
 
 :host(.has-focus.ion-valid) .helper-text {

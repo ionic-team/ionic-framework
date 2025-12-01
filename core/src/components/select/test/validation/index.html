@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Select - Validation</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-row-gap: 30px;
+        grid-column-gap: 30px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: var(--ion-color-step-600);
+
+        margin-top: 10px;
+        margin-bottom: 5px;
+      }
+
+      .validation-info {
+        margin: 20px;
+        padding: 10px;
+        background: var(--ion-color-light);
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Select - Validation Test</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <div class="validation-info">
+          <h2>Screen Reader Testing Instructions:</h2>
+          <ol>
+            <li>Enable your screen reader (VoiceOver, NVDA, JAWS, etc.)</li>
+            <li>Tab through the form fields</li>
+            <li>When you tab away from an empty required field, the error should be announced immediately</li>
+            <li>The error text should be announced BEFORE the next field is announced</li>
+            <li>Test in Chrome, Safari, and Firefox to verify consistent behavior</li>
+          </ol>
+        </div>
+
+        <div class="grid">
+          <div>
+            <h2>Required Field</h2>
+            <ion-select
+              id="fruits-select"
+              label="Fruits"
+              placeholder="Select one"
+              interface="alert"
+              helper-text="You must select an option to continue"
+              error-text="This field is required"
+              required
+            >
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+              <ion-select-option value="pears">Pears</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div>
+            <h2>Optional Field (No Validation)</h2>
+            <ion-select
+              id="optional-select"
+              label="Colors"
+              placeholder="Select one"
+              interface="alert"
+              helper-text="You can skip this field"
+            >
+              <ion-select-option value="red">Red</ion-select-option>
+              <ion-select-option value="blue">Blue</ion-select-option>
+              <ion-select-option value="green">Green</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
+
+        <div class="ion-padding">
+          <ion-button id="submit-btn" expand="block" disabled>Submit Form</ion-button>
+          <ion-button id="reset-btn" expand="block" fill="outline">Reset Form</ion-button>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      // Simple validation logic
+      const selects = document.querySelectorAll('ion-select');
+      const submitBtn = document.getElementById('submit-btn');
+      const resetBtn = document.getElementById('reset-btn');
+
+      // Track which fields have been touched
+      const touchedFields = new Set();
+
+      // Validation functions
+      const validators = {
+        'fruits-select': (value) => {
+          return value !== '' && value !== undefined;
+        },
+        'optional-select': () => true, // Always valid
+      };
+
+      function validateField(select) {
+        const selectId = select.id;
+        const value = select.value;
+        const isValid = validators[selectId] ? validators[selectId](value) : true;
+
+        // Only show validation state if field has been touched
+        if (touchedFields.has(selectId)) {
+          if (isValid) {
+            select.classList.remove('ion-invalid');
+            select.classList.add('ion-valid');
+          } else {
+            select.classList.remove('ion-valid');
+            select.classList.add('ion-invalid');
+          }
+          select.classList.add('ion-touched');
+        }
+
+        return isValid;
+      }
+
+      function validateForm() {
+        let allValid = true;
+        selects.forEach((select) => {
+          if (select.id !== 'optional-select') {
+            const isValid = validateField(select);
+            if (!isValid) {
+              allValid = false;
+            }
+          }
+        });
+        submitBtn.disabled = !allValid;
+        return allValid;
+      }
+
+      // Add event listeners
+      selects.forEach((select) => {
+        // Mark as touched on blur
+        select.addEventListener('ionBlur', (e) => {
+          console.log('Blur event on:', select.id);
+          touchedFields.add(select.id);
+          validateField(select);
+          validateForm();
+
+          const isInvalid = select.classList.contains('ion-invalid');
+          if (isInvalid) {
+            console.log('Field marked invalid:', select.label, select.errorText);
+          }
+        });
+
+        // Validate on change
+        select.addEventListener('ionChange', (e) => {
+          console.log('Change event on:', select.id);
+          if (touchedFields.has(select.id)) {
+            validateField(select);
+            validateForm();
+          }
+        });
+      });
+
+      // Reset button
+      resetBtn.addEventListener('click', () => {
+        selects.forEach((select) => {
+          select.value = '';
+          select.classList.remove('ion-valid', 'ion-invalid', 'ion-touched');
+        });
+        touchedFields.clear();
+        submitBtn.disabled = true;
+      });
+
+      // Submit button
+      submitBtn.addEventListener('click', () => {
+        if (validateForm()) {
+          alert('Form submitted successfully!');
+        }
+      });
+
+      // Initial setup
+      validateForm();
+    </script>
+  </body>
+</html>

@@ -47,6 +47,10 @@ export const routes: Routes = [
         children: [
           { path: 'input-validation', loadComponent: () => import('../validation/input-validation/input-validation.component').then(c => c.InputValidationComponent) },
           { path: 'textarea-validation', loadComponent: () => import('../validation/textarea-validation/textarea-validation.component').then(c => c.TextareaValidationComponent) },
+          { path: 'select-validation', loadComponent: () => import('../validation/select-validation/select-validation.component').then(c => c.SelectValidationComponent) },
+          { path: 'checkbox-validation', loadComponent: () => import('../validation/checkbox-validation/checkbox-validation.component').then(c => c.CheckboxValidationComponent) },
+          { path: 'toggle-validation', loadComponent: () => import('../validation/toggle-validation/toggle-validation.component').then(c => c.ToggleValidationComponent) },
+          { path: 'radio-group-validation', loadComponent: () => import('../validation/radio-group-validation/radio-group-validation.component').then(c => c.RadioGroupValidationComponent) },
           { path: '**', redirectTo: 'input-validation' }
         ]
       },

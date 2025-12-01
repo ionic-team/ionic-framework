@@ -433,6 +433,61 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 });
 
 /**
+ * Synthetic IntersectionObserver fallback behavior.
+ *
+ * This test stubs IntersectionObserver so that the callback
+ * never reports an intersecting entry. The datetime should
+ * still become ready via its internal fallback logic.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime: IO fallback'), () => {
+    test('should become ready even if IntersectionObserver never reports visible', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30706',
+      });
+
+      await page.addInitScript(() => {
+        const OriginalIO = window.IntersectionObserver;
+        (window as any).IntersectionObserver = function (callback: any, options: any) {
+          const instance = new OriginalIO(() => {}, options);
+          const originalObserve = instance.observe.bind(instance);
+
+          instance.observe = (target: Element) => {
+            originalObserve(target);
+            callback([
+              {
+                isIntersecting: false,
+                target,
+              } as IntersectionObserverEntry,
+            ]);
+          };
+
+          return instance;
+        } as any;
+      });
+
+      await page.setContent(
+        `
+        <ion-datetime value="2022-05-03"></ion-datetime>
+      `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+
+      // Give the fallback a short amount of time to run
+      await page.waitForTimeout(100);
+
+      await expect(datetime).toHaveClass(/datetime-ready/);
+
+      const calendarBody = datetime.locator('.calendar-body');
+      await expect(calendarBody).toBeVisible();
+    });
+  });
+});
+
+/**
  * We are setting RTL on the component instead, so we don't need to test
  * both directions. Also, this behavior does not vary across modes.
  */
