@@ -36,5 +36,8 @@ export const lightTheme: LightTheme = {
     IonRange: {
       bg: colors.gray['100']!, // Available only in iOS
     },
+    IonRefresher: {
+      nativeSpinnerColor: '#747577', // Available only in iOS
+    },
   },
 };

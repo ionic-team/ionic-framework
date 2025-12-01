@@ -96,5 +96,9 @@ export const darkTheme: DarkTheme = {
     IonModal: {
       handleBg: colors.gray['350']!,
     },
+    IonRefresher: {
+      nativeSpinnerBorder: colors.gray['200']!, // Available only in md
+      nativeSpinnerBg: colors.gray['250']!, // Available only in md
+    },
   },
 };

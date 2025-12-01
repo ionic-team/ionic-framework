@@ -20,5 +20,9 @@ export const lightTheme: LightTheme = {
     IonModal: {
       handleBg: '#c0c0be',
     },
+    IonRefresher: {
+      nativeSpinnerBorder: '#ececec', // Available only in md
+      nativeSpinnerBg: '#ffffff', // Available only in md
+    },
   },
 };
