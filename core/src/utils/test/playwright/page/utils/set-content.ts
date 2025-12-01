@@ -84,7 +84,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
           window.Ionic = {
             config: {
               mode: '${mode}',
-              theme: '${theme}',
+              theme: '${theme}'
             }
           }
         </script>
