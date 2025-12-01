@@ -33,5 +33,8 @@ export const lightTheme: LightTheme = {
     IonPicker: {
       highlightBg: '#eeeeef', // Available only in iOS
     },
+    IonRange: {
+      bg: colors.gray['100']!, // Available only in iOS
+    },
   },
 };

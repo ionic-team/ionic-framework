@@ -91,5 +91,8 @@ export const darkTheme: DarkTheme = {
     IonPicker: {
       highlightBg: colors.gray['150']!, // Available only in iOS
     },
+    IonRange: {
+      bg: colors.gray['900']!, // Available only in iOS
+    },
   },
 };

@@ -23,7 +23,7 @@ $range-ios-hit-height: $range-ios-slider-height;
 $range-ios-bar-height: 4px;
 
 /// @prop - Background of the range bar
-$range-ios-bar-background-color: var(--ion-color-step-900, var(--ion-background-color-step-900, #e6e6e6));
+$range-ios-bar-background-color: var(--ion-components-ion-range-bg);
 
 /// @prop - Border radius of the range bar
 $range-ios-bar-border-radius: 2px;
