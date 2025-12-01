@@ -47,7 +47,7 @@
     "@playwright/test": "^1.56.1",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
-    "@stencil/angular-output-target": "^0.10.0",
+    "@stencil/angular-output-target": "^1.1.1",
     "@stencil/react-output-target": "0.5.3",
     "@stencil/sass": "^3.0.9",
     "@stencil/vue-output-target": "0.10.8",
