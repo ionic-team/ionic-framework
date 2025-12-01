@@ -19,7 +19,7 @@ $searchbar-md-padding-start: $searchbar-md-padding-end;
 $searchbar-md-background: inherit;
 
 /// @prop - Color of the searchbar cancel button
-$searchbar-md-cancel-button-color: $text-color-step-100;
+$searchbar-md-cancel-button-color: var(--ion-color-gray-900);
 
 /// @prop - Background color of the searchbar cancel button
 $searchbar-md-cancel-button-background-color: transparent;
@@ -28,7 +28,7 @@ $searchbar-md-cancel-button-background-color: transparent;
 $searchbar-md-cancel-button-font-size: 1.5em;
 
 /// @prop - Color of the searchbar input search icon
-$searchbar-md-input-search-icon-color: $text-color-step-400;
+$searchbar-md-input-search-icon-color: var(--ion-color-gray-600);
 
 /// @prop - Size of the searchbar input search icon
 $searchbar-md-input-search-icon-size: dynamic-font(21px);
@@ -44,7 +44,7 @@ $searchbar-md-input-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px 
   0 1px 5px 0 rgba(0, 0, 0, 0.12);
 
 /// @prop - Color of the searchbar input text
-$searchbar-md-input-text-color: $text-color-step-150;
+$searchbar-md-input-text-color: var(--ion-color-gray-850);
 
 /// @prop - Background of the searchbar input
 $searchbar-md-input-background-color: $background-color;
