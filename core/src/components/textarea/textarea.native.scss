@@ -72,14 +72,14 @@
 // ----------------------------------------------------------------
 
 .textarea-bottom .helper-text {
-  color: globals.$text-color-step-300;
+  color: var(--ion-color-gray-700);
 }
 
 // Textarea Max Length Counter
 // ----------------------------------------------------------------
 
 .textarea-bottom .counter {
-  color: globals.$text-color-step-300;
+  color: var(--ion-color-gray-700);
 
   padding-inline-start: 16px;
 }
