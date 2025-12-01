@@ -72,6 +72,7 @@ export const darkTheme: DarkTheme = {
       background: 'var(--ion-background-color-step-100)',
       toolbarBackground: 'var(--ion-background-color-step-150)',
       toolbarBorderColor: 'var(--ion-background-color-step-250)',
+      handleBg: colors.gray['350']!,
     },
     IonDatetime: {
       bg: colors.gray['950']!,

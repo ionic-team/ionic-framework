@@ -93,5 +93,8 @@ export const darkTheme: DarkTheme = {
     IonDatetimeButton: {
       bg: colors.gray['300']!,
     },
+    IonModal: {
+      handleBg: colors.gray['350']!,
+    },
   },
 };

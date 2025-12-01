@@ -27,5 +27,8 @@ export const lightTheme: LightTheme = {
     IonItem: {
       paragraphTextColor: '#a3a3a3',
     },
+    IonModal: {
+      handleBg: '#c0c0be',
+    },
   },
 };

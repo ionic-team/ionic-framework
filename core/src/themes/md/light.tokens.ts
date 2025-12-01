@@ -17,5 +17,8 @@ export const lightTheme: LightTheme = {
       colorFocused: '#35404e', // Available only in md
       separatorColor: '#73849a',
     },
+    IonModal: {
+      handleBg: '#c0c0be',
+    },
   },
 };

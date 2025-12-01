@@ -219,7 +219,27 @@
         <div class="block text-step-850">Step 850</div>
         <div class="block text-step-900">Step 900</div>
         <div class="block text-step-950">Step 950</div>
+
+        <h2>Gray</h2>
+        <div id="gray"></div>
       </ion-content>
     </ion-app>
+
+    <script>
+      // create gray color steps dynamically using the CSS variables
+      // like --ion-color-step-50, --ion-color-step-100, etc.
+      const grayContainer = document.getElementById('gray');
+      for (let i = 50; i <= 950; i += 50) {
+        // i want it to have a block showing the color gray step
+        // then the text "Gray {i}"
+        // then the value of the CSS variable --ion-color-gray-{i}
+        const block = document.createElement('div');
+        block.classList.add('block');
+        block.style.backgroundColor = `var(--ion-color-gray-${i})`;
+        block.style.color = `var(--ion-color-gray-${950 - i})`;
+        block.textContent = `Gray ${i} - var(--ion-color-gray-${i})`;
+        grayContainer.appendChild(block);
+      }
+    </script>
   </body>
 </html>
