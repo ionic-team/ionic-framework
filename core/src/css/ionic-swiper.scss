@@ -7,7 +7,7 @@
   // These values are the same for iOS and MD
   // We just do not add a .md or .ios class beforehand
   // so the styles are easier to override by the user.
-  --bullet-background: $text-color-step-800;
+  --bullet-background: var(--ion-color-gray-200);
   --bullet-background-active: ion-color(primary, base);
   --progress-bar-background: rgba($text-color-rgb, 0.25);
   --progress-bar-background-active: ion-color(primary, shade);
