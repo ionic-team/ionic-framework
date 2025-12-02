@@ -50,39 +50,39 @@
     </ion-app>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-          const grayContainer = document.getElementById('gray');
-          const bodyStyles = getComputedStyle(document.body); 
-          
-          for (let i = 0; i <= 1000; i += 50) {
-            const grayColor = `--ion-color-gray-${i}`;
-            
-            const colorValue = bodyStyles.getPropertyValue(grayColor).trim();
-            
-            const gridItem = document.createElement('div');
-            gridItem.classList.add('grid-item');
+      document.addEventListener('DOMContentLoaded', function () {
+        const grayContainer = document.getElementById('gray');
+        const bodyStyles = getComputedStyle(document.body);
 
-            const color = document.createElement('div');
-            color.classList.add('block', 'color-tile');
-            color.style.backgroundColor = `var(${grayColor})`;
+        for (let i = 0; i <= 1000; i += 50) {
+          const grayColor = `--ion-color-gray-${i}`;
 
-            color.addEventListener('click', () => {
-              navigator.clipboard.writeText(grayColor);
-              console.log(`${grayColor} copied to clipboard`);
-            });
+          const colorValue = bodyStyles.getPropertyValue(grayColor).trim();
 
-            gridItem.appendChild(color);
+          const gridItem = document.createElement('div');
+          gridItem.classList.add('grid-item');
 
-            const name = document.createElement('div');
-            name.textContent = `gray-${i}`;
-            gridItem.appendChild(name);
+          const color = document.createElement('div');
+          color.classList.add('block', 'color-tile');
+          color.style.backgroundColor = `var(${grayColor})`;
 
-            const value = document.createElement('div');
-            value.textContent = colorValue;
-            gridItem.appendChild(value);
+          color.addEventListener('click', () => {
+            navigator.clipboard.writeText(grayColor);
+            console.log(`${grayColor} copied to clipboard`);
+          });
 
-            grayContainer.appendChild(gridItem);
-          }
+          gridItem.appendChild(color);
+
+          const name = document.createElement('div');
+          name.textContent = `gray-${i}`;
+          gridItem.appendChild(name);
+
+          const value = document.createElement('div');
+          value.textContent = colorValue;
+          gridItem.appendChild(value);
+
+          grayContainer.appendChild(gridItem);
+        }
       });
     </script>
   </body>
