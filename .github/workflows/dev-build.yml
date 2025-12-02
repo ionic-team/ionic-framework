@@ -1,7 +1,11 @@
 name: 'Ionic Dev Build'
 
 on:
-  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   create-dev-hash:
@@ -9,7 +13,7 @@ jobs:
     outputs:
       dev-hash: ${{ steps.create-dev-hash.outputs.DEV_HASH }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
       # A 1 is required before the timestamp
       # as lerna will fail when there is a leading 0
       # See https://github.com/lerna/lerna/issues/2840
@@ -25,13 +29,12 @@ jobs:
   release-ionic:
     needs: [create-dev-hash]
     permissions:
+      contents: read
       id-token: write
     uses: ./.github/workflows/release-ionic.yml
     with:
       tag: dev
       version: ${{ needs.create-dev-hash.outputs.dev-hash }}
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   get-build:
     name: Get your dev build!

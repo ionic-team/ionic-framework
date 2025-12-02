@@ -14,8 +14,8 @@ jobs:
     permissions:
       security-events: write
     steps:
-      - uses: actions/checkout@v5
-      - uses: github/codeql-action/init@v3
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+      - uses: github/codeql-action/init@v4
         with:
           languages: javascript
-      - uses: github/codeql-action/analyze@v3
+      - uses: github/codeql-action/analyze@v4

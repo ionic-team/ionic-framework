@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "8.7.5",
+  "version": "8.7.11",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -32,12 +32,12 @@
   ],
   "dependencies": {
     "@phosphor-icons/core": "^2.1.1",
-    "@stencil/core": "4.36.2",
+    "@stencil/core": "4.38.0",
     "ionicons": "^8.0.13",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.10.2",
+    "@axe-core/playwright": "^4.11.0",
     "@capacitor/core": "^7.0.0",
     "@capacitor/haptics": "^7.0.0",
     "@capacitor/keyboard": "^7.0.0",
@@ -45,7 +45,7 @@
     "@clack/prompts": "^0.11.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
-    "@playwright/test": "^1.55.1",
+    "@playwright/test": "^1.56.1",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.10.0",
@@ -59,6 +59,7 @@
     "chalk": "^5.3.0",
     "clean-css-cli": "^5.6.1",
     "domino": "^2.1.6",
+    "esbuild": "^0.27.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-custom-rules": "file:custom-rules",
@@ -66,12 +67,11 @@
     "fs-extra": "^9.0.1",
     "jest": "^29.7.0",
     "jest-cli": "^29.7.0",
-    "outsystems-design-tokens": "^1.3.2",
+    "outsystems-design-tokens": "^1.3.4",
     "prettier": "^2.8.8",
     "rollup": "^2.26.4",
     "sass": "^1.33.0",
     "serve": "^14.0.1",
-    "style-dictionary": "^5.0.0",
     "stylelint": "^13.13.1",
     "stylelint-order": "^4.1.0"
   },
@@ -80,7 +80,7 @@
     "build.css": "npm run css.sass && npm run css.minify",
     "build.debug": "npm run clean && stencil build --debug",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
-    "build.tokens": "npx build.tokens --config scripts/tokens/index.mjs && npm run prettier.tokens",
+    "build.tokens": "npx build.tokens --dest src/foundations/ --root=false --scss=true --scss-file=ionic.vars.scss --scss-prefix=ion --utilities=false && npm run prettier.tokens",
     "build.themes": "esbuild src/themes/*/*.tokens.ts --bundle --format=esm --platform=browser --target=es2017 --outdir=themes --outbase=src/themes && esbuild src/utils/theme.ts --bundle --format=esm --platform=browser --target=es2017 --outfile=themes/utils/theme.js",
     "clean": "node scripts/clean.js",
     "css.minify": "cleancss -O2 -o ./css/ionic.bundle.css ./css/ionic.bundle.css",

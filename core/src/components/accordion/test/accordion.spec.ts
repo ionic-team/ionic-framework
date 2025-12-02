@@ -200,6 +200,87 @@ it('should set default values if not provided', async () => {
   expect(accordion.classList.contains('accordion-collapsed')).toEqual(false);
 });
 
+it('should not animate when initial value is set before load', async () => {
+  const page = await newSpecPage({
+    components: [Item, Accordion, AccordionGroup],
+  });
+
+  const accordionGroup = page.doc.createElement('ion-accordion-group');
+  accordionGroup.innerHTML = `
+    <ion-accordion value="first">
+      <ion-item slot="header">Label</ion-item>
+      <div slot="content">Content</div>
+    </ion-accordion>
+    <ion-accordion value="second">
+      <ion-item slot="header">Label</ion-item>
+      <div slot="content">Content</div>
+    </ion-accordion>
+  `;
+
+  accordionGroup.value = 'first';
+  page.body.appendChild(accordionGroup);
+
+  await page.waitForChanges();
+
+  const firstAccordion = accordionGroup.querySelector('ion-accordion[value="first"]')!;
+
+  expect(firstAccordion.classList.contains('accordion-expanded')).toEqual(true);
+  expect(firstAccordion.classList.contains('accordion-expanding')).toEqual(false);
+});
+
+it('should not animate when initial value is set after load', async () => {
+  const page = await newSpecPage({
+    components: [Item, Accordion, AccordionGroup],
+  });
+
+  const accordionGroup = page.doc.createElement('ion-accordion-group');
+  accordionGroup.innerHTML = `
+    <ion-accordion value="first">
+      <ion-item slot="header">Label</ion-item>
+      <div slot="content">Content</div>
+    </ion-accordion>
+    <ion-accordion value="second">
+      <ion-item slot="header">Label</ion-item>
+      <div slot="content">Content</div>
+    </ion-accordion>
+  `;
+
+  page.body.appendChild(accordionGroup);
+  await page.waitForChanges();
+
+  accordionGroup.value = 'first';
+  await page.waitForChanges();
+
+  const firstAccordion = accordionGroup.querySelector('ion-accordion[value="first"]')!;
+
+  expect(firstAccordion.classList.contains('accordion-expanded')).toEqual(true);
+  expect(firstAccordion.classList.contains('accordion-expanding')).toEqual(false);
+});
+
+it('should not have animated class on first expansion', async () => {
+  const page = await newSpecPage({
+    components: [Item, Accordion, AccordionGroup],
+    html: `
+      <ion-accordion-group>
+        <ion-accordion value="first">
+          <ion-item slot="header">Label</ion-item>
+          <div slot="content">Content</div>
+        </ion-accordion>
+      </ion-accordion-group>
+    `,
+  });
+
+  const accordionGroup = page.body.querySelector('ion-accordion-group')!;
+  const firstAccordion = page.body.querySelector('ion-accordion[value="first"]')!;
+
+  // First expansion should not have the animated class
+  accordionGroup.value = 'first';
+  await page.waitForChanges();
+
+  expect(firstAccordion.classList.contains('accordion-animated')).toEqual(false);
+  expect(firstAccordion.classList.contains('accordion-expanded')).toEqual(true);
+});
+
 // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/27047
 it('should not have animated class when animated="false"', async () => {
   const page = await newSpecPage({

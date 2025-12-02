@@ -68,19 +68,23 @@
 // --------------------------------------------------
 
 :host(.input-otp-shape-round) {
-  --border-radius: #{globals.$ion-border-radius-400};
+  --border-radius: #{globals.$ion-round-xl};
 }
 
 :host(.input-otp-shape-soft) {
-  --border-radius: #{globals.$ion-border-radius-200};
+  --border-radius: #{globals.$ion-soft-xl};
 }
 
 :host(.input-otp-shape-rectangular) {
-  --border-radius: #{globals.$ion-border-radius-0};
+  --border-radius: #{globals.$ion-rectangular-xl};
 }
 
 // Fills
 // --------------------------------------------------
+
+:host(.input-otp-fill-outline) {
+  --background: #{globals.$ion-bg-input-default};
+}
 
 :host(.input-otp-fill-solid) {
   --border-color: #{globals.$ion-bg-input-bold-default};

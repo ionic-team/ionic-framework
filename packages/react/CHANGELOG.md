@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.11](https://github.com/ionic-team/ionic-framework/compare/v8.7.10...v8.7.11) (2025-11-26)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.7.10](https://github.com/ionic-team/ionic-framework/compare/v8.7.9...v8.7.10) (2025-11-19)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.7.9](https://github.com/ionic-team/ionic-framework/compare/v8.7.8...v8.7.9) (2025-11-05)
+
+
+### Bug Fixes
+
+* **accordion-group:** skip initial animation ([#30729](https://github.com/ionic-team/ionic-framework/issues/30729)) ([58d5638](https://github.com/ionic-team/ionic-framework/commit/58d563805fca1db88caeeb40a8f710ac30416d93)), closes [#30613](https://github.com/ionic-team/ionic-framework/issues/30613)
+
+
+
+
+
+## [8.7.8](https://github.com/ionic-team/ionic-framework/compare/v8.7.7...v8.7.8) (2025-10-29)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.7.7](https://github.com/ionic-team/ionic-framework/compare/v8.7.6...v8.7.7) (2025-10-15)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.7.6](https://github.com/ionic-team/ionic-framework/compare/v8.7.5...v8.7.6) (2025-10-08)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
 ## [8.7.5](https://github.com/ionic-team/ionic-framework/compare/v8.7.4...v8.7.5) (2025-09-24)
 
 
