@@ -69,9 +69,9 @@ export const darkTheme: DarkTheme = {
       paragraphTextColor: colors.gray['450']!,
     },
     IonModal: {
-      background: 'var(--ion-background-color-step-100)',
-      toolbarBackground: 'var(--ion-background-color-step-150)',
-      toolbarBorderColor: 'var(--ion-background-color-step-250)',
+      background: 'var(--ion-color-gray-100)',
+      toolbarBackground: 'var(--ion-color-gray-150)',
+      toolbarBorderColor: 'var(--ion-color-gray-250)',
       handleBg: colors.gray['350']!,
     },
     IonDatetime: {
