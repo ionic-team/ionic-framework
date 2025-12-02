@@ -153,19 +153,16 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     }
 
     const leavingUrl = leavingLocationInfo.pathname + leavingLocationInfo.search;
-    // Check if the URL has changed.
     if (leavingUrl !== location.pathname) {
-      // An external navigation was triggered.
       if (!incomingRouteParams.current) {
         // Determine if the destination is a tab route by checking if it matches
         // the pattern of tab routes (containing /tabs/ in the path)
         const isTabRoute = /\/tabs(\/|$)/.test(location.pathname);
-        let tabToUse = isTabRoute ? currentTab.current : undefined;
+        const tabToUse = isTabRoute ? currentTab.current : undefined;
 
         // If we're leaving tabs entirely, clear the current tab
         if (!isTabRoute && currentTab.current) {
           currentTab.current = undefined;
-          tabToUse = undefined;
         }
 
         /**
@@ -201,7 +198,6 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
             };
           }
         }
-        // Still found no params, set it to a default state of forward.
         if (!incomingRouteParams.current) {
           const state = location.state as LocationState | null;
           incomingRouteParams.current = {
@@ -247,9 +243,8 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
           params: incomingRouteParams.current?.params
             ? filterUndefinedParams(incomingRouteParams.current.params as RouteParams)
             : {},
-          prevRouteLastPathname: leavingLocationInfo.lastPathname, // The lastPathname of the route we are leaving
+          prevRouteLastPathname: leavingLocationInfo.lastPathname,
         };
-        // It's a linear navigation.
         if (isPushed) {
           // Only inherit tab from leaving route if we don't already have one.
           // This preserves tab context for same-tab navigation while allowing cross-tab navigation.
@@ -312,7 +307,6 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
       setRouteInfo(routeInfo);
     }
 
-    // Reset for the next navigation.
     incomingRouteParams.current = null;
   };
 

@@ -113,7 +113,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     this.registerIonPage = this.registerIonPage.bind(this);
     this.transitionPage = this.transitionPage.bind(this);
     this.handlePageTransition = this.handlePageTransition.bind(this);
-    // Use provided id prop if available; otherwise generate a unique id.
     this.id = props.id || `routerOutlet-${generateId('routerOutlet')}`;
     this.prevProps = undefined;
     this.skipTransition = false;
@@ -435,13 +434,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         if (!leavingViewItem) {
           return false;
         }
-
-        // routeOptions.unmount should NOT trigger view removal - it just hides the view
-        // The view needs to remain in the stack for tab navigation and back navigation
-        // Don't set mount = false, just let the transition hide the page
-        // if (routeInfo.routeOptions?.unmount) {
-        //   return true;
-        // }
 
         if (routeInfo.routeAction === 'replace') {
           return true;
@@ -799,16 +791,12 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
             leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
           }
-          if (shouldUnmountLeavingViewItem && leavingViewItem) {
+          if (shouldUnmountLeavingViewItem) {
             leavingViewItem.mount = false;
           }
-        } else {
-          // No entering or leaving view - this might be a routing issue
-          // Don't retry endlessly to avoid infinite loops
         }
       }
 
-      // Force re-render so views update according to their new mount/visible status
       this.forceUpdate();
     }
   }
@@ -1054,11 +1042,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           await runCommit(enteringViewItem.ionPageElement, undefined);
         }
       } else {
-        // The leaving view is not the same as the entering view
-        // (e.g., `/home` → `/settings` or initial load `/`)
         await runCommit(enteringViewItem.ionPageElement, leavingViewItem?.ionPageElement);
         if (leavingViewItem && leavingViewItem.ionPageElement && !progressAnimation) {
-          // An initiial load will not have a leaving view.
           leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
           leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
         }
@@ -1213,7 +1198,7 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
   if (absolutePathRoutes.length > 0) {
     // Find common prefix of all absolute paths to determine outlet scope
     const absolutePaths = absolutePathRoutes.map((r) => r.props.path as string);
-    const commonPrefix = findCommonPrefix(absolutePaths);
+    const commonPrefix = computeCommonPrefix(absolutePaths);
 
     // If we have a common prefix, check if the current pathname is within that scope
     if (commonPrefix && commonPrefix !== '/') {
@@ -1232,44 +1217,6 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
   }
 
   return matchedNode ?? fallbackNode;
-}
-
-/**
- * Finds the longest common prefix among an array of paths.
- * Used to determine the scope of an outlet with absolute routes.
- */
-function findCommonPrefix(paths: string[]): string {
-  if (paths.length === 0) return '';
-  if (paths.length === 1) {
-    // For a single path, extract the directory-like prefix
-    // e.g., /dynamic-routes/home -> /dynamic-routes
-    const segments = paths[0].split('/').filter(Boolean);
-    if (segments.length > 1) {
-      return '/' + segments.slice(0, -1).join('/');
-    }
-    return '/' + segments[0];
-  }
-
-  // Split all paths into segments
-  const segmentArrays = paths.map((p) => p.split('/').filter(Boolean));
-  const minLength = Math.min(...segmentArrays.map((s) => s.length));
-
-  const commonSegments: string[] = [];
-  for (let i = 0; i < minLength; i++) {
-    const segment = segmentArrays[0][i];
-    // Skip segments with route parameters or wildcards
-    if (segment.includes(':') || segment.includes('*')) {
-      break;
-    }
-    const allMatch = segmentArrays.every((s) => s[i] === segment);
-    if (allMatch) {
-      commonSegments.push(segment);
-    } else {
-      break;
-    }
-  }
-
-  return commonSegments.length > 0 ? '/' + commonSegments.join('/') : '';
 }
 
 function matchComponent(node: React.ReactElement, pathname: string, forceExact?: boolean) {

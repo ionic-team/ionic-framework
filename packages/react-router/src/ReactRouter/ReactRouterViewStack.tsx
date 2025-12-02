@@ -102,8 +102,6 @@ const resolveIndexRouteMatch = (
 };
 
 export class ReactRouterViewStack extends ViewStacks {
-  private pendingViewItems: Map<string, ViewItem> = new Map();
-  private deactivationQueue: Map<string, NodeJS.Timeout> = new Map();
   private viewItemCounter = 0;
 
   constructor() {
@@ -182,20 +180,8 @@ export class ReactRouterViewStack extends ViewStacks {
       return existingViewItem;
     }
 
-    // Create a truly unique ID by combining outlet ID with an incrementing counter
     this.viewItemCounter++;
     const id = `${outletId}-${this.viewItemCounter}`;
-
-    // Add infinite loop detection with a more reasonable limit
-    // In complex navigation flows, we may have many view items across different outlets
-    if (this.viewItemCounter > 100) {
-      // Clean up all outlets to prevent memory leaks
-      this.getStackIds().forEach((stackId) => this.cleanupStaleViewItems(stackId));
-      // Reset counter to a lower value after cleanup
-      if (this.viewItemCounter > 100) {
-        this.viewItemCounter = 50;
-      }
-    }
 
     const viewItem: ViewItem = {
       id,
@@ -219,9 +205,7 @@ export class ReactRouterViewStack extends ViewStacks {
       childProps: reactElement.props,
     };
 
-    // Store in pending until properly added
-    const key = `${outletId}-${routeInfo.pathname}`;
-    this.pendingViewItems.set(key, viewItem);
+    this.add(viewItem);
 
     return viewItem;
   };
@@ -254,14 +238,6 @@ export class ReactRouterViewStack extends ViewStacks {
     // Flag to indicate this view should not be reused for this different parameterized path
     const shouldSkipForDifferentParam = isParameterRoute && match && previousMatch && !isSamePath;
 
-    // Cancel any pending deactivation if we have a match
-    if (match) {
-      const timeoutId = this.deactivationQueue.get(viewItem.id);
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-        this.deactivationQueue.delete(viewItem.id);
-      }
-    }
 
     // Don't deactivate views automatically - let the StackManager handle view lifecycle
     // This preserves views in the stack for navigation history like native apps
@@ -342,9 +318,7 @@ export class ReactRouterViewStack extends ViewStacks {
 
         // Check if this view item would match the current route
         const vMatch = v.reactElement ? matchComponent(v.reactElement, routeInfo.pathname) : null;
-        const hasMatch = !!vMatch;
-
-        return hasMatch;
+        return !!vMatch;
       });
 
       if (hasSpecificMatch) {
@@ -655,7 +629,6 @@ export class ReactRouterViewStack extends ViewStacks {
       return true;
     });
 
-    // Render all view items using renderViewItem
     const renderedItems = renderableViewItems.map((viewItem) => this.renderViewItem(viewItem, routeInfo, parentPath));
     return renderedItems;
   };
@@ -701,25 +674,6 @@ export class ReactRouterViewStack extends ViewStacks {
     let viewItem: ViewItem | undefined;
     let match: PathMatch<string> | null = null;
     let viewStack: ViewItem[];
-
-    // First check pending items
-    if (outletId) {
-      const pendingKey = `${outletId}-${pathname}`;
-      const pendingItem = this.pendingViewItems.get(pendingKey);
-      if (pendingItem) {
-        // Move from pending to active
-        this.pendingViewItems.delete(pendingKey);
-        this.add(pendingItem);
-        return { viewItem: pendingItem, match: pendingItem.routeData.match };
-      }
-
-      // Fallback: If we did not find a pending item for this outlet, look for
-      // a pending view item created under a different outlet for the same pathname
-      // and adopt it into the current outlet. This can happen if an outlet remounts
-      // (e.g., during browser forward navigation) and gets a new generated id.
-      // Disable cross-outlet adoption for now; it can cause mismatches where
-      // views are moved between outlets with different routing scopes.
-    }
 
     // Helper function to sort views by specificity (most specific first)
     const sortBySpecificity = (views: ViewItem[]) => {
@@ -885,19 +839,13 @@ export class ReactRouterViewStack extends ViewStacks {
 
     super.add(viewItem);
 
-    // Clean up stale view items after adding new ones
     this.cleanupStaleViewItems(viewItem.outletId);
   };
 
   /**
-   * Override remove to clear any pending deactivations
+   * Override remove
    */
   remove = (viewItem: ViewItem) => {
-    const timeoutId = this.deactivationQueue.get(viewItem.id);
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      this.deactivationQueue.delete(viewItem.id);
-    }
     super.remove(viewItem);
   };
 }
