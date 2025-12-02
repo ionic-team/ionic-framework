@@ -14,23 +14,23 @@ on:
       preid:
         description: 'The prerelease identifier used when doing a prerelease.'
         type: string
-    secrets:
-      NPM_TOKEN:
-        required: true
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   release-core:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+    - uses: ./.github/actions/publish-npm
       with:
         scope: '@ionic/core'
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
         working-directory: 'core'
-        token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/core
       uses: ./.github/workflows/actions/upload-archive
       with:
@@ -48,34 +48,33 @@ jobs:
     needs: [release-core]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
     - name: Restore @ionic/docs built cache
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-docs
         path: ./packages/docs
         filename: DocsBuild.zip
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: ./.github/actions/publish-npm
       with:
         scope: '@ionic/docs'
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
         working-directory: 'packages/docs'
-        token: ${{ secrets.NPM_TOKEN }}
 
   release-angular:
     needs: [release-core]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
     - name: Restore @ionic/core built cache
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: ./.github/actions/publish-npm
       with:
         scope: '@ionic/angular'
         tag: ${{ inputs.tag }}
@@ -83,7 +82,6 @@ jobs:
         preid: ${{ inputs.preid }}
         working-directory: 'packages/angular'
         folder: './dist'
-        token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/angular
       uses: ./.github/workflows/actions/upload-archive
       with:
@@ -95,21 +93,20 @@ jobs:
     needs: [release-core]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
     - name: Restore @ionic/core built cache
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: ./.github/actions/publish-npm
       with:
         scope: '@ionic/react'
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
         working-directory: 'packages/react'
-        token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/react
       uses: ./.github/workflows/actions/upload-archive
       with:
@@ -121,21 +118,20 @@ jobs:
     needs: [release-core]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
     - name: Restore @ionic/core built cache
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: ./.github/actions/publish-npm
       with:
         scope: '@ionic/vue'
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
         working-directory: 'packages/vue'
-        token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/vue
       uses: ./.github/workflows/actions/upload-archive
       with:
@@ -147,14 +143,14 @@ jobs:
     needs: [release-core]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
     - name: Restore @ionic/core built cache
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: ./.github/actions/publish-npm
       with:
         scope: '@ionic/angular-server'
         tag: ${{ inputs.tag }}
@@ -162,13 +158,12 @@ jobs:
         preid: ${{ inputs.preid }}
         working-directory: 'packages/angular-server'
         folder: './dist'
-        token: ${{ secrets.NPM_TOKEN }}
 
   release-react-router:
     needs: [release-react]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
     - name: Restore @ionic/core built cache
       uses: ./.github/workflows/actions/download-archive
       with:
@@ -181,20 +176,19 @@ jobs:
         name: ionic-react
         path: ./packages/react
         filename: ReactBuild.zip
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: ./.github/actions/publish-npm
       with:
         scope: '@ionic/react-router'
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
         working-directory: 'packages/react-router'
-        token: ${{ secrets.NPM_TOKEN }}
 
   release-vue-router:
     needs: [release-vue]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
     - name: Restore @ionic/core built cache
       uses: ./.github/workflows/actions/download-archive
       with:
@@ -207,11 +201,10 @@ jobs:
         name: ionic-vue
         path: ./packages/vue
         filename: VueBuild.zip
-    - uses: ./.github/workflows/actions/publish-npm
+    - uses: ./.github/actions/publish-npm
       with:
         scope: '@ionic/vue-router'
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
         working-directory: 'packages/vue-router'
-        token: ${{ secrets.NPM_TOKEN }}

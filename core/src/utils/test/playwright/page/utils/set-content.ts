@@ -43,6 +43,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
     theme === 'ionic'
       ? `
     <link href="${baseUrl}/css/ionic/bundle.ionic.css" rel="stylesheet" />
+    <link href="${baseUrl}/css/utils.bundle.css" rel="stylesheet" />
   `
       : `
     <link href="${baseUrl}/css/ionic.bundle.css" rel="stylesheet" />
@@ -56,6 +57,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
       theme === 'ionic'
         ? `
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic/bundle.ionic.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/utils.bundle.css" />
     `
         : `
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
@@ -126,6 +128,13 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
       }
     });
 
+    /**
+     * URL query parameters cause the custom Playwright `page.route`
+     * interceptor to fail, which is necessary to inject the test HTML.
+     *
+     * To avoid this, the final navigation URL is kept simple by using
+     * hash params to ensure the route interceptor always works.
+     */
     await page.goto(`${baseUrl}#`, options);
   }
 };

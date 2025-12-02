@@ -7,13 +7,13 @@ on:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@v5
+    - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
       with:
-        node-version: 22.x
-    - uses: actions/download-artifact@v5
+        node-version: 24.x
+    - uses: actions/download-artifact@v6
       with:
         path: ./artifacts
-    - name: Extract Archives
+    - name: 🔎 Extract Archives
       # This finds all .zip files in the ./artifacts
       # directory, including nested directories.
       # It then unzips every .zip to the root directory
@@ -21,7 +21,7 @@ runs:
         find . -type f -name 'UpdatedScreenshots-*.zip' -exec unzip -q -o -d ../ {} \;
       shell: bash
       working-directory: ./artifacts
-    - name: Push Screenshots
+    - name: 📸 Push Screenshots
       # Configure user as Ionitron
       # and push only the changed .png snapshots
       # to the remote branch.

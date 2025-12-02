@@ -5,7 +5,7 @@
 
 :host(.textarea-fill-outline) {
   --border-width: #{globals.$ion-border-size-025};
-  --border-color: #{globals.$ion-primitives-neutral-500};
+  --border-color: #{globals.$ion-border-input-default};
 }
 
 // Textarea Fill: Outline, Textarea Wrapper

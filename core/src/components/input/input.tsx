@@ -15,7 +15,7 @@ import {
   h,
 } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
-import { createNotchController } from '@utils/forms';
+import { createNotchController, checkInvalidState } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -425,16 +425,6 @@ export class Input implements ComponentInterface {
     }
   }
 
-  /**
-   * Checks if the input is in an invalid state based on Ionic validation classes
-   */
-  private checkInvalidState(): boolean {
-    const hasIonTouched = this.el.classList.contains('ion-touched');
-    const hasIonInvalid = this.el.classList.contains('ion-invalid');
-
-    return hasIonTouched && hasIonInvalid;
-  }
-
   connectedCallback() {
     const { el } = this;
 
@@ -448,7 +438,7 @@ export class Input implements ComponentInterface {
     // Watch for class changes to update validation state
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
       this.validationObserver = new MutationObserver(() => {
-        const newIsInvalid = this.checkInvalidState();
+        const newIsInvalid = checkInvalidState(el);
         if (this.isInvalid !== newIsInvalid) {
           this.isInvalid = newIsInvalid;
           // Force a re-render to update aria-describedby immediately
@@ -463,7 +453,7 @@ export class Input implements ComponentInterface {
     }
 
     // Always set initial state
-    this.isInvalid = this.checkInvalidState();
+    this.isInvalid = checkInvalidState(el);
 
     this.debounceChanged();
     if (Build.isBrowser) {

@@ -1,0 +1,60 @@
+name: 'Release'
+description: 'Releases a package'
+inputs:
+  scope:
+    description: 'The package to release. Must match a package specified in lerna.json.'
+  version:
+    description: 'The type of version to release.'
+  tag:
+    description: 'The tag to publish to on NPM.'
+  preid:
+    description: "Prerelease identifier such as 'alpha', 'beta', 'rc', or 'next'. Leave blank to skip prerelease tagging."
+  working-directory:
+    description: 'The directory of the package.'
+  folder:
+    default: './'
+    description: 'A folder containing a package.json file.'
+  node-version:
+    description: 'Node.js version to use when publishing.'
+    required: false
+    default: '24.x'
+runs:
+  using: 'composite'
+  steps:
+    - name: 🟢 Configure Node for Publish
+      uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+      with:
+        node-version: ${{ inputs.node-version }}
+        registry-url: 'https://registry.npmjs.org'
+        scope: '@ionic'
+    # Provenance requires npm 9.5.0+
+    - name: 📦 Install latest npm
+      run: npm install -g npm@latest
+      shell: bash
+    # This ensures the local version of Lerna is installed
+    # and that we do not use the global Lerna version
+    - name: 🕸️ Install root dependencies
+      run: npm ci
+      shell: bash
+    - name: 📦 Install Dependencies
+      run: npx lerna@5 bootstrap --include-dependencies --scope ${{ inputs.scope }} --ignore-scripts -- --legacy-peer-deps
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - name: 🏷️ Set Version
+      run: |
+        if [ -z "${{ inputs.preid }}" ]; then
+          npx lerna@5 version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version
+        else
+          npx lerna@5 version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version --preid=${{ inputs.preid }}
+        fi
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - name: 🏗️ Run Build
+      run: npm run build
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - name: 🚀 Publish to NPM
+      run: npm publish ${{ inputs.folder }} --tag ${{ inputs.tag }} --provenance
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+

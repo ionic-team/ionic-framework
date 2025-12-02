@@ -1,27 +1,63 @@
+/**
+ * This script is loaded in testing environments to set up the
+ * document based on URL parameters.
+ * 
+ * Test pages (e.g., `chip/test/basic/index.html`) are set to use
+ * URL query parameters.
+ * 
+ * Playwright test environments (e.g., `chip/test/basic/chip.e2e.ts`)
+ * are set based on whether `setContent` or `goto` has been used:
+ * - `setContent` uses URL hash parameters. Tests will break if
+ * query parameters are used.
+ * - `goto` uses URL query parameters.
+ * 
+ * The following URL parameters are supported:
+ * - `rtl`: Set to `true` to enable right-to-left directionality.
+ * - `ionic:_testing`: Set to `true` to identify testing environments.
+ * - `ionic:theme`: Set to `ionic`, `ios`, or `md` to load a specific 
+ * theme. Defaults to `md`.
+ * - `palette`: Set to `light`, `dark`, `high-contrast`, or 
+ * `high-contrast-dark` to load a specific palette. Defaults to `light`.
+ */
+
 const DEFAULT_THEME = 'md';
 
 (function() {
+  
+  /**
+   * The `rtl` param is used to set the directionality of the 
+   * document. This can be `true` or `false`.
+   */
+  const isRTL = window.location.search.indexOf('rtl=true') > -1 || window.location.hash.indexOf('rtl=true') > -1;
 
-  if (window.location.search.indexOf('rtl=true') > -1) {
+  if (isRTL) {
     document.documentElement.setAttribute('dir', 'rtl');
   }
 
-  if (window.location.search.indexOf('ionic:_testing=true') > -1) {
+  /**
+   * The `ionic:_testing` param is used to identify testing
+   * environments.
+   */
+  const isTestEnv = window.location.search.indexOf('ionic:_testing=true') > -1 || window.location.hash.indexOf('ionic:_testing=true') > -1;
+
+  if (isTestEnv) {
     const style = document.createElement('style');
     style.innerHTML = `
-* {
-  caret-color: transparent !important;
-}`;
+      * {
+        caret-color: transparent !important;
+      }
+    `;
     document.head.appendChild(style);
   }
 
   /**
-  * The `theme` query param is used to load a specific theme.
-  * This can be `ionic`, `ios`, or `md`. Default to `md` for tests.
-  */
+   * The `theme` param is used to load a specific theme.
+   * This can be `ionic`, `ios`, or `md`. Default to `md` for tests.
+   */
   const themeQuery = window.location.search.match(/ionic:theme=([a-z0-9]+)/i);
+  const themeHash = window.location.hash.match(/ionic:theme=([a-z0-9]+)/i);
   const themeAttr = document.documentElement.getAttribute('theme');
-  const themeName = themeQuery?.[1] || themeAttr || DEFAULT_THEME;
+  const themeName = themeQuery?.[1] || themeHash?.[1] || themeAttr || DEFAULT_THEME;
 
   // TODO(): Remove this when the tokens are working for all components
   // and the themes all use the same bundle
@@ -43,12 +79,19 @@ const DEFAULT_THEME = 'md';
   }
 
   /**
-   * The `palette` query param is used to load a specific palette
-   * for the theme. This can be `light`, `dark`, `high-contrast`,
+   * The `palette` param is used to load a specific palette
+   * for the theme.
+   * The dark class will load the dark palette automatically
+   * if no palette is specified through the URL.
+   * 
+   * Values can be `light`, `dark`, `high-contrast`,
    * or `high-contrast-dark`. Default to `light` for tests.
    */
   const paletteQuery = window.location.search.match(/palette=([a-z]+)/);
-  const paletteName = paletteQuery?.[1] || 'light';
+  const paletteHash = window.location.hash.match(/palette=([a-z]+)/);
+  const darkClass = document.body?.classList.contains('ion-palette-dark') ? 'dark' : null;
+
+  const paletteName = paletteQuery?.[1] || paletteHash?.[1] || darkClass || 'light';
 
   // Load theme tokens if the theme is valid
   const validThemes = ['ionic', 'ios', 'md'];

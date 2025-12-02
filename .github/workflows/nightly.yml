@@ -1,10 +1,11 @@
 name: 'Ionic Nightly Build'
 
 on:
-  schedule:
-    # Run every Monday-Friday
-    # at 6:00 UTC (6:00 am UTC)
-    - cron: '00 06 * * 1-5'
+  workflow_call:
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   create-nightly-hash:
@@ -12,7 +13,7 @@ jobs:
     outputs:
       nightly-hash: ${{ steps.create-nightly-hash.outputs.NIGHTLY_HASH }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
       # A 1 is required before the timestamp
       # as lerna will fail when there is a leading 0
       # See https://github.com/lerna/lerna/issues/2840
@@ -30,10 +31,10 @@ jobs:
   release-ionic:
     needs: [create-nightly-hash]
     permissions:
+      contents: read
       id-token: write
     uses: ./.github/workflows/release-ionic.yml
+    secrets: inherit
     with:
       tag: nightly
       version: ${{ needs.create-nightly-hash.outputs.nightly-hash }}
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -5,7 +5,7 @@ import type { Attributes } from '@utils/helpers';
 import { inheritAttributes } from '@utils/helpers';
 
 import { config } from '../../global/config';
-import { getIonTheme } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type {
   TabBarChangedEventDetail,
   TabButtonClickEventDetail,
@@ -163,10 +163,20 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     this.selectTab(ev);
   };
 
+  private canActivate(): boolean {
+    const theme = getIonTheme(this);
+    const mode = getIonMode(this);
+    if (theme !== 'ionic') {
+      return true;
+    }
+    return mode === 'md';
+  }
+
   render() {
     const { disabled, hasIcon, hasLabel, href, rel, target, layout, selected, tab, inheritedAttributes } = this;
     const theme = getIonTheme(this);
     const shape = this.getShape();
+    const canActivate = this.canActivate();
     const attrs = {
       download: this.download,
       href,
@@ -188,7 +198,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
           'tab-has-label-only': hasLabel && !hasIcon,
           'tab-has-icon-only': hasIcon && !hasLabel,
           [`tab-layout-${layout}`]: true,
-          'ion-activatable': true,
+          'ion-activatable': canActivate,
           'ion-selectable': true,
           [`tab-button-shape-${shape}`]: shape !== undefined,
           'ion-focusable': true,

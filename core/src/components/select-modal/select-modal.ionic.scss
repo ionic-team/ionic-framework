@@ -4,6 +4,10 @@
 // Ionic Select Modal
 // --------------------------------------------------
 
+:host(.in-modal-default) ion-content::part(scroll) {
+  --padding-bottom: #{globals.$ion-space-400};
+}
+
 // Item
 // ----------------------------------------------------------------
 
@@ -67,4 +71,9 @@ ion-content {
   --padding-end: #{globals.$ion-space-400} !important;
   /* stylelint-disable-next-line declaration-no-important */
   --padding-bottom: #{globals.$ion-space-1200} !important;
+
+  // Set the background to the focused element within a radio group only when there is a checked radio
+  &:has(.radio-checked) .ion-focused:not(.item-radio-checked) {
+    --background-focused-opacity: 1;
+  }
 }
