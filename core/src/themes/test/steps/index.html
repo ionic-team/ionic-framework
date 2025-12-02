@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Themes - Steps</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+
+      .grid-item {
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .color-tile {
+        border: 1px solid #f2f2f2;
+        height: 60px;
+        width: 100%;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Themes - Steps</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <h2>Gray</h2>
+        <div id="gray" class="grid"></div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const grayContainer = document.getElementById('gray');
+          const bodyStyles = getComputedStyle(document.body); 
+          
+          for (let i = 0; i <= 1000; i += 50) {
+            const grayColor = `--ion-color-gray-${i}`;
+            
+            const colorValue = bodyStyles.getPropertyValue(grayColor).trim();
+            
+            const gridItem = document.createElement('div');
+            gridItem.classList.add('grid-item');
+
+            const color = document.createElement('div');
+            color.classList.add('block', 'color-tile');
+            color.style.backgroundColor = `var(${grayColor})`;
+
+            color.addEventListener('click', () => {
+              navigator.clipboard.writeText(grayColor);
+              console.log(`${grayColor} copied to clipboard`);
+            });
+
+            gridItem.appendChild(color);
+
+            const name = document.createElement('div');
+            name.textContent = `gray-${i}`;
+            gridItem.appendChild(name);
+
+            const value = document.createElement('div');
+            value.textContent = colorValue;
+            gridItem.appendChild(value);
+
+            grayContainer.appendChild(gridItem);
+          }
+      });
+    </script>
+  </body>
+</html>
