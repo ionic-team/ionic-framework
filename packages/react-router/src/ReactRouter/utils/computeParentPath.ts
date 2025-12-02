@@ -1,8 +1,6 @@
-import React from 'react';
-import { Route } from 'react-router-dom';
+import type React from 'react';
 
-import { getRoutesChildren } from './getRoutesChildren';
-import { matchPath } from './matchPath';
+import { matchPath } from './pathMatching';
 
 /**
  * Finds the longest common prefix among an array of paths.
@@ -75,19 +73,6 @@ export interface ParentPathResult {
   parentPath: string | undefined;
   outletMountPath: string | undefined;
 }
-
-/**
- * Extracts Route children from a node (either directly or from a Routes wrapper).
- *
- * @param children The children to extract routes from.
- * @returns An array of Route elements.
- */
-export const extractRouteChildren = (children: React.ReactNode): React.ReactElement[] => {
-  const routesChildren = getRoutesChildren(children) ?? children;
-  return React.Children.toArray(routesChildren).filter(
-    (child): child is React.ReactElement => React.isValidElement(child) && child.type === Route
-  );
-};
 
 interface RouteAnalysis {
   hasRelativeRoutes: boolean;

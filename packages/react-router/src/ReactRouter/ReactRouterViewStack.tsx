@@ -11,11 +11,11 @@ import React from 'react';
 import type { PathMatch } from 'react-router';
 import { Navigate, UNSAFE_RouteContext as RouteContext } from 'react-router-dom';
 
-import { analyzeRouteChildren, computeParentPath, extractRouteChildren } from './utils/computeParentPath';
-import { derivePathnameToMatch } from './utils/derivePathnameToMatch';
-import { matchPath } from './utils/matchPath';
-import { normalizePathnameForComparison } from './utils/normalizePath';
-import { isNavigateElement, sortViewsBySpecificity } from './utils/routeUtils';
+import { analyzeRouteChildren, computeParentPath } from './utils/computeParentPath';
+import { derivePathnameToMatch, matchPath } from './utils/pathMatching';
+import { normalizePathnameForComparison } from './utils/pathNormalization';
+import { extractRouteChildren, isNavigateElement } from './utils/routeElements';
+import { sortViewsBySpecificity } from './utils/viewItemUtils';
 
 /**
  * Delay in milliseconds before removing a Navigate view item after a redirect.
@@ -50,7 +50,6 @@ const createDefaultMatch = (
     },
   };
 };
-
 
 const computeRelativeToParent = (pathname: string, parentPath?: string): string | null => {
   if (!parentPath) return null;
@@ -237,7 +236,6 @@ export class ReactRouterViewStack extends ViewStacks {
 
     // Flag to indicate this view should not be reused for this different parameterized path
     const shouldSkipForDifferentParam = isParameterRoute && match && previousMatch && !isSamePath;
-
 
     // Don't deactivate views automatically - let the StackManager handle view lifecycle
     // This preserves views in the stack for navigation history like native apps
@@ -519,8 +517,7 @@ export class ReactRouterViewStack extends ViewStacks {
 
           // Check if current pathname is within this view's route hierarchy
           const isWithinRouteHierarchy =
-            normalizedCurrentPath === normalizedViewPath ||
-            normalizedCurrentPath.startsWith(normalizedViewPath + '/');
+            normalizedCurrentPath === normalizedViewPath || normalizedCurrentPath.startsWith(normalizedViewPath + '/');
 
           if (!isWithinRouteHierarchy) {
             // View is outside current route hierarchy, remove it

@@ -10,17 +10,10 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import { clonePageElement } from './clonePageElement';
-import {
-  analyzeRouteChildren,
-  computeCommonPrefix,
-  computeParentPath,
-  extractRouteChildren,
-} from './utils/computeParentPath';
-import { derivePathnameToMatch } from './utils/derivePathnameToMatch';
-import { getRoutesChildren } from './utils/getRoutesChildren';
-import { matchPath } from './utils/matchPath';
-import { stripTrailingSlash } from './utils/normalizePath';
-import { isNavigateElement } from './utils/routeUtils';
+import { analyzeRouteChildren, computeCommonPrefix, computeParentPath } from './utils/computeParentPath';
+import { derivePathnameToMatch, matchPath } from './utils/pathMatching';
+import { stripTrailingSlash } from './utils/pathNormalization';
+import { extractRouteChildren, getRoutesChildren, isNavigateElement } from './utils/routeElements';
 
 /**
  * Delay in milliseconds before unmounting a view after a transition completes.
@@ -149,7 +142,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     enteringViewItem: ViewItem | undefined;
     leavingViewItem: ViewItem | undefined;
   } {
-    let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
+    const enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
     let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
 
     // If we don't have a leaving view item, but the route info indicates
@@ -257,7 +250,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       return false;
     }
 
-    const routesChildren = getRoutesChildren(this.ionRouterOutlet.props.children) ?? this.ionRouterOutlet.props.children;
+    const routesChildren =
+      getRoutesChildren(this.ionRouterOutlet.props.children) ?? this.ionRouterOutlet.props.children;
     const routeChildren = React.Children.toArray(routesChildren).filter(
       (child): child is React.ReactElement => React.isValidElement(child) && child.type === Route
     );
@@ -382,11 +376,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   /**
    * Handles the delayed unmount of the leaving view item after a replace action.
    */
-  private handleLeavingViewUnmount(
-    routeInfo: RouteInfo,
-    enteringViewItem: ViewItem,
-    leavingViewItem: ViewItem
-  ): void {
+  private handleLeavingViewUnmount(routeInfo: RouteInfo, enteringViewItem: ViewItem, leavingViewItem: ViewItem): void {
     if (routeInfo.routeAction !== 'replace' || !leavingViewItem.ionPageElement) {
       return;
     }
@@ -538,9 +528,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     // the nested outlet's componentDidUpdate won't be called, so we must hide
     // the ion-page elements here to prevent them from remaining visible on top
     // of other content after navigation to a different route.
-    const allViewsInOutlet = this.context.getViewItemsForOutlet
-      ? this.context.getViewItemsForOutlet(this.id)
-      : [];
+    const allViewsInOutlet = this.context.getViewItemsForOutlet ? this.context.getViewItemsForOutlet(this.id) : [];
     allViewsInOutlet.forEach((viewItem) => {
       hideIonPageElement(viewItem.ionPageElement);
     });
@@ -570,7 +558,9 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     }
 
     // Find entering and leaving view items
-    let { enteringViewItem, leavingViewItem } = this.findViewItems(routeInfo);
+    const viewItems = this.findViewItems(routeInfo);
+    let enteringViewItem = viewItems.enteringViewItem;
+    const leavingViewItem = viewItems.leavingViewItem;
     const shouldUnmountLeavingViewItem = this.shouldUnmountLeavingView(routeInfo, enteringViewItem, leavingViewItem);
 
     // Get parent path for nested outlets
