@@ -9,11 +9,25 @@ import type { RouteInfo, ViewItem } from '@ionic/react';
 import { IonRoute, ViewLifeCycleManager, ViewStacks } from '@ionic/react';
 import React from 'react';
 import type { PathMatch } from 'react-router';
-import { Navigate, Route, UNSAFE_RouteContext as RouteContext } from 'react-router-dom';
+import { Navigate, UNSAFE_RouteContext as RouteContext } from 'react-router-dom';
 
+import { analyzeRouteChildren, computeParentPath, extractRouteChildren } from './utils/computeParentPath';
 import { derivePathnameToMatch } from './utils/derivePathnameToMatch';
-import { findRoutesNode } from './utils/findRoutesNode';
 import { matchPath } from './utils/matchPath';
+import { normalizePathnameForComparison } from './utils/normalizePath';
+import { isNavigateElement, sortViewsBySpecificity } from './utils/routeUtils';
+
+/**
+ * Delay in milliseconds before removing a Navigate view item after a redirect.
+ * This ensures the redirect navigation completes before the view is removed.
+ */
+const NAVIGATE_REDIRECT_DELAY_MS = 100;
+
+/**
+ * Delay in milliseconds before cleaning up a view without an IonPage element.
+ * This double-checks that the view is truly not needed before removal.
+ */
+const VIEW_CLEANUP_DELAY_MS = 200;
 
 const createDefaultMatch = (
   fullPathname: string,
@@ -37,22 +51,6 @@ const createDefaultMatch = (
   };
 };
 
-const ensureLeadingSlash = (value: string): string => {
-  if (value === '') {
-    return '/';
-  }
-  return value.startsWith('/') ? value : `/${value}`;
-};
-
-const normalizePathnameForComparison = (value: string | undefined): string => {
-  if (!value || value === '') {
-    return '/';
-  }
-  const withLeadingSlash = ensureLeadingSlash(value);
-  return withLeadingSlash.length > 1 && withLeadingSlash.endsWith('/')
-    ? withLeadingSlash.slice(0, -1)
-    : withLeadingSlash;
-};
 
 const computeRelativeToParent = (pathname: string, parentPath?: string): string | null => {
   if (!parentPath) return null;
@@ -127,9 +125,11 @@ export class ReactRouterViewStack extends ViewStacks {
       const newIsIndexRoute = !!reactElement.props.index;
 
       // For Navigate components, match by destination
-      if (existingElement?.type?.name === 'Navigate' && newElement?.type?.name === 'Navigate') {
-        const existingTo = existingElement.props?.to;
-        const newTo = newElement.props?.to;
+      const existingIsNavigate = React.isValidElement(existingElement) && existingElement.type === Navigate;
+      const newIsNavigate = React.isValidElement(newElement) && newElement.type === Navigate;
+      if (existingIsNavigate && newIsNavigate) {
+        const existingTo = (existingElement.props as { to?: string })?.to;
+        const newTo = (newElement.props as { to?: string })?.to;
         if (existingTo === newTo) {
           return true;
         }
@@ -245,10 +245,7 @@ export class ReactRouterViewStack extends ViewStacks {
 
     // Special handling for Navigate components - they should unmount after redirecting
     const elementComponent = viewItem.reactElement?.props?.element;
-    const isNavigateComponent =
-      React.isValidElement(elementComponent) &&
-      (elementComponent.type === Navigate ||
-        (typeof elementComponent.type === 'function' && elementComponent.type.name === 'Navigate'));
+    const isNavigateComponent = isNavigateElement(elementComponent);
 
     if (isNavigateComponent) {
       // Navigate components should only be mounted when they match
@@ -266,7 +263,7 @@ export class ReactRouterViewStack extends ViewStacks {
         // This ensures the redirect completes before removal
         setTimeout(() => {
           this.remove(viewItem);
-        }, 100);
+        }, NAVIGATE_REDIRECT_DELAY_MS);
       }
     }
 
@@ -293,7 +290,7 @@ export class ReactRouterViewStack extends ViewStacks {
           if (stillNotNeeded) {
             this.remove(viewItem);
           }
-        }, 200);
+        }, VIEW_CLEANUP_DELAY_MS);
       } else {
         // Preserve it but unmount it for now
         viewItem.mount = false;
@@ -444,107 +441,19 @@ export class ReactRouterViewStack extends ViewStacks {
     try {
       // Only attempt parent path computation for non-root outlets
       if (outletId !== 'routerOutlet') {
-        const routesNode = findRoutesNode(ionRouterOutlet.props.children) ?? ionRouterOutlet.props.children;
-        const routeChildren = React.Children.toArray(routesNode).filter(
-          (child): child is React.ReactElement => React.isValidElement(child) && child.type === Route
-        );
-
-        const hasRelativeRoutes = routeChildren.some((route) => {
-          const path = (route.props as any).path as string | undefined;
-          return path && !path.startsWith('/') && path !== '*';
-        });
-        const hasIndexRoute = routeChildren.some((route) => !!(route.props as any).index);
+        const routeChildren = extractRouteChildren(ionRouterOutlet.props.children);
+        const { hasRelativeRoutes, hasIndexRoute, hasWildcardRoute } = analyzeRouteChildren(routeChildren);
 
         if (hasRelativeRoutes || hasIndexRoute) {
-          const segments = routeInfo.pathname.split('/').filter(Boolean);
-
-          // Two-pass algorithm:
-          // Pass 1: Look for specific route matches OR index routes (prefer real routes)
-          // Pass 2: If no match found, use wildcard fallback
-          //
-          // Key insight: Index routes should match when remaining is empty at the longest
-          // valid parent path. Wildcards should only be used when no specific/index match exists.
-
-          let wildcardFallbackPath: string | undefined = undefined;
-
-          // Pass 1: Look for specific or index matches, tracking wildcard fallback
-          for (let i = 1; i <= segments.length; i++) {
-            const testParentPath = '/' + segments.slice(0, i).join('/');
-            const testRemainingPath = segments.slice(i).join('/');
-
-            // Check for specific (non-wildcard, non-index) route matches
-            const hasSpecificMatch = routeChildren.some((route) => {
-              const props = route.props as any;
-              const routePath = props.path as string | undefined;
-              const isIndex = !!props.index;
-              const isWildcardOnly = routePath === '*' || routePath === '/*';
-
-              if (isIndex || isWildcardOnly) {
-                return false;
-              }
-
-              const m = matchPath({ pathname: testRemainingPath, componentProps: props });
-              return !!m;
-            });
-
-            if (hasSpecificMatch) {
-              parentPath = testParentPath;
-              break;
-            }
-
-            // Check for index match (only when remaining is empty AND no wildcard fallback)
-            // If we already found a wildcard fallback at a shorter path, it means
-            // the remaining path at that level didn't match any routes, so the
-            // index match at this longer path is not valid.
-            if (!wildcardFallbackPath && (testRemainingPath === '' || testRemainingPath === '/')) {
-              const hasIndexMatch = routeChildren.some((route) => !!(route.props as any).index);
-              if (hasIndexMatch) {
-                parentPath = testParentPath;
-                break;
-              }
-            }
-
-            // Track wildcard fallback at first level where remaining is non-empty
-            // and no specific route could even START to match the remaining path
-            if (!wildcardFallbackPath && testRemainingPath !== '' && testRemainingPath !== '/') {
-              const hasWildcard = routeChildren.some((route) => {
-                const routePath = (route.props as any).path;
-                return routePath === '*' || routePath === '/*';
-              });
-
-              if (hasWildcard) {
-                // Check if any specific route could plausibly match this remaining path
-                // by checking if the first segment overlaps with any route's first segment
-                const remainingFirstSegment = testRemainingPath.split('/')[0];
-                const couldAnyRouteMatch = routeChildren.some((route) => {
-                  const props = route.props as any;
-                  const routePath = props.path as string | undefined;
-                  if (!routePath || routePath === '*' || routePath === '/*') return false;
-                  if (props.index) return false;
-
-                  // Get the route's first segment (before any / or *)
-                  const routeFirstSegment = routePath.split('/')[0].replace(/[*:]/g, '');
-                  if (!routeFirstSegment) return false;
-
-                  // Check for prefix overlap (either direction)
-                  return (
-                    routeFirstSegment.startsWith(remainingFirstSegment.slice(0, 3)) ||
-                    remainingFirstSegment.startsWith(routeFirstSegment.slice(0, 3))
-                  );
-                });
-
-                // Only save wildcard fallback if no specific route could match
-                if (!couldAnyRouteMatch) {
-                  wildcardFallbackPath = testParentPath;
-                }
-              }
-            }
-          }
-
-          // Pass 2: If no specific/index match found, use wildcard fallback
-          if (!parentPath && wildcardFallbackPath) {
-            parentPath = wildcardFallbackPath;
-          }
+          const result = computeParentPath({
+            currentPathname: routeInfo.pathname,
+            outletMountPath: undefined,
+            routeChildren,
+            hasRelativeRoutes,
+            hasIndexRoute,
+            hasWildcardRoute,
+          });
+          parentPath = result.parentPath;
         }
       }
     } catch (e) {
@@ -580,10 +489,7 @@ export class ReactRouterViewStack extends ViewStacks {
     // and triggering unwanted redirects
     const renderableViewItems = uniqueViewItems.filter((viewItem) => {
       const elementComponent = viewItem.reactElement?.props?.element;
-      const isNavigateComponent =
-        React.isValidElement(elementComponent) &&
-        (elementComponent.type === Navigate ||
-          (typeof elementComponent.type === 'function' && elementComponent.type.name === 'Navigate'));
+      const isNavigateComponent = isNavigateElement(elementComponent);
 
       // Exclude unmounted Navigate components from rendering
       if (isNavigateComponent && !viewItem.mount) {
@@ -675,30 +581,12 @@ export class ReactRouterViewStack extends ViewStacks {
     let match: PathMatch<string> | null = null;
     let viewStack: ViewItem[];
 
-    // Helper function to sort views by specificity (most specific first)
-    const sortBySpecificity = (views: ViewItem[]) => {
-      return [...views].sort((a, b) => {
-        const pathA = a.routeData.childProps.path || '';
-        const pathB = b.routeData.childProps.path || '';
-
-        // Exact matches (no wildcards/params) come first
-        const aHasWildcard = pathA.includes('*') || pathA.includes(':');
-        const bHasWildcard = pathB.includes('*') || pathB.includes(':');
-
-        if (!aHasWildcard && bHasWildcard) return -1;
-        if (aHasWildcard && !bHasWildcard) return 1;
-
-        // Among wildcard routes, longer paths are more specific
-        return pathB.length - pathA.length;
-      });
-    };
-
     if (outletId) {
-      viewStack = sortBySpecificity(this.getViewItemsForOutlet(outletId));
+      viewStack = sortViewsBySpecificity(this.getViewItemsForOutlet(outletId));
       viewStack.some(matchView);
       if (!viewItem && allowDefaultMatch) viewStack.some(matchDefaultRoute);
     } else {
-      const viewItems = sortBySpecificity(this.getAllViewItems());
+      const viewItems = sortViewsBySpecificity(this.getAllViewItems());
       viewItems.some(matchView);
       if (!viewItem && allowDefaultMatch) viewItems.some(matchDefaultRoute);
     }

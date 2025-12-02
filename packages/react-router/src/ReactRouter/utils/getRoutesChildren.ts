@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes } from 'react-router';
 
-export const findRoutesNode = (node: React.ReactNode) => {
+export const getRoutesChildren = (node: React.ReactNode) => {
   // The use of `<Routes />` is encouraged with React Router v6.
   let routesNode: React.ReactNode;
   React.Children.forEach(node as React.ReactElement, (child: React.ReactElement) => {
@@ -11,7 +11,7 @@ export const findRoutesNode = (node: React.ReactNode) => {
   });
 
   if (routesNode) {
-    // The childern of the `<Routes />` component are most likely
+    // The children of the `<Routes />` component are most likely
     // (and should be) the `<Route />` components.
     return (routesNode as React.ReactElement).props.children;
   }

@@ -7,84 +7,62 @@
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
 import { RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
 import React from 'react';
-import { Navigate, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import { clonePageElement } from './clonePageElement';
+import {
+  analyzeRouteChildren,
+  computeCommonPrefix,
+  computeParentPath,
+  extractRouteChildren,
+} from './utils/computeParentPath';
 import { derivePathnameToMatch } from './utils/derivePathnameToMatch';
-import { findRoutesNode } from './utils/findRoutesNode';
+import { getRoutesChildren } from './utils/getRoutesChildren';
 import { matchPath } from './utils/matchPath';
+import { stripTrailingSlash } from './utils/normalizePath';
+import { isNavigateElement } from './utils/routeUtils';
 
 /**
- * Checks if a route is a specific match (not wildcard or index).
+ * Delay in milliseconds before unmounting a view after a transition completes.
+ * This ensures the page transition animation finishes before the view is removed.
  */
-const isSpecificRouteMatch = (route: React.ReactElement, remainingPath: string) => {
-  const routePath = route.props.path;
-  const isWildcardOnly = routePath === '*' || routePath === '/*';
-  const isIndex = route.props.index;
+const VIEW_UNMOUNT_DELAY_MS = 250;
 
-  // Skip wildcards and index routes
-  if (isIndex || isWildcardOnly) {
-    return false;
-  }
-
-  return !!matchPath({
-    pathname: remainingPath,
-    componentProps: route.props,
-  });
-};
-
-// TODO(FW-2959): types
+/**
+ * Delay in milliseconds to wait for an IonPage element to be mounted before
+ * proceeding with a page transition.
+ */
+const ION_PAGE_WAIT_TIMEOUT_MS = 50;
 
 interface StackManagerProps {
   routeInfo: RouteInfo;
   id?: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface StackManagerState {}
-
 const isViewVisible = (el: HTMLElement) =>
   !el.classList.contains('ion-page-invisible') && !el.classList.contains('ion-page-hidden');
 
 /**
- * Finds the longest common prefix among an array of paths.
- * Used to determine the scope of an outlet with absolute routes.
+ * Hides an ion-page element by adding hidden class and aria attribute.
  */
-const computeCommonPrefix = (paths: string[]): string => {
-  if (paths.length === 0) return '';
-  if (paths.length === 1) {
-    // For a single path, extract the directory-like prefix
-    // e.g., /dynamic-routes/home -> /dynamic-routes
-    const segments = paths[0].split('/').filter(Boolean);
-    if (segments.length > 1) {
-      return '/' + segments.slice(0, -1).join('/');
-    }
-    return '/' + segments[0];
+const hideIonPageElement = (element: HTMLElement | undefined): void => {
+  if (element) {
+    element.classList.add('ion-page-hidden');
+    element.setAttribute('aria-hidden', 'true');
   }
-
-  // Split all paths into segments
-  const segmentArrays = paths.map((p) => p.split('/').filter(Boolean));
-  const minLength = Math.min(...segmentArrays.map((s) => s.length));
-
-  const commonSegments: string[] = [];
-  for (let i = 0; i < minLength; i++) {
-    const segment = segmentArrays[0][i];
-    // Skip segments with route parameters or wildcards
-    if (segment.includes(':') || segment.includes('*')) {
-      break;
-    }
-    const allMatch = segmentArrays.every((s) => s[i] === segment);
-    if (allMatch) {
-      commonSegments.push(segment);
-    } else {
-      break;
-    }
-  }
-
-  return commonSegments.length > 0 ? '/' + commonSegments.join('/') : '';
 };
 
-export class StackManager extends React.PureComponent<StackManagerProps, StackManagerState> {
+/**
+ * Shows an ion-page element by removing hidden class and aria attribute.
+ */
+const showIonPageElement = (element: HTMLElement | undefined): void => {
+  if (element) {
+    element.classList.remove('ion-page-hidden');
+    element.removeAttribute('aria-hidden');
+  }
+};
+
+export class StackManager extends React.PureComponent<StackManagerProps> {
   id: string; // Unique id for the router outlet aka outletId
   context!: React.ContextType<typeof RouteManagerContext>;
   ionRouterOutlet?: React.ReactElement;
@@ -141,148 +119,375 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     // If this is a nested outlet (has an explicit ID like "main"),
     // we need to figure out what part of the path was already matched
     if (this.id !== 'routerOutlet' && this.ionRouterOutlet) {
-      // Check if this outlet has relative routes (routes that don't start with /)
-      const routesNode = findRoutesNode(this.ionRouterOutlet.props.children) ?? this.ionRouterOutlet.props.children;
-      const routeChildren = React.Children.toArray(routesNode).filter(
-        (child): child is React.ReactElement => React.isValidElement(child) && child.type === Route
-      );
+      const routeChildren = extractRouteChildren(this.ionRouterOutlet.props.children);
+      const { hasRelativeRoutes, hasIndexRoute, hasWildcardRoute } = analyzeRouteChildren(routeChildren);
 
-      const hasRelativeRoutes = routeChildren.some((route) => {
-        const path = route.props.path;
-        const isRelative = path && !path.startsWith('/') && path !== '*';
-        return isRelative;
+      const result = computeParentPath({
+        currentPathname,
+        outletMountPath: this.outletMountPath,
+        routeChildren,
+        hasRelativeRoutes,
+        hasIndexRoute,
+        hasWildcardRoute,
       });
 
-      const hasIndexRoute = routeChildren.some((route) => route.props.index);
-      const hasWildcardRoute = routeChildren.some((route) => {
-        const routePath = route.props.path;
-        return routePath === '*' || routePath === '/*';
-      });
-
-      if ((hasRelativeRoutes || hasIndexRoute) && currentPathname.includes('/')) {
-        const segments = currentPathname.split('/').filter(Boolean);
-
-        if (segments.length >= 1) {
-          // Find matches at each level, keeping track of the FIRST (shortest) match
-          let firstSpecificMatch: string | undefined = undefined;
-          let firstWildcardMatch: string | undefined = undefined;
-          let indexMatchAtMount: string | undefined = undefined;
-
-          for (let i = 1; i <= segments.length; i++) {
-            const parentPath = '/' + segments.slice(0, i).join('/');
-            const remainingPath = segments.slice(i).join('/');
-
-            // Check for specific (non-wildcard, non-index) route matches
-            const hasSpecificMatch = routeChildren.some((route) => isSpecificRouteMatch(route, remainingPath));
-            if (hasSpecificMatch && !firstSpecificMatch) {
-              firstSpecificMatch = parentPath;
-              // Found a specific match - this is our answer for non-index routes
-              break;
-            }
-
-            // Check if wildcard would match this remaining path
-            // Only if remaining is non-empty (wildcard needs something to match)
-            if (remainingPath !== '' && remainingPath !== '/' && hasWildcardRoute && !firstWildcardMatch) {
-              // Check if any specific route could plausibly match this remaining path
-              const remainingFirstSegment = remainingPath.split('/')[0];
-              const couldAnyRouteMatch = routeChildren.some((route) => {
-                const routePath = route.props.path as string | undefined;
-                if (!routePath || routePath === '*' || routePath === '/*') return false;
-                if (route.props.index) return false;
-
-                const routeFirstSegment = routePath.split('/')[0].replace(/[*:]/g, '');
-                if (!routeFirstSegment) return false;
-
-                // Check for prefix overlap (either direction)
-                return (
-                  routeFirstSegment.startsWith(remainingFirstSegment.slice(0, 3)) ||
-                  remainingFirstSegment.startsWith(routeFirstSegment.slice(0, 3))
-                );
-              });
-
-              // Only save wildcard match if no specific route could match
-              if (!couldAnyRouteMatch) {
-                firstWildcardMatch = parentPath;
-                // Continue looking - might find a specific match at a longer path
-              }
-            }
-
-            // Check for index route match when remaining path is empty
-            // BUT only at the outlet's mount path level
-            if ((remainingPath === '' || remainingPath === '/') && hasIndexRoute) {
-              // Index route matches when current path exactly matches the mount path
-              // If we already have an outletMountPath, index should only match there
-              if (this.outletMountPath) {
-                if (parentPath === this.outletMountPath) {
-                  indexMatchAtMount = parentPath;
-                }
-              } else {
-                // No mount path set yet - index would establish this as mount path
-                // But only if we haven't found a better match
-                indexMatchAtMount = parentPath;
-              }
-            }
-          }
-
-          // Determine the best parent path:
-          // 1. Specific match (routes like tabs/*, favorites) - highest priority
-          // 2. Wildcard match (route path="*") - catches unmatched segments
-          // 3. Index match - only valid at the outlet's mount point, not deeper
-          let bestPath: string | undefined = undefined;
-
-          if (firstSpecificMatch) {
-            bestPath = firstSpecificMatch;
-          } else if (firstWildcardMatch) {
-            bestPath = firstWildcardMatch;
-          } else if (indexMatchAtMount) {
-            // Only use index match if no specific or wildcard matched
-            // This handles the case where pathname exactly matches the mount path
-            bestPath = indexMatchAtMount;
-          }
-
-          // Store the mount path when we first successfully match a route
-          if (!this.outletMountPath && bestPath) {
-            this.outletMountPath = bestPath;
-          }
-
-          // If we have a mount path, verify the current pathname is within scope
-          if (this.outletMountPath && !currentPathname.startsWith(this.outletMountPath)) {
-            return undefined;
-          }
-
-          return bestPath;
-        }
+      // Update the outlet mount path if it was set
+      if (result.outletMountPath && !this.outletMountPath) {
+        this.outletMountPath = result.outletMountPath;
       }
 
-      // Handle outlets with ONLY absolute routes (no relative routes or index routes)
-      // Compute the common prefix of all absolute routes to determine the outlet's scope
-      if (!hasRelativeRoutes && !hasIndexRoute) {
-        const absolutePathRoutes = routeChildren.filter((route) => {
-          const path = route.props.path;
-          return path && path.startsWith('/');
-        });
-
-        if (absolutePathRoutes.length > 0) {
-          const absolutePaths = absolutePathRoutes.map((r) => r.props.path as string);
-          const commonPrefix = computeCommonPrefix(absolutePaths);
-
-          if (commonPrefix && commonPrefix !== '/') {
-            // Set the mount path based on common prefix of absolute routes
-            if (!this.outletMountPath) {
-              this.outletMountPath = commonPrefix;
-            }
-
-            // Check if current pathname is within scope
-            if (!currentPathname.startsWith(commonPrefix)) {
-              return undefined;
-            }
-
-            return commonPrefix;
-          }
-        }
-      }
+      return result.parentPath;
     }
     return this.outletMountPath;
+  }
+
+  /**
+   * Finds the entering and leaving view items for a route transition,
+   * handling special redirect cases.
+   */
+  private findViewItems(routeInfo: RouteInfo): {
+    enteringViewItem: ViewItem | undefined;
+    leavingViewItem: ViewItem | undefined;
+  } {
+    let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
+    let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
+
+    // If we don't have a leaving view item, but the route info indicates
+    // that the user has routed from a previous path, then the leaving view
+    // can be found by the last known pathname.
+    if (!leavingViewItem && routeInfo.prevRouteLastPathname) {
+      leavingViewItem = this.context.findViewItemByPathname(routeInfo.prevRouteLastPathname, this.id);
+    }
+
+    // Special case for redirects: When a redirect happens inside a nested route,
+    // the entering and leaving view might be the same (the container route like tabs/*).
+    // In this case, we need to look at prevRouteLastPathname to find the actual
+    // view we're transitioning away from.
+    if (
+      enteringViewItem &&
+      leavingViewItem &&
+      enteringViewItem === leavingViewItem &&
+      routeInfo.routeAction === 'replace' &&
+      routeInfo.prevRouteLastPathname
+    ) {
+      const actualLeavingView = this.context.findViewItemByPathname(routeInfo.prevRouteLastPathname, this.id);
+      if (actualLeavingView && actualLeavingView !== enteringViewItem) {
+        leavingViewItem = actualLeavingView;
+      }
+    }
+
+    // Also check if we're in a redirect scenario where entering and leaving are different
+    // but we still need to handle the actual previous view.
+    if (
+      enteringViewItem &&
+      !leavingViewItem &&
+      routeInfo.routeAction === 'replace' &&
+      routeInfo.prevRouteLastPathname
+    ) {
+      const actualLeavingView = this.context.findViewItemByPathname(routeInfo.prevRouteLastPathname, this.id);
+      if (actualLeavingView && actualLeavingView !== enteringViewItem) {
+        leavingViewItem = actualLeavingView;
+      }
+    }
+
+    return { enteringViewItem, leavingViewItem };
+  }
+
+  /**
+   * Determines if the leaving view item should be unmounted after a transition.
+   */
+  private shouldUnmountLeavingView(
+    routeInfo: RouteInfo,
+    enteringViewItem: ViewItem | undefined,
+    leavingViewItem: ViewItem | undefined
+  ): boolean {
+    if (!leavingViewItem) {
+      return false;
+    }
+
+    if (routeInfo.routeAction === 'replace') {
+      return true;
+    }
+
+    const isForwardPush = routeInfo.routeAction === 'push' && (routeInfo as any).routeDirection === 'forward';
+    if (!isForwardPush && routeInfo.routeDirection !== 'none' && enteringViewItem !== leavingViewItem) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Handles the case when the outlet is out of scope (current route is outside mount path).
+   * Returns true if the transition should be aborted.
+   */
+  private handleOutOfScopeOutlet(routeInfo: RouteInfo): boolean {
+    if (!this.outletMountPath || routeInfo.pathname.startsWith(this.outletMountPath)) {
+      return false;
+    }
+
+    // Clear any pending unmount timeout to avoid conflicts
+    if (this.outOfScopeUnmountTimeout) {
+      clearTimeout(this.outOfScopeUnmountTimeout);
+      this.outOfScopeUnmountTimeout = undefined;
+    }
+
+    // When an outlet is out of scope, unmount its views immediately
+    const allViewsInOutlet = this.context.getViewItemsForOutlet ? this.context.getViewItemsForOutlet(this.id) : [];
+
+    // Unmount and remove all views in this outlet immediately to avoid leftover content
+    allViewsInOutlet.forEach((viewItem) => {
+      hideIonPageElement(viewItem.ionPageElement);
+      this.context.unMountViewItem(viewItem);
+    });
+
+    this.forceUpdate();
+    return true;
+  }
+
+  /**
+   * Handles the case when this is a nested outlet with relative routes but no valid parent path.
+   * Returns true if the transition should be aborted.
+   */
+  private handleOutOfContextNestedOutlet(
+    parentPath: string | undefined,
+    leavingViewItem: ViewItem | undefined
+  ): boolean {
+    if (this.id === 'routerOutlet' || parentPath !== undefined || !this.ionRouterOutlet) {
+      return false;
+    }
+
+    const routesChildren = getRoutesChildren(this.ionRouterOutlet.props.children) ?? this.ionRouterOutlet.props.children;
+    const routeChildren = React.Children.toArray(routesChildren).filter(
+      (child): child is React.ReactElement => React.isValidElement(child) && child.type === Route
+    );
+
+    const hasRelativeRoutes = routeChildren.some((route) => {
+      const path = route.props.path;
+      return path && !path.startsWith('/') && path !== '*';
+    });
+
+    if (hasRelativeRoutes) {
+      // Hide any visible views in this outlet since it's out of scope
+      hideIonPageElement(leavingViewItem?.ionPageElement);
+      if (leavingViewItem) {
+        leavingViewItem.mount = false;
+      }
+      this.forceUpdate();
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Handles the case when a nested outlet has no matching route.
+   * Returns true if the transition should be aborted.
+   */
+  private handleNoMatchingRoute(
+    enteringRoute: React.ReactElement | undefined,
+    enteringViewItem: ViewItem | undefined,
+    leavingViewItem: ViewItem | undefined
+  ): boolean {
+    if (this.id === 'routerOutlet' || enteringRoute || enteringViewItem) {
+      return false;
+    }
+
+    // Hide any visible views in this outlet since it has no matching route
+    hideIonPageElement(leavingViewItem?.ionPageElement);
+    if (leavingViewItem) {
+      leavingViewItem.mount = false;
+    }
+    this.forceUpdate();
+    return true;
+  }
+
+  /**
+   * Handles the transition when entering view item has an ion-page element ready.
+   */
+  private handleReadyEnteringView(
+    routeInfo: RouteInfo,
+    enteringViewItem: ViewItem,
+    leavingViewItem: ViewItem | undefined,
+    shouldUnmountLeavingViewItem: boolean
+  ): void {
+    // Ensure the entering view is not hidden from previous navigations
+    showIonPageElement(enteringViewItem.ionPageElement);
+
+    // Handle same view item case (e.g., parameterized route changes)
+    if (enteringViewItem === leavingViewItem) {
+      const routePath = enteringViewItem.reactElement?.props?.path as string | undefined;
+      const isParameterizedRoute = routePath ? routePath.includes(':') : false;
+
+      if (isParameterizedRoute) {
+        // Refresh match metadata so the component receives updated params
+        const updatedMatch = matchComponent(enteringViewItem.reactElement, routeInfo.pathname, true);
+        if (updatedMatch) {
+          enteringViewItem.routeData.match = updatedMatch;
+        }
+
+        const enteringEl = enteringViewItem.ionPageElement;
+        if (enteringEl) {
+          enteringEl.classList.remove('ion-page-hidden', 'ion-page-invisible');
+          enteringEl.removeAttribute('aria-hidden');
+        }
+
+        this.forceUpdate();
+        return;
+      }
+    }
+
+    // Try to find leaving view using prev route info if still not found
+    if (!leavingViewItem && this.props.routeInfo.prevRouteLastPathname) {
+      leavingViewItem = this.context.findViewItemByPathname(this.props.routeInfo.prevRouteLastPathname, this.id);
+    }
+
+    // Skip transition if entering view is visible and leaving view is not
+    if (
+      enteringViewItem.ionPageElement &&
+      isViewVisible(enteringViewItem.ionPageElement) &&
+      leavingViewItem !== undefined &&
+      leavingViewItem.ionPageElement &&
+      !isViewVisible(leavingViewItem.ionPageElement)
+    ) {
+      return;
+    }
+
+    // Check for duplicate transition
+    const currentTransition = {
+      enteringId: enteringViewItem.id,
+      leavingId: leavingViewItem?.id,
+    };
+
+    if (
+      leavingViewItem &&
+      this.lastTransition &&
+      this.lastTransition.leavingId &&
+      this.lastTransition.enteringId === currentTransition.enteringId &&
+      this.lastTransition.leavingId === currentTransition.leavingId
+    ) {
+      return;
+    }
+
+    this.lastTransition = currentTransition;
+    this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
+
+    // Handle unmounting the leaving view
+    if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
+      leavingViewItem.mount = false;
+      this.handleLeavingViewUnmount(routeInfo, enteringViewItem, leavingViewItem);
+    }
+  }
+
+  /**
+   * Handles the delayed unmount of the leaving view item after a replace action.
+   */
+  private handleLeavingViewUnmount(
+    routeInfo: RouteInfo,
+    enteringViewItem: ViewItem,
+    leavingViewItem: ViewItem
+  ): void {
+    if (routeInfo.routeAction !== 'replace' || !leavingViewItem.ionPageElement) {
+      return;
+    }
+
+    // Check if we should skip removal for nested outlet redirects
+    const enteringRoutePath = enteringViewItem.reactElement?.props?.path as string | undefined;
+    const leavingRoutePath = leavingViewItem.reactElement?.props?.path as string | undefined;
+    const isEnteringContainerRoute = enteringRoutePath && enteringRoutePath.endsWith('/*');
+    const isLeavingSpecificRoute =
+      leavingRoutePath &&
+      leavingRoutePath !== '' &&
+      leavingRoutePath !== '*' &&
+      !leavingRoutePath.endsWith('/*') &&
+      !leavingViewItem.reactElement?.props?.index;
+
+    // Skip removal only for container-to-container transitions
+    if (isEnteringContainerRoute && !isLeavingSpecificRoute) {
+      return;
+    }
+
+    const viewToUnmount = leavingViewItem;
+    setTimeout(() => {
+      this.context.unMountViewItem(viewToUnmount);
+    }, VIEW_UNMOUNT_DELAY_MS);
+  }
+
+  /**
+   * Handles the case when entering view has no ion-page element yet (waiting for render).
+   */
+  private handleWaitingForIonPage(
+    routeInfo: RouteInfo,
+    enteringViewItem: ViewItem,
+    leavingViewItem: ViewItem | undefined,
+    shouldUnmountLeavingViewItem: boolean
+  ): void {
+    const enteringRouteElement = enteringViewItem.reactElement?.props?.element;
+
+    // Handle Navigate components (they never render an IonPage)
+    if (isNavigateElement(enteringRouteElement)) {
+      this.waitingForIonPage = false;
+      if (this.ionPageWaitTimeout) {
+        clearTimeout(this.ionPageWaitTimeout);
+        this.ionPageWaitTimeout = undefined;
+      }
+      this.pendingPageTransition = false;
+
+      // Hide the leaving view immediately for Navigate redirects
+      hideIonPageElement(leavingViewItem?.ionPageElement);
+
+      // Don't unmount if entering and leaving are the same view item
+      if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
+        leavingViewItem.mount = false;
+      }
+
+      this.forceUpdate();
+      return;
+    }
+
+    // Hide leaving view while we wait for the entering view's IonPage to mount
+    hideIonPageElement(leavingViewItem?.ionPageElement);
+
+    this.waitingForIonPage = true;
+
+    if (this.ionPageWaitTimeout) {
+      clearTimeout(this.ionPageWaitTimeout);
+    }
+
+    this.ionPageWaitTimeout = setTimeout(() => {
+      this.ionPageWaitTimeout = undefined;
+
+      if (!this.waitingForIonPage) {
+        return;
+      }
+      this.waitingForIonPage = false;
+
+      const latestEnteringView = this.context.findViewItemByRouteInfo(routeInfo, this.id) ?? enteringViewItem;
+      const latestLeavingView = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id) ?? leavingViewItem;
+
+      if (latestEnteringView?.ionPageElement) {
+        this.transitionPage(routeInfo, latestEnteringView, latestLeavingView ?? undefined);
+
+        if (shouldUnmountLeavingViewItem && latestLeavingView && latestEnteringView !== latestLeavingView) {
+          latestLeavingView.mount = false;
+        }
+
+        this.forceUpdate();
+      }
+    }, ION_PAGE_WAIT_TIMEOUT_MS);
+
+    this.forceUpdate();
+  }
+
+  /**
+   * Gets the route info to use for finding views during swipe-to-go-back gestures.
+   * This pattern is used in multiple places in setupRouterOutlet.
+   */
+  private getSwipeBackRouteInfo(): RouteInfo {
+    const { routeInfo } = this.props;
+    return this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute
+      ? this.prevProps.routeInfo
+      : ({ pathname: routeInfo.pushedByRoute || '' } as RouteInfo);
   }
 
   componentDidMount() {
@@ -337,10 +542,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       ? this.context.getViewItemsForOutlet(this.id)
       : [];
     allViewsInOutlet.forEach((viewItem) => {
-      if (viewItem.ionPageElement) {
-        viewItem.ionPageElement.classList.add('ion-page-hidden');
-        viewItem.ionPageElement.setAttribute('aria-hidden', 'true');
-      }
+      hideIonPageElement(viewItem.ionPageElement);
     });
 
     this.clearOutletTimeout = this.context.clearOutlet(this.id);
@@ -361,444 +563,82 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
    * the Promise may resolve immediately.
    */
   async handlePageTransition(routeInfo: RouteInfo) {
+    // Wait for router outlet to mount
     if (!this.routerOutletElement || !this.routerOutletElement.commit) {
-      /**
-       * The route outlet has not mounted yet (i.e., not in the DOM yet).
-       * We need to wait for it to render before we can transition the page.
-       *
-       * Set a flag to indicate that we should transition the page after
-       * the component has updated (i.e., in `componentDidUpdate`).
-       */
       this.pendingPageTransition = true;
-    } else {
-      let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
-      let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
-
-      /**
-       * If we don't have a leaving view item, but the route info indicates
-       * that the user has routed from a previous path, then the leaving view
-       * can be found by the last known pathname.
-       */
-      if (!leavingViewItem && routeInfo.prevRouteLastPathname) {
-        leavingViewItem = this.context.findViewItemByPathname(routeInfo.prevRouteLastPathname, this.id);
-      }
-
-      /**
-       * Special case for redirects: When a redirect happens inside a nested route,
-       * the entering and leaving view might be the same (the container route like tabs/*).
-       * In this case, we need to look at prevRouteLastPathname to find the actual
-       * view we're transitioning away from (e.g., favorites when going from
-       * /favorites -> /tabs -> /tabs/home via redirect).
-       */
-      if (
-        enteringViewItem &&
-        leavingViewItem &&
-        enteringViewItem === leavingViewItem &&
-        routeInfo.routeAction === 'replace' &&
-        routeInfo.prevRouteLastPathname
-      ) {
-        const actualLeavingView = this.context.findViewItemByPathname(routeInfo.prevRouteLastPathname, this.id);
-        if (actualLeavingView && actualLeavingView !== enteringViewItem) {
-          leavingViewItem = actualLeavingView;
-        }
-      }
-
-      /**
-       * Also check if we're in a redirect scenario where entering and leaving are different
-       * but we still need to handle the actual previous view. This handles cases where
-       * lastPathname doesn't match a view but prevRouteLastPathname does.
-       */
-      if (
-        enteringViewItem &&
-        !leavingViewItem &&
-        routeInfo.routeAction === 'replace' &&
-        routeInfo.prevRouteLastPathname
-      ) {
-        const actualLeavingView = this.context.findViewItemByPathname(routeInfo.prevRouteLastPathname, this.id);
-        if (actualLeavingView && actualLeavingView !== enteringViewItem) {
-          leavingViewItem = actualLeavingView;
-        }
-      }
-
-      /**
-       * The leaving view item should be unmounted in the following cases:
-       * - Navigating with `replace` (not within a nested outlet container route)
-       * - Navigating forward but not pushing a new view (e.g., back navigation or non-animated transition) and the leaving view is not the same as the entering view
-       *
-       * NOTE: routeOptions.unmount is handled separately - it means the React component should unmount,
-       * but the DOM element should remain hidden for tab navigation purposes.
-       * The view item should NOT be removed from the stack when routeOptions.unmount is used,
-       * as we may need to show it again when navigating back.
-       */
-      const shouldUnmountLeavingViewItem = (() => {
-        if (!leavingViewItem) {
-          return false;
-        }
-
-        if (routeInfo.routeAction === 'replace') {
-          return true;
-        }
-
-        const isForwardPush = routeInfo.routeAction === 'push' && (routeInfo as any).routeDirection === 'forward';
-        if (!isForwardPush && routeInfo.routeDirection !== 'none' && enteringViewItem !== leavingViewItem) {
-          return true;
-        }
-
-        return false;
-      })();
-
-      // Match the route element to render
-      // For nested outlets, we need to pass parent path info
-      const parentPath = this.getParentPath();
-
-      // CRITICAL: If we have a mount path and current route is outside of it,
-      // don't process any routes in this outlet - it's completely out of scope
-      if (this.outletMountPath && !routeInfo.pathname.startsWith(this.outletMountPath)) {
-        // Clear any pending unmount timeout to avoid conflicts
-        if (this.outOfScopeUnmountTimeout) {
-          clearTimeout(this.outOfScopeUnmountTimeout);
-          this.outOfScopeUnmountTimeout = undefined;
-        }
-
-        // When an outlet is out of scope, unmount its views immediately
-        // No transition is happening in this outlet - the transition is in the parent
-        const allViewsInOutlet = this.context.getViewItemsForOutlet ? this.context.getViewItemsForOutlet(this.id) : [];
-
-        // Unmount and remove all views in this outlet immediately to avoid leftover content
-        allViewsInOutlet.forEach((viewItem) => {
-          if (viewItem.ionPageElement) {
-            viewItem.ionPageElement.classList.add('ion-page-hidden');
-            viewItem.ionPageElement.setAttribute('aria-hidden', 'true');
-          }
-          // Remove the view from the stack so it is no longer rendered
-          this.context.unMountViewItem(viewItem);
-        });
-
-        // Do not reset outletMountPath here; keeping it prevents this outlet
-        // from re-adopting an unrelated parent path on subsequent navigations.
-        this.forceUpdate();
-        return;
-      }
-
-      // Clear any pending out-of-scope unmount timeout since we're processing an in-scope route
-      if (this.outOfScopeUnmountTimeout) {
-        clearTimeout(this.outOfScopeUnmountTimeout);
-        this.outOfScopeUnmountTimeout = undefined;
-      }
-
-      // If this is a nested outlet with relative routes but no valid parent path,
-      // it means the outlet is outside its expected routing context
-      if (this.id !== 'routerOutlet' && parentPath === undefined && this.ionRouterOutlet) {
-        const routesNode = findRoutesNode(this.ionRouterOutlet.props.children) ?? this.ionRouterOutlet.props.children;
-        const routeChildren = React.Children.toArray(routesNode).filter(
-          (child): child is React.ReactElement => React.isValidElement(child) && child.type === Route
-        );
-
-        const hasRelativeRoutes = routeChildren.some((route) => {
-          const path = route.props.path;
-          return path && !path.startsWith('/') && path !== '*';
-        });
-
-        if (hasRelativeRoutes) {
-          // Hide any visible views in this outlet since it's out of scope
-          if (leavingViewItem && leavingViewItem.ionPageElement) {
-            leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
-            leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
-          }
-          if (leavingViewItem) {
-            leavingViewItem.mount = false;
-          }
-          this.forceUpdate();
-          return;
-        }
-      }
-
-      const enteringRoute = findRouteByRouteInfo(
-        this.ionRouterOutlet?.props.children,
-        routeInfo,
-        parentPath
-      ) as React.ReactElement;
-
-      // If this is a nested outlet (has an explicit ID) and no route matches,
-      // it means this outlet shouldn't handle this route
-      if (this.id !== 'routerOutlet' && !enteringRoute && !enteringViewItem) {
-        // Hide any visible views in this outlet since it has no matching route
-        if (leavingViewItem && leavingViewItem.ionPageElement) {
-          leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
-          leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
-        }
-        // Unmount the leaving view to prevent components from staying active
-        if (leavingViewItem) {
-          leavingViewItem.mount = false;
-        }
-        this.forceUpdate();
-        return;
-      }
-
-      /**
-       * If we already have a view item for this route, update its element.
-       * Otherwise, create a new view item for the route.
-       */
-      if (enteringViewItem && enteringRoute) {
-        // Update existing view item
-        enteringViewItem.reactElement = enteringRoute;
-      } else if (enteringRoute) {
-        enteringViewItem = this.context.createViewItem(this.id, enteringRoute, routeInfo);
-        this.context.addViewItem(enteringViewItem);
-      }
-
-      /**
-       * Begin transition only if we have an ionPageElement (i.e., the page has rendered).
-       */
-      if (enteringViewItem && enteringViewItem.ionPageElement) {
-        if (this.waitingForIonPage) {
-          this.waitingForIonPage = false;
-        }
-        if (this.ionPageWaitTimeout) {
-          clearTimeout(this.ionPageWaitTimeout);
-          this.ionPageWaitTimeout = undefined;
-        }
-
-        // Ensure the entering view is not hidden by ion-page-hidden from previous navigations
-        const enteringEl = enteringViewItem.ionPageElement as HTMLElement;
-        if (enteringEl.classList.contains('ion-page-hidden')) {
-          enteringEl.classList.remove('ion-page-hidden');
-          enteringEl.removeAttribute('aria-hidden');
-        }
-
-        /**
-         * If the entering view item is the same as the leaving view item,
-         * then we don't need to transition.
-         */
-        if (enteringViewItem === leavingViewItem) {
-          const routePath = enteringViewItem.reactElement?.props?.path as string | undefined;
-          const isParameterizedRoute = routePath ? routePath.includes(':') : false;
-
-          if (isParameterizedRoute) {
-            /**
-             * When the same view instance handles the new route (e.g. navigating between
-             * parameterised URLs), refresh its match metadata so the component receives
-             * the updated params, then skip triggering another transition.
-             */
-            const updatedMatch = matchComponent(enteringViewItem.reactElement, routeInfo.pathname, true);
-            if (updatedMatch) {
-              enteringViewItem.routeData.match = updatedMatch;
-            }
-
-            const enteringEl = enteringViewItem.ionPageElement;
-            if (enteringEl) {
-              enteringEl.classList.remove('ion-page-hidden', 'ion-page-invisible');
-              enteringEl.removeAttribute('aria-hidden');
-            }
-
-            this.forceUpdate();
-            return;
-          }
-        }
-
-        /**
-         * If the leaving view is still not found, especially during a
-         * 'pop' (back navigation) operation, try to retrieve it using the
-         * previous route information that was available as a prop on the
-         * component.
-         */
-        if (!leavingViewItem && this.props.routeInfo.prevRouteLastPathname) {
-          leavingViewItem = this.context.findViewItemByPathname(this.props.routeInfo.prevRouteLastPathname, this.id);
-        }
-
-        /**
-         * If the entering view is already visible and the leaving view is not, the transition does not need to occur.
-         */
-        if (
-          enteringViewItem.ionPageElement &&
-          isViewVisible(enteringViewItem.ionPageElement) &&
-          leavingViewItem !== undefined &&
-          leavingViewItem.ionPageElement &&
-          !isViewVisible(leavingViewItem.ionPageElement)
-        ) {
-          return;
-        }
-
-        /**
-         * The view should only be transitioned in the following cases:
-         * 1. Performing a replace or pop action, such as a swipe to go back gesture
-         * to animation the leaving view off the screen.
-         *
-         * 2. Navigating between top-level router outlets, such as /page-1 to /page-2;
-         * or navigating within a nested outlet, such as /tabs/tab-1 to /tabs/tab-2.
-         *
-         * 3. The entering view is an ion-router-outlet containing a page
-         * matching the current route and that hasn't already transitioned in.
-         *
-         * This should only happen when navigating directly to a nested router outlet
-         * route or on an initial page load (i.e. refreshing). In cases when loading
-         * /tabs/tab-1, we need to transition the /tabs page element into the view.
-         */
-
-        /**
-         * Check if we've already started a transition for the same entering/leaving pair.
-         * This can happen during rapid navigation (e.g., Navigate redirects) where
-         * multiple handlePageTransition calls occur before the first transition completes.
-         *
-         * Only skip if there's an actual leaving view involved - we don't want to skip
-         * transitions where leaving is undefined as those could be legitimate initial loads
-         * or transitions to new views.
-         */
-        const currentTransition = {
-          enteringId: enteringViewItem.id,
-          leavingId: leavingViewItem?.id,
-        };
-
-        if (
-          leavingViewItem &&
-          this.lastTransition &&
-          this.lastTransition.leavingId &&
-          this.lastTransition.enteringId === currentTransition.enteringId &&
-          this.lastTransition.leavingId === currentTransition.leavingId
-        ) {
-          return;
-        }
-
-        this.lastTransition = currentTransition;
-        this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
-
-        if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
-          leavingViewItem.mount = false;
-          // For replace actions, remove actual pages (with ionPageElement) from the stack entirely
-          // Don't remove utility components like Navigate that don't have ionPageElement
-          if (routeInfo.routeAction === 'replace' && leavingViewItem.ionPageElement) {
-            // Check if we should skip removal for nested outlet redirects.
-            // Only skip if:
-            // 1. The entering view's route is a container (ends with /*)
-            // 2. The leaving view is also a container/utility (like index redirect)
-            //
-            // If the leaving view is a specific route (like "favorites"), we should
-            // remove it when navigating to a container route via replace.
-            const enteringRoutePath = enteringViewItem.reactElement?.props?.path as string | undefined;
-            const leavingRoutePath = leavingViewItem.reactElement?.props?.path as string | undefined;
-            const isEnteringContainerRoute = enteringRoutePath && enteringRoutePath.endsWith('/*');
-            const isLeavingSpecificRoute =
-              leavingRoutePath &&
-              leavingRoutePath !== '' &&
-              leavingRoutePath !== '*' &&
-              !leavingRoutePath.endsWith('/*') &&
-              !leavingViewItem.reactElement?.props?.index;
-
-            // Skip removal only for container-to-container transitions (nested outlet redirects)
-            // Remove the leaving view if it's a specific route being replaced
-            if (!(isEnteringContainerRoute && !isLeavingSpecificRoute)) {
-              // Capture leavingViewItem for the closure since TypeScript can't
-              // track the outer if-block's null check through the setTimeout
-              const viewToUnmount = leavingViewItem;
-              setTimeout(() => {
-                // Use a timeout to ensure the transition completes before removal
-                this.context.unMountViewItem(viewToUnmount);
-              }, 250);
-            }
-          }
-        }
-      } else if (enteringViewItem && !enteringViewItem.ionPageElement) {
-        const enteringRouteElement = enteringViewItem.reactElement?.props?.element;
-        const isNavigateElement = React.isValidElement(enteringRouteElement) && enteringRouteElement.type === Navigate;
-
-        if (isNavigateElement) {
-          /**
-           * `<Navigate />` components never render an IonPage. They perform an immediate
-           * history change instead, so waiting for `ionPageElement` would stall the redirect
-           * and repeatedly hide the leaving view. Treat this as a no-op transition and allow
-           * the follow-up navigation to proceed.
-           */
-          this.waitingForIonPage = false;
-          if (this.ionPageWaitTimeout) {
-            clearTimeout(this.ionPageWaitTimeout);
-            this.ionPageWaitTimeout = undefined;
-          }
-          this.pendingPageTransition = false;
-
-          // Hide and unmount the leaving view immediately for Navigate redirects
-          if (leavingViewItem?.ionPageElement) {
-            leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
-            leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
-          }
-          // IMPORTANT: Don't unmount if entering and leaving are the same view item
-          // This happens during chained Navigate redirects where the same Navigate view item
-          // is being processed multiple times before it can render and trigger the redirect
-          if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
-            leavingViewItem.mount = false;
-          }
-
-          this.forceUpdate();
-          return;
-        }
-
-        /**
-         * We have a view item but no page element yet. This can happen during
-         * initial page load with nested routes where the view item is created
-         * but the component hasn't rendered yet.
-         *
-         * Hide the leaving view immediately to avoid duplicate/overlapping content
-         * while we wait for the entering view's IonPage to mount, then retry the
-         * transition once the page is ready.
-         */
-        if (leavingViewItem?.ionPageElement) {
-          leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
-          leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
-        }
-
-        this.waitingForIonPage = true;
-
-        if (this.ionPageWaitTimeout) {
-          clearTimeout(this.ionPageWaitTimeout);
-        }
-
-        this.ionPageWaitTimeout = setTimeout(() => {
-          this.ionPageWaitTimeout = undefined;
-
-          if (!this.waitingForIonPage) {
-            return;
-          }
-          this.waitingForIonPage = false;
-
-          const latestEnteringView = this.context.findViewItemByRouteInfo(routeInfo, this.id) ?? enteringViewItem;
-          const latestLeavingView = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id) ?? leavingViewItem;
-
-          if (latestEnteringView?.ionPageElement) {
-            this.transitionPage(routeInfo, latestEnteringView, latestLeavingView ?? undefined);
-
-            if (shouldUnmountLeavingViewItem && latestLeavingView && latestEnteringView !== latestLeavingView) {
-              latestLeavingView.mount = false;
-            }
-
-            this.forceUpdate();
-          }
-        }, 50);
-
-        this.forceUpdate();
-        return;
-      } else if (!enteringViewItem && !enteringRoute) {
-        /**
-         * No view item and no route found. This can happen during initial page load
-         * with nested routes where the nested router outlet hasn't rendered its
-         * children yet. Schedule a retry to allow nested routes to be processed.
-         */
-        if (leavingViewItem) {
-          /**
-           * If we have a leavingView but no entering view/route, we are probably
-           * leaving to another outlet, so hide this leavingView.
-           * (e.g., /tabs/tab1 → /settings)
-           */
-          if (leavingViewItem.ionPageElement) {
-            leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
-            leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
-          }
-          if (shouldUnmountLeavingViewItem) {
-            leavingViewItem.mount = false;
-          }
-        }
-      }
-
-      this.forceUpdate();
+      return;
     }
+
+    // Find entering and leaving view items
+    let { enteringViewItem, leavingViewItem } = this.findViewItems(routeInfo);
+    const shouldUnmountLeavingViewItem = this.shouldUnmountLeavingView(routeInfo, enteringViewItem, leavingViewItem);
+
+    // Get parent path for nested outlets
+    const parentPath = this.getParentPath();
+
+    // Handle out-of-scope outlet (route outside mount path)
+    if (this.handleOutOfScopeOutlet(routeInfo)) {
+      return;
+    }
+
+    // Clear any pending out-of-scope unmount timeout
+    if (this.outOfScopeUnmountTimeout) {
+      clearTimeout(this.outOfScopeUnmountTimeout);
+      this.outOfScopeUnmountTimeout = undefined;
+    }
+
+    // Handle nested outlet with relative routes but no valid parent path
+    if (this.handleOutOfContextNestedOutlet(parentPath, leavingViewItem)) {
+      return;
+    }
+
+    // Find the matching route element
+    const enteringRoute = findRouteByRouteInfo(
+      this.ionRouterOutlet?.props.children,
+      routeInfo,
+      parentPath
+    ) as React.ReactElement;
+
+    // Handle nested outlet with no matching route
+    if (this.handleNoMatchingRoute(enteringRoute, enteringViewItem, leavingViewItem)) {
+      return;
+    }
+
+    // Create or update the entering view item
+    if (enteringViewItem && enteringRoute) {
+      enteringViewItem.reactElement = enteringRoute;
+    } else if (enteringRoute) {
+      enteringViewItem = this.context.createViewItem(this.id, enteringRoute, routeInfo);
+      this.context.addViewItem(enteringViewItem);
+    }
+
+    // Handle transition based on ion-page element availability
+    if (enteringViewItem && enteringViewItem.ionPageElement) {
+      // Clear waiting state
+      if (this.waitingForIonPage) {
+        this.waitingForIonPage = false;
+      }
+      if (this.ionPageWaitTimeout) {
+        clearTimeout(this.ionPageWaitTimeout);
+        this.ionPageWaitTimeout = undefined;
+      }
+
+      this.handleReadyEnteringView(routeInfo, enteringViewItem, leavingViewItem, shouldUnmountLeavingViewItem);
+    } else if (enteringViewItem && !enteringViewItem.ionPageElement) {
+      // Wait for ion-page to mount
+      this.handleWaitingForIonPage(routeInfo, enteringViewItem, leavingViewItem, shouldUnmountLeavingViewItem);
+      return;
+    } else if (!enteringViewItem && !enteringRoute) {
+      // No view or route found - likely leaving to another outlet
+      if (leavingViewItem) {
+        hideIonPageElement(leavingViewItem.ionPageElement);
+        if (shouldUnmountLeavingViewItem) {
+          leavingViewItem.mount = false;
+        }
+      }
+    }
+
+    this.forceUpdate();
   }
 
   /**
@@ -848,32 +688,17 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       }
 
       const { routeInfo } = this.props;
-
-      // Determine the route to use for finding the view we would be navigating back to
-      const propsToUse =
-        this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute
-          ? this.prevProps.routeInfo
-          : ({ pathname: routeInfo.pushedByRoute || '' } as any);
-      // Find the view item for the route we are going back to
-      const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
+      const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
+      const enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, this.id, false);
 
       const canStartSwipe =
         !!enteringViewItem &&
-        /**
-         * The root url '/' is treated as
-         * the first view item (but is never mounted),
-         * so we do not want to swipe back to the
-         * root url.
-         */
+        // The root url '/' is treated as the first view item (but is never mounted),
+        // so we do not want to swipe back to the root url.
         enteringViewItem.mount &&
-        /**
-         * When on the first page (whatever view
-         * you land on after the root url) it
-         * is possible for findViewItemByRouteInfo to
-         * return the exact same view you are currently on.
-         * Make sure that we are not swiping back to the same
-         * instances of a view.
-         */
+        // When on the first page it is possible for findViewItemByRouteInfo to
+        // return the exact same view you are currently on.
+        // Make sure that we are not swiping back to the same instances of a view.
         enteringViewItem.routeData.match.pattern.path !== routeInfo.pathname;
 
       return canStartSwipe;
@@ -881,22 +706,11 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
     const onStart = async () => {
       const { routeInfo } = this.props;
-
-      // Determine the route to use for finding the view we would be navigating back to
-      const propsToUse =
-        this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute
-          ? this.prevProps.routeInfo
-          : ({ pathname: routeInfo.pushedByRoute || '' } as any);
-      // Find the view item for the route we are going back to
-      const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
-      // Find the view item for the route we are going back from
+      const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
+      const enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, this.id, false);
       const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
 
-      /**
-       * When the gesture starts, kick off
-       * a transition that is controlled
-       * via a swipe gesture.
-       */
+      // When the gesture starts, kick off a transition controlled via swipe gesture
       if (enteringViewItem && leavingViewItem) {
         await this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, 'back', true);
       }
@@ -908,39 +722,17 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       if (shouldContinue) {
         // User finished the swipe gesture, so complete the back navigation
         this.skipTransition = true;
-
         this.context.goBack();
       } else {
-        /**
-         * In the event that the swipe
-         * gesture was aborted, we should
-         * re-hide the page that was going to enter.
-         */
+        // Swipe gesture was aborted - re-hide the page that was going to enter
         const { routeInfo } = this.props;
-
-        // Determine the route to use for finding the view we would be navigating back to
-        const propsToUse =
-          this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute
-            ? this.prevProps.routeInfo
-            : ({ pathname: routeInfo.pushedByRoute || '' } as any);
-        // Find the view item for the route we are going back to
-        const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
-        // Find the view item for the route we are going back from
+        const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
+        const enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, this.id, false);
         const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
 
-        /**
-         * Ionic React has a design defect where it
-         * a) Unmounts the leaving view item when using parameterized routes
-         * b) Considers the current view to be the entering view when using
-         * parameterized routes
-         *
-         * As a result, we should not hide the view item here
-         * as it will cause the current view to be hidden.
-         */
+        // Don't hide if entering and leaving are the same (parameterized route edge case)
         if (enteringViewItem !== leavingViewItem && enteringViewItem?.ionPageElement !== undefined) {
-          const { ionPageElement } = enteringViewItem;
-          ionPageElement.setAttribute('aria-hidden', 'true');
-          ionPageElement.classList.add('ion-page-hidden');
+          hideIonPageElement(enteringViewItem.ionPageElement);
         }
       }
     };
@@ -1054,10 +846,12 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   render() {
     const { children } = this.props;
     const ionRouterOutlet = React.Children.only(children) as React.ReactElement;
-    this.ionRouterOutlet = ionRouterOutlet; // TODO: check if we can use a ref instead of storing this in the class
+    // Store reference for use in getParentPath() and handlePageTransition()
+    this.ionRouterOutlet = ionRouterOutlet;
 
     const components = this.context.getChildrenToRender(this.id, this.ionRouterOutlet, this.props.routeInfo, () => {
-      this.forceUpdate(); // TODO: investigate why this is needed
+      // Callback triggers re-render when view items are modified during getChildrenToRender
+      this.forceUpdate();
     });
 
     return (
@@ -1109,10 +903,10 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
   let fallbackNode: React.ReactNode;
 
   // `<Route />` nodes are rendered inside of a <Routes /> node
-  const routesNode = findRoutesNode(node) ?? node;
+  const routesChildren = getRoutesChildren(node) ?? node;
 
   // Collect all route children
-  const routeChildren = React.Children.toArray(routesNode).filter(
+  const routeChildren = React.Children.toArray(routesChildren).filter(
     (child): child is React.ReactElement => React.isValidElement(child) && child.type === Route
   );
 
@@ -1158,8 +952,8 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
   // SIMPLIFIED: Trust React Router 6's matching more, compute relative path when parent is known
   if ((hasRelativeRoutes || hasIndexRoute) && parentPath) {
     const parentPrefix = parentPath.replace('/*', '');
-    const normalizedParent = parentPrefix.endsWith('/') ? parentPrefix.slice(0, -1) : parentPrefix;
-    const normalizedPathname = routeInfo.pathname.endsWith('/') ? routeInfo.pathname.slice(0, -1) : routeInfo.pathname;
+    const normalizedParent = stripTrailingSlash(parentPrefix);
+    const normalizedPathname = stripTrailingSlash(routeInfo.pathname);
 
     // Only compute relative path if pathname is within parent scope
     if (normalizedPathname.startsWith(normalizedParent + '/') || normalizedPathname === normalizedParent) {
