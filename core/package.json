@@ -59,7 +59,7 @@
     "chalk": "^5.3.0",
     "clean-css-cli": "^5.6.1",
     "domino": "^2.1.6",
-    "esbuild": "0.27.0",
+    "esbuild": "^0.27.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-custom-rules": "file:custom-rules",
