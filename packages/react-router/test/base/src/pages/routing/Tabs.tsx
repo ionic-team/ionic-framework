@@ -34,15 +34,15 @@ const Tabs: React.FC = () => {
         />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="home" href="/routing/tabs/home" routerOptions={{ unmount: true }}>
+        <IonTabButton tab="home" href="/routing/tabs/home">
           <IonIcon icon={triangle} />
           <IonLabel>Home</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="settings" href="/routing/tabs/settings" routerOptions={{ unmount: true }}>
+        <IonTabButton tab="settings" href="/routing/tabs/settings">
           <IonIcon icon={ellipse} />
           <IonLabel>Settings</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="tab3" href="/routing/tabs/tab3" routerOptions={{ unmount: true }}>
+        <IonTabButton tab="tab3" href="/routing/tabs/tab3">
           <IonIcon icon={square} />
           <IonLabel>Tab 3</IonLabel>
         </IonTabButton>

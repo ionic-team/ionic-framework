@@ -28,7 +28,7 @@ const TabsContext: React.FC = () => {
         <Route path="tab2" element={<Tab2 />} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="tab1" href="/tab-context/tab1" routerOptions={{ unmount: true }}>
+        <IonTabButton tab="tab1" href="/tab-context/tab1">
           <IonIcon icon={triangle} />
           <IonLabel>Tab1</IonLabel>
         </IonTabButton>

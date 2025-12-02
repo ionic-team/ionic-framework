@@ -86,10 +86,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
           if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
             const target = mutation.target as HTMLElement;
             // If any element gets the ion-page-hidden or ion-page-invisible class, dismiss overlay
-            if (
-              target.classList.contains('ion-page-hidden') ||
-              target.classList.contains('ion-page-invisible')
-            ) {
+            if (target.classList.contains('ion-page-hidden') || target.classList.contains('ion-page-invisible')) {
               this.dismissOverlay();
               return;
             }
