@@ -111,10 +111,13 @@ const DEFAULT_THEME = 'md';
 
       // If a specific palette is requested, modify the palette structure
       // to set the enabled property to 'always'
+      // TODO(FW-4004): Implement dark mode
       if (paletteName === 'dark' && theme.palette?.dark) {
         theme.palette.dark.enabled = 'always';
+      // TODO(FW-4005): Implement high contrast mode
       } else if (paletteName === 'high-contrast' && theme.palette?.highContrast) {
         theme.palette.highContrast.enabled = 'always';
+      // TODO(FW-4005): Implement high contrast dark mode
       } else if (paletteName === 'high-contrast-dark' && theme.palette?.highContrastDark) {
         theme.palette.highContrastDark.enabled = 'always';
       }
@@ -123,8 +126,6 @@ const DEFAULT_THEME = 'md';
       window.Ionic = window.Ionic || {};
       window.Ionic.config = window.Ionic.config || {};
       window.Ionic.config.customTheme = theme;
-      console.log(`Applied ${themeName} theme with ${paletteName} palette.`);
-      console.log('theme:', theme);
 
       // Re-apply the global theme
       if (window.Ionic.config.get && window.Ionic.config.set) {
