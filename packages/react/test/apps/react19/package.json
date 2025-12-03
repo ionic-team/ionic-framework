@@ -28,6 +28,7 @@
     "e2e": "concurrently \"serve -s dist -l 3000\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.4.3",
@@ -35,6 +36,7 @@
     "@types/react-dom": "19.0.4",
     "@vitejs/plugin-legacy": "^4.0.2",
     "@vitejs/plugin-react": "^4.0.1",
+    "terser": "^5.16.0",
     "concurrently": "^6.3.0",
     "cypress": "^13.2.0",
     "eslint": "^8.35.0",
