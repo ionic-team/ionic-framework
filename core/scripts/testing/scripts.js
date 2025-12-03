@@ -87,8 +87,8 @@ const DEFAULT_THEME = 'md';
    * Values can be `light`, `dark`, `high-contrast`,
    * or `high-contrast-dark`. Default to `light` for tests.
    */
-  const paletteQuery = window.location.search.match(/palette=([a-z-]+)/);
-  const paletteHash = window.location.hash.match(/palette=([a-z-]+)/);
+  const paletteQuery = window.location.search.match(/palette=([a-z]+)/);
+  const paletteHash = window.location.hash.match(/palette=([a-z]+)/);
   const darkClass = document.body?.classList.contains('ion-palette-dark') ? 'dark' : null;
 
   const paletteName = paletteQuery?.[1] || paletteHash?.[1] || darkClass || 'light';
