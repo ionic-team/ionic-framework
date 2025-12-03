@@ -1,4 +1,4 @@
-import type { Theme } from '../../../interface';
+import type { Mode, Theme } from '../../../interface';
 import type { DatetimeParts, DatetimeHourCycle } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
@@ -70,7 +70,7 @@ const hour24 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1
  * MD should display days such as "M"
  * or "T".
  */
-export const getDaysOfWeek = (locale: string, theme: Theme, firstDayOfWeek = 0) => {
+export const getDaysOfWeek = (locale: string, theme: Theme | Mode, firstDayOfWeek = 0) => {
   /**
    * Nov 1st, 2020 starts on a Sunday.
    * ion-datetime assumes weeks start on Sunday,
