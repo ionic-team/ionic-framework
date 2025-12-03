@@ -1,7 +1,7 @@
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route } from 'react-router';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -45,32 +45,32 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/" component={Main} />
-        <Route path="/overlay-hooks" component={OverlayHooks} />
-        <Route path="/overlay-components" component={OverlayComponents} />
-        <Route path="/overlay-components/nested-popover" component={IonPopoverNested} />
+        <Route path="/" element={<Main />} />
+        <Route path="/overlay-hooks/*" element={<OverlayHooks />} />
+        <Route path="/overlay-components/*" element={<OverlayComponents />} />
+        <Route path="/overlay-components/nested-popover" element={<IonPopoverNested />} />
         <Route
           path="/overlay-components/modal-conditional-sibling"
-          component={IonModalConditionalSibling}
+          element={<IonModalConditionalSibling />}
         />
-        <Route path="/overlay-components/modal-conditional" component={IonModalConditional} />
+        <Route path="/overlay-components/modal-conditional" element={<IonModalConditional />} />
         <Route
           path="/overlay-components/modal-datetime-button"
-          component={IonModalDatetimeButton}
+          element={<IonModalDatetimeButton />}
         />
         <Route
           path="/overlay-components/modal-multiple-children"
-          component={IonModalMultipleChildren}
+          element={<IonModalMultipleChildren />}
         />
-        <Route path="/keep-contents-mounted" component={KeepContentsMounted} />
-        <Route path="/navigation" component={NavComponent} />
-        <Route path="/tabs" component={Tabs} />
-        <Route path="/tabs-basic" component={TabsBasic} />
-        <Route path="/tabs-direct-navigation" component={TabsDirectNavigation} />
-        <Route path="/icons" component={Icons} />
-        <Route path="/inputs" component={Inputs} />
-        <Route path="/reorder-group" component={ReorderGroup} />
-        <Route path="/accordion-group" component={AccordionGroup} />
+        <Route path="/keep-contents-mounted" element={<KeepContentsMounted />} />
+        <Route path="/navigation" element={<NavComponent />} />
+        <Route path="/tabs/*" element={<Tabs />} />
+        <Route path="/tabs-basic/*" element={<TabsBasic />} />
+        <Route path="/tabs-direct-navigation/*" element={<TabsDirectNavigation />} />
+        <Route path="/icons" element={<Icons />} />
+        <Route path="/inputs" element={<Inputs />} />
+        <Route path="/reorder-group" element={<ReorderGroup />} />
+        <Route path="/accordion-group" element={<AccordionGroup />} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

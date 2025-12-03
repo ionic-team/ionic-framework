@@ -71,11 +71,11 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
 
     setupPageVisibilityObserver() {
       /**
-       * Watch for when ANY element in the document gets the ion-page-hidden class.
+       * Watch for when ancestor pages get the ion-page-hidden class.
        * We use a subtree observer on a parent container because:
        * 1. The overlay's component might not have an IonPage wrapper
        * 2. Pages might be added dynamically after this component mounts
-       * 3. We want to dismiss overlays when ANY navigation occurs
+       * 3. We want to dismiss overlays when navigation hides the containing page
        *
        * This handles React Router 6 where pages stay mounted but get hidden.
        */
@@ -87,8 +87,17 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
             const target = mutation.target as HTMLElement;
             // If any element gets the ion-page-hidden or ion-page-invisible class, dismiss overlay
             if (target.classList.contains('ion-page-hidden') || target.classList.contains('ion-page-invisible')) {
-              this.dismissOverlay();
-              return;
+              /**
+               * Only dismiss the overlay if the hidden page is an ancestor of the overlay,
+               * not a descendant. Pages inside the overlay (e.g., IonPage in modal content)
+               * may get ion-page-invisible when they mount inside an outlet context, but
+               * this should not dismiss the overlay.
+               */
+              const overlayElement = this.ref.current;
+              if (overlayElement && !overlayElement.contains(target)) {
+                this.dismissOverlay();
+                return;
+              }
             }
           }
         }

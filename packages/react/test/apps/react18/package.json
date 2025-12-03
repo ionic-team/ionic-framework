@@ -2,14 +2,20 @@
   "name": "test-app",
   "version": "0.0.1",
   "private": true,
+  "overrides": {
+    "@ionic/react-router": {
+      "react-router": "$react-router",
+      "react-router-dom": "$react-router-dom"
+    }
+  },
   "dependencies": {
     "@ionic/react": "^7.0.0",
     "@ionic/react-router": "^7.0.0",
     "ionicons": "^8.0.13",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router": "^5.3.4",
-    "react-router-dom": "^5.3.4"
+    "react-router": "^6.0.0",
+    "react-router-dom": "^6.0.0"
   },
   "scripts": {
     "dev": "vite",
@@ -27,8 +33,6 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
-    "@types/react-router": "^5.1.20",
-    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-legacy": "^4.0.2",
     "@vitejs/plugin-react": "^4.0.1",
     "concurrently": "^6.3.0",
