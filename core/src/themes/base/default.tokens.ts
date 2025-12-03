@@ -2,6 +2,8 @@ import type { DefaultTheme } from '../themes.interfaces';
 
 import { darkTheme } from './dark.tokens';
 import { defaultPrimitiveColors } from './default.tokens.primitives';
+import { highContrastDarkTheme } from './high-contrast-dark.tokens';
+import { highContrastTheme } from './high-contrast.tokens';
 import { lightTheme } from './light.tokens';
 
 export const defaultTheme: DefaultTheme = {
@@ -10,6 +12,8 @@ export const defaultTheme: DefaultTheme = {
   palette: {
     light: lightTheme,
     dark: darkTheme,
+    highContrast: highContrastTheme,
+    highContrastDark: highContrastDarkTheme,
   },
 
   config: {
@@ -162,7 +166,17 @@ export const defaultTheme: DefaultTheme = {
     xxl: '2.4',
   },
 
+  // TODO: Note to self: these colors are applied to all themes unless overridden in a specific theme
   color: {
     ...defaultPrimitiveColors,
+    text: defaultPrimitiveColors.gray,
+  },
+  components: {
+    IonBreadcrumb: {
+      separatorColor: 'var(--ion-color-text-550)',
+    },
+    IonDatetimeButton: {
+      bg: 'var(--ion-color-gray-300)',
+    },
   },
 };

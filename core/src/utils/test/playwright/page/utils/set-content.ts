@@ -77,7 +77,6 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
         ${ionicCSSImports}
         <link href="${baseUrl}/scripts/testing/styles.css" rel="stylesheet" />
-        ${palette !== 'light' ? `<link href="${baseUrl}/css/palettes/${palette}.always.css" rel="stylesheet" />` : ''}
         <script src="${baseUrl}/scripts/testing/scripts.js"></script>
         ${ionicJSImports}
         <script>

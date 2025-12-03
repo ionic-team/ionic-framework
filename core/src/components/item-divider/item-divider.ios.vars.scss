@@ -14,10 +14,10 @@ $item-divider-ios-font-size: dynamic-font(17px);
 $item-divider-ios-font-weight: 600;
 
 /// @prop - Background for the divider
-$item-divider-ios-background: var(--ion-color-gray-100);
+$item-divider-ios-background: var(--ion-color-text-100);
 
 /// @prop - Color for the divider
-$item-divider-ios-color: var(--ion-color-gray-850);
+$item-divider-ios-color: var(--ion-color-text-850);
 
 /// @prop - Padding start for the divider
 $item-divider-ios-padding-start: $item-ios-padding-start;

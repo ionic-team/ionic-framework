@@ -10,4 +10,4 @@ $split-pane-ios-side-min-width: $split-pane-side-min-width;
 $split-pane-ios-side-max-width: $split-pane-side-max-width;
 
 /// @prop - Border style of the side pane
-$split-pane-ios-border: $hairlines-width solid $item-ios-border-color;
+$split-pane-ios-border: $hairlines-width solid var(--ion-components-ion-item-border-color);

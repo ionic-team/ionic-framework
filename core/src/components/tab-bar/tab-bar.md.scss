@@ -6,7 +6,7 @@
   // default color / background
   --background: #{$tabbar-md-background};
   --background-focused: #{$tabbar-md-background-focused};
-  --border: #{1px solid $tabbar-md-border-color};
+  --border: #{1px solid var(--ion-components-ion-tabbar-border-color)};
   --color: #{$tab-button-md-text-color};
   --color-selected: #{$tabbar-md-color-selected};
 

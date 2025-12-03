@@ -2,6 +2,8 @@ import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
 import { darkTheme } from './dark.tokens';
+import { highContrastDarkTheme } from './high-contrast-dark.tokens';
+import { highContrastTheme } from './high-contrast.tokens';
 import { lightTheme } from './light.tokens';
 
 export const defaultTheme: DefaultTheme = {
@@ -12,6 +14,8 @@ export const defaultTheme: DefaultTheme = {
   palette: {
     light: lightTheme,
     dark: darkTheme,
+    highContrast: highContrastTheme,
+    highContrastDark: highContrastDarkTheme,
   },
 
   config: {
@@ -75,5 +79,41 @@ export const defaultTheme: DefaultTheme = {
     xxl: 'var(--ion-radii-700)',
     xxxl: 'var(--ion-radii-900)',
     xxxxl: 'var(--ion-radii-full)',
+  },
+
+  components: {
+    IonBreadcrumb: {
+      color: 'var(--ion-color-text-600)',
+      colorFocused: 'var(--ion-color-text-800)', // Available only in md
+      iconColor: 'var(--ion-color-text-550)',
+      iconColorActive: 'var(--ion-color-text-850)',
+      bgFocused: 'var(--ion-color-gray-50)',
+      indicatorBg: 'var(--ion-color-gray-100)',
+      indicatorBgFocused: 'var(--ion-color-gray-150)',
+      separatorColor: 'var(--ion-color-gray-550)',
+    },
+    IonDatetime: {
+      bg: 'var(--ion-color-gray-100)',
+      timeBodyBg: 'var(--ion-color-gray-300)',
+    },
+    IonDatetimeButton: {
+      bg: 'var(--ion-color-gray-300)',
+    },
+    IonItem: {
+      borderColor: 'var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-gray-150)))',
+    },
+    IonModal: {
+      handleBg: 'var(--ion-color-gray-350)',
+    },
+    IonRefresher: {
+      nativeSpinnerBorder: 'var(--ion-color-gray-200)', // Available only in md
+      nativeSpinnerBg: 'var(--ion-color-gray-250)', // Available only in md
+    },
+    IonTabBar: {
+      borderColor: 'var(--ion-tab-bar-border-color, var(--ion-border-color, var(--ion-color-gray-150)))',
+    },
+    IonToolbar: {
+      borderColor: 'var(--ion-toolbar-border-color, var(--ion-border-color, var(--ion-color-gray-150)))',
+    },
   },
 };

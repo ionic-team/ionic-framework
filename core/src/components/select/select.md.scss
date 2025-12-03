@@ -8,7 +8,7 @@
 
 :host {
   --border-width: 1px;
-  --border-color: #{$item-md-border-color};
+  --border-color: var(--ion-components-ion-item-border-color);
   --highlight-height: 2px;
 }
 

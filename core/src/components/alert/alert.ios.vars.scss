@@ -15,7 +15,7 @@ $alert-ios-max-width: dynamic-font-clamp(1, 270px, 1.2);
 $alert-ios-border-radius: 13px;
 
 /// @prop - Background color of the alert
-$alert-ios-background-color: $overlay-ios-background-color;
+$alert-ios-background-color: var(--ion-color-overlay-bg);
 
 /// @prop - Background color alpha of the alert when translucent
 $alert-ios-translucent-background-color-alpha: 0.9;
@@ -57,7 +57,7 @@ $alert-ios-title-font-weight: 600;
 $alert-ios-sub-title-font-size: dynamic-font-min(1, 14px);
 
 /// @prop - Text color of the alert sub title
-$alert-ios-sub-title-text-color: var(--ion-color-gray-600);
+$alert-ios-sub-title-text-color: var(--ion-color-text-600);
 
 /// @prop - Padding top of the alert message
 $alert-ios-message-padding-top: 0;
@@ -114,7 +114,7 @@ $alert-ios-input-padding-start: $alert-ios-input-padding-end;
 $alert-ios-input-placeholder-color: $placeholder-text-color;
 
 /// @prop - Border color of the alert input
-$alert-ios-input-border-color: var(--ion-color-gray-250);
+$alert-ios-input-border-color: var(--ion-color-text-250);
 
 /// @prop - Border of the alert input
 $alert-ios-input-border: $hairlines-width solid $alert-ios-input-border-color;
@@ -276,7 +276,7 @@ $alert-ios-checkbox-border-style: solid;
 $alert-ios-checkbox-border-radius: 50%;
 
 /// @prop - Border color of the checkbox in the alert when off
-$alert-ios-checkbox-border-color-off: $item-ios-border-color;
+$alert-ios-checkbox-border-color-off: var(--ion-components-ion-item-border-color);
 
 /// @prop - Border color of the checkbox in the alert when on
 $alert-ios-checkbox-border-color-on: ion-color(primary, base);

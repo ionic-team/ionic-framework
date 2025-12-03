@@ -175,6 +175,7 @@ $lightest-text-color: $text-color;
   // Modal
   // --------------------------------------------------
 
+  // TODO(FW-4005): Implement these to ionic modular
   & ion-modal {
     --ion-background-color: var(--ion-background-color-step-100);
     --ion-toolbar-background: var(--ion-background-color-step-150);
@@ -190,12 +191,13 @@ $lightest-text-color: $text-color;
     --ion-background-color-rgb: #{color-to-rgb-list($background-color)};
     --ion-text-color: #{$text-color};
     --ion-text-color-rgb: #{color-to-rgb-list($text-color)};
+    // TODO(FW-4005): Implement these to ionic modular
     --ion-border-color: #222222;
     --ion-item-background: #1e1e1e;
     --ion-toolbar-background: #1f1f1f;
     --ion-tab-bar-background: #1f1f1f;
     --ion-card-background: #1e1e1e;
-
+    // TODO(FW-4005): Implement these to ionic modular
     /// Only the item borders should increase in contrast
     /// Borders for elements like toolbars should remain the same
     --ion-item-border-color: var(--ion-background-color-step-400);
@@ -239,6 +241,7 @@ $lightest-text-color: $text-color;
     --ion-background-color-step-950: #{mix($text-color, $background-color, 95%)};
   }
 
+  // TODO(FW-4005): Implement these to ionic modular
   // Toast
   // --------------------------------------------------
 

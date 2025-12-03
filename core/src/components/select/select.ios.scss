@@ -6,7 +6,7 @@
 
 :host {
   --border-width: #{$hairlines-width};
-  --border-color: #{$item-ios-border-color};
+  --border-color: var(--ion-components-ion-item-border-color);
   --highlight-height: 0px;
 }
 
@@ -16,7 +16,7 @@
 
   // Color deviates from the iOS spec, but satisfies WCAG AAA:
   // https://www.w3.org/TR/WCAG20-TECHS/G18.html
-  color: var(--ion-color-gray-650);
+  color: var(--ion-color-text-650);
 }
 
 // Select Inner Wrapper

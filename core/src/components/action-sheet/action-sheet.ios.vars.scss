@@ -25,7 +25,7 @@ $action-sheet-ios-group-margin-top: 10px;
 $action-sheet-ios-group-margin-bottom: 10px;
 
 /// @prop - Background color of the action sheet
-$action-sheet-ios-background-color: $overlay-ios-background-color;
+$action-sheet-ios-background-color: var(--ion-color-overlay-bg);
 
 /// @prop - Border radius of the action sheet
 $action-sheet-ios-border-radius: 13px;
@@ -46,7 +46,7 @@ $action-sheet-ios-title-padding-bottom: 13px;
 $action-sheet-ios-title-padding-start: $action-sheet-ios-title-padding-end;
 
 /// @prop - Color of the action sheet title
-$action-sheet-ios-title-color: var(--ion-color-gray-400);
+$action-sheet-ios-title-color: var(--ion-color-text-400);
 
 /// @prop - Font size of the action sheet title
 $action-sheet-ios-title-font-size: dynamic-font-min(1, 13px);
@@ -115,7 +115,7 @@ $action-sheet-ios-button-background: linear-gradient(
 $action-sheet-ios-button-background-activated: $text-color;
 
 /// @prop - Background color of the selected action sheet button
-$action-sheet-ios-button-background-selected: var(--ion-color-gray-0);
+$action-sheet-ios-button-background-selected: var(--ion-components-ion-action-sheet-button-bg-selected);
 
 /// @prop - Destructive text color of the action sheet button
 $action-sheet-ios-button-destructive-text-color: ion-color(danger, base);

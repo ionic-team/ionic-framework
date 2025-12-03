@@ -26,7 +26,7 @@
 // ----------------------------------------------------------------
 
 .input-otp-description {
-  color: var(--ion-color-gray-700);
+  color: var(--ion-color-text-700);
 
   font-size: dynamic-font(12px);
 
@@ -91,7 +91,7 @@
 // --------------------------------------------------
 
 :host(.input-otp-disabled) {
-  --color: var(--ion-color-gray-350);
+  --color: var(--ion-color-text-350);
 }
 
 :host(.input-otp-fill-outline.input-otp-disabled) {

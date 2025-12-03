@@ -87,8 +87,8 @@ const DEFAULT_THEME = 'md';
    * Values can be `light`, `dark`, `high-contrast`,
    * or `high-contrast-dark`. Default to `light` for tests.
    */
-  const paletteQuery = window.location.search.match(/palette=([a-z]+)/);
-  const paletteHash = window.location.hash.match(/palette=([a-z]+)/);
+  const paletteQuery = window.location.search.match(/palette=([a-z-]+)/);
+  const paletteHash = window.location.hash.match(/palette=([a-z-]+)/);
   const darkClass = document.body?.classList.contains('ion-palette-dark') ? 'dark' : null;
 
   const paletteName = paletteQuery?.[1] || paletteHash?.[1] || darkClass || 'light';
@@ -113,12 +113,18 @@ const DEFAULT_THEME = 'md';
       // to set the enabled property to 'always'
       if (paletteName === 'dark' && theme.palette?.dark) {
         theme.palette.dark.enabled = 'always';
+      } else if (paletteName === 'high-contrast' && theme.palette?.highContrast) {
+        theme.palette.highContrast.enabled = 'always';
+      } else if (paletteName === 'high-contrast-dark' && theme.palette?.highContrastDark) {
+        theme.palette.highContrastDark.enabled = 'always';
       }
 
       // Apply the theme tokens to Ionic config
       window.Ionic = window.Ionic || {};
       window.Ionic.config = window.Ionic.config || {};
       window.Ionic.config.customTheme = theme;
+      console.log(`Applied ${themeName} theme with ${paletteName} palette.`);
+      console.log('theme:', theme);
 
       // Re-apply the global theme
       if (window.Ionic.config.get && window.Ionic.config.set) {

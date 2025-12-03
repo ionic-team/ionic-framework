@@ -7,7 +7,7 @@
 $picker-ios-height: 260px;
 
 /// @prop - Border color of the picker wrapper
-$picker-ios-border-color: $item-ios-border-color;
+$picker-ios-border-color: var(--ion-components-ion-item-border-color);
 
 /// @prop - Background Color of the picker wrapper
 $picker-ios-background-color: $background-color;

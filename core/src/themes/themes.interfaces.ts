@@ -231,6 +231,16 @@ export type DarkTheme = BaseTheme & {
   enabled: 'system' | 'always' | 'never' | 'class';
 };
 
+// High Contrast theme interface
+export type HighContrastTheme = BaseTheme & {
+  enabled: 'system' | 'always' | 'never' | 'class';
+};
+
+// High Contrast Dark theme interface
+export type HighContrastDarkTheme = BaseTheme & {
+  enabled: 'system' | 'always' | 'never' | 'class';
+};
+
 // Light theme interface
 export type LightTheme = BaseTheme;
 
@@ -241,6 +251,8 @@ export type DefaultTheme = BaseTheme & {
   palette?: {
     light?: LightTheme;
     dark?: DarkTheme;
+    highContrast?: HighContrastTheme;
+    highContrastDark?: HighContrastDarkTheme;
   };
 
   config?: IonicConfig;
@@ -268,11 +280,16 @@ export type NumberStringKeys = {
 };
 
 // Primitive color keys
-export type PrimitiveColors = 'gray' | 'black' | 'white';
+export type PrimitiveColors = 'gray' | 'black' | 'white' | 'gray-contrast';
+
+// Functional color keys
+export type FunctionalColors = 'text' | 'overlay-bg';
 
 // Colors interface
 export type Colors = {
   [K in PredefinedColors]?: SemanticHue;
 } & {
   [K in PrimitiveColors]?: NumberStringKeys;
+} & {
+  [K in FunctionalColors]?: NumberStringKeys;
 };

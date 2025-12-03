@@ -275,9 +275,11 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     return '';
   }
 
-  // Exclude components and palette from the default tokens
+  // TODO: NOTE TO SELF: we must include components from the defaults
+  // since some components share amongst themes.
+  // Exclude palette from the default tokens
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { palette, components, ...defaultTokens } = theme;
+  const { palette, ...defaultTokens } = theme;
 
   // Generate CSS variables for the default design tokens
   const defaultTokensCSS = generateCSSVars(defaultTokens);
@@ -288,9 +290,31 @@ export const generateGlobalThemeCSS = (theme: any): string => {
   // Generate CSS variables for the dark color palette
   const darkTokensCSS = generateCSSVars(palette.dark);
 
+  // Generate CSS variable for the high contrast color palette
+  const highContrastTokensCSS = generateCSSVars(palette.highContrast);
+
+  // Generate CSS variable for the high contrast dark color palette
+  const highContrastDarkTokensCSS = generateCSSVars(palette.highContrastDark);
+
+  let paletteTokensCSS = lightTokensCSS;
+
   // Include CSS variables for the dark color palette instead of
   // the light palette if dark palette enabled is 'always'
-  const paletteTokensCSS = palette.dark.enabled === 'always' ? darkTokensCSS : lightTokensCSS;
+  if (palette.dark.enabled === 'always') {
+    paletteTokensCSS = darkTokensCSS;
+  }
+
+  // Include CSS variables for the high contrast color palette instead of
+  // the light palette if high contrast palette enabled is 'always'
+  if (palette.highContrast?.enabled === 'always') {
+    paletteTokensCSS = highContrastTokensCSS;
+  }
+
+  // Include CSS variables for the high contrast dark color palette instead of
+  // the light palette if high contrast dark palette enabled is 'always'
+  if (palette.highContrastDark?.enabled === 'always') {
+    paletteTokensCSS = highContrastDarkTokensCSS;
+  }
 
   let css = `
     ${CSS_ROOT_SELECTOR} {
@@ -309,6 +333,26 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     `;
   }
 
+  // Include CSS variables for the high contrast color palette inside of a
+  // class if high contrast palette enabled is 'class'
+  if (palette.highContrast.enabled === 'class') {
+    css += `
+      .ion-palette-high-contrast {
+        ${highContrastTokensCSS}
+      }
+    `;
+  }
+
+  // Include CSS variables for the high contrast dark color palette inside of a
+  // class if high contrast dark palette enabled is 'class'
+  if (palette.highContrastDark.enabled === 'class') {
+    css += `
+      .ion-palette-high-contrast.ion-palette-dark {
+        ${highContrastDarkTokensCSS}
+      }
+    `;
+  }
+
   // Include CSS variables for the dark color palette inside of the
   // dark color scheme media query if dark palette enabled is 'system'
   if (palette.dark.enabled === 'system') {
@@ -316,6 +360,30 @@ export const generateGlobalThemeCSS = (theme: any): string => {
       @media (prefers-color-scheme: dark) {
         ${CSS_ROOT_SELECTOR} {
           ${darkTokensCSS}
+        }
+      }
+    `;
+  }
+
+  // Include CSS variables for the high contrast color palette inside of the
+  // high contrast media query if high contrast palette enabled is 'system'
+  if (palette.highContrast.enabled === 'system') {
+    css += `
+      @media (prefers-contrast: more) {
+        ${CSS_ROOT_SELECTOR} {
+          ${highContrastTokensCSS}
+        }
+      }
+    `;
+  }
+
+  // Include CSS variables for the high contrast dark color palette inside of the
+  // high contrast dark media query if high contrast dark palette enabled is 'system'
+  if (palette.highContrastDark.enabled === 'system') {
+    css += `
+      @media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+        ${CSS_ROOT_SELECTOR} {
+          ${highContrastDarkTokensCSS}
         }
       }
     `;
@@ -351,6 +419,7 @@ export const applyGlobalTheme = (baseTheme: any, userTheme?: any): any => {
 
   // Merge themes and apply
   const mergedTheme = deepMerge(baseTheme, userTheme);
+  console.log('Merged Theme:', mergedTheme);
   injectCSS(generateGlobalThemeCSS(mergedTheme));
   return mergedTheme;
 };

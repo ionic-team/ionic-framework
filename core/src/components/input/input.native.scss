@@ -55,7 +55,7 @@
   width: 30px;
   height: 30px;
 
-  color: var(--ion-color-gray-600);
+  color: var(--ion-color-text-600);
 }
 
 /**
@@ -108,14 +108,14 @@
 // ----------------------------------------------------------------
 
 .input-bottom .helper-text {
-  color: var(--ion-color-gray-700);
+  color: var(--ion-color-text-700);
 }
 
 // Input Max Length Counter
 // ----------------------------------------------------------------
 
 .input-bottom .counter {
-  color: var(--ion-color-gray-700);
+  color: var(--ion-color-text-700);
 
   padding-inline-start: 16px;
 }

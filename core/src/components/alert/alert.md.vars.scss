@@ -80,7 +80,7 @@ $alert-md-message-padding-start: $alert-md-message-padding-end;
 $alert-md-message-font-size: dynamic-font(16px);
 
 /// @prop - Text color of the alert message
-$alert-md-message-text-color: var(--ion-color-gray-550);
+$alert-md-message-text-color: var(--ion-color-text-550);
 
 /// @prop - Padding top of the alert empty message
 $alert-md-message-empty-padding-top: 0;
@@ -254,7 +254,7 @@ $alert-md-radio-label-padding-start: $alert-md-radio-label-padding-end + 26px;
 $alert-md-radio-label-font-size: dynamic-font(16px);
 
 /// @prop - Text color of the label for the radio alert
-$alert-md-radio-label-text-color: var(--ion-color-gray-850);
+$alert-md-radio-label-text-color: var(--ion-color-text-850);
 
 /// @prop - Text color of the label for the checked radio alert
 $alert-md-radio-label-text-color-checked: $alert-md-radio-label-text-color;
@@ -323,7 +323,7 @@ $alert-md-checkbox-label-padding-bottom: $alert-md-checkbox-label-padding-top;
 $alert-md-checkbox-label-padding-start: $alert-md-checkbox-label-padding-end + 27px;
 
 /// @prop - Text color of the label for the checkbox in the alert
-$alert-md-checkbox-label-text-color: var(--ion-color-gray-850);
+$alert-md-checkbox-label-text-color: var(--ion-color-text-850);
 
 /// @prop - Font size of the label for the checkbox in the alert
 $alert-md-checkbox-label-font-size: dynamic-font(16px);

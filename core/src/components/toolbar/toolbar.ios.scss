@@ -5,9 +5,9 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{$toolbar-ios-background};
+  --background: var(--ion-components-ion-toolbar-bg);
   --color: #{$toolbar-ios-color};
-  --border-color: #{$toolbar-ios-border-color};
+  --border-color: var(--ion-components-ion-toolbar-border-color);
   --padding-top: #{$toolbar-ios-padding-top};
   --padding-bottom: #{$toolbar-ios-padding-bottom};
   --padding-start: #{$toolbar-ios-padding-start};
