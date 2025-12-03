@@ -134,3 +134,58 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('action-sheet: radio buttons'), () => {
+    test('should render action sheet with radio buttons correctly', async ({ page }) => {
+      await page.goto(`/src/components/action-sheet/test/a11y`, config);
+
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+      const button = page.locator('#radioButtons');
+
+      await button.click();
+      await ionActionSheetDidPresent.next();
+
+      const actionSheet = page.locator('ion-action-sheet');
+
+      const radioButtons = actionSheet.locator('.action-sheet-button[role="radio"]');
+      await expect(radioButtons).toHaveCount(2);
+    });
+
+    test('should navigate radio buttons with keyboard', async ({ page, pageUtils }) => {
+      await page.goto(`/src/components/action-sheet/test/a11y`, config);
+
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+      const button = page.locator('#radioButtons');
+
+      await button.click();
+      await ionActionSheetDidPresent.next();
+
+      // Focus on the radios
+      await pageUtils.pressKeys('Tab');
+
+      // Verify the first focusable radio button is focused
+      let focusedElement = await page.evaluate(() => document.activeElement?.textContent?.trim());
+      expect(focusedElement).toBe('Option 2');
+
+      // Navigate to the next radio button
+      await page.keyboard.press('ArrowDown');
+
+      // Verify the first radio button is focused again (wrap around)
+      focusedElement = await page.evaluate(() => document.activeElement?.textContent?.trim());
+      expect(focusedElement).toBe('Option 1');
+
+      // Navigate to the next radio button
+      await page.keyboard.press('ArrowDown');
+
+      // Navigate to the cancel button
+      await pageUtils.pressKeys('Tab');
+
+      focusedElement = await page.evaluate(() => document.activeElement?.textContent?.trim());
+      expect(focusedElement).toBe('Cancel');
+    });
+  });
+});
