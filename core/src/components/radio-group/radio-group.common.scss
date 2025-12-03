@@ -2,6 +2,8 @@
 // --------------------------------------------------
 
 :host {
+  display: block;
+
   // Prevents additional pixels from being rendered on top
   vertical-align: top;
 }
