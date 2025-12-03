@@ -406,7 +406,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           onBlur={this.onBlur}
           {...inheritedAttributes}
         >
-          <span class="button-inner">
+          <span class="button-inner" part="inner">
             <slot name="icon-only" onSlotchange={this.slotChanged}></slot>
             <slot name="start"></slot>
             <slot></slot>
