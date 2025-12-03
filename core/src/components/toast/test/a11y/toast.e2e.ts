@@ -253,7 +253,7 @@ configs({ directions: ['ltr'], palettes: ['high-contrast-dark', 'high-contrast']
         );
       });
 
-      test.only('should not have visual regressions', async ({ page }) => {
+      test('should not have visual regressions', async ({ page }) => {
         const toast = page.locator('ion-toast');
 
         await expect(toast).toBeVisible();
