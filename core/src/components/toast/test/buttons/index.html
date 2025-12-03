@@ -64,7 +64,22 @@
       async function presentToastWithTwoButtons() {
         const opts = {
           message: "Can't send photo. Retry in 5 seconds.",
-          buttons: [{ text: 'Cancel', role: 'cancel' }, { text: 'OK' }],
+          buttons: [
+            {
+              text: 'retry',
+              handler: () => {
+                console.log('retry button clicked!');
+                return false;
+              },
+            },
+            {
+              icon: 'close',
+              role: 'cancel',
+              handler: () => {
+                console.log('close button clicked!');
+              },
+            },
+          ],
         };
 
         return await presentToastWithOptions(opts);
