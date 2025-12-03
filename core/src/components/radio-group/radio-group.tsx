@@ -18,6 +18,7 @@ import type { RadioGroupChangeEventDetail, RadioGroupCompareFn } from './radio-g
     md: 'radio-group.md.scss',
     ionic: 'radio-group.ionic.scss',
   },
+  shadow: true,
 })
 export class RadioGroup implements ComponentInterface {
   private inputId = `ion-rg-${radioGroupIds++}`;
@@ -317,11 +318,11 @@ export class RadioGroup implements ComponentInterface {
     }
 
     return (
-      <div class="radio-group-top">
-        <div id={helperTextId} class="helper-text" aria-live="polite">
+      <div class="radio-group-top" part="top">
+        <div id={helperTextId} class="helper-text" part="helper-text" aria-live="polite">
           {!isInvalid ? helperText : null}
         </div>
-        <div id={errorTextId} class="error-text" role="alert">
+        <div id={errorTextId} class="error-text" part="error-text" role="alert">
           {isInvalid ? errorText : null}
         </div>
       </div>
@@ -360,14 +361,7 @@ export class RadioGroup implements ComponentInterface {
         onClick={this.onClick}
       >
         {this.renderHintText()}
-        {/*
-          TODO(FW-6279): Wrapping the slot in a div is a workaround due to a
-          Stencil issue. Without the wrapper, the children radio will fire the
-          blur event on focus, instead of waiting for them to be blurred.
-        */}
-        <div class="radio-group-wrapper">
-          <slot></slot>
-        </div>
+        <slot></slot>
       </Host>
     );
   }

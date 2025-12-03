@@ -1,7 +1,7 @@
 // Radio Group: Common
 // --------------------------------------------------
 
-ion-radio-group {
+:host {
   // Prevents additional pixels from being rendered on top
   vertical-align: top;
 }
@@ -21,10 +21,10 @@ ion-radio-group {
   display: block;
 }
 
-.ion-touched.ion-invalid .radio-group-top .error-text {
+:host(.ion-touched.ion-invalid) .radio-group-top .error-text {
   display: block;
 }
 
-.ion-touched.ion-invalid .radio-group-top .helper-text {
+:host(.ion-touched.ion-invalid) .radio-group-top .helper-text {
   display: none;
 }

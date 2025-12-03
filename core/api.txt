@@ -1845,7 +1845,7 @@ ion-radio,part,container
 ion-radio,part,label
 ion-radio,part,mark
 
-ion-radio-group,none
+ion-radio-group,shadow
 ion-radio-group,prop,allowEmptySelection,boolean,false,false,false
 ion-radio-group,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
 ion-radio-group,prop,errorText,string | undefined,undefined,false,false
@@ -1855,6 +1855,9 @@ ion-radio-group,prop,name,string,this.inputId,false,false
 ion-radio-group,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-radio-group,prop,value,any,undefined,false,false
 ion-radio-group,event,ionChange,RadioGroupChangeEventDetail<any>,true
+ion-radio-group,part,error-text
+ion-radio-group,part,helper-text
+ion-radio-group,part,top
 
 ion-range,shadow
 ion-range,prop,activeBarStart,number | undefined,undefined,false,false

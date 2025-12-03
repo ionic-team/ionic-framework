@@ -7,6 +7,6 @@
 
 // Add padding to the error and helper text when used in a
 // list to align them with the list header and item text.
-ion-list .radio-group-top {
+:host-context(ion-list) .radio-group-top {
   @include padding-horizontal($item-md-padding-start, $item-md-padding-end);
 }

@@ -23,16 +23,20 @@
 
 // Add padding to the error and helper text when used in a
 // list to align them with the list header and item text.
-ion-list .radio-group-top {
-  /* stylelint-disable */
-  @include globals.ltr() {
-    padding-right: globals.$ion-space-400;
-    padding-left: calc(globals.$ion-space-400 + var(--ion-safe-area-left, 0px));
-  }
-
-  @include globals.rtl() {
-    padding-right: calc(globals.$ion-space-400 + var(--ion-safe-area-right, 0px));
-    padding-left: globals.$ion-space-400;
-  }
-  /* stylelint-enable */
+// Note: :host-context() cannot be nested inside ltr()/rtl() mixins
+// because the mixin tries to transform the selector, creating invalid CSS.
+// We work around this by using separate rules outside the mixins.
+/* stylelint-disable */
+:host-context(ion-list) .radio-group-top {
+  // Default to LTR - padding-left includes safe area
+  padding-right: globals.$ion-space-400;
+  padding-left: calc(globals.$ion-space-400 + var(--ion-safe-area-left, 0px));
 }
+
+// RTL support - match when document or ancestor has dir="rtl"
+:host-context([dir="rtl"] ion-list) .radio-group-top,
+:host-context(ion-list) .radio-group-top:dir(rtl) {
+  padding-right: calc(globals.$ion-space-400 + var(--ion-safe-area-right, 0px));
+  padding-left: globals.$ion-space-400;
+}
+/* stylelint-enable */
