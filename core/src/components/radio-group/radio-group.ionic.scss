@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 .radio-group-top {
-  @include globals.typography(globals.$ion-body-md-regular);
+  @include globals.typography(globals.$ion-body-sm-medium);
 
   margin-bottom: globals.$ion-space-400;
 }
