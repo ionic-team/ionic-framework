@@ -3,17 +3,8 @@
 // iOS Datetime
 // --------------------------------------------------
 
-/// @prop Border width for dividers between header and footer
-$datetime-ios-border-width: 0.55px;
-
-/// @prop - Border style for dividers between header and footer
-$datetime-ios-border-style: solid;
-
-/// @prop - Border color for dividers between header and footer
-$datetime-ios-border-color: var(--ion-color-gray-200);
-
 /// @prop - Border for dividers between header and footer
-$datetime-ios-border: $datetime-ios-border-width $datetime-ios-border-style $datetime-ios-border-color;
+$datetime-ios-border: 0.55px solid var(--ion-color-gray-200);
 
 /// @prop - Padding for content
 $datetime-ios-padding: 16px;
