@@ -37,8 +37,11 @@ const Landing: React.FC = () => (
     </IonHeader>
     <IonContent className="ion-padding">
       <IonLabel>A nested route will try to read the parent :userId parameter.</IonLabel>
-      <IonButton routerLink="/nested-params/user/42/details" id="go-to-user-details" className="ion-margin-top">
+      <IonButton routerLink="/nested-params/user/42/details" id="go-to-user-42" className="ion-margin-top">
         Go to User 42 Details
+      </IonButton>
+      <IonButton routerLink="/nested-params/user/99/details" id="go-to-user-99" className="ion-margin-top">
+        Go to User 99 Details
       </IonButton>
     </IonContent>
   </IonPage>

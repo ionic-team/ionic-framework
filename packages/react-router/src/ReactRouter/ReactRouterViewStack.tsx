@@ -142,14 +142,24 @@ export class ReactRouterViewStack extends ViewStacks {
       // Special case: reuse tabs/* and other specific wildcard routes
       // Don't reuse index routes (empty path) or generic catch-all wildcards (*)
       if (existingPath === routePath && existingPath !== '' && existingPath !== '*') {
-        // For parameterized routes (containing :param), only reuse if the ACTUAL pathname matches
-        // This ensures /details/1 and /details/2 get separate view items and component instances
+        // Parameterized routes need pathname matching to ensure /details/1 and /details/2
+        // get separate view items. For wildcard routes (e.g., user/:userId/*), compare
+        // pathnameBase to allow child path changes while preserving the parent view.
         const hasParams = routePath.includes(':');
+        const isWildcard = routePath.includes('*');
         if (hasParams) {
-          // Check if the existing view item's pathname matches the new pathname
-          const existingPathname = v.routeData?.match?.pathname;
-          if (existingPathname !== routeInfo.pathname) {
-            return false; // Different param values, don't reuse
+          if (isWildcard) {
+            const existingPathnameBase = v.routeData?.match?.pathnameBase;
+            const newMatch = matchComponent(reactElement, routeInfo.pathname, false);
+            const newPathnameBase = newMatch?.pathnameBase;
+            if (existingPathnameBase !== newPathnameBase) {
+              return false;
+            }
+          } else {
+            const existingPathname = v.routeData?.match?.pathname;
+            if (existingPathname !== routeInfo.pathname) {
+              return false;
+            }
           }
         }
         return true;
@@ -339,12 +349,33 @@ export class ReactRouterViewStack extends ViewStacks {
       <RouteContext.Consumer key={`view-context-${viewItem.id}`}>
         {(parentContext) => {
           const parentMatches = parentContext?.matches ?? [];
-          const accumulatedParentParams = parentMatches.reduce<Record<string, string | string[] | undefined>>(
+          let accumulatedParentParams = parentMatches.reduce<Record<string, string | string[] | undefined>>(
             (acc, match) => {
               return { ...acc, ...match.params };
             },
             {}
           );
+
+          // If parentMatches is empty, try to extract params from view items in other outlets.
+          // This handles cases where React context propagation doesn't work as expected
+          // for nested router outlets.
+          if (parentMatches.length === 0 && Object.keys(accumulatedParentParams).length === 0) {
+            const allViewItems = this.getAllViewItems();
+            for (const otherViewItem of allViewItems) {
+              // Skip view items from the same outlet
+              if (otherViewItem.outletId === viewItem.outletId) continue;
+
+              // Check if this view item's route could match the current pathname
+              const otherMatch = otherViewItem.routeData?.match;
+              if (otherMatch && otherMatch.params && Object.keys(otherMatch.params).length > 0) {
+                // Check if the current pathname starts with this view item's matched pathname
+                const matchedPathname = otherMatch.pathnameBase || otherMatch.pathname;
+                if (matchedPathname && routeInfo.pathname.startsWith(matchedPathname)) {
+                  accumulatedParentParams = { ...accumulatedParentParams, ...otherMatch.params };
+                }
+              }
+            }
+          }
 
           const combinedParams = {
             ...accumulatedParentParams,
@@ -620,6 +651,8 @@ export class ReactRouterViewStack extends ViewStacks {
       if (result) {
         const hasParams = result.params && Object.keys(result.params).length > 0;
         const isSamePath = result.pathname === previousMatch?.pathname;
+        const isWildcardRoute = viewItemPath.includes('*');
+        const isParameterRoute = viewItemPath.includes(':');
 
         // Don't allow view items with undefined paths to match specific routes
         // This prevents broken index route view items from interfering with navigation
@@ -627,10 +660,18 @@ export class ReactRouterViewStack extends ViewStacks {
           return false;
         }
 
-        // For parameterized routes, never reuse if the pathname is different
-        // This ensures /details/1 and /details/2 get separate view items
-        const isParameterRoute = viewItemPath.includes(':');
+        // For parameterized routes, check if we should reuse the view item.
+        // Wildcard routes (e.g., user/:userId/*) compare pathnameBase to allow
+        // child path changes while preserving the parent view.
         if (isParameterRoute && !isSamePath) {
+          if (isWildcardRoute) {
+            const isSameBase = result.pathnameBase === previousMatch?.pathnameBase;
+            if (isSameBase) {
+              match = result;
+              viewItem = v;
+              return true;
+            }
+          }
           return false;
         }
 
@@ -642,8 +683,7 @@ export class ReactRouterViewStack extends ViewStacks {
           return true;
         }
 
-        // For wildcard routes, only reuse if the pathname exactly matches
-        const isWildcardRoute = viewItemPath.includes('*');
+        // For wildcard routes (without params), only reuse if the pathname exactly matches
         if (isWildcardRoute && isSamePath) {
           match = result;
           viewItem = v;

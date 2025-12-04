@@ -6,7 +6,14 @@
  * and animate.
  */
 
-import type { AnimationBuilder, RouteAction, RouteInfo, RouteManagerContextState, RouterDirection, RouterOptions } from '@ionic/react';
+import type {
+  AnimationBuilder,
+  RouteAction,
+  RouteInfo,
+  RouteManagerContextState,
+  RouterDirection,
+  RouterOptions,
+} from '@ionic/react';
 import { LocationHistory, NavManager, RouteManagerContext, generateId, getConfig } from '@ionic/react';
 import type { Action as HistoryAction, Location } from 'history';
 import type { PropsWithChildren } from 'react';
