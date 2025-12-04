@@ -129,9 +129,6 @@ $lightest-text-color: $text-color;
     --ion-item-background: #000000;
     --ion-card-background: #1c1c1d;
 
-    /// Only the item borders should increase in contrast
-    /// Borders for elements like toolbars should remain the same
-    --ion-item-border-color: var(--ion-background-color-step-400);
     --ion-text-color-step-50: #{mix($darkest-text-color, $lightest-text-color, 5%)};
     --ion-text-color-step-100: #{mix($darkest-text-color, $lightest-text-color, 10%)};
     --ion-text-color-step-150: #{mix($darkest-text-color, $lightest-text-color, 15%)};
@@ -171,16 +168,6 @@ $lightest-text-color: $text-color;
     --ion-background-color-step-900: #{mix($text-color, $background-color, 90%)};
     --ion-background-color-step-950: #{mix($text-color, $background-color, 95%)};
   }
-
-  // Modal
-  // --------------------------------------------------
-
-  // TODO(FW-4005): Implement these to ionic modular
-  & ion-modal {
-    --ion-background-color: var(--ion-background-color-step-100);
-    --ion-toolbar-background: var(--ion-background-color-step-150);
-    --ion-toolbar-border-color: var(--ion-background-color-step-250);
-  }
 }
 
 @mixin high-contrast-dark-md-palette() {
@@ -197,10 +184,6 @@ $lightest-text-color: $text-color;
     --ion-toolbar-background: #1f1f1f;
     --ion-tab-bar-background: #1f1f1f;
     --ion-card-background: #1e1e1e;
-    // TODO(FW-4005): Implement these to ionic modular
-    /// Only the item borders should increase in contrast
-    /// Borders for elements like toolbars should remain the same
-    --ion-item-border-color: var(--ion-background-color-step-400);
     --ion-text-color-step-50: #{mix($darkest-text-color, $lightest-text-color, 5%)};
     --ion-text-color-step-100: #{mix($darkest-text-color, $lightest-text-color, 10%)};
     --ion-text-color-step-150: #{mix($darkest-text-color, $lightest-text-color, 15%)};

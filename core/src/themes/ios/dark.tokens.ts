@@ -26,8 +26,8 @@ export const darkTheme: DarkTheme = {
       background: '#000000',
     },
     IonModal: {
-      background: 'var(--ion-color-gray-100)',
-      toolbarBackground: 'var(--ion-color-gray-150)',
+      bg: 'var(--ion-color-gray-100)',
+      toolbarBg: 'var(--ion-color-gray-150)',
       toolbarBorderColor: 'var(--ion-color-gray-250)',
     },
   },

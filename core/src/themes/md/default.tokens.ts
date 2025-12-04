@@ -100,7 +100,7 @@ export const defaultTheme: DefaultTheme = {
       bg: 'var(--ion-color-gray-300)',
     },
     IonItem: {
-      borderColor: 'var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-gray-150)))',
+      borderColor: 'var(--ion-components-ion-item-border-color, var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-gray-150))))',
     },
     IonModal: {
       handleBg: 'var(--ion-color-gray-350)',
