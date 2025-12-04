@@ -180,7 +180,6 @@ $lightest-text-color: $text-color;
     // TODO(FW-4005): Implement the following components to the high contrast dark theme in ionic modular
     --ion-border-color: #222222;
     --ion-item-background: #1e1e1e;
-    --ion-toolbar-background: #1f1f1f;
     --ion-tab-bar-background: #1f1f1f;
     --ion-card-background: #1e1e1e;
     --ion-text-color-step-50: #{mix($darkest-text-color, $lightest-text-color, 5%)};
