@@ -23,7 +23,7 @@ export const darkTheme: DarkTheme = {
       background: '#1c1c1d',
     },
     IonItem: {
-      background: '#000000',
+      bg: '#000000',
     },
     IonModal: {
       bg: 'var(--ion-color-gray-100)',

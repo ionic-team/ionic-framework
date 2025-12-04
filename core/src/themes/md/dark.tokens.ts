@@ -22,13 +22,13 @@ export const darkTheme: DarkTheme = {
 
   components: {
     IonCard: {
-      background: '#1e1e1e',
+      bg: '#1e1e1e',
     },
     IonItem: {
       background: '#1e1e1e',
     },
     IonToolbar: {
-      background: '#1f1f1f',
+      bg: '#1f1f1f',
     },
     IonTabBar: {
       background: '#1f1f1f',

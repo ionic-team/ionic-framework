@@ -78,7 +78,7 @@
 // --------------------------------------------------
 
 ::slotted(*) .button-solid {
-  --color: #{$toolbar-md-background};
+  --color: var(--ion-components-ion-toolbar-bg);
   --background: #{$toolbar-md-color};
   --background-activated: transparent;
   --background-focused: currentColor;
