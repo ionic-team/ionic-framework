@@ -1,11 +1,11 @@
-import { defaultPrimitiveColors } from '../base/default.tokens.primitives';
+import { colors as defaultColors } from '../base/default.tokens';
 import type { LightTheme } from '../themes.interfaces';
 
 export const lightTheme: LightTheme = {
   components: {
     IonBreadcrumb: {
       color: '#677483',
-      bgFocused: defaultPrimitiveColors.white,
+      bgFocused: defaultColors.white,
       iconColor: '#7d8894',
       iconColorActive: '#222d3a',
       indicatorBg: '#eef1f3',
@@ -14,7 +14,7 @@ export const lightTheme: LightTheme = {
       separatorColor: '#73849a',
     },
     IonDatetime: {
-      bg: defaultPrimitiveColors.white,
+      bg: defaultColors.white,
       timeBodyBg: '#edeef0',
     },
     IonItem: {

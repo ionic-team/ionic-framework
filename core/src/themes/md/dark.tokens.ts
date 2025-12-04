@@ -1,9 +1,10 @@
 import { generateColorSteps } from '../../utils/theme';
 import { darkTheme as baseDarkTheme } from '../base/dark.tokens';
+import { colors as defaultColors } from '../base/default.tokens';
 import type { DarkTheme } from '../themes.interfaces';
 
 const colors = {
-  gray: generateColorSteps('#ffffff', '#121212', true),
+  gray: generateColorSteps(defaultColors.white, '#121212', true),
 };
 
 export const darkTheme: DarkTheme = {

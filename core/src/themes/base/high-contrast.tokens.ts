@@ -1,6 +1,8 @@
 import { generateColorSteps, mix } from '../../utils/theme';
 import type { HighContrastTheme } from '../themes.interfaces';
 
+import { colors as defaultColors } from './default.tokens';
+
 const colors = {
   primary: '#003fae',
   secondary: '#01487b',
@@ -160,11 +162,11 @@ export const highContrastTheme: HighContrastTheme = {
         tint: mix('#fff', colors.dark, '4%'),
       },
     },
-    text: generateColorSteps('#888888', '#000000'),
+    text: generateColorSteps('#888888', defaultColors.black),
   },
 
-  backgroundColor: '#ffffff',
+  backgroundColor: defaultColors.white,
   backgroundColorRgb: '255, 255, 255',
-  textColor: '#000000',
+  textColor: defaultColors.black,
   textColorRgb: '0, 0, 0',
 };

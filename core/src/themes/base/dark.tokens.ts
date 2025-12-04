@@ -1,9 +1,9 @@
-import { mix } from '../../utils/theme';
+import { mix, generateColorSteps } from '../../utils/theme';
 import type { DarkTheme } from '../themes.interfaces';
 
-import { darkPrimitiveColors } from './dark.tokens.primitives';
+import { colors as defaultColors } from './default.tokens';
 
-const colors = {
+export const colors = {
   primary: '#4d8dff',
   secondary: '#46b1ff',
   tertiary: '#8482fb',
@@ -13,7 +13,7 @@ const colors = {
   light: '#222428',
   medium: '#989aa2',
   dark: '#f4f5f8',
-  ...darkPrimitiveColors,
+  gray: generateColorSteps(defaultColors.white, defaultColors.black, true),
 };
 
 export const darkTheme: DarkTheme = {

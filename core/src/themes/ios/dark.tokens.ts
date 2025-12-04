@@ -1,11 +1,11 @@
-import { darkTheme as baseDarkTheme } from '../base/dark.tokens';
-import { darkPrimitiveColors as baseDarkPrimitiveColors } from '../base/dark.tokens.primitives';
+import { darkTheme as baseDarkTheme, colors as defaultDarkColors } from '../base/dark.tokens';
+import { colors as defaultColors } from '../base/default.tokens';
 import type { DarkTheme } from '../themes.interfaces';
 
 const colors = {
-  background: '#000000',
-  textColor: '#ffffff',
-  gray: baseDarkPrimitiveColors.gray,
+  background: defaultColors.black,
+  textColor: defaultColors.white,
+  gray: defaultDarkColors.gray,
 };
 
 export const darkTheme: DarkTheme = {

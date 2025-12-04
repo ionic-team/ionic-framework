@@ -1,8 +1,8 @@
-import { defaultPrimitiveColors } from '../base/default.tokens.primitives';
+import { colors as defaultColors } from '../base/default.tokens';
 import type { LightTheme } from '../themes.interfaces';
 
 const colors = {
-  gray: defaultPrimitiveColors.gray,
+  gray: defaultColors.gray,
 };
 
 export const lightTheme: LightTheme = {
@@ -12,7 +12,7 @@ export const lightTheme: LightTheme = {
   },
   components: {
     IonActionSheet: {
-      buttonBgSelected: `var(--ion-background-color, ${defaultPrimitiveColors.white})`,
+      buttonBgSelected: `var(--ion-background-color, ${defaultColors.white})`,
     },
     IonDatetime: {
       timeBodyBg: '#edeef0',
@@ -44,7 +44,7 @@ export const lightTheme: LightTheme = {
       nativeSpinnerColor: '#747577', // Available only in iOS
     },
     IonSegmentButton: {
-      checkedIndicatorBg: defaultPrimitiveColors.white, // Available only in iOS
+      checkedIndicatorBg: defaultColors.white, // Available only in iOS
     },
     IonTabbar: {
       bg: 'var(--ion-tab-bar-background-color, #f7f7f7)',
