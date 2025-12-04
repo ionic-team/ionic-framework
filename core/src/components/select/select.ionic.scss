@@ -36,6 +36,10 @@
   color: globals.$ion-primitives-neutral-800;
 }
 
+.select-bottom .error-text {
+  color: globals.$ion-text-danger;
+}
+
 .select-text {
   min-width: globals.$ion-space-400;
 
