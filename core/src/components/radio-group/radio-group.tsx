@@ -2,11 +2,11 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 import { checkInvalidState } from '@utils/forms';
 import { renderHiddenInput } from '@utils/helpers';
+import { hostContext } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
 
 import type { RadioGroupChangeEventDetail, RadioGroupCompareFn } from './radio-group-interface';
-import {hostContext} from "@utils/theme";
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
