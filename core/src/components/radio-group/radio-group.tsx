@@ -318,11 +318,11 @@ export class RadioGroup implements ComponentInterface {
     }
 
     return (
-      <div class="radio-group-top" part="top">
-        <div id={helperTextId} class="helper-text" part="helper-text" aria-live="polite">
+      <div class="radio-group-top">
+        <div id={helperTextId} class="helper-text" part="supporting-text helper-text" aria-live="polite">
           {!isInvalid ? helperText : null}
         </div>
-        <div id={errorTextId} class="error-text" part="error-text" role="alert">
+        <div id={errorTextId} class="error-text" part="supporting-text error-text" role="alert">
           {isInvalid ? errorText : null}
         </div>
       </div>
