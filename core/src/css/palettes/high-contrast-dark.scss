@@ -178,7 +178,7 @@ $lightest-text-color: $text-color;
     --ion-background-color-rgb: #{color-to-rgb-list($background-color)};
     --ion-text-color: #{$text-color};
     --ion-text-color-rgb: #{color-to-rgb-list($text-color)};
-    // TODO(FW-4005): Implement these to ionic modular
+    // TODO(FW-4005): Implement the following components to the high contrast dark theme in ionic modular
     --ion-border-color: #222222;
     --ion-item-background: #1e1e1e;
     --ion-toolbar-background: #1f1f1f;
@@ -224,7 +224,7 @@ $lightest-text-color: $text-color;
     --ion-background-color-step-950: #{mix($text-color, $background-color, 95%)};
   }
 
-  // TODO(FW-4005): Implement these to ionic modular
+  // TODO(FW-4005): Implement the following to the high contrast dark theme in ionic modular
   // Toast
   // --------------------------------------------------
 
