@@ -209,7 +209,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('should not override keyboard interactions for textarea elements', async ({ page, browserName }) => {
       const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
       const popover = page.locator('ion-popover');
-      const innerNativeTextarea = page.locator('ion-textarea textarea').nth(0);
+      const innerNativeTextarea = page.locator('ion-textarea').locator('textarea').nth(0);
       const vanillaTextarea = page.locator('ion-textarea + textarea');
 
       await popoverFixture.open('#popover-with-textarea');
@@ -220,43 +220,32 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
        */
       await expect(popover).toBeFocused();
 
+      // Tab should focus the native textarea inside ion-textarea
       await page.keyboard.press(tabKey);
-
-      // for Firefox, ion-textarea is focused first
-      // need to tab again to get to native input
-      if (browserName === 'firefox') {
-        await page.keyboard.press(tabKey);
-      }
-
       await expect(innerNativeTextarea).toBeFocused();
 
+      // Arrow keys should work on the ion-textarea
       await page.keyboard.press('ArrowDown');
-
       await expect(innerNativeTextarea).toBeFocused();
 
       await page.keyboard.press('ArrowUp');
-
       await expect(innerNativeTextarea).toBeFocused();
 
+      // Tab again should focus the vanilla textarea
       await page.keyboard.press(tabKey);
-      // Checking within HTML textarea
-
       await expect(vanillaTextarea).toBeFocused();
 
+      // Arrow keys should work on the vanilla textarea
       await page.keyboard.press('ArrowDown');
-
       await expect(vanillaTextarea).toBeFocused();
 
       await page.keyboard.press('ArrowUp');
-
       await expect(vanillaTextarea).toBeFocused();
 
       await page.keyboard.press('Home');
-
       await expect(vanillaTextarea).toBeFocused();
 
       await page.keyboard.press('End');
-
       await expect(vanillaTextarea).toBeFocused();
     });
   });
