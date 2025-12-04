@@ -124,14 +124,6 @@ export class Datetime implements ComponentInterface {
   private destroyCalendarListener?: () => void;
   private destroyKeyboardMO?: () => void;
 
-  /**
-   * Tracks the current visibility state of the datetime component.
-   * This prevents race conditions when the datetime rapidly becomes visible/hidden
-   * (e.g., when dragging a modal on iOS), ensuring the datetime-ready class
-   * accurately reflects the component's current intersection state.
-   */
-  private isIntersecting = false;
-
   // TODO(FW-2832): types (DatetimeParts causes some errors that need untangling)
   private minParts?: any;
   private maxParts?: any;
@@ -1156,13 +1148,6 @@ export class Datetime implements ComponentInterface {
         return;
       }
 
-      /**
-       * Track that the component is now intersecting.
-       * This prevents stale writeTask operations from incorrectly
-       * removing the datetime-ready class.
-       */
-      this.isIntersecting = true;
-
       this.initializeListeners();
 
       /**
@@ -1174,14 +1159,7 @@ export class Datetime implements ComponentInterface {
        * is a better way to handle this?
        */
       writeTask(() => {
-        /**
-         * Only add the class if the component is still intersecting.
-         * This prevents race conditions when the visibility state changes
-         * rapidly (e.g., when dragging a modal on iOS).
-         */
-        if (this.isIntersecting) {
-          this.el.classList.add('datetime-ready');
-        }
+        this.el.classList.add('datetime-ready');
       });
     };
     const visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01, root: el });
@@ -1219,13 +1197,6 @@ export class Datetime implements ComponentInterface {
         return;
       }
 
-      /**
-       * Track that the component is no longer intersecting.
-       * This prevents stale writeTask operations from incorrectly
-       * adding the datetime-ready class.
-       */
-      this.isIntersecting = false;
-
       this.destroyInteractionListeners();
 
       /**
@@ -1238,14 +1209,7 @@ export class Datetime implements ComponentInterface {
       this.showMonthAndYear = false;
 
       writeTask(() => {
-        /**
-         * Only remove the class if the component is still not intersecting.
-         * This prevents race conditions when the visibility state changes
-         * rapidly (e.g., when dragging a modal on iOS).
-         */
-        if (!this.isIntersecting) {
-          this.el.classList.remove('datetime-ready');
-        }
+        this.el.classList.remove('datetime-ready');
       });
     };
     const hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0, root: el });
