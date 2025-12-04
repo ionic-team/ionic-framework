@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -10,11 +9,10 @@ import {
   IonLabel,
   IonButton,
 } from '@ionic/react';
-import { useParams, useLocation } from 'react-router';
+import React, { useEffect } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
 
-interface DetailsProps {}
-
-const Details: React.FC<DetailsProps> = () => {
+const Details: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
   const location = useLocation();
@@ -24,7 +22,7 @@ const Details: React.FC<DetailsProps> = () => {
     return () => console.log('Home Details unmount');
   }, []);
 
-  const nextId = parseInt(id, 10) + 1;
+  const nextId = parseInt(id ?? '0', 10) + 1;
 
   return (
     <IonPage data-pageid={`home-details-page-${id}`}>

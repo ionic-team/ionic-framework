@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react';
-import { Route, Redirect } from 'react-router';
+import { Route, Navigate } from 'react-router';
 import {
   addCircleOutline,
   alarm,
@@ -26,16 +26,16 @@ const OverlayHooks: React.FC<OverlayHooksProps> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Redirect from="/overlay-components" to="/overlay-components/actionsheet" exact />
-        <Route path="/overlay-components/actionsheet" component={ActionSheetComponent} />
-        <Route path="/overlay-components/alert" component={AlertComponent} />
-        <Route path="/overlay-components/loading" component={LoadingComponent} />
-        <Route path="/overlay-components/modal-basic" component={ModalComponent} />
-        <Route path="/overlay-components/modal-focus-trap" component={ModalFocusTrap} />
-        <Route path="/overlay-components/modal-teleport" component={ModalTeleport} />
-        <Route path="/overlay-components/picker" component={PickerComponent} />
-        <Route path="/overlay-components/popover" component={PopoverComponent} />
-        <Route path="/overlay-components/toast" component={ToastComponent} />
+        <Route index element={<Navigate to="/overlay-components/actionsheet" replace />} />
+        <Route path="actionsheet" element={<ActionSheetComponent />} />
+        <Route path="alert" element={<AlertComponent />} />
+        <Route path="loading" element={<LoadingComponent />} />
+        <Route path="modal-basic" element={<ModalComponent />} />
+        <Route path="modal-focus-trap" element={<ModalFocusTrap />} />
+        <Route path="modal-teleport" element={<ModalTeleport />} />
+        <Route path="picker" element={<PickerComponent />} />
+        <Route path="popover" element={<PopoverComponent />} />
+        <Route path="toast" element={<ToastComponent />} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="actionsheet" href="/overlay-components/actionsheet">

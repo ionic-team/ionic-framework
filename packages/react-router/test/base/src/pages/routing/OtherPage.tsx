@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -10,10 +9,9 @@ import {
   useIonViewWillEnter,
   IonButton,
 } from '@ionic/react';
+import React, { useEffect } from 'react';
 
-interface OtherPageProps {}
-
-const OtherPage: React.FC<OtherPageProps> = () => {
+const OtherPage: React.FC = () => {
   useIonViewWillEnter(() => {
     console.log('IVWE on otherpage');
   });
@@ -25,7 +23,7 @@ const OtherPage: React.FC<OtherPageProps> = () => {
 
   return (
     // <IonRouterOutlet id="other" ionPageContainer>
-    //   <Route path="/otherpage" render={() => (
+    //   <Route path="/otherpage" element={
     <IonPage data-pageid="other-page">
       <IonHeader>
         <IonToolbar>
@@ -39,7 +37,7 @@ const OtherPage: React.FC<OtherPageProps> = () => {
         <IonButton routerLink="/routing/tabs/tab3">Go to tab3</IonButton>
       </IonContent>
     </IonPage>
-    //   )}></Route>
+    //   }></Route>
     // </IonRouterOutlet>
   );
 };
