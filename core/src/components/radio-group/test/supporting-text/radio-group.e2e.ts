@@ -197,7 +197,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `
         <style>
-          ion-radio-group::part(top) {
+          ion-radio-group::part(supporting-text) {
             font-size: 20px;
           }
 
@@ -222,7 +222,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `
         <style>
-          ion-radio-group::part(top) {
+          ion-radio-group::part(supporting-text) {
             font-size: 20px;
           }
 

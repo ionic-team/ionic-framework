@@ -6,10 +6,15 @@ import { renderHiddenInput } from '@utils/helpers';
 import { getIonTheme } from '../../global/ionic-global';
 
 import type { RadioGroupChangeEventDetail, RadioGroupCompareFn } from './radio-group-interface';
+import {hostContext} from "@utils/theme";
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ *
+ * @part supporting-text - Supporting text displayed above the radios.
+ * @part helper-text - Supporting text displayed above the radios when the radio group is valid.
+ * @part error-text - Supporting text displayed above the radios when the radio group is invalid and touched.
  */
 @Component({
   tag: 'ion-radio-group',
@@ -353,6 +358,7 @@ export class RadioGroup implements ComponentInterface {
       <Host
         class={{
           [theme]: true,
+          'in-list': hostContext('ion-list', el),
         }}
         role="radiogroup"
         aria-labelledby={label ? labelId : null}
