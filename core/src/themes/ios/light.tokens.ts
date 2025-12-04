@@ -12,7 +12,7 @@ export const lightTheme: LightTheme = {
   },
   components: {
     IonActionSheet: {
-      buttonBgSelected: 'var(--ion-background-color)',
+      buttonBgSelected: `var(--ion-background-color, ${defaultPrimitiveColors.white})`,
     },
     IonDatetime: {
       timeBodyBg: '#edeef0',
