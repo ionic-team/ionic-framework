@@ -15,5 +15,5 @@ export const highContrastDarkTheme: HighContrastDarkTheme = {
       toolbarBg: 'var(--ion-color-gray-150)',
       toolbarBorderColor: 'var(--ion-color-gray-250)',
     },
-  }
+  },
 };

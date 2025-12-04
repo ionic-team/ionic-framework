@@ -9,6 +9,6 @@ export const highContrastDarkTheme: HighContrastDarkTheme = {
       /// Only the item borders should increase in contrast
       /// Borders for elements like toolbars should remain the same
       borderColor: 'var(--ion-color-gray-400)',
-    }
-  }
+    },
+  },
 };

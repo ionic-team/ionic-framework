@@ -112,7 +112,6 @@ $lightest-text-color: #888888;
     /// Only the item borders should increase in contrast
     /// Borders for elements like toolbars should remain the same
     --ion-item-border-color: #7a7a7a;
-
     --ion-text-color-step-50: #{mix($lightest-text-color, $darkest-text-color, 5%)};
     --ion-text-color-step-100: #{mix($lightest-text-color, $darkest-text-color, 10%)};
     --ion-text-color-step-150: #{mix($lightest-text-color, $darkest-text-color, 15%)};
@@ -145,7 +144,7 @@ $lightest-text-color: #888888;
   }
 }
 
-  // TODO(FW-4005): Implement the following to the high contrast theme in ionic modular
+// TODO(FW-4005): Implement the following to the high contrast theme in ionic modular
 @mixin high-contrast-light-md-palette() {
   // Toast
   // --------------------------------------------------

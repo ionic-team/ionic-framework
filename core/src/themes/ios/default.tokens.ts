@@ -100,7 +100,8 @@ export const defaultTheme: DefaultTheme = {
     },
     IonItem: {
       paragraphTextColor: 'var(--ion-color-text-450)',
-      borderColor: 'var(--ion-components-ion-item-border-color, var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-gray-250))))',
+      borderColor:
+        'var(--ion-components-ion-item-border-color, var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-gray-250))))',
     },
     IonModal: {
       handleBg: 'var(--ion-color-gray-350)',
