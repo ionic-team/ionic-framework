@@ -146,6 +146,10 @@ ion-icon {
   color: globals.$ion-text-subtlest;
 }
 
+.textarea-bottom .error-text {
+  color: globals.$ion-text-danger;
+}
+
 :host(.has-focus.ion-valid) .helper-text {
   color: var(--highlight-color-valid);
 }
