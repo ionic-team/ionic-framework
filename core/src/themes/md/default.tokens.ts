@@ -113,7 +113,8 @@ export const defaultTheme: DefaultTheme = {
       borderColor: 'var(--ion-tab-bar-border-color, var(--ion-border-color, var(--ion-color-gray-150)))',
     },
     IonToolbar: {
-      bg: `var(--ion-toolbar-background, ${baseDefaultTheme.color!.white})`,
+      activatedButtonBg: 'var(--ion-toolbar-background, var(--color))',
+      bg: `var(--ion-toolbar-background, var(--ion-background-color, ${baseDefaultTheme.color!.white}))`,
       borderColor: 'var(--ion-toolbar-border-color, var(--ion-border-color, var(--ion-color-gray-150)))',
     },
   },

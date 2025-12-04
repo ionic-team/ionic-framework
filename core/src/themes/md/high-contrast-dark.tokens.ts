@@ -10,5 +10,8 @@ export const highContrastDarkTheme: HighContrastDarkTheme = {
       /// Borders for elements like toolbars should remain the same
       borderColor: 'var(--ion-color-gray-400)',
     },
+    IonToolbar: {
+      bg: 'var(--ion-toolbar-background, #1f1f1f)',
+    },
   },
 };

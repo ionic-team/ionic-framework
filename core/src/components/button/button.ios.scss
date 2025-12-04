@@ -291,5 +291,5 @@
 
 :host(.button-outline.ion-activated.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
   background: var(--ion-toolbar-color, var(--color));
-  color: #{var(--ion-components-ion-toolbar-bg, var(--background), ion-color(primary, contrast))};
+  color: var(--ion-components-ion-toolbar-activated-button-color);
 }

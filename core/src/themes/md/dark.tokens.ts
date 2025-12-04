@@ -29,7 +29,7 @@ export const darkTheme: DarkTheme = {
       background: '#1e1e1e',
     },
     IonToolbar: {
-      bg: '#1f1f1f',
+      bg: 'var(--ion-toolbar-background, #1f1f1f)',
     },
     IonTabBar: {
       background: '#1f1f1f',
