@@ -29,8 +29,7 @@ export const lightTheme: LightTheme = {
     },
     IonItem: {
       paragraphTextColor: '#a3a3a3',
-      borderColor:
-        'var(--ion-components-ion-item-border-color, var(--ion-item-border-color, var(--ion-border-color, #c8c7cc)))',
+      borderColor: 'var(--ion-item-border-color, var(--ion-border-color, #c8c7cc))',
     },
     IonModal: {
       handleBg: '#c0c0be',

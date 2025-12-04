@@ -18,8 +18,7 @@ export const lightTheme: LightTheme = {
       timeBodyBg: '#edeef0',
     },
     IonItem: {
-      borderColor:
-        'var(--ion-components-ion-item-border-color, var(--ion-item-border-color, var(--ion-border-color, rgba(0, 0, 0, 0.13))))',
+      borderColor: 'var(--ion-item-border-color, var(--ion-border-color, rgba(0, 0, 0, 0.13)))',
     },
     IonModal: {
       handleBg: '#c0c0be',

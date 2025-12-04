@@ -210,7 +210,7 @@ describe('generateCSSVars', () => {
         },
         highContrastDark: {
           enabled: 'never',
-        }
+        },
       },
       config: {
         rippleEffect: true,
@@ -330,7 +330,7 @@ describe('generateGlobalThemeCSS', () => {
         },
         highContrastDark: {
           enabled: 'never',
-        }
+        },
       },
       borderWidth: {
         sm: '4px',
@@ -389,7 +389,7 @@ describe('generateGlobalThemeCSS', () => {
         },
         highContrastDark: {
           enabled: 'never',
-        }
+        },
       },
       borderWidth: {
         sm: '4px',
@@ -460,7 +460,7 @@ describe('generateGlobalThemeCSS', () => {
         },
         highContrastDark: {
           enabled: 'never',
-        }
+        },
       },
       borderWidth: {
         sm: '4px',
@@ -616,7 +616,7 @@ describe('generateGlobalThemeCSS', () => {
               100: '#ffcdd2',
               200: '#ef9a9a',
             },
-          }
+          },
         },
         highContrastDark: {
           enabled: 'never',
@@ -697,7 +697,7 @@ describe('generateGlobalThemeCSS', () => {
               100: '#ffcdd2',
               200: '#ef9a9a',
             },
-          }
+          },
         },
       },
       borderWidth: {
