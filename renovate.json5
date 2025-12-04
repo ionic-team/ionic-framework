@@ -96,6 +96,15 @@
         "package.json"
       ],
       enabled: false
+    },
+    {
+      /**
+       * Group Node version updates into a single PR to update 
+       * the workflows and core package.json simultaneously.
+       */
+      matchDatasources: ["node-version"],
+      matchPackagePatterns: ["node"],
+      groupName: "node-version-updates"
     }
   ],
   dependencyDashboard: false,
