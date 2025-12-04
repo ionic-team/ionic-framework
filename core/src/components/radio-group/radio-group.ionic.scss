@@ -6,8 +6,6 @@
 
 .radio-group-top {
   @include globals.typography(globals.$ion-body-sm-medium);
-
-  margin-bottom: globals.$ion-space-400;
 }
 
 .radio-group-top .error-text {
