@@ -8,7 +8,7 @@ ion-header {
   z-index: 10; // TODO(ROU-10853): replace this value with a layer token.
 
   &.header-divider {
-    border-bottom: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-primitives-neutral-300;
+    border-bottom: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-border-default;
   }
 }
 
