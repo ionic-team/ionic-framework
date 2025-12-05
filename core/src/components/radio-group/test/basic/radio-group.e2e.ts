@@ -26,7 +26,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await radioFixture.checkRadio('keyboard');
+      await radioFixture.checkRadio({ method: 'keyboard', key: 'Space' });
       await radioFixture.expectChecked(true);
     });
 
@@ -42,7 +42,39 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await radioFixture.checkRadio('keyboard');
+      await radioFixture.checkRadio({ method: 'keyboard', key: 'Space' });
+      await radioFixture.expectChecked(false);
+    });
+
+    test('enter should not deselect without allowEmptySelection', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-radio-group value="one" allow-empty-selection="false">
+          <ion-item>
+            <ion-radio id="one" value="one">One</ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      `,
+        config
+      );
+
+      await radioFixture.checkRadio({ method: 'keyboard', key: 'Enter' });
+      await radioFixture.expectChecked(true);
+    });
+
+    test('enter should deselect with allowEmptySelection', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-radio-group value="one" allow-empty-selection="true">
+          <ion-item>
+            <ion-radio id="one" value="one">One</ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      `,
+        config
+      );
+
+      await radioFixture.checkRadio({ method: 'keyboard', key: 'Enter' });
       await radioFixture.expectChecked(false);
     });
 
@@ -58,7 +90,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await radioFixture.checkRadio('mouse');
+      await radioFixture.checkRadio({ method: 'mouse' });
       await radioFixture.expectChecked(true);
     });
 
@@ -74,7 +106,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await radioFixture.checkRadio('mouse');
+      await radioFixture.checkRadio({ method: 'mouse' });
       await radioFixture.expectChecked(false);
     });
 
