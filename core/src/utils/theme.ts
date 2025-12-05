@@ -419,7 +419,7 @@ export const applyGlobalTheme = (baseTheme: any, userTheme?: any): any => {
 
   // Merge themes and apply
   const mergedTheme = deepMerge(baseTheme, userTheme);
-  
+
   injectCSS(generateGlobalThemeCSS(mergedTheme));
   return mergedTheme;
 };
