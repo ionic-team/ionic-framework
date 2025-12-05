@@ -46,7 +46,7 @@ export const lightTheme: LightTheme = {
     IonSegmentButton: {
       checkedIndicatorBg: defaultColors.white, // Available only in iOS
     },
-    IonTabbar: {
+    IonTabBar: {
       bg: 'var(--ion-tab-bar-background-color, #f7f7f7)',
       borderColor: 'var(--ion-border-color, rgba(0, 0, 0, 0.2))',
     },

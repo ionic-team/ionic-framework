@@ -117,7 +117,7 @@ export const defaultTheme: DefaultTheme = {
     IonSegmentButton: {
       checkedIndicatorBg: 'var(--ion-color-gray-350)', // Available only in iOS
     },
-    IonTabbar: {
+    IonTabBar: {
       bg: 'var(--ion-tab-bar-background-color, var(--ion-color-gray-50))',
       borderColor: 'var(--ion-border-color, var(--ion-color-gray-150))',
     },
