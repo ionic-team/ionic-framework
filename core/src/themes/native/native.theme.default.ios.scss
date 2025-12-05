@@ -17,7 +17,7 @@ $tabbar-ios-color-selected: var(--ion-tab-bar-color-selected, ion-color(primary,
 // iOS Toolbar
 // --------------------------------------------------
 $toolbar-ios-background: var(--ion-toolbar-background, var(--ion-components-ion-toolbar-bg));
-$toolbar-ios-border-color: var(--ion-components-ion-toolbar-border-color);
+$toolbar-ios-border-color: var(--ion-toolbar-border-color, var(--ion-components-ion-toolbar-border-color));
 $toolbar-ios-color: var(--ion-toolbar-color, $text-color);
 
 // iOS List & List Items

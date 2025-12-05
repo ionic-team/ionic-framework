@@ -28,11 +28,11 @@ export const lightTheme: LightTheme = {
       nativeSpinnerBg: defaultColors.white, // Available only in md
     },
     IonTabBar: {
-      borderColor: 'var(--ion-tab-bar-border-color, var(--ion-border-color, rgba(0, 0, 0, 0.07)))',
+      borderColor: 'var(--ion-border-color, rgba(0, 0, 0, 0.07))',
     },
     IonToolbar: {
       bg: `var(--ion-background-color, ${defaultColors.white})`,
-      borderColor: 'var(--ion-toolbar-border-color, var(--ion-border-color, #c1c4cd))',
+      borderColor: 'var(--ion-border-color, #c1c4cd)',
     },
   },
 };

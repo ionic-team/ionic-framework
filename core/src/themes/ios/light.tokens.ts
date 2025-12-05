@@ -48,11 +48,11 @@ export const lightTheme: LightTheme = {
     },
     IonTabbar: {
       bg: 'var(--ion-tab-bar-background-color, #f7f7f7)',
-      borderColor: 'var(--ion-tab-bar-border-color, var(--ion-border-color, rgba(0, 0, 0, 0.2)))',
+      borderColor: 'var(--ion-border-color, rgba(0, 0, 0, 0.2))',
     },
     IonToolbar: {
       bg: '#f7f7f7',
-      borderColor: 'var(--ion-toolbar-border-color, var(--ion-border-color, rgba(0, 0, 0, 0.2)))',
+      borderColor: 'var(--ion-border-color, rgba(0, 0, 0, 0.2))',
     },
   },
 };

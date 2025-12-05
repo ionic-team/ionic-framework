@@ -119,12 +119,12 @@ export const defaultTheme: DefaultTheme = {
     },
     IonTabbar: {
       bg: 'var(--ion-tab-bar-background-color, var(--ion-color-gray-50))',
-      borderColor: 'var(--ion-tab-bar-border-color, var(--ion-border-color, var(--ion-color-gray-150)))',
+      borderColor: 'var(--ion-border-color, var(--ion-color-gray-150))',
     },
     IonToolbar: {
       activatedButtonColor: 'var(--ion-toolbar-background, var(--background), ion-color(primary, contrast))',
       bg: 'var(--ion-color-gray-50)',
-      borderColor: 'var(--ion-toolbar-border-color, var(--ion-border-color, var(--ion-color-gray-150)))',
+      borderColor: 'var(--ion-border-color, var(--ion-color-gray-150))',
     },
   },
 };

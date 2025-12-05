@@ -110,12 +110,12 @@ export const defaultTheme: DefaultTheme = {
       nativeSpinnerBg: 'var(--ion-color-gray-250)', // Available only in md
     },
     IonTabBar: {
-      borderColor: 'var(--ion-tab-bar-border-color, var(--ion-border-color, var(--ion-color-gray-150)))',
+      borderColor: 'var(--ion-border-color, var(--ion-color-gray-150))',
     },
     IonToolbar: {
       activatedButtonBg: 'var(--ion-toolbar-background, var(--color))',
       bg: '#1f1f1f',
-      borderColor: 'var(--ion-toolbar-border-color, var(--ion-border-color, var(--ion-color-gray-150)))',
+      borderColor: 'var(--ion-border-color, var(--ion-color-gray-150))',
     },
   },
 };

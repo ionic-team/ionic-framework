@@ -8,7 +8,7 @@
   // default color / background
   --background: var(--ion-components-ion-tabbar-bg);
   --background-focused: #{$tabbar-ios-background-focused};
-  --border: #{$hairlines-width solid var(--ion-components-ion-tabbar-border-color)};
+  --border: #{$hairlines-width solid (var(--ion-tab-bar-border-color, var(--ion-components-ion-tab-bar-border-color)))};
   --color: #{$tab-button-ios-text-color};
   --color-selected: #{$tabbar-ios-color-selected};
 
