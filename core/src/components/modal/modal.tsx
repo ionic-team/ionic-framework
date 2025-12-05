@@ -764,16 +764,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.gesture.enable(true);
 
     /**
-     * When showBackdrop or focusTrap is false, the modal's original parent may
-     * block pointer events after the modal is moved to ion-app. This only applies
-     * when the modal is in a child route (detected by the modal being inside
-     * a route wrapper like ion-page). Disable pointer-events on the child
+     * When the backdrop doesn't block pointer events (showBackdrop=false,
+     * focusTrap=false, or backdropBreakpoint > 0), the modal's original parent
+     * may block pointer events after the modal is moved to ion-app. This only
+     * applies when the modal is in a child route (detected by the modal being
+     * inside a route wrapper like ion-page). Disable pointer-events on the child
      * route's wrapper elements up to (and including) the first ion-router-outlet.
      * We stop there because parent elements may contain sibling content that
      * should remain interactive.
      * See https://github.com/ionic-team/ionic-framework/issues/30700
      */
-    if ((this.showBackdrop === false || this.focusTrap === false) && this.cachedOriginalParent) {
+    const backdropNotBlocking = this.showBackdrop === false || this.focusTrap === false || this.backdropBreakpoint > 0;
+    if (backdropNotBlocking && this.cachedOriginalParent) {
       // Find the first meaningful parent (skip template and other non-semantic wrappers).
       // In Ionic React, modals are wrapped in a <template> element.
       let semanticParent: HTMLElement | null = this.cachedOriginalParent;
