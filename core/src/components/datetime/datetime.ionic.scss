@@ -12,6 +12,24 @@
   --background: #{globals.$ion-bg-surface-default};
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-radius-025};
+  --body-opacity: 0;
+  --year-opacity: 0;
+}
+
+:host .calendar-body {
+  opacity: var(--body-opacity);
+}
+
+:host .datetime-year {
+  opacity: var(--year-opacity);
+}
+
+:host(.datetime-ready) .calendar-body {
+  --body-opacity: 1;
+}
+
+:host(.datetime-ready) .datetime-year {
+  --year-opacity: 1;
 }
 
 // Header

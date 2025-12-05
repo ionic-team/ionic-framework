@@ -23,6 +23,16 @@
   max-width: 350px;
 }
 
+:host .calendar-body,
+:host .datetime-year {
+  opacity: 0;
+}
+
+:host(.datetime-ready) .calendar-body,
+:host(.datetime-ready) .datetime-year {
+  opacity: 1;
+}
+
 /**
  * This ensures that the picker is appropriately
  * sized and never truncates the text.

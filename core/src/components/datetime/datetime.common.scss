@@ -25,25 +25,15 @@
   width: 100%;
 }
 
-:host .calendar-body,
-:host .datetime-year {
-  opacity: 0;
-}
-
 :host(:not(.datetime-ready)) .datetime-year {
   position: absolute;
   pointer-events: none;
 }
 
-:host(.datetime-ready) .calendar-body {
-  opacity: 1;
-}
-
 :host(.datetime-ready) .datetime-year {
   display: none;
-
-  opacity: 1;
 }
+
 
 /**
  * Changing the physical order of the
