@@ -539,11 +539,16 @@ export const present = async <OverlayPresentOptions>(
    * view container subtree, skip adding aria-hidden/inert there
    * to avoid disabling the overlay.
    */
-  const overlayEl = overlay.el as HTMLIonOverlayElement & { focusTrap?: boolean; showBackdrop?: boolean };
+  const overlayEl = overlay.el as HTMLIonOverlayElement & {
+    focusTrap?: boolean;
+    showBackdrop?: boolean;
+    backdropBreakpoint?: number;
+  };
   const shouldTrapFocus = overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false;
-  // Only lock out root content when backdrop is active. Developers relying on showBackdrop=false
-  // expect background interaction to remain enabled.
-  const shouldLockRoot = shouldTrapFocus && overlayEl.showBackdrop !== false;
+  // Only lock out root content when backdrop is always active. Developers relying on
+  // showBackdrop=false or backdropBreakpoint expect background interaction at some point.
+  const backdropAlwaysActive = overlayEl.showBackdrop !== false && !((overlayEl.backdropBreakpoint ?? 0) > 0);
+  const shouldLockRoot = shouldTrapFocus && backdropAlwaysActive;
 
   overlay.presented = true;
   overlay.willPresent.emit();
@@ -680,12 +685,21 @@ export const dismiss = async <OverlayDismissOptions>(
    * is dismissed.
    */
   const overlaysLockingRoot = presentedOverlays.filter((o) => {
-    const el = o as HTMLIonOverlayElement & { focusTrap?: boolean; showBackdrop?: boolean };
-    return el.tagName !== 'ION-TOAST' && el.focusTrap !== false && el.showBackdrop !== false;
+    const el = o as HTMLIonOverlayElement & {
+      focusTrap?: boolean;
+      showBackdrop?: boolean;
+      backdropBreakpoint?: number;
+    };
+    const backdropAlwaysActive = el.showBackdrop !== false && !((el.backdropBreakpoint ?? 0) > 0);
+    return el.tagName !== 'ION-TOAST' && el.focusTrap !== false && backdropAlwaysActive;
   });
-  const overlayEl = overlay.el as HTMLIonOverlayElement & { focusTrap?: boolean; showBackdrop?: boolean };
-  const locksRoot =
-    overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false && overlayEl.showBackdrop !== false;
+  const overlayEl = overlay.el as HTMLIonOverlayElement & {
+    focusTrap?: boolean;
+    showBackdrop?: boolean;
+    backdropBreakpoint?: number;
+  };
+  const backdropAlwaysActive = overlayEl.showBackdrop !== false && !((overlayEl.backdropBreakpoint ?? 0) > 0);
+  const locksRoot = overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false && backdropAlwaysActive;
 
   /**
    * If this is the last visible overlay that is trapping focus
