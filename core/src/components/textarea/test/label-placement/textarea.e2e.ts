@@ -307,7 +307,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `
         <style>
-          .custom-textarea .native-wrapper {
+          .custom-textarea::part(container) {
             background: pink;
           }
         </style>
