@@ -252,10 +252,26 @@ export const focusVisibleElement = (el: HTMLElement) => {
    * however, there are times when we need to manually control
    * this behavior so we call the `setFocus` method on ion-app
    * which will let us explicitly set the elements to focus.
+   *
+   * Note: The element passed to this function might be an inner
+   * focusable element (e.g., a native <button> inside ion-button's
+   * shadow root). If so, we need to find the host element that has
+   * the ion-focusable class to pass to setFocus.
    */
-  if (el.classList.contains('ion-focusable')) {
+  let elToFocus = el;
+
+  // If the element doesn't have ion-focusable, check if it's inside
+  // a shadow root and use the host element instead
+  if (!el.classList.contains('ion-focusable')) {
+    const rootNode = el.getRootNode();
+    if (rootNode instanceof ShadowRoot && rootNode.host instanceof HTMLElement) {
+      elToFocus = rootNode.host;
+    }
+  }
+
+  if (elToFocus.classList.contains('ion-focusable')) {
     const appRootSelector: string = config.get('appRootSelector', 'ion-app');
-    const app = el.closest(appRootSelector) as HTMLIonAppElement | null;
+    const app = elToFocus.closest(appRootSelector) as HTMLIonAppElement | null;
     if (app) {
       if (appRootSelector === 'ion-app') {
         /**
@@ -264,7 +280,7 @@ export const focusVisibleElement = (el: HTMLElement) => {
          * focus-visible utility is attached to the app root
          * and will handle setting focus on the correct element.
          */
-        app.setFocus([el]);
+        app.setFocus([elToFocus]);
       } else {
         /**
          * When using a custom app root selector, the focus-visible
@@ -280,7 +296,7 @@ export const focusVisibleElement = (el: HTMLElement) => {
            * The focus-visible utility is used to set focus on an
            * element that uses `ion-focusable`.
            */
-          focusElements([el]);
+          focusElements([elToFocus]);
         });
       }
     }
