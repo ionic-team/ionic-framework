@@ -100,6 +100,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private parentRemovalObserver?: MutationObserver;
   // Cached original parent from before modal is moved to body during presentation
   private cachedOriginalParent?: HTMLElement;
+  // Elements that had pointer-events disabled for background interaction
+  private pointerEventsDisabledElements: HTMLElement[] = [];
 
   lastFocus?: HTMLElement;
   animation?: Animation;
@@ -763,16 +765,52 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     /**
      * When showBackdrop or focusTrap is false, the modal's original parent may
-     * block pointer events after the modal is moved to ion-app. Disable
-     * pointer-events on the parent elements to allow background interaction.
+     * block pointer events after the modal is moved to ion-app. This only applies
+     * when the modal is in a child route (detected by the modal being inside
+     * a route wrapper like ion-page). Disable pointer-events on the child
+     * route's wrapper elements up to (and including) the first ion-router-outlet.
+     * We stop there because parent elements may contain sibling content that
+     * should remain interactive.
      * See https://github.com/ionic-team/ionic-framework/issues/30700
      */
     if ((this.showBackdrop === false || this.focusTrap === false) && this.cachedOriginalParent) {
-      this.cachedOriginalParent.style.setProperty('pointer-events', 'none');
+      // Find the first meaningful parent (skip template and other non-semantic wrappers).
+      // In Ionic React, modals are wrapped in a <template> element.
+      let semanticParent: HTMLElement | null = this.cachedOriginalParent;
+      while (semanticParent && (semanticParent.tagName === 'TEMPLATE' || semanticParent.tagName === 'SLOT')) {
+        semanticParent = semanticParent.parentElement;
+      }
 
-      const immediateParent = this.cachedOriginalParent.parentElement;
-      if (immediateParent?.tagName === 'ION-ROUTER-OUTLET') {
-        immediateParent.style.setProperty('pointer-events', 'none');
+      // Check if the modal is inside a route wrapper (ion-page or div.ion-page)
+      // If the modal is inside ion-content or other content containers, this fix doesn't apply
+      const parentIsRouteWrapper =
+        semanticParent && (semanticParent.tagName === 'ION-PAGE' || semanticParent.classList.contains('ion-page'));
+
+      if (parentIsRouteWrapper && semanticParent) {
+        this.pointerEventsDisabledElements = [];
+        let current: HTMLElement | null = semanticParent;
+
+        while (current && current.tagName !== 'ION-APP') {
+          const tagName = current.tagName;
+          // Check for ion-page tag or elements with ion-page class
+          // (React renders IonPage as div.ion-page, not ion-page tag)
+          const isIonPage = tagName === 'ION-PAGE' || current.classList.contains('ion-page');
+          const isRouterOutlet = tagName === 'ION-ROUTER-OUTLET';
+          const isNav = tagName === 'ION-NAV';
+
+          if (isIonPage || isRouterOutlet || isNav) {
+            current.style.setProperty('pointer-events', 'none');
+            this.pointerEventsDisabledElements.push(current);
+          }
+
+          // Stop after processing the first ion-router-outlet - parent elements
+          // may contain sibling content (like buttons) that should remain interactive
+          if (isRouterOutlet) {
+            break;
+          }
+
+          current = current.parentElement;
+        }
       }
     }
   }
@@ -888,13 +926,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
       /**
        * Clean up pointer-events changes made in initSheetGesture.
        */
-      if (this.cachedOriginalParent) {
-        this.cachedOriginalParent.style.removeProperty('pointer-events');
-        const immediateParent = this.cachedOriginalParent.parentElement;
-        if (immediateParent?.tagName === 'ION-ROUTER-OUTLET') {
-          immediateParent.style.removeProperty('pointer-events');
-        }
+      for (const element of this.pointerEventsDisabledElements) {
+        element.style.removeProperty('pointer-events');
       }
+      this.pointerEventsDisabledElements = [];
     }
     this.currentBreakpoint = undefined;
     this.animation = undefined;
