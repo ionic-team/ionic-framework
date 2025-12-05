@@ -23,11 +23,17 @@
   max-width: 350px;
 }
 
+/**
+ * TODO(FW-6931): Move this back to common file upon solving the root cause
+ */
 :host .calendar-body,
 :host .datetime-year {
   opacity: 0;
 }
 
+/**
+ * TODO(FW-6931): Move this back to common file upon solving the root cause
+ */
 :host(.datetime-ready) .calendar-body,
 :host(.datetime-ready) .datetime-year {
   opacity: 1;
