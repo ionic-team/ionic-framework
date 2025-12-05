@@ -23,6 +23,7 @@ $toolbar-ios-color: var(--ion-toolbar-color, $text-color);
 // iOS List & List Items
 // --------------------------------------------------
 $item-ios-background: var(--ion-item-background, $background-color);
+$item-ios-border-color: var(--ion-components-ion-item-border-color);
 $item-ios-color: var(--ion-item-color, $text-color);
 
 // iOS Card

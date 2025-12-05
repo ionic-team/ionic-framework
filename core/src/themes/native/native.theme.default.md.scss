@@ -25,6 +25,7 @@ $toolbar-md-color: var(--ion-toolbar-color, var(--ion-text-color, #424242));
 // Material Design List & List Items
 // --------------------------------------------------
 $item-md-background: var(--ion-item-background, $background-color);
+$item-md-border-color: var(--ion-components-ion-item-border-color);
 $item-md-color: var(--ion-item-color, $text-color);
 
 // Material Design Card

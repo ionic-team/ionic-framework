@@ -55,7 +55,7 @@ $item-ios-border-bottom-width: $hairlines-width;
 $item-ios-border-bottom-style: solid;
 
 /// @prop - Border bottom color for the item when lines are displayed
-$item-ios-border-bottom-color: var(--ion-components-ion-item-border-color);
+$item-ios-border-bottom-color: $item-ios-border-color;
 
 // Item Slots
 // --------------------------------------------------

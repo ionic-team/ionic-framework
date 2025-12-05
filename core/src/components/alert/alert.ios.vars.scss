@@ -276,7 +276,7 @@ $alert-ios-checkbox-border-style: solid;
 $alert-ios-checkbox-border-radius: 50%;
 
 /// @prop - Border color of the checkbox in the alert when off
-$alert-ios-checkbox-border-color-off: var(--ion-components-ion-item-border-color);
+$alert-ios-checkbox-border-color-off: $item-ios-border-color;
 
 /// @prop - Border color of the checkbox in the alert when on
 $alert-ios-checkbox-border-color-on: ion-color(primary, base);

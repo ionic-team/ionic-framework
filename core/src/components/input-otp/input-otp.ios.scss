@@ -16,5 +16,5 @@
 // --------------------------------------------------
 
 :host(.input-otp-fill-outline) {
-  --border-color: var(--ion-components-ion-item-border-color);
+  --border-color: #{$item-ios-border-color};
 }

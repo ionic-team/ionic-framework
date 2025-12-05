@@ -3,7 +3,7 @@
 
 :host {
   --border-width: #{$hairlines-width};
-  --border-color: var(--ion-components-ion-item-border-color);
+  --border-color: #{$item-ios-border-color};
   --highlight-height: 0px;
 
   font-size: $input-ios-font-size;

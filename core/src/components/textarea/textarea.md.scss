@@ -9,7 +9,7 @@
 
 :host {
   --border-width: 1px;
-  --border-color: var(--ion-components-ion-item-border-color);
+  --border-color: #{$item-md-border-color};
   --padding-top: 18px;
   --padding-end: 0px;
   --padding-bottom: #{$textarea-padding-bottom};

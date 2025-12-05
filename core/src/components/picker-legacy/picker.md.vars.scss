@@ -7,7 +7,7 @@
 $picker-md-height: 260px;
 
 /// @prop - Border color of the picker wrapper
-$picker-md-border-color: var(--ion-components-ion-item-border-color);
+$picker-md-border-color: $item-md-border-color;
 
 /// @prop - Background Color of the picker wrapper
 $picker-md-background-color: $background-color;

@@ -41,7 +41,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], palettes: ['light', 'dark'] }).forEa
       await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-long-text`));
     });
 
-    test('should not have visual regressions with icon-only buttons', async ({ page }) => {
+    test.only('should not have visual regressions with icon-only buttons', async ({ page }) => {
       await page.setContent(
         `
           <ion-header>

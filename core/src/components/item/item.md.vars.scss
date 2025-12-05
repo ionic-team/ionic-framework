@@ -40,7 +40,7 @@ $item-md-border-bottom-width: 1px;
 $item-md-border-bottom-style: solid;
 
 /// @prop - Border bottom color for the item when lines are displayed
-$item-md-border-bottom-color: var(--ion-components-ion-item-border-color);
+$item-md-border-bottom-color: $item-md-border-color;
 
 // Item Label
 // --------------------------------------------------
