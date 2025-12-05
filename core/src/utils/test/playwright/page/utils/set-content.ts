@@ -68,6 +68,20 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
     `;
   }
 
+  const customTheme = {
+    palette: {
+      dark: {
+        enabled: palette === 'dark' ? 'always' : 'never'
+      },
+      highContrast: {
+        enabled: palette === 'high-contrast' ? 'always' : 'never'
+      },
+      highContrastDark: {
+        enabled: palette === 'high-contrast-dark' ? 'always' : 'never'
+      },
+    },
+  };
+
   const output = `
     <!DOCTYPE html>
     <html dir="${direction}" lang="en">
@@ -83,7 +97,8 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
           window.Ionic = {
             config: {
               mode: '${mode}',
-              theme: '${theme}'
+              theme: '${theme}',
+              customTheme: ${JSON.stringify(customTheme)}
             }
           }
         </script>
