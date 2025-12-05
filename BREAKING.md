@@ -39,6 +39,12 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - The properties `pull` and `push` have been deprecated and no longer work. A similar look can be achieved with the newly added property `order`.
 
+<h4 id="version-9x-radio-group">Radio Group</h4>
+
+- Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).<br/>
+If you were targeting the internals of `ion-radio-group` in your CSS, you will need to target the `supporting-text`, `helper-text` or `error-text` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.<br/>
+Additionally, the `radio-group-wrapper` div element has been removed, causing slotted elements to be direct children of the `ion-radio-group`.
+
 <h5>Example 1: Swap two columns</h5>
 
 **Version up to 8.x**

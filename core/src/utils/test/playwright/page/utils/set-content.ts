@@ -128,6 +128,13 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
       }
     });
 
+    /**
+     * URL query parameters cause the custom Playwright `page.route`
+     * interceptor to fail, which is necessary to inject the test HTML.
+     *
+     * To avoid this, the final navigation URL is kept simple by using
+     * hash params to ensure the route interceptor always works.
+     */
     await page.goto(`${baseUrl}#`, options);
   }
 };
