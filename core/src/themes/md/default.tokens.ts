@@ -114,7 +114,7 @@ export const defaultTheme: DefaultTheme = {
     },
     IonToolbar: {
       activatedButtonBg: 'var(--ion-toolbar-background, var(--color))',
-      bg: `var(--ion-toolbar-background, var(--ion-background-color, ${baseDefaultTheme.color!.white}))`,
+      bg: '#1f1f1f',
       borderColor: 'var(--ion-toolbar-border-color, var(--ion-border-color, var(--ion-color-gray-150)))',
     },
   },
