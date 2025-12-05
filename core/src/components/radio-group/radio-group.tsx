@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 import { checkInvalidState } from '@utils/forms';
 import { renderHiddenInput } from '@utils/helpers';
+import { hostContext } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
 
@@ -10,6 +11,10 @@ import type { RadioGroupChangeEventDetail, RadioGroupCompareFn } from './radio-g
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ *
+ * @part supporting-text - Supporting text displayed above the radios.
+ * @part helper-text - Supporting text displayed above the radios when the radio group is valid.
+ * @part error-text - Supporting text displayed above the radios when the radio group is invalid and touched.
  */
 @Component({
   tag: 'ion-radio-group',
@@ -18,6 +23,7 @@ import type { RadioGroupChangeEventDetail, RadioGroupCompareFn } from './radio-g
     md: 'radio-group.md.scss',
     ionic: 'radio-group.ionic.scss',
   },
+  shadow: true,
 })
 export class RadioGroup implements ComponentInterface {
   private inputId = `ion-rg-${radioGroupIds++}`;
@@ -318,10 +324,10 @@ export class RadioGroup implements ComponentInterface {
 
     return (
       <div class="radio-group-top">
-        <div id={helperTextId} class="helper-text" aria-live="polite">
+        <div id={helperTextId} class="helper-text" part="supporting-text helper-text" aria-live="polite">
           {!isInvalid ? helperText : null}
         </div>
-        <div id={errorTextId} class="error-text" role="alert">
+        <div id={errorTextId} class="error-text" part="supporting-text error-text" role="alert">
           {isInvalid ? errorText : null}
         </div>
       </div>
@@ -352,6 +358,7 @@ export class RadioGroup implements ComponentInterface {
       <Host
         class={{
           [theme]: true,
+          'in-list': hostContext('ion-list', el),
         }}
         role="radiogroup"
         aria-labelledby={label ? labelId : null}
@@ -360,14 +367,7 @@ export class RadioGroup implements ComponentInterface {
         onClick={this.onClick}
       >
         {this.renderHintText()}
-        {/*
-          TODO(FW-6279): Wrapping the slot in a div is a workaround due to a
-          Stencil issue. Without the wrapper, the children radio will fire the
-          blur event on focus, instead of waiting for them to be blurred.
-        */}
-        <div class="radio-group-wrapper">
-          <slot></slot>
-        </div>
+        <slot></slot>
       </Host>
     );
   }

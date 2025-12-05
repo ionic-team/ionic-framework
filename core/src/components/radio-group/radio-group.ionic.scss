@@ -6,8 +6,6 @@
 
 .radio-group-top {
   @include globals.typography(globals.$ion-body-sm-medium);
-
-  margin-bottom: globals.$ion-space-400;
 }
 
 .radio-group-top .error-text {
@@ -23,7 +21,7 @@
 
 // Add padding to the error and helper text when used in a
 // list to align them with the list header and item text.
-ion-list .radio-group-top {
+:host(.in-list) .radio-group-top {
   /* stylelint-disable */
   @include globals.ltr() {
     padding-right: globals.$ion-space-400;
