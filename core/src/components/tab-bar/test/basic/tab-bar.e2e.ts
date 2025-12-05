@@ -15,7 +15,7 @@ configs({ modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, conf
           }
 
           #container {
-            padding-top: 5px;
+            padding-top: 2px;
           }
         </style>
 
@@ -73,7 +73,7 @@ configs().forEach(({ title, screenshot, config }) => {
             }
 
             #container {
-              padding-top: 5px;
+              padding-top: 2px;
             }
           </style>
 

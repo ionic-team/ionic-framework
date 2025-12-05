@@ -18,7 +18,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
           }
 
           #container {
-            padding-top: 5px;
+            padding-top: 2px;
           }
         </style>
         
@@ -55,33 +55,39 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
           ion-content {
             --background: linear-gradient(to right, orange, yellow, green, cyan, blue, violet);
           }
+
+          #container {
+            padding-top: 2px;
+          }
         </style>
         <ion-tabs>
           <div class="ion-page">
             <ion-content fullscreen="true">My Content</ion-content>
           </div>
-          <ion-tab-bar slot="bottom" translucent="true" selected-tab="1">
-            <ion-tab-button tab="1">
-              <ion-label>Recents</ion-label>
-            </ion-tab-button>
+          <div id="container">
+            <ion-tab-bar slot="bottom" translucent="true" selected-tab="1">
+              <ion-tab-button tab="1">
+                <ion-label>Recents</ion-label>
+              </ion-tab-button>
 
-            <ion-tab-button tab="2">
-              <ion-label>Favorites</ion-label>
-              <ion-badge>23</ion-badge>
-            </ion-tab-button>
+              <ion-tab-button tab="2">
+                <ion-label>Favorites</ion-label>
+                <ion-badge>23</ion-badge>
+              </ion-tab-button>
 
-            <ion-tab-button tab="3">
-              <ion-label>Settings</ion-label>
-            </ion-tab-button>
-          </ion-tab-bar>
+              <ion-tab-button tab="3">
+                <ion-label>Settings</ion-label>
+              </ion-tab-button>
+            </ion-tab-bar>
+          </div>
         </ion-tabs>
       `,
         config
       );
 
-      const tabBar = page.locator('ion-tab-bar');
+      const container = page.locator('#container');
 
-      await expect(tabBar).toHaveScreenshot(screenshot(`tab-bar-translucent-container`));
+      await expect(container).toHaveScreenshot(screenshot(`tab-bar-translucent-container`));
     });
   });
 });
