@@ -19,6 +19,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Card](#version-9x-card)
   - [Chip](#version-9x-chip)
   - [Grid](#version-9x-grid)
+  - [Textarea](#version-9x-textarea)
 
 <h2 id="version-9x-components">Components</h2>
 
@@ -41,6 +42,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 <h5>Example 1: Swap two columns</h5>
 
 **Version up to 8.x**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -51,6 +53,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 </ion-grid>
 ```
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -62,9 +65,11 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 ```
 
 <h5>Example 2: Reorder columns with specific sizes</h5>
+
 To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `size="3" pull="9"`:
 
 **Version up to 8.x**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -73,7 +78,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -82,7 +89,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 <h5>Example 3: Push</h5>
+
 ```html
 <ion-grid>
   <ion-row>
@@ -96,6 +105,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 </ion-grid>
 ```
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -110,6 +120,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 ```
 
 <h5>Example 4: Push and Pull</h5>
+
 ```html
 <ion-grid>
   <ion-row>
@@ -122,6 +133,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
 ```html
 <ion-grid>
@@ -135,3 +147,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
+<h4 id="version-9x-textarea">Textarea</h4>
+
+Converted `ion-textarea` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+If you were targeting the internals of `ion-textarea` in your CSS, you will need to target the `container`, `label`, `native`, `supporting-text`, `helper-text`, `error-text`, `counter`, or `bottom` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
