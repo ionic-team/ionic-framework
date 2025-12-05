@@ -87,11 +87,15 @@ const DEFAULT_THEME = 'md';
    * Values can be `light`, `dark`, `high-contrast`,
    * or `high-contrast-dark`. Default to `light` for tests.
    */
-  const paletteQuery = window.location.search.match(/palette=([a-z]+)/);
-  const paletteHash = window.location.hash.match(/palette=([a-z]+)/);
+  const configDarkMode = window.Ionic?.config?.customTheme?.palette?.dark?.enabled === 'always' ? 'dark' : null;
+  const configHighContrastMode = window.Ionic?.config?.customTheme?.palette?.highContrast?.enabled === 'always' ? 'high-contrast' : null;
+  const configHighContrastDarkMode = window.Ionic?.config?.customTheme?.palette?.highContrastDark?.enabled === 'always' ? 'high-contrast-dark' : null;
+  const configPalette = configDarkMode || configHighContrastMode || configHighContrastDarkMode;
+  const paletteQuery = window.location.search.match(/palette=([a-z-]+)/);
+  const paletteHash = window.location.hash.match(/palette=([a-z-]+)/);
   const darkClass = document.body?.classList.contains('ion-palette-dark') ? 'dark' : null;
 
-  const paletteName = paletteQuery?.[1] || paletteHash?.[1] || darkClass || 'light';
+  const paletteName = configPalette || paletteQuery?.[1] || paletteHash?.[1] || darkClass || 'light';
 
   // Load theme tokens if the theme is valid
   const validThemes = ['ionic', 'ios', 'md'];
