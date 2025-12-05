@@ -86,7 +86,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], palettes: ['light', 'dark'] }).forEa
       await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-icon-buttons`));
     });
 
-    test.only('should not have visual regressions with buttons with icons and text', async ({ page, skip }) => {
+    test('should not have visual regressions with buttons with icons and text', async ({ page, skip }) => {
       skip.browser('webkit', 'Safari does not consistently render overflowing text in a toolbar with icons and text.');
 
       await page.setContent(
