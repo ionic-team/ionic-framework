@@ -8,7 +8,8 @@ it('should inherit attributes', async () => {
     html: '<ion-textarea title="my title" tabindex="-1" data-form-type="password"></ion-textarea>',
   });
 
-  const nativeEl = page.body.querySelector('ion-textarea textarea')!;
+  const textareaEl = page.body.querySelector('ion-textarea')!;
+  const nativeEl = textareaEl.shadowRoot!.querySelector('textarea')!;
   expect(nativeEl.getAttribute('title')).toBe('my title');
   expect(nativeEl.getAttribute('tabindex')).toBe('-1');
   expect(nativeEl.getAttribute('data-form-type')).toBe('password');
@@ -21,7 +22,7 @@ it('should inherit watched attributes', async () => {
   });
 
   const textareaEl = page.body.querySelector('ion-textarea')!;
-  const nativeEl = textareaEl.querySelector('textarea')!;
+  const nativeEl = textareaEl.shadowRoot!.querySelector('textarea')!;
 
   expect(nativeEl.getAttribute('dir')).toBe('ltr');
 
@@ -52,7 +53,7 @@ describe('textarea: label rendering', () => {
 
     const textarea = page.body.querySelector('ion-textarea')!;
 
-    const labelText = textarea.querySelector('.label-text-wrapper')!;
+    const labelText = textarea.shadowRoot!.querySelector('.label-text-wrapper')!;
 
     expect(labelText.textContent).toBe('Label Prop Text');
   });
@@ -66,9 +67,16 @@ describe('textarea: label rendering', () => {
 
     const textarea = page.body.querySelector('ion-textarea')!;
 
-    const labelText = textarea.querySelector('.label-text-wrapper')!;
+    // When using a slot, the content is in the light DOM, not directly
+    // accessible via textContent. Check that the slot element exists and
+    // the slotted content is in the light DOM.
+    const slotEl = textarea.shadowRoot!.querySelector('slot[name="label"]');
+    const propEl = textarea.shadowRoot!.querySelector('.label-text');
+    const slottedContent = textarea.querySelector('[slot="label"]');
 
-    expect(labelText.textContent).toBe('Label Prop Slot');
+    expect(slotEl).not.toBe(null);
+    expect(propEl).toBe(null);
+    expect(slottedContent?.textContent).toBe('Label Prop Slot');
   });
   it('should render label prop if both prop and slot provided', async () => {
     const page = await newSpecPage({
@@ -80,7 +88,7 @@ describe('textarea: label rendering', () => {
 
     const textarea = page.body.querySelector('ion-textarea')!;
 
-    const labelText = textarea.querySelector('.label-text-wrapper')!;
+    const labelText = textarea.shadowRoot!.querySelector('.label-text-wrapper')!;
 
     expect(labelText.textContent).toBe('Label Prop Text');
   });
