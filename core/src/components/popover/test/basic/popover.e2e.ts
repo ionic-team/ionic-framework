@@ -248,5 +248,80 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.keyboard.press('End');
       await expect(vanillaTextarea).toBeFocused();
     });
+
+    test('should not override keyboard interactions for input elements', async ({ page, browserName }) => {
+      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+      const popover = page.locator('ion-popover');
+      const innerNativeInput = page.locator('ion-input input').nth(0);
+      const vanillaInput = page.locator('ion-input + input');
+
+      await popoverFixture.open('#popover-with-input');
+
+      /**
+       * Focusing happens async inside of popover so we need
+       * to wait for the requestAnimationFrame to fire.
+       */
+      await expect(popover).toBeFocused();
+
+      // Tab should focus the native input inside ion-input
+      await page.keyboard.press(tabKey);
+
+      // for Firefox, ion-input is focused first
+      // need to tab again to get to native input
+      if (browserName === 'firefox') {
+        await page.keyboard.press(tabKey);
+      }
+
+      await expect(innerNativeInput).toBeFocused();
+
+      // Arrow keys should work on the ion-input
+      await page.keyboard.press('ArrowDown');
+      await expect(innerNativeInput).toBeFocused();
+
+      await page.keyboard.press('ArrowUp');
+      await expect(innerNativeInput).toBeFocused();
+
+      // Tab again should focus the vanilla input
+      await page.keyboard.press(tabKey);
+      await expect(vanillaInput).toBeFocused();
+
+      // Arrow keys should work on the vanilla input
+      await page.keyboard.press('ArrowDown');
+      await expect(vanillaInput).toBeFocused();
+
+      await page.keyboard.press('ArrowUp');
+      await expect(vanillaInput).toBeFocused();
+
+      await page.keyboard.press('Home');
+      await expect(vanillaInput).toBeFocused();
+
+      await page.keyboard.press('End');
+      await expect(vanillaInput).toBeFocused();
+    });
+
+    test('should move focus between buttons', async ({ page, browserName }) => {
+      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+      const buttons = page.locator('ion-popover button');
+
+      await popoverFixture.open('#popover-with-buttons');
+
+      await page.keyboard.press(tabKey);
+      await expect(buttons.nth(0)).toBeFocused();
+
+      await page.keyboard.press(tabKey);
+      await expect(buttons.nth(1)).toBeFocused();
+
+      await page.keyboard.press(tabKey);
+      await expect(buttons.nth(0)).toBeFocused();
+
+      await page.keyboard.press(`Shift+${tabKey}`);
+      await expect(buttons.nth(1)).toBeFocused();
+
+      await page.keyboard.press(`Shift+${tabKey}`);
+      await expect(buttons.nth(0)).toBeFocused();
+
+      await page.keyboard.press(`Shift+${tabKey}`);
+      await expect(buttons.nth(1)).toBeFocused();
+    });
   });
 });
