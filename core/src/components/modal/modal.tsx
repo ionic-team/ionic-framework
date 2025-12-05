@@ -644,7 +644,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
       window.addEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
     }
 
-    if (this.isSheetModal) {
+    /**
+     * Recalculate isSheetModal here because framework bindings (e.g., Angular)
+     * may not have been applied when componentWillLoad ran.
+     */
+    const isSheetModal = this.breakpoints !== undefined && this.initialBreakpoint !== undefined;
+    this.isSheetModal = isSheetModal;
+
+    if (isSheetModal) {
       this.initSheetGesture();
     } else if (hasCardModal) {
       this.initSwipeToClose();
@@ -753,6 +760,21 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.moveSheetToBreakpoint = moveSheetToBreakpoint;
 
     this.gesture.enable(true);
+
+    /**
+     * When showBackdrop or focusTrap is false, the modal's original parent may
+     * block pointer events after the modal is moved to ion-app. Disable
+     * pointer-events on the parent elements to allow background interaction.
+     * See https://github.com/ionic-team/ionic-framework/issues/30700
+     */
+    if ((this.showBackdrop === false || this.focusTrap === false) && this.cachedOriginalParent) {
+      this.cachedOriginalParent.style.setProperty('pointer-events', 'none');
+
+      const immediateParent = this.cachedOriginalParent.parentElement;
+      if (immediateParent?.tagName === 'ION-ROUTER-OUTLET') {
+        immediateParent.style.setProperty('pointer-events', 'none');
+      }
+    }
   }
 
   private sheetOnDismiss() {
@@ -862,6 +884,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
       }
       this.cleanupViewTransitionListener();
       this.cleanupParentRemovalObserver();
+
+      /**
+       * Clean up pointer-events changes made in initSheetGesture.
+       */
+      if (this.cachedOriginalParent) {
+        this.cachedOriginalParent.style.removeProperty('pointer-events');
+        const immediateParent = this.cachedOriginalParent.parentElement;
+        if (immediateParent?.tagName === 'ION-ROUTER-OUTLET') {
+          immediateParent.style.removeProperty('pointer-events');
+        }
+      }
     }
     this.currentBreakpoint = undefined;
     this.animation = undefined;

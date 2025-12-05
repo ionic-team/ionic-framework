@@ -57,6 +57,20 @@ ion-backdrop {
   pointer-events: auto;
 }
 
+/**
+ * When focus trap is disabled on a visible modal, allow clicks to pass through
+ * to content behind it. The .modal-wrapper retains pointer-events: auto so
+ * modal content remains interactive. We only apply this when show-modal is
+ * present to avoid affecting hidden modals that haven't presented.
+ */
+:host(.ion-disable-focus-trap.show-modal) {
+  pointer-events: none;
+}
+
+:host(.ion-disable-focus-trap.show-modal) ion-backdrop {
+  pointer-events: none;
+}
+
 :host(.overlay-hidden) {
   display: none;
 }
