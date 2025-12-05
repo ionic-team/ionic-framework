@@ -266,12 +266,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       // Tab should focus the native input inside ion-input
       await page.keyboard.press(tabKey);
 
-      // for Firefox, ion-input is focused first
-      // need to tab again to get to native input
-      if (browserName === 'firefox') {
-        await page.keyboard.press(tabKey);
-      }
-
       await expect(innerNativeInput).toBeFocused();
 
       // Arrow keys should work on the ion-input
