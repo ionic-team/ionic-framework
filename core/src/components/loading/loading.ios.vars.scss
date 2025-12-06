@@ -31,7 +31,7 @@ $loading-ios-border-radius: 8px;
 $loading-ios-text-color: $text-color;
 
 /// @prop - Background of the loading wrapper
-$loading-ios-background-color: var(--ion-color-overlay-bg);
+$loading-ios-background-color: $overlay-ios-background-color;
 
 /// @prop - Background color alpha of the translucent loading wrapper
 $loading-ios-translucent-background-color-alpha: 0.8;

@@ -25,7 +25,7 @@ $action-sheet-ios-group-margin-top: 10px;
 $action-sheet-ios-group-margin-bottom: 10px;
 
 /// @prop - Background color of the action sheet
-$action-sheet-ios-background-color: var(--ion-color-overlay-bg);
+$action-sheet-ios-background-color: $overlay-ios-background-color;
 
 /// @prop - Border radius of the action sheet
 $action-sheet-ios-border-radius: 13px;

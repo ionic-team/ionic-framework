@@ -13,13 +13,14 @@ $overlay-md-background-color: var(--ion-overlay-background-color, var(--ion-back
 // --------------------------------------------------
 $tabbar-md-background: var(--ion-tab-bar-background, $background-color);
 $tabbar-md-background-focused: var(--ion-tab-bar-background-focused, get-color-shade(#fff));
+$tabbar-md-border-color: var(--ion-tab-bar-border-color, var(--ion-components-ion-tab-bar-border-color));
 $tabbar-md-color: var(--ion-tab-bar-color, var(--ion-color-text-650));
 $tabbar-md-color-selected: var(--ion-tab-bar-color-selected, ion-color(primary, base));
 
 // Material Design Toolbar
 // --------------------------------------------------
 $toolbar-md-background: var(--ion-toolbar-background, var(--ion-components-ion-toolbar-bg));
-$toolbar-md-border-color: var(--ion-tab-bar-border-color, var(--ion-components-ion-toolbar-border-color));
+$toolbar-md-border-color: var(--ion-toolbar-border-color, var(--ion-components-ion-toolbar-border-color));
 $toolbar-md-color: var(--ion-toolbar-color, var(--ion-text-color, #424242));
 
 // Material Design List & List Items
