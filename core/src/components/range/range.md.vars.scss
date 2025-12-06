@@ -20,7 +20,7 @@ $range-md-slider-height: 42px;
 $range-md-bar-height: 2px;
 
 /// @prop - Background of the range bar
-$range-md-bar-background-color: $background-color-step-250;
+$range-md-bar-background-color: var(--ion-color-gray-250);
 
 /// @prop - Font size of the range pin
 $range-md-pin-font-size: dynamic-font(12px);

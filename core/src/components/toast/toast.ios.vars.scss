@@ -9,7 +9,7 @@
 $toast-ios-max-height: 478px;
 
 /// @prop - Background Color of the toast wrapper
-$toast-ios-background-color: $background-color-step-50;
+$toast-ios-background-color: var(--ion-color-gray-50);
 
 /// @prop - Background Color alpha of the toast wrapper when translucent
 $toast-ios-translucent-background-color-alpha: 0.8;
@@ -21,7 +21,7 @@ $toast-ios-translucent-background-color: rgba($background-color-rgb, $toast-ios-
 $toast-ios-border-radius: 14px;
 
 /// @prop - Color of the toast title
-$toast-ios-title-color: $text-color-step-150;
+$toast-ios-title-color: var(--ion-color-text-850);
 
 /// @prop - Font size of the toast title
 $toast-ios-header-font-weight: 500;

@@ -25,4 +25,4 @@ $popover-ios-translucent-filter: saturate(180%) blur(20px);
 $popover-ios-desktop-box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.12);
 
 /// $prop - Border of popover content on desktop
-$popover-ios-desktop-border: 0.5px solid $background-color-step-100;
+$popover-ios-desktop-border: 0.5px solid var(--ion-color-gray-100);

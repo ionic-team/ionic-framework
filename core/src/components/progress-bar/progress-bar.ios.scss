@@ -18,5 +18,5 @@
    * solid (with a buffer value of 1). This maintains
    * the custom Ionic appearance for a buffered progress bar.
    */
-  --background: #{$background-color-step-100};
+  --background: var(--ion-color-gray-100);
 }

@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------
 
 :host(.select-fill-outline) {
-  --border-color: #{$background-color-step-300};
+  --border-color: var(--ion-color-gray-300);
   --border-radius: 4px;
   --padding-start: 16px;
   --padding-end: 16px;
@@ -33,7 +33,7 @@
  */
 @media (any-hover: hover) {
   :host(.select-fill-outline:hover) {
-    --border-color: #{$background-color-step-750};
+    --border-color: var(--ion-color-gray-750);
   }
 }
 
