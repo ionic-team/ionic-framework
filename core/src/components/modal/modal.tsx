@@ -71,7 +71,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private gesture?: Gesture;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private sheetTransition?: Promise<any>;
-  private isSheetModal = false;
+  @State() private isSheetModal = false;
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
@@ -644,7 +644,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
       window.addEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
     }
 
-    if (this.isSheetModal) {
+    /**
+     * Recalculate isSheetModal because framework bindings (e.g., Angular)
+     * may not have been applied when componentWillLoad ran.
+     */
+    const isSheetModal = this.breakpoints !== undefined && this.initialBreakpoint !== undefined;
+    this.isSheetModal = isSheetModal;
+
+    if (isSheetModal) {
       this.initSheetGesture();
     } else if (hasCardModal) {
       this.initSwipeToClose();
