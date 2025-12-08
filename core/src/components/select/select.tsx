@@ -559,7 +559,7 @@ export class Select implements ComponentInterface {
       const isSelected = isOptionSelected(selectValue, value, this.compareWith);
 
       return {
-        role: 'radio',
+        role: isOptionSelected(selectValue, value, this.compareWith) ? 'selected' : '',
         text: option.textContent,
         cssClass: optClass,
         handler: () => {
@@ -567,6 +567,7 @@ export class Select implements ComponentInterface {
         },
         htmlAttributes: {
           'aria-checked': isSelected ? 'true' : 'false',
+          role: 'radio',
         },
       } as ActionSheetButton;
     });

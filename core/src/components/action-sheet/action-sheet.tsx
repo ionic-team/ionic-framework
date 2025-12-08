@@ -313,7 +313,10 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    * Get all radio buttons (buttons with role="radio").
    */
   private getRadioButtons(): ActionSheetButton[] {
-    return this.getButtons().filter((b) => b.role === 'radio' && !isCancel(b.role));
+    return this.getButtons().filter((b) => {
+      const role = b.htmlAttributes?.role;
+      return role === 'radio' && !isCancel(role);
+    });
   }
 
   /**
@@ -513,7 +516,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     const { activeRadioId } = this;
 
     return filteredButtons.map((b, index) => {
-      const isRadio = b.role === 'radio';
+      const isRadio = b.htmlAttributes?.role === 'radio';
       const buttonId = this.getButtonId(b, index);
       const radioButtons = this.getRadioButtons();
       const isActiveRadio = isRadio && buttonId === activeRadioId;
