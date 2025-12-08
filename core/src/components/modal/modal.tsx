@@ -100,6 +100,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private parentRemovalObserver?: MutationObserver;
   // Cached original parent from before modal is moved to body during presentation
   private cachedOriginalParent?: HTMLElement;
+  // Cached ion-page ancestor for child route passthrough
+  private cachedPageParent?: HTMLElement | null;
 
   lastFocus?: HTMLElement;
   animation?: Animation;
@@ -778,7 +780,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * passthrough on child route page wrappers and nested router outlets.
    */
   private setupChildRoutePassthrough() {
-    const pageParent = this.getOriginalPageParent();
+    // Cache the page parent for cleanup
+    this.cachedPageParent = this.getOriginalPageParent();
+    const pageParent = this.cachedPageParent;
 
     // Skip ion-app (controller modals) and pages with other content (inline modals)
     if (!pageParent || pageParent.tagName === 'ION-APP') {
@@ -827,7 +831,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Removes passthrough styles added by setupChildRoutePassthrough.
    */
   private cleanupChildRoutePassthrough() {
-    const pageParent = this.getOriginalPageParent();
+    const pageParent = this.cachedPageParent;
     if (!pageParent) {
       return;
     }
@@ -839,6 +843,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       routerOutlet.style.removeProperty('pointer-events');
       routerOutlet.removeAttribute('data-overlay-passthrough');
     }
+
+    // Clear the cached reference
+    this.cachedPageParent = undefined;
   }
 
   private sheetOnDismiss() {

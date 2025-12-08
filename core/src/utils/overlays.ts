@@ -38,6 +38,20 @@ let lastId = 0;
 
 export const activeAnimations = new WeakMap<OverlayInterface, Animation[]>();
 
+type OverlayWithFocusTrapProps = HTMLIonOverlayElement & {
+  focusTrap?: boolean;
+  showBackdrop?: boolean;
+  backdropBreakpoint?: number;
+};
+
+/**
+ * Determines if the overlay's backdrop is always active (no background interaction).
+ * Returns false if showBackdrop=false or backdropBreakpoint > 0.
+ */
+const isBackdropAlwaysActive = (el: OverlayWithFocusTrapProps): boolean => {
+  return el.showBackdrop !== false && !((el.backdropBreakpoint ?? 0) > 0);
+};
+
 const createController = <Opts extends object, HTMLElm>(tagName: string) => {
   return {
     create(options: Opts): Promise<HTMLElm> {
@@ -539,16 +553,9 @@ export const present = async <OverlayPresentOptions>(
    * view container subtree, skip adding aria-hidden/inert there
    * to avoid disabling the overlay.
    */
-  const overlayEl = overlay.el as HTMLIonOverlayElement & {
-    focusTrap?: boolean;
-    showBackdrop?: boolean;
-    backdropBreakpoint?: number;
-  };
+  const overlayEl = overlay.el as OverlayWithFocusTrapProps;
   const shouldTrapFocus = overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false;
-  // Only lock out root content when backdrop is always active. Developers relying on
-  // showBackdrop=false or backdropBreakpoint expect background interaction at some point.
-  const backdropAlwaysActive = overlayEl.showBackdrop !== false && !((overlayEl.backdropBreakpoint ?? 0) > 0);
-  const shouldLockRoot = shouldTrapFocus && backdropAlwaysActive;
+  const shouldLockRoot = shouldTrapFocus && isBackdropAlwaysActive(overlayEl);
 
   overlay.presented = true;
   overlay.willPresent.emit();
@@ -685,21 +692,12 @@ export const dismiss = async <OverlayDismissOptions>(
    * is dismissed.
    */
   const overlaysLockingRoot = presentedOverlays.filter((o) => {
-    const el = o as HTMLIonOverlayElement & {
-      focusTrap?: boolean;
-      showBackdrop?: boolean;
-      backdropBreakpoint?: number;
-    };
-    const backdropAlwaysActive = el.showBackdrop !== false && !((el.backdropBreakpoint ?? 0) > 0);
-    return el.tagName !== 'ION-TOAST' && el.focusTrap !== false && backdropAlwaysActive;
+    const el = o as OverlayWithFocusTrapProps;
+    return el.tagName !== 'ION-TOAST' && el.focusTrap !== false && isBackdropAlwaysActive(el);
   });
-  const overlayEl = overlay.el as HTMLIonOverlayElement & {
-    focusTrap?: boolean;
-    showBackdrop?: boolean;
-    backdropBreakpoint?: number;
-  };
-  const backdropAlwaysActive = overlayEl.showBackdrop !== false && !((overlayEl.backdropBreakpoint ?? 0) > 0);
-  const locksRoot = overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false && backdropAlwaysActive;
+  const overlayEl = overlay.el as OverlayWithFocusTrapProps;
+  const locksRoot =
+    overlayEl.tagName !== 'ION-TOAST' && overlayEl.focusTrap !== false && isBackdropAlwaysActive(overlayEl);
 
   /**
    * If this is the last visible overlay that is trapping focus

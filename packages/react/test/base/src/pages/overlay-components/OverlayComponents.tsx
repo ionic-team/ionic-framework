@@ -64,6 +64,10 @@ const OverlayHooks: React.FC<OverlayHooksProps> = () => {
           <IonIcon icon={star} />
           <IonLabel>Modal Teleport</IonLabel>
         </IonTabButton>
+        <IonTabButton tab="modalSheetChildRoute" href="/overlay-components/modal-sheet-child-route/child">
+          <IonIcon icon={star} />
+          <IonLabel>Sheet Child</IonLabel>
+        </IonTabButton>
         <IonTabButton tab="picker" href="/overlay-components/picker">
           <IonIcon icon={logoIonic} />
           <IonLabel>Picker</IonLabel>
