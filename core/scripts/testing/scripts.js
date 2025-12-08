@@ -67,8 +67,8 @@
   let paletteName = paletteQuery?.[1] || paletteHash?.[1] || highContrastDarkClass || darkClass || highContrastClass || 'light';
 
   if (!validPalettes.includes(paletteName)) {
+    console.warn(`Invalid palette name: '${paletteName}'. Falling back to 'light' palette.`);
     paletteName = 'light';
-    console.warn(`Invalid palette name: ${paletteName}. Falling back to 'light' palette.`);
   }
 
   if (paletteName !== 'light') {
