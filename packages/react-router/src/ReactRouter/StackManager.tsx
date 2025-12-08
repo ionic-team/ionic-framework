@@ -933,7 +933,8 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
 
   // For nested routes in React Router 6, we need to extract the relative path
   // that this outlet should be responsible for matching
-  let pathnameToMatch = routeInfo.pathname;
+  const originalPathname = routeInfo.pathname;
+  let relativePathnameToMatch = routeInfo.pathname;
 
   // Check if we have relative routes (routes that don't start with '/')
   const hasRelativeRoutes = sortedRoutes.some((r) => r.props.path && !r.props.path.startsWith('/'));
@@ -950,14 +951,27 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
       const pathSegments = routeInfo.pathname.split('/').filter(Boolean);
       const parentSegments = normalizedParent.split('/').filter(Boolean);
       const relativeSegments = pathSegments.slice(parentSegments.length);
-      pathnameToMatch = relativeSegments.join('/'); // Empty string is valid for index routes
+      relativePathnameToMatch = relativeSegments.join('/'); // Empty string is valid for index routes
     }
   }
 
   // Find the first matching route
   for (const child of sortedRoutes) {
+    const childPath = child.props.path as string | undefined;
+    const isAbsoluteRoute = childPath && childPath.startsWith('/');
+    const pathnameToMatch = isAbsoluteRoute ? originalPathname : relativePathnameToMatch;
+
+    // Only use derivePathnameToMatch for absolute routes or wildcard patterns;
+    // non-wildcard relative routes match directly against the computed relative pathname.
+    let pathForMatch: string;
+    if (isAbsoluteRoute || (childPath && childPath.includes('*'))) {
+      pathForMatch = derivePathnameToMatch(pathnameToMatch, childPath);
+    } else {
+      pathForMatch = pathnameToMatch;
+    }
+
     const match = matchPath({
-      pathname: pathnameToMatch,
+      pathname: pathForMatch,
       componentProps: child.props,
     });
 

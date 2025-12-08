@@ -31,6 +31,7 @@ import MultipleTabs from './pages/muiltiple-tabs/MultipleTabs';
 import NestedOutlet from './pages/nested-outlet/NestedOutlet';
 import NestedOutlet2 from './pages/nested-outlet/NestedOutlet2';
 import NestedParams from './pages/nested-params/NestedParams';
+import RelativePaths from './pages/relative-paths/RelativePaths';
 import { OutletRef } from './pages/outlet-ref/OutletRef';
 import Params from './pages/params/Params';
 import Refs from './pages/refs/Refs';
@@ -70,6 +71,7 @@ const App: React.FC = () => {
           <Route path="/overlays" element={<Overlays />} />
           <Route path="/params/:id" element={<Params />} />
           <Route path="/nested-params/*" element={<NestedParams />} />
+          <Route path="/relative-paths/*" element={<RelativePaths />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

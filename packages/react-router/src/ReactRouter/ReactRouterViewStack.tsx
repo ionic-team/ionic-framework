@@ -713,7 +713,17 @@ export class ReactRouterViewStack extends ViewStacks {
         return false;
       }
 
+      // For empty path routes, only match if we're at the same level as when the view was created.
+      // This prevents an empty path view item from being reused for different routes.
       if (isDefaultRoute) {
+        const previousPathnameBase = v.routeData?.match?.pathnameBase || '';
+        const normalizedBase = normalizePathnameForComparison(previousPathnameBase);
+        const normalizedPathname = normalizePathnameForComparison(pathname);
+
+        if (normalizedPathname !== normalizedBase) {
+          return false;
+        }
+
         match = {
           params: {},
           pathname,

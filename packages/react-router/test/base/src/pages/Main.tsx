@@ -74,6 +74,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/nested-params">
             <IonLabel>Nested Params</IonLabel>
           </IonItem>
+          <IonItem routerLink="/relative-paths">
+            <IonLabel>Relative Paths</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
