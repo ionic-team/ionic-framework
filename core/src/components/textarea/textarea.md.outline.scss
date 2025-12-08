@@ -150,6 +150,8 @@
 :host(.textarea-fill-outline) .textarea-outline-end {
   border-top: var(--border-width) var(--border-style) var(--border-color);
   border-bottom: var(--border-width) var(--border-style) var(--border-color);
+
+  box-sizing: border-box;
 }
 
 /**
