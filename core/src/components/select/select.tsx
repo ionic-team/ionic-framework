@@ -559,7 +559,7 @@ export class Select implements ComponentInterface {
       const isSelected = isOptionSelected(selectValue, value, this.compareWith);
 
       return {
-        role: isOptionSelected(selectValue, value, this.compareWith) ? 'selected' : '',
+        role: isSelected ? 'selected' : '',
         text: option.textContent,
         cssClass: optClass,
         handler: () => {
