@@ -118,8 +118,7 @@ const RelativePaths: React.FC = () => {
       {/* Route with absolute path (has leading slash) - this should work */}
       <Route path="/relative-paths/page-a" element={<PageA />} />
 
-      {/* Routes with relative paths (no leading slash) - these should also work
-          but currently don't match in IonRouterOutlet */}
+      {/* Routes with relative paths (no leading slash) */}
       <Route path="page-b" element={<PageB />} />
       <Route path="page-c" element={<PageC />} />
 

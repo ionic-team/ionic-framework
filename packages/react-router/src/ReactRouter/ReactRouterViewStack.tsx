@@ -469,7 +469,9 @@ export class ReactRouterViewStack extends ViewStacks {
     let parentPath: string | undefined = undefined;
     try {
       // Only attempt parent path computation for non-root outlets
-      if (outletId !== 'routerOutlet') {
+      // Root outlets have IDs like 'routerOutlet' or 'routerOutlet-2'
+      const isRootOutlet = outletId.startsWith('routerOutlet');
+      if (!isRootOutlet) {
         const routeChildren = extractRouteChildren(ionRouterOutlet.props.children);
         const { hasRelativeRoutes, hasIndexRoute, hasWildcardRoute } = analyzeRouteChildren(routeChildren);
 

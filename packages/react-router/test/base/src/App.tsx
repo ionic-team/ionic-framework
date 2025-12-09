@@ -71,7 +71,8 @@ const App: React.FC = () => {
           <Route path="/overlays" element={<Overlays />} />
           <Route path="/params/:id" element={<Params />} />
           <Route path="/nested-params/*" element={<NestedParams />} />
-          <Route path="/relative-paths/*" element={<RelativePaths />} />
+          {/* Test root-level relative path - no leading slash */}
+          <Route path="relative-paths/*" element={<RelativePaths />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

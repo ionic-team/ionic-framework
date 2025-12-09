@@ -120,7 +120,10 @@ export const derivePathnameToMatch = (fullPathname: string, routePath?: string):
 
   const trimmedPath = fullPathname.startsWith('/') ? fullPathname.slice(1) : fullPathname;
   if (!trimmedPath) {
-    return '';
+    // For root-level relative routes (pathname is "/" and routePath is relative),
+    // return the full pathname so matchPath can normalize both.
+    // This allows routes like <Route path="foo/*" .../> at root level to work correctly.
+    return fullPathname;
   }
 
   const fullSegments = trimmedPath.split('/').filter(Boolean);
