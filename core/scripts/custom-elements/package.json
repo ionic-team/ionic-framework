@@ -1,9 +1,10 @@
 {
   "name": "@ionic/core/components",
-  "version": "0.0.0",
+  "version": "1.0.0-0",
   "description": "Ionic Components exported as custom elements, extending HTMLElement.",
   "main": "./index.js",
   "types": "./custom-elements.d.ts",
   "private": true,
   "sideEffects": false
 }
+// @task String does not match the pattern ^\d+\.\d+\.\d+(-.+)?$
