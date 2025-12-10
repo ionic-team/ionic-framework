@@ -784,18 +784,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.cachedPageParent = this.getOriginalPageParent();
     const pageParent = this.cachedPageParent;
 
-    // Skip ion-app (controller modals) and pages with other content (inline modals)
+    // Skip ion-app (controller modals) and pages with visible sibling content next to the modal
     if (!pageParent || pageParent.tagName === 'ION-APP') {
       return;
     }
 
-    const hasVisibleContent = Array.from(pageParent.children).some((child) => {
-      if (child === this.el) return false;
-      if (child instanceof HTMLElement && window.getComputedStyle(child).display === 'none') return false;
-      if (child.tagName === 'TEMPLATE' || child.tagName === 'SLOT') return false;
-      if (child.nodeType === Node.TEXT_NODE && !child.textContent?.trim()) return false;
-      return true;
-    });
+    const hasVisibleContent = Array.from(pageParent.children).some(
+      (child) =>
+        child !== this.el &&
+        !(child instanceof HTMLElement && window.getComputedStyle(child).display === 'none') &&
+        child.tagName !== 'TEMPLATE' &&
+        child.tagName !== 'SLOT' &&
+        !(child.nodeType === Node.TEXT_NODE && !child.textContent?.trim())
+    );
 
     if (hasVisibleContent) {
       return;
