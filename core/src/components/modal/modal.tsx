@@ -71,7 +71,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private gesture?: Gesture;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private sheetTransition?: Promise<any>;
-  private isSheetModal = false;
+  @State() private isSheetModal = false;
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
@@ -100,6 +100,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private parentRemovalObserver?: MutationObserver;
   // Cached original parent from before modal is moved to body during presentation
   private cachedOriginalParent?: HTMLElement;
+  // Cached ion-page ancestor for child route passthrough
+  private cachedPageParent?: HTMLElement | null;
 
   lastFocus?: HTMLElement;
   animation?: Animation;
@@ -644,7 +646,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
       window.addEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
     }
 
-    if (this.isSheetModal) {
+    /**
+     * Recalculate isSheetModal because framework bindings (e.g., Angular)
+     * may not have been applied when componentWillLoad ran.
+     */
+    const isSheetModal = this.breakpoints !== undefined && this.initialBreakpoint !== undefined;
+    this.isSheetModal = isSheetModal;
+
+    if (isSheetModal) {
       this.initSheetGesture();
     } else if (hasCardModal) {
       this.initSwipeToClose();
@@ -753,6 +762,91 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.moveSheetToBreakpoint = moveSheetToBreakpoint;
 
     this.gesture.enable(true);
+
+    /**
+     * When backdrop interaction is allowed, nested router outlets from child routes
+     * may block pointer events to parent content. Apply passthrough styles only when
+     * the modal was the sole content of a child route page.
+     * See https://github.com/ionic-team/ionic-framework/issues/30700
+     */
+    const backdropNotBlocking = this.showBackdrop === false || this.focusTrap === false || backdropBreakpoint > 0;
+    if (backdropNotBlocking) {
+      this.setupChildRoutePassthrough();
+    }
+  }
+
+  /**
+   * For sheet modals that allow background interaction, sets up pointer-events
+   * passthrough on child route page wrappers and nested router outlets.
+   */
+  private setupChildRoutePassthrough() {
+    // Cache the page parent for cleanup
+    this.cachedPageParent = this.getOriginalPageParent();
+    const pageParent = this.cachedPageParent;
+
+    // Skip ion-app (controller modals) and pages with visible sibling content next to the modal
+    if (!pageParent || pageParent.tagName === 'ION-APP') {
+      return;
+    }
+
+    const hasVisibleContent = Array.from(pageParent.children).some(
+      (child) =>
+        child !== this.el &&
+        !(child instanceof HTMLElement && window.getComputedStyle(child).display === 'none') &&
+        child.tagName !== 'TEMPLATE' &&
+        child.tagName !== 'SLOT' &&
+        !(child.nodeType === Node.TEXT_NODE && !child.textContent?.trim())
+    );
+
+    if (hasVisibleContent) {
+      return;
+    }
+
+    // Child route case: page only contained the modal
+    pageParent.classList.add('ion-page-overlay-passthrough');
+
+    // Also make nested router outlets passthrough
+    const routerOutlet = pageParent.parentElement;
+    if (routerOutlet?.tagName === 'ION-ROUTER-OUTLET' && routerOutlet.parentElement?.tagName !== 'ION-APP') {
+      routerOutlet.style.setProperty('pointer-events', 'none');
+      routerOutlet.setAttribute('data-overlay-passthrough', 'true');
+    }
+  }
+
+  /**
+   * Finds the ion-page ancestor of the modal's original parent location.
+   */
+  private getOriginalPageParent(): HTMLElement | null {
+    if (!this.cachedOriginalParent) {
+      return null;
+    }
+
+    let pageParent: HTMLElement | null = this.cachedOriginalParent;
+    while (pageParent && !pageParent.classList.contains('ion-page')) {
+      pageParent = pageParent.parentElement;
+    }
+    return pageParent;
+  }
+
+  /**
+   * Removes passthrough styles added by setupChildRoutePassthrough.
+   */
+  private cleanupChildRoutePassthrough() {
+    const pageParent = this.cachedPageParent;
+    if (!pageParent) {
+      return;
+    }
+
+    pageParent.classList.remove('ion-page-overlay-passthrough');
+
+    const routerOutlet = pageParent.parentElement;
+    if (routerOutlet?.hasAttribute('data-overlay-passthrough')) {
+      routerOutlet.style.removeProperty('pointer-events');
+      routerOutlet.removeAttribute('data-overlay-passthrough');
+    }
+
+    // Clear the cached reference
+    this.cachedPageParent = undefined;
   }
 
   private sheetOnDismiss() {
@@ -862,6 +956,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       }
       this.cleanupViewTransitionListener();
       this.cleanupParentRemovalObserver();
+
+      this.cleanupChildRoutePassthrough();
     }
     this.currentBreakpoint = undefined;
     this.animation = undefined;
