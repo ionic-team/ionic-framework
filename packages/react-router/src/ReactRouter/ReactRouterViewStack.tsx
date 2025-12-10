@@ -384,30 +384,38 @@ export class ReactRouterViewStack extends ViewStacks {
 
           // For relative route paths, we need to compute an absolute pathnameBase
           // by combining the parent's pathnameBase with the matched portion
-          let absolutePathnameBase = routeMatch?.pathnameBase || routeInfo.pathname;
           const routePath = routeElement.props.path;
           const isRelativePath = routePath && !routePath.startsWith('/');
           const isIndexRoute = !!routeElement.props.index;
+          const isSplatOnlyRoute = routePath === '*' || routePath === '/*';
 
-          if (isRelativePath || isIndexRoute) {
-            // Get the parent's pathnameBase to build the absolute path
-            const parentPathnameBase =
-              parentMatches.length > 0 ? parentMatches[parentMatches.length - 1].pathnameBase : '/';
+          // Get parent's pathnameBase for relative path resolution
+          const parentPathnameBase =
+            parentMatches.length > 0 ? parentMatches[parentMatches.length - 1].pathnameBase : '/';
 
-            // For relative paths, the matchPath returns a relative pathnameBase
-            // We need to make it absolute by prepending the parent's base
-            if (routeMatch?.pathnameBase && isRelativePath) {
-              // Strip leading slash if present in the relative match
-              const relativeBase = routeMatch.pathnameBase.startsWith('/')
-                ? routeMatch.pathnameBase.slice(1)
-                : routeMatch.pathnameBase;
+          // Start with the match's pathnameBase, falling back to routeInfo.pathname
+          // BUT: splat-only routes should use parent's base (v7_relativeSplatPath behavior)
+          let absolutePathnameBase: string;
 
-              absolutePathnameBase =
-                parentPathnameBase === '/' ? `/${relativeBase}` : `${parentPathnameBase}/${relativeBase}`;
-            } else if (isIndexRoute) {
-              // Index routes should use the parent's base as their base
-              absolutePathnameBase = parentPathnameBase;
-            }
+          if (isSplatOnlyRoute) {
+            // Splat routes should NOT contribute their matched portion to pathnameBase
+            // This aligns with React Router v7's v7_relativeSplatPath behavior
+            // Without this, relative links inside splat routes get double path segments
+            absolutePathnameBase = parentPathnameBase;
+          } else if (isRelativePath && routeMatch?.pathnameBase) {
+            // For relative paths with a pathnameBase, combine with parent
+            const relativeBase = routeMatch.pathnameBase.startsWith('/')
+              ? routeMatch.pathnameBase.slice(1)
+              : routeMatch.pathnameBase;
+
+            absolutePathnameBase =
+              parentPathnameBase === '/' ? `/${relativeBase}` : `${parentPathnameBase}/${relativeBase}`;
+          } else if (isIndexRoute) {
+            // Index routes should use the parent's base as their base
+            absolutePathnameBase = parentPathnameBase;
+          } else {
+            // Default: use the match's pathnameBase or the current pathname
+            absolutePathnameBase = routeMatch?.pathnameBase || routeInfo.pathname;
           }
 
           const contextMatches = [

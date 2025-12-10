@@ -42,6 +42,7 @@ import TabsContext from './pages/tab-context/TabContext';
 import Tabs from './pages/tabs/Tabs';
 import TabsSecondary from './pages/tabs/TabsSecondary';
 import Overlays from './pages/overlays/Overlays';
+import NestedTabsRelativeLinks from './pages/nested-tabs-relative-links/NestedTabsRelativeLinks';
 
 setupIonicReact();
 
@@ -73,6 +74,7 @@ const App: React.FC = () => {
           <Route path="/nested-params/*" element={<NestedParams />} />
           {/* Test root-level relative path - no leading slash */}
           <Route path="relative-paths/*" element={<RelativePaths />} />
+          <Route path="/nested-tabs-relative-links/*" element={<NestedTabsRelativeLinks />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
