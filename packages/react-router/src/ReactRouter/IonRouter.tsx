@@ -269,10 +269,15 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
            * tab and use its `pushedByRoute`.
            */
           const lastRoute = locationHistory.current.getCurrentRouteInfoForTab(routeInfo.tab);
-          // This helps maintain correct back stack behavior within tabs.
-          // If this is the first time entering this tab from a different context,
-          // use the leaving route's pathname as the pushedByRoute to maintain the back stack.
-          routeInfo.pushedByRoute = lastRoute?.pushedByRoute ?? leavingLocationInfo.pathname;
+          /**
+           * Tab bar switches (direction 'none') should not create cross-tab back
+           * navigation. Only inherit pushedByRoute from the tab's own history.
+           */
+          if (routeInfo.routeDirection === 'none') {
+            routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
+          } else {
+            routeInfo.pushedByRoute = lastRoute?.pushedByRoute ?? leavingLocationInfo.pathname;
+          }
           // Triggered by `history.replace()` or a `<Redirect />` component, etc.
         } else if (routeInfo.routeAction === 'replace') {
           /**
@@ -465,10 +470,13 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
         handleNavigate(defaultHref as string, 'pop', 'back', routeAnimation);
       }
       /**
-       * No `pushedByRoute`
-       * e.g., initial page load
+       * No `pushedByRoute` (e.g., initial page load or tab root).
+       * Tabs with no back history should not navigate.
        */
     } else {
+      if (routeInfo && routeInfo.tab) {
+        return;
+      }
       handleNavigate(defaultHref as string, 'pop', 'back', routeAnimation);
     }
   };
