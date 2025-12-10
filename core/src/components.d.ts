@@ -869,6 +869,10 @@ export namespace Components {
          */
         "getScrollElement": () => Promise<HTMLElement>;
         /**
+          * Recalculate content dimensions. Called by overlays (e.g., popover) when sibling elements like headers or footers have finished rendering and their heights are available, ensuring accurate offset-top calculations.
+         */
+        "recalculateDimensions": () => Promise<void>;
+        /**
           * Scroll by a specified X/Y distance in the component.
           * @param x The amount to scroll by on the horizontal axis.
           * @param y The amount to scroll by on the vertical axis.
