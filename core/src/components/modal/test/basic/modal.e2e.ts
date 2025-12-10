@@ -108,7 +108,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('should not set up parentRemovalObserver for controller-created modals', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/pull/30845',
+        description: 'FW-6766',
       });
 
       await page.goto('/src/components/modal/test/basic', config);
