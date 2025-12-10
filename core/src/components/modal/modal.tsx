@@ -1279,6 +1279,20 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
+    /**
+     * Don't observe for controller-based modals or when the parent is the
+     * app root (document.body or ion-app). These parents won't be removed,
+     * and observing document.body with subtree: true causes performance
+     * issues with frameworks like Angular during change detection.
+     */
+    if (
+      this.hasController ||
+      this.cachedOriginalParent === document.body ||
+      this.cachedOriginalParent.tagName === 'ION-APP'
+    ) {
+      return;
+    }
+
     this.parentRemovalObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'childList' && mutation.removedNodes.length > 0) {
