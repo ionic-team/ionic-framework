@@ -18,10 +18,6 @@ import { Route } from 'react-router-dom';
  * This test page verifies that IonRouterOutlet correctly handles
  * relative paths (paths without a leading slash) the same way
  * React Router 6's Routes component does.
- *
- * Issue: https://github.com/ionic-team/ionic-framework/issues/24177#issuecomment-3624311206
- * - Routes with path="help" should work the same as path="/help"
- * - IonRouterOutlet should match relative paths correctly
  */
 
 const RelativePathsHome: React.FC = () => {
