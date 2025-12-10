@@ -64,6 +64,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   private destroyTriggerInteraction?: () => void;
   private destroyKeyboardInteraction?: () => void;
   private destroyDismissInteraction?: () => void;
+  private headerResizeObserver?: ResizeObserver;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -361,6 +362,11 @@ export class Popover implements ComponentInterface, PopoverInterface {
     if (destroyTriggerInteraction) {
       destroyTriggerInteraction();
     }
+
+    if (this.headerResizeObserver) {
+      this.headerResizeObserver.disconnect();
+      this.headerResizeObserver = undefined;
+    }
   }
 
   componentWillLoad() {
@@ -562,16 +568,17 @@ export class Popover implements ComponentInterface, PopoverInterface {
       return;
     }
 
-    const ro = new ResizeObserver(async () => {
+    this.headerResizeObserver = new ResizeObserver(async () => {
       if (header.offsetHeight > 0) {
-        ro.disconnect();
+        this.headerResizeObserver?.disconnect();
+        this.headerResizeObserver = undefined;
         for (const contentEl of contentElements) {
           await contentEl.recalculateDimensions();
         }
       }
     });
 
-    ro.observe(header);
+    this.headerResizeObserver.observe(header);
   }
 
   /**
