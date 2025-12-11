@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Textarea - Form</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      .required-label {
+        display: none;
+      }
+
+      .textarea-required .required-label {
+        display: inline;
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Textarea - Form</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" class="ion-padding">
+        <form onsubmit="return onSubmit(event)">
+          <ion-textarea
+            fill="outline"
+            label-placement="stacked"
+            placeholder="Placeholder"
+            helper-text="Helper message"
+            counter="true"
+            maxlength="999"
+          >
+            <div slot="label">Label <span class="required-label">(Required) *</span></div>
+            <ion-icon slot="end" name="square-outline"></ion-icon>
+          </ion-textarea>
+
+          <p>
+            Click the first button below to toggle the required prop and then click the submit button to attempt to
+            submit the form. It should show a popup warning to fill out the field when textarea is required and empty.
+            When the textarea is not required, or the field is filled, the form should submit by sending a console log.
+          </p>
+          <button type="button" onClick="toggleRequired()">Toggle Required</button>
+          <button type="submit">Submit</button>
+        </form>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      function onSubmit(event) {
+        event.preventDefault();
+        const textarea = document.querySelector('ion-textarea');
+        console.log('Form submitted with value:', textarea.value);
+        return true;
+      }
+
+      function toggleRequired() {
+        const textarea = document.querySelector('ion-textarea');
+        textarea.required = textarea.required ? false : true;
+        textarea.classList.toggle('textarea-required', textarea.required);
+        console.log('Textarea required set to:', textarea.required);
+      }
+    </script>
+  </body>
+</html>
