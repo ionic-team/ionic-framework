@@ -24,6 +24,23 @@ interface TabBarData {
 
 const isTabButton = (child: any) => child.type?.name === "IonTabButton";
 
+/**
+ * Checks if pathname matches the tab's href using path segment matching.
+ * Avoids false matches like /home2 matching /home by requiring exact match
+ * or a path segment boundary (/).
+ */
+const matchesTab = (pathname: string, href: string | undefined): boolean => {
+  if (href === undefined) {
+    return false;
+  }
+
+  const normalizedHref =
+    href.endsWith("/") && href !== "/" ? href.slice(0, -1) : href;
+  return (
+    pathname === normalizedHref || pathname.startsWith(normalizedHref + "/")
+  );
+};
+
 const getTabs = (nodes: VNode[]) => {
   let tabs: VNode[] = [];
   nodes.forEach((node: VNode) => {
@@ -135,7 +152,7 @@ export const IonTabBar = defineComponent({
       const tabKeys = Object.keys(tabs);
       let activeTab = tabKeys.find((key) => {
         const href = tabs[key].originalHref;
-        return currentRoute?.pathname.startsWith(href);
+        return currentRoute?.pathname && matchesTab(currentRoute.pathname, href);
       });
 
       /**

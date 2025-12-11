@@ -1,4 +1,43 @@
 describe('IonTabs', () => {
+  /**
+   * Verifies that tabs with similar route prefixes (e.g., /home, /home2, /home3)
+   * correctly select the matching tab instead of the first prefix match.
+   */
+  describe('Similar Route Prefixes', () => {
+    it('should select the correct tab when routes have similar prefixes', () => {
+      cy.visit('/tabs-similar-prefixes/home2');
+
+      cy.get('[data-testid="home2-content"]').should('be.visible');
+      cy.get('[data-testid="home2-tab"]').should('have.class', 'tab-selected');
+      cy.get('[data-testid="home-tab"]').should('not.have.class', 'tab-selected');
+    });
+
+    it('should select the correct tab when navigating via tab buttons', () => {
+      cy.visit('/tabs-similar-prefixes/home');
+
+      cy.get('[data-testid="home-tab"]').should('have.class', 'tab-selected');
+      cy.get('[data-testid="home2-tab"]').should('not.have.class', 'tab-selected');
+
+      cy.get('[data-testid="home2-tab"]').click();
+      cy.get('[data-testid="home2-tab"]').should('have.class', 'tab-selected');
+      cy.get('[data-testid="home-tab"]').should('not.have.class', 'tab-selected');
+
+      cy.get('[data-testid="home3-tab"]').click();
+      cy.get('[data-testid="home3-tab"]').should('have.class', 'tab-selected');
+      cy.get('[data-testid="home-tab"]').should('not.have.class', 'tab-selected');
+      cy.get('[data-testid="home2-tab"]').should('not.have.class', 'tab-selected');
+    });
+
+    it('should select the correct tab when directly navigating to home3', () => {
+      cy.visit('/tabs-similar-prefixes/home3');
+
+      cy.get('[data-testid="home3-content"]').should('be.visible');
+      cy.get('[data-testid="home3-tab"]').should('have.class', 'tab-selected');
+      cy.get('[data-testid="home-tab"]').should('not.have.class', 'tab-selected');
+      cy.get('[data-testid="home2-tab"]').should('not.have.class', 'tab-selected');
+    });
+  });
+
   describe('With IonRouterOutlet', () => {
     beforeEach(() => {
       cy.visit('/tabs/tab1');

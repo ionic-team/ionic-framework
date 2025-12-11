@@ -46,6 +46,9 @@ const Main: React.FC<MainProps> = () => {
           <IonItem routerLink="/tabs-direct-navigation">
             <IonLabel>Tabs with Direct Navigation</IonLabel>
           </IonItem>
+          <IonItem routerLink="/tabs-similar-prefixes">
+            <IonLabel>Tabs with Similar Route Prefixes</IonLabel>
+          </IonItem>
           <IonItem routerLink="/icons">
             <IonLabel>Icons</IonLabel>
           </IonItem>
