@@ -433,3 +433,7 @@ h1[tabindex="-1"]:focus,
     overflow: hidden;
   }
 }
+
+ion-card-header + ion-card-content {
+  padding-top: 0;
+}
