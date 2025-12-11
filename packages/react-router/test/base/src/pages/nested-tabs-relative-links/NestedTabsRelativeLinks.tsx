@@ -184,10 +184,9 @@ const TabsContainer: React.FC = () => (
     </IonTabs>
 );
 
-// Top-level component with outer router outlet
+// Top-level component - splat route renders tabs
 const NestedTabsRelativeLinks: React.FC = () => (
   <IonRouterOutlet>
-    {/* Catch-all route that renders the tabs container */}
     <Route path="*" element={<TabsContainer />} />
   </IonRouterOutlet>
 );

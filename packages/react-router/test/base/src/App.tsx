@@ -44,6 +44,7 @@ import TabsSecondary from './pages/tabs/TabsSecondary';
 import TabHistoryIsolation from './pages/tab-history-isolation/TabHistoryIsolation';
 import Overlays from './pages/overlays/Overlays';
 import NestedTabsRelativeLinks from './pages/nested-tabs-relative-links/NestedTabsRelativeLinks';
+import RootSplatTabs from './pages/root-splat-tabs/RootSplatTabs';
 
 setupIonicReact();
 
@@ -77,6 +78,7 @@ const App: React.FC = () => {
           {/* Test root-level relative path - no leading slash */}
           <Route path="relative-paths/*" element={<RelativePaths />} />
           <Route path="/nested-tabs-relative-links/*" element={<NestedTabsRelativeLinks />} />
+          <Route path="/root-splat-tabs/*" element={<RootSplatTabs />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
