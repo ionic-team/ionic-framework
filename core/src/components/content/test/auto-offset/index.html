@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Content - Auto Offset</title>
+  <meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
+
+<body>
+  <ion-app mode="ios">
+    <ion-header translucent>
+      <ion-toolbar>
+        <ion-title>Auto Offset Test</ion-title>
+      </ion-toolbar>
+      <ion-toolbar id="extra-header-content" style="display: none">
+        <ion-searchbar label="dynamic"></ion-searchbar>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content fullscreen style="--background: blue">
+      <button id="expand-header-btn">Expand Header</button>
+      <br><br>
+      <button id="expand-footer-btn">Expand Footer</button>
+
+    </ion-content>
+
+    <ion-footer translucent>
+      <ion-toolbar id="extra-footer-content" style="display: none">
+        <div class="ion-padding">Expanded Footer Area</div>
+      </ion-toolbar>
+      <ion-toolbar>
+        <ion-title>Footer</ion-title>
+      </ion-toolbar>
+      </ion-footer>
+  </ion-app>
+  <script>
+      const headerBtn = document.getElementById('expand-header-btn');
+      const footerBtn = document.getElementById('expand-footer-btn');
+      const extraHeaderToolBar = document.getElementById('extra-header-content');
+      const extraFooterToolbar = document.getElementById('extra-footer-content');
+
+      headerBtn.addEventListener('click', () => {
+        extraHeaderToolBar.style.display = "flex";
+      });
+
+      footerBtn.addEventListener('click', () => {
+        extraFooterToolbar.style.display = "flex";
+      });
+    </script>
+</body>
+
+</html>
