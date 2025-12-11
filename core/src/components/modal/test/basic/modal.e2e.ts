@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
-import { configs, test, Viewports } from '@utils/test/playwright';
 import type { E2EPage } from '@utils/test/playwright';
+import { configs, test, Viewports } from '@utils/test/playwright';
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('modal: focus trapping'), () => {
@@ -104,6 +104,28 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
 });
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('modal: parent removal observer'), () => {
+    test('should not set up parentRemovalObserver for controller-created modals', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'FW-6766',
+      });
+
+      await page.goto('/src/components/modal/test/basic', config);
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#basic-modal');
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+      const hasObserver = await modal.evaluate((el: any) => {
+        return el.parentRemovalObserver !== undefined;
+      });
+
+      expect(hasObserver).toBe(false);
+    });
+  });
+
   test.describe(title('modal: backdrop'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/modal/test/basic', config);
