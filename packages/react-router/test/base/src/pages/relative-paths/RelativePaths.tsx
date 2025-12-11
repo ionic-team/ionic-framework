@@ -18,10 +18,6 @@ import { Route } from 'react-router-dom';
  * This test page verifies that IonRouterOutlet correctly handles
  * relative paths (paths without a leading slash) the same way
  * React Router 6's Routes component does.
- *
- * Issue: https://github.com/ionic-team/ionic-framework/issues/24177#issuecomment-3624311206
- * - Routes with path="help" should work the same as path="/help"
- * - IonRouterOutlet should match relative paths correctly
  */
 
 const RelativePathsHome: React.FC = () => {
@@ -42,9 +38,6 @@ const RelativePathsHome: React.FC = () => {
           </IonItem>
           <IonItem routerLink="/relative-paths/page-b">
             <IonLabel>Go to Page B (relative path route)</IonLabel>
-          </IonItem>
-          <IonItem routerLink="/relative-paths/page-c">
-            <IonLabel>Go to Page C (relative path route)</IonLabel>
           </IonItem>
         </IonList>
       </IonContent>
@@ -92,35 +85,14 @@ const PageB: React.FC = () => {
   );
 };
 
-const PageC: React.FC = () => {
-  return (
-    <IonPage data-pageid="relative-paths-page-c">
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="/relative-paths" />
-          </IonButtons>
-          <IonTitle>Page C</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <div data-testid="page-c-content">
-          This is Page C - another route defined with relative path
-        </div>
-      </IonContent>
-    </IonPage>
-  );
-};
-
 const RelativePaths: React.FC = () => {
   return (
     <IonRouterOutlet>
       {/* Route with absolute path (has leading slash) - this should work */}
       <Route path="/relative-paths/page-a" element={<PageA />} />
 
-      {/* Routes with relative paths (no leading slash) */}
+      {/* Route with relative path (no leading slash) */}
       <Route path="page-b" element={<PageB />} />
-      <Route path="page-c" element={<PageC />} />
 
       {/* Home route - using relative path */}
       <Route path="" element={<RelativePathsHome />} />

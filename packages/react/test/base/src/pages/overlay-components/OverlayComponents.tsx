@@ -15,6 +15,7 @@ import AlertComponent from './AlertComponent';
 import LoadingComponent from './LoadingComponent';
 import ModalComponent from './ModalComponent';
 import ModalFocusTrap from './ModalFocusTrap';
+import ModalSheetChildRoute from './ModalSheetChildRoute';
 import ModalTeleport from './ModalTeleport';
 import PickerComponent from './PickerComponent';
 import PopoverComponent from './PopoverComponent';
@@ -32,6 +33,7 @@ const OverlayHooks: React.FC<OverlayHooksProps> = () => {
         <Route path="loading" element={<LoadingComponent />} />
         <Route path="modal-basic" element={<ModalComponent />} />
         <Route path="modal-focus-trap" element={<ModalFocusTrap />} />
+        <Route path="modal-sheet-child-route/*" element={<ModalSheetChildRoute />} />
         <Route path="modal-teleport" element={<ModalTeleport />} />
         <Route path="picker" element={<PickerComponent />} />
         <Route path="popover" element={<PopoverComponent />} />
@@ -61,6 +63,10 @@ const OverlayHooks: React.FC<OverlayHooksProps> = () => {
         <IonTabButton tab="modalTeleport" href="/overlay-components/modal-teleport">
           <IonIcon icon={star} />
           <IonLabel>Modal Teleport</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="modalSheetChildRoute" href="/overlay-components/modal-sheet-child-route/child">
+          <IonIcon icon={star} />
+          <IonLabel>Sheet Child</IonLabel>
         </IonTabButton>
         <IonTabButton tab="picker" href="/overlay-components/picker">
           <IonIcon icon={logoIonic} />

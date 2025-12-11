@@ -27,24 +27,10 @@ describe('Relative Paths Tests', () => {
     cy.get('[data-testid="page-b-content"]').should('contain', 'Page B');
   });
 
-  it('should navigate to Page C (defined with relative path - no leading slash)', () => {
-    cy.visit(`http://localhost:${port}/relative-paths`);
-    cy.ionPageVisible('relative-paths-home');
-    cy.ionNav('ion-item', 'Go to Page C');
-    cy.ionPageVisible('relative-paths-page-c');
-    cy.get('[data-testid="page-c-content"]').should('contain', 'Page C');
-  });
-
   it('should navigate directly to Page B via URL', () => {
     cy.visit(`http://localhost:${port}/relative-paths/page-b`);
     cy.ionPageVisible('relative-paths-page-b');
     cy.get('[data-testid="page-b-content"]').should('contain', 'Page B');
-  });
-
-  it('should navigate directly to Page C via URL', () => {
-    cy.visit(`http://localhost:${port}/relative-paths/page-c`);
-    cy.ionPageVisible('relative-paths-page-c');
-    cy.get('[data-testid="page-c-content"]').should('contain', 'Page C');
   });
 
   it('should navigate to Page B and back', () => {

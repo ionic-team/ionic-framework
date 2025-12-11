@@ -41,6 +41,7 @@ import { SwipeToGoBack } from './pages/swipe-to-go-back/SwipToGoBack';
 import TabsContext from './pages/tab-context/TabContext';
 import Tabs from './pages/tabs/Tabs';
 import TabsSecondary from './pages/tabs/TabsSecondary';
+import TabHistoryIsolation from './pages/tab-history-isolation/TabHistoryIsolation';
 import Overlays from './pages/overlays/Overlays';
 import NestedTabsRelativeLinks from './pages/nested-tabs-relative-links/NestedTabsRelativeLinks';
 
@@ -68,6 +69,7 @@ const App: React.FC = () => {
           <Route path="/dynamic-ionpage-classnames" element={<DynamicIonpageClassnames />} />
           <Route path="/tabs/*" element={<Tabs />} />
           <Route path="/tabs-secondary/*" element={<TabsSecondary />} />
+          <Route path="/tab-history-isolation/*" element={<TabHistoryIsolation />} />
           <Route path="/refs/*" element={<Refs />} />
           <Route path="/overlays" element={<Overlays />} />
           <Route path="/params/:id" element={<Params />} />
