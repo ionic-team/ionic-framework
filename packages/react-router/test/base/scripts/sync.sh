@@ -15,4 +15,4 @@ npm pack ../../../../react
 npm pack ../../../
 
 # Install Dependencies
-npm install *.tgz --no-save
+npm install *.tgz --no-save --legacy-peer-deps

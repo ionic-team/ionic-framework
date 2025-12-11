@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   IonContent,
   IonHeader,
@@ -10,6 +9,7 @@ import {
   IonMenuButton,
   IonButton,
 } from '@ionic/react';
+import React from 'react';
 import './Tab3.css';
 
 class Tab3 extends React.Component {

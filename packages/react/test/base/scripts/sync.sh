@@ -15,4 +15,4 @@ npm pack ../../../
 npm pack ../../../../react-router
 
 # Install Dependencies
-npm install *.tgz --no-save
+npm install *.tgz --no-save --legacy-peer-deps

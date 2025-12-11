@@ -23,6 +23,11 @@ export interface RouteManagerContextState {
     routeInfo: RouteInfo,
     reRender: () => void
   ) => React.ReactNode[];
+  /**
+   * Returns all view items currently registered for a given outlet id.
+   * Used by StackManager for out-of-scope cleanup.
+   */
+  getViewItemsForOutlet: (outletId: string) => ViewItem[];
   goBack: () => void;
   unMountViewItem: (viewItem: ViewItem) => void;
 }
@@ -37,6 +42,7 @@ export const RouteManagerContext = /*@__PURE__*/ React.createContext<RouteManage
   findLeavingViewItemByRouteInfo: () => undefined,
   findViewItemByRouteInfo: () => undefined,
   getChildrenToRender: () => undefined as any,
+  getViewItemsForOutlet: () => [] as any,
   goBack: () => undefined,
   unMountViewItem: () => undefined,
 });

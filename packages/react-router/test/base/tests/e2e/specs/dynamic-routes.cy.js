@@ -5,6 +5,11 @@ Fixes bug reported in https://github.com/ionic-team/ionic-framework/issues/21329
 */
 
 describe('Dynamic Routes', () => {
+  it('/dynamic-routes/home loads directly', () => {
+    cy.visit(`http://localhost:${port}/dynamic-routes/home`);
+    cy.ionPageVisible('dynamic-routes-home');
+  });
+
   it('/dynamic-routes, when adding a dynamic route, we should be able to navigate to it', () => {
     cy.visit(`http://localhost:${port}/dynamic-routes`);
     cy.ionPageVisible('dynamic-routes-home');

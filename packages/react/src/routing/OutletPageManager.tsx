@@ -12,6 +12,7 @@ interface OutletPageManagerProps {
   forwardedRef?: React.ForwardedRef<HTMLIonRouterOutletElement>;
   routeInfo?: RouteInfo;
   StackManager: any; // TODO(FW-2959): type
+  id?: string;
 }
 
 export class OutletPageManager extends React.Component<OutletPageManagerProps> {
@@ -83,15 +84,16 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
   }
 
   render() {
-    const { StackManager, children, routeInfo, ...props } = this.props;
+    const { StackManager, children, routeInfo, id, ...props } = this.props;
     return (
       <IonLifeCycleContext.Consumer>
         {(context) => {
           this.ionLifeCycleContext = context;
           return (
-            <StackManager routeInfo={routeInfo}>
+            <StackManager routeInfo={routeInfo} id={id}>
               <IonRouterOutletInner
                 setRef={(val: HTMLIonRouterOutletElement) => (this.ionRouterOutlet = val)}
+                id={id}
                 {...props}
               >
                 {children}
