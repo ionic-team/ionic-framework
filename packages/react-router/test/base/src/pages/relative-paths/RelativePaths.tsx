@@ -43,9 +43,6 @@ const RelativePathsHome: React.FC = () => {
           <IonItem routerLink="/relative-paths/page-b">
             <IonLabel>Go to Page B (relative path route)</IonLabel>
           </IonItem>
-          <IonItem routerLink="/relative-paths/page-c">
-            <IonLabel>Go to Page C (relative path route)</IonLabel>
-          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
@@ -92,35 +89,14 @@ const PageB: React.FC = () => {
   );
 };
 
-const PageC: React.FC = () => {
-  return (
-    <IonPage data-pageid="relative-paths-page-c">
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="/relative-paths" />
-          </IonButtons>
-          <IonTitle>Page C</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <div data-testid="page-c-content">
-          This is Page C - another route defined with relative path
-        </div>
-      </IonContent>
-    </IonPage>
-  );
-};
-
 const RelativePaths: React.FC = () => {
   return (
     <IonRouterOutlet>
       {/* Route with absolute path (has leading slash) - this should work */}
       <Route path="/relative-paths/page-a" element={<PageA />} />
 
-      {/* Routes with relative paths (no leading slash) */}
+      {/* Route with relative path (no leading slash) */}
       <Route path="page-b" element={<PageB />} />
-      <Route path="page-c" element={<PageC />} />
 
       {/* Home route - using relative path */}
       <Route path="" element={<RelativePathsHome />} />
