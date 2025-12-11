@@ -68,6 +68,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/tabs" id="go-to-tabs">
             <IonLabel>Tabs</IonLabel>
           </IonItem>
+          <IonItem routerLink="/tab-history-isolation">
+            <IonLabel>Tab History Isolation</IonLabel>
+          </IonItem>
           <IonItem routerLink="/params/0">
             <IonLabel>Params</IonLabel>
           </IonItem>
