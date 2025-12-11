@@ -152,7 +152,9 @@ export const IonTabBar = defineComponent({
       const tabKeys = Object.keys(tabs);
       let activeTab = tabKeys.find((key) => {
         const href = tabs[key].originalHref;
-        return currentRoute?.pathname && matchesTab(currentRoute.pathname, href);
+        return (
+          currentRoute?.pathname && matchesTab(currentRoute.pathname, href)
+        );
       });
 
       /**
