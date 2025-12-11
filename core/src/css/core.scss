@@ -157,6 +157,15 @@ html.ios ion-modal.modal-card .ion-page {
 }
 
 /**
+ * Allows pointer events to pass through child route page wrappers
+ * when they only contain a sheet modal that permits background interaction.
+ * https://github.com/ionic-team/ionic-framework/issues/30700
+ */
+.ion-page.ion-page-overlay-passthrough {
+  pointer-events: none;
+}
+
+/**
  * When making custom dialogs, using
  * ion-content is not required. As a result,
  * some developers may wish to have dialogs
