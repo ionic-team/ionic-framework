@@ -1,3 +1,4 @@
+import type { PredefinedColors } from '../interface';
 import type { IonicConfig } from '../utils/config';
 
 // Platform-specific theme
@@ -218,24 +219,7 @@ export type BaseTheme = {
   };
 
   // COLOR TOKENS
-  color?: {
-    [key: string]: {
-      bold: {
-        base: string;
-        contrast: string;
-        foreground: string;
-        shade: string;
-        tint: string;
-      };
-      subtle: {
-        base: string;
-        contrast: string;
-        foreground: string;
-        shade: string;
-        tint: string;
-      };
-    };
-  };
+  color?: Colors;
 
   // PLATFORM SPECIFIC OVERRIDES
   ios?: PlatformTheme;
@@ -244,6 +228,16 @@ export type BaseTheme = {
 
 // Dark theme interface
 export type DarkTheme = BaseTheme & {
+  enabled: 'system' | 'always' | 'never' | 'class';
+};
+
+// High Contrast theme interface
+export type HighContrastTheme = BaseTheme & {
+  enabled: 'system' | 'always' | 'never' | 'class';
+};
+
+// High Contrast Dark theme interface
+export type HighContrastDarkTheme = BaseTheme & {
   enabled: 'system' | 'always' | 'never' | 'class';
 };
 
@@ -257,7 +251,45 @@ export type DefaultTheme = BaseTheme & {
   palette?: {
     light?: LightTheme;
     dark?: DarkTheme;
+    highContrast?: HighContrastTheme;
+    highContrastDark?: HighContrastDarkTheme;
   };
 
   config?: IonicConfig;
+};
+
+// Semantic color value structure
+type SemanticColorValue = {
+  base: string;
+  contrast: string;
+  foreground: string;
+  shade: string;
+  tint: string;
+};
+
+// Semantic color hue value structure
+type SemanticHue = {
+  bold?: SemanticColorValue;
+  subtle?: SemanticColorValue;
+};
+
+// Number string keys structure
+export type NumberStringKeys = {
+  // Enforce keys are strings of numbers (like 50, '50', etc.)
+  [K in number as `${K}`]?: string;
+};
+
+// Primitive color keys
+export type PrimitiveColors = 'gray' | 'black' | 'white' | 'gray-contrast';
+
+// Functional color keys
+export type FunctionalColors = 'text' | 'overlay-bg';
+
+// Colors interface
+export type Colors = {
+  [K in PredefinedColors]?: SemanticHue;
+} & {
+  [K in PrimitiveColors]?: NumberStringKeys;
+} & {
+  [K in FunctionalColors]?: NumberStringKeys;
 };

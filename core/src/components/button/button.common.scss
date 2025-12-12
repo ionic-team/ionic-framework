@@ -293,7 +293,7 @@ ion-ripple-effect {
 
 :host(.button-solid.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
   background: #{var(--ion-toolbar-color, var(--background))};
-  color: #{var(--ion-toolbar-background, var(--color))};
+  color: #{var(--ion-toolbar-background, var(--ion-components-ion-toolbar-bg, (var(--color))))};
 }
 
 // Button Badge

@@ -201,7 +201,7 @@ $text-color-rgb: var(--ion-text-color-rgb, $text-color-rgb-value);
 $backdrop-ios-color: var(--ion-backdrop-color, #000);
 $overlay-ios-background-color: var(
   --ion-overlay-background-color,
-  var(--ion-color-step-100, #f9f9f9)
+  var(--ion-color-gray-100, #f9f9f9)
 );
 ```
 

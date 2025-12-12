@@ -14,7 +14,7 @@
   --border-style: solid;
   --separator-width: 8px;
   --separator-border-radius: 999px;
-  --separator-color: #{$background-color-step-150};
+  --separator-color: var(--ion-color-gray-150);
   --highlight-color-focused: #{ion-color(primary, base)};
   --highlight-color-valid: #{ion-color(success, base)};
   --highlight-color-invalid: #{ion-color(danger, base)};
@@ -26,7 +26,7 @@
 // ----------------------------------------------------------------
 
 .input-otp-description {
-  color: $text-color-step-300;
+  color: var(--ion-color-text-700);
 
   font-size: dynamic-font(12px);
 
@@ -83,30 +83,30 @@
 }
 
 :host(.input-otp-fill-solid) {
-  --border-color: #{$background-color-step-50};
-  --background: #{$background-color-step-50};
+  --border-color: var(--ion-color-gray-50);
+  --background: var(--ion-color-gray-50);
 }
 
 // States
 // --------------------------------------------------
 
 :host(.input-otp-disabled) {
-  --color: #{$text-color-step-650};
+  --color: var(--ion-color-text-350);
 }
 
 :host(.input-otp-fill-outline.input-otp-disabled) {
-  --background: #{$background-color-step-50};
-  --border-color: #{$background-color-step-100};
+  --background: var(--ion-color-gray-50);
+  --border-color: var(--ion-color-gray-100);
 }
 
 :host(.input-otp-fill-outline.input-otp-readonly) {
-  --background: #{$background-color-step-50};
+  --background: var(--ion-color-gray-50);
 }
 
 :host(.input-otp-fill-solid.input-otp-disabled),
 :host(.input-otp-fill-solid.input-otp-readonly) {
-  --border-color: #{$background-color-step-100};
-  --background: #{$background-color-step-100};
+  --border-color: var(--ion-color-gray-100);
+  --background: var(--ion-color-gray-100);
 }
 
 // Colors

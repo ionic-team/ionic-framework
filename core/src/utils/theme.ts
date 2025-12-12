@@ -1,6 +1,7 @@
 import { printIonWarning } from '@utils/logging';
 
 import type { Color, CssClassMap } from '../interface';
+import type { NumberStringKeys } from '../themes/themes.interfaces';
 
 import { deepMerge } from './helpers';
 
@@ -274,9 +275,11 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     return '';
   }
 
-  // Exclude components and palette from the default tokens
+  // TODO: NOTE TO SELF: we must include components from the defaults
+  // since some components share amongst themes.
+  // Exclude palette from the default tokens
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { palette, components, ...defaultTokens } = theme;
+  const { palette, ...defaultTokens } = theme;
 
   // Generate CSS variables for the default design tokens
   const defaultTokensCSS = generateCSSVars(defaultTokens);
@@ -287,9 +290,31 @@ export const generateGlobalThemeCSS = (theme: any): string => {
   // Generate CSS variables for the dark color palette
   const darkTokensCSS = generateCSSVars(palette.dark);
 
+  // Generate CSS variable for the high contrast color palette
+  const highContrastTokensCSS = generateCSSVars(palette.highContrast);
+
+  // Generate CSS variable for the high contrast dark color palette
+  const highContrastDarkTokensCSS = generateCSSVars(palette.highContrastDark);
+
+  let paletteTokensCSS = lightTokensCSS;
+
   // Include CSS variables for the dark color palette instead of
   // the light palette if dark palette enabled is 'always'
-  const paletteTokensCSS = palette.dark.enabled === 'always' ? darkTokensCSS : lightTokensCSS;
+  if (palette.dark.enabled === 'always') {
+    paletteTokensCSS = darkTokensCSS;
+  }
+
+  // Include CSS variables for the high contrast color palette instead of
+  // the light palette if high contrast palette enabled is 'always'
+  if (palette.highContrast?.enabled === 'always') {
+    paletteTokensCSS = highContrastTokensCSS;
+  }
+
+  // Include CSS variables for the high contrast dark color palette instead of
+  // the light palette if high contrast dark palette enabled is 'always'
+  if (palette.highContrastDark?.enabled === 'always') {
+    paletteTokensCSS = highContrastDarkTokensCSS;
+  }
 
   let css = `
     ${CSS_ROOT_SELECTOR} {
@@ -308,6 +333,26 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     `;
   }
 
+  // Include CSS variables for the high contrast color palette inside of a
+  // class if high contrast palette enabled is 'class'
+  if (palette.highContrast.enabled === 'class') {
+    css += `
+      .ion-palette-high-contrast {
+        ${highContrastTokensCSS}
+      }
+    `;
+  }
+
+  // Include CSS variables for the high contrast dark color palette inside of a
+  // class if high contrast dark palette enabled is 'class'
+  if (palette.highContrastDark.enabled === 'class') {
+    css += `
+      .ion-palette-high-contrast.ion-palette-dark {
+        ${highContrastDarkTokensCSS}
+      }
+    `;
+  }
+
   // Include CSS variables for the dark color palette inside of the
   // dark color scheme media query if dark palette enabled is 'system'
   if (palette.dark.enabled === 'system') {
@@ -315,6 +360,30 @@ export const generateGlobalThemeCSS = (theme: any): string => {
       @media (prefers-color-scheme: dark) {
         ${CSS_ROOT_SELECTOR} {
           ${darkTokensCSS}
+        }
+      }
+    `;
+  }
+
+  // Include CSS variables for the high contrast color palette inside of the
+  // high contrast media query if high contrast palette enabled is 'system'
+  if (palette.highContrast.enabled === 'system') {
+    css += `
+      @media (prefers-contrast: more) {
+        ${CSS_ROOT_SELECTOR} {
+          ${highContrastTokensCSS}
+        }
+      }
+    `;
+  }
+
+  // Include CSS variables for the high contrast dark color palette inside of the
+  // high contrast dark media query if high contrast dark palette enabled is 'system'
+  if (palette.highContrastDark.enabled === 'system') {
+    css += `
+      @media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+        ${CSS_ROOT_SELECTOR} {
+          ${highContrastDarkTokensCSS}
         }
       }
     `;
@@ -350,6 +419,7 @@ export const applyGlobalTheme = (baseTheme: any, userTheme?: any): any => {
 
   // Merge themes and apply
   const mergedTheme = deepMerge(baseTheme, userTheme);
+
   injectCSS(generateGlobalThemeCSS(mergedTheme));
   return mergedTheme;
 };
@@ -470,4 +540,38 @@ export const mix = (baseColor: string, mixColor: string, weight: string): string
 
   const toHex = (n: number) => n.toString(16).padStart(2, '0');
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+};
+
+/**
+ * Generates a color scale object by mixing a light and dark color.
+ *
+ * This function creates ten distinct shade levels (50, 100, 150, ..., 950)
+ * by mixing the light color into the dark color using mix percentages
+ * that increment in steps of 5%.
+ *
+ * The final output is an object where keys are the shade levels (50-950)
+ * and values are the resulting mixed hex codes.
+ *
+ * @param {string} lightColor - The lighter base color hex value.
+ * @param {string} darkColor - The darker base color hex value.
+ * @param {boolean} isInverted - If true, generates the scale in reverse (dark to light).
+ * @returns {NumberStringKeys} An object of color shades.
+ *
+ * @example
+ * mix('#ffffff', '#000000', 5%) results in the color for key '50'
+ * mix('#ffffff', '#000000', 95%) results in the color for key '950'
+ */
+export const generateColorSteps = (lightColor: string, darkColor: string, isInverted = false): NumberStringKeys => {
+  const colorSteps: NumberStringKeys = {
+    0: isInverted ? darkColor : lightColor,
+    1000: isInverted ? lightColor : darkColor,
+  };
+
+  for (let i = 50; i <= 950; i += 50) {
+    const weight = isInverted ? `${100 - i / 10}%` : `${i / 10}%`;
+
+    colorSteps[i.toString() as keyof NumberStringKeys] = mix(lightColor, darkColor, weight);
+  }
+
+  return colorSteps;
 };

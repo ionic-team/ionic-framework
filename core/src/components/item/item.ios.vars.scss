@@ -25,7 +25,7 @@ $item-ios-paragraph-margin-start: $item-ios-paragraph-margin-end;
 $item-ios-paragraph-font-size: dynamic-font(14px);
 
 /// @prop - Color of the item paragraph
-$item-ios-paragraph-text-color: var(--ion-text-color-step-550, #a3a3a3);
+$item-ios-paragraph-text-color: var(--ion-components-ion-item-paragraph-text-color);
 
 /// @prop - Width of the avatar in the item
 $item-ios-avatar-width: 36px;

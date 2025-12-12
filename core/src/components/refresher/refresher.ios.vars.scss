@@ -7,7 +7,7 @@ $refresher-ios-icon-color: $text-color;
 $refresher-ios-text-color: $text-color;
 
 /// @prop - Color of the native refresher spinner
-$refresher-ios-native-spinner-color: var(--ion-color-step-450, var(--ion-background-color-step-450, #747577));
+$refresher-ios-native-spinner-color: var(--ion-components-ion-refresher-native-spinner-color);
 
 /// @prop - Width of the native refresher spinner
 $refresher-ios-native-spinner-width: 32px;
