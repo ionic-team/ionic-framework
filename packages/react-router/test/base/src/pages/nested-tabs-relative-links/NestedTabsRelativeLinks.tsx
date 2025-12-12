@@ -21,9 +21,9 @@ import { Link, Navigate, Route } from 'react-router-dom';
  * This test page verifies that relative links work correctly within
  * nested IonRouterOutlet components, specifically in a tabs-based layout.
  *
- * Issue: When using React Router's <Link to="relative"> inside nested
- * outlets with index routes, the relative path resolution can produce
- * incorrect URLs (e.g., /tab1/tab1/abc instead of /tab1/abc).
+ * Issue: When using React Router's <Link to="page-a"> inside the tab1 route
+ * with nested outlets and index routes, the relative path resolution can produce
+ * incorrect URLs (e.g., /tab1/tab1/page-a instead of /tab1/page-a).
  *
  * This test also verifies that absolute links work when a catch-all route
  * is present.
