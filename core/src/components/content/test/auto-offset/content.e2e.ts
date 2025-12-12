@@ -3,7 +3,6 @@ import { test, configs } from '@utils/test/playwright';
 
 configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('content: auto offset'), () => {
-
     test('should not have visual regressions', async ({ page }) => {
       await page.goto(`/src/components/content/test/auto-offset`, config);
       await page.setIonViewport();
@@ -15,9 +14,7 @@ configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
       await page.setIonViewport();
 
       const content = page.locator('ion-content');
-      const before = await content.evaluate((el: HTMLElement) =>
-        getComputedStyle(el).getPropertyValue('--offset-top')
-      );
+      const before = await content.evaluate((el: HTMLElement) => getComputedStyle(el).getPropertyValue('--offset-top'));
 
       await page.click('#expand-header-btn');
 
@@ -47,6 +44,5 @@ configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(page).toHaveScreenshot(screenshot(`content-auto-offset-footer-updated`));
     });
-
   });
 });
