@@ -108,8 +108,8 @@ export class Datetime implements ComponentInterface {
   private inputId = `ion-dt-${datetimeIds++}`;
   private calendarBodyRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
-  private intersectionTrackerRef?: HTMLElement;
   private clearFocusVisible?: () => void;
+  private resizeObserver?: ResizeObserver;
   private parsedMinuteValues?: number[];
   private parsedHourValues?: number[];
   private parsedMonthValues?: number[];
@@ -118,6 +118,7 @@ export class Datetime implements ComponentInterface {
 
   private destroyCalendarListener?: () => void;
   private destroyKeyboardMO?: () => void;
+  private destroyOverlayListeners?: () => void;
 
   // TODO(FW-2832): types (DatetimeParts causes some errors that need untangling)
   private minParts?: any;
@@ -1077,6 +1078,14 @@ export class Datetime implements ComponentInterface {
       this.clearFocusVisible();
       this.clearFocusVisible = undefined;
     }
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = undefined;
+    }
+    if (this.destroyOverlayListeners) {
+      this.destroyOverlayListeners();
+      this.destroyOverlayListeners = undefined;
+    }
   }
 
   /**
@@ -1102,113 +1111,100 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * TODO(FW-6931): Remove this fallback upon solving the root cause
-   * Fallback to ensure the datetime becomes ready even if
-   * IntersectionObserver never reports it as intersecting.
+   * Sets up visibility detection for the datetime component.
    *
-   * This is primarily used in environments where the observer
-   * might not fire as expected, such as when running under
-   * synthetic tests that stub IntersectionObserver.
+   * Uses multiple strategies to reliably detect when the datetime becomes
+   * visible, which is necessary for proper initialization of scrollable areas:
+   * 1. ResizeObserver - detects dimension changes
+   * 2. Overlay event listeners - for datetime inside modals/popovers
+   * 3. Polling fallback - for browsers where observers are unreliable (WebKit)
    */
-  private ensureReadyIfVisible = () => {
-    if (this.el.classList.contains('datetime-ready')) {
-      return;
+  private initializeVisibilityObserver() {
+    const { el } = this;
+
+    const markReady = () => {
+      if (el.classList.contains('datetime-ready')) {
+        return;
+      }
+      this.initializeListeners();
+      writeTask(() => {
+        el.classList.add('datetime-ready');
+      });
+    };
+
+    const markHidden = () => {
+      this.destroyInteractionListeners();
+      this.showMonthAndYear = false;
+      writeTask(() => {
+        el.classList.remove('datetime-ready');
+      });
+      startVisibilityPolling();
+    };
+
+    /**
+     * FW-6931: Poll for visibility as a fallback for browsers where
+     * ResizeObserver doesn't fire reliably (e.g., WebKit).
+     */
+    const startVisibilityPolling = () => {
+      let pollCount = 0;
+      const poll = () => {
+        if (el.classList.contains('datetime-ready') || pollCount++ >= 60) {
+          return;
+        }
+        const { width, height } = el.getBoundingClientRect();
+        if (width > 0 && height > 0) {
+          markReady();
+        } else {
+          raf(poll);
+        }
+      };
+      raf(poll);
+    };
+
+    /**
+     * FW-6931: Listen for overlay present/dismiss events when datetime
+     * is inside a modal or popover.
+     */
+    const parentOverlay = el.closest('ion-modal, ion-popover') as HTMLIonModalElement | HTMLIonPopoverElement | null;
+    if (parentOverlay) {
+      const handlePresent = () => markReady();
+      const handleDismiss = () => markHidden();
+
+      parentOverlay.addEventListener('didPresent', handlePresent);
+      parentOverlay.addEventListener('didDismiss', handleDismiss);
+
+      this.destroyOverlayListeners = () => {
+        parentOverlay.removeEventListener('didPresent', handlePresent);
+        parentOverlay.removeEventListener('didDismiss', handleDismiss);
+      };
     }
 
-    const rect = this.el.getBoundingClientRect();
-    if (rect.width === 0 || rect.height === 0) {
-      return;
+    if (typeof ResizeObserver !== 'undefined') {
+      this.resizeObserver = new ResizeObserver((entries) => {
+        const { width, height } = entries[0].contentRect;
+        const isVisible = width > 0 && height > 0;
+        const isReady = el.classList.contains('datetime-ready');
+
+        if (isVisible && !isReady) {
+          markReady();
+        } else if (!isVisible && isReady) {
+          markHidden();
+        }
+      });
+
+      // Use raf to avoid race condition with modal/popover animations
+      raf(() => this.resizeObserver?.observe(el));
+      startVisibilityPolling();
+    } else {
+      // Test environment fallback - mark ready immediately
+      writeTask(() => {
+        el.classList.add('datetime-ready');
+      });
     }
-
-    this.initializeListeners();
-
-    writeTask(() => {
-      this.el.classList.add('datetime-ready');
-    });
-  };
+  }
 
   componentDidLoad() {
-    const { el, intersectionTrackerRef } = this;
-
-    /**
-     * If a scrollable element is hidden using `display: none`,
-     * it will not have a scroll height meaning we cannot scroll elements
-     * into view. As a result, we will need to wait for the datetime to become
-     * visible if used inside of a modal or a popover otherwise the scrollable
-     * areas will not have the correct values snapped into place.
-     */
-    const visibleCallback = (entries: IntersectionObserverEntry[]) => {
-      const ev = entries[0];
-      if (!ev.isIntersecting) {
-        return;
-      }
-
-      this.initializeListeners();
-
-      /**
-       * TODO FW-2793: Datetime needs a frame to ensure that it
-       * can properly scroll contents into view. As a result
-       * we hide the scrollable content until after that frame
-       * so users do not see the content quickly shifting. The downside
-       * is that the content will pop into view a frame after. Maybe there
-       * is a better way to handle this?
-       */
-      writeTask(() => {
-        this.el.classList.add('datetime-ready');
-      });
-    };
-    const visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01, root: el });
-
-    /**
-     * Use raf to avoid a race condition between the component loading and
-     * its display animation starting (such as when shown in a modal). This
-     * could cause the datetime to start at a visibility of 0, erroneously
-     * triggering the `hiddenIO` observer below.
-     */
-    raf(() => visibleIO?.observe(intersectionTrackerRef!));
-
-    /**
-     * TODO(FW-6931): Remove this fallback upon solving the root cause
-     * Fallback: If IntersectionObserver never reports that the
-     * datetime is visible but the host clearly has layout, ensure
-     * we still initialize listeners and mark the component as ready.
-     *
-     * We schedule this after everything has had a chance to run.
-     */
-    setTimeout(() => {
-      this.ensureReadyIfVisible();
-    }, 100);
-
-    /**
-     * We need to clean up listeners when the datetime is hidden
-     * in a popover/modal so that we can properly scroll containers
-     * back into view if they are re-presented. When the datetime is hidden
-     * the scroll areas have scroll widths/heights of 0px, so any snapping
-     * we did originally has been lost.
-     */
-    const hiddenCallback = (entries: IntersectionObserverEntry[]) => {
-      const ev = entries[0];
-      if (ev.isIntersecting) {
-        return;
-      }
-
-      this.destroyInteractionListeners();
-
-      /**
-       * When datetime is hidden, we need to make sure that
-       * the month/year picker is closed. Otherwise,
-       * it will be open when the datetime re-appears
-       * and the scroll area of the calendar grid will be 0.
-       * As a result, the wrong month will be shown.
-       */
-      this.showMonthAndYear = false;
-
-      writeTask(() => {
-        this.el.classList.remove('datetime-ready');
-      });
-    };
-    const hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0, root: el });
-    raf(() => hiddenIO?.observe(intersectionTrackerRef!));
+    this.initializeVisibilityObserver();
 
     /**
      * Datetime uses Ionic components that emit
@@ -2693,20 +2689,6 @@ export class Datetime implements ComponentInterface {
           }),
         }}
       >
-        {/*
-          WebKit has a quirk where IntersectionObserver callbacks are delayed until after
-          an accelerated animation finishes if the "root" specified in the config is the
-          browser viewport (the default behavior if "root" is not specified). This means
-          that when presenting a datetime in a modal on iOS the calendar body appears
-          blank until the modal animation finishes.
-
-          We can work around this by observing .intersection-tracker and using the host
-          (ion-datetime) as the "root". This allows the IO callback to fire the moment
-          the datetime is visible. The .intersection-tracker element should not have
-          dimensions or additional styles, and it should not be positioned absolutely
-          otherwise the IO callback may fire at unexpected times.
-        */}
-        <div class="intersection-tracker" ref={(el) => (this.intersectionTrackerRef = el)}></div>
         {this.renderDatetime(mode)}
       </Host>
     );

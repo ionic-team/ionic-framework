@@ -10,6 +10,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       `,
         config
       );
+      await page.locator('.datetime-ready').waitFor();
     });
 
     test('should render highlights correctly when using an array', async ({ page }) => {
