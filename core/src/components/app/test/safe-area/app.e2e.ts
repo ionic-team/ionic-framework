@@ -18,20 +18,56 @@ configs({ directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
 
       await expect(page).toHaveScreenshot(screenshot(`app-${screenshotModifier}-diff`));
     };
+
     test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/app/test/safe-area`, config);
     });
-    test('should not have visual regressions with action sheet', async ({ page }) => {
-      await testOverlay(page, '#show-action-sheet', 'ionActionSheetDidPresent', 'action-sheet');
+
+    test.describe(title('Ionic safe area variables'), () => {
+      test.beforeEach(async ({ page }) => {
+        const htmlTag = page.locator('html');
+        const hasSafeAreaClass = await htmlTag.evaluate((el) => el.classList.contains('safe-area'));
+
+        expect(hasSafeAreaClass).toBe(true);
+      });
+
+      test('should not have visual regressions with action sheet', async ({ page }) => {
+        await testOverlay(page, '#show-action-sheet', 'ionActionSheetDidPresent', 'action-sheet');
+      });
+      test('should not have visual regressions with menu', async ({ page }) => {
+        await testOverlay(page, '#show-menu', 'ionDidOpen', 'menu');
+      });
+      test('should not have visual regressions with picker', async ({ page }) => {
+        await testOverlay(page, '#show-picker', 'ionPickerDidPresent', 'picker');
+      });
+      test('should not have visual regressions with toast', async ({ page }) => {
+        await testOverlay(page, '#show-toast', 'ionToastDidPresent', 'toast');
+      });
     });
-    test('should not have visual regressions with menu', async ({ page }) => {
-      await testOverlay(page, '#show-menu', 'ionDidOpen', 'menu');
-    });
-    test('should not have visual regressions with picker', async ({ page }) => {
-      await testOverlay(page, '#show-picker', 'ionPickerDidPresent', 'picker');
-    });
-    test('should not have visual regressions with toast', async ({ page }) => {
-      await testOverlay(page, '#show-toast', 'ionToastDidPresent', 'toast');
+
+    test.describe(title('Capacitor safe area variables'), () => {
+      test.beforeEach(async ({ page }) => {
+        const toggleButton = page.locator('#toggle-safe-area');
+        await toggleButton.click();
+
+        const htmlTag = page.locator('html');
+        const hasSafeAreaClass = await htmlTag.evaluate((el) => el.classList.contains('safe-area-capacitor'));
+
+        expect(hasSafeAreaClass).toBe(true);
+      });
+
+      test('should not have visual regressions with action sheet', async ({ page }) => {
+        await testOverlay(page, '#show-action-sheet', 'ionActionSheetDidPresent', 'capacitor-action-sheet');
+      });
+      test('should not have visual regressions with menu', async ({ page }) => {
+        await testOverlay(page, '#show-menu', 'ionDidOpen', 'capacitor-menu');
+      });
+      test('should not have visual regressions with picker', async ({ page }) => {
+        await testOverlay(page, '#show-picker', 'ionPickerDidPresent', 'capacitor-picker');
+      });
+      test('should not have visual regressions with toast', async ({ page }) => {
+        await testOverlay(page, '#show-toast', 'ionToastDidPresent', 'capacitor-toast');
+      });
     });
   });
 });
