@@ -1105,6 +1105,26 @@ export class Datetime implements ComponentInterface {
     this.initializeKeyboardListeners();
   }
 
+  /**
+   * FW-6931: Fallback check for when ResizeObserver doesn't fire reliably
+   * (e.g., WebKit during modal re-presentation). Called after element is
+   * hidden to catch when it becomes visible again.
+   */
+  private checkVisibilityFallback = () => {
+    const { el } = this;
+    if (el.classList.contains('datetime-ready')) {
+      return;
+    }
+
+    const rect = el.getBoundingClientRect();
+    if (rect.width > 0 && rect.height > 0) {
+      this.initializeListeners();
+      writeTask(() => {
+        el.classList.add('datetime-ready');
+      });
+    }
+  };
+
   componentDidLoad() {
     const { el } = this;
 
@@ -1115,11 +1135,31 @@ export class Datetime implements ComponentInterface {
      * visible if used inside of a modal or a popover otherwise the scrollable
      * areas will not have the correct values snapped into place.
      *
-     * FW-6931: We use ResizeObserver to detect when the element transitions
-     * between having dimensions (visible) and zero dimensions (hidden). This
-     * is more reliable than IntersectionObserver for detecting visibility
-     * changes, especially when the element is inside a modal or popover.
+     * We use ResizeObserver to detect when the element transitions between
+     * having dimensions (visible) and zero dimensions (hidden). This is more
+     * reliable than IntersectionObserver for detecting visibility changes,
+     * especially when the element is inside a modal or popover.
      */
+    const markReady = () => {
+      this.initializeListeners();
+      writeTask(() => {
+        el.classList.add('datetime-ready');
+      });
+    };
+
+    const markHidden = () => {
+      this.destroyInteractionListeners();
+      this.showMonthAndYear = false;
+      writeTask(() => {
+        el.classList.remove('datetime-ready');
+      });
+      /**
+       * Schedule fallback check for browsers where ResizeObserver
+       * doesn't fire reliably on re-presentation (e.g., WebKit).
+       */
+      setTimeout(() => this.checkVisibilityFallback(), 100);
+    };
+
     if (typeof ResizeObserver !== 'undefined') {
       this.resizeObserver = new ResizeObserver((entries) => {
         const entry = entries[0];
@@ -1128,36 +1168,9 @@ export class Datetime implements ComponentInterface {
         const isReady = el.classList.contains('datetime-ready');
 
         if (isVisible && !isReady) {
-          this.initializeListeners();
-
-          /**
-           * TODO FW-2793: Datetime needs a frame to ensure that it
-           * can properly scroll contents into view. As a result
-           * we hide the scrollable content until after that frame
-           * so users do not see the content quickly shifting. The downside
-           * is that the content will pop into view a frame after. Maybe there
-           * is a better way to handle this?
-           */
-          writeTask(() => {
-            el.classList.add('datetime-ready');
-          });
+          markReady();
         } else if (!isVisible && isReady) {
-          /**
-           * Clean up listeners when hidden so we can properly
-           * reinitialize scroll positions on re-presentation.
-           */
-          this.destroyInteractionListeners();
-
-          /**
-           * Close month/year picker when hidden, otherwise
-           * it will be open when re-presented with a 0-height
-           * scroll area, showing the wrong month.
-           */
-          this.showMonthAndYear = false;
-
-          writeTask(() => {
-            el.classList.remove('datetime-ready');
-          });
+          markHidden();
         }
       });
 
@@ -1166,6 +1179,12 @@ export class Datetime implements ComponentInterface {
        * its display animation starting (such as when shown in a modal).
        */
       raf(() => this.resizeObserver?.observe(el));
+
+      /**
+       * Fallback for initial presentation in case ResizeObserver
+       * doesn't fire reliably (e.g., WebKit).
+       */
+      setTimeout(() => this.checkVisibilityFallback(), 100);
     } else {
       /**
        * Fallback for test environments where ResizeObserver is not available.
