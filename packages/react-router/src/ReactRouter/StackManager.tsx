@@ -657,9 +657,25 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       this.ionPageWaitTimeout = undefined;
     }
     this.pendingPageTransition = false;
+
     const foundView = this.context.findViewItemByRouteInfo(routeInfo, this.id);
     if (foundView) {
       const oldPageElement = foundView.ionPageElement;
+
+      /**
+       * FIX for issue #28878: Reject orphaned IonPage registrations.
+       *
+       * When a component conditionally renders different IonPages (e.g., list vs empty state)
+       * using React keys, and state changes simultaneously with navigation, the new IonPage
+       * tries to register for a route we're navigating away from. This creates a stale view.
+       *
+       * Only reject if both pageIds exist and differ, to allow nested outlet registrations.
+       */
+      if (this.shouldRejectOrphanedPage(page, oldPageElement, routeInfo)) {
+        this.hideAndRemoveOrphanedPage(page);
+        return;
+      }
+
       foundView.ionPageElement = page;
       foundView.ionRoute = true;
 
@@ -673,6 +689,45 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       }
     }
     this.handlePageTransition(routeInfo);
+  }
+
+  /**
+   * Determines if a new IonPage registration should be rejected as orphaned.
+   * This happens when a component re-renders with a different IonPage while navigating away.
+   */
+  private shouldRejectOrphanedPage(
+    newPage: HTMLElement,
+    oldPageElement: HTMLElement | undefined,
+    routeInfo: RouteInfo
+  ): boolean {
+    if (!oldPageElement || oldPageElement === newPage) {
+      return false;
+    }
+
+    const newPageId = newPage.getAttribute('data-pageid');
+    const oldPageId = oldPageElement.getAttribute('data-pageid');
+
+    // Only reject if both pageIds exist and are different
+    if (!newPageId || !oldPageId || newPageId === oldPageId) {
+      return false;
+    }
+
+    // Reject only if we're navigating away from this route
+    return this.props.routeInfo.pathname !== routeInfo.pathname;
+  }
+
+  /**
+   * Hides an orphaned IonPage and schedules its removal from the DOM.
+   */
+  private hideAndRemoveOrphanedPage(page: HTMLElement): void {
+    page.classList.add('ion-page-hidden');
+    page.setAttribute('aria-hidden', 'true');
+
+    setTimeout(() => {
+      if (page.parentElement) {
+        page.remove();
+      }
+    }, VIEW_UNMOUNT_DELAY_MS);
   }
 
   /**

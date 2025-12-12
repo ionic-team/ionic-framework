@@ -86,6 +86,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/root-splat-tabs">
             <IonLabel>Root Splat Tabs</IonLabel>
           </IonItem>
+          <IonItem routerLink="/content-change-navigation">
+            <IonLabel>Content Change Navigation</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
