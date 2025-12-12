@@ -118,6 +118,7 @@ export class Datetime implements ComponentInterface {
 
   private destroyCalendarListener?: () => void;
   private destroyKeyboardMO?: () => void;
+  private destroyOverlayListeners?: () => void;
 
   // TODO(FW-2832): types (DatetimeParts causes some errors that need untangling)
   private minParts?: any;
@@ -1081,6 +1082,10 @@ export class Datetime implements ComponentInterface {
       this.resizeObserver.disconnect();
       this.resizeObserver = undefined;
     }
+    if (this.destroyOverlayListeners) {
+      this.destroyOverlayListeners();
+      this.destroyOverlayListeners = undefined;
+    }
   }
 
   /**
@@ -1106,41 +1111,21 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * FW-6931: Fallback check for when ResizeObserver doesn't fire reliably
-   * (e.g., WebKit during modal re-presentation). Called after element is
-   * hidden to catch when it becomes visible again.
+   * Sets up visibility detection for the datetime component.
+   *
+   * Uses multiple strategies to reliably detect when the datetime becomes
+   * visible, which is necessary for proper initialization of scrollable areas:
+   * 1. ResizeObserver - detects dimension changes
+   * 2. Overlay event listeners - for datetime inside modals/popovers
+   * 3. Polling fallback - for browsers where observers are unreliable (WebKit)
    */
-  private checkVisibilityFallback = () => {
-    const { el } = this;
-    if (el.classList.contains('datetime-ready')) {
-      return;
-    }
-
-    const rect = el.getBoundingClientRect();
-    if (rect.width > 0 && rect.height > 0) {
-      this.initializeListeners();
-      writeTask(() => {
-        el.classList.add('datetime-ready');
-      });
-    }
-  };
-
-  componentDidLoad() {
+  private initializeVisibilityObserver() {
     const { el } = this;
 
-    /**
-     * If a scrollable element is hidden using `display: none`,
-     * it will not have a scroll height meaning we cannot scroll elements
-     * into view. As a result, we will need to wait for the datetime to become
-     * visible if used inside of a modal or a popover otherwise the scrollable
-     * areas will not have the correct values snapped into place.
-     *
-     * We use ResizeObserver to detect when the element transitions between
-     * having dimensions (visible) and zero dimensions (hidden). This is more
-     * reliable than IntersectionObserver for detecting visibility changes,
-     * especially when the element is inside a modal or popover.
-     */
     const markReady = () => {
+      if (el.classList.contains('datetime-ready')) {
+        return;
+      }
       this.initializeListeners();
       writeTask(() => {
         el.classList.add('datetime-ready');
@@ -1153,17 +1138,50 @@ export class Datetime implements ComponentInterface {
       writeTask(() => {
         el.classList.remove('datetime-ready');
       });
-      /**
-       * Schedule fallback check for browsers where ResizeObserver
-       * doesn't fire reliably on re-presentation (e.g., WebKit).
-       */
-      setTimeout(() => this.checkVisibilityFallback(), 100);
+      startVisibilityPolling();
     };
+
+    /**
+     * FW-6931: Poll for visibility as a fallback for browsers where
+     * ResizeObserver doesn't fire reliably (e.g., WebKit).
+     */
+    const startVisibilityPolling = () => {
+      let pollCount = 0;
+      const poll = () => {
+        if (el.classList.contains('datetime-ready') || pollCount++ >= 60) {
+          return;
+        }
+        const { width, height } = el.getBoundingClientRect();
+        if (width > 0 && height > 0) {
+          markReady();
+        } else {
+          raf(poll);
+        }
+      };
+      raf(poll);
+    };
+
+    /**
+     * FW-6931: Listen for overlay present/dismiss events when datetime
+     * is inside a modal or popover.
+     */
+    const parentOverlay = el.closest('ion-modal, ion-popover') as HTMLIonModalElement | HTMLIonPopoverElement | null;
+    if (parentOverlay) {
+      const handlePresent = () => markReady();
+      const handleDismiss = () => markHidden();
+
+      parentOverlay.addEventListener('didPresent', handlePresent);
+      parentOverlay.addEventListener('didDismiss', handleDismiss);
+
+      this.destroyOverlayListeners = () => {
+        parentOverlay.removeEventListener('didPresent', handlePresent);
+        parentOverlay.removeEventListener('didDismiss', handleDismiss);
+      };
+    }
 
     if (typeof ResizeObserver !== 'undefined') {
       this.resizeObserver = new ResizeObserver((entries) => {
-        const entry = entries[0];
-        const { width, height } = entry.contentRect;
+        const { width, height } = entries[0].contentRect;
         const isVisible = width > 0 && height > 0;
         const isReady = el.classList.contains('datetime-ready');
 
@@ -1174,27 +1192,19 @@ export class Datetime implements ComponentInterface {
         }
       });
 
-      /**
-       * Use raf to avoid a race condition between the component loading and
-       * its display animation starting (such as when shown in a modal).
-       */
+      // Use raf to avoid race condition with modal/popover animations
       raf(() => this.resizeObserver?.observe(el));
-
-      /**
-       * Fallback for initial presentation in case ResizeObserver
-       * doesn't fire reliably (e.g., WebKit).
-       */
-      setTimeout(() => this.checkVisibilityFallback(), 100);
+      startVisibilityPolling();
     } else {
-      /**
-       * Fallback for test environments where ResizeObserver is not available.
-       * Just mark as ready without initializing scroll/keyboard listeners
-       * since those also require browser APIs not available in Jest.
-       */
+      // Test environment fallback - mark ready immediately
       writeTask(() => {
         el.classList.add('datetime-ready');
       });
     }
+  }
+
+  componentDidLoad() {
+    this.initializeVisibilityObserver();
 
     /**
      * Datetime uses Ionic components that emit
