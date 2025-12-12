@@ -252,6 +252,8 @@ html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
 
 @supports (padding-top: env(safe-area-inset-top)) {
   html {
+    // `--safe-area-inset-*` are set by Capacitor
+    // @see https://capacitorjs.com/docs/apis/system-bars#android-note
     --ion-safe-area-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
     --ion-safe-area-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
     --ion-safe-area-left: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
