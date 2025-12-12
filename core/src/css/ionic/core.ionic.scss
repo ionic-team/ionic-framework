@@ -221,10 +221,10 @@ html.plt-ios.plt-pwa {
 
 @supports (padding-top: env(safe-area-inset-top)) {
   html {
-    --ion-safe-area-top: env(safe-area-inset-top);
-    --ion-safe-area-bottom: env(safe-area-inset-bottom);
-    --ion-safe-area-left: env(safe-area-inset-left);
-    --ion-safe-area-right: env(safe-area-inset-right);
+    --ion-safe-area-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+    --ion-safe-area-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+    --ion-safe-area-left: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
+    --ion-safe-area-right: var(--safe-area-inset-right, env(safe-area-inset-right, 0px));
   }
 }
 
