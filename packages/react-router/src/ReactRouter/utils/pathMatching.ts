@@ -27,13 +27,8 @@ interface MatchPathOptions {
 export const matchPath = ({ pathname, componentProps }: MatchPathOptions): PathMatch<string> | null => {
   const { path, index, ...restProps } = componentProps;
 
-  // Handle index routes
+  // Handle index routes - they match when pathname is empty or just "/"
   if (index && !path) {
-    // Index routes match when there's no additional path after the parent route
-    // For example, in a nested outlet at /routing/*, the index route matches
-    // when the relative path is empty (i.e., we're exactly at /routing)
-
-    // If pathname is empty or just "/", it should match the index route
     if (pathname === '' || pathname === '/') {
       return {
         params: {},
@@ -46,17 +41,27 @@ export const matchPath = ({ pathname, componentProps }: MatchPathOptions): PathM
         },
       };
     }
-
-    // Otherwise, index routes don't match when there's additional path
     return null;
   }
 
-  if (!path) {
+  // Handle empty path routes - they match when pathname is also empty or just "/"
+  if (path === '' || path === undefined) {
+    if (pathname === '' || pathname === '/') {
+      return {
+        params: {},
+        pathname: pathname,
+        pathnameBase: pathname || '/',
+        pattern: {
+          path: '',
+          caseSensitive: restProps.caseSensitive ?? false,
+          end: restProps.end ?? true,
+        },
+      };
+    }
     return null;
   }
 
-  // For relative paths in nested routes (those that don't start with '/'),
-  // use React Router's matcher against a normalized path.
+  // For relative paths (don't start with '/'), normalize both path and pathname for matching
   if (!path.startsWith('/')) {
     const matchOptions: Parameters<typeof reactRouterMatchPath>[0] = {
       path: `/${path}`,
@@ -83,7 +88,6 @@ export const matchPath = ({ pathname, componentProps }: MatchPathOptions): PathM
       };
     }
 
-    // No match found
     return null;
   }
 
@@ -109,13 +113,17 @@ export const matchPath = ({ pathname, componentProps }: MatchPathOptions): PathM
  * strip off the already-matched parent segments so React Router receives the remainder.
  */
 export const derivePathnameToMatch = (fullPathname: string, routePath?: string): string => {
+  // For absolute or empty routes, use the full pathname as-is
   if (!routePath || routePath === '' || routePath.startsWith('/')) {
     return fullPathname;
   }
 
   const trimmedPath = fullPathname.startsWith('/') ? fullPathname.slice(1) : fullPathname;
   if (!trimmedPath) {
-    return '';
+    // For root-level relative routes (pathname is "/" and routePath is relative),
+    // return the full pathname so matchPath can normalize both.
+    // This allows routes like <Route path="foo/*" .../> at root level to work correctly.
+    return fullPathname;
   }
 
   const fullSegments = trimmedPath.split('/').filter(Boolean);

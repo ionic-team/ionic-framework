@@ -109,28 +109,36 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       return undefined;
     }
 
-    // If this is a nested outlet (has an explicit ID like "main"),
-    // we need to figure out what part of the path was already matched
-    if (this.id !== 'routerOutlet' && this.ionRouterOutlet) {
+    // Check if this outlet has route children to analyze
+    if (this.ionRouterOutlet) {
       const routeChildren = extractRouteChildren(this.ionRouterOutlet.props.children);
       const { hasRelativeRoutes, hasIndexRoute, hasWildcardRoute } = analyzeRouteChildren(routeChildren);
 
-      const result = computeParentPath({
-        currentPathname,
-        outletMountPath: this.outletMountPath,
-        routeChildren,
-        hasRelativeRoutes,
-        hasIndexRoute,
-        hasWildcardRoute,
-      });
+      // Root outlets have IDs like 'routerOutlet' or 'routerOutlet-2'
+      // But even outlets with auto-generated IDs may need parent path computation
+      // if they have relative routes (indicating they're nested outlets)
+      const isRootOutlet = this.id.startsWith('routerOutlet');
+      const needsParentPath = !isRootOutlet || hasRelativeRoutes || hasIndexRoute;
 
-      // Update the outlet mount path if it was set
-      if (result.outletMountPath && !this.outletMountPath) {
-        this.outletMountPath = result.outletMountPath;
+      if (needsParentPath) {
+        const result = computeParentPath({
+          currentPathname,
+          outletMountPath: this.outletMountPath,
+          routeChildren,
+          hasRelativeRoutes,
+          hasIndexRoute,
+          hasWildcardRoute,
+        });
+
+        // Update the outlet mount path if it was set
+        if (result.outletMountPath && !this.outletMountPath) {
+          this.outletMountPath = result.outletMountPath;
+        }
+
+        return result.parentPath;
       }
-
-      return result.parentPath;
     }
+
     return this.outletMountPath;
   }
 
@@ -246,7 +254,9 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     parentPath: string | undefined,
     leavingViewItem: ViewItem | undefined
   ): boolean {
-    if (this.id === 'routerOutlet' || parentPath !== undefined || !this.ionRouterOutlet) {
+    // Root outlets have IDs like 'routerOutlet' or 'routerOutlet-2'
+    const isRootOutlet = this.id.startsWith('routerOutlet');
+    if (isRootOutlet || parentPath !== undefined || !this.ionRouterOutlet) {
       return false;
     }
 
@@ -283,7 +293,9 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     enteringViewItem: ViewItem | undefined,
     leavingViewItem: ViewItem | undefined
   ): boolean {
-    if (this.id === 'routerOutlet' || enteringRoute || enteringViewItem) {
+    // Root outlets have IDs like 'routerOutlet' or 'routerOutlet-2'
+    const isRootOutlet = this.id.startsWith('routerOutlet');
+    if (isRootOutlet || enteringRoute || enteringViewItem) {
       return false;
     }
 
@@ -933,7 +945,8 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
 
   // For nested routes in React Router 6, we need to extract the relative path
   // that this outlet should be responsible for matching
-  let pathnameToMatch = routeInfo.pathname;
+  const originalPathname = routeInfo.pathname;
+  let relativePathnameToMatch = routeInfo.pathname;
 
   // Check if we have relative routes (routes that don't start with '/')
   const hasRelativeRoutes = sortedRoutes.some((r) => r.props.path && !r.props.path.startsWith('/'));
@@ -942,7 +955,8 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
   // SIMPLIFIED: Trust React Router 6's matching more, compute relative path when parent is known
   if ((hasRelativeRoutes || hasIndexRoute) && parentPath) {
     const parentPrefix = parentPath.replace('/*', '');
-    const normalizedParent = stripTrailingSlash(parentPrefix);
+    // Normalize both paths to start with '/' for consistent comparison
+    const normalizedParent = stripTrailingSlash(parentPrefix.startsWith('/') ? parentPrefix : `/${parentPrefix}`);
     const normalizedPathname = stripTrailingSlash(routeInfo.pathname);
 
     // Only compute relative path if pathname is within parent scope
@@ -950,14 +964,44 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
       const pathSegments = routeInfo.pathname.split('/').filter(Boolean);
       const parentSegments = normalizedParent.split('/').filter(Boolean);
       const relativeSegments = pathSegments.slice(parentSegments.length);
-      pathnameToMatch = relativeSegments.join('/'); // Empty string is valid for index routes
+      relativePathnameToMatch = relativeSegments.join('/'); // Empty string is valid for index routes
     }
   }
 
   // Find the first matching route
   for (const child of sortedRoutes) {
+    const childPath = child.props.path as string | undefined;
+    const isAbsoluteRoute = childPath && childPath.startsWith('/');
+
+    // Determine which pathname to match against:
+    // - For absolute routes: use the original full pathname
+    // - For relative routes with a parent: use the computed relative pathname
+    // - For relative routes at root level (no parent): use the original pathname
+    //   (matchPath will handle the relative-to-absolute normalization)
+    const pathnameToMatch = isAbsoluteRoute ? originalPathname : relativePathnameToMatch;
+
+    // Determine the path portion to match:
+    // - For absolute routes: use derivePathnameToMatch
+    // - For relative routes at root level (no parent): use original pathname
+    //   directly since matchPath normalizes both path and pathname
+    // - For relative routes with parent: use derivePathnameToMatch for wildcards,
+    //   or the computed relative pathname for non-wildcards
+    let pathForMatch: string;
+    if (isAbsoluteRoute) {
+      pathForMatch = derivePathnameToMatch(pathnameToMatch, childPath);
+    } else if (!parentPath && childPath) {
+      // Root-level relative route: use the full pathname and let matchPath
+      // handle the normalization (it adds '/' to both path and pathname)
+      pathForMatch = originalPathname;
+    } else if (childPath && childPath.includes('*')) {
+      // Relative wildcard route with parent path: use derivePathnameToMatch
+      pathForMatch = derivePathnameToMatch(pathnameToMatch, childPath);
+    } else {
+      pathForMatch = pathnameToMatch;
+    }
+
     const match = matchPath({
-      pathname: pathnameToMatch,
+      pathname: pathForMatch,
       componentProps: child.props,
     });
 
