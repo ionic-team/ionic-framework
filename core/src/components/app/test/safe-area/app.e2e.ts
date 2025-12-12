@@ -5,7 +5,7 @@ import type { E2EPage } from '@utils/test/playwright';
 /**
  * Safe area tests only check top and bottom edges. RTL checks are not required here.
  */
-configs({ directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
+configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ config, title, screenshot }) => {
   test.describe(title('app: safe-area'), () => {
     const testOverlay = async (page: E2EPage, trigger: string, event: string, screenshotModifier: string) => {
       const presentEvent = await page.spyOnEvent(event);
