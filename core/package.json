@@ -3,7 +3,7 @@
   "version": "8.7.12",
   "description": "Base components for Ionic",
   "engines": {
-    "node": "24.x"
+    "node": ">= 16"
   },
   "keywords": [
     "ionic",
