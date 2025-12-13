@@ -1,7 +1,4 @@
 /**
- * Test case for GitHub issue #28878
- * https://github.com/ionic-team/ionic-framework/issues/28878
- *
  * Reproduces the bug where changing view content while navigating causes
  * an invalid view to be rendered.
  */

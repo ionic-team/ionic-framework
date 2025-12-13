@@ -1,7 +1,4 @@
 /**
- * Tests for GitHub issue #28878
- * https://github.com/ionic-team/ionic-framework/issues/28878
- *
  * Verifies that when view content changes (causing IonPage to remount)
  * while navigation is happening, the correct view is displayed.
  */
