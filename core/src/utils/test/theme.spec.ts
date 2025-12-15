@@ -5,7 +5,7 @@ import { CardContent } from '../../components/card-content/card-content';
 import { Chip } from '../../components/chip/chip';
 import {
   generateColorClasses,
-  generateComponentThemeCSS,
+  generateComponentsThemeCSS,
   generateCSSVars,
   generateGlobalThemeCSS,
   getClassList,
@@ -557,10 +557,11 @@ describe('generateGlobalThemeCSS', () => {
   });
 });
 
-describe('generateComponentThemeCSS', () => {
+describe('generateComponentsThemeCSS', () => {
   it('should generate component theme CSS for a given theme', () => {
-    const IonChip = {
-      hue: {
+    const components = {
+      IonChip: {
+        hue: {
         subtle: {
           bg: 'red',
           color: 'white',
@@ -572,12 +573,13 @@ describe('generateComponentThemeCSS', () => {
           borderColor: 'black',
         },
       },
+      }
     };
 
-    const css = generateComponentThemeCSS(IonChip, 'chip').replace(/\s/g, '');
+    const css = generateComponentsThemeCSS(components).replace(/\s/g, '');
 
     const expectedCSS = `
-      :host(.chip-themed) {
+      :root ion-chip {
         --ion-chip-hue-subtle-bg: red;
         --ion-chip-hue-subtle-color: white;
         --ion-chip-hue-subtle-border-color: black;

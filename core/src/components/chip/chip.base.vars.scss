@@ -1,0 +1,149 @@
+/// Chip Variables
+/// ---------------------------------------------
+
+/// @prop - Margin of the chip
+$chip-margin: var(--ion-chip-margin);
+
+/// @prop - Vertical padding of the chip
+$chip-padding-vertical: var(--ion-chip-padding-vertical);
+
+/// @prop - Horizontal padding of the chip
+$chip-padding-horizontal: var(--ion-chip-padding-horizontal);
+
+/// @prop - Gap between chip elements
+$chip-gap: var(--ion-chip-gap);
+
+/// @prop - Line height of the chip
+$chip-line-height: var(--ion-chip-line-height);
+
+/// @prop - Opacity of disabled chip
+$chip-state-disabled-opacity: var(--ion-chip-state-disabled-opacity);
+
+/// @prop - Size small: Height of the chip
+$chip-size-small-height: var(--ion-chip-size-small-height);
+
+/// @prop - Size small: Font size of the chip
+$chip-size-small-font-size: var(--ion-chip-size-small-font-size);
+
+/// @prop - Size medium: Height of the chip
+$chip-size-medium-height: var(--ion-chip-size-medium-height);
+
+/// @prop - Size medium: Font size of the chip
+$chip-size-medium-font-size: var(--ion-chip-size-medium-font-size);
+
+/// @prop - Size large: Height of the chip
+$chip-size-large-height: var(--ion-chip-size-large-height);
+
+/// @prop - Size large: Font size of the chip
+$chip-size-large-font-size: var(--ion-chip-size-large-font-size);
+
+/// @prop - Soft chip border radius
+$chip-border-radius-soft: var(--ion-chip-shape-soft-border-radius);
+
+/// @prop - Round chip border radius
+$chip-border-radius-round: var(--ion-chip-shape-round-border-radius);
+
+/// @prop - Rectangular chip border radius
+$chip-border-radius-rectangular: var(--ion-chip-shape-rectangular-border-radius);
+
+/// @prop - Subtle chip background color
+$chip-hue-subtle-bg: var(--ion-chip-hue-subtle-bg);
+
+/// @prop - Subtle chip color
+$chip-hue-subtle-color: var(--ion-chip-hue-subtle-color);
+
+/// @prop - Outline subtle chip border color
+$chip-hue-subtle-outline-border-color: var(--ion-chip-hue-subtle-outline-border-color);
+
+/// @prop - Bold chip background color
+$chip-hue-bold-bg: var(--ion-chip-hue-bold-bg);
+
+/// @prop - Bold chip color
+$chip-hue-bold-color: var(--ion-chip-hue-bold-color);
+
+/// @prop - Outline bold chip border color
+$chip-hue-bold-outline-border-color: var(--ion-chip-hue-bold-outline-border-color);
+
+/// @prop - Bold chip background alpha of semantic colors
+$chip-hue-bold-semantic-bg-alpha: var(--ion-chip-hue-bold-semantic-bg-alpha); // only native uses this
+
+/// @prop - Bold chip color for semantic colors
+$chip-hue-bold-semantic-color: var(--ion-chip-hue-bold-semantic-color);
+
+/// @prop - Outline bold chip border color for semantic colors
+$chip-hue-bold-semantic-outline-border-color: var(--ion-chip-hue-bold-semantic-outline-border-color);
+
+/// @prop - Outline border width
+$chip-outline-border-width: var(--ion-chip-variant-outline-border-width);
+
+/// @prop - Outline chip background color
+$chip-outline-bg: var(--ion-chip-variant-outline-bg);
+
+/// @prop - Focus ring color
+$chip-focus-ring-color: var(--ion-chip-state-focus-ring-color);
+
+/// @prop - Focus ring width
+$chip-focus-ring-width: var(--ion-chip-state-focus-ring-width);
+
+/// @prop - Focus ring background color
+$chip-focus-bg: var(--ion-chip-state-focus-bg);
+
+/// @prop - Focus background color for semantic colors
+$chip-focus-semantic-bg: var(--ion-chip-state-focus-semantic-bg);
+
+/// @prop - Outline focus background color
+$chip-outline-focus-bg: var(--ion-chip-state-focus-outline-bg);
+
+/// @prop - Activated background color
+$chip-activated-bg: var(--ion-chip-state-activated-bg);
+
+/// @prop - Activated background color for semantic colors
+$chip-activated-semantic-bg: var(--ion-chip-state-activated-semantic-bg);
+
+/// @prop - Hover background color
+$chip-hover-bg: var(--ion-chip-state-hover-bg);
+
+/// @prop - Hover background color for semantic colors
+$chip-hover-semantic-bg: var(--ion-chip-state-hover-semantic-bg);
+
+/// @prop - Outline hover background color
+$chip-outline-hover-bg: var(--ion-chip-state-hover-outline-bg);
+
+/// @prop - Icon size
+$chip-icon-size: var(--ion-chip-icon-size);
+
+/// @prop - Icon color
+$chip-icon-color: var(--ion-chip-icon-color);
+
+/// @prop - Icon margin for first child
+$chip-icon-first-child-margin: var(--ion-chip-icon-first-child-margin);
+
+/// @prop - Icon margin end for first child
+$chip-icon-first-child-margin-end: var(--ion-chip-icon-first-child-margin-end);
+
+/// @prop - Icon margin for last child
+$chip-icon-last-child-margin: var(--ion-chip-icon-last-child-margin);
+
+/// @prop - Icon margin start for last child
+$chip-icon-last-child-margin-start: var(--ion-chip-icon-last-child-margin-start);
+
+/// @prop - Avatar size
+$chip-avatar-size: var(--ion-chip-avatar-size);
+
+/// @prop - Avatar margin vertical for first child
+$chip-avatar-first-child-margin-vertical: var(--ion-chip-avatar-first-child-margin-vertical);
+
+/// @prop - Avatar margin horizontal start for first child
+$chip-avatar-first-child-margin-start: var(--ion-chip-avatar-first-child-margin-start);
+
+/// @prop - Avatar margin horizontal end for first child
+$chip-avatar-first-child-margin-end: var(--ion-chip-avatar-first-child-margin-end);
+
+/// @prop - Avatar margin vertical for last child
+$chip-avatar-last-child-margin-vertical: var(--ion-chip-avatar-last-child-margin-vertical);
+
+/// @prop - Avatar margin start for last child
+$chip-avatar-last-child-margin-start: var(--ion-chip-avatar-last-child-margin-start);
+
+/// @prop - Avatar margin end for last child
+$chip-avatar-last-child-margin-end: var(--ion-chip-avatar-last-child-margin-end);

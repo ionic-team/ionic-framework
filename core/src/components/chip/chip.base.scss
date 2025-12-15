@@ -1,0 +1,222 @@
+@use "../../themes/mixins" as mixins;
+@use "../../themes/functions.color" as colors;
+@use "./chip.base.vars.scss" as vars;
+
+// Chip: Common Styles
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the chip
+   * @prop --border-radius: Border radius of the chip
+   * @prop --color: Color of the chip
+   * @prop --focus-ring-color: Color of the focus ring
+   * @prop --focus-ring-width: Width of the focus ring
+   */
+  --focus-ring-color: #{vars.$chip-focus-ring-color};
+  --focus-ring-width: #{vars.$chip-focus-ring-width};
+
+  @include mixins.font-smoothing();
+  @include mixins.border-radius(var(--border-radius));
+  @include mixins.margin(vars.$chip-margin);
+  @include mixins.padding(vars.$chip-padding-vertical, vars.$chip-padding-horizontal);
+
+  display: inline-flex;
+  position: relative;
+
+  align-items: center;
+  justify-content: center;
+
+  background: var(--background);
+  color: var(--color);
+
+  line-height: vars.$chip-line-height;
+
+  cursor: pointer;
+  overflow: hidden;
+  vertical-align: middle;
+  box-sizing: border-box;
+
+  gap: vars.$chip-gap;
+}
+
+// Chip Sizes
+// ---------------------------------------------
+
+:host(.chip-small) {
+  min-height: vars.$chip-size-small-height;
+
+  font-size: vars.$chip-size-small-font-size;
+}
+
+:host(.chip-medium) {
+  min-height: vars.$chip-size-medium-height;
+
+  font-size: vars.$chip-size-medium-font-size;
+}
+
+:host(.chip-large) {
+  min-height: vars.$chip-size-large-height;
+
+  font-size: vars.$chip-size-large-font-size;
+}
+
+// Chip Shapes
+// ---------------------------------------------
+
+:host(.chip-soft) {
+  --border-radius: #{vars.$chip-border-radius-soft};
+}
+
+:host(.chip-round) {
+  --border-radius: #{vars.$chip-border-radius-round};
+}
+
+:host(.chip-rectangular) {
+  --border-radius: #{vars.$chip-border-radius-rectangular};
+}
+
+// Chip Hues
+// ---------------------------------------------
+
+// Bold
+:host(.chip-bold) {
+  --background: #{vars.$chip-hue-bold-bg};
+  --color: #{vars.$chip-hue-bold-color};
+}
+
+:host(.chip-bold.chip-outline) {
+  border-color: #{vars.$chip-hue-bold-outline-border-color};
+}
+
+// Subtle
+:host(.chip-subtle) {
+  --background: #{vars.$chip-hue-subtle-bg};
+  --color: #{vars.$chip-hue-subtle-color};
+}
+
+:host(.chip-subtle.chip-outline) {
+  border-color: #{vars.$chip-hue-subtle-outline-border-color};
+}
+
+// Chip Colors
+// ---------------------------------------------
+
+// Bold
+:host(.ion-color.chip-bold) {
+  background: colors.current-color(base, vars.$chip-hue-bold-semantic-bg-alpha);
+  color: vars.$chip-hue-bold-semantic-color;
+}
+
+:host(.ion-color.chip-bold.chip-outline) {
+  border-color: vars.$chip-hue-bold-semantic-outline-border-color;
+}
+
+// Subtle
+:host(.ion-color.chip-subtle) {
+  background: colors.current-color(base, $subtle: true);
+  color: colors.current-color(contrast, $subtle: true);
+}
+
+:host(.ion-color.chip-subtle.chip-outline) {
+  border-color: colors.current-color(shade, $subtle: true);
+}
+
+// Outline Chip
+// ---------------------------------------------
+
+:host(.chip-outline) {
+  border-width: vars.$chip-outline-border-width;
+  border-style: solid;
+}
+
+:host(.chip-outline),
+:host(.chip-outline.ion-color) {
+  background: vars.$chip-outline-bg;
+}
+
+// Chip States
+// ---------------------------------------------
+
+// Disabled
+:host(.chip-disabled) {
+  cursor: default;
+  opacity: vars.$chip-state-disabled-opacity;
+  pointer-events: none;
+}
+
+// Focus
+:host(.ion-focused) {
+  --background: #{vars.$chip-focus-bg};
+
+  @include mixins.focused-state(var(--focus-ring-width), $color: var(--focus-ring-color));
+}
+
+:host(.ion-focused.ion-color) {
+  background: vars.$chip-focus-semantic-bg;
+}
+
+:host(.ion-focused.chip-outline:not(.ion-color)) {
+  background: vars.$chip-outline-focus-bg;
+}
+
+// Activated
+:host(.ion-activated) {
+  --background: #{vars.$chip-activated-bg};
+}
+
+:host(.ion-activated.ion-color) {
+  background: vars.$chip-activated-semantic-bg;
+}
+
+// Hover
+@media (any-hover: hover) {
+  :host(:hover) {
+    --background: #{vars.$chip-hover-bg};
+  }
+
+  :host(.ion-color:hover) {
+    background: vars.$chip-hover-semantic-bg;
+  }
+
+  :host(.chip-outline:not(.ion-color):hover) {
+    background: vars.$chip-outline-hover-bg;
+  }
+}
+
+// Chip Slotted Elements
+// ---------------------------------------------
+
+// Icon
+::slotted(ion-icon) {
+  font-size: vars.$chip-icon-size;
+}
+
+:host(:not(.ion-color)) ::slotted(ion-icon) {
+  color: vars.$chip-icon-color;
+}
+
+::slotted(ion-icon:first-child) {
+  @include mixins.margin(vars.$chip-icon-first-child-margin, vars.$chip-icon-first-child-margin-end, $start: vars.$chip-icon-first-child-margin);
+}
+
+::slotted(ion-icon:last-child) {
+  @include mixins.margin(vars.$chip-icon-last-child-margin, $start: vars.$chip-icon-last-child-margin-start);
+}
+
+// Avatar
+::slotted(ion-avatar) {
+  flex-shrink: 0;
+
+  width: vars.$chip-avatar-size;
+  height: vars.$chip-avatar-size;
+}
+
+::slotted(ion-avatar:first-child) {
+  @include mixins.margin(vars.$chip-avatar-first-child-margin-vertical, $end: vars.$chip-avatar-first-child-margin-end, $start: vars.$chip-avatar-first-child-margin-start);
+}
+
+::slotted(ion-avatar:last-child) {
+  @include mixins.margin(vars.$chip-avatar-last-child-margin-vertical, $end: vars.$chip-avatar-last-child-margin-end, $start: vars.$chip-avatar-last-child-margin-start);
+}
+

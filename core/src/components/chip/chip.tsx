@@ -1,6 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
-import { printIonWarning } from '@utils/logging';
 import { createColorClasses } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -12,11 +11,7 @@ import type { Color } from '../../interface';
  */
 @Component({
   tag: 'ion-chip',
-  styleUrls: {
-    ios: 'chip.ios.scss',
-    md: 'chip.md.scss',
-    ionic: 'chip.ionic.scss',
-  },
+  styleUrl: 'chip.base.scss',
   shadow: true,
 })
 export class Chip implements ComponentInterface {
@@ -41,7 +36,7 @@ export class Chip implements ComponentInterface {
    * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for
    * a chip with muted, subtle colors.
    *
-   * Only applies to the `ionic` theme.
+   * Defaults to `"subtle"`.
    */
   @Prop() hue?: 'bold' | 'subtle' = 'subtle';
 
@@ -71,27 +66,11 @@ export class Chip implements ComponentInterface {
    *
    * Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
    */
-  @Prop() size?: 'small' | 'large';
-
-  private getSize() {
-    const theme = getIonTheme(this);
-    const { size } = this;
-
-    if (theme === 'ionic') {
-      return size !== undefined ? size : 'large';
-      // TODO(ROU-10695): remove the size !== undefined when we add support for
-      // the `ios` and `md` themes.
-    } else if (size !== undefined) {
-      printIonWarning(`The "${size}" size is not supported in the ${theme} theme.`);
-    }
-
-    return undefined;
-  }
+  @Prop() size?: 'small' | 'medium' | 'large' = 'medium';
 
   render() {
-    const { hue } = this;
+    const { hue, size } = this;
     const theme = getIonTheme(this);
-    const size = this.getSize();
     const shape = this.getShape();
 
     return (

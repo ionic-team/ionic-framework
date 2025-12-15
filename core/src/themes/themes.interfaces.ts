@@ -211,11 +211,7 @@ export type BaseTheme = {
   };
 
   // COMPONENT OVERRIDES
-  components?: {
-    [key: string]: {
-      [key: string]: string;
-    };
-  };
+  components?: Components;
 
   // COLOR TOKENS
   color?: {
@@ -260,4 +256,129 @@ export type DefaultTheme = BaseTheme & {
   };
 
   config?: IonicConfig;
+};
+
+type Components = {
+  IonChip?: {
+    margin: string | number;
+    paddingVertical: string | number;
+    paddingHorizontal: string | number;
+    gap?: string | number;
+    lineHeight?: string | number;
+
+    // Sizes
+    size: {
+      small: {
+        height: string | number;
+        fontSize: string | number;
+      };
+      medium: {
+        height: string | number;
+        fontSize?: string | number;
+      };
+      large: {
+        height: string | number;
+        fontSize: string | number;
+      };
+    };
+
+    // States
+    state: {
+      disabled: {
+        opacity: string | number;
+      };
+      focus: {
+        ringColor?: string;
+        ringWidth?: string | number;
+        bg: string;
+        semanticBg: string;
+        outlineBg: string;
+      };
+      activated: {
+        bg: string;
+        semanticBg: string;
+      };
+      hover: {
+        bg: string;
+        semanticBg: string;
+        outlineBg: string;
+      };
+    };
+
+    // Shapes
+    shape: {
+      soft: {
+        borderRadius: string | number;
+      };
+      round: {
+        borderRadius: string | number;
+      };
+      rectangular: {
+        borderRadius: string | number;
+      };
+    };
+
+    // Hues
+    hue: {
+      bold: {
+        bg: string;
+        color: string;
+
+        outline: {
+          borderColor: string;
+        }
+
+        // Any of the semantic colors like primary, secondary, etc.
+        semantic: {
+          bgAlpha: string;
+          color: string;
+
+          outline: {
+            borderColor: string;
+          }
+        };
+      };
+      subtle: {
+        bg: string;
+        color: string;
+
+        outline: {
+          borderColor: string;
+        }
+      };
+    };
+
+    // Variants
+    variant: {
+      outline: {
+        borderWidth: string | number;
+        bg: string;
+      };
+    };
+
+    icon: {
+      size: string | number;
+      color: string;
+      firstChildMargin: string | number;
+      firstChildMarginEnd: string | number;
+      lastChildMargin: string | number;
+      lastChildMarginStart: string | number;
+    };
+
+    avatar: {
+      size: string | number;
+      firstChildMarginVertical: string | number;
+      firstChildMarginStart: string | number;
+      firstChildMarginEnd: string | number;
+      lastChildMarginVertical: string | number;
+      lastChildMarginStart: string | number;
+      lastChildMarginEnd: string | number;
+    };
+  };
+
+  IonCard?: any;
+  IonItem?: any;
+  IonTabBar?: any;
+  IonModal?: any;
+  IonToolbar?: any;
 };

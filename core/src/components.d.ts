@@ -872,7 +872,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Only applies to the `ionic` theme.
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"`.
           * @default 'subtle'
          */
         "hue"?: 'bold' | 'subtle';
@@ -891,8 +891,9 @@ export namespace Components {
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+          * @default 'medium'
          */
-        "size"?: 'small' | 'large';
+        "size"?: 'small' | 'medium' | 'large';
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -6842,7 +6843,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Only applies to the `ionic` theme.
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"`.
           * @default 'subtle'
          */
         "hue"?: 'bold' | 'subtle';
@@ -6861,8 +6862,9 @@ declare namespace LocalJSX {
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+          * @default 'medium'
          */
-        "size"?: 'small' | 'large';
+        "size"?: 'small' | 'medium' | 'large';
         /**
           * The theme determines the visual appearance of the component.
          */

@@ -81,10 +81,7 @@ export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): 
         return [];
       }
 
-      // if key is camelCase, convert to kebab-case
-      if (key.match(/([a-z])([A-Z])/g)) {
-        key = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-      }
+      key = convertToKebabCase(key);
 
       // Do not generate CSS variables for excluded keys
       const excludedKeys = ['name', 'enabled', 'config'];
@@ -264,13 +261,8 @@ export const injectCSS = (css: string, target: Element | ShadowRoot = document.h
  * @returns The generated CSS string
  */
 export const generateGlobalThemeCSS = (theme: any): string => {
-  if (typeof theme !== 'object' || Array.isArray(theme)) {
-    console.warn('generateGlobalThemeCSS: Invalid theme object provided', theme);
-    return '';
-  }
-
-  if (Object.keys(theme).length === 0) {
-    console.warn('generateGlobalThemeCSS: Empty theme object provided');
+  const themeValidity = checkThemeValidity(theme, 'generateGlobalThemeCSS');
+  if (!themeValidity) {
     return '';
   }
 
@@ -361,14 +353,29 @@ export const applyGlobalTheme = (baseTheme: any, userTheme?: any): any => {
  * @param componentName The component name without any prefixes (e.g., 'chip')
  * @returns string containing the component's themed CSS variables
  */
-export const generateComponentThemeCSS = (componentTheme: any, componentName: string): string => {
-  const cssProps = generateCSSVars(componentTheme, `${CSS_PROPS_PREFIX}${componentName}-`);
+export const generateComponentsThemeCSS = (components: any): string => {
+  let componentsCSS = '';
+  if (components) {
+    for (const [component, componentTokens] of Object.entries(components)) {
+      const componentTag = convertToKebabCase(component);
+      const vars = generateCSSVars(componentTokens, `--${componentTag}-`);
 
-  return `
-    :host(.${componentName}-themed) {
-      ${cssProps}
+      const componentBlock = `
+        ${CSS_ROOT_SELECTOR} ${componentTag} {
+          ${vars}
+        }
+      `;
+      
+      // 3. Append the block to the main componentsCSS string
+      componentsCSS += componentBlock;
     }
+  }
+console.log('componentsCSS', componentsCSS);
+  const css = `
+    ${componentsCSS}
   `;
+
+  return css;
 };
 
 /**
@@ -376,34 +383,50 @@ export const generateComponentThemeCSS = (componentTheme: any, componentName: st
  * @param element The element to apply the theme to
  * @returns true if theme was applied, false otherwise
  */
-export const applyComponentTheme = (element: HTMLElement): void => {
-  const customTheme = (window as any).Ionic?.config?.get?.('customTheme');
-
-  // Convert 'ION-CHIP' to 'ion-chip' and split into parts
-  const parts = element.tagName.toLowerCase().split('-');
-
-  // Get the component name 'chip' from the second part
-  const componentName = parts[1];
-
-  // Convert to 'IonChip' by capitalizing each part
-  const themeLookupName = parts.map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join('');
-
-  // Get the component theme from the global custom theme if it exists
-  const componentTheme = customTheme?.components?.[themeLookupName];
-
-  if (componentTheme) {
-    // Add the theme class to the element (e.g., 'chip-themed')
-    const themeClass = `${componentName}-themed`;
-    element.classList.add(themeClass);
-
-    // Generate CSS custom properties inside a theme class selector
-    const css = generateComponentThemeCSS(componentTheme, componentName);
-
-    // Inject styles into shadow root if available,
-    // otherwise into the element itself
-    const root = element.shadowRoot ?? element;
-    injectCSS(css, root);
+export const applyComponentsTheme = (theme: any): any => {
+  const themeValidity = checkThemeValidity(theme, 'applyComponentsTheme');
+  if (!themeValidity) {
+    return '';
   }
+
+  // grab all the default components from theme
+  const { components } = theme;
+  
+  // check if there is no components then return
+  if (!components) {
+    return '';
+  }
+
+  injectCSS(generateComponentsThemeCSS(components));
+  return components;
+
+  // const customTheme = (window as any).Ionic?.config?.get?.('customTheme');
+
+  // // Convert 'ION-CHIP' to 'ion-chip' and split into parts
+  // const parts = element.tagName.toLowerCase().split('-');
+
+  // // Get the component name 'chip' from the second part
+  // const componentName = parts[1];
+
+  // // Convert to 'IonChip' by capitalizing each part
+  // const themeLookupName = parts.map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join('');
+
+  // // Get the component theme from the global custom theme if it exists
+  // const componentTheme = customTheme?.components?.[themeLookupName];
+
+  // if (componentTheme) {
+  //   // Add the theme class to the element (e.g., 'chip-themed')
+  //   const themeClass = `${componentName}-themed`;
+  //   element.classList.add(themeClass);
+
+  //   // Generate CSS custom properties inside a theme class selector
+  //   const css = generateComponentsThemeCSS(componentTheme, componentName);
+
+  //   // Inject styles into shadow root if available,
+  //   // otherwise into the element itself
+  //   const root = element.shadowRoot ?? element;
+  //   injectCSS(css, root);
+  // }
 };
 
 /**
@@ -471,3 +494,88 @@ export const mix = (baseColor: string, mixColor: string, weight: string): string
   const toHex = (n: number) => n.toString(16).padStart(2, '0');
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 };
+
+/**
+ * Converts a string to kebab-case
+ * 
+ * @param str The string to convert (e.g., 'IonChip')
+ * @returns The kebab-case string (e.g., 'ion-chip')
+ */
+const convertToKebabCase = (str: string): string => {
+  // It's already kebab-case
+  if (str.indexOf('-') !== -1) {
+    return str.toLowerCase();
+  }
+
+  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+};
+
+const checkThemeValidity = (theme: any, source: string): boolean => {
+  if (typeof theme !== 'object' || Array.isArray(theme)) {
+    console.warn(`${source}: Invalid theme object provided`, theme);
+    return false;
+  }
+  
+  if (Object.keys(theme).length === 0) {
+    console.warn(`${source}: Empty theme object provided`);
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Mimics the Sass `rgba` function logic to construct CSS rgba() values.
+ *
+ * @param colorRgb The RGB color components as a string (e.g., '255, 0, 0').
+ * @param alpha The opacity value (0 to 1).
+ * @returns A string containing the CSS rgba() function call.
+ */
+export function rgba(colorRgb: string, alpha: number | string): string {
+  // This directly constructs the rgba() function call using the provided values.
+  return `rgba(${colorRgb}, ${alpha})`;
+}
+
+/**
+ * Mimics the Ionic Framework `current-color` function logic to construct CSS color values.
+ *
+ * @param variation The color variation (e.g., 'primary', 'secondary', 'base').
+ * @param alpha The opacity value (0 to 1). If null, returns the full color variable.
+ * @param subtle If true, uses the '--ion-color-subtle-' prefix.
+ * @returns A string containing the CSS value (e.g., 'var(--ion-color-primary)' or 'rgba(var(--ion-color-primary-rgb), 0.16)').
+ */
+export function currentColor(
+  variation: string,
+  alpha: number | string | null = null,
+  subtle: boolean = false
+): string {
+  // 1. Determine the base CSS variable name
+  const variable = subtle
+    ? `--ion-color-subtle-${variation}`
+    : `--ion-color-${variation}`;
+
+  // 2. Handle the case where no alpha is provided
+  if (alpha === null) {
+    // Corresponds to: @return var(#{$variable});
+    return `var(${variable})`;
+  } else {
+    // 3. Handle the case where alpha is provided
+    // Corresponds to: @return rgba(var(#{$variable}-rgb), #{$alpha});
+
+    // NOTE: The resulting string uses the CSS variable for the RGB components
+    // (e.g., '255, 0, 0') and the provided alpha.
+    return `rgba(var(${variable}-rgb), ${alpha})`;
+  }
+}
+
+/**
+ * Mimics the CSS `clamp` function logic.
+ * 
+ * @param min The minimum value
+ * @param val The preferred value
+ * @param max The maximum value
+ * @returns 
+ */
+export function clamp(min: number | string, val: number | string, max: number | string): string {
+  return `clamp(${min}, ${val}, ${max})`;
+}

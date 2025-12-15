@@ -1,8 +1,20 @@
+import { rgba, currentColor } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
 import { darkTheme } from './dark.tokens';
 import { lightTheme } from './light.tokens';
+
+const colors = {
+  backgroundColor: 'var(--ion-background-color, #fff)',
+  backgroundColorRgb: 'var(--ion-background-color-rgb, 255, 255, 255)',
+  textColor: 'var(--ion-text-color, #000)',
+  textColorRgb: 'var(--ion-text-color-rgb, 0, 0, 0)',
+}
+
+const fontSizes = {
+  chipBase: 14,
+}
 
 export const defaultTheme: DefaultTheme = {
   ...baseDefaultTheme,
@@ -76,4 +88,119 @@ export const defaultTheme: DefaultTheme = {
     xxxl: 'var(--ion-radii-900)',
     xxxxl: 'var(--ion-radii-full)',
   },
+
+  components: {
+    IonChip: {
+      margin: '4px',
+      paddingVertical: '6px',
+      paddingHorizontal: '12px',
+
+      // Sizes
+      size: {
+        small: {
+          height: '24px',
+          fontSize: `${(fontSizes.chipBase - 2) / 16}rem`,
+        },
+        medium: {
+          height: '32px',
+          fontSize: `${fontSizes.chipBase / 16}rem`,
+        },
+        large: {
+          height: '32px',
+          fontSize: `${(fontSizes.chipBase + 2) / 16}rem`,
+        },
+      },
+
+      // States
+      state: {
+        disabled: {
+          opacity: '0.4',
+        },
+        focus: {
+          bg: rgba(colors.textColorRgb, 0.16),
+          semanticBg: currentColor('base', 0.12),
+          outlineBg: rgba(colors.textColorRgb, 0.04),
+        },
+        activated: {
+          bg: rgba(colors.textColorRgb, 0.2),
+          semanticBg: currentColor('base', 0.16),
+        },
+        hover: {
+          bg: rgba(colors.textColorRgb, 0.16),
+          semanticBg: currentColor('base', 0.12),
+          outlineBg: rgba(colors.textColorRgb, 0.04),
+        },
+      },
+
+      // Shapes
+      shape: {
+        soft: {
+          borderRadius: 'var(--ion-radii-200)',
+        },
+        round: {
+          borderRadius: 'var(--ion-radii-full)',
+        },
+        rectangular: {
+          borderRadius: 'var(--ion-radii-0)',
+        },
+      },
+
+      // Hues
+      hue: {
+        bold: {
+          bg: rgba(colors.textColorRgb, 0.12),
+          color: rgba(colors.textColorRgb, 0.87),
+
+          outline: {
+            borderColor: rgba(colors.textColorRgb, 0.32),
+          },
+
+          // Any of the semantic colors like primary, secondary, etc.
+          semantic: {
+            bgAlpha: '0.08',
+            color: currentColor('shade'),
+
+            outline: {
+              borderColor: currentColor('base', 0.32),
+            }
+          },
+        },
+        subtle: {
+          bg: rgba(colors.textColorRgb, 0.04),
+          color: rgba(colors.textColorRgb, 0.87),
+
+          outline: {
+            borderColor: rgba(colors.textColorRgb, 0.32),
+          },
+        },
+      },
+
+      // Variants
+      variant: {
+        outline: {
+          borderWidth: '1px',
+          bg: 'transparent',
+        },
+      },
+
+      icon: {
+        size: `${20 / fontSizes.chipBase}em`,
+        color: rgba(colors.textColorRgb, 0.54),
+        firstChildMargin: '-4px',
+        firstChildMarginEnd: '8px',
+        lastChildMargin: '-4px',
+        lastChildMarginStart: '8px',
+      },
+
+      avatar: {
+        size: `${24 / fontSizes.chipBase}em`,
+        firstChildMarginVertical: '-4px',
+        firstChildMarginStart: '-8px',
+        firstChildMarginEnd: '8px',
+        lastChildMarginVertical: '-4px',
+        lastChildMarginStart: '8px',
+        lastChildMarginEnd: '-8px',
+      },
+    },
+  }
 };

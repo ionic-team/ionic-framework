@@ -1,4 +1,5 @@
 @use "./functions.string" as string;
+@use 'sass:meta';
 
 /**
  * A heuristic that applies CSS to tablet
@@ -606,6 +607,25 @@
 
     @include rtl() {
       transform: $rtl-translate $extra;
+    }
+  }
+}
+
+// Focused mixin to be used on regular elements
+//
+// ex: :host(.ion-focused) .toggle-icon {
+//       @include mixins.focused-state();
+//      }
+//
+// --------------------------------------------------
+@mixin focused-state($width: null, $style: solid, $color: null, $addOffset: true) {
+  @if $width == null or $color == null {
+    outline: none;
+  } @else {
+    outline: $width $style $color;
+
+    @if $addOffset {
+      outline-offset: $width;
     }
   }
 }
