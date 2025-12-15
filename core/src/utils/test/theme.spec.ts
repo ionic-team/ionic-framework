@@ -205,6 +205,12 @@ describe('generateCSSVars', () => {
         dark: {
           enabled: 'system',
         },
+        highContrast: {
+          enabled: 'never',
+        },
+        highContrastDark: {
+          enabled: 'never',
+        },
       },
       config: {
         rippleEffect: true,
@@ -319,6 +325,12 @@ describe('generateGlobalThemeCSS', () => {
         dark: {
           enabled: 'never',
         },
+        highContrast: {
+          enabled: 'never',
+        },
+        highContrastDark: {
+          enabled: 'never',
+        },
       },
       borderWidth: {
         sm: '4px',
@@ -370,6 +382,12 @@ describe('generateGlobalThemeCSS', () => {
           },
         },
         dark: {
+          enabled: 'never',
+        },
+        highContrast: {
+          enabled: 'never',
+        },
+        highContrastDark: {
           enabled: 'never',
         },
       },
@@ -435,6 +453,12 @@ describe('generateGlobalThemeCSS', () => {
       palette: {
         light: {},
         dark: {
+          enabled: 'never',
+        },
+        highContrast: {
+          enabled: 'never',
+        },
+        highContrastDark: {
           enabled: 'never',
         },
       },
@@ -513,6 +537,12 @@ describe('generateGlobalThemeCSS', () => {
             },
           },
         },
+        highContrast: {
+          enabled: 'never',
+        },
+        highContrastDark: {
+          enabled: 'never',
+        },
       },
       borderWidth: {
         sm: '4px',
@@ -533,6 +563,162 @@ describe('generateGlobalThemeCSS', () => {
       }
 
       @media(prefers-color-scheme: dark) {
+        :root {
+          --ion-color-primary-bold: #0054e9;
+          --ion-color-primary-bold-rgb: 0, 84, 233;
+          --ion-color-primary-bold-contrast: #ffffff;
+          --ion-color-primary-bold-contrast-rgb: 255, 255, 255;
+          --ion-color-primary-bold-shade: #0041c4;
+          --ion-color-primary-bold-tint: #0065ff;
+          --ion-color-primary-subtle: #0054e9;
+          --ion-color-primary-subtle-rgb: 0, 84, 233;
+          --ion-color-primary-subtle-contrast: #ffffff;
+          --ion-color-primary-subtle-contrast-rgb: 255, 255, 255;
+          --ion-color-primary-subtle-shade: #0041c4;
+          --ion-color-primary-subtle-tint: #0065ff;
+          --ion-color-red-50: #ffebee;
+          --ion-color-red-100: #ffcdd2;
+          --ion-color-red-200: #ef9a9a;
+        }
+      }
+    `.replace(/\s/g, '');
+
+    expect(css).toBe(expectedCSS);
+  });
+
+  it('should generate global CSS for a given theme with high contrast palette enabled for system preference', () => {
+    const theme = {
+      name: 'test',
+      palette: {
+        light: {},
+        dark: {
+          enabled: 'never',
+        },
+        highContrast: {
+          enabled: 'system',
+          color: {
+            primary: {
+              bold: {
+                base: '#0054e9',
+                contrast: '#ffffff',
+                shade: '#0041c4',
+                tint: '#0065ff',
+              },
+              subtle: {
+                base: '#0054e9',
+                contrast: '#ffffff',
+                shade: '#0041c4',
+                tint: '#0065ff',
+              },
+            },
+            red: {
+              50: '#ffebee',
+              100: '#ffcdd2',
+              200: '#ef9a9a',
+            },
+          },
+        },
+        highContrastDark: {
+          enabled: 'never',
+        },
+      },
+      borderWidth: {
+        sm: '4px',
+      },
+      spacing: {
+        md: '12px',
+      },
+      dynamicFont: '-apple-system-body',
+    };
+
+    const css = generateGlobalThemeCSS(theme).replace(/\s/g, '');
+
+    const expectedCSS = `
+      :root {
+        --ion-border-width-sm: 4px;
+        --ion-spacing-md: 12px;
+        --ion-dynamic-font: -apple-system-body;
+      }
+
+      @media(prefers-contrast: more) {
+        :root {
+          --ion-color-primary-bold: #0054e9;
+          --ion-color-primary-bold-rgb: 0, 84, 233;
+          --ion-color-primary-bold-contrast: #ffffff;
+          --ion-color-primary-bold-contrast-rgb: 255, 255, 255;
+          --ion-color-primary-bold-shade: #0041c4;
+          --ion-color-primary-bold-tint: #0065ff;
+          --ion-color-primary-subtle: #0054e9;
+          --ion-color-primary-subtle-rgb: 0, 84, 233;
+          --ion-color-primary-subtle-contrast: #ffffff;
+          --ion-color-primary-subtle-contrast-rgb: 255, 255, 255;
+          --ion-color-primary-subtle-shade: #0041c4;
+          --ion-color-primary-subtle-tint: #0065ff;
+          --ion-color-red-50: #ffebee;
+          --ion-color-red-100: #ffcdd2;
+          --ion-color-red-200: #ef9a9a;
+        }
+      }
+    `.replace(/\s/g, '');
+
+    expect(css).toBe(expectedCSS);
+  });
+
+  it('should generate global CSS for a given theme with high contrast dark palette enabled for system preference', () => {
+    const theme = {
+      name: 'test',
+      palette: {
+        light: {},
+        dark: {
+          enabled: 'never',
+        },
+        highContrast: {
+          enabled: 'never',
+        },
+        highContrastDark: {
+          enabled: 'system',
+          color: {
+            primary: {
+              bold: {
+                base: '#0054e9',
+                contrast: '#ffffff',
+                shade: '#0041c4',
+                tint: '#0065ff',
+              },
+              subtle: {
+                base: '#0054e9',
+                contrast: '#ffffff',
+                shade: '#0041c4',
+                tint: '#0065ff',
+              },
+            },
+            red: {
+              50: '#ffebee',
+              100: '#ffcdd2',
+              200: '#ef9a9a',
+            },
+          },
+        },
+      },
+      borderWidth: {
+        sm: '4px',
+      },
+      spacing: {
+        md: '12px',
+      },
+      dynamicFont: '-apple-system-body',
+    };
+
+    const css = generateGlobalThemeCSS(theme).replace(/\s/g, '');
+
+    const expectedCSS = `
+      :root {
+        --ion-border-width-sm: 4px;
+        --ion-spacing-md: 12px;
+        --ion-dynamic-font: -apple-system-body;
+      }
+
+      @media(prefers-contrast: more) and (prefers-color-scheme: dark) {
         :root {
           --ion-color-primary-bold: #0054e9;
           --ion-color-primary-bold-rgb: 0, 84, 233;

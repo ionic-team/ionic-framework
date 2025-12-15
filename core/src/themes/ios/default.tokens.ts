@@ -2,6 +2,8 @@ import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
 import { darkTheme } from './dark.tokens';
+import { highContrastDarkTheme } from './high-contrast-dark.tokens';
+import { highContrastTheme } from './high-contrast.tokens';
 import { lightTheme } from './light.tokens';
 
 export const defaultTheme: DefaultTheme = {
@@ -12,6 +14,8 @@ export const defaultTheme: DefaultTheme = {
   palette: {
     light: lightTheme,
     dark: darkTheme,
+    highContrast: highContrastTheme,
+    highContrastDark: highContrastDarkTheme,
   },
 
   fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif',

@@ -87,11 +87,18 @@ const DEFAULT_THEME = 'md';
    * Values can be `light`, `dark`, `high-contrast`,
    * or `high-contrast-dark`. Default to `light` for tests.
    */
-  const paletteQuery = window.location.search.match(/palette=([a-z]+)/);
-  const paletteHash = window.location.hash.match(/palette=([a-z]+)/);
+  const configDarkMode = window.Ionic?.config?.customTheme?.palette?.dark?.enabled === 'always' ? 'dark' : null;
+  const configHighContrastMode = window.Ionic?.config?.customTheme?.palette?.highContrast?.enabled === 'always' ? 'high-contrast' : null;
+  const configHighContrastDarkMode = window.Ionic?.config?.customTheme?.palette?.highContrastDark?.enabled === 'always' ? 'high-contrast-dark' : null;
+  const configPalette = configDarkMode || configHighContrastMode || configHighContrastDarkMode;
+  const paletteQuery = window.location.search.match(/palette=([a-z-]+)/);
+  const paletteHash = window.location.hash.match(/palette=([a-z-]+)/);
   const darkClass = document.body?.classList.contains('ion-palette-dark') ? 'dark' : null;
+  const highContrastClass = document.body?.classList.contains('ion-palette-high-contrast') ? 'high-contrast' : null;
+  const highContrastDarkClass = darkClass && highContrastClass ? 'high-contrast-dark' : null;
+  const paletteClass = highContrastDarkClass || highContrastClass || darkClass;
 
-  const paletteName = paletteQuery?.[1] || paletteHash?.[1] || darkClass || 'light';
+  const paletteName = configPalette || paletteQuery?.[1] || paletteHash?.[1] || paletteClass || 'light';
 
   // Load theme tokens if the theme is valid
   const validThemes = ['ionic', 'ios', 'md'];
@@ -111,8 +118,15 @@ const DEFAULT_THEME = 'md';
 
       // If a specific palette is requested, modify the palette structure
       // to set the enabled property to 'always'
+      // TODO(FW-4004): Implement dark mode
       if (paletteName === 'dark' && theme.palette?.dark) {
         theme.palette.dark.enabled = 'always';
+      // TODO(FW-4005): Implement high contrast mode
+      } else if (paletteName === 'high-contrast' && theme.palette?.highContrast) {
+        theme.palette.highContrast.enabled = 'always';
+      // TODO(FW-4005): Implement high contrast dark mode
+      } else if (paletteName === 'high-contrast-dark' && theme.palette?.highContrastDark) {
+        theme.palette.highContrastDark.enabled = 'always';
       }
 
       // Apply the theme tokens to Ionic config
