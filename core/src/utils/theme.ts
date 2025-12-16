@@ -393,7 +393,6 @@ export const generateComponentsThemeCSS = (components: any): string => {
 
   return css;
 };
-};
 
 /**
  * Applies a component theme to an element if it exists in the custom theme
