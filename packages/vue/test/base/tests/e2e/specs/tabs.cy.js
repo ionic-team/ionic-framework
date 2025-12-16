@@ -2,6 +2,8 @@ describe('Tabs', () => {
   /**
    * Verifies that tabs with similar route prefixes (e.g., /home, /home2, /home3)
    * correctly select the matching tab instead of the first prefix match.
+   * 
+   * @see https://github.com/ionic-team/ionic-framework/issues/30448
    */
   describe('Similar Route Prefixes', () => {
     it('should select the correct tab when routes have similar prefixes', () => {
