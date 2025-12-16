@@ -64,7 +64,7 @@ export class Chip implements ComponentInterface {
   /**
    * Set to `"small"` for a chip with less height and padding.
    *
-   * Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+   * Defaults to `"medium"`.
    */
   @Prop() size?: 'small' | 'medium' | 'large' = 'medium';
 
