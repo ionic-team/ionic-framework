@@ -80,6 +80,4 @@ configs({ directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
       });
     });
   });
-    });
-  });
 });
