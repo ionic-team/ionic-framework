@@ -350,7 +350,29 @@ export const applyGlobalTheme = (baseTheme: any, userTheme?: any): any => {
  * Generates component's themed CSS class with CSS variables
  * from its theme object
  * @param componentTheme The component's object to generate CSS for (e.g., IonChip { })
- * @param componentName The component name without any prefixes (e.g., 'chip')
+ * @param components An object mapping component names (e.g. `IonChip`) to a nested
+ * design-token configuration. Each configuration can contain arbitrary levels of
+ * token groups (such as `size`, `state`, `shape`, `variant`, etc.), where leaf values
+ * are CSS-compatible values. The structure is recursively flattened into CSS custom
+ * properties using kebab-case keys and an `--ion-<component>-` prefix.
+ *
+ * Example:
+ * ```json
+ * {
+ *   IonChip: {
+ *     size: { small: { height: "24px" } },
+ *     state: { disabled: { opacity: "0.4" } }
+ *   }
+ * }
+ * ```
+ *
+ * Becomes:
+ * ```css
+ * :root ion-chip {
+ *   --ion-chip-size-small-height: 24px;
+ *   --ion-chip-state-disabled-opacity: 0.4;
+ * }
+ * ```
  * @returns string containing the component's themed CSS variables
  */
 export const generateComponentsThemeCSS = (components: any): string => {
