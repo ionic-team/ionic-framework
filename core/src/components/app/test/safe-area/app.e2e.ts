@@ -46,7 +46,7 @@ configs({ directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
     });
 
     test.describe(title('Capacitor safe area variables'), () => {
-      test('should use safe-area-inset vars when safe-area class is defined', async ({ page }) => {
+      test('should use safe-area-inset vars when safe-area class is not defined', async ({ page }) => {
         await page.evaluate(() => {
           const html = document.documentElement;
 
