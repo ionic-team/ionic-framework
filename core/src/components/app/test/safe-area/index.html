@@ -156,13 +156,8 @@
       function toggleSafeArea() {
         console.log('Toggling safe area classes');
         const htmlTag = document.documentElement;
-        if (htmlTag.classList.contains('safe-area-capacitor')) {
-          htmlTag.classList.remove('safe-area-capacitor');
-          htmlTag.classList.add('safe-area');
-        } else {
-          htmlTag.classList.remove('safe-area');
-          htmlTag.classList.add('safe-area-capacitor');
-        }
+        htmlTag.classList.toggle('safe-area-capacitor');
+        htmlTag.classList.toggle('safe-area');
       }
     </script>
   </body>
