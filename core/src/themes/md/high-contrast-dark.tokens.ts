@@ -7,6 +7,11 @@ export const highContrastDarkTheme: HighContrastDarkTheme = {
   backgroundColor: '#121212',
   textColor: '#000000',
 
+  // TODO(FW-6864): Remove once IonToolbar themes are added
+  toolbar: {
+    background: '#1f1f1f',
+  },
+
   backgroundColorStep: {
     50: '#1e1e1e',
     100: '#2a2a2a',

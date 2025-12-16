@@ -17,6 +17,9 @@ export type BaseTheme = {
     [key: string]: string;
   };
 
+  // TODO(FW-6864): Remove once IonToolbar themes are added
+  toolbar?: any;
+
   // SPACE TOKENS
   spacing?: {
     0?: string;
