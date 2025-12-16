@@ -19,13 +19,6 @@
         --ion-safe-area-bottom: 40px;
         --ion-safe-area-left: 40px;
       }
-
-      .safe-area-capacitor {
-        --safe-area-inset-top: 40px;
-        --safe-area-inset-right: 40px;
-        --safe-area-inset-bottom: 40px;
-        --safe-area-inset-left: 40px;
-      }
     </style>
   </head>
 
@@ -55,7 +48,6 @@
       </ion-header>
 
       <ion-content id="main">
-        <button id="toggle-safe-area" onclick="toggleSafeArea()">Toggle Safe Area Classes</button>
         <ion-card>
           <ion-card-header>
             <ion-card-title>Card</ion-card-title>
@@ -150,14 +142,6 @@
         });
         document.body.appendChild(toast);
         await toast.present();
-      }
-
-      // toggle between safe area classes based on button click
-      function toggleSafeArea() {
-        console.log('Toggling safe area classes');
-        const htmlTag = document.documentElement;
-        htmlTag.classList.toggle('safe-area-capacitor');
-        htmlTag.classList.toggle('safe-area');
       }
     </script>
   </body>
