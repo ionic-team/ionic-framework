@@ -197,11 +197,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `
         <style>
-          .radio-group-top {
+          ion-radio-group::part(supporting-text) {
             font-size: 20px;
           }
 
-          .radio-group-top .helper-text {
+          ion-radio-group::part(helper-text) {
             color: green;
           }
         </style>
@@ -222,11 +222,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `
         <style>
-          .radio-group-top {
+          ion-radio-group::part(supporting-text) {
             font-size: 20px;
           }
 
-          .radio-group-top .error-text {
+          ion-radio-group::part(error-text) {
             color: purple;
           }
         </style>
