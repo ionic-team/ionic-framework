@@ -383,7 +383,7 @@ export const generateComponentsThemeCSS = (components: any): string => {
     const vars = generateCSSVars(componentTokens, `--${componentTag}-`);
 
     const componentBlock = `
-      ${CSS_ROOT_SELECTOR} ${componentTag} {
+      ${componentTag} {
         ${vars}
       }
     `;
@@ -407,7 +407,7 @@ export const applyComponentsTheme = (theme: any): any => {
 
   // grab all the default components from theme
   const { components } = theme;
-  
+
   // check if there is no components then return
   if (!components) {
     return '';
@@ -513,7 +513,7 @@ export const mix = (baseColor: string, mixColor: string, weight: string): string
 
 /**
  * Converts a string to kebab-case
- * 
+ *
  * @param str The string to convert (e.g., 'IonChip')
  * @returns The kebab-case string (e.g., 'ion-chip')
  */
@@ -531,14 +531,14 @@ const checkThemeValidity = (theme: any, source: string): boolean => {
     console.warn(`${source}: Invalid theme object provided`, theme);
     return false;
   }
-  
+
   if (Object.keys(theme).length === 0) {
     console.warn(`${source}: Empty theme object provided`);
     return false;
   }
 
   return true;
-}
+};
 
 /**
  * Mimics the Sass `rgba` function logic to construct CSS rgba() values.
@@ -560,15 +560,9 @@ export function rgba(colorRgb: string, alpha: number | string): string {
  * @param subtle If true, uses the '--ion-color-subtle-' prefix.
  * @returns A string containing the CSS value (e.g., 'var(--ion-color-primary)' or 'rgba(var(--ion-color-primary-rgb), 0.16)').
  */
-export function currentColor(
-  variation: string,
-  alpha: number | string | null = null,
-  subtle: boolean = false
-): string {
+export function currentColor(variation: string, alpha: number | string | null = null, subtle: boolean = false): string {
   // 1. Determine the base CSS variable name
-  const variable = subtle
-    ? `--ion-color-subtle-${variation}`
-    : `--ion-color-${variation}`;
+  const variable = subtle ? `--ion-color-subtle-${variation}` : `--ion-color-${variation}`;
 
   // 2. Handle the case where no alpha is provided
   if (alpha === null) {
@@ -586,11 +580,11 @@ export function currentColor(
 
 /**
  * Mimics the CSS `clamp` function logic.
- * 
+ *
  * @param min The minimum value
  * @param val The preferred value
  * @param max The maximum value
- * @returns 
+ * @returns
  */
 export function clamp(min: number | string, val: number | string, max: number | string): string {
   return `clamp(${min}, ${val}, ${max})`;
