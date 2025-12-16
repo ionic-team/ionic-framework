@@ -287,9 +287,27 @@ export const generateGlobalThemeCSS = (theme: any): string => {
   // Generate CSS variables for the dark color palette
   const darkTokensCSS = generateCSSVars(palette.dark);
 
-  // Include CSS variables for the dark color palette instead of
-  // the light palette if dark palette enabled is 'always'
-  const paletteTokensCSS = palette.dark.enabled === 'always' ? darkTokensCSS : lightTokensCSS;
+  // Generate CSS variable for the high contrast color palette
+  const highContrastTokensCSS = generateCSSVars(palette.highContrast);
+
+  // Generate CSS variable for the high contrast dark color palette
+  const highContrastDarkTokensCSS = generateCSSVars(palette.highContrastDark);
+
+  let paletteTokensCSS = lightTokensCSS;
+
+  if (palette.highContrastDark?.enabled === 'always') {
+    // Include CSS variables for the high contrast dark color palette instead of
+    // the light palette if high contrast dark palette enabled is 'always'
+    paletteTokensCSS = highContrastDarkTokensCSS;
+  } else if (palette.highContrast?.enabled === 'always') {
+    // Include CSS variables for the dark color palette instead of
+    // the light palette if dark palette enabled is 'always'
+    paletteTokensCSS = highContrastTokensCSS;
+  } else if (palette.dark.enabled === 'always') {
+    // Include CSS variables for the dark color palette instead of
+    // the light palette if dark palette enabled is 'always'
+    paletteTokensCSS = darkTokensCSS;
+  }
 
   let css = `
     ${CSS_ROOT_SELECTOR} {
@@ -298,9 +316,25 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     }
   `;
 
-  // Include CSS variables for the dark color palette inside of a
-  // class if dark palette enabled is 'class'
-  if (palette.dark.enabled === 'class') {
+  if (palette.highContrastDark.enabled === 'class') {
+    // Include CSS variables for the high contrast dark color palette inside of a
+    // class if high contrast dark palette enabled is 'class'
+    css += `
+      .ion-palette-high-contrast.ion-palette-dark {
+        ${highContrastDarkTokensCSS}
+      }
+    `;
+  } else if (palette.highContrast.enabled === 'class') {
+    // Include CSS variables for the high contrast color palette inside of a
+    // class if high contrast palette enabled is 'class'
+    css += `
+      .ion-palette-high-contrast {
+        ${highContrastTokensCSS}
+      }
+    `;
+  } else if (palette.dark.enabled === 'class') {
+    // Include CSS variables for the dark color palette inside of a
+    // class if dark palette enabled is 'class'
     css += `
       .ion-palette-dark {
         ${darkTokensCSS}
@@ -308,9 +342,29 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     `;
   }
 
-  // Include CSS variables for the dark color palette inside of the
-  // dark color scheme media query if dark palette enabled is 'system'
-  if (palette.dark.enabled === 'system') {
+  if (palette.highContrastDark.enabled === 'system') {
+    // Include CSS variables for the high contrast dark color palette inside of the
+    // high contrast dark media query if high contrast dark palette enabled is 'system'
+    css += `
+      @media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+        ${CSS_ROOT_SELECTOR} {
+          ${highContrastDarkTokensCSS}
+        }
+      }
+    `;
+  } else if (palette.highContrast.enabled === 'system') {
+    // Include CSS variables for the high contrast color palette inside of the
+    // high contrast media query if high contrast palette enabled is 'system'
+    css += `
+      @media (prefers-contrast: more) {
+        ${CSS_ROOT_SELECTOR} {
+          ${highContrastTokensCSS}
+        }
+      }
+    `;
+  } else if (palette.dark.enabled === 'system') {
+    // Include CSS variables for the dark color palette inside of the
+    // dark color scheme media query if dark palette enabled is 'system'
     css += `
       @media (prefers-color-scheme: dark) {
         ${CSS_ROOT_SELECTOR} {

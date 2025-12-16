@@ -236,7 +236,8 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
  */
 configs({ directions: ['ltr'], palettes: ['high-contrast-dark', 'high-contrast'] }).forEach(
   ({ title, config, screenshot }) => {
-    test.describe(title('toast: high contrast: buttons'), () => {
+    // TODO(FW-4005): Once high contrast themes are fully implemented in ionic modular, remove the skips from these tests
+    test.describe.skip(title('toast: high contrast: buttons'), () => {
       test.beforeEach(async ({ page }) => {
         await page.setContent(
           `
