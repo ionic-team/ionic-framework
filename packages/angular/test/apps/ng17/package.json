@@ -48,6 +48,7 @@
     "@angular/language-service": "^17.0.2",
     "@playwright/test": "^1.54.2",
     "@types/express": "^4.17.7",
+    "@types/node": "^18.19.0",
     "@types/ws": "8.5.3",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",

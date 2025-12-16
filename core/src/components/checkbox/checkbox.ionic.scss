@@ -113,11 +113,11 @@ input {
 // ----------------------------------------------------------------
 
 .checkbox-bottom {
-  @include globals.typography(globals.$ion-body-md-regular);
+  @include globals.typography(globals.$ion-body-sm-medium);
 }
 
 .checkbox-bottom .error-text {
-  color: globals.$ion-semantics-danger-800;
+  color: globals.$ion-text-danger;
 }
 
 .checkbox-bottom .helper-text {
@@ -198,7 +198,7 @@ input {
 // Ionic Design Checkbox Invalid
 // --------------------------------------------------
 :host(.ion-invalid) {
-  --focus-ring-color: #{globals.$ion-border-focus-error};
+  --focus-ring-color: #{globals.$ion-border-danger-default};
 }
 
 :host(.ion-invalid:not(.checkbox-checked)),
