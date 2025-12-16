@@ -10,11 +10,11 @@ const colors = {
   backgroundColorRgb: 'var(--ion-background-color-rgb, 255, 255, 255)',
   textColor: 'var(--ion-text-color, #000)',
   textColorRgb: 'var(--ion-text-color-rgb, 0, 0, 0)',
-}
+};
 
 const fontSizes = {
   chipBase: 14,
-}
+};
 
 export const defaultTheme: DefaultTheme = {
   ...baseDefaultTheme,
@@ -162,7 +162,7 @@ export const defaultTheme: DefaultTheme = {
 
             outline: {
               borderColor: currentColor('base', 0.32),
-            }
+            },
           },
         },
         subtle: {
@@ -202,5 +202,5 @@ export const defaultTheme: DefaultTheme = {
         lastChildMarginEnd: '-8px',
       },
     },
-  }
+  },
 };

@@ -326,7 +326,7 @@ type Components = {
 
         outline: {
           borderColor: string;
-        }
+        };
 
         // Any of the semantic colors like primary, secondary, etc.
         semantic: {
@@ -335,7 +335,7 @@ type Components = {
 
           outline: {
             borderColor: string;
-          }
+          };
         };
       };
       subtle: {
@@ -344,7 +344,7 @@ type Components = {
 
         outline: {
           borderColor: string;
-        }
+        };
       };
     };
 

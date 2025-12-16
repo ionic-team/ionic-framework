@@ -562,18 +562,18 @@ describe('generateComponentsThemeCSS', () => {
     const components = {
       IonChip: {
         hue: {
-        subtle: {
-          bg: 'red',
-          color: 'white',
-          borderColor: 'black',
-        },
-        bold: {
-          bg: 'blue',
-          color: 'white',
-          borderColor: 'black',
+          subtle: {
+            bg: 'red',
+            color: 'white',
+            borderColor: 'black',
+          },
+          bold: {
+            bg: 'blue',
+            color: 'white',
+            borderColor: 'black',
+          },
         },
       },
-      }
     };
 
     const css = generateComponentsThemeCSS(components).replace(/\s/g, '');

@@ -197,7 +197,11 @@
 }
 
 ::slotted(ion-icon:first-child) {
-  @include mixins.margin(vars.$chip-icon-first-child-margin, vars.$chip-icon-first-child-margin-end, $start: vars.$chip-icon-first-child-margin);
+  @include mixins.margin(
+    vars.$chip-icon-first-child-margin,
+    vars.$chip-icon-first-child-margin-end,
+    $start: vars.$chip-icon-first-child-margin
+  );
 }
 
 ::slotted(ion-icon:last-child) {
@@ -213,10 +217,17 @@
 }
 
 ::slotted(ion-avatar:first-child) {
-  @include mixins.margin(vars.$chip-avatar-first-child-margin-vertical, $end: vars.$chip-avatar-first-child-margin-end, $start: vars.$chip-avatar-first-child-margin-start);
+  @include mixins.margin(
+    vars.$chip-avatar-first-child-margin-vertical,
+    $end: vars.$chip-avatar-first-child-margin-end,
+    $start: vars.$chip-avatar-first-child-margin-start
+  );
 }
 
 ::slotted(ion-avatar:last-child) {
-  @include mixins.margin(vars.$chip-avatar-last-child-margin-vertical, $end: vars.$chip-avatar-last-child-margin-end, $start: vars.$chip-avatar-last-child-margin-start);
+  @include mixins.margin(
+    vars.$chip-avatar-last-child-margin-vertical,
+    $end: vars.$chip-avatar-last-child-margin-end,
+    $start: vars.$chip-avatar-last-child-margin-start
+  );
 }
-
