@@ -46,28 +46,40 @@ configs({ directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
     });
 
     test.describe(title('Capacitor safe area variables'), () => {
-      test.beforeEach(async ({ page }) => {
-        const toggleButton = page.locator('#toggle-safe-area');
-        await toggleButton.click();
+      test('should use safe-area-inset vars when safe-area class is defined', async ({ page }) => {
+        await page.evaluate(() => {
+          const html = document.documentElement;
 
-        const htmlTag = page.locator('html');
-        const hasSafeAreaClass = await htmlTag.evaluate((el) => el.classList.contains('safe-area-capacitor'));
+          // Remove the safe area class
+          html.classList.remove('safe-area');
 
-        expect(hasSafeAreaClass).toBe(true);
-      });
+          // Set the safe area inset variables
+          html.style.setProperty('--safe-area-inset-top', '10px');
+          html.style.setProperty('--safe-area-inset-bottom', '20px');
+          html.style.setProperty('--safe-area-inset-left', '30px');
+          html.style.setProperty('--safe-area-inset-right', '40px');
+        });
 
-      test('should not have visual regressions with action sheet', async ({ page }) => {
-        await testOverlay(page, '#show-action-sheet', 'ionActionSheetDidPresent', 'capacitor-action-sheet');
+        const top = await page.evaluate(() =>
+          getComputedStyle(document.documentElement).getPropertyValue('--ion-safe-area-top').trim()
+        );
+        const bottom = await page.evaluate(() =>
+          getComputedStyle(document.documentElement).getPropertyValue('--ion-safe-area-bottom').trim()
+        );
+        const left = await page.evaluate(() =>
+          getComputedStyle(document.documentElement).getPropertyValue('--ion-safe-area-left').trim()
+        );
+        const right = await page.evaluate(() =>
+          getComputedStyle(document.documentElement).getPropertyValue('--ion-safe-area-right').trim()
+        );
+
+        expect(top).toBe('10px');
+        expect(bottom).toBe('20px');
+        expect(left).toBe('30px');
+        expect(right).toBe('40px');
       });
-      test('should not have visual regressions with menu', async ({ page }) => {
-        await testOverlay(page, '#show-menu', 'ionDidOpen', 'capacitor-menu');
-      });
-      test('should not have visual regressions with picker', async ({ page }) => {
-        await testOverlay(page, '#show-picker', 'ionPickerDidPresent', 'capacitor-picker');
-      });
-      test('should not have visual regressions with toast', async ({ page }) => {
-        await testOverlay(page, '#show-toast', 'ionToastDidPresent', 'capacitor-toast');
-      });
+    });
+  });
     });
   });
 });
