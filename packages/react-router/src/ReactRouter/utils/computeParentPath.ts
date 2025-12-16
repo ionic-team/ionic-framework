@@ -44,26 +44,39 @@ export const computeCommonPrefix = (paths: string[]): string => {
 };
 
 /**
- * Checks if a route is a specific match (not wildcard or index).
- *
- * @param route The route element to check.
- * @param remainingPath The remaining path to match against.
- * @returns True if the route specifically matches the remaining path.
+ * Checks if a route path is a "splat-only" route (just `*` or `/*`).
+ */
+const isSplatOnlyRoute = (routePath: string | undefined): boolean => {
+  return routePath === '*' || routePath === '/*';
+};
+
+/**
+ * Checks if a route has an embedded wildcard (e.g., "tab1/*" but not "*" or "/*").
+ */
+const hasEmbeddedWildcard = (routePath: string | undefined): boolean => {
+  return !!routePath && routePath.includes('*') && !isSplatOnlyRoute(routePath);
+};
+
+/**
+ * Checks if a route with an embedded wildcard matches a pathname.
+ */
+const matchesEmbeddedWildcardRoute = (route: React.ReactElement, pathname: string): boolean => {
+  const routePath = route.props.path as string | undefined;
+  if (!hasEmbeddedWildcard(routePath)) {
+    return false;
+  }
+  return !!matchPath({ pathname, componentProps: route.props });
+};
+
+/**
+ * Checks if a route is a specific match (not wildcard-only or index).
  */
 export const isSpecificRouteMatch = (route: React.ReactElement, remainingPath: string): boolean => {
   const routePath = route.props.path;
-  const isWildcardOnly = routePath === '*' || routePath === '/*';
-  const isIndex = route.props.index;
-
-  // Skip wildcards and index routes
-  if (isIndex || isWildcardOnly) {
+  if (route.props.index || isSplatOnlyRoute(routePath)) {
     return false;
   }
-
-  return !!matchPath({
-    pathname: remainingPath,
-    componentProps: route.props,
-  });
+  return !!matchPath({ pathname: remainingPath, componentProps: route.props });
 };
 
 /**
@@ -142,12 +155,16 @@ export const computeParentPath = (options: ComputeParentPathOptions): ParentPath
       let firstWildcardMatch: string | undefined = undefined;
       let indexMatchAtMount: string | undefined = undefined;
 
+      // Start at i = 1 (normal case: strip at least one segment for parent path)
       for (let i = 1; i <= segments.length; i++) {
         const parentPath = '/' + segments.slice(0, i).join('/');
         const remainingPath = segments.slice(i).join('/');
 
-        // Check for specific (non-wildcard, non-index) route matches
-        const hasSpecificMatch = routeChildren.some((route) => isSpecificRouteMatch(route, remainingPath));
+        // Check for specific route matches (non-wildcard-only, non-index)
+        // Also check routes with embedded wildcards (e.g., "tab1/*")
+        const hasSpecificMatch = routeChildren.some(
+          (route) => isSpecificRouteMatch(route, remainingPath) || matchesEmbeddedWildcardRoute(route, remainingPath)
+        );
         if (hasSpecificMatch && !firstSpecificMatch) {
           firstSpecificMatch = parentPath;
           // Found a specific match - this is our answer for non-index routes
@@ -195,6 +212,17 @@ export const computeParentPath = (options: ComputeParentPathOptions): ParentPath
             // But only if we haven't found a better match
             indexMatchAtMount = parentPath;
           }
+        }
+      }
+
+      // Fallback: check at root level (i = 0) for embedded wildcard routes.
+      // This handles outlets inside root-level splat routes where routes like
+      // "tab1/*" need to match the full pathname.
+      if (!firstSpecificMatch) {
+        const fullRemainingPath = segments.join('/');
+        const hasRootLevelMatch = routeChildren.some((route) => matchesEmbeddedWildcardRoute(route, fullRemainingPath));
+        if (hasRootLevelMatch) {
+          firstSpecificMatch = '/';
         }
       }
 

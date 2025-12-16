@@ -31,6 +31,7 @@ import MultipleTabs from './pages/muiltiple-tabs/MultipleTabs';
 import NestedOutlet from './pages/nested-outlet/NestedOutlet';
 import NestedOutlet2 from './pages/nested-outlet/NestedOutlet2';
 import NestedParams from './pages/nested-params/NestedParams';
+import RelativePaths from './pages/relative-paths/RelativePaths';
 import { OutletRef } from './pages/outlet-ref/OutletRef';
 import Params from './pages/params/Params';
 import Refs from './pages/refs/Refs';
@@ -42,6 +43,9 @@ import Tabs from './pages/tabs/Tabs';
 import TabsSecondary from './pages/tabs/TabsSecondary';
 import TabHistoryIsolation from './pages/tab-history-isolation/TabHistoryIsolation';
 import Overlays from './pages/overlays/Overlays';
+import NestedTabsRelativeLinks from './pages/nested-tabs-relative-links/NestedTabsRelativeLinks';
+import RootSplatTabs from './pages/root-splat-tabs/RootSplatTabs';
+import ContentChangeNavigation from './pages/content-change-navigation/ContentChangeNavigation';
 
 setupIonicReact();
 
@@ -72,6 +76,11 @@ const App: React.FC = () => {
           <Route path="/overlays" element={<Overlays />} />
           <Route path="/params/:id" element={<Params />} />
           <Route path="/nested-params/*" element={<NestedParams />} />
+          {/* Test root-level relative path - no leading slash */}
+          <Route path="relative-paths/*" element={<RelativePaths />} />
+          <Route path="/nested-tabs-relative-links/*" element={<NestedTabsRelativeLinks />} />
+          <Route path="/root-splat-tabs/*" element={<RootSplatTabs />} />
+          <Route path="/content-change-navigation/*" element={<ContentChangeNavigation />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
