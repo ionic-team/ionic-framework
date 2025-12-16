@@ -611,12 +611,15 @@
   }
 }
 
-// Focused mixin to be used on regular elements
+// Mixin that applies focus styles to interactive elements.
 //
-// ex: :host(.ion-focused) .toggle-icon {
-//       @include mixins.focused-state();
-//      }
+// Example:
 //
+// ```scss
+// :host(.ion-focused) .toggle-icon {
+//   @include mixins.focused-state();
+// }
+// ```
 // --------------------------------------------------
 @mixin focused-state($width: null, $style: solid, $color: null, $addOffset: true) {
   @if $width == null or $color == null {
