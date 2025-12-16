@@ -87,8 +87,10 @@ export const defaultTheme: DefaultTheme = {
   components: {
     IonChip: {
       margin: '4px',
-      paddingVertical: '6px',
-      paddingHorizontal: '12px',
+      padding: {
+        vertical: '6px',
+        horizontal: '12px',
+      },
 
       // Sizes
       size: {

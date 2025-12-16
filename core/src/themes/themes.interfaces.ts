@@ -261,8 +261,12 @@ export type DefaultTheme = BaseTheme & {
 type Components = {
   IonChip?: {
     margin: string | number;
-    paddingVertical: string | number;
-    paddingHorizontal: string | number;
+
+    padding?: {
+      vertical: string | number;
+      horizontal: string | number;
+    };
+
     gap?: string | number;
     lineHeight?: string | number;
 
