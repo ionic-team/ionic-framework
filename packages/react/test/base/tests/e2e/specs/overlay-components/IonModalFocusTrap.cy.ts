@@ -5,7 +5,9 @@ describe('IonModal: focusTrap regression', () => {
 
   it('should allow interacting with background when focusTrap=false', () => {
     cy.get('#open-non-trapped-modal').click();
-    cy.get('ion-modal').should('be.visible');
+    // Use 'exist' instead of 'be.visible' because the modal has pointer-events: none
+    // to allow background interaction, which Cypress interprets as "covered"
+    cy.get('ion-modal.show-modal').should('exist');
 
     cy.get('#background-action').click();
     cy.get('#background-action-count').should('have.text', '1');
@@ -13,7 +15,7 @@ describe('IonModal: focusTrap regression', () => {
 
   it('should prevent interacting with background when focusTrap=true', () => {
     cy.get('#open-trapped-modal').click();
-    cy.get('ion-modal').should('be.visible');
+    cy.get('ion-modal.show-modal').should('be.visible');
 
     // Ensure backdrop is active and capturing pointer events
     cy.get('ion-backdrop').should('exist');

@@ -87,11 +87,19 @@ const DEFAULT_THEME = 'md';
    * Values can be `light`, `dark`, `high-contrast`,
    * or `high-contrast-dark`. Default to `light` for tests.
    */
-  const paletteQuery = window.location.search.match(/palette=([a-z]+)/);
-  const paletteHash = window.location.hash.match(/palette=([a-z]+)/);
+  const validPalettes = ['light', 'dark', 'high-contrast', 'high-contrast-dark'];
+  const paletteQuery = window.location.search.match(/palette=([a-z-]+)/);
+  const paletteHash = window.location.hash.match(/palette=([a-z-]+)/);
   const darkClass = document.body?.classList.contains('ion-palette-dark') ? 'dark' : null;
+  const highContrastClass = document.body?.classList.contains('ion-palette-high-contrast') ? 'high-contrast' : null;
+  const highContrastDarkClass = darkClass && highContrastClass ? 'high-contrast-dark' : null;
 
-  const paletteName = paletteQuery?.[1] || paletteHash?.[1] || darkClass || 'light';
+  let paletteName = paletteQuery?.[1] || paletteHash?.[1] || highContrastDarkClass || darkClass || highContrastClass || 'light';
+
+  if (!validPalettes.includes(paletteName)) {
+    console.warn(`Invalid palette name: '${paletteName}'. Falling back to 'light' palette.`);
+    paletteName = 'light';
+  }
 
   // Load theme tokens if the theme is valid
   const validThemes = ['ionic', 'ios', 'md'];

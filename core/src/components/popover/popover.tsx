@@ -66,6 +66,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   private destroyTriggerInteraction?: () => void;
   private destroyKeyboardInteraction?: () => void;
   private destroyDismissInteraction?: () => void;
+  private headerResizeObserver?: ResizeObserver;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -363,6 +364,11 @@ export class Popover implements ComponentInterface, PopoverInterface {
     if (destroyTriggerInteraction) {
       destroyTriggerInteraction();
     }
+
+    if (this.headerResizeObserver) {
+      this.headerResizeObserver.disconnect();
+      this.headerResizeObserver = undefined;
+    }
   }
 
   componentWillLoad() {
@@ -493,6 +499,8 @@ export class Popover implements ComponentInterface, PopoverInterface {
       inline
     );
 
+    this.recalculateContentOnHeaderReady();
+
     if (!this.keyboardEvents) {
       this.configureKeyboardInteraction();
     }
@@ -540,6 +548,39 @@ export class Popover implements ComponentInterface, PopoverInterface {
     }
 
     unlock();
+  }
+
+  /**
+   * Watch the header for height changes and trigger content dimension
+   * recalculation when the header has a height > 0. This sets the offset-top
+   * of the content to the height of the header correctly.
+   */
+  private recalculateContentOnHeaderReady() {
+    const popoverContent = this.el.shadowRoot?.querySelector('.popover-content');
+    if (!popoverContent) {
+      return;
+    }
+
+    const contentContainer = this.usersElement || popoverContent;
+
+    const header = contentContainer.querySelector('ion-header') as HTMLElement | null;
+    const contentElements = contentContainer.querySelectorAll('ion-content');
+
+    if (!header || contentElements.length === 0) {
+      return;
+    }
+
+    this.headerResizeObserver = new ResizeObserver(async () => {
+      if (header.offsetHeight > 0) {
+        this.headerResizeObserver?.disconnect();
+        this.headerResizeObserver = undefined;
+        for (const contentEl of contentElements) {
+          await contentEl.recalculateDimensions();
+        }
+      }
+    });
+
+    this.headerResizeObserver.observe(header);
   }
 
   /**
