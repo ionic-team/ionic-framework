@@ -207,8 +207,6 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     }
 
     if (routeInfo.routeAction === 'replace') {
-      // For replace actions, decide whether to unmount the leaving view.
-      // The key question is: are these routes in the same navigation context?
       const enteringRoutePath = enteringViewItem?.reactElement?.props?.path as string | undefined;
       const leavingRoutePath = leavingViewItem?.reactElement?.props?.path as string | undefined;
 

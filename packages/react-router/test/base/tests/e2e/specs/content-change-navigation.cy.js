@@ -1,11 +1,13 @@
 /**
  * Verifies that when view content changes (causing IonPage to remount)
  * while navigation is happening, the correct view is displayed.
+ *
+ * @see https://github.com/ionic-team/ionic-framework/issues/28878
  */
 
 const port = 3000;
 
-describe('Content Change Navigation Tests (Issue #28878)', () => {
+describe('Content Change Navigation Tests', () => {
   it('should navigate to list page correctly', () => {
     cy.visit(`http://localhost:${port}/content-change-navigation`);
     cy.ionPageVisible('content-nav-home');
