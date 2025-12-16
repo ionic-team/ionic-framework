@@ -45,6 +45,7 @@ import TabHistoryIsolation from './pages/tab-history-isolation/TabHistoryIsolati
 import Overlays from './pages/overlays/Overlays';
 import NestedTabsRelativeLinks from './pages/nested-tabs-relative-links/NestedTabsRelativeLinks';
 import RootSplatTabs from './pages/root-splat-tabs/RootSplatTabs';
+import ContentChangeNavigation from './pages/content-change-navigation/ContentChangeNavigation';
 
 setupIonicReact();
 
@@ -79,6 +80,7 @@ const App: React.FC = () => {
           <Route path="relative-paths/*" element={<RelativePaths />} />
           <Route path="/nested-tabs-relative-links/*" element={<NestedTabsRelativeLinks />} />
           <Route path="/root-splat-tabs/*" element={<RootSplatTabs />} />
+          <Route path="/content-change-navigation/*" element={<ContentChangeNavigation />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

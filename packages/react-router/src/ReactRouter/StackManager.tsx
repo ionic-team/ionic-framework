@@ -207,9 +207,40 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     }
 
     if (routeInfo.routeAction === 'replace') {
-      return true;
+      const enteringRoutePath = enteringViewItem?.reactElement?.props?.path as string | undefined;
+      const leavingRoutePath = leavingViewItem?.reactElement?.props?.path as string | undefined;
+
+      // Never unmount the root path "/" - it's the main entry point for back navigation
+      if (leavingRoutePath === '/' || leavingRoutePath === '') {
+        return false;
+      }
+
+      if (enteringRoutePath && leavingRoutePath) {
+        // Get parent paths to check if routes share a common parent
+        const getParentPath = (path: string) => {
+          const normalized = path.replace(/\/\*$/, ''); // Remove trailing /*
+          const lastSlash = normalized.lastIndexOf('/');
+          return lastSlash > 0 ? normalized.substring(0, lastSlash) : '/';
+        };
+
+        const enteringParent = getParentPath(enteringRoutePath);
+        const leavingParent = getParentPath(leavingRoutePath);
+
+        // Unmount if:
+        // 1. Routes are siblings (same parent, e.g., /page1 and /page2, or /foo/page1 and /foo/page2)
+        // 2. Entering is a child of leaving (redirect, e.g., /tabs -> /tabs/tab1)
+        const areSiblings = enteringParent === leavingParent && enteringParent !== '/';
+        const isChildRedirect =
+          enteringRoutePath.startsWith(leavingRoutePath) ||
+          (leavingRoutePath.endsWith('/*') && enteringRoutePath.startsWith(leavingRoutePath.slice(0, -2)));
+
+        return areSiblings || isChildRedirect;
+      }
+
+      return false;
     }
 
+    // For non-replace actions, only unmount for back navigation (not forward push)
     const isForwardPush = routeInfo.routeAction === 'push' && (routeInfo as any).routeDirection === 'forward';
     if (!isForwardPush && routeInfo.routeDirection !== 'none' && enteringViewItem !== leavingViewItem) {
       return true;
@@ -317,9 +348,6 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     leavingViewItem: ViewItem | undefined,
     shouldUnmountLeavingViewItem: boolean
   ): void {
-    // Ensure the entering view is not hidden from previous navigations
-    showIonPageElement(enteringViewItem.ionPageElement);
-
     // Handle same view item case (e.g., parameterized route changes)
     if (enteringViewItem === leavingViewItem) {
       const routePath = enteringViewItem.reactElement?.props?.path as string | undefined;
@@ -348,16 +376,20 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       leavingViewItem = this.context.findViewItemByPathname(this.props.routeInfo.prevRouteLastPathname, this.id);
     }
 
-    // Skip transition if entering view is visible and leaving view is not
-    if (
-      enteringViewItem.ionPageElement &&
-      isViewVisible(enteringViewItem.ionPageElement) &&
-      leavingViewItem !== undefined &&
-      leavingViewItem.ionPageElement &&
-      !isViewVisible(leavingViewItem.ionPageElement)
-    ) {
-      return;
+    // Ensure the entering view is marked as mounted.
+    // This is critical for views that were previously unmounted (e.g., navigating back to home).
+    // When mount=false, the ViewLifeCycleManager doesn't render the IonPage, so the
+    // ionPageElement reference becomes stale. By setting mount=true, we ensure the view
+    // gets re-rendered and a new IonPage is created.
+    if (!enteringViewItem.mount) {
+      enteringViewItem.mount = true;
     }
+
+    // Check visibility state BEFORE showing the entering view.
+    // This must be done before showIonPageElement to get accurate visibility state.
+    const enteringWasVisible = enteringViewItem.ionPageElement && isViewVisible(enteringViewItem.ionPageElement);
+    const leavingIsHidden =
+      leavingViewItem !== undefined && leavingViewItem.ionPageElement && !isViewVisible(leavingViewItem.ionPageElement);
 
     // Check for duplicate transition
     const currentTransition = {
@@ -365,17 +397,72 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       leavingId: leavingViewItem?.id,
     };
 
-    if (
+    const isDuplicateTransition =
       leavingViewItem &&
       this.lastTransition &&
       this.lastTransition.leavingId &&
       this.lastTransition.enteringId === currentTransition.enteringId &&
-      this.lastTransition.leavingId === currentTransition.leavingId
-    ) {
+      this.lastTransition.leavingId === currentTransition.leavingId;
+
+    // Skip transition if entering view was ALREADY visible and leaving view is not visible.
+    // This indicates the transition has already been performed (e.g., via swipe gesture).
+    // IMPORTANT: Only skip if both ionPageElements are the same as when the transition was last done.
+    // If the leaving view's ionPageElement changed (e.g., component re-rendered with different IonPage),
+    // we should NOT skip because the DOM state is inconsistent.
+    if (enteringWasVisible && leavingIsHidden && isDuplicateTransition) {
+      // For swipe-to-go-back, the transition animation was handled by the gesture.
+      // We still need to set mount=false so React unmounts the leaving view.
+      // Only do this when skipTransition is set (indicating gesture completion).
+      if (
+        this.skipTransition &&
+        shouldUnmountLeavingViewItem &&
+        leavingViewItem &&
+        enteringViewItem !== leavingViewItem
+      ) {
+        leavingViewItem.mount = false;
+        // Call transitionPage with duration 0 to trigger ionViewDidLeave lifecycle
+        // which is needed for ViewLifeCycleManager to remove the view.
+        this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, 'back');
+      }
+      // Clear skipTransition since we're not calling transitionPage which normally clears it
+      this.skipTransition = false;
+      // Must call forceUpdate to trigger re-render after mount state change
+      this.forceUpdate();
+      return;
+    }
+
+    // Ensure the entering view is not hidden from previous navigations
+    // This must happen AFTER the visibility check above
+    showIonPageElement(enteringViewItem.ionPageElement);
+
+    // Skip if this is a duplicate transition (but visibility state didn't match above)
+    // OR if skipTransition is set (swipe gesture already handled the animation)
+    if (isDuplicateTransition || this.skipTransition) {
+      // For swipe-to-go-back, we still need to handle unmounting even if visibility
+      // conditions aren't fully met (animation might still be in progress)
+      if (
+        this.skipTransition &&
+        shouldUnmountLeavingViewItem &&
+        leavingViewItem &&
+        enteringViewItem !== leavingViewItem
+      ) {
+        leavingViewItem.mount = false;
+        // For swipe-to-go-back, we need to call transitionPage with duration 0 to
+        // trigger the ionViewDidLeave lifecycle event. The ViewLifeCycleManager
+        // uses componentCanBeDestroyed callback to remove the view, which is
+        // only called from ionViewDidLeave. Since the gesture animation already
+        // completed before mount=false was set, we need to re-fire the lifecycle.
+        this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, 'back');
+      }
+      // Clear skipTransition since we're not calling transitionPage which normally clears it
+      this.skipTransition = false;
+      // Must call forceUpdate to trigger re-render after mount state change
+      this.forceUpdate();
       return;
     }
 
     this.lastTransition = currentTransition;
+
     this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
 
     // Handle unmounting the leaving view
@@ -386,14 +473,29 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   }
 
   /**
-   * Handles the delayed unmount of the leaving view item after a replace action.
+   * Handles the delayed unmount of the leaving view item.
+   * For 'replace' actions: handles container route transitions specially.
+   * For back navigation: explicitly unmounts because the ionViewDidLeave lifecycle
+   * fires DURING transitionPage, but mount=false is set AFTER.
+   *
+   * @param routeInfo Current route information
+   * @param enteringViewItem The view being navigated to
+   * @param leavingViewItem The view being navigated from
    */
   private handleLeavingViewUnmount(routeInfo: RouteInfo, enteringViewItem: ViewItem, leavingViewItem: ViewItem): void {
-    if (routeInfo.routeAction !== 'replace' || !leavingViewItem.ionPageElement) {
+    if (!leavingViewItem.ionPageElement) {
       return;
     }
 
-    // Check if we should skip removal for nested outlet redirects
+    // For push/pop actions, do NOT unmount - views are cached for navigation history.
+    // Push: Forward navigation caches views for back navigation
+    // Pop: Back navigation should not unmount the entering view's history
+    // Only 'replace' actions should actually unmount views since they replace history.
+    if (routeInfo.routeAction !== 'replace') {
+      return;
+    }
+
+    // For replace actions, check if we should skip removal for nested outlet redirects
     const enteringRoutePath = enteringViewItem.reactElement?.props?.path as string | undefined;
     const leavingRoutePath = leavingViewItem.reactElement?.props?.path as string | undefined;
     const isEnteringContainerRoute = enteringRoutePath && enteringRoutePath.endsWith('/*');
@@ -412,6 +514,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     const viewToUnmount = leavingViewItem;
     setTimeout(() => {
       this.context.unMountViewItem(viewToUnmount);
+      // Trigger re-render to remove the view from DOM
+      this.forceUpdate();
     }, VIEW_UNMOUNT_DELAY_MS);
   }
 
@@ -472,6 +576,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
         if (shouldUnmountLeavingViewItem && latestLeavingView && latestEnteringView !== latestLeavingView) {
           latestLeavingView.mount = false;
+          // Call handleLeavingViewUnmount to ensure the view is properly removed
+          this.handleLeavingViewUnmount(routeInfo, latestEnteringView, latestLeavingView);
         }
 
         this.forceUpdate();
@@ -615,7 +721,14 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     }
 
     // Handle transition based on ion-page element availability
-    if (enteringViewItem && enteringViewItem.ionPageElement) {
+    // Check if the ionPageElement is still in the document.
+    // If the view was previously unmounted (mount=false), the ViewLifeCycleManager
+    // removes the React component from the tree, which removes the IonPage from the DOM.
+    // The ionPageElement reference becomes stale and we need to wait for a new one.
+    const ionPageIsInDocument =
+      enteringViewItem?.ionPageElement && document.body.contains(enteringViewItem.ionPageElement);
+
+    if (enteringViewItem && ionPageIsInDocument) {
       // Clear waiting state
       if (this.waitingForIonPage) {
         this.waitingForIonPage = false;
@@ -626,8 +739,17 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       }
 
       this.handleReadyEnteringView(routeInfo, enteringViewItem, leavingViewItem, shouldUnmountLeavingViewItem);
-    } else if (enteringViewItem && !enteringViewItem.ionPageElement) {
+    } else if (enteringViewItem && !ionPageIsInDocument) {
       // Wait for ion-page to mount
+      // This handles both: no ionPageElement, or stale ionPageElement (not in document)
+      // Clear stale reference if the element is no longer in the document
+      if (enteringViewItem.ionPageElement && !document.body.contains(enteringViewItem.ionPageElement)) {
+        enteringViewItem.ionPageElement = undefined;
+      }
+      // Ensure the view is marked as mounted so ViewLifeCycleManager renders the IonPage
+      if (!enteringViewItem.mount) {
+        enteringViewItem.mount = true;
+      }
       this.handleWaitingForIonPage(routeInfo, enteringViewItem, leavingViewItem, shouldUnmountLeavingViewItem);
       return;
     } else if (!enteringViewItem && !enteringRoute) {
@@ -657,9 +779,26 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       this.ionPageWaitTimeout = undefined;
     }
     this.pendingPageTransition = false;
+
     const foundView = this.context.findViewItemByRouteInfo(routeInfo, this.id);
+
     if (foundView) {
       const oldPageElement = foundView.ionPageElement;
+
+      /**
+       * FIX for issue #28878: Reject orphaned IonPage registrations.
+       *
+       * When a component conditionally renders different IonPages (e.g., list vs empty state)
+       * using React keys, and state changes simultaneously with navigation, the new IonPage
+       * tries to register for a route we're navigating away from. This creates a stale view.
+       *
+       * Only reject if both pageIds exist and differ, to allow nested outlet registrations.
+       */
+      if (this.shouldRejectOrphanedPage(page, oldPageElement, routeInfo)) {
+        this.hideAndRemoveOrphanedPage(page);
+        return;
+      }
+
       foundView.ionPageElement = page;
       foundView.ionRoute = true;
 
@@ -673,6 +812,45 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       }
     }
     this.handlePageTransition(routeInfo);
+  }
+
+  /**
+   * Determines if a new IonPage registration should be rejected as orphaned.
+   * This happens when a component re-renders with a different IonPage while navigating away.
+   */
+  private shouldRejectOrphanedPage(
+    newPage: HTMLElement,
+    oldPageElement: HTMLElement | undefined,
+    routeInfo: RouteInfo
+  ): boolean {
+    if (!oldPageElement || oldPageElement === newPage) {
+      return false;
+    }
+
+    const newPageId = newPage.getAttribute('data-pageid');
+    const oldPageId = oldPageElement.getAttribute('data-pageid');
+
+    // Only reject if both pageIds exist and are different
+    if (!newPageId || !oldPageId || newPageId === oldPageId) {
+      return false;
+    }
+
+    // Reject only if we're navigating away from this route
+    return this.props.routeInfo.pathname !== routeInfo.pathname;
+  }
+
+  /**
+   * Hides an orphaned IonPage and schedules its removal from the DOM.
+   */
+  private hideAndRemoveOrphanedPage(page: HTMLElement): void {
+    page.classList.add('ion-page-hidden');
+    page.setAttribute('aria-hidden', 'true');
+
+    setTimeout(() => {
+      if (page.parentElement) {
+        page.remove();
+      }
+    }, VIEW_UNMOUNT_DELAY_MS);
   }
 
   /**
@@ -691,13 +869,28 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
       const { routeInfo } = this.props;
       const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
-      const enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, this.id, false);
+      // First try to find the view in the current outlet
+      let enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, this.id, false);
+      // If not found in current outlet, search all outlets (for cross-outlet swipe back)
+      if (!enteringViewItem) {
+        enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, undefined, false);
+      }
+
+      // Check if the ionPageElement is still in the document.
+      // A view might have mount=false but still have its ionPageElement in the DOM
+      // (due to timing differences in unmounting).
+      const ionPageInDocument = Boolean(
+        enteringViewItem?.ionPageElement && document.body.contains(enteringViewItem.ionPageElement)
+      );
 
       const canStartSwipe =
         !!enteringViewItem &&
-        // The root url '/' is treated as the first view item (but is never mounted),
-        // so we do not want to swipe back to the root url.
-        enteringViewItem.mount &&
+        // Check if we can swipe to this view. Either:
+        // 1. The view is mounted (mount=true), OR
+        // 2. The view's ionPageElement is still in the document
+        // The second case handles views that have been marked for unmount but haven't
+        // actually been removed from the DOM yet.
+        (enteringViewItem.mount || ionPageInDocument) &&
         // When on the first page it is possible for findViewItemByRouteInfo to
         // return the exact same view you are currently on.
         // Make sure that we are not swiping back to the same instances of a view.
@@ -709,8 +902,19 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     const onStart = async () => {
       const { routeInfo } = this.props;
       const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
-      const enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, this.id, false);
+      // First try to find the view in the current outlet, then search all outlets
+      let enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, this.id, false);
+      if (!enteringViewItem) {
+        enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, undefined, false);
+      }
       const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
+
+      // Ensure the entering view is mounted so React keeps rendering it during the gesture.
+      // This is important when the view was previously marked for unmount but its
+      // ionPageElement is still in the DOM.
+      if (enteringViewItem && !enteringViewItem.mount) {
+        enteringViewItem.mount = true;
+      }
 
       // When the gesture starts, kick off a transition controlled via swipe gesture
       if (enteringViewItem && leavingViewItem) {
@@ -729,7 +933,11 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         // Swipe gesture was aborted - re-hide the page that was going to enter
         const { routeInfo } = this.props;
         const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
-        const enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, this.id, false);
+        // First try to find the view in the current outlet, then search all outlets
+        let enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, this.id, false);
+        if (!enteringViewItem) {
+          enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, undefined, false);
+        }
         const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
 
         // Don't hide if entering and leaving are the same (parameterized route edge case)
