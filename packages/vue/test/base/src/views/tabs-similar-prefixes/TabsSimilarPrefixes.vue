@@ -39,33 +39,16 @@
   </ion-page>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
+  IonContent,
+  IonIcon,
+  IonLabel,
+  IonPage,
+  IonRouterOutlet,
   IonTabBar,
   IonTabButton,
   IonTabs,
-  IonContent,
-  IonLabel,
-  IonIcon,
-  IonPage,
-  IonRouterOutlet,
 } from '@ionic/vue';
 import { homeOutline, radioOutline, libraryOutline } from 'ionicons/icons';
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  components: {
-    IonContent,
-    IonLabel,
-    IonTabs,
-    IonTabBar,
-    IonTabButton,
-    IonIcon,
-    IonPage,
-    IonRouterOutlet,
-  },
-  setup() {
-    return { homeOutline, radioOutline, libraryOutline };
-  },
-});
 </script>
