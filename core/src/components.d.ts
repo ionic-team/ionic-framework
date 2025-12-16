@@ -890,7 +890,7 @@ export namespace Components {
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"medium"`.
           * @default 'medium'
          */
         "size"?: 'small' | 'medium' | 'large';
@@ -6861,7 +6861,7 @@ declare namespace LocalJSX {
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"medium"`.
           * @default 'medium'
          */
         "size"?: 'small' | 'medium' | 'large';
