@@ -376,28 +376,23 @@ export const applyGlobalTheme = (baseTheme: any, userTheme?: any): any => {
  * @returns string containing the component's themed CSS variables
  */
 export const generateComponentsThemeCSS = (components: any): string => {
-  let componentsCSS = '';
-  if (components) {
-    for (const [component, componentTokens] of Object.entries(components)) {
-      const componentTag = convertToKebabCase(component);
-      const vars = generateCSSVars(componentTokens, `--${componentTag}-`);
+  let css = '';
 
-      const componentBlock = `
-        ${CSS_ROOT_SELECTOR} ${componentTag} {
-          ${vars}
-        }
-      `;
-      
-      // 3. Append the block to the main componentsCSS string
-      componentsCSS += componentBlock;
-    }
+  for (const [component, componentTokens] of Object.entries(components)) {
+    const componentTag = convertToKebabCase(component);
+    const vars = generateCSSVars(componentTokens, `--${componentTag}-`);
+
+    const componentBlock = `
+      ${CSS_ROOT_SELECTOR} ${componentTag} {
+        ${vars}
+      }
+    `;
+
+    css += componentBlock;
   }
-console.log('componentsCSS', componentsCSS);
-  const css = `
-    ${componentsCSS}
-  `;
 
   return css;
+};
 };
 
 /**
