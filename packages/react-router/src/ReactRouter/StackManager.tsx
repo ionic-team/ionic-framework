@@ -470,6 +470,11 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       leavingViewItem.mount = false;
       this.handleLeavingViewUnmount(routeInfo, enteringViewItem, leavingViewItem);
     }
+
+    // Clean up any orphaned sibling views that are no longer reachable
+    // This is important for replace actions (like redirects) where sibling views
+    // that were pushed earlier become unreachable
+    this.cleanupOrphanedSiblingViews(routeInfo, enteringViewItem, leavingViewItem);
   }
 
   /**
@@ -518,6 +523,90 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       // Trigger re-render to remove the view from DOM
       this.forceUpdate();
     }, VIEW_UNMOUNT_DELAY_MS);
+  }
+
+  /**
+   * Cleans up orphaned sibling views after a replace action.
+   * When navigating via replace (e.g., through a redirect), sibling views that were
+   * pushed earlier may become orphaned (unreachable via back navigation).
+   * This method identifies and unmounts such views.
+   */
+  private cleanupOrphanedSiblingViews(
+    routeInfo: RouteInfo,
+    enteringViewItem: ViewItem,
+    leavingViewItem: ViewItem | undefined
+  ): void {
+    // Only cleanup for replace actions
+    if (routeInfo.routeAction !== 'replace') {
+      return;
+    }
+
+    const enteringRoutePath = enteringViewItem.reactElement?.props?.path as string | undefined;
+    if (!enteringRoutePath) {
+      return;
+    }
+
+    // Get all views in this outlet
+    const allViewsInOutlet = this.context.getViewItemsForOutlet ? this.context.getViewItemsForOutlet(this.id) : [];
+
+    // Check if routes are "siblings" - direct children of the same outlet at the same level
+    const areSiblingRoutes = (path1: string, path2: string): boolean => {
+      // Both are relative routes (don't start with /)
+      const path1IsRelative = !path1.startsWith('/');
+      const path2IsRelative = !path2.startsWith('/');
+
+      // For relative routes at the outlet root level, they're siblings
+      if (path1IsRelative && path2IsRelative) {
+        // Check if they're at the same depth (no nested slashes, except for wildcards)
+        const path1Depth = path1.replace(/\/\*$/, '').split('/').filter(Boolean).length;
+        const path2Depth = path2.replace(/\/\*$/, '').split('/').filter(Boolean).length;
+        return path1Depth === path2Depth && path1Depth <= 1;
+      }
+
+      // For absolute routes, check if they share the same parent
+      const getParent = (path: string) => {
+        const normalized = path.replace(/\/\*$/, '');
+        const lastSlash = normalized.lastIndexOf('/');
+        return lastSlash > 0 ? normalized.substring(0, lastSlash) : '/';
+      };
+
+      return getParent(path1) === getParent(path2);
+    };
+
+    for (const viewItem of allViewsInOutlet) {
+      const viewRoutePath = viewItem.reactElement?.props?.path as string | undefined;
+
+      // Skip views that shouldn't be cleaned up:
+      // - The entering view itself
+      // - The immediate leaving view (handled separately by handleLeavingViewUnmount)
+      // - Already unmounted views
+      // - Views without a route path
+      // - Container routes (ending in /*) when entering is also a container route
+      const shouldSkip =
+        viewItem.id === enteringViewItem.id ||
+        (leavingViewItem && viewItem.id === leavingViewItem.id) ||
+        !viewItem.mount ||
+        !viewRoutePath ||
+        (viewRoutePath.endsWith('/*') && enteringRoutePath.endsWith('/*'));
+
+      if (shouldSkip) {
+        continue;
+      }
+
+      // Check if this is a sibling route that should be cleaned up
+      if (areSiblingRoutes(enteringRoutePath, viewRoutePath)) {
+        // Hide and unmount the orphaned view
+        hideIonPageElement(viewItem.ionPageElement);
+        viewItem.mount = false;
+
+        // Schedule removal
+        const viewToRemove = viewItem;
+        setTimeout(() => {
+          this.context.unMountViewItem(viewToRemove);
+          this.forceUpdate();
+        }, VIEW_UNMOUNT_DELAY_MS);
+      }
+    }
   }
 
   /**

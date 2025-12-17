@@ -268,7 +268,7 @@ describe('Routing Tests', () => {
     cy.ionPageVisible('home-details-page-2');
   });
 
-  it('/routing/tabs/home Menu > Favorites > Menu > Home with redirect, Home page should be visible, and Favorites should be hidden', () => {
+  it('/routing/tabs/home Menu > Favorites > Menu > Home with redirect, Home page should be visible, and Favorites should be destroyed', () => {
     cy.visit(`http://localhost:${port}/routing/tabs/home`);
     cy.ionMenuClick();
     cy.ionMenuNav('Favorites');
@@ -276,10 +276,10 @@ describe('Routing Tests', () => {
     cy.ionMenuClick();
     cy.ionMenuNav('Home with redirect');
     cy.ionPageVisible('home-page');
-    cy.ionPageHidden('favorites-page');
+    cy.ionPageDoesNotExist('favorites-page');
   });
 
-  it('/routing/tabs/home Menu > Favorites > Menu > Home with router, Home page should be visible, and Favorites should be hidden', () => {
+  it('/routing/tabs/home Menu > Favorites > Menu > Home with router, Home page should be visible, and Favorites should be destroyed', () => {
     cy.visit(`http://localhost:${port}/routing/tabs/home`);
     cy.ionMenuClick();
     cy.ionMenuNav('Favorites');
@@ -287,7 +287,7 @@ describe('Routing Tests', () => {
     cy.ionMenuClick();
     cy.ionMenuNav('Home with router');
     cy.ionPageVisible('home-page');
-    cy.ionPageHidden('favorites-page');
+    cy.ionPageDoesNotExist('favorites-page');
   });
 
   it('should show back button when going back to a pushed page', () => {
