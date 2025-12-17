@@ -79,8 +79,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   /**
    * Set to `"clear"` for a transparent button that resembles a flat button, to `"outline"`
    * for a transparent button with a border, or to `"solid"` for a button with a filled background.
-   * The default fill is `"solid"` except when inside of a datetime or toolbar, where the default
-   * is `"clear"`.
+   * The default fill is `"solid"` except when inside of a buttons or datetime component, where
+   * the default fill is `"clear"`.
    */
   @Prop({ reflect: true, mutable: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
 
