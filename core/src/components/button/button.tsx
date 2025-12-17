@@ -221,7 +221,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     const rootNode = this.el.getRootNode();
     const shadowHost = rootNode instanceof ShadowRoot ? (rootNode as ShadowRoot).host : null;
 
-    this.inDatetime = !!this.el.closest('ion-datetime') || (shadowHost?.tagName === 'ION-DATETIME');
+    this.inDatetime = !!this.el.closest('ion-datetime') || shadowHost?.tagName === 'ION-DATETIME';
     this.inButtons = !!this.el.closest('ion-buttons');
     this.inListHeader = !!this.el.closest('ion-list-header');
     this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');

@@ -253,7 +253,7 @@
 
 :host .datetime-buttons .datetime-action-buttons,
 .datetime-action-buttons .datetime-action-buttons-container,
-::slotted([slot="buttons"]), {
+::slotted([slot="buttons"]) {
   flex-flow: column;
   align-items: stretch;
   gap: globals.$ion-space-200;

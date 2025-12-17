@@ -2192,11 +2192,7 @@ export class Datetime implements ComponentInterface {
           </div>
 
           <div class="calendar-next-prev">
-            <ion-button
-              aria-label="Previous month"
-              disabled={prevMonthDisabled}
-              onClick={() => this.prevMonth()}
-            >
+            <ion-button aria-label="Previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
               <ion-icon
                 dir={hostDir}
                 aria-hidden="true"
@@ -2206,11 +2202,7 @@ export class Datetime implements ComponentInterface {
                 flipRtl
               ></ion-icon>
             </ion-button>
-            <ion-button
-              aria-label="Next month"
-              disabled={nextMonthDisabled}
-              onClick={() => this.nextMonth()}
-            >
+            <ion-button aria-label="Next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
               <ion-icon
                 dir={hostDir}
                 aria-hidden="true"
