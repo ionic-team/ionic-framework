@@ -12,6 +12,30 @@
   --background: #{globals.$ion-bg-surface-default};
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-radius-025};
+  /**
+   * TODO(FW-6931): Remove these variables upon solving the root cause
+   */
+  --body-opacity: 0;
+  --year-opacity: 0;
+}
+
+/**
+   * TODO(FW-6931): Remove all this css related to opacity upon solving the root cause
+   */
+:host .calendar-body {
+  opacity: var(--body-opacity);
+}
+
+:host .datetime-year {
+  opacity: var(--year-opacity);
+}
+
+:host(.datetime-ready) .calendar-body {
+  --body-opacity: 1;
+}
+
+:host(.datetime-ready) .datetime-year {
+  --year-opacity: 1;
 }
 
 // Header

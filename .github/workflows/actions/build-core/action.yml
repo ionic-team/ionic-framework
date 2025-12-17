@@ -8,22 +8,22 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@v5
-    - uses: actions/setup-node@v5
+    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+    - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
       with:
-        node-version: 22.x
-    - name: Install Dependencies
+        node-version: 24.x
+    - name: 🕸️ Install Dependencies
       run: npm install
       working-directory: ./core
       shell: bash
     # If an Ionicons version was specified install that.
     # Otherwise just use the version defined in the package.json.
-    - name: Install Ionicons Version
+    - name: 📦 Install Ionicons Version
       if: inputs.ionicons-version != ''
       run: npm install ionicons@${{ inputs.ionicons-version }}
       working-directory: ./core
       shell: bash
-    - name: Build Core
+    - name: 🏗️ Build Core
       run: npm run build -- --ci
       working-directory: ./core
       shell: bash

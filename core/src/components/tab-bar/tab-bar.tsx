@@ -24,6 +24,7 @@ import type { TabBarChangedEventDetail } from './tab-bar-interface';
 })
 export class TabBar implements ComponentInterface {
   private keyboardCtrl: KeyboardController | null = null;
+  private didLoad = false;
 
   @Element() el!: HTMLElement;
 
@@ -42,6 +43,12 @@ export class TabBar implements ComponentInterface {
   @Prop() selectedTab?: string;
   @Watch('selectedTab')
   selectedTabChanged() {
+    // Skip the initial watcher call that happens during component load
+    // We handle that in componentDidLoad to ensure children are ready
+    if (!this.didLoad) {
+      return;
+    }
+
     if (this.selectedTab !== undefined) {
       this.ionTabBarChanged.emit({
         tab: this.selectedTab,
@@ -87,8 +94,19 @@ export class TabBar implements ComponentInterface {
    */
   @Event() ionTabBarLoaded!: EventEmitter<void>;
 
-  componentWillLoad() {
-    this.selectedTabChanged();
+  componentDidLoad() {
+    this.ionTabBarLoaded.emit();
+    // Set the flag to indicate the component has loaded
+    // This allows the watcher to emit changes from this point forward
+    this.didLoad = true;
+
+    // Emit the initial selected tab after the component is fully loaded
+    // This ensures all child components (ion-tab-button) are ready
+    if (this.selectedTab !== undefined) {
+      this.ionTabBarChanged.emit({
+        tab: this.selectedTab,
+      });
+    }
   }
 
   async connectedCallback() {
@@ -110,10 +128,6 @@ export class TabBar implements ComponentInterface {
     if (this.keyboardCtrl) {
       this.keyboardCtrl.destroy();
     }
-  }
-
-  componentDidLoad() {
-    this.ionTabBarLoaded.emit();
   }
 
   private getShape(): string | undefined {

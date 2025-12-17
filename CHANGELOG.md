@@ -3,6 +3,96 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.13](https://github.com/ionic-team/ionic-framework/compare/v8.7.12...v8.7.13) (2025-12-13)
+
+**Note:** Version bump only for package ionic-framework
+
+
+
+
+
+## [8.7.12](https://github.com/ionic-team/ionic-framework/compare/v8.7.11...v8.7.12) (2025-12-10)
+
+
+### Bug Fixes
+
+* **modal:** allow interaction with parent content through sheet modals in child routes ([#30839](https://github.com/ionic-team/ionic-framework/issues/30839)) ([b9e3cf0](https://github.com/ionic-team/ionic-framework/commit/b9e3cf0f5aae79a1f27a07b102c77e51f24825f4)), closes [#30700](https://github.com/ionic-team/ionic-framework/issues/30700)
+* **modal:** prevent browser hang when using ModalController in Angular ([#30845](https://github.com/ionic-team/ionic-framework/issues/30845)) ([b164516](https://github.com/ionic-team/ionic-framework/commit/b1645168a7fb9378dc39a081c207b2de0e180089))
+* **popover:** recalculate the content dimensions after the header has fully loaded ([#30853](https://github.com/ionic-team/ionic-framework/issues/30853)) ([99dcf38](https://github.com/ionic-team/ionic-framework/commit/99dcf3810a0c32416996d1e992ddf63359965cfc))
+* **select, action-sheet:** use radio role for options ([#30769](https://github.com/ionic-team/ionic-framework/issues/30769)) ([1c89cf0](https://github.com/ionic-team/ionic-framework/commit/1c89cf06ac959f9c9a35a66f811227c244d3198b))
+
+
+
+
+
+## [8.7.11](https://github.com/ionic-team/ionic-framework/compare/v8.7.10...v8.7.11) (2025-11-26)
+
+
+### Bug Fixes
+
+* **datetime:** ensure datetime is shown when intersection observer fails to report visibility ([#30793](https://github.com/ionic-team/ionic-framework/issues/30793)) ([9d781db](https://github.com/ionic-team/ionic-framework/commit/9d781db662d213090d0b7198d0cdc5abb16fed1b)), closes [#30706](https://github.com/ionic-team/ionic-framework/issues/30706)
+
+
+
+
+
+## [8.7.10](https://github.com/ionic-team/ionic-framework/compare/v8.7.9...v8.7.10) (2025-11-19)
+
+
+### Bug Fixes
+
+* **checkbox, toggle, radio-group:** improve screen reader announcement timing for validation errors ([#30714](https://github.com/ionic-team/ionic-framework/issues/30714)) ([92db364](https://github.com/ionic-team/ionic-framework/commit/92db36489cca944caf1593dbd518a1f025a171a2))
+
+
+
+
+
+## [8.7.9](https://github.com/ionic-team/ionic-framework/compare/v8.7.8...v8.7.9) (2025-11-05)
+
+
+### Bug Fixes
+
+* **accordion-group:** skip initial animation ([#30729](https://github.com/ionic-team/ionic-framework/issues/30729)) ([58d5638](https://github.com/ionic-team/ionic-framework/commit/58d563805fca1db88caeeb40a8f710ac30416d93)), closes [#30613](https://github.com/ionic-team/ionic-framework/issues/30613)
+
+
+
+
+
+## [8.7.8](https://github.com/ionic-team/ionic-framework/compare/v8.7.7...v8.7.8) (2025-10-29)
+
+
+### Bug Fixes
+
+* **checkbox, toggle:** fire ionFocus and ionBlur ([#30733](https://github.com/ionic-team/ionic-framework/issues/30733)) ([54a1c86](https://github.com/ionic-team/ionic-framework/commit/54a1c86d6a5d533b0c8c2d18edc62454a7c17bab))
+
+
+
+
+
+## [8.7.7](https://github.com/ionic-team/ionic-framework/compare/v8.7.6...v8.7.7) (2025-10-15)
+
+
+### Bug Fixes
+
+* **header:** ensure one banner role in condensed header ([#30718](https://github.com/ionic-team/ionic-framework/issues/30718)) ([12084af](https://github.com/ionic-team/ionic-framework/commit/12084af163ed811b9c6bda3c7850fc0c53c60c7b))
+* **header:** prevent flickering during iOS page transitions ([#30705](https://github.com/ionic-team/ionic-framework/issues/30705)) ([820fa28](https://github.com/ionic-team/ionic-framework/commit/820fa2854331722d22efd0e38a1936117477967a)), closes [#25326](https://github.com/ionic-team/ionic-framework/issues/25326)
+* **select:** improve screen reader announcement timing for validation errors ([#30723](https://github.com/ionic-team/ionic-framework/issues/30723)) ([03303d7](https://github.com/ionic-team/ionic-framework/commit/03303d73f0bfe2380ced7931525fc52fd8576367))
+
+
+
+
+
+## [8.7.6](https://github.com/ionic-team/ionic-framework/compare/v8.7.5...v8.7.6) (2025-10-08)
+
+
+### Bug Fixes
+
+* **tabs:** respect stencil lifecycle order for tab selection ([#30702](https://github.com/ionic-team/ionic-framework/issues/30702)) ([7bb9535](https://github.com/ionic-team/ionic-framework/commit/7bb9535f601d2469ce60687a9c03f8b1cfe4aba4)), closes [#30611](https://github.com/ionic-team/ionic-framework/issues/30611)
+
+
+
+
+
 ## [8.7.5](https://github.com/ionic-team/ionic-framework/compare/v8.7.4...v8.7.5) (2025-09-24)
 
 
