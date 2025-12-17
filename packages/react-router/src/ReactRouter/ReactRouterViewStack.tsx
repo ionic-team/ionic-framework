@@ -6,7 +6,7 @@
  */
 
 import type { RouteInfo, ViewItem } from '@ionic/react';
-import { IonRoute, ViewLifeCycleManager, ViewStacks } from '@ionic/react';
+import { generateId, IonRoute, ViewLifeCycleManager, ViewStacks } from '@ionic/react';
 import React from 'react';
 import type { PathMatch } from 'react-router';
 import { Navigate, UNSAFE_RouteContext as RouteContext } from 'react-router-dom';
@@ -99,8 +99,6 @@ const resolveIndexRouteMatch = (
 };
 
 export class ReactRouterViewStack extends ViewStacks {
-  private viewItemCounter = 0;
-
   constructor() {
     super();
   }
@@ -189,8 +187,7 @@ export class ReactRouterViewStack extends ViewStacks {
       return existingViewItem;
     }
 
-    this.viewItemCounter++;
-    const id = `${outletId}-${this.viewItemCounter}`;
+    const id = `${outletId}-${generateId(outletId)}`;
 
     const viewItem: ViewItem = {
       id,
