@@ -29,6 +29,114 @@ const NAVIGATE_REDIRECT_DELAY_MS = 100;
  */
 const VIEW_CLEANUP_DELAY_MS = 200;
 
+type RouteParams = Record<string, string | undefined>;
+
+type RouteContextMatch = {
+  params: RouteParams;
+  pathname: string;
+  pathnameBase: string;
+  route: {
+    id: string;
+    path?: string;
+    element: React.ReactNode;
+    index: boolean;
+    caseSensitive?: boolean;
+    hasErrorBoundary: boolean;
+  };
+};
+
+/**
+ * Computes the absolute pathnameBase for a route element based on its type.
+ * Handles relative paths, index routes, and splat routes differently.
+ */
+const computeAbsolutePathnameBase = (
+  routeElement: React.ReactElement,
+  routeMatch: PathMatch<string> | undefined,
+  parentPathnameBase: string,
+  routeInfoPathname: string
+): string => {
+  const routePath = routeElement.props.path;
+  const isRelativePath = routePath && !routePath.startsWith('/');
+  const isIndexRoute = !!routeElement.props.index;
+  const isSplatOnlyRoute = routePath === '*' || routePath === '/*';
+
+  if (isSplatOnlyRoute) {
+    // Splat routes should NOT contribute their matched portion to pathnameBase
+    // This aligns with React Router v7's v7_relativeSplatPath behavior
+    return parentPathnameBase;
+  }
+
+  if (isRelativePath && routeMatch?.pathnameBase) {
+    const relativeBase = routeMatch.pathnameBase.startsWith('/')
+      ? routeMatch.pathnameBase.slice(1)
+      : routeMatch.pathnameBase;
+    return parentPathnameBase === '/' ? `/${relativeBase}` : `${parentPathnameBase}/${relativeBase}`;
+  }
+
+  if (isIndexRoute) {
+    return parentPathnameBase;
+  }
+
+  return routeMatch?.pathnameBase || routeInfoPathname;
+};
+
+/**
+ * Gets fallback params from view items in other outlets when parent context is empty.
+ * This handles cases where React context propagation doesn't work as expected.
+ */
+const getFallbackParamsFromViewItems = (
+  allViewItems: ViewItem[],
+  currentOutletId: string,
+  currentPathname: string
+): RouteParams => {
+  const params: RouteParams = {};
+
+  for (const otherViewItem of allViewItems) {
+    if (otherViewItem.outletId === currentOutletId) continue;
+
+    const otherMatch = otherViewItem.routeData?.match;
+    if (otherMatch?.params && Object.keys(otherMatch.params).length > 0) {
+      const matchedPathname = otherMatch.pathnameBase || otherMatch.pathname;
+      if (matchedPathname && currentPathname.startsWith(matchedPathname)) {
+        Object.assign(params, otherMatch.params);
+      }
+    }
+  }
+
+  return params;
+};
+
+/**
+ * Builds the matches array for RouteContext.
+ */
+const buildContextMatches = (
+  parentMatches: RouteContextMatch[],
+  combinedParams: RouteParams,
+  routeMatch: PathMatch<string> | undefined,
+  routeInfoPathname: string,
+  absolutePathnameBase: string,
+  viewItem: ViewItem,
+  routeElement: React.ReactElement,
+  componentElement: React.ReactNode
+): RouteContextMatch[] => {
+  return [
+    ...parentMatches,
+    {
+      params: combinedParams,
+      pathname: routeMatch?.pathname || routeInfoPathname,
+      pathnameBase: absolutePathnameBase,
+      route: {
+        id: viewItem.id,
+        path: routeElement.props.path,
+        element: componentElement,
+        index: !!routeElement.props.index,
+        caseSensitive: routeElement.props.caseSensitive,
+        hasErrorBoundary: false,
+      },
+    },
+  ];
+};
+
 const createDefaultMatch = (
   fullPathname: string,
   routeProps: { path?: string; caseSensitive?: boolean; end?: boolean; index?: boolean }
@@ -345,103 +453,42 @@ export class ReactRouterViewStack extends ViewStacks {
     return (
       <RouteContext.Consumer key={`view-context-${viewItem.id}`}>
         {(parentContext) => {
-          const parentMatches = parentContext?.matches ?? [];
-          let accumulatedParentParams = parentMatches.reduce<Record<string, string | string[] | undefined>>(
-            (acc, match) => {
-              return { ...acc, ...match.params };
-            },
-            {}
-          );
+          const parentMatches = (parentContext?.matches ?? []) as RouteContextMatch[];
 
-          // If parentMatches is empty, try to extract params from view items in other outlets.
-          // This handles cases where React context propagation doesn't work as expected
-          // for nested router outlets.
+          // Accumulate params from parent matches, with fallback to other outlets
+          let accumulatedParentParams = parentMatches.reduce<RouteParams>((acc, m) => ({ ...acc, ...m.params }), {});
           if (parentMatches.length === 0 && Object.keys(accumulatedParentParams).length === 0) {
-            const allViewItems = this.getAllViewItems();
-            for (const otherViewItem of allViewItems) {
-              // Skip view items from the same outlet
-              if (otherViewItem.outletId === viewItem.outletId) continue;
-
-              // Check if this view item's route could match the current pathname
-              const otherMatch = otherViewItem.routeData?.match;
-              if (otherMatch && otherMatch.params && Object.keys(otherMatch.params).length > 0) {
-                // Check if the current pathname starts with this view item's matched pathname
-                const matchedPathname = otherMatch.pathnameBase || otherMatch.pathname;
-                if (matchedPathname && routeInfo.pathname.startsWith(matchedPathname)) {
-                  accumulatedParentParams = { ...accumulatedParentParams, ...otherMatch.params };
-                }
-              }
-            }
+            accumulatedParentParams = getFallbackParamsFromViewItems(
+              this.getAllViewItems(),
+              viewItem.outletId,
+              routeInfo.pathname
+            );
           }
 
-          const combinedParams = {
-            ...accumulatedParentParams,
-            ...(routeMatch?.params ?? {}),
-          };
-
-          // For relative route paths, we need to compute an absolute pathnameBase
-          // by combining the parent's pathnameBase with the matched portion
-          const routePath = routeElement.props.path;
-          const isRelativePath = routePath && !routePath.startsWith('/');
-          const isIndexRoute = !!routeElement.props.index;
-          const isSplatOnlyRoute = routePath === '*' || routePath === '/*';
-
-          // Get parent's pathnameBase for relative path resolution
+          const combinedParams = { ...accumulatedParentParams, ...(routeMatch?.params ?? {}) };
           const parentPathnameBase =
             parentMatches.length > 0 ? parentMatches[parentMatches.length - 1].pathnameBase : '/';
+          const absolutePathnameBase = computeAbsolutePathnameBase(
+            routeElement,
+            routeMatch,
+            parentPathnameBase,
+            routeInfo.pathname
+          );
 
-          // Start with the match's pathnameBase, falling back to routeInfo.pathname
-          // BUT: splat-only routes should use parent's base (v7_relativeSplatPath behavior)
-          let absolutePathnameBase: string;
-
-          if (isSplatOnlyRoute) {
-            // Splat routes should NOT contribute their matched portion to pathnameBase
-            // This aligns with React Router v7's v7_relativeSplatPath behavior
-            // Without this, relative links inside splat routes get double path segments
-            absolutePathnameBase = parentPathnameBase;
-          } else if (isRelativePath && routeMatch?.pathnameBase) {
-            // For relative paths with a pathnameBase, combine with parent
-            const relativeBase = routeMatch.pathnameBase.startsWith('/')
-              ? routeMatch.pathnameBase.slice(1)
-              : routeMatch.pathnameBase;
-
-            absolutePathnameBase =
-              parentPathnameBase === '/' ? `/${relativeBase}` : `${parentPathnameBase}/${relativeBase}`;
-          } else if (isIndexRoute) {
-            // Index routes should use the parent's base as their base
-            absolutePathnameBase = parentPathnameBase;
-          } else {
-            // Default: use the match's pathnameBase or the current pathname
-            absolutePathnameBase = routeMatch?.pathnameBase || routeInfo.pathname;
-          }
-
-          const contextMatches = [
-            ...parentMatches,
-            {
-              params: combinedParams,
-              pathname: routeMatch?.pathname || routeInfo.pathname,
-              pathnameBase: absolutePathnameBase,
-              route: {
-                id: viewItem.id,
-                path: routeElement.props.path,
-                element: componentElement,
-                index: !!routeElement.props.index,
-                caseSensitive: routeElement.props.caseSensitive,
-                hasErrorBoundary: false,
-              },
-            },
-          ];
+          const contextMatches = buildContextMatches(
+            parentMatches,
+            combinedParams,
+            routeMatch,
+            routeInfo.pathname,
+            absolutePathnameBase,
+            viewItem,
+            routeElement,
+            componentElement
+          );
 
           const routeContextValue = parentContext
-            ? {
-                ...parentContext,
-                matches: contextMatches,
-              }
-            : {
-                outlet: null,
-                matches: contextMatches,
-                isDataRoute: false,
-              };
+            ? { ...parentContext, matches: contextMatches }
+            : { outlet: null, matches: contextMatches, isDataRoute: false };
 
           return (
             <ViewLifeCycleManager
