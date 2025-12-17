@@ -11,8 +11,6 @@ import {
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// ReplaceAction is no longer used as a component wrapper
-// Routes are defined directly in App.tsx
 const ReplaceAction: React.FC = () => null;
 
 const Page1: React.FC = () => (

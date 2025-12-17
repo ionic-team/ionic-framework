@@ -37,7 +37,7 @@ import Params from './pages/params/Params';
 import Refs from './pages/refs/Refs';
 import { Page1, Page2, Page3 } from './pages/replace-action/Replace';
 import Routing from './pages/routing/Routing';
-import { SwipeToGoBack } from './pages/swipe-to-go-back/SwipToGoBack';
+import { SwipeToGoBack } from './pages/swipe-to-go-back/SwipeToGoBack';
 import TabsContext from './pages/tab-context/TabContext';
 import Tabs from './pages/tabs/Tabs';
 import TabsSecondary from './pages/tabs/TabsSecondary';

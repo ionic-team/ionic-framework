@@ -54,7 +54,7 @@ const Tab2: React.FC = () => {
             navigate('/routing/tabs/settings/details/1');
           }}
         >
-          Details with Unmount via navigate
+          Details via navigate
         </IonButton>
       </IonContent>
     </IonPage>
