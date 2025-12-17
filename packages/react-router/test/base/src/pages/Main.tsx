@@ -10,18 +10,12 @@ import {
 } from '@ionic/react';
 import React from 'react';
 
-import packageJson from '../../package.json';
-
 const Main: React.FC = () => {
-  const majorVersion = packageJson.dependencies['react-router'].match(
-    /(\d+)\.(\d+)\.(\d+)/
-  )?.[1];
-
   return (
     <IonPage data-pageid="home">
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Test App - React Router v{majorVersion}</IonTitle>
+          <IonTitle>Main</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

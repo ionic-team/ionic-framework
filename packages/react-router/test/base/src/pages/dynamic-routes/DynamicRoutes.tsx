@@ -30,7 +30,6 @@ const DynamicRoutes: React.FC = () => {
   return (
     <IonRouterOutlet>
       {routes}
-      {/* <Route path="/home" render={() => <Home update={addRoute} />} /> */}
       <Route path="/dynamic-routes" element={<Navigate to="/dynamic-routes/home" replace />} />
       <Route element={<Failed />} />
     </IonRouterOutlet>

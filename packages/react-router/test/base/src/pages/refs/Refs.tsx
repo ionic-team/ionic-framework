@@ -13,7 +13,6 @@ import { Route } from "react-router";
 const Refs: React.FC = () => {
   return (
     <IonRouterOutlet>
-      {/* <Route path="/home" element={<Home update={addRoute} />} /> */}
       <Route path="/refs" element={<RefsFC />} />
       <Route path="/refs/class" element={<RefsClass />} />
     </IonRouterOutlet>

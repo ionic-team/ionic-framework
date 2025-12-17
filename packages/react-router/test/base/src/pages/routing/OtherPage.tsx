@@ -22,8 +22,6 @@ const OtherPage: React.FC = () => {
   }, []);
 
   return (
-    // <IonRouterOutlet id="other" ionPageContainer>
-    //   <Route path="/otherpage" element={
     <IonPage data-pageid="other-page">
       <IonHeader>
         <IonToolbar>
@@ -37,8 +35,6 @@ const OtherPage: React.FC = () => {
         <IonButton routerLink="/routing/tabs/tab3">Go to tab3</IonButton>
       </IonContent>
     </IonPage>
-    //   }></Route>
-    // </IonRouterOutlet>
   );
 };
 

@@ -506,7 +506,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       !leavingRoutePath.endsWith('/*') &&
       !leavingViewItem.reactElement?.props?.index;
 
-    // Skip removal only for container-to-container transitions
+    // Skip removal for container-to-container transitions (e.g., /tabs/* → /settings/*).
+    // These routes manage their own nested outlets; unmounting would disrupt child views.
     if (isEnteringContainerRoute && !isLeavingSpecificRoute) {
       return;
     }

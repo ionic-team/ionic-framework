@@ -90,10 +90,10 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
         {(context) => {
           this.ionLifeCycleContext = context;
           return (
-            <StackManager routeInfo={routeInfo} id={id}>
+            <StackManager id={id} routeInfo={routeInfo}>
               <IonRouterOutletInner
-                setRef={(val: HTMLIonRouterOutletElement) => (this.ionRouterOutlet = val)}
                 id={id}
+                setRef={(val: HTMLIonRouterOutletElement) => (this.ionRouterOutlet = val)}
                 {...props}
               >
                 {children}

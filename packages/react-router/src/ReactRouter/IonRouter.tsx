@@ -104,6 +104,8 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     didMountRef.current = true;
   }, []);
 
+  // Sync route params extracted by React Router's path matching back into routeInfo.
+  // The view stack's match may contain params (e.g., :id) not present in the initial routeInfo.
   useEffect(() => {
     const activeView = viewStack.current.findViewItemByRouteInfo(routeInfo, undefined, true);
     const matchedParams = activeView?.routeData.match?.params as RouteParams | undefined;
