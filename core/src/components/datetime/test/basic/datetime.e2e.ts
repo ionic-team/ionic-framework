@@ -265,6 +265,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
       const datetime = page.locator('ion-datetime');
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-footer-default-buttons`));
     });
+
     test('should render clear button', async ({ page }) => {
       await page.setContent('<ion-datetime value="2022-05-03" show-clear-button="true"></ion-datetime>', config);
 
@@ -274,6 +275,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
       const datetime = page.locator('ion-datetime');
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-footer-clear-button`));
     });
+
     test('should render default and clear buttons', async ({ page }) => {
       await page.setContent(
         '<ion-datetime value="2022-05-03" show-default-buttons="true" show-clear-button="true"></ion-datetime>',
@@ -292,23 +294,74 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
       const datetime = page.locator('ion-datetime');
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-footer-default-clear-buttons`));
     });
-    test('should render custom buttons', async ({ page }) => {
+
+    test('should render custom default buttons', async ({ page }) => {
       await page.setContent(
         `
         <ion-datetime value="2022-05-03">
           <div slot="buttons">
-            <ion-button id="custom-button" fill="clear" color="primary">Hello!</ion-button>
+            <ion-button id="custom-cancel-button">Cancel</ion-button>
+            <ion-button id="custom-confirm-button">Done</ion-button>
           </div>
         </ion-datetime>
       `,
         config
       );
 
-      const customButton = page.locator('ion-datetime #custom-button');
-      await expect(customButton).toBeVisible();
+      const cancelButton = page.locator('ion-datetime #custom-cancel-button');
+      await expect(cancelButton).toBeVisible();
+
+      const confirmButton = page.locator('ion-datetime #custom-confirm-button');
+      await expect(confirmButton).toBeVisible();
 
       const datetime = page.locator('ion-datetime');
-      await expect(datetime).toHaveScreenshot(screenshot(`datetime-footer-custom-buttons`));
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-footer-custom-default-buttons`));
+    });
+
+    test('should render custom clear button', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime value="2022-05-03">
+          <div slot="buttons">
+            <ion-button color="danger" id="custom-clear-button">Clear</ion-button>
+          </div>
+        </ion-datetime>
+      `,
+        config
+      );
+
+      const clearButton = page.locator('ion-datetime #custom-clear-button');
+      await expect(clearButton).toBeVisible();
+
+      const datetime = page.locator('ion-datetime');
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-footer-custom-clear-button`));
+    });
+
+    test('should render custom default and clear buttons', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime value="2022-05-03">
+          <div slot="buttons">
+            <ion-button id="custom-cancel-button">Cancel</ion-button>
+            <ion-button color="danger" id="custom-clear-button">Clear</ion-button>
+            <ion-button id="custom-confirm-button">Done</ion-button>
+          </div>
+        </ion-datetime>
+      `,
+        config
+      );
+
+      const cancelButton = page.locator('ion-datetime #custom-cancel-button');
+      await expect(cancelButton).toBeVisible();
+
+      const clearButton = page.locator('ion-datetime #custom-clear-button');
+      await expect(clearButton).toBeVisible();
+
+      const confirmButton = page.locator('ion-datetime #custom-confirm-button');
+      await expect(confirmButton).toBeVisible();
+
+      const datetime = page.locator('ion-datetime');
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-footer-custom-default-clear-buttons`));
     });
   });
 });
