@@ -1557,7 +1557,7 @@ export class Datetime implements ComponentInterface {
      * is disabled or readonly.
      */
     const isButtonDisabled = disabled || readonly;
-    const confirmFill = theme === 'ionic' ? 'solid' : 'clear';
+    const confirmFill = theme === 'ionic' ? 'solid' : undefined;
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (!hasSlottedButtons && !showDefaultButtons && !showClearButton) {
       return;
@@ -1588,7 +1588,6 @@ export class Datetime implements ComponentInterface {
               {showDefaultButtons && (
                 <ion-button
                   id="cancel-button"
-                  fill="clear"
                   color={this.color}
                   onClick={() => this.cancel(true)}
                   disabled={isButtonDisabled}
@@ -1600,7 +1599,6 @@ export class Datetime implements ComponentInterface {
                 {showClearButton && (
                   <ion-button
                     id="clear-button"
-                    fill="clear"
                     color={this.color}
                     onClick={() => clearButtonClick()}
                     disabled={isButtonDisabled}
@@ -2196,7 +2194,6 @@ export class Datetime implements ComponentInterface {
           <div class="calendar-next-prev">
             <ion-button
               aria-label="Previous month"
-              fill="clear"
               disabled={prevMonthDisabled}
               onClick={() => this.prevMonth()}
             >
@@ -2211,7 +2208,6 @@ export class Datetime implements ComponentInterface {
             </ion-button>
             <ion-button
               aria-label="Next month"
-              fill="clear"
               disabled={nextMonthDisabled}
               onClick={() => this.nextMonth()}
             >

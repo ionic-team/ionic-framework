@@ -198,16 +198,3 @@
 
   justify-content: flex-end;
 }
-
-// These styles are copied from buttons.md.scss
-:host .datetime-action-buttons ion-button {
-  --padding-top: 3px;
-  --padding-bottom: 3px;
-  --padding-start: 8px;
-  --padding-end: 8px;
-  --box-shadow: none;
-
-  @include margin(0px, 2px, 0px, 2px);
-
-  min-height: 32px;
-}

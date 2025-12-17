@@ -54,12 +54,6 @@
   @include margin(10px, 8px, 10px, 0);
 }
 
-// These styles are copied from buttons.ios.scss
-:host ion-button {
-  font-size: dynamic-font-clamp(1, 17px, 1.24);
-  font-weight: 400;
-}
-
 :host .calendar-action-buttons .calendar-month-year-toggle ion-icon,
 :host .calendar-action-buttons ion-button {
   color: current-color(base);
@@ -340,25 +334,15 @@
   border-top: $datetime-ios-border-color;
 }
 
-:host .datetime-buttons {
+:host .datetime-buttons,
+::slotted([slot="buttons"]) {
   display: flex;
 
   align-items: center;
   justify-content: space-between;
 }
 
-:host .datetime-action-buttons {
+:host .datetime-action-buttons,
+::slotted([slot="buttons"]) {
   width: 100%;
-}
-
-// These styles are copied from buttons.ios.scss
-:host .datetime-action-buttons ion-button {
-  --padding-top: 3px;
-  --padding-bottom: 3px;
-  --padding-start: 5px;
-  --padding-end: 5px;
-
-  @include margin(0px, 2px, 0px, 2px);
-
-  min-height: 32px;
 }

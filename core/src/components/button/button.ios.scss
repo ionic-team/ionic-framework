@@ -293,3 +293,20 @@
   background: var(--ion-toolbar-color, var(--color));
   color: #{var(--ion-toolbar-background, var(--background), ion-color(primary, contrast))};
 }
+
+// Button in Datetime
+// --------------------------------------------------
+
+:host(.in-datetime) {
+  --padding-top: 3px;
+  --padding-bottom: 3px;
+  --padding-start: 5px;
+  --padding-end: 5px;
+
+  @include margin(0px, 2px, 0px, 2px);
+
+  min-height: 32px;
+
+  font-size: dynamic-font-clamp(1, 17px, 1.24);
+  font-weight: 400;
+}

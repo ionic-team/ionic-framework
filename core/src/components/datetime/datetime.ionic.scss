@@ -252,14 +252,9 @@
 }
 
 :host .datetime-buttons .datetime-action-buttons,
-.datetime-action-buttons .datetime-action-buttons-container {
+.datetime-action-buttons .datetime-action-buttons-container,
+::slotted([slot="buttons"]), {
   flex-flow: column;
   align-items: stretch;
   gap: globals.$ion-space-200;
-}
-
-:host .datetime-buttons ion-button {
-  @include globals.typography(globals.$ion-body-action-md);
-
-  min-height: globals.$ion-space-1200;
 }
