@@ -442,19 +442,38 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   }
 
   /**
-   * Cleans up orphaned sibling views after replace actions (redirects).
+   * Cleans up orphaned sibling views after replace actions or push-to-container navigations.
    */
   private cleanupOrphanedSiblingViews(
     routeInfo: RouteInfo,
     enteringViewItem: ViewItem,
     leavingViewItem: ViewItem | undefined
   ): void {
-    if (routeInfo.routeAction !== 'replace') {
+    const enteringRoutePath = enteringViewItem.reactElement?.props?.path as string | undefined;
+    if (!enteringRoutePath) {
       return;
     }
 
-    const enteringRoutePath = enteringViewItem.reactElement?.props?.path as string | undefined;
-    if (!enteringRoutePath) {
+    const leavingRoutePath = leavingViewItem?.reactElement?.props?.path as string | undefined;
+    const isContainerRoute = (path: string | undefined) => path?.endsWith('/*');
+
+    const isReplaceAction = routeInfo.routeAction === 'replace';
+    const isPushToContainer =
+      routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'none' && isContainerRoute(enteringRoutePath);
+
+    if (!isReplaceAction && !isPushToContainer) {
+      return;
+    }
+
+    // Skip cleanup for tab switches
+    const isSameView = enteringViewItem === leavingViewItem;
+    const isSameContainerRoute = isContainerRoute(enteringRoutePath) && leavingRoutePath === enteringRoutePath;
+    const isNavigatingWithinContainer =
+      isPushToContainer &&
+      !leavingViewItem &&
+      routeInfo.prevRouteLastPathname?.startsWith(enteringRoutePath.replace(/\/\*$/, ''));
+
+    if (isSameView || isSameContainerRoute || isNavigatingWithinContainer) {
       return;
     }
 
