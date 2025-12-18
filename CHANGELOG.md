@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.14](https://github.com/ionic-team/ionic-framework/compare/v8.7.13...v8.7.14) (2025-12-17)
+
+
+### Bug Fixes
+
+* **tabs:** select correct tab when routes have similar prefixes ([#30863](https://github.com/ionic-team/ionic-framework/issues/30863)) ([03fb422](https://github.com/ionic-team/ionic-framework/commit/03fb422bfa775e3e9dd695ea1857fa88d4245ecd)), closes [#30448](https://github.com/ionic-team/ionic-framework/issues/30448)
+
+
+
+
+
+## [8.7.13](https://github.com/ionic-team/ionic-framework/compare/v8.7.12...v8.7.13) (2025-12-13)
+
+**Note:** Version bump only for package ionic-framework
+
+
+
+
+
+## [8.7.12](https://github.com/ionic-team/ionic-framework/compare/v8.7.11...v8.7.12) (2025-12-10)
+
+
+### Bug Fixes
+
+* **modal:** allow interaction with parent content through sheet modals in child routes ([#30839](https://github.com/ionic-team/ionic-framework/issues/30839)) ([b9e3cf0](https://github.com/ionic-team/ionic-framework/commit/b9e3cf0f5aae79a1f27a07b102c77e51f24825f4)), closes [#30700](https://github.com/ionic-team/ionic-framework/issues/30700)
+* **modal:** prevent browser hang when using ModalController in Angular ([#30845](https://github.com/ionic-team/ionic-framework/issues/30845)) ([b164516](https://github.com/ionic-team/ionic-framework/commit/b1645168a7fb9378dc39a081c207b2de0e180089))
+* **popover:** recalculate the content dimensions after the header has fully loaded ([#30853](https://github.com/ionic-team/ionic-framework/issues/30853)) ([99dcf38](https://github.com/ionic-team/ionic-framework/commit/99dcf3810a0c32416996d1e992ddf63359965cfc))
+* **select, action-sheet:** use radio role for options ([#30769](https://github.com/ionic-team/ionic-framework/issues/30769)) ([1c89cf0](https://github.com/ionic-team/ionic-framework/commit/1c89cf06ac959f9c9a35a66f811227c244d3198b))
+
+
+
+
+
+## [8.7.11](https://github.com/ionic-team/ionic-framework/compare/v8.7.10...v8.7.11) (2025-11-26)
+
+
+### Bug Fixes
+
+* **datetime:** ensure datetime is shown when intersection observer fails to report visibility ([#30793](https://github.com/ionic-team/ionic-framework/issues/30793)) ([9d781db](https://github.com/ionic-team/ionic-framework/commit/9d781db662d213090d0b7198d0cdc5abb16fed1b)), closes [#30706](https://github.com/ionic-team/ionic-framework/issues/30706)
+
+
+
+
+
 ## [8.7.10](https://github.com/ionic-team/ionic-framework/compare/v8.7.9...v8.7.10) (2025-11-19)
 
 

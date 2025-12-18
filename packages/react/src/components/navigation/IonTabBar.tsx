@@ -40,6 +40,20 @@ interface IonTabBarState {
 
 // TODO(FW-2959): types
 
+/**
+ * Checks if pathname matches the tab's href using path segment matching.
+ * Avoids false matches like /home2 matching /home by requiring exact match
+ * or a path segment boundary (/).
+ */
+const matchesTab = (pathname: string, href: string | undefined): boolean => {
+  if (href === undefined) {
+    return false;
+  }
+
+  const normalizedHref = href.endsWith('/') && href !== '/' ? href.slice(0, -1) : href;
+  return pathname === normalizedHref || pathname.startsWith(normalizedHref + '/');
+};
+
 class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarState> {
   context!: React.ContextType<typeof NavContext>;
 
@@ -79,7 +93,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
     const tabKeys = Object.keys(tabs);
     const activeTab = tabKeys.find((key) => {
       const href = tabs[key].originalHref;
-      return this.props.routeInfo!.pathname.startsWith(href);
+      return matchesTab(this.props.routeInfo!.pathname, href);
     });
 
     if (activeTab) {
@@ -121,7 +135,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
     const tabKeys = Object.keys(state.tabs);
     const activeTab = tabKeys.find((key) => {
       const href = state.tabs[key].originalHref;
-      return props.routeInfo!.pathname.startsWith(href);
+      return matchesTab(props.routeInfo!.pathname, href);
     });
 
     // Check to see if the tab button href has changed, and if so, update it in the tabs state
