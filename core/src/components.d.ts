@@ -890,10 +890,10 @@ export namespace Components {
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"medium"`.
-          * @default 'medium'
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"small"`.
+          * @default 'large'
          */
-        "size"?: 'small' | 'medium' | 'large';
+        "size"?: 'small' | 'large';
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -6861,10 +6861,10 @@ declare namespace LocalJSX {
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"medium"`.
-          * @default 'medium'
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"small"`.
+          * @default 'large'
          */
-        "size"?: 'small' | 'medium' | 'large';
+        "size"?: 'small' | 'large';
         /**
           * The theme determines the visual appearance of the component.
          */

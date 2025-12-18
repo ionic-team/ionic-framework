@@ -632,3 +632,20 @@
     }
   }
 }
+
+// Typography mixin to be used with typography scss variables (ionic.vars.scss)
+//
+// ex: @include typography($ion-heading-h3-medium);
+//
+// --------------------------------------------------
+@mixin typography($properties) {
+  font-family: map-get($properties, font-family);
+  font-size: map-get($properties, font-size);
+  font-weight: map-get($properties, font-weight);
+
+  letter-spacing: map-get($properties, letter-spacing);
+  line-height: map-get($properties, line-height);
+
+  text-decoration: map-get($properties, text-decoration);
+  text-transform: map-get($properties, text-transform);
+}

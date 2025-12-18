@@ -76,8 +76,14 @@ $chip-hue-bold-semantic-outline-border-color: var(--ion-chip-hue-bold-semantic-o
 /// @prop - Outline border width
 $chip-outline-border-width: var(--ion-chip-variant-outline-border-width);
 
-/// @prop - Outline chip background color
-$chip-outline-bg: var(--ion-chip-variant-outline-bg);
+/// @prop - Outline bold chip background color for semantic colors
+$chip-outline-bold-semantic-bg: var(--ion-chip-hue-bold-semantic-outline-bg);
+
+/// @prop - Subtle chip background color for semantic colors
+$chip-hue-subtle-semantic-bg: var(--ion-chip-hue-subtle-semantic-bg);
+
+/// @prop - Outline subtle chip background color for semantic colors
+$chip-outline-subtle-semantic-bg: var(--ion-chip-hue-subtle-semantic-outline-bg);
 
 /// @prop - Focus ring color
 $chip-focus-ring-color: var(--ion-chip-state-focus-ring-color);
@@ -128,7 +134,7 @@ $chip-icon-last-child-margin: var(--ion-chip-icon-last-child-margin);
 $chip-icon-last-child-margin-start: var(--ion-chip-icon-last-child-margin-start);
 
 /// @prop - Avatar size
-$chip-avatar-size: var(--ion-chip-avatar-size);
+$chip-avatar-size: var(--ion-chip-avatar-size, revert-layer);
 
 /// @prop - Avatar margin vertical for first child
 $chip-avatar-first-child-margin-vertical: var(--ion-chip-avatar-first-child-margin-vertical);
@@ -147,3 +153,14 @@ $chip-avatar-last-child-margin-start: var(--ion-chip-avatar-last-child-margin-st
 
 /// @prop - Avatar margin end for last child
 $chip-avatar-last-child-margin-end: var(--ion-chip-avatar-last-child-margin-end);
+
+/// @prop - Typography styles for the chip
+$chip-typography: (
+  font-family: var(--ion-chip-typography-font-family),
+  font-size: var(--ion-chip-typography-font-size),
+  font-weight: var(--ion-chip-typography-font-weight),
+  letter-spacing: var(--ion-chip-typography-letter-spacing),
+  line-height: var(--ion-chip-typography-line-height),
+  text-decoration: var(--ion-chip-typography-text-decoration),
+  text-transform: var(--ion-chip-typography-text-transform),
+);

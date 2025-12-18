@@ -1,6 +1,7 @@
 @use "../../themes/mixins" as mixins;
 @use "../../themes/functions.color" as colors;
 @use "./chip.base.vars.scss" as vars;
+@use "sass:meta";
 
 // Chip: Common Styles
 // --------------------------------------------------
@@ -20,6 +21,7 @@
   @include mixins.border-radius(var(--border-radius));
   @include mixins.margin(vars.$chip-margin);
   @include mixins.padding(vars.$chip-padding-vertical, vars.$chip-padding-horizontal);
+  @include mixins.typography(vars.$chip-typography);
 
   display: inline-flex;
   position: relative;
@@ -47,12 +49,6 @@
   min-height: vars.$chip-size-small-height;
 
   font-size: vars.$chip-size-small-font-size;
-}
-
-:host(.chip-medium) {
-  min-height: vars.$chip-size-medium-height;
-
-  font-size: vars.$chip-size-medium-font-size;
 }
 
 :host(.chip-large) {
@@ -110,6 +106,8 @@
 
 :host(.ion-color.chip-bold.chip-outline) {
   border-color: vars.$chip-hue-bold-semantic-outline-border-color;
+
+  background: vars.$chip-outline-bold-semantic-bg; //native would be transparent, else it would be whatevers in ion-color.chip-bold
 }
 
 // Subtle
@@ -120,6 +118,8 @@
 
 :host(.ion-color.chip-subtle.chip-outline) {
   border-color: colors.current-color(shade, $subtle: true);
+
+  background: vars.$chip-outline-subtle-semantic-bg;
 }
 
 // Outline Chip
@@ -128,11 +128,6 @@
 :host(.chip-outline) {
   border-width: vars.$chip-outline-border-width;
   border-style: solid;
-}
-
-:host(.chip-outline),
-:host(.chip-outline.ion-color) {
-  background: vars.$chip-outline-bg;
 }
 
 // Chip States
@@ -210,10 +205,14 @@
 
 // Avatar
 ::slotted(ion-avatar) {
+  // width: vars.$chip-avatar-size;
+  // height: vars.$chip-avatar-size;
+  // @error vars.$chip-avatar-size;
+  @if vars.$chip-avatar-size != "unset" {
+    width: vars.$chip-avatar-size;
+    height: vars.$chip-avatar-size;
+  }
   flex-shrink: 0;
-
-  width: vars.$chip-avatar-size;
-  height: vars.$chip-avatar-size;
 }
 
 ::slotted(ion-avatar:first-child) {

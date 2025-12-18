@@ -98,10 +98,6 @@ export const defaultTheme: DefaultTheme = {
           height: '24px',
           fontSize: clamp('12px', `${(fontSizes.chipBase - 2) / 16}rem`, '20px'),
         },
-        medium: {
-          height: '32px',
-          fontSize: clamp('13px', `${fontSizes.chipBase / 16}rem`, '22px'),
-        },
         large: {
           height: '32px',
           fontSize: clamp('14px', `${(fontSizes.chipBase + 2) / 16}rem`, '24px'),
@@ -159,6 +155,7 @@ export const defaultTheme: DefaultTheme = {
 
             outline: {
               borderColor: currentColor('base', 0.32),
+              bg: 'transparent',
             },
           },
         },
@@ -169,6 +166,13 @@ export const defaultTheme: DefaultTheme = {
           outline: {
             borderColor: rgba(colors.textColorRgb, 0.32),
           },
+
+          semantic: {
+            outline: {
+              borderColor: currentColor('shade'),
+              bg: 'transparent',
+            },
+          },
         },
       },
 
@@ -176,7 +180,6 @@ export const defaultTheme: DefaultTheme = {
       variant: {
         outline: {
           borderWidth: '1px',
-          bg: 'transparent',
         },
       },
 

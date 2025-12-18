@@ -269,16 +269,15 @@ type Components = {
 
     gap?: string | number;
     lineHeight?: string | number;
+    typography?: {
+      [key: string]: string | number;
+    };
 
     // Sizes
     size: {
       small: {
         height: string | number;
         fontSize: string | number;
-      };
-      medium: {
-        height: string | number;
-        fontSize?: string | number;
       };
       large: {
         height: string | number;
@@ -292,17 +291,19 @@ type Components = {
         opacity: string | number;
       };
       focus: {
-        ringColor?: string;
-        ringWidth?: string | number;
+        ring?: {
+          color: string;
+          width?: string | number;
+        };
+        bg?: string;
+        semanticBg?: string;
+        outlineBg?: string;
+      };
+      activated?: {
         bg: string;
         semanticBg: string;
-        outlineBg: string;
       };
-      activated: {
-        bg: string;
-        semanticBg: string;
-      };
-      hover: {
+      hover?: {
         bg: string;
         semanticBg: string;
         outlineBg: string;
@@ -334,11 +335,12 @@ type Components = {
 
         // Any of the semantic colors like primary, secondary, etc.
         semantic: {
-          bgAlpha: string;
+          bgAlpha?: string;
           color: string;
 
           outline: {
             borderColor: string;
+            bg?: string;
           };
         };
       };
@@ -348,6 +350,14 @@ type Components = {
 
         outline: {
           borderColor: string;
+          bg?: string;
+        };
+
+        semantic: {
+          outline: {
+            borderColor: string;
+            bg?: string;
+          };
         };
       };
     };
@@ -356,27 +366,26 @@ type Components = {
     variant: {
       outline: {
         borderWidth: string | number;
-        bg: string;
       };
     };
 
     icon: {
       size: string | number;
-      color: string;
-      firstChildMargin: string | number;
-      firstChildMarginEnd: string | number;
-      lastChildMargin: string | number;
-      lastChildMarginStart: string | number;
+      color?: string;
+      firstChildMargin?: string | number;
+      firstChildMarginEnd?: string | number;
+      lastChildMargin?: string | number;
+      lastChildMarginStart?: string | number;
     };
 
-    avatar: {
-      size: string | number;
-      firstChildMarginVertical: string | number;
-      firstChildMarginStart: string | number;
-      firstChildMarginEnd: string | number;
-      lastChildMarginVertical: string | number;
-      lastChildMarginStart: string | number;
-      lastChildMarginEnd: string | number;
+    avatar?: {
+      size: string | number | null;
+      firstChildMarginVertical?: string | number;
+      firstChildMarginStart?: string | number;
+      firstChildMarginEnd?: string | number;
+      lastChildMarginVertical?: string | number;
+      lastChildMarginStart?: string | number;
+      lastChildMarginEnd?: string | number;
     };
   };
 

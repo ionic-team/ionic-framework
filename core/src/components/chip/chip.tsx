@@ -64,9 +64,9 @@ export class Chip implements ComponentInterface {
   /**
    * Set to `"small"` for a chip with less height and padding.
    *
-   * Defaults to `"medium"`.
+   * Defaults to `"small"`.
    */
-  @Prop() size?: 'small' | 'medium' | 'large' = 'medium';
+  @Prop() size?: 'small' | 'large' = 'large';
 
   render() {
     const { hue, size } = this;
