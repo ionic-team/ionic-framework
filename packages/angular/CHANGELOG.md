@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.14](https://github.com/ionic-team/ionic-framework/compare/v8.7.13...v8.7.14) (2025-12-17)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [8.7.13](https://github.com/ionic-team/ionic-framework/compare/v8.7.12...v8.7.13) (2025-12-13)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [8.7.12](https://github.com/ionic-team/ionic-framework/compare/v8.7.11...v8.7.12) (2025-12-10)
+
+
+### Bug Fixes
+
+* **modal:** allow interaction with parent content through sheet modals in child routes ([#30839](https://github.com/ionic-team/ionic-framework/issues/30839)) ([b9e3cf0](https://github.com/ionic-team/ionic-framework/commit/b9e3cf0f5aae79a1f27a07b102c77e51f24825f4)), closes [#30700](https://github.com/ionic-team/ionic-framework/issues/30700)
+
+
+
+
+
 ## [8.7.11](https://github.com/ionic-team/ionic-framework/compare/v8.7.10...v8.7.11) (2025-11-26)
 
 **Note:** Version bump only for package @ionic/angular

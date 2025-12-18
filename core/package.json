@@ -1,7 +1,10 @@
 {
   "name": "@ionic/core",
-  "version": "8.7.11",
+  "version": "8.7.14",
   "description": "Base components for Ionic",
+  "engines": {
+    "node": ">= 16"
+  },
   "keywords": [
     "ionic",
     "framework",
@@ -37,10 +40,10 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",
-    "@capacitor/core": "^7.0.0",
-    "@capacitor/haptics": "^7.0.0",
-    "@capacitor/keyboard": "^7.0.0",
-    "@capacitor/status-bar": "^7.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/haptics": "^8.0.0",
+    "@capacitor/keyboard": "^8.0.0",
+    "@capacitor/status-bar": "^8.0.0",
     "@clack/prompts": "^0.11.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
