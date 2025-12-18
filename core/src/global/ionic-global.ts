@@ -1,6 +1,6 @@
 import { Build, getMode, setMode, getElement } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
-import { applyGlobalTheme, getCustomTheme } from '@utils/theme';
+import { applyComponentsTheme, applyGlobalTheme, getCustomTheme } from '@utils/theme';
 
 import type { IonicConfig, Mode, Theme } from '../interface';
 import { defaultTheme as baseTheme } from '../themes/base/default.tokens';
@@ -152,9 +152,17 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   // Apply base theme, or combine with custom theme if provided
   if (customTheme) {
     const combinedTheme = applyGlobalTheme(baseTheme, customTheme);
+    // Component styles must be applied after global styles in order
+    // to ensure CSS variables are available for components
+    // like the semantic colors (e.g., --ion-color-shade)
+    applyComponentsTheme(combinedTheme);
     config.set('customTheme', combinedTheme);
   } else {
     applyGlobalTheme(baseTheme);
+    // Component styles must be applied after global styles in order
+    // to ensure CSS variables are available for components
+    // like the semantic colors (e.g., --ion-color-shade)
+    applyComponentsTheme(baseTheme);
     config.set('customTheme', baseTheme);
   }
 

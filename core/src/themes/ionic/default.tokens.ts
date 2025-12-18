@@ -1,8 +1,21 @@
+import * as colorTokens from 'outsystems-design-tokens/tokens/color scheme.json';
+import * as primitiveTokens from 'outsystems-design-tokens/tokens/primitives.json';
+import * as lightTokens from 'outsystems-design-tokens/tokens/theme/light.json';
+import * as typographyTokens from 'outsystems-design-tokens/tokens/typography.json';
+
+import { currentColor, cachedResolveOsToken } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
 import { darkTheme } from './dark.tokens';
 import { lightTheme } from './light.tokens';
+
+const tokenMap = {
+  colorTokens,
+  primitiveTokens,
+  lightTokens,
+  typographyTokens,
+};
 
 export const defaultTheme: DefaultTheme = {
   ...baseDefaultTheme,
@@ -75,5 +88,103 @@ export const defaultTheme: DefaultTheme = {
     xxl: 'var(--ion-radii-500)',
     xxxl: 'var(--ion-radii-1000)',
     xxxxl: 'var(--ion-radii-full)',
+  },
+
+  components: {
+    IonChip: {
+      margin: '0px',
+      padding: {
+        vertical: primitiveTokens.scale['150'].$value,
+        horizontal: primitiveTokens.scale['200'].$value,
+      },
+      typography: cachedResolveOsToken(typographyTokens.body.sm.medium.$value, tokenMap),
+      lineHeight: primitiveTokens.font['line-height']['full'].$value,
+
+      // Sizes
+      size: {
+        small: {
+          height: primitiveTokens.scale['600'].$value,
+          fontSize: primitiveTokens.font['font-size']['300'].$value,
+        },
+        large: {
+          height: primitiveTokens.scale['800'].$value,
+          fontSize: primitiveTokens.font['font-size']['350'].$value,
+        },
+      },
+
+      // States
+      state: {
+        disabled: {
+          opacity: '0.4',
+        },
+        focus: {
+          ring: {
+            color: lightTokens.primitives.blue['400'].$value,
+            width: primitiveTokens.scale['050'].$value,
+          },
+        },
+      },
+
+      // Shapes
+      shape: {
+        soft: {
+          borderRadius: primitiveTokens.scale['100'].$value,
+        },
+        round: {
+          borderRadius: primitiveTokens.scale['400'].$value,
+        },
+        rectangular: {
+          borderRadius: primitiveTokens.scale['0'].$value,
+        },
+      },
+
+      // Hues
+      hue: {
+        bold: {
+          bg: cachedResolveOsToken(colorTokens.bg.neutral.bold.default, tokenMap),
+          color: lightTokens.primitives.base.white.$value,
+
+          outline: {
+            borderColor: lightTokens.primitives.neutral['1200'].$value,
+          },
+
+          // Any of the semantic colors like primary, secondary, etc.
+          semantic: {
+            color: currentColor('contrast'),
+
+            outline: {
+              borderColor: currentColor('shade'),
+              bg: currentColor('base'),
+            },
+          },
+        },
+        subtle: {
+          bg: cachedResolveOsToken(lightTokens.primitives.neutral['100'], tokenMap),
+          color: lightTokens.primitives.neutral['800'].$value,
+
+          outline: {
+            borderColor: lightTokens.primitives.neutral['300'].$value,
+          },
+
+          semantic: {
+            outline: {
+              borderColor: currentColor('shade', null, true),
+              bg: currentColor('base', null, true),
+            },
+          },
+        },
+      },
+
+      // Variants
+      variant: {
+        outline: {
+          borderWidth: primitiveTokens.scale['025'].$value,
+        },
+      },
+
+      icon: {
+        size: primitiveTokens.font['font-size']['400'].$value,
+      },
+    },
   },
 };
