@@ -1,6 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
+import { checkInvalidState } from '@utils/forms';
 import { renderHiddenInput } from '@utils/helpers';
+import { hostContext } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
 
@@ -9,6 +11,10 @@ import type { RadioGroupChangeEventDetail, RadioGroupCompareFn } from './radio-g
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ *
+ * @part supporting-text - Supporting text displayed above the radios.
+ * @part helper-text - Supporting text displayed above the radios when the radio group is valid.
+ * @part error-text - Supporting text displayed above the radios when the radio group is invalid and touched.
  */
 @Component({
   tag: 'ion-radio-group',
@@ -17,6 +23,7 @@ import type { RadioGroupChangeEventDetail, RadioGroupCompareFn } from './radio-g
     md: 'radio-group.md.scss',
     ionic: 'radio-group.ionic.scss',
   },
+  shadow: true,
 })
 export class RadioGroup implements ComponentInterface {
   private inputId = `ion-rg-${radioGroupIds++}`;
@@ -24,8 +31,16 @@ export class RadioGroup implements ComponentInterface {
   private errorTextId = `${this.inputId}-error-text`;
   private labelId = `${this.inputId}-lbl`;
   private label?: HTMLIonLabelElement | null;
+  private validationObserver?: MutationObserver;
 
   @Element() el!: HTMLElement;
+
+  /**
+   * Track validation state for proper aria-live announcements.
+   */
+  @State() isInvalid = false;
+
+  @State() private hintTextId?: string;
 
   /**
    * If `true`, the radios can be deselected.
@@ -125,6 +140,57 @@ export class RadioGroup implements ComponentInterface {
       if (label) {
         this.labelId = label.id = this.name + '-lbl';
       }
+    }
+
+    // Watch for class changes to update validation state.
+    if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
+      this.validationObserver = new MutationObserver(() => {
+        const newIsInvalid = checkInvalidState(this.el);
+        if (this.isInvalid !== newIsInvalid) {
+          this.isInvalid = newIsInvalid;
+          /**
+           * Screen readers tend to announce changes
+           * to `aria-describedby` when the attribute
+           * is changed during a blur event for a
+           * native form control.
+           * However, the announcement can be spotty
+           * when using a non-native form control
+           * and `forceUpdate()`.
+           * This is due to `forceUpdate()` internally
+           * rescheduling the DOM update to a lower
+           * priority queue regardless if it's called
+           * inside a Promise or not, thus causing
+           * the screen reader to potentially miss the
+           * change.
+           * By using a State variable inside a Promise,
+           * it guarantees a re-render immediately at
+           * a higher priority.
+           */
+          Promise.resolve().then(() => {
+            this.hintTextId = this.getHintTextId();
+          });
+        }
+      });
+
+      this.validationObserver.observe(this.el, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    }
+
+    // Always set initial state
+    this.isInvalid = checkInvalidState(this.el);
+  }
+
+  componentWillLoad() {
+    this.hintTextId = this.getHintTextId();
+  }
+
+  disconnectedCallback() {
+    // Clean up validation observer to prevent memory leaks.
+    if (this.validationObserver) {
+      this.validationObserver.disconnect();
+      this.validationObserver = undefined;
     }
   }
 
@@ -249,7 +315,7 @@ export class RadioGroup implements ComponentInterface {
    * Renders the helper text or error text values
    */
   private renderHintText() {
-    const { helperText, errorText, helperTextId, errorTextId } = this;
+    const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
     const hasHintText = !!helperText || !!errorText;
     if (!hasHintText) {
@@ -258,20 +324,20 @@ export class RadioGroup implements ComponentInterface {
 
     return (
       <div class="radio-group-top">
-        <div id={helperTextId} class="helper-text">
-          {helperText}
+        <div id={helperTextId} class="helper-text" part="supporting-text helper-text" aria-live="polite">
+          {!isInvalid ? helperText : null}
         </div>
-        <div id={errorTextId} class="error-text">
-          {errorText}
+        <div id={errorTextId} class="error-text" part="supporting-text error-text" role="alert">
+          {isInvalid ? errorText : null}
         </div>
       </div>
     );
   }
 
-  private getHintTextID(): string | undefined {
-    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+  private getHintTextId(): string | undefined {
+    const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
-    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+    if (isInvalid && errorText) {
       return errorTextId;
     }
 
@@ -292,22 +358,16 @@ export class RadioGroup implements ComponentInterface {
       <Host
         class={{
           [theme]: true,
+          'in-list': hostContext('ion-list', el),
         }}
         role="radiogroup"
         aria-labelledby={label ? labelId : null}
-        aria-describedby={this.getHintTextID()}
-        aria-invalid={this.getHintTextID() === this.errorTextId}
+        aria-describedby={this.hintTextId}
+        aria-invalid={this.isInvalid ? 'true' : undefined}
         onClick={this.onClick}
       >
         {this.renderHintText()}
-        {/*
-          TODO(FW-6279): Wrapping the slot in a div is a workaround due to a
-          Stencil issue. Without the wrapper, the children radio will fire the
-          blur event on focus, instead of waiting for them to be blurred.
-        */}
-        <div class="radio-group-wrapper">
-          <slot></slot>
-        </div>
+        <slot></slot>
       </Host>
     );
   }

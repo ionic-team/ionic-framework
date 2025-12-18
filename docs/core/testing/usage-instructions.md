@@ -186,7 +186,21 @@ test.describe.only('group of tests', () => {
 > [!IMPORTANT]
 > After debugging, make sure to remove the `.only` suffix to ensure all tests run again during normal execution.
 
-#### 3. Pausing Test Execution
+#### 3. Repeating Tests to Reproduce Flaky Failures
+
+Flaky tests may not fail consistently. To help reproduce intermittent failures locally, you can use Playwright's `--repeat-each` flag to run the same test multiple times in a row.
+
+This is especially useful when CI reports a failure you cannot reproduce on your first local run.
+
+**Example:**
+
+```shell
+npm run test.e2e.docker.update-snapshots src/components/radio/test/a11y/radio.e2e.ts -- --repeat-each=10
+```
+
+This runs the test 10 times, increasing the chance of catching the flaky behavior.
+
+#### 4. Pausing Test Execution
 
 Additionally, you can pause execution of a test by using the `page.pause()` method. This pauses the script execution and allows you to manually inspect the page in the browser.
 

@@ -14,6 +14,8 @@
 
   align-content: center;
 
+  min-width: globals.$ion-scale-1200;
+
   min-height: globals.$ion-scale-1200;
   max-height: globals.$ion-scale-1800;
 }

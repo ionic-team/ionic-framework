@@ -4,6 +4,10 @@
 // Ionic Select Modal
 // --------------------------------------------------
 
+:host(.in-modal-default) ion-content::part(scroll) {
+  --padding-bottom: #{globals.$ion-space-400};
+}
+
 // Item
 // ----------------------------------------------------------------
 

@@ -59,9 +59,9 @@
 :host(.button-outline) {
   --border-width: #{globals.$ion-border-size-025};
   --border-style: #{globals.$ion-border-style-solid};
-  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-activated: #{globals.ion-color(primary, shade, $subtle: true)};
   --background-focused: transparent;
-  --background-hover: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-hover: #{globals.ion-color(primary, shade, $subtle: true)};
   --background-hover-opacity: 1;
   --border-color: #{globals.ion-color(primary, base)};
   --color: #{globals.ion-color(primary, base)};
@@ -69,13 +69,20 @@
   --ripple-color: var(--background-activated);
 }
 
+// Warning Outline Button - use foreground color for text and border
+:host(.button-outline.ion-color-warning) .button-native {
+  border-color: globals.ion-color(warning, foreground);
+
+  color: globals.ion-color(warning, foreground);
+}
+
 // Clear Button
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-activated: #{globals.ion-color(primary, shade, $subtle: true)};
   --background-focused: transparent;
-  --background-hover: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-hover: #{globals.ion-color(primary, shade, $subtle: true)};
   --background-hover-opacity: 1;
   --color: #{globals.ion-color(primary, foreground)};
   --ripple-opacity: var(--background-activated-opacity, 1);
@@ -91,7 +98,7 @@
 
 :host(.button-outline.ion-color) ion-ripple-effect,
 :host(.button-clear.ion-color) ion-ripple-effect {
-  color: globals.$ion-primitives-neutral-200;
+  color: globals.current-color(shade, $subtle: true);
 }
 
 // Button Sizes
@@ -178,21 +185,21 @@
 // --------------------------------------------------
 
 :host(.button-soft) {
-  --border-radius: #{globals.$ion-border-radius-200};
+  --border-radius: #{globals.$ion-soft-xs};
 }
 
 // Round Button
 // --------------------------------------------------
 
 :host(.button-round) {
-  --border-radius: #{globals.$ion-border-radius-full};
+  --border-radius: #{globals.$ion-round-xs};
 }
 
 // Rectangular Button
 // --------------------------------------------------
 
 :host(.button-rectangular) {
-  --border-radius: #{globals.$ion-border-radius-0};
+  --border-radius: #{globals.$ion-rectangular-xs};
 }
 
 // Button: Focus
@@ -211,8 +218,15 @@
   background: globals.current-color(shade);
 }
 
+:host(.button-outline.ion-color.ion-activated) .button-native::after,
+:host(.button-clear.ion-color.ion-activated) .button-native::after {
+  background: globals.current-color(shade, $subtle: true);
+}
+
 :host(.ion-activated) .button-native:has(ion-ripple-effect)::after,
-:host(.button-solid.ion-color.ion-activated) .button-native:has(ion-ripple-effect)::after {
+:host(.button-solid.ion-color.ion-activated) .button-native:has(ion-ripple-effect)::after,
+:host(.button-outline.ion-color.ion-activated) .button-native:has(ion-ripple-effect)::after,
+:host(.button-clear.ion-color.ion-activated) .button-native:has(ion-ripple-effect)::after {
   background: transparent;
 }
 
@@ -222,6 +236,11 @@
 @media (any-hover: hover) {
   :host(.button-solid.ion-color:hover) .button-native::after {
     background: globals.current-color(shade);
+  }
+
+  :host(.button-outline.ion-color:hover) .button-native::after,
+  :host(.button-clear.ion-color:hover) .button-native::after {
+    background: globals.current-color(shade, $subtle: true);
   }
 }
 

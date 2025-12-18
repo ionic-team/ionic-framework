@@ -27,6 +27,16 @@
   --border-radius: #{globals.$ion-border-radius-0};
 }
 
+// Default Modal
+// --------------------------------------------------
+
+// Modal when inside a select default-modal
+:host(.select-modal.modal-default) {
+  --max-height: 45%;
+  --max-width: calc(100% - (#{globals.$ion-space-400} * 2));
+  --min-height: 340px;
+}
+
 // Sheet Modal
 // --------------------------------------------------
 

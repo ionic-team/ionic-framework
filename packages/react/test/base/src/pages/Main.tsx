@@ -22,6 +22,9 @@ const Main: React.FC<MainProps> = () => {
       </IonHeader>
       <IonContent>
         <IonList>
+          <IonItem routerLink="/accordion-group">
+            <IonLabel>Accordion Group</IonLabel>
+          </IonItem>
           <IonItem routerLink="/overlay-hooks">
             <IonLabel>Overlay Hooks</IonLabel>
           </IonItem>
@@ -42,6 +45,9 @@ const Main: React.FC<MainProps> = () => {
           </IonItem>
           <IonItem routerLink="/tabs-direct-navigation">
             <IonLabel>Tabs with Direct Navigation</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/tabs-similar-prefixes">
+            <IonLabel>Tabs with Similar Route Prefixes</IonLabel>
           </IonItem>
           <IonItem routerLink="/icons">
             <IonLabel>Icons</IonLabel>

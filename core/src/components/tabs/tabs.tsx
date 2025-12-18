@@ -68,32 +68,33 @@ export class Tabs implements NavOutlet {
     this.ionNavWillLoad.emit();
   }
 
-  componentWillRender() {
+  componentDidLoad() {
+    this.updateTabBar();
+  }
+
+  componentDidUpdate() {
+    this.updateTabBar();
+  }
+
+  private updateTabBar() {
     const tabBar = this.el.querySelector('ion-tab-bar');
-    if (tabBar) {
-      let tab = this.selectedTab ? this.selectedTab.tab : undefined;
-
-      // Fallback: if no selectedTab is set but we're using router mode,
-      // determine the active tab from the current URL. This works around
-      // timing issues in React Router integration where setRouteId may not
-      // be called in time for the initial render.
-      // TODO(FW-6724): Remove this with React Router upgrade
-      if (!tab && this.useRouter && typeof window !== 'undefined') {
-        const currentPath = window.location.pathname;
-        const tabButtons = this.el.querySelectorAll('ion-tab-button');
-
-        // Look for a tab button that matches the current path pattern
-        for (const tabButton of tabButtons) {
-          const tabId = tabButton.getAttribute('tab');
-          if (tabId && currentPath.includes(tabId)) {
-            tab = tabId;
-            break;
-          }
-        }
-      }
-
-      tabBar.selectedTab = tab;
+    if (!tabBar) {
+      return;
     }
+
+    const tab = this.selectedTab ? this.selectedTab.tab : undefined;
+
+    // If tabs has no selected tab but tab-bar already has a selected-tab set,
+    // don't overwrite it. This handles cases where tab-bar is used without ion-tab elements.
+    if (tab === undefined) {
+      return;
+    }
+
+    if (tabBar.selectedTab === tab) {
+      return;
+    }
+
+    tabBar.selectedTab = tab;
   }
 
   /**
@@ -165,6 +166,7 @@ export class Tabs implements NavOutlet {
     this.selectedTab = selectedTab;
     this.ionTabsWillChange.emit({ tab: selectedTab.tab });
     selectedTab.active = true;
+    this.updateTabBar();
     return Promise.resolve();
   }
 
