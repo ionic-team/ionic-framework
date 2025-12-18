@@ -258,3 +258,9 @@
 
   min-height: 32px;
 }
+
+:host(.in-datetime.button-clear) {
+  --background-activated: transparent;
+  --background-focused: currentColor;
+  --background-hover: currentColor;
+}
