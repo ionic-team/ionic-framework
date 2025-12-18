@@ -41,7 +41,7 @@ const Details: React.FC = () => {
     <IonPage data-pageid="details">
       <IonHeader>
         <IonToolbar>
-          <IonButtons>
+          <IonButtons slot="start">
             <IonBackButton></IonBackButton>
           </IonButtons>
           <IonTitle>Details</IonTitle>
