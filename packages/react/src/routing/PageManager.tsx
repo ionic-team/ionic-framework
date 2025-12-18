@@ -36,8 +36,43 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
     this.ionViewDidLeaveHandler = this.ionViewDidLeaveHandler.bind(this);
   }
 
+  private parseClasses(className: string | undefined): Set<string> {
+    if (!className) return new Set();
+    return new Set(className.split(/\s+/).filter(Boolean));
+  }
+
+  /**
+   * Updates classList by diffing old/new className props.
+   * Preserves framework-added classes (can-go-back, ion-page-invisible, etc.).
+   */
+  private updateUserClasses(oldClassName: string | undefined, newClassName: string | undefined) {
+    if (!this.ionPageElementRef.current) return;
+
+    const oldClasses = this.parseClasses(oldClassName);
+    const newClasses = this.parseClasses(newClassName);
+
+    oldClasses.forEach((cls) => {
+      if (!newClasses.has(cls)) {
+        this.ionPageElementRef.current!.classList.remove(cls);
+      }
+    });
+
+    newClasses.forEach((cls) => {
+      if (!oldClasses.has(cls)) {
+        this.ionPageElementRef.current!.classList.add(cls);
+      }
+    });
+  }
+
   componentDidMount() {
     if (this.ionPageElementRef.current) {
+      // Add user classes via classList to preserve framework-added classes on re-renders
+      if (this.props.className) {
+        this.parseClasses(this.props.className).forEach((cls) => {
+          this.ionPageElementRef.current!.classList.add(cls);
+        });
+      }
+
       if (this.context.isInOutlet()) {
         this.ionPageElementRef.current.classList.add('ion-page-invisible');
       }
@@ -46,6 +81,12 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
       this.ionPageElementRef.current.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler);
       this.ionPageElementRef.current.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler);
       this.ionPageElementRef.current.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler);
+    }
+  }
+
+  componentDidUpdate(prevProps: PageManagerProps) {
+    if (prevProps.className !== this.props.className) {
+      this.updateUserClasses(prevProps.className, this.props.className);
     }
   }
 
@@ -89,7 +130,7 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
         {(context) => {
           this.ionLifeCycleContext = context;
           return (
-            <div className={className ? `${className} ion-page` : `ion-page`} ref={this.stableMergedRefs} {...props}>
+            <div className="ion-page" ref={this.stableMergedRefs} {...props}>
               {children}
             </div>
           );

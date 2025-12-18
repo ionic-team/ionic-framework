@@ -83,12 +83,7 @@ describe('Nested Outlets 2', () => {
     cy.ionPageVisible('list');
   });
 
-  it(`/nested-outlet2 >
-    Go to Welcome IonItem click >
-    Go to list from Welcome IonItem click >
-    Item#1 IonItem Click >
-    Item page should be visible
-`, () => {
+  it('/nested-outlet2 > Go to Welcome IonItem click > Go to list from Welcome IonItem click > Item#1 IonItem Click > Item page should be visible', () => {
     cy.visit(`http://localhost:${port}/nested-outlet2`);
     cy.ionPageVisible('home');
     cy.ionNav('ion-item', 'Go to Welcome');
@@ -99,13 +94,7 @@ describe('Nested Outlets 2', () => {
     cy.ionPageVisible('item');
   });
 
-  it(`/nested-outlet2 >
-    Go to list from Home IonItem click >
-    Item#1 IonItem Click >
-    Item page should be visible >
-    Back >
-    List page should be visible
-`, () => {
+  it('/nested-outlet2 > Go to list from Home IonItem click > Item#1 IonItem Click > Item page should be visible > Back > List page should be visible', () => {
     cy.visit(`http://localhost:${port}/nested-outlet2`);
     cy.ionPageVisible('home');
     cy.ionNav('ion-item', 'Go to list from Home');
@@ -116,15 +105,7 @@ describe('Nested Outlets 2', () => {
     cy.ionPageVisible('list');
 });
 
-  it(`/nested-outlet2 >
-    Go to list from Home IonItem click >
-    Item#1 IonItem Click >
-    Item page should be visible >
-    Back >
-    List page should be visible
-    Back >
-    Home page should be visible
-`, () => {
+  it('/nested-outlet2 > Go to list from Home IonItem click > Item#1 IonItem Click > Item page should be visible > Back > List page should be visible > Back > Home page should be visible', () => {
     cy.visit(`http://localhost:${port}/nested-outlet2`);
     cy.ionPageVisible('home');
     cy.ionNav('ion-item', 'Go to list from Home');
