@@ -242,6 +242,10 @@ ion-card-header.ion-color .ion-inherit-color {
   color: inherit;
 }
 
+ion-card-header + ion-card-content {
+  padding-top: 0;
+}
+
 // Menu Styles
 // --------------------------------------------------
 
@@ -432,8 +436,4 @@ h1[tabindex="-1"]:focus,
   .popover-viewport {
     overflow: hidden;
   }
-}
-
-ion-card-header + ion-card-content {
-  padding-top: 0;
 }
