@@ -12,30 +12,6 @@
   line-height: 1.4;
 }
 
-::slotted(h1) {
-  @include margin(0, 0, 2px);
-
-  font-size: dynamic-font(24px);
-  font-weight: normal;
-}
-
-::slotted(h2) {
-  @include margin(2px, 0);
-
-  font-size: dynamic-font(16px);
-  font-weight: normal;
-}
-
-::slotted(h3),
-::slotted(h4),
-::slotted(h5),
-::slotted(h6) {
-  @include margin(2px, 0);
-
-  font-size: dynamic-font(14px);
-  font-weight: normal;
-}
-
 ::slotted(p) {
   @include margin(0, 0, 2px);
 
