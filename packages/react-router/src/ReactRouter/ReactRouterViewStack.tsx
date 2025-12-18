@@ -433,7 +433,6 @@ export class ReactRouterViewStack extends ViewStacks {
 
       if (hasSpecificMatch) {
         viewItem.mount = false;
-        // Also hide the ion-page element immediately to prevent visual overlap
         if (viewItem.ionPageElement) {
           viewItem.ionPageElement.classList.add('ion-page-hidden');
           viewItem.ionPageElement.setAttribute('aria-hidden', 'true');

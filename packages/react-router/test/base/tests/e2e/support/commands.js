@@ -96,8 +96,11 @@ Cypress.Commands.add('ionBackClick', (pageId) => {
     .click();
 });
 
-// TODO: ionMenuClick is not implemented - figure out how to get menu to close
-Cypress.Commands.add('ionMenuClick', () => {});
+Cypress.Commands.add('ionMenuClick', () => {
+  cy.log('[ionMenuClick] Clicking menu button');
+  cy.get('ion-menu-button').first().click({ force: true });
+  cy.wait(500); // Wait for menu animation
+});
 
 Cypress.Commands.add('ionHardwareBackEvent', () => {
   cy.document().trigger('backbutton');
