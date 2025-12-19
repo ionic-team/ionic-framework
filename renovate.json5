@@ -8,8 +8,15 @@
       groupName: "Download + Upload Artifacts"
     },
     {
-      matchPackagePatterns: ["@stencil/core", "@stencil/angular-output-target", "@stencil/react-output-target", "@stencil/sass", "@stencil/vue-output-target"],
+      matchPackagePatterns: ["@stencil/core", "@stencil/sass"],
       groupName: "stencil",
+      matchFileNames: [
+        "core/package.json"
+      ]
+    },
+    {
+      matchPackagePatterns: ["@stencil/angular-output-target", "@stencil/react-output-target", "@stencil/vue-output-target"],
+      groupName: "stencil-output-targets",
       matchFileNames: [
         "core/package.json"
       ]
@@ -89,6 +96,15 @@
         "package.json"
       ],
       enabled: false
+    },
+    {
+      /**
+       * Group Node version updates into a single PR to update 
+       * the workflows and core package.json simultaneously.
+       */
+      matchDatasources: ["node-version"],
+      matchPackagePatterns: ["node"],
+      groupName: "node-version-updates"
     }
   ],
   dependencyDashboard: false,

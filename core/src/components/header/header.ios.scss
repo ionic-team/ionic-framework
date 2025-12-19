@@ -39,6 +39,15 @@
   --opacity-scale: inherit;
 }
 
+/**
+ * Override styles applied during the page transition to prevent
+ * header flickering.
+ */
+.header-collapse-fade.header-transitioning ion-toolbar {
+  --background: transparent;
+  --border-style: none;
+}
+
 // iOS Header - Collapse Condense
 // --------------------------------------------------
 .header-collapse-condense {
@@ -65,8 +74,6 @@
  * since it needs to blend in with the header above it.
  */
 .header-collapse-condense ion-toolbar {
-  --background: var(--ion-background-color, #fff);
-
   z-index: 0;
 }
 
@@ -91,6 +98,28 @@
 .header-collapse-main ion-toolbar.in-toolbar ion-title,
 .header-collapse-main ion-toolbar.in-toolbar ion-buttons {
   transition: all 0.2s ease-in-out;
+}
+
+/**
+ * Large title toolbar should just use the content background
+ * since it needs to blend in with the header above it.
+ */
+.header-collapse-condense ion-toolbar,
+/**
+ * Override styles applied during the page transition to prevent
+ * header flickering.
+ */
+.header-collapse-condense-inactive.header-transitioning:not(.header-collapse-condense) ion-toolbar {
+  --background: var(--ion-background-color, #fff);
+}
+
+/**
+ * Override styles applied during the page transition to prevent
+ * header flickering.
+ */
+.header-collapse-condense-inactive.header-transitioning:not(.header-collapse-condense) ion-toolbar {
+  --border-style: none;
+  --opacity-scale: 1;
 }
 
 .header-collapse-condense-inactive:not(.header-collapse-condense) ion-toolbar.in-toolbar ion-title,

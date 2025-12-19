@@ -3,6 +3,81 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.14](https://github.com/ionic-team/ionic-framework/compare/v8.7.13...v8.7.14) (2025-12-17)
+
+
+### Bug Fixes
+
+* **tabs:** select correct tab when routes have similar prefixes ([#30863](https://github.com/ionic-team/ionic-framework/issues/30863)) ([03fb422](https://github.com/ionic-team/ionic-framework/commit/03fb422bfa775e3e9dd695ea1857fa88d4245ecd)), closes [#30448](https://github.com/ionic-team/ionic-framework/issues/30448)
+
+
+
+
+
+## [8.7.13](https://github.com/ionic-team/ionic-framework/compare/v8.7.12...v8.7.13) (2025-12-13)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.7.12](https://github.com/ionic-team/ionic-framework/compare/v8.7.11...v8.7.12) (2025-12-10)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.7.11](https://github.com/ionic-team/ionic-framework/compare/v8.7.10...v8.7.11) (2025-11-26)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.7.10](https://github.com/ionic-team/ionic-framework/compare/v8.7.9...v8.7.10) (2025-11-19)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.7.9](https://github.com/ionic-team/ionic-framework/compare/v8.7.8...v8.7.9) (2025-11-05)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.7.8](https://github.com/ionic-team/ionic-framework/compare/v8.7.7...v8.7.8) (2025-10-29)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.7.7](https://github.com/ionic-team/ionic-framework/compare/v8.7.6...v8.7.7) (2025-10-15)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.7.6](https://github.com/ionic-team/ionic-framework/compare/v8.7.5...v8.7.6) (2025-10-08)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
 ## [8.7.5](https://github.com/ionic-team/ionic-framework/compare/v8.7.4...v8.7.5) (2025-09-24)
 
 

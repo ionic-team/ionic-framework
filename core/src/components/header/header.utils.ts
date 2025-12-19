@@ -2,6 +2,8 @@ import { readTask, writeTask } from '@stencil/core';
 import { clamp } from '@utils/helpers';
 
 const TRANSITION = 'all 0.2s ease-in-out';
+const ROLE_NONE = 'none';
+const ROLE_BANNER = 'banner';
 
 interface HeaderIndex {
   el: HTMLIonHeaderElement;
@@ -171,6 +173,7 @@ export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
   const ionTitles = toolbars.map((toolbar) => toolbar.ionTitleEl);
 
   if (active) {
+    headerEl.setAttribute('role', ROLE_BANNER);
     headerEl.classList.remove('header-collapse-condense-inactive');
 
     ionTitles.forEach((ionTitle) => {
@@ -179,6 +182,16 @@ export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
       }
     });
   } else {
+    /**
+     * There can only be one banner landmark per page.
+     * By default, all ion-headers have the banner role.
+     * This causes an accessibility issue when using a
+     * condensed header since there are two ion-headers
+     * on the page at once (active and inactive).
+     * To solve this, the role needs to be toggled
+     * based on which header is active.
+     */
+    headerEl.setAttribute('role', ROLE_NONE);
     headerEl.classList.add('header-collapse-condense-inactive');
 
     /**
@@ -243,4 +256,29 @@ export const handleHeaderFade = (scrollEl: HTMLElement, baseEl: HTMLElement, con
       baseEl.style.setProperty('--opacity-scale', scale.toString());
     });
   });
+};
+
+/**
+ * Get the role type for the ion-header.
+ *
+ * @param isInsideMenu If ion-header is inside ion-menu.
+ * @param isCondensed If ion-header has collapse="condense".
+ * @param mode The current mode.
+ * @returns 'none' if inside ion-menu or if condensed in md
+ * mode, otherwise 'banner'.
+ */
+export const getRoleType = (isInsideMenu: boolean, isCondensed: boolean, mode: 'ios' | 'md') => {
+  // If the header is inside a menu, it should not have the banner role.
+  if (isInsideMenu) {
+    return ROLE_NONE;
+  }
+  /**
+   * Only apply role="none" to `md` mode condensed headers
+   * since the large header is never shown.
+   */
+  if (isCondensed && mode === 'md') {
+    return ROLE_NONE;
+  }
+  // Default to banner role.
+  return ROLE_BANNER;
 };

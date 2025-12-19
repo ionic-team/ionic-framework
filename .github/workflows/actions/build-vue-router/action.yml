@@ -3,9 +3,9 @@ description: 'Builds Ionic Vue Router'
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@v5
+    - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
       with:
-        node-version: 22.x
+        node-version: 24.x
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
@@ -16,23 +16,23 @@ runs:
         name: ionic-vue
         path: ./packages/vue
         filename: VueBuild.zip
-    - name: Install Vue Router Dependencies
+    - name: 🕸️ Install Vue Router Dependencies
       run: npm ci
       shell: bash
       working-directory: ./packages/vue-router
-    - name: Sync
+    - name: 🔄 Sync
       run: npm run sync
       shell: bash
       working-directory: ./packages/vue-router
-    - name: Lint
+    - name: 🖌️ Lint
       run: npm run lint
       shell: bash
       working-directory: ./packages/vue-router
-    - name: Build
+    - name: 🏗️ Build
       run: npm run build
       shell: bash
       working-directory: ./packages/vue-router
-    - name: Test Spec
+    - name: 🧪 Test Spec
       run: npm run test.spec
       shell: bash
       working-directory: ./packages/vue-router

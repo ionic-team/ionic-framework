@@ -3,21 +3,21 @@ description: 'Test Core Lint'
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@v5
+    - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
       with:
-        node-version: 22.x
-    - name: Install Dependencies
+        node-version: 24.x
+    - name: 🕸️ Install Dependencies
       run: npm ci
       working-directory: ./core
       shell: bash
-    - name: Lint
+    - name: 🖌️ Lint
       run: npm run lint
       shell: bash
       working-directory: ./core
     # Lint changes should be pushed
     # to the branch before the branch
     # is merge eligible.
-    - name: Check Lint Results
+    - name: 🔎 Check Lint Results
       run: git diff --exit-code
       shell: bash
       working-directory: ./core

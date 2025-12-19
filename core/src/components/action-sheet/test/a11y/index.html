@@ -27,6 +27,7 @@
       <button class="expand" id="ariaLabelCancelButton" onclick="presentAriaLabelCancelButton()">
         Aria Label Cancel Button
       </button>
+      <button class="expand" id="radioButtons" onclick="presentRadioButtons()">Radio Buttons</button>
     </main>
 
     <script>
@@ -96,6 +97,32 @@
                 'aria-label': 'cancel button',
                 'aria-labelledby': 'cancel-label',
               },
+            },
+          ],
+        });
+      }
+
+      function presentRadioButtons() {
+        openActionSheet({
+          header: 'Select an option',
+          buttons: [
+            {
+              text: 'Option 1',
+              htmlAttributes: {
+                role: 'radio',
+                'aria-checked': 'false',
+              },
+            },
+            {
+              text: 'Option 2',
+              htmlAttributes: {
+                role: 'radio',
+                'aria-checked': 'true',
+              },
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel',
             },
           ],
         });
