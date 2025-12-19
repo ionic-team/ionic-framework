@@ -16,6 +16,16 @@ import type {
   InputOtpInputEventDetail,
 } from './input-otp-interface';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ *
+ * @part group - The container element that wraps all input boxes.
+ * @part container - The wrapper element for each individual input box.
+ * @part native - The native input element.
+ * @part separator - The separator element displayed between input boxes.
+ * @part description - The container element for the description text.
+ */
 @Component({
   tag: 'ion-input-otp',
   styleUrls: {
@@ -23,7 +33,8 @@ import type {
     md: 'input-otp.md.scss',
     ionic: 'input-otp.ionic.scss',
   },
-  scoped: true,
+  shadow: true,
+  formAssociated: true,
 })
 export class InputOTP implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
@@ -817,12 +828,19 @@ export class InputOTP implements ComponentInterface {
           'input-otp-readonly': readonly,
         })}
       >
-        <div role="group" aria-label="One-time password input" class="input-otp-group" {...inheritedAttributes}>
+        <div
+          role="group"
+          aria-label="One-time password input"
+          class="input-otp-group"
+          part="group"
+          {...inheritedAttributes}
+        >
           {Array.from({ length }).map((_, index) => (
             <>
-              <div class="native-wrapper">
+              <div class="native-wrapper" part="container">
                 <input
                   class="native-input"
+                  part="native"
                   id={`${inputId}-${index}`}
                   aria-label={`Input ${index + 1} of ${length}`}
                   type="text"
@@ -842,7 +860,7 @@ export class InputOTP implements ComponentInterface {
                   onPaste={this.onPaste}
                 />
               </div>
-              {this.showSeparator(index) && <div class="input-otp-separator" />}
+              {this.showSeparator(index) && <div class="input-otp-separator" part="separator" />}
             </>
           ))}
         </div>
@@ -851,6 +869,7 @@ export class InputOTP implements ComponentInterface {
             'input-otp-description': true,
             'input-otp-description-hidden': !hasDescription,
           }}
+          part="description"
         >
           <slot></slot>
         </div>

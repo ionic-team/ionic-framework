@@ -19,6 +19,8 @@
   --highlight-color-valid: #{ion-color(success, base)};
   --highlight-color-invalid: #{ion-color(danger, base)};
 
+  font-family: $font-family-base;
+
   font-size: dynamic-font(14px);
 }
 

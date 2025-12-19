@@ -1780,6 +1780,10 @@ export namespace Components {
          */
         "length": number;
         /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * A regex pattern string for allowed characters. Defaults based on type.  For numbers (`type="number"`): `"[\p{N}]"` For text (`type="text"`): `"[\p{L}\p{N}]"`
          */
         "pattern"?: string;
@@ -1807,6 +1811,10 @@ export namespace Components {
           * @default 'medium'
          */
         "size": 'small' | 'medium' | 'large';
+        /**
+          * The theme determines the visual appearance of the component.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The type of input allowed in the input boxes.
           * @default 'number'
@@ -7763,6 +7771,10 @@ declare namespace LocalJSX {
          */
         "length"?: number;
         /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * Emitted when the input group loses focus.
          */
         "onIonBlur"?: (event: IonInputOtpCustomEvent<FocusEvent>) => void;
@@ -7805,6 +7817,10 @@ declare namespace LocalJSX {
           * @default 'medium'
          */
         "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The theme determines the visual appearance of the component.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The type of input allowed in the input boxes.
           * @default 'number'
