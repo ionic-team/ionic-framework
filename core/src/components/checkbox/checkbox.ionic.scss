@@ -113,7 +113,7 @@ input {
 // ----------------------------------------------------------------
 
 .checkbox-bottom {
-  @include globals.typography(globals.$ion-body-sm-medium);
+  @include globals.typography(globals.$ion-body-md-regular);
 }
 
 .checkbox-bottom .error-text {
