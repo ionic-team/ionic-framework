@@ -63,6 +63,24 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await selectPopoverPage.ionPopoverDidDismiss.next();
         await expect(selectPopoverPage.popover).not.toBeVisible();
       });
+
+      test('pressing Enter on an unselected option should dismiss the popover', async () => {
+        await selectPopoverPage.setup(config, options, false);
+
+        await selectPopoverPage.pressEnterOnOption('apple');
+        await selectPopoverPage.ionPopoverDidDismiss.next();
+        await expect(selectPopoverPage.popover).not.toBeVisible();
+      });
+
+      test('pressing Enter on a selected option should dismiss the popover', async ({ browserName }) => {
+        test.skip(browserName === 'firefox', 'Same behavior as ROU-5437');
+
+        await selectPopoverPage.setup(config, checkedOptions, false);
+
+        await selectPopoverPage.pressEnterOnOption('apple');
+        await selectPopoverPage.ionPopoverDidDismiss.next();
+        await expect(selectPopoverPage.popover).not.toBeVisible();
+      });
     });
   });
 });
