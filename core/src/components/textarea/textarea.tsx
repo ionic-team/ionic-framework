@@ -590,6 +590,14 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
+   * Called when the form is reset.
+   * Resets the component's value.
+   */
+  formResetCallback() {
+    this.value = '';
+  }
+
+  /**
    * Updates the form value and reports validity state to the browser via
    * ElementInternals. This should be called when the component loads, when
    * the required prop changes, when the disabled prop changes, and when the value

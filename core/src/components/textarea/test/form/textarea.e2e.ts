@@ -136,7 +136,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(isValidAfterSubmit).toBe(true);
     });
 
-    test('should set formData when submitted', async ({ page }) => {
+    test('should set formData when submit button is clicked', async ({ page }) => {
       await page.setContent(
         `
         <form onsubmit="return onSubmit(event)">
@@ -194,6 +194,89 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       });
       expect(formData).toBeDefined();
       expect(formData?.['textarea']).toBe('Test value');
+    });
+
+    test('should reset formData when reset button is clicked', async ({ page }) => {
+      await page.setContent(
+        `
+        <form onsubmit="return onSubmit(event)">
+          <ion-textarea label="textarea" name="textarea" required></ion-textarea>
+          <button type="submit">Submit</button>
+          <button type="reset">Reset</button>
+        </form>
+        <script>
+          function onSubmit(event) {
+            window.formSubmitted = true;
+            event.preventDefault();
+            return false;
+          }
+        </script>
+      `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+      const submitButton = page.locator('button[type="submit"]');
+      const resetButton = page.locator('button[type="reset"]');
+
+      // Type into the native textarea
+      await textarea.evaluate((el: HTMLIonTextareaElement) => {
+        const nativeTextarea = el.shadowRoot?.querySelector('textarea') as HTMLTextAreaElement | null;
+        if (nativeTextarea) {
+          nativeTextarea.value = 'Test value';
+          nativeTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      });
+
+      // Click submit button - form should submit since validation passes
+      await submitButton.click();
+
+      // Wait for any async operations to complete
+      await page.waitForChanges();
+
+      // Verify that the formData is set
+      let formData = await page.evaluate(() => {
+        const form = document.querySelector('form');
+        if (!form) {
+          return null;
+        }
+        const formData = new FormData(form);
+        const entries: Record<string, string> = {};
+        for (const [key, value] of formData.entries()) {
+          entries[key] = value.toString();
+        }
+        return entries;
+      });
+      expect(formData).toBeDefined();
+      expect(formData?.['textarea']).toBe('Test value');
+
+      // Click reset button - form should reset
+      await resetButton.click();
+
+      // Wait for any async operations to complete
+      await page.waitForChanges();
+
+      // Verify that the textarea's value is cleared
+      const textareaValue = await textarea.evaluate((el: HTMLIonTextareaElement) => {
+        const nativeTextarea = el.shadowRoot?.querySelector('textarea') as HTMLTextAreaElement | null;
+        return nativeTextarea?.value ?? '';
+      });
+      expect(textareaValue).toBe('');
+
+      // Verify that the formData is cleared
+      formData = await page.evaluate(() => {
+        const form = document.querySelector('form');
+        if (!form) {
+          return null;
+        }
+        const formData = new FormData(form);
+        const entries: Record<string, string> = {};
+        for (const [key, value] of formData.entries()) {
+          entries[key] = value.toString();
+        }
+        return entries;
+      });
+      expect(formData?.['textarea']).toBe('');
     });
   });
 });
