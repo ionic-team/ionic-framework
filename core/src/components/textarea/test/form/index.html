@@ -14,13 +14,28 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
 
     <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 6px;
+      }
+
       .required-label {
         display: none;
       }
 
       .textarea-required .required-label {
         display: inline;
-        color: red;
+        color: #b80000;
+      }
+
+      ion-textarea {
+        margin-bottom: 16px;
+      }
+
+      ion-content button.reset-button {
+        background: #960101;
+        border-color: #650000;
       }
     </style>
   </head>
@@ -37,40 +52,77 @@
         <form onsubmit="return onSubmit(event)">
           <ion-textarea
             fill="outline"
+            label="Textarea 1"
             label-placement="stacked"
-            placeholder="Placeholder"
+            placeholder="Textarea 1"
             helper-text="Helper message"
             counter="true"
             maxlength="999"
+            name="textarea1"
           >
-            <div slot="label">Label <span class="required-label">(Required) *</span></div>
             <ion-icon slot="end" name="square-outline"></ion-icon>
           </ion-textarea>
 
+          <ion-textarea
+            fill="outline"
+            label-placement="stacked"
+            placeholder="Textarea 2"
+            helper-text="Helper message"
+            counter="true"
+            maxlength="999"
+            name="textarea2"
+          >
+            <div slot="label">Textarea 2 <span class="required-label">(Required) *</span></div>
+            <ion-icon slot="end" name="square-outline"></ion-icon>
+          </ion-textarea>
+
+          <div class="grid">
+            <button type="button" onClick="toggleRequired()">Toggle Required (Textarea 2)</button>
+          </div>
+
           <p>
-            Click the first button below to toggle the required prop and then click the submit button to attempt to
-            submit the form. It should show a popup warning to fill out the field when textarea is required and empty.
-            When the textarea is not required, or the field is filled, the form should submit by sending a console log.
+            Click the button above to toggle the required prop on the
+            2nd textarea and then click the submit button to attempt to submit
+            the form. It should show a popup warning on the 2nd textarea to
+            fill out the field when the textarea is required and empty. When
+            the textarea is not required, or the field is filled, the form
+            should submit by sending a console log. Click the reset button to
+            reset the form and clear the textareas.
           </p>
-          <button type="button" onClick="toggleRequired()">Toggle Required</button>
-          <button type="submit">Submit</button>
+
+          <div class="grid">
+            <button type="submit">Submit</button>
+            <button type="reset" class="reset-button">Reset</button>
+          </div>
         </form>
       </ion-content>
     </ion-app>
 
     <script>
+      const form = document.querySelector('form');
+
       function onSubmit(event) {
         event.preventDefault();
-        const textarea = document.querySelector('ion-textarea');
-        console.log('Form submitted with value:', textarea.value);
+        console.log('Form submitted with values:', getFormData(form));
         return true;
       }
 
       function toggleRequired() {
-        const textarea = document.querySelector('ion-textarea');
+        const textarea = document.querySelector('[name="textarea2"]');
         textarea.required = textarea.required ? false : true;
         textarea.classList.toggle('textarea-required', textarea.required);
         console.log('Textarea required set to:', textarea.required);
+      }
+
+      // Helper function to get the form data as a plain object
+      function getFormData(form) {
+        const formData = new FormData(form);
+        // Convert FormData to a plain object for easier inspection
+        const formDataEntries = {};
+        for (const [key, value] of formData.entries()) {
+          formDataEntries[key] = value;
+        }
+        return formDataEntries;
       }
     </script>
   </body>
