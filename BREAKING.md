@@ -28,7 +28,9 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 <h4 id="version-9x-card">Card</h4>
 
-- The `border-radius` of the `ios` and `md` card now defaults to `14px` and `12px` instead of `8px` and `4px`, respectively, in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"`, or override the `--border-radius` CSS variable to specify a different value.
+- **ion-card**: The `border-radius` of the `ios` and `md` card now defaults to `14px` and `12px` instead of `8px` and `4px`, respectively, in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"`, or override the `--border-radius` CSS variable to specify a different value.
+
+- **ion-card-content**: The `ion-card-content` component has been updated to Shadow DOM. With this update, all card-related components now use Shadow DOM for style encapsulation. The default styles for heading elements inside `ion-card-content` have been removed. If you need custom styling for headings, you can add your own CSS targeting these elements.
 
 <h4 id="version-9x-chip">Chip</h4>
 
@@ -47,6 +49,7 @@ Additionally, the `radio-group-wrapper` div element has been removed, causing sl
 <h5>Example 1: Swap two columns</h5>
 
 **Version up to 8.x**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -56,7 +59,9 @@ Additionally, the `radio-group-wrapper` div element has been removed, causing sl
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -68,9 +73,11 @@ Additionally, the `radio-group-wrapper` div element has been removed, causing sl
 ```
 
 <h5>Example 2: Reorder columns with specific sizes</h5>
+
 To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `size="3" pull="9"`:
 
 **Version up to 8.x**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -79,7 +86,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -88,7 +97,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 <h5>Example 3: Push</h5>
+
 ```html
 <ion-grid>
   <ion-row>
@@ -101,7 +112,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -116,6 +129,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 ```
 
 <h5>Example 4: Push and Pull</h5>
+
 ```html
 <ion-grid>
   <ion-row>
@@ -128,7 +142,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
