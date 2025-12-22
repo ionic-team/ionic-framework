@@ -649,7 +649,7 @@ export class IonDatetime {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur']);
+    proxyOutputs(this, this.el, ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur', 'ionScrollStart', 'ionScrollEnd']);
   }
 }
 
@@ -675,6 +675,16 @@ This event will not emit when programmatically setting the `value` property.
    * Emitted when the datetime loses focus.
    */
   ionBlur: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted when a wheel column inside the datetime begins scrolling.
+Does not bubble to avoid duplicate handling alongside inner column events.
+   */
+  ionScrollStart: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted when a wheel column inside the datetime finishes scrolling and the value has settled.
+Does not bubble to avoid duplicate handling alongside inner column events.
+   */
+  ionScrollEnd: EventEmitter<CustomEvent<void>>;
 }
 
 
@@ -1545,7 +1555,7 @@ export class IonPickerColumn {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange']);
+    proxyOutputs(this, this.el, ['ionChange', 'ionScrollStart', 'ionScrollEnd']);
   }
 }
 
@@ -1559,6 +1569,14 @@ export declare interface IonPickerColumn extends Components.IonPickerColumn {
 This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonPickerColumnPickerColumnChangeEventDetail>>;
+  /**
+   * Emitted when the user begins scrolling the wheel.
+   */
+  ionScrollStart: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted when the user stops scrolling the wheel and the value has settled.
+   */
+  ionScrollEnd: EventEmitter<CustomEvent<void>>;
 }
 
 
