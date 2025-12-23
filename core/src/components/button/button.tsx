@@ -222,6 +222,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     const rootNode = this.el.getRootNode();
     const shadowHost = rootNode instanceof ShadowRoot ? (rootNode as ShadowRoot).host : null;
 
+    // Check if the button is inside a datetime component.
+    // This can happen in two ways:
+    // 1. Light DOM: User passed one or more buttons to the `buttons` slot
+    // 2. Shadow DOM: Button is rendered by the datetime component itself
     this.inDatetime = !!this.el.closest('ion-datetime') || shadowHost?.tagName === 'ION-DATETIME';
     this.inButtons = !!this.el.closest('ion-buttons');
     this.inListHeader = !!this.el.closest('ion-list-header');
