@@ -1,7 +1,7 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
 import { Modal } from '../modal';
-import { h } from '@stencil/core';
 
 describe('modal: id', () => {
   it('modal should be assigned an incrementing id', async () => {
@@ -51,5 +51,22 @@ describe('modal: id', () => {
 
     const alert = page.body.querySelector('ion-modal')!;
     expect(alert.id).toBe(id);
+  });
+
+  it('should allow multiple modals with the same id', async () => {
+    const sharedId = 'shared-modal-id';
+
+    const page = await newSpecPage({
+      components: [Modal],
+      template: () => [
+        <ion-modal id={sharedId} overlayIndex={1} is-open={true}></ion-modal>,
+        <ion-modal id={sharedId} overlayIndex={2} is-open={true}></ion-modal>,
+      ],
+    });
+
+    const modals = page.body.querySelectorAll('ion-modal');
+    expect(modals.length).toBe(2);
+    expect(modals[0].id).toBe(sharedId);
+    expect(modals[1].id).toBe(sharedId);
   });
 });

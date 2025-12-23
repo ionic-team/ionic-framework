@@ -22,7 +22,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
   });
 
   test.describe(title('input password toggle: aria attributes'), () => {
-    test('should inherit aria attributes to inner button on load', async ({ page }) => {
+    test('should have correct aria attributes on load', async ({ page }) => {
       await page.setContent(
         `
         <ion-input label="input" type="password">
@@ -35,9 +35,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       const nativeButton = page.locator('ion-input-password-toggle button');
 
       await expect(nativeButton).toHaveAttribute('aria-label', 'Show password');
-      await expect(nativeButton).toHaveAttribute('aria-checked', 'false');
+      await expect(nativeButton).toHaveAttribute('aria-pressed', 'false');
     });
-    test('should inherit aria attributes to inner button after toggle', async ({ page }) => {
+    test('should update aria attributes after toggle', async ({ page }) => {
       await page.setContent(
         `
         <ion-input label="input" type="password">
@@ -51,7 +51,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       await nativeButton.click();
 
       await expect(nativeButton).toHaveAttribute('aria-label', 'Hide password');
-      await expect(nativeButton).toHaveAttribute('aria-checked', 'true');
+      await expect(nativeButton).toHaveAttribute('aria-pressed', 'true');
     });
   });
 });

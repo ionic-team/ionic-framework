@@ -174,6 +174,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    */
   @Watch('aria-checked')
   @Watch('aria-label')
+  @Watch('aria-pressed')
   onAriaChanged(newValue: string, _oldValue: string, propName: string) {
     this.inheritedAttributes = {
       ...this.inheritedAttributes,
