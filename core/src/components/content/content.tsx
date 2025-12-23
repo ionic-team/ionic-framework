@@ -446,8 +446,10 @@ export class Content implements ComponentInterface {
     }
 
     if ('ResizeObserver' in window) {
+      let timeout: any;
       this.resizeObserver = new ResizeObserver(() => {
-        this.resize();
+        clearTimeout(timeout);
+        timeout = setTimeout(() => this.resize(), 100);
       });
     }
 
@@ -457,14 +459,14 @@ export class Content implements ComponentInterface {
 
         for (const mutation of mutations) {
           if (mutation.type === 'childList') {
-            mutation.addedNodes.forEach((node: any) => {
-              if (node.tagName === 'ION-HEADER' || node.tagName === 'ION-FOOTER') {
+            mutation.addedNodes.forEach((node: Node) => {
+              if (node instanceof HTMLElement && (node.tagName === 'ION-HEADER' || node.tagName === 'ION-FOOTER')) {
                 shouldUpdate = true;
               }
             });
 
-            mutation.removedNodes.forEach((node: any) => {
-              if (node.tagName === 'ION-HEADER' || node.tagName === 'ION-FOOTER') {
+            mutation.removedNodes.forEach((node: Node) => {
+              if (node instanceof HTMLElement && (node.tagName === 'ION-HEADER' || node.tagName === 'ION-FOOTER')) {
                 shouldUpdate = true;
               }
             });
@@ -504,8 +506,14 @@ export class Content implements ComponentInterface {
     const headers = this.el.parentElement.querySelectorAll('ion-header');
     const footers = this.el.parentElement.querySelectorAll('ion-footer');
 
-    headers.forEach((header) => this.resizeObserver!.observe(header));
-    footers.forEach((footer) => this.resizeObserver!.observe(footer));
+    const observer = this.resizeObserver;
+
+    if (observer === null || observer === undefined) {
+      return;
+    }
+
+    headers.forEach((header) => observer.observe(header));
+    footers.forEach((footer) => observer.observe(footer));
   }
 
   private onScrollStart() {
