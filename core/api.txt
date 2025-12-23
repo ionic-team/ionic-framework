@@ -2526,6 +2526,7 @@ ion-textarea,part,helper-text
 ion-textarea,part,label
 ion-textarea,part,native
 ion-textarea,part,supporting-text
+ion-textarea,part,wrapper
 
 ion-thumbnail,shadow
 ion-thumbnail,prop,mode,"ios" | "md",undefined,false,false

@@ -37,7 +37,8 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
  * @slot start - Content to display at the leading edge of the textarea. (EXPERIMENTAL)
  * @slot end - Content to display at the trailing edge of the textarea. (EXPERIMENTAL)
  *
- * @part container - The wrapper element for the textarea.
+ * @part wrapper - The clickable label element that wraps the entire form field (label text, slots, and native textarea).
+ * @part container - The inner wrapper element that directly contains the native textarea element.
  * @part label - The label text describing the textarea.
  * @part native - The native textarea element.
  * @part supporting-text - Supporting text displayed beneath the textarea label.
@@ -889,7 +890,7 @@ export class Textarea implements ComponentInterface {
          * interactable, clicking the label would focus that instead
          * since it comes before the textarea in the DOM.
          */}
-        <label class="textarea-wrapper" htmlFor={inputId} onClick={this.onLabelClick}>
+        <label class="textarea-wrapper" htmlFor={inputId} onClick={this.onLabelClick} part="wrapper">
           {this.renderLabelContainer()}
           <div class="textarea-wrapper-inner">
             {
