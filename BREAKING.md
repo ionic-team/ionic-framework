@@ -18,6 +18,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Button](#version-9x-button)
   - [Card](#version-9x-card)
   - [Chip](#version-9x-chip)
+  - [Datetime](#version-9x-datetime)
   - [Grid](#version-9x-grid)
 
 <h2 id="version-9x-components">Components</h2>
@@ -33,6 +34,10 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 <h4 id="version-9x-chip">Chip</h4>
 
 - The `border-radius` of the `ios` and `md` chip now defaults to `10px` and `8px`, respectively, instead of `16px` in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"round"`, or override the `--border-radius` CSS variable to specify a different value.
+
+<h4 id="version-9x-datetime">Datetime</h4>
+
+- The `ion-buttons` component has been removed from the internal implementation of `ion-datetime` and is no longer required when passing custom buttons to the `slot="buttons"`. When providing custom buttons, use a `div` element instead of `ion-buttons`. While existing code using `ion-buttons` may continue to work visually, future updates to the `ion-buttons` component may cause any styles you rely on to break.
 
 <h4 id="version-9x-grid">Grid</h4>
 
