@@ -52,6 +52,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('datetime: custom focus'), () => {
     test('should focus the selected day and then the day after', async ({ page }) => {
       await page.goto(`/src/components/datetime/test/custom`, config);
+      await page.locator('.datetime-ready').last().waitFor();
 
       const datetime = page.locator('#custom-calendar-days');
 

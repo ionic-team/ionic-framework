@@ -7,6 +7,7 @@ configs().forEach(({ title, screenshot, config }) => {
       await page.goto('/src/components/datetime/test/first-day-of-week', config);
 
       const datetime = page.locator('ion-datetime');
+      await page.locator('.datetime-ready').waitFor();
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-day-of-week`));
     });
   });
