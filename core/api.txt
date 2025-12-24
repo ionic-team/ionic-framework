@@ -1035,18 +1035,20 @@ ion-input,css-prop,--placeholder-opacity,ionic
 ion-input,css-prop,--placeholder-opacity,ios
 ion-input,css-prop,--placeholder-opacity,md
 
-ion-input-otp,scoped
+ion-input-otp,shadow
 ion-input-otp,prop,autocapitalize,string,'off',false,false
 ion-input-otp,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-input-otp,prop,disabled,boolean,false,false,true
 ion-input-otp,prop,fill,"outline" | "solid" | undefined,'outline',false,false
 ion-input-otp,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-input-otp,prop,length,number,4,false,false
+ion-input-otp,prop,mode,"ios" | "md",undefined,false,false
 ion-input-otp,prop,pattern,string | undefined,undefined,false,false
 ion-input-otp,prop,readonly,boolean,false,false,true
 ion-input-otp,prop,separators,number[] | string | undefined,undefined,false,false
 ion-input-otp,prop,shape,"rectangular" | "round" | "soft",'round',false,false
 ion-input-otp,prop,size,"large" | "medium" | "small",'medium',false,false
+ion-input-otp,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-input-otp,prop,type,"number" | "text",'number',false,false
 ion-input-otp,prop,value,null | number | string | undefined,'',false,false
 ion-input-otp,method,setFocus,setFocus(index?: number) => Promise<void>
@@ -1127,6 +1129,11 @@ ion-input-otp,css-prop,--separator-width,md
 ion-input-otp,css-prop,--width,ionic
 ion-input-otp,css-prop,--width,ios
 ion-input-otp,css-prop,--width,md
+ion-input-otp,part,container
+ion-input-otp,part,description
+ion-input-otp,part,group
+ion-input-otp,part,native
+ion-input-otp,part,separator
 
 ion-input-password-toggle,shadow
 ion-input-password-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
