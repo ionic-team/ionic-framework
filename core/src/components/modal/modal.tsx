@@ -276,7 +276,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   @Listen('resize', { target: 'window' })
   onWindowResize() {
-    // Only handle resize for iOS card modals when no custom animations are provided
+    // Update safe-area overrides for all modal types on resize
+    this.updateSafeAreaOverrides();
+
+    // Only handle view transition for iOS card modals when no custom animations are provided
     if (getIonMode(this) !== 'ios' || !this.presentingElement || this.enterAnimation || this.leaveAnimation) {
       return;
     }
@@ -592,6 +595,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       await waitForMount();
     }
 
+    // Predict safe-area needs based on modal configuration to avoid visual snap
+    this.setInitialSafeAreaOverrides(presentingElement);
+
     writeTask(() => this.el.classList.add('show-modal'));
 
     const hasCardModal = presentingElement !== undefined;
@@ -659,6 +665,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.initSwipeToClose();
     }
 
+    // Now that animation is complete, update safe-area based on actual position
+    this.updateSafeAreaOverrides();
+
     // Initialize view transition listener for iOS card modals
     this.initViewTransitionListener();
 
@@ -692,33 +701,39 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const statusBarStyle = this.statusBarStyle ?? StatusBarStyle.Default;
 
-    this.gesture = createSwipeToCloseGesture(el, ani, statusBarStyle, () => {
-      /**
-       * While the gesture animation is finishing
-       * it is possible for a user to tap the backdrop.
-       * This would result in the dismiss animation
-       * being played again. Typically this is avoided
-       * by setting `presented = false` on the overlay
-       * component; however, we cannot do that here as
-       * that would prevent the element from being
-       * removed from the DOM.
-       */
-      this.gestureAnimationDismissing = true;
+    this.gesture = createSwipeToCloseGesture(
+      el,
+      ani,
+      statusBarStyle,
+      () => {
+        /**
+         * While the gesture animation is finishing
+         * it is possible for a user to tap the backdrop.
+         * This would result in the dismiss animation
+         * being played again. Typically this is avoided
+         * by setting `presented = false` on the overlay
+         * component; however, we cannot do that here as
+         * that would prevent the element from being
+         * removed from the DOM.
+         */
+        this.gestureAnimationDismissing = true;
 
-      /**
-       * Reset the status bar style as the dismiss animation
-       * starts otherwise the status bar will be the wrong
-       * color for the duration of the dismiss animation.
-       * The dismiss method does this as well, but
-       * in this case it's only called once the animation
-       * has finished.
-       */
-      setCardStatusBarDefault(this.statusBarStyle);
-      this.animation!.onFinish(async () => {
-        await this.dismiss(undefined, GESTURE);
-        this.gestureAnimationDismissing = false;
-      });
-    });
+        /**
+         * Reset the status bar style as the dismiss animation
+         * starts otherwise the status bar will be the wrong
+         * color for the duration of the dismiss animation.
+         * The dismiss method does this as well, but
+         * in this case it's only called once the animation
+         * has finished.
+         */
+        setCardStatusBarDefault(this.statusBarStyle);
+        this.animation!.onFinish(async () => {
+          await this.dismiss(undefined, GESTURE);
+          this.gestureAnimationDismissing = false;
+        });
+      },
+      () => this.updateSafeAreaOverrides()
+    );
     this.gesture.enable(true);
   }
 
@@ -755,7 +770,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
           this.currentBreakpoint = breakpoint;
           this.ionBreakpointDidChange.emit({ breakpoint });
         }
-      }
+        this.updateSafeAreaOverrides();
+      },
+      () => this.updateSafeAreaOverrides()
     );
 
     this.gesture = gesture;
@@ -847,6 +864,86 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     // Clear the cached reference
     this.cachedPageParent = undefined;
+  }
+
+  /**
+   * Sets initial safe-area overrides based on modal configuration before
+   * the modal becomes visible. This predicts whether the modal will touch
+   * screen edges to avoid a visual snap after animation completes.
+   */
+  private setInitialSafeAreaOverrides(presentingElement: HTMLElement | undefined) {
+    const style = this.el.style;
+    const isSheetModal = this.breakpoints !== undefined && this.initialBreakpoint !== undefined;
+    const isCardModal = presentingElement !== undefined;
+    const isTablet = window.innerWidth >= 768;
+
+    // Sheet modals: always touch bottom, top depends on breakpoint
+    if (isSheetModal) {
+      style.setProperty('--ion-safe-area-top', '0px');
+      // Don't override bottom - sheet always touches bottom
+      style.setProperty('--ion-safe-area-left', '0px');
+      style.setProperty('--ion-safe-area-right', '0px');
+      return;
+    }
+
+    // Card modals are inset from edges (rounded corners), no safe areas needed
+    if (isCardModal) {
+      style.setProperty('--ion-safe-area-top', '0px');
+      style.setProperty('--ion-safe-area-bottom', '0px');
+      style.setProperty('--ion-safe-area-left', '0px');
+      style.setProperty('--ion-safe-area-right', '0px');
+      return;
+    }
+
+    // Phone modals are fullscreen, need all safe areas
+    if (!isTablet) {
+      // Don't set any overrides - inherit from :root
+      return;
+    }
+
+    // Default tablet modal: centered dialog, no safe areas needed
+    // Check for fullscreen override via CSS custom properties
+    const computedStyle = getComputedStyle(this.el);
+    const width = computedStyle.getPropertyValue('--width').trim();
+    const height = computedStyle.getPropertyValue('--height').trim();
+
+    if (width === '100%' && height === '100%') {
+      // Fullscreen modal - need safe areas, don't override
+      return;
+    }
+
+    // Centered dialog - zero out all safe areas
+    style.setProperty('--ion-safe-area-top', '0px');
+    style.setProperty('--ion-safe-area-bottom', '0px');
+    style.setProperty('--ion-safe-area-left', '0px');
+    style.setProperty('--ion-safe-area-right', '0px');
+  }
+
+  /**
+   * Updates safe-area CSS variable overrides based on whether the modal
+   * is touching each edge of the viewport. This is called after animation
+   * and during gestures to handle dynamic position changes.
+   */
+  private updateSafeAreaOverrides() {
+    const wrapper = this.wrapperEl;
+    if (!wrapper) return;
+
+    const rect = wrapper.getBoundingClientRect();
+    const threshold = 2; // Account for subpixel rendering
+
+    const touchingTop = rect.top <= threshold;
+    const touchingBottom = rect.bottom >= window.innerHeight - threshold;
+    const touchingLeft = rect.left <= threshold;
+    const touchingRight = rect.right >= window.innerWidth - threshold;
+
+    // Remove override when touching edge (allow inheritance), set to 0 when not touching
+    const style = this.el.style;
+    touchingTop ? style.removeProperty('--ion-safe-area-top') : style.setProperty('--ion-safe-area-top', '0px');
+    touchingBottom
+      ? style.removeProperty('--ion-safe-area-bottom')
+      : style.setProperty('--ion-safe-area-bottom', '0px');
+    touchingLeft ? style.removeProperty('--ion-safe-area-left') : style.setProperty('--ion-safe-area-left', '0px');
+    touchingRight ? style.removeProperty('--ion-safe-area-right') : style.setProperty('--ion-safe-area-right', '0px');
   }
 
   private sheetOnDismiss() {
