@@ -64,18 +64,18 @@
 }
 
 // Segment Button: Checked
+// All slot content should have the checked color even when it's not label or icon
 // --------------------------------------------------
 
-:host(.segment-button-checked) ::slotted(ion-label),
-:host(.segment-button-checked) ::slotted(ion-icon) {
+:host(.segment-button-checked) ::slotted(*) {
   color: var(--color-checked);
 }
 
 // Segment Button: Disabled
+// All slot content should have the disabled color even when it's not label or icon
 // --------------------------------------------------
 
-:host(.segment-button-disabled) ::slotted(ion-label),
-:host(.segment-button-disabled) ::slotted(ion-icon) {
+:host(.segment-button-disabled) ::slotted(*) {
   color: var(--color-disabled);
 }
 
