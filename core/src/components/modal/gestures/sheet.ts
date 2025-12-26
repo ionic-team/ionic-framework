@@ -52,7 +52,8 @@ export const createSheetGesture = (
   expandToScroll: boolean,
   getCurrentBreakpoint: () => number,
   onDismiss: () => void,
-  onBreakpointChange: (breakpoint: number) => void
+  onBreakpointChange: (breakpoint: number) => void,
+  onGestureMove?: () => void
 ) => {
   // Defaults for the sheet swipe animation
   const defaultBackdrop = [
@@ -423,6 +424,9 @@ export const createSheetGesture = (
 
     offset = clamp(0.0001, processedStep, maxStep);
     animation.progressStep(offset);
+
+    // Notify modal of position change for safe-area updates
+    onGestureMove?.();
   };
 
   const onEnd = (detail: GestureDetail) => {

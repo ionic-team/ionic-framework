@@ -276,7 +276,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   @Listen('resize', { target: 'window' })
   onWindowResize() {
-    // Only handle resize for iOS card modals when no custom animations are provided
+    // Update safe-area overrides for all modal types on resize
+    this.updateSafeAreaOverrides();
+
+    // Only handle view transition for iOS card modals when no custom animations are provided
     if (getIonMode(this) !== 'ios' || !this.presentingElement || this.enterAnimation || this.leaveAnimation) {
       return;
     }
@@ -592,6 +595,15 @@ export class Modal implements ComponentInterface, OverlayInterface {
       await waitForMount();
     }
 
+    // Set all safe-areas to 0 before modal becomes visible to prevent flash
+    // for centered dialogs. After animation, updateSafeAreaOverrides() will
+    // restore values for edges that touch the viewport.
+    const style = this.el.style;
+    style.setProperty('--ion-safe-area-top', '0px');
+    style.setProperty('--ion-safe-area-bottom', '0px');
+    style.setProperty('--ion-safe-area-left', '0px');
+    style.setProperty('--ion-safe-area-right', '0px');
+
     writeTask(() => this.el.classList.add('show-modal'));
 
     const hasCardModal = presentingElement !== undefined;
@@ -659,6 +671,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.initSwipeToClose();
     }
 
+    // Now that animation is complete, update safe-area based on actual position
+    this.updateSafeAreaOverrides();
+
     // Initialize view transition listener for iOS card modals
     this.initViewTransitionListener();
 
@@ -692,33 +707,39 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const statusBarStyle = this.statusBarStyle ?? StatusBarStyle.Default;
 
-    this.gesture = createSwipeToCloseGesture(el, ani, statusBarStyle, () => {
-      /**
-       * While the gesture animation is finishing
-       * it is possible for a user to tap the backdrop.
-       * This would result in the dismiss animation
-       * being played again. Typically this is avoided
-       * by setting `presented = false` on the overlay
-       * component; however, we cannot do that here as
-       * that would prevent the element from being
-       * removed from the DOM.
-       */
-      this.gestureAnimationDismissing = true;
+    this.gesture = createSwipeToCloseGesture(
+      el,
+      ani,
+      statusBarStyle,
+      () => {
+        /**
+         * While the gesture animation is finishing
+         * it is possible for a user to tap the backdrop.
+         * This would result in the dismiss animation
+         * being played again. Typically this is avoided
+         * by setting `presented = false` on the overlay
+         * component; however, we cannot do that here as
+         * that would prevent the element from being
+         * removed from the DOM.
+         */
+        this.gestureAnimationDismissing = true;
 
-      /**
-       * Reset the status bar style as the dismiss animation
-       * starts otherwise the status bar will be the wrong
-       * color for the duration of the dismiss animation.
-       * The dismiss method does this as well, but
-       * in this case it's only called once the animation
-       * has finished.
-       */
-      setCardStatusBarDefault(this.statusBarStyle);
-      this.animation!.onFinish(async () => {
-        await this.dismiss(undefined, GESTURE);
-        this.gestureAnimationDismissing = false;
-      });
-    });
+        /**
+         * Reset the status bar style as the dismiss animation
+         * starts otherwise the status bar will be the wrong
+         * color for the duration of the dismiss animation.
+         * The dismiss method does this as well, but
+         * in this case it's only called once the animation
+         * has finished.
+         */
+        setCardStatusBarDefault(this.statusBarStyle);
+        this.animation!.onFinish(async () => {
+          await this.dismiss(undefined, GESTURE);
+          this.gestureAnimationDismissing = false;
+        });
+      },
+      () => this.updateSafeAreaOverrides()
+    );
     this.gesture.enable(true);
   }
 
@@ -755,7 +776,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
           this.currentBreakpoint = breakpoint;
           this.ionBreakpointDidChange.emit({ breakpoint });
         }
-      }
+        this.updateSafeAreaOverrides();
+      },
+      () => this.updateSafeAreaOverrides()
     );
 
     this.gesture = gesture;
@@ -847,6 +870,34 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     // Clear the cached reference
     this.cachedPageParent = undefined;
+  }
+
+  /**
+   * Updates safe-area CSS variable overrides based on whether the modal
+   * is touching each edge of the viewport. This ensures that modals which
+   * don't touch an edge (e.g., centered dialogs) don't have unnecessary
+   * safe-area padding, while full-screen modals properly respect safe areas.
+   */
+  private updateSafeAreaOverrides() {
+    const wrapper = this.wrapperEl;
+    if (!wrapper) return;
+
+    const rect = wrapper.getBoundingClientRect();
+    const threshold = 2; // Account for subpixel rendering
+
+    const touchingTop = rect.top <= threshold;
+    const touchingBottom = rect.bottom >= window.innerHeight - threshold;
+    const touchingLeft = rect.left <= threshold;
+    const touchingRight = rect.right >= window.innerWidth - threshold;
+
+    // Remove override when touching edge (allow inheritance), set to 0 when not touching
+    const style = this.el.style;
+    touchingTop ? style.removeProperty('--ion-safe-area-top') : style.setProperty('--ion-safe-area-top', '0px');
+    touchingBottom
+      ? style.removeProperty('--ion-safe-area-bottom')
+      : style.setProperty('--ion-safe-area-bottom', '0px');
+    touchingLeft ? style.removeProperty('--ion-safe-area-left') : style.setProperty('--ion-safe-area-left', '0px');
+    touchingRight ? style.removeProperty('--ion-safe-area-right') : style.setProperty('--ion-safe-area-right', '0px');
   }
 
   private sheetOnDismiss() {
