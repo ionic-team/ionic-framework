@@ -26,6 +26,302 @@
   "collection:main": "dist/collection/index.js",
   "collection": "dist/collection/collection-manifest.json",
   "types": "dist/types/interface.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/types/interface.d.ts"
+    },
+    "./components": {
+      "import": "./components/index.js",
+      "types": "./components/index.d.ts"
+    },
+    "./loader": {
+      "import": "./loader/index.js",
+      "require": "./loader/index.cjs.js",
+      "types": "./loader/index.d.ts"
+    },
+    "./components/*": {
+      "import": "./components/*",
+      "types": "./components/*"
+    },
+    "./docs.json": {
+      "import": "./dist/docs.json",
+      "require": "./dist/docs.json"
+    },
+    "./ion-accordion-group": {
+      "import": "./components/ion-accordion-group.js",
+      "types": "./components/ion-accordion-group.d.ts"
+    },
+    "./ion-accordion": {
+      "import": "./components/ion-accordion.js",
+      "types": "./components/ion-accordion.d.ts"
+    },
+    "./ion-avatar": {
+      "import": "./components/ion-avatar.js",
+      "types": "./components/ion-avatar.d.ts"
+    },
+    "./ion-backdrop": {
+      "import": "./components/ion-backdrop.js",
+      "types": "./components/ion-backdrop.d.ts"
+    },
+    "./ion-badge": {
+      "import": "./components/ion-badge.js",
+      "types": "./components/ion-badge.d.ts"
+    },
+    "./ion-breadcrumbs": {
+      "import": "./components/ion-breadcrumbs.js",
+      "types": "./components/ion-breadcrumbs.d.ts"
+    },
+    "./ion-buttons": {
+      "import": "./components/ion-buttons.js",
+      "types": "./components/ion-buttons.d.ts"
+    },
+    "./ion-card-content": {
+      "import": "./components/ion-card-content.js",
+      "types": "./components/ion-card-content.d.ts"
+    },
+    "./ion-card-header": {
+      "import": "./components/ion-card-header.js",
+      "types": "./components/ion-card-header.d.ts"
+    },
+    "./ion-card-subtitle": {
+      "import": "./components/ion-card-subtitle.js",
+      "types": "./components/ion-card-subtitle.d.ts"
+    },
+    "./ion-card-title": {
+      "import": "./components/ion-card-title.js",
+      "types": "./components/ion-card-title.d.ts"
+    },
+    "./ion-checkbox": {
+      "import": "./components/ion-checkbox.js",
+      "types": "./components/ion-checkbox.d.ts"
+    },
+    "./ion-chip": {
+      "import": "./components/ion-chip.js",
+      "types": "./components/ion-chip.d.ts"
+    },
+    "./ion-col": {
+      "import": "./components/ion-col.js",
+      "types": "./components/ion-col.d.ts"
+    },
+    "./ion-content": {
+      "import": "./components/ion-content.js",
+      "types": "./components/ion-content.d.ts"
+    },
+    "./ion-datetime-button": {
+      "import": "./components/ion-datetime-button.js",
+      "types": "./components/ion-datetime-button.d.ts"
+    },
+    "./ion-datetime": {
+      "import": "./components/ion-datetime.js",
+      "types": "./components/ion-datetime.d.ts"
+    },
+    "./ion-fab-list": {
+      "import": "./components/ion-fab-list.js",
+      "types": "./components/ion-fab-list.d.ts"
+    },
+    "./ion-fab": {
+      "import": "./components/ion-fab.js",
+      "types": "./components/ion-fab.d.ts"
+    },
+    "./ion-footer": {
+      "import": "./components/ion-footer.js",
+      "types": "./components/ion-footer.d.ts"
+    },
+    "./ion-grid": {
+      "import": "./components/ion-grid.js",
+      "types": "./components/ion-grid.d.ts"
+    },
+    "./ion-header": {
+      "import": "./components/ion-header.js",
+      "types": "./components/ion-header.d.ts"
+    },
+    "./ion-img": {
+      "import": "./components/ion-img.js",
+      "types": "./components/ion-img.d.ts"
+    },
+    "./ion-infinite-scroll-content": {
+      "import": "./components/ion-infinite-scroll-content.js",
+      "types": "./components/ion-infinite-scroll-content.d.ts"
+    },
+    "./ion-infinite-scroll": {
+      "import": "./components/ion-infinite-scroll.js",
+      "types": "./components/ion-infinite-scroll.d.ts"
+    },
+    "./ion-input-password-toggle": {
+      "import": "./components/ion-input-password-toggle.js",
+      "types": "./components/ion-input-password-toggle.d.ts"
+    },
+    "./ion-input": {
+      "import": "./components/ion-input.js",
+      "types": "./components/ion-input.d.ts"
+    },
+    "./ion-item-divider": {
+      "import": "./components/ion-item-divider.js",
+      "types": "./components/ion-item-divider.d.ts"
+    },
+    "./ion-item-group": {
+      "import": "./components/ion-item-group.js",
+      "types": "./components/ion-item-group.d.ts"
+    },
+    "./ion-item-options": {
+      "import": "./components/ion-item-options.js",
+      "types": "./components/ion-item-options.d.ts"
+    },
+    "./ion-item-sliding": {
+      "import": "./components/ion-item-sliding.js",
+      "types": "./components/ion-item-sliding.d.ts"
+    },
+    "./ion-label": {
+      "import": "./components/ion-label.js",
+      "types": "./components/ion-label.d.ts"
+    },
+    "./ion-list-header": {
+      "import": "./components/ion-list-header.js",
+      "types": "./components/ion-list-header.d.ts"
+    },
+    "./ion-list": {
+      "import": "./components/ion-list.js",
+      "types": "./components/ion-list.d.ts"
+    },
+    "./ion-menu-button": {
+      "import": "./components/ion-menu-button.js",
+      "types": "./components/ion-menu-button.d.ts"
+    },
+    "./ion-menu-toggle": {
+      "import": "./components/ion-menu-toggle.js",
+      "types": "./components/ion-menu-toggle.d.ts"
+    },
+    "./ion-menu": {
+      "import": "./components/ion-menu.js",
+      "types": "./components/ion-menu.d.ts"
+    },
+    "./ion-nav-link": {
+      "import": "./components/ion-nav-link.js",
+      "types": "./components/ion-nav-link.d.ts"
+    },
+    "./ion-nav": {
+      "import": "./components/ion-nav.js",
+      "types": "./components/ion-nav.d.ts"
+    },
+    "./ion-note": {
+      "import": "./components/ion-note.js",
+      "types": "./components/ion-note.d.ts"
+    },
+    "./ion-picker-column-option": {
+      "import": "./components/ion-picker-column-option.js",
+      "types": "./components/ion-picker-column-option.d.ts"
+    },
+    "./ion-picker-column": {
+      "import": "./components/ion-picker-column.js",
+      "types": "./components/ion-picker-column.d.ts"
+    },
+    "./ion-picker": {
+      "import": "./components/ion-picker.js",
+      "types": "./components/ion-picker.d.ts"
+    },
+    "./ion-progress-bar": {
+      "import": "./components/ion-progress-bar.js",
+      "types": "./components/ion-progress-bar.d.ts"
+    },
+    "./ion-radio-group": {
+      "import": "./components/ion-radio-group.js",
+      "types": "./components/ion-radio-group.d.ts"
+    },
+    "./ion-radio": {
+      "import": "./components/ion-radio.js",
+      "types": "./components/ion-radio.d.ts"
+    },
+    "./ion-range": {
+      "import": "./components/ion-range.js",
+      "types": "./components/ion-range.d.ts"
+    },
+    "./ion-refresher-content": {
+      "import": "./components/ion-refresher-content.js",
+      "types": "./components/ion-refresher-content.d.ts"
+    },
+    "./ion-refresher": {
+      "import": "./components/ion-refresher.js",
+      "types": "./components/ion-refresher.d.ts"
+    },
+    "./ion-reorder-group": {
+      "import": "./components/ion-reorder-group.js",
+      "types": "./components/ion-reorder-group.d.ts"
+    },
+    "./ion-reorder": {
+      "import": "./components/ion-reorder.js",
+      "types": "./components/ion-reorder.d.ts"
+    },
+    "./ion-ripple-effect": {
+      "import": "./components/ion-ripple-effect.js",
+      "types": "./components/ion-ripple-effect.d.ts"
+    },
+    "./ion-row": {
+      "import": "./components/ion-row.js",
+      "types": "./components/ion-row.d.ts"
+    },
+    "./ion-searchbar": {
+      "import": "./components/ion-searchbar.js",
+      "types": "./components/ion-searchbar.d.ts"
+    },
+    "./ion-segment-button": {
+      "import": "./components/ion-segment-button.js",
+      "types": "./components/ion-segment-button.d.ts"
+    },
+    "./ion-segment": {
+      "import": "./components/ion-segment.js",
+      "types": "./components/ion-segment.d.ts"
+    },
+    "./ion-select-option": {
+      "import": "./components/ion-select-option.js",
+      "types": "./components/ion-select-option.d.ts"
+    },
+    "./ion-select": {
+      "import": "./components/ion-select.js",
+      "types": "./components/ion-select.d.ts"
+    },
+    "./ion-skeleton-text": {
+      "import": "./components/ion-skeleton-text.js",
+      "types": "./components/ion-skeleton-text.d.ts"
+    },
+    "./ion-spinner": {
+      "import": "./components/ion-spinner.js",
+      "types": "./components/ion-spinner.d.ts"
+    },
+    "./ion-split-pane": {
+      "import": "./components/ion-split-pane.js",
+      "types": "./components/ion-split-pane.d.ts"
+    },
+    "./ion-tab": {
+      "import": "./components/ion-tab.js",
+      "types": "./components/ion-tab.d.ts"
+    },
+    "./ion-text": {
+      "import": "./components/ion-text.js",
+      "types": "./components/ion-text.d.ts"
+    },
+    "./ion-textarea": {
+      "import": "./components/ion-textarea.js",
+      "types": "./components/ion-textarea.d.ts"
+    },
+    "./ion-thumbnail": {
+      "import": "./components/ion-thumbnail.js",
+      "types": "./components/ion-thumbnail.d.ts"
+    },
+    "./ion-title": {
+      "import": "./components/ion-title.js",
+      "types": "./components/ion-title.d.ts"
+    },
+    "./ion-toggle": {
+      "import": "./components/ion-toggle.js",
+      "types": "./components/ion-toggle.d.ts"
+    },
+    "./ion-toolbar": {
+      "import": "./components/ion-toolbar.js",
+      "types": "./components/ion-toolbar.d.ts"
+    }
+  },
   "files": [
     "components/",
     "css/",
