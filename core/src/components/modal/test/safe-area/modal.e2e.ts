@@ -58,7 +58,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       await page.goto('/src/components/modal/test/safe-area', config);
     });
 
-    test('card modal should have safe-area padding', async ({ page }) => {
+    test('card modal should not have safe-area padding', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
       await page.click('#card-modal');

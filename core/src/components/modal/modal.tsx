@@ -595,14 +595,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       await waitForMount();
     }
 
-    // Set all safe-areas to 0 before modal becomes visible to prevent flash
-    // for centered dialogs. After animation, updateSafeAreaOverrides() will
-    // restore values for edges that touch the viewport.
-    const style = this.el.style;
-    style.setProperty('--ion-safe-area-top', '0px');
-    style.setProperty('--ion-safe-area-bottom', '0px');
-    style.setProperty('--ion-safe-area-left', '0px');
-    style.setProperty('--ion-safe-area-right', '0px');
+    // Predict safe-area needs based on modal configuration to avoid visual snap
+    this.setInitialSafeAreaOverrides(presentingElement);
 
     writeTask(() => this.el.classList.add('show-modal'));
 
@@ -873,10 +867,62 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
+   * Sets initial safe-area overrides based on modal configuration before
+   * the modal becomes visible. This predicts whether the modal will touch
+   * screen edges to avoid a visual snap after animation completes.
+   */
+  private setInitialSafeAreaOverrides(presentingElement: HTMLElement | undefined) {
+    const style = this.el.style;
+    const isSheetModal = this.breakpoints !== undefined && this.initialBreakpoint !== undefined;
+    const isCardModal = presentingElement !== undefined;
+    const isTablet = window.innerWidth >= 768;
+
+    // Sheet modals: always touch bottom, top depends on breakpoint
+    if (isSheetModal) {
+      style.setProperty('--ion-safe-area-top', '0px');
+      // Don't override bottom - sheet always touches bottom
+      style.setProperty('--ion-safe-area-left', '0px');
+      style.setProperty('--ion-safe-area-right', '0px');
+      return;
+    }
+
+    // Card modals are inset from edges (rounded corners), no safe areas needed
+    if (isCardModal) {
+      style.setProperty('--ion-safe-area-top', '0px');
+      style.setProperty('--ion-safe-area-bottom', '0px');
+      style.setProperty('--ion-safe-area-left', '0px');
+      style.setProperty('--ion-safe-area-right', '0px');
+      return;
+    }
+
+    // Phone modals are fullscreen, need all safe areas
+    if (!isTablet) {
+      // Don't set any overrides - inherit from :root
+      return;
+    }
+
+    // Default tablet modal: centered dialog, no safe areas needed
+    // Check for fullscreen override via CSS custom properties
+    const computedStyle = getComputedStyle(this.el);
+    const width = computedStyle.getPropertyValue('--width').trim();
+    const height = computedStyle.getPropertyValue('--height').trim();
+
+    if (width === '100%' && height === '100%') {
+      // Fullscreen modal - need safe areas, don't override
+      return;
+    }
+
+    // Centered dialog - zero out all safe areas
+    style.setProperty('--ion-safe-area-top', '0px');
+    style.setProperty('--ion-safe-area-bottom', '0px');
+    style.setProperty('--ion-safe-area-left', '0px');
+    style.setProperty('--ion-safe-area-right', '0px');
+  }
+
+  /**
    * Updates safe-area CSS variable overrides based on whether the modal
-   * is touching each edge of the viewport. This ensures that modals which
-   * don't touch an edge (e.g., centered dialogs) don't have unnecessary
-   * safe-area padding, while full-screen modals properly respect safe areas.
+   * is touching each edge of the viewport. This is called after animation
+   * and during gestures to handle dynamic position changes.
    */
   private updateSafeAreaOverrides() {
     const wrapper = this.wrapperEl;
