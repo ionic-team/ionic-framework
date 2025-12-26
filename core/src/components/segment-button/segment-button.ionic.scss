@@ -67,7 +67,8 @@
 // --------------------------------------------------
 
 :host(.segment-button-checked) ::slotted(ion-label),
-:host(.segment-button-checked) ::slotted(ion-icon) {
+:host(.segment-button-checked) ::slotted(ion-icon),
+:host(.segment-button-checked) ::slotted(*) {
   color: var(--color-checked);
 }
 
