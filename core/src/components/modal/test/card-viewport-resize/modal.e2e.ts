@@ -54,7 +54,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       );
     });
 
-    test('should not animate presenting element when viewport resizes and modal is closed', async ({ page }, testInfo) => {
+    test('should not animate presenting element when viewport resizes and modal is closed', async ({
+      page,
+    }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30679',
