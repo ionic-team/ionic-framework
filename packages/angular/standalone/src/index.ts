@@ -28,6 +28,7 @@ export {
   ViewWillLeave,
   ViewDidLeave,
 } from '@ionic/angular/common';
+export type { AngularModalOptions, AngularPopoverOptions } from '@ionic/angular/common';
 export { IonNav } from './navigation/nav';
 export {
   IonCheckbox,

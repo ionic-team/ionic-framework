@@ -1,9 +1,9 @@
 import { Injector, inject, EnvironmentInjector } from '@angular/core';
 import { AngularDelegate, OverlayBaseController } from '@ionic/angular/common';
-import type { PopoverOptions } from '@ionic/core';
+import type { AngularPopoverOptions } from '@ionic/angular/common';
 import { popoverController } from '@ionic/core';
 
-export class PopoverController extends OverlayBaseController<PopoverOptions, HTMLIonPopoverElement> {
+export class PopoverController extends OverlayBaseController<AngularPopoverOptions, HTMLIonPopoverElement> {
   private angularDelegate = inject(AngularDelegate);
   private injector = inject(Injector);
   private environmentInjector = inject(EnvironmentInjector);
@@ -12,10 +12,11 @@ export class PopoverController extends OverlayBaseController<PopoverOptions, HTM
     super(popoverController);
   }
 
-  create(opts: PopoverOptions): Promise<HTMLIonPopoverElement> {
+  create(opts: AngularPopoverOptions): Promise<HTMLIonPopoverElement> {
+    const { injector: customInjector, ...restOpts } = opts;
     return super.create({
-      ...opts,
-      delegate: this.angularDelegate.create(this.environmentInjector, this.injector, 'popover'),
+      ...restOpts,
+      delegate: this.angularDelegate.create(this.environmentInjector, this.injector, 'popover', customInjector),
     });
   }
 }

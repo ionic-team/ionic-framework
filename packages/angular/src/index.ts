@@ -32,6 +32,7 @@ export {
   ViewDidEnter,
   ViewDidLeave,
 } from '@ionic/angular/common';
+export type { AngularModalOptions, AngularPopoverOptions } from '@ionic/angular/common';
 export { AlertController } from './providers/alert-controller';
 export { AnimationController } from './providers/animation-controller';
 export { ActionSheetController } from './providers/action-sheet-controller';
