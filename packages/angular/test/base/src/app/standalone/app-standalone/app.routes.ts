@@ -23,6 +23,7 @@ export const routes: Routes = [
       },
       { path: 'programmatic-modal', loadComponent: () => import('../programmatic-modal/programmatic-modal.component').then(c => c.ProgrammaticModalComponent) },
       { path: 'modal-custom-injector', loadComponent: () => import('../modal-custom-injector/modal-custom-injector.component').then(c => c.ModalCustomInjectorComponent) },
+      { path: 'popover-custom-injector', loadComponent: () => import('../popover-custom-injector/popover-custom-injector.component').then(c => c.PopoverCustomInjectorComponent) },
       { path: 'router-outlet', loadComponent: () => import('../router-outlet/router-outlet.component').then(c => c.RouterOutletComponent) },
       { path: 'back-button', loadComponent: () => import('../back-button/back-button.component').then(c => c.BackButtonComponent) },
       { path: 'router-link', loadComponent: () => import('../router-link/router-link.component').then(c => c.RouterLinkComponent) },
