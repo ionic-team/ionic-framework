@@ -1116,6 +1116,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private handleViewTransition() {
+    // Only run view transitions when the modal is presented
+    if (!this.presented) {
+      return;
+    }
+
     const isPortrait = window.innerWidth < 768;
 
     // Only transition if view state actually changed
