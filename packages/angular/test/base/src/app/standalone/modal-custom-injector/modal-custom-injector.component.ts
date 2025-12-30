@@ -50,11 +50,8 @@ export class ModalCustomInjectorComponent {
         component: ModalCustomInjectorModalComponent,
       });
       await modal.present();
-    } catch {
-      const errorDiv = document.createElement('div');
-      errorDiv.id = 'error-message';
-      errorDiv.textContent = 'Error: TestService not available';
-      document.body.appendChild(errorDiv);
+    } catch (e) {
+      alert('Error: TestService not available without custom injector');
     }
   }
 }

@@ -18,12 +18,13 @@ test.describe('Modal: Custom Injector', () => {
   });
 
   test('should fail without custom injector when service is not globally provided', async ({ page }) => {
+    page.on('dialog', async (dialog) => {
+      expect(dialog.message()).toContain('TestService not available');
+      await dialog.accept();
+    });
+
     await page.locator('ion-button#open-modal-without-custom-injector').click();
 
-    await page.waitForTimeout(1000);
-
-    const errorMessage = page.locator('#error-message');
-    await expect(errorMessage).toBeVisible();
-    await expect(errorMessage).toHaveText('Error: TestService not available');
+    await page.waitForEvent('dialog');
   });
 });
