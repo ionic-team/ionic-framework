@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.16](https://github.com/ionic-team/ionic-framework/compare/v8.7.15...v8.7.16) (2025-12-31)
+
+
+### Bug Fixes
+
+* **modal:** prevent card modal animation on viewport resize when modal is closed ([#30894](https://github.com/ionic-team/ionic-framework/issues/30894)) ([e5634d4](https://github.com/ionic-team/ionic-framework/commit/e5634d45ee5fd32715f6e6b75e0448f74ee1f8f2)), closes [#30679](https://github.com/ionic-team/ionic-framework/issues/30679)
+
+
+
+
+
 ## [8.7.15](https://github.com/ionic-team/ionic-framework/compare/v8.7.14...v8.7.15) (2025-12-23)
 
 
