@@ -102,6 +102,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private cachedOriginalParent?: HTMLElement;
   // Cached ion-page ancestor for child route passthrough
   private cachedPageParent?: HTMLElement | null;
+  // Whether to skip coordinate-based safe-area detection (for fullscreen phone modals)
+  private skipSafeAreaCoordinateDetection = false;
 
   lastFocus?: HTMLElement;
   animation?: Animation;
@@ -877,42 +879,61 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const isCardModal = presentingElement !== undefined;
     const isTablet = window.innerWidth >= 768;
 
-    // Sheet modals: always touch bottom, top depends on breakpoint
+    // Sheet modals always touch bottom edge, never top/left/right
     if (isSheetModal) {
       style.setProperty('--ion-safe-area-top', '0px');
-      // Don't override bottom - sheet always touches bottom
       style.setProperty('--ion-safe-area-left', '0px');
       style.setProperty('--ion-safe-area-right', '0px');
       return;
     }
 
-    // Card modals are inset from edges (rounded corners), no safe areas needed
+    // Card modals are inset from all edges
     if (isCardModal) {
-      style.setProperty('--ion-safe-area-top', '0px');
-      style.setProperty('--ion-safe-area-bottom', '0px');
-      style.setProperty('--ion-safe-area-left', '0px');
-      style.setProperty('--ion-safe-area-right', '0px');
+      this.zeroAllSafeAreas();
       return;
     }
 
-    // Phone modals are fullscreen, need all safe areas
+    // Phone-sized fullscreen modals inherit safe areas and use wrapper padding
     if (!isTablet) {
-      // Don't set any overrides - inherit from :root
+      this.applyFullscreenSafeArea();
       return;
     }
 
-    // Default tablet modal: centered dialog, no safe areas needed
-    // Check for fullscreen override via CSS custom properties
+    // Check if tablet modal is fullscreen via CSS custom properties
     const computedStyle = getComputedStyle(this.el);
     const width = computedStyle.getPropertyValue('--width').trim();
     const height = computedStyle.getPropertyValue('--height').trim();
+    const isFullscreen = width === '100%' && height === '100%';
 
-    if (width === '100%' && height === '100%') {
-      // Fullscreen modal - need safe areas, don't override
-      return;
+    if (isFullscreen) {
+      this.applyFullscreenSafeArea();
+    } else {
+      // Centered dialog doesn't touch edges
+      this.zeroAllSafeAreas();
     }
+  }
 
-    // Centered dialog - zero out all safe areas
+  /**
+   * Applies safe-area handling for fullscreen modals.
+   * Adds wrapper padding when no footer is present to prevent
+   * content from overlapping system navigation areas.
+   */
+  private applyFullscreenSafeArea() {
+    this.skipSafeAreaCoordinateDetection = true;
+
+    const hasFooter = this.el.querySelector('ion-footer') !== null;
+    if (!hasFooter && this.wrapperEl) {
+      this.wrapperEl.style.setProperty('padding-bottom', 'var(--ion-safe-area-bottom, 0px)');
+      this.wrapperEl.style.setProperty('box-sizing', 'border-box');
+    }
+  }
+
+  /**
+   * Sets all safe-area CSS variables to 0px for modals that
+   * don't touch screen edges.
+   */
+  private zeroAllSafeAreas() {
+    const style = this.el.style;
     style.setProperty('--ion-safe-area-top', '0px');
     style.setProperty('--ion-safe-area-bottom', '0px');
     style.setProperty('--ion-safe-area-left', '0px');
@@ -921,22 +942,27 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * Updates safe-area CSS variable overrides based on whether the modal
-   * is touching each edge of the viewport. This is called after animation
+   * is touching each edge of the viewport. Called after animation
    * and during gestures to handle dynamic position changes.
    */
   private updateSafeAreaOverrides() {
+    if (this.skipSafeAreaCoordinateDetection) {
+      return;
+    }
+
     const wrapper = this.wrapperEl;
-    if (!wrapper) return;
+    if (!wrapper) {
+      return;
+    }
 
     const rect = wrapper.getBoundingClientRect();
-    const threshold = 2; // Account for subpixel rendering
+    const threshold = 2;
 
     const touchingTop = rect.top <= threshold;
     const touchingBottom = rect.bottom >= window.innerHeight - threshold;
     const touchingLeft = rect.left <= threshold;
     const touchingRight = rect.right >= window.innerWidth - threshold;
 
-    // Remove override when touching edge (allow inheritance), set to 0 when not touching
     const style = this.el.style;
     touchingTop ? style.removeProperty('--ion-safe-area-top') : style.setProperty('--ion-safe-area-top', '0px');
     touchingBottom
@@ -1058,6 +1084,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
     this.currentBreakpoint = undefined;
     this.animation = undefined;
+    // Reset safe-area detection flag for potential re-presentation
+    this.skipSafeAreaCoordinateDetection = false;
 
     unlock();
 

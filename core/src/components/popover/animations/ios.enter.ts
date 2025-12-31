@@ -61,6 +61,8 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
     top,
     left,
     bottom,
+    checkSafeAreaTop,
+    checkSafeAreaBottom,
     checkSafeAreaLeft,
     checkSafeAreaRight,
     arrowTop,
@@ -118,15 +120,27 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
         baseEl.classList.add('popover-bottom');
       }
 
-      if (bottom !== undefined) {
-        contentEl.style.setProperty('bottom', `${bottom}px`);
-      }
-
+      /**
+       * Safe area CSS variable adjustments.
+       * When the popover is positioned near an edge, we add the corresponding
+       * safe-area inset to ensure the popover doesn't overlap with system UI
+       * (status bars, home indicators, navigation bars on Android API 36+, etc.)
+       */
+      const safeAreaTop = ' + var(--ion-safe-area-top, 0)';
+      const safeAreaBottom = ' + var(--ion-safe-area-bottom, 0)';
       const safeAreaLeft = ' + var(--ion-safe-area-left, 0)';
       const safeAreaRight = ' - var(--ion-safe-area-right, 0)';
 
+      let topValue = `${top}px`;
+      let bottomValue = bottom !== undefined ? `${bottom}px` : undefined;
       let leftValue = `${left}px`;
 
+      if (checkSafeAreaTop) {
+        topValue = `${top}px${safeAreaTop}`;
+      }
+      if (checkSafeAreaBottom && bottomValue !== undefined) {
+        bottomValue = `${bottom}px${safeAreaBottom}`;
+      }
       if (checkSafeAreaLeft) {
         leftValue = `${left}px${safeAreaLeft}`;
       }
@@ -134,7 +148,11 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
         leftValue = `${left}px${safeAreaRight}`;
       }
 
-      contentEl.style.setProperty('top', `calc(${top}px + var(--offset-y, 0))`);
+      if (bottomValue !== undefined) {
+        contentEl.style.setProperty('bottom', `calc(${bottomValue})`);
+      }
+
+      contentEl.style.setProperty('top', `calc(${topValue} + var(--offset-y, 0))`);
       contentEl.style.setProperty('left', `calc(${leftValue} + var(--offset-x, 0))`);
       contentEl.style.setProperty('transform-origin', `${originY} ${originX}`);
 
