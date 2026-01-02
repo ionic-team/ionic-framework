@@ -154,26 +154,6 @@
       generateItems('large-list', 15);
       generateItems('bottom-list', 10);
       generateItems('near-bottom-list', 8);
-
-      // Log positioning info for debugging
-      document.querySelectorAll('ion-popover').forEach((popover) => {
-        popover.addEventListener('ionPopoverDidPresent', () => {
-          const content = popover.shadowRoot.querySelector('.popover-content');
-          if (content) {
-            const rect = content.getBoundingClientRect();
-            const bottomSafeArea =
-              parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ion-safe-area-bottom')) || 0;
-            console.log('Popover position:', {
-              top: rect.top,
-              bottom: rect.bottom,
-              windowHeight: window.innerHeight,
-              bottomSafeArea,
-              distanceFromBottom: window.innerHeight - rect.bottom,
-              overlapsBottomSafeArea: rect.bottom > window.innerHeight - bottomSafeArea,
-            });
-          }
-        });
-      });
     </script>
   </body>
 </html>

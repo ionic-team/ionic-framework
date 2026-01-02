@@ -41,56 +41,118 @@
         </ion-header>
 
         <ion-content class="ion-padding">
-          <p>Test safe-area handling in modals on tablet-sized screens.</p>
+          <p>Test safe-area handling in modals.</p>
 
           <ion-list>
-            <ion-item>
-              <ion-label>
-                <h2>Default Modal</h2>
-                <p>Centered dialog on tablet - should NOT have safe-area padding</p>
-              </ion-label>
-              <ion-button slot="end" id="default-modal" onclick="presentDefaultModal()">Present</ion-button>
-            </ion-item>
+            <ion-item-group>
+              <ion-item-divider>
+                <ion-label>With Footer</ion-label>
+              </ion-item-divider>
 
-            <ion-item>
-              <ion-label>
-                <h2>Fullscreen Modal</h2>
-                <p>Full screen on tablet - should have safe-area padding</p>
-              </ion-label>
-              <ion-button slot="end" id="fullscreen-modal" onclick="presentFullscreenModal()">Present</ion-button>
-            </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h2>Default Modal</h2>
+                  <p>Centered dialog on tablet - should NOT have safe-area padding</p>
+                </ion-label>
+                <ion-button slot="end" id="default-modal" onclick="presentDefaultModal()">Present</ion-button>
+              </ion-item>
 
-            <ion-item>
-              <ion-label>
-                <h2>Sheet Modal (Partial)</h2>
-                <p>At 0.5 breakpoint - should have bottom safe-area only</p>
-              </ion-label>
-              <ion-button slot="end" id="sheet-modal-partial" onclick="presentSheetModalPartial()">Present</ion-button>
-            </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h2>Fullscreen Modal</h2>
+                  <p>Full screen - footer handles safe-area</p>
+                </ion-label>
+                <ion-button slot="end" id="fullscreen-modal" onclick="presentFullscreenModal()">Present</ion-button>
+              </ion-item>
 
-            <ion-item>
-              <ion-label>
-                <h2>Sheet Modal (Full)</h2>
-                <p>At 1.0 breakpoint - should have bottom safe-area (handle creates top gap)</p>
-              </ion-label>
-              <ion-button slot="end" id="sheet-modal-full" onclick="presentSheetModalFull()">Present</ion-button>
-            </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h2>Sheet Modal (Partial)</h2>
+                  <p>At 0.5 breakpoint - should have bottom safe-area only</p>
+                </ion-label>
+                <ion-button slot="end" id="sheet-modal-partial" onclick="presentSheetModalPartial()"
+                  >Present</ion-button
+                >
+              </ion-item>
 
-            <ion-item>
-              <ion-label>
-                <h2>Card Modal (iOS)</h2>
-                <p>Card presentation - inset from edges, no safe-area padding</p>
-              </ion-label>
-              <ion-button slot="end" id="card-modal" onclick="presentCardModal()">Present</ion-button>
-            </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h2>Sheet Modal (Full)</h2>
+                  <p>At 1.0 breakpoint - should have bottom safe-area</p>
+                </ion-label>
+                <ion-button slot="end" id="sheet-modal-full" onclick="presentSheetModalFull()">Present</ion-button>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>
+                  <h2>Card Modal (iOS)</h2>
+                  <p>Card presentation with presentingElement</p>
+                </ion-label>
+                <ion-button slot="end" id="card-modal" onclick="presentCardModal()">Present</ion-button>
+              </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+              <ion-item-divider>
+                <ion-label>Without Footer (wrapper padding)</ion-label>
+              </ion-item-divider>
+
+              <ion-item>
+                <ion-label>
+                  <h2>Fullscreen Modal (no footer)</h2>
+                  <p>Wrapper padding should prevent content overlap</p>
+                </ion-label>
+                <ion-button slot="end" id="fullscreen-no-footer" onclick="presentFullscreenNoFooter()"
+                  >Present</ion-button
+                >
+              </ion-item>
+
+              <ion-item>
+                <ion-label>
+                  <h2>Card Modal (no footer)</h2>
+                  <p>On phones, wrapper padding should prevent content overlap</p>
+                </ion-label>
+                <ion-button slot="end" id="card-modal-no-footer" onclick="presentCardModalNoFooter()"
+                  >Present</ion-button
+                >
+              </ion-item>
+
+              <ion-item>
+                <ion-label>
+                  <h2>Default Modal (no footer)</h2>
+                  <p>On phones, wrapper padding should prevent content overlap</p>
+                </ion-label>
+                <ion-button slot="end" id="default-no-footer" onclick="presentDefaultNoFooter()">Present</ion-button>
+              </ion-item>
+            </ion-item-group>
           </ion-list>
         </ion-content>
       </div>
     </ion-app>
 
     <script>
-      function createModalContent(title) {
+      function createModalContent(title, includeFooter = true) {
         const element = document.createElement('div');
+        const footerHtml = includeFooter
+          ? `
+          <ion-footer>
+            <ion-toolbar>
+              <ion-title>Footer</ion-title>
+            </ion-toolbar>
+          </ion-footer>
+        `
+          : '';
+
+        // Create multiple items to ensure scrollable content
+        const items = Array.from(
+          { length: 20 },
+          (_, i) => `
+          <ion-item>
+            <ion-label>Item ${i + 1}</ion-label>
+          </ion-item>
+        `
+        ).join('');
+
         element.innerHTML = `
           <ion-header>
             <ion-toolbar>
@@ -103,14 +165,12 @@
           <ion-content class="ion-padding">
             <h1>Modal Content</h1>
             <p>This modal tests safe-area handling.</p>
-            <p>The header should respect safe-area-top when the modal touches the top edge.</p>
-            <p>The footer should respect safe-area-bottom when the modal touches the bottom edge.</p>
+            <ion-list>
+              ${items}
+            </ion-list>
+            <p class="last-item">Last item - should not overlap safe area</p>
           </ion-content>
-          <ion-footer>
-            <ion-toolbar>
-              <ion-title>Footer</ion-title>
-            </ion-toolbar>
-          </ion-footer>
+          ${footerHtml}
         `;
         return element;
       }
@@ -166,6 +226,34 @@
         currentModal = Object.assign(document.createElement('ion-modal'), {
           component: createModalContent('Card Modal'),
           presentingElement: presentingElement,
+        });
+        document.body.appendChild(currentModal);
+        await currentModal.present();
+      }
+
+      // Modals without footer - test wrapper padding
+      async function presentFullscreenNoFooter() {
+        currentModal = Object.assign(document.createElement('ion-modal'), {
+          component: createModalContent('Fullscreen (No Footer)', false),
+        });
+        currentModal.classList.add('fullscreen-modal');
+        document.body.appendChild(currentModal);
+        await currentModal.present();
+      }
+
+      async function presentCardModalNoFooter() {
+        const presentingElement = document.getElementById('main-page');
+        currentModal = Object.assign(document.createElement('ion-modal'), {
+          component: createModalContent('Card Modal (No Footer)', false),
+          presentingElement: presentingElement,
+        });
+        document.body.appendChild(currentModal);
+        await currentModal.present();
+      }
+
+      async function presentDefaultNoFooter() {
+        currentModal = Object.assign(document.createElement('ion-modal'), {
+          component: createModalContent('Default (No Footer)', false),
         });
         document.body.appendChild(currentModal);
         await currentModal.present();

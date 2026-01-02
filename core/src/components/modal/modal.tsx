@@ -887,9 +887,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    // Card modals are inset from all edges
+    // Card modals have rounded top corners
     if (isCardModal) {
-      this.zeroAllSafeAreas();
+      style.setProperty('--ion-safe-area-top', '0px');
+      if (isTablet) {
+        // On tablets, card modals are inset from all edges
+        this.zeroAllSafeAreas();
+      } else {
+        // On phones, card modals still extend to the bottom edge
+        style.setProperty('--ion-safe-area-left', '0px');
+        style.setProperty('--ion-safe-area-right', '0px');
+        this.applyFullscreenSafeArea();
+      }
       return;
     }
 
