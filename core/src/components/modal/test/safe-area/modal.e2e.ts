@@ -14,7 +14,7 @@ async function getWrapperPaddingBottom(page: any): Promise<string> {
   const modal = page.locator('ion-modal');
   return modal.evaluate((el: HTMLIonModalElement) => {
     const wrapper = el.shadowRoot?.querySelector('.modal-wrapper');
-    if (wrapper === null) return '0px';
+    if (!wrapper) return '0px';
     return getComputedStyle(wrapper).paddingBottom;
   });
 }
