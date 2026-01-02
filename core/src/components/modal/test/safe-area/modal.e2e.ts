@@ -27,6 +27,9 @@ async function modalHasFooter(page: any): Promise<boolean> {
   });
 }
 
+// Phone viewport (less than 768px width)
+const PhoneViewport = { width: 390, height: 844 };
+
 // =============================================================================
 // Phone Tests - Fullscreen modals need wrapper padding when no footer
 // =============================================================================
@@ -34,7 +37,7 @@ async function modalHasFooter(page: any): Promise<boolean> {
 configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('modal: safe-area - phone'), () => {
     test.beforeEach(async ({ page }) => {
-      await page.setViewportSize(Viewports.large);
+      await page.setViewportSize(PhoneViewport);
       await page.goto('/src/components/modal/test/safe-area', config);
     });
 
@@ -82,7 +85,7 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('modal: safe-area - card modal on phone'), () => {
     test.beforeEach(async ({ page }) => {
-      await page.setViewportSize(Viewports.large);
+      await page.setViewportSize(PhoneViewport);
       await page.goto('/src/components/modal/test/safe-area', config);
     });
 
