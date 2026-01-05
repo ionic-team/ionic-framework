@@ -875,8 +875,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   private setInitialSafeAreaOverrides(presentingElement: HTMLElement | undefined) {
     const style = this.el.style;
+    const mode = getIonMode(this);
     const isSheetModal = this.breakpoints !== undefined && this.initialBreakpoint !== undefined;
-    const isCardModal = presentingElement !== undefined;
+    // Card modals only exist in iOS mode - in MD mode, presentingElement is ignored
+    const isCardModal = presentingElement !== undefined && mode === 'ios';
     const isTablet = window.innerWidth >= 768;
 
     // Sheet modals always touch bottom edge, never top/left/right
@@ -950,8 +952,22 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
+   * Gets the root safe-area values from the document element.
+   * These represent the actual device safe areas before any overlay overrides.
+   */
+  private getRootSafeAreaValues(): { top: number; bottom: number; left: number; right: number } {
+    const rootStyle = getComputedStyle(document.documentElement);
+    return {
+      top: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-top')) || 0,
+      bottom: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-bottom')) || 0,
+      left: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-left')) || 0,
+      right: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-right')) || 0,
+    };
+  }
+
+  /**
    * Updates safe-area CSS variable overrides based on whether the modal
-   * is touching each edge of the viewport. Called after animation
+   * extends into each safe-area region. Called after animation
    * and during gestures to handle dynamic position changes.
    */
   private updateSafeAreaOverrides() {
@@ -965,20 +981,22 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     const rect = wrapper.getBoundingClientRect();
-    const threshold = 2;
+    const safeAreas = this.getRootSafeAreaValues();
 
-    const touchingTop = rect.top <= threshold;
-    const touchingBottom = rect.bottom >= window.innerHeight - threshold;
-    const touchingLeft = rect.left <= threshold;
-    const touchingRight = rect.right >= window.innerWidth - threshold;
+    const extendsIntoTop = rect.top < safeAreas.top;
+    const extendsIntoBottom = rect.bottom > window.innerHeight - safeAreas.bottom;
+    const extendsIntoLeft = rect.left < safeAreas.left;
+    const extendsIntoRight = rect.right > window.innerWidth - safeAreas.right;
 
     const style = this.el.style;
-    touchingTop ? style.removeProperty('--ion-safe-area-top') : style.setProperty('--ion-safe-area-top', '0px');
-    touchingBottom
+    extendsIntoTop ? style.removeProperty('--ion-safe-area-top') : style.setProperty('--ion-safe-area-top', '0px');
+    extendsIntoBottom
       ? style.removeProperty('--ion-safe-area-bottom')
       : style.setProperty('--ion-safe-area-bottom', '0px');
-    touchingLeft ? style.removeProperty('--ion-safe-area-left') : style.setProperty('--ion-safe-area-left', '0px');
-    touchingRight ? style.removeProperty('--ion-safe-area-right') : style.setProperty('--ion-safe-area-right', '0px');
+    extendsIntoLeft ? style.removeProperty('--ion-safe-area-left') : style.setProperty('--ion-safe-area-left', '0px');
+    extendsIntoRight
+      ? style.removeProperty('--ion-safe-area-right')
+      : style.setProperty('--ion-safe-area-right', '0px');
   }
 
   private sheetOnDismiss() {
