@@ -907,6 +907,20 @@ export const calculateWindowAdjustment = (
     }
   }
 
+  /**
+   * Final check: If the popover extends into any safe-area region,
+   * ensure the corresponding flag is set regardless of side.
+   * This handles cases where a side-positioned popover (left/right)
+   * still needs bottom safe-area padding because it extends into that region.
+   */
+  const popoverBottom = bottom !== undefined ? bodyHeight - bottom : top + contentHeight;
+  if (popoverBottom + safeAreaMargin > bodyHeight) {
+    checkSafeAreaBottom = true;
+  }
+  if (top < safeAreaMargin) {
+    checkSafeAreaTop = true;
+  }
+
   return {
     top,
     left,
