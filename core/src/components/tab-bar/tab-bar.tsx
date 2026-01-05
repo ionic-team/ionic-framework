@@ -23,6 +23,7 @@ import type { TabBarChangedEventDetail } from './tab-bar-interface';
 export class TabBar implements ComponentInterface {
   private keyboardCtrl: KeyboardController | null = null;
   private didLoad = false;
+  private isComponentConnected = false;
 
   @Element() el!: HTMLElement;
 
@@ -88,7 +89,9 @@ export class TabBar implements ComponentInterface {
   }
 
   async connectedCallback() {
-    this.keyboardCtrl = await createKeyboardController(async (keyboardOpen, waitForResize) => {
+    this.isComponentConnected = true;
+
+    const keyboardCtrl = await createKeyboardController(async (keyboardOpen, waitForResize) => {
       /**
        * If the keyboard is hiding, then we need to wait
        * for the webview to resize. Otherwise, the tab bar
@@ -100,11 +103,24 @@ export class TabBar implements ComponentInterface {
 
       this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
     });
+
+    /**
+     * Destroy the keyboard controller if the component was
+     * disconnected during async initialization to prevent memory leaks.
+     */
+    if (this.isComponentConnected) {
+      this.keyboardCtrl = keyboardCtrl;
+    } else {
+      keyboardCtrl.destroy();
+    }
   }
 
   disconnectedCallback() {
+    this.isComponentConnected = false;
+
     if (this.keyboardCtrl) {
       this.keyboardCtrl.destroy();
+      this.keyboardCtrl = null;
     }
   }
 
