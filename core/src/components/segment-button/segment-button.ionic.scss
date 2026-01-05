@@ -44,13 +44,15 @@
   gap: globals.$ion-space-100;
 }
 
+::slotted(*) {
+  color: var(--color);
+}
+
 // Segment Button Label
 // --------------------------------------------------
 
 ::slotted(ion-label) {
   @include globals.typography(globals.$ion-body-action-sm);
-
-  color: var(--color);
 }
 
 // Segment Button Icon
@@ -59,8 +61,6 @@
 ::slotted(ion-icon) {
   width: globals.$ion-scale-600;
   height: globals.$ion-scale-600;
-
-  color: var(--color);
 }
 
 // Segment Button: Checked
