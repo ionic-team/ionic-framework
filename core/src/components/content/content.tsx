@@ -36,6 +36,13 @@ export class Content implements ComponentInterface {
   private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
   private inheritedAttributes: Attributes = {};
 
+  /**
+   * Track whether this content has sibling header/footer elements.
+   * When absent, we need to apply safe-area padding directly.
+   */
+  private hasHeader = false;
+  private hasFooter = false;
+
   private tabsElement: HTMLElement | null = null;
   private tabsLoadCallback?: () => void;
 
@@ -134,6 +141,9 @@ export class Content implements ComponentInterface {
   connectedCallback() {
     this.isMainContent = this.el.closest('ion-menu, ion-popover, ion-modal') === null;
 
+    // Detect sibling header/footer for safe-area handling
+    this.detectSiblingElements();
+
     /**
      * The fullscreen content offsets need to be
      * computed after the tab bar has loaded. Since
@@ -166,6 +176,27 @@ export class Content implements ComponentInterface {
          */
         this.tabsLoadCallback = () => this.resize();
         closestTabs.addEventListener('ionTabBarLoaded', this.tabsLoadCallback);
+      }
+    }
+  }
+
+  /**
+   * Detects sibling ion-header and ion-footer elements.
+   * When these are absent, content needs to handle safe-area padding directly.
+   */
+  private detectSiblingElements() {
+    // Check parent element for sibling header/footer.
+    const parent = this.el.parentElement;
+    if (parent) {
+      this.hasHeader = parent.querySelector(':scope > ion-header') !== null;
+      this.hasFooter = parent.querySelector(':scope > ion-footer') !== null;
+    }
+
+    // If no footer found, check if we're inside ion-tabs which has ion-tab-bar
+    if (!this.hasFooter) {
+      const tabs = this.el.closest('ion-tabs');
+      if (tabs) {
+        this.hasFooter = tabs.querySelector(':scope > ion-tab-bar') !== null;
       }
     }
   }
@@ -449,7 +480,7 @@ export class Content implements ComponentInterface {
   }
 
   render() {
-    const { fixedSlotPlacement, inheritedAttributes, isMainContent, scrollX, scrollY, el } = this;
+    const { fixedSlotPlacement, hasFooter, hasHeader, inheritedAttributes, isMainContent, scrollX, scrollY, el } = this;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
@@ -465,6 +496,8 @@ export class Content implements ComponentInterface {
           'content-sizing': hostContext('ion-popover', this.el),
           overscroll: forceOverscroll,
           [`content-${rtl}`]: true,
+          'safe-area-top': isMainContent && !hasHeader,
+          'safe-area-bottom': isMainContent && !hasFooter,
         })}
         style={{
           '--offset-top': `${this.cTop}px`,
