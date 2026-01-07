@@ -53,17 +53,11 @@ configs({ directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
           // Remove the safe area class
           html.classList.remove('safe-area');
 
-          // Set the Capacitor safe area inset variables.
-          // Also set --ion-safe-area-* directly since test environments zero these out,
-          // which would prevent the CSS var() cascade from working.
+          // Set the safe area inset variables
           html.style.setProperty('--safe-area-inset-top', '10px');
           html.style.setProperty('--safe-area-inset-bottom', '20px');
           html.style.setProperty('--safe-area-inset-left', '30px');
           html.style.setProperty('--safe-area-inset-right', '40px');
-          html.style.setProperty('--ion-safe-area-top', 'var(--safe-area-inset-top)');
-          html.style.setProperty('--ion-safe-area-bottom', 'var(--safe-area-inset-bottom)');
-          html.style.setProperty('--ion-safe-area-left', 'var(--safe-area-inset-left)');
-          html.style.setProperty('--ion-safe-area-right', 'var(--safe-area-inset-right)');
         });
 
         const top = await page.evaluate(() =>

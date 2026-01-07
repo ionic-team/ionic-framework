@@ -49,24 +49,6 @@
   }
 
   /**
-   * Zero out safe-area insets in test environments.
-   * The default 20px --ion-safe-area-top from core.scss is for legacy
-   * status bar simulation but doesn't represent real browser behavior.
-   * Tests that need to verify safe-area handling should explicitly set
-   * these values in their test HTML files.
-   */
-  const safeAreaStyle = document.createElement('style');
-  safeAreaStyle.innerHTML = `
-    :root {
-      --ion-safe-area-top: 0px;
-      --ion-safe-area-bottom: 0px;
-      --ion-safe-area-left: 0px;
-      --ion-safe-area-right: 0px;
-    }
-  `;
-  document.head.appendChild(safeAreaStyle);
-
-  /**
    * The `palette` param is used to load a specific palette
    * for the theme.
    * The dark class will load the dark palette automatically

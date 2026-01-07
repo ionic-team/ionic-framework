@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
+import { win } from '@utils/browser';
 import { componentOnReady, hasLazyBuild, inheritAriaAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { isPlatform } from '@utils/platform';
@@ -192,7 +193,7 @@ export class Content implements ComponentInterface {
 
     // Watch for dynamic header/footer changes (common in React conditional rendering)
     const parent = this.el.parentElement;
-    if (parent && !this.parentMutationObserver) {
+    if (parent && !this.parentMutationObserver && win !== undefined && 'MutationObserver' in win) {
       this.parentMutationObserver = new MutationObserver(() => {
         this.updateSiblingDetection();
         forceUpdate(this);

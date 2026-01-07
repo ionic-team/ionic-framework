@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { win } from '@utils/browser';
 import { findIonContent, printIonContentErrorMsg } from '@utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
 import { raf, inheritAttributes, hasLazyBuild, getElementRoot } from '@utils/helpers';
@@ -941,7 +942,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.updateFooterPadding();
 
     // Watch for dynamic footer additions/removals (e.g., async data loading)
-    if (!this.footerObserver) {
+    if (!this.footerObserver && win !== undefined && 'MutationObserver' in win) {
       this.footerObserver = new MutationObserver(() => this.updateFooterPadding());
       this.footerObserver.observe(this.el, { childList: true, subtree: true });
     }
