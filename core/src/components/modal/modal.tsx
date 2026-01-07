@@ -98,12 +98,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   // Mutation observer to watch for parent removal
   private parentRemovalObserver?: MutationObserver;
+  // Watches for dynamic footer additions/removals to update safe-area padding
+  private footerObserver?: MutationObserver;
   // Cached original parent from before modal is moved to body during presentation
   private cachedOriginalParent?: HTMLElement;
   // Cached ion-page ancestor for child route passthrough
   private cachedPageParent?: HTMLElement | null;
   // Whether to skip coordinate-based safe-area detection (for fullscreen phone modals)
   private skipSafeAreaCoordinateDetection = false;
+  // Cached safe-area values to avoid getComputedStyle calls during gestures
+  private cachedSafeAreas?: { top: number; bottom: number; left: number; right: number };
+  // Track previous safe-area state to avoid redundant DOM writes
+  private prevSafeAreaState = { top: false, bottom: false, left: false, right: false };
 
   lastFocus?: HTMLElement;
   animation?: Animation;
@@ -278,7 +284,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   @Listen('resize', { target: 'window' })
   onWindowResize() {
-    // Update safe-area overrides for all modal types on resize
+    // Invalidate safe-area cache on resize (device rotation may change values)
+    this.cachedSafeAreas = undefined;
     this.updateSafeAreaOverrides();
 
     // Only handle view transition for iOS card modals when no custom animations are provided
@@ -931,9 +938,27 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   private applyFullscreenSafeArea() {
     this.skipSafeAreaCoordinateDetection = true;
+    this.updateFooterPadding();
+
+    // Watch for dynamic footer additions/removals (e.g., async data loading)
+    if (!this.footerObserver) {
+      this.footerObserver = new MutationObserver(() => this.updateFooterPadding());
+      this.footerObserver.observe(this.el, { childList: true, subtree: true });
+    }
+  }
+
+  /**
+   * Updates wrapper padding based on footer presence.
+   * Called initially and when footer is dynamically added/removed.
+   */
+  private updateFooterPadding() {
+    if (!this.wrapperEl) return;
 
     const hasFooter = this.el.querySelector('ion-footer') !== null;
-    if (!hasFooter && this.wrapperEl) {
+    if (hasFooter) {
+      this.wrapperEl.style.removeProperty('padding-bottom');
+      this.wrapperEl.style.removeProperty('box-sizing');
+    } else {
       this.wrapperEl.style.setProperty('padding-bottom', 'var(--ion-safe-area-bottom, 0px)');
       this.wrapperEl.style.setProperty('box-sizing', 'border-box');
     }
@@ -953,22 +978,27 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * Gets the root safe-area values from the document element.
-   * These represent the actual device safe areas before any overlay overrides.
+   * Uses cached values during gestures to avoid getComputedStyle calls.
    */
-  private getRootSafeAreaValues(): { top: number; bottom: number; left: number; right: number } {
-    const rootStyle = getComputedStyle(document.documentElement);
-    return {
-      top: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-top')) || 0,
-      bottom: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-bottom')) || 0,
-      left: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-left')) || 0,
-      right: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-right')) || 0,
-    };
+  private getSafeAreaValues(): { top: number; bottom: number; left: number; right: number } {
+    if (!this.cachedSafeAreas) {
+      const rootStyle = getComputedStyle(document.documentElement);
+      this.cachedSafeAreas = {
+        top: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-top')) || 0,
+        bottom: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-bottom')) || 0,
+        left: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-left')) || 0,
+        right: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-right')) || 0,
+      };
+    }
+    return this.cachedSafeAreas;
   }
 
   /**
    * Updates safe-area CSS variable overrides based on whether the modal
    * extends into each safe-area region. Called after animation
    * and during gestures to handle dynamic position changes.
+   *
+   * Optimized to avoid redundant DOM writes by tracking previous state.
    */
   private updateSafeAreaOverrides() {
     if (this.skipSafeAreaCoordinateDetection) {
@@ -981,22 +1011,37 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     const rect = wrapper.getBoundingClientRect();
-    const safeAreas = this.getRootSafeAreaValues();
+    const safeAreas = this.getSafeAreaValues();
 
     const extendsIntoTop = rect.top < safeAreas.top;
     const extendsIntoBottom = rect.bottom > window.innerHeight - safeAreas.bottom;
     const extendsIntoLeft = rect.left < safeAreas.left;
     const extendsIntoRight = rect.right > window.innerWidth - safeAreas.right;
 
+    // Only update DOM when state actually changes
+    const prev = this.prevSafeAreaState;
     const style = this.el.style;
-    extendsIntoTop ? style.removeProperty('--ion-safe-area-top') : style.setProperty('--ion-safe-area-top', '0px');
-    extendsIntoBottom
-      ? style.removeProperty('--ion-safe-area-bottom')
-      : style.setProperty('--ion-safe-area-bottom', '0px');
-    extendsIntoLeft ? style.removeProperty('--ion-safe-area-left') : style.setProperty('--ion-safe-area-left', '0px');
-    extendsIntoRight
-      ? style.removeProperty('--ion-safe-area-right')
-      : style.setProperty('--ion-safe-area-right', '0px');
+
+    if (extendsIntoTop !== prev.top) {
+      extendsIntoTop ? style.removeProperty('--ion-safe-area-top') : style.setProperty('--ion-safe-area-top', '0px');
+      prev.top = extendsIntoTop;
+    }
+    if (extendsIntoBottom !== prev.bottom) {
+      extendsIntoBottom
+        ? style.removeProperty('--ion-safe-area-bottom')
+        : style.setProperty('--ion-safe-area-bottom', '0px');
+      prev.bottom = extendsIntoBottom;
+    }
+    if (extendsIntoLeft !== prev.left) {
+      extendsIntoLeft ? style.removeProperty('--ion-safe-area-left') : style.setProperty('--ion-safe-area-left', '0px');
+      prev.left = extendsIntoLeft;
+    }
+    if (extendsIntoRight !== prev.right) {
+      extendsIntoRight
+        ? style.removeProperty('--ion-safe-area-right')
+        : style.setProperty('--ion-safe-area-right', '0px');
+      prev.right = extendsIntoRight;
+    }
   }
 
   private sheetOnDismiss() {
@@ -1111,8 +1156,23 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
     this.currentBreakpoint = undefined;
     this.animation = undefined;
-    // Reset safe-area detection flag for potential re-presentation
+    // Reset safe-area state for potential re-presentation
     this.skipSafeAreaCoordinateDetection = false;
+    this.cachedSafeAreas = undefined;
+    this.prevSafeAreaState = { top: false, bottom: false, left: false, right: false };
+    this.footerObserver?.disconnect();
+    this.footerObserver = undefined;
+    // Clear styles that may have been set for safe-area handling
+    if (this.wrapperEl) {
+      this.wrapperEl.style.removeProperty('padding-bottom');
+      this.wrapperEl.style.removeProperty('box-sizing');
+    }
+    // Clear safe-area CSS variable overrides
+    const style = this.el.style;
+    style.removeProperty('--ion-safe-area-top');
+    style.removeProperty('--ion-safe-area-bottom');
+    style.removeProperty('--ion-safe-area-left');
+    style.removeProperty('--ion-safe-area-right');
 
     unlock();
 

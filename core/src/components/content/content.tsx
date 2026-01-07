@@ -43,6 +43,9 @@ export class Content implements ComponentInterface {
   private hasHeader = false;
   private hasFooter = false;
 
+  /** Watches for dynamic header/footer changes in parent element */
+  private parentMutationObserver?: MutationObserver;
+
   private tabsElement: HTMLElement | null = null;
   private tabsLoadCallback?: () => void;
 
@@ -181,15 +184,42 @@ export class Content implements ComponentInterface {
   }
 
   /**
-   * Detects sibling ion-header and ion-footer elements.
-   * When these are absent, content needs to handle safe-area padding directly.
+   * Detects sibling ion-header and ion-footer elements and sets up
+   * a mutation observer to handle dynamic changes (e.g., conditional rendering).
    */
   private detectSiblingElements() {
-    // Check parent element for sibling header/footer.
+    this.updateSiblingDetection();
+
+    // Watch for dynamic header/footer changes (common in React conditional rendering)
+    const parent = this.el.parentElement;
+    if (parent && !this.parentMutationObserver) {
+      this.parentMutationObserver = new MutationObserver(() => {
+        this.updateSiblingDetection();
+        forceUpdate(this);
+      });
+      this.parentMutationObserver.observe(parent, { childList: true });
+    }
+  }
+
+  /**
+   * Updates hasHeader/hasFooter based on current DOM state.
+   * Checks both direct siblings and elements wrapped in custom components
+   * (e.g., <my-header><ion-header>...</ion-header></my-header>).
+   */
+  private updateSiblingDetection() {
     const parent = this.el.parentElement;
     if (parent) {
+      // First check for direct ion-header/ion-footer siblings
       this.hasHeader = parent.querySelector(':scope > ion-header') !== null;
       this.hasFooter = parent.querySelector(':scope > ion-footer') !== null;
+
+      // If not found, check if any sibling contains them (wrapped components)
+      if (!this.hasHeader) {
+        this.hasHeader = this.siblingContainsElement(parent, 'ion-header');
+      }
+      if (!this.hasFooter) {
+        this.hasFooter = this.siblingContainsElement(parent, 'ion-footer');
+      }
     }
 
     // If no footer found, check if we're inside ion-tabs which has ion-tab-bar
@@ -201,8 +231,28 @@ export class Content implements ComponentInterface {
     }
   }
 
+  /**
+   * Checks if any sibling element of ion-content contains the specified element.
+   * Only searches one level deep to avoid finding elements in nested pages.
+   */
+  private siblingContainsElement(parent: Element, tagName: string): boolean {
+    for (const sibling of parent.children) {
+      // Skip ion-content itself
+      if (sibling === this.el) continue;
+      // Check if this sibling contains the target element as an immediate child
+      if (sibling.querySelector(`:scope > ${tagName}`) !== null) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   disconnectedCallback() {
     this.onScrollEnd();
+
+    // Clean up mutation observer to prevent memory leaks
+    this.parentMutationObserver?.disconnect();
+    this.parentMutationObserver = undefined;
 
     if (hasLazyBuild(this.el)) {
       /**
