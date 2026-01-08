@@ -143,7 +143,10 @@ export class Content implements ComponentInterface {
   }
 
   connectedCallback() {
-    this.isMainContent = this.el.closest('ion-menu, ion-popover, ion-modal') === null;
+    // Content is "main" if not inside menu/popover/modal and not nested in another ion-content
+    this.isMainContent =
+      this.el.closest('ion-menu, ion-popover, ion-modal') === null &&
+      this.el.parentElement?.closest('ion-content') === null;
 
     // Detect sibling header/footer for safe-area handling
     this.detectSiblingElements();
@@ -178,7 +181,12 @@ export class Content implements ComponentInterface {
          * bubbles, we can catch any instances of child tab bars loading by listening
          * on IonTabs.
          */
-        this.tabsLoadCallback = () => this.resize();
+        this.tabsLoadCallback = () => {
+          this.resize();
+          // Re-detect footer when tab bar loads (it may not exist during initial detection)
+          this.updateSiblingDetection();
+          forceUpdate(this);
+        };
         closestTabs.addEventListener('ionTabBarLoaded', this.tabsLoadCallback);
       }
     }
