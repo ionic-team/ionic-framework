@@ -22,8 +22,8 @@ import type { TabBarChangedEventDetail } from './tab-bar-interface';
 })
 export class TabBar implements ComponentInterface {
   private keyboardCtrl: KeyboardController | null = null;
+  private keyboardCtrlPromise: Promise<KeyboardController> | null = null;
   private didLoad = false;
-  private isComponentConnected = false;
 
   @Element() el!: HTMLElement;
 
@@ -89,9 +89,7 @@ export class TabBar implements ComponentInterface {
   }
 
   async connectedCallback() {
-    this.isComponentConnected = true;
-
-    const keyboardCtrl = await createKeyboardController(async (keyboardOpen, waitForResize) => {
+    const promise = createKeyboardController(async (keyboardOpen, waitForResize) => {
       /**
        * If the keyboard is hiding, then we need to wait
        * for the webview to resize. Otherwise, the tab bar
@@ -103,20 +101,28 @@ export class TabBar implements ComponentInterface {
 
       this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
     });
+    this.keyboardCtrlPromise = promise;
+
+    const keyboardCtrl = await promise;
 
     /**
-     * Destroy the keyboard controller if the component was
-     * disconnected during async initialization to prevent memory leaks.
+     * Only assign if this is still the current promise.
+     * Otherwise, a new connectedCallback has started or
+     * disconnectedCallback was called, so destroy this instance.
      */
-    if (this.isComponentConnected) {
+    if (this.keyboardCtrlPromise === promise) {
       this.keyboardCtrl = keyboardCtrl;
+      this.keyboardCtrlPromise = null;
     } else {
       keyboardCtrl.destroy();
     }
   }
 
   disconnectedCallback() {
-    this.isComponentConnected = false;
+    if (this.keyboardCtrlPromise) {
+      this.keyboardCtrlPromise.then((ctrl) => ctrl.destroy());
+      this.keyboardCtrlPromise = null;
+    }
 
     if (this.keyboardCtrl) {
       this.keyboardCtrl.destroy();
