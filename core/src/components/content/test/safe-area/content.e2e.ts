@@ -110,6 +110,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         description: 'https://outsystemsrd.atlassian.net/browse/FW-6830',
       });
 
+      // Set up event spy BEFORE opening modal
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
       // Open the modal
       await page.evaluate(() => {
         const modal = document.getElementById('test-modal') as HTMLIonModalElement;
@@ -117,7 +120,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       });
 
       // Wait for modal to be presented
-      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       await ionModalDidPresent.next();
 
       const modalContent = page.locator('#content-in-modal');
@@ -137,11 +139,10 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       // Initially should have safe-area-top (no header)
       await expect(content).toHaveClass(/safe-area-top/);
 
-      // Add header dynamically
-      await page.click('#add-header-btn');
+      // Add header dynamically (use evaluate to avoid pointer-events issues in Firefox)
+      await page.evaluate(() => (window as any).addHeader());
 
       // Wait for mutation observer to trigger and component to update
-      // Using expect with timeout instead of waitForTimeout for reliability
       await expect(content).not.toHaveClass(/safe-area-top/, { timeout: 1000 });
     });
 
@@ -153,12 +154,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       const content = page.locator('#content-dynamic');
 
-      // Add header first
-      await page.click('#add-header-btn');
+      // Add header first (use evaluate to avoid pointer-events issues in Firefox)
+      await page.evaluate(() => (window as any).addHeader());
       await expect(content).not.toHaveClass(/safe-area-top/, { timeout: 1000 });
 
       // Remove header
-      await page.click('#remove-header-btn');
+      await page.evaluate(() => (window as any).removeHeader());
 
       // Should have safe-area-top again
       await expect(content).toHaveClass(/safe-area-top/, { timeout: 1000 });
