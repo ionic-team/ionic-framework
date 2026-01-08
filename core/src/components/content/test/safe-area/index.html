@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Content - Safe Area</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      /* Simulate safe-area insets for testing */
+      :root {
+        --ion-safe-area-top: 44px;
+        --ion-safe-area-bottom: 34px;
+        --ion-safe-area-left: 0px;
+        --ion-safe-area-right: 0px;
+      }
+
+      .test-section {
+        border: 2px solid #ccc;
+        margin: 10px;
+        height: 200px;
+        position: relative;
+      }
+
+      .test-section .ion-page {
+        position: relative;
+        height: 100%;
+      }
+
+      /* Custom wrapper component for testing wrapped header/footer detection */
+      my-header,
+      my-footer {
+        display: contents;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <!-- Test 1: Content without header - should have safe-area-top -->
+      <div id="test-no-header" class="test-section">
+        <div class="ion-page">
+          <ion-content id="content-no-header">
+            <p>Content without header - should have safe-area-top class</p>
+          </ion-content>
+          <ion-footer>
+            <ion-toolbar>
+              <ion-title>Footer</ion-title>
+            </ion-toolbar>
+          </ion-footer>
+        </div>
+      </div>
+
+      <!-- Test 2: Content without footer - should have safe-area-bottom -->
+      <div id="test-no-footer" class="test-section">
+        <div class="ion-page">
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Header</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content id="content-no-footer">
+            <p>Content without footer - should have safe-area-bottom class</p>
+          </ion-content>
+        </div>
+      </div>
+
+      <!-- Test 3: Content with both header and footer - should NOT have safe-area classes -->
+      <div id="test-with-both" class="test-section">
+        <div class="ion-page">
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Header</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content id="content-with-both">
+            <p>Content with both header and footer - should NOT have safe-area classes</p>
+          </ion-content>
+          <ion-footer>
+            <ion-toolbar>
+              <ion-title>Footer</ion-title>
+            </ion-toolbar>
+          </ion-footer>
+        </div>
+      </div>
+
+      <!-- Test 4: Content without both header and footer - should have both safe-area classes -->
+      <div id="test-no-both" class="test-section">
+        <div class="ion-page">
+          <ion-content id="content-no-both">
+            <p>Content without header or footer - should have both safe-area classes</p>
+          </ion-content>
+        </div>
+      </div>
+
+      <!-- Test 5: Content with wrapped header component - should NOT have safe-area-top -->
+      <div id="test-wrapped-header" class="test-section">
+        <div class="ion-page">
+          <my-header>
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>Wrapped Header</ion-title>
+              </ion-toolbar>
+            </ion-header>
+          </my-header>
+          <ion-content id="content-wrapped-header">
+            <p>Content with wrapped header - should NOT have safe-area-top class</p>
+          </ion-content>
+        </div>
+      </div>
+
+      <!-- Test 6: Content with wrapped footer component - should NOT have safe-area-bottom -->
+      <div id="test-wrapped-footer" class="test-section">
+        <div class="ion-page">
+          <ion-content id="content-wrapped-footer">
+            <p>Content with wrapped footer - should NOT have safe-area-bottom class</p>
+          </ion-content>
+          <my-footer>
+            <ion-footer>
+              <ion-toolbar>
+                <ion-title>Wrapped Footer</ion-title>
+              </ion-toolbar>
+            </ion-footer>
+          </my-footer>
+        </div>
+      </div>
+
+      <!-- Test 7: Nested content - should NOT have safe-area classes (inner content) -->
+      <div id="test-nested" class="test-section">
+        <div class="ion-page">
+          <ion-content id="content-outer">
+            <p>Outer content</p>
+            <div style="height: 100px; border: 1px solid blue">
+              <ion-content id="content-nested">
+                <p>Nested content - should NOT have safe-area classes</p>
+              </ion-content>
+            </div>
+          </ion-content>
+        </div>
+      </div>
+
+      <!-- Test 8: Content inside modal - should NOT have safe-area classes -->
+      <ion-modal id="test-modal" is-open="false">
+        <ion-content id="content-in-modal">
+          <p>Content inside modal - should NOT have safe-area classes</p>
+        </ion-content>
+      </ion-modal>
+
+      <!-- Test 9: Dynamic header/footer - for testing mutation observer -->
+      <div id="test-dynamic" class="test-section">
+        <div class="ion-page" id="dynamic-page">
+          <ion-content id="content-dynamic">
+            <p>Content with dynamic header/footer</p>
+            <button id="add-header-btn" onclick="addHeader()">Add Header</button>
+            <button id="remove-header-btn" onclick="removeHeader()">Remove Header</button>
+          </ion-content>
+        </div>
+      </div>
+
+      <script>
+        function addHeader() {
+          const page = document.getElementById('dynamic-page');
+          const content = document.getElementById('content-dynamic');
+          if (!page.querySelector('ion-header')) {
+            const header = document.createElement('ion-header');
+            header.innerHTML = '<ion-toolbar><ion-title>Dynamic Header</ion-title></ion-toolbar>';
+            page.insertBefore(header, content);
+          }
+        }
+
+        function removeHeader() {
+          const page = document.getElementById('dynamic-page');
+          const header = page.querySelector('ion-header');
+          if (header) {
+            header.remove();
+          }
+        }
+
+        // Helper to open modal for testing
+        function openModal() {
+          document.getElementById('test-modal').isOpen = true;
+        }
+      </script>
+    </ion-app>
+  </body>
+</html>

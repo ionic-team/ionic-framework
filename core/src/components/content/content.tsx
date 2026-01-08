@@ -203,8 +203,13 @@ export class Content implements ComponentInterface {
     const parent = this.el.parentElement;
     if (parent && !this.parentMutationObserver && win !== undefined && 'MutationObserver' in win) {
       this.parentMutationObserver = new MutationObserver(() => {
+        const prevHasHeader = this.hasHeader;
+        const prevHasFooter = this.hasFooter;
         this.updateSiblingDetection();
-        forceUpdate(this);
+        // Only trigger re-render if header/footer detection actually changed
+        if (prevHasHeader !== this.hasHeader || prevHasFooter !== this.hasFooter) {
+          forceUpdate(this);
+        }
       });
       this.parentMutationObserver.observe(parent, { childList: true });
     }

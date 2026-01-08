@@ -419,6 +419,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.triggerController.removeClickListener();
     this.cleanupViewTransitionListener();
     this.cleanupParentRemovalObserver();
+    // Reset safe-area state to handle removal without dismiss (e.g., framework unmount)
+    this.resetSafeAreaState();
   }
 
   componentWillLoad() {
@@ -942,6 +944,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.updateFooterPadding();
 
     // Watch for dynamic footer additions/removals (e.g., async data loading)
+    // Use subtree:true to support wrapped footers in framework components
+    // (e.g., <my-footer><ion-footer>...</ion-footer></my-footer>)
     if (!this.footerObserver && win !== undefined && 'MutationObserver' in win) {
       this.footerObserver = new MutationObserver(() => this.updateFooterPadding());
       this.footerObserver.observe(this.el, { childList: true, subtree: true });
@@ -975,6 +979,32 @@ export class Modal implements ComponentInterface, OverlayInterface {
     style.setProperty('--ion-safe-area-bottom', '0px');
     style.setProperty('--ion-safe-area-left', '0px');
     style.setProperty('--ion-safe-area-right', '0px');
+  }
+
+  /**
+   * Resets all safe-area related state and styles.
+   * Called during dismiss and disconnectedCallback to ensure clean state
+   * for re-presentation of inline modals.
+   */
+  private resetSafeAreaState() {
+    this.skipSafeAreaCoordinateDetection = false;
+    this.cachedSafeAreas = undefined;
+    this.prevSafeAreaState = { top: false, bottom: false, left: false, right: false };
+    this.footerObserver?.disconnect();
+    this.footerObserver = undefined;
+
+    // Clear wrapper styles that may have been set for safe-area handling
+    if (this.wrapperEl) {
+      this.wrapperEl.style.removeProperty('padding-bottom');
+      this.wrapperEl.style.removeProperty('box-sizing');
+    }
+
+    // Clear safe-area CSS variable overrides
+    const style = this.el.style;
+    style.removeProperty('--ion-safe-area-top');
+    style.removeProperty('--ion-safe-area-bottom');
+    style.removeProperty('--ion-safe-area-left');
+    style.removeProperty('--ion-safe-area-right');
   }
 
   /**
@@ -1158,22 +1188,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.currentBreakpoint = undefined;
     this.animation = undefined;
     // Reset safe-area state for potential re-presentation
-    this.skipSafeAreaCoordinateDetection = false;
-    this.cachedSafeAreas = undefined;
-    this.prevSafeAreaState = { top: false, bottom: false, left: false, right: false };
-    this.footerObserver?.disconnect();
-    this.footerObserver = undefined;
-    // Clear styles that may have been set for safe-area handling
-    if (this.wrapperEl) {
-      this.wrapperEl.style.removeProperty('padding-bottom');
-      this.wrapperEl.style.removeProperty('box-sizing');
-    }
-    // Clear safe-area CSS variable overrides
-    const style = this.el.style;
-    style.removeProperty('--ion-safe-area-top');
-    style.removeProperty('--ion-safe-area-bottom');
-    style.removeProperty('--ion-safe-area-left');
-    style.removeProperty('--ion-safe-area-right');
+    this.resetSafeAreaState();
 
     unlock();
 

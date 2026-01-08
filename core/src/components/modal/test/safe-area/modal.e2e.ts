@@ -1,4 +1,5 @@
 import { expect } from '@playwright/test';
+import type { E2EPage } from '@utils/test/playwright';
 import { configs, test, Viewports } from '@utils/test/playwright';
 
 /**
@@ -10,7 +11,7 @@ import { configs, test, Viewports } from '@utils/test/playwright';
  */
 
 // Helper to get the modal wrapper's computed padding-bottom
-async function getWrapperPaddingBottom(page: any): Promise<string> {
+async function getWrapperPaddingBottom(page: E2EPage): Promise<string> {
   const modal = page.locator('ion-modal');
   return modal.evaluate((el: HTMLIonModalElement) => {
     const wrapper = el.shadowRoot?.querySelector('.modal-wrapper');
@@ -20,7 +21,7 @@ async function getWrapperPaddingBottom(page: any): Promise<string> {
 }
 
 // Helper to check if modal has a footer
-async function modalHasFooter(page: any): Promise<boolean> {
+async function modalHasFooter(page: E2EPage): Promise<boolean> {
   const modal = page.locator('ion-modal');
   return modal.evaluate((el: HTMLIonModalElement) => {
     return el.querySelector('ion-footer') !== null;
@@ -41,7 +42,12 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       await page.goto('/src/components/modal/test/safe-area', config);
     });
 
-    test('fullscreen modal without footer should have wrapper padding', async ({ page }) => {
+    test('fullscreen modal without footer should have wrapper padding', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://outsystemsrd.atlassian.net/browse/FW-6830',
+      });
+
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
       await page.click('#fullscreen-no-footer');
@@ -55,7 +61,12 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       expect(paddingBottom).toBe('34px');
     });
 
-    test('fullscreen modal with footer should not have wrapper padding', async ({ page }) => {
+    test('fullscreen modal with footer should not have wrapper padding', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://outsystemsrd.atlassian.net/browse/FW-6830',
+      });
+
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
       await page.click('#fullscreen-modal');
@@ -69,7 +80,12 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       expect(paddingBottom).toBe('0px');
     });
 
-    test('default modal without footer should have wrapper padding on phone', async ({ page }) => {
+    test('default modal without footer should have wrapper padding on phone', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://outsystemsrd.atlassian.net/browse/FW-6830',
+      });
+
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
       await page.click('#default-no-footer');
@@ -89,7 +105,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.goto('/src/components/modal/test/safe-area', config);
     });
 
-    test('card modal without footer should have wrapper padding on phone', async ({ page }) => {
+    test('card modal without footer should have wrapper padding on phone', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://outsystemsrd.atlassian.net/browse/FW-6830',
+      });
+
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
       await page.click('#card-modal-no-footer');
@@ -100,7 +121,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(paddingBottom).toBe('34px');
     });
 
-    test('card modal with footer should not have wrapper padding', async ({ page }) => {
+    test('card modal with footer should not have wrapper padding', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://outsystemsrd.atlassian.net/browse/FW-6830',
+      });
+
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
       await page.click('#card-modal');
@@ -123,7 +149,12 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       await page.goto('/src/components/modal/test/safe-area', config);
     });
 
-    test('default modal should not have wrapper padding on tablet', async ({ page }) => {
+    test('default modal should not have wrapper padding on tablet', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://outsystemsrd.atlassian.net/browse/FW-6830',
+      });
+
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
       await page.click('#default-modal');
@@ -134,7 +165,12 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       expect(paddingBottom).toBe('0px');
     });
 
-    test('fullscreen modal without footer should have wrapper padding on tablet', async ({ page }) => {
+    test('fullscreen modal without footer should have wrapper padding on tablet', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://outsystemsrd.atlassian.net/browse/FW-6830',
+      });
+
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
       await page.click('#fullscreen-no-footer');
@@ -144,7 +180,12 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       expect(paddingBottom).toBe('34px');
     });
 
-    test('fullscreen modal with footer should not have wrapper padding', async ({ page }) => {
+    test('fullscreen modal with footer should not have wrapper padding', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://outsystemsrd.atlassian.net/browse/FW-6830',
+      });
+
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
       await page.click('#fullscreen-modal');
@@ -163,7 +204,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.goto('/src/components/modal/test/safe-area', config);
     });
 
-    test('card modal should not have wrapper padding on tablet', async ({ page }) => {
+    test('card modal should not have wrapper padding on tablet', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://outsystemsrd.atlassian.net/browse/FW-6830',
+      });
+
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
       await page.click('#card-modal');
@@ -187,7 +233,12 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       await page.goto('/src/components/modal/test/safe-area', config);
     });
 
-    test('sheet modal should not have wrapper padding (footer handles safe-area)', async ({ page }) => {
+    test('sheet modal should not have wrapper padding (footer handles safe-area)', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://outsystemsrd.atlassian.net/browse/FW-6830',
+      });
+
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
       await page.click('#sheet-modal-full');
