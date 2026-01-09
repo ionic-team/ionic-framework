@@ -254,12 +254,16 @@
 
 :host(.safe-area-left) #background-content,
 :host(.safe-area-left) .inner-scroll {
+  /* stylelint-disable property-disallowed-list */
   left: var(--ion-safe-area-left, 0px);
+  /* stylelint-enable property-disallowed-list */
 }
 
 :host(.safe-area-right) #background-content,
 :host(.safe-area-right) .inner-scroll {
+  /* stylelint-disable property-disallowed-list */
   right: var(--ion-safe-area-right, 0px);
+  /* stylelint-enable property-disallowed-list */
 }
 
 

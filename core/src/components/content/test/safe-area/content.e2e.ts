@@ -48,7 +48,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(content).toHaveClass(/safe-area-right/);
     });
 
-    test('content with both header and footer should not have top/bottom safe-area classes', async ({ page }, testInfo) => {
+    test('content with both header and footer should not have top/bottom safe-area classes', async ({
+      page,
+    }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://outsystemsrd.atlassian.net/browse/FW-6830',
