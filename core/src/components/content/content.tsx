@@ -47,6 +47,9 @@ export class Content implements ComponentInterface {
   /** Watches for dynamic header/footer changes in parent element */
   private parentMutationObserver?: MutationObserver;
 
+  /** Watches for dynamic tab bar changes in ion-tabs */
+  private tabsMutationObserver?: MutationObserver;
+
   private tabsElement: HTMLElement | null = null;
   private tabsLoadCallback?: () => void;
 
@@ -213,6 +216,20 @@ export class Content implements ComponentInterface {
       });
       this.parentMutationObserver.observe(parent, { childList: true });
     }
+
+    // Watch for dynamic tab bar changes in ion-tabs (common in Angular conditional rendering)
+    const tabs = this.el.closest('ion-tabs');
+    if (tabs && !this.tabsMutationObserver && win !== undefined && 'MutationObserver' in win) {
+      this.tabsMutationObserver = new MutationObserver(() => {
+        const prevHasFooter = this.hasFooter;
+        this.updateSiblingDetection();
+        // Only trigger re-render if footer detection actually changed
+        if (prevHasFooter !== this.hasFooter) {
+          forceUpdate(this);
+        }
+      });
+      this.tabsMutationObserver.observe(tabs, { childList: true });
+    }
   }
 
   /**
@@ -264,9 +281,11 @@ export class Content implements ComponentInterface {
   disconnectedCallback() {
     this.onScrollEnd();
 
-    // Clean up mutation observer to prevent memory leaks
+    // Clean up mutation observers to prevent memory leaks
     this.parentMutationObserver?.disconnect();
     this.parentMutationObserver = undefined;
+    this.tabsMutationObserver?.disconnect();
+    this.tabsMutationObserver = undefined;
 
     if (hasLazyBuild(this.el)) {
       /**

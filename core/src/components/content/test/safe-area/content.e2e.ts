@@ -164,5 +164,53 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       // Should have safe-area-top again
       await expect(content).toHaveClass(/safe-area-top/, { timeout: 1000 });
     });
+
+    test('content inside ion-tabs with tab bar should not have safe-area-bottom', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
+      });
+
+      const content = page.locator('#content-dynamic-tabs');
+      // Tab bar is present, so content should not have safe-area-bottom
+      await expect(content).not.toHaveClass(/safe-area-bottom/);
+    });
+
+    test('dynamic tab bar removal should update safe-area classes', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
+      });
+
+      const content = page.locator('#content-dynamic-tabs');
+
+      // Initially tab bar is present, so no safe-area-bottom
+      await expect(content).not.toHaveClass(/safe-area-bottom/);
+
+      // Remove tab bar
+      await page.evaluate(() => (window as any).removeTabBar());
+
+      // Should have safe-area-bottom now
+      await expect(content).toHaveClass(/safe-area-bottom/, { timeout: 1000 });
+    });
+
+    test('dynamic tab bar addition should update safe-area classes', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
+      });
+
+      const content = page.locator('#content-dynamic-tabs');
+
+      // Remove tab bar first
+      await page.evaluate(() => (window as any).removeTabBar());
+      await expect(content).toHaveClass(/safe-area-bottom/, { timeout: 1000 });
+
+      // Add tab bar back
+      await page.evaluate(() => (window as any).addTabBar());
+
+      // Should not have safe-area-bottom anymore
+      await expect(content).not.toHaveClass(/safe-area-bottom/, { timeout: 1000 });
+    });
   });
 });
