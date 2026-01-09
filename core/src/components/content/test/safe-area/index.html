@@ -13,12 +13,12 @@
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <style>
-      /* Simulate safe-area insets for testing */
+      /* Simulate safe-area insets for testing (typical phone in landscape) */
       :root {
         --ion-safe-area-top: 44px;
         --ion-safe-area-bottom: 34px;
-        --ion-safe-area-left: 0px;
-        --ion-safe-area-right: 0px;
+        --ion-safe-area-left: 44px;
+        --ion-safe-area-right: 44px;
       }
 
       .test-section {
@@ -180,7 +180,8 @@
       </div>
 
       <script>
-        function addHeader() {
+        // Expose functions globally for e2e tests
+        window.addHeader = function addHeader() {
           const page = document.getElementById('dynamic-page');
           const content = document.getElementById('content-dynamic');
           if (!page.querySelector('ion-header')) {
@@ -188,22 +189,22 @@
             header.innerHTML = '<ion-toolbar><ion-title>Dynamic Header</ion-title></ion-toolbar>';
             page.insertBefore(header, content);
           }
-        }
+        };
 
-        function removeHeader() {
+        window.removeHeader = function removeHeader() {
           const page = document.getElementById('dynamic-page');
           const header = page.querySelector('ion-header');
           if (header) {
             header.remove();
           }
-        }
+        };
 
         // Helper to open modal for testing
-        function openModal() {
+        window.openModal = function openModal() {
           document.getElementById('test-modal').isOpen = true;
-        }
+        };
 
-        function addTabBar() {
+        window.addTabBar = function addTabBar() {
           const tabs = document.getElementById('dynamic-tabs');
           if (!tabs.querySelector('ion-tab-bar')) {
             const tabBar = document.createElement('ion-tab-bar');
@@ -212,14 +213,14 @@
             tabBar.innerHTML = '<ion-tab-button tab="tab1"><ion-label>Tab 1</ion-label></ion-tab-button>';
             tabs.appendChild(tabBar);
           }
-        }
+        };
 
-        function removeTabBar() {
+        window.removeTabBar = function removeTabBar() {
           const tabBar = document.getElementById('dynamic-tab-bar');
           if (tabBar) {
             tabBar.remove();
           }
-        }
+        };
       </script>
     </ion-app>
   </body>

@@ -239,7 +239,8 @@
 // --------------------------------------------------
 // When content has no sibling header, offset from top safe-area.
 // When content has no sibling footer/tab-bar, offset from bottom safe-area.
-// This prevents content from overlapping device safe areas (status bar, nav bar).
+// Left/right safe-areas always apply to main content (for landscape notched devices).
+// This prevents content from overlapping device safe areas (status bar, nav bar, notch).
 
 :host(.safe-area-top) #background-content,
 :host(.safe-area-top) .inner-scroll {
@@ -249,6 +250,16 @@
 :host(.safe-area-bottom) #background-content,
 :host(.safe-area-bottom) .inner-scroll {
   bottom: var(--ion-safe-area-bottom, 0px);
+}
+
+:host(.safe-area-left) #background-content,
+:host(.safe-area-left) .inner-scroll {
+  left: var(--ion-safe-area-left, 0px);
+}
+
+:host(.safe-area-right) #background-content,
+:host(.safe-area-right) .inner-scroll {
+  right: var(--ion-safe-area-right, 0px);
 }
 
 

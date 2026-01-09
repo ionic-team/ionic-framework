@@ -581,6 +581,8 @@ export class Content implements ComponentInterface {
           [`content-${rtl}`]: true,
           'safe-area-top': isMainContent && !hasHeader,
           'safe-area-bottom': isMainContent && !hasFooter,
+          'safe-area-left': isMainContent,
+          'safe-area-right': isMainContent,
         })}
         style={{
           '--offset-top': `${this.cTop}px`,
