@@ -342,6 +342,12 @@ type Components = {
             borderColor: string;
             bg?: string;
           };
+
+          state?: {
+            focus?: {
+              bg?: string;
+            };
+          };
         };
       };
       subtle: {
@@ -358,6 +364,12 @@ type Components = {
             borderColor: string;
             bg?: string;
           };
+
+          state?: {
+            focus?: {
+              bg?: string;
+            };
+          };
         };
       };
     };
@@ -366,6 +378,7 @@ type Components = {
     variant: {
       outline: {
         borderWidth: string | number;
+        bg?: string;
       };
     };
 

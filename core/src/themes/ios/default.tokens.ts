@@ -111,7 +111,6 @@ export const defaultTheme: DefaultTheme = {
         },
         focus: {
           bg: rgba(colors.textColorRgb, 0.16),
-          semanticBg: currentColor('base', 0.12),
           outlineBg: rgba(colors.textColorRgb, 0.04),
         },
         activated: {
@@ -144,35 +143,15 @@ export const defaultTheme: DefaultTheme = {
           bg: rgba(colors.textColorRgb, 0.12),
           color: rgba(colors.textColorRgb, 0.87),
 
-          outline: {
-            borderColor: rgba(colors.textColorRgb, 0.32),
-          },
-
           // Any of the semantic colors like primary, secondary, etc.
           semantic: {
             bgAlpha: '0.08',
             color: currentColor('shade'),
-
-            outline: {
-              borderColor: currentColor('base', 0.32),
-              bg: 'transparent',
-            },
           },
         },
         subtle: {
           bg: rgba(colors.textColorRgb, 0.04),
           color: rgba(colors.textColorRgb, 0.87),
-
-          outline: {
-            borderColor: rgba(colors.textColorRgb, 0.32),
-          },
-
-          semantic: {
-            outline: {
-              borderColor: currentColor('shade'),
-              bg: 'transparent',
-            },
-          },
         },
       },
 
@@ -180,6 +159,7 @@ export const defaultTheme: DefaultTheme = {
       variant: {
         outline: {
           borderWidth: '1px',
+          bg: 'transparent',
         },
       },
 

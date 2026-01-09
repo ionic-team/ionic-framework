@@ -105,7 +105,7 @@ export const defaultTheme: DefaultTheme = {
         },
         large: {
           height: '32px',
-          fontSize: `${(fontSizes.chipBase + 2) / 16}rem`,
+          fontSize: `${fontSizes.chipBase / 16}rem`,
         },
       },
 
@@ -116,7 +116,6 @@ export const defaultTheme: DefaultTheme = {
         },
         focus: {
           bg: rgba(colors.textColorRgb, 0.16),
-          semanticBg: currentColor('base', 0.12),
           outlineBg: rgba(colors.textColorRgb, 0.04),
         },
         activated: {
@@ -151,6 +150,7 @@ export const defaultTheme: DefaultTheme = {
 
           outline: {
             borderColor: rgba(colors.textColorRgb, 0.32),
+            // bg: 'transparent',
           },
 
           // Any of the semantic colors like primary, secondary, etc.
@@ -160,7 +160,13 @@ export const defaultTheme: DefaultTheme = {
 
             outline: {
               borderColor: currentColor('base', 0.32),
-              bg: 'transparent',
+              // bg: 'transparent',
+            },
+
+            state: {
+              focus: {
+                bg: currentColor('base', 0.12),
+              },
             },
           },
         },
@@ -170,12 +176,19 @@ export const defaultTheme: DefaultTheme = {
 
           outline: {
             borderColor: rgba(colors.textColorRgb, 0.32),
+            // bg: 'transparent',
           },
 
           semantic: {
             outline: {
               borderColor: currentColor('shade'),
-              bg: 'transparent',
+              // bg: 'transparent',
+            },
+
+            state: {
+              focus: {
+                bg: currentColor('base', 0.12, true),
+              },
             },
           },
         },
@@ -185,6 +198,7 @@ export const defaultTheme: DefaultTheme = {
       variant: {
         outline: {
           borderWidth: '1px',
+          bg: 'transparent',
         },
       },
 

@@ -1,3 +1,5 @@
+@use "../../themes/functions.color" as colors;
+
 /// Chip Variables
 /// ---------------------------------------------
 
@@ -52,8 +54,14 @@ $chip-hue-subtle-bg: var(--ion-chip-hue-subtle-bg);
 /// @prop - Subtle chip color
 $chip-hue-subtle-color: var(--ion-chip-hue-subtle-color);
 
+/// @prop - Subtle chip background color for semantic colors
+$chip-hue-subtle-semantic-bg: colors.current-color(base, $subtle: true);
+
 /// @prop - Outline subtle chip border color
 $chip-hue-subtle-outline-border-color: var(--ion-chip-hue-subtle-outline-border-color);
+
+/// @prop - Outline subtle chip background color
+$chip-hue-subtle-outline-bg: var(--ion-chip-hue-subtle-outline-bg);
 
 /// @prop - Bold chip background color
 $chip-hue-bold-bg: var(--ion-chip-hue-bold-bg);
@@ -64,8 +72,14 @@ $chip-hue-bold-color: var(--ion-chip-hue-bold-color);
 /// @prop - Outline bold chip border color
 $chip-hue-bold-outline-border-color: var(--ion-chip-hue-bold-outline-border-color);
 
+/// @prop - Outline bold chip background color
+$chip-hue-bold-outline-bg: var(--ion-chip-hue-bold-outline-bg);
+
 /// @prop - Bold chip background alpha of semantic colors
-$chip-hue-bold-semantic-bg-alpha: var(--ion-chip-hue-bold-semantic-bg-alpha); // only native uses this
+$chip-hue-bold-semantic-bg-alpha: var(--ion-chip-hue-bold-semantic-bg-alpha, 1); // only native uses this
+
+/// @prop - Bold chip background color for semantic colors
+$chip-hue-bold-semantic-bg: colors.current-color(base, $chip-hue-bold-semantic-bg-alpha);
 
 /// @prop - Bold chip color for semantic colors
 $chip-hue-bold-semantic-color: var(--ion-chip-hue-bold-semantic-color);
@@ -76,11 +90,14 @@ $chip-hue-bold-semantic-outline-border-color: var(--ion-chip-hue-bold-semantic-o
 /// @prop - Outline border width
 $chip-outline-border-width: var(--ion-chip-variant-outline-border-width);
 
-/// @prop - Outline bold chip background color for semantic colors
-$chip-outline-bold-semantic-bg: var(--ion-chip-hue-bold-semantic-outline-bg);
+/// @prop - Outline background color
+$chip-outline-bg: var(--ion-chip-variant-outline-bg);
 
-/// @prop - Subtle chip background color for semantic colors
-$chip-hue-subtle-semantic-bg: var(--ion-chip-hue-subtle-semantic-bg);
+/// @prop - Outline bold chip background color for semantic colors
+$chip-outline-bold-semantic-bg: var($chip-outline-bg, $chip-hue-bold-semantic-bg);
+
+/// @prop - Outline subtle chip background color for semantic colors
+$chip-outline-subtle-semantic-bg: var($chip-outline-bg, $chip-hue-subtle-semantic-bg);
 
 /// @prop - Outline subtle chip background color for semantic colors
 $chip-outline-subtle-semantic-bg: var(--ion-chip-hue-subtle-semantic-outline-bg);

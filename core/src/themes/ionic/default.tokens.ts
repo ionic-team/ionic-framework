@@ -99,6 +99,7 @@ export const defaultTheme: DefaultTheme = {
       },
       typography: cachedResolveOsToken(typographyTokens.body.sm.medium.$value, tokenMap),
       lineHeight: primitiveTokens.font['line-height']['full'].$value,
+      gap: cachedResolveOsToken(primitiveTokens.space['100'].$value, tokenMap),
 
       // Sizes
       size: {

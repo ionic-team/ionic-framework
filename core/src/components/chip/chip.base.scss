@@ -83,6 +83,7 @@
 
 :host(.chip-bold.chip-outline) {
   border-color: #{vars.$chip-hue-bold-outline-border-color};
+  // background: #{vars.$chip-hue-bold-outline-bg};
 }
 
 // Subtle
@@ -93,6 +94,7 @@
 
 :host(.chip-subtle.chip-outline) {
   border-color: #{vars.$chip-hue-subtle-outline-border-color};
+  // background: #{vars.$chip-hue-subtle-outline-bg};
 }
 
 // Chip Colors
@@ -100,26 +102,26 @@
 
 // Bold
 :host(.ion-color.chip-bold) {
-  background: colors.current-color(base, vars.$chip-hue-bold-semantic-bg-alpha);
+  background: vars.$chip-hue-bold-semantic-bg;
   color: vars.$chip-hue-bold-semantic-color;
 }
 
 :host(.ion-color.chip-bold.chip-outline) {
   border-color: vars.$chip-hue-bold-semantic-outline-border-color;
 
-  background: vars.$chip-outline-bold-semantic-bg; //native would be transparent, else it would be whatevers in ion-color.chip-bold
+  // background: vars.$chip-outline-bold-semantic-bg; //native would be transparent, else it would be whatevers in ion-color.chip-bold
 }
 
 // Subtle
 :host(.ion-color.chip-subtle) {
-  background: colors.current-color(base, $subtle: true);
+  background: vars.$chip-hue-subtle-semantic-bg;
   color: colors.current-color(contrast, $subtle: true);
 }
 
 :host(.ion-color.chip-subtle.chip-outline) {
   border-color: colors.current-color(shade, $subtle: true);
 
-  background: vars.$chip-outline-subtle-semantic-bg;
+  // background: vars.$chip-outline-subtle-semantic-bg;
 }
 
 // Outline Chip
@@ -128,6 +130,16 @@
 :host(.chip-outline) {
   border-width: vars.$chip-outline-border-width;
   border-style: solid;
+
+  background: var(--ion-chip-variant-outline-bg, var(--background));
+}
+
+:host(.ion-color.chip-outline.chip-bold) {
+  background: vars.$chip-outline-bold-semantic-bg;
+}
+
+:host(.ion-color.chip-outline.chip-subtle) {
+  background: vars.$chip-outline-subtle-semantic-bg;
 }
 
 // Chip States
@@ -142,17 +154,33 @@
 
 // Focus
 :host(.ion-focused) {
-  --background: #{vars.$chip-focus-bg};
-
   @include mixins.focused-state(var(--focus-ring-width), $color: var(--focus-ring-color));
 }
 
-:host(.ion-focused.ion-color) {
-  background: vars.$chip-focus-semantic-bg;
+:host(.ion-focused.chip-bold) {
+  --background: var(--ion-chip-state-focus-bg, var(--ion-chip-hue-bold-bg));
 }
 
-:host(.ion-focused.chip-outline:not(.ion-color)) {
-  background: vars.$chip-outline-focus-bg;
+:host(.ion-focused.chip-subtle) {
+  --background: var(--ion-chip-state-focus-bg, var(--ion-chip-hue-subtle-bg));
+}
+
+:host(.ion-focused.ion-color.chip-bold) {
+  background: var(--ion-chip-hue-bold-semantic-state-focus-bg, vars.$chip-hue-bold-semantic-bg);
+}
+
+:host(.ion-focused.ion-color.chip-subtle) {
+  background: var(--ion-chip-hue-subtle-semantic-state-focus-bg, vars.$chip-hue-subtle-semantic-bg);
+}
+
+:host(.ion-focused.chip-outline.chip-bold:not(.ion-color)) {
+  // background: vars.$chip-outline-focus-bg;
+  background: var(--ion-chip-state-focus-outline-bg, var(--ion-chip-hue-bold-bg));
+}
+
+:host(.ion-focused.chip-outline.chip-subtle:not(.ion-color)) {
+  // background: vars.$chip-outline-focus-bg;
+  background: var(--ion-chip-state-focus-outline-bg, var(--ion-chip-hue-subtle-bg));
 }
 
 // Activated
