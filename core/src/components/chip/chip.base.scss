@@ -14,13 +14,13 @@
    * @prop --focus-ring-color: Color of the focus ring
    * @prop --focus-ring-width: Width of the focus ring
    */
-  --focus-ring-color: #{vars.$chip-focus-ring-color};
-  --focus-ring-width: #{vars.$chip-focus-ring-width};
+  --focus-ring-color: var(--ion-chip-state-focus-ring-color);
+  --focus-ring-width: var(--ion-chip-state-focus-ring-width);
 
   @include mixins.font-smoothing();
   @include mixins.border-radius(var(--border-radius));
-  @include mixins.margin(vars.$chip-margin);
-  @include mixins.padding(vars.$chip-padding-vertical, vars.$chip-padding-horizontal);
+  @include mixins.margin(var(--ion-chip-margin));
+  @include mixins.padding(var(--ion-chip-padding-vertical), var(--ion-chip-padding-horizontal));
   @include mixins.typography(vars.$chip-typography);
 
   display: inline-flex;
@@ -32,44 +32,44 @@
   background: var(--background);
   color: var(--color);
 
-  line-height: vars.$chip-line-height;
+  line-height: var(--ion-chip-line-height);
 
   cursor: pointer;
   overflow: hidden;
   vertical-align: middle;
   box-sizing: border-box;
 
-  gap: vars.$chip-gap;
+  gap: var(--ion-chip-gap);
 }
 
 // Chip Sizes
 // ---------------------------------------------
 
 :host(.chip-small) {
-  min-height: vars.$chip-size-small-height;
+  min-height: var(--ion-chip-size-small-height);
 
-  font-size: vars.$chip-size-small-font-size;
+  font-size: var(--ion-chip-size-small-font-size);
 }
 
 :host(.chip-large) {
-  min-height: vars.$chip-size-large-height;
+  min-height: var(--ion-chip-size-large-height);
 
-  font-size: vars.$chip-size-large-font-size;
+  font-size: var(--ion-chip-size-large-font-size);
 }
 
 // Chip Shapes
 // ---------------------------------------------
 
 :host(.chip-soft) {
-  --border-radius: #{vars.$chip-border-radius-soft};
+  --border-radius: var(--ion-chip-shape-soft-border-radius);
 }
 
 :host(.chip-round) {
-  --border-radius: #{vars.$chip-border-radius-round};
+  --border-radius: var(--ion-chip-shape-round-border-radius);
 }
 
 :host(.chip-rectangular) {
-  --border-radius: #{vars.$chip-border-radius-rectangular};
+  --border-radius: var(--ion-chip-shape-rectangular-border-radius);
 }
 
 // Chip Hues
@@ -77,24 +77,22 @@
 
 // Bold
 :host(.chip-bold) {
-  --background: #{vars.$chip-hue-bold-bg};
-  --color: #{vars.$chip-hue-bold-color};
+  --background: var(--ion-chip-hue-bold-bg);
+  --color: var(--ion-chip-hue-bold-color);
 }
 
 :host(.chip-bold.chip-outline) {
-  border-color: #{vars.$chip-hue-bold-outline-border-color};
-  // background: #{vars.$chip-hue-bold-outline-bg};
+  border-color: var(--ion-chip-variant-outline-border-color-bold);
 }
 
 // Subtle
 :host(.chip-subtle) {
-  --background: #{vars.$chip-hue-subtle-bg};
-  --color: #{vars.$chip-hue-subtle-color};
+  --background: var(--ion-chip-hue-subtle-bg);
+  --color: var(--ion-chip-hue-subtle-color);
 }
 
 :host(.chip-subtle.chip-outline) {
-  border-color: #{vars.$chip-hue-subtle-outline-border-color};
-  // background: #{vars.$chip-hue-subtle-outline-bg};
+  border-color: var(--ion-chip-variant-outline-border-color-subtle);
 }
 
 // Chip Colors
@@ -103,13 +101,11 @@
 // Bold
 :host(.ion-color.chip-bold) {
   background: var(--ion-chip-hue-bold-semantic-bg);
-  color: vars.$chip-hue-bold-semantic-color;
+  color: var(--ion-chip-hue-bold-semantic-color);
 }
 
 :host(.ion-color.chip-bold.chip-outline) {
-  border-color: vars.$chip-hue-bold-semantic-outline-border-color;
-
-  // background: vars.$chip-outline-bold-semantic-bg; //native would be transparent, else it would be whatevers in ion-color.chip-bold
+  border-color: var(--ion-chip-hue-bold-semantic-color);
 }
 
 // Subtle
@@ -120,22 +116,23 @@
 
 :host(.ion-color.chip-subtle.chip-outline) {
   border-color: colors.current-color(shade, $subtle: true);
-
-  // background: vars.$chip-outline-subtle-semantic-bg;
 }
 
 // Outline Chip
 // ---------------------------------------------
 
 :host(.chip-outline) {
-  border-width: vars.$chip-outline-border-width;
+  border-width: var(--ion-chip-variant-outline-border-width);
   border-style: solid;
 
   background: var(--ion-chip-variant-outline-bg, var(--background));
 }
 
 :host(.chip-outline.ion-color.chip-bold) {
-  background: vars.$chip-outline-bold-semantic-bg;
+  background: var(
+    --ion-chip-variant-outline-bg,
+    colors.current-color(base, var(--ion-chip-hue-bold-semantic-bg-alpha, 1))
+  );
 }
 
 :host(.chip-outline.ion-color.chip-subtle) {
@@ -148,7 +145,7 @@
 // Disabled
 :host(.chip-disabled) {
   cursor: default;
-  opacity: vars.$chip-state-disabled-opacity;
+  opacity: var(--ion-chip-state-disabled-opacity);
   pointer-events: none;
 }
 
@@ -166,11 +163,14 @@
 }
 
 :host(.ion-focused.ion-color.chip-bold) {
-  background: var(--ion-chip-hue-bold-semantic-state-focus-bg, vars.$chip-hue-bold-semantic-bg);
+  background: var(
+    --ion-chip-hue-bold-semantic-state-focus-bg,
+    colors.current-color(base, var(--ion-chip-hue-bold-semantic-bg-alpha, 1))
+  );
 }
 
 :host(.ion-focused.ion-color.chip-subtle) {
-  background: var(--ion-chip-hue-subtle-semantic-state-focus-bg, vars.$chip-hue-subtle-semantic-bg);
+  background: var(--ion-chip-hue-subtle-semantic-state-focus-bg, colors.current-color(base, $subtle: true));
 }
 
 :host(.ion-focused.chip-outline.chip-bold:not(.ion-color)) {
@@ -183,11 +183,11 @@
 
 // Activated
 :host(.ion-activated) {
-  --background: #{vars.$chip-activated-bg};
+  --background: var(--ion-chip-state-activated-bg);
 }
 
 :host(.ion-activated.ion-color) {
-  background: vars.$chip-activated-semantic-bg;
+  background: var(--ion-chip-state-activated-semantic-bg);
 }
 
 // Hover
@@ -222,49 +222,45 @@
 
 // Icon
 ::slotted(ion-icon) {
-  font-size: vars.$chip-icon-size;
+  font-size: var(--ion-chip-icon-size);
 }
 
 :host(:not(.ion-color)) ::slotted(ion-icon) {
-  color: vars.$chip-icon-color;
+  color: var(--ion-chip-icon-color);
 }
 
 ::slotted(ion-icon:first-child) {
   @include mixins.margin(
-    vars.$chip-icon-first-child-margin,
-    vars.$chip-icon-first-child-margin-end,
-    $start: vars.$chip-icon-first-child-margin
+    var(--ion-chip-icon-first-child-margin),
+    var(--ion-chip-icon-first-child-margin-end),
+    $start: var(--ion-chip-icon-first-child-margin)
   );
 }
 
 ::slotted(ion-icon:last-child) {
-  @include mixins.margin(vars.$chip-icon-last-child-margin, $start: vars.$chip-icon-last-child-margin-start);
+  @include mixins.margin(var(--ion-chip-icon-last-child-margin), $start: var(--ion-chip-icon-last-child-margin-start));
 }
 
 // Avatar
 ::slotted(ion-avatar) {
-  // width: vars.$chip-avatar-size;
-  // height: vars.$chip-avatar-size;
-  // @error vars.$chip-avatar-size;
-  @if vars.$chip-avatar-size != "unset" {
-    width: vars.$chip-avatar-size;
-    height: vars.$chip-avatar-size;
-  }
   flex-shrink: 0;
+
+  width: var(--ion-chip-avatar-size, revert-layer);
+  height: var(--ion-chip-avatar-size, revert-layer);
 }
 
 ::slotted(ion-avatar:first-child) {
   @include mixins.margin(
-    vars.$chip-avatar-first-child-margin-vertical,
-    $end: vars.$chip-avatar-first-child-margin-end,
-    $start: vars.$chip-avatar-first-child-margin-start
+    var(--ion-chip-avatar-first-child-margin-vertical),
+    $end: var(--ion-chip-avatar-first-child-margin-end),
+    $start: var(--ion-chip-avatar-first-child-margin-start)
   );
 }
 
 ::slotted(ion-avatar:last-child) {
   @include mixins.margin(
-    vars.$chip-avatar-last-child-margin-vertical,
-    $end: vars.$chip-avatar-last-child-margin-end,
-    $start: vars.$chip-avatar-last-child-margin-start
+    var(--ion-chip-avatar-last-child-margin-vertical),
+    $end: var(--ion-chip-avatar-last-child-margin-end),
+    $start: var(--ion-chip-avatar-last-child-margin-start)
   );
 }
