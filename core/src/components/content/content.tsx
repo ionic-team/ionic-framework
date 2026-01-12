@@ -1,6 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
-import { win } from '@utils/browser';
 import { componentOnReady, hasLazyBuild, inheritAriaAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { isPlatform } from '@utils/platform';
@@ -36,19 +35,6 @@ export class Content implements ComponentInterface {
   private isMainContent = true;
   private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
   private inheritedAttributes: Attributes = {};
-
-  /**
-   * Track whether this content has sibling header/footer elements.
-   * When absent, we need to apply safe-area padding directly.
-   */
-  private hasHeader = false;
-  private hasFooter = false;
-
-  /** Watches for dynamic header/footer changes in parent element */
-  private parentMutationObserver?: MutationObserver;
-
-  /** Watches for dynamic tab bar changes in ion-tabs */
-  private tabsMutationObserver?: MutationObserver;
 
   private tabsElement: HTMLElement | null = null;
   private tabsLoadCallback?: () => void;
@@ -146,13 +132,7 @@ export class Content implements ComponentInterface {
   }
 
   connectedCallback() {
-    // Content is "main" if not inside menu/popover/modal and not nested in another ion-content
-    this.isMainContent =
-      this.el.closest('ion-menu, ion-popover, ion-modal') === null &&
-      this.el.parentElement?.closest('ion-content') === null;
-
-    // Detect sibling header/footer for safe-area handling
-    this.detectSiblingElements();
+    this.isMainContent = this.el.closest('ion-menu, ion-popover, ion-modal') === null;
 
     /**
      * The fullscreen content offsets need to be
@@ -184,108 +164,14 @@ export class Content implements ComponentInterface {
          * bubbles, we can catch any instances of child tab bars loading by listening
          * on IonTabs.
          */
-        this.tabsLoadCallback = () => {
-          this.resize();
-          // Re-detect footer when tab bar loads (it may not exist during initial detection)
-          this.updateSiblingDetection();
-          forceUpdate(this);
-        };
+        this.tabsLoadCallback = () => this.resize();
         closestTabs.addEventListener('ionTabBarLoaded', this.tabsLoadCallback);
       }
     }
   }
 
-  /**
-   * Detects sibling ion-header and ion-footer elements and sets up
-   * a mutation observer to handle dynamic changes (e.g., conditional rendering).
-   */
-  private detectSiblingElements() {
-    this.updateSiblingDetection();
-
-    // Watch for dynamic header/footer changes (common in React conditional rendering)
-    const parent = this.el.parentElement;
-    if (parent && !this.parentMutationObserver && win !== undefined && 'MutationObserver' in win) {
-      this.parentMutationObserver = new MutationObserver(() => {
-        const prevHasHeader = this.hasHeader;
-        const prevHasFooter = this.hasFooter;
-        this.updateSiblingDetection();
-        // Only trigger re-render if header/footer detection actually changed
-        if (prevHasHeader !== this.hasHeader || prevHasFooter !== this.hasFooter) {
-          forceUpdate(this);
-        }
-      });
-      this.parentMutationObserver.observe(parent, { childList: true });
-    }
-
-    // Watch for dynamic tab bar changes in ion-tabs (common in Angular conditional rendering)
-    const tabs = this.el.closest('ion-tabs');
-    if (tabs && !this.tabsMutationObserver && win !== undefined && 'MutationObserver' in win) {
-      this.tabsMutationObserver = new MutationObserver(() => {
-        const prevHasFooter = this.hasFooter;
-        this.updateSiblingDetection();
-        // Only trigger re-render if footer detection actually changed
-        if (prevHasFooter !== this.hasFooter) {
-          forceUpdate(this);
-        }
-      });
-      this.tabsMutationObserver.observe(tabs, { childList: true });
-    }
-  }
-
-  /**
-   * Updates hasHeader/hasFooter based on current DOM state.
-   * Checks both direct siblings and elements wrapped in custom components
-   * (e.g., <my-header><ion-header>...</ion-header></my-header>).
-   */
-  private updateSiblingDetection() {
-    const parent = this.el.parentElement;
-    if (parent) {
-      // First check for direct ion-header/ion-footer siblings
-      this.hasHeader = parent.querySelector(':scope > ion-header') !== null;
-      this.hasFooter = parent.querySelector(':scope > ion-footer') !== null;
-
-      // If not found, check if any sibling contains them (wrapped components)
-      if (!this.hasHeader) {
-        this.hasHeader = this.siblingContainsElement(parent, 'ion-header');
-      }
-      if (!this.hasFooter) {
-        this.hasFooter = this.siblingContainsElement(parent, 'ion-footer');
-      }
-    }
-
-    // If no footer found, check if we're inside ion-tabs which has ion-tab-bar
-    if (!this.hasFooter) {
-      const tabs = this.el.closest('ion-tabs');
-      if (tabs) {
-        this.hasFooter = tabs.querySelector(':scope > ion-tab-bar') !== null;
-      }
-    }
-  }
-
-  /**
-   * Checks if any sibling element of ion-content contains the specified element.
-   * Only searches one level deep to avoid finding elements in nested pages.
-   */
-  private siblingContainsElement(parent: Element, tagName: string): boolean {
-    for (const sibling of parent.children) {
-      // Skip ion-content itself
-      if (sibling === this.el) continue;
-      // Check if this sibling contains the target element as an immediate child
-      if (sibling.querySelector(`:scope > ${tagName}`) !== null) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   disconnectedCallback() {
     this.onScrollEnd();
-
-    // Clean up mutation observers to prevent memory leaks
-    this.parentMutationObserver?.disconnect();
-    this.parentMutationObserver = undefined;
-    this.tabsMutationObserver?.disconnect();
-    this.tabsMutationObserver = undefined;
 
     if (hasLazyBuild(this.el)) {
       /**
@@ -563,7 +449,7 @@ export class Content implements ComponentInterface {
   }
 
   render() {
-    const { fixedSlotPlacement, hasFooter, hasHeader, inheritedAttributes, isMainContent, scrollX, scrollY, el } = this;
+    const { fixedSlotPlacement, inheritedAttributes, isMainContent, scrollX, scrollY, el } = this;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
@@ -579,10 +465,6 @@ export class Content implements ComponentInterface {
           'content-sizing': hostContext('ion-popover', this.el),
           overscroll: forceOverscroll,
           [`content-${rtl}`]: true,
-          'safe-area-top': isMainContent && !hasHeader,
-          'safe-area-bottom': isMainContent && !hasFooter,
-          'safe-area-left': isMainContent,
-          'safe-area-right': isMainContent,
         })}
         style={{
           '--offset-top': `${this.cTop}px`,
