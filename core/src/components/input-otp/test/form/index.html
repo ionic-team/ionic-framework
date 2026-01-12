@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Input OTP - Form</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      ion-input-otp {
+        display: flex;
+      }
+
+      #result {
+        background: var(--ion-color-light);
+        border-radius: 8px;
+        padding: 16px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Input OTP - Form</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <form id="form">
+          <ion-input-otp id="inputOtp" name="otp" form="form"></ion-input-otp>
+          <ion-button type="submit" id="submitButton">Submit</ion-button>
+          <ion-button type="reset" id="resetButton">Reset</ion-button>
+        </form>
+
+        <div id="result">
+          <h3 id="resultTitle">&nbsp;</h3>
+          <p><strong>OTP Value:</strong> <span id="otpValue"></span></p>
+          <p><strong>Form Data:</strong></p>
+          <pre id="formData"></pre>
+        </div>
+      </ion-content>
+
+      <script>
+        const form = document.getElementById('form');
+        const inputOtp = document.getElementById('inputOtp');
+        const result = document.getElementById('result');
+        const resultTitle = document.getElementById('resultTitle');
+        const otpValue = document.getElementById('otpValue');
+        const formData = document.getElementById('formData');
+        const toggleDisabledButton = document.getElementById('toggleDisabledButton');
+
+        function updateValidity() {
+          inputOtp.classList.remove('ion-invalid');
+          inputOtp.classList.remove('ion-valid');
+
+          const formDataObj = new FormData(form);
+          const otp = formDataObj.get('otp');
+          if (otp.length === 4) {
+            inputOtp.classList.add('ion-valid');
+          } else {
+            inputOtp.classList.add('ion-invalid');
+          }
+        }
+
+        function displayResults(status) {
+          const value = inputOtp.value || '';
+          let statusText;
+          switch (status) {
+            case 'success':
+              statusText = 'Success: Form Submitted!';
+              break;
+            case 'error':
+              statusText = 'Error: Fill in the required fields.';
+              break;
+            case 'completed':
+              statusText = 'Completed: Ready to Submit!';
+              break;
+            default:
+              statusText = 'Initial: Form Not Submitted!';
+              break;
+          }
+
+          // Collect form data
+          const formDataObj = new FormData(form);
+          const formDataEntries = {};
+          for (const [key, val] of formDataObj.entries()) {
+            formDataEntries[key] = val;
+          }
+
+          // Update the results box
+          resultTitle.textContent = statusText;
+          otpValue.textContent = value;
+          formData.textContent = JSON.stringify(formDataEntries, null, 2);
+
+          // Log to console for debugging
+          console.log('Form results:', {
+            status: statusText,
+            otp: value,
+            formData: formDataEntries,
+          });
+        }
+
+        // Display initial results
+        displayResults();
+
+        // Handle form submission
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
+
+          const value = inputOtp.value || '';
+
+          // Validate OTP is complete
+          if (value.length !== 4) {
+            inputOtp.classList.add('ion-invalid');
+            inputOtp.classList.add('ion-touched');
+            displayResults('error');
+            return;
+          }
+
+          inputOtp.classList.remove('ion-invalid');
+          inputOtp.classList.add('ion-valid');
+          displayResults('success');
+        });
+
+        inputOtp.addEventListener('ionInput', () => {
+          updateValidity();
+        });
+
+        inputOtp.addEventListener('ionComplete', () => {
+          inputOtp.classList.remove('ion-invalid');
+          displayResults('completed');
+        });
+
+        form.addEventListener('reset', () => {
+          inputOtp.classList.remove('ion-valid');
+          inputOtp.classList.remove('ion-invalid');
+          inputOtp.classList.remove('ion-touched');
+
+          // The reset event fires before form controls are updated,
+          // so we wait until the next animation frame to read the cleared value.
+          // This is standard browser behavior, not Ionic-specific.
+          requestAnimationFrame(() => {
+            displayResults();
+          });
+        });
+      </script>
+    </ion-app>
+  </body>
+</html>
