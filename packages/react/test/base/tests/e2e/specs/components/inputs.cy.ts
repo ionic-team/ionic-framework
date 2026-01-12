@@ -55,7 +55,11 @@ describe('Inputs', () => {
     });
 
     it('typing into input-otp should update ref', () => {
-      cy.get('ion-input-otp').shadow().find('input').eq(0).type('1234', { scrollBehavior: false });
+      cy.get('ion-input-otp').shadow().find('input').eq(0).focus();
+      cy.get('ion-input-otp').shadow().find('input').eq(0).type('1', { scrollBehavior: false });
+      cy.get('ion-input-otp').shadow().find('input').eq(1).type('2', { scrollBehavior: false });
+      cy.get('ion-input-otp').shadow().find('input').eq(2).type('3', { scrollBehavior: false });
+      cy.get('ion-input-otp').shadow().find('input').eq(3).type('4', { scrollBehavior: false });
 
       cy.get('#input-otp-ref').should('have.text', '1234');
     });
