@@ -106,7 +106,8 @@ export const defaultTheme: DefaultTheme = {
           height: '32px',
 
           font: {
-            size: clamp('14px', `${(fontSizes.chipBase + 2) / 16}rem`, '24px'),
+            size: clamp('13px', `${fontSizes.chipBase / 16}rem`, '22px'),
+
           },
         },
       },
@@ -123,6 +124,7 @@ export const defaultTheme: DefaultTheme = {
 
         activated: {
           bg: rgba(colors.textColorRgb, 0.2),
+
           semantic: {
             bg: currentColor('base', 0.16),
           },
@@ -130,6 +132,7 @@ export const defaultTheme: DefaultTheme = {
 
         hover: {
           bg: rgba(colors.textColorRgb, 0.16),
+
           semantic: {
             bg: currentColor('base', 0.12),
           },
@@ -166,13 +169,36 @@ export const defaultTheme: DefaultTheme = {
           // Any of the semantic colors like primary, secondary, etc.
           semantic: {
             bgAlpha: '0.08',
+            bg: currentColor('base', 0.08),
             color: currentColor('shade'),
+
+            state: {
+              focus: {
+                bg: currentColor('base', 0.12),
+              },
+
+              hover: {
+                bg: currentColor('base', 0.12),
+              },
+            },
           },
         },
 
         subtle: {
           bg: rgba(colors.textColorRgb, 0.04), // making this up since ionic subtle does not use textColorRgb
           color: rgba(colors.textColorRgb, 0.83), // making this up since ionic subtle does not use textColorRgb
+
+          semantic: {
+            state: {
+              focus: {
+                bg: currentColor('base', 0.8, true),
+              },
+
+              hover: {
+                bg: currentColor('base', 0.8, true),
+              },
+            },
+          },
         },
       },
 
@@ -182,6 +208,11 @@ export const defaultTheme: DefaultTheme = {
           bg: 'transparent',
 
           border: {
+            color: {
+              bold: rgba(colors.textColorRgb, 0.32),
+              subtle: rgba(colors.textColorRgb, 0.3), // making this up since ionic subtle does not use textColorRgb
+            },
+      
             width: '1px',
           },
 
@@ -197,6 +228,14 @@ export const defaultTheme: DefaultTheme = {
               bg: {
                 bold: rgba(colors.textColorRgb, 0.04),
                 subtle: rgba(colors.textColorRgb, 0.02), // making this up since md subtle doesn't exist yet
+              },
+            },
+
+            activated: {
+              bg: {
+                // NEED TO ADD THIS TO THE COMPONENT SCSS
+                bold: rgba(colors.textColorRgb, 0.08),
+                subtle: rgba(colors.textColorRgb, 0.04), // making this up since md subtle doesn't exist yet
               },
             },
           },
