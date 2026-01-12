@@ -45,21 +45,7 @@ export class Chip implements ComponentInterface {
    * rounded corners, or `"rectangular"` for a chip without rounded corners.
    * Defaults to `"round"` for the `"ionic"` theme and `"soft"` for all other themes.
    */
-  @Prop() shape?: 'soft' | 'round' | 'rectangular';
-
-  /**
-   * Set the shape based on the theme
-   */
-  private getShape(): string {
-    const theme = getIonTheme(this);
-    const { shape } = this;
-
-    if (shape === undefined) {
-      return theme === 'ionic' ? 'round' : 'soft';
-    }
-
-    return shape;
-  }
+  @Prop() shape?: 'soft' | 'round' | 'rectangular' = 'round';
 
   /**
    * Set to `"small"` for a chip with less height and padding.
@@ -69,9 +55,8 @@ export class Chip implements ComponentInterface {
   @Prop() size?: 'small' | 'large' = 'large';
 
   render() {
-    const { hue, size } = this;
+    const { hue, size, shape } = this;
     const theme = getIonTheme(this);
-    const shape = this.getShape();
 
     return (
       <Host

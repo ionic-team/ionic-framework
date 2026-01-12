@@ -101,11 +101,17 @@ export const defaultTheme: DefaultTheme = {
       size: {
         small: {
           height: '24px',
-          fontSize: `${(fontSizes.chipBase - 2) / 16}rem`,
+
+          font: {
+            size: `${(fontSizes.chipBase - 2) / 16}rem`,
+          },
         },
         large: {
           height: '32px',
-          fontSize: `${fontSizes.chipBase / 16}rem`,
+
+          font: {
+            size: `${fontSizes.chipBase / 16}rem`,
+          },
         },
       },
 
@@ -114,31 +120,46 @@ export const defaultTheme: DefaultTheme = {
         disabled: {
           opacity: '0.4',
         },
+
         focus: {
-          bg: rgba(colors.textColorRgb, 0.16),
-          outlineBg: rgba(colors.textColorRgb, 0.04),
+          bg: rgba(colors.textColorRgb, 0.16), // default non-semantic focus bg for both hues // probably should split this into bold/subtle later
         },
+
         activated: {
-          bg: rgba(colors.textColorRgb, 0.2),
-          semanticBg: currentColor('base', 0.16),
+          bg: rgba(colors.textColorRgb, 0.2), // probably should split this into bold/subtle later
+
+          semantic: {
+            bg: currentColor('base', 0.16), // probably should split this into bold/subtle later
+          },
         },
+
         hover: {
-          bg: rgba(colors.textColorRgb, 0.16),
-          semanticBg: currentColor('base', 0.12),
-          outlineBg: rgba(colors.textColorRgb, 0.04),
+          bg: rgba(colors.textColorRgb, 0.16), // probably should split this into bold/subtle later
+
+          semantic: {
+            bg: currentColor('base', 0.12), // probably should split this into bold/subtle later
+          },
         },
       },
 
       // Shapes
       shape: {
         soft: {
-          borderRadius: 'var(--ion-radii-200)',
+          border: {
+            radius: 'var(--ion-radii-200)',
+          },
         },
+
         round: {
-          borderRadius: 'var(--ion-radii-full)',
+          border: {
+            radius: 'var(--ion-radii-full)',
+          },
         },
+
         rectangular: {
-          borderRadius: 'var(--ion-radii-0)',
+          border: {
+            radius: 'var(--ion-radii-0)',
+          },
         },
       },
 
@@ -148,46 +169,36 @@ export const defaultTheme: DefaultTheme = {
           bg: rgba(colors.textColorRgb, 0.12),
           color: rgba(colors.textColorRgb, 0.87),
 
-          outline: {
-            borderColor: rgba(colors.textColorRgb, 0.32),
-            // bg: 'transparent',
-          },
-
           // Any of the semantic colors like primary, secondary, etc.
           semantic: {
             bgAlpha: '0.08',
+            bg: currentColor('base', 0.08), // ADD THIS TO THE COMPONENT SCSS
             color: currentColor('shade'),
-
-            outline: {
-              borderColor: currentColor('base', 0.32),
-              // bg: 'transparent',
-            },
 
             state: {
               focus: {
                 bg: currentColor('base', 0.12),
               },
+
+              hover: {
+                bg: currentColor('base', 0.12),
+              },
             },
           },
         },
-        subtle: {
-          bg: rgba(colors.textColorRgb, 0.04),
-          color: rgba(colors.textColorRgb, 0.87),
 
-          outline: {
-            borderColor: rgba(colors.textColorRgb, 0.32),
-            // bg: 'transparent',
-          },
+        subtle: {
+          bg: rgba(colors.textColorRgb, 0.04), // making this up since ionic subtle does not use textColorRgb
+          color: rgba(colors.textColorRgb, 0.83), // making this up since ionic subtle does not use textColorRgb
 
           semantic: {
-            outline: {
-              borderColor: currentColor('shade'),
-              // bg: 'transparent',
-            },
-
             state: {
               focus: {
-                bg: currentColor('base', 0.12, true),
+                bg: currentColor('base', 0.8, true),
+              },
+
+              hover: {
+                bg: currentColor('base', 0.8, true),
               },
             },
           },
@@ -197,8 +208,49 @@ export const defaultTheme: DefaultTheme = {
       // Variants
       variant: {
         outline: {
-          borderWidth: '1px',
           bg: 'transparent',
+
+          border: {
+            color: {
+              bold: rgba(colors.textColorRgb, 0.32),
+              subtle: rgba(colors.textColorRgb, 0.3), // making this up since ionic subtle does not use textColorRgb
+            },
+
+            width: '1px',
+          },
+
+          semantic: {
+            border: {
+              color: {
+                bold: currentColor('base', 0.32),
+                subtle: currentColor('base'), // based this off ionic subtle border color since md subtle doesn't exist yet
+              },
+            },
+          },
+
+          state: {
+            focus: {
+              bg: {
+                bold: rgba(colors.textColorRgb, 0.04),
+                subtle: rgba(colors.textColorRgb, 0.02), // making this up since md subtle doesn't exist yet
+              },
+            },
+
+            hover: {
+              bg: {
+                bold: rgba(colors.textColorRgb, 0.04),
+                subtle: rgba(colors.textColorRgb, 0.02), // making this up since subtle doesn't exist yet
+              },
+            },
+
+            activated: {
+              bg: {
+                // NEED TO ADD THIS TO THE COMPONENT SCSS
+                bold: rgba(colors.textColorRgb, 0.08),
+                subtle: rgba(colors.textColorRgb, 0.04), // making this up since md subtle doesn't exist yet
+              },
+            },
+          },
         },
       },
 

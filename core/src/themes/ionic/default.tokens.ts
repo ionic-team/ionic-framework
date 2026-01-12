@@ -93,10 +93,12 @@ export const defaultTheme: DefaultTheme = {
   components: {
     IonChip: {
       margin: '0px',
+
       padding: {
         vertical: primitiveTokens.scale['150'].$value,
         horizontal: primitiveTokens.scale['200'].$value,
       },
+
       typography: cachedResolveOsToken(typographyTokens.body.sm.medium.$value, tokenMap),
       lineHeight: primitiveTokens.font['line-height']['full'].$value,
       gap: cachedResolveOsToken(primitiveTokens.space['100'].$value, tokenMap),
@@ -105,11 +107,15 @@ export const defaultTheme: DefaultTheme = {
       size: {
         small: {
           height: primitiveTokens.scale['600'].$value,
-          fontSize: primitiveTokens.font['font-size']['300'].$value,
+          font: {
+            size: primitiveTokens.font['font-size']['300'].$value,
+          },
         },
         large: {
           height: primitiveTokens.scale['800'].$value,
-          fontSize: primitiveTokens.font['font-size']['350'].$value,
+          font: {
+            size: primitiveTokens.font['font-size']['350'].$value,
+          },
         },
       },
 
@@ -129,13 +135,19 @@ export const defaultTheme: DefaultTheme = {
       // Shapes
       shape: {
         soft: {
-          borderRadius: primitiveTokens.scale['100'].$value,
+          border: {
+            radius: primitiveTokens.scale['100'].$value,
+          },
         },
         round: {
-          borderRadius: primitiveTokens.scale['400'].$value,
+          border: {
+            radius: primitiveTokens.scale['400'].$value,
+          },
         },
         rectangular: {
-          borderRadius: primitiveTokens.scale['0'].$value,
+          border: {
+            radius: primitiveTokens.scale['0'].$value,
+          },
         },
       },
 
@@ -143,35 +155,22 @@ export const defaultTheme: DefaultTheme = {
       hue: {
         bold: {
           bg: cachedResolveOsToken(colorTokens.bg.neutral.bold.default, tokenMap),
-          color: lightTokens.primitives.base.white.$value,
-
-          outline: {
-            borderColor: lightTokens.primitives.neutral['1200'].$value,
-          },
+          color: cachedResolveOsToken(colorTokens.bg.surface.default, tokenMap),
 
           // Any of the semantic colors like primary, secondary, etc.
           semantic: {
             color: currentColor('contrast'),
-
-            outline: {
-              borderColor: currentColor('shade'),
-              bg: currentColor('base'),
-            },
+            bg: currentColor('base'), // ADD THIS TO THE COMPONENT SCSS
           },
         },
+
         subtle: {
           bg: cachedResolveOsToken(lightTokens.primitives.neutral['100'], tokenMap),
           color: lightTokens.primitives.neutral['800'].$value,
 
-          outline: {
-            borderColor: lightTokens.primitives.neutral['300'].$value,
-          },
-
           semantic: {
-            outline: {
-              borderColor: currentColor('shade', null, true),
-              bg: currentColor('base', null, true),
-            },
+            color: currentColor('contrast', null, true), // ADD THIS TO THE COMPONENT SCSS
+            bg: currentColor('base', null, true), // ADD THIS TO THE COMPONENT SCSS
           },
         },
       },
@@ -179,7 +178,23 @@ export const defaultTheme: DefaultTheme = {
       // Variants
       variant: {
         outline: {
-          borderWidth: primitiveTokens.scale['025'].$value,
+          border: {
+            color: {
+              bold: cachedResolveOsToken(colorTokens.text.default, tokenMap),
+              subtle: cachedResolveOsToken(lightTokens.primitives.neutral['300'], tokenMap),
+            },
+
+            width: primitiveTokens.scale['025'].$value,
+          },
+
+          semantic: {
+            border: {
+              color: {
+                bold: currentColor('shade'),
+                subtle: currentColor('shade', null, true),
+              },
+            },
+          },
         },
       },
 

@@ -27,12 +27,6 @@ $chip-size-small-height: var(--ion-chip-size-small-height);
 /// @prop - Size small: Font size of the chip
 $chip-size-small-font-size: var(--ion-chip-size-small-font-size);
 
-/// @prop - Size medium: Height of the chip
-$chip-size-medium-height: var(--ion-chip-size-medium-height);
-
-/// @prop - Size medium: Font size of the chip
-$chip-size-medium-font-size: var(--ion-chip-size-medium-font-size);
-
 /// @prop - Size large: Height of the chip
 $chip-size-large-height: var(--ion-chip-size-large-height);
 
@@ -58,10 +52,10 @@ $chip-hue-subtle-color: var(--ion-chip-hue-subtle-color);
 $chip-hue-subtle-semantic-bg: colors.current-color(base, $subtle: true);
 
 /// @prop - Outline subtle chip border color
-$chip-hue-subtle-outline-border-color: var(--ion-chip-hue-subtle-outline-border-color);
+$chip-hue-subtle-outline-border-color: var(--ion-chip-variant-outline-border-color-subtle);
 
 /// @prop - Outline subtle chip background color
-$chip-hue-subtle-outline-bg: var(--ion-chip-hue-subtle-outline-bg);
+$chip-hue-subtle-outline-bg: var(--ion-chip-variant-outline-bg);
 
 /// @prop - Bold chip background color
 $chip-hue-bold-bg: var(--ion-chip-hue-bold-bg);
@@ -70,10 +64,10 @@ $chip-hue-bold-bg: var(--ion-chip-hue-bold-bg);
 $chip-hue-bold-color: var(--ion-chip-hue-bold-color);
 
 /// @prop - Outline bold chip border color
-$chip-hue-bold-outline-border-color: var(--ion-chip-hue-bold-outline-border-color);
+$chip-hue-bold-outline-border-color: var(--ion-chip-variant-outline-border-color-bold);
 
 /// @prop - Outline bold chip background color
-$chip-hue-bold-outline-bg: var(--ion-chip-hue-bold-outline-bg);
+$chip-hue-bold-outline-bg: var(--ion-chip-variant-outline-bg);
 
 /// @prop - Bold chip background alpha of semantic colors
 $chip-hue-bold-semantic-bg-alpha: var(--ion-chip-hue-bold-semantic-bg-alpha, 1); // only native uses this
@@ -85,7 +79,7 @@ $chip-hue-bold-semantic-bg: colors.current-color(base, $chip-hue-bold-semantic-b
 $chip-hue-bold-semantic-color: var(--ion-chip-hue-bold-semantic-color);
 
 /// @prop - Outline bold chip border color for semantic colors
-$chip-hue-bold-semantic-outline-border-color: var(--ion-chip-hue-bold-semantic-outline-border-color);
+$chip-hue-bold-semantic-outline-border-color: var(--ion-chip-variant-outline-semantic-border-color-bold);
 
 /// @prop - Outline border width
 $chip-outline-border-width: var(--ion-chip-variant-outline-border-width);
@@ -94,13 +88,13 @@ $chip-outline-border-width: var(--ion-chip-variant-outline-border-width);
 $chip-outline-bg: var(--ion-chip-variant-outline-bg);
 
 /// @prop - Outline bold chip background color for semantic colors
-$chip-outline-bold-semantic-bg: var($chip-outline-bg, $chip-hue-bold-semantic-bg);
+$chip-outline-bold-semantic-bg: var(--ion-chip-variant-outline-bg, $chip-hue-bold-semantic-bg);
 
 /// @prop - Outline subtle chip background color for semantic colors
 $chip-outline-subtle-semantic-bg: var($chip-outline-bg, $chip-hue-subtle-semantic-bg);
 
 /// @prop - Outline subtle chip background color for semantic colors
-$chip-outline-subtle-semantic-bg: var(--ion-chip-hue-subtle-semantic-outline-bg);
+$chip-outline-subtle-semantic-bg: var(--ion-chip-variant-outline-bg);
 
 /// @prop - Focus ring color
 $chip-focus-ring-color: var(--ion-chip-state-focus-ring-color);
@@ -110,12 +104,6 @@ $chip-focus-ring-width: var(--ion-chip-state-focus-ring-width);
 
 /// @prop - Focus ring background color
 $chip-focus-bg: var(--ion-chip-state-focus-bg);
-
-/// @prop - Focus background color for semantic colors
-$chip-focus-semantic-bg: var(--ion-chip-state-focus-semantic-bg);
-
-/// @prop - Outline focus background color
-$chip-outline-focus-bg: var(--ion-chip-state-focus-outline-bg);
 
 /// @prop - Activated background color
 $chip-activated-bg: var(--ion-chip-state-activated-bg);
@@ -129,8 +117,11 @@ $chip-hover-bg: var(--ion-chip-state-hover-bg);
 /// @prop - Hover background color for semantic colors
 $chip-hover-semantic-bg: var(--ion-chip-state-hover-semantic-bg);
 
-/// @prop - Outline hover background color
-$chip-outline-hover-bg: var(--ion-chip-state-hover-outline-bg);
+/// @prop - Outline bold hover background color
+$chip-outline-hover-bg-bold: var(--ion-chip-variant-outline-state-hover-bg-bold);
+
+/// @prop - Outline subtle hover background color
+$chip-outline-hover-bg-subtle: var(--ion-chip-variant-outline-state-hover-bg-subtle);
 
 /// @prop - Icon size
 $chip-icon-size: var(--ion-chip-icon-size);

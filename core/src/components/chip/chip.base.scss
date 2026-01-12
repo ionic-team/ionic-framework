@@ -102,7 +102,7 @@
 
 // Bold
 :host(.ion-color.chip-bold) {
-  background: vars.$chip-hue-bold-semantic-bg;
+  background: var(--ion-chip-hue-bold-semantic-bg);
   color: vars.$chip-hue-bold-semantic-color;
 }
 
@@ -114,8 +114,8 @@
 
 // Subtle
 :host(.ion-color.chip-subtle) {
-  background: vars.$chip-hue-subtle-semantic-bg;
-  color: colors.current-color(contrast, $subtle: true);
+  background: colors.current-color(base, $subtle: true); // always the same regardless of theme
+  color: colors.current-color(contrast, $subtle: true); // always the same regardless of theme
 }
 
 :host(.ion-color.chip-subtle.chip-outline) {
@@ -134,12 +134,12 @@
   background: var(--ion-chip-variant-outline-bg, var(--background));
 }
 
-:host(.ion-color.chip-outline.chip-bold) {
+:host(.chip-outline.ion-color.chip-bold) {
   background: vars.$chip-outline-bold-semantic-bg;
 }
 
-:host(.ion-color.chip-outline.chip-subtle) {
-  background: vars.$chip-outline-subtle-semantic-bg;
+:host(.chip-outline.ion-color.chip-subtle) {
+  background: var(--ion-chip-variant-outline-bg, colors.current-color(base, $subtle: true));
 }
 
 // Chip States
@@ -174,13 +174,11 @@
 }
 
 :host(.ion-focused.chip-outline.chip-bold:not(.ion-color)) {
-  // background: vars.$chip-outline-focus-bg;
-  background: var(--ion-chip-state-focus-outline-bg, var(--ion-chip-hue-bold-bg));
+  background: var(--ion-chip-variant-outline-state-focus-bg-bold, var(--ion-chip-hue-bold-bg));
 }
 
 :host(.ion-focused.chip-outline.chip-subtle:not(.ion-color)) {
-  // background: vars.$chip-outline-focus-bg;
-  background: var(--ion-chip-state-focus-outline-bg, var(--ion-chip-hue-subtle-bg));
+  background: var(--ion-chip-variant-outline-state-focus-bg-subtle, var(--ion-chip-hue-subtle-bg));
 }
 
 // Activated
@@ -194,16 +192,28 @@
 
 // Hover
 @media (any-hover: hover) {
-  :host(:hover) {
-    --background: #{vars.$chip-hover-bg};
+  :host(.chip-bold:hover) {
+    --background: var(--ion-chip-state-hover-bg, var(--ion-chip-hue-bold-bg));
   }
 
-  :host(.ion-color:hover) {
-    background: vars.$chip-hover-semantic-bg;
+  :host(.chip-subtle:hover) {
+    --background: var(--ion-chip-state-hover-bg, var(--ion-chip-hue-subtle-bg));
   }
 
-  :host(.chip-outline:not(.ion-color):hover) {
-    background: vars.$chip-outline-hover-bg;
+  :host(.chip-bold.ion-color:hover) {
+    background: var(--ion-chip-hue-bold-semantic-state-hover-bg, var(--ion-chip-hue-bold-semantic-bg));
+  }
+
+  :host(.chip-subtle.ion-color:hover) {
+    background: var(--ion-chip-hue-subtle-semantic-state-hover-bg, var(--ion-chip-hue-subtle-semantic-bg));
+  }
+
+  :host(.chip-outline.chip-bold:not(.ion-color):hover) {
+    background: var(--ion-chip-variant-outline-state-hover-bg-bold, var(--background));
+  }
+
+  :host(.chip-outline.chip-subtle:not(.ion-color):hover) {
+    background: var(--ion-chip-variant-outline-state-hover-bg-subtle, var(--background));
   }
 }
 

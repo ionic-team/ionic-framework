@@ -277,11 +277,16 @@ type Components = {
     size: {
       small: {
         height: string | number;
-        fontSize: string | number;
+        font: {
+          size: string | number;
+        };
       };
+
       large: {
         height: string | number;
-        fontSize: string | number;
+        font: {
+          size: string | number;
+        };
       };
     };
 
@@ -290,36 +295,51 @@ type Components = {
       disabled: {
         opacity: string | number;
       };
+
       focus: {
         ring?: {
           color: string;
           width?: string | number;
         };
         bg?: string;
-        semanticBg?: string;
-        outlineBg?: string;
+        semantic?: {
+          bg?: string;
+        };
       };
+
       activated?: {
         bg: string;
-        semanticBg: string;
+        semantic?: {
+          bg: string;
+        };
       };
+
       hover?: {
         bg: string;
-        semanticBg: string;
-        outlineBg: string;
+        semantic?: {
+          bg: string;
+        };
       };
     };
 
     // Shapes
     shape: {
       soft: {
-        borderRadius: string | number;
+        border: {
+          radius: string | number;
+        };
       };
+
       round: {
-        borderRadius: string | number;
+        border: {
+          radius: string | number;
+        };
       };
+
       rectangular: {
-        borderRadius: string | number;
+        border: {
+          radius: string | number;
+        };
       };
     };
 
@@ -329,44 +349,38 @@ type Components = {
         bg: string;
         color: string;
 
-        outline: {
-          borderColor: string;
-        };
-
         // Any of the semantic colors like primary, secondary, etc.
         semantic: {
-          bgAlpha?: string;
+          bgAlpha?: string; // SUBSTITUTE THIS WITH bg IN THE COMPONENT SCSS
+          bg?: string;
           color: string;
-
-          outline: {
-            borderColor: string;
-            bg?: string;
-          };
 
           state?: {
             focus?: {
               bg?: string;
             };
+
+            hover?: {
+              bg?: string;
+            };
           };
         };
       };
+
       subtle: {
         bg: string;
         color: string;
 
-        outline: {
-          borderColor: string;
-          bg?: string;
-        };
-
-        semantic: {
-          outline: {
-            borderColor: string;
-            bg?: string;
-          };
+        semantic?: {
+          color?: string;
+          bg?: string; // SUBSTITUTE THIS WITH bg IN THE COMPONENT SCSS
 
           state?: {
             focus?: {
+              bg?: string;
+            };
+
+            hover?: {
               bg?: string;
             };
           };
@@ -375,10 +389,56 @@ type Components = {
     };
 
     // Variants
+
     variant: {
       outline: {
-        borderWidth: string | number;
         bg?: string;
+
+        border: {
+          color?: {
+            bold?: string;
+            subtle?: string;
+          };
+
+          width?: string | number;
+        };
+
+        semantic?: {
+          bg?: {
+            bold?: string;
+            subtle?: string;
+          };
+
+          border?: {
+            color?: {
+              bold?: string;
+              subtle?: string;
+            };
+          };
+        };
+
+        state?: {
+          focus?: {
+            bg?: {
+              bold?: string;
+              subtle?: string;
+            };
+          };
+
+          hover?: {
+            bg?: {
+              bold?: string;
+              subtle?: string;
+            };
+          };
+
+          activated?: {
+            bg?: {
+              bold?: string;
+              subtle?: string;
+            };
+          };
+        };
       };
     };
 

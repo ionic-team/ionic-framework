@@ -96,11 +96,18 @@ export const defaultTheme: DefaultTheme = {
       size: {
         small: {
           height: '24px',
-          fontSize: clamp('12px', `${(fontSizes.chipBase - 2) / 16}rem`, '20px'),
+
+          font: {
+            size: clamp('12px', `${(fontSizes.chipBase - 2) / 16}rem`, '20px'),
+          },
         },
+
         large: {
           height: '32px',
-          fontSize: clamp('14px', `${(fontSizes.chipBase + 2) / 16}rem`, '24px'),
+
+          font: {
+            size: clamp('14px', `${(fontSizes.chipBase + 2) / 16}rem`, '24px'),
+          },
         },
       },
 
@@ -109,31 +116,44 @@ export const defaultTheme: DefaultTheme = {
         disabled: {
           opacity: '0.4',
         },
+
         focus: {
-          bg: rgba(colors.textColorRgb, 0.16),
-          outlineBg: rgba(colors.textColorRgb, 0.04),
+          bg: rgba(colors.textColorRgb, 0.16), // default non-semantic focus bg for both hues
         },
+
         activated: {
           bg: rgba(colors.textColorRgb, 0.2),
-          semanticBg: currentColor('base', 0.16),
+          semantic: {
+            bg: currentColor('base', 0.16),
+          },
         },
+
         hover: {
           bg: rgba(colors.textColorRgb, 0.16),
-          semanticBg: currentColor('base', 0.12),
-          outlineBg: rgba(colors.textColorRgb, 0.04),
+          semantic: {
+            bg: currentColor('base', 0.12),
+          },
         },
       },
 
       // Shapes
       shape: {
         soft: {
-          borderRadius: 'var(--ion-radii-250)',
+          border: {
+            radius: 'var(--ion-radii-250)',
+          },
         },
+
         round: {
-          borderRadius: 'var(--ion-radii-full)',
+          border: {
+            radius: 'var(--ion-radii-full)',
+          },
         },
+
         rectangular: {
-          borderRadius: 'var(--ion-radii-0)',
+          border: {
+            radius: 'var(--ion-radii-0)',
+          },
         },
       },
 
@@ -149,17 +169,37 @@ export const defaultTheme: DefaultTheme = {
             color: currentColor('shade'),
           },
         },
+
         subtle: {
-          bg: rgba(colors.textColorRgb, 0.04),
-          color: rgba(colors.textColorRgb, 0.87),
+          bg: rgba(colors.textColorRgb, 0.04), // making this up since ionic subtle does not use textColorRgb
+          color: rgba(colors.textColorRgb, 0.83), // making this up since ionic subtle does not use textColorRgb
         },
       },
 
       // Variants
       variant: {
         outline: {
-          borderWidth: '1px',
           bg: 'transparent',
+
+          border: {
+            width: '1px',
+          },
+
+          state: {
+            focus: {
+              bg: {
+                bold: rgba(colors.textColorRgb, 0.04),
+                subtle: rgba(colors.textColorRgb, 0.02), // making this up since md subtle doesn't exist yet
+              },
+            },
+
+            hover: {
+              bg: {
+                bold: rgba(colors.textColorRgb, 0.04),
+                subtle: rgba(colors.textColorRgb, 0.02), // making this up since md subtle doesn't exist yet
+              },
+            },
+          },
         },
       },
 
