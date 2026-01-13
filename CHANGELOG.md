@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.15](https://github.com/ionic-team/ionic-framework/compare/v8.7.14...v8.7.15) (2025-12-23)
+
+
+### Bug Fixes
+
+* **core:** use Capacitor safe-area CSS variables on older WebViews ([#30865](https://github.com/ionic-team/ionic-framework/issues/30865)) ([8573bf8](https://github.com/ionic-team/ionic-framework/commit/8573bf8083f75eda13c954a56731a6aac8ca5724))
+* **header:** show iOS condense header when app is in MD mode ([#30690](https://github.com/ionic-team/ionic-framework/issues/30690)) ([f83b000](https://github.com/ionic-team/ionic-framework/commit/f83b0005309400d674e43c497bdffbcb9d2c4d94)), closes [#29929](https://github.com/ionic-team/ionic-framework/issues/29929)
+* **input-password-toggle:** improve screen reader announcements ([#30885](https://github.com/ionic-team/ionic-framework/issues/30885)) ([12ede4b](https://github.com/ionic-team/ionic-framework/commit/12ede4b79c8d5cffc2b014c7c8a0d2ef1d3bf90d))
+* **modal:** dismiss top-most overlay when multiple IDs match ([#30883](https://github.com/ionic-team/ionic-framework/issues/30883)) ([3b60a1d](https://github.com/ionic-team/ionic-framework/commit/3b60a1d68a1df1606ffee0bde7db7a206bac404a)), closes [#30030](https://github.com/ionic-team/ionic-framework/issues/30030)
+
+
+
+
+
+## [8.7.14](https://github.com/ionic-team/ionic-framework/compare/v8.7.13...v8.7.14) (2025-12-17)
+
+
+### Bug Fixes
+
+* **tabs:** select correct tab when routes have similar prefixes ([#30863](https://github.com/ionic-team/ionic-framework/issues/30863)) ([03fb422](https://github.com/ionic-team/ionic-framework/commit/03fb422bfa775e3e9dd695ea1857fa88d4245ecd)), closes [#30448](https://github.com/ionic-team/ionic-framework/issues/30448)
+
+
+
+
+
 ## [8.7.13](https://github.com/ionic-team/ionic-framework/compare/v8.7.12...v8.7.13) (2025-12-13)
 
 **Note:** Version bump only for package ionic-framework
