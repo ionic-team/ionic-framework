@@ -43,14 +43,15 @@ export class Chip implements ComponentInterface {
   /**
    * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully
    * rounded corners, or `"rectangular"` for a chip without rounded corners.
-   * Defaults to `"round"` for the `"ionic"` theme and `"soft"` for all other themes.
+   * 
+   * Defaults to `"round"`.
    */
   @Prop() shape?: 'soft' | 'round' | 'rectangular' = 'round';
 
   /**
    * Set to `"small"` for a chip with less height and padding.
    *
-   * Defaults to `"small"`.
+   * Defaults to `"large"`.
    */
   @Prop() size?: 'small' | 'large' = 'large';
 

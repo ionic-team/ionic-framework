@@ -886,12 +886,12 @@ export namespace Components {
          */
         "outline": boolean;
         /**
-          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners. Defaults to `"round"` for the `"ionic"` theme and `"soft"` for all other themes.
+          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"`.
           * @default 'round'
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"small"`.
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"`.
           * @default 'large'
          */
         "size"?: 'small' | 'large';
@@ -6858,12 +6858,12 @@ declare namespace LocalJSX {
          */
         "outline"?: boolean;
         /**
-          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners. Defaults to `"round"` for the `"ionic"` theme and `"soft"` for all other themes.
+          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"`.
           * @default 'round'
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"small"`.
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"`.
           * @default 'large'
          */
         "size"?: 'small' | 'large';
