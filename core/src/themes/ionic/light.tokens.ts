@@ -85,17 +85,17 @@ export const lightTheme: LightTheme = {
     warning: {
       bold: {
         base: cachedResolveOsToken(colorTokens.bg.warning.base.default, tokenMap),
-        contrast: cachedResolveOsToken(colorTokens.text.inverse, tokenMap),
+        contrast: cachedResolveOsToken(colorTokens.text.default, tokenMap),
         foreground: cachedResolveOsToken(colorTokens.text.warning, tokenMap),
         shade: cachedResolveOsToken(colorTokens.bg.warning.base.press, tokenMap),
-        tint: cachedResolveOsToken(colorTokens.semantics.warning['800'], tokenMap),
+        tint: cachedResolveOsToken(lightTokens.primitives.yellow['300'], tokenMap),
       },
       subtle: {
         base: cachedResolveOsToken(colorTokens.bg.warning.subtle.default, tokenMap),
         contrast: cachedResolveOsToken(colorTokens.text.warning, tokenMap),
         foreground: cachedResolveOsToken(colorTokens.text.warning, tokenMap),
         shade: cachedResolveOsToken(colorTokens.bg.warning.subtle.press, tokenMap),
-        tint: cachedResolveOsToken(colorTokens.semantics.warning['200'], tokenMap),
+        tint: cachedResolveOsToken(lightTokens.primitives.yellow['100'], tokenMap),
       },
     },
     danger: {

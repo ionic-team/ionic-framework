@@ -1,7 +1,10 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screenshot, title }) => {
+/**
+ * This behavior does not vary across directions.
+ */
+configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('chip: hue'), () => {
     test('should render subtle chips', async ({ page }) => {
       await page.setContent(
