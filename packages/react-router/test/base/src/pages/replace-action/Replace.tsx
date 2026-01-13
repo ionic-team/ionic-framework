@@ -66,6 +66,7 @@ const Page3: React.FC = () => {
       </IonHeader>
       <IonContent>
         <p>Page 3</p>
+        <p>Note: The back button navigates to Page 1 (not Page 2) because Page 2 used replace navigation.</p>
       </IonContent>
     </IonPage>
   );
