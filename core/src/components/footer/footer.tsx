@@ -22,6 +22,7 @@ export class Footer implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private contentScrollCallback?: () => void;
   private keyboardCtrl: KeyboardController | null = null;
+  private keyboardCtrlPromise: Promise<KeyboardController> | null = null;
 
   @State() private keyboardVisible = false;
 
@@ -52,7 +53,7 @@ export class Footer implements ComponentInterface {
   }
 
   async connectedCallback() {
-    this.keyboardCtrl = await createKeyboardController(async (keyboardOpen, waitForResize) => {
+    const promise = createKeyboardController(async (keyboardOpen, waitForResize) => {
       /**
        * If the keyboard is hiding, then we need to wait
        * for the webview to resize. Otherwise, the footer
@@ -64,11 +65,32 @@ export class Footer implements ComponentInterface {
 
       this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
     });
+    this.keyboardCtrlPromise = promise;
+
+    const keyboardCtrl = await promise;
+
+    /**
+     * Only assign if this is still the current promise.
+     * Otherwise, a new connectedCallback has started or
+     * disconnectedCallback was called, so destroy this instance.
+     */
+    if (this.keyboardCtrlPromise === promise) {
+      this.keyboardCtrl = keyboardCtrl;
+      this.keyboardCtrlPromise = null;
+    } else {
+      keyboardCtrl.destroy();
+    }
   }
 
   disconnectedCallback() {
+    if (this.keyboardCtrlPromise) {
+      this.keyboardCtrlPromise.then((ctrl) => ctrl.destroy());
+      this.keyboardCtrlPromise = null;
+    }
+
     if (this.keyboardCtrl) {
       this.keyboardCtrl.destroy();
+      this.keyboardCtrl = null;
     }
   }
 
