@@ -214,6 +214,15 @@ export const defaultTheme: DefaultTheme = {
             width: '1px',
           },
 
+          semantic: {
+            border: {
+              color: {
+                bold: currentColor('base', 0.32),
+                subtle: currentColor('base'), // based this off ionic subtle border color since md subtle doesn't exist yet
+              },
+            },
+          },
+
           state: {
             focus: {
               bg: {
