@@ -105,7 +105,7 @@
 }
 
 :host(.ion-color.chip-bold.chip-outline) {
-  border-color: var(--ion-chip-hue-bold-semantic-color);
+  border-color: var(--ion-chip-variant-outline-semantic-border-color-bold);
 }
 
 // Subtle
@@ -115,7 +115,7 @@
 }
 
 :host(.ion-color.chip-subtle.chip-outline) {
-  border-color: colors.current-color(shade, $subtle: true);
+  border-color: var(--ion-chip-variant-outline-semantic-border-color-subtle);
 }
 
 // Outline Chip
