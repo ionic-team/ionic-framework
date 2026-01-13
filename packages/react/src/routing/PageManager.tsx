@@ -22,7 +22,18 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
     super(props);
     this.ionPageElementRef = React.createRef();
     // React refs must be stable (not created inline).
-    this.stableMergedRefs = mergeRefs(this.ionPageElementRef, this.props.forwardedRef);
+    // Wrap merged refs to add ion-page-invisible synchronously when element is created
+    const baseMergedRefs = mergeRefs(this.ionPageElementRef, this.props.forwardedRef);
+    this.stableMergedRefs = (node: HTMLDivElement | null) => {
+      if (node && !node.classList.contains('ion-page-invisible') && !node.classList.contains('ion-page-hidden')) {
+        // Add ion-page-invisible synchronously before first paint (if in an outlet)
+        // This prevents the flash that occurs when componentDidMount runs after paint
+        if (this.context?.isInOutlet?.()) {
+          node.classList.add('ion-page-invisible');
+        }
+      }
+      baseMergedRefs(node);
+    };
 
     /**
      * This binds the scope of the following methods to the class scope.
@@ -66,16 +77,11 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
 
   componentDidMount() {
     if (this.ionPageElementRef.current) {
-      // Add user classes via classList to preserve framework-added classes on re-renders
-      if (this.props.className) {
-        this.parseClasses(this.props.className).forEach((cls) => {
-          this.ionPageElementRef.current!.classList.add(cls);
-        });
-      }
-
-      // Note: ion-page-invisible is now added in render() to prevent flash.
-      // We no longer add it here to avoid race conditions where the browser
-      // paints the visible element before componentDidMount runs.
+      // Add user classes via DOM manipulation to preserve framework-added classes.
+      // We only set "ion-page" in JSX; user classes are added here.
+      // Note: ion-page-invisible is added in the ref callback (stableMergedRefs) to prevent flash.
+      // The ref callback runs synchronously when the element is created, before the browser paints.
+      this.updateUserClasses(undefined, this.props.className);
 
       this.context.registerIonPage(this.ionPageElementRef.current, this.props.routeInfo!);
       this.ionPageElementRef.current.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler);
@@ -126,21 +132,14 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { className, children, routeInfo, forwardedRef, ...props } = this.props;
 
-    /**
-     * Start with ion-page-invisible when inside an outlet to prevent flash.
-     * Previously, ion-page-invisible was added in componentDidMount, but the browser
-     * could paint the visible element before componentDidMount runs, causing a flash.
-     * The invisible class is removed by the StackManager when the page becomes active.
-     */
-    const isInOutlet = this.context?.isInOutlet?.() ?? false;
-    const initialClassName = isInOutlet ? 'ion-page ion-page-invisible' : 'ion-page';
-
+    // Only set "ion-page" in JSX. User classes are managed via DOM in componentDidMount/componentDidUpdate
+    // to preserve framework-added classes (can-go-back, ion-page-invisible, etc.) when className prop changes.
     return (
       <IonLifeCycleContext.Consumer>
         {(context) => {
           this.ionLifeCycleContext = context;
           return (
-            <div className={initialClassName} ref={this.stableMergedRefs} {...props}>
+            <div className="ion-page" ref={this.stableMergedRefs} {...props}>
               {children}
             </div>
           );

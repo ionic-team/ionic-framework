@@ -818,7 +818,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     /**
      * DO NOT remove ion-page-invisible here.
      *
-     * PageManager.render() adds ion-page-invisible to prevent flash before componentDidMount.
+     * PageManager's ref callback adds ion-page-invisible synchronously to prevent flash.
      * At this point, the <IonPage> div exists but its CHILDREN (header, toolbar, menu-button)
      * have NOT rendered yet. If we remove ion-page-invisible now, the page becomes visible
      * with empty/incomplete content, causing a flicker (especially for ion-menu-button which
