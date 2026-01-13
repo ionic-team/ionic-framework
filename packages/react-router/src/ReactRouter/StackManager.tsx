@@ -308,12 +308,14 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     leavingViewItem: ViewItem | undefined,
     shouldUnmountLeavingViewItem: boolean
   ): void {
-    // Handle parameterized route changes (same view, different params)
-    if (enteringViewItem === leavingViewItem) {
-      const routePath = enteringViewItem.reactElement?.props?.path as string | undefined;
-      const isParameterizedRoute = routePath ? routePath.includes(':') : false;
+    const routePath = enteringViewItem.reactElement?.props?.path as string | undefined;
+    const isParameterizedRoute = routePath ? routePath.includes(':') : false;
+    const isWildcardContainerRoute = routePath ? routePath.endsWith('/*') : false;
 
-      if (isParameterizedRoute) {
+    // Handle same-view transitions (parameterized routes like /user/:id or container routes like /tabs/*)
+    // When entering === leaving, the view is already visible - skip transition to prevent flash
+    if (enteringViewItem === leavingViewItem) {
+      if (isParameterizedRoute || isWildcardContainerRoute) {
         const updatedMatch = matchComponent(enteringViewItem.reactElement, routeInfo.pathname, true);
         if (updatedMatch) {
           enteringViewItem.routeData.match = updatedMatch;
@@ -325,6 +327,28 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
           enteringEl.removeAttribute('aria-hidden');
         }
 
+        this.forceUpdate();
+        return;
+      }
+    }
+
+    // For wildcard container routes, check if we're navigating within the same container.
+    // If both the current pathname and the previous pathname match the same container route,
+    // skip the transition - the nested outlet will handle the actual page change.
+    // This handles cases where leavingViewItem lookup fails (e.g., no IonPage wrapper).
+    if (isWildcardContainerRoute && routeInfo.lastPathname) {
+      // routePath is guaranteed to exist since isWildcardContainerRoute checks routePath?.endsWith('/*')
+      const containerBase = routePath!.replace(/\/\*$/, '');
+      const currentInContainer =
+        routeInfo.pathname.startsWith(containerBase + '/') || routeInfo.pathname === containerBase;
+      const previousInContainer =
+        routeInfo.lastPathname.startsWith(containerBase + '/') || routeInfo.lastPathname === containerBase;
+
+      if (currentInContainer && previousInContainer) {
+        const updatedMatch = matchComponent(enteringViewItem.reactElement, routeInfo.pathname, true);
+        if (updatedMatch) {
+          enteringViewItem.routeData.match = updatedMatch;
+        }
         this.forceUpdate();
         return;
       }
@@ -557,8 +581,10 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       return;
     }
 
-    // Hide leaving view while we wait for the entering view's IonPage to mount
-    hideIonPageElement(leavingViewItem?.ionPageElement);
+    // Do not hide the leaving view here - wait until the entering view is ready.
+    // Hiding the leaving view while the entering view is still mounting causes a flash
+    // where both views are hidden/invisible simultaneously.
+    // The leaving view will be hidden in transitionPage() after the entering view is visible.
 
     this.waitingForIonPage = true;
 
@@ -586,6 +612,16 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
           this.handleLeavingViewUnmount(routeInfo, latestEnteringView, latestLeavingView);
         }
 
+        this.forceUpdate();
+      } else {
+        /**
+         * Timeout fired and entering view still has no ionPageElement.
+         * This happens for container routes that render nested outlets without a direct IonPage.
+         * Hide the leaving view since there's no entering IonPage to wait for.
+         */
+        if (latestLeavingView?.ionPageElement) {
+          hideIonPageElement(latestLeavingView.ionPageElement);
+        }
         this.forceUpdate();
       }
     }, ION_PAGE_WAIT_TIMEOUT_MS);
@@ -782,7 +818,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     /**
      * DO NOT remove ion-page-invisible here.
      *
-     * PageManager.componentDidMount adds ion-page-invisible before calling registerIonPage.
+     * PageManager.render() adds ion-page-invisible to prevent flash before componentDidMount.
      * At this point, the <IonPage> div exists but its CHILDREN (header, toolbar, menu-button)
      * have NOT rendered yet. If we remove ion-page-invisible now, the page becomes visible
      * with empty/incomplete content, causing a flicker (especially for ion-menu-button which
@@ -997,7 +1033,15 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         this.skipTransition = false;
       } else {
         enteringEl.classList.add('ion-page');
-        enteringEl.classList.add('ion-page-invisible');
+        /**
+         * Only add ion-page-invisible if the element is not already visible.
+         * During tab switches, the container page (e.g., TabContext wrapper) is
+         * already visible and should remain so. Adding ion-page-invisible would
+         * cause a flash where the visible page briefly becomes invisible.
+         */
+        if (!isViewVisible(enteringEl)) {
+          enteringEl.classList.add('ion-page-invisible');
+        }
       }
 
       await routerOutlet.commit(enteringEl, leavingEl, {
@@ -1039,29 +1083,28 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         if (isNonAnimatedTransition && leavingEl) {
           /**
            * Flicker prevention for non-animated transitions:
-           * 1. Keep entering invisible during commit and component mounting
-           * 2. Wait for components (including menu button) to be ready
-           * 3. Swap visibility atomically
+           * Skip commit() entirely for simple visibility swaps (like tab switches).
+           * commit() runs animation logic that can cause intermediate paints even with
+           * duration: 0. Instead, we directly swap visibility classes and wait for
+           * components to be ready before showing the entering element.
            */
           const enteringEl = enteringViewItem.ionPageElement;
 
+          // Ensure entering element has proper base classes
           enteringEl.classList.add('ion-page');
-          if (!enteringEl.classList.contains('ion-page-invisible')) {
+          // Only add ion-page-invisible if not already visible (e.g., tab switches)
+          if (!isViewVisible(enteringEl)) {
             enteringEl.classList.add('ion-page-invisible');
           }
           enteringEl.classList.remove('ion-page-hidden');
           enteringEl.removeAttribute('aria-hidden');
 
-          await routerOutlet.commit(enteringEl, undefined, {
-            duration: 0,
-            direction: undefined,
-            showGoBack: !!routeInfo.pushedByRoute,
-            progressAnimation: false,
-            animationBuilder: routeInfo.routeAnimation,
-          });
-
-          // Re-add invisible after commit removes it (commit's afterTransition handling)
-          enteringEl.classList.add('ion-page-invisible');
+          // Handle can-go-back class since we're skipping commit() which normally sets this
+          if (routeInfo.pushedByRoute) {
+            enteringEl.classList.add('can-go-back');
+          } else {
+            enteringEl.classList.remove('can-go-back');
+          }
 
           /**
            * Wait for components to be ready. Menu buttons start hidden (menu-button-hidden)

@@ -73,9 +73,10 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
         });
       }
 
-      if (this.context.isInOutlet()) {
-        this.ionPageElementRef.current.classList.add('ion-page-invisible');
-      }
+      // Note: ion-page-invisible is now added in render() to prevent flash.
+      // We no longer add it here to avoid race conditions where the browser
+      // paints the visible element before componentDidMount runs.
+
       this.context.registerIonPage(this.ionPageElementRef.current, this.props.routeInfo!);
       this.ionPageElementRef.current.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler);
       this.ionPageElementRef.current.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler);
@@ -125,12 +126,21 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { className, children, routeInfo, forwardedRef, ...props } = this.props;
 
+    /**
+     * Start with ion-page-invisible when inside an outlet to prevent flash.
+     * Previously, ion-page-invisible was added in componentDidMount, but the browser
+     * could paint the visible element before componentDidMount runs, causing a flash.
+     * The invisible class is removed by the StackManager when the page becomes active.
+     */
+    const isInOutlet = this.context?.isInOutlet?.() ?? false;
+    const initialClassName = isInOutlet ? 'ion-page ion-page-invisible' : 'ion-page';
+
     return (
       <IonLifeCycleContext.Consumer>
         {(context) => {
           this.ionLifeCycleContext = context;
           return (
-            <div className="ion-page" ref={this.stableMergedRefs} {...props}>
+            <div className={initialClassName} ref={this.stableMergedRefs} {...props}>
               {children}
             </div>
           );

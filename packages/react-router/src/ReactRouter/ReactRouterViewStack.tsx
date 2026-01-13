@@ -736,11 +736,17 @@ export class ReactRouterViewStack extends ViewStacks {
           return true;
         }
 
-        // For wildcard routes (without params), only reuse if the pathname exactly matches
-        if (isWildcardRoute && isSamePath) {
-          match = result;
-          viewItem = v;
-          return true;
+        // For pure wildcard routes (without : params), compare pathnameBase to allow
+        // child path changes while preserving the parent view. This handles container
+        // routes like /tabs/* where switching between /tabs/tab1 and /tabs/tab2
+        // should reuse the same ViewItem.
+        if (isWildcardRoute && !isParameterRoute) {
+          const isSameBase = result.pathnameBase === previousMatch?.pathnameBase;
+          if (isSameBase) {
+            match = result;
+            viewItem = v;
+            return true;
+          }
         }
       }
 
