@@ -141,13 +141,13 @@ ion-icon {
   @include globals.typography(globals.$ion-body-sm-medium);
 }
 
+.textarea-bottom .error-text {
+  color: globals.$ion-text-danger;
+}
+
 .textarea-bottom .helper-text,
 .textarea-bottom .counter {
   color: globals.$ion-text-subtlest;
-}
-
-.textarea-bottom .error-text {
-  color: globals.$ion-text-danger;
 }
 
 :host(.has-focus.ion-valid) .helper-text {
