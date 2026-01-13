@@ -143,6 +143,7 @@ describe('Routing Tests', () => {
   it('/ > Menu > Favorites > Menu > Tabs, should be back on Home', () => {
     // Tests transferring from one outlet to another and back again via menu
     cy.visit(`http://localhost:${port}/routing`);
+    cy.ionPageVisible('home-page');
     cy.ionMenuClick();
     cy.ionMenuNav('Favorites');
     cy.ionPageVisible('favorites-page');
@@ -267,7 +268,7 @@ describe('Routing Tests', () => {
     cy.ionPageVisible('home-details-page-2');
   });
 
-  it('/routing/tabs/home Menu > Favorites > Menu > Home with redirect, Home page should be visible, and Favorites should be hidden', () => {
+  it('/routing/tabs/home Menu > Favorites > Menu > Home with redirect, Home page should be visible, and Favorites should be destroyed', () => {
     cy.visit(`http://localhost:${port}/routing/tabs/home`);
     cy.ionMenuClick();
     cy.ionMenuNav('Favorites');
@@ -278,7 +279,7 @@ describe('Routing Tests', () => {
     cy.ionPageDoesNotExist('favorites-page');
   });
 
-  it('/routing/tabs/home Menu > Favorites > Menu > Home with router, Home page should be visible, and Favorites should be hidden', () => {
+  it('/routing/tabs/home Menu > Favorites > Menu > Home with router, Home page should be visible, and Favorites should be destroyed', () => {
     cy.visit(`http://localhost:${port}/routing/tabs/home`);
     cy.ionMenuClick();
     cy.ionMenuNav('Favorites');
@@ -286,7 +287,7 @@ describe('Routing Tests', () => {
     cy.ionMenuClick();
     cy.ionMenuNav('Home with router');
     cy.ionPageVisible('home-page');
-    cy.ionPageHidden('favorites-page');
+    cy.ionPageDoesNotExist('favorites-page');
   });
 
   it('should show back button when going back to a pushed page', () => {
@@ -342,6 +343,16 @@ describe('Routing Tests', () => {
     cy.ionPageVisible('home-details-page-1');
 
     cy.get('div.ion-page[data-pageid=home-details-page-1] [data-testid="details-input"]').should('have.value', '1');
+  });
+
+  it('should complete chained Navigate redirects from root to /routing/tabs/home', () => {
+    // Tests that chained Navigate redirects work correctly:
+    // / > click Routing link > /routing (Navigate to tabs) > /routing/tabs (Navigate to home) > /routing/tabs/home
+    // This was a bug where the second Navigate would be unmounted before it could trigger
+    cy.visit(`http://localhost:${port}/`);
+    cy.ionNav('ion-item', 'Routing');
+    cy.ionPageVisible('home-page');
+    cy.url().should('include', '/routing/tabs/home');
   });
 
   /*

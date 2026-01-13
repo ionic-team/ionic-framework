@@ -1,27 +1,25 @@
-import React, { useRef } from "react";
 import {
   IonContent,
   IonHeader,
   IonPage,
   IonRouterOutlet,
   IonTitle,
+  IonText,
   IonToolbar,
 } from "@ionic/react";
+import React, { useRef } from "react";
 import { Route } from "react-router";
-
-interface RefsProps {}
 
 const Refs: React.FC = () => {
   return (
     <IonRouterOutlet>
-      {/* <Route exact path="/home" render={() => <Home update={addRoute} />} /> */}
-      <Route exact path="/refs" component={RefsFC} />
-      <Route exact path="/refs/class" component={RefsClass} />
+      <Route path="/refs" element={<RefsFC />} />
+      <Route path="/refs/class" element={<RefsClass />} />
     </IonRouterOutlet>
   );
 };
 
-const RefsFC: React.FC<RefsProps> = () => {
+const RefsFC: React.FC = () => {
   const contentRef = useRef<HTMLIonContentElement>(null);
   return (
     <IonPage data-pageid="refs-fc">
@@ -30,7 +28,11 @@ const RefsFC: React.FC<RefsProps> = () => {
           <IonTitle>Refs FC</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent ref={contentRef} className="ref-test"></IonContent>
+      <IonContent ref={contentRef} className="ref-test">
+        <IonText>
+          <p>This view is used for automated ref regression tests.</p>
+        </IonText>
+      </IonContent>
     </IonPage>
   );
 };
@@ -45,7 +47,11 @@ class RefsClass extends React.Component {
             <IonTitle>Refs Class</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent ref={this.ref} className="ref-test"></IonContent>
+        <IonContent ref={this.ref} className="ref-test">
+          <IonText>
+            <p>This view is used for automated ref regression tests.</p>
+          </IonText>
+        </IonContent>
       </IonPage>
     );
   }

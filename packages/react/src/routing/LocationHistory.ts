@@ -91,7 +91,18 @@ export class LocationHistory {
   private _replace(routeInfo: RouteInfo) {
     const routeInfos = this._getRouteInfosByKey(routeInfo.tab);
     routeInfos && routeInfos.pop();
-    this.locationHistory.pop();
+
+    // Get the current route that's being replaced
+    const currentRoute = this.locationHistory[this.locationHistory.length - 1];
+
+    // Only pop from global history if we're replacing in the same outlet context.
+    // Don't pop if we're entering a nested outlet (current route has no tab, new route has a tab)
+    const isEnteringNestedOutlet = currentRoute && !currentRoute.tab && !!routeInfo.tab;
+
+    if (!isEnteringNestedOutlet) {
+      this.locationHistory.pop();
+    }
+
     this._add(routeInfo);
   }
 

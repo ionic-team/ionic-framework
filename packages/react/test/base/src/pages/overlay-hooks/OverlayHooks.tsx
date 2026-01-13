@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react';
-import { Route, Redirect } from 'react-router';
+import { Route, Navigate } from 'react-router';
 import ActionSheetHook from './ActionSheetHook';
 import {
   addCircleOutline,
@@ -24,14 +24,14 @@ const OverlayHooks: React.FC<OverlayHooksProps> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Redirect from="/overlay-hooks" to="/overlay-hooks/actionsheet" exact />
-        <Route path="/overlay-hooks/actionsheet" component={ActionSheetHook} />
-        <Route path="/overlay-hooks/alert" component={AlertHook} />
-        <Route path="/overlay-hooks/loading" component={LoadingHook} />
-        <Route path="/overlay-hooks/modal" component={ModalHook} />
-        <Route path="/overlay-hooks/picker" component={PickerHook} />
-        <Route path="/overlay-hooks/popover" component={PopoverHook} />
-        <Route path="/overlay-hooks/toast" component={ToastHook} />
+        <Route index element={<Navigate to="/overlay-hooks/actionsheet" replace />} />
+        <Route path="actionsheet" element={<ActionSheetHook />} />
+        <Route path="alert" element={<AlertHook />} />
+        <Route path="loading" element={<LoadingHook />} />
+        <Route path="modal" element={<ModalHook />} />
+        <Route path="picker" element={<PickerHook />} />
+        <Route path="popover" element={<PopoverHook />} />
+        <Route path="toast" element={<ToastHook />} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="actionsheet" href="/overlay-hooks/actionsheet">

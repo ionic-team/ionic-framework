@@ -31,6 +31,14 @@ describe('Swipe To Go Back', () => {
     cy.ionPageVisible('main');
   });
 
+  it('should render details page when navigating directly to nested route', () => {
+    cy.visit(`http://localhost:${port}/swipe-to-go-back/details?${IOS_MODE}`);
+    cy.ionPageVisible('details');
+
+    cy.get('[data-pageid="details"]').should('be.visible');
+    cy.get('[data-pageid="details"] ion-content').should('contain', 'Details');
+  });
+
   it('should swipe and abort within a tab', () => {
     cy.visit(`http://localhost:${port}/tabs/tab1?${IOS_MODE}`);
     cy.ionPageVisible('tab1');

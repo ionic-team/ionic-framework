@@ -1,5 +1,3 @@
-import React from 'react';
-import { Redirect, Route, RouteComponentProps } from 'react-router-dom';
 import {
   IonBackButton,
   IonButtons,
@@ -13,12 +11,14 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import React from 'react';
+import { Navigate, Route, useParams } from 'react-router-dom';
 
-const ListPage: React.FC<RouteComponentProps> = ({ match }) => {
+const ListPage: React.FC = () => {
   return (
     <IonRouterOutlet ionPage id="listpage">
-      <Route exact path="/nested-outlet2/list" component={List} />
-      <Route path={`${match.url}/:id`} component={Item} />
+      <Route path="/nested-outlet2/list" element={<List />} />
+      <Route path="/nested-outlet2/list/:id" element={<Item />} />
     </IonRouterOutlet>
   );
 };
@@ -51,7 +51,9 @@ const List: React.FC = () => {
   );
 };
 
-const Item: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
+const Item: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+
   return (
     <IonPage data-pageid="item">
       <IonHeader>
@@ -62,16 +64,16 @@ const Item: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
           <IonTitle>Item</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>Detail of item #{match.params.id}</IonContent>
+      <IonContent>Detail of item #{id}</IonContent>
     </IonPage>
   );
 };
 
-const HomePage: React.FC<RouteComponentProps> = ({ match }) => {
+const HomePage: React.FC = () => {
   return (
     <IonRouterOutlet ionPage id="homepage">
-      <Route exact path="/nested-outlet2/home" component={Home} />
-      <Route path="/nested-outlet2/home/welcome" component={Welcome} />
+      <Route path="/nested-outlet2/home" element={<Home />} />
+      <Route path="/nested-outlet2/home/welcome" element={<Welcome />} />
     </IonRouterOutlet>
   );
 };
@@ -98,7 +100,7 @@ const Welcome: React.FC = () => {
   );
 };
 
-const Home: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
+const Home: React.FC = () => {
   return (
     <IonPage data-pageid="home">
       <IonHeader>
@@ -122,12 +124,11 @@ const Home: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
 
 const NestedOutlet2: React.FC = () => (
   <IonRouterOutlet id="main">
-    <Route path="/nested-outlet2/list" component={ListPage} />
-    <Route path="/nested-outlet2/home" component={HomePage} />
+    <Route path="/nested-outlet2/list/*" element={<ListPage />} />
+    <Route path="/nested-outlet2/home/*" element={<HomePage />} />
     <Route
       path="/nested-outlet2"
-      render={() => <Redirect to="/nested-outlet2/home" />}
-      exact={true}
+      element={<Navigate to="/nested-outlet2/home" replace />}
     />
   </IonRouterOutlet>
 );

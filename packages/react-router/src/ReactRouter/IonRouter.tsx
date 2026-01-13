@@ -1,182 +1,300 @@
+/**
+ * `IonRouter` is responsible for managing the application's navigation
+ * state, tracking the history of visited routes, and coordinating
+ * transitions between different views. It intercepts route changes from
+ * React Router and translates them into actions that Ionic can understand
+ * and animate.
+ */
+
 import type {
   AnimationBuilder,
   RouteAction,
   RouteInfo,
   RouteManagerContextState,
   RouterDirection,
-  ViewItem,
+  RouterOptions,
 } from '@ionic/react';
 import { LocationHistory, NavManager, RouteManagerContext, generateId, getConfig } from '@ionic/react';
-import type { Action as HistoryAction, Location as HistoryLocation } from 'history';
-import React from 'react';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
+import type { Action as HistoryAction, Location } from 'history';
+import type { PropsWithChildren } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { IonRouteInner } from './IonRouteInner';
 import { ReactRouterViewStack } from './ReactRouterViewStack';
 import StackManager from './StackManager';
 
+// Use Location directly - state is typed as `unknown` in history v5
+type HistoryLocation = Location;
+
 export interface LocationState {
   direction?: RouterDirection;
-  routerOptions?: { as?: string; unmount?: boolean };
+  routerOptions?: RouterOptions;
 }
 
-interface IonRouteProps extends RouteComponentProps<{}, {}, LocationState> {
-  registerHistoryListener: (cb: (location: HistoryLocation<any>, action: HistoryAction) => void) => void;
+interface IonRouterProps {
+  registerHistoryListener: (cb: (location: HistoryLocation, action: HistoryAction) => void) => void;
 }
 
-interface IonRouteState {
-  routeInfo: RouteInfo;
-}
+type RouteParams = Record<string, string | string[] | undefined>;
+type SafeRouteParams = Record<string, string | string[]>;
 
-class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
-  currentTab?: string;
-  exitViewFromOtherOutletHandlers: ((pathname: string) => ViewItem | undefined)[] = [];
-  incomingRouteParams?: Partial<RouteInfo>;
-  locationHistory = new LocationHistory();
-  viewStack = new ReactRouterViewStack();
-  routeMangerContextState: RouteManagerContextState = {
-    canGoBack: () => this.locationHistory.canGoBack(),
-    clearOutlet: this.viewStack.clear,
-    findViewItemByPathname: this.viewStack.findViewItemByPathname,
-    getChildrenToRender: this.viewStack.getChildrenToRender,
-    goBack: () => this.handleNavigateBack(),
-    createViewItem: this.viewStack.createViewItem,
-    findViewItemByRouteInfo: this.viewStack.findViewItemByRouteInfo,
-    findLeavingViewItemByRouteInfo: this.viewStack.findLeavingViewItemByRouteInfo,
-    addViewItem: this.viewStack.add,
-    unMountViewItem: this.viewStack.remove,
-  };
+const filterUndefinedParams = (params: RouteParams): SafeRouteParams => {
+  const result: SafeRouteParams = {};
+  for (const key of Object.keys(params)) {
+    const value = params[key];
+    if (value !== undefined) {
+      result[key] = value;
+    }
+  }
+  return result;
+};
 
-  constructor(props: IonRouteProps) {
-    super(props);
+const areParamsEqual = (a?: RouteParams, b?: RouteParams) => {
+  const paramsA = a || {};
+  const paramsB = b || {};
+  const keysA = Object.keys(paramsA);
+  const keysB = Object.keys(paramsB);
 
-    const routeInfo = {
-      id: generateId('routeInfo'),
-      pathname: this.props.location.pathname,
-      search: this.props.location.search,
-    };
-
-    this.locationHistory.add(routeInfo);
-    this.handleChangeTab = this.handleChangeTab.bind(this);
-    this.handleResetTab = this.handleResetTab.bind(this);
-    this.handleNativeBack = this.handleNativeBack.bind(this);
-    this.handleNavigate = this.handleNavigate.bind(this);
-    this.handleNavigateBack = this.handleNavigateBack.bind(this);
-    this.props.registerHistoryListener(this.handleHistoryChange.bind(this));
-    this.handleSetCurrentTab = this.handleSetCurrentTab.bind(this);
-
-    this.state = {
-      routeInfo,
-    };
+  if (keysA.length !== keysB.length) {
+    return false;
   }
 
-  handleChangeTab(tab: string, path?: string, routeOptions?: any) {
-    if (!path) {
+  return keysA.every((key) => {
+    const valueA = paramsA[key];
+    const valueB = paramsB[key];
+    if (Array.isArray(valueA) && Array.isArray(valueB)) {
+      if (valueA.length !== valueB.length) {
+        return false;
+      }
+      return valueA.every((entry, idx) => entry === valueB[idx]);
+    }
+    return valueA === valueB;
+  });
+};
+
+export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildren<IonRouterProps>) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const didMountRef = useRef(false);
+  const locationHistory = useRef(new LocationHistory());
+  const currentTab = useRef<string | undefined>(undefined);
+  const viewStack = useRef(new ReactRouterViewStack());
+  const incomingRouteParams = useRef<Partial<RouteInfo> | null>(null);
+
+  const [routeInfo, setRouteInfo] = useState<RouteInfo>({
+    id: generateId('routeInfo'),
+    pathname: location.pathname,
+    search: location.search,
+    params: {},
+  });
+
+  useEffect(() => {
+    if (didMountRef.current) {
       return;
     }
 
-    const routeInfo = this.locationHistory.getCurrentRouteInfoForTab(tab);
-    const [pathname, search] = path.split('?');
-    if (routeInfo) {
-      this.incomingRouteParams = { ...routeInfo, routeAction: 'push', routeDirection: 'none' };
-      if (routeInfo.pathname === pathname) {
-        this.incomingRouteParams.routeOptions = routeOptions;
-        this.props.history.push(routeInfo.pathname + (routeInfo.search || ''));
-      } else {
-        this.incomingRouteParams.pathname = pathname;
-        this.incomingRouteParams.search = search ? '?' + search : undefined;
-        this.incomingRouteParams.routeOptions = routeOptions;
-        this.props.history.push(pathname + (search ? '?' + search : ''));
-      }
-    } else {
-      this.handleNavigate(pathname, 'push', 'none', undefined, routeOptions, tab);
-    }
-  }
+    // Seed the history stack with the initial location and begin listening
+    // for future navigations once React has committed the mount. This avoids
+    // duplicate entries when React StrictMode runs an extra render pre-commit.
+    locationHistory.current.add(routeInfo);
+    registerHistoryListener(handleHistoryChange);
 
-  handleHistoryChange(location: HistoryLocation<LocationState>, action: HistoryAction) {
+    didMountRef.current = true;
+  }, []);
+
+  // Sync route params extracted by React Router's path matching back into routeInfo.
+  // The view stack's match may contain params (e.g., :id) not present in the initial routeInfo.
+  useEffect(() => {
+    const activeView = viewStack.current.findViewItemByRouteInfo(routeInfo, undefined, true);
+    const matchedParams = activeView?.routeData.match?.params as RouteParams | undefined;
+
+    if (matchedParams) {
+      const paramsCopy = filterUndefinedParams({ ...matchedParams });
+      if (areParamsEqual(routeInfo.params as RouteParams | undefined, paramsCopy)) {
+        return;
+      }
+
+      const updatedRouteInfo: RouteInfo = {
+        ...routeInfo,
+        params: paramsCopy,
+      };
+      locationHistory.current.update(updatedRouteInfo);
+      setRouteInfo(updatedRouteInfo);
+    }
+  }, [routeInfo]);
+
+  /**
+   * Triggered whenever the history changes, either through user navigation
+   * or programmatic changes. It transforms the raw browser history changes
+   * into `RouteInfo` objects, which are needed Ionic's animations and
+   * navigation patterns.
+   *
+   * @param location The current location object from the history.
+   * @param action The action that triggered the history change.
+   */
+  const handleHistoryChange = (location: HistoryLocation, action: HistoryAction) => {
     let leavingLocationInfo: RouteInfo;
-    if (this.incomingRouteParams) {
-      if (this.incomingRouteParams.routeAction === 'replace') {
-        leavingLocationInfo = this.locationHistory.previous();
+    /**
+     * A programmatic navigation was triggered.
+     * e.g., `<Redirect />`, `history.push()`, or `handleNavigate()`
+     */
+    if (incomingRouteParams.current) {
+      /**
+       * The current history entry is overwritten, so the previous entry
+       * is the one we are leaving.
+       */
+      if (incomingRouteParams.current?.routeAction === 'replace') {
+        leavingLocationInfo = locationHistory.current.previous();
       } else {
-        leavingLocationInfo = this.locationHistory.current();
+        // If the action is 'push' or 'pop', we want to use the current route.
+        leavingLocationInfo = locationHistory.current.current();
       }
     } else {
-      leavingLocationInfo = this.locationHistory.current();
+      /**
+       * An external navigation was triggered
+       * e.g., browser back/forward button or direct link
+       *
+       * The leaving location is the current route.
+       */
+      leavingLocationInfo = locationHistory.current.current();
     }
 
     const leavingUrl = leavingLocationInfo.pathname + leavingLocationInfo.search;
     if (leavingUrl !== location.pathname) {
-      if (!this.incomingRouteParams) {
+      if (!incomingRouteParams.current) {
+        // Determine if the destination is a tab route by checking if it matches
+        // the pattern of tab routes (containing /tabs/ in the path)
+        const isTabRoute = /\/tabs(\/|$)/.test(location.pathname);
+        const tabToUse = isTabRoute ? currentTab.current : undefined;
+
+        // If we're leaving tabs entirely, clear the current tab
+        if (!isTabRoute && currentTab.current) {
+          currentTab.current = undefined;
+        }
+
+        /**
+         * A `REPLACE` action can be triggered by React Router's
+         * `<Redirect />` component.
+         */
         if (action === 'REPLACE') {
-          this.incomingRouteParams = {
+          incomingRouteParams.current = {
             routeAction: 'replace',
             routeDirection: 'none',
-            tab: this.currentTab,
+            tab: tabToUse,
           };
         }
+        /**
+         * A `POP` action can be triggered by the browser's back/forward
+         * button.
+         */
         if (action === 'POP') {
-          const currentRoute = this.locationHistory.current();
+          const currentRoute = locationHistory.current.current();
+          /**
+           * Check if the current route was "pushed" by a previous route
+           * (indicates a linear history path).
+           */
           if (currentRoute && currentRoute.pushedByRoute) {
-            const prevInfo = this.locationHistory.findLastLocation(currentRoute);
-            this.incomingRouteParams = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
+            const prevInfo = locationHistory.current.findLastLocation(currentRoute);
+            incomingRouteParams.current = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
+            // It's a non-linear history path like a direct link.
           } else {
-            this.incomingRouteParams = {
+            incomingRouteParams.current = {
               routeAction: 'pop',
               routeDirection: 'none',
-              tab: this.currentTab,
+              tab: tabToUse,
             };
           }
         }
-        if (!this.incomingRouteParams) {
-          this.incomingRouteParams = {
+        if (!incomingRouteParams.current) {
+          const state = location.state as LocationState | null;
+          incomingRouteParams.current = {
             routeAction: 'push',
-            routeDirection: location.state?.direction || 'forward',
-            routeOptions: location.state?.routerOptions,
-            tab: this.currentTab,
+            routeDirection: state?.direction || 'forward',
+            routeOptions: state?.routerOptions,
+            tab: tabToUse,
           };
         }
       }
 
       let routeInfo: RouteInfo;
 
-      if (this.incomingRouteParams?.id) {
+      // If we're navigating away from tabs to a non-tab route, clear the current tab
+      if (!/\/tabs(\/|$)/.test(location.pathname) && currentTab.current) {
+        currentTab.current = undefined;
+      }
+
+      /**
+       * An existing id indicates that it's re-activating an existing route.
+       * e.g., tab switching or navigating back to a previous route
+       */
+      if (incomingRouteParams.current?.id) {
         routeInfo = {
-          ...(this.incomingRouteParams as RouteInfo),
+          ...(incomingRouteParams.current as RouteInfo),
           lastPathname: leavingLocationInfo.pathname,
         };
-        this.locationHistory.add(routeInfo);
+        locationHistory.current.add(routeInfo);
+        /**
+         * A new route is being created since it's not re-activating
+         * an existing route.
+         */
       } else {
         const isPushed =
-          this.incomingRouteParams.routeAction === 'push' && this.incomingRouteParams.routeDirection === 'forward';
+          incomingRouteParams.current?.routeAction === 'push' &&
+          incomingRouteParams.current.routeDirection === 'forward';
         routeInfo = {
           id: generateId('routeInfo'),
-          ...this.incomingRouteParams,
-          lastPathname: leavingLocationInfo.pathname,
-          pathname: location.pathname,
+          ...incomingRouteParams.current,
+          lastPathname: leavingLocationInfo.pathname, // The URL we just came from
+          pathname: location.pathname, // The current (destination) URL
           search: location.search,
-          params: this.props.match.params,
+          params: incomingRouteParams.current?.params
+            ? filterUndefinedParams(incomingRouteParams.current.params as RouteParams)
+            : {},
           prevRouteLastPathname: leavingLocationInfo.lastPathname,
         };
         if (isPushed) {
-          routeInfo.tab = leavingLocationInfo.tab;
+          // Only inherit tab from leaving route if we don't already have one.
+          // This preserves tab context for same-tab navigation while allowing cross-tab navigation.
+          routeInfo.tab = routeInfo.tab || leavingLocationInfo.tab;
           routeInfo.pushedByRoute = leavingLocationInfo.pathname;
+          // Triggered by a browser back button or handleNavigateBack.
         } else if (routeInfo.routeAction === 'pop') {
-          const r = this.locationHistory.findLastLocation(routeInfo);
+          // Find the route that pushed this one.
+          const r = locationHistory.current.findLastLocation(routeInfo);
           routeInfo.pushedByRoute = r?.pushedByRoute;
+          // Navigating to a new tab.
         } else if (routeInfo.routeAction === 'push' && routeInfo.tab !== leavingLocationInfo.tab) {
-          // If we are switching tabs grab the last route info for the tab and use its pushedByRoute
-          const lastRoute = this.locationHistory.getCurrentRouteInfoForTab(routeInfo.tab);
-          routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
+          /**
+           * If we are switching tabs grab the last route info for the
+           * tab and use its `pushedByRoute`.
+           */
+          const lastRoute = locationHistory.current.getCurrentRouteInfoForTab(routeInfo.tab);
+          /**
+           * Tab bar switches (direction 'none') should not create cross-tab back
+           * navigation. Only inherit pushedByRoute from the tab's own history.
+           */
+          if (routeInfo.routeDirection === 'none') {
+            routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
+          } else {
+            routeInfo.pushedByRoute = lastRoute?.pushedByRoute ?? leavingLocationInfo.pathname;
+          }
+          // Triggered by `history.replace()` or a `<Redirect />` component, etc.
         } else if (routeInfo.routeAction === 'replace') {
-          // Make sure to set the lastPathname, etc.. to the current route so the page transitions out
-          const currentRouteInfo = this.locationHistory.current();
+          /**
+           * Make sure to set the `lastPathname`, etc.. to the current route
+           * so the page transitions out.
+           */
+          const currentRouteInfo = locationHistory.current.current();
 
           /**
-           * If going from /home to /child, then replacing from
-           * /child to /home, we don't want the route info to
-           * say that /home was pushed by /home which is not correct.
+           * Special handling for `replace` to ensure correct `pushedByRoute`
+           * and `lastPathname`.
+           *
+           * If going from `/home` to `/child`, then replacing from
+           * `/child` to `/home`, we don't want the route info to
+           * say that `/home` was pushed by `/home` which is not correct.
            */
           const currentPushedBy = currentRouteInfo?.pushedByRoute;
           const pushedByRoute =
@@ -198,58 +316,126 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           routeInfo.routeAnimation = routeInfo.routeAnimation || currentRouteInfo?.routeAnimation;
         }
 
-        this.locationHistory.add(routeInfo);
+        locationHistory.current.add(routeInfo);
       }
-
-      this.setState({
-        routeInfo,
-      });
+      setRouteInfo(routeInfo);
     }
 
-    this.incomingRouteParams = undefined;
-  }
+    incomingRouteParams.current = null;
+  };
 
   /**
-   * history@4.x uses goBack(), history@5.x uses back()
-   * TODO: If support for React Router <=5 is dropped
-   * this logic is no longer needed. We can just
-   * assume back() is available.
+   * Resets the specified tab to its initial, root route.
+   *
+   * @param tab The tab to reset.
+   * @param originalHref The original href for the tab.
+   * @param originalRouteOptions The original route options for the tab.
    */
-  handleNativeBack() {
-    const history = this.props.history as any;
-    const goBack = history.goBack || history.back;
-    goBack();
-  }
-
-  handleNavigate(
-    path: string,
-    routeAction: RouteAction,
-    routeDirection?: RouterDirection,
-    routeAnimation?: AnimationBuilder,
-    routeOptions?: any,
-    tab?: string
-  ) {
-    this.incomingRouteParams = Object.assign(this.incomingRouteParams || {}, {
-      routeAction,
-      routeDirection,
-      routeOptions,
-      routeAnimation,
-      tab,
-    });
-
-    if (routeAction === 'push') {
-      this.props.history.push(path);
-    } else {
-      this.props.history.replace(path);
+  const handleResetTab = (tab: string, originalHref: string, originalRouteOptions: any) => {
+    const routeInfo = locationHistory.current.getFirstRouteInfoForTab(tab);
+    if (routeInfo) {
+      const newRouteInfo = { ...routeInfo };
+      newRouteInfo.pathname = originalHref;
+      newRouteInfo.routeOptions = originalRouteOptions;
+      incomingRouteParams.current = { ...newRouteInfo, routeAction: 'pop', routeDirection: 'back' };
+      navigate(newRouteInfo.pathname + (newRouteInfo.search || ''));
     }
-  }
+  };
 
-  handleNavigateBack(defaultHref: string | RouteInfo = '/', routeAnimation?: AnimationBuilder) {
+  /**
+   * Handles tab changes.
+   *
+   * @param tab The tab to switch to.
+   * @param path The new path for the tab.
+   * @param routeOptions Additional route options.
+   */
+  const handleChangeTab = (tab: string, path?: string, routeOptions?: any) => {
+    if (!path) {
+      return;
+    }
+
+    const routeInfo = locationHistory.current.getCurrentRouteInfoForTab(tab);
+    const [pathname, search] = path.split('?');
+    // User has navigated to the current tab before.
+    if (routeInfo) {
+      const routeParams = {
+        ...routeInfo,
+        routeAction: 'push' as RouteAction,
+        routeDirection: 'none' as RouterDirection,
+      };
+      /**
+       * User is navigating to the same tab.
+       * e.g., `/tabs/home` → `/tabs/home`
+       */
+      if (routeInfo.pathname === pathname) {
+        incomingRouteParams.current = {
+          ...routeParams,
+          routeOptions,
+        };
+
+        navigate(routeInfo.pathname + (routeInfo.search || ''));
+        /**
+         * User is navigating to a different tab.
+         * e.g., `/tabs/home` → `/tabs/settings`
+         */
+      } else {
+        incomingRouteParams.current = {
+          ...routeParams,
+          pathname,
+          search: search ? '?' + search : undefined,
+          routeOptions,
+        };
+
+        navigate(pathname + (search ? '?' + search : ''));
+      }
+      // User has not navigated to this tab before.
+    } else {
+      handleNavigate(pathname, 'push', 'none', undefined, routeOptions, tab);
+    }
+  };
+
+  /**
+   * Set the current active tab in `locationHistory`.
+   * This is crucial for maintaining tab history since each tab has
+   * its own navigation stack.
+   *
+   * @param tab The tab to set as active.
+   */
+  const handleSetCurrentTab = (tab: string) => {
+    currentTab.current = tab;
+    const ri = { ...locationHistory.current.current() };
+    if (ri.tab !== tab) {
+      ri.tab = tab;
+      locationHistory.current.update(ri);
+    }
+  };
+
+  /**
+   * Handles the native back button press.
+   * It's usually called when a user presses the platform-native back action.
+   */
+  const handleNativeBack = () => {
+    navigate(-1);
+  };
+
+  /**
+   * Used to manage the back navigation within the Ionic React's routing
+   * system. It's deeply integrated with Ionic's view lifecycle, animations,
+   * and its custom history tracking (`locationHistory`) to provide a
+   * native-like transition and maintain correct application state.
+   *
+   * @param defaultHref The fallback URL to navigate to if there's no
+   * previous entry in the `locationHistory` stack.
+   * @param routeAnimation A custom animation builder to override the
+   * default "back" animation.
+   */
+  const handleNavigateBack = (defaultHref: string | RouteInfo = '/', routeAnimation?: AnimationBuilder) => {
     const config = getConfig();
     defaultHref = defaultHref ? defaultHref : config && config.get('backButtonDefaultHref' as any);
-    const routeInfo = this.locationHistory.current();
+    const routeInfo = locationHistory.current.current();
+    // It's a linear navigation.
     if (routeInfo && routeInfo.pushedByRoute) {
-      const prevInfo = this.locationHistory.findLastLocation(routeInfo);
+      const prevInfo = locationHistory.current.findLastLocation(routeInfo);
       if (prevInfo) {
         /**
          * This needs to be passed to handleNavigate
@@ -257,84 +443,144 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
          * will be overridden.
          */
         const incomingAnimation = routeAnimation || routeInfo.routeAnimation;
-        this.incomingRouteParams = {
+        incomingRouteParams.current = {
           ...prevInfo,
           routeAction: 'pop',
           routeDirection: 'back',
           routeAnimation: incomingAnimation,
         };
-        if (
-          routeInfo.lastPathname === routeInfo.pushedByRoute ||
-          /**
-           * We need to exclude tab switches/tab
-           * context changes here because tabbed
-           * navigation is not linear, but router.back()
-           * will go back in a linear fashion.
-           */
-          (prevInfo.pathname === routeInfo.pushedByRoute && routeInfo.tab === '' && prevInfo.tab === '')
-        ) {
-          /**
-           * history@4.x uses goBack(), history@5.x uses back()
-           * TODO: If support for React Router <=5 is dropped
-           * this logic is no longer needed. We can just
-           * assume back() is available.
-           */
-          const history = this.props.history as any;
-          const goBack = history.goBack || history.back;
-          goBack();
+        /**
+         * Check if it's a simple linear back navigation (not tabbed).
+         * e.g., `/home` → `/settings` → back to `/home`
+         */
+        const condition1 = routeInfo.lastPathname === routeInfo.pushedByRoute;
+        const condition2 = prevInfo.pathname === routeInfo.pushedByRoute && routeInfo.tab === '' && prevInfo.tab === '';
+        if (condition1 || condition2) {
+          navigate(-1);
         } else {
-          this.handleNavigate(prevInfo.pathname + (prevInfo.search || ''), 'pop', 'back', incomingAnimation);
+          /**
+           * It's a non-linear back navigation.
+           * e.g., direct link or tab switch or nested navigation with redirects
+           */
+          handleNavigate(prevInfo.pathname + (prevInfo.search || ''), 'pop', 'back', incomingAnimation);
         }
+        /**
+         * `pushedByRoute` exists, but no corresponding previous entry in
+         * the history stack.
+         */
       } else {
-        this.handleNavigate(defaultHref as string, 'pop', 'back', routeAnimation);
+        handleNavigate(defaultHref as string, 'pop', 'back', routeAnimation);
       }
+      /**
+       * No `pushedByRoute` (e.g., initial page load or tab root).
+       * Tabs with no back history should not navigate.
+       */
     } else {
-      this.handleNavigate(defaultHref as string, 'pop', 'back', routeAnimation);
+      if (routeInfo && routeInfo.tab) {
+        return;
+      }
+      handleNavigate(defaultHref as string, 'pop', 'back', routeAnimation);
     }
-  }
+  };
 
-  handleResetTab(tab: string, originalHref: string, originalRouteOptions: any) {
-    const routeInfo = this.locationHistory.getFirstRouteInfoForTab(tab);
-    if (routeInfo) {
-      const newRouteInfo = { ...routeInfo };
-      newRouteInfo.pathname = originalHref;
-      newRouteInfo.routeOptions = originalRouteOptions;
-      this.incomingRouteParams = { ...newRouteInfo, routeAction: 'pop', routeDirection: 'back' };
-      this.props.history.push(newRouteInfo.pathname + (newRouteInfo.search || ''));
+  /**
+   * Used to programmatically navigate through the app.
+   *
+   * @param path The path to navigate to.
+   * @param routeAction The action to take (push, replace, etc.).
+   * @param routeDirection The direction of the navigation (forward,
+   * back, etc.).
+   * @param routeAnimation The animation to use for the transition.
+   * @param routeOptions Additional options for the route.
+   * @param tab The tab to navigate to, if applicable.
+   */
+  const handleNavigate = (
+    path: string,
+    routeAction: RouteAction,
+    routeDirection?: RouterDirection,
+    routeAnimation?: AnimationBuilder,
+    routeOptions?: any,
+    tab?: string
+  ) => {
+    const normalizedRouteDirection =
+      routeAction === 'push' && routeDirection === undefined ? 'forward' : routeDirection;
+
+    // When navigating from tabs context, we need to determine if the destination
+    // is also within tabs. If not, we should clear the tab context.
+    let navigationTab = tab;
+
+    // If no explicit tab is provided and we're in a tab context,
+    // check if the destination path is outside of the current tab context
+    if (!tab && currentTab.current && path) {
+      // Get the current route info to understand where we are
+      const currentRoute = locationHistory.current.current();
+
+      // If we're navigating from a tab route to a completely different path structure,
+      // we should clear the tab context. This is a simplified check that assumes
+      // tab routes share a common parent path.
+      if (currentRoute && currentRoute.pathname) {
+        // Extract the base tab path (e.g., /routing/tabs from /routing/tabs/home)
+        const tabBaseMatch = currentRoute.pathname.match(/^(.*\/tabs)/);
+        if (tabBaseMatch) {
+          const tabBasePath = tabBaseMatch[1];
+          // If the new path doesn't start with the tab base path, we're leaving tabs
+          if (!path.startsWith(tabBasePath)) {
+            currentTab.current = undefined;
+            navigationTab = undefined;
+          } else {
+            // Still within tabs, preserve the tab context
+            navigationTab = currentTab.current;
+          }
+        }
+      }
     }
-  }
 
-  handleSetCurrentTab(tab: string) {
-    this.currentTab = tab;
-    const ri = { ...this.locationHistory.current() };
-    if (ri.tab !== tab) {
-      ri.tab = tab;
-      this.locationHistory.update(ri);
-    }
-  }
+    const baseParams = incomingRouteParams.current ?? {};
+    incomingRouteParams.current = {
+      ...baseParams,
+      routeAction,
+      routeDirection: normalizedRouteDirection,
+      routeOptions,
+      routeAnimation,
+      tab: navigationTab,
+    };
 
-  render() {
-    return (
-      <RouteManagerContext.Provider value={this.routeMangerContextState}>
-        <NavManager
-          ionRoute={IonRouteInner}
-          ionRedirect={{}}
-          stackManager={StackManager}
-          routeInfo={this.state.routeInfo!}
-          onNativeBack={this.handleNativeBack}
-          onNavigateBack={this.handleNavigateBack}
-          onNavigate={this.handleNavigate}
-          onSetCurrentTab={this.handleSetCurrentTab}
-          onChangeTab={this.handleChangeTab}
-          onResetTab={this.handleResetTab}
-          locationHistory={this.locationHistory}
-        >
-          {this.props.children}
-        </NavManager>
-      </RouteManagerContext.Provider>
-    );
-  }
-}
+    navigate(path, { replace: routeAction !== 'push' });
+  };
 
-export const IonRouter = withRouter(IonRouterInner);
+  const routeMangerContextValue: RouteManagerContextState = {
+    canGoBack: () => locationHistory.current.canGoBack(),
+    clearOutlet: viewStack.current.clear,
+    findViewItemByPathname: viewStack.current.findViewItemByPathname,
+    getChildrenToRender: viewStack.current.getChildrenToRender,
+    getViewItemsForOutlet: viewStack.current.getViewItemsForOutlet.bind(viewStack.current),
+    goBack: () => handleNavigateBack(),
+    createViewItem: viewStack.current.createViewItem,
+    findViewItemByRouteInfo: viewStack.current.findViewItemByRouteInfo,
+    findLeavingViewItemByRouteInfo: viewStack.current.findLeavingViewItemByRouteInfo,
+    addViewItem: viewStack.current.add,
+    unMountViewItem: viewStack.current.remove,
+  };
+
+  return (
+    <RouteManagerContext.Provider value={routeMangerContextValue}>
+      <NavManager
+        ionRoute={IonRouteInner}
+        ionRedirect={{}}
+        stackManager={StackManager}
+        routeInfo={routeInfo}
+        onNativeBack={handleNativeBack}
+        onNavigateBack={handleNavigateBack}
+        onNavigate={handleNavigate}
+        onSetCurrentTab={handleSetCurrentTab}
+        onChangeTab={handleChangeTab}
+        onResetTab={handleResetTab}
+        locationHistory={locationHistory.current}
+      >
+        {children}
+      </NavManager>
+    </RouteManagerContext.Provider>
+  );
+};
+
 IonRouter.displayName = 'IonRouter';

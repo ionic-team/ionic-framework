@@ -176,7 +176,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        apps: [reactrouter5]
+        apps: [reactrouter6]
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
