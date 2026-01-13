@@ -107,7 +107,6 @@ export const defaultTheme: DefaultTheme = {
 
           font: {
             size: clamp('13px', `${fontSizes.chipBase / 16}rem`, '22px'),
-
           },
         },
       },
@@ -168,7 +167,6 @@ export const defaultTheme: DefaultTheme = {
 
           // Any of the semantic colors like primary, secondary, etc.
           semantic: {
-            bgAlpha: '0.08',
             bg: currentColor('base', 0.08),
             color: currentColor('shade'),
 
@@ -212,7 +210,7 @@ export const defaultTheme: DefaultTheme = {
               bold: rgba(colors.textColorRgb, 0.32),
               subtle: rgba(colors.textColorRgb, 0.3), // making this up since ionic subtle does not use textColorRgb
             },
-      
+
             width: '1px',
           },
 

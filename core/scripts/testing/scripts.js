@@ -120,10 +120,11 @@ const DEFAULT_THEME = 'md';
       window.Ionic.config = window.Ionic.config || {};
       window.Ionic.config.customTheme = theme;
 
-      // Re-apply the global theme
+      // Re-apply the global theme, needed for Playwright tests
       if (window.Ionic.config.get && window.Ionic.config.set) {
         const themeModule = await import('/themes/utils/theme.js');
         themeModule.applyGlobalTheme(theme);
+        themeModule.applyComponentsTheme(theme);
       }
     } catch (error) {
       console.error(`Failed to load theme tokens for ${themeName}:`, error);

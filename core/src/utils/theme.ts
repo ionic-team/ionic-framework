@@ -652,7 +652,6 @@ export const resolveOsToken = (tokenPath: any, tokenMap: Record<string, any>): a
 
     if (!rootKey) return tokenPath;
 
-    // As requested, keeping refCategory in the path
     lookupPath = `${rootKey}.${refCategory}.${refPath.join('.')}`;
     isPath = true;
   }

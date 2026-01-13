@@ -171,8 +171,7 @@ export const defaultTheme: DefaultTheme = {
 
           // Any of the semantic colors like primary, secondary, etc.
           semantic: {
-            bgAlpha: '0.08',
-            bg: currentColor('base', 0.08), // ADD THIS TO THE COMPONENT SCSS
+            bg: currentColor('base', 0.08),
             color: currentColor('shade'),
 
             state: {

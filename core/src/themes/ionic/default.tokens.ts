@@ -160,7 +160,7 @@ export const defaultTheme: DefaultTheme = {
           // Any of the semantic colors like primary, secondary, etc.
           semantic: {
             color: currentColor('contrast'),
-            bg: currentColor('base'), // ADD THIS TO THE COMPONENT SCSS
+            bg: currentColor('base'),
           },
         },
 

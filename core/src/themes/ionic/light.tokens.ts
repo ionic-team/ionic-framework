@@ -12,10 +12,7 @@ const tokenMap = {
   primitiveTokens,
   typographyTokens,
 };
-console.log(
-  'cachedResolveOsToken(colorTokens.bg.primary.base.default, tokenMap)',
-  cachedResolveOsToken(colorTokens.bg.primary.base.default, tokenMap)
-);
+
 export const lightTheme: LightTheme = {
   backgroundColor: '#ffffff',
   textColor: '#000000',

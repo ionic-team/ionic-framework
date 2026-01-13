@@ -129,10 +129,7 @@
 }
 
 :host(.chip-outline.ion-color.chip-bold) {
-  background: var(
-    --ion-chip-variant-outline-bg,
-    colors.current-color(base, var(--ion-chip-hue-bold-semantic-bg-alpha, 1))
-  );
+  background: var(--ion-chip-variant-outline-bg, var(--ion-chip-hue-bold-semantic-bg));
 }
 
 :host(.chip-outline.ion-color.chip-subtle) {
@@ -163,10 +160,7 @@
 }
 
 :host(.ion-focused.ion-color.chip-bold) {
-  background: var(
-    --ion-chip-hue-bold-semantic-state-focus-bg,
-    colors.current-color(base, var(--ion-chip-hue-bold-semantic-bg-alpha, 1))
-  );
+  background: var(--ion-chip-hue-bold-semantic-state-focus-bg, var(--ion-chip-hue-bold-semantic-bg));
 }
 
 :host(.ion-focused.ion-color.chip-subtle) {
