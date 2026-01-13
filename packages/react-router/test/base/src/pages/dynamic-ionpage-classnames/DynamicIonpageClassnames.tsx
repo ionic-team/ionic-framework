@@ -49,10 +49,18 @@ const Page: React.FC = (props) => {
           <IonTitle>Dynamic Ionpage Classnames</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent className="ion-padding">
+        <p>
+          This page tests that dynamically changing the className prop on IonPage
+          preserves framework classes (ion-page, ion-page-hidden, ion-page-invisible).
+        </p>
+        <p>
+          <strong>Test:</strong> Click "Add Class" and verify the classes below include
+          both "other-class" AND "ion-page". If only "other-class" appears,
+          the framework classes were incorrectly removed.
+        </p>
         <IonButton onClick={() => setStyleClass('other-class')}>Add Class</IonButton>
-        <br />
-        Div classes: {divClasses}
+        <p>Current classes: {divClasses}</p>
       </IonContent>
     </IonPage>
   );
