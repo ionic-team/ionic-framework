@@ -56,18 +56,18 @@
 // ----------------------------------------------------------------
 
 .toggle-bottom {
-  @include globals.typography(globals.$ion-body-md-regular);
+  @include globals.typography(globals.$ion-body-sm-medium);
 }
 
 // Toggle Hint Text
 // ----------------------------------------------------------------
 
 .toggle-bottom .error-text {
-  color: globals.$ion-semantics-danger-900;
+  color: globals.$ion-text-danger;
 }
 
 .toggle-bottom .helper-text {
-  color: globals.$ion-primitives-neutral-900;
+  color: globals.$ion-text-subtlest;
 }
 
 // Toggle Native Wrapper: Focused
