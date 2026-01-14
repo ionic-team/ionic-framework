@@ -116,26 +116,6 @@ export const defaultTheme: DefaultTheme = {
         disabled: {
           opacity: '0.4',
         },
-
-        focus: {
-          bg: rgba(colors.textColorRgb, 0.16), // default non-semantic focus bg for both hues
-        },
-
-        activated: {
-          bg: rgba(colors.textColorRgb, 0.2),
-
-          semantic: {
-            bg: currentColor('base', 0.16),
-          },
-        },
-
-        hover: {
-          bg: rgba(colors.textColorRgb, 0.16),
-
-          semantic: {
-            bg: currentColor('base', 0.12),
-          },
-        },
       },
 
       // Shapes
@@ -178,23 +158,61 @@ export const defaultTheme: DefaultTheme = {
               hover: {
                 bg: currentColor('base', 0.12),
               },
+
+              activated: {
+                bg: currentColor('base', 0.16),
+              },
+            },
+          },
+
+          // default non-semantic states
+          state: {
+            focus: {
+              bg: rgba(colors.textColorRgb, 0.16),
+            },
+
+            activated: {
+              bg: rgba(colors.textColorRgb, 0.2),
+            },
+
+            hover: {
+              bg: rgba(colors.textColorRgb, 0.16),
             },
           },
         },
 
         subtle: {
-          bg: rgba(colors.textColorRgb, 0.04), // making this up since ionic subtle does not use textColorRgb
-          color: rgba(colors.textColorRgb, 0.83), // making this up since ionic subtle does not use textColorRgb
+          bg: rgba(colors.textColorRgb, 0.05),
+          color: rgba(colors.textColorRgb, 0.6),
 
           semantic: {
             state: {
               focus: {
-                bg: currentColor('base', 0.8, true),
+                bg: currentColor('base', 0.6, true),
               },
 
               hover: {
+                bg: currentColor('base', 0.6, true),
+              },
+
+              activated: {
                 bg: currentColor('base', 0.8, true),
               },
+            },
+          },
+
+          // default non-semantic states
+          state: {
+            focus: {
+              bg: rgba(colors.textColorRgb, 0.1),
+            },
+
+            activated: {
+              bg: rgba(colors.textColorRgb, 0.14),
+            },
+
+            hover: {
+              bg: rgba(colors.textColorRgb, 0.1),
             },
           },
         },
@@ -208,7 +226,7 @@ export const defaultTheme: DefaultTheme = {
           border: {
             color: {
               bold: rgba(colors.textColorRgb, 0.32),
-              subtle: rgba(colors.textColorRgb, 0.3), // making this up since ionic subtle does not use textColorRgb
+              subtle: rgba(colors.textColorRgb, 0.16),
             },
 
             width: '1px',
@@ -218,7 +236,7 @@ export const defaultTheme: DefaultTheme = {
             border: {
               color: {
                 bold: currentColor('base', 0.32),
-                subtle: currentColor('base'), // based this off ionic subtle border color since md subtle doesn't exist yet
+                subtle: currentColor('base', 0.12),
               },
             },
           },
@@ -227,22 +245,21 @@ export const defaultTheme: DefaultTheme = {
             focus: {
               bg: {
                 bold: rgba(colors.textColorRgb, 0.04),
-                subtle: rgba(colors.textColorRgb, 0.02), // making this up since md subtle doesn't exist yet
+                subtle: rgba(colors.textColorRgb, 0.04),
               },
             },
 
             hover: {
               bg: {
                 bold: rgba(colors.textColorRgb, 0.04),
-                subtle: rgba(colors.textColorRgb, 0.02), // making this up since md subtle doesn't exist yet
+                subtle: rgba(colors.textColorRgb, 0.04),
               },
             },
 
             activated: {
               bg: {
-                // NEED TO ADD THIS TO THE COMPONENT SCSS
                 bold: rgba(colors.textColorRgb, 0.08),
-                subtle: rgba(colors.textColorRgb, 0.04), // making this up since md subtle doesn't exist yet
+                subtle: rgba(colors.textColorRgb, 0.04),
               },
             },
           },

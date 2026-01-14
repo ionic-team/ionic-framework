@@ -291,33 +291,15 @@ type Components = {
     };
 
     // States
-    state: {
-      disabled: {
+    state?: {
+      disabled?: {
         opacity: string | number;
       };
 
-      focus: {
+      focus?: {
         ring?: {
           color: string;
           width?: string | number;
-        };
-        bg?: string;
-        semantic?: {
-          bg?: string;
-        };
-      };
-
-      activated?: {
-        bg: string;
-        semantic?: {
-          bg: string;
-        };
-      };
-
-      hover?: {
-        bg: string;
-        semantic?: {
-          bg: string;
         };
       };
     };
@@ -351,7 +333,6 @@ type Components = {
 
         // Any of the semantic colors like primary, secondary, etc.
         semantic: {
-          bgAlpha?: string; // SUBSTITUTE THIS WITH bg IN THE COMPONENT SCSS
           bg?: string;
           color: string;
 
@@ -363,6 +344,24 @@ type Components = {
             hover?: {
               bg?: string;
             };
+
+            activated?: {
+              bg?: string;
+            };
+          };
+        };
+
+        state?: {
+          focus?: {
+            bg?: string;
+          };
+
+          activated?: {
+            bg: string;
+          };
+
+          hover?: {
+            bg: string;
           };
         };
       };
@@ -373,7 +372,7 @@ type Components = {
 
         semantic?: {
           color?: string;
-          bg?: string; // SUBSTITUTE THIS WITH bg IN THE COMPONENT SCSS
+          bg?: string;
 
           state?: {
             focus?: {
@@ -383,6 +382,24 @@ type Components = {
             hover?: {
               bg?: string;
             };
+
+            activated?: {
+              bg?: string;
+            };
+          };
+        };
+
+        state?: {
+          focus?: {
+            bg?: string;
+          };
+
+          activated?: {
+            bg: string;
+          };
+
+          hover?: {
+            bg: string;
           };
         };
       };
