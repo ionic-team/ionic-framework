@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "8.7.16",
+  "version": "8.7.17",
   "description": "Base components for Ionic",
   "engines": {
     "node": ">= 16"
