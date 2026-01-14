@@ -462,20 +462,42 @@ type Components = {
     icon: {
       size: string | number;
       color?: string;
-      firstChildMargin?: string | number;
-      firstChildMarginEnd?: string | number;
-      lastChildMargin?: string | number;
-      lastChildMarginStart?: string | number;
+
+      firstChild?: {
+        margin?: {
+          vertical?: string | number;
+          start?: string | number;
+          end?: string | number;
+        };
+      };
+
+      lastChild?: {
+        margin?: {
+          vertical?: string | number;
+          start?: string | number;
+          end?: string | number;
+        };
+      };
     };
 
     avatar?: {
       size: string | number | null;
-      firstChildMarginVertical?: string | number;
-      firstChildMarginStart?: string | number;
-      firstChildMarginEnd?: string | number;
-      lastChildMarginVertical?: string | number;
-      lastChildMarginStart?: string | number;
-      lastChildMarginEnd?: string | number;
+
+      firstChild?: {
+        margin?: {
+          vertical?: string | number;
+          start?: string | number;
+          end?: string | number;
+        };
+      };
+
+      lastChild?: {
+        margin?: {
+          vertical?: string | number;
+          start?: string | number;
+          end?: string | number;
+        };
+      };
     };
   };
 

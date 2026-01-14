@@ -269,20 +269,42 @@ export const defaultTheme: DefaultTheme = {
       icon: {
         size: `${20 / fontSizes.chipBase}em`,
         color: rgba(colors.textColorRgb, 0.54),
-        firstChildMargin: '-4px',
-        firstChildMarginEnd: '8px',
-        lastChildMargin: '-4px',
-        lastChildMarginStart: '8px',
+
+        firstChild: {
+          margin: {
+            vertical: '-4px',
+            start: '-4px',
+            end: '8px',
+          },
+        },
+
+        lastChild: {
+          margin: {
+            vertical: '-4px',
+            start: '8px',
+            end: '-4px',
+          },
+        },
       },
 
       avatar: {
         size: `${24 / fontSizes.chipBase}em`,
-        firstChildMarginVertical: '-4px',
-        firstChildMarginStart: '-8px',
-        firstChildMarginEnd: '8px',
-        lastChildMarginVertical: '-4px',
-        lastChildMarginStart: '8px',
-        lastChildMarginEnd: '-8px',
+
+        firstChild: {
+          margin: {
+            vertical: '-4px',
+            start: '-8px',
+            end: '8px',
+          },
+        },
+
+        lastChild: {
+          margin: {
+            vertical: '-4px',
+            start: '8px',
+            end: '-8px',
+          },
+        },
       },
     },
   },

@@ -241,14 +241,18 @@
 
 ::slotted(ion-icon:first-child) {
   @include mixins.margin(
-    var(--ion-chip-icon-first-child-margin),
+    var(--ion-chip-icon-first-child-margin-vertical),
     var(--ion-chip-icon-first-child-margin-end),
-    $start: var(--ion-chip-icon-first-child-margin)
+    $start: var(--ion-chip-icon-first-child-margin-start)
   );
 }
 
 ::slotted(ion-icon:last-child) {
-  @include mixins.margin(var(--ion-chip-icon-last-child-margin), $start: var(--ion-chip-icon-last-child-margin-start));
+  @include mixins.margin(
+    var(--ion-chip-icon-last-child-margin-vertical),
+    var(--ion-chip-icon-last-child-margin-end),
+    $start: var(--ion-chip-icon-last-child-margin-start)
+  );
 }
 
 // Avatar
