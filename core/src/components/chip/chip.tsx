@@ -43,7 +43,7 @@ export class Chip implements ComponentInterface {
   /**
    * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully
    * rounded corners, or `"rectangular"` for a chip without rounded corners.
-   * 
+   *
    * Defaults to `"round"`.
    */
   @Prop() shape?: 'soft' | 'round' | 'rectangular' = 'round';
