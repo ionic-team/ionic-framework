@@ -471,3 +471,86 @@ export const mix = (baseColor: string, mixColor: string, weight: string): string
   const toHex = (n: number) => n.toString(16).padStart(2, '0');
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 };
+
+// Create a cache to store results
+const cache = new Map<any, any>();
+
+export const cachedResolveOsToken = (tokenPath: any, tokenMap: Record<string, any>): any => {
+  // Use the path/object as the key
+  // (Note: For objects, this caches by reference)
+  if (cache.has(tokenPath)) {
+    return cache.get(tokenPath);
+  }
+
+  // Use your existing resolveOsToken function with the global tokenMap
+  const result = resolveOsToken(tokenPath, tokenMap);
+
+  cache.set(tokenPath, result);
+  return result;
+};
+
+export const resolveOsToken = (tokenPath: any, tokenMap: Record<string, any>): any => {
+  // 1. Handle Objects (like Typography maps)
+  if (typeof tokenPath === 'object' && tokenPath !== null) {
+    // If it's a leaf-node token object, unwrap the $value immediately
+    if ('$value' in tokenPath) {
+      return resolveOsToken(tokenPath.$value, tokenMap);
+    }
+
+    // Otherwise, it's a map of multiple tokens, resolve each key
+    const resolvedObject: Record<string, any> = {};
+    for (const [key, val] of Object.entries(tokenPath)) {
+      resolvedObject[key] = resolveOsToken(val, tokenMap);
+    }
+    return resolvedObject;
+  }
+
+  // 2. Handle Reference Strings: "{category.path.item}"
+  let lookupPath = tokenPath;
+  let isPath = false;
+
+  if (typeof tokenPath === 'string' && tokenPath.startsWith('{') && tokenPath.endsWith('}')) {
+    const reference = tokenPath.slice(1, -1).trim();
+    const [refCategory, ...refPath] = reference.split('.');
+
+    let rootKey: string | null = null;
+    switch (refCategory) {
+      case 'semantics':
+        rootKey = 'colorTokens';
+        break;
+      case 'font':
+        rootKey = 'primitiveTokens';
+        break;
+      case 'primitives':
+        rootKey = 'lightTokens';
+        break;
+      case 'typography':
+        rootKey = 'typographyTokens';
+        break;
+      case 'scale':
+        rootKey = 'primitiveTokens';
+        break; // Added 'scale' based on your example
+    }
+
+    if (!rootKey) return tokenPath;
+
+    lookupPath = `${rootKey}.${refCategory}.${refPath.join('.')}`;
+    isPath = true;
+  }
+
+  // 3. ONLY run the reduce if we have confirmed this is a path to be searched
+  if (isPath) {
+    const value = lookupPath.split('.').reduce((acc: any, key: string) => {
+      if (acc && typeof acc === 'object' && key in acc) {
+        return acc[key];
+      }
+      return undefined;
+    }, tokenMap);
+
+    // Recursively resolve the result of the lookup
+    return resolveOsToken(value, tokenMap);
+  }
+
+  // 4. If it's not a path or a reference, it's a Literal Value (Hex, Font-stack, etc.)
+  return tokenPath;
+};
