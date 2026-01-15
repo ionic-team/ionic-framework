@@ -13,7 +13,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+    - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
       with:
         node-version: 24.x
     - uses: ./.github/workflows/actions/download-archive
@@ -62,7 +62,7 @@ runs:
       working-directory: ./core
     - name: 📦 Archive Updated Screenshots
       if: inputs.update == 'true' && steps.test-and-update.outputs.hasUpdatedScreenshots == 'true'
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: updated-screenshots-${{ inputs.shard }}-${{ inputs.totalShards }}
         path: UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
