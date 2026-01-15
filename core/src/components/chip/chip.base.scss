@@ -47,13 +47,13 @@
 // ---------------------------------------------
 
 :host(.chip-small) {
-  min-height: var(--ion-chip-size-small-height);
+  min-height: var(--ion-chip-size-small-min-height);
 
   font-size: var(--ion-chip-size-small-font-size);
 }
 
 :host(.chip-large) {
-  min-height: var(--ion-chip-size-large-height);
+  min-height: var(--ion-chip-size-large-min-height);
 
   font-size: var(--ion-chip-size-large-font-size);
 }

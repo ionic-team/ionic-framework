@@ -95,7 +95,7 @@ export const defaultTheme: DefaultTheme = {
       // Sizes
       size: {
         small: {
-          height: '24px',
+          minHeight: '24px',
 
           font: {
             size: clamp('12px', `${(fontSizes.chipBase - 2) / 16}rem`, '20px'),
@@ -103,7 +103,7 @@ export const defaultTheme: DefaultTheme = {
         },
 
         large: {
-          height: '32px',
+          minHeight: '32px',
 
           font: {
             size: clamp('13px', `${fontSizes.chipBase / 16}rem`, '22px'),

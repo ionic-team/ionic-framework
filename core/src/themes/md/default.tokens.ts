@@ -100,14 +100,14 @@ export const defaultTheme: DefaultTheme = {
       // Sizes
       size: {
         small: {
-          height: '24px',
+          minHeight: '24px',
 
           font: {
             size: `${(fontSizes.chipBase - 2) / 16}rem`,
           },
         },
         large: {
-          height: '32px',
+          minHeight: '32px',
 
           font: {
             size: `${fontSizes.chipBase / 16}rem`,

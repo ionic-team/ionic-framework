@@ -106,13 +106,13 @@ export const defaultTheme: DefaultTheme = {
       // Sizes
       size: {
         small: {
-          height: primitiveTokens.scale['600'].$value,
+          minHeight: primitiveTokens.scale['600'].$value,
           font: {
             size: primitiveTokens.font['font-size']['300'].$value,
           },
         },
         large: {
-          height: primitiveTokens.scale['800'].$value,
+          minHeight: primitiveTokens.scale['800'].$value,
           font: {
             size: primitiveTokens.font['font-size']['350'].$value,
           },

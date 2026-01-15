@@ -269,6 +269,7 @@ type Components = {
 
     gap?: string | number;
     lineHeight?: string | number;
+
     typography?: {
       [key: string]: string | number;
     };
@@ -276,15 +277,16 @@ type Components = {
     // Sizes
     size: {
       small: {
-        // TODO: change height to min-height in the future
-        height: string | number;
+        minHeight: string | number;
+
         font: {
           size: string | number;
         };
       };
 
       large: {
-        height: string | number;
+        minHeight: string | number;
+
         font: {
           size: string | number;
         };
