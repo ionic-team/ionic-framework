@@ -103,14 +103,14 @@ export const defaultTheme: DefaultTheme = {
           minHeight: '24px',
 
           font: {
-            size: `${(fontSizes.chipBase - 2) / 16}rem`,
+            size: `${((fontSizes.chipBase - 2) / 16).toFixed(2)}rem`,
           },
         },
         large: {
           minHeight: '32px',
 
           font: {
-            size: `${fontSizes.chipBase / 16}rem`,
+            size: `${(fontSizes.chipBase / 16).toFixed(2)}rem`,
           },
         },
       },
@@ -274,7 +274,7 @@ export const defaultTheme: DefaultTheme = {
       },
 
       icon: {
-        size: `${20 / fontSizes.chipBase}em`,
+        size: `${(20 / fontSizes.chipBase).toFixed(2)}em`,
         color: rgba(colors.textColorRgb, 0.54),
 
         firstChild: {
@@ -295,7 +295,7 @@ export const defaultTheme: DefaultTheme = {
       },
 
       avatar: {
-        size: `${24 / fontSizes.chipBase}em`,
+        size: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
 
         firstChild: {
           margin: {
