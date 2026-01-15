@@ -91,23 +91,23 @@ export const defaultTheme: DefaultTheme = {
 
   components: {
     IonChip: {
-      margin: '4px',
+      margin: 'var(--ion-spacing-xxs)',
       padding: {
-        vertical: '6px',
-        horizontal: '12px',
+        vertical: 'var(--ion-spacing-xs)',
+        horizontal: 'var(--ion-spacing-md)',
       },
 
       // Sizes
       size: {
         small: {
-          minHeight: '24px',
+          minHeight: 'var(--ion-scaling-xs)',
 
           font: {
             size: `${((fontSizes.chipBase - 2) / 16).toFixed(2)}rem`,
           },
         },
         large: {
-          minHeight: '32px',
+          minHeight: 'var(--ion-scaling-md)',
 
           font: {
             size: `${(fontSizes.chipBase / 16).toFixed(2)}rem`,
@@ -126,19 +126,19 @@ export const defaultTheme: DefaultTheme = {
       shape: {
         soft: {
           border: {
-            radius: 'var(--ion-radii-200)',
+            radius: 'var(--ion-radii-md)',
           },
         },
 
         round: {
           border: {
-            radius: 'var(--ion-radii-full)',
+            radius: 'var(--ion-radii-xxxxl)',
           },
         },
 
         rectangular: {
           border: {
-            radius: 'var(--ion-radii-0)',
+            radius: 'var(--ion-radii-xxxxs)',
           },
         },
       },
@@ -236,7 +236,7 @@ export const defaultTheme: DefaultTheme = {
               subtle: rgba(colors.textColorRgb, 0.16),
             },
 
-            width: '1px',
+            width: 'var(--ion-border-width-xxxs)',
           },
 
           semantic: {
@@ -281,14 +281,14 @@ export const defaultTheme: DefaultTheme = {
           margin: {
             vertical: '-4px',
             start: '-4px',
-            end: '8px',
+            end: 'var(--ion-spacing-sm)',
           },
         },
 
         lastChild: {
           margin: {
             vertical: '-4px',
-            start: '8px',
+            start: 'var(--ion-spacing-sm)',
             end: '-4px',
           },
         },
@@ -301,14 +301,14 @@ export const defaultTheme: DefaultTheme = {
           margin: {
             vertical: '-4px',
             start: '-8px',
-            end: '8px',
+            end: 'var(--ion-spacing-sm)',
           },
         },
 
         lastChild: {
           margin: {
             vertical: '-4px',
-            start: '8px',
+            start: 'var(--ion-spacing-sm)',
             end: '-8px',
           },
         },
