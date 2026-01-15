@@ -466,6 +466,7 @@ type Components = {
       size: string | number;
       color?: string;
 
+      // Styles for the ion-icon only if it is the first element in the slot
       firstChild?: {
         margin?: {
           vertical?: string | number;
@@ -474,6 +475,7 @@ type Components = {
         };
       };
 
+      // Styles for the ion-icon only if it is the last element in the slot
       lastChild?: {
         margin?: {
           vertical?: string | number;
@@ -486,6 +488,7 @@ type Components = {
     avatar?: {
       size: string | number | null;
 
+      // Styles for the ion-avatar only if it is the first element in the slot
       firstChild?: {
         margin?: {
           vertical?: string | number;
@@ -494,6 +497,7 @@ type Components = {
         };
       };
 
+      // Styles for the ion-avatar only if it is the last element in the slot
       lastChild?: {
         margin?: {
           vertical?: string | number;
