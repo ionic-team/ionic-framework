@@ -1,7 +1,5 @@
 @use "../../themes/mixins" as mixins;
 @use "../../themes/functions.color" as colors;
-@use "./chip.base.vars.scss" as vars;
-@use "sass:meta";
 
 // Chip: Common Styles
 // --------------------------------------------------
@@ -23,7 +21,17 @@
   @include mixins.border-radius(var(--border-radius));
   @include mixins.margin(var(--ion-chip-margin));
   @include mixins.padding(var(--ion-chip-padding-vertical), var(--ion-chip-padding-horizontal));
-  @include mixins.typography(vars.$chip-typography);
+  @include mixins.typography(
+    (
+      font-family: var(--ion-chip-typography-font-family),
+      font-size: var(--ion-chip-typography-font-size),
+      font-weight: var(--ion-chip-typography-font-weight),
+      letter-spacing: var(--ion-chip-typography-letter-spacing),
+      line-height: var(--ion-chip-typography-line-height),
+      text-decoration: var(--ion-chip-typography-text-decoration),
+      text-transform: var(--ion-chip-typography-text-transform),
+    )
+  );
 
   display: inline-flex;
   position: relative;
