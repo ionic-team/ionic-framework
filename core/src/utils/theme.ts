@@ -514,6 +514,7 @@ export const mix = (baseColor: string, mixColor: string, weight: string): string
 /**
  * Converts a string to kebab-case
  *
+ * @internal
  * @param str The string to convert (e.g., 'IonChip')
  * @returns The kebab-case string (e.g., 'ion-chip')
  */
@@ -526,6 +527,14 @@ const convertToKebabCase = (str: string): string => {
   return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 };
 
+/**
+ * Verifies that a theme object is valid
+ *
+ * @internal
+ * @param theme The theme object to validate
+ * @param source The source or context where the theme is being validated
+ * @returns A boolean indicating whether the theme is valid
+ */
 const checkThemeValidity = (theme: any, source: string): boolean => {
   if (typeof theme !== 'object' || Array.isArray(theme)) {
     console.warn(`${source}: Invalid theme object provided`, theme);
@@ -543,6 +552,7 @@ const checkThemeValidity = (theme: any, source: string): boolean => {
 /**
  * Mimics the Sass `rgba` function logic to construct CSS rgba() values.
  *
+ * @internal
  * @param colorRgb The RGB color components as a string (e.g., '255, 0, 0').
  * @param alpha The opacity value (0 to 1).
  * @returns A string containing the CSS rgba() function call.
@@ -555,6 +565,7 @@ export function rgba(colorRgb: string, alpha: number | string): string {
 /**
  * Mimics the Ionic Framework `current-color` function logic to construct CSS color values.
  *
+ * @internal
  * @param variation The color variation (e.g., 'primary', 'secondary', 'base').
  * @param alpha The opacity value (0 to 1). If null, returns the full color variable.
  * @param subtle If true, uses the '--ion-color-subtle-' prefix.
@@ -581,6 +592,7 @@ export function currentColor(variation: string, alpha: number | string | null = 
 /**
  * Mimics the CSS `clamp` function logic.
  *
+ * @internal
  * @param min The minimum value
  * @param val The preferred value
  * @param max The maximum value
