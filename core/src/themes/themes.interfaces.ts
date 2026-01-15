@@ -261,6 +261,7 @@ export type DefaultTheme = BaseTheme & {
 type Components = {
   IonChip?: {
     margin: string | number;
+    cursor?: string;
 
     padding?: {
       vertical: string | number;

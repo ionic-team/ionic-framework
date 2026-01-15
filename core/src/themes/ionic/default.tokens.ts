@@ -93,6 +93,7 @@ export const defaultTheme: DefaultTheme = {
   components: {
     IonChip: {
       margin: '0px',
+      cursor: 'auto',
 
       padding: {
         vertical: primitiveTokens.scale['150'].$value,

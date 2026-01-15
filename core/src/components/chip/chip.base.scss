@@ -45,7 +45,8 @@
   line-height: var(--ion-chip-line-height);
   gap: var(--ion-chip-gap);
 
-  cursor: pointer;
+  cursor: var(--ion-chip-cursor);
+
   overflow: hidden;
   vertical-align: middle;
   box-sizing: border-box;
