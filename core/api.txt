@@ -1873,7 +1873,7 @@ ion-textarea,prop,cols,number | undefined,undefined,false,true
 ion-textarea,prop,counter,boolean,false,false,false
 ion-textarea,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
 ion-textarea,prop,debounce,number | undefined,undefined,false,false
-ion-textarea,prop,disabled,boolean,false,false,false
+ion-textarea,prop,disabled,boolean,false,false,true
 ion-textarea,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-textarea,prop,errorText,string | undefined,undefined,false,false
 ion-textarea,prop,fill,"outline" | "solid" | undefined,undefined,false,false
@@ -1886,7 +1886,7 @@ ion-textarea,prop,minlength,number | undefined,undefined,false,false
 ion-textarea,prop,mode,"ios" | "md",undefined,false,false
 ion-textarea,prop,name,string,this.inputId,false,false
 ion-textarea,prop,placeholder,string | undefined,undefined,false,false
-ion-textarea,prop,readonly,boolean,false,false,false
+ion-textarea,prop,readonly,boolean,false,false,true
 ion-textarea,prop,required,boolean,false,false,false
 ion-textarea,prop,rows,number | undefined,undefined,false,false
 ion-textarea,prop,shape,"round" | undefined,undefined,false,false
