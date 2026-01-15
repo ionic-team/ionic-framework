@@ -186,6 +186,9 @@ export const defaultTheme: DefaultTheme = {
           color: rgba(colors.textColorRgb, 0.6),
 
           semantic: {
+            bg: currentColor('base', null, true),
+            color: currentColor('contrast', null, true),
+
             state: {
               focus: {
                 bg: currentColor('base', 0.6, true),

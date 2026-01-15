@@ -276,6 +276,7 @@ type Components = {
     // Sizes
     size: {
       small: {
+        // TODO: change height to min-height in the future
         height: string | number;
         font: {
           size: string | number;
