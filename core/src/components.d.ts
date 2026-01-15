@@ -895,10 +895,6 @@ export namespace Components {
           * @default 'large'
          */
         "size"?: 'small' | 'large';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonCol {
         /**
@@ -6867,10 +6863,6 @@ declare namespace LocalJSX {
           * @default 'large'
          */
         "size"?: 'small' | 'large';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonCol {
         /**

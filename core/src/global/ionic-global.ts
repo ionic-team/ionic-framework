@@ -4,7 +4,7 @@ import { applyComponentsTheme, applyGlobalTheme, getCustomTheme } from '@utils/t
 
 import type { IonicConfig, Mode, Theme } from '../interface';
 import { defaultTheme as baseTheme } from '../themes/base/default.tokens';
-import type { BaseTheme } from '../themes/themes.interfaces';
+import type { DefaultTheme } from '../themes/themes.interfaces';
 import { shouldUseCloseWatcher } from '../utils/hardware-back-button';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
@@ -147,7 +147,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   doc.documentElement.setAttribute('theme', defaultTheme);
   doc.documentElement.classList.add(defaultTheme);
 
-  const customTheme: BaseTheme | undefined = getCustomTheme(configObj.customTheme, defaultMode);
+  const customTheme: DefaultTheme | undefined = getCustomTheme(configObj.customTheme, defaultMode);
 
   // Apply base theme, or combine with custom theme if provided
   if (customTheme) {
@@ -164,6 +164,14 @@ export const initialize = (userConfig: IonicConfig = {}) => {
     // like the semantic colors (e.g., --ion-color-shade)
     applyComponentsTheme(baseTheme);
     config.set('customTheme', baseTheme);
+  }
+
+  // Apply any config values from the custom theme
+  const customConfig = customTheme?.config;
+  if (customConfig) {
+    Object.entries(customConfig).forEach(([key, value]) => {
+      config.set(key as keyof IonicConfig, value);
+    });
   }
 
   if (config.getBoolean('_testing')) {

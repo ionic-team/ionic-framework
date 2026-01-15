@@ -2,12 +2,11 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonTheme } from '../../global/ionic-global';
+import { config } from '../../global/config';
 import type { Color } from '../../interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-chip',
@@ -57,13 +56,12 @@ export class Chip implements ComponentInterface {
 
   render() {
     const { hue, size, shape } = this;
-    const theme = getIonTheme(this);
+    const useRippleEffect = config.getBoolean('rippleEffect', false);
 
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
-          [theme]: true,
           [`chip-${shape}`]: true,
           'chip-outline': this.outline,
           'chip-disabled': this.disabled,
@@ -74,7 +72,7 @@ export class Chip implements ComponentInterface {
         })}
       >
         <slot></slot>
-        {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        {useRippleEffect && <ion-ripple-effect></ion-ripple-effect>}
       </Host>
     );
   }

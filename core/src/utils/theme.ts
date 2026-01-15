@@ -266,9 +266,9 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     return '';
   }
 
-  // Exclude components and palette from the default tokens
+  // Exclude palette, components, and config from the default tokens
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { palette, components, ...defaultTokens } = theme;
+  const { palette, components, config, ...defaultTokens } = theme;
 
   // Generate CSS variables for the default design tokens
   const defaultTokensCSS = generateCSSVars(defaultTokens);
