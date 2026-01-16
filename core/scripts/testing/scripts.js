@@ -21,6 +21,7 @@
  */
 
 const DEFAULT_THEME = 'md';
+const DEFAULT_PALETTE = 'light';
 
 (function() {
   
@@ -88,17 +89,33 @@ const DEFAULT_THEME = 'md';
    * or `high-contrast-dark`. Default to `light` for tests.
    */
   const validPalettes = ['light', 'dark', 'high-contrast', 'high-contrast-dark'];
+
+  const configDarkMode = window.Ionic?.config?.customTheme?.palette?.dark?.enabled === 'always' ? 'dark' : null;
+  const configHighContrastMode = window.Ionic?.config?.customTheme?.palette?.highContrast?.enabled === 'always' ? 'high-contrast' : null;
+  const configHighContrastDarkMode = window.Ionic?.config?.customTheme?.palette?.highContrastDark?.enabled === 'always' ? 'high-contrast-dark' : null;
+  /**
+   * Ensure window.Ionic.config is defined before importing 'testing/scripts'
+   * in the test HTML to properly initialize the palette configuration below.
+   * 
+   * Example:
+   * <script>
+   *    window.Ionic = { config: { customTheme: { palette: { ... } } } };
+   * </script>
+   * <script src="testing/scripts.js"></script>
+   */
+  const configPalette = configDarkMode || configHighContrastMode || configHighContrastDarkMode;
   const paletteQuery = window.location.search.match(/palette=([a-z-]+)/);
   const paletteHash = window.location.hash.match(/palette=([a-z-]+)/);
   const darkClass = document.body?.classList.contains('ion-palette-dark') ? 'dark' : null;
   const highContrastClass = document.body?.classList.contains('ion-palette-high-contrast') ? 'high-contrast' : null;
   const highContrastDarkClass = darkClass && highContrastClass ? 'high-contrast-dark' : null;
+  const paletteClass = highContrastDarkClass || highContrastClass || darkClass;
 
-  let paletteName = paletteQuery?.[1] || paletteHash?.[1] || highContrastDarkClass || darkClass || highContrastClass || 'light';
+  let paletteName = configPalette || paletteQuery?.[1] || paletteHash?.[1] || paletteClass || DEFAULT_PALETTE;
 
   if (!validPalettes.includes(paletteName)) {
     console.warn(`Invalid palette name: '${paletteName}'. Falling back to 'light' palette.`);
-    paletteName = 'light';
+    paletteName = DEFAULT_PALETTE;
   }
 
   // Load theme tokens if the theme is valid
@@ -119,8 +136,15 @@ const DEFAULT_THEME = 'md';
 
       // If a specific palette is requested, modify the palette structure
       // to set the enabled property to 'always'
+      // TODO(FW-4004): Implement dark palette
       if (paletteName === 'dark' && theme.palette?.dark) {
         theme.palette.dark.enabled = 'always';
+      // TODO(FW-4005): Implement high contrast palette
+      } else if (paletteName === 'high-contrast' && theme.palette?.highContrast) {
+        theme.palette.highContrast.enabled = 'always';
+      // TODO(FW-4005): Implement high contrast dark palette
+      } else if (paletteName === 'high-contrast-dark' && theme.palette?.highContrastDark) {
+        theme.palette.highContrastDark.enabled = 'always';
       }
 
       // Apply the theme tokens to Ionic config

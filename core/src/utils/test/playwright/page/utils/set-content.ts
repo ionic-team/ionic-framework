@@ -68,6 +68,34 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
     `;
   }
 
+  /**
+   * This object is CRITICAL for Playwright stability.
+   *
+   * WHY IT'S NEEDED:
+   * 1. Bypasses Dynamic Loading: It avoids the consistent import
+   * failure 'await import(...)' when the global theme needed to be
+   * re-applied after the initial Ionic framework load.
+   * 2. Prevents Incorrect Palettes: It directly initializes with the
+   * required 'enabled: "always"' palette before any scripts run. This guarantees that correct CSS variables are loaded from the start.
+   * Otherwise, it would load the default light palette.
+   *
+   * These issues were only happening in Playwright Firefox tests
+   * that use `setContent`.
+   */
+  const customTheme = {
+    palette: {
+      dark: {
+        enabled: palette === 'dark' ? 'always' : 'never',
+      },
+      highContrast: {
+        enabled: palette === 'high-contrast' ? 'always' : 'never',
+      },
+      highContrastDark: {
+        enabled: palette === 'high-contrast-dark' ? 'always' : 'never',
+      },
+    },
+  };
+
   const output = `
     <!DOCTYPE html>
     <html dir="${direction}" lang="en">
@@ -77,14 +105,14 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
         ${ionicCSSImports}
         <link href="${baseUrl}/scripts/testing/styles.css" rel="stylesheet" />
-        ${palette !== 'light' ? `<link href="${baseUrl}/css/palettes/${palette}.always.css" rel="stylesheet" />` : ''}
         <script src="${baseUrl}/scripts/testing/scripts.js"></script>
         ${ionicJSImports}
         <script>
           window.Ionic = {
             config: {
               mode: '${mode}',
-              theme: '${theme}'
+              theme: '${theme}',
+              customTheme: ${JSON.stringify(customTheme)}
             }
           }
         </script>
