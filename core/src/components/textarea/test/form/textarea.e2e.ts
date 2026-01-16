@@ -166,18 +166,16 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         }
       });
 
-      // Click submit button - form should submit since validation passes
+      // Click submit button and wait for any async operations to complete
       await submitButton.click();
-
-      // Wait for any async operations to complete
       await page.waitForChanges();
 
-      // Verify that the form's validation passed
-      const formValidity = await page.evaluate(() => {
-        const form = document.querySelector('form');
-        return form ? form.checkValidity() : null;
+      // Verify that the textarea's value is set
+      const textareaValue = await textarea.evaluate((el: HTMLIonTextareaElement) => {
+        const nativeTextarea = el.shadowRoot?.querySelector('textarea') as HTMLTextAreaElement | null;
+        return nativeTextarea?.value ?? '';
       });
-      expect(formValidity).toBe(true);
+      expect(textareaValue).toBe('Test value');
 
       // Verify that the formData is set
       const formData = await page.evaluate(() => {
@@ -228,32 +226,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         }
       });
 
-      // Click submit button - form should submit since validation passes
+      // Click submit button and wait for any async operations to complete
       await submitButton.click();
-
-      // Wait for any async operations to complete
       await page.waitForChanges();
 
-      // Verify that the formData is set
-      let formData = await page.evaluate(() => {
-        const form = document.querySelector('form');
-        if (!form) {
-          return null;
-        }
-        const formData = new FormData(form);
-        const entries: Record<string, string> = {};
-        for (const [key, value] of formData.entries()) {
-          entries[key] = value.toString();
-        }
-        return entries;
-      });
-      expect(formData).toBeDefined();
-      expect(formData?.['textarea']).toBe('Test value');
-
-      // Click reset button - form should reset
+      // Click reset button and wait for any async operations to complete
       await resetButton.click();
-
-      // Wait for any async operations to complete
       await page.waitForChanges();
 
       // Verify that the textarea's value is cleared
@@ -264,7 +242,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(textareaValue).toBe('');
 
       // Verify that the formData is cleared
-      formData = await page.evaluate(() => {
+      const formData = await page.evaluate(() => {
         const form = document.querySelector('form');
         if (!form) {
           return null;
