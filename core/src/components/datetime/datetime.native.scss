@@ -87,6 +87,11 @@
   align-items: start;
 }
 
+.calendar-next-prev ion-button ion-icon[slot="icon-only"] {
+  @include globals.padding(0);
+  @include globals.margin(0);
+}
+
 :host(.datetime-presentation-time) .datetime-time {
   @include globals.padding(0);
 }

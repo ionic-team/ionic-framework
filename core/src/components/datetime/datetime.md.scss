@@ -59,9 +59,6 @@
 
 // These styles are copied from buttons.md.scss
 .calendar-next-prev ion-button ion-icon[slot="icon-only"] {
-  @include padding(0);
-  @include margin(0);
-
   font-size: 1.8em;
 }
 

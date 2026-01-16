@@ -81,9 +81,6 @@
 
 // These styles are copied from buttons.ios.scss
 .calendar-next-prev ion-button ion-icon[slot="icon-only"] {
-  @include padding(0);
-  @include margin(0);
-
   // This value is calculated by dividing the font size the
   // icon should be in px (28px) by the font size of its
   // parent button (17px). e.g. 28 / 17 = 1.647
