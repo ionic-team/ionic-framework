@@ -253,10 +253,6 @@
   --padding-start: 8px;
   --padding-end: 8px;
   --box-shadow: none;
-
-  @include margin(0px, 2px, 0px, 2px);
-
-  min-height: 32px;
 }
 
 :host(.in-datetime.button-clear) {

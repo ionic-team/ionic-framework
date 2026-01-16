@@ -303,10 +303,6 @@
   --padding-start: 5px;
   --padding-end: 5px;
 
-  @include margin(0px, 2px, 0px, 2px);
-
-  min-height: 32px;
-
   font-size: dynamic-font-clamp(1, 17px, 1.24);
   font-weight: 400;
 }
