@@ -93,6 +93,16 @@ const DEFAULT_PALETTE = 'light';
   const configDarkMode = window.Ionic?.config?.customTheme?.palette?.dark?.enabled === 'always' ? 'dark' : null;
   const configHighContrastMode = window.Ionic?.config?.customTheme?.palette?.highContrast?.enabled === 'always' ? 'high-contrast' : null;
   const configHighContrastDarkMode = window.Ionic?.config?.customTheme?.palette?.highContrastDark?.enabled === 'always' ? 'high-contrast-dark' : null;
+  /**
+   * Ensure window.Ionic.config is defined before importing 'testing/scripts'
+   * in the test HTML to properly initialize the palette configuration below.
+   * 
+   * Example:
+   * <script>
+   *    window.Ionic = { config: { customTheme: { palette: { ... } } } };
+   * </script>
+   * <script src="testing/scripts.js"></script>
+   */
   const configPalette = configDarkMode || configHighContrastMode || configHighContrastDarkMode;
   const paletteQuery = window.location.search.match(/palette=([a-z-]+)/);
   const paletteHash = window.location.hash.match(/palette=([a-z-]+)/);
