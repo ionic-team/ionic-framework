@@ -87,16 +87,16 @@ export const defaultTheme: DefaultTheme = {
 
   components: {
     IonChip: {
-      margin: '0px',
+      margin: 'var(--ion-spacing-0)',
       cursor: 'auto',
 
       padding: {
-        vertical: '6px',
-        horizontal: '8px',
+        vertical: 'var(--ion-spacing-xs)',
+        horizontal: 'var(--ion-spacing-sm)',
       },
 
-      lineHeight: '20px',
-      gap: '4px',
+      lineHeight: '100%',
+      gap: 'var(--ion-spacing-xxs)',
 
       typography: {
         fontFamily:
@@ -114,15 +114,15 @@ export const defaultTheme: DefaultTheme = {
       // Sizes
       size: {
         small: {
-          minHeight: '24px',
+          minHeight: 'var(--ion-scaling-xs)',
           font: {
-            size: '12px',
+            size: 'var(--ion-font-size-xs)',
           },
         },
         large: {
-          minHeight: '32px',
+          minHeight: 'var(--ion-scaling-md)',
           font: {
-            size: '14px',
+            size: 'var(--ion-font-size-sm)',
           },
         },
       },
@@ -135,7 +135,7 @@ export const defaultTheme: DefaultTheme = {
         focus: {
           ring: {
             color: '#b5c0f7',
-            width: '2px',
+            width: 'var(--ion-border-width-xxs)',
           },
         },
       },
@@ -144,17 +144,17 @@ export const defaultTheme: DefaultTheme = {
       shape: {
         soft: {
           border: {
-            radius: '4px',
+            radius: 'var(--ion-radii-sm)',
           },
         },
         round: {
           border: {
-            radius: '16px',
+            radius: 'var(--ion-radii-xl)',
           },
         },
         rectangular: {
           border: {
-            radius: '0px',
+            radius: 'var(--ion-radii-xxxxs)',
           },
         },
       },
@@ -207,7 +207,7 @@ export const defaultTheme: DefaultTheme = {
       },
 
       icon: {
-        size: '16px',
+        size: 'var(--ion-scaling-xxxs)',
       },
     },
   },
