@@ -54,7 +54,9 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
     md: 'textarea.md.scss',
     ionic: 'textarea.ionic.scss',
   },
-  shadow: true,
+  shadow: {
+    delegatesFocus: true,
+  },
   formAssociated: true,
 })
 export class Textarea implements ComponentInterface {
@@ -464,8 +466,8 @@ export class Textarea implements ComponentInterface {
     this.runAutoGrow();
 
     // Override focus() to delegate to the native textarea.
-    // This is needed for Safari which doesn't properly delegate
-    // focus when calling focus() directly on the host.
+    // This is needed for Safari and Firefox which don't properly
+    // delegate focus when calling focus() directly on the host.
     this.el.focus = () => {
       this.setFocus();
     };
