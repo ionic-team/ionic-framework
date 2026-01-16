@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import {
+  AttachInternals,
   Build,
   Component,
   Element,
@@ -15,7 +16,7 @@ import {
   writeTask,
 } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
-import { createNotchController, checkInvalidState } from '@utils/forms';
+import { createNotchController, checkInvalidState, reportValidityToElementInternals } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
@@ -35,6 +36,16 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
  * @slot label - The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
  * @slot start - Content to display at the leading edge of the textarea. (EXPERIMENTAL)
  * @slot end - Content to display at the trailing edge of the textarea. (EXPERIMENTAL)
+ *
+ * @part wrapper - The clickable label element that wraps the entire form field (label text, slots, and native textarea).
+ * @part container - The inner wrapper element that directly contains the native textarea element.
+ * @part label - The label text describing the textarea.
+ * @part native - The native textarea element.
+ * @part supporting-text - Supporting text displayed beneath the textarea label.
+ * @part helper-text - Supporting text displayed beneath the textarea label when the textarea is valid.
+ * @part error-text - Supporting text displayed beneath the textarea label when the textarea is invalid and touched.
+ * @part counter - The character counter displayed when the counter property is set.
+ * @part bottom - The container element for helper text, error text, and counter.
  */
 @Component({
   tag: 'ion-textarea',
@@ -43,7 +54,10 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
     md: 'textarea.md.scss',
     ionic: 'textarea.ionic.scss',
   },
-  scoped: true,
+  shadow: {
+    delegatesFocus: true,
+  },
+  formAssociated: true,
 })
 export class Textarea implements ComponentInterface {
   private nativeInput?: HTMLTextAreaElement;
@@ -72,6 +86,8 @@ export class Textarea implements ComponentInterface {
   private focusedValue?: string | null;
 
   @Element() el!: HTMLIonTextareaElement;
+
+  @AttachInternals() internals!: ElementInternals;
 
   /**
    * The `hasFocus` state ensures the focus class is
@@ -137,6 +153,14 @@ export class Textarea implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * Update element internals when disabled prop changes
+   */
+  @Watch('disabled')
+  protected disabledChanged() {
+    this.updateElementInternals();
+  }
+
+  /**
    * The fill for the item. If `"solid"` the item will have a background. If
    * `"outline"` the item will be transparent with a border. Only available when the theme is `"md"`.
    */
@@ -184,7 +208,7 @@ export class Textarea implements ComponentInterface {
   /**
    * If `true`, the user must fill in a value before submitting a form.
    */
-  @Prop() required = false;
+  @Prop({ reflect: true }) required = false;
 
   /**
    * If `true`, the element will have its spelling and grammar checked.
@@ -287,7 +311,23 @@ export class Textarea implements ComponentInterface {
     if (nativeInput && nativeInput.value !== value) {
       nativeInput.value = value;
     }
+    this.updateElementInternals();
     this.runAutoGrow();
+  }
+
+  /**
+   * Update native input and element internals when required prop changes
+   */
+  @Watch('required')
+  protected requiredChanged() {
+    // Explicitly update the native element's required attribute to ensure
+    // browser validation works correctly when required changes dynamically.
+    // While the template binding should handle this, we need to update it
+    // synchronously for the browser's validation to recognize the change.
+    if (this.nativeInput) {
+      this.nativeInput.required = this.required;
+    }
+    this.updateElementInternals();
   }
 
   /**
@@ -422,7 +462,15 @@ export class Textarea implements ComponentInterface {
 
   componentDidLoad() {
     this.originalIonInput = this.ionInput;
+    this.updateElementInternals();
     this.runAutoGrow();
+
+    // Override focus() to delegate to the native textarea.
+    // This is needed for Safari and Firefox which don't properly
+    // delegate focus when calling focus() directly on the host.
+    this.el.focus = () => {
+      this.setFocus();
+    };
   }
 
   componentDidRender() {
@@ -544,6 +592,32 @@ export class Textarea implements ComponentInterface {
     return this.value || '';
   }
 
+  /**
+   * Called when the form is reset.
+   * Resets the component's value.
+   */
+  formResetCallback() {
+    this.value = '';
+  }
+
+  /**
+   * Updates the form value and reports validity state to the browser via
+   * ElementInternals. This should be called when the component loads, when
+   * the required prop changes, when the disabled prop changes, and when the value
+   * changes to ensure the form value stays in sync and validation state is updated.
+   */
+  private updateElementInternals() {
+    // Disabled form controls should not be included in form data
+    // Pass null to setFormValue when disabled to exclude it from form submission
+    const value = this.disabled ? null : this.getValue();
+    // ElementInternals may not be fully available in test environments
+    // so we need to check if the method exists before calling it
+    if (typeof this.internals.setFormValue === 'function') {
+      this.internals.setFormValue(value);
+    }
+    reportValidityToElementInternals(this.nativeInput, this.internals);
+  }
+
   // `Event` type is used instead of `InputEvent`
   // since the types from Stencil are not derived
   // from the element (e.g. textarea and input
@@ -595,6 +669,7 @@ export class Textarea implements ComponentInterface {
           'label-text-wrapper': true,
           'label-text-wrapper-hidden': !this.hasLabel,
         }}
+        part="label"
       >
         {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}
       </div>
@@ -701,10 +776,10 @@ export class Textarea implements ComponentInterface {
     const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
     return [
-      <div id={helperTextId} class="helper-text" aria-live="polite">
+      <div id={helperTextId} class="helper-text" part="supporting-text helper-text" aria-live="polite">
         {!isInvalid ? helperText : null}
       </div>,
-      <div id={errorTextId} class="error-text" role="alert">
+      <div id={errorTextId} class="error-text" part="supporting-text error-text" role="alert">
         {isInvalid ? errorText : null}
       </div>,
     ];
@@ -730,7 +805,11 @@ export class Textarea implements ComponentInterface {
       return;
     }
 
-    return <div class="counter">{getCounterText(value, maxlength, counterFormatter)}</div>;
+    return (
+      <div class="counter" part="counter">
+        {getCounterText(value, maxlength, counterFormatter)}
+      </div>
+    );
   }
 
   /**
@@ -752,7 +831,7 @@ export class Textarea implements ComponentInterface {
     }
 
     return (
-      <div class="textarea-bottom">
+      <div class="textarea-bottom" part="bottom">
         {this.renderHintText()}
         {this.renderCounter()}
       </div>
@@ -802,6 +881,7 @@ export class Textarea implements ComponentInterface {
           [`textarea-shape-${shape}`]: shape !== undefined,
           [`textarea-size-${size}`]: true,
           [`textarea-label-placement-${labelPlacement}`]: true,
+          'in-item': inItem,
           'textarea-disabled': disabled,
           'textarea-readonly': readonly,
         })}
@@ -812,7 +892,7 @@ export class Textarea implements ComponentInterface {
          * interactable, clicking the label would focus that instead
          * since it comes before the textarea in the DOM.
          */}
-        <label class="textarea-wrapper" htmlFor={inputId} onClick={this.onLabelClick}>
+        <label class="textarea-wrapper" htmlFor={inputId} onClick={this.onLabelClick} part="wrapper">
           {this.renderLabelContainer()}
           <div class="textarea-wrapper-inner">
             {
@@ -837,9 +917,10 @@ export class Textarea implements ComponentInterface {
             <div class="start-slot-wrapper">
               <slot name="start"></slot>
             </div>
-            <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+            <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)} part="container">
               <textarea
                 class="native-textarea"
+                part="native"
                 ref={(el) => (this.nativeInput = el)}
                 id={inputId}
                 disabled={disabled}

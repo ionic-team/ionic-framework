@@ -26,6 +26,8 @@ export class FormComponent {
       datetime: ['2010-08-20', Validators.required],
       select: [undefined, Validators.required],
       toggle: [false],
+      textarea: ['', Validators.required],
+      textarea2: ['Default Value'],
       input: ['', Validators.required],
       input2: ['Default Value'],
       inputOtp: [null, [Validators.required, otpRequiredLength(4)]],
@@ -40,8 +42,15 @@ export class FormComponent {
     });
   }
 
-  setTouched() {
+  setInputTouched() {
     const formControl = this.profileForm.get('input');
+    if (formControl) {
+      formControl.markAsTouched();
+    }
+  }
+
+  setTextareaTouched() {
+    const formControl = this.profileForm.get('textarea');
     if (formControl) {
       formControl.markAsTouched();
     }
@@ -63,6 +72,8 @@ export class FormComponent {
       datetime: '2010-08-20',
       select: 'nes',
       toggle: true,
+      textarea: 'Some value',
+      textarea2: 'Another values',
       input: 'Some value',
       input2: 'Another values',
       inputOtp: 5678,

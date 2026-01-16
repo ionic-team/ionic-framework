@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Textarea - Form</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 6px;
+      }
+
+      .required-label {
+        display: none;
+      }
+
+      .textarea-required .required-label {
+        display: inline;
+        color: #b80000;
+      }
+
+      ion-textarea {
+        margin-bottom: 16px;
+      }
+
+      ion-content button.reset-button {
+        background: #960101;
+        border-color: #650000;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Textarea - Form</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" class="ion-padding">
+        <form onsubmit="return onSubmit(event)">
+          <ion-textarea
+            fill="outline"
+            label="Textarea 1"
+            label-placement="stacked"
+            placeholder="Textarea 1"
+            helper-text="Helper message"
+            counter="true"
+            maxlength="999"
+            name="textarea1"
+          >
+            <ion-icon slot="end" name="square-outline"></ion-icon>
+          </ion-textarea>
+
+          <ion-textarea
+            fill="outline"
+            label-placement="stacked"
+            placeholder="Textarea 2"
+            helper-text="Helper message"
+            counter="true"
+            maxlength="999"
+            name="textarea2"
+          >
+            <div slot="label">Textarea 2 <span class="required-label">(Required) *</span></div>
+            <ion-icon slot="end" name="square-outline"></ion-icon>
+          </ion-textarea>
+
+          <div class="grid">
+            <button type="button" onClick="toggleRequired()">Toggle Required (Textarea 2)</button>
+          </div>
+
+          <p>
+            Click the button above to toggle the required prop on the 2nd textarea and then click the submit button to
+            attempt to submit the form. It should show a popup warning on the 2nd textarea to fill out the field when
+            the textarea is required and empty. When the textarea is not required, or the field is filled, the form
+            should submit by sending a console log. Click the reset button to reset the form and clear the textareas.
+          </p>
+
+          <div class="grid">
+            <button type="submit">Submit</button>
+            <button type="reset" class="reset-button">Reset</button>
+          </div>
+        </form>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const form = document.querySelector('form');
+
+      function onSubmit(event) {
+        event.preventDefault();
+        console.log('Form submitted with values:', getFormData(form));
+        return true;
+      }
+
+      function toggleRequired() {
+        const textarea = document.querySelector('[name="textarea2"]');
+        textarea.required = textarea.required ? false : true;
+        textarea.classList.toggle('textarea-required', textarea.required);
+        console.log('Textarea required set to:', textarea.required);
+      }
+
+      // Helper function to get the form data as a plain object
+      function getFormData(form) {
+        const formData = new FormData(form);
+        // Convert FormData to a plain object for easier inspection
+        const formDataEntries = {};
+        for (const [key, value] of formData.entries()) {
+          formDataEntries[key] = value;
+        }
+        return formDataEntries;
+      }
+    </script>
+  </body>
+</html>

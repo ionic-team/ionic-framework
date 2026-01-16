@@ -157,12 +157,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `
         <style>
-          ion-textarea.custom-textarea.md .textarea-bottom .helper-text {
+          ion-textarea::part(helper-text) {
             font-size: 20px;
             color: green;
           }
         </style>
-        <ion-textarea class="custom-textarea" label="Label" helper-text="Helper text"></ion-textarea>
+        <ion-textarea label="Label" helper-text="Helper text"></ion-textarea>
       `,
         config
       );
@@ -174,12 +174,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `
         <style>
-          ion-textarea.custom-textarea.md .textarea-bottom .error-text {
+          ion-textarea::part(error-text) {
             font-size: 20px;
             color: purple;
           }
         </style>
-        <ion-textarea class="ion-invalid ion-touched custom-textarea" label="Label" error-text="Error text"></ion-textarea>
+        <ion-textarea class="ion-invalid ion-touched" label="Label" error-text="Error text"></ion-textarea>
       `,
         config
       );
@@ -193,11 +193,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `
         <style>
-          ion-textarea.custom-textarea {
+          ion-textarea {
             --highlight-color-invalid: purple;
           }
         </style>
-        <ion-textarea class="ion-invalid ion-touched custom-textarea" label="Label" error-text="Error text"></ion-textarea>
+        <ion-textarea class="ion-invalid ion-touched" label="Label" error-text="Error text"></ion-textarea>
       `,
         config
       );

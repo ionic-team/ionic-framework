@@ -2426,7 +2426,7 @@ ion-text,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "second
 ion-text,prop,mode,"ios" | "md",undefined,false,false
 ion-text,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
-ion-textarea,scoped
+ion-textarea,shadow
 ion-textarea,prop,autoGrow,boolean,false,false,true
 ion-textarea,prop,autocapitalize,string,'none',false,false
 ion-textarea,prop,autofocus,boolean,false,false,false
@@ -2450,7 +2450,7 @@ ion-textarea,prop,mode,"ios" | "md",undefined,false,false
 ion-textarea,prop,name,string,this.inputId,false,false
 ion-textarea,prop,placeholder,string | undefined,undefined,false,false
 ion-textarea,prop,readonly,boolean,false,false,false
-ion-textarea,prop,required,boolean,false,false,false
+ion-textarea,prop,required,boolean,false,false,true
 ion-textarea,prop,rows,number | undefined,undefined,false,false
 ion-textarea,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-textarea,prop,size,"large" | "medium" | "small" | undefined,'medium',false,false
@@ -2518,6 +2518,15 @@ ion-textarea,css-prop,--placeholder-font-weight,md
 ion-textarea,css-prop,--placeholder-opacity,ionic
 ion-textarea,css-prop,--placeholder-opacity,ios
 ion-textarea,css-prop,--placeholder-opacity,md
+ion-textarea,part,bottom
+ion-textarea,part,container
+ion-textarea,part,counter
+ion-textarea,part,error-text
+ion-textarea,part,helper-text
+ion-textarea,part,label
+ion-textarea,part,native
+ion-textarea,part,supporting-text
+ion-textarea,part,wrapper
 
 ion-thumbnail,shadow
 ion-thumbnail,prop,mode,"ios" | "md",undefined,false,false

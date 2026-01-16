@@ -384,6 +384,96 @@ const connectListeners = (doc: Document) => {
       true
     );
 
+    // Listen for keydown events to intercept Tab navigation.
+    // This is needed for Safari and Firefox which may skip focusable
+    // elements or allow focus to escape the overlay.
+    // It also ensures proper focus delegation for shadow DOM elements
+    // like ion-textarea.
+    doc.addEventListener(
+      'keydown',
+      (ev: KeyboardEvent) => {
+        if (ev.key !== 'Tab' && ev.key !== 'Alt+Tab') return;
+
+        const lastOverlay = getPresentedOverlay(
+          doc,
+          'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker-legacy,ion-popover'
+        );
+
+        if (!lastOverlay || lastOverlay.classList.contains(FOCUS_TRAP_DISABLE_CLASS)) return;
+
+        const activeElement = doc.activeElement as HTMLElement | null;
+
+        if (activeElement === lastOverlay) {
+          ev.preventDefault();
+          focusFirstDescendant(lastOverlay);
+          return;
+        }
+
+        // Check if activeElement is inside the overlay (including shadow DOM)
+        const isInsideOverlay = activeElement
+          ? lastOverlay.contains(activeElement) ||
+            (activeElement.getRootNode() instanceof ShadowRoot &&
+              lastOverlay.contains((activeElement.getRootNode() as ShadowRoot).host as HTMLElement)) ||
+            (lastOverlay.shadowRoot?.contains(activeElement) ?? false)
+          : false;
+
+        if (!isInsideOverlay) return;
+
+        // Get all focusable elements from both light and shadow DOM
+        const allFocusable = [
+          ...lastOverlay.querySelectorAll<HTMLElement>(focusableQueryString),
+          ...(lastOverlay.shadowRoot?.querySelectorAll<HTMLElement>(focusableQueryString) || []),
+        ];
+
+        if (allFocusable.length === 0) {
+          ev.preventDefault();
+          return;
+        }
+
+        // Find current element's index (accounting for shadow DOM)
+        const currentIndex = activeElement
+          ? allFocusable.findIndex((el) => {
+              if (el === activeElement) return true;
+              if (el.shadowRoot?.contains(activeElement)) return true;
+              const rootNode = activeElement.getRootNode();
+              return rootNode instanceof ShadowRoot && rootNode.host === el;
+            })
+          : -1;
+
+        ev.preventDefault();
+
+        // Helper to focus an element, handling shadow DOM properly
+        const focusElement = (element: HTMLElement) => {
+          const shadowRoot = element.shadowRoot;
+          if (shadowRoot) {
+            const innerFocusable = shadowRoot.querySelector<HTMLElement>(focusableQueryString);
+            if (innerFocusable && typeof (element as any).setFocus !== 'function') {
+              focusVisibleElement(innerFocusable);
+              return;
+            }
+          }
+          focusVisibleElement(element);
+        };
+
+        if (ev.shiftKey) {
+          // Shift+Tab: previous element, wrap to last if at first
+          if (currentIndex <= 0) {
+            focusLastDescendant(lastOverlay);
+          } else {
+            focusElement(allFocusable[currentIndex - 1]);
+          }
+        } else {
+          // Tab: next element, wrap to first if at last
+          if (currentIndex < 0 || currentIndex >= allFocusable.length - 1) {
+            focusFirstDescendant(lastOverlay);
+          } else {
+            focusElement(allFocusable[currentIndex + 1]);
+          }
+        }
+      },
+      true
+    );
+
     // handle back-button click
     doc.addEventListener('ionBackButton', (ev) => {
       const lastOverlay = getPresentedOverlay(doc);

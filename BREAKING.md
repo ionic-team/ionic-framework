@@ -19,6 +19,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Card](#version-9x-card)
   - [Chip](#version-9x-chip)
   - [Grid](#version-9x-grid)
+  - [Radio Group](#version-9x-radio-group)
+  - [Textarea](#version-9x-textarea)
 
 <h2 id="version-9x-components">Components</h2>
 
@@ -38,15 +40,10 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - The properties `pull` and `push` have been deprecated and no longer work. A similar look can be achieved with the newly added property `order`.
 
-<h4 id="version-9x-radio-group">Radio Group</h4>
-
-- Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).<br/>
-If you were targeting the internals of `ion-radio-group` in your CSS, you will need to target the `supporting-text`, `helper-text` or `error-text` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.<br/>
-Additionally, the `radio-group-wrapper` div element has been removed, causing slotted elements to be direct children of the `ion-radio-group`.
-
 <h5>Example 1: Swap two columns</h5>
 
 **Version up to 8.x**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -57,6 +54,7 @@ Additionally, the `radio-group-wrapper` div element has been removed, causing sl
 </ion-grid>
 ```
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -68,9 +66,11 @@ Additionally, the `radio-group-wrapper` div element has been removed, causing sl
 ```
 
 <h5>Example 2: Reorder columns with specific sizes</h5>
+
 To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `size="3" pull="9"`:
 
 **Version up to 8.x**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -79,7 +79,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -88,7 +90,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 <h5>Example 3: Push</h5>
+
 ```html
 <ion-grid>
   <ion-row>
@@ -102,6 +106,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 </ion-grid>
 ```
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -116,6 +121,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 ```
 
 <h5>Example 4: Push and Pull</h5>
+
 ```html
 <ion-grid>
   <ion-row>
@@ -128,6 +134,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
 ```html
 <ion-grid>
@@ -141,3 +148,17 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
+<h4 id="version-9x-radio-group">Radio Group</h4>
+
+Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+If you were targeting the internals of `ion-radio-group` in your CSS, you will need to target the `supporting-text`, `helper-text` or `error-text` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+
+Additionally, the `radio-group-wrapper` div element has been removed, causing slotted elements to be direct children of the `ion-radio-group`.
+
+<h4 id="version-9x-textarea">Textarea</h4>
+
+Converted `ion-textarea` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+If you were targeting the internals of `ion-textarea` in your CSS, you will need to target the `wrapper`, `container`, `label`, `native`, `supporting-text`, `helper-text`, `error-text`, `counter`, or `bottom` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
