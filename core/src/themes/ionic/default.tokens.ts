@@ -1,20 +1,15 @@
-import * as colorTokens from 'outsystems-design-tokens/tokens/color scheme.json';
-import * as primitiveTokens from 'outsystems-design-tokens/tokens/primitives.json';
-import * as lightTokens from 'outsystems-design-tokens/tokens/theme/light.json';
-import * as typographyTokens from 'outsystems-design-tokens/tokens/typography.json';
-
-import { currentColor, cachedResolveOsToken } from '../../utils/theme';
+import { rgba, currentColor } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
 import { darkTheme } from './dark.tokens';
 import { lightTheme } from './light.tokens';
 
-const tokenMap = {
-  colorTokens,
-  primitiveTokens,
-  lightTokens,
-  typographyTokens,
+const colors = {
+  backgroundColor: 'var(--ion-background-color, #fff)',
+  backgroundColorRgb: 'var(--ion-background-color-rgb, 255, 255, 255)',
+  textColor: 'var(--ion-text-color, #000)',
+  textColorRgb: 'var(--ion-text-color-rgb, 0, 0, 0)',
 };
 
 export const defaultTheme: DefaultTheme = {
@@ -96,26 +91,38 @@ export const defaultTheme: DefaultTheme = {
       cursor: 'auto',
 
       padding: {
-        vertical: primitiveTokens.scale['150'].$value,
-        horizontal: primitiveTokens.scale['200'].$value,
+        vertical: '6px',
+        horizontal: '8px',
       },
 
-      typography: cachedResolveOsToken(typographyTokens.body.sm.medium.$value, tokenMap),
-      lineHeight: primitiveTokens.font['line-height']['full'].$value,
-      gap: cachedResolveOsToken(primitiveTokens.space['100'].$value, tokenMap),
+      lineHeight: '20px',
+      gap: '4px',
+
+      typography: {
+        fontFamily:
+          '-apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+        fontWeight: 500,
+        lineHeight: '20px',
+        fontSize: '12px',
+        letterSpacing: '0%',
+        paragraphSpacing: 20,
+        paragraphIndent: 0,
+        textCase: 'none',
+        textDecoration: 'none',
+      },
 
       // Sizes
       size: {
         small: {
-          minHeight: primitiveTokens.scale['600'].$value,
+          minHeight: '24px',
           font: {
-            size: primitiveTokens.font['font-size']['300'].$value,
+            size: '12px',
           },
         },
         large: {
-          minHeight: primitiveTokens.scale['800'].$value,
+          minHeight: '32px',
           font: {
-            size: primitiveTokens.font['font-size']['350'].$value,
+            size: '14px',
           },
         },
       },
@@ -127,8 +134,8 @@ export const defaultTheme: DefaultTheme = {
         },
         focus: {
           ring: {
-            color: lightTokens.primitives.blue['400'].$value,
-            width: primitiveTokens.scale['050'].$value,
+            color: '#b5c0f7',
+            width: '2px',
           },
         },
       },
@@ -137,17 +144,17 @@ export const defaultTheme: DefaultTheme = {
       shape: {
         soft: {
           border: {
-            radius: primitiveTokens.scale['100'].$value,
+            radius: '4px',
           },
         },
         round: {
           border: {
-            radius: primitiveTokens.scale['400'].$value,
+            radius: '16px',
           },
         },
         rectangular: {
           border: {
-            radius: primitiveTokens.scale['0'].$value,
+            radius: '0px',
           },
         },
       },
@@ -155,8 +162,8 @@ export const defaultTheme: DefaultTheme = {
       // Hues
       hue: {
         bold: {
-          bg: cachedResolveOsToken(colorTokens.bg.neutral.bold.default, tokenMap),
-          color: cachedResolveOsToken(colorTokens.bg.surface.default, tokenMap),
+          bg: rgba(colors.textColorRgb, 0.12),
+          color: rgba(colors.textColorRgb, 0.87),
 
           // Any of the semantic colors like primary, secondary, etc.
           semantic: {
@@ -166,8 +173,8 @@ export const defaultTheme: DefaultTheme = {
         },
 
         subtle: {
-          bg: cachedResolveOsToken(lightTokens.primitives.neutral['100'], tokenMap),
-          color: lightTokens.primitives.neutral['800'].$value,
+          bg: rgba(colors.textColorRgb, 0.05),
+          color: rgba(colors.textColorRgb, 0.6),
 
           semantic: {
             color: currentColor('contrast', null, true), // ADD THIS TO THE COMPONENT SCSS
@@ -181,11 +188,11 @@ export const defaultTheme: DefaultTheme = {
         outline: {
           border: {
             color: {
-              bold: cachedResolveOsToken(colorTokens.text.default, tokenMap),
-              subtle: cachedResolveOsToken(lightTokens.primitives.neutral['300'], tokenMap),
+              bold: rgba(colors.textColorRgb, 0.32),
+              subtle: rgba(colors.textColorRgb, 0.16),
             },
 
-            width: primitiveTokens.scale['025'].$value,
+            width: '1px',
           },
 
           semantic: {
@@ -200,7 +207,7 @@ export const defaultTheme: DefaultTheme = {
       },
 
       icon: {
-        size: primitiveTokens.font['font-size']['400'].$value,
+        size: '16px',
       },
     },
   },
