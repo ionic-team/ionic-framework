@@ -88,7 +88,7 @@ const DEFAULT_PALETTE = 'light';
    * Values can be `light`, `dark`, `high-contrast`,
    * or `high-contrast-dark`. Default to `light` for tests.
    */
-  const validPalettes = [DEFAULT_PALETTE, 'dark', 'high-contrast', 'high-contrast-dark'];
+  const validPalettes = ['light', 'dark', 'high-contrast', 'high-contrast-dark'];
 
   const configDarkMode = window.Ionic?.config?.customTheme?.palette?.dark?.enabled === 'always' ? 'dark' : null;
   const configHighContrastMode = window.Ionic?.config?.customTheme?.palette?.highContrast?.enabled === 'always' ? 'high-contrast' : null;
