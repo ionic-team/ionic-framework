@@ -132,7 +132,6 @@
 .toast-layout-baseline .toast-content {
   display: flex;
 
-  flex: 1;
   flex-direction: column;
   justify-content: center;
 }
@@ -142,6 +141,8 @@
 }
 
 .toast-content {
+  flex: 1;
+
   min-width: 0;
 }
 
