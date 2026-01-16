@@ -24,6 +24,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
+      const inputOtp = page.locator('ion-input-otp');
       const submitButton = page.locator('button[type="submit"]');
       const firstInput = page.locator('ion-input-otp input').first();
 
@@ -34,10 +35,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       // Wait for any async operations to complete
       await page.waitForChanges();
 
-      // Click submit button - form should submit since validation passes
+      // Submit the form and then wait for any async operations to complete
       await submitButton.click();
-
-      // Wait for any async operations to complete
       await page.waitForChanges();
 
       // Verify that the form's validation passed
@@ -46,6 +45,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         return form ? form.checkValidity() : null;
       });
       expect(formValidity).toBe(true);
+
+      // Verify that the input-otp's value is set
+      const inputOtpValue = await inputOtp.evaluate((el: HTMLIonInputOtpElement) => {
+        return el.value ?? '';
+      });
+      expect(inputOtpValue).toBe('1234');
 
       // Verify that the formData is set
       const formData = await page.evaluate(() => {
@@ -95,32 +100,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       // Wait for any async operations to complete
       await page.waitForChanges();
 
-      // Click submit button - form should submit since validation passes
+      // Submit the form and then wait for any async operations to complete
       await submitButton.click();
-
-      // Wait for any async operations to complete
       await page.waitForChanges();
 
-      // Verify that the formData is set
-      let formData = await page.evaluate(() => {
-        const form = document.querySelector('form');
-        if (!form) {
-          return null;
-        }
-        const formData = new FormData(form);
-        const entries: Record<string, string> = {};
-        for (const [key, value] of formData.entries()) {
-          entries[key] = value.toString();
-        }
-        return entries;
-      });
-      expect(formData).toBeDefined();
-      expect(formData?.['otp']).toBe('1234');
-
-      // Click reset button - form should reset
+      // Reset the form and then wait for any async operations to complete
       await resetButton.click();
-
-      // Wait for any async operations to complete
       await page.waitForChanges();
 
       // Verify that the input-otp's value is cleared
@@ -130,7 +115,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(inputOtpValue).toBe('');
 
       // Verify that the formData is cleared
-      formData = await page.evaluate(() => {
+      const formData = await page.evaluate(() => {
         const form = document.querySelector('form');
         if (!form) {
           return null;
