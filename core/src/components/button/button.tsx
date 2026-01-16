@@ -31,9 +31,10 @@ import type { RouterDirection } from '../router/utils/interface';
   shadow: true,
 })
 export class Button implements ComponentInterface, AnchorInterface, ButtonInterface {
+  private inDatetime = false;
   private inItem = false;
   private inListHeader = false;
-  private inToolbar = false;
+  private inButtons = false;
   private formButtonEl: HTMLButtonElement | null = null;
   private formEl: HTMLFormElement | null = null;
   private inheritedAttributes: Attributes = {};
@@ -78,7 +79,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   /**
    * Set to `"clear"` for a transparent button that resembles a flat button, to `"outline"`
    * for a transparent button with a border, or to `"solid"` for a button with a filled background.
-   * The default fill is `"solid"` except inside of a toolbar, where the default is `"clear"`.
+   * The default fill is `"solid"` except when inside of a buttons or datetime component, where
+   * the default fill is `"clear"`.
    */
   @Prop({ reflect: true, mutable: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
 
@@ -217,9 +219,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   }
 
   componentWillLoad() {
-    this.inToolbar = !!this.el.closest('ion-buttons');
-    this.inListHeader = !!this.el.closest('ion-list-header');
-    this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
+    this.inDatetime = hostContext('ion-datetime', this.el);
+    this.inButtons = hostContext('ion-buttons', this.el);
+    this.inListHeader = hostContext('ion-list-header', this.el);
+    this.inItem = hostContext('ion-item', this.el) || hostContext('ion-item-divider', this.el);
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
@@ -234,9 +237,11 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private get rippleType() {
     const hasClearFill = this.fill === undefined || this.fill === 'clear';
 
-    // If the button is in a toolbar, has a clear fill (which is the default)
-    // and only has an icon we use the unbounded "circular" ripple effect
-    if (hasClearFill && this.hasIconOnly && this.inToolbar) {
+    // Use the unbounded "circular" ripple effect if it:
+    // - Has a clear fill (the default)
+    // - Only has an icon and
+    // - Is inside of buttons (used in a toolbar) or a datetime
+    if (hasClearFill && this.hasIconOnly && (this.inButtons || this.inDatetime)) {
       return 'unbounded';
     }
 
@@ -401,7 +406,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           };
     let fill = this.fill;
     if (fill === undefined) {
-      fill = this.inToolbar || this.inListHeader ? 'clear' : 'solid';
+      fill = this.inDatetime || this.inButtons || this.inListHeader ? 'clear' : 'solid';
     }
 
     /**
@@ -427,9 +432,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           [`${buttonType}-${shape}`]: true,
           [`${buttonType}-${fill}`]: true,
           [`${buttonType}-strong`]: strong,
+          'in-datetime': this.inDatetime,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
-          'in-buttons': hostContext('ion-buttons', this.el),
+          'in-buttons': this.inButtons,
           'button-has-icon-only': hasIconOnly,
           'button-has-badge': hasBadge,
           'button-disabled': disabled,
