@@ -132,7 +132,7 @@ const DEFAULT_PALETTE = 'light';
       // TODO(FW-4005): Implement high contrast palette
       } else if (paletteName === 'high-contrast' && theme.palette?.highContrast) {
         theme.palette.highContrast.enabled = 'always';
-      // TODO(FW-4005): Implement high contrast dark mode
+      // TODO(FW-4005): Implement high contrast dark palette
       } else if (paletteName === 'high-contrast-dark' && theme.palette?.highContrastDark) {
         theme.palette.highContrastDark.enabled = 'always';
       }
