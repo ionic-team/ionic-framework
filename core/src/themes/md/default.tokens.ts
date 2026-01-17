@@ -5,13 +5,6 @@ import type { DefaultTheme } from '../themes.interfaces';
 import { darkTheme } from './dark.tokens';
 import { lightTheme } from './light.tokens';
 
-const colors = {
-  backgroundColor: 'var(--ion-background-color, #fff)',
-  backgroundColorRgb: 'var(--ion-background-color-rgb, 255, 255, 255)',
-  textColor: 'var(--ion-text-color, #000)',
-  textColorRgb: 'var(--ion-text-color-rgb, 0, 0, 0)',
-};
-
 const fontSizes = {
   chipBase: 14,
 };
@@ -148,8 +141,8 @@ export const defaultTheme: DefaultTheme = {
       // Hues
       hue: {
         bold: {
-          bg: rgba(colors.textColorRgb, 0.12),
-          color: rgba(colors.textColorRgb, 0.87),
+          bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+          color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.87),
 
           // Any of the semantic colors like primary, secondary, etc.
           semantic: {
@@ -174,22 +167,22 @@ export const defaultTheme: DefaultTheme = {
           // default non-semantic states
           state: {
             focus: {
-              bg: rgba(colors.textColorRgb, 0.16), // default non-semantic focus bg for both hues
+              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16), // default non-semantic focus bg for both hues
             },
 
             activated: {
-              bg: rgba(colors.textColorRgb, 0.2),
+              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.2),
             },
 
             hover: {
-              bg: rgba(colors.textColorRgb, 0.16),
+              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
             },
           },
         },
 
         subtle: {
-          bg: rgba(colors.textColorRgb, 0.05),
-          color: rgba(colors.textColorRgb, 0.6),
+          bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.05),
+          color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.6),
 
           semantic: {
             bg: currentColor('base', null, true),
@@ -213,15 +206,15 @@ export const defaultTheme: DefaultTheme = {
           // default non-semantic states
           state: {
             focus: {
-              bg: rgba(colors.textColorRgb, 0.1),
+              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.1),
             },
 
             activated: {
-              bg: rgba(colors.textColorRgb, 0.14),
+              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.14),
             },
 
             hover: {
-              bg: rgba(colors.textColorRgb, 0.1),
+              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.1),
             },
           },
         },
@@ -234,8 +227,8 @@ export const defaultTheme: DefaultTheme = {
 
           border: {
             color: {
-              bold: rgba(colors.textColorRgb, 0.32),
-              subtle: rgba(colors.textColorRgb, 0.16),
+              bold: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.32),
+              subtle: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
             },
 
             width: 'var(--ion-border-width-xxxs)',
@@ -253,22 +246,22 @@ export const defaultTheme: DefaultTheme = {
           state: {
             focus: {
               bg: {
-                bold: rgba(colors.textColorRgb, 0.04),
-                subtle: rgba(colors.textColorRgb, 0.04),
+                bold: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+                subtle: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
               },
             },
 
             hover: {
               bg: {
-                bold: rgba(colors.textColorRgb, 0.04),
-                subtle: rgba(colors.textColorRgb, 0.04),
+                bold: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+                subtle: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
               },
             },
 
             activated: {
               bg: {
-                bold: rgba(colors.textColorRgb, 0.08),
-                subtle: rgba(colors.textColorRgb, 0.04),
+                bold: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.08),
+                subtle: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
               },
             },
           },
@@ -277,7 +270,7 @@ export const defaultTheme: DefaultTheme = {
 
       icon: {
         size: `${(20 / fontSizes.chipBase).toFixed(2)}em`,
-        color: rgba(colors.textColorRgb, 0.54),
+        color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.54),
 
         firstChild: {
           margin: {

@@ -5,13 +5,6 @@ import type { DefaultTheme } from '../themes.interfaces';
 import { darkTheme } from './dark.tokens';
 import { lightTheme } from './light.tokens';
 
-const colors = {
-  backgroundColor: 'var(--ion-background-color, #fff)',
-  backgroundColorRgb: 'var(--ion-background-color-rgb, 255, 255, 255)',
-  textColor: 'var(--ion-text-color, #000)',
-  textColorRgb: 'var(--ion-text-color-rgb, 0, 0, 0)',
-};
-
 export const defaultTheme: DefaultTheme = {
   ...baseDefaultTheme,
 
@@ -151,8 +144,8 @@ export const defaultTheme: DefaultTheme = {
       // Hues
       hue: {
         bold: {
-          bg: rgba(colors.textColorRgb, 0.12),
-          color: rgba(colors.textColorRgb, 0.87),
+          bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+          color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.87),
 
           // Any of the semantic colors like primary, secondary, etc.
           semantic: {
@@ -162,12 +155,12 @@ export const defaultTheme: DefaultTheme = {
         },
 
         subtle: {
-          bg: rgba(colors.textColorRgb, 0.05),
-          color: rgba(colors.textColorRgb, 0.6),
+          bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.05),
+          color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.6),
 
           semantic: {
-            color: currentColor('contrast', null, true), // ADD THIS TO THE COMPONENT SCSS
-            bg: currentColor('base', null, true), // ADD THIS TO THE COMPONENT SCSS
+            color: currentColor('contrast', null, true),
+            bg: currentColor('base', null, true),
           },
         },
       },
@@ -177,8 +170,8 @@ export const defaultTheme: DefaultTheme = {
         outline: {
           border: {
             color: {
-              bold: rgba(colors.textColorRgb, 0.32),
-              subtle: rgba(colors.textColorRgb, 0.16),
+              bold: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.32),
+              subtle: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
             },
 
             width: '1px',
