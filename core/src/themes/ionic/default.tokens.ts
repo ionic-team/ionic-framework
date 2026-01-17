@@ -96,20 +96,9 @@ export const defaultTheme: DefaultTheme = {
       },
 
       lineHeight: '100%',
+      fontWeight: 500,
+      letterSpacing: '0%',
       gap: 'var(--ion-spacing-xxs)',
-
-      typography: {
-        fontFamily:
-          '-apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-        fontWeight: 500,
-        lineHeight: '20px',
-        fontSize: '12px',
-        letterSpacing: '0%',
-        paragraphSpacing: 20,
-        paragraphIndent: 0,
-        textCase: 'none',
-        textDecoration: 'none',
-      },
 
       // Sizes
       size: {

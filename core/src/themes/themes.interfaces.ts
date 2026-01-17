@@ -270,10 +270,8 @@ type Components = {
 
     gap?: string | number;
     lineHeight?: string | number;
-
-    typography?: {
-      [key: string]: string | number;
-    };
+    fontWeight?: string | number;
+    letterSpacing?: string | number;
 
     // Sizes
     size: {
