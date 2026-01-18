@@ -19,6 +19,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Card](#version-9x-card)
   - [Chip](#version-9x-chip)
   - [Grid](#version-9x-grid)
+  - [Input Otp](#version-9x-input-otp)
   - [Radio Group](#version-9x-radio-group)
   - [Textarea](#version-9x-textarea)
 
@@ -148,6 +149,12 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
+<h4 id="version-9x-input-otp">Input Otp</h4>
+
+Converted `ion-input-otp` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+If you were targeting the internals of `ion-input-otp` in your CSS, you will need to target the `group`, `container`, `native`, `separator` or `description` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
 
 <h4 id="version-9x-radio-group">Radio Group</h4>
 

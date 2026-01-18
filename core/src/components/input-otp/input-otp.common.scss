@@ -94,10 +94,13 @@
   background: var(--background);
   color: var(--color);
 
+  font-family: inherit;
   font-size: inherit;
 
   text-align: center;
   appearance: none;
+
+  box-sizing: border-box;
 }
 
 :host(.has-focus) .native-input {

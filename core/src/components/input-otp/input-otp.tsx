@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Fragment, Host, Prop, State, h, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, Fragment, Host, Prop, State, h, Watch } from '@stencil/core';
+import { reportValidityToElementInternals } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -16,6 +17,16 @@ import type {
   InputOtpInputEventDetail,
 } from './input-otp-interface';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ *
+ * @part group - The container element that wraps all input boxes.
+ * @part container - The wrapper element for each individual input box.
+ * @part native - The native input element.
+ * @part separator - The separator element displayed between input boxes.
+ * @part description - The container element for the description text.
+ */
 @Component({
   tag: 'ion-input-otp',
   styleUrls: {
@@ -23,7 +34,8 @@ import type {
     md: 'input-otp.md.scss',
     ionic: 'input-otp.ionic.scss',
   },
-  scoped: true,
+  shadow: true,
+  formAssociated: true,
 })
 export class InputOTP implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
@@ -47,6 +59,8 @@ export class InputOTP implements ComponentInterface {
 
   @Element() el!: HTMLIonInputOtpElement;
 
+  @AttachInternals() internals!: ElementInternals;
+
   @State() private inputValues: string[] = [];
   @State() hasFocus = false;
   @State() private previousInputValues: string[] = [];
@@ -68,6 +82,14 @@ export class InputOTP implements ComponentInterface {
    * If `true`, the user cannot interact with the input.
    */
   @Prop({ reflect: true }) disabled = false;
+
+  /**
+   * Update element internals when disabled prop changes
+   */
+  @Watch('disabled')
+  protected disabledChanged() {
+    this.updateElementInternals();
+  }
 
   /**
    * The fill for the input boxes. If `"solid"` the input boxes will have a background. If
@@ -197,6 +219,7 @@ export class InputOTP implements ComponentInterface {
   valueChanged() {
     this.initializeValues();
     this.updateTabIndexes();
+    this.updateElementInternals();
   }
 
   /**
@@ -272,6 +295,7 @@ export class InputOTP implements ComponentInterface {
 
   componentDidLoad() {
     this.updateTabIndexes();
+    this.updateElementInternals();
   }
 
   /**
@@ -354,6 +378,42 @@ export class InputOTP implements ComponentInterface {
     if (newValue.length === length) {
       this.ionComplete.emit({ value: newValue });
     }
+  }
+
+  /**
+   * Gets the value of the input group as a string for form submission.
+   * Returns an empty string if the value is null or undefined.
+   */
+  private getValue(): string {
+    return this.value != null ? this.value.toString() : '';
+  }
+
+  /**
+   * Called when the form is reset.
+   * Resets the component's value.
+   */
+  formResetCallback() {
+    this.value = '';
+  }
+
+  /**
+   * Updates the form value and reports validity state to the browser via
+   * ElementInternals. This should be called when the component loads, when
+   * the required prop changes, when the disabled prop changes, and when the value
+   * changes to ensure the form value stays in sync and validation state is updated.
+   */
+  private updateElementInternals() {
+    // Disabled form controls should not be included in form data
+    // Pass null to setFormValue when disabled to exclude it from form submission
+    const value = this.disabled ? null : this.getValue();
+    // ElementInternals may not be fully available in test environments
+    // so we need to check if the method exists before calling it
+    if (typeof this.internals.setFormValue === 'function') {
+      this.internals.setFormValue(value);
+    }
+    // Use the first input element for validity reporting since all inputs
+    // share the same validation state
+    reportValidityToElementInternals(this.inputRefs[0] ?? null, this.internals);
   }
 
   /**
@@ -817,12 +877,19 @@ export class InputOTP implements ComponentInterface {
           'input-otp-readonly': readonly,
         })}
       >
-        <div role="group" aria-label="One-time password input" class="input-otp-group" {...inheritedAttributes}>
+        <div
+          role="group"
+          aria-label="One-time password input"
+          class="input-otp-group"
+          part="group"
+          {...inheritedAttributes}
+        >
           {Array.from({ length }).map((_, index) => (
             <>
-              <div class="native-wrapper">
+              <div class="native-wrapper" part="container">
                 <input
                   class="native-input"
+                  part="native"
                   id={`${inputId}-${index}`}
                   aria-label={`Input ${index + 1} of ${length}`}
                   type="text"
@@ -842,7 +909,7 @@ export class InputOTP implements ComponentInterface {
                   onPaste={this.onPaste}
                 />
               </div>
-              {this.showSeparator(index) && <div class="input-otp-separator" />}
+              {this.showSeparator(index) && <div class="input-otp-separator" part="separator" />}
             </>
           ))}
         </div>
@@ -851,6 +918,7 @@ export class InputOTP implements ComponentInterface {
             'input-otp-description': true,
             'input-otp-description-hidden': !hasDescription,
           }}
+          part="description"
         >
           <slot></slot>
         </div>
