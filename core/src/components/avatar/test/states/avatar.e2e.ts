@@ -13,6 +13,9 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
         <div id="container"> 
           <ion-avatar disabled> AV </ion-avatar>
           <ion-avatar disabled>
+            <ion-icon name="person-outline"></ion-icon>
+          </ion-avatar>
+          <ion-avatar disabled>
             <img src="/src/components/avatar/test/avatar.svg" />
           </ion-avatar>
         </div> 

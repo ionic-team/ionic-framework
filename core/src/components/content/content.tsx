@@ -257,6 +257,17 @@ export class Content implements ComponentInterface {
     }
   }
 
+  /**
+   * Recalculate content dimensions. Called by overlays (e.g., popover) when
+   * sibling elements like headers or footers have finished rendering and their
+   * heights are available, ensuring accurate offset-top calculations.
+   * @internal
+   */
+  @Method()
+  async recalculateDimensions(): Promise<void> {
+    readTask(() => this.readDimensions());
+  }
+
   private readDimensions() {
     const page = getPageElement(this.el);
     const top = Math.max(this.el.offsetTop, 0);
