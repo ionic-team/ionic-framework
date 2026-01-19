@@ -1,34 +1,21 @@
 export type IonChip = {
-  margin: string | number;
   cursor?: string;
+  margin: string | number;
+
+  fontWeight?: string | number;
+  gap?: string | number;
+  lineHeight?: string | number;
+  letterSpacing?: string | number;
 
   padding?: {
     vertical: string | number;
     horizontal: string | number;
   };
 
-  gap?: string | number;
-  lineHeight?: string | number;
-  fontWeight?: string | number;
-  letterSpacing?: string | number;
-
   // Sizes
   size: {
-    small: {
-      minHeight: string | number;
-
-      font: {
-        size: string | number;
-      };
-    };
-
-    large: {
-      minHeight: string | number;
-
-      font: {
-        size: string | number;
-      };
-    };
+    small: IonChipSizeDefinition;
+    large: IonChipSizeDefinition;
   };
 
   // States
@@ -47,104 +34,15 @@ export type IonChip = {
 
   // Shapes
   shape: {
-    soft: {
-      border: {
-        radius: string | number;
-      };
-    };
-
-    round: {
-      border: {
-        radius: string | number;
-      };
-    };
-
-    rectangular: {
-      border: {
-        radius: string | number;
-      };
-    };
+    soft: IonChipShapeDefinition;
+    round: IonChipShapeDefinition;
+    rectangular: IonChipShapeDefinition;
   };
 
   // Hues
   hue: {
-    bold: {
-      bg: string;
-      color: string;
-
-      // Any of the semantic colors like primary, secondary, etc.
-      semantic: {
-        bg?: string;
-        color?: string;
-
-        state?: {
-          focus?: {
-            bg?: string;
-          };
-
-          hover?: {
-            bg?: string;
-          };
-
-          activated?: {
-            bg?: string;
-          };
-        };
-      };
-
-      state?: {
-        focus?: {
-          bg?: string;
-        };
-
-        activated?: {
-          bg: string;
-        };
-
-        hover?: {
-          bg: string;
-        };
-      };
-    };
-
-    subtle: {
-      bg: string;
-      color: string;
-
-      // Any of the semantic colors like primary, secondary, etc.
-      semantic?: {
-        bg?: string;
-        color?: string;
-
-        state?: {
-          focus?: {
-            bg?: string;
-          };
-
-          hover?: {
-            bg?: string;
-          };
-
-          activated?: {
-            bg?: string;
-          };
-        };
-      };
-
-      state?: {
-        focus?: {
-          bg?: string;
-        };
-
-        activated?: {
-          bg: string;
-        };
-
-        hover?: {
-          bg: string;
-        };
-      };
-    };
+    bold: IonChipHueDefinition;
+    subtle: IonChipHueDefinition;
   };
 
   // Variants
@@ -154,96 +52,102 @@ export type IonChip = {
       bg?: string;
 
       border: {
-        color?: {
-          bold?: string;
-          subtle?: string;
-        };
-
+        color?: HueRef;
         width?: string | number;
       };
 
       // Any of the semantic colors like primary, secondary, etc.
       semantic?: {
-        bg?: {
-          bold?: string;
-          subtle?: string;
-        };
+        bg?: HueRef;
 
         border?: {
-          color?: {
-            bold?: string;
-            subtle?: string;
-          };
+          color?: HueRef;
         };
       };
 
-      state?: {
-        focus?: {
-          bg?: {
-            bold?: string;
-            subtle?: string;
-          };
-        };
-
-        hover?: {
-          bg?: {
-            bold?: string;
-            subtle?: string;
-          };
-        };
-
-        activated?: {
-          bg?: {
-            bold?: string;
-            subtle?: string;
-          };
-        };
-      };
+      state?: IonChipVariantState;
     };
   };
 
-  icon: {
+  icon: IonChipIconDefinition;
+  avatar?: IonChipMediaDefinition;
+};
+
+type IonChipSizeDefinition = {
+  minHeight: string | number;
+
+  font: {
     size: string | number;
+  };
+};
+
+type IonChipShapeDefinition = {
+  border: {
+    radius: string | number;
+  };
+};
+
+type IonChipHueDefinition = {
+  bg: string;
+  color: string;
+
+  semantic?: {
+    bg?: string;
     color?: string;
-
-    // Styles for the ion-icon only if it is the first element in the slot
-    firstChild?: {
-      margin?: {
-        vertical?: string | number;
-        start?: string | number;
-        end?: string | number;
-      };
-    };
-
-    // Styles for the ion-icon only if it is the last element in the slot
-    lastChild?: {
-      margin?: {
-        vertical?: string | number;
-        start?: string | number;
-        end?: string | number;
-      };
-    };
+    state?: IonChipInteractionStates;
   };
 
-  avatar?: {
-    size: string | number | null;
+  state?: IonChipInteractionStates;
+};
 
-    // Styles for the ion-avatar only if it is the first element in the slot
-    firstChild?: {
-      margin?: {
-        vertical?: string | number;
-        start?: string | number;
-        end?: string | number;
-      };
-    };
-
-    // Styles for the ion-avatar only if it is the last element in the slot
-    lastChild?: {
-      margin?: {
-        vertical?: string | number;
-        start?: string | number;
-        end?: string | number;
-      };
-    };
+type IonChipInteractionStates = {
+  focus?: {
+    bg?: string;
   };
+
+  hover?: {
+    bg?: string;
+  };
+
+  activated?: {
+    bg?: string;
+  };
+};
+
+type IonChipVariantState = {
+  focus?: {
+    bg?: HueRef;
+  };
+  hover?: {
+    bg?: HueRef;
+  };
+  activated?: {
+    bg?: HueRef;
+  };
+};
+
+type HueRef = {
+  bold?: string;
+  subtle?: string;
+};
+
+type IonChipMediaDefinition = {
+  size: string | number;
+
+  // Styles for the media component only if it is the first element in the slot
+  firstChild?: IonChipMediaMargin;
+  // Styles for the media component only if it is the last element in the slot
+  lastChild?: IonChipMediaMargin;
+};
+
+type IonChipMediaMargin = {
+  margin?: {
+    vertical?: string | number;
+    start?: string | number;
+    end?: string | number;
+  };
+};
+
+type IonChipIconDefinition = IonChipMediaDefinition & {
+  color?: string;
 };
