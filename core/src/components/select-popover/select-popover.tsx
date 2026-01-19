@@ -159,12 +159,20 @@ export class SelectPopover implements ComponentInterface {
               value={option.value}
               disabled={option.disabled}
               onClick={() => this.dismissParentPopover()}
+              onKeyDown={(ev) => {
+                if (ev.key === 'Enter') {
+                  /**
+                   * Selecting a radio option with keyboard navigation,
+                   * Enter key should dismiss the popover.
+                   */
+                  this.dismissParentPopover();
+                }
+              }}
               onKeyUp={(ev) => {
                 if (ev.key === ' ') {
                   /**
                    * Selecting a radio option with keyboard navigation,
-                   * either through the Enter or Space keys, should
-                   * dismiss the popover.
+                   * Space key should dismiss the popover.
                    */
                   this.dismissParentPopover();
                 }
