@@ -1,7 +1,7 @@
 import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
 import { isIonContent, findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import { createGesture } from '@utils/gesture';
-import { clamp, getElementRoot } from '@utils/helpers';
+import { clamp, getElementRoot, raf } from '@utils/helpers';
 import { OVERLAY_GESTURE_PRIORITY } from '@utils/overlays';
 
 import type { Animation } from '../../../interface';
@@ -140,6 +140,14 @@ export const createSwipeToCloseGesture = (
     if (deltaY > 0 && contentEl) {
       disableContentScrollY(contentEl);
     }
+
+    raf(() => {
+      /**
+       * Dismisses the open keyboard when the card drag gesture is started.
+       * Sets the focus onto the modal element.
+       */
+      el.focus();
+    });
 
     animation.progressStart(true, isOpen ? 1 : 0);
   };
