@@ -1018,6 +1018,7 @@ ion-list-header,css-prop,--color,ios
 ion-list-header,css-prop,--color,md
 ion-list-header,css-prop,--inner-border-width,ios
 ion-list-header,css-prop,--inner-border-width,md
+ion-list-header,part,inner
 
 ion-loading,scoped
 ion-loading,prop,animated,boolean,true,false,false
