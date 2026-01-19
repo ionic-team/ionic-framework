@@ -13,5 +13,33 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       await expect(page).toHaveScreenshot(screenshot(`content-fullscreen`));
     });
+
+    test('should have content-fullscreen class when fullscreen is true', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-content fullscreen>
+          <p>Hello</p>
+        </ion-content>
+      `,
+        config
+      );
+
+      const content = page.locator('ion-content');
+      await expect(content).toHaveClass(/content-fullscreen/);
+    });
+
+    test('should not have content-fullscreen class when fullscreen is false', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-content>
+          <p>Hello</p>
+        </ion-content>
+      `,
+        config
+      );
+
+      const content = page.locator('ion-content');
+      await expect(content).not.toHaveClass(/content-fullscreen/);
+    });
   });
 });
