@@ -974,6 +974,8 @@ ion-item-option,css-prop,--background,ios
 ion-item-option,css-prop,--background,md
 ion-item-option,css-prop,--color,ios
 ion-item-option,css-prop,--color,md
+ion-item-option,part,container
+ion-item-option,part,inner
 ion-item-option,part,native
 
 ion-item-options,none

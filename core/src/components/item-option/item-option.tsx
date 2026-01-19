@@ -17,6 +17,8 @@ import type { Color } from '../../interface';
  * @slot end - Content is placed to the right of the option text in LTR, and to the left in RTL.
  *
  * @part native - The native HTML button or anchor element that wraps all child elements.
+ * @part inner - The inner container element that wraps the option content.
+ * @part container - The container element that wraps the start, icon-only, default, and end slots.
  */
 @Component({
   tag: 'ion-item-option',
@@ -109,9 +111,9 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
         })}
       >
         <TagType {...attrs} class="button-native" part="native" disabled={disabled}>
-          <span class="button-inner">
+          <span class="button-inner" part="inner">
             <slot name="top"></slot>
-            <div class="horizontal-wrapper">
+            <div class="horizontal-wrapper" part="container">
               <slot name="start"></slot>
               <slot name="icon-only"></slot>
               <slot></slot>
