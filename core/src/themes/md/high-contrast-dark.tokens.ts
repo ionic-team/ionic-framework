@@ -12,25 +12,11 @@ export const highContrastDarkTheme: HighContrastDarkTheme = {
     background: '#1f1f1f',
   },
 
-  backgroundColorStep: {
-    50: '#1e1e1e',
-    100: '#2a2a2a',
-    150: '#363636',
-    200: '#414141',
-    250: '#4d4d4d',
-    300: '#595959',
-    350: '#656565',
-    400: '#717171',
-    450: '#7d7d7d',
-    500: '#898989',
-    550: '#949494',
-    600: '#a0a0a0',
-    650: '#acacac',
-    700: '#b8b8b8',
-    750: '#c4c4c4',
-    800: '#d0d0d0',
-    850: '#dbdbdb',
-    900: '#e7e7e7',
-    950: '#f3f3f3',
+  components: {
+    IonItem: {
+      /// Only the item borders should increase in contrast
+      /// Borders for elements like toolbars should remain the same
+      borderColor: 'var(--ion-color-gray-400)',
+    },
   },
 };
