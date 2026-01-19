@@ -957,6 +957,8 @@ ion-item-divider,css-prop,--padding-start,ios
 ion-item-divider,css-prop,--padding-start,md
 ion-item-divider,css-prop,--padding-top,ios
 ion-item-divider,css-prop,--padding-top,md
+ion-item-divider,part,content
+ion-item-divider,part,inner
 
 ion-item-group,none
 
