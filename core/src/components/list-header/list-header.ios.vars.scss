@@ -17,7 +17,7 @@ $list-header-ios-font-weight: 700;
 $list-header-ios-letter-spacing: 0;
 
 /// @prop - Text color of the list header
-$list-header-ios-color: $text-color-step-150;
+$list-header-ios-color: var(--ion-color-text-850);
 
 /// @prop - Background color of the list header
 $list-header-ios-background-color: transparent;

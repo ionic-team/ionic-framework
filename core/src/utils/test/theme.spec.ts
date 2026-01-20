@@ -497,11 +497,11 @@ describe('generateGlobalThemeCSS', () => {
     expect(css).toContain('--ion-border-width-sm: 4px');
     expect(css).toContain('--ion-spacing-md: 12px');
 
-    // Should NOT include component variables
-    expect(css).not.toContain('--ion-components-ion-chip-hue-subtle-bg');
-    expect(css).not.toContain('--ion-components-ion-chip-shape-round-border-radius');
-    expect(css).not.toContain('--ion-components-ion-button-color-primary-bg');
-    expect(css).not.toContain('components');
+    // Should include component variables
+    expect(css).toContain('--ion-components-ion-chip-hue-subtle-bg');
+    expect(css).toContain('--ion-components-ion-chip-shape-round-border-radius');
+    expect(css).toContain('--ion-components-ion-button-color-primary-bg');
+    expect(css).toContain('components');
 
     // Should NOT include palette variables
     expect(css).not.toContain('--ion-color-palette-dark-enabled-never');

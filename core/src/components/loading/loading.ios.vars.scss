@@ -43,7 +43,7 @@ $loading-ios-translucent-background-color: rgba($background-color-rgb, $loading-
 $loading-ios-content-font-weight: bold;
 
 /// @prop - Color of the loading spinner
-$loading-ios-spinner-color: $text-color-step-400;
+$loading-ios-spinner-color: var(--ion-color-text-600);
 
 /// @prop - Filter of the translucent loading
 $loading-ios-translucent-filter: saturate(180%) blur(20px);

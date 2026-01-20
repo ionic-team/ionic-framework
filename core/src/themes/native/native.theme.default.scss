@@ -181,4 +181,4 @@ $text-color-step-950: var(
 
 // Default General Colors
 // --------------------------------------------------
-$placeholder-text-color: var(--ion-placeholder-color, $text-color-step-600);
+$placeholder-text-color: var(--ion-placeholder-color, var(--ion-color-text-400));

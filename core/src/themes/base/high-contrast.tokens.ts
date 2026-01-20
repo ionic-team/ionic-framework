@@ -1,4 +1,4 @@
-import { mix } from '../../utils/theme';
+import { generateColorSteps, mix } from '../../utils/theme';
 import type { HighContrastTheme } from '../themes.interfaces';
 
 const colors = {
@@ -160,6 +160,8 @@ export const highContrastTheme: HighContrastTheme = {
         tint: mix('#fff', colors.dark, '4%'),
       },
     },
+
+    text: generateColorSteps('#888888', '#000000'),
   },
 
   backgroundColor: '#ffffff',

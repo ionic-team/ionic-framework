@@ -8,7 +8,7 @@
 :host {
   --background: #{ion-color(light, base)};
   --background-rgb: #{ion-color(light, base, null, true)};
-  --title-color: #{$text-color-step-400};
+  --title-color: var(--ion-color-text-600);
 }
 
 :host(.datetime-presentation-date-time:not(.datetime-prefer-wheel)),
@@ -22,7 +22,7 @@
 :host .datetime-header {
   @include padding($datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding);
 
-  border-bottom: $datetime-ios-border-color;
+  border-bottom: $datetime-ios-border;
 
   font-size: dynamic-font-max(14px, 1.6);
 }
@@ -72,7 +72,7 @@
 :host .calendar-days-of-week {
   @include padding(0, $datetime-ios-padding * 0.5, 0, $datetime-ios-padding * 0.5);
 
-  color: $text-color-step-700;
+  color: var(--ion-color-text-300);
 
   font-size: dynamic-font-max(12px, 1.6);
 
@@ -280,7 +280,7 @@
 }
 
 :host .calendar-day.calendar-day-adjacent-day {
-  color: $text-color-step-700;
+  color: var(--ion-color-text-300);
 }
 
 // Time / Header
@@ -305,7 +305,7 @@
     $datetime-ios-padding * 0.5
   );
 
-  border-top: $datetime-ios-border-color;
+  border-top: $datetime-ios-border;
 }
 
 :host .datetime-buttons ::slotted(ion-buttons),

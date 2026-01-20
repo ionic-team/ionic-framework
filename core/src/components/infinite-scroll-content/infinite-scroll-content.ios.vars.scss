@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Color of the infinite scroll loading indicator
-$infinite-scroll-ios-loading-color: $text-color-step-400;
+$infinite-scroll-ios-loading-color: var(--ion-color-text-600);
 
 /// @prop - Color of the infinite scroll loading indicator text
 $infinite-scroll-ios-loading-text-color: $infinite-scroll-ios-loading-color;

@@ -1,6 +1,7 @@
 import { printIonWarning } from '@utils/logging';
 
 import type { Color, CssClassMap } from '../interface';
+import type { NumberStringKeys } from '../themes/themes.interfaces';
 
 import { deepMerge } from './helpers';
 
@@ -274,9 +275,9 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     return '';
   }
 
-  // Exclude components and palette from the default tokens
+  // Exclude palette from the default tokens
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { palette, components, ...defaultTokens } = theme;
+  const { palette, ...defaultTokens } = theme;
 
   // Generate CSS variables for the default design tokens
   const defaultTokensCSS = generateCSSVars(defaultTokens);
@@ -404,6 +405,7 @@ export const applyGlobalTheme = (baseTheme: any, userTheme?: any): any => {
 
   // Merge themes and apply
   const mergedTheme = deepMerge(baseTheme, userTheme);
+
   injectCSS(generateGlobalThemeCSS(mergedTheme));
   return mergedTheme;
 };
@@ -524,4 +526,38 @@ export const mix = (baseColor: string, mixColor: string, weight: string): string
 
   const toHex = (n: number) => n.toString(16).padStart(2, '0');
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+};
+
+/**
+ * Generates a color scale object by mixing a light and dark color.
+ *
+ * This function creates ten distinct shade levels (50, 100, 150, ..., 950)
+ * by mixing the light color into the dark color using mix percentages
+ * that increment in steps of 5%.
+ *
+ * The final output is an object where keys are the shade levels (50-950)
+ * and values are the resulting mixed hex codes.
+ *
+ * @param {string} lightColor - The lighter base color hex value.
+ * @param {string} darkColor - The darker base color hex value.
+ * @param {boolean} isInverted - If true, generates the scale in reverse (dark to light).
+ * @returns {NumberStringKeys} An object of color shades.
+ *
+ * @example
+ * mix('#ffffff', '#000000', 5%) results in the color for key '50'
+ * mix('#ffffff', '#000000', 95%) results in the color for key '950'
+ */
+export const generateColorSteps = (lightColor: string, darkColor: string, isInverted = false): NumberStringKeys => {
+  const colorSteps: NumberStringKeys = {
+    0: isInverted ? darkColor : lightColor,
+    1000: isInverted ? lightColor : darkColor,
+  };
+
+  for (let i = 50; i <= 950; i += 50) {
+    const weight = isInverted ? `${100 - i / 10}%` : `${i / 10}%`;
+
+    colorSteps[i.toString() as keyof NumberStringKeys] = mix(lightColor, darkColor, weight);
+  }
+
+  return colorSteps;
 };

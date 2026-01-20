@@ -1,5 +1,7 @@
-import { mix } from '../../utils/theme';
+import { generateColorSteps, mix } from '../../utils/theme';
 import type { HighContrastDarkTheme } from '../themes.interfaces';
+
+import { colors as baseDarkColors } from './dark.tokens';
 
 const colors = {
   primary: '#7cabff',
@@ -11,6 +13,7 @@ const colors = {
   light: '#222428',
   medium: '#a8aab3',
   dark: '#f4f5f8',
+  gray: baseDarkColors.gray,
 };
 
 export const highContrastDarkTheme: HighContrastDarkTheme = {
@@ -160,6 +163,9 @@ export const highContrastDarkTheme: HighContrastDarkTheme = {
         tint: mix('#fff', colors.dark, '4%'),
       },
     },
+
+    gray: colors.gray,
+    text: generateColorSteps('#ffffff', '#888888', true),
   },
 
   backgroundColor: '#000000',

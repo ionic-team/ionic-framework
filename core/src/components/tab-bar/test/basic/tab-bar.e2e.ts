@@ -13,36 +13,44 @@ configs({ modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, conf
           .ionic {
             --ion-background-color: #ccc7c7;
           }
+
+          #container {
+            padding-top: 2px;
+          }
         </style>
 
-        <ion-tab-bar selected-tab="2">
-          <ion-tab-button tab="1">
-            <ion-icon name="home-outline"></ion-icon>
-            <ion-label>Label</ion-label>
-          </ion-tab-button>
+        <div id="container" class="ionic">
+          <ion-tab-bar selected-tab="2">
+            <ion-tab-button tab="1">
+              <ion-icon name="home-outline"></ion-icon>
+              <ion-label>Label</ion-label>
+            </ion-tab-button>
 
-          <ion-tab-button tab="2">
-            <ion-icon name="home-outline"></ion-icon>
-            <ion-label>Label</ion-label>
-          </ion-tab-button>
+            <ion-tab-button tab="2">
+              <ion-icon name="home-outline"></ion-icon>
+              <ion-label>Label</ion-label>
+            </ion-tab-button>
 
-          <ion-tab-button tab="3" class="ion-focused">
-            <ion-icon name="home-outline"></ion-icon>
-            <ion-label>Label</ion-label>
-          </ion-tab-button>
+            <ion-tab-button tab="3" class="ion-focused">
+              <ion-icon name="home-outline"></ion-icon>
+              <ion-label>Label</ion-label>
+            </ion-tab-button>
 
-          <ion-tab-button tab="4" class="ion-activated">
-            <ion-icon name="home-outline"></ion-icon>
-            <ion-label>Label</ion-label>
-          </ion-tab-button>
-        </ion-tab-bar>
+            <ion-tab-button tab="4" class="ion-activated">
+              <ion-icon name="home-outline"></ion-icon>
+              <ion-label>Label</ion-label>
+            </ion-tab-button>
+          </ion-tab-bar>
+        </div>
       `,
         config
       );
 
-      const tabBar = page.locator('ion-tab-bar');
+      // The border top is not being captured in the screenshot
+      // so we need padding on a container to make sure it's visible
+      const container = page.locator('#container');
 
-      await expect(tabBar).toHaveScreenshot(screenshot(`tab-bar-default`));
+      await expect(container).toHaveScreenshot(screenshot(`tab-bar-default`));
     });
   });
 });
@@ -63,29 +71,37 @@ configs().forEach(({ title, screenshot, config }) => {
               --ion-safe-area-left: 40px;
               --ion-safe-area-right: 20px;
             }
+
+            #container {
+              padding-top: 2px;
+            }
           </style>
 
-          <ion-tab-bar selected-tab="1">
-            <ion-tab-button tab="1">
-              <ion-label>Recents</ion-label>
-            </ion-tab-button>
+          <div id="container">
+            <ion-tab-bar selected-tab="1">
+              <ion-tab-button tab="1">
+                <ion-label>Recents</ion-label>
+              </ion-tab-button>
 
-            <ion-tab-button tab="2">
-              <ion-label>Favorites</ion-label>
-              <ion-badge>23</ion-badge>
-            </ion-tab-button>
+              <ion-tab-button tab="2">
+                <ion-label>Favorites</ion-label>
+                <ion-badge>23</ion-badge>
+              </ion-tab-button>
 
-            <ion-tab-button tab="3">
-              <ion-label>Settings</ion-label>
-            </ion-tab-button>
-          </ion-tab-bar>
+              <ion-tab-button tab="3">
+                <ion-label>Settings</ion-label>
+              </ion-tab-button>
+            </ion-tab-bar>
+          </div>
         `,
           config
         );
 
-        const tabBar = page.locator('ion-tab-bar');
+        // The border top is not being captured in the screenshot
+        // so we need padding on a container to make sure it's visible
+        const container = page.locator('#container');
 
-        await expect(tabBar).toHaveScreenshot(screenshot(`tab-bar-safe-area`));
+        await expect(container).toHaveScreenshot(screenshot(`tab-bar-safe-area`));
       });
     });
   });

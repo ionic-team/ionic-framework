@@ -4,8 +4,8 @@
 // ----------------------------------------------------------------
 
 :host(.select-fill-solid) {
-  --background: #{$background-color-step-50};
-  --border-color: #{$background-color-step-500};
+  --background: var(--ion-color-gray-50);
+  --border-color: var(--ion-color-gray-500);
   --border-radius: 4px;
   --padding-start: 16px;
   --padding-end: 16px;
@@ -47,8 +47,8 @@
  */
 @media (any-hover: hover) {
   :host(.select-fill-solid:hover) {
-    --background: #{$background-color-step-100};
-    --border-color: #{$background-color-step-750};
+    --background: var(--ion-color-gray-100);
+    --border-color: var(--ion-color-gray-750);
   }
 }
 
@@ -58,7 +58,7 @@
  */
 :host(.select-fill-solid.select-expanded),
 :host(.select-fill-solid.has-focus) {
-  --background: #{$background-color-step-150};
+  --background: var(--ion-color-gray-150);
   --border-color: var(--highlight-color);
 }
 

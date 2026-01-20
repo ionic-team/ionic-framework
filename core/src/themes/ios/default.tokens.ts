@@ -20,6 +20,10 @@ export const defaultTheme: DefaultTheme = {
 
   fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif',
 
+  color: {
+    'overlay-bg': 'var(--ion-overlay-background-color, var(--ion-color-gray-100))',
+  },
+
   spacing: {
     xxxxs: 'var(--ion-spacing-25)',
     xxxs: 'var(--ion-spacing-50)',
@@ -74,5 +78,53 @@ export const defaultTheme: DefaultTheme = {
     xxl: 'var(--ion-radii-400)',
     xxxl: 'var(--ion-radii-500)',
     xxxxl: 'var(--ion-radii-full)',
+  },
+  components: {
+    IonActionSheet: {
+      buttonColorDisabled: 'var(--ion-color-gray-850)',
+      buttonBgSelected: 'var(--ion-color-gray-150)',
+    },
+    IonBreadcrumb: {
+      color: 'var(--ion-color-text-850)',
+      bgFocused: 'var(--ion-color-gray-50)',
+      iconColor: 'var(--ion-color-text-400)',
+      iconColorActive: 'var(--ion-color-text-850)',
+      iconColorFocused: 'var(--ion-color-text-750)',
+      indicatorBg: 'var(--ion-color-gray-100)',
+      indicatorBgFocused: 'var(--ion-color-gray-150)',
+      separatorColor: 'var(--ion-color-text-550)',
+    },
+    IonDatetime: {
+      bg: 'var(--ion-color-gray-950)',
+      timeBodyBg: 'var(--ion-color-gray-300)',
+    },
+    IonItem: {
+      paragraphTextColor: 'var(--ion-color-text-450)',
+      borderColor: 'var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-gray-250)))',
+    },
+    IonModal: {
+      handleBg: 'var(--ion-color-gray-350)',
+    },
+    IonPicker: {
+      highlightBg: 'var(--ion-color-text-150)',
+    },
+    IonRange: {
+      bg: 'var(--ion-color-gray-900)',
+    },
+    IonRefresher: {
+      nativeSpinnerColor: 'var(--ion-color-gray-450)',
+    },
+    IonSegmentButton: {
+      checkedIndicatorBg: 'var(--ion-color-gray-350)',
+    },
+    IonTabBar: {
+      bg: 'var(--ion-tab-bar-background-color, var(--ion-color-gray-50))',
+      borderColor: 'var(--ion-border-color, var(--ion-color-gray-150))',
+    },
+    IonToolbar: {
+      activatedButtonColor: 'var(--ion-toolbar-background, var(--background), ion-color(primary, contrast))',
+      bg: 'var(--ion-color-gray-50)',
+      borderColor: 'var(--ion-border-color, var(--ion-color-gray-150))',
+    },
   },
 };

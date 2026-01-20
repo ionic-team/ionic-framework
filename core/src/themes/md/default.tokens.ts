@@ -80,4 +80,42 @@ export const defaultTheme: DefaultTheme = {
     xxxl: 'var(--ion-radii-900)',
     xxxxl: 'var(--ion-radii-full)',
   },
+
+  components: {
+    IonBreadcrumb: {
+      color: 'var(--ion-color-text-600)',
+      colorFocused: 'var(--ion-color-text-800)',
+      iconColor: 'var(--ion-color-text-550)',
+      iconColorActive: 'var(--ion-color-text-850)',
+      bgFocused: 'var(--ion-color-gray-50)',
+      indicatorBg: 'var(--ion-color-gray-100)',
+      indicatorBgFocused: 'var(--ion-color-gray-150)',
+      separatorColor: 'var(--ion-color-gray-550)',
+    },
+    IonDatetime: {
+      bg: 'var(--ion-color-gray-100)',
+      timeBodyBg: 'var(--ion-color-gray-300)',
+    },
+    IonDatetimeButton: {
+      bg: 'var(--ion-color-gray-300)',
+    },
+    IonItem: {
+      borderColor: 'var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-gray-150)))',
+    },
+    IonModal: {
+      handleBg: 'var(--ion-color-gray-350)',
+    },
+    IonRefresher: {
+      nativeSpinnerBorder: 'var(--ion-color-gray-200)',
+      nativeSpinnerBg: 'var(--ion-color-gray-250)',
+    },
+    IonTabBar: {
+      borderColor: 'var(--ion-border-color, var(--ion-color-gray-150))',
+    },
+    IonToolbar: {
+      activatedButtonBg: 'var(--ion-toolbar-background, var(--color))',
+      bg: '#1f1f1f',
+      borderColor: 'var(--ion-border-color, var(--ion-color-gray-150))',
+    },
+  },
 };
