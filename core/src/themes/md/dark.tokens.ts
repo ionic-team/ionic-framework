@@ -21,7 +21,6 @@ export const darkTheme: DarkTheme = {
   },
 
   color: {
-    // TODO: Update hex values to use the text color variable and background color variable
     gray: colors.gray,
     text: colors.gray,
   },
