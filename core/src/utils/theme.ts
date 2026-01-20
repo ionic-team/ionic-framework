@@ -377,30 +377,6 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     `;
   }
 
-  // Include CSS variables for the high contrast color palette inside of the
-  // high contrast media query if high contrast palette enabled is 'system'
-  if (palette.highContrast.enabled === 'system') {
-    css += `
-      @media (prefers-contrast: more) {
-        ${CSS_ROOT_SELECTOR} {
-          ${highContrastTokensCSS}
-        }
-      }
-    `;
-  }
-
-  // Include CSS variables for the high contrast dark color palette inside of the
-  // high contrast dark media query if high contrast dark palette enabled is 'system'
-  if (palette.highContrastDark.enabled === 'system') {
-    css += `
-      @media (prefers-contrast: more) and (prefers-color-scheme: dark) {
-        ${CSS_ROOT_SELECTOR} {
-          ${highContrastDarkTokensCSS}
-        }
-      }
-    `;
-  }
-
   // Add color classes
   const colorClasses = generateColorClasses(theme);
 

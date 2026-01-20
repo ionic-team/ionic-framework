@@ -562,7 +562,7 @@ describe('generateGlobalThemeCSS', () => {
         --ion-dynamic-font: -apple-system-body;
       }
 
-      @media(prefers-contrast: more) and (prefers-color-scheme: dark) {
+      @media(prefers-color-scheme: dark) {
         :root {
           --ion-color-primary-bold: #0054e9;
           --ion-color-primary-bold-rgb: 0, 84, 233;
