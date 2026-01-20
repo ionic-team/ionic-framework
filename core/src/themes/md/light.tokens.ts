@@ -10,7 +10,7 @@ export const lightTheme: LightTheme = {
       iconColorActive: '#222d3a',
       indicatorBg: '#eef1f3',
       indicatorBgFocused: '#dfe5e8',
-      colorFocused: '#35404e', // Available only in md
+      colorFocused: '#35404e',
       separatorColor: '#73849a',
     },
     IonDatetime: {
@@ -24,8 +24,8 @@ export const lightTheme: LightTheme = {
       handleBg: '#c0c0be',
     },
     IonRefresher: {
-      nativeSpinnerBorder: '#ececec', // Available only in md
-      nativeSpinnerBg: defaultColors.white, // Available only in md
+      nativeSpinnerBorder: '#ececec',
+      nativeSpinnerBg: defaultColors.white,
     },
     IonTabBar: {
       borderColor: 'var(--ion-border-color, rgba(0, 0, 0, 0.07))',

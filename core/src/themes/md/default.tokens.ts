@@ -84,7 +84,7 @@ export const defaultTheme: DefaultTheme = {
   components: {
     IonBreadcrumb: {
       color: 'var(--ion-color-text-600)',
-      colorFocused: 'var(--ion-color-text-800)', // Available only in md
+      colorFocused: 'var(--ion-color-text-800)',
       iconColor: 'var(--ion-color-text-550)',
       iconColorActive: 'var(--ion-color-text-850)',
       bgFocused: 'var(--ion-color-gray-50)',
@@ -106,8 +106,8 @@ export const defaultTheme: DefaultTheme = {
       handleBg: 'var(--ion-color-gray-350)',
     },
     IonRefresher: {
-      nativeSpinnerBorder: 'var(--ion-color-gray-200)', // Available only in md
-      nativeSpinnerBg: 'var(--ion-color-gray-250)', // Available only in md
+      nativeSpinnerBorder: 'var(--ion-color-gray-200)',
+      nativeSpinnerBg: 'var(--ion-color-gray-250)',
     },
     IonTabBar: {
       borderColor: 'var(--ion-border-color, var(--ion-color-gray-150))',

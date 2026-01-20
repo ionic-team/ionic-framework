@@ -8,7 +8,7 @@ const colors = {
 export const lightTheme: LightTheme = {
   color: {
     gray: colors.gray,
-    'overlay-bg': 'var(--ion-overlay-background-color, #f9f9f9)', // Available only in iOS
+    'overlay-bg': 'var(--ion-overlay-background-color, #f9f9f9)',
   },
   components: {
     IonActionSheet: {
@@ -22,7 +22,7 @@ export const lightTheme: LightTheme = {
       bgFocused: 'rgba(233, 237, 243, 0.7)',
       iconColor: '#92a0b3',
       iconColorActive: '#242d39',
-      iconColorFocused: '#445b78', // Available only in iOS
+      iconColorFocused: '#445b78',
       indicatorBg: '#e9edf3',
       indicatorBgFocused: '#d9e0ea',
       separatorColor: '#73849a',
@@ -35,16 +35,16 @@ export const lightTheme: LightTheme = {
       handleBg: '#c0c0be',
     },
     IonPicker: {
-      highlightBg: '#eeeeef', // Available only in iOS
+      highlightBg: '#eeeeef',
     },
     IonRange: {
-      bg: 'var(--ion-color-gray-100)', // Available only in iOS
+      bg: 'var(--ion-color-gray-100)',
     },
     IonRefresher: {
-      nativeSpinnerColor: '#747577', // Available only in iOS
+      nativeSpinnerColor: '#747577',
     },
     IonSegmentButton: {
-      checkedIndicatorBg: defaultColors.white, // Available only in iOS
+      checkedIndicatorBg: defaultColors.white,
     },
     IonTabBar: {
       bg: 'var(--ion-tab-bar-background-color, #f7f7f7)',

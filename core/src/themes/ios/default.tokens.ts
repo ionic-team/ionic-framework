@@ -21,7 +21,7 @@ export const defaultTheme: DefaultTheme = {
   fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif',
 
   color: {
-    'overlay-bg': 'var(--ion-overlay-background-color, var(--ion-color-gray-100))', // Available only in iOS
+    'overlay-bg': 'var(--ion-overlay-background-color, var(--ion-color-gray-100))',
   },
 
   spacing: {
@@ -89,7 +89,7 @@ export const defaultTheme: DefaultTheme = {
       bgFocused: 'var(--ion-color-gray-50)',
       iconColor: 'var(--ion-color-text-400)',
       iconColorActive: 'var(--ion-color-text-850)',
-      iconColorFocused: 'var(--ion-color-text-750)', // Available only in iOS
+      iconColorFocused: 'var(--ion-color-text-750)',
       indicatorBg: 'var(--ion-color-gray-100)',
       indicatorBgFocused: 'var(--ion-color-gray-150)',
       separatorColor: 'var(--ion-color-text-550)',
@@ -106,16 +106,16 @@ export const defaultTheme: DefaultTheme = {
       handleBg: 'var(--ion-color-gray-350)',
     },
     IonPicker: {
-      highlightBg: 'var(--ion-color-text-150)', // Available only in iOS
+      highlightBg: 'var(--ion-color-text-150)',
     },
     IonRange: {
-      bg: 'var(--ion-color-gray-900)', // Available only in iOS
+      bg: 'var(--ion-color-gray-900)',
     },
     IonRefresher: {
-      nativeSpinnerColor: 'var(--ion-color-gray-450)', // Available only in iOS
+      nativeSpinnerColor: 'var(--ion-color-gray-450)',
     },
     IonSegmentButton: {
-      checkedIndicatorBg: 'var(--ion-color-gray-350)', // Available only in iOS
+      checkedIndicatorBg: 'var(--ion-color-gray-350)',
     },
     IonTabBar: {
       bg: 'var(--ion-tab-bar-background-color, var(--ion-color-gray-50))',
