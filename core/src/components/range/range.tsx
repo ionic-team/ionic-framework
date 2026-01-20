@@ -883,7 +883,7 @@ export class Range implements ComponentInterface {
   }
 
   render() {
-    const { disabled, el, hasLabel, rangeId, pin, pressedKnob, labelPlacement, label } = this;
+    const { disabled, el, hasLabel, rangeId, pin, pressedKnob, labelPlacement, label, min, max, dualKnobs } = this;
 
     const inItem = hostContext('ion-item', el);
 
@@ -906,6 +906,13 @@ export class Range implements ComponentInterface {
 
     const mode = getIonMode(this);
 
+    /**
+     * Determine if any knob is at the min or max value to
+     * apply Host classes for styling.
+     */
+    const valueAtMin = dualKnobs ? this.valA === min || this.valB === min : this.valA === min;
+    const valueAtMax = dualKnobs ? this.valA === max || this.valB === max : this.valA === max;
+
     renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
 
     return (
@@ -922,6 +929,8 @@ export class Range implements ComponentInterface {
           [`range-label-placement-${labelPlacement}`]: true,
           'range-item-start-adjustment': needsStartAdjustment,
           'range-item-end-adjustment': needsEndAdjustment,
+          'range-value-min': valueAtMin,
+          'range-value-max': valueAtMax,
         })}
       >
         <label class="range-wrapper" id="range-label">
