@@ -405,44 +405,14 @@ export const applyComponentsTheme = (theme: any): any => {
     return '';
   }
 
-  // grab all the default components from theme
   const { components } = theme;
 
-  // check if there is no components then return
   if (!components) {
     return '';
   }
 
   injectCSS(generateComponentsThemeCSS(components));
   return components;
-
-  // const customTheme = (window as any).Ionic?.config?.get?.('customTheme');
-
-  // // Convert 'ION-CHIP' to 'ion-chip' and split into parts
-  // const parts = element.tagName.toLowerCase().split('-');
-
-  // // Get the component name 'chip' from the second part
-  // const componentName = parts[1];
-
-  // // Convert to 'IonChip' by capitalizing each part
-  // const themeLookupName = parts.map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join('');
-
-  // // Get the component theme from the global custom theme if it exists
-  // const componentTheme = customTheme?.components?.[themeLookupName];
-
-  // if (componentTheme) {
-  //   // Add the theme class to the element (e.g., 'chip-themed')
-  //   const themeClass = `${componentName}-themed`;
-  //   element.classList.add(themeClass);
-
-  //   // Generate CSS custom properties inside a theme class selector
-  //   const css = generateComponentsThemeCSS(componentTheme, componentName);
-
-  //   // Inject styles into shadow root if available,
-  //   // otherwise into the element itself
-  //   const root = element.shadowRoot ?? element;
-  //   injectCSS(css, root);
-  // }
 };
 
 /**
