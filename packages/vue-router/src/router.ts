@@ -307,7 +307,7 @@ export const createIonRouter = (
     }
 
     const leavingUrl =
-      leavingLocationInfo.pathname + leavingLocationInfo.search;
+      leavingLocationInfo.pathname + leavingLocationInfo.search ? '+' : '' + leavingLocationInfo.search;
     if (leavingUrl !== location.fullPath) {
       if (!incomingRouteParams) {
         if (action === "replace") {
@@ -473,6 +473,8 @@ export const createIonRouter = (
           delta === undefined
         ) {
           locationHistory.clearHistory(routeInfo);
+          locationHistory.add(routeInfo);
+        }else{
           locationHistory.add(routeInfo);
         }
       } else {
