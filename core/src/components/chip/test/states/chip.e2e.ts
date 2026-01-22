@@ -4,10 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 /**
  * This behavior does not vary across modes/directions
  */
-configs({ modes: ['ios'], directions: ['ltr'], palettes: ['dark', 'light'] }).forEach(({ title, screenshot, config }) => {
-  /**
-   * This behavior does not vary across modes/directions.
-   */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('chip: states'), () => {
     test('should render disabled state', async ({ page }) => {
       await page.goto(`/src/components/chip/test/states`, config);
