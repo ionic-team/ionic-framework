@@ -30,6 +30,10 @@ runs:
       run: npm run test.e2e.docker.ci ${{ inputs.component }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./core
+    - name: Clean core package.json
+      run: git checkout ./package.json
+      shell: bash
+      working-directory: ./core
     - name: Test and Update
       id: test-and-update
       if: inputs.update == 'true'

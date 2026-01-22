@@ -21,6 +21,10 @@ runs:
         find . -type f -name 'UpdatedScreenshots-*.zip' -exec unzip -q -o -d ../ {} \;
       shell: bash
       working-directory: ./artifacts
+    - name: Clean core package.json
+      run: git checkout ./package.json
+      shell: bash
+      working-directory: ./core
     - name: 📸 Push Screenshots
       # Configure user as Ionitron
       # and push only the changed .png snapshots
