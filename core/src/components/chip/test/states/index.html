@@ -17,222 +17,292 @@
   <body>
     <ion-app>
       <ion-content>
+
         <h3>Default</h3>
 
-        <p>
-          <ion-chip>
-            <ion-label>Default</ion-label>
-          </ion-chip>
-          <ion-chip style="border-radius: 4px">
-            <ion-label>Border Radius</ion-label>
-          </ion-chip>
-          <ion-chip>
-            <ion-icon name="checkmark-circle"></ion-icon>
-            <ion-label>With Icon</ion-label>
-          </ion-chip>
-          <ion-chip>
-            <ion-avatar>
-              <img
-                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
-              />
-            </ion-avatar>
-            <ion-label>With Avatar</ion-label>
-          </ion-chip>
-          <ion-chip>
-            <ion-avatar>
-              <img
-                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
-              />
-            </ion-avatar>
-            <ion-label>With Icon and Avatar</ion-label>
-            <ion-icon name="close-circle"></ion-icon>
-          </ion-chip>
-        </p>
-        <p>
-          <ion-chip class="ion-focused">
-            <ion-label>Default</ion-label>
-          </ion-chip>
-          <ion-chip style="border-radius: 4px" class="ion-focused">
-            <ion-label>Border Radius</ion-label>
-          </ion-chip>
-          <ion-chip class="ion-focused">
-            <ion-icon name="checkmark-circle"></ion-icon>
-            <ion-label>With Icon</ion-label>
-          </ion-chip>
-          <ion-chip class="ion-focused">
-            <ion-avatar>
-              <img
-                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
-              />
-            </ion-avatar>
-            <ion-label>With Avatar</ion-label>
-          </ion-chip>
-          <ion-chip class="ion-focused">
-            <ion-avatar>
-              <img
-                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
-              />
-            </ion-avatar>
-            <ion-label>With Icon and Avatar</ion-label>
-            <ion-icon name="close-circle"></ion-icon>
-          </ion-chip>
-        </p>
+        <div id="default">
+          <p>
+            <ion-chip>
+              <ion-label>Default</ion-label>
+            </ion-chip>
+            <ion-chip color="primary">
+              <ion-label>Primary</ion-label>
+            </ion-chip>
+            <ion-chip color="secondary">
+              <ion-label>Secondary</ion-label>
+            </ion-chip>
+            <ion-chip color="tertiary">
+              <ion-label>Tertiary</ion-label>
+            </ion-chip>
+            <ion-chip color="success">
+              <ion-label>Success</ion-label>
+            </ion-chip>
+            <ion-chip color="warning">
+              <ion-label>Warning</ion-label>
+            </ion-chip>
+            <ion-chip color="danger">
+              <ion-label>Danger</ion-label>
+            </ion-chip>
+            <ion-chip color="light">
+              <ion-label>Light</ion-label>
+            </ion-chip>
+            <ion-chip color="medium">
+              <ion-label>Medium</ion-label>
+            </ion-chip>
+            <ion-chip color="dark">
+              <ion-label>Dark</ion-label>
+            </ion-chip>
+          </p>
 
-        <h3>Colors</h3>
-        <p>
-          <ion-chip color="primary">
-            <ion-label>Primary</ion-label>
-          </ion-chip>
-          <ion-chip color="secondary">
-            <ion-label>Secondary</ion-label>
-          </ion-chip>
-          <ion-chip color="tertiary">
-            <ion-icon name="checkmark-circle"></ion-icon>
-            <ion-label>Tertiary with Icon</ion-label>
-          </ion-chip>
-          <ion-chip color="success">
-            <ion-avatar>
-              <img
-                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
-              />
-            </ion-avatar>
-            <ion-label>Success with Avatar</ion-label>
-          </ion-chip>
-          <ion-chip color="warning">
-            <ion-label>Warning with Icon</ion-label>
-            <ion-icon name="calendar"></ion-icon>
-          </ion-chip>
-          <ion-chip color="danger">
-            <ion-label>Danger</ion-label>
-          </ion-chip>
-          <ion-chip color="light">
-            <ion-label>Light</ion-label>
-          </ion-chip>
-          <ion-chip color="medium">
-            <ion-label>Medium</ion-label>
-          </ion-chip>
-          <ion-chip color="dark">
-            <ion-label>Dark</ion-label>
-          </ion-chip>
-        </p>
-        <p>
-          <ion-chip color="primary" class="ion-focused">
-            <ion-label>Primary</ion-label>
-          </ion-chip>
-          <ion-chip color="secondary" class="ion-focused">
-            <ion-label>Secondary</ion-label>
-          </ion-chip>
-          <ion-chip color="tertiary" class="ion-focused">
-            <ion-icon name="checkmark-circle"></ion-icon>
-            <ion-label>Tertiary with Icon</ion-label>
-          </ion-chip>
-          <ion-chip color="success" class="ion-focused">
-            <ion-avatar>
-              <img
-                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
-              />
-            </ion-avatar>
-            <ion-label>Success with Avatar</ion-label>
-          </ion-chip>
-          <ion-chip color="warning" class="ion-focused">
-            <ion-label>Warning with Icon</ion-label>
-            <ion-icon name="calendar"></ion-icon>
-          </ion-chip>
-          <ion-chip color="danger" class="ion-focused">
-            <ion-label>Danger</ion-label>
-          </ion-chip>
-          <ion-chip color="light" class="ion-focused">
-            <ion-label>Light</ion-label>
-          </ion-chip>
-          <ion-chip color="medium" class="ion-focused">
-            <ion-label>Medium</ion-label>
-          </ion-chip>
-          <ion-chip color="dark" class="ion-focused">
-            <ion-label>Dark</ion-label>
-          </ion-chip>
-        </p>
-
-        <h3>Outline</h3>
-
-        <p>
-          <ion-chip outline>
-            <ion-label>Outline</ion-label>
-          </ion-chip>
-          <ion-chip outline color="danger">
-            <ion-label>Danger Outline</ion-label>
-          </ion-chip>
-          <ion-chip outline color="secondary">
-            <ion-icon name="checkmark-circle"></ion-icon>
-            <ion-label>Secondary Outline with Icon</ion-label>
-          </ion-chip>
-          <ion-chip outline color="primary">
-            <ion-label>Primary Outline with Avatar</ion-label>
-            <ion-avatar>
-              <img
-                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
-              />
-            </ion-avatar>
-          </ion-chip>
-          <ion-chip outline>
-            <ion-icon name="git-pull-request"></ion-icon>
-            <ion-label>Outline with Icon and Avatar</ion-label>
-            <ion-icon name="close-circle"></ion-icon>
-          </ion-chip>
-        </p>
-        <p>
-          <ion-chip outline class="ion-focused">
-            <ion-label>Outline</ion-label>
-          </ion-chip>
-          <ion-chip outline color="danger" class="ion-focused">
-            <ion-label>Danger Outline</ion-label>
-          </ion-chip>
-          <ion-chip outline color="secondary" class="ion-focused">
-            <ion-icon name="checkmark-circle"></ion-icon>
-            <ion-label>Secondary Outline with Icon</ion-label>
-          </ion-chip>
-          <ion-chip outline color="primary" class="ion-focused">
-            <ion-label>Primary Outline with Avatar</ion-label>
-            <ion-avatar>
-              <img
-                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
-              />
-            </ion-avatar>
-          </ion-chip>
-          <ion-chip outline class="ion-focused">
-            <ion-icon name="git-pull-request"></ion-icon>
-            <ion-label>Outline with Icon and Avatar</ion-label>
-            <ion-icon name="close-circle"></ion-icon>
-          </ion-chip>
-        </p>
+          <p>
+            <ion-chip outline>
+              <ion-label>Default</ion-label>
+            </ion-chip>
+            <ion-chip outline color="primary">
+              <ion-label>Primary</ion-label>
+            </ion-chip>
+            <ion-chip outline color="secondary">
+              <ion-label>Secondary</ion-label>
+            </ion-chip>
+            <ion-chip outline color="tertiary">
+              <ion-label>Tertiary</ion-label>
+            </ion-chip>
+            <ion-chip outline color="success">
+              <ion-label>Success</ion-label>
+            </ion-chip>
+            <ion-chip outline color="warning">
+              <ion-label>Warning</ion-label>
+            </ion-chip>
+            <ion-chip outline color="danger">
+              <ion-label>Danger</ion-label>
+            </ion-chip>
+            <ion-chip outline color="light">
+              <ion-label>Light</ion-label>
+            </ion-chip>
+            <ion-chip outline color="medium">
+              <ion-label>Medium</ion-label>
+            </ion-chip>
+            <ion-chip outline color="dark">
+              <ion-label>Dark</ion-label>
+            </ion-chip>
+          </p>
+        </div>
 
         <h3>Disabled</h3>
+        <div id="disabled">
+          <p>
+            <ion-chip disabled>
+              <ion-label>Default</ion-label>
+            </ion-chip>
+            <ion-chip color="primary" disabled>
+              <ion-label>Primary</ion-label>
+            </ion-chip>
+            <ion-chip color="secondary" disabled>
+              <ion-label>Secondary</ion-label>
+            </ion-chip>
+            <ion-chip color="tertiary" disabled>
+              <ion-label>Tertiary</ion-label>
+            </ion-chip>
+            <ion-chip color="success" disabled>
+              <ion-label>Success</ion-label>
+            </ion-chip>
+            <ion-chip color="warning" disabled>
+              <ion-label>Warning</ion-label>
+            </ion-chip>
+            <ion-chip color="danger" disabled>
+              <ion-label>Danger</ion-label>
+            </ion-chip>
+            <ion-chip color="light" disabled>
+              <ion-label>Light</ion-label>
+            </ion-chip>
+            <ion-chip color="medium" disabled>
+              <ion-label>Medium</ion-label>
+            </ion-chip>
+            <ion-chip color="dark" disabled>
+              <ion-label>Dark</ion-label>
+            </ion-chip>
+          </p>
 
+          <p>
+            <ion-chip outline disabled>
+              <ion-label>Default</ion-label>
+            </ion-chip>
+            <ion-chip outline color="primary" disabled>
+              <ion-label>Primary</ion-label>
+            </ion-chip>
+            <ion-chip outline color="secondary" disabled>
+              <ion-label>Secondary</ion-label>
+            </ion-chip>
+            <ion-chip outline color="tertiary" disabled>
+              <ion-label>Tertiary</ion-label>
+            </ion-chip>
+            <ion-chip outline color="success" disabled>
+              <ion-label>Success</ion-label>
+            </ion-chip>
+            <ion-chip outline color="warning" disabled>
+              <ion-label>Warning</ion-label>
+            </ion-chip>
+            <ion-chip outline color="danger" disabled>
+              <ion-label>Danger</ion-label>
+            </ion-chip>
+            <ion-chip outline color="light" disabled>
+              <ion-label>Light</ion-label>
+            </ion-chip>
+            <ion-chip outline color="medium" disabled>
+              <ion-label>Medium</ion-label>
+            </ion-chip>
+            <ion-chip outline color="dark" disabled>
+              <ion-label>Dark</ion-label>
+            </ion-chip>
+          </p>
+        </div>
+
+        <h3>Activated</h3>
+        <div id="activated">
+          <p>
+            <ion-chip class="ion-activated">
+              <ion-label>Default</ion-label>
+            </ion-chip>
+            <ion-chip color="primary" class="ion-activated">
+              <ion-label>Primary</ion-label>
+            </ion-chip>
+            <ion-chip color="secondary" class="ion-activated">
+              <ion-label>Secondary</ion-label>
+            </ion-chip>
+            <ion-chip color="tertiary" class="ion-activated">
+              <ion-label>Tertiary</ion-label>
+            </ion-chip>
+            <ion-chip color="success" class="ion-activated">
+              <ion-label>Success</ion-label>
+            </ion-chip>
+            <ion-chip color="warning" class="ion-activated">
+              <ion-label>Warning</ion-label>
+            </ion-chip>
+            <ion-chip color="danger" class="ion-activated">
+              <ion-label>Danger</ion-label>
+            </ion-chip>
+            <ion-chip color="light" class="ion-activated">
+              <ion-label>Light</ion-label>
+            </ion-chip>
+            <ion-chip color="medium" class="ion-activated">
+              <ion-label>Medium</ion-label>
+            </ion-chip>
+            <ion-chip color="dark" class="ion-activated">
+              <ion-label>Dark</ion-label>
+            </ion-chip>
+          </p>
+
+          <p>
+            <ion-chip outline class="ion-activated">
+              <ion-label>Default</ion-label>
+            </ion-chip>
+            <ion-chip outline color="primary" class="ion-activated">
+              <ion-label>Primary</ion-label>
+            </ion-chip>
+            <ion-chip outline color="secondary" class="ion-activated">
+              <ion-label>Secondary</ion-label>
+            </ion-chip>
+            <ion-chip outline color="tertiary" class="ion-activated">
+              <ion-label>Tertiary</ion-label>
+            </ion-chip>
+            <ion-chip outline color="success" class="ion-activated">
+              <ion-label>Success</ion-label>
+            </ion-chip>
+            <ion-chip outline color="warning" class="ion-activated">
+              <ion-label>Warning</ion-label>
+            </ion-chip>
+            <ion-chip outline color="danger" class="ion-activated">
+              <ion-label>Danger</ion-label>
+            </ion-chip>
+            <ion-chip outline color="light" class="ion-activated">
+              <ion-label>Light</ion-label>
+            </ion-chip>
+            <ion-chip outline color="medium" class="ion-activated">
+              <ion-label>Medium</ion-label>
+            </ion-chip>
+            <ion-chip outline color="dark" class="ion-activated">
+              <ion-label>Dark</ion-label>
+            </ion-chip>
+          </p>
+        </div>
+
+        <h3>Focused</h3>
         <p>
-          <ion-chip disabled>
-            <ion-label>Disabled</ion-label>
-          </ion-chip>
-          <ion-chip outline color="danger" class="ion-focused" disabled>
-            <ion-label>Disabled Outline</ion-label>
-          </ion-chip>
-          <ion-chip color="secondary" class="ion-focused" disabled>
-            <ion-icon name="checkmark-circle"></ion-icon>
-            <ion-label>Disabled Secondary with Icon</ion-label>
-          </ion-chip>
-          <ion-chip outline class="ion-focused" disabled>
-            <ion-icon name="git-pull-request"></ion-icon>
-            <ion-label>Disabled Outline with Icon and Avatar</ion-label>
-            <ion-icon name="close-circle"></ion-icon>
-          </ion-chip>
+          `ion-chip` is not focusable by default, meaning it doesn't use `ion-focusable`. But it does have focus styles that target the `:focus` pseudo-class. In order to see the focus styles, you need to add tabindex="0" and tab into the chip.
         </p>
+        <div id="focused">
+          <p>
+            <ion-chip tabindex="0">
+              <ion-label>Default</ion-label>
+            </ion-chip>
+            <ion-chip color="primary" tabindex="0">
+              <ion-label>Primary</ion-label>
+            </ion-chip>
+            <ion-chip color="secondary" tabindex="0">
+              <ion-label>Secondary</ion-label>
+            </ion-chip>
+            <ion-chip color="tertiary" tabindex="0">
+              <ion-label>Tertiary</ion-label>
+            </ion-chip>
+            <ion-chip color="success" tabindex="0">
+              <ion-label>Success</ion-label>
+            </ion-chip>
+            <ion-chip color="warning" tabindex="0">
+              <ion-label>Warning</ion-label>
+            </ion-chip>
+            <ion-chip color="danger" tabindex="0">
+              <ion-label>Danger</ion-label>
+            </ion-chip>
+            <ion-chip color="light" tabindex="0">
+              <ion-label>Light</ion-label>
+            </ion-chip>
+            <ion-chip color="medium" tabindex="0">
+              <ion-label>Medium</ion-label>
+            </ion-chip>
+            <ion-chip color="dark" tabindex="0">
+              <ion-label>Dark</ion-label>
+            </ion-chip>
+          </p>
+
+          <p>
+            <ion-chip outline tabindex="0">
+              <ion-label>Default</ion-label>
+            </ion-chip>
+            <ion-chip outline color="primary" tabindex="0">
+              <ion-label>Primary</ion-label>
+            </ion-chip>
+            <ion-chip outline color="secondary" tabindex="0">
+              <ion-label>Secondary</ion-label>
+            </ion-chip>
+            <ion-chip outline color="tertiary" tabindex="0">
+              <ion-label>Tertiary</ion-label>
+            </ion-chip>
+            <ion-chip outline color="success" tabindex="0">
+              <ion-label>Success</ion-label>
+            </ion-chip>
+            <ion-chip outline color="warning" tabindex="0">
+              <ion-label>Warning</ion-label>
+            </ion-chip>
+            <ion-chip outline color="danger" tabindex="0">
+              <ion-label>Danger</ion-label>
+            </ion-chip>
+            <ion-chip outline color="light" tabindex="0">
+              <ion-label>Light</ion-label>
+            </ion-chip>
+            <ion-chip outline color="medium" tabindex="0">
+              <ion-label>Medium</ion-label>
+            </ion-chip>
+            <ion-chip outline color="dark" tabindex="0">
+              <ion-label>Dark</ion-label>
+            </ion-chip>
+          </p>
+        </div>
 
         <h3>Custom</h3>
 
         <!-- Custom Font -->
         <p>
           <ion-chip class="wide" text="wide">
-            <ion-icon name="add"></ion-icon>
-          </ion-chip>
-          <ion-chip class="wide ion-focused" text="wide">
             <ion-icon name="add"></ion-icon>
           </ion-chip>
         </p>
@@ -245,25 +315,19 @@
           <ion-chip color="secondary" class="custom">
             <ion-icon name="add"></ion-icon>
           </ion-chip>
-          <ion-chip class="custom ion-focused">
-            <ion-icon name="add"></ion-icon>
-          </ion-chip>
-          <ion-chip color="secondary" class="custom ion-focused">
-            <ion-icon name="add"></ion-icon>
-          </ion-chip>
         </p>
       </ion-content>
     </ion-app>
 
     <script>
-      var buttons = document.querySelectorAll('ion-chip');
+      var chips = document.querySelectorAll('ion-chip');
 
-      for (var i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener('click', (event) => onClick(event));
+      for (var i = 0; i < chips.length; i++) {
+        chips[i].addEventListener('click', (event) => onClick(event));
       }
 
       function onClick(ev) {
-        console.log('clicked the button', ev.target.innerText);
+        console.log('clicked the chip', ev.target.innerText);
       }
     </script>
 
