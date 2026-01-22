@@ -44,7 +44,12 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   });
 
   test.describe(title('CSS shadow parts'), () => {
-    test('should be able to customize wheel part', async ({ page }) => {
+    test('should be able to customize wheel part', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30420',
+      });
+
       await page.setContent(
         `
           <style>
@@ -70,7 +75,12 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       expect(backgroundColor).toBe('rgb(255, 0, 0)');
     });
 
-    test('should be able to customize wheel part when focused', async ({ page }) => {
+    test('should be able to customize wheel part when focused', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30420',
+      });
+
       await page.setContent(
         `
           <style>
