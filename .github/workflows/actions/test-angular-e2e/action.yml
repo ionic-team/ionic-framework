@@ -17,7 +17,7 @@ runs:
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-angular
-        path: ./angular
+        path: ./packages/angular
         filename: AngularBuild.zip
     - uses: ./.github/workflows/actions/download-archive
       with:
