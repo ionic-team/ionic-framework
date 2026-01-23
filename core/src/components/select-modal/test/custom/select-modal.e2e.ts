@@ -29,6 +29,10 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await selectModalPage.setup(config, options, false);
 
+      await selectModalPage.selectModal.evaluate((selectModal: HTMLIonSelectModalElement) => {
+        selectModal.cancelText = 'Close me';
+      });
+
       const cancelButton = selectModalPage.selectModal.locator('ion-button');
 
       await expect(cancelButton).toHaveText('Close me');
