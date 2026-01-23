@@ -32,7 +32,7 @@ runs:
       shell: bash
       working-directory: ./core
     - name: 🔍 Check Diff
-      run: git diff --exit-code .
+      run: git diff --exit-code
       shell: bash
       working-directory: ./packages/angular
     - uses: ./.github/workflows/actions/upload-archive
