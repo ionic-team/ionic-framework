@@ -29,12 +29,16 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await selectModalPage.setup(config, options, false);
 
+      const cancelButton = selectModalPage.selectModal.locator('ion-button');
+
+      // Verify the default text on the cancel button
+      await expect(cancelButton).toHaveText('Close');
+
       await selectModalPage.selectModal.evaluate((selectModal: HTMLIonSelectModalElement) => {
         selectModal.cancelText = 'Close me';
       });
 
-      const cancelButton = selectModalPage.selectModal.locator('ion-button');
-
+      // Verify the cancel button text has been updated
       await expect(cancelButton).toHaveText('Close me');
     });
   });
