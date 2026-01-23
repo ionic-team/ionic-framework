@@ -3223,7 +3223,10 @@ export namespace Components {
         "value"?: any | null;
     }
     interface IonSelectModal {
-        "cancelText"?: string;
+        /**
+          * @default 'Close'
+         */
+        "cancelText": string;
         "header"?: string;
         "multiple"?: boolean;
         /**
@@ -8549,6 +8552,9 @@ declare namespace LocalJSX {
         "value"?: any | null;
     }
     interface IonSelectModal {
+        /**
+          * @default 'Close'
+         */
         "cancelText"?: string;
         "header"?: string;
         "multiple"?: boolean;
