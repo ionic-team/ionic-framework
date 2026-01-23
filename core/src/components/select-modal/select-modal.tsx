@@ -23,6 +23,9 @@ export class SelectModal implements ComponentInterface {
 
   @Prop() header?: string;
 
+  /**
+   * The text to display on the cancel button.
+   */
   @Prop() cancelText = 'Close';
 
   @Prop() multiple?: boolean;

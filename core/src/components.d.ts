@@ -3224,6 +3224,7 @@ export namespace Components {
     }
     interface IonSelectModal {
         /**
+          * The text to display on the cancel button.
           * @default 'Close'
          */
         "cancelText": string;
@@ -8553,6 +8554,7 @@ declare namespace LocalJSX {
     }
     interface IonSelectModal {
         /**
+          * The text to display on the cancel button.
           * @default 'Close'
          */
         "cancelText"?: string;
