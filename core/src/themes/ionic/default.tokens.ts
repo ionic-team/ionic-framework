@@ -1,4 +1,4 @@
-import { rgba, currentColor } from '../../utils/theme';
+import { currentColor } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
@@ -144,8 +144,8 @@ export const defaultTheme: DefaultTheme = {
       // Hues
       hue: {
         bold: {
-          bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
-          color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.87),
+          bg: '#3b3b3b',
+          color: '#ffffff',
 
           // Any of the semantic colors like primary, secondary, etc.
           semantic: {
@@ -155,8 +155,8 @@ export const defaultTheme: DefaultTheme = {
         },
 
         subtle: {
-          bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.05),
-          color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.6),
+          bg: '#f3f3f3',
+          color: '#626262',
 
           semantic: {
             color: currentColor('contrast', null, true),
@@ -170,8 +170,8 @@ export const defaultTheme: DefaultTheme = {
         outline: {
           border: {
             color: {
-              bold: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.32),
-              subtle: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
+              bold: '#242424',
+              subtle: '#e0e0e0',
             },
 
             width: '1px',
