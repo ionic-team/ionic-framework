@@ -10,7 +10,7 @@ import type { Color } from '../../interface';
  */
 @Component({
   tag: 'ion-chip',
-  styleUrl: 'chip.base.scss',
+  styleUrl: 'chip.scss',
   shadow: true,
 })
 export class Chip implements ComponentInterface {
