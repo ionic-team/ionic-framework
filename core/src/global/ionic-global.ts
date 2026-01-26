@@ -166,10 +166,22 @@ export const initialize = (userConfig: IonicConfig = {}) => {
     config.set('customTheme', baseTheme);
   }
 
-  // Apply any config values from the custom theme
+  // Apply any global config values from the custom theme
   const customConfig = customTheme?.config;
   if (customConfig) {
     Object.entries(customConfig).forEach(([key, value]) => {
+      // A key with 'Ion' prefix indicates it's a component-specific config,
+      // which should not be merged into the global config settings.
+      if (key.startsWith('Ion')) {
+        return;
+      }
+
+      if (typeof value === 'object' && value !== null) {
+        const existingConfig = config.get(key as keyof IonicConfig, {});
+        config.set(key as keyof IonicConfig, { ...existingConfig, ...value });
+        return;
+      }
+
       config.set(key as keyof IonicConfig, value);
     });
   }

@@ -35,27 +35,63 @@ export class Chip implements ComponentInterface {
    * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for
    * a chip with muted, subtle colors.
    *
-   * Defaults to `"subtle"`.
+   * Defaults to `"subtle"` if no hue is set in the custom theme config.
    */
-  @Prop() hue?: 'bold' | 'subtle' = 'subtle';
+  @Prop() hue?: 'bold' | 'subtle';
 
   /**
-   * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully
-   * rounded corners, or `"rectangular"` for a chip without rounded corners.
+   * Set to `"soft"` for a chip with slightly rounded corners,
+   * `"round"` for a chip with fully rounded corners,
+   * or `"rectangular"` for a chip without rounded corners.
    *
-   * Defaults to `"round"`.
+   * Defaults to `"round"` if no shape is set in the custom
+   * theme config.
    */
-  @Prop() shape?: 'soft' | 'round' | 'rectangular' = 'round';
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
   /**
    * Set to `"small"` for a chip with less height and padding.
    *
-   * Defaults to `"large"`.
+   * Defaults to `"large"` if no size is set in the custom
+   * theme config.
    */
-  @Prop() size?: 'small' | 'large' = 'large';
+  @Prop() size?: 'small' | 'large';
+
+  /**
+   * Set the hue based on the custom theme config
+   */
+  private getHue(): string {
+    const hueConfig = config.getObjectValue('IonChip.hue');
+    console.log('hueConfig', hueConfig);
+    const hue = this.hue || hueConfig || 'subtle';
+
+    return hue;
+  }
+
+  /**
+   * Set the shape based on the custom theme config
+   */
+  private getShape(): string {
+    const shapeConfig = config.getObjectValue('IonChip.shape');
+    const shape = this.shape || shapeConfig || 'round';
+
+    return shape;
+  }
+
+  /**
+   * Set the size based on the custom theme config
+   */
+  private getSize(): string {
+    const sizeConfig = config.getObjectValue('IonChip.size');
+    const size = this.size || sizeConfig || 'large';
+
+    return size;
+  }
 
   render() {
-    const { hue, size, shape } = this;
+    const hue = this.getHue();
+    const shape = this.getShape();
+    const size = this.getSize();
     const useRippleEffect = config.getBoolean('rippleEffect', false);
 
     return (
@@ -67,8 +103,8 @@ export class Chip implements ComponentInterface {
           'chip-disabled': this.disabled,
           'ion-activatable': true,
           'ion-focusable': !this.disabled,
-          [`chip-${size}`]: size !== undefined,
-          [`chip-${hue}`]: hue !== undefined,
+          [`chip-${size}`]: true,
+          [`chip-${hue}`]: true,
         })}
       >
         <slot></slot>

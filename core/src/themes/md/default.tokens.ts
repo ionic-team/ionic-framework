@@ -22,6 +22,12 @@ export const defaultTheme: DefaultTheme = {
   config: {
     formHighlight: true,
     rippleEffect: true,
+
+    IonChip: {
+      hue: 'bold',
+      shape: 'round',
+      size: 'large',
+    },
   },
 
   fontFamily: '"Roboto", "Helvetica Neue", sans-serif',

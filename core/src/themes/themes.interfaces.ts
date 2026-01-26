@@ -1,5 +1,5 @@
-import type { IonChip as IonChipType } from '../components/chip/chip.interfaces';
-import type { IonicConfig } from '../utils/config';
+import type { IonChip as IonChipType, IonicChipConfig } from '../components/chip/chip.interfaces';
+import type { IonicConfig as IonicGlobalConfig } from '../utils/config';
 
 // Platform-specific theme
 export type PlatformTheme = Omit<BaseTheme, 'ios' | 'md'>;
@@ -237,6 +237,10 @@ export type BaseTheme = {
   // PLATFORM SPECIFIC OVERRIDES
   ios?: PlatformTheme;
   md?: PlatformTheme;
+};
+
+export type IonicConfig = IonicGlobalConfig & {
+  IonChip?: IonicChipConfig;
 };
 
 // Dark theme interface

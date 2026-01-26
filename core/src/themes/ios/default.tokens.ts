@@ -19,6 +19,14 @@ export const defaultTheme: DefaultTheme = {
     dark: darkTheme,
   },
 
+  config: {
+    IonChip: {
+      hue: 'bold',
+      shape: 'round',
+      size: 'large',
+    },
+  },
+
   fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif',
 
   spacing: {

@@ -872,8 +872,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"`.
-          * @default 'subtle'
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if no hue is set in the custom theme config.
          */
         "hue"?: 'bold' | 'subtle';
         /**
@@ -886,13 +885,11 @@ export namespace Components {
          */
         "outline": boolean;
         /**
-          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"`.
-          * @default 'round'
+          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"` if no shape is set in the custom theme config.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"`.
-          * @default 'large'
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` if no size is set in the custom theme config.
          */
         "size"?: 'small' | 'large';
     }
@@ -6844,8 +6841,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"`.
-          * @default 'subtle'
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if no hue is set in the custom theme config.
          */
         "hue"?: 'bold' | 'subtle';
         /**
@@ -6858,13 +6854,11 @@ declare namespace LocalJSX {
          */
         "outline"?: boolean;
         /**
-          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"`.
-          * @default 'round'
+          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"` if no shape is set in the custom theme config.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"`.
-          * @default 'large'
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` if no size is set in the custom theme config.
          */
         "size"?: 'small' | 'large';
     }

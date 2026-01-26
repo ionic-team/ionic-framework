@@ -1,4 +1,4 @@
-import type { IonicConfig } from '../interface';
+import type { IonicConfig } from '../themes/themes.interfaces';
 
 // TODO(FW-2832): types
 
@@ -12,6 +12,36 @@ export class Config {
   get(key: keyof IonicConfig, fallback?: any): any {
     const value = this.m.get(key);
     return value !== undefined ? value : fallback;
+  }
+
+  /**
+   * Get a nested object value from the config
+   *
+   * @param key Nested key string (e.g., 'IonChip.size')
+   * @param fallback Default value if the key is not found
+   * @returns The value found at the nested key or the fallback
+   */
+  getObjectValue(key: string, fallback = ''): string {
+    const [firstKey, ...remainingKeys] = key.split('.');
+
+    let root: any;
+    // First key is a component config since it starts with 'Ion',
+    // it must be accessed from the 'customTheme' config object
+    if (firstKey.startsWith('Ion')) {
+      const customTheme = this.m.get('customTheme');
+      root = customTheme ? customTheme.config[firstKey as keyof IonicConfig] : undefined;
+    } else {
+      // Otherwise, get the value directly from the global config
+      root = this.m.get(firstKey as keyof IonicConfig);
+    }
+
+    if (root === undefined) {
+      return fallback;
+    }
+
+    const result = remainingKeys.reduce((acc, k) => acc?.[k], root);
+
+    return result ?? fallback;
   }
 
   getBoolean(key: keyof IonicConfig, fallback = false): boolean {
