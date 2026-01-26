@@ -14,6 +14,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(page).toHaveScreenshot(screenshot(`content-fullscreen`));
     });
 
+    /**
+     * The content-fullscreen class is added when fullscreen is true. The
+     * fullscreen attribute is not reflected in Angular, Vue, or React, so
+     * the class is needed for users to create custom themes.
+     */
     test('should have content-fullscreen class when fullscreen is true', async ({ page }) => {
       await page.setContent(
         `
