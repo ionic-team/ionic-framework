@@ -635,7 +635,7 @@ Set `scrollEvents` to `true` to enable.
 
 @ProxyCmp({
   inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showAdjacentDays', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
-  methods: ['confirm', 'reset', 'cancel']
+  methods: ['exitInputMode', 'enterInputMode', 'confirm', 'reset', 'cancel']
 })
 @Component({
   selector: 'ion-datetime',
@@ -649,7 +649,7 @@ export class IonDatetime {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur']);
+    proxyOutputs(this, this.el, ['inputModeChanged', 'ionCancel', 'ionChange', 'ionFocus', 'ionBlur']);
   }
 }
 
@@ -657,6 +657,10 @@ export class IonDatetime {
 import type { DatetimeChangeEventDetail as IIonDatetimeDatetimeChangeEventDetail } from '@ionic/core';
 
 export declare interface IonDatetime extends Components.IonDatetime {
+  /**
+   * Emitted when input mode changes (numeric input enabled/disabled).
+   */
+  inputModeChanged: EventEmitter<CustomEvent<{ active: boolean }>>;
   /**
    * Emitted when the datetime selection was cancelled.
    */
@@ -1508,7 +1512,8 @@ export declare interface IonNote extends Components.IonNote {}
 
 
 @ProxyCmp({
-  inputs: ['mode']
+  inputs: ['mode'],
+  methods: ['enterInputMode']
 })
 @Component({
   selector: 'ion-picker',

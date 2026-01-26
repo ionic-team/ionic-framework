@@ -545,7 +545,10 @@ ion-datetime,prop,value,null | string | string[] | undefined,undefined,false,fal
 ion-datetime,prop,yearValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,method,cancel,cancel(closeOverlay?: boolean) => Promise<void>
 ion-datetime,method,confirm,confirm(closeOverlay?: boolean) => Promise<void>
+ion-datetime,method,enterInputMode,enterInputMode(scope?: "all" | "hour" | "minute", options?: { focus?: boolean; }) => Promise<void>
+ion-datetime,method,exitInputMode,exitInputMode() => Promise<void>
 ion-datetime,method,reset,reset(startDate?: string) => Promise<void>
+ion-datetime,event,inputModeChanged,{ active: boolean; },true
 ion-datetime,event,ionBlur,void,true
 ion-datetime,event,ionCancel,void,true
 ion-datetime,event,ionChange,DatetimeChangeEventDetail,true
@@ -1242,6 +1245,7 @@ ion-note,css-prop,--color,md
 
 ion-picker,shadow
 ion-picker,prop,mode,"ios" | "md",undefined,false,false
+ion-picker,method,enterInputMode,enterInputMode(columnEl?: HTMLIonPickerColumnElement, focusInput?: boolean) => Promise<void>
 ion-picker,css-prop,--fade-background-rgb,ios
 ion-picker,css-prop,--fade-background-rgb,md
 ion-picker,css-prop,--highlight-background,ios
