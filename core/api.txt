@@ -1475,6 +1475,11 @@ ion-range,css-prop,--pin-color,md
 ion-range,part,bar
 ion-range,part,bar-active
 ion-range,part,knob
+ion-range,part,knob-a
+ion-range,part,knob-b
+ion-range,part,knob-handle
+ion-range,part,knob-handle-a
+ion-range,part,knob-handle-b
 ion-range,part,label
 ion-range,part,pin
 ion-range,part,tick

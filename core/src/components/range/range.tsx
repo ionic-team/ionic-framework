@@ -32,7 +32,12 @@ import type {
  * @part tick - An inactive tick mark.
  * @part tick-active - An active tick mark.
  * @part pin - The counter that appears above a knob.
- * @part knob - The handle that is used to drag the range.
+ * @part knob-handle - The container element that wraps the knob and handles drag interactions.
+ * @part knob-handle-a - The container element for the lower/left knob. Only available when `dualKnobs` is `true`.
+ * @part knob-handle-b - The container element for the upper/right knob. Only available when `dualKnobs` is `true`.
+ * @part knob - The visual knob element that appears on the range track.
+ * @part knob-a - The visual knob element for the lower/left knob. Only available when `dualKnobs` is `true`.
+ * @part knob-b - The visual knob element for the upper/right knob. Only available when `dualKnobs` is `true`.
  * @part bar - The inactive part of the bar.
  * @part bar-active - The active part of the bar.
  * @part label - The label text describing the range.
@@ -616,9 +621,9 @@ export class Range implements ComponentInterface {
 
   private setFocus(knob: KnobName) {
     if (this.el.shadowRoot) {
-      const knobEl = this.el.shadowRoot.querySelector(knob === 'A' ? '.range-knob-a' : '.range-knob-b') as
-        | HTMLElement
-        | undefined;
+      const knobEl = this.el.shadowRoot.querySelector(
+        knob === 'A' ? '.range-knob-handle-a' : '.range-knob-handle-b'
+      ) as HTMLElement | undefined;
       if (knobEl) {
         knobEl.focus();
       }
@@ -647,8 +652,8 @@ export class Range implements ComponentInterface {
 
     // Manually manage ion-focused class for dual knobs
     if (this.dualKnobs && this.el.shadowRoot) {
-      const knobA = this.el.shadowRoot.querySelector('.range-knob-a');
-      const knobB = this.el.shadowRoot.querySelector('.range-knob-b');
+      const knobA = this.el.shadowRoot.querySelector('.range-knob-handle-a');
+      const knobB = this.el.shadowRoot.querySelector('.range-knob-handle-b');
 
       // Remove ion-focused from both knobs first
       knobA?.classList.remove('ion-focused');
@@ -675,8 +680,8 @@ export class Range implements ComponentInterface {
 
         // Remove ion-focused from both knobs when focus leaves the range
         if (this.dualKnobs && this.el.shadowRoot) {
-          const knobA = this.el.shadowRoot.querySelector('.range-knob-a');
-          const knobB = this.el.shadowRoot.querySelector('.range-knob-b');
+          const knobA = this.el.shadowRoot.querySelector('.range-knob-handle-a');
+          const knobB = this.el.shadowRoot.querySelector('.range-knob-handle-b');
           knobA?.classList.remove('ion-focused');
           knobB?.classList.remove('ion-focused');
         }
@@ -848,6 +853,7 @@ export class Range implements ComponentInterface {
 
         {renderKnob(rtl, {
           knob: 'A',
+          dualKnobs: this.dualKnobs,
           pressed: pressedKnob === 'A',
           value: this.valA,
           ratio: this.ratioA,
@@ -865,6 +871,7 @@ export class Range implements ComponentInterface {
         {this.dualKnobs &&
           renderKnob(rtl, {
             knob: 'B',
+            dualKnobs: this.dualKnobs,
             pressed: pressedKnob === 'B',
             value: this.valB,
             ratio: this.ratioB,
@@ -924,6 +931,7 @@ export class Range implements ComponentInterface {
           [mode]: true,
           'in-item': inItem,
           'range-disabled': disabled,
+          'range-dual-knobs': dualKnobs,
           'range-pressed': pressedKnob !== undefined,
           'range-has-pin': pin,
           [`range-label-placement-${labelPlacement}`]: true,
@@ -956,6 +964,7 @@ export class Range implements ComponentInterface {
 
 interface RangeKnob {
   knob: KnobName;
+  dualKnobs: boolean;
   value: number;
   ratio: number;
   min: number;
@@ -974,6 +983,7 @@ const renderKnob = (
   rtl: boolean,
   {
     knob,
+    dualKnobs,
     value,
     ratio,
     min,
@@ -1019,14 +1029,15 @@ const renderKnob = (
       onBlur={onKnobBlur}
       class={{
         'range-knob-handle': true,
-        'range-knob-a': knob === 'A',
-        'range-knob-b': knob === 'B',
+        'range-knob-handle-a': knob === 'A',
+        'range-knob-handle-b': knob === 'B',
         'range-knob-pressed': pressed,
         'range-knob-min': value === min,
         'range-knob-max': value === max,
         'ion-activatable': true,
         'ion-focusable': true,
       }}
+      part={dualKnobs ? (knob === 'A' ? 'knob-handle knob-handle-a' : 'knob-handle knob-handle-b') : 'knob-handle'}
       style={knobStyle()}
       role="slider"
       tabindex={disabled ? -1 : 0}
@@ -1042,7 +1053,15 @@ const renderKnob = (
           {pinFormatter(value)}
         </div>
       )}
-      <div class="range-knob" role="presentation" part="knob" />
+      <div
+        class={{
+          'range-knob': true,
+          'range-knob-a': knob === 'A',
+          'range-knob-b': knob === 'B',
+        }}
+        role="presentation"
+        part={dualKnobs ? (knob === 'A' ? 'knob knob-a' : 'knob knob-b') : 'knob'}
+      />
     </div>
   );
 };
