@@ -1482,6 +1482,8 @@ ion-range,part,knob-handle-a
 ion-range,part,knob-handle-b
 ion-range,part,label
 ion-range,part,pin
+ion-range,part,pin-a
+ion-range,part,pin-b
 ion-range,part,tick
 ion-range,part,tick-active
 

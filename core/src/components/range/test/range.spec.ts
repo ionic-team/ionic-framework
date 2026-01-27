@@ -403,6 +403,10 @@ describe('range: shadow parts', () => {
 
     // pin only exists when pin is true
     expect(range).not.toHaveShadowPart('pin');
+
+    // pin a and pin b only exist when pin is true and dualKnobs is true
+    expect(range).not.toHaveShadowPart('pin-a');
+    expect(range).not.toHaveShadowPart('pin-b');
   });
 
   it('should have tick shadow parts', async () => {
@@ -433,6 +437,10 @@ describe('range: shadow parts', () => {
 
     // pin only exists when pin is true
     expect(range).not.toHaveShadowPart('pin');
+
+    // pin a and pin b only exist when pin is true and dualKnobs is true
+    expect(range).not.toHaveShadowPart('pin-a');
+    expect(range).not.toHaveShadowPart('pin-b');
   });
 
   it('should have pin shadow part', async () => {
@@ -463,12 +471,16 @@ describe('range: shadow parts', () => {
 
     // pin only exists when pin is true
     expect(range).toHaveShadowPart('pin');
+
+    // pin a and pin b only exist when pin is true and dualKnobs is true
+    expect(range).not.toHaveShadowPart('pin-a');
+    expect(range).not.toHaveShadowPart('pin-b');
   });
 
   it('should have dual knob shadow parts', async () => {
     const page = await newSpecPage({
       components: [Range],
-      html: `<ion-range dual-knobs="true" value="50" label="Label"></ion-range>`,
+      html: `<ion-range dual-knobs="true" pin="true" value="50" label="Label"></ion-range>`,
     });
     const range = page.body.querySelector('ion-range')!;
 
@@ -492,6 +504,10 @@ describe('range: shadow parts', () => {
     expect(range).not.toHaveShadowPart('tick-active');
 
     // pin only exists when pin is true
-    expect(range).not.toHaveShadowPart('pin');
+    expect(range).toHaveShadowPart('pin');
+
+    // pin a and pin b only exist when pin is true and dualKnobs is true
+    expect(range).toHaveShadowPart('pin-a');
+    expect(range).toHaveShadowPart('pin-b');
   });
 });

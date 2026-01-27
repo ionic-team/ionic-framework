@@ -32,6 +32,8 @@ import type {
  * @part tick - An inactive tick mark.
  * @part tick-active - An active tick mark.
  * @part pin - The counter that appears above a knob.
+ * @part pin-a - The counter that appears above the lower/left knob. Only available when `dualKnobs` is `true`.
+ * @part pin-b - The counter that appears above the upper/right knob. Only available when `dualKnobs` is `true`.
  * @part knob-handle - The container element that wraps the knob and handles drag interactions.
  * @part knob-handle-a - The container element for the lower/left knob. Only available when `dualKnobs` is `true`.
  * @part knob-handle-b - The container element for the upper/right knob. Only available when `dualKnobs` is `true`.
@@ -1049,7 +1051,7 @@ const renderKnob = (
       aria-valuenow={value}
     >
       {pin && (
-        <div class="range-pin" role="presentation" part="pin">
+        <div class="range-pin" role="presentation" part={dualKnobs ? (knob === 'A' ? 'pin pin-a' : 'pin pin-b') : 'pin'}>
           {pinFormatter(value)}
         </div>
       )}
