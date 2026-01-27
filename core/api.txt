@@ -601,7 +601,7 @@ ion-chip,prop,mode,"ios" | "md",undefined,false,false
 ion-chip,prop,outline,boolean,false,false,false
 ion-chip,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-chip,prop,size,"large" | "small" | undefined,undefined,false,false
-ion-chip,css-prop,--background
+ion-chip,css-prop,--bg
 ion-chip,css-prop,--border-radius
 ion-chip,css-prop,--color
 ion-chip,css-prop,--focus-ring-color
