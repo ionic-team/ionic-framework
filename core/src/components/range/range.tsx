@@ -883,7 +883,7 @@ export class Range implements ComponentInterface {
   }
 
   render() {
-    const { disabled, el, hasLabel, rangeId, pin, pressedKnob, labelPlacement, label, min, max, dualKnobs } = this;
+    const { disabled, el, hasLabel, rangeId, pin, pressedKnob, labelPlacement, label, dualKnobs, min, max } = this;
 
     const inItem = hostContext('ion-item', el);
 
