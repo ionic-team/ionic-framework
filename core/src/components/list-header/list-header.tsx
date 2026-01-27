@@ -7,6 +7,8 @@ import type { Color } from '../../interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part inner - The inner container element that wraps the list header content.
  */
 @Component({
   tag: 'ion-list-header',
@@ -40,7 +42,7 @@ export class ListHeader implements ComponentInterface {
           [`list-header-lines-${lines}`]: lines !== undefined,
         })}
       >
-        <div class="list-header-inner">
+        <div class="list-header-inner" part="inner">
           <slot></slot>
         </div>
       </Host>
