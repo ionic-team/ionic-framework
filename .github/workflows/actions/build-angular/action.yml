@@ -27,6 +27,10 @@ runs:
       run: npm run build
       shell: bash
       working-directory: ./packages/angular
+    - name: Clean core package.json
+      run: git checkout ./package.json
+      shell: bash
+      working-directory: ./core
     - name: 🔍 Check Diff
       run: git diff --exit-code
       shell: bash
