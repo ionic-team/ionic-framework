@@ -18,8 +18,8 @@ describe('range: dual knobs focus management', () => {
     await page.waitForChanges();
 
     // Get the knob elements
-    const knobA = range!.shadowRoot!.querySelector('.range-knob-a') as HTMLElement;
-    const knobB = range!.shadowRoot!.querySelector('.range-knob-b') as HTMLElement;
+    const knobA = range!.shadowRoot!.querySelector('.range-knob-handle-a') as HTMLElement;
+    const knobB = range!.shadowRoot!.querySelector('.range-knob-handle-b') as HTMLElement;
 
     expect(knobA).not.toBeNull();
     expect(knobB).not.toBeNull();
@@ -41,8 +41,8 @@ describe('range: dual knobs focus management', () => {
     const range = page.body.querySelector('ion-range');
     await page.waitForChanges();
 
-    const knobA = range!.shadowRoot!.querySelector('.range-knob-a') as HTMLElement;
-    const knobB = range!.shadowRoot!.querySelector('.range-knob-b') as HTMLElement;
+    const knobA = range!.shadowRoot!.querySelector('.range-knob-handle-a') as HTMLElement;
+    const knobB = range!.shadowRoot!.querySelector('.range-knob-handle-b') as HTMLElement;
 
     // Focus knob A
     knobA.dispatchEvent(new Event('focus'));
@@ -73,8 +73,8 @@ describe('range: dual knobs focus management', () => {
     const range = page.body.querySelector('ion-range');
     await page.waitForChanges();
 
-    const knobA = range!.shadowRoot!.querySelector('.range-knob-a') as HTMLElement;
-    const knobB = range!.shadowRoot!.querySelector('.range-knob-b') as HTMLElement;
+    const knobA = range!.shadowRoot!.querySelector('.range-knob-handle-a') as HTMLElement;
+    const knobB = range!.shadowRoot!.querySelector('.range-knob-handle-b') as HTMLElement;
 
     // Focus knob A
     knobA.dispatchEvent(new Event('focus'));
@@ -112,8 +112,8 @@ describe('range: dual knobs focus management', () => {
       focusEventFiredCount++;
     });
 
-    const knobA = range.shadowRoot!.querySelector('.range-knob-a') as HTMLElement;
-    const knobB = range.shadowRoot!.querySelector('.range-knob-b') as HTMLElement;
+    const knobA = range.shadowRoot!.querySelector('.range-knob-handle-a') as HTMLElement;
+    const knobB = range.shadowRoot!.querySelector('.range-knob-handle-b') as HTMLElement;
 
     // Focus knob A
     knobA.dispatchEvent(new Event('focus'));
@@ -140,7 +140,7 @@ describe('range: dual knobs focus management', () => {
       blurEventFired = true;
     });
 
-    const knobA = range.shadowRoot!.querySelector('.range-knob-a') as HTMLElement;
+    const knobA = range.shadowRoot!.querySelector('.range-knob-handle-a') as HTMLElement;
 
     // Focus and then blur knob A
     knobA.dispatchEvent(new Event('focus'));
@@ -173,8 +173,8 @@ describe('range: dual knobs focus management', () => {
     const beforeButton = page.body.querySelector('#before') as HTMLElement;
     await page.waitForChanges();
 
-    const knobA = range.shadowRoot!.querySelector('.range-knob-a') as HTMLElement;
-    const knobB = range.shadowRoot!.querySelector('.range-knob-b') as HTMLElement;
+    const knobA = range.shadowRoot!.querySelector('.range-knob-handle-a') as HTMLElement;
+    const knobB = range.shadowRoot!.querySelector('.range-knob-handle-b') as HTMLElement;
 
     // Start with focus on element before the range
     beforeButton.focus();
