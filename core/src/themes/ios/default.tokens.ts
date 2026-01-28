@@ -20,10 +20,12 @@ export const defaultTheme: DefaultTheme = {
   },
 
   config: {
-    IonChip: {
-      hue: 'bold',
-      shape: 'round',
-      size: 'large',
+    components: {
+      IonChip: {
+        hue: 'bold',
+        shape: 'round',
+        size: 'large',
+      },
     },
   },
 

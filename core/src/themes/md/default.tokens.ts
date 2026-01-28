@@ -23,10 +23,12 @@ export const defaultTheme: DefaultTheme = {
     formHighlight: true,
     rippleEffect: true,
 
-    IonChip: {
-      hue: 'bold',
-      shape: 'round',
-      size: 'large',
+    components: {
+      IonChip: {
+        hue: 'bold',
+        shape: 'round',
+        size: 'large',
+      },
     },
   },
 

@@ -1,4 +1,4 @@
-import type { IonChip as IonChipType, IonicChipConfig } from '../components/chip/chip.interfaces';
+import type { IonChip as IonChipType, IonChipConfig } from '../components/chip/chip.interfaces';
 import type { IonicConfig as IonicGlobalConfig } from '../utils/config';
 
 // Platform-specific theme
@@ -240,7 +240,9 @@ export type BaseTheme = {
 };
 
 export type IonicConfig = IonicGlobalConfig & {
-  IonChip?: IonicChipConfig;
+  components?: {
+    IonChip?: IonChipConfig;
+  };
 };
 
 // Dark theme interface

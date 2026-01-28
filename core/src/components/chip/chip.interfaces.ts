@@ -152,7 +152,7 @@ type IonChipIconDefinition = IonChipMediaDefinition & {
   color?: string;
 };
 
-export type IonicChipConfig = {
+export type IonChipConfig = {
   hue?: 'bold' | 'subtle';
   size?: 'small' | 'large';
   shape?: 'soft' | 'round' | 'rectangular';

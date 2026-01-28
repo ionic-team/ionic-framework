@@ -18,10 +18,12 @@ export const defaultTheme: DefaultTheme = {
   config: {
     formHighlight: true,
 
-    IonChip: {
-      hue: 'subtle',
-      shape: 'round',
-      size: 'large',
+    components: {
+      IonChip: {
+        hue: 'subtle',
+        shape: 'round',
+        size: 'large',
+      },
     },
   },
 

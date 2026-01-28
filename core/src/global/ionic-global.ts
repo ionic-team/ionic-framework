@@ -166,25 +166,30 @@ export const initialize = (userConfig: IonicConfig = {}) => {
     config.set('customTheme', baseTheme);
   }
 
-  // Apply any global config values from the custom theme
-  const customConfig = customTheme?.config;
-  if (customConfig) {
-    Object.entries(customConfig).forEach(([key, value]) => {
-      // A key with 'Ion' prefix indicates it's a component-specific config,
-      // which should not be merged into the global config settings.
-      if (key.startsWith('Ion')) {
-        return;
-      }
+  /**
+   * Apply any global config values from the custom theme
+   * excluding component-specific overrides.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { components, ...customGlobalConfig } = customTheme?.config || {};
 
-      if (typeof value === 'object' && value !== null) {
-        const existingConfig = config.get(key as keyof IonicConfig, {});
-        config.set(key as keyof IonicConfig, { ...existingConfig, ...value });
-        return;
-      }
+  Object.entries(customGlobalConfig).forEach(([key, value]) => {
+    const configKey = key as keyof IonicConfig;
 
-      config.set(key as keyof IonicConfig, value);
-    });
-  }
+    // For object-based config values, we merge with existing settings.
+    if (value !== null && typeof value === 'object') {
+      const existingConfig = config.get(configKey, {});
+      config.set(configKey, { ...existingConfig, ...value });
+      return;
+    }
+
+    /**
+     * For primitive values (boolean, string, number), we set the
+     * value directly.
+     * This covers global flags like 'rippleEffect' or 'animated'.
+     */
+    config.set(configKey, value);
+  });
 
   if (config.getBoolean('_testing')) {
     config.set('animated', false);
