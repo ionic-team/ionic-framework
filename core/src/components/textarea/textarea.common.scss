@@ -533,6 +533,17 @@
   opacity: 1;
 }
 
+/**
+ * When the rows attribute is set, the textarea should not force a min-height,
+ * but rather respect the natural height of the textarea. Specially when
+ * rows is set to 1.
+ */
+:host(.textarea-fill-outline.sc-ion-textarea-md-h[rows]),
+:host(.textarea-label-placement-stacked[rows]),
+:host(.textarea-label-placement-floating[rows]) {
+  min-height: auto;
+}
+
 // Start / End Slots
 // ----------------------------------------------------------------
 
