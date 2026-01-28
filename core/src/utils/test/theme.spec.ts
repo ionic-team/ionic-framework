@@ -243,7 +243,7 @@ describe('generateCSSVars', () => {
       components: {},
     };
 
-    const css = generateCSSVars(theme).replace(/\s/g, '');
+    const css = generateCSSVars(theme)!.replace(/\s/g, '');
 
     const expectedCSS = `
       --ion-border-width-sm: 4px;

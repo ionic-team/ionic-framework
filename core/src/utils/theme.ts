@@ -73,7 +73,13 @@ export const getCustomTheme = (customTheme: any, mode: string): any => {
  * @param prefix The CSS prefix to use (e.g., '--ion-')
  * @returns CSS string with custom properties
  */
-export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): string => {
+export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): string | undefined => {
+  // Logs do not need to be printed because palette objects are optional
+  const themeValidity = checkThemeValidity(theme, 'generateCSSVars', false);
+  if (!themeValidity) {
+    return undefined;
+  }
+
   const cssProps = Object.entries(theme)
     .flatMap(([key, val]) => {
       // Skip invalid keys or values
@@ -295,7 +301,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     // Include CSS variables for the dark color palette instead of
     // the light palette if dark palette enabled is 'always'
     paletteTokensCSS = highContrastTokensCSS;
-  } else if (palette.dark.enabled === 'always') {
+  } else if (palette.dark?.enabled === 'always') {
     // Include CSS variables for the dark color palette instead of
     // the light palette if dark palette enabled is 'always'
     paletteTokensCSS = darkTokensCSS;
@@ -308,7 +314,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     }
   `;
 
-  if (palette.highContrastDark.enabled === 'class') {
+  if (palette.highContrastDark?.enabled === 'class') {
     // Include CSS variables for the high contrast dark color palette inside of a
     // class if high contrast dark palette enabled is 'class'
     css += `
@@ -316,7 +322,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
         ${highContrastDarkTokensCSS}
       }
     `;
-  } else if (palette.highContrast.enabled === 'class') {
+  } else if (palette.highContrast?.enabled === 'class') {
     // Include CSS variables for the high contrast color palette inside of a
     // class if high contrast palette enabled is 'class'
     css += `
@@ -324,7 +330,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
         ${highContrastTokensCSS}
       }
     `;
-  } else if (palette.dark.enabled === 'class') {
+  } else if (palette.dark?.enabled === 'class') {
     // Include CSS variables for the dark color palette inside of a
     // class if dark palette enabled is 'class'
     css += `
@@ -334,7 +340,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     `;
   }
 
-  if (palette.highContrastDark.enabled === 'system') {
+  if (palette.highContrastDark?.enabled === 'system') {
     // Include CSS variables for the high contrast dark color palette inside of the
     // high contrast dark media query if high contrast dark palette enabled is 'system'
     css += `
@@ -344,7 +350,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
         }
       }
     `;
-  } else if (palette.highContrast.enabled === 'system') {
+  } else if (palette.highContrast?.enabled === 'system') {
     // Include CSS variables for the high contrast color palette inside of the
     // high contrast media query if high contrast palette enabled is 'system'
     css += `
@@ -354,7 +360,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
         }
       }
     `;
-  } else if (palette.dark.enabled === 'system') {
+  } else if (palette.dark?.enabled === 'system') {
     // Include CSS variables for the dark color palette inside of the
     // dark color scheme media query if dark palette enabled is 'system'
     css += `
@@ -559,14 +565,18 @@ const convertToKebabCase = (str: string): string => {
  * @param source The source or context where the theme is being validated
  * @returns A boolean indicating whether the theme is valid
  */
-const checkThemeValidity = (theme: any, source: string): boolean => {
+const checkThemeValidity = (theme: any, source: string, showLog: boolean = true): boolean => {
   if (typeof theme !== 'object' || Array.isArray(theme)) {
-    console.warn(`${source}: Invalid theme object provided`, theme);
+    if (showLog) {
+      printIonWarning(`${source}: Invalid theme object provided`, theme);
+    }
     return false;
   }
 
   if (Object.keys(theme).length === 0) {
-    console.warn(`${source}: Empty theme object provided`);
+    if (showLog) {
+      printIonWarning(`${source}: Empty theme object provided`, theme);
+    }
     return false;
   }
 

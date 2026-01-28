@@ -11,9 +11,9 @@ configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, s
     test('should render disabled state', async ({ page }) => {
       await page.setContent(
         `
-          // Adding margin so chips aren't overlapping
           <style>
             ion-chip {
+              /* Adding margin so chips aren't overlapping */
               margin: 4px 0;
             }
           </style>
@@ -37,9 +37,9 @@ configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, s
     test('should render focus state', async ({ page }) => {
       await page.setContent(
         `
-          // Adding margin so chips aren't overlapping
           <style>
             ion-chip {
+              /* Adding margin so chips aren't overlapping */
               margin: 4px 0;
             }
           </style>

@@ -9,8 +9,8 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ co
     test('should render subtle chips', async ({ page }) => {
       await page.setContent(
         `
-        // Adding margin so chips aren't overlapping
         <style>
+          /* Adding margin so chips aren't overlapping */
           ion-chip {
             margin: 4px 0;
           }
@@ -113,8 +113,8 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ co
     test('should render bold chips', async ({ page }) => {
       await page.setContent(
         `
-        // Adding margin so chips aren't overlapping
         <style>
+          /* Adding margin so chips aren't overlapping */
           ion-chip {
             margin: 4px 0;
           }
