@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Popover - Safe Area</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      /**
+       * Simulate safe-area insets for testing.
+       * These values represent typical Android edge-to-edge safe areas.
+       */
+      :root {
+        --ion-safe-area-top: 44px;
+        --ion-safe-area-bottom: 34px;
+        --ion-safe-area-left: 0px;
+        --ion-safe-area-right: 0px;
+      }
+
+      /* Visual indicator for safe areas */
+      .safe-area-indicator {
+        position: fixed;
+        background: rgba(255, 0, 0, 0.2);
+        pointer-events: none;
+        z-index: 99999;
+      }
+
+      .safe-area-top {
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--ion-safe-area-top);
+      }
+
+      .safe-area-bottom {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: var(--ion-safe-area-bottom);
+      }
+
+      /* Position triggers at different locations */
+      .bottom-trigger {
+        position: fixed;
+        bottom: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .near-bottom-trigger {
+        position: fixed;
+        bottom: 200px;
+        right: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <!-- Visual indicators for safe areas -->
+      <div class="safe-area-indicator safe-area-top"></div>
+      <div class="safe-area-indicator safe-area-bottom"></div>
+
+      <div class="ion-page" id="main-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Popover - Safe Area Positioning</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <p>Test that popovers are <strong>positioned away from</strong> unsafe areas (shown in red).</p>
+          <p>The popover should be moved up/down to avoid overlapping the safe-area zones.</p>
+
+          <ion-list>
+            <ion-item>
+              <ion-label>
+                <h2>Small Popover (Center)</h2>
+                <p>Floating popover - positioned in center, no adjustment needed</p>
+              </ion-label>
+              <ion-button slot="end" id="small-popover-trigger">Present</ion-button>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>
+                <h2>Large Popover</h2>
+                <p>Tall content that may extend toward bottom safe area</p>
+              </ion-label>
+              <ion-button slot="end" id="large-popover-trigger">Present</ion-button>
+            </ion-item>
+          </ion-list>
+
+          <ion-button class="bottom-trigger" id="bottom-trigger"> Trigger Near Bottom </ion-button>
+
+          <ion-button class="near-bottom-trigger" id="near-bottom-trigger"> Near Bottom Right </ion-button>
+
+          <!-- Small popover -->
+          <ion-popover trigger="small-popover-trigger" trigger-action="click">
+            <ion-content class="ion-padding">
+              <ion-list>
+                <ion-item><ion-label>Option 1</ion-label></ion-item>
+                <ion-item><ion-label>Option 2</ion-label></ion-item>
+                <ion-item><ion-label>Option 3</ion-label></ion-item>
+              </ion-list>
+            </ion-content>
+          </ion-popover>
+
+          <!-- Large popover with many items -->
+          <ion-popover trigger="large-popover-trigger" trigger-action="click">
+            <ion-content>
+              <ion-list id="large-list"></ion-list>
+            </ion-content>
+          </ion-popover>
+
+          <!-- Popover triggered from near bottom -->
+          <ion-popover trigger="bottom-trigger" trigger-action="click">
+            <ion-content>
+              <ion-list id="bottom-list"></ion-list>
+            </ion-content>
+          </ion-popover>
+
+          <!-- Popover triggered from near bottom right -->
+          <ion-popover trigger="near-bottom-trigger" trigger-action="click">
+            <ion-content>
+              <ion-list id="near-bottom-list"></ion-list>
+            </ion-content>
+          </ion-popover>
+        </ion-content>
+      </div>
+    </ion-app>
+
+    <script>
+      // Generate list items for popovers
+      function generateItems(listId, count) {
+        const list = document.getElementById(listId);
+        if (!list) return;
+
+        for (let i = 1; i <= count; i++) {
+          const item = document.createElement('ion-item');
+          const label = document.createElement('ion-label');
+          label.textContent = `Item ${i}`;
+          item.appendChild(label);
+          list.appendChild(item);
+        }
+      }
+
+      generateItems('large-list', 15);
+      generateItems('bottom-list', 10);
+      generateItems('near-bottom-list', 8);
+    </script>
+  </body>
+</html>

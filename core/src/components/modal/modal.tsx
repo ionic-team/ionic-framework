@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { win } from '@utils/browser';
 import { findIonContent, printIonContentErrorMsg } from '@utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
 import { raf, inheritAttributes, hasLazyBuild, getElementRoot } from '@utils/helpers';
@@ -98,10 +99,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   // Mutation observer to watch for parent removal
   private parentRemovalObserver?: MutationObserver;
+  // Watches for dynamic footer additions/removals to update safe-area padding
+  private footerObserver?: MutationObserver;
   // Cached original parent from before modal is moved to body during presentation
   private cachedOriginalParent?: HTMLElement;
   // Cached ion-page ancestor for child route passthrough
   private cachedPageParent?: HTMLElement | null;
+  // Whether to skip coordinate-based safe-area detection (for fullscreen phone modals)
+  private skipSafeAreaCoordinateDetection = false;
+  // Cached safe-area values to avoid getComputedStyle calls during gestures
+  private cachedSafeAreas?: { top: number; bottom: number; left: number; right: number };
+  // Track previous safe-area state to avoid redundant DOM writes
+  private prevSafeAreaState = { top: false, bottom: false, left: false, right: false };
 
   lastFocus?: HTMLElement;
   animation?: Animation;
@@ -276,7 +285,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   @Listen('resize', { target: 'window' })
   onWindowResize() {
-    // Only handle resize for iOS card modals when no custom animations are provided
+    // Invalidate safe-area cache on resize (device rotation may change values)
+    this.cachedSafeAreas = undefined;
+    this.updateSafeAreaOverrides();
+
+    // Only handle view transition for iOS card modals when no custom animations are provided
     if (getIonMode(this) !== 'ios' || !this.presentingElement || this.enterAnimation || this.leaveAnimation) {
       return;
     }
@@ -406,6 +419,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.triggerController.removeClickListener();
     this.cleanupViewTransitionListener();
     this.cleanupParentRemovalObserver();
+    // Reset safe-area state to handle removal without dismiss (e.g., framework unmount)
+    this.resetSafeAreaState();
   }
 
   componentWillLoad() {
@@ -592,6 +607,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       await waitForMount();
     }
 
+    // Predict safe-area needs based on modal configuration to avoid visual snap
+    this.setInitialSafeAreaOverrides(presentingElement);
+
     writeTask(() => this.el.classList.add('show-modal'));
 
     const hasCardModal = presentingElement !== undefined;
@@ -659,6 +677,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.initSwipeToClose();
     }
 
+    // Now that animation is complete, update safe-area based on actual position
+    this.updateSafeAreaOverrides();
+
     // Initialize view transition listener for iOS card modals
     this.initViewTransitionListener();
 
@@ -692,33 +713,39 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const statusBarStyle = this.statusBarStyle ?? StatusBarStyle.Default;
 
-    this.gesture = createSwipeToCloseGesture(el, ani, statusBarStyle, () => {
-      /**
-       * While the gesture animation is finishing
-       * it is possible for a user to tap the backdrop.
-       * This would result in the dismiss animation
-       * being played again. Typically this is avoided
-       * by setting `presented = false` on the overlay
-       * component; however, we cannot do that here as
-       * that would prevent the element from being
-       * removed from the DOM.
-       */
-      this.gestureAnimationDismissing = true;
+    this.gesture = createSwipeToCloseGesture(
+      el,
+      ani,
+      statusBarStyle,
+      () => {
+        /**
+         * While the gesture animation is finishing
+         * it is possible for a user to tap the backdrop.
+         * This would result in the dismiss animation
+         * being played again. Typically this is avoided
+         * by setting `presented = false` on the overlay
+         * component; however, we cannot do that here as
+         * that would prevent the element from being
+         * removed from the DOM.
+         */
+        this.gestureAnimationDismissing = true;
 
-      /**
-       * Reset the status bar style as the dismiss animation
-       * starts otherwise the status bar will be the wrong
-       * color for the duration of the dismiss animation.
-       * The dismiss method does this as well, but
-       * in this case it's only called once the animation
-       * has finished.
-       */
-      setCardStatusBarDefault(this.statusBarStyle);
-      this.animation!.onFinish(async () => {
-        await this.dismiss(undefined, GESTURE);
-        this.gestureAnimationDismissing = false;
-      });
-    });
+        /**
+         * Reset the status bar style as the dismiss animation
+         * starts otherwise the status bar will be the wrong
+         * color for the duration of the dismiss animation.
+         * The dismiss method does this as well, but
+         * in this case it's only called once the animation
+         * has finished.
+         */
+        setCardStatusBarDefault(this.statusBarStyle);
+        this.animation!.onFinish(async () => {
+          await this.dismiss(undefined, GESTURE);
+          this.gestureAnimationDismissing = false;
+        });
+      },
+      () => this.updateSafeAreaOverrides()
+    );
     this.gesture.enable(true);
   }
 
@@ -755,7 +782,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
           this.currentBreakpoint = breakpoint;
           this.ionBreakpointDidChange.emit({ breakpoint });
         }
-      }
+        this.updateSafeAreaOverrides();
+      },
+      () => this.updateSafeAreaOverrides()
     );
 
     this.gesture = gesture;
@@ -847,6 +876,203 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     // Clear the cached reference
     this.cachedPageParent = undefined;
+  }
+
+  /**
+   * Sets initial safe-area overrides based on modal configuration before
+   * the modal becomes visible. This predicts whether the modal will touch
+   * screen edges to avoid a visual snap after animation completes.
+   */
+  private setInitialSafeAreaOverrides(presentingElement: HTMLElement | undefined) {
+    const style = this.el.style;
+    const mode = getIonMode(this);
+    const isSheetModal = this.breakpoints !== undefined && this.initialBreakpoint !== undefined;
+    // Card modals only exist in iOS mode - in MD mode, presentingElement is ignored
+    const isCardModal = presentingElement !== undefined && mode === 'ios';
+    const isTablet = window.innerWidth >= 768;
+
+    // Sheet modals always touch bottom edge, never top/left/right
+    if (isSheetModal) {
+      style.setProperty('--ion-safe-area-top', '0px');
+      style.setProperty('--ion-safe-area-left', '0px');
+      style.setProperty('--ion-safe-area-right', '0px');
+      return;
+    }
+
+    // Card modals have rounded top corners
+    if (isCardModal) {
+      style.setProperty('--ion-safe-area-top', '0px');
+      if (isTablet) {
+        // On tablets, card modals are inset from all edges
+        this.zeroAllSafeAreas();
+      } else {
+        // On phones, card modals still extend to the bottom edge
+        style.setProperty('--ion-safe-area-left', '0px');
+        style.setProperty('--ion-safe-area-right', '0px');
+        this.applyFullscreenSafeArea();
+      }
+      return;
+    }
+
+    // Phone-sized fullscreen modals inherit safe areas and use wrapper padding
+    if (!isTablet) {
+      this.applyFullscreenSafeArea();
+      return;
+    }
+
+    // Check if tablet modal is fullscreen via CSS custom properties
+    const computedStyle = getComputedStyle(this.el);
+    const width = computedStyle.getPropertyValue('--width').trim();
+    const height = computedStyle.getPropertyValue('--height').trim();
+    const isFullscreen = width === '100%' && height === '100%';
+
+    if (isFullscreen) {
+      this.applyFullscreenSafeArea();
+    } else {
+      // Centered dialog doesn't touch edges
+      this.zeroAllSafeAreas();
+    }
+  }
+
+  /**
+   * Applies safe-area handling for fullscreen modals.
+   * Adds wrapper padding when no footer is present to prevent
+   * content from overlapping system navigation areas.
+   */
+  private applyFullscreenSafeArea() {
+    this.skipSafeAreaCoordinateDetection = true;
+    this.updateFooterPadding();
+
+    // Watch for dynamic footer additions/removals (e.g., async data loading)
+    // Use subtree:true to support wrapped footers in framework components
+    // (e.g., <my-footer><ion-footer>...</ion-footer></my-footer>)
+    if (!this.footerObserver && win !== undefined && 'MutationObserver' in win) {
+      this.footerObserver = new MutationObserver(() => this.updateFooterPadding());
+      this.footerObserver.observe(this.el, { childList: true, subtree: true });
+    }
+  }
+
+  /**
+   * Updates wrapper padding based on footer presence.
+   * Called initially and when footer is dynamically added/removed.
+   */
+  private updateFooterPadding() {
+    if (!this.wrapperEl) return;
+
+    const hasFooter = this.el.querySelector('ion-footer') !== null;
+    if (hasFooter) {
+      this.wrapperEl.style.removeProperty('padding-bottom');
+      this.wrapperEl.style.removeProperty('box-sizing');
+    } else {
+      this.wrapperEl.style.setProperty('padding-bottom', 'var(--ion-safe-area-bottom, 0px)');
+      this.wrapperEl.style.setProperty('box-sizing', 'border-box');
+    }
+  }
+
+  /**
+   * Sets all safe-area CSS variables to 0px for modals that
+   * don't touch screen edges.
+   */
+  private zeroAllSafeAreas() {
+    const style = this.el.style;
+    style.setProperty('--ion-safe-area-top', '0px');
+    style.setProperty('--ion-safe-area-bottom', '0px');
+    style.setProperty('--ion-safe-area-left', '0px');
+    style.setProperty('--ion-safe-area-right', '0px');
+  }
+
+  /**
+   * Resets all safe-area related state and styles.
+   * Called during dismiss and disconnectedCallback to ensure clean state
+   * for re-presentation of inline modals.
+   */
+  private resetSafeAreaState() {
+    this.skipSafeAreaCoordinateDetection = false;
+    this.cachedSafeAreas = undefined;
+    this.prevSafeAreaState = { top: false, bottom: false, left: false, right: false };
+    this.footerObserver?.disconnect();
+    this.footerObserver = undefined;
+
+    // Clear wrapper styles that may have been set for safe-area handling
+    if (this.wrapperEl) {
+      this.wrapperEl.style.removeProperty('padding-bottom');
+      this.wrapperEl.style.removeProperty('box-sizing');
+    }
+
+    // Clear safe-area CSS variable overrides
+    const style = this.el.style;
+    style.removeProperty('--ion-safe-area-top');
+    style.removeProperty('--ion-safe-area-bottom');
+    style.removeProperty('--ion-safe-area-left');
+    style.removeProperty('--ion-safe-area-right');
+  }
+
+  /**
+   * Gets the root safe-area values from the document element.
+   * Uses cached values during gestures to avoid getComputedStyle calls.
+   */
+  private getSafeAreaValues(): { top: number; bottom: number; left: number; right: number } {
+    if (!this.cachedSafeAreas) {
+      const rootStyle = getComputedStyle(document.documentElement);
+      this.cachedSafeAreas = {
+        top: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-top')) || 0,
+        bottom: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-bottom')) || 0,
+        left: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-left')) || 0,
+        right: parseFloat(rootStyle.getPropertyValue('--ion-safe-area-right')) || 0,
+      };
+    }
+    return this.cachedSafeAreas;
+  }
+
+  /**
+   * Updates safe-area CSS variable overrides based on whether the modal
+   * extends into each safe-area region. Called after animation
+   * and during gestures to handle dynamic position changes.
+   *
+   * Optimized to avoid redundant DOM writes by tracking previous state.
+   */
+  private updateSafeAreaOverrides() {
+    if (this.skipSafeAreaCoordinateDetection) {
+      return;
+    }
+
+    const wrapper = this.wrapperEl;
+    if (!wrapper) {
+      return;
+    }
+
+    const rect = wrapper.getBoundingClientRect();
+    const safeAreas = this.getSafeAreaValues();
+
+    const extendsIntoTop = rect.top < safeAreas.top;
+    const extendsIntoBottom = rect.bottom > window.innerHeight - safeAreas.bottom;
+    const extendsIntoLeft = rect.left < safeAreas.left;
+    const extendsIntoRight = rect.right > window.innerWidth - safeAreas.right;
+
+    // Only update DOM when state actually changes
+    const prev = this.prevSafeAreaState;
+    const style = this.el.style;
+
+    if (extendsIntoTop !== prev.top) {
+      extendsIntoTop ? style.removeProperty('--ion-safe-area-top') : style.setProperty('--ion-safe-area-top', '0px');
+      prev.top = extendsIntoTop;
+    }
+    if (extendsIntoBottom !== prev.bottom) {
+      extendsIntoBottom
+        ? style.removeProperty('--ion-safe-area-bottom')
+        : style.setProperty('--ion-safe-area-bottom', '0px');
+      prev.bottom = extendsIntoBottom;
+    }
+    if (extendsIntoLeft !== prev.left) {
+      extendsIntoLeft ? style.removeProperty('--ion-safe-area-left') : style.setProperty('--ion-safe-area-left', '0px');
+      prev.left = extendsIntoLeft;
+    }
+    if (extendsIntoRight !== prev.right) {
+      extendsIntoRight
+        ? style.removeProperty('--ion-safe-area-right')
+        : style.setProperty('--ion-safe-area-right', '0px');
+      prev.right = extendsIntoRight;
+    }
   }
 
   private sheetOnDismiss() {
@@ -961,6 +1187,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
     this.currentBreakpoint = undefined;
     this.animation = undefined;
+    // Reset safe-area state for potential re-presentation
+    this.resetSafeAreaState();
 
     unlock();
 

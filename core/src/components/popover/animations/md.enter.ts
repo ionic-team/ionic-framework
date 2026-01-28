@@ -47,7 +47,17 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
 
   const padding = size === 'cover' ? 0 : POPOVER_MD_BODY_PADDING;
 
-  const { originX, originY, top, left, bottom } = calculateWindowAdjustment(
+  const {
+    originX,
+    originY,
+    top,
+    left,
+    bottom,
+    checkSafeAreaTop,
+    checkSafeAreaBottom,
+    checkSafeAreaLeft,
+    checkSafeAreaRight,
+  } = calculateWindowAdjustment(
     side,
     results.top,
     results.left,
@@ -61,6 +71,34 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
     results.originY,
     results.referenceCoordinates
   );
+
+  /**
+   * Safe area CSS variable adjustments.
+   * When the popover is positioned near an edge, we add the corresponding
+   * safe-area inset to ensure the popover doesn't overlap with system UI
+   * (status bars, home indicators, navigation bars on Android API 36+, etc.)
+   */
+  const safeAreaTop = ' + var(--ion-safe-area-top, 0)';
+  const safeAreaBottom = ' + var(--ion-safe-area-bottom, 0)';
+  const safeAreaLeft = ' + var(--ion-safe-area-left, 0)';
+  const safeAreaRight = ' - var(--ion-safe-area-right, 0)';
+
+  let topValue = `${top}px`;
+  let bottomValue = bottom !== undefined ? `${bottom}px` : undefined;
+  let leftValue = `${left}px`;
+
+  if (checkSafeAreaTop) {
+    topValue = `${top}px${safeAreaTop}`;
+  }
+  if (checkSafeAreaBottom && bottomValue !== undefined) {
+    bottomValue = `${bottom}px${safeAreaBottom}`;
+  }
+  if (checkSafeAreaLeft) {
+    leftValue = `${left}px${safeAreaLeft}`;
+  }
+  if (checkSafeAreaRight) {
+    leftValue = `${left}px${safeAreaRight}`;
+  }
 
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
@@ -81,13 +119,13 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
   contentAnimation
     .addElement(contentEl)
     .beforeStyles({
-      top: `calc(${top}px + var(--offset-y, 0px))`,
-      left: `calc(${left}px + var(--offset-x, 0px))`,
+      top: `calc(${topValue} + var(--offset-y, 0px))`,
+      left: `calc(${leftValue} + var(--offset-x, 0px))`,
       'transform-origin': `${originY} ${originX}`,
     })
     .beforeAddWrite(() => {
-      if (bottom !== undefined) {
-        contentEl.style.setProperty('bottom', `${bottom}px`);
+      if (bottomValue !== undefined) {
+        contentEl.style.setProperty('bottom', `calc(${bottomValue})`);
       }
     })
     .fromTo('transform', 'scale(0.8)', 'scale(1)');

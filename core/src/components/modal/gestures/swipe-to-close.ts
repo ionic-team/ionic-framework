@@ -20,7 +20,8 @@ export const createSwipeToCloseGesture = (
   el: HTMLIonModalElement,
   animation: Animation,
   statusBarStyle: StatusBarStyle,
-  onDismiss: () => void
+  onDismiss: () => void,
+  onGestureMove?: () => void
 ) => {
   /**
    * The step value at which a card modal
@@ -198,6 +199,9 @@ export const createSwipeToCloseGesture = (
     const clampedStep = clamp(0.0001, processedStep, maxStep);
 
     animation.progressStep(clampedStep);
+
+    // Notify modal of position change for safe-area updates
+    onGestureMove?.();
 
     /**
      * When swiping down half way, the status bar style

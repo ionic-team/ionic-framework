@@ -30,6 +30,8 @@ export interface PopoverStyles {
   bottom?: number;
   originX: string;
   originY: string;
+  checkSafeAreaTop: boolean;
+  checkSafeAreaBottom: boolean;
   checkSafeAreaLeft: boolean;
   checkSafeAreaRight: boolean;
   arrowTop: number;
@@ -829,6 +831,8 @@ export const calculateWindowAdjustment = (
   let bottom;
   let originX = contentOriginX;
   let originY = contentOriginY;
+  let checkSafeAreaTop = false;
+  let checkSafeAreaBottom = false;
   let checkSafeAreaLeft = false;
   let checkSafeAreaRight = false;
   const triggerTop = triggerCoordinates
@@ -874,10 +878,19 @@ export const calculateWindowAdjustment = (
        * We chose 12 here so that the popover position looks a bit nicer as
        * it is not right up against the edge of the screen.
        */
-      top = Math.max(12, triggerTop - contentHeight - triggerHeight - (arrowHeight - 1));
+      top = Math.max(bodyPadding, triggerTop - contentHeight - triggerHeight - (arrowHeight - 1));
       arrowTop = top + contentHeight;
       originY = 'bottom';
       addPopoverBottomClass = true;
+
+      /**
+       * If the popover is positioned near the top edge, account for safe area.
+       * This ensures the popover doesn't overlap with status bars or notches.
+       */
+      if (top <= bodyPadding + safeAreaMargin) {
+        checkSafeAreaTop = true;
+        top = bodyPadding;
+      }
 
       /**
        * If not enough room for popover to appear
@@ -885,7 +898,27 @@ export const calculateWindowAdjustment = (
        */
     } else {
       bottom = bodyPadding;
+      /**
+       * When the popover is pinned to the bottom, account for safe area.
+       * This ensures the popover doesn't overlap with home indicators
+       * or navigation bars (e.g., Android API 36+ edge-to-edge).
+       */
+      checkSafeAreaBottom = true;
     }
+  }
+
+  /**
+   * Final check: If the popover extends into any safe-area region,
+   * ensure the corresponding flag is set regardless of side.
+   * This handles cases where a side-positioned popover (left/right)
+   * still needs bottom safe-area padding because it extends into that region.
+   */
+  const popoverBottom = bottom !== undefined ? bodyHeight - bottom : top + contentHeight;
+  if (popoverBottom + safeAreaMargin > bodyHeight) {
+    checkSafeAreaBottom = true;
+  }
+  if (top < safeAreaMargin) {
+    checkSafeAreaTop = true;
   }
 
   return {
@@ -894,6 +927,8 @@ export const calculateWindowAdjustment = (
     bottom,
     originX,
     originY,
+    checkSafeAreaTop,
+    checkSafeAreaBottom,
     checkSafeAreaLeft,
     checkSafeAreaRight,
     arrowTop,
