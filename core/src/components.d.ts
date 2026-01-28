@@ -872,6 +872,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * The fill for the chip.  Set to `"outline"` for a chip with a border and background. Set to `"solid"` for a chip with a background.  Defaults to `"solid"` if no fill is set in the custom theme config.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
           * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if no hue is set in the custom theme config.
          */
         "hue"?: 'bold' | 'subtle';
@@ -880,7 +884,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Display an outline style button.
+          * @deprecated - Use fill="outline" instead  Display an outline style button.
           * @default false
          */
         "outline": boolean;
@@ -6841,6 +6845,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * The fill for the chip.  Set to `"outline"` for a chip with a border and background. Set to `"solid"` for a chip with a background.  Defaults to `"solid"` if no fill is set in the custom theme config.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
           * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if no hue is set in the custom theme config.
          */
         "hue"?: 'bold' | 'subtle';
@@ -6849,7 +6857,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Display an outline style button.
+          * @deprecated - Use fill="outline" instead  Display an outline style button.
           * @default false
          */
         "outline"?: boolean;

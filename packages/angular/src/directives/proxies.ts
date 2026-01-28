@@ -550,14 +550,14 @@ setting the `checked` property.
 
 
 @ProxyCmp({
-  inputs: ['color', 'disabled', 'hue', 'mode', 'outline', 'shape', 'size']
+  inputs: ['color', 'disabled', 'fill', 'hue', 'mode', 'outline', 'shape', 'size']
 })
 @Component({
   selector: 'ion-chip',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'hue', 'mode', 'outline', 'shape', 'size'],
+  inputs: ['color', 'disabled', 'fill', 'hue', 'mode', 'outline', 'shape', 'size'],
 })
 export class IonChip {
   protected el: HTMLIonChipElement;

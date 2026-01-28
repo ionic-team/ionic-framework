@@ -232,8 +232,8 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Variants
-      variant: {
+      // Fills
+      fill: {
         outline: {
           bg: 'transparent',
 

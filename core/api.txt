@@ -596,6 +596,7 @@ ion-checkbox,part,supporting-text
 ion-chip,shadow
 ion-chip,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-chip,prop,disabled,boolean,false,false,false
+ion-chip,prop,fill,"outline" | "solid" | undefined,undefined,false,false
 ion-chip,prop,hue,"bold" | "subtle" | undefined,undefined,false,false
 ion-chip,prop,mode,"ios" | "md",undefined,false,false
 ion-chip,prop,outline,boolean,false,false,false

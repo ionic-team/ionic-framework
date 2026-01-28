@@ -45,9 +45,9 @@ export type IonChip = {
     subtle: IonChipHueDefinition;
   };
 
-  // Variants
+  // Fills
 
-  variant?: {
+  fill?: {
     outline: {
       bg?: string;
 

@@ -60,43 +60,43 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ co
 
           <br>
 
-          <ion-chip hue="subtle" outline>
+          <ion-chip hue="subtle" fill="outline">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="subtle" outline color="primary">
+          <ion-chip hue="subtle" fill="outline" color="primary">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="subtle" outline color="secondary">
+          <ion-chip hue="subtle" fill="outline" color="secondary">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="subtle" outline color="tertiary">
+          <ion-chip hue="subtle" fill="outline" color="tertiary">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="subtle" outline color="success">
+          <ion-chip hue="subtle" fill="outline" color="success">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="subtle" outline color="warning">
+          <ion-chip hue="subtle" fill="outline" color="warning">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="subtle" outline color="danger">
+          <ion-chip hue="subtle" fill="outline" color="danger">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="subtle" outline color="light">
+          <ion-chip hue="subtle" fill="outline" color="light">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="subtle" outline color="medium">
+          <ion-chip hue="subtle" fill="outline" color="medium">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="subtle" outline color="dark">
+          <ion-chip hue="subtle" fill="outline" color="dark">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
@@ -164,43 +164,43 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ co
 
           <br>
 
-          <ion-chip hue="bold" outline>
+          <ion-chip hue="bold" fill="outline">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="bold" outline color="primary">
+          <ion-chip hue="bold" fill="outline" color="primary">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="bold" outline color="secondary">
+          <ion-chip hue="bold" fill="outline" color="secondary">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="bold" outline color="tertiary">
+          <ion-chip hue="bold" fill="outline" color="tertiary">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="bold" outline color="success">
+          <ion-chip hue="bold" fill="outline" color="success">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="bold" outline color="warning">
+          <ion-chip hue="bold" fill="outline" color="warning">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="bold" outline color="danger">
+          <ion-chip hue="bold" fill="outline" color="danger">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="bold" outline color="light">
+          <ion-chip hue="bold" fill="outline" color="light">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="bold" outline color="medium">
+          <ion-chip hue="bold" fill="outline" color="medium">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>
-          <ion-chip hue="bold" outline color="dark">
+          <ion-chip hue="bold" fill="outline" color="dark">
             <ion-icon name="logo-ionic"></ion-icon>
             <ion-label>Chip</ion-label>
           </ion-chip>

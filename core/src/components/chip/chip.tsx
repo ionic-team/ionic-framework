@@ -1,5 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Prop, h } from '@stencil/core';
+import { Component, Element, Host, Prop, h } from '@stencil/core';
+import { printIonWarning } from '@utils/logging';
 import { createColorClasses } from '@utils/theme';
 
 import { config } from '../../global/config';
@@ -14,6 +15,8 @@ import type { Color } from '../../interface';
   shadow: true,
 })
 export class Chip implements ComponentInterface {
+  @Element() el!: HTMLElement;
+
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -22,9 +25,21 @@ export class Chip implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
+   * @deprecated - Use fill="outline" instead
+   *
    * Display an outline style button.
    */
   @Prop() outline = false;
+
+  /**
+   * The fill for the chip.
+   *
+   * Set to `"outline"` for a chip with a border and background.
+   * Set to `"solid"` for a chip with a background.
+   *
+   * Defaults to `"solid"` if no fill is set in the custom theme config.
+   */
+  @Prop() fill?: 'outline' | 'solid';
 
   /**
    * If `true`, the user cannot interact with the chip.
@@ -58,6 +73,23 @@ export class Chip implements ComponentInterface {
   @Prop() size?: 'small' | 'large';
 
   /**
+   * Set the fill based on the custom theme config
+   */
+  get fillValue(): string {
+    // Check if the deprecated outline prop is used
+    if (this.outline) {
+      printIonWarning(`[ion-chip] - The "outline" prop is deprecated. Use fill="outline" instead.`, this.el);
+
+      return 'outline';
+    }
+
+    const fillConfig = config.getObjectValue('IonChip.fill');
+    const fill = this.fill || fillConfig || 'solid';
+
+    return fill;
+  }
+
+  /**
    * Set the hue based on the custom theme config
    */
   get hueValue(): string {
@@ -88,20 +120,20 @@ export class Chip implements ComponentInterface {
   }
 
   render() {
-    const { hueValue: hue, shapeValue: shape, sizeValue: size } = this;
+    const { hueValue, shapeValue, sizeValue, fillValue } = this;
     const useRippleEffect = config.getBoolean('rippleEffect', false);
 
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
-          [`chip-${shape}`]: true,
-          'chip-outline': this.outline,
+          [`chip-${shapeValue}`]: true,
+          [`chip-${fillValue}`]: true,
           'chip-disabled': this.disabled,
           'ion-activatable': true,
           'ion-focusable': !this.disabled,
-          [`chip-${size}`]: true,
-          [`chip-${hue}`]: true,
+          [`chip-${sizeValue}`]: true,
+          [`chip-${hueValue}`]: true,
         })}
       >
         <slot></slot>

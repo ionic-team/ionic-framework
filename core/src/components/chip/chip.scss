@@ -26,7 +26,6 @@
   align-items: center;
   justify-content: center;
 
-  background: var(--bg);
   color: var(--color);
 
   font-weight: var(--ion-chip-font-weight);
@@ -100,37 +99,44 @@
   color: var(--ion-chip-hue-subtle-semantic-color);
 }
 
-// Chip Variants
+// Chip Fills
 // ---------------------------------------------
+
+// Solid
+:host(.chip-solid) {
+  background: var(--bg);
+}
 
 // Outline
 :host(.chip-outline) {
-  border-width: var(--ion-chip-variant-outline-border-width);
+  border-width: var(--ion-chip-fill-outline-border-width);
   border-style: solid;
+
+  background: var(--bg);
 }
 
 :host(.chip-outline.chip-bold) {
-  --bg: var(--ion-chip-variant-outline-bg, var(--ion-chip-hue-bold-bg));
+  --bg: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg));
 
-  border-color: var(--ion-chip-variant-outline-border-color-bold);
+  border-color: var(--ion-chip-fill-outline-border-color-bold);
 }
 
 :host(.chip-outline.chip-bold.ion-color) {
-  border-color: var(--ion-chip-variant-outline-semantic-border-color-bold);
+  border-color: var(--ion-chip-fill-outline-semantic-border-color-bold);
 
-  background: var(--ion-chip-variant-outline-bg, var(--ion-chip-hue-bold-semantic-bg));
+  background: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-semantic-bg));
 }
 
 :host(.chip-outline.chip-subtle) {
-  --bg: var(--ion-chip-variant-outline-bg, var(--ion-chip-hue-subtle-bg));
+  --bg: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg));
 
-  border-color: var(--ion-chip-variant-outline-border-color-subtle);
+  border-color: var(--ion-chip-fill-outline-border-color-subtle);
 }
 
 :host(.chip-outline.chip-subtle.ion-color) {
-  border-color: var(--ion-chip-variant-outline-semantic-border-color-subtle);
+  border-color: var(--ion-chip-fill-outline-semantic-border-color-subtle);
 
-  background: var(--ion-chip-variant-outline-bg, var(--ion-chip-hue-subtle-semantic-bg));
+  background: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-semantic-bg));
 }
 
 // Chip States
@@ -157,10 +163,7 @@
 }
 
 :host(.ion-focused.chip-outline.chip-bold) {
-  --bg: var(
-    --ion-chip-variant-outline-state-focus-bg-bold,
-    var(--ion-chip-variant-outline-bg, var(--ion-chip-hue-bold-bg))
-  );
+  --bg: var(--ion-chip-fill-outline-state-focus-bg-bold, var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg)));
 }
 
 :host(.ion-focused.chip-subtle) {
@@ -173,8 +176,8 @@
 
 :host(.ion-focused.chip-outline.chip-subtle) {
   --bg: var(
-    --ion-chip-variant-outline-state-focus-bg-subtle,
-    var(--ion-chip-variant-outline-bg, var(--ion-chip-hue-subtle-bg))
+    --ion-chip-fill-outline-state-focus-bg-subtle,
+    var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg))
   );
 }
 
@@ -189,8 +192,8 @@
 
 :host(.ion-activated.chip-outline.chip-bold) {
   --bg: var(
-    --ion-chip-variant-outline-state-activated-bg-bold,
-    var(--ion-chip-variant-outline-bg, var(--ion-chip-hue-bold-bg))
+    --ion-chip-fill-outline-state-activated-bg-bold,
+    var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg))
   );
 }
 
@@ -204,8 +207,8 @@
 
 :host(.ion-activated.chip-outline.chip-subtle) {
   --bg: var(
-    --ion-chip-variant-outline-state-activated-bg-subtle,
-    var(--ion-chip-variant-outline-bg, var(--ion-chip-hue-subtle-bg))
+    --ion-chip-fill-outline-state-activated-bg-subtle,
+    var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg))
   );
 }
 
@@ -221,8 +224,8 @@
 
   :host(.chip-outline.chip-bold:not(.ion-color):hover) {
     --bg: var(
-      --ion-chip-variant-outline-state-hover-bg-bold,
-      var(--ion-chip-variant-outline-bg, var(--ion-chip-hue-bold-bg))
+      --ion-chip-fill-outline-state-hover-bg-bold,
+      var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg))
     );
   }
 
@@ -236,8 +239,8 @@
 
   :host(.chip-outline.chip-subtle:not(.ion-color):hover) {
     --bg: var(
-      --ion-chip-variant-outline-state-hover-bg-subtle,
-      var(--ion-chip-variant-outline-bg, var(--ion-chip-hue-subtle-bg))
+      --ion-chip-fill-outline-state-hover-bg-subtle,
+      var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg))
     );
   }
 }
