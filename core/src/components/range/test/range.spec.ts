@@ -253,3 +253,101 @@ describe('range: item adjustments', () => {
     });
   });
 });
+
+describe('range: value state classes', () => {
+  it('should apply range-value-min class when value is at min', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range min="0" max="100" value="0"></ion-range>`,
+    });
+
+    const range = page.body.querySelector('ion-range')!;
+
+    expect(range.classList.contains('range-value-min')).toBe(true);
+    expect(range.classList.contains('range-value-max')).toBe(false);
+  });
+
+  it('should apply range-value-max class when value is at max', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range min="0" max="100" value="100"></ion-range>`,
+    });
+
+    const range = page.body.querySelector('ion-range')!;
+
+    expect(range.classList.contains('range-value-max')).toBe(true);
+    expect(range.classList.contains('range-value-min')).toBe(false);
+  });
+
+  it('should not apply range-value-min or range-value-max classes when value is in the middle', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range min="0" max="100" value="50"></ion-range>`,
+    });
+
+    const range = page.body.querySelector('ion-range')!;
+
+    expect(range.classList.contains('range-value-min')).toBe(false);
+    expect(range.classList.contains('range-value-max')).toBe(false);
+  });
+
+  it('should apply range-value-min class when lower knob is at min in dual knobs', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range dual-knobs="true" min="0" max="100"></ion-range>`,
+    });
+
+    const range = page.body.querySelector('ion-range')!;
+    range.value = { lower: 0, upper: 50 };
+
+    await page.waitForChanges();
+
+    expect(range.classList.contains('range-value-min')).toBe(true);
+    expect(range.classList.contains('range-value-max')).toBe(false);
+  });
+
+  it('should apply range-value-max class when upper knob is at max in dual knobs', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range dual-knobs="true" min="0" max="100"></ion-range>`,
+    });
+
+    const range = page.body.querySelector('ion-range')!;
+    range.value = { lower: 50, upper: 100 };
+
+    await page.waitForChanges();
+
+    expect(range.classList.contains('range-value-max')).toBe(true);
+    expect(range.classList.contains('range-value-min')).toBe(false);
+  });
+
+  it('should apply range-value-min and range-value-max classes for dual knobs when both are at boundaries', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range dual-knobs="true" min="0" max="100"></ion-range>`,
+    });
+
+    const range = page.body.querySelector('ion-range')!;
+    range.value = { lower: 0, upper: 100 };
+
+    await page.waitForChanges();
+
+    expect(range.classList.contains('range-value-min')).toBe(true);
+    expect(range.classList.contains('range-value-max')).toBe(true);
+  });
+
+  it('should not apply range-value-min or range-value-max classes for dual knobs when neither is at boundaries', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range dual-knobs="true" min="0" max="100"></ion-range>`,
+    });
+
+    const range = page.body.querySelector('ion-range')!;
+    range.value = { lower: 25, upper: 75 };
+
+    await page.waitForChanges();
+
+    expect(range.classList.contains('range-value-min')).toBe(false);
+    expect(range.classList.contains('range-value-max')).toBe(false);
+  });
+});
