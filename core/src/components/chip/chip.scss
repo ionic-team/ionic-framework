@@ -45,13 +45,13 @@
 // Chip Sizes
 // ---------------------------------------------
 
-:host(.chip-small) {
+:host(.chip-size-small) {
   min-height: var(--ion-chip-size-small-min-height);
 
   font-size: var(--ion-chip-size-small-font-size);
 }
 
-:host(.chip-large) {
+:host(.chip-size-large) {
   min-height: var(--ion-chip-size-large-min-height);
 
   font-size: var(--ion-chip-size-large-font-size);
@@ -60,15 +60,15 @@
 // Chip Shapes
 // ---------------------------------------------
 
-:host(.chip-soft) {
+:host(.chip-shape-soft) {
   --border-radius: var(--ion-chip-shape-soft-border-radius);
 }
 
-:host(.chip-round) {
+:host(.chip-shape-round) {
   --border-radius: var(--ion-chip-shape-round-border-radius);
 }
 
-:host(.chip-rectangular) {
+:host(.chip-shape-rectangular) {
   --border-radius: var(--ion-chip-shape-rectangular-border-radius);
 }
 
@@ -76,25 +76,25 @@
 // ---------------------------------------------
 
 // Bold
-:host(.chip-bold) {
+:host(.chip-hue-bold) {
   --bg: var(--ion-chip-hue-bold-bg);
   --color: var(--ion-chip-hue-bold-color);
 }
 
 // Bold Colors
-:host(.chip-bold.ion-color) {
+:host(.chip-hue-bold.ion-color) {
   background: var(--ion-chip-hue-bold-semantic-bg);
   color: var(--ion-chip-hue-bold-semantic-color);
 }
 
 // Subtle
-:host(.chip-subtle) {
+:host(.chip-hue-subtle) {
   --bg: var(--ion-chip-hue-subtle-bg);
   --color: var(--ion-chip-hue-subtle-color);
 }
 
 // Subtle Colors
-:host(.chip-subtle.ion-color) {
+:host(.chip-hue-subtle.ion-color) {
   background: var(--ion-chip-hue-subtle-semantic-bg);
   color: var(--ion-chip-hue-subtle-semantic-color);
 }
@@ -103,37 +103,37 @@
 // ---------------------------------------------
 
 // Solid
-:host(.chip-solid) {
+:host(.chip-fill-solid) {
   background: var(--bg);
 }
 
 // Outline
-:host(.chip-outline) {
+:host(.chip-fill-outline) {
   border-width: var(--ion-chip-fill-outline-border-width);
   border-style: solid;
 
   background: var(--bg);
 }
 
-:host(.chip-outline.chip-bold) {
+:host(.chip-fill-outline.chip-hue-bold) {
   --bg: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg));
 
   border-color: var(--ion-chip-fill-outline-border-color-bold);
 }
 
-:host(.chip-outline.chip-bold.ion-color) {
+:host(.chip-fill-outline.chip-hue-bold.ion-color) {
   border-color: var(--ion-chip-fill-outline-semantic-border-color-bold);
 
   background: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-semantic-bg));
 }
 
-:host(.chip-outline.chip-subtle) {
+:host(.chip-fill-outline.chip-hue-subtle) {
   --bg: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg));
 
   border-color: var(--ion-chip-fill-outline-border-color-subtle);
 }
 
-:host(.chip-outline.chip-subtle.ion-color) {
+:host(.chip-fill-outline.chip-hue-subtle.ion-color) {
   border-color: var(--ion-chip-fill-outline-semantic-border-color-subtle);
 
   background: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-semantic-bg));
@@ -154,27 +154,27 @@
   @include mixins.focused-state(var(--focus-ring-width), $color: var(--focus-ring-color));
 }
 
-:host(.ion-focused.chip-bold) {
+:host(.ion-focused.chip-hue-bold) {
   --bg: var(--ion-chip-hue-bold-state-focus-bg, var(--ion-chip-hue-bold-bg));
 }
 
-:host(.ion-focused.chip-bold.ion-color) {
+:host(.ion-focused.chip-hue-bold.ion-color) {
   background: var(--ion-chip-hue-bold-semantic-state-focus-bg, var(--ion-chip-hue-bold-semantic-bg));
 }
 
-:host(.ion-focused.chip-outline.chip-bold) {
+:host(.ion-focused.chip-fill-outline.chip-hue-bold) {
   --bg: var(--ion-chip-fill-outline-state-focus-bg-bold, var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg)));
 }
 
-:host(.ion-focused.chip-subtle) {
+:host(.ion-focused.chip-hue-subtle) {
   --bg: var(--ion-chip-hue-subtle-state-focus-bg, var(--ion-chip-hue-subtle-bg));
 }
 
-:host(.ion-focused.chip-subtle.ion-color) {
+:host(.ion-focused.chip-hue-subtle.ion-color) {
   background: var(--ion-chip-hue-subtle-semantic-state-focus-bg, var(--ion-chip-hue-subtle-semantic-bg));
 }
 
-:host(.ion-focused.chip-outline.chip-subtle) {
+:host(.ion-focused.chip-fill-outline.chip-hue-subtle) {
   --bg: var(
     --ion-chip-fill-outline-state-focus-bg-subtle,
     var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg))
@@ -182,30 +182,30 @@
 }
 
 // Activated
-:host(.ion-activated.chip-bold) {
+:host(.ion-activated.chip-hue-bold) {
   --bg: var(--ion-chip-hue-bold-state-activated-bg, var(--ion-chip-hue-bold-bg));
 }
 
-:host(.ion-activated.chip-bold.ion-color) {
+:host(.ion-activated.chip-hue-bold.ion-color) {
   background: var(--ion-chip-hue-bold-semantic-state-activated-bg, var(--ion-chip-hue-bold-semantic-bg));
 }
 
-:host(.ion-activated.chip-outline.chip-bold) {
+:host(.ion-activated.chip-fill-outline.chip-hue-bold) {
   --bg: var(
     --ion-chip-fill-outline-state-activated-bg-bold,
     var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg))
   );
 }
 
-:host(.ion-activated.chip-subtle) {
+:host(.ion-activated.chip-hue-subtle) {
   --bg: var(--ion-chip-hue-subtle-state-activated-bg, var(--ion-chip-hue-subtle-bg));
 }
 
-:host(.ion-activated.chip-subtle.ion-color) {
+:host(.ion-activated.chip-hue-subtle.ion-color) {
   background: var(--ion-chip-hue-subtle-semantic-state-activated-bg, var(--ion-chip-hue-subtle-semantic-bg));
 }
 
-:host(.ion-activated.chip-outline.chip-subtle) {
+:host(.ion-activated.chip-fill-outline.chip-hue-subtle) {
   --bg: var(
     --ion-chip-fill-outline-state-activated-bg-subtle,
     var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg))
@@ -214,30 +214,30 @@
 
 // Hover
 @media (any-hover: hover) {
-  :host(.chip-bold:hover) {
+  :host(.chip-hue-bold:hover) {
     --bg: var(--ion-chip-hue-bold-state-hover-bg, var(--ion-chip-hue-bold-bg));
   }
 
-  :host(.chip-bold.ion-color:hover) {
+  :host(.chip-hue-bold.ion-color:hover) {
     background: var(--ion-chip-hue-bold-semantic-state-hover-bg, var(--ion-chip-hue-bold-semantic-bg));
   }
 
-  :host(.chip-outline.chip-bold:not(.ion-color):hover) {
+  :host(.chip-fill-outline.chip-hue-bold:not(.ion-color):hover) {
     --bg: var(
       --ion-chip-fill-outline-state-hover-bg-bold,
       var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg))
     );
   }
 
-  :host(.chip-subtle:hover) {
+  :host(.chip-hue-subtle:hover) {
     --bg: var(--ion-chip-hue-subtle-state-hover-bg, var(--ion-chip-hue-subtle-bg));
   }
 
-  :host(.chip-subtle.ion-color:hover) {
+  :host(.chip-hue-subtle.ion-color:hover) {
     background: var(--ion-chip-hue-subtle-semantic-state-hover-bg, var(--ion-chip-hue-subtle-semantic-bg));
   }
 
-  :host(.chip-outline.chip-subtle:not(.ion-color):hover) {
+  :host(.chip-fill-outline.chip-hue-subtle:not(.ion-color):hover) {
     --bg: var(
       --ion-chip-fill-outline-state-hover-bg-subtle,
       var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg))

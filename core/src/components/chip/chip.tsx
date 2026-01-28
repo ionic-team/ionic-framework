@@ -127,13 +127,13 @@ export class Chip implements ComponentInterface {
       <Host
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
-          [`chip-${shapeValue}`]: true,
-          [`chip-${fillValue}`]: true,
+          [`chip-fill-${fillValue}`]: true,
+          [`chip-hue-${hueValue}`]: true,
+          [`chip-shape-${shapeValue}`]: true,
+          [`chip-size-${sizeValue}`]: true,
           'chip-disabled': this.disabled,
           'ion-activatable': true,
           'ion-focusable': !this.disabled,
-          [`chip-${sizeValue}`]: true,
-          [`chip-${hueValue}`]: true,
         })}
       >
         <slot></slot>
