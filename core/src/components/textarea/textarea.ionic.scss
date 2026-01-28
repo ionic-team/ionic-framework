@@ -38,8 +38,6 @@
   --padding-end: #{globals.$ion-space-300};
   --padding-bottom: #{globals.$ion-space-200};
   --padding-start: #{globals.$ion-space-300};
-
-  min-height: globals.$ion-scale-2800;
 }
 
 :host(.textarea-size-medium) .textarea-wrapper-inner {
@@ -47,8 +45,6 @@
   --padding-end: #{globals.$ion-space-400};
   --padding-bottom: #{globals.$ion-space-300};
   --padding-start: #{globals.$ion-space-400};
-
-  min-height: globals.$ion-scale-3400;
 }
 
 :host(.textarea-size-large) .textarea-wrapper-inner {
@@ -56,8 +52,6 @@
   --padding-end: #{globals.$ion-space-500};
   --padding-bottom: #{globals.$ion-space-400};
   --padding-start: #{globals.$ion-space-500};
-
-  min-height: globals.$ion-scale-3600;
 }
 
 // Ionic Textarea Shapes
