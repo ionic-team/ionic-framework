@@ -29,20 +29,22 @@ import type {
  * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the range slider in LTR, and to the left in RTL.
  *
+ * @part label - The label text describing the range.
  * @part tick - An inactive tick mark.
  * @part tick-active - An active tick mark.
- * @part pin - The counter that appears above a knob.
- * @part pin-a - The counter that appears above the lower/left knob. Only available when `dualKnobs` is `true`.
- * @part pin-b - The counter that appears above the upper/right knob. Only available when `dualKnobs` is `true`.
+ * @part bar - The inactive part of the bar.
+ * @part bar-active - The active part of the bar.
  * @part knob-handle - The container element that wraps the knob and handles drag interactions.
  * @part knob-handle-a - The container element for the lower/left knob. Only available when `dualKnobs` is `true`.
  * @part knob-handle-b - The container element for the upper/right knob. Only available when `dualKnobs` is `true`.
+ * @part pin - The counter that appears above a knob.
+ * @part pin-a - The counter that appears above the lower/left knob. Only available when `dualKnobs` is `true`.
+ * @part pin-b - The counter that appears above the upper/right knob. Only available when `dualKnobs` is `true`.
  * @part knob - The visual knob element that appears on the range track.
  * @part knob-a - The visual knob element for the lower/left knob. Only available when `dualKnobs` is `true`.
  * @part knob-b - The visual knob element for the upper/right knob. Only available when `dualKnobs` is `true`.
- * @part bar - The inactive part of the bar.
- * @part bar-active - The active part of the bar.
- * @part label - The label text describing the range.
+ * @part pressed - Added to the knob-handle, knob, and pin that is currently being pressed to drag. Only one set has this part at a time.
+ * @part focused - Added to the knob-handle, knob, and pin that currently has focus. Only one set has this part at a time.
  */
 @Component({
   tag: 'ion-range',
@@ -70,6 +72,7 @@ export class Range implements ComponentInterface {
   @State() private ratioA = 0;
   @State() private ratioB = 0;
   @State() private pressedKnob: KnobName;
+  @State() private focusedKnob: KnobName | undefined;
 
   /**
    * The color to use from your application's color palette.
@@ -635,6 +638,7 @@ export class Range implements ComponentInterface {
   private onBlur = () => {
     if (this.hasFocus) {
       this.hasFocus = false;
+      this.focusedKnob = undefined;
       this.ionBlur.emit();
     }
   };
@@ -647,6 +651,7 @@ export class Range implements ComponentInterface {
   };
 
   private onKnobFocus = (knob: KnobName) => {
+    this.focusedKnob = knob;
     if (!this.hasFocus) {
       this.hasFocus = true;
       this.ionFocus.emit();
@@ -677,6 +682,7 @@ export class Range implements ComponentInterface {
       if (!isStillFocusedOnKnob) {
         if (this.hasFocus) {
           this.hasFocus = false;
+          this.focusedKnob = undefined;
           this.ionBlur.emit();
         }
 
@@ -715,6 +721,7 @@ export class Range implements ComponentInterface {
       max,
       step,
       handleKeyboard,
+      focusedKnob,
       pressedKnob,
       disabled,
       pin,
@@ -857,6 +864,7 @@ export class Range implements ComponentInterface {
           knob: 'A',
           dualKnobs: this.dualKnobs,
           pressed: pressedKnob === 'A',
+          focused: focusedKnob === 'A',
           value: this.valA,
           ratio: this.ratioA,
           pin,
@@ -875,6 +883,7 @@ export class Range implements ComponentInterface {
             knob: 'B',
             dualKnobs: this.dualKnobs,
             pressed: pressedKnob === 'B',
+            focused: focusedKnob === 'B',
             value: this.valB,
             ratio: this.ratioB,
             pin,
@@ -973,6 +982,7 @@ interface RangeKnob {
   max: number;
   disabled: boolean;
   pressed: boolean;
+  focused: boolean;
   pin: boolean;
   pinFormatter: PinFormatter;
   inheritedAttributes: Attributes;
@@ -992,6 +1002,7 @@ const renderKnob = (
     max,
     disabled,
     pressed,
+    focused,
     pin,
     handleKeyboard,
     pinFormatter,
@@ -1039,7 +1050,15 @@ const renderKnob = (
         'ion-activatable': true,
         'ion-focusable': true,
       }}
-      part={dualKnobs ? (knob === 'A' ? 'knob-handle knob-handle-a' : 'knob-handle knob-handle-b') : 'knob-handle'}
+      part={[
+        'knob-handle',
+        dualKnobs && knob === 'A' && 'knob-handle-a',
+        dualKnobs && knob === 'B' && 'knob-handle-b',
+        pressed && 'pressed',
+        focused && 'focused',
+      ]
+        .filter(Boolean)
+        .join(' ')}
       style={knobStyle()}
       role="slider"
       tabindex={disabled ? -1 : 0}
@@ -1051,7 +1070,19 @@ const renderKnob = (
       aria-valuenow={value}
     >
       {pin && (
-        <div class="range-pin" role="presentation" part={dualKnobs ? (knob === 'A' ? 'pin pin-a' : 'pin pin-b') : 'pin'}>
+        <div
+          class="range-pin"
+          role="presentation"
+          part={[
+            'pin',
+            dualKnobs && knob === 'A' && 'pin-a',
+            dualKnobs && knob === 'B' && 'pin-b',
+            pressed && 'pressed',
+            focused && 'focused',
+          ]
+            .filter(Boolean)
+            .join(' ')}
+        >
           {pinFormatter(value)}
         </div>
       )}
@@ -1062,7 +1093,15 @@ const renderKnob = (
           'range-knob-b': knob === 'B',
         }}
         role="presentation"
-        part={dualKnobs ? (knob === 'A' ? 'knob knob-a' : 'knob knob-b') : 'knob'}
+        part={[
+          'knob',
+          dualKnobs && knob === 'A' && 'knob-a',
+          dualKnobs && knob === 'B' && 'knob-b',
+          pressed && 'pressed',
+          focused && 'focused',
+        ]
+          .filter(Boolean)
+          .join(' ')}
       />
     </div>
   );
