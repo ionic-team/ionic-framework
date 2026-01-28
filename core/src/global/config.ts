@@ -21,7 +21,7 @@ export class Config {
    * @param fallback Default value if the key is not found
    * @returns The value found at the nested key or the fallback
    */
-  getObjectValue(key: string, fallback = ''): string {
+  getObjectValue(key: string, fallback?: string): string | undefined {
     const [firstKey, ...remainingKeys] = key.split('.');
 
     let root: any;
