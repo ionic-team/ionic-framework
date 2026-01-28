@@ -18,6 +18,9 @@ export type BaseTheme = {
     [key: string]: string;
   };
 
+  // TODO(FW-6864): Remove once IonToolbar themes are added
+  toolbar?: any;
+
   // SPACE TOKENS
   spacing?: {
     0?: string;
@@ -250,6 +253,16 @@ export type DarkTheme = BaseTheme & {
   enabled: 'system' | 'always' | 'never' | 'class';
 };
 
+// High Contrast theme interface
+export type HighContrastTheme = BaseTheme & {
+  enabled: 'system' | 'always' | 'never' | 'class';
+};
+
+// High Contrast Dark theme interface
+export type HighContrastDarkTheme = BaseTheme & {
+  enabled: 'system' | 'always' | 'never' | 'class';
+};
+
 // Light theme interface
 export type LightTheme = BaseTheme;
 
@@ -260,6 +273,8 @@ export type DefaultTheme = BaseTheme & {
   palette?: {
     light?: LightTheme;
     dark?: DarkTheme;
+    highContrast?: HighContrastTheme;
+    highContrastDark?: HighContrastDarkTheme;
   };
 
   config?: IonicConfig;
