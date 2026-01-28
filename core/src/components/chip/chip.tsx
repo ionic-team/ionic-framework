@@ -60,9 +60,8 @@ export class Chip implements ComponentInterface {
   /**
    * Set the hue based on the custom theme config
    */
-  private getHue(): string {
+  get hueValue(): string {
     const hueConfig = config.getObjectValue('IonChip.hue');
-    console.log('hueConfig', hueConfig);
     const hue = this.hue || hueConfig || 'subtle';
 
     return hue;
@@ -71,7 +70,7 @@ export class Chip implements ComponentInterface {
   /**
    * Set the shape based on the custom theme config
    */
-  private getShape(): string {
+  get shapeValue(): string {
     const shapeConfig = config.getObjectValue('IonChip.shape');
     const shape = this.shape || shapeConfig || 'round';
 
@@ -81,7 +80,7 @@ export class Chip implements ComponentInterface {
   /**
    * Set the size based on the custom theme config
    */
-  private getSize(): string {
+  get sizeValue(): string {
     const sizeConfig = config.getObjectValue('IonChip.size');
     const size = this.size || sizeConfig || 'large';
 
@@ -89,9 +88,7 @@ export class Chip implements ComponentInterface {
   }
 
   render() {
-    const hue = this.getHue();
-    const shape = this.getShape();
-    const size = this.getSize();
+    const { hueValue: hue, shapeValue: shape, sizeValue: size } = this;
     const useRippleEffect = config.getBoolean('rippleEffect', false);
 
     return (
