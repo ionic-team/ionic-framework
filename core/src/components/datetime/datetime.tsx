@@ -110,6 +110,12 @@ export class Datetime implements ComponentInterface {
   private popoverRef?: HTMLIonPopoverElement;
   private intersectionTrackerRef?: HTMLElement;
   private clearFocusVisible?: () => void;
+  /**
+   * Tracks concurrent wheel scroll sessions across inner picker columns
+   * so we can emit a single start/end pair from ion-datetime.
+   */
+  private activeColumnScrolls = 0;
+  private scrollEndEmitTimeout?: ReturnType<typeof setTimeout>;
   private parsedMinuteValues?: number[];
   private parsedHourValues?: number[];
   private parsedMonthValues?: number[];
@@ -520,6 +526,18 @@ export class Datetime implements ComponentInterface {
    * @internal
    */
   @Event() ionRender!: EventEmitter<void>;
+
+  /**
+   * Emitted when a wheel column inside the datetime begins scrolling.
+   * Does not bubble to avoid duplicate handling alongside inner column events.
+   */
+  @Event({ bubbles: false }) ionScrollStart!: EventEmitter<void>;
+
+  /**
+   * Emitted when a wheel column inside the datetime finishes scrolling and the value has settled.
+   * Does not bubble to avoid duplicate handling alongside inner column events.
+   */
+  @Event({ bubbles: false }) ionScrollEnd!: EventEmitter<void>;
 
   /**
    * Confirms the selected datetime value, updates the
@@ -1070,6 +1088,14 @@ export class Datetime implements ComponentInterface {
 
   connectedCallback() {
     this.clearFocusVisible = startFocusVisible(this.el).destroy;
+    /**
+     * Re-emit wheel scroll lifecycle events from inner picker columns so app code
+     * can disable/enable actions (e.g., Save) during scrolling.
+     */
+    const root = getElementRoot(this.el);
+    // Intercept at capture phase within the shadow root to suppress originals
+    root.addEventListener('ionScrollStart', this.onColumnScrollStart as EventListener, true);
+    root.addEventListener('ionScrollEnd', this.onColumnScrollEnd as EventListener, true);
   }
 
   disconnectedCallback() {
@@ -1077,6 +1103,9 @@ export class Datetime implements ComponentInterface {
       this.clearFocusVisible();
       this.clearFocusVisible = undefined;
     }
+    const root = getElementRoot(this.el);
+    root.removeEventListener('ionScrollStart', this.onColumnScrollStart as EventListener, true);
+    root.removeEventListener('ionScrollEnd', this.onColumnScrollEnd as EventListener, true);
   }
 
   /**
@@ -1489,6 +1518,50 @@ export class Datetime implements ComponentInterface {
 
   private onBlur = () => {
     this.ionBlur.emit();
+  };
+
+  private onColumnScrollStart = (ev: Event & { composedPath?: () => any[] }) => {
+    const src = typeof ev.composedPath === 'function' ? (ev.composedPath()[0] as HTMLElement | undefined) : undefined;
+    if (src?.tagName === 'ION-PICKER-COLUMN') {
+      // Prevent the original event from escaping, consumers should listen to datetime's re-emitted event.
+      (ev as any).stopImmediatePropagation?.();
+      ev.stopPropagation();
+      // A new start within the cooldown window should cancel any pending end emission
+      if (this.scrollEndEmitTimeout) {
+        clearTimeout(this.scrollEndEmitTimeout);
+        this.scrollEndEmitTimeout = undefined;
+      }
+      if (this.activeColumnScrolls === 0) {
+        this.ionScrollStart.emit();
+      }
+      this.activeColumnScrolls++;
+    }
+  };
+
+  private onColumnScrollEnd = (ev: Event & { composedPath?: () => any[] }) => {
+    const src = typeof ev.composedPath === 'function' ? (ev.composedPath()[0] as HTMLElement | undefined) : undefined;
+    if (src?.tagName === 'ION-PICKER-COLUMN') {
+      (ev as any).stopImmediatePropagation?.();
+      ev.stopPropagation();
+      if (this.activeColumnScrolls > 0) {
+        this.activeColumnScrolls--;
+      }
+      if (this.activeColumnScrolls === 0) {
+        // Coalesce ends across multiple auto-adjusting columns.
+        // Wait slightly longer than the column's own debounce (250ms)
+        // so a new start cancels this emission.
+        if (this.scrollEndEmitTimeout) {
+          clearTimeout(this.scrollEndEmitTimeout);
+        }
+        this.scrollEndEmitTimeout = setTimeout(() => {
+          // Only emit if no new start occurred during the window
+          if (this.activeColumnScrolls === 0) {
+            this.ionScrollEnd.emit();
+          }
+          this.scrollEndEmitTimeout = undefined;
+        }, 300);
+      }
+    }
   };
 
   private hasValue = () => {
