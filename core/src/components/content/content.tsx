@@ -25,6 +25,8 @@ import type { ScrollBaseDetail, ScrollDetail } from './content-interface';
 })
 export class Content implements ComponentInterface {
   private watchDog: ReturnType<typeof setInterval> | null = null;
+  private mutationObserver: MutationObserver | null = null;
+  private resizeObserver: ResizeObserver | null = null;
   private isScrolling = false;
   private lastScroll = 0;
   private queued = false;
@@ -168,10 +170,12 @@ export class Content implements ComponentInterface {
         closestTabs.addEventListener('ionTabBarLoaded', this.tabsLoadCallback);
       }
     }
+    this.connectObservers();
   }
 
   disconnectedCallback() {
     this.onScrollEnd();
+    this.disconnectObservers();
 
     if (hasLazyBuild(this.el)) {
       /**
@@ -418,6 +422,93 @@ export class Content implements ComponentInterface {
       step(ts);
     });
     return promise;
+  }
+
+  /**
+   * We need to observe the parent element to detect when
+   * <ion-header> or <ion-footer> elements are added/removed
+   * or resized. This ensures the content offset is recalculated
+   * dynamically.
+   */
+  private connectObservers() {
+    if (!Build.isBrowser) {
+      return;
+    }
+
+    const parent = this.el.parentElement;
+    if (!parent) {
+      return;
+    }
+
+    if ('ResizeObserver' in window) {
+      let timeout: any;
+      this.resizeObserver = new ResizeObserver(() => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => this.resize(), 100);
+      });
+    }
+
+    if ('MutationObserver' in window) {
+      this.mutationObserver = new MutationObserver((mutations) => {
+        let shouldUpdate = false;
+
+        for (const mutation of mutations) {
+          if (mutation.type === 'childList') {
+            mutation.addedNodes.forEach((node: Node) => {
+              if (node instanceof HTMLElement && (node.tagName === 'ION-HEADER' || node.tagName === 'ION-FOOTER')) {
+                shouldUpdate = true;
+              }
+            });
+
+            mutation.removedNodes.forEach((node: Node) => {
+              if (node instanceof HTMLElement && (node.tagName === 'ION-HEADER' || node.tagName === 'ION-FOOTER')) {
+                shouldUpdate = true;
+              }
+            });
+          }
+        }
+
+        if (shouldUpdate) {
+          this.refreshResizeObserver();
+          this.resize();
+        }
+      });
+
+      this.mutationObserver.observe(parent, { childList: true });
+    }
+
+    this.refreshResizeObserver();
+  }
+
+  private disconnectObservers() {
+    if (this.mutationObserver) {
+      this.mutationObserver.disconnect();
+      this.mutationObserver = null;
+    }
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = null;
+    }
+  }
+
+  private refreshResizeObserver() {
+    if (!this.resizeObserver || !this.el.parentElement) {
+      return;
+    }
+
+    this.resizeObserver.disconnect();
+
+    const headers = this.el.parentElement.querySelectorAll('ion-header');
+    const footers = this.el.parentElement.querySelectorAll('ion-footer');
+
+    const observer = this.resizeObserver;
+
+    if (observer === null || observer === undefined) {
+      return;
+    }
+
+    headers.forEach((header) => observer.observe(header));
+    footers.forEach((footer) => observer.observe(footer));
   }
 
   private onScrollStart() {
