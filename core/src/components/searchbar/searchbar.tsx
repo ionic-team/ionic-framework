@@ -30,6 +30,8 @@ export class Searchbar implements ComponentInterface {
   private originalIonInput?: EventEmitter<SearchbarInputEventDetail>;
   private inputId = `ion-searchbar-${searchbarIds++}`;
   private inheritedAttributes: Attributes = {};
+  private loadTimeout: ReturnType<typeof setTimeout> | undefined;
+  private clearTimeout: ReturnType<typeof setTimeout> | undefined;
 
   /**
    * The value of the input when the textarea is focused.
@@ -288,9 +290,18 @@ export class Searchbar implements ComponentInterface {
     this.positionElements();
     this.debounceChanged();
 
-    setTimeout(() => {
+    this.loadTimeout = setTimeout(() => {
       this.noAnimate = false;
     }, 300);
+  }
+
+  disconnectedCallback() {
+    if (this.loadTimeout) {
+      clearTimeout(this.loadTimeout);
+    }
+    if (this.clearTimeout) {
+      clearTimeout(this.clearTimeout);
+    }
   }
 
   private emitStyle() {
@@ -358,12 +369,15 @@ export class Searchbar implements ComponentInterface {
    * Clears the input field and triggers the control change.
    */
   private onClearInput = async (shouldFocus?: boolean) => {
+    if (this.clearTimeout) {
+      clearTimeout(this.clearTimeout);
+    }
     this.ionClear.emit();
 
     return new Promise<void>((resolve) => {
       // setTimeout() fixes https://github.com/ionic-team/ionic-framework/issues/7527
       // wait for 4 frames
-      setTimeout(() => {
+      this.clearTimeout = setTimeout(() => {
         const value = this.getValue();
         if (value !== '') {
           this.value = '';

@@ -14,12 +14,13 @@ import { getIonMode } from '../../global/ionic-global';
 })
 export class App implements ComponentInterface {
   private focusVisible?: FocusVisibleUtility;
+  private loadTimeout?: ReturnType<typeof setTimeout> | undefined;
 
   @Element() el!: HTMLElement;
 
   componentDidLoad() {
     if (Build.isBrowser) {
-      rIC(async () => {
+      this.rIC(async () => {
         const isHybrid = isPlatform(window, 'hybrid');
         if (!config.getBoolean('_testing')) {
           import('../../utils/tap-click').then((module) => module.startTapClick(config));
@@ -60,6 +61,12 @@ export class App implements ComponentInterface {
     }
   }
 
+  disconnectedCallback() {
+    if (this.loadTimeout) {
+      clearTimeout(this.loadTimeout);
+    }
+  }
+
   /**
    * Used to set focus on an element that uses `ion-focusable`.
    * Do not use this if focusing the element as a result of a keyboard
@@ -75,6 +82,14 @@ export class App implements ComponentInterface {
   async setFocus(elements: HTMLElement[]) {
     if (this.focusVisible) {
       this.focusVisible.setFocus(elements);
+    }
+  }
+
+  private rIC(callback: () => void) {
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(callback);
+    } else {
+      this.loadTimeout = setTimeout(callback, 32);
     }
   }
 
@@ -112,12 +127,4 @@ const needInputShims = () => {
   }
 
   return false;
-};
-
-const rIC = (callback: () => void) => {
-  if ('requestIdleCallback' in window) {
-    (window as any).requestIdleCallback(callback);
-  } else {
-    setTimeout(callback, 32);
-  }
 };
