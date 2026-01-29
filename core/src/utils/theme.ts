@@ -549,12 +549,10 @@ export const mix = (baseColor: string, mixColor: string, weight: string): string
  * @returns The kebab-case string (e.g., 'ion-chip')
  */
 const convertToKebabCase = (str: string): string => {
-  // It's already kebab-case
-  if (str.indexOf('-') !== -1) {
-    return str.toLowerCase();
-  }
-
-  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+  return str
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/[\s_]+/g, '-')
+    .toLowerCase();
 };
 
 /**
