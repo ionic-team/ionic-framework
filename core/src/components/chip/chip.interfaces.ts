@@ -2,7 +2,7 @@ import type { IonPadding, IonMargin } from '../../themes/themes.interfaces.js';
 
 export type IonChipRecipe = {
   cursor?: string;
-  margin: IonMargin;
+  margin?: IonMargin;
 
   font?: {
     weight?: string | number;
