@@ -69,7 +69,7 @@ export type IonChipRecipe = {
         };
       };
 
-      state?: IonChipVariantState;
+      state?: IonChipInteractionStates;
     };
   };
 
@@ -106,27 +106,15 @@ type IonChipHueDefinition = {
 
 type IonChipInteractionStates = {
   focus?: {
-    bg?: string;
+    bg?: HueRef | string;
   };
 
   hover?: {
-    bg?: string;
+    bg?: HueRef | string;
   };
 
   activated?: {
-    bg?: string;
-  };
-};
-
-type IonChipVariantState = {
-  focus?: {
-    bg?: HueRef;
-  };
-  hover?: {
-    bg?: HueRef;
-  };
-  activated?: {
-    bg?: HueRef;
+    bg?: HueRef | string;
   };
 };
 
