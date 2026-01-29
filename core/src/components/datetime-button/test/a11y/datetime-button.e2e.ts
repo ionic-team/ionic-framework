@@ -21,6 +21,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, screenshot, c
       );
 
       const datetimeButton = page.locator('ion-datetime-button');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(datetimeButton).toHaveScreenshot(screenshot(`datetime-button-scale`));
     });
@@ -40,6 +41,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, screenshot, c
       );
 
       const datetimeButton = page.locator('ion-datetime-button');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(datetimeButton).toHaveScreenshot(screenshot(`datetime-button-scale-wrap`));
     });

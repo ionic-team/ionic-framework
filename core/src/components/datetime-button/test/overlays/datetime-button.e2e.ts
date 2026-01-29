@@ -24,6 +24,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await dateButton.click();
       await ionModalDidPresent.next();
 
+      // Wait for datetime to be ready before taking screenshot
+      await page.locator('ion-datetime.datetime-ready').waitFor();
+
       await expect(page).toHaveScreenshot(screenshot(`datetime-overlay-modal`));
     });
 
@@ -43,6 +46,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const dateButton = page.locator('ion-datetime-button #date-button');
       await dateButton.click();
       await ionPopoverDidPresent.next();
+
+      // Wait for datetime to be ready before taking screenshot
+      await page.locator('ion-datetime.datetime-ready').waitFor();
 
       await expect(page).toHaveScreenshot(screenshot(`datetime-overlay-popover`));
     });
