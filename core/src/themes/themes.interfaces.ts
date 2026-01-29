@@ -1,4 +1,4 @@
-import type { IonChip as IonChipType, IonChipConfig } from '../components/chip/chip.interfaces';
+import type { IonChipRecipe, IonChipConfig } from '../components/chip/chip.interfaces';
 import type { IonicConfig as IonicGlobalConfig } from '../utils/config';
 
 // Platform-specific theme
@@ -281,7 +281,7 @@ export type DefaultTheme = BaseTheme & {
 };
 
 type Components = {
-  IonChip?: IonChipType;
+  IonChip?: IonChipRecipe;
 
   IonCard?: any;
   IonItem?: any;

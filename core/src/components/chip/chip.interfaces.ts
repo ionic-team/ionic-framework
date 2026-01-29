@@ -1,4 +1,4 @@
-export type IonChip = {
+export type IonChipRecipe = {
   cursor?: string;
   margin: string | number;
 
