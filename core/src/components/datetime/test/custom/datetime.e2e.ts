@@ -44,7 +44,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   });
 
   test.describe(title('CSS shadow parts'), () => {
-    test('should be able to customize wheel part', async ({ page }, testInfo) => {
+    test('should be able to customize wheel part within the wheel style', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30420',
@@ -73,6 +73,74 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       });
 
       expect(backgroundColor).toBe('rgb(255, 0, 0)');
+    });
+
+    test('should be able to customize wheel part within the month/year picker', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30420',
+      });
+
+      await page.setContent(
+        `
+          <style>
+            ion-datetime::part(wheel) {
+              background-color: orange;
+            }
+          </style>
+          <ion-datetime
+            value="2020-03-14T14:23:00.000Z"
+          ></ion-datetime>
+        `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+      const monthYearButton = datetime.locator('.calendar-month-year-toggle');
+
+      await monthYearButton.click();
+
+      const pickerColumn = datetime.locator('ion-picker-column').first();
+
+      const backgroundColor = await pickerColumn.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
+      expect(backgroundColor).toBe('rgb(255, 165, 0)');
+    });
+
+    test('should be able to customize wheel part within the time picker', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30420',
+      });
+
+      await page.setContent(
+        `
+          <style>
+            ion-picker-column {
+              background-color: green;
+            }
+          </style>
+          <ion-datetime
+            value="2020-03-14T14:23:00.000Z"
+          ></ion-datetime>
+        `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+      const timeButton = datetime.locator('.time-body');
+
+      await timeButton.click();
+
+      const pickerColumn = page.locator('ion-picker-column').first();
+
+      const backgroundColor = await pickerColumn.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
+      expect(backgroundColor).toBe('rgb(0, 128, 0)');
     });
 
     test('should be able to customize wheel part when focused', async ({ page }, testInfo) => {
