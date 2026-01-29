@@ -137,13 +137,13 @@ type IonChipMediaDefinition = {
   size: string | number;
 
   // Styles for the media component only if it is the first element in the slot
-  firstChild?: IonChipMediaMargin;
+  firstChild?: {
+    margin?: IonMargin;
+  };
   // Styles for the media component only if it is the last element in the slot
-  lastChild?: IonChipMediaMargin;
-};
-
-type IonChipMediaMargin = {
-  margin?: IonMargin;
+  lastChild?: {
+    margin?: IonMargin;
+  };
 };
 
 type IonChipIconDefinition = IonChipMediaDefinition & {
