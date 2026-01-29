@@ -95,6 +95,10 @@
   max-height: inherit;
 }
 
+:host([rows]) .textarea-wrapper-inner textarea {
+  min-height: calc(attr(rows number) * 2em);
+}
+
 // Textarea Label
 // ----------------------------------------------------------------
 
