@@ -251,6 +251,7 @@ export const defaultTheme: DefaultTheme = {
               subtle: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
             },
 
+            style: 'solid',
             width: 'var(--ion-border-width-xxxs)',
           },
 

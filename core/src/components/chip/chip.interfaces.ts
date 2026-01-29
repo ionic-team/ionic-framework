@@ -29,6 +29,7 @@ export type IonChipRecipe = {
     focus?: {
       ring?: {
         color?: string;
+        style?: string;
         width?: string | number;
       };
     };
@@ -55,6 +56,7 @@ export type IonChipRecipe = {
 
       border?: {
         color?: HueRef;
+        style?: string;
         width?: string | number;
       };
 

@@ -10,9 +10,11 @@
    * @prop --border-radius: Border radius of the chip
    * @prop --color: Color of the chip
    * @prop --focus-ring-color: Color of the focus ring
+   * @prop --focus-ring-style: Style of the focus ring
    * @prop --focus-ring-width: Width of the focus ring
    */
   --focus-ring-color: var(--ion-chip-state-focus-ring-color);
+  --focus-ring-style: var(--ion-chip-state-focus-ring-style);
   --focus-ring-width: var(--ion-chip-state-focus-ring-width);
 
   @include mixins.font-smoothing();
@@ -120,7 +122,7 @@
 // Outline
 :host(.chip-fill-outline) {
   border-width: var(--ion-chip-fill-outline-border-width);
-  border-style: solid;
+  border-style: var(--ion-chip-fill-outline-border-style);
 
   background: var(--bg);
 }
@@ -161,7 +163,7 @@
 
 // Focus
 :host(.ion-focused) {
-  @include mixins.focused-state(var(--focus-ring-width), $color: var(--focus-ring-color));
+  @include mixins.focused-state(var(--focus-ring-width), var(--focus-ring-style), var(--focus-ring-color));
 }
 
 :host(.ion-focused.chip-hue-bold) {

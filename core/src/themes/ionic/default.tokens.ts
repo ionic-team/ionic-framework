@@ -136,6 +136,7 @@ export const defaultTheme: DefaultTheme = {
         focus: {
           ring: {
             color: '#b5c0f7',
+            style: 'solid',
             width: 'var(--ion-border-width-xxs)',
           },
         },
@@ -193,6 +194,7 @@ export const defaultTheme: DefaultTheme = {
               subtle: '#e0e0e0',
             },
 
+            style: 'solid',
             width: '1px',
           },
 
