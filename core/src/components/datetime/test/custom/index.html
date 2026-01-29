@@ -74,6 +74,13 @@
         color: rgb(128, 30, 171);
       }
 
+      /* Targets the month/year picker and the wheel style datetime */
+      .custom-grid-wheel::part(wheel):focus,
+      /* Targets the time picker */
+      ion-picker-column:focus {
+        background-color: rgba(138, 238, 69, 0.37);
+      }
+
       /*
       * Custom Datetime Day Parts
       * -------------------------------------------
