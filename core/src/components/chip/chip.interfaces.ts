@@ -4,7 +4,10 @@ export type IonChipRecipe = {
   cursor?: string;
   margin: IonMargin;
 
-  fontWeight?: string | number;
+  font?: {
+    weight?: string | number;
+  };
+
   gap?: string | number;
   lineHeight?: string | number;
   letterSpacing?: string | number;

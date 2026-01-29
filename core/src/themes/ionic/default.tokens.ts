@@ -105,9 +105,12 @@ export const defaultTheme: DefaultTheme = {
       },
 
       lineHeight: '100%',
-      fontWeight: 500,
       letterSpacing: '0%',
       gap: 'var(--ion-spacing-xxs)',
+
+      font: {
+        weight: 500,
+      },
 
       // Sizes
       size: {
