@@ -44,7 +44,7 @@
     "@capacitor/haptics": "^8.0.0",
     "@capacitor/keyboard": "^8.0.0",
     "@capacitor/status-bar": "^8.0.0",
-    "@clack/prompts": "^0.11.0",
+    "@clack/prompts": "^1.0.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@playwright/test": "^1.56.1",
