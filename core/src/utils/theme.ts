@@ -75,7 +75,7 @@ export const getCustomTheme = (customTheme: any, mode: string): any => {
  */
 export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): string | undefined => {
   // Logs do not need to be printed because palette objects are optional
-  const themeValidity = checkThemeValidity(theme, 'generateCSSVars', false);
+  const themeValidity = isValidTheme(theme, 'generateCSSVars', false);
   if (!themeValidity) {
     return undefined;
   }
@@ -267,7 +267,7 @@ export const injectCSS = (css: string, target: Element | ShadowRoot = document.h
  * @returns The generated CSS string
  */
 export const generateGlobalThemeCSS = (theme: any): string => {
-  const themeValidity = checkThemeValidity(theme, 'generateGlobalThemeCSS');
+  const themeValidity = isValidTheme(theme, 'generateGlobalThemeCSS');
   if (!themeValidity) {
     return '';
   }
@@ -460,7 +460,7 @@ export const generateComponentsThemeCSS = (components: any): string => {
  * @returns true if theme was applied, false otherwise
  */
 export const applyComponentsTheme = (theme: any): any => {
-  const themeValidity = checkThemeValidity(theme, 'applyComponentsTheme');
+  const themeValidity = isValidTheme(theme, 'applyComponentsTheme');
   if (!themeValidity) {
     return '';
   }
@@ -565,7 +565,7 @@ const convertToKebabCase = (str: string): string => {
  * @param source The source or context where the theme is being validated
  * @returns A boolean indicating whether the theme is valid
  */
-const checkThemeValidity = (theme: any, source: string, showLog: boolean = true): boolean => {
+const isValidTheme = (theme: any, source: string, showLog: boolean = true): boolean => {
   if (typeof theme !== 'object' || Array.isArray(theme)) {
     if (showLog) {
       printIonWarning(`${source}: Invalid theme object provided`, theme);
