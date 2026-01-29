@@ -9,6 +9,7 @@ import { lightTheme } from './light.tokens';
 
 const fontSizes = {
   chipBase: 14,
+  root: parseFloat(baseDefaultTheme.fontSize!.root as string),
 };
 
 export const defaultTheme: DefaultTheme = {
@@ -117,7 +118,7 @@ export const defaultTheme: DefaultTheme = {
           font: {
             size: clamp(
               'var(--ion-font-size-xs)',
-              `${((fontSizes.chipBase - 2) / 16).toFixed(2)}rem`,
+              `${((fontSizes.chipBase - 2) / fontSizes.root).toFixed(2)}rem`,
               'var(--ion-font-size-xl)'
             ),
           },
@@ -127,7 +128,7 @@ export const defaultTheme: DefaultTheme = {
           minHeight: 'var(--ion-scaling-md)',
 
           font: {
-            size: clamp('13px', `${(fontSizes.chipBase / 16).toFixed(2)}rem`, '22px'),
+            size: clamp('13px', `${(fontSizes.chipBase / fontSizes.root).toFixed(2)}rem`, '22px'),
           },
         },
       },
