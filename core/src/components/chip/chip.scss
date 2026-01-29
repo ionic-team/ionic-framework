@@ -155,7 +155,7 @@
 // Disabled
 :host(.chip-disabled) {
   cursor: default;
-  opacity: var(--ion-chip-state-disabled-opacity);
+  opacity: var(--ion-chip-state-disabled-opacity, 1);
   pointer-events: none;
 }
 

@@ -23,7 +23,7 @@ export type IonChipRecipe = {
   // States
   state?: {
     disabled?: {
-      opacity: string | number;
+      opacity?: string | number;
     };
 
     focus?: {
