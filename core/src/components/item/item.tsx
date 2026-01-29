@@ -18,6 +18,8 @@ import type { RouterDirection } from '../router/utils/interface';
  * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
  *
  * @part native - The native HTML button, anchor or div element that wraps all child elements.
+ * @part inner - The inner container element that wraps the item content.
+ * @part content - The wrapper element that contains the default slot.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
  */
 @Component({
@@ -390,8 +392,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           {...clickFn}
         >
           <slot name="start" onSlotchange={this.updateInteractivityOnSlotChange}></slot>
-          <div class="item-inner">
-            <div class="input-wrapper">
+          <div class="item-inner" part="inner">
+            <div class="input-wrapper" part="content">
               <slot onSlotchange={this.updateInteractivityOnSlotChange}></slot>
             </div>
             <slot name="end" onSlotchange={this.updateInteractivityOnSlotChange}></slot>

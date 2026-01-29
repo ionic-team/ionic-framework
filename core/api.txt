@@ -930,7 +930,9 @@ ion-item,css-prop,--ripple-color,ios
 ion-item,css-prop,--ripple-color,md
 ion-item,css-prop,--transition,ios
 ion-item,css-prop,--transition,md
+ion-item,part,content
 ion-item,part,detail-icon
+ion-item,part,inner
 ion-item,part,native
 
 ion-item-divider,shadow
