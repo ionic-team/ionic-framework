@@ -428,7 +428,7 @@ export const applyGlobalTheme = (baseTheme: any, userTheme?: any): any => {
  *
  * Becomes:
  * ```css
- * :root ion-chip {
+ * ion-chip {
  *   --ion-chip-size-small-height: 24px;
  *   --ion-chip-state-disabled-opacity: 0.4;
  * }
