@@ -194,7 +194,7 @@ export const defaultTheme: DefaultTheme = {
 
         subtle: {
           bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.05),
-          color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.6),
+          color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.8),
 
           semantic: {
             bg: currentColor('base', null, true),
