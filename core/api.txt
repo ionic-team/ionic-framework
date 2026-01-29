@@ -2016,9 +2016,11 @@ ion-toast,css-prop,--width,md
 ion-toast,part,button
 ion-toast,part,button cancel
 ion-toast,part,container
+ion-toast,part,content
 ion-toast,part,header
 ion-toast,part,icon
 ion-toast,part,message
+ion-toast,part,wrapper
 
 ion-toggle,shadow
 ion-toggle,prop,alignment,"center" | "start" | undefined,undefined,false,false
