@@ -606,6 +606,7 @@ ion-chip,css-prop,--bg
 ion-chip,css-prop,--border-radius
 ion-chip,css-prop,--color
 ion-chip,css-prop,--focus-ring-color
+ion-chip,css-prop,--focus-ring-style
 ion-chip,css-prop,--focus-ring-width
 
 ion-col,shadow
