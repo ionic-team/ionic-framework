@@ -271,19 +271,19 @@
 
 ::slotted(ion-icon:first-child) {
   @include mixins.margin(
-    var(--ion-chip-icon-first-child-margin-top),
-    var(--ion-chip-icon-first-child-margin-end),
-    var(--ion-chip-icon-first-child-margin-bottom),
-    var(--ion-chip-icon-first-child-margin-start)
+    var(--ion-chip-icon-leading-margin-top),
+    var(--ion-chip-icon-leading-margin-end),
+    var(--ion-chip-icon-leading-margin-bottom),
+    var(--ion-chip-icon-leading-margin-start)
   );
 }
 
 ::slotted(ion-icon:last-child) {
   @include mixins.margin(
-    var(--ion-chip-icon-last-child-margin-top),
-    var(--ion-chip-icon-last-child-margin-end),
-    var(--ion-chip-icon-last-child-margin-bottom),
-    var(--ion-chip-icon-last-child-margin-start)
+    var(--ion-chip-icon-trailing-margin-top),
+    var(--ion-chip-icon-trailing-margin-end),
+    var(--ion-chip-icon-trailing-margin-bottom),
+    var(--ion-chip-icon-trailing-margin-start)
   );
 }
 

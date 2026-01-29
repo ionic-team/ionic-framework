@@ -137,12 +137,12 @@ type HueRef = {
 
 type IonChipMediaDefinition = {
   // Styles for the media component only if it is the first element in the slot
-  firstChild?: {
+  leading?: {
     margin?: IonMargin;
   };
 
   // Styles for the media component only if it is the last element in the slot
-  lastChild?: {
+  trailing?: {
     margin?: IonMargin;
   };
 };

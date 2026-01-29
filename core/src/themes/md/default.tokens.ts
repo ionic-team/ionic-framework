@@ -296,7 +296,7 @@ export const defaultTheme: DefaultTheme = {
           size: `${(20 / fontSizes.chipBase).toFixed(2)}em`,
         },
 
-        firstChild: {
+        leading: {
           margin: {
             top: '-4px',
             end: 'var(--ion-spacing-sm)',
@@ -305,7 +305,7 @@ export const defaultTheme: DefaultTheme = {
           },
         },
 
-        lastChild: {
+        trailing: {
           margin: {
             top: '-4px',
             end: '-4px',
@@ -319,7 +319,7 @@ export const defaultTheme: DefaultTheme = {
         height: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
         width: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
 
-        firstChild: {
+        leading: {
           margin: {
             top: '-4px',
             end: 'var(--ion-spacing-sm)',
@@ -328,7 +328,7 @@ export const defaultTheme: DefaultTheme = {
           },
         },
 
-        lastChild: {
+        trailing: {
           margin: {
             top: '-4px',
             end: '-8px',
