@@ -260,7 +260,7 @@
 
 // Icon
 ::slotted(ion-icon) {
-  font-size: var(--ion-chip-icon-size);
+  font-size: var(--ion-chip-icon-font-size);
 }
 
 :host(:not(.ion-color)) ::slotted(ion-icon) {
@@ -289,8 +289,8 @@
 ::slotted(ion-avatar) {
   flex-shrink: 0;
 
-  width: var(--ion-chip-avatar-size, revert-layer);
-  height: var(--ion-chip-avatar-size, revert-layer);
+  width: var(--ion-chip-avatar-width, revert-layer);
+  height: var(--ion-chip-avatar-height, revert-layer);
 }
 
 ::slotted(ion-avatar:first-child) {

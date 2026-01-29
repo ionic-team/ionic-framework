@@ -50,10 +50,10 @@ export type IonChipRecipe = {
   // Fills
 
   fill?: {
-    outline: {
+    outline?: {
       bg?: string;
 
-      border: {
+      border?: {
         color?: HueRef;
         width?: string | number;
       };
@@ -71,8 +71,8 @@ export type IonChipRecipe = {
     };
   };
 
-  icon: IonChipIconDefinition;
-  avatar?: IonChipMediaDefinition;
+  icon?: IonChipIconDefinition;
+  avatar?: IonChipAvatarDefinition;
 };
 
 type IonChipSizeDefinition = {
@@ -90,8 +90,8 @@ type IonChipShapeDefinition = {
 };
 
 type IonChipHueDefinition = {
-  bg: string;
-  color: string;
+  bg?: string;
+  color?: string;
 
   semantic?: {
     bg?: string;
@@ -134,12 +134,11 @@ type HueRef = {
 };
 
 type IonChipMediaDefinition = {
-  size: string | number;
-
   // Styles for the media component only if it is the first element in the slot
   firstChild?: {
     margin?: IonMargin;
   };
+
   // Styles for the media component only if it is the last element in the slot
   lastChild?: {
     margin?: IonMargin;
@@ -148,6 +147,15 @@ type IonChipMediaDefinition = {
 
 type IonChipIconDefinition = IonChipMediaDefinition & {
   color?: string;
+
+  font: {
+    size?: string | number;
+  };
+};
+
+type IonChipAvatarDefinition = IonChipMediaDefinition & {
+  height?: string | number;
+  width?: string | number;
 };
 
 export type IonChipConfig = {

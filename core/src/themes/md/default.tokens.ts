@@ -289,8 +289,11 @@ export const defaultTheme: DefaultTheme = {
       },
 
       icon: {
-        size: `${(20 / fontSizes.chipBase).toFixed(2)}em`,
         color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.54),
+
+        font: {
+          size: `${(20 / fontSizes.chipBase).toFixed(2)}em`,
+        },
 
         firstChild: {
           margin: {
@@ -312,7 +315,8 @@ export const defaultTheme: DefaultTheme = {
       },
 
       avatar: {
-        size: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
+        height: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
+        width: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
 
         firstChild: {
           margin: {

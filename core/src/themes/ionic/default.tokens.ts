@@ -208,7 +208,9 @@ export const defaultTheme: DefaultTheme = {
       },
 
       icon: {
-        size: 'var(--ion-scaling-xxxs)',
+        font: {
+          size: 'var(--ion-scaling-xxxs)',
+        },
       },
     },
   },
