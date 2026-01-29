@@ -79,6 +79,7 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  * @slot buttons - The buttons in the datetime.
  * @slot time-label - The label for the time selector in the datetime.
  *
+ * @part wheel - The wheel container when using a wheel style layout, or in the month/year picker when using a grid style layout.
  * @part wheel-item - The individual items when using a wheel style layout, or in the
  * month/year picker when using a grid style layout.
  * @part wheel-item active - The currently selected wheel-item.
@@ -1724,6 +1725,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        part={WHEEL_PART}
         aria-label="Select a date"
         class="date-column"
         color={this.color}
@@ -1844,6 +1846,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        part={WHEEL_PART}
         aria-label="Select a day"
         class="day-column"
         color={this.color}
@@ -1888,6 +1891,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        part={WHEEL_PART}
         aria-label="Select a month"
         class="month-column"
         color={this.color}
@@ -1931,6 +1935,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        part={WHEEL_PART}
         aria-label="Select a year"
         class="year-column"
         color={this.color}
@@ -2005,6 +2010,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        part={WHEEL_PART}
         aria-label="Select an hour"
         color={this.color}
         disabled={disabled}
@@ -2045,6 +2051,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        part={WHEEL_PART}
         aria-label="Select a minute"
         color={this.color}
         disabled={disabled}
@@ -2088,6 +2095,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        part={WHEEL_PART}
         aria-label="Select a day period"
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
@@ -2716,5 +2724,6 @@ export class Datetime implements ComponentInterface {
 let datetimeIds = 0;
 const CANCEL_ROLE = 'datetime-cancel';
 const CONFIRM_ROLE = 'datetime-confirm';
+const WHEEL_PART = 'wheel';
 const WHEEL_ITEM_PART = 'wheel-item';
 const WHEEL_ITEM_ACTIVE_PART = `active`;
