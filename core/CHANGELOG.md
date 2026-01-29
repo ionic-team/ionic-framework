@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.17](https://github.com/ionic-team/ionic-framework/compare/v8.7.15...v8.7.17) (2026-01-14)
+
+
+### Bug Fixes
+
+* **input:** prevent Android TalkBack from focusing label separately ([#30895](https://github.com/ionic-team/ionic-framework/issues/30895)) ([ab733b7](https://github.com/ionic-team/ionic-framework/commit/ab733b71dd355d9486757f219fe09acaefeeefcc))
+* **input:** prevent placeholder from overlapping start slot during scroll assist ([#30896](https://github.com/ionic-team/ionic-framework/issues/30896)) ([3b3318d](https://github.com/ionic-team/ionic-framework/commit/3b3318da513b199128f3822bd8226797cd118b0f))
+* **tab-bar:** prevent keyboard controller memory leak on rapid mount/unmount ([#30906](https://github.com/ionic-team/ionic-framework/issues/30906)) ([f99d000](https://github.com/ionic-team/ionic-framework/commit/f99d0007a8ffc9c7d3d2636e912c37c12112b21d))
+
+
+
+
+
 ## [8.7.16](https://github.com/ionic-team/ionic-framework/compare/v8.7.15...v8.7.16) (2025-12-31)
 
 
