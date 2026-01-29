@@ -1,16 +1,15 @@
+import type { IonPadding, IonMargin } from '../../themes/themes.interfaces.js';
+
 export type IonChipRecipe = {
   cursor?: string;
-  margin: string | number;
+  margin: IonMargin;
 
   fontWeight?: string | number;
   gap?: string | number;
   lineHeight?: string | number;
   letterSpacing?: string | number;
 
-  padding?: {
-    vertical: string | number;
-    horizontal: string | number;
-  };
+  padding?: IonPadding;
 
   // Sizes
   size: {
@@ -141,11 +140,7 @@ type IonChipMediaDefinition = {
 };
 
 type IonChipMediaMargin = {
-  margin?: {
-    vertical?: string | number;
-    start?: string | number;
-    end?: string | number;
-  };
+  margin?: IonMargin;
 };
 
 type IonChipIconDefinition = IonChipMediaDefinition & {

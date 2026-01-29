@@ -17,8 +17,18 @@
 
   @include mixins.font-smoothing();
   @include mixins.border-radius(var(--border-radius));
-  @include mixins.margin(var(--ion-chip-margin));
-  @include mixins.padding(var(--ion-chip-padding-vertical), var(--ion-chip-padding-horizontal));
+  @include mixins.margin(
+    var(--ion-chip-margin-top),
+    var(--ion-chip-margin-end),
+    var(--ion-chip-margin-bottom),
+    var(--ion-chip-margin-start)
+  );
+  @include mixins.padding(
+    var(--ion-chip-padding-top),
+    var(--ion-chip-padding-end),
+    var(--ion-chip-padding-bottom),
+    var(--ion-chip-padding-start)
+  );
 
   display: inline-flex;
   position: relative;
@@ -259,17 +269,19 @@
 
 ::slotted(ion-icon:first-child) {
   @include mixins.margin(
-    var(--ion-chip-icon-first-child-margin-vertical),
+    var(--ion-chip-icon-first-child-margin-top),
     var(--ion-chip-icon-first-child-margin-end),
-    $start: var(--ion-chip-icon-first-child-margin-start)
+    var(--ion-chip-icon-first-child-margin-bottom),
+    var(--ion-chip-icon-first-child-margin-start)
   );
 }
 
 ::slotted(ion-icon:last-child) {
   @include mixins.margin(
-    var(--ion-chip-icon-last-child-margin-vertical),
+    var(--ion-chip-icon-last-child-margin-top),
     var(--ion-chip-icon-last-child-margin-end),
-    $start: var(--ion-chip-icon-last-child-margin-start)
+    var(--ion-chip-icon-last-child-margin-bottom),
+    var(--ion-chip-icon-last-child-margin-start)
   );
 }
 
@@ -283,16 +295,18 @@
 
 ::slotted(ion-avatar:first-child) {
   @include mixins.margin(
-    var(--ion-chip-avatar-first-child-margin-vertical),
-    $end: var(--ion-chip-avatar-first-child-margin-end),
-    $start: var(--ion-chip-avatar-first-child-margin-start)
+    var(--ion-chip-avatar-first-child-margin-top),
+    var(--ion-chip-avatar-first-child-margin-end),
+    var(--ion-chip-avatar-first-child-margin-bottom),
+    var(--ion-chip-avatar-first-child-margin-start)
   );
 }
 
 ::slotted(ion-avatar:last-child) {
   @include mixins.margin(
-    var(--ion-chip-avatar-last-child-margin-vertical),
-    $end: var(--ion-chip-avatar-last-child-margin-end),
-    $start: var(--ion-chip-avatar-last-child-margin-start)
+    var(--ion-chip-avatar-last-child-margin-top),
+    var(--ion-chip-avatar-last-child-margin-end),
+    var(--ion-chip-avatar-last-child-margin-bottom),
+    var(--ion-chip-avatar-last-child-margin-start)
   );
 }

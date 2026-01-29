@@ -289,3 +289,17 @@ type Components = {
   IonModal?: any;
   IonToolbar?: any;
 };
+
+export type IonMargin = {
+  top?: string | number;
+  end?: string | number;
+  bottom?: string | number;
+  start?: string | number;
+};
+
+export type IonPadding = {
+  top?: string | number;
+  end?: string | number;
+  bottom?: string | number;
+  start?: string | number;
+};

@@ -93,12 +93,20 @@ export const defaultTheme: DefaultTheme = {
 
   components: {
     IonChip: {
-      margin: 'var(--ion-spacing-xxs)',
       cursor: 'pointer',
 
+      margin: {
+        top: 'var(--ion-spacing-xxs)',
+        end: 'var(--ion-spacing-xxs)',
+        bottom: 'var(--ion-spacing-xxs)',
+        start: 'var(--ion-spacing-xxs)',
+      },
+
       padding: {
-        vertical: 'var(--ion-spacing-xs)',
-        horizontal: 'var(--ion-spacing-md)',
+        top: 'var(--ion-spacing-xs)',
+        end: 'var(--ion-spacing-md)',
+        bottom: 'var(--ion-spacing-xs)',
+        start: 'var(--ion-spacing-md)',
       },
 
       // Sizes
@@ -288,17 +296,19 @@ export const defaultTheme: DefaultTheme = {
 
         firstChild: {
           margin: {
-            vertical: '-4px',
-            start: '-4px',
+            top: '-4px',
             end: 'var(--ion-spacing-sm)',
+            bottom: '-4px',
+            start: '-4px',
           },
         },
 
         lastChild: {
           margin: {
-            vertical: '-4px',
-            start: 'var(--ion-spacing-sm)',
+            top: '-4px',
             end: '-4px',
+            bottom: '-4px',
+            start: 'var(--ion-spacing-sm)',
           },
         },
       },
@@ -308,17 +318,19 @@ export const defaultTheme: DefaultTheme = {
 
         firstChild: {
           margin: {
-            vertical: '-4px',
-            start: '-8px',
+            top: '-4px',
             end: 'var(--ion-spacing-sm)',
+            bottom: '-4px',
+            start: '-8px',
           },
         },
 
         lastChild: {
           margin: {
-            vertical: '-4px',
-            start: 'var(--ion-spacing-sm)',
+            top: '-4px',
             end: '-8px',
+            bottom: '-4px',
+            start: 'var(--ion-spacing-sm)',
           },
         },
       },

@@ -88,12 +88,20 @@ export const defaultTheme: DefaultTheme = {
 
   components: {
     IonChip: {
-      margin: 'var(--ion-spacing-0)',
       cursor: 'auto',
 
+      margin: {
+        top: 'var(--ion-spacing-0)',
+        end: 'var(--ion-spacing-0)',
+        bottom: 'var(--ion-spacing-0)',
+        start: 'var(--ion-spacing-0)',
+      },
+
       padding: {
-        vertical: 'var(--ion-spacing-xs)',
-        horizontal: 'var(--ion-spacing-sm)',
+        top: 'var(--ion-spacing-xs)',
+        end: 'var(--ion-spacing-sm)',
+        bottom: 'var(--ion-spacing-xs)',
+        start: 'var(--ion-spacing-sm)',
       },
 
       lineHeight: '100%',
