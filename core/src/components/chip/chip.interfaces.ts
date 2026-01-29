@@ -42,9 +42,9 @@ export type IonChipRecipe = {
   };
 
   // Hues
-  hue: {
-    bold: IonChipHueDefinition;
-    subtle: IonChipHueDefinition;
+  hue?: {
+    bold?: IonChipHueDefinition;
+    subtle?: IonChipHueDefinition;
   };
 
   // Fills
