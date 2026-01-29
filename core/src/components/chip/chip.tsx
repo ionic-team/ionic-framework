@@ -120,7 +120,7 @@ export class Chip implements ComponentInterface {
   }
 
   render() {
-    const { hueValue, shapeValue, sizeValue, fillValue } = this;
+    const { fillValue, hueValue, shapeValue, sizeValue } = this;
     const useRippleEffect = config.getBoolean('rippleEffect', false);
 
     return (
