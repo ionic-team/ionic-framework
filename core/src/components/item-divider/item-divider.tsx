@@ -11,6 +11,9 @@ import type { Color } from '../../interface';
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the divider text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the divider text in LTR, and to the left in RTL.
+ *
+ * @part inner - The inner container element that wraps the divider content.
+ * @part content - The wrapper element that contains the default slot.
  */
 @Component({
   tag: 'ion-item-divider',
@@ -50,8 +53,8 @@ export class ItemDivider implements ComponentInterface {
         })}
       >
         <slot name="start"></slot>
-        <div class="item-divider-inner">
-          <div class="item-divider-wrapper">
+        <div class="item-divider-inner" part="inner">
+          <div class="item-divider-wrapper" part="content">
             <slot></slot>
           </div>
           <slot name="end"></slot>
