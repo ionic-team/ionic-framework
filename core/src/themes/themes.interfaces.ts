@@ -1,4 +1,5 @@
-import type { IonicConfig } from '../utils/config';
+import type { IonChip as IonChipType, IonChipConfig } from '../components/chip/chip.interfaces';
+import type { IonicConfig as IonicGlobalConfig } from '../utils/config';
 
 // Platform-specific theme
 export type PlatformTheme = Omit<BaseTheme, 'ios' | 'md'>;
@@ -214,11 +215,7 @@ export type BaseTheme = {
   };
 
   // COMPONENT OVERRIDES
-  components?: {
-    [key: string]: {
-      [key: string]: string;
-    };
-  };
+  components?: Components;
 
   // COLOR TOKENS
   color?: {
@@ -243,6 +240,12 @@ export type BaseTheme = {
   // PLATFORM SPECIFIC OVERRIDES
   ios?: PlatformTheme;
   md?: PlatformTheme;
+};
+
+export type IonicConfig = IonicGlobalConfig & {
+  components?: {
+    IonChip?: IonChipConfig;
+  };
 };
 
 // Dark theme interface
@@ -275,4 +278,14 @@ export type DefaultTheme = BaseTheme & {
   };
 
   config?: IonicConfig;
+};
+
+type Components = {
+  IonChip?: IonChipType;
+
+  IonCard?: any;
+  IonItem?: any;
+  IonTabBar?: any;
+  IonModal?: any;
+  IonToolbar?: any;
 };

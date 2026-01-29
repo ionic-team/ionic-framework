@@ -2,7 +2,9 @@ import type { LightTheme } from '../themes.interfaces';
 
 export const lightTheme: LightTheme = {
   backgroundColor: '#ffffff',
+  backgroundColorRgb: '255, 255, 255',
   textColor: '#000000',
+  textColorRgb: '0, 0, 0',
 
   components: {
     IonCard: {

@@ -1,3 +1,4 @@
+import { rgba, currentColor, clamp } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
@@ -5,6 +6,10 @@ import { darkTheme } from './dark.tokens';
 import { highContrastDarkTheme } from './high-contrast-dark.tokens';
 import { highContrastTheme } from './high-contrast.tokens';
 import { lightTheme } from './light.tokens';
+
+const fontSizes = {
+  chipBase: 14,
+};
 
 export const defaultTheme: DefaultTheme = {
   ...baseDefaultTheme,
@@ -16,6 +21,16 @@ export const defaultTheme: DefaultTheme = {
     dark: darkTheme,
     highContrast: highContrastTheme,
     highContrastDark: highContrastDarkTheme,
+  },
+
+  config: {
+    components: {
+      IonChip: {
+        hue: 'bold',
+        shape: 'round',
+        size: 'large',
+      },
+    },
   },
 
   fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif',
@@ -74,5 +89,239 @@ export const defaultTheme: DefaultTheme = {
     xxl: 'var(--ion-radii-400)',
     xxxl: 'var(--ion-radii-500)',
     xxxxl: 'var(--ion-radii-full)',
+  },
+
+  components: {
+    IonChip: {
+      margin: 'var(--ion-spacing-xxs)',
+      cursor: 'pointer',
+
+      padding: {
+        vertical: 'var(--ion-spacing-xs)',
+        horizontal: 'var(--ion-spacing-md)',
+      },
+
+      // Sizes
+      size: {
+        small: {
+          minHeight: 'var(--ion-scaling-xs)',
+
+          font: {
+            size: clamp(
+              'var(--ion-font-size-xs)',
+              `${((fontSizes.chipBase - 2) / 16).toFixed(2)}rem`,
+              'var(--ion-font-size-xl)'
+            ),
+          },
+        },
+
+        large: {
+          minHeight: 'var(--ion-scaling-md)',
+
+          font: {
+            size: clamp('13px', `${(fontSizes.chipBase / 16).toFixed(2)}rem`, '22px'),
+          },
+        },
+      },
+
+      // States
+      state: {
+        disabled: {
+          opacity: '0.4',
+        },
+      },
+
+      // Shapes
+      shape: {
+        soft: {
+          border: {
+            radius: 'var(--ion-radii-md)',
+          },
+        },
+
+        round: {
+          border: {
+            radius: 'var(--ion-radii-xxxxl)',
+          },
+        },
+
+        rectangular: {
+          border: {
+            radius: 'var(--ion-radii-xxxxs)',
+          },
+        },
+      },
+
+      // Hues
+      hue: {
+        bold: {
+          bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+          color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.87),
+
+          // Any of the semantic colors like primary, secondary, etc.
+          semantic: {
+            bg: currentColor('base', 0.08),
+            color: currentColor('shade'),
+
+            state: {
+              focus: {
+                bg: currentColor('base', 0.12),
+              },
+
+              hover: {
+                bg: currentColor('base', 0.12),
+              },
+
+              activated: {
+                bg: currentColor('base', 0.16),
+              },
+            },
+          },
+
+          // default non-semantic states
+          state: {
+            focus: {
+              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
+            },
+
+            activated: {
+              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.2),
+            },
+
+            hover: {
+              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
+            },
+          },
+        },
+
+        subtle: {
+          bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.05),
+          color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.8),
+
+          semantic: {
+            bg: currentColor('base', null, true),
+            color: currentColor('contrast', null, true),
+
+            state: {
+              focus: {
+                bg: currentColor('base', 0.6, true),
+              },
+
+              hover: {
+                bg: currentColor('base', 0.6, true),
+              },
+
+              activated: {
+                bg: currentColor('base', 0.8, true),
+              },
+            },
+          },
+
+          // default non-semantic states
+          state: {
+            focus: {
+              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.1),
+            },
+
+            activated: {
+              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.14),
+            },
+
+            hover: {
+              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.1),
+            },
+          },
+        },
+      },
+
+      // Fils
+      fill: {
+        outline: {
+          bg: 'transparent',
+
+          border: {
+            color: {
+              bold: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.32),
+              subtle: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
+            },
+
+            width: 'var(--ion-border-width-xxs)',
+          },
+
+          semantic: {
+            border: {
+              color: {
+                bold: currentColor('base', 0.32),
+                subtle: currentColor('base', 0.12),
+              },
+            },
+          },
+
+          state: {
+            focus: {
+              bg: {
+                bold: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+                subtle: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+              },
+            },
+
+            hover: {
+              bg: {
+                bold: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+                subtle: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+              },
+            },
+
+            activated: {
+              bg: {
+                bold: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.08),
+                subtle: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+              },
+            },
+          },
+        },
+      },
+
+      icon: {
+        size: `${(20 / fontSizes.chipBase).toFixed(2)}em`,
+        color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.54),
+
+        firstChild: {
+          margin: {
+            vertical: '-4px',
+            start: '-4px',
+            end: 'var(--ion-spacing-sm)',
+          },
+        },
+
+        lastChild: {
+          margin: {
+            vertical: '-4px',
+            start: 'var(--ion-spacing-sm)',
+            end: '-4px',
+          },
+        },
+      },
+
+      avatar: {
+        size: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
+
+        firstChild: {
+          margin: {
+            vertical: '-4px',
+            start: '-8px',
+            end: 'var(--ion-spacing-sm)',
+          },
+        },
+
+        lastChild: {
+          margin: {
+            vertical: '-4px',
+            start: 'var(--ion-spacing-sm)',
+            end: '-8px',
+          },
+        },
+      },
+    },
   },
 };

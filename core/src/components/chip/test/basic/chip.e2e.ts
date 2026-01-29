@@ -9,7 +9,7 @@ configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(
         `
-        <ion-chip>
+        <ion-chip fill="solid">
           <ion-avatar>
             <img
               src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
@@ -23,7 +23,7 @@ configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
 
       const chip = page.locator('ion-chip');
 
-      await expect(chip).toHaveScreenshot(screenshot(`chip-basic`));
+      await expect(chip).toHaveScreenshot(screenshot(`chip-solid`));
     });
   });
 });
@@ -40,7 +40,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
         `
         <ion-list>
           <ion-item>
-            <ion-chip>
+            <ion-chip fill="solid">
               <ion-label>Agreements</ion-label>
             </ion-chip>
           </ion-item>
@@ -63,7 +63,7 @@ configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, s
   test.describe(title('chip: outline'), () => {
     test('should render default outline chip', async ({ page }) => {
       await page.setContent(
-        `<ion-chip outline="true">
+        `<ion-chip fill="outline">
           <ion-icon name="checkmark-circle"></ion-icon>
           <ion-label>Icon</ion-label>
         </ion-chip>`,
@@ -91,7 +91,7 @@ configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, s
     });
     test('should render outline color chip', async ({ page }) => {
       await page.setContent(
-        `<ion-chip outline="true" color="success">
+        `<ion-chip fill="outline" color="success">
           <ion-icon name="checkmark-circle"></ion-icon>
           <ion-label>Success with Icon</ion-label>
         </ion-chip>`,

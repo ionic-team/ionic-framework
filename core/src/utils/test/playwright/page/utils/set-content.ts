@@ -164,5 +164,13 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
      * hash params to ensure the route interceptor always works.
      */
     await page.goto(`${baseUrl}#`, options);
+
+    //   await page.waitForFunction(() => {
+    //   const win = window as any;
+
+    //   // Ensure both the global flag and component shadowRoots are ready
+    //   return win.testAppLoaded === true &&
+    //           win.Ionic?.config?.get?.('customTheme') !== undefined;
+    // }, { timeout: 4750 });
   }
 };

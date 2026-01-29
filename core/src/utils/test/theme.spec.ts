@@ -5,7 +5,7 @@ import { CardContent } from '../../components/card-content/card-content';
 import { Chip } from '../../components/chip/chip';
 import {
   generateColorClasses,
-  generateComponentThemeCSS,
+  generateComponentsThemeCSS,
   generateCSSVars,
   generateGlobalThemeCSS,
   getClassList,
@@ -243,7 +243,7 @@ describe('generateCSSVars', () => {
       components: {},
     };
 
-    const css = generateCSSVars(theme).replace(/\s/g, '');
+    const css = generateCSSVars(theme)!.replace(/\s/g, '');
 
     const expectedCSS = `
       --ion-border-width-sm: 4px;
@@ -743,27 +743,29 @@ describe('generateGlobalThemeCSS', () => {
   });
 });
 
-describe('generateComponentThemeCSS', () => {
-  it('should generate component theme CSS for a given theme', () => {
-    const IonChip = {
-      hue: {
-        subtle: {
-          bg: 'red',
-          color: 'white',
-          borderColor: 'black',
-        },
-        bold: {
-          bg: 'blue',
-          color: 'white',
-          borderColor: 'black',
+describe('generateComponentsThemeCSS', () => {
+  it('should generate component theme CSS for a given theme with a single component', () => {
+    const components = {
+      IonChip: {
+        hue: {
+          subtle: {
+            bg: 'red',
+            color: 'white',
+            borderColor: 'black',
+          },
+          bold: {
+            bg: 'blue',
+            color: 'white',
+            borderColor: 'black',
+          },
         },
       },
     };
 
-    const css = generateComponentThemeCSS(IonChip, 'chip').replace(/\s/g, '');
+    const css = generateComponentsThemeCSS(components).replace(/\s/g, '');
 
     const expectedCSS = `
-      :host(.chip-themed) {
+      ion-chip {
         --ion-chip-hue-subtle-bg: red;
         --ion-chip-hue-subtle-color: white;
         --ion-chip-hue-subtle-border-color: black;
@@ -774,6 +776,71 @@ describe('generateComponentThemeCSS', () => {
     `.replace(/\s/g, '');
 
     expect(css).toBe(expectedCSS);
+  });
+
+  it('should generate component theme CSS for a given theme with multiple components', () => {
+    const components = {
+      IonChip: {
+        hue: {
+          subtle: {
+            bg: 'red',
+            color: 'white',
+            borderColor: 'black',
+          },
+          bold: {
+            bg: 'blue',
+            color: 'white',
+            borderColor: 'black',
+          },
+        },
+      },
+      IonBadge: {
+        hue: {
+          subtle: {
+            bg: 'green',
+            color: 'white',
+            borderColor: 'black',
+          },
+          bold: {
+            bg: 'blue',
+            color: 'white',
+            borderColor: 'black',
+          },
+        },
+      },
+    };
+
+    const css = generateComponentsThemeCSS(components).replace(/\s/g, '');
+
+    const expectedCSS = `
+      ion-chip {
+        --ion-chip-hue-subtle-bg: red;
+        --ion-chip-hue-subtle-color: white;
+        --ion-chip-hue-subtle-border-color: black;
+        --ion-chip-hue-bold-bg: blue;
+        --ion-chip-hue-bold-color: white;
+        --ion-chip-hue-bold-border-color: black;
+      }
+
+      ion-badge {
+        --ion-badge-hue-subtle-bg: green;
+        --ion-badge-hue-subtle-color: white;
+        --ion-badge-hue-subtle-border-color: black;
+        --ion-badge-hue-bold-bg: blue;
+        --ion-badge-hue-bold-color: white;
+        --ion-badge-hue-bold-border-color: black;
+      }
+    `.replace(/\s/g, '');
+
+    expect(css).toBe(expectedCSS);
+  });
+
+  it('should not generate CSS variables for an empty components object', () => {
+    const components = {};
+
+    const css = generateComponentsThemeCSS(components);
+
+    expect(css).toBe('');
   });
 });
 

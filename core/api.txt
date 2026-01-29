@@ -596,23 +596,17 @@ ion-checkbox,part,supporting-text
 ion-chip,shadow
 ion-chip,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-chip,prop,disabled,boolean,false,false,false
-ion-chip,prop,hue,"bold" | "subtle" | undefined,'subtle',false,false
+ion-chip,prop,fill,"outline" | "solid" | undefined,undefined,false,false
+ion-chip,prop,hue,"bold" | "subtle" | undefined,undefined,false,false
 ion-chip,prop,mode,"ios" | "md",undefined,false,false
 ion-chip,prop,outline,boolean,false,false,false
 ion-chip,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-chip,prop,size,"large" | "small" | undefined,undefined,false,false
-ion-chip,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-chip,css-prop,--background,ionic
-ion-chip,css-prop,--background,ios
-ion-chip,css-prop,--background,md
-ion-chip,css-prop,--border-radius,ionic
-ion-chip,css-prop,--border-radius,ios
-ion-chip,css-prop,--border-radius,md
-ion-chip,css-prop,--color,ionic
-ion-chip,css-prop,--color,ios
-ion-chip,css-prop,--color,md
-ion-chip,css-prop,--focus-ring-color,ionic
-ion-chip,css-prop,--focus-ring-width,ionic
+ion-chip,css-prop,--bg
+ion-chip,css-prop,--border-radius
+ion-chip,css-prop,--color
+ion-chip,css-prop,--focus-ring-color
+ion-chip,css-prop,--focus-ring-width
 
 ion-col,shadow
 ion-col,prop,mode,"ios" | "md",undefined,false,false

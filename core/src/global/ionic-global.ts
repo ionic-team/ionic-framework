@@ -1,10 +1,10 @@
 import { Build, getMode, setMode, getElement } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
-import { applyGlobalTheme, getCustomTheme } from '@utils/theme';
+import { applyComponentsTheme, applyGlobalTheme, getCustomTheme } from '@utils/theme';
 
 import type { IonicConfig, Mode, Theme } from '../interface';
 import { defaultTheme as baseTheme } from '../themes/base/default.tokens';
-import type { BaseTheme } from '../themes/themes.interfaces';
+import type { DefaultTheme } from '../themes/themes.interfaces';
 import { shouldUseCloseWatcher } from '../utils/hardware-back-button';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
@@ -147,16 +147,49 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   doc.documentElement.setAttribute('theme', defaultTheme);
   doc.documentElement.classList.add(defaultTheme);
 
-  const customTheme: BaseTheme | undefined = getCustomTheme(configObj.customTheme, defaultMode);
+  const customTheme: DefaultTheme | undefined = getCustomTheme(configObj.customTheme, defaultMode);
 
   // Apply base theme, or combine with custom theme if provided
   if (customTheme) {
     const combinedTheme = applyGlobalTheme(baseTheme, customTheme);
+    // Component styles must be applied after global styles in order
+    // to ensure CSS variables are available for components
+    // like the semantic colors (e.g., --ion-color-shade)
+    applyComponentsTheme(combinedTheme);
     config.set('customTheme', combinedTheme);
   } else {
     applyGlobalTheme(baseTheme);
+    // Component styles must be applied after global styles in order
+    // to ensure CSS variables are available for components
+    // like the semantic colors (e.g., --ion-color-shade)
+    applyComponentsTheme(baseTheme);
     config.set('customTheme', baseTheme);
   }
+
+  /**
+   * Apply any global config values from the custom theme
+   * excluding component-specific overrides.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { components, ...customGlobalConfig } = customTheme?.config || {};
+
+  Object.entries(customGlobalConfig).forEach(([key, value]) => {
+    const configKey = key as keyof IonicConfig;
+
+    // For object-based config values, we merge with existing settings.
+    if (value !== null && typeof value === 'object') {
+      const existingConfig = config.get(configKey, {});
+      config.set(configKey, { ...existingConfig, ...value });
+      return;
+    }
+
+    /**
+     * For primitive values (boolean, string, number), we set the
+     * value directly.
+     * This covers global flags like 'rippleEffect' or 'animated'.
+     */
+    config.set(configKey, value);
+  });
 
   if (config.getBoolean('_testing')) {
     config.set('animated', false);

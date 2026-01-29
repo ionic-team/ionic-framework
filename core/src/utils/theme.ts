@@ -73,7 +73,13 @@ export const getCustomTheme = (customTheme: any, mode: string): any => {
  * @param prefix The CSS prefix to use (e.g., '--ion-')
  * @returns CSS string with custom properties
  */
-export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): string => {
+export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): string | undefined => {
+  // Logs do not need to be printed because palette objects are optional
+  const themeValidity = checkThemeValidity(theme, 'generateCSSVars', false);
+  if (!themeValidity) {
+    return undefined;
+  }
+
   const cssProps = Object.entries(theme)
     .flatMap(([key, val]) => {
       // Skip invalid keys or values
@@ -81,10 +87,7 @@ export const generateCSSVars = (theme: any, prefix: string = CSS_PROPS_PREFIX): 
         return [];
       }
 
-      // if key is camelCase, convert to kebab-case
-      if (key.match(/([a-z])([A-Z])/g)) {
-        key = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-      }
+      key = convertToKebabCase(key);
 
       // Do not generate CSS variables for excluded keys
       const excludedKeys = ['name', 'enabled', 'config'];
@@ -264,19 +267,14 @@ export const injectCSS = (css: string, target: Element | ShadowRoot = document.h
  * @returns The generated CSS string
  */
 export const generateGlobalThemeCSS = (theme: any): string => {
-  if (typeof theme !== 'object' || Array.isArray(theme)) {
-    console.warn('generateGlobalThemeCSS: Invalid theme object provided', theme);
+  const themeValidity = checkThemeValidity(theme, 'generateGlobalThemeCSS');
+  if (!themeValidity) {
     return '';
   }
 
-  if (Object.keys(theme).length === 0) {
-    console.warn('generateGlobalThemeCSS: Empty theme object provided');
-    return '';
-  }
-
-  // Exclude components and palette from the default tokens
+  // Exclude palette, components, and config from the default tokens
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { palette, components, ...defaultTokens } = theme;
+  const { palette, components, config, ...defaultTokens } = theme;
 
   // Generate CSS variables for the default design tokens
   const defaultTokensCSS = generateCSSVars(defaultTokens);
@@ -303,7 +301,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     // Include CSS variables for the dark color palette instead of
     // the light palette if dark palette enabled is 'always'
     paletteTokensCSS = highContrastTokensCSS;
-  } else if (palette.dark.enabled === 'always') {
+  } else if (palette.dark?.enabled === 'always') {
     // Include CSS variables for the dark color palette instead of
     // the light palette if dark palette enabled is 'always'
     paletteTokensCSS = darkTokensCSS;
@@ -316,7 +314,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     }
   `;
 
-  if (palette.highContrastDark.enabled === 'class') {
+  if (palette.highContrastDark?.enabled === 'class') {
     // Include CSS variables for the high contrast dark color palette inside of a
     // class if high contrast dark palette enabled is 'class'
     css += `
@@ -324,7 +322,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
         ${highContrastDarkTokensCSS}
       }
     `;
-  } else if (palette.highContrast.enabled === 'class') {
+  } else if (palette.highContrast?.enabled === 'class') {
     // Include CSS variables for the high contrast color palette inside of a
     // class if high contrast palette enabled is 'class'
     css += `
@@ -332,7 +330,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
         ${highContrastTokensCSS}
       }
     `;
-  } else if (palette.dark.enabled === 'class') {
+  } else if (palette.dark?.enabled === 'class') {
     // Include CSS variables for the dark color palette inside of a
     // class if dark palette enabled is 'class'
     css += `
@@ -342,7 +340,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     `;
   }
 
-  if (palette.highContrastDark.enabled === 'system') {
+  if (palette.highContrastDark?.enabled === 'system') {
     // Include CSS variables for the high contrast dark color palette inside of the
     // high contrast dark media query if high contrast dark palette enabled is 'system'
     css += `
@@ -352,7 +350,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
         }
       }
     `;
-  } else if (palette.highContrast.enabled === 'system') {
+  } else if (palette.highContrast?.enabled === 'system') {
     // Include CSS variables for the high contrast color palette inside of the
     // high contrast media query if high contrast palette enabled is 'system'
     css += `
@@ -362,7 +360,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
         }
       }
     `;
-  } else if (palette.dark.enabled === 'system') {
+  } else if (palette.dark?.enabled === 'system') {
     // Include CSS variables for the dark color palette inside of the
     // dark color scheme media query if dark palette enabled is 'system'
     css += `
@@ -412,17 +410,48 @@ export const applyGlobalTheme = (baseTheme: any, userTheme?: any): any => {
  * Generates component's themed CSS class with CSS variables
  * from its theme object
  * @param componentTheme The component's object to generate CSS for (e.g., IonChip { })
- * @param componentName The component name without any prefixes (e.g., 'chip')
+ * @param components An object mapping component names (e.g. `IonChip`) to a nested
+ * design-token configuration. Each configuration can contain arbitrary levels of
+ * token groups (such as `size`, `state`, `shape`, `variant`, etc.), where leaf values
+ * are CSS-compatible values. The structure is recursively flattened into CSS custom
+ * properties using kebab-case keys and an `--ion-<component>-` prefix.
+ *
+ * Example:
+ * ```json
+ * {
+ *   IonChip: {
+ *     size: { small: { height: "24px" } },
+ *     state: { disabled: { opacity: "0.4" } }
+ *   }
+ * }
+ * ```
+ *
+ * Becomes:
+ * ```css
+ * :root ion-chip {
+ *   --ion-chip-size-small-height: 24px;
+ *   --ion-chip-state-disabled-opacity: 0.4;
+ * }
+ * ```
  * @returns string containing the component's themed CSS variables
  */
-export const generateComponentThemeCSS = (componentTheme: any, componentName: string): string => {
-  const cssProps = generateCSSVars(componentTheme, `${CSS_PROPS_PREFIX}${componentName}-`);
+export const generateComponentsThemeCSS = (components: any): string => {
+  let css = '';
 
-  return `
-    :host(.${componentName}-themed) {
-      ${cssProps}
-    }
-  `;
+  for (const [component, componentTokens] of Object.entries(components)) {
+    const componentTag = convertToKebabCase(component);
+    const vars = generateCSSVars(componentTokens, `--${componentTag}-`);
+
+    const componentBlock = `
+      ${componentTag} {
+        ${vars}
+      }
+    `;
+
+    css += componentBlock;
+  }
+
+  return css;
 };
 
 /**
@@ -430,34 +459,20 @@ export const generateComponentThemeCSS = (componentTheme: any, componentName: st
  * @param element The element to apply the theme to
  * @returns true if theme was applied, false otherwise
  */
-export const applyComponentTheme = (element: HTMLElement): void => {
-  const customTheme = (window as any).Ionic?.config?.get?.('customTheme');
-
-  // Convert 'ION-CHIP' to 'ion-chip' and split into parts
-  const parts = element.tagName.toLowerCase().split('-');
-
-  // Get the component name 'chip' from the second part
-  const componentName = parts[1];
-
-  // Convert to 'IonChip' by capitalizing each part
-  const themeLookupName = parts.map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join('');
-
-  // Get the component theme from the global custom theme if it exists
-  const componentTheme = customTheme?.components?.[themeLookupName];
-
-  if (componentTheme) {
-    // Add the theme class to the element (e.g., 'chip-themed')
-    const themeClass = `${componentName}-themed`;
-    element.classList.add(themeClass);
-
-    // Generate CSS custom properties inside a theme class selector
-    const css = generateComponentThemeCSS(componentTheme, componentName);
-
-    // Inject styles into shadow root if available,
-    // otherwise into the element itself
-    const root = element.shadowRoot ?? element;
-    injectCSS(css, root);
+export const applyComponentsTheme = (theme: any): any => {
+  const themeValidity = checkThemeValidity(theme, 'applyComponentsTheme');
+  if (!themeValidity) {
+    return '';
   }
+
+  const { components } = theme;
+
+  if (!components) {
+    return '';
+  }
+
+  injectCSS(generateComponentsThemeCSS(components));
+  return components;
 };
 
 /**
@@ -525,3 +540,98 @@ export const mix = (baseColor: string, mixColor: string, weight: string): string
   const toHex = (n: number) => n.toString(16).padStart(2, '0');
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 };
+
+/**
+ * Converts a string to kebab-case
+ *
+ * @internal
+ * @param str The string to convert (e.g., 'IonChip')
+ * @returns The kebab-case string (e.g., 'ion-chip')
+ */
+const convertToKebabCase = (str: string): string => {
+  // It's already kebab-case
+  if (str.indexOf('-') !== -1) {
+    return str.toLowerCase();
+  }
+
+  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+};
+
+/**
+ * Verifies that a theme object is valid
+ *
+ * @internal
+ * @param theme The theme object to validate
+ * @param source The source or context where the theme is being validated
+ * @returns A boolean indicating whether the theme is valid
+ */
+const checkThemeValidity = (theme: any, source: string, showLog: boolean = true): boolean => {
+  if (typeof theme !== 'object' || Array.isArray(theme)) {
+    if (showLog) {
+      printIonWarning(`${source}: Invalid theme object provided`, theme);
+    }
+    return false;
+  }
+
+  if (Object.keys(theme).length === 0) {
+    if (showLog) {
+      printIonWarning(`${source}: Empty theme object provided`, theme);
+    }
+    return false;
+  }
+
+  return true;
+};
+
+/**
+ * Mimics the Sass `rgba` function logic to construct CSS rgba() values.
+ *
+ * @internal
+ * @param colorRgb The RGB color components as a string (e.g., '255, 0, 0').
+ * @param alpha The opacity value (0 to 1).
+ * @returns A string containing the CSS rgba() function call.
+ */
+export function rgba(colorRgb: string, alpha: number | string): string {
+  // This directly constructs the rgba() function call using the provided values.
+  return `rgba(${colorRgb}, ${alpha})`;
+}
+
+/**
+ * Mimics the Ionic Framework `current-color` function logic to construct CSS color values.
+ *
+ * @internal
+ * @param variation The color variation (e.g., 'primary', 'secondary', 'base').
+ * @param alpha The opacity value (0 to 1). If null, returns the full color variable.
+ * @param subtle If true, uses the '--ion-color-subtle-' prefix.
+ * @returns A string containing the CSS value (e.g., 'var(--ion-color-primary)' or 'rgba(var(--ion-color-primary-rgb), 0.16)').
+ */
+export function currentColor(variation: string, alpha: number | string | null = null, subtle: boolean = false): string {
+  // 1. Determine the base CSS variable name
+  const variable = subtle ? `--ion-color-subtle-${variation}` : `--ion-color-${variation}`;
+
+  // 2. Handle the case where no alpha is provided
+  if (alpha === null) {
+    // Corresponds to: @return var(#{$variable});
+    return `var(${variable})`;
+  } else {
+    // 3. Handle the case where alpha is provided
+    // Corresponds to: @return rgba(var(#{$variable}-rgb), #{$alpha});
+
+    // NOTE: The resulting string uses the CSS variable for the RGB components
+    // (e.g., '255, 0, 0') and the provided alpha.
+    return `rgba(var(${variable}-rgb), ${alpha})`;
+  }
+}
+
+/**
+ * Mimics the CSS `clamp` function logic.
+ *
+ * @internal
+ * @param min The minimum value
+ * @param val The preferred value
+ * @param max The maximum value
+ * @returns
+ */
+export function clamp(min: number | string, val: number | string, max: number | string): string {
+  return `clamp(${min}, ${val}, ${max})`;
+}

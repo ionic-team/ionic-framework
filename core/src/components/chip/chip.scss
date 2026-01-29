@@ -1,0 +1,298 @@
+@use "../../themes/mixins" as mixins;
+@use "../../themes/functions.color" as colors;
+
+// Chip: Common Styles
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --bg: Background of the chip
+   * @prop --border-radius: Border radius of the chip
+   * @prop --color: Color of the chip
+   * @prop --focus-ring-color: Color of the focus ring
+   * @prop --focus-ring-width: Width of the focus ring
+   */
+  --focus-ring-color: var(--ion-chip-state-focus-ring-color);
+  --focus-ring-width: var(--ion-chip-state-focus-ring-width);
+
+  @include mixins.font-smoothing();
+  @include mixins.border-radius(var(--border-radius));
+  @include mixins.margin(var(--ion-chip-margin));
+  @include mixins.padding(var(--ion-chip-padding-vertical), var(--ion-chip-padding-horizontal));
+
+  display: inline-flex;
+  position: relative;
+
+  align-items: center;
+  justify-content: center;
+
+  color: var(--color);
+
+  font-weight: var(--ion-chip-font-weight);
+
+  letter-spacing: var(--ion-chip-letter-spacing);
+
+  line-height: var(--ion-chip-line-height);
+
+  cursor: var(--ion-chip-cursor);
+  gap: var(--ion-chip-gap);
+
+  overflow: hidden;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+// Chip Sizes
+// ---------------------------------------------
+
+:host(.chip-size-small) {
+  min-height: var(--ion-chip-size-small-min-height);
+
+  font-size: var(--ion-chip-size-small-font-size);
+}
+
+:host(.chip-size-large) {
+  min-height: var(--ion-chip-size-large-min-height);
+
+  font-size: var(--ion-chip-size-large-font-size);
+}
+
+// Chip Shapes
+// ---------------------------------------------
+
+:host(.chip-shape-soft) {
+  --border-radius: var(--ion-chip-shape-soft-border-radius);
+}
+
+:host(.chip-shape-round) {
+  --border-radius: var(--ion-chip-shape-round-border-radius);
+}
+
+:host(.chip-shape-rectangular) {
+  --border-radius: var(--ion-chip-shape-rectangular-border-radius);
+}
+
+// Chip Hues
+// ---------------------------------------------
+
+// Bold
+:host(.chip-hue-bold) {
+  --bg: var(--ion-chip-hue-bold-bg);
+  --color: var(--ion-chip-hue-bold-color);
+}
+
+// Bold Colors
+:host(.chip-hue-bold.ion-color) {
+  background: var(--ion-chip-hue-bold-semantic-bg);
+  color: var(--ion-chip-hue-bold-semantic-color);
+}
+
+// Subtle
+:host(.chip-hue-subtle) {
+  --bg: var(--ion-chip-hue-subtle-bg);
+  --color: var(--ion-chip-hue-subtle-color);
+}
+
+// Subtle Colors
+:host(.chip-hue-subtle.ion-color) {
+  background: var(--ion-chip-hue-subtle-semantic-bg);
+  color: var(--ion-chip-hue-subtle-semantic-color);
+}
+
+// Chip Fills
+// ---------------------------------------------
+
+// Solid
+:host(.chip-fill-solid) {
+  background: var(--bg);
+}
+
+// Outline
+:host(.chip-fill-outline) {
+  border-width: var(--ion-chip-fill-outline-border-width);
+  border-style: solid;
+
+  background: var(--bg);
+}
+
+:host(.chip-fill-outline.chip-hue-bold) {
+  --bg: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg));
+
+  border-color: var(--ion-chip-fill-outline-border-color-bold);
+}
+
+:host(.chip-fill-outline.chip-hue-bold.ion-color) {
+  border-color: var(--ion-chip-fill-outline-semantic-border-color-bold);
+
+  background: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-semantic-bg));
+}
+
+:host(.chip-fill-outline.chip-hue-subtle) {
+  --bg: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg));
+
+  border-color: var(--ion-chip-fill-outline-border-color-subtle);
+}
+
+:host(.chip-fill-outline.chip-hue-subtle.ion-color) {
+  border-color: var(--ion-chip-fill-outline-semantic-border-color-subtle);
+
+  background: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-semantic-bg));
+}
+
+// Chip States
+// ---------------------------------------------
+
+// Disabled
+:host(.chip-disabled) {
+  cursor: default;
+  opacity: var(--ion-chip-state-disabled-opacity);
+  pointer-events: none;
+}
+
+// Focus
+:host(.ion-focused) {
+  @include mixins.focused-state(var(--focus-ring-width), $color: var(--focus-ring-color));
+}
+
+:host(.ion-focused.chip-hue-bold) {
+  --bg: var(--ion-chip-hue-bold-state-focus-bg, var(--ion-chip-hue-bold-bg));
+}
+
+:host(.ion-focused.chip-hue-bold.ion-color) {
+  background: var(--ion-chip-hue-bold-semantic-state-focus-bg, var(--ion-chip-hue-bold-semantic-bg));
+}
+
+:host(.ion-focused.chip-fill-outline.chip-hue-bold) {
+  --bg: var(--ion-chip-fill-outline-state-focus-bg-bold, var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg)));
+}
+
+:host(.ion-focused.chip-hue-subtle) {
+  --bg: var(--ion-chip-hue-subtle-state-focus-bg, var(--ion-chip-hue-subtle-bg));
+}
+
+:host(.ion-focused.chip-hue-subtle.ion-color) {
+  background: var(--ion-chip-hue-subtle-semantic-state-focus-bg, var(--ion-chip-hue-subtle-semantic-bg));
+}
+
+:host(.ion-focused.chip-fill-outline.chip-hue-subtle) {
+  --bg: var(
+    --ion-chip-fill-outline-state-focus-bg-subtle,
+    var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg))
+  );
+}
+
+// Activated
+:host(.ion-activated.chip-hue-bold) {
+  --bg: var(--ion-chip-hue-bold-state-activated-bg, var(--ion-chip-hue-bold-bg));
+}
+
+:host(.ion-activated.chip-hue-bold.ion-color) {
+  background: var(--ion-chip-hue-bold-semantic-state-activated-bg, var(--ion-chip-hue-bold-semantic-bg));
+}
+
+:host(.ion-activated.chip-fill-outline.chip-hue-bold) {
+  --bg: var(
+    --ion-chip-fill-outline-state-activated-bg-bold,
+    var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg))
+  );
+}
+
+:host(.ion-activated.chip-hue-subtle) {
+  --bg: var(--ion-chip-hue-subtle-state-activated-bg, var(--ion-chip-hue-subtle-bg));
+}
+
+:host(.ion-activated.chip-hue-subtle.ion-color) {
+  background: var(--ion-chip-hue-subtle-semantic-state-activated-bg, var(--ion-chip-hue-subtle-semantic-bg));
+}
+
+:host(.ion-activated.chip-fill-outline.chip-hue-subtle) {
+  --bg: var(
+    --ion-chip-fill-outline-state-activated-bg-subtle,
+    var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg))
+  );
+}
+
+// Hover
+@media (any-hover: hover) {
+  :host(.chip-hue-bold:hover) {
+    --bg: var(--ion-chip-hue-bold-state-hover-bg, var(--ion-chip-hue-bold-bg));
+  }
+
+  :host(.chip-hue-bold.ion-color:hover) {
+    background: var(--ion-chip-hue-bold-semantic-state-hover-bg, var(--ion-chip-hue-bold-semantic-bg));
+  }
+
+  :host(.chip-fill-outline.chip-hue-bold:not(.ion-color):hover) {
+    --bg: var(
+      --ion-chip-fill-outline-state-hover-bg-bold,
+      var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg))
+    );
+  }
+
+  :host(.chip-hue-subtle:hover) {
+    --bg: var(--ion-chip-hue-subtle-state-hover-bg, var(--ion-chip-hue-subtle-bg));
+  }
+
+  :host(.chip-hue-subtle.ion-color:hover) {
+    background: var(--ion-chip-hue-subtle-semantic-state-hover-bg, var(--ion-chip-hue-subtle-semantic-bg));
+  }
+
+  :host(.chip-fill-outline.chip-hue-subtle:not(.ion-color):hover) {
+    --bg: var(
+      --ion-chip-fill-outline-state-hover-bg-subtle,
+      var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg))
+    );
+  }
+}
+
+// Chip Slotted Elements
+// ---------------------------------------------
+
+// Icon
+::slotted(ion-icon) {
+  font-size: var(--ion-chip-icon-size);
+}
+
+:host(:not(.ion-color)) ::slotted(ion-icon) {
+  color: var(--ion-chip-icon-color);
+}
+
+::slotted(ion-icon:first-child) {
+  @include mixins.margin(
+    var(--ion-chip-icon-first-child-margin-vertical),
+    var(--ion-chip-icon-first-child-margin-end),
+    $start: var(--ion-chip-icon-first-child-margin-start)
+  );
+}
+
+::slotted(ion-icon:last-child) {
+  @include mixins.margin(
+    var(--ion-chip-icon-last-child-margin-vertical),
+    var(--ion-chip-icon-last-child-margin-end),
+    $start: var(--ion-chip-icon-last-child-margin-start)
+  );
+}
+
+// Avatar
+::slotted(ion-avatar) {
+  flex-shrink: 0;
+
+  width: var(--ion-chip-avatar-size, revert-layer);
+  height: var(--ion-chip-avatar-size, revert-layer);
+}
+
+::slotted(ion-avatar:first-child) {
+  @include mixins.margin(
+    var(--ion-chip-avatar-first-child-margin-vertical),
+    $end: var(--ion-chip-avatar-first-child-margin-end),
+    $start: var(--ion-chip-avatar-first-child-margin-start)
+  );
+}
+
+::slotted(ion-avatar:last-child) {
+  @include mixins.margin(
+    var(--ion-chip-avatar-last-child-margin-vertical),
+    $end: var(--ion-chip-avatar-last-child-margin-end),
+    $start: var(--ion-chip-avatar-last-child-margin-start)
+  );
+}
