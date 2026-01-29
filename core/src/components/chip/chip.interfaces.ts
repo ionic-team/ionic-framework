@@ -28,7 +28,7 @@ export type IonChipRecipe = {
 
     focus?: {
       ring?: {
-        color: string;
+        color?: string;
         width?: string | number;
       };
     };
