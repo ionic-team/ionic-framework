@@ -23,6 +23,11 @@ export class SelectModal implements ComponentInterface {
 
   @Prop() header?: string;
 
+  /**
+   * The text to display on the cancel button.
+   */
+  @Prop() cancelText = 'Close';
+
   @Prop() multiple?: boolean;
 
   @Prop() options: SelectModalOption[] = [];
@@ -149,7 +154,7 @@ export class SelectModal implements ComponentInterface {
             {this.header !== undefined && <ion-title>{this.header}</ion-title>}
 
             <ion-buttons slot="end">
-              <ion-button onClick={() => this.closeModal()}>Close</ion-button>
+              <ion-button onClick={() => this.closeModal()}>{this.cancelText}</ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>

@@ -3223,6 +3223,11 @@ export namespace Components {
         "value"?: any | null;
     }
     interface IonSelectModal {
+        /**
+          * The text to display on the cancel button.
+          * @default 'Close'
+         */
+        "cancelText": string;
         "header"?: string;
         "multiple"?: boolean;
         /**
@@ -8548,6 +8553,11 @@ declare namespace LocalJSX {
         "value"?: any | null;
     }
     interface IonSelectModal {
+        /**
+          * The text to display on the cancel button.
+          * @default 'Close'
+         */
+        "cancelText"?: string;
         "header"?: string;
         "multiple"?: boolean;
         /**

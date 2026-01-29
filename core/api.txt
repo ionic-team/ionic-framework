@@ -1766,6 +1766,7 @@ ion-select,part,supporting-text
 ion-select,part,text
 
 ion-select-modal,scoped
+ion-select-modal,prop,cancelText,string,'Close',false,false
 ion-select-modal,prop,header,string | undefined,undefined,false,false
 ion-select-modal,prop,multiple,boolean | undefined,undefined,false,false
 ion-select-modal,prop,options,SelectModalOption[],[],false,false

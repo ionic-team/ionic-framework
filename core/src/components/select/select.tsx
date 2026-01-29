@@ -795,6 +795,7 @@ export class Select implements ComponentInterface {
       component: 'ion-select-modal',
       componentProps: {
         header: interfaceOptions.header,
+        cancelText: this.cancelText,
         multiple,
         value,
         options: this.createOverlaySelectOptions(this.childOpts, value),
