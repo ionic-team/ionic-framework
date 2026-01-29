@@ -3,6 +3,9 @@ import { newSpecPage } from '@stencil/core/testing';
 import { Item } from '../../item/item';
 import { Range } from '../range';
 
+const waitForEvent = (el: HTMLElement, eventName: string) =>
+  new Promise<void>((resolve) => el.addEventListener(eventName, () => resolve(), { once: true }));
+
 let sharedRange: Range;
 
 describe('range: values', () => {
@@ -509,5 +512,185 @@ describe('range: shadow parts', () => {
     // pin a and pin b only exist when pin is true and dualKnobs is true
     expect(range).toHaveShadowPart('pin-a');
     expect(range).toHaveShadowPart('pin-b');
+  });
+
+  it('should have pressed shadow part when pressed', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range pin="true" value="50" label="Label"></ion-range>`,
+    });
+    const range = page.body.querySelector('ion-range')!;
+    const shadowRoot = range.shadowRoot!;
+
+    // pressed part should not exist on any element by default
+    expect(shadowRoot.querySelector('[part~="knob-handle"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin"][part~="pressed"]')).toBeNull();
+
+    // Simulate a pressed knob by setting state on component instance
+    const component = page.rootInstance as any;
+    component.pressedKnob = 'A';
+    await page.waitForChanges();
+
+    // pressed part should exist on knob-handle, knob, and pin when pressed
+    expect(shadowRoot.querySelector('[part~="knob-handle"][part~="pressed"]')).not.toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob"][part~="pressed"]')).not.toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin"][part~="pressed"]')).not.toBeNull();
+
+    // Clear the pressed state
+    component.pressedKnob = undefined;
+    await page.waitForChanges();
+
+    // pressed part should not exist after clearing pressed state
+    expect(shadowRoot.querySelector('[part~="knob-handle"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin"][part~="pressed"]')).toBeNull();
+  });
+
+  it('should have focused shadow part when focused', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range pin="true" value="50" label="Label"></ion-range>`,
+    });
+    const range = page.body.querySelector('ion-range')!;
+    const shadowRoot = range.shadowRoot!;
+
+    // focused part should not exist on any element by default
+    expect(shadowRoot.querySelector('[part~="knob-handle"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin"][part~="focused"]')).toBeNull();
+
+    // Focus the knob handle
+    const knobHandle = shadowRoot.querySelector('.range-knob-handle') as HTMLElement;
+    knobHandle.focus();
+    await page.waitForChanges();
+
+    // focused part should exist on knob-handle, knob, and pin when focused
+    expect(shadowRoot.querySelector('[part~="knob-handle"][part~="focused"]')).not.toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob"][part~="focused"]')).not.toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin"][part~="focused"]')).not.toBeNull();
+
+    // Blur the knob handle and wait for the component to finish handling blur
+    knobHandle.blur();
+    await waitForEvent(range, 'ionBlur');
+    await page.waitForChanges();
+
+    // focused part should not exist after blur
+    expect(shadowRoot.querySelector('[part~="knob-handle"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin"][part~="focused"]')).toBeNull();
+  });
+
+  it('should have pressed shadow part on only one knob when dual-knobs is', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range dual-knobs="true" pin="true" value="50" label="Label"></ion-range>`,
+    });
+    const range = page.body.querySelector('ion-range')!;
+    const shadowRoot = range.shadowRoot!;
+    const component = page.rootInstance as any;
+
+    // pressed part should not exist on any element by default
+    expect(shadowRoot.querySelector('[part~="knob-handle-a"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-a"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-a"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-handle-b"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-b"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-b"][part~="pressed"]')).toBeNull();
+
+    // Press knob A
+    component.pressedKnob = 'A';
+    await page.waitForChanges();
+
+    // pressed part should exist on knob A's handle, knob, and pin
+    expect(shadowRoot.querySelector('[part~="knob-handle-a"][part~="pressed"]')).not.toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-a"][part~="pressed"]')).not.toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-a"][part~="pressed"]')).not.toBeNull();
+    // knob B should not have pressed
+    expect(shadowRoot.querySelector('[part~="knob-handle-b"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-b"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-b"][part~="pressed"]')).toBeNull();
+
+    // Press knob B
+    component.pressedKnob = 'B';
+    await page.waitForChanges();
+
+    // pressed part should now exist on knob B's handle, knob, and pin
+    expect(shadowRoot.querySelector('[part~="knob-handle-b"][part~="pressed"]')).not.toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-b"][part~="pressed"]')).not.toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-b"][part~="pressed"]')).not.toBeNull();
+    // knob A should no longer have pressed
+    expect(shadowRoot.querySelector('[part~="knob-handle-a"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-a"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-a"][part~="pressed"]')).toBeNull();
+
+    // Clear the pressed state
+    component.pressedKnob = undefined;
+    await page.waitForChanges();
+
+    // pressed part should not exist after clearing pressed state
+    expect(shadowRoot.querySelector('[part~="knob-handle-a"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-a"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-a"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-handle-b"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-b"][part~="pressed"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-b"][part~="pressed"]')).toBeNull();
+  });
+
+  it('should have focused shadow part on only one knob when dual-knobs is', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range dual-knobs="true" pin="true" value="50" label="Label"></ion-range>`,
+    });
+    const range = page.body.querySelector('ion-range')!;
+    const shadowRoot = range.shadowRoot!;
+
+    // focused part should not exist on any element by default
+    expect(shadowRoot.querySelector('[part~="knob-handle-a"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-a"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-a"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-handle-b"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-b"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-b"][part~="focused"]')).toBeNull();
+
+    // Focus knob A
+    const knobHandleA = shadowRoot.querySelector('.range-knob-handle-a') as HTMLElement;
+    knobHandleA.focus();
+    await page.waitForChanges();
+
+    // focused part should exist on knob A's handle, knob, and pin
+    expect(shadowRoot.querySelector('[part~="knob-handle-a"][part~="focused"]')).not.toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-a"][part~="focused"]')).not.toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-a"][part~="focused"]')).not.toBeNull();
+    // knob B should not have focused
+    expect(shadowRoot.querySelector('[part~="knob-handle-b"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-b"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-b"][part~="focused"]')).toBeNull();
+
+    // Focus knob B
+    const knobHandleB = shadowRoot.querySelector('.range-knob-handle-b') as HTMLElement;
+    knobHandleB.focus();
+    await page.waitForChanges();
+
+    // focused part should now exist on knob B's handle, knob, and pin
+    expect(shadowRoot.querySelector('[part~="knob-handle-b"][part~="focused"]')).not.toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-b"][part~="focused"]')).not.toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-b"][part~="focused"]')).not.toBeNull();
+    // knob A should no longer have focused
+    expect(shadowRoot.querySelector('[part~="knob-handle-a"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-a"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-a"][part~="focused"]')).toBeNull();
+
+    knobHandleB.blur();
+    await waitForEvent(range, 'ionBlur');
+    await page.waitForChanges();
+
+    // focused part should not exist after blur
+    expect(shadowRoot.querySelector('[part~="knob-handle-a"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-a"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-a"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-handle-b"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="knob-b"][part~="focused"]')).toBeNull();
+    expect(shadowRoot.querySelector('[part~="pin-b"][part~="focused"]')).toBeNull();
   });
 });
