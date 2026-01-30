@@ -16,12 +16,13 @@
       /**
        * Simulate safe-area insets for testing.
        * These values represent typical Android edge-to-edge safe areas.
+       * Left/right values simulate landscape orientation or devices with side notches.
        */
       :root {
         --ion-safe-area-top: 44px;
         --ion-safe-area-bottom: 34px;
-        --ion-safe-area-left: 0px;
-        --ion-safe-area-right: 0px;
+        --ion-safe-area-left: 44px;
+        --ion-safe-area-right: 44px;
       }
 
       /* Visual indicator for safe areas */
@@ -46,6 +47,20 @@
         height: var(--ion-safe-area-bottom);
       }
 
+      .safe-area-left {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: var(--ion-safe-area-left);
+      }
+
+      .safe-area-right {
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: var(--ion-safe-area-right);
+      }
+
       /* Position triggers at different locations */
       .bottom-trigger {
         position: fixed;
@@ -67,6 +82,8 @@
       <!-- Visual indicators for safe areas -->
       <div class="safe-area-indicator safe-area-top"></div>
       <div class="safe-area-indicator safe-area-bottom"></div>
+      <div class="safe-area-indicator safe-area-left"></div>
+      <div class="safe-area-indicator safe-area-right"></div>
 
       <div class="ion-page" id="main-page">
         <ion-header>
@@ -77,7 +94,11 @@
 
         <ion-content class="ion-padding">
           <p>Test that popovers are <strong>positioned away from</strong> unsafe areas (shown in red).</p>
-          <p>The popover should be moved up/down to avoid overlapping the safe-area zones.</p>
+          <p>The popover should be moved up/down/left/right to avoid overlapping the safe-area zones.</p>
+          <p>
+            <strong>Landscape simulation:</strong> Left and right safe areas are set to 44px to test devices with side
+            notches.
+          </p>
 
           <ion-list>
             <ion-item>

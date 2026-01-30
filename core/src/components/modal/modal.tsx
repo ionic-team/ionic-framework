@@ -75,6 +75,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @State() private isSheetModal = false;
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
+  private shadowEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
   private dragHandleEl?: HTMLButtonElement;
   private sortedBreakpoints?: number[];
@@ -914,13 +915,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    // Phone-sized fullscreen modals inherit safe areas and use wrapper padding
-    if (!isTablet) {
-      this.applyFullscreenSafeArea();
-      return;
-    }
-
-    // Check if tablet modal is fullscreen via CSS custom properties
+    // Check if modal is fullscreen via CSS custom properties
+    // This applies to both phone and tablet sizes - custom modals may have
+    // non-fullscreen dimensions even on phones (e.g., --height: 70%)
     const computedStyle = getComputedStyle(this.el);
     const width = computedStyle.getPropertyValue('--width').trim();
     const height = computedStyle.getPropertyValue('--height').trim();
@@ -928,9 +925,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     if (isFullscreen) {
       this.applyFullscreenSafeArea();
-    } else {
-      // Centered dialog doesn't touch edges
+    } else if (isTablet) {
+      // Centered dialog on tablet doesn't touch edges
       this.zeroAllSafeAreas();
+    } else {
+      // Non-fullscreen modal on phone - use coordinate-based detection
+      // to determine which edges it touches (e.g., bottom-aligned custom modals)
     }
   }
 
@@ -953,19 +953,27 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
-   * Updates wrapper padding based on footer presence.
+   * Updates wrapper and shadow padding based on footer presence.
    * Called initially and when footer is dynamically added/removed.
+   * Both elements must be styled identically to prevent visual mismatches.
    */
   private updateFooterPadding() {
     if (!this.wrapperEl) return;
 
     const hasFooter = this.el.querySelector('ion-footer') !== null;
+    // Apply to both wrapper and shadow to keep them in sync
+    const elements = [this.wrapperEl, this.shadowEl].filter(Boolean) as HTMLElement[];
+
     if (hasFooter) {
-      this.wrapperEl.style.removeProperty('padding-bottom');
-      this.wrapperEl.style.removeProperty('box-sizing');
+      elements.forEach((el) => {
+        el.style.removeProperty('padding-bottom');
+        el.style.removeProperty('box-sizing');
+      });
     } else {
-      this.wrapperEl.style.setProperty('padding-bottom', 'var(--ion-safe-area-bottom, 0px)');
-      this.wrapperEl.style.setProperty('box-sizing', 'border-box');
+      elements.forEach((el) => {
+        el.style.setProperty('padding-bottom', 'var(--ion-safe-area-bottom, 0px)');
+        el.style.setProperty('box-sizing', 'border-box');
+      });
     }
   }
 
@@ -993,11 +1001,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.footerObserver?.disconnect();
     this.footerObserver = undefined;
 
-    // Clear wrapper styles that may have been set for safe-area handling
-    if (this.wrapperEl) {
-      this.wrapperEl.style.removeProperty('padding-bottom');
-      this.wrapperEl.style.removeProperty('box-sizing');
-    }
+    // Clear wrapper and shadow styles that may have been set for safe-area handling
+    [this.wrapperEl, this.shadowEl].forEach((el) => {
+      if (el) {
+        el.style.removeProperty('padding-bottom');
+        el.style.removeProperty('box-sizing');
+      }
+    });
 
     // Clear safe-area CSS variable overrides
     const style = this.el.style;
@@ -1613,7 +1623,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           part="backdrop"
         />
 
-        {mode === 'ios' && <div class="modal-shadow"></div>}
+        {mode === 'ios' && <div class="modal-shadow" ref={(el) => (this.shadowEl = el)}></div>}
 
         <div
           /*
