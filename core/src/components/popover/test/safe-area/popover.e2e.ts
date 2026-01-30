@@ -7,6 +7,9 @@ import { configs, test } from '@utils/test/playwright';
  *
  * This is especially important for Android API 36+ where edge-to-edge mode
  * is enforced and apps can no longer opt out.
+ *
+ * The test HTML includes safe-area values (44px top/left/right, 34px bottom)
+ * and red visual indicators to verify popover positioning.
  */
 
 // Tests that apply to both iOS and MD modes
@@ -71,6 +74,52 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(topStyle).not.toContain('var(--ion-safe-area-top');
       // The bottom should not be set for a floating popover
       expect(bottomStyle).toBe('');
+    });
+  });
+});
+
+// Landscape viewport simulates devices with side notches or landscape orientation
+const LandscapeViewport = { width: 844, height: 390 };
+
+configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('popover: safe-area screenshots'), () => {
+    test('popover near bottom should avoid bottom safe area', async ({ page }) => {
+      await page.setViewportSize(LandscapeViewport);
+      await page.goto('/src/components/popover/test/safe-area', config);
+
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+      await page.click('#bottom-trigger');
+      await ionPopoverDidPresent.next();
+
+      // Red overlays show safe areas - popover should be positioned to avoid them
+      await expect(page).toHaveScreenshot(screenshot('popover-safe-area-bottom-landscape'));
+    });
+
+    test('popover near bottom right should avoid right safe area', async ({ page }) => {
+      await page.setViewportSize(LandscapeViewport);
+      await page.goto('/src/components/popover/test/safe-area', config);
+
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+      await page.click('#near-bottom-trigger');
+      await ionPopoverDidPresent.next();
+
+      // Popover triggered from near-right edge should account for right safe area
+      await expect(page).toHaveScreenshot(screenshot('popover-safe-area-right-landscape'));
+    });
+
+    test('large popover should avoid all safe areas', async ({ page }) => {
+      await page.setViewportSize(LandscapeViewport);
+      await page.goto('/src/components/popover/test/safe-area', config);
+
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+      await page.click('#large-popover-trigger');
+      await ionPopoverDidPresent.next();
+
+      // Large popover may extend toward edges - should respect safe areas
+      await expect(page).toHaveScreenshot(screenshot('popover-safe-area-large-landscape'));
     });
   });
 });

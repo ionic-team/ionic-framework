@@ -6,8 +6,11 @@ import { configs, test, Viewports } from '@utils/test/playwright';
  * Safe-area tests verify that modals correctly handle safe-area insets
  * based on modal type and screen size.
  *
- * These tests use simulated safe-area values (34px bottom) set in index.html.
- * They verify the modal wrapper has correct padding applied.
+ * These tests use simulated safe-area values set in index.html:
+ * - Top: 44px, Bottom: 34px, Left: 44px, Right: 44px
+ *
+ * The test HTML includes red visual indicators for all safe areas to
+ * verify modal content doesn't overlap unsafe regions.
  */
 
 // Helper to get the modal wrapper's computed padding-bottom
@@ -247,6 +250,72 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       // Sheet modals with footer - footer handles the safe area
       const paddingBottom = await getWrapperPaddingBottom(page);
       expect(paddingBottom).toBe('0px');
+    });
+  });
+});
+
+// Landscape viewport simulates devices with side notches or landscape orientation
+const LandscapeViewport = { width: 844, height: 390 };
+
+configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('modal: safe-area screenshots'), () => {
+    test('fullscreen modal should not overlap safe areas in landscape', async ({ page }) => {
+      await page.setViewportSize(LandscapeViewport);
+      await page.goto('/src/components/modal/test/safe-area', config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#fullscreen-modal');
+      await ionModalDidPresent.next();
+
+      // Red overlays show safe areas - modal content should not overlap them
+      await expect(page).toHaveScreenshot(screenshot('modal-safe-area-fullscreen-landscape'));
+    });
+
+    test('fullscreen modal without footer should show wrapper padding in landscape', async ({ page }) => {
+      await page.setViewportSize(LandscapeViewport);
+      await page.goto('/src/components/modal/test/safe-area', config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#fullscreen-no-footer');
+      await ionModalDidPresent.next();
+
+      // Without footer, wrapper padding prevents content from overlapping bottom safe area
+      await expect(page).toHaveScreenshot(screenshot('modal-safe-area-fullscreen-no-footer-landscape'));
+    });
+  });
+});
+
+configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('modal: safe-area screenshots - tablet'), () => {
+    test('centered dialog should be inset from all safe areas', async ({ page }) => {
+      await page.setViewportSize(Viewports.tablet.portrait);
+      await page.goto('/src/components/modal/test/safe-area', config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#default-modal');
+      await ionModalDidPresent.next();
+
+      // Centered dialog should not touch any edges or safe areas
+      await expect(page).toHaveScreenshot(screenshot('modal-safe-area-centered-tablet'));
+    });
+  });
+});
+
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('modal: safe-area screenshots - card modal'), () => {
+    test('card modal should handle safe areas correctly in landscape', async ({ page }) => {
+      await page.setViewportSize(LandscapeViewport);
+      await page.goto('/src/components/modal/test/safe-area', config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#card-modal');
+      await ionModalDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot('modal-safe-area-card-landscape'));
     });
   });
 });
