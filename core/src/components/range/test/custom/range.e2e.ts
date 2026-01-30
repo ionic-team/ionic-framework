@@ -199,14 +199,14 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
 
       const knobABackgroundColor = await range.evaluate((el) => {
         const shadowRoot = el.shadowRoot;
-        const knobA = shadowRoot?.querySelector('.range-knob-a');
+        const knobA = shadowRoot?.querySelector('.range-knob-handle-a .range-knob');
         return knobA ? window.getComputedStyle(knobA).backgroundColor : '';
       });
       expect(knobABackgroundColor).toBe('rgb(0, 0, 255)');
 
       const knobBBackgroundColor = await range.evaluate((el) => {
         const shadowRoot = el.shadowRoot;
-        const knobB = shadowRoot?.querySelector('.range-knob-b');
+        const knobB = shadowRoot?.querySelector('.range-knob-handle-b .range-knob');
         return knobB ? window.getComputedStyle(knobB).backgroundColor : '';
       });
       expect(knobBBackgroundColor).toBe('rgb(255, 255, 0)');
