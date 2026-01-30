@@ -14,7 +14,20 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   </head>
   <style>
-    /* 1st Custom Range */
+    h2 {
+      font-size: 12px;
+      font-weight: normal;
+
+      color: #6f7378;
+
+      margin-top: 10px;
+      margin-left: 5px;
+    }
+
+    /**
+     * 1st Custom Range: All Parts
+     * -----------------------------------
+     */
     .range-part::part(bar) {
       background: red;
     }
@@ -53,14 +66,17 @@
       background: orange;
     }
 
-    /* 2nd Custom Range: Single Knob */
-    .custom-knobs {
+    /**
+     * Shared Custom Knob Styles
+     * -----------------------------------
+     */
+    .custom-knobs-range {
       --color-blue-light: #3b82f6;
       --color-blue-primary: var(--ion-color-primary, #0054e9);
       --color-blue-dark: #1e3a8a;
     }
 
-    .custom-knobs::part(knob-handle) {
+    .custom-knobs-range::part(knob-handle) {
       --custom-knob-width: 50px;
       --custom-knob-height: 25px;
 
@@ -76,7 +92,7 @@
       transform-origin: center center;
     }
 
-    .custom-knobs::part(knob) {
+    .custom-knobs-range::part(knob) {
       background: rgba(255, 255, 255, 0.5);
       backdrop-filter: blur(10px);
 
@@ -93,89 +109,25 @@
     }
 
     /* Pressed knob */
-    .custom-knobs::part(knob pressed) {
+    .custom-knobs-range::part(knob pressed) {
       background: var(--color-blue-primary);
     }
 
     /* Hover/focus indicator */
-    .custom-knobs::part(knob)::before {
+    .custom-knobs-range::part(knob)::before {
       width: 100%;
       height: 100%;
       border-radius: inherit;
     }
 
     /* Pressed/focused knob hover/focus indicator */
-    .custom-knobs::part(knob pressed)::before,
-    .custom-knobs::part(knob focused)::before {
+    .custom-knobs-range::part(knob pressed)::before,
+    .custom-knobs-range::part(knob focused)::before {
       transform: scale(1);
     }
 
-    /* TODO hover states */
-
-    /* iOS offset is larger than MD due to not having a bottom arrow */
-    .ios.custom-knobs {
-      --pin-offset: 8px;
-    }
-
-    .md.custom-knobs {
-      --pin-offset: 4px;
-    }
-
-    .ios.custom-knobs {
-      padding-top: 40px;
-    }
-
-    .ios.custom-knobs::part(pin) {
-      border-radius: 50%;
-      background-color: var(--color-blue-primary);
-      color: #fff;
-    }
-
-    /* Move the pin up so it sits above the taller custom knob when pressed/focused */
-    .custom-knobs::part(pin pressed),
-    .custom-knobs::part(pin focused) {
-      transform: translate3d(0, calc(-100% - (var(--custom-knob-height) / 2) + var(--pin-offset)), 0) scale(1);
-    }
-
-    .custom-knobs [slot='start'] {
-      margin-inline-end: 36px;
-    }
-
-    .custom-knobs [slot='end'] {
-      margin-inline-start: 36px;
-    }
-
-    /* 3rd Custom Range: Dual Knobs */
-    .custom-knobs.range-dual-knobs::part(knob-a) {
-      border-radius: 50% 0 0 50%;
-    }
-
-    .custom-knobs.range-dual-knobs::part(knob-b) {
-      border-radius: 0 50% 50% 0;
-    }
-
-    /* Pressed knob a */
-    .custom-knobs::part(knob-a pressed) {
-      background: var(--color-blue-light);
-    }
-
-    /* Pressed knob b */
-    .custom-knobs::part(knob-b pressed) {
-      background: var(--color-blue-dark);
-    }
-
-    .custom-knobs.range-dual-knobs::part(pin-a),
-    .custom-knobs.range-dual-knobs::part(pin-a):before {
-      background: var(--color-blue-light);
-    }
-
-    .custom-knobs.range-dual-knobs::part(pin-b),
-    .custom-knobs.range-dual-knobs::part(pin-b):before {
-      background: var(--color-blue-dark);
-    }
-
     /* Displayed knob values */
-    .custom-knobs.range-dual-knobs .knob-value {
+    .custom-knobs-range .knob-value {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -187,12 +139,115 @@
       border-radius: 4px;
     }
 
-    .custom-knobs.range-dual-knobs [slot='start'] {
-      border-color: var(--color-blue-light);
+    /* TODO hover states */
+
+    /* iOS offset is larger than MD due to not having a bottom arrow */
+    .ios.custom-knobs-range {
+      --pin-offset: 8px;
     }
 
-    .custom-knobs.range-dual-knobs [slot='end'] {
-      border-color: var(--color-blue-dark);
+    .md.custom-knobs-range {
+      --pin-offset: 4px;
+    }
+
+    .ios.custom-knobs-range {
+      padding-top: 40px;
+    }
+
+    .ios.custom-knobs-range::part(pin) {
+      border-radius: 50%;
+      background-color: var(--color-blue-primary);
+      color: #fff;
+    }
+
+    /* Move the pin up so it sits above the taller custom knob when pressed/focused */
+    .custom-knobs-range::part(pin pressed),
+    .custom-knobs-range::part(pin focused) {
+      transform: translate3d(0, calc(-100% - (var(--custom-knob-height) / 2) + var(--pin-offset)), 0) scale(1);
+    }
+
+    .custom-knobs-range [slot='start'] {
+      margin-inline-end: 36px;
+    }
+
+    .custom-knobs-range [slot='end'] {
+      margin-inline-start: 36px;
+    }
+
+    /**
+     * 2nd Custom Range: Single Knob
+     * -----------------------------------
+     */
+
+    /* Pressed knob */
+    #single-knob-range::part(knob pressed) {
+      background: var(--color-blue-primary);
+    }
+
+    /**
+     * 3rd Custom Range: Dual Knobs
+     *     Knobs Lower & Upper
+     * -----------------------------------
+     */
+
+    /* Knob lower */
+    #lower-upper-dual-knobs-range::part(knob-lower) {
+      border-radius: 50% 0 0 50%;
+    }
+
+    /* Knob upper */
+    #lower-upper-dual-knobs-range::part(knob-upper) {
+      border-radius: 0 50% 50% 0;
+    }
+
+    /* Pressed knob lower */
+    #lower-upper-dual-knobs-range::part(knob-lower pressed) {
+      background: var(--color-blue-light);
+    }
+
+    /* Pressed knob upper */
+    #lower-upper-dual-knobs-range::part(knob-upper pressed) {
+      background: var(--color-blue-dark);
+    }
+
+    /* Pin lower */
+    #lower-upper-dual-knobs-range.range-dual-knobs::part(pin-lower),
+    #lower-upper-dual-knobs-range.range-dual-knobs::part(pin-lower):before {
+      background: var(--color-blue-light);
+    }
+
+    /* Pin upper */
+    #lower-upper-dual-knobs-range.range-dual-knobs::part(pin-upper),
+    #lower-upper-dual-knobs-range.range-dual-knobs::part(pin-upper):before {
+      background: var(--color-blue-dark);
+    }
+
+    /**
+     * 4th Custom Range: Dual Knobs
+     *       Knobs A & B
+     * -----------------------------------
+     */
+
+    /* Pressed knob A */
+    #a-b-dual-knobs-range::part(knob-a pressed) {
+      background: var(--color-blue-light);
+    }
+
+    /* Pressed knob B */
+    #a-b-dual-knobs-range::part(knob-b pressed) {
+      background: var(--color-blue-dark);
+    }
+
+    /* Pin A */
+    #a-b-dual-knobs-range.range-dual-knobs::part(pin-a),
+    #a-b-dual-knobs-range.range-dual-knobs::part(pin-a):before {
+      background: var(--color-blue-light);
+    }
+
+    /* Pin B */
+    #a-b-dual-knobs-range.range-dual-knobs::part(pin-b),
+    #a-b-dual-knobs-range.range-dual-knobs::part(pin-b):before {
+      background: var(--color-blue-dark);
     }
   </style>
   <body>
@@ -205,6 +260,7 @@
 
       <ion-content class="ion-padding">
         <!-- 1st Custom Range -->
+        <h2>Custom Range</h2>
         <ion-range
           class="range-part"
           min="-200"
@@ -217,9 +273,10 @@
         ></ion-range>
 
         <!-- 2nd Custom Range: Single Knob -->
+        <h2>Custom Range: Single Knob</h2>
         <ion-range
           id="single-knob-range"
-          class="custom-knobs"
+          class="custom-knobs-range"
           step="5"
           snaps="true"
           pin="true"
@@ -234,10 +291,26 @@
           </span>
         </ion-range>
 
-        <!-- 3rd Custom Range: Dual Knobs -->
+        <!-- 3rd Custom Range: Dual Knobs with Knob Lower & Upper -->
+        <h2>Custom Range: Dual Knobs with Knob Lower & Upper</h2>
         <ion-range
-          id="dual-knobs-range"
-          class="custom-knobs"
+          id="lower-upper-dual-knobs-range"
+          class="custom-knobs-range range-lower-upper-knobs"
+          step="5"
+          snaps="true"
+          pin="true"
+          dual-knobs="true"
+          aria-label="Custom Lower & Upper Knobs Range"
+        >
+          <div slot="start" class="knob-value"></div>
+          <div slot="end" class="knob-value"></div>
+        </ion-range>
+
+        <!-- 4th Custom Range: Dual Knobs with Knob A & B -->
+        <h2>Custom Range: Dual Knobs with Knob A & B</h2>
+        <ion-range
+          id="a-b-dual-knobs-range"
+          class="custom-knobs-range"
           step="5"
           snaps="true"
           pin="true"
@@ -257,20 +330,33 @@
         upper: '100',
       };
 
-      const dualKnobs = document.getElementById('dual-knobs-range');
-      dualKnobs.value = {
+      const lowerUpperKnobs = document.getElementById('lower-upper-dual-knobs-range');
+      lowerUpperKnobs.value = {
+        lower: '40',
+        upper: '60',
+      };
+
+      const abDualKnobs = document.getElementById('a-b-dual-knobs-range');
+      abDualKnobs.value = {
         lower: '25',
         upper: '75',
       };
 
       function updateDisplayedKnobValues() {
-        document.querySelector('#dual-knobs-range [slot="start"]').textContent = dualKnobs.value.lower;
-        document.querySelector('#dual-knobs-range [slot="end"]').textContent = dualKnobs.value.upper;
+        document.querySelector('#lower-upper-dual-knobs-range [slot="start"]').textContent =
+          lowerUpperKnobs.value.lower;
+        document.querySelector('#lower-upper-dual-knobs-range [slot="end"]').textContent = lowerUpperKnobs.value.upper;
+        document.querySelector('#a-b-dual-knobs-range [slot="start"]').textContent = abDualKnobs.value.lower;
+        document.querySelector('#a-b-dual-knobs-range [slot="end"]').textContent = abDualKnobs.value.upper;
       }
 
       updateDisplayedKnobValues();
 
-      dualKnobs.addEventListener('ionChange', () => {
+      lowerUpperKnobs.addEventListener('ionChange', () => {
+        updateDisplayedKnobValues();
+      });
+
+      abDualKnobs.addEventListener('ionChange', () => {
         updateDisplayedKnobValues();
       });
     </script>
