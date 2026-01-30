@@ -1482,10 +1482,16 @@ ion-range,part,knob-b
 ion-range,part,knob-handle
 ion-range,part,knob-handle-a
 ion-range,part,knob-handle-b
+ion-range,part,knob-handle-lower
+ion-range,part,knob-handle-upper
+ion-range,part,knob-lower
+ion-range,part,knob-upper
 ion-range,part,label
 ion-range,part,pin
 ion-range,part,pin-a
 ion-range,part,pin-b
+ion-range,part,pin-lower
+ion-range,part,pin-upper
 ion-range,part,pressed
 ion-range,part,tick
 ion-range,part,tick-active
