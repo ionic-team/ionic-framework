@@ -73,6 +73,7 @@ export class Range implements ComponentInterface {
   private contentEl: HTMLElement | null = null;
   private initialContentScrollY = true;
   private originalIonInput?: EventEmitter<RangeChangeEventDetail>;
+  private focusFromPointer = false;
 
   @Element() el!: HTMLIonRangeElement;
 
@@ -534,12 +535,6 @@ export class Range implements ComponentInterface {
     this.update(currentX);
 
     /**
-     * Blur the knob so focus styles are cleared.
-     */
-    const knobEl = this.getKnobElement(this.pressedKnob);
-    knobEl?.blur();
-
-    /**
      * Reset the pressed knob to undefined since the user
      * may start dragging a different knob in the next gesture event.
      */
@@ -583,17 +578,6 @@ export class Range implements ComponentInterface {
       ratio = 1 - ratio;
     }
     this.pressedKnob = !this.dualKnobs || Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio) ? 'A' : 'B';
-
-    this.setFocus(this.pressedKnob);
-  }
-
-  /**
-   * Returns the DOM element for the given knob.
-   */
-  private getKnobElement(knob: KnobName): HTMLElement | null {
-    return this.el.shadowRoot?.querySelector(
-      knob === 'A' ? '.range-knob-handle-a' : '.range-knob-handle-b'
-    ) as HTMLElement | null;
   }
 
   private get valA() {
@@ -664,13 +648,6 @@ export class Range implements ComponentInterface {
     this.noUpdate = false;
   }
 
-  private setFocus(knob: KnobName) {
-    if (this.el.shadowRoot) {
-      const knobEl = this.getKnobElement(knob);
-      knobEl?.focus();
-    }
-  }
-
   private onBlur = () => {
     if (this.hasFocus) {
       this.hasFocus = false;
@@ -687,7 +664,16 @@ export class Range implements ComponentInterface {
   };
 
   private onKnobFocus = (knob: KnobName) => {
-    this.focusedKnob = knob;
+    // Clicking focuses the range which is needed for the keyboard,
+    // but we only want to add the ion-focused class when focused via Tab.
+    if (!this.focusFromPointer) {
+      this.focusedKnob = knob;
+    } else {
+      this.focusFromPointer = false;
+      this.focusedKnob = undefined;
+    }
+
+    // If the knob was not already focused, emit the focus event
     if (!this.hasFocus) {
       this.hasFocus = true;
       this.ionFocus.emit();
@@ -818,6 +804,9 @@ export class Range implements ComponentInterface {
       <div
         class="range-slider"
         ref={(rangeEl) => (this.rangeSlider = rangeEl)}
+        onPointerDown={() => {
+          this.focusFromPointer = true;
+        }}
         /**
          * Since the gesture has a threshold, the value
          * won't change until the user has dragged past
@@ -830,6 +819,8 @@ export class Range implements ComponentInterface {
          * we need to listen for the "pointerUp" event.
          */
         onPointerUp={(ev: PointerEvent) => {
+          this.focusFromPointer = false;
+
           /**
            * If the user drags the knob on the web
            * version (does not occur on mobile),
@@ -1044,12 +1035,6 @@ const renderKnob = (
 
   return (
     <div
-      onMouseDown={(ev) => {
-        /**
-         * Prevent the knob from being focused when the user clicks on it.
-         */
-        ev.preventDefault();
-      }}
       onKeyDown={(ev: KeyboardEvent) => {
         const key = ev.key;
         if (key === 'ArrowLeft' || key === 'ArrowDown') {
