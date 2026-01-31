@@ -84,71 +84,237 @@
   --border-radius: var(--ion-chip-shape-rectangular-border-radius);
 }
 
-// Chip Hues
+// Chip: Bold Solid
 // ---------------------------------------------
 
-// Bold
-:host(.chip-hue-bold) {
-  --bg: var(--ion-chip-hue-bold-bg);
-  --color: var(--ion-chip-hue-bold-color);
+// Default
+:host(.chip-hue-bold.chip-fill-solid) {
+  background: var(--ion-chip-hue-bold-solid-default-bg);
+  color: var(--ion-chip-hue-bold-solid-default-color);
 }
 
-// Bold Colors
-:host(.chip-hue-bold.ion-color) {
-  background: var(--ion-chip-hue-bold-semantic-bg);
-  color: var(--ion-chip-hue-bold-semantic-color);
+// Default: Activated
+:host(.chip-hue-bold.chip-fill-solid.ion-activated) {
+  background: var(--ion-chip-hue-bold-solid-activated-bg, var(--ion-chip-hue-bold-solid-default-bg));
 }
 
-// Subtle
-:host(.chip-hue-subtle) {
-  --bg: var(--ion-chip-hue-subtle-bg);
-  --color: var(--ion-chip-hue-subtle-color);
+// Default: Focus
+:host(.chip-hue-bold.chip-fill-solid.ion-focused) {
+  background: var(--ion-chip-hue-bold-solid-focus-bg, var(--ion-chip-hue-bold-solid-default-bg));
 }
 
-// Subtle Colors
-:host(.chip-hue-subtle.ion-color) {
-  background: var(--ion-chip-hue-subtle-semantic-bg);
-  color: var(--ion-chip-hue-subtle-semantic-color);
+@media (any-hover: hover) {
+  // Default: Hover
+  :host(.chip-hue-bold.chip-fill-solid:hover) {
+    background: var(--ion-chip-hue-bold-solid-hover-bg, var(--ion-chip-hue-bold-solid-default-bg));
+  }
 }
 
-// Chip Fills
+// Colors
+:host(.chip-hue-bold.chip-fill-solid.ion-color) {
+  background: var(--ion-chip-hue-bold-solid-semantic-default-bg);
+  color: var(--ion-chip-hue-bold-solid-semantic-default-color);
+}
+
+// Colors: Activated
+:host(.chip-hue-bold.chip-fill-solid.ion-color.ion-activated) {
+  background: var(--ion-chip-hue-bold-solid-semantic-activated-bg, var(--ion-chip-hue-bold-solid-semantic-default-bg));
+}
+
+// Colors: Focus
+:host(.chip-hue-bold.chip-fill-solid.ion-color.ion-focused) {
+  background: var(--ion-chip-hue-bold-solid-semantic-focus-bg, var(--ion-chip-hue-bold-solid-semantic-default-bg));
+}
+
+@media (any-hover: hover) {
+  // Colors: Hover
+  :host(.chip-hue-bold.chip-fill-solid.ion-color:hover) {
+    background: var(--ion-chip-hue-bold-solid-semantic-hover-bg, var(--ion-chip-hue-bold-solid-semantic-default-bg));
+  }
+}
+
+// Chip: Bold Outline
 // ---------------------------------------------
 
-// Solid
-:host(.chip-fill-solid) {
-  background: var(--bg);
+// Default
+:host(.chip-hue-bold.chip-fill-outline) {
+  border-width: var(--ion-chip-hue-bold-outline-default-border-width);
+  border-style: var(--ion-chip-hue-bold-outline-default-border-style);
+  border-color: var(--ion-chip-hue-bold-outline-default-border-color);
+
+  background: var(--ion-chip-hue-bold-outline-default-bg);
+  color: var(--ion-chip-hue-bold-outline-default-color);
 }
 
-// Outline
-:host(.chip-fill-outline) {
-  border-width: var(--ion-chip-fill-outline-border-width);
-  border-style: var(--ion-chip-fill-outline-border-style);
-
-  background: var(--bg);
+// Default: Activated
+:host(.chip-hue-bold.chip-fill-outline.ion-activated) {
+  background: var(--ion-chip-hue-bold-outline-activated-bg, var(--ion-chip-hue-bold-outline-default-bg));
 }
 
-:host(.chip-fill-outline.chip-hue-bold) {
-  --bg: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg));
-
-  border-color: var(--ion-chip-fill-outline-border-color-bold);
+// Default: Focus
+:host(.chip-hue-bold.chip-fill-outline.ion-focused) {
+  background: var(--ion-chip-hue-bold-outline-focus-bg, var(--ion-chip-hue-bold-outline-default-bg));
 }
 
-:host(.chip-fill-outline.chip-hue-bold.ion-color) {
-  border-color: var(--ion-chip-fill-outline-semantic-border-color-bold);
-
-  background: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-semantic-bg));
+@media (any-hover: hover) {
+  // Default: Hover
+  :host(.chip-hue-bold.chip-fill-outline::hover) {
+    background: var(--ion-chip-hue-bold-outline-hover-bg, var(--ion-chip-hue-bold-outline-default-bg));
+  }
 }
 
-:host(.chip-fill-outline.chip-hue-subtle) {
-  --bg: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg));
+// Colors
+:host(.chip-hue-bold.chip-fill-outline.ion-color) {
+  border-width: var(--ion-chip-hue-bold-outline-semantic-default-border-width);
+  border-style: var(--ion-chip-hue-bold-outline-semantic-default-border-style);
+  border-color: var(--ion-chip-hue-bold-outline-semantic-default-border-color);
 
-  border-color: var(--ion-chip-fill-outline-border-color-subtle);
+  background: var(--ion-chip-hue-bold-outline-semantic-default-bg);
+  color: var(--ion-chip-hue-bold-outline-semantic-default-color);
 }
 
-:host(.chip-fill-outline.chip-hue-subtle.ion-color) {
-  border-color: var(--ion-chip-fill-outline-semantic-border-color-subtle);
+// Colors: Activated
+:host(.chip-hue-bold.chip-fill-outline.ion-color.ion-activated) {
+  background: var(
+    --ion-chip-hue-bold-outline-semantic-activated-bg,
+    var(--ion-chip-hue-bold-outline-semantic-default-bg)
+  );
+}
 
-  background: var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-semantic-bg));
+// Colors: Focus
+:host(.chip-hue-bold.chip-fill-outline.ion-color.ion-focused) {
+  background: var(--ion-chip-hue-bold-outline-semantic-focus-bg, var(--ion-chip-hue-bold-outline-semantic-default-bg));
+}
+
+@media (any-hover: hover) {
+  // Colors: Hover
+  :host(.chip-hue-bold.chip-fill-outline.ion-color:hover) {
+    background: var(
+      --ion-chip-hue-bold-outline-semantic-hover-bg,
+      var(--ion-chip-hue-bold-outline-semantic-default-bg)
+    );
+  }
+}
+
+// Chip: Subtle Solid
+// ---------------------------------------------
+
+// Default
+:host(.chip-hue-subtle.chip-fill-solid) {
+  background: var(--ion-chip-hue-subtle-solid-default-bg);
+  color: var(--ion-chip-hue-subtle-solid-default-color);
+}
+
+// Default: Activated
+:host(.chip-hue-subtle.chip-fill-solid.ion-activated) {
+  background: var(--ion-chip-hue-subtle-solid-activated-bg, var(--ion-chip-hue-subtle-solid-default-bg));
+}
+
+// Default: Focus
+:host(.chip-hue-subtle.chip-fill-solid.ion-focused) {
+  background: var(--ion-chip-hue-subtle-solid-focus-bg, var(--ion-chip-hue-subtle-solid-default-bg));
+}
+
+@media (any-hover: hover) {
+  // Default: Hover
+  :host(.chip-hue-subtle.chip-fill-solid:hover) {
+    background: var(--ion-chip-hue-subtle-solid-hover-bg, var(--ion-chip-hue-subtle-solid-default-bg));
+  }
+}
+
+// Colors
+:host(.chip-hue-subtle.chip-fill-solid.ion-color) {
+  background: var(--ion-chip-hue-subtle-solid-semantic-default-bg);
+  color: var(--ion-chip-hue-subtle-solid-semantic-default-color);
+}
+
+// Colors: Activated
+:host(.chip-hue-subtle.chip-fill-solid.ion-color.ion-activated) {
+  background: var(
+    --ion-chip-hue-subtle-solid-semantic-activated-bg,
+    var(--ion-chip-hue-subtle-solid-semantic-default-bg)
+  );
+}
+
+// Colors: Focus
+:host(.chip-hue-subtle.chip-fill-solid.ion-color.ion-focused) {
+  background: var(--ion-chip-hue-subtle-solid-semantic-focus-bg, var(--ion-chip-hue-subtle-solid-semantic-default-bg));
+}
+
+@media (any-hover: hover) {
+  // Colors: Hover
+  :host(.chip-hue-subtle.chip-fill-solid.ion-color:hover) {
+    background: var(
+      --ion-chip-hue-subtle-solid-semantic-hover-bg,
+      var(--ion-chip-hue-subtle-solid-semantic-default-bg)
+    );
+  }
+}
+
+// Chip: Subtle Outline
+// ---------------------------------------------
+
+// Default
+:host(.chip-hue-subtle.chip-fill-outline) {
+  border-width: var(--ion-chip-hue-subtle-outline-default-border-width);
+  border-style: var(--ion-chip-hue-subtle-outline-default-border-style);
+  border-color: var(--ion-chip-hue-subtle-outline-default-border-color);
+
+  background: var(--ion-chip-hue-subtle-outline-default-bg);
+  color: var(--ion-chip-hue-subtle-outline-default-color);
+}
+
+// Default: Activated
+:host(.chip-hue-subtle.chip-fill-outline.ion-activated) {
+  background: var(--ion-chip-hue-subtle-outline-activated-bg, var(--ion-chip-hue-subtle-outline-default-bg));
+}
+
+// Default: Focus
+:host(.chip-hue-subtle.chip-fill-outline.ion-focused) {
+  background: var(--ion-chip-hue-subtle-outline-focus-bg, var(--ion-chip-hue-subtle-outline-default-bg));
+}
+
+@media (any-hover: hover) {
+  // Default: Hover
+  :host(.chip-hue-subtle.chip-fill-outline:hover) {
+    background: var(--ion-chip-hue-subtle-outline-hover-bg, var(--ion-chip-hue-subtle-outline-default-bg));
+  }
+}
+
+// Colors
+:host(.chip-hue-subtle.chip-fill-outline.ion-color) {
+  border-width: var(--ion-chip-hue-subtle-outline-semantic-default-border-width);
+  border-style: var(--ion-chip-hue-subtle-outline-semantic-default-border-style);
+  border-color: var(--ion-chip-hue-subtle-outline-semantic-default-border-color);
+
+  background: var(--ion-chip-hue-subtle-outline-semantic-default-bg);
+  color: var(--ion-chip-hue-subtle-outline-semantic-default-color);
+}
+
+// Colors: Activated
+:host(.chip-hue-subtle.chip-fill-outline.ion-color.ion-activated) {
+  background: var(
+    --ion-chip-hue-subtle-outline-semantic-activated-bg,
+    var(--ion-chip-hue-subtle-outline-semantic-default-bg)
+  );
+}
+
+// Colors: Focus
+:host(.chip-hue-subtle.chip-fill-outline.ion-color.ion-focused) {
+  background: var(
+    --ion-chip-hue-subtle-outline-semantic-focus-bg,
+    var(--ion-chip-hue-subtle-outline-semantic-default-bg)
+  );
+}
+
+@media (any-hover: hover) {
+  // Colors: Hover
+  :host(.chip-hue-subtle.chip-fill-outline.ion-color:hover) {
+    background: var(
+      --ion-chip-hue-subtle-outline-semantic-hover-bg,
+      var(--ion-chip-hue-subtle-outline-semantic-default-bg)
+    );
+  }
 }
 
 // Chip States
@@ -164,97 +330,6 @@
 // Focus
 :host(.ion-focused) {
   @include mixins.focused-state(var(--focus-ring-width), var(--focus-ring-style), var(--focus-ring-color));
-}
-
-:host(.ion-focused.chip-hue-bold) {
-  --bg: var(--ion-chip-hue-bold-state-focus-bg, var(--ion-chip-hue-bold-bg));
-}
-
-:host(.ion-focused.chip-hue-bold.ion-color) {
-  background: var(--ion-chip-hue-bold-semantic-state-focus-bg, var(--ion-chip-hue-bold-semantic-bg));
-}
-
-:host(.ion-focused.chip-fill-outline.chip-hue-bold) {
-  --bg: var(--ion-chip-fill-outline-state-focus-bg-bold, var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg)));
-}
-
-:host(.ion-focused.chip-hue-subtle) {
-  --bg: var(--ion-chip-hue-subtle-state-focus-bg, var(--ion-chip-hue-subtle-bg));
-}
-
-:host(.ion-focused.chip-hue-subtle.ion-color) {
-  background: var(--ion-chip-hue-subtle-semantic-state-focus-bg, var(--ion-chip-hue-subtle-semantic-bg));
-}
-
-:host(.ion-focused.chip-fill-outline.chip-hue-subtle) {
-  --bg: var(
-    --ion-chip-fill-outline-state-focus-bg-subtle,
-    var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg))
-  );
-}
-
-// Activated
-:host(.ion-activated.chip-hue-bold) {
-  --bg: var(--ion-chip-hue-bold-state-activated-bg, var(--ion-chip-hue-bold-bg));
-}
-
-:host(.ion-activated.chip-hue-bold.ion-color) {
-  background: var(--ion-chip-hue-bold-semantic-state-activated-bg, var(--ion-chip-hue-bold-semantic-bg));
-}
-
-:host(.ion-activated.chip-fill-outline.chip-hue-bold) {
-  --bg: var(
-    --ion-chip-fill-outline-state-activated-bg-bold,
-    var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg))
-  );
-}
-
-:host(.ion-activated.chip-hue-subtle) {
-  --bg: var(--ion-chip-hue-subtle-state-activated-bg, var(--ion-chip-hue-subtle-bg));
-}
-
-:host(.ion-activated.chip-hue-subtle.ion-color) {
-  background: var(--ion-chip-hue-subtle-semantic-state-activated-bg, var(--ion-chip-hue-subtle-semantic-bg));
-}
-
-:host(.ion-activated.chip-fill-outline.chip-hue-subtle) {
-  --bg: var(
-    --ion-chip-fill-outline-state-activated-bg-subtle,
-    var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg))
-  );
-}
-
-// Hover
-@media (any-hover: hover) {
-  :host(.chip-hue-bold:hover) {
-    --bg: var(--ion-chip-hue-bold-state-hover-bg, var(--ion-chip-hue-bold-bg));
-  }
-
-  :host(.chip-hue-bold.ion-color:hover) {
-    background: var(--ion-chip-hue-bold-semantic-state-hover-bg, var(--ion-chip-hue-bold-semantic-bg));
-  }
-
-  :host(.chip-fill-outline.chip-hue-bold:not(.ion-color):hover) {
-    --bg: var(
-      --ion-chip-fill-outline-state-hover-bg-bold,
-      var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-bold-bg))
-    );
-  }
-
-  :host(.chip-hue-subtle:hover) {
-    --bg: var(--ion-chip-hue-subtle-state-hover-bg, var(--ion-chip-hue-subtle-bg));
-  }
-
-  :host(.chip-hue-subtle.ion-color:hover) {
-    background: var(--ion-chip-hue-subtle-semantic-state-hover-bg, var(--ion-chip-hue-subtle-semantic-bg));
-  }
-
-  :host(.chip-fill-outline.chip-hue-subtle:not(.ion-color):hover) {
-    --bg: var(
-      --ion-chip-fill-outline-state-hover-bg-subtle,
-      var(--ion-chip-fill-outline-bg, var(--ion-chip-hue-subtle-bg))
-    );
-  }
 }
 
 // Chip Slotted Elements
@@ -297,18 +372,18 @@
 
 ::slotted(ion-avatar:first-child) {
   @include mixins.margin(
-    var(--ion-chip-avatar-first-child-margin-top),
-    var(--ion-chip-avatar-first-child-margin-end),
-    var(--ion-chip-avatar-first-child-margin-bottom),
-    var(--ion-chip-avatar-first-child-margin-start)
+    var(--ion-chip-avatar-leading-margin-top),
+    var(--ion-chip-avatar-leading-margin-end),
+    var(--ion-chip-avatar-leading-margin-bottom),
+    var(--ion-chip-avatar-leading-margin-start)
   );
 }
 
 ::slotted(ion-avatar:last-child) {
   @include mixins.margin(
-    var(--ion-chip-avatar-last-child-margin-top),
-    var(--ion-chip-avatar-last-child-margin-end),
-    var(--ion-chip-avatar-last-child-margin-bottom),
-    var(--ion-chip-avatar-last-child-margin-start)
+    var(--ion-chip-avatar-trailing-margin-top),
+    var(--ion-chip-avatar-trailing-margin-end),
+    var(--ion-chip-avatar-trailing-margin-bottom),
+    var(--ion-chip-avatar-trailing-margin-start)
   );
 }

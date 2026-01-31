@@ -2,17 +2,21 @@ import type { IonPadding, IonMargin } from '../../themes/themes.interfaces.js';
 
 export type IonChipRecipe = {
   cursor?: string;
+  letterSpacing?: string | number;
+  lineHeight?: string | number;
   margin?: IonMargin;
+  padding?: IonPadding;
+  gap?: string | number;
 
   font?: {
     weight?: string | number;
   };
 
-  gap?: string | number;
-  lineHeight?: string | number;
-  letterSpacing?: string | number;
-
-  padding?: IonPadding;
+  // Hues with fills
+  hue?: {
+    bold?: ChipFills;
+    subtle?: ChipFills;
+  };
 
   // Sizes
   size: {
@@ -20,7 +24,14 @@ export type IonChipRecipe = {
     large: IonChipSizeDefinition;
   };
 
-  // States
+  // Shapes
+  shape: {
+    soft: IonChipShapeDefinition;
+    round: IonChipShapeDefinition;
+    rectangular: IonChipShapeDefinition;
+  };
+
+  // Shared States
   state?: {
     disabled?: {
       opacity?: string | number;
@@ -35,46 +46,37 @@ export type IonChipRecipe = {
     };
   };
 
-  // Shapes
-  shape: {
-    soft: IonChipShapeDefinition;
-    round: IonChipShapeDefinition;
-    rectangular: IonChipShapeDefinition;
-  };
-
-  // Hues
-  hue?: {
-    bold?: IonChipHueDefinition;
-    subtle?: IonChipHueDefinition;
-  };
-
-  // Fills
-
-  fill?: {
-    outline?: {
-      bg?: string;
-
-      border?: {
-        color?: HueRef;
-        style?: string;
-        width?: string | number;
-      };
-
-      // Any of the semantic colors like primary, secondary, etc.
-      semantic?: {
-        bg?: HueRef;
-
-        border?: {
-          color?: HueRef;
-        };
-      };
-
-      state?: IonChipInteractionStates;
-    };
-  };
-
   icon?: IonChipIconDefinition;
   avatar?: IonChipAvatarDefinition;
+};
+
+type ChipFills = {
+  solid: ChipStates & {
+    semantic?: ChipStates;
+  };
+
+  outline: ChipStates & {
+    semantic?: ChipStates;
+  };
+};
+
+type ChipStates = {
+  default: ChipColors;
+  hover?: ChipColors;
+  focus?: ChipColors;
+  activated?: ChipColors;
+  disabled?: ChipColors;
+};
+
+// Basic colors for a state
+type ChipColors = {
+  bg?: string;
+  color?: string;
+  border?: {
+    color?: string;
+    style?: string;
+    width?: string | number;
+  };
 };
 
 type IonChipSizeDefinition = {
@@ -89,38 +91,6 @@ type IonChipShapeDefinition = {
   border: {
     radius: string | number;
   };
-};
-
-type IonChipHueDefinition = {
-  bg?: string;
-  color?: string;
-
-  semantic?: {
-    bg?: string;
-    color?: string;
-    state?: IonChipInteractionStates;
-  };
-
-  state?: IonChipInteractionStates;
-};
-
-type IonChipInteractionStates = {
-  focus?: {
-    bg?: HueRef | string;
-  };
-
-  hover?: {
-    bg?: HueRef | string;
-  };
-
-  activated?: {
-    bg?: HueRef | string;
-  };
-};
-
-type HueRef = {
-  bold?: string;
-  subtle?: string;
 };
 
 type IonChipMediaDefinition = {

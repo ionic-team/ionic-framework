@@ -239,16 +239,16 @@
 
         <!-- Custom Colors -->
         <p>
-          <ion-chip class="custom">
+          <ion-chip class="custom" hue="bold" fill="solid">
             <ion-icon name="add"></ion-icon>
           </ion-chip>
-          <ion-chip color="secondary" class="custom">
+          <ion-chip color="secondary" class="custom" hue="bold" fill="solid">
             <ion-icon name="add"></ion-icon>
           </ion-chip>
-          <ion-chip class="custom ion-focused">
+          <ion-chip class="custom ion-focused" hue="bold" fill="solid">
             <ion-icon name="add"></ion-icon>
           </ion-chip>
-          <ion-chip color="secondary" class="custom ion-focused">
+          <ion-chip color="secondary" class="custom ion-focused" hue="bold" fill="solid">
             <ion-icon name="add"></ion-icon>
           </ion-chip>
         </p>
@@ -277,22 +277,21 @@
       }
 
       .wide {
-        --bg: #d1f3ff;
-        --background-hover: #add8e6;
-        --background-focused: #84c5db;
+        --ion-chip-hue-bold-solid-default-bg: #d1f3ff;
+        --ion-chip-hue-bold-solid-hover-bg: #add8e6;
+        --ion-chip-hue-bold-solid-focus-bg: #84c5db;
 
         height: 50px;
         width: 150px;
       }
 
       .custom {
-        --bg: #ffdde2;
-        --background-hover: #fcc6ce;
-        --background-focused: lightpink;
-        --color: rgb(214, 60, 235);
-        --border-radius: 10px;
-        --padding-start: 10px;
-        --padding-end: 10px;
+        --ion-chip-hue-bold-solid-default-bg: #ffdde2;
+        --ion-chip-hue-bold-solid-hover-bg: #fcc6ce;
+        --ion-chip-hue-bold-solid-focus-bg: lightpink;
+        --ion-chip-hue-bold-solid-default-color: rgb(214, 60, 235);
+        --ion-chip-padding-start: 10px;
+        --ion-chip-padding-end: 10px;
       }
 
       .custom:hover {

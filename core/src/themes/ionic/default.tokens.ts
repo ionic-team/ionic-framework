@@ -164,45 +164,92 @@ export const defaultTheme: DefaultTheme = {
       // Hues
       hue: {
         bold: {
-          bg: '#3b3b3b',
-          color: '#ffffff',
+          solid: {
+            // default non-semantic states
+            default: {
+              bg: '#3b3b3b',
+              color: '#ffffff',
+            },
 
-          // Any of the semantic colors like primary, secondary, etc.
-          semantic: {
-            color: currentColor('contrast'),
-            bg: currentColor('base'),
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                bg: currentColor('base'),
+                color: currentColor('contrast'),
+              },
+            },
+          },
+
+          outline: {
+            // default non-semantic states
+            default: {
+              bg: '#3b3b3b',
+              color: '#ffffff',
+
+              border: {
+                color: '#242424',
+                style: 'solid',
+                width: '1px',
+              },
+            },
+
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                bg: currentColor('base'),
+                color: currentColor('contrast'),
+
+                border: {
+                  color: currentColor('shade'),
+                  style: 'solid',
+                  width: '1px',
+                },
+              },
+            },
           },
         },
 
         subtle: {
-          bg: '#f3f3f3',
-          color: '#626262',
-
-          semantic: {
-            color: currentColor('contrast', null, true),
-            bg: currentColor('base', null, true),
-          },
-        },
-      },
-
-      // Fills
-      fill: {
-        outline: {
-          border: {
-            color: {
-              bold: '#242424',
-              subtle: '#e0e0e0',
+          solid: {
+            // default non-semantic states
+            default: {
+              bg: '#f3f3f3',
+              color: '#626262',
             },
 
-            style: 'solid',
-            width: '1px',
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                bg: currentColor('base', null, true),
+                color: currentColor('contrast', null, true),
+              },
+            },
           },
 
-          semantic: {
-            border: {
-              color: {
-                bold: currentColor('shade'),
-                subtle: currentColor('shade', null, true),
+          outline: {
+            // default non-semantic states
+            default: {
+              bg: '#f3f3f3',
+              color: '#626262',
+
+              border: {
+                color: '#e0e0e0',
+                style: 'solid',
+                width: '1px',
+              },
+            },
+
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                bg: currentColor('base', null, true),
+                color: currentColor('contrast', null, true),
+
+                border: {
+                  color: currentColor('shade', null, true),
+                  style: 'solid',
+                  width: '1px',
+                },
               },
             },
           },
