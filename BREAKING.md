@@ -30,7 +30,33 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - **ion-card**: The `border-radius` of the `ios` and `md` card now defaults to `14px` and `12px` instead of `8px` and `4px`, respectively, in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"`, or override the `--border-radius` CSS variable to specify a different value.
 
-- **ion-card-content**: The `ion-card-content` component has been updated to Shadow DOM. With this update, all card-related components now use Shadow DOM for style encapsulation. The default styles for heading elements inside `ion-card-content` have been removed. If you need custom styling for headings, you can add your own CSS targeting these elements.
+- **ion-card-content**: The `ion-card-content` component has been updated to Shadow DOM. With this update, all card-related components now use Shadow DOM for style encapsulation. The default styles for heading elements inside `ion-card-content` have been removed. If you need custom styling for headings, you can add your own CSS targeting these elements. For example:
+
+  ```css
+  ion-card-content h1 {
+    margin-top: 0;
+    margin-bottom: 2px;
+
+    font-size: 1.5rem;
+  }
+
+  ion-card-content h2 {
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+    font-size: 1rem;
+  }
+
+  ion-card-content h3,
+  ion-card-content h4,
+  ion-card-content h5,
+  ion-card-content h6 {
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+    font-size: 0.875rem;
+  }
+  ```
 
 <h4 id="version-9x-chip">Chip</h4>
 
