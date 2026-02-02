@@ -14,8 +14,15 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
 
     <style>
-      ion-input-otp {
-        display: flex;
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 6px;
+      }
+
+      ion-content button.reset-button {
+        background: #960101;
+        border-color: #650000;
       }
 
       #result {
@@ -37,9 +44,15 @@
 
       <ion-content class="ion-padding">
         <form id="form">
-          <ion-input-otp id="inputOtp" name="otp" form="form"></ion-input-otp>
-          <ion-button type="submit" id="submitButton">Submit</ion-button>
-          <ion-button type="reset" color="danger" id="resetButton">Reset</ion-button>
+          <ion-input-otp id="inputOtp" name="otp" type="text" length="6" autocomplete="one-time-code">
+            Input OTP
+          </ion-input-otp>
+
+          <div class="grid">
+            <button type="submit">Submit</button>
+            <button type="reset" class="reset-button">Reset</button>
+            <button type="button" onClick="window.location.href = 'other.html';">Leave Page</button>
+          </div>
         </form>
 
         <div id="result">
@@ -65,7 +78,7 @@
 
           const formDataObj = new FormData(form);
           const otp = formDataObj.get('otp');
-          if (otp.length === 4) {
+          if (otp.length === inputOtp.length) {
             inputOtp.classList.add('ion-valid');
           } else {
             inputOtp.classList.add('ion-invalid');
@@ -111,7 +124,9 @@
         }
 
         // Display initial results
-        displayResults();
+        customElements.whenDefined('ion-input-otp').then(() => {
+          inputOtp.componentOnReady().then(() => displayResults());
+        });
 
         // Handle form submission
         form.addEventListener('submit', (event) => {
@@ -120,7 +135,7 @@
           const value = inputOtp.value || '';
 
           // Validate OTP is complete
-          if (value.length !== 4) {
+          if (value.length !== inputOtp.length) {
             inputOtp.classList.add('ion-invalid');
             inputOtp.classList.add('ion-touched');
             displayResults('error');
