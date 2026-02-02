@@ -399,8 +399,8 @@ export class InputOTP implements ComponentInterface {
   /**
    * Updates the form value and reports validity state to the browser via
    * ElementInternals. This should be called when the component loads, when
-   * the required prop changes, when the disabled prop changes, and when the value
-   * changes to ensure the form value stays in sync and validation state is updated.
+   * the disabled prop changes, and when the value changes to ensure the form
+   * value stays in sync and validation state is updated.
    */
   private updateElementInternals() {
     // Disabled form controls should not be included in form data
