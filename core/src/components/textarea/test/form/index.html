@@ -16,8 +16,13 @@
     <style>
       .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 6px;
+      }
+
+      textarea {
+        width: 100%;
+        padding: 8px;
       }
 
       .required-label {
@@ -30,6 +35,7 @@
       }
 
       ion-textarea {
+        margin-top: 16px;
         margin-bottom: 16px;
       }
 
@@ -59,6 +65,7 @@
             counter="true"
             maxlength="999"
             name="textarea1"
+            autocomplete="street-address"
           >
             <ion-icon slot="end" name="square-outline"></ion-icon>
           </ion-textarea>
@@ -71,10 +78,13 @@
             counter="true"
             maxlength="999"
             name="textarea2"
+            autocomplete="name"
           >
             <div slot="label">Textarea 2 <span class="required-label">(Required) *</span></div>
             <ion-icon slot="end" name="square-outline"></ion-icon>
           </ion-textarea>
+
+          <textarea name="textarea-native" placeholder="Native Textarea" autocomplete="organization"></textarea>
 
           <div class="grid">
             <button type="button" onClick="toggleRequired()">Toggle Required (Textarea 2)</button>
@@ -90,6 +100,7 @@
           <div class="grid">
             <button type="submit">Submit</button>
             <button type="reset" class="reset-button">Reset</button>
+            <button type="button" onClick="window.location.href = 'other.html';">Leave Page</button>
           </div>
         </form>
       </ion-content>

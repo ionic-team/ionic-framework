@@ -593,6 +593,14 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
+   * Called when the form state is restored.
+   * Restores the component's value.
+   */
+  formStateRestoreCallback(value: string) {
+    this.value = value;
+  }
+
+  /**
    * Called when the form is reset.
    * Resets the component's value.
    */
