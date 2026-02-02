@@ -5,6 +5,12 @@ import type { Animation } from '../../../interface';
 import { calculateWindowAdjustment, getPopoverDimensions, getPopoverPosition } from '../utils';
 
 const POPOVER_MD_BODY_PADDING = 12;
+/**
+ * Extra margin around viewport edges for safe area detection.
+ * When popover is within this distance of an edge, safe area
+ * CSS variables will be applied to prevent overlap with system UI.
+ */
+const POPOVER_MD_SAFE_AREA_MARGIN = 25;
 
 /**
  * Md Popover Enter Animation
@@ -47,6 +53,8 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
 
   const padding = size === 'cover' ? 0 : POPOVER_MD_BODY_PADDING;
 
+  const margin = size === 'cover' ? 0 : POPOVER_MD_SAFE_AREA_MARGIN;
+
   const {
     originX,
     originY,
@@ -66,7 +74,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
     bodyHeight,
     contentWidth,
     contentHeight,
-    0,
+    margin,
     results.originX,
     results.originY,
     results.referenceCoordinates
