@@ -134,6 +134,13 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
     .beforeAddWrite(() => {
       if (bottomValue !== undefined) {
         contentEl.style.setProperty('bottom', `calc(${bottomValue})`);
+        /**
+         * When both top and bottom are set, we need to override the
+         * height: var(--height) style to allow the top/bottom constraint
+         * to determine the height. Setting height to 'auto' with both
+         * top and bottom defined would cause bottom to be ignored.
+         */
+        contentEl.style.setProperty('height', 'unset');
       }
     })
     .fromTo('transform', 'scale(0.8)', 'scale(1)');

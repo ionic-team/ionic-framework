@@ -74,6 +74,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
     arrowTop,
     arrowLeft,
     addPopoverBottomClass,
+    isFullyConstrained,
   } = calculateWindowAdjustment(
     side,
     results.top,
@@ -156,6 +157,13 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
 
       if (bottomValue !== undefined) {
         contentEl.style.setProperty('bottom', `calc(${bottomValue})`);
+        /**
+         * When both top and bottom are set, we need to override the
+         * height: var(--height) style to allow the top/bottom constraint
+         * to determine the height. Setting height to 'auto' with both
+         * top and bottom defined would cause bottom to be ignored.
+         */
+        contentEl.style.setProperty('height', 'unset');
       }
 
       contentEl.style.setProperty('top', `calc(${topValue} + var(--offset-y, 0))`);
@@ -164,7 +172,11 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
 
       if (arrowEl !== null) {
         const didAdjustBounds = results.top !== top || results.left !== left;
-        const showArrow = shouldShowArrow(side, didAdjustBounds, ev, trigger);
+        /**
+         * Hide the arrow when the popover is fully constrained to the viewport
+         * because it cannot accurately point to the trigger in this case.
+         */
+        const showArrow = shouldShowArrow(side, didAdjustBounds, ev, trigger) && !isFullyConstrained;
 
         if (showArrow) {
           arrowEl.style.setProperty('top', `calc(${arrowTop}px + var(--offset-y, 0))`);

@@ -37,6 +37,13 @@ export interface PopoverStyles {
   arrowTop: number;
   arrowLeft: number;
   addPopoverBottomClass: boolean;
+  /**
+   * When true, the popover content was too tall to fit above or below
+   * the trigger, so it was constrained to the full viewport height.
+   * In this case, the arrow should be hidden as it cannot accurately
+   * point to the trigger.
+   */
+  isFullyConstrained: boolean;
 }
 
 /**
@@ -835,6 +842,7 @@ export const calculateWindowAdjustment = (
   let checkSafeAreaBottom = false;
   let checkSafeAreaLeft = false;
   let checkSafeAreaRight = false;
+  let isFullyConstrained = false;
   const triggerTop = triggerCoordinates
     ? triggerCoordinates.top + triggerCoordinates.height
     : bodyHeight / 2 - contentHeight / 2;
@@ -845,18 +853,27 @@ export const calculateWindowAdjustment = (
    * Adjust popover so it does not
    * go off the left of the screen.
    */
-  if (left < bodyPadding + safeAreaMargin) {
+  if (left < bodyPadding) {
     left = bodyPadding;
-    checkSafeAreaLeft = true;
     originX = 'left';
     /**
      * Adjust popover so it does not
      * go off the right of the screen.
      */
-  } else if (contentWidth + bodyPadding + left + safeAreaMargin > bodyWidth) {
-    checkSafeAreaRight = true;
+  } else if (contentWidth + bodyPadding + left > bodyWidth) {
     left = bodyWidth - contentWidth - bodyPadding;
     originX = 'right';
+  }
+
+  /**
+   * After position adjustment, check if popover is near edges
+   * and needs safe-area CSS variable adjustments.
+   */
+  if (left <= safeAreaMargin) {
+    checkSafeAreaLeft = true;
+  }
+  if (left + contentWidth >= bodyWidth - safeAreaMargin) {
+    checkSafeAreaRight = true;
   }
 
   /**
@@ -893,28 +910,48 @@ export const calculateWindowAdjustment = (
       }
 
       /**
+       * After flipping above, check if popover still extends into bottom safe area.
+       * This can happen when the popover is taller than the available space between
+       * the top safe area and the trigger. In this case, constrain with bottom too.
+       *
+       * We estimate the effective top by adding safeAreaMargin if checkSafeAreaTop
+       * is true (since CSS will add the actual safe-area-top value).
+       */
+      const estimatedTop = checkSafeAreaTop ? top + safeAreaMargin : top;
+      if (estimatedTop + contentHeight > bodyHeight - safeAreaMargin) {
+        bottom = bodyPadding;
+        checkSafeAreaBottom = true;
+        isFullyConstrained = true;
+      }
+
+      /**
        * If not enough room for popover to appear
-       * above trigger, then cut it off.
+       * above trigger, constrain to full viewport.
+       * Pin both top and bottom to maximize visible area
+       * and let the content scroll within those bounds.
        */
     } else {
+      top = bodyPadding;
       bottom = bodyPadding;
-      /**
-       * When the popover is pinned to the bottom, account for safe area.
-       * This ensures the popover doesn't overlap with home indicators
-       * or navigation bars (e.g., Android API 36+ edge-to-edge).
-       */
+      checkSafeAreaTop = true;
       checkSafeAreaBottom = true;
+      isFullyConstrained = true;
     }
   }
 
   /**
    * Final check: If the popover extends into any safe-area region,
-   * ensure the corresponding flag is set regardless of side.
+   * constrain it to avoid overlapping system UI.
    * This handles cases where a side-positioned popover (left/right)
-   * still needs bottom safe-area padding because it extends into that region.
+   * or a bottom-positioned popover extends into the safe area.
    */
   const popoverBottom = bottom !== undefined ? bodyHeight - bottom : top + contentHeight;
-  if (popoverBottom + safeAreaMargin > bodyHeight) {
+  if (popoverBottom + safeAreaMargin > bodyHeight && bottom === undefined) {
+    /**
+     * Popover extends into bottom safe area but isn't already constrained.
+     * Set bottom to constrain the popover and apply safe-area adjustment.
+     */
+    bottom = bodyPadding;
     checkSafeAreaBottom = true;
   }
   if (top < safeAreaMargin) {
@@ -934,6 +971,7 @@ export const calculateWindowAdjustment = (
     arrowTop,
     arrowLeft,
     addPopoverBottomClass,
+    isFullyConstrained,
   };
 };
 
