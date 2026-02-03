@@ -92,9 +92,11 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
    * 2. Prevents Incorrect Palettes: It directly initializes with the
    * required 'enabled: "always"' palette before any scripts run. This guarantees that correct CSS variables are loaded from the start.
    * Otherwise, it would load the default light palette.
-   *
-   * These issues were only happening in Playwright Firefox tests
-   * that use `setContent`.
+   * 3. Ensures Component Setup: Since components do not automatically
+   * re-render if 'window.Ionic.config' is modified post-load, tokens MUST
+   * be present during the initial render to ensure properties and classes
+   * (e.g., 'chip-size-large') are correctly applied. Hence, the need to
+   * import the tokens and set the 'customTheme' here.
    */
   const customTheme = {
     ...tokens,
