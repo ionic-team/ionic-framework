@@ -108,7 +108,8 @@
       border: 1px solid rgba(3, 60, 89, 0.5);
     }
 
-    /* Pressed knob */
+    /* Hovered/pressed knob */
+    .custom-knobs-range::part(knob hover),
     .custom-knobs-range::part(knob pressed) {
       background: var(--color-blue-primary);
     }
@@ -120,7 +121,8 @@
       border-radius: inherit;
     }
 
-    /* Pressed/focused knob hover/focus indicator */
+    /* Override the default hover/focus indicator */
+    .custom-knobs-range::part(knob hover)::before,
     .custom-knobs-range::part(knob pressed)::before,
     .custom-knobs-range::part(knob focused)::before {
       transform: scale(1);
@@ -138,8 +140,6 @@
       border: 1px solid #000;
       border-radius: 4px;
     }
-
-    /* TODO hover states */
 
     /* iOS offset is larger than MD due to not having a bottom arrow */
     .ios.custom-knobs-range {
@@ -200,12 +200,14 @@
       border-radius: 0 50% 50% 0;
     }
 
-    /* Pressed knob lower */
+    /* Hovered/pressed knob lower */
+    #lower-upper-dual-knobs-range::part(knob-lower hover),
     #lower-upper-dual-knobs-range::part(knob-lower pressed) {
       background: var(--color-blue-light);
     }
 
-    /* Pressed knob upper */
+    /* Hovered/pressed knob upper */
+    #lower-upper-dual-knobs-range::part(knob-upper hover),
     #lower-upper-dual-knobs-range::part(knob-upper pressed) {
       background: var(--color-blue-dark);
     }
@@ -228,12 +230,14 @@
      * -----------------------------------
      */
 
-    /* Pressed knob A */
+    /* Hovered/pressed knob A */
+    #a-b-dual-knobs-range::part(knob-a hover),
     #a-b-dual-knobs-range::part(knob-a pressed) {
       background: var(--color-blue-light);
     }
 
-    /* Pressed knob B */
+    /* Hovered/pressed knob B */
+    #a-b-dual-knobs-range::part(knob-b hover),
     #a-b-dual-knobs-range::part(knob-b pressed) {
       background: var(--color-blue-dark);
     }
