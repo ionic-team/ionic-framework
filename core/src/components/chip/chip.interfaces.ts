@@ -119,6 +119,7 @@ type IonChipAvatarDefinition = IonChipMediaDefinition & {
 };
 
 export type IonChipConfig = {
+  fill?: 'outline' | 'solid';
   hue?: 'bold' | 'subtle';
   size?: 'small' | 'large';
   shape?: 'soft' | 'round' | 'rectangular';

@@ -130,6 +130,15 @@ const DEFAULT_PALETTE = 'light';
 
   async function loadThemeTokens(themeName, paletteName) {
     try {
+      /**
+       * If a custom theme is already set, then the tokens have been set
+       * elsewhere (e.g., app initialization, e2e tests).
+       * Thus, we skip loading them here.
+       */
+      if (window.Ionic?.config?.customTheme) {
+        return;
+      }
+
       // Load the default tokens for the theme
       const defaultTokens = await import(`/themes/${themeName}/default.tokens.js`);
       const theme = defaultTokens.defaultTheme;

@@ -27,6 +27,7 @@ export const defaultTheme: DefaultTheme = {
   config: {
     components: {
       IonChip: {
+        fill: 'solid',
         hue: 'bold',
         shape: 'round',
         size: 'large',

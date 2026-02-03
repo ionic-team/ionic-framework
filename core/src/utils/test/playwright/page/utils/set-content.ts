@@ -1,6 +1,11 @@
 import type { Page, TestInfo } from '@playwright/test';
 import type { Direction, E2EPageOptions, Mode, Palette, Theme } from '@utils/test/playwright';
 
+import { defaultTheme as baseTheme } from '../../../../../themes/base/default.tokens';
+import { defaultTheme as ionicTheme } from '../../../../../themes/ionic/default.tokens';
+import { defaultTheme as iosTheme } from '../../../../../themes/ios/default.tokens';
+import { defaultTheme as mdTheme } from '../../../../../themes/md/default.tokens';
+
 /**
  * Overwrites the default Playwright page.setContent method.
  *
@@ -68,6 +73,15 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
     `;
   }
 
+  const themes = {
+    ios: iosTheme,
+    md: mdTheme,
+    ionic: ionicTheme,
+    base: baseTheme,
+  };
+
+  const tokens = themes[theme];
+
   /**
    * This object is CRITICAL for Playwright stability.
    *
@@ -83,7 +97,9 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
    * that use `setContent`.
    */
   const customTheme = {
+    ...tokens,
     palette: {
+      ...tokens.palette,
       dark: {
         enabled: palette === 'dark' ? 'always' : 'never',
       },
@@ -164,13 +180,5 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
      * hash params to ensure the route interceptor always works.
      */
     await page.goto(`${baseUrl}#`, options);
-
-    //   await page.waitForFunction(() => {
-    //   const win = window as any;
-
-    //   // Ensure both the global flag and component shadowRoots are ready
-    //   return win.testAppLoaded === true &&
-    //           win.Ionic?.config?.get?.('customTheme') !== undefined;
-    // }, { timeout: 4750 });
   }
 };
