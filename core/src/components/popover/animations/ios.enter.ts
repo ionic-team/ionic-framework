@@ -93,8 +93,37 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
     arrowHeight
   );
 
+  /**
+   * Safe area CSS variable adjustments.
+   * When the popover is positioned near an edge, we add the corresponding
+   * safe-area inset to ensure the popover doesn't overlap with system UI
+   * (status bars, home indicators, navigation bars on Android API 36+, etc.)
+   */
+  const safeAreaTop = ' + var(--ion-safe-area-top, 0px)';
+  const safeAreaBottom = ' + var(--ion-safe-area-bottom, 0px)';
+  const safeAreaLeft = ' + var(--ion-safe-area-left, 0px)';
+  const safeAreaRight = ' - var(--ion-safe-area-right, 0px)';
+
+  let topValue = `${top}px`;
+  let bottomValue = bottom !== undefined ? `${bottom}px` : undefined;
+  let leftValue = `${left}px`;
+
+  if (checkSafeAreaTop) {
+    topValue = `${top}px${safeAreaTop}`;
+  }
+  if (checkSafeAreaBottom && bottomValue !== undefined) {
+    bottomValue = `${bottom}px${safeAreaBottom}`;
+  }
+  if (checkSafeAreaLeft) {
+    leftValue = `${left}px${safeAreaLeft}`;
+  }
+  if (checkSafeAreaRight) {
+    leftValue = `${left}px${safeAreaRight}`;
+  }
+
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
+  const arrowAnimation = createAnimation();
   const contentAnimation = createAnimation();
 
   backdropAnimation
@@ -109,11 +138,42 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
   // The Chromium team stated that this behavior is expected and not a bug. The element animating opacity creates a backdrop root for the backdrop-filter.
   // To get around this, instead of animating the wrapper, animate both the arrow and content.
   // https://bugs.chromium.org/p/chromium/issues/detail?id=1148826
-  contentAnimation
-    .addElement(root.querySelector('.popover-arrow')!)
-    .addElement(root.querySelector('.popover-content')!)
-    .fromTo('opacity', 0.01, 1);
   // TODO(FW-4376) Ensure that arrow also blurs when translucent
+  if (arrowEl !== null) {
+    arrowAnimation.addElement(arrowEl).fromTo('opacity', 0.01, 1);
+  }
+
+  contentAnimation
+    .addElement(contentEl)
+    .beforeAddWrite(() => {
+      contentEl.style.setProperty('top', `calc(${topValue} + var(--offset-y, 0px))`);
+      contentEl.style.setProperty('left', `calc(${leftValue} + var(--offset-x, 0px))`);
+      contentEl.style.setProperty('transform-origin', `${originY} ${originX}`);
+
+      if (bottomValue !== undefined) {
+        contentEl.style.setProperty('bottom', `calc(${bottomValue})`);
+        /**
+         * When both top and bottom are explicitly constrained (isFullyConstrained),
+         * we need to explicitly calculate the height to ensure the popover
+         * fits within the safe area boundaries.
+         *
+         * Using CSS calc with 100vh minus top and bottom values ensures the
+         * popover height respects both safe areas. We also override max-height
+         * to prevent it from interfering with the calculated height.
+         */
+        if (isFullyConstrained) {
+          /**
+           * Wrap topValue and bottomValue in parentheses to ensure correct
+           * order of operations in the CSS calc. Without parentheses, the
+           * safe-area additions would have wrong signs.
+           */
+          const heightCalc = `calc(100vh - (${topValue}) - (${bottomValue}) - var(--offset-y, 0px))`;
+          contentEl.style.setProperty('height', heightCalc);
+          contentEl.style.setProperty('max-height', heightCalc);
+        }
+      }
+    })
+    .fromTo('opacity', 0.01, 1);
 
   return baseAnimation
     .easing('ease')
@@ -127,54 +187,6 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
         baseEl.classList.add('popover-bottom');
       }
 
-      /**
-       * Safe area CSS variable adjustments.
-       * When the popover is positioned near an edge, we add the corresponding
-       * safe-area inset to ensure the popover doesn't overlap with system UI
-       * (status bars, home indicators, navigation bars on Android API 36+, etc.)
-       */
-      const safeAreaTop = ' + var(--ion-safe-area-top, 0)';
-      const safeAreaBottom = ' + var(--ion-safe-area-bottom, 0)';
-      const safeAreaLeft = ' + var(--ion-safe-area-left, 0)';
-      const safeAreaRight = ' - var(--ion-safe-area-right, 0)';
-
-      let topValue = `${top}px`;
-      let bottomValue = bottom !== undefined ? `${bottom}px` : undefined;
-      let leftValue = `${left}px`;
-
-      if (checkSafeAreaTop) {
-        topValue = `${top}px${safeAreaTop}`;
-      }
-      if (checkSafeAreaBottom && bottomValue !== undefined) {
-        bottomValue = `${bottom}px${safeAreaBottom}`;
-      }
-      if (checkSafeAreaLeft) {
-        leftValue = `${left}px${safeAreaLeft}`;
-      }
-      if (checkSafeAreaRight) {
-        leftValue = `${left}px${safeAreaRight}`;
-      }
-
-      if (bottomValue !== undefined) {
-        contentEl.style.setProperty('bottom', `calc(${bottomValue})`);
-        /**
-         * When both top and bottom are explicitly constrained (isFullyConstrained),
-         * we need to override the height: var(--height) style to allow the
-         * top/bottom constraint to determine the height.
-         *
-         * We only do this when fully constrained because setting height: unset
-         * when only bottom is set (without explicit top) would result in an
-         * incorrectly sized popover.
-         */
-        if (isFullyConstrained) {
-          contentEl.style.setProperty('height', 'unset');
-        }
-      }
-
-      contentEl.style.setProperty('top', `calc(${topValue} + var(--offset-y, 0))`);
-      contentEl.style.setProperty('left', `calc(${leftValue} + var(--offset-x, 0))`);
-      contentEl.style.setProperty('transform-origin', `${originY} ${originX}`);
-
       if (arrowEl !== null) {
         const didAdjustBounds = results.top !== top || results.left !== left;
         /**
@@ -184,12 +196,12 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
         const showArrow = shouldShowArrow(side, didAdjustBounds, ev, trigger) && !isFullyConstrained;
 
         if (showArrow) {
-          arrowEl.style.setProperty('top', `calc(${arrowTop}px + var(--offset-y, 0))`);
-          arrowEl.style.setProperty('left', `calc(${arrowLeft}px + var(--offset-x, 0))`);
+          arrowEl.style.setProperty('top', `calc(${arrowTop}px + var(--offset-y, 0px))`);
+          arrowEl.style.setProperty('left', `calc(${arrowLeft}px + var(--offset-x, 0px))`);
         } else {
           arrowEl.style.setProperty('display', 'none');
         }
       }
     })
-    .addAnimation([backdropAnimation, contentAnimation]);
+    .addAnimation([backdropAnimation, arrowAnimation, contentAnimation]);
 };

@@ -137,15 +137,22 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
         contentEl.style.setProperty('bottom', `calc(${bottomValue})`);
         /**
          * When both top and bottom are explicitly constrained (isFullyConstrained),
-         * we need to override the height: var(--height) style to allow the
-         * top/bottom constraint to determine the height.
+         * we need to explicitly calculate the height to ensure the popover
+         * fits within the safe area boundaries.
          *
-         * We only do this when fully constrained because setting height: unset
-         * when only bottom is set (without explicit top) would result in an
-         * incorrectly sized popover.
+         * Using CSS calc with 100vh minus top and bottom values ensures the
+         * popover height respects both safe areas. We also override max-height
+         * to prevent it from interfering with the calculated height.
          */
         if (isFullyConstrained) {
-          contentEl.style.setProperty('height', 'unset');
+          /**
+           * Wrap topValue and bottomValue in parentheses to ensure correct
+           * order of operations in the CSS calc. Without parentheses, the
+           * safe-area additions would have wrong signs.
+           */
+          const heightCalc = `calc(100vh - (${topValue}) - (${bottomValue}) - var(--offset-y, 0px))`;
+          contentEl.style.setProperty('height', heightCalc);
+          contentEl.style.setProperty('max-height', heightCalc);
         }
       }
     })

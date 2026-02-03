@@ -927,13 +927,13 @@ export const calculateWindowAdjustment = (
        *
        * When checkSafeAreaTop is true, the CSS will add safe-area-top to the
        * top position, pushing the popover down. Since we don't know the exact
-       * CSS safe-area value, we use a threshold that accounts for likely
-       * safe-area sizes. This only triggers when:
-       * 1. We're already applying safe-area-top (checkSafeAreaTop), and
-       * 2. The popover is close enough to overflowing that any safe-area
-       *    would push it past the viewport
+       * CSS safe-area value at runtime, we use a conservative threshold that
+       * accounts for typical safe-area sizes (usually 40-50px). By checking
+       * against (safeAreaMargin * 2), we ensure that:
+       * 1. Any popover close to the viewport boundary gets constrained
+       * 2. The safe-area CSS variables have room to be applied without overflow
        */
-      if (checkSafeAreaTop && top + contentHeight > bodyHeight - safeAreaMargin - bodyPadding) {
+      if (checkSafeAreaTop && top + contentHeight > bodyHeight - safeAreaMargin * 2 - bodyPadding) {
         bottom = bodyPadding;
         checkSafeAreaBottom = true;
         isFullyConstrained = true;
@@ -965,8 +965,13 @@ export const calculateWindowAdjustment = (
     /**
      * Set a bottom constraint to push the popover up out of the safe-area zone.
      * The animation will add the safe-area CSS variable to this value.
+     *
+     * We also set isFullyConstrained so that height: unset is applied,
+     * allowing the bottom constraint to actually take effect (otherwise
+     * the explicit height would override the bottom constraint).
      */
     bottom = bodyPadding;
+    isFullyConstrained = true;
   }
   if (top < safeAreaMargin) {
     checkSafeAreaTop = true;
