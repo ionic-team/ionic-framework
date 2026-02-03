@@ -310,11 +310,11 @@ export const generateGlobalThemeCSS = (theme: any): string => {
   let css = `
     ${CSS_ROOT_SELECTOR} {
       ${defaultTokensCSS}
-      ${paletteTokensCSS}
+      ${paletteTokensCSS || ''}
     }
   `;
 
-  if (palette.highContrastDark?.enabled === 'class') {
+  if (palette.highContrastDark?.enabled === 'class' && highContrastDarkTokensCSS) {
     // Include CSS variables for the high contrast dark color palette inside of a
     // class if high contrast dark palette enabled is 'class'
     css += `
@@ -322,7 +322,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
         ${highContrastDarkTokensCSS}
       }
     `;
-  } else if (palette.highContrast?.enabled === 'class') {
+  } else if (palette.highContrast?.enabled === 'class' && highContrastTokensCSS) {
     // Include CSS variables for the high contrast color palette inside of a
     // class if high contrast palette enabled is 'class'
     css += `
@@ -330,7 +330,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
         ${highContrastTokensCSS}
       }
     `;
-  } else if (palette.dark?.enabled === 'class') {
+  } else if (palette.dark?.enabled === 'class' && darkTokensCSS) {
     // Include CSS variables for the dark color palette inside of a
     // class if dark palette enabled is 'class'
     css += `
@@ -340,7 +340,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
     `;
   }
 
-  if (palette.highContrastDark?.enabled === 'system') {
+  if (palette.highContrastDark?.enabled === 'system' && highContrastDarkTokensCSS) {
     // Include CSS variables for the high contrast dark color palette inside of the
     // high contrast dark media query if high contrast dark palette enabled is 'system'
     css += `
@@ -350,7 +350,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
         }
       }
     `;
-  } else if (palette.highContrast?.enabled === 'system') {
+  } else if (palette.highContrast?.enabled === 'system' && highContrastTokensCSS) {
     // Include CSS variables for the high contrast color palette inside of the
     // high contrast media query if high contrast palette enabled is 'system'
     css += `
@@ -360,7 +360,7 @@ export const generateGlobalThemeCSS = (theme: any): string => {
         }
       }
     `;
-  } else if (palette.dark?.enabled === 'system') {
+  } else if (palette.dark?.enabled === 'system' && darkTokensCSS) {
     // Include CSS variables for the dark color palette inside of the
     // dark color scheme media query if dark palette enabled is 'system'
     css += `
