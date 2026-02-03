@@ -136,7 +136,6 @@ const DEFAULT_PALETTE = 'light';
 
       // If a specific palette is requested, modify the palette structure
       // to set the enabled property to 'always'
-      // TODO(FW-4004): Implement dark palette
       if (paletteName === 'dark' && theme.palette?.dark) {
         theme.palette.dark.enabled = 'always';
       // TODO(FW-4005): Implement high contrast palette
