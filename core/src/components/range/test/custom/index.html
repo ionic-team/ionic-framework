@@ -72,8 +72,13 @@
      */
     .custom-knobs-range {
       --color-blue-light: #3b82f6;
+      --color-blue-light-rgb: 59, 130, 246;
+
       --color-blue-primary: var(--ion-color-primary, #0054e9);
+      --color-blue-primary-rgb: var(--ion-color-primary-rgb, 0, 84, 233);
+
       --color-blue-dark: #1e3a8a;
+      --color-blue-dark-rgb: 30, 58, 138;
     }
 
     .custom-knobs-range::part(knob-handle) {
@@ -106,12 +111,6 @@
 
       border-radius: 4px;
       border: 1px solid rgba(3, 60, 89, 0.5);
-    }
-
-    /* Hovered/pressed knob */
-    .custom-knobs-range::part(knob hover),
-    .custom-knobs-range::part(knob pressed) {
-      background: var(--color-blue-primary);
     }
 
     /* Hover/focus indicator */
@@ -179,6 +178,11 @@
      * -----------------------------------
      */
 
+    /* Hovered knob */
+    #single-knob-range::part(knob hover) {
+      background: rgba(var(--color-blue-primary-rgb), 0.5);
+    }
+
     /* Pressed knob */
     #single-knob-range::part(knob pressed) {
       background: var(--color-blue-primary);
@@ -200,14 +204,22 @@
       border-radius: 0 50% 50% 0;
     }
 
-    /* Hovered/pressed knob lower */
-    #lower-upper-dual-knobs-range::part(knob-lower hover),
+    /* Hovered knob lower */
+    #lower-upper-dual-knobs-range::part(knob-lower hover) {
+      background: rgba(var(--color-blue-light-rgb), 0.5);
+    }
+
+    /* Pressed knob lower */
     #lower-upper-dual-knobs-range::part(knob-lower pressed) {
       background: var(--color-blue-light);
     }
 
-    /* Hovered/pressed knob upper */
-    #lower-upper-dual-knobs-range::part(knob-upper hover),
+    /* Hovered knob upper */
+    #lower-upper-dual-knobs-range::part(knob-upper hover) {
+      background: rgba(var(--color-blue-dark-rgb), 0.5);
+    }
+
+    /* Pressed knob upper */
     #lower-upper-dual-knobs-range::part(knob-upper pressed) {
       background: var(--color-blue-dark);
     }
@@ -230,14 +242,22 @@
      * -----------------------------------
      */
 
-    /* Hovered/pressed knob A */
-    #a-b-dual-knobs-range::part(knob-a hover),
+    /* Hovered knob A */
+    #a-b-dual-knobs-range::part(knob-a hover) {
+      background: rgba(var(--color-blue-light-rgb), 0.5);
+    }
+
+    /* Pressed knob A */
     #a-b-dual-knobs-range::part(knob-a pressed) {
       background: var(--color-blue-light);
     }
 
-    /* Hovered/pressed knob B */
-    #a-b-dual-knobs-range::part(knob-b hover),
+    /* Hovered knob B */
+    #a-b-dual-knobs-range::part(knob-b hover) {
+      background: rgba(var(--color-blue-dark-rgb), 0.5);
+    }
+
+    /* Pressed knob B */
     #a-b-dual-knobs-range::part(knob-b pressed) {
       background: var(--color-blue-dark);
     }
