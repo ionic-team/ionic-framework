@@ -158,12 +158,17 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
       if (bottomValue !== undefined) {
         contentEl.style.setProperty('bottom', `calc(${bottomValue})`);
         /**
-         * When both top and bottom are set, we need to override the
-         * height: var(--height) style to allow the top/bottom constraint
-         * to determine the height. Setting height to 'auto' with both
-         * top and bottom defined would cause bottom to be ignored.
+         * When both top and bottom are explicitly constrained (isFullyConstrained),
+         * we need to override the height: var(--height) style to allow the
+         * top/bottom constraint to determine the height.
+         *
+         * We only do this when fully constrained because setting height: unset
+         * when only bottom is set (without explicit top) would result in an
+         * incorrectly sized popover.
          */
-        contentEl.style.setProperty('height', 'unset');
+        if (isFullyConstrained) {
+          contentEl.style.setProperty('height', 'unset');
+        }
       }
 
       contentEl.style.setProperty('top', `calc(${topValue} + var(--offset-y, 0))`);

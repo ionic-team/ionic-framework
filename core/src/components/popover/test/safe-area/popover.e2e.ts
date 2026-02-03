@@ -25,17 +25,25 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
         description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
       });
 
-      // Use a smaller viewport to force the popover to be constrained
-      await page.setViewportSize({ width: 375, height: 500 });
+      /**
+       * Use a small viewport to force the popover to be fully constrained.
+       * The large popover has 15 items (~700px), which will exceed the available
+       * space in this viewport, causing it to be constrained with both top and
+       * bottom edges near the safe areas.
+       *
+       * A 300px viewport ensures there's not enough space above OR below the
+       * trigger for the full popover content, triggering the fully constrained path.
+       */
+      await page.setViewportSize({ width: 375, height: 300 });
 
       const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
 
-      // Click the trigger near the bottom of the screen
-      await page.click('#bottom-trigger');
+      // Click the large popover trigger which has enough content to extend toward the bottom
+      await page.click('#large-popover-trigger');
       await ionPopoverDidPresent.next();
 
-      // Target the specific popover that was presented (the one with trigger="bottom-trigger")
-      const popover = page.locator('ion-popover[trigger="bottom-trigger"]');
+      // Target the specific popover that was presented
+      const popover = page.locator('ion-popover[trigger="large-popover-trigger"]');
       const popoverContent = popover.locator('.popover-content');
 
       // Get the computed bottom style - should include safe-area calc

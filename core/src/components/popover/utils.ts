@@ -884,7 +884,19 @@ export const calculateWindowAdjustment = (
    * margins.
    */
   if (triggerTop + triggerHeight + contentHeight > bodyHeight && (side === 'top' || side === 'bottom')) {
-    if (triggerTop - contentHeight > 0) {
+    /**
+     * Calculate available space above and below, accounting for safe areas.
+     * This ensures we flip to whichever side has more usable space.
+     */
+    const spaceAbove = (triggerCoordinates?.top ?? triggerTop) - bodyPadding - safeAreaMargin;
+    const spaceBelow = bodyHeight - triggerTop - triggerHeight - bodyPadding - safeAreaMargin;
+
+    /**
+     * Flip above if:
+     * 1. Content fits entirely above the trigger, OR
+     * 2. There's more usable space above than below (accounting for safe areas)
+     */
+    if (triggerTop - contentHeight > 0 || spaceAbove > spaceBelow) {
       /**
        * While we strive to align the popover with the trigger
        * on smaller screens this is not always possible. As a result,
@@ -910,25 +922,27 @@ export const calculateWindowAdjustment = (
       }
 
       /**
-       * After flipping above, check if popover still extends into bottom safe area.
-       * This can happen when the popover is taller than the available space between
-       * the top safe area and the trigger. In this case, constrain with bottom too.
+       * After flipping above, check if popover will likely overflow the viewport.
+       * This can happen when the popover is taller than the available space.
        *
-       * We estimate the effective top by adding safeAreaMargin if checkSafeAreaTop
-       * is true (since CSS will add the actual safe-area-top value).
+       * When checkSafeAreaTop is true, the CSS will add safe-area-top to the
+       * top position, pushing the popover down. Since we don't know the exact
+       * CSS safe-area value, we use a threshold that accounts for likely
+       * safe-area sizes. This only triggers when:
+       * 1. We're already applying safe-area-top (checkSafeAreaTop), and
+       * 2. The popover is close enough to overflowing that any safe-area
+       *    would push it past the viewport
        */
-      const estimatedTop = checkSafeAreaTop ? top + safeAreaMargin : top;
-      if (estimatedTop + contentHeight > bodyHeight - safeAreaMargin) {
+      if (checkSafeAreaTop && top + contentHeight > bodyHeight - safeAreaMargin - bodyPadding) {
         bottom = bodyPadding;
         checkSafeAreaBottom = true;
         isFullyConstrained = true;
       }
 
       /**
-       * If not enough room for popover to appear
-       * above trigger, constrain to full viewport.
-       * Pin both top and bottom to maximize visible area
-       * and let the content scroll within those bounds.
+       * If not enough room for popover to appear above trigger
+       * (i.e., content is taller than space above), then constrain
+       * the popover to fill the entire viewport from top to bottom.
        */
     } else {
       top = bodyPadding;
@@ -940,19 +954,19 @@ export const calculateWindowAdjustment = (
   }
 
   /**
-   * Final check: If the popover extends into any safe-area region,
-   * constrain it to avoid overlapping system UI.
-   * This handles cases where a side-positioned popover (left/right)
-   * or a bottom-positioned popover extends into the safe area.
+   * Check if popover is near edges and needs safe-area adjustments.
+   * When the popover extends into the safe-area zone, set a bottom constraint
+   * to push it up and out of the unsafe area. This is essential for
+   * edge-to-edge displays on Android API 36+ and iOS devices with home indicators.
    */
   const popoverBottom = bottom !== undefined ? bodyHeight - bottom : top + contentHeight;
-  if (popoverBottom + safeAreaMargin > bodyHeight && bottom === undefined) {
+  if (popoverBottom > bodyHeight - safeAreaMargin && bottom === undefined) {
+    checkSafeAreaBottom = true;
     /**
-     * Popover extends into bottom safe area but isn't already constrained.
-     * Set bottom to constrain the popover and apply safe-area adjustment.
+     * Set a bottom constraint to push the popover up out of the safe-area zone.
+     * The animation will add the safe-area CSS variable to this value.
      */
     bottom = bodyPadding;
-    checkSafeAreaBottom = true;
   }
   if (top < safeAreaMargin) {
     checkSafeAreaTop = true;
