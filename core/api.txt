@@ -1476,6 +1476,7 @@ ion-range,css-prop,--pin-color,md
 ion-range,part,bar
 ion-range,part,bar-active
 ion-range,part,focused
+ion-range,part,hover
 ion-range,part,knob
 ion-range,part,knob-a
 ion-range,part,knob-b

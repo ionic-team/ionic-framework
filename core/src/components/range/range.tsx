@@ -50,8 +50,9 @@ import type {
  * @part knob-b - The visual knob element for the second knob. Only available when `dualKnobs` is `true`.
  * @part knob-lower - The visual knob element for the lower knob. Only available when `dualKnobs` is `true`.
  * @part knob-upper - The visual knob element for the upper knob. Only available when `dualKnobs` is `true`.
- * @part pressed - Added to the knob-handle, knob, and pin that is currently being pressed to drag. Only one set has this part at a time.
- * @part focused - Added to the knob-handle, knob, and pin that currently has focus. Only one set has this part at a time.
+ * @part pressed - Added to the knob-handle, knob, and pin that is currently being pressed to drag. Only one set has this part at a time when `dualKnobs` is `true`.
+ * @part focused - Added to the knob-handle, knob, and pin that currently has focus. Only one set has this part at a time when `dualKnobs` is `true`.
+ * @part hover - Added to the knob-handle, knob, and pin when the knob has hover. Only one set has this part at a time.
  */
 @Component({
   tag: 'ion-range',
@@ -79,8 +80,9 @@ export class Range implements ComponentInterface {
 
   @State() private ratioA = 0;
   @State() private ratioB = 0;
-  @State() private pressedKnob: KnobName;
   @State() private focusedKnob: KnobName;
+  @State() private hoveredKnob: KnobName;
+  @State() private pressedKnob: KnobName;
 
   /**
    * The color to use from your application's color palette.
@@ -697,6 +699,14 @@ export class Range implements ComponentInterface {
     }, 0);
   };
 
+  private onKnobMouseEnter = (knob: KnobName) => {
+    this.hoveredKnob = knob;
+  };
+
+  private onKnobMouseLeave = () => {
+    this.hoveredKnob = undefined;
+  };
+
   /**
    * Returns true if content was passed to the "start" slot
    */
@@ -722,6 +732,7 @@ export class Range implements ComponentInterface {
       step,
       handleKeyboard,
       focusedKnob,
+      hoveredKnob,
       pressedKnob,
       disabled,
       pin,
@@ -869,8 +880,9 @@ export class Range implements ComponentInterface {
           knob: 'A',
           position: this.dualKnobs ? (this.ratioA <= this.ratioB ? 'lower' : 'upper') : 'lower',
           dualKnobs: this.dualKnobs,
-          pressed: pressedKnob === 'A',
           focused: focusedKnob === 'A',
+          hovered: hoveredKnob === 'A',
+          pressed: pressedKnob === 'A',
           value: this.valA,
           ratio: this.ratioA,
           pin,
@@ -882,6 +894,8 @@ export class Range implements ComponentInterface {
           inheritedAttributes,
           onKnobFocus: this.onKnobFocus,
           onKnobBlur: this.onKnobBlur,
+          onKnobMouseEnter: this.onKnobMouseEnter,
+          onKnobMouseLeave: this.onKnobMouseLeave,
         })}
 
         {this.dualKnobs &&
@@ -889,8 +903,9 @@ export class Range implements ComponentInterface {
             knob: 'B',
             position: this.ratioB <= this.ratioA ? 'lower' : 'upper',
             dualKnobs: this.dualKnobs,
-            pressed: pressedKnob === 'B',
             focused: focusedKnob === 'B',
+            hovered: hoveredKnob === 'B',
+            pressed: pressedKnob === 'B',
             value: this.valB,
             ratio: this.ratioB,
             pin,
@@ -902,6 +917,8 @@ export class Range implements ComponentInterface {
             inheritedAttributes,
             onKnobFocus: this.onKnobFocus,
             onKnobBlur: this.onKnobBlur,
+            onKnobMouseEnter: this.onKnobMouseEnter,
+            onKnobMouseLeave: this.onKnobMouseLeave,
           })}
       </div>
     );
@@ -991,12 +1008,15 @@ interface RangeKnob {
   disabled: boolean;
   pressed: boolean;
   focused: boolean;
+  hovered: boolean;
   pin: boolean;
   pinFormatter: PinFormatter;
   inheritedAttributes: Attributes;
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
   onKnobFocus: (knob: KnobName) => void;
   onKnobBlur: () => void;
+  onKnobMouseEnter: (knob: KnobName) => void;
+  onKnobMouseLeave: () => void;
 }
 
 const renderKnob = (
@@ -1012,12 +1032,15 @@ const renderKnob = (
     disabled,
     pressed,
     focused,
+    hovered,
     pin,
     handleKeyboard,
     pinFormatter,
     inheritedAttributes,
     onKnobFocus,
     onKnobBlur,
+    onKnobMouseEnter,
+    onKnobMouseLeave,
   }: RangeKnob
 ) => {
   const start = rtl ? 'right' : 'left';
@@ -1049,6 +1072,8 @@ const renderKnob = (
       }}
       onFocus={() => onKnobFocus(knob)}
       onBlur={onKnobBlur}
+      onMouseEnter={() => onKnobMouseEnter(knob)}
+      onMouseLeave={onKnobMouseLeave}
       class={{
         'range-knob-handle': true,
         'range-knob-handle-a': knob === 'A',
@@ -1068,6 +1093,7 @@ const renderKnob = (
         dualKnobs && position === 'upper' && 'knob-handle-upper',
         pressed && 'pressed',
         focused && 'focused',
+        hovered && 'hover',
       ]
         .filter(Boolean)
         .join(' ')}
@@ -1093,6 +1119,7 @@ const renderKnob = (
             dualKnobs && position === 'upper' && 'pin-upper',
             pressed && 'pressed',
             focused && 'focused',
+            hovered && 'hover',
           ]
             .filter(Boolean)
             .join(' ')}
@@ -1111,6 +1138,7 @@ const renderKnob = (
           dualKnobs && position === 'upper' && 'knob-upper',
           pressed && 'pressed',
           focused && 'focused',
+          hovered && 'hover',
         ]
           .filter(Boolean)
           .join(' ')}
