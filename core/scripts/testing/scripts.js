@@ -130,18 +130,23 @@ const DEFAULT_PALETTE = 'light';
 
   async function loadThemeTokens(themeName, paletteName) {
     try {
-      /**
-       * If a custom theme is already set, then the tokens have been set
-       * elsewhere (e.g., app initialization, e2e tests).
-       * Thus, we skip loading them here.
-       */
-      if (window.Ionic?.config?.customTheme) {
-        return;
-      }
-
+      // Store existing theme set from the app initialization
+      const existingTheme = window.Ionic?.config?.customTheme;
       // Load the default tokens for the theme
       const defaultTokens = await import(`/themes/${themeName}/default.tokens.js`);
-      const theme = defaultTokens.defaultTheme;
+      let theme = defaultTokens.defaultTheme;
+
+      // Merge with existing theme to preserve any customizations
+      if (existingTheme) {
+        theme = {
+          ...theme,
+          ...existingTheme,
+          palette: {
+            ...theme.palette,
+            ...existingTheme.palette,
+          },
+        };
+      }
 
       // If a specific palette is requested, modify the palette structure
       // to set the enabled property to 'always'
@@ -158,7 +163,9 @@ const DEFAULT_PALETTE = 'light';
 
       if (window.Ionic?.config?.set) {
         /**
-         * Playwright: If the Config instance exists, we must use the
+         * New Page Load after Initial App Load or Playwright Test:
+         * 
+         * If the Config instance exists, we must use the
          * `set()` method. This ensures the internal private Map inside
          * the `Config` class is updated with the loaded theme tokens.
          * Without this, components would read 'undefined' or 'base'
@@ -168,7 +175,9 @@ const DEFAULT_PALETTE = 'light';
         window.Ionic.config.set('customTheme', theme);
       } else {
         /**
-         * App Initialization: If the Config instance doesn't exist yet,
+         * App Initialization or Browser Refresh:
+         * 
+         * If the Config instance doesn't exist yet,
          * we attach the theme to the global Ionic object. The `initialize()`
          * method in `ionic-global.ts` will later merge this into the new
          * `Config` instance via `config.reset()`.
