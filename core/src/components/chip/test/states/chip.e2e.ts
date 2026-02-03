@@ -12,9 +12,9 @@ configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, s
       await page.setContent(
         `
           <style>
-            ion-chip {
-              /* Adding margin so chips aren't overlapping */
-              margin: 4px 0;
+            /* Styling container to lessen size of screenshot */
+            #container {
+              display: inline-flex;
             }
           </style>
 
@@ -38,9 +38,11 @@ configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, s
       await page.setContent(
         `
           <style>
-            ion-chip {
-              /* Adding margin so chips aren't overlapping */
-              margin: 4px 0;
+            /* Styling container to prevent overlapping focus rings */
+            #container {
+              display: inline-flex;
+              gap: 12px;
+              padding: 8px;
             }
           </style>
 
