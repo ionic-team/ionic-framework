@@ -6,7 +6,7 @@ configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
    * Chip rendering does not vary across modes.
    */
   test.describe(title('chip: rendering'), () => {
-    test('should not have visual regressions', async ({ page }) => {
+    test('should render default solid chip', async ({ page }) => {
       await page.setContent(
         `
         <ion-chip fill="solid">
@@ -40,7 +40,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
         `
         <ion-list>
           <ion-item>
-            <ion-chip fill="solid">
+            <ion-chip>
               <ion-label>Agreements</ion-label>
             </ion-chip>
           </ion-item>
@@ -78,7 +78,7 @@ configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, s
   test.describe(title('chip: color'), () => {
     test('should render solid color chip', async ({ page }) => {
       await page.setContent(
-        `<ion-chip color="success">
+        `<ion-chip fill="solid" color="success">
           <ion-icon name="checkmark-circle"></ion-icon>
           <ion-label>Success with Icon</ion-label>
         </ion-chip>`,

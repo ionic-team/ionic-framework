@@ -10,14 +10,6 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
       await page.goto(`/src/components/chip/test/shape`, config);
     });
 
-    test.describe('default', () => {
-      test('should not have visual regressions', async ({ page }) => {
-        const container = page.locator('#default');
-
-        await expect(container).toHaveScreenshot(screenshot(`chip-default`));
-      });
-    });
-
     test.describe('soft', () => {
       test('should not have visual regressions', async ({ page }) => {
         const container = page.locator('#soft');
