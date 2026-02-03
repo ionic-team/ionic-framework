@@ -44,7 +44,6 @@
     "@capacitor/haptics": "^8.0.0",
     "@capacitor/keyboard": "^8.0.0",
     "@capacitor/status-bar": "^8.0.0",
-    "@clack/prompts": "^0.11.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@playwright/test": "^1.56.1",
@@ -104,8 +103,7 @@
     "docker.build": "docker build -t ionic-playwright .",
     "test.e2e.docker": "npm run docker.build && node ./scripts/docker.mjs",
     "test.e2e.docker.update-snapshots": "npm run test.e2e.docker -- --update-snapshots='changed'",
-    "test.e2e.docker.ci": "npm run docker.build && CI=true node ./scripts/docker.mjs",
-    "test.e2e.script": "node scripts/testing/e2e-script.mjs"
+    "test.e2e.docker.ci": "npm run docker.build && CI=true node ./scripts/docker.mjs"
   },
   "author": "Ionic Team",
   "license": "MIT",
