@@ -175,6 +175,180 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       expect(backgroundColor).toBe('rgb(0, 0, 255)');
     });
+
+    test('should be able to customize header part within the grid style', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30083',
+      });
+
+      await page.setContent(
+        `
+          <style>
+            ion-datetime::part(header) {
+              background-color: rgb(218, 216, 255);
+            }
+          </style>
+          <ion-datetime value="2020-03-14T14:23:00.000Z"></ion-datetime>
+        `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+      const header = datetime.locator('.calendar-header');
+
+      const backgroundColor = await header.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
+      expect(backgroundColor).toBe('rgb(218, 216, 255)');
+    });
+
+    test('should be able to customize month/year picker part within the grid style', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/26596',
+      });
+
+      await page.setContent(
+        `
+          <style>
+            ion-datetime::part(month-year-button) {
+              background-color: lightblue;
+            }
+          </style>
+          <ion-datetime value="2020-03-14T14:23:00.000Z"></ion-datetime>
+        `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+      const monthYearButton = datetime.locator('.calendar-month-year-toggle');
+
+      const backgroundColor = await monthYearButton.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
+      expect(backgroundColor).toBe('rgb(173, 216, 230)');
+    });
+
+    test('should be able to customize prev/next buttons part within the grid style', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30830',
+      });
+
+      await page.setContent(
+        `
+          <style>
+            ion-datetime::part(prev-next-buttons) {
+              background-color: firebrick;
+            }
+          </style>
+          <ion-datetime value="2020-03-14T14:23:00.000Z"></ion-datetime>
+        `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+      const prevButton = datetime.locator('.calendar-next-prev ion-button').first();
+      const nextButton = datetime.locator('.calendar-next-prev ion-button').last();
+
+      const prevBackgroundColor = await prevButton.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
+      const nextBackgroundColor = await nextButton.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
+      expect(prevBackgroundColor).toBe('rgb(178, 34, 34)');
+      expect(nextBackgroundColor).toBe('rgb(178, 34, 34)');
+    });
+
+    test('should be able to customize prev button part within the grid style', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30830',
+      });
+
+      await page.setContent(
+        `
+          <style>
+            ion-datetime::part(prev-button) {
+              color: blue;
+            }
+          </style>
+          <ion-datetime value="2020-03-14T14:23:00.000Z"></ion-datetime>
+        `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+      const prevButton = datetime.locator('.calendar-next-prev ion-button').first();
+
+      const color = await prevButton.evaluate((el) => {
+        return window.getComputedStyle(el).color;
+      });
+
+      expect(color).toBe('rgb(0, 0, 255)');
+    });
+
+    test('should be able to customize next button part within the grid style', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30830',
+      });
+
+      await page.setContent(
+        `
+          <style>
+            ion-datetime::part(next-button) {
+              color: blue;
+            }
+          </style>
+          <ion-datetime value="2020-03-14T14:23:00.000Z"></ion-datetime>
+        `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+      const nextButton = datetime.locator('.calendar-next-prev ion-button').last();
+
+      const color = await nextButton.evaluate((el) => {
+        return window.getComputedStyle(el).color;
+      });
+
+      expect(color).toBe('rgb(0, 0, 255)');
+    });
+
+    test('should be able to customize days of the week part within the grid style', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30830',
+      });
+
+      await page.setContent(
+        `
+          <style>
+            ion-datetime::part(days-of-week) {
+              background-color: #9ad162;
+            }
+          </style>
+          <ion-datetime value="2020-03-14T14:23:00.000Z"></ion-datetime>
+        `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+      const daysOfWeek = datetime.locator('.calendar-days-of-week');
+
+      const backgroundColor = await daysOfWeek.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
+      expect(backgroundColor).toBe('rgb(154, 209, 98)');
+    });
   });
 });
 

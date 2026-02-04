@@ -88,8 +88,13 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  * layout with `presentation="date-time"` or `"time-date"`.
  * @part time-button active - The time picker button when the picker is open.
  *
+ * @part header - The header container for the calendar when using a grid style layout.
  * @part month-year-button - The button that opens the month/year picker when
  * using a grid style layout.
+ * @part prev-next-buttons - The buttons used to navigate to the next or previous month when using a grid style layout.
+ * @part prev-button - The button used to navigate to the previous month when using a grid style layout.
+ * @part next-button - The button used to navigate to the next month when using a grid style layout.
+ * @part days-of-week - The container for the day-of-the-week header (both weekdays and weekends) when using a grid style layout.
  *
  * @part calendar-day - The individual buttons that display a day inside of the datetime
  * calendar.
@@ -2166,7 +2171,7 @@ export class Datetime implements ComponentInterface {
     const hostDir = this.el.getAttribute('dir') || undefined;
 
     return (
-      <div class="calendar-header">
+      <div class="calendar-header" part="header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
             <button
@@ -2195,7 +2200,12 @@ export class Datetime implements ComponentInterface {
 
           <div class="calendar-next-prev">
             <ion-buttons>
-              <ion-button aria-label="Previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
+              <ion-button
+                aria-label="Previous month"
+                disabled={prevMonthDisabled}
+                onClick={() => this.prevMonth()}
+                part="prev-next-buttons prev-button"
+              >
                 <ion-icon
                   dir={hostDir}
                   aria-hidden="true"
@@ -2205,7 +2215,12 @@ export class Datetime implements ComponentInterface {
                   flipRtl
                 ></ion-icon>
               </ion-button>
-              <ion-button aria-label="Next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
+              <ion-button
+                aria-label="Next month"
+                disabled={nextMonthDisabled}
+                onClick={() => this.nextMonth()}
+                part="prev-next-buttons next-button"
+              >
                 <ion-icon
                   dir={hostDir}
                   aria-hidden="true"
@@ -2218,7 +2233,7 @@ export class Datetime implements ComponentInterface {
             </ion-buttons>
           </div>
         </div>
-        <div class="calendar-days-of-week" aria-hidden="true">
+        <div class="calendar-days-of-week" aria-hidden="true" part="days-of-week">
           {getDaysOfWeek(this.locale, mode, this.firstDayOfWeek % 7).map((d) => {
             return <div class="day-of-week">{d}</div>;
           })}
