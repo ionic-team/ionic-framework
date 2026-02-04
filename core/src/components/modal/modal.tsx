@@ -44,6 +44,13 @@ import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture, SwipeToCloseDefaults } from './gestures/swipe-to-close';
 import type { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from './modal-interface';
+import {
+  getInitialSafeAreaConfig,
+  getPositionBasedSafeAreaConfig,
+  applySafeAreaOverrides,
+  clearSafeAreaOverrides,
+  type ModalSafeAreaContext,
+} from './safe-area-utils';
 import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
 // TODO(FW-2832): types
@@ -594,6 +601,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
+    // Set initial safe-area overrides before animation
+    this.setInitialSafeAreaOverrides();
+
     const hasCardModal = presentingElement !== undefined;
 
     /**
@@ -613,6 +623,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
       backdropBreakpoint: this.backdropBreakpoint,
       expandToScroll: this.expandToScroll,
     });
+
+    // Update safe-area based on actual position after animation
+    this.updateSafeAreaOverrides();
+
+    // Apply fullscreen safe-area padding if needed
+    this.applyFullscreenSafeArea();
 
     /* tslint:disable-next-line */
     if (typeof window !== 'undefined') {
@@ -754,6 +770,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
         if (this.currentBreakpoint !== breakpoint) {
           this.currentBreakpoint = breakpoint;
           this.ionBreakpointDidChange.emit({ breakpoint });
+          // Update safe-area overrides based on new position
+          this.updateSafeAreaOverrides();
         }
       }
     );
@@ -956,6 +974,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       }
       this.cleanupViewTransitionListener();
       this.cleanupParentRemovalObserver();
+      this.cleanupSafeAreaOverrides();
 
       this.cleanupChildRoutePassthrough();
     }
@@ -1166,6 +1185,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
     transitionAnimation.play().then(() => {
       this.viewTransitionAnimation = undefined;
 
+      // Update safe-area overrides for new orientation
+      this.updateSafeAreaOverrides();
+
       // After orientation transition, recreate the swipe-to-close gesture
       // with updated animation that reflects the new presenting element state
       this.reinitSwipeToClose();
@@ -1333,6 +1355,77 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private cleanupParentRemovalObserver() {
     this.parentRemovalObserver?.disconnect();
     this.parentRemovalObserver = undefined;
+  }
+
+  /**
+   * Creates the context object for safe-area utilities.
+   */
+  private getSafeAreaContext(): ModalSafeAreaContext {
+    const mode = getIonMode(this);
+    return {
+      isSheetModal: this.isSheetModal,
+      isCardModal: this.presentingElement !== undefined && mode === 'ios',
+      mode,
+      presentingElement: this.presentingElement,
+      breakpoints: this.breakpoints,
+      currentBreakpoint: this.currentBreakpoint,
+    };
+  }
+
+  /**
+   * Sets initial safe-area overrides before modal animation.
+   * Called in present() before animation starts.
+   */
+  private setInitialSafeAreaOverrides(): void {
+    const context = this.getSafeAreaContext();
+    const config = getInitialSafeAreaConfig(context);
+    applySafeAreaOverrides(this.el, config);
+  }
+
+  /**
+   * Updates safe-area overrides during dynamic state changes.
+   * Called after animations, during gestures, and on orientation changes.
+   */
+  private updateSafeAreaOverrides(): void {
+    const { wrapperEl, el } = this;
+    if (!wrapperEl) return;
+
+    // Always use position-based detection to correctly handle both
+    // fullscreen modals and centered dialogs with custom dimensions
+    const config = getPositionBasedSafeAreaConfig(wrapperEl);
+    applySafeAreaOverrides(el, config);
+  }
+
+  /**
+   * Applies padding-bottom to fullscreen modal wrapper to prevent
+   * content from overlapping system navigation bar.
+   */
+  private applyFullscreenSafeArea(): void {
+    const { wrapperEl, el } = this;
+    if (!wrapperEl) return;
+
+    const context = this.getSafeAreaContext();
+    if (context.isSheetModal || context.isCardModal) return;
+
+    // Check if footer exists
+    const footer = el.querySelector('ion-footer');
+    if (footer) return;
+
+    // Add padding to wrapper to prevent content overlap
+    wrapperEl.style.setProperty('box-sizing', 'border-box');
+    wrapperEl.style.setProperty('padding-bottom', 'var(--ion-safe-area-bottom, 0px)');
+  }
+
+  /**
+   * Clears all safe-area overrides and padding from wrapper.
+   */
+  private cleanupSafeAreaOverrides(): void {
+    clearSafeAreaOverrides(this.el);
+
+    if (this.wrapperEl) {
+      this.wrapperEl.style.removeProperty('box-sizing');
+      this.wrapperEl.style.removeProperty('padding-bottom');
+    }
   }
 
   render() {
