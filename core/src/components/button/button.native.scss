@@ -59,3 +59,12 @@
 :host ::slotted(ion-badge[vertical]:not(:empty)) {
   @include globals.padding(2px);
 }
+
+// Button in Datetime
+// --------------------------------------------------
+
+:host(.in-datetime) {
+  @include globals.margin(0px, 2px, 0px, 2px);
+
+  min-height: 32px;
+}
