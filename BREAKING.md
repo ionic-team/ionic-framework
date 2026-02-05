@@ -18,6 +18,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Button](#version-9x-button)
   - [Card](#version-9x-card)
   - [Chip](#version-9x-chip)
+  - [Datetime](#version-9x-datetime)
   - [Grid](#version-9x-grid)
   - [Input Otp](#version-9x-input-otp)
   - [Radio Group](#version-9x-radio-group)
@@ -31,11 +32,43 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 <h4 id="version-9x-card">Card</h4>
 
-- The `border-radius` of the `ios` and `md` card now defaults to `14px` and `12px` instead of `8px` and `4px`, respectively, in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"`, or override the `--border-radius` CSS variable to specify a different value.
+- **ion-card**: The `border-radius` of the `ios` and `md` card now defaults to `14px` and `12px` instead of `8px` and `4px`, respectively, in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"`, or override the `--border-radius` CSS variable to specify a different value.
+
+- **ion-card-content**: The `ion-card-content` component has been updated to Shadow DOM. With this update, all card-related components now use Shadow DOM for style encapsulation. The default styles for heading elements inside `ion-card-content` have been removed. If you need custom styling for headings, you can add your own CSS targeting these elements. For example:
+
+  ```css
+  ion-card-content h1 {
+    margin-top: 0;
+    margin-bottom: 2px;
+
+    font-size: 1.5rem;
+  }
+
+  ion-card-content h2 {
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+    font-size: 1rem;
+  }
+
+  ion-card-content h3,
+  ion-card-content h4,
+  ion-card-content h5,
+  ion-card-content h6 {
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+    font-size: 0.875rem;
+  }
+  ```
 
 <h4 id="version-9x-chip">Chip</h4>
 
 - The `border-radius` of the `ios` and `md` chip now defaults to `10px` and `8px`, respectively, instead of `16px` in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"round"`, or override the `--border-radius` CSS variable to specify a different value.
+
+<h4 id="version-9x-datetime">Datetime</h4>
+
+- The `ion-buttons` component has been removed from the internal implementation of `ion-datetime` and is no longer required when passing custom buttons to the `slot="buttons"`. When providing custom buttons, use a `div` element instead of `ion-buttons`. While existing code using `ion-buttons` may continue to work visually, future updates to the `ion-buttons` component may cause any styles you rely on to break.
 
 <h4 id="version-9x-grid">Grid</h4>
 
@@ -54,6 +87,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
 
 ```html
@@ -106,6 +140,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
 
 ```html
@@ -137,6 +172,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 ```
 
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>

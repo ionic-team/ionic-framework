@@ -1585,41 +1585,39 @@ export class Datetime implements ComponentInterface {
             }}
           >
             <slot name="buttons">
-              <ion-buttons>
-                {showDefaultButtons && (
+              {showDefaultButtons && (
+                <ion-button
+                  id="cancel-button"
+                  color={this.color}
+                  onClick={() => this.cancel(true)}
+                  disabled={isButtonDisabled}
+                >
+                  {this.cancelText}
+                </ion-button>
+              )}
+              <div class="datetime-action-buttons-container">
+                {showClearButton && (
                   <ion-button
-                    id="cancel-button"
+                    id="clear-button"
                     color={this.color}
-                    onClick={() => this.cancel(true)}
+                    onClick={() => clearButtonClick()}
                     disabled={isButtonDisabled}
                   >
-                    {this.cancelText}
+                    {this.clearText}
                   </ion-button>
                 )}
-                <div class="datetime-action-buttons-container">
-                  {showClearButton && (
-                    <ion-button
-                      id="clear-button"
-                      color={this.color}
-                      onClick={() => clearButtonClick()}
-                      disabled={isButtonDisabled}
-                    >
-                      {this.clearText}
-                    </ion-button>
-                  )}
-                  {showDefaultButtons && (
-                    <ion-button
-                      id="confirm-button"
-                      color={this.color}
-                      onClick={() => this.confirm(true)}
-                      disabled={isButtonDisabled}
-                      fill={confirmFill}
-                    >
-                      {this.doneText}
-                    </ion-button>
-                  )}
-                </div>
-              </ion-buttons>
+                {showDefaultButtons && (
+                  <ion-button
+                    id="confirm-button"
+                    fill={confirmFill}
+                    color={this.color}
+                    onClick={() => this.confirm(true)}
+                    disabled={isButtonDisabled}
+                  >
+                    {this.doneText}
+                  </ion-button>
+                )}
+              </div>
             </slot>
           </div>
         </div>
@@ -2194,28 +2192,26 @@ export class Datetime implements ComponentInterface {
           </div>
 
           <div class="calendar-next-prev">
-            <ion-buttons>
-              <ion-button aria-label="Previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
-                <ion-icon
-                  dir={hostDir}
-                  aria-hidden="true"
-                  slot="icon-only"
-                  icon={datetimePreviousIcon}
-                  lazy={false}
-                  flipRtl
-                ></ion-icon>
-              </ion-button>
-              <ion-button aria-label="Next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
-                <ion-icon
-                  dir={hostDir}
-                  aria-hidden="true"
-                  slot="icon-only"
-                  icon={datetimeNextIcon}
-                  lazy={false}
-                  flipRtl
-                ></ion-icon>
-              </ion-button>
-            </ion-buttons>
+            <ion-button aria-label="Previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
+              <ion-icon
+                dir={hostDir}
+                aria-hidden="true"
+                slot="icon-only"
+                icon={datetimePreviousIcon}
+                lazy={false}
+                flipRtl
+              ></ion-icon>
+            </ion-button>
+            <ion-button aria-label="Next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
+              <ion-icon
+                dir={hostDir}
+                aria-hidden="true"
+                slot="icon-only"
+                icon={datetimeNextIcon}
+                lazy={false}
+                flipRtl
+              ></ion-icon>
+            </ion-button>
           </div>
         </div>
         <div class="calendar-days-of-week" aria-hidden="true">

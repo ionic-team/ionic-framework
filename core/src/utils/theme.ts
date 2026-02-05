@@ -1,8 +1,35 @@
 import type { RouterDirection } from '../components/router/utils/interface';
 import type { AnimationBuilder, Color, CssClassMap } from '../interface';
 
+/**
+ * Checks if an element has a parent matching the specified selector.
+ * This handles an element in both light DOM and shadow DOM contexts.
+ * @param selector The parent selector to check for (e.g., 'ion-datetime'
+ * or 'ion-toolbar[color]').
+ * @param el The element to check.
+ * @returns `true` if the element has a parent matching the specified selector,
+ * `false` otherwise.
+ */
 export const hostContext = (selector: string, el: HTMLElement): boolean => {
-  return el.closest(selector) !== null;
+  // Check the light DOM first
+  if (el.closest(selector) !== null) {
+    return true;
+  }
+
+  // For attribute or class selectors (e.g., 'ion-toolbar[color]' or
+  // 'ion-toolbar.ion-color') we can only check light DOM since tagName
+  // doesn't include attributes or classes.
+  if (selector.includes('[') || selector.includes('.')) {
+    return false;
+  }
+
+  // Check the shadow DOM by looking at the shadow root host and
+  // converting the selector to uppercase to compare with tagName
+  const upperCaseTagName = selector.toUpperCase();
+  const rootNode = el.getRootNode();
+  const shadowHost = rootNode instanceof ShadowRoot ? (rootNode as ShadowRoot).host : null;
+
+  return shadowHost?.tagName === upperCaseTagName;
 };
 
 /**
