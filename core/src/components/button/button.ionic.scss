@@ -334,3 +334,12 @@
     @include globals.position(null, globals.$ion-space-200, globals.$ion-space-200, null);
   }
 }
+
+// Button in Datetime
+// --------------------------------------------------
+
+:host(.in-datetime) {
+  @include globals.typography(globals.$ion-body-action-md);
+
+  min-height: globals.$ion-space-1200;
+}
