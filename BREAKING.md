@@ -20,6 +20,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Chip](#version-9x-chip)
   - [Datetime](#version-9x-datetime)
   - [Grid](#version-9x-grid)
+  - [Radio Group](#version-9x-radio-group)
+  - [Textarea](#version-9x-textarea)
 
 <h2 id="version-9x-components">Components</h2>
 
@@ -70,12 +72,6 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 <h4 id="version-9x-grid">Grid</h4>
 
 - The properties `pull` and `push` have been deprecated and no longer work. A similar look can be achieved with the newly added property `order`.
-
-<h4 id="version-9x-radio-group">Radio Group</h4>
-
-- Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).<br/>
-If you were targeting the internals of `ion-radio-group` in your CSS, you will need to target the `supporting-text`, `helper-text` or `error-text` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.<br/>
-Additionally, the `radio-group-wrapper` div element has been removed, causing slotted elements to be direct children of the `ion-radio-group`.
 
 <h5>Example 1: Swap two columns</h5>
 
@@ -188,3 +184,17 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
+<h4 id="version-9x-radio-group">Radio Group</h4>
+
+Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+If you were targeting the internals of `ion-radio-group` in your CSS, you will need to target the `supporting-text`, `helper-text` or `error-text` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+
+Additionally, the `radio-group-wrapper` div element has been removed, causing slotted elements to be direct children of the `ion-radio-group`.
+
+<h4 id="version-9x-textarea">Textarea</h4>
+
+Converted `ion-textarea` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+If you were targeting the internals of `ion-textarea` in your CSS, you will need to target the `wrapper`, `container`, `label`, `native`, `supporting-text`, `helper-text`, `error-text`, `counter`, or `bottom` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.

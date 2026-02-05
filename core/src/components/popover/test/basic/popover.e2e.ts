@@ -169,47 +169,45 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await popoverFixture.goto('/src/components/popover/test/basic', config);
     });
 
-    test('should focus the first ion-item on ArrowDown', async ({ page }) => {
+    test('should focus the first ion-item on ArrowDown', async ({ page, pageUtils }) => {
       const item0 = page.locator('ion-popover ion-item:nth-of-type(1)');
 
       await popoverFixture.open('#basic-popover');
 
-      await page.keyboard.press('ArrowDown');
+      await pageUtils.pressKeys('ArrowDown');
       await expect(item0).toBeFocused();
     });
 
-    test('should trap focus', async ({ page, browserName }) => {
-      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+    test('should trap focus', async ({ page, pageUtils }) => {
       const items = page.locator('ion-popover ion-item');
 
       await popoverFixture.open('#basic-popover');
 
-      await page.keyboard.press(tabKey);
+      await pageUtils.pressKeys('Tab');
       await expect(items.nth(0)).toBeFocused();
 
-      await page.keyboard.press(`Shift+${tabKey}`);
+      await pageUtils.pressKeys('Shift+Tab');
       await expect(items.nth(3)).toBeFocused();
 
-      await page.keyboard.press(tabKey);
+      await pageUtils.pressKeys('Tab');
       await expect(items.nth(0)).toBeFocused();
 
-      await page.keyboard.press('ArrowDown');
+      await pageUtils.pressKeys('ArrowDown');
       await expect(items.nth(1)).toBeFocused();
 
-      await page.keyboard.press('ArrowDown');
+      await pageUtils.pressKeys('ArrowDown');
       await expect(items.nth(2)).toBeFocused();
 
-      await page.keyboard.press('Home');
+      await pageUtils.pressKeys('Home');
       await expect(items.nth(0)).toBeFocused();
 
-      await page.keyboard.press('End');
+      await pageUtils.pressKeys('End');
       await expect(items.nth(3)).toBeFocused();
     });
 
-    test('should not override keyboard interactions for textarea elements', async ({ page, browserName }) => {
-      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+    test('should not override keyboard interactions for textarea elements', async ({ page, pageUtils }) => {
       const popover = page.locator('ion-popover');
-      const innerNativeTextarea = page.locator('ion-textarea textarea').nth(0);
+      const innerNativeTextarea = page.locator('ion-textarea').locator('textarea').nth(0);
       const vanillaTextarea = page.locator('ion-textarea + textarea');
 
       await popoverFixture.open('#popover-with-textarea');
@@ -220,44 +218,100 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
        */
       await expect(popover).toBeFocused();
 
-      await page.keyboard.press(tabKey);
-
-      // for Firefox, ion-textarea is focused first
-      // need to tab again to get to native input
-      if (browserName === 'firefox') {
-        await page.keyboard.press(tabKey);
-      }
-
+      // Tab should focus the native textarea inside ion-textarea
+      await pageUtils.pressKeys('Tab');
       await expect(innerNativeTextarea).toBeFocused();
 
-      await page.keyboard.press('ArrowDown');
-
+      // Arrow keys should work on the ion-textarea
+      await pageUtils.pressKeys('ArrowDown');
       await expect(innerNativeTextarea).toBeFocused();
 
-      await page.keyboard.press('ArrowUp');
-
+      await pageUtils.pressKeys('ArrowUp');
       await expect(innerNativeTextarea).toBeFocused();
 
-      await page.keyboard.press(tabKey);
-      // Checking within HTML textarea
-
+      // Tab again should focus the vanilla textarea
+      await pageUtils.pressKeys('Tab');
       await expect(vanillaTextarea).toBeFocused();
 
-      await page.keyboard.press('ArrowDown');
-
+      // Arrow keys should work on the vanilla textarea
+      await pageUtils.pressKeys('ArrowDown');
       await expect(vanillaTextarea).toBeFocused();
 
-      await page.keyboard.press('ArrowUp');
-
+      await pageUtils.pressKeys('ArrowUp');
       await expect(vanillaTextarea).toBeFocused();
 
-      await page.keyboard.press('Home');
-
+      await pageUtils.pressKeys('Home');
       await expect(vanillaTextarea).toBeFocused();
 
-      await page.keyboard.press('End');
-
+      await pageUtils.pressKeys('End');
       await expect(vanillaTextarea).toBeFocused();
+    });
+
+    test('should not override keyboard interactions for input elements', async ({ page, pageUtils }) => {
+      const popover = page.locator('ion-popover');
+      const innerNativeInput = page.locator('ion-input input').nth(0);
+      const vanillaInput = page.locator('ion-input + input');
+
+      await popoverFixture.open('#popover-with-input');
+
+      /**
+       * Focusing happens async inside of popover so we need
+       * to wait for the requestAnimationFrame to fire.
+       */
+      await expect(popover).toBeFocused();
+
+      // Tab should focus the native input inside ion-input
+      await pageUtils.pressKeys('Tab');
+
+      await expect(innerNativeInput).toBeFocused();
+
+      // Arrow keys should work on the ion-input
+      await pageUtils.pressKeys('ArrowDown');
+      await expect(innerNativeInput).toBeFocused();
+
+      await pageUtils.pressKeys('ArrowUp');
+      await expect(innerNativeInput).toBeFocused();
+
+      // Tab again should focus the vanilla input
+      await pageUtils.pressKeys('Tab');
+      await expect(vanillaInput).toBeFocused();
+
+      // Arrow keys should work on the vanilla input
+      await pageUtils.pressKeys('ArrowDown');
+      await expect(vanillaInput).toBeFocused();
+
+      await pageUtils.pressKeys('ArrowUp');
+      await expect(vanillaInput).toBeFocused();
+
+      await pageUtils.pressKeys('Home');
+      await expect(vanillaInput).toBeFocused();
+
+      await pageUtils.pressKeys('End');
+      await expect(vanillaInput).toBeFocused();
+    });
+
+    test('should move focus between buttons', async ({ page, pageUtils }) => {
+      const buttons = page.locator('ion-popover button');
+
+      await popoverFixture.open('#popover-with-buttons');
+
+      await pageUtils.pressKeys('Tab');
+      await expect(buttons.nth(0)).toBeFocused();
+
+      await pageUtils.pressKeys('Tab');
+      await expect(buttons.nth(1)).toBeFocused();
+
+      await pageUtils.pressKeys('Tab');
+      await expect(buttons.nth(0)).toBeFocused();
+
+      await pageUtils.pressKeys('Shift+Tab');
+      await expect(buttons.nth(1)).toBeFocused();
+
+      await pageUtils.pressKeys('Shift+Tab');
+      await expect(buttons.nth(0)).toBeFocused();
+
+      await pageUtils.pressKeys('Shift+Tab');
+      await expect(buttons.nth(1)).toBeFocused();
     });
   });
 });
