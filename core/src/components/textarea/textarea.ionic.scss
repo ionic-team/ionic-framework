@@ -95,8 +95,13 @@
   max-height: inherit;
 }
 
-:host([rows]) .textarea-wrapper-inner textarea {
-  min-height: calc(attr(rows number) * 2em);
+:host([rows]) {
+  --rows-number: attr(rows number);
+}
+
+:host([rows]) .textarea-wrapper-inner {
+  height: auto;
+  min-height: calc(var(--rows-number) * 1em + 0.5em);
 }
 
 // Textarea Label
