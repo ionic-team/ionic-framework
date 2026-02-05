@@ -24,7 +24,7 @@ export { PopoverOptions } from './components/popover/popover-interface';
 export { RadioGroupCustomEvent } from './components/radio-group/radio-group-interface';
 export { RangeCustomEvent, PinFormatter } from './components/range/range-interface';
 export { RouterCustomEvent } from './components/router/utils/interface';
-export { RefresherCustomEvent } from './components/refresher/refresher-interface';
+export { RefresherCustomEvent, RefresherPullEndCustomEvent } from './components/refresher/refresher-interface';
 export {
   ItemReorderCustomEvent,
   ReorderEndCustomEvent,

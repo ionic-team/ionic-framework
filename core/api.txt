@@ -1493,6 +1493,8 @@ ion-refresher,method,cancel,cancel() => Promise<void>
 ion-refresher,method,complete,complete() => Promise<void>
 ion-refresher,method,getProgress,getProgress() => Promise<number>
 ion-refresher,event,ionPull,void,true
+ion-refresher,event,ionPullEnd,RefresherPullEndEventDetail,true
+ion-refresher,event,ionPullStart,void,true
 ion-refresher,event,ionRefresh,RefresherEventDetail,true
 ion-refresher,event,ionStart,void,true
 
