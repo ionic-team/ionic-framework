@@ -566,8 +566,9 @@ ion-datetime,part,calendar-day
 ion-datetime,part,calendar-day active
 ion-datetime,part,calendar-day disabled
 ion-datetime,part,calendar-day today
+ion-datetime,part,calendar-header
+ion-datetime,part,datetime-header
 ion-datetime,part,days-of-week
-ion-datetime,part,header
 ion-datetime,part,month-year-button
 ion-datetime,part,next-button
 ion-datetime,part,prev-button

@@ -176,7 +176,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       expect(backgroundColor).toBe('rgb(0, 0, 255)');
     });
 
-    test('should be able to customize header part within the grid style', async ({ page }, testInfo) => {
+    test('should be able to customize datetime header part', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30083',
@@ -185,8 +185,33 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await page.setContent(
         `
           <style>
-            ion-datetime::part(header) {
-              background-color: rgb(218, 216, 255);
+            ion-datetime::part(datetime-header) {
+              background-color: orange;
+            }
+          </style>
+          <ion-datetime value="2020-03-14T14:23:00.000Z">
+            <span slot="title">Select Date</span>
+          </ion-datetime>
+        `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+      const header = datetime.locator('.datetime-header');
+
+      const backgroundColor = await header.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
+      expect(backgroundColor).toBe('rgb(255, 165, 0)');
+    });
+
+    test('should be able to customize calendar header part within the grid style', async ({ page }) => {
+      await page.setContent(
+        `
+          <style>
+            ion-datetime::part(calendar-header) {
+              background-color: orange;
             }
           </style>
           <ion-datetime value="2020-03-14T14:23:00.000Z"></ion-datetime>
@@ -201,7 +226,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         return window.getComputedStyle(el).backgroundColor;
       });
 
-      expect(backgroundColor).toBe('rgb(218, 216, 255)');
+      expect(backgroundColor).toBe('rgb(255, 165, 0)');
     });
 
     test('should be able to customize month/year picker part within the grid style', async ({ page }, testInfo) => {

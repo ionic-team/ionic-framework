@@ -140,8 +140,9 @@
       * -------------------------------------------
       */
 
-      #custom-grid::part(header) {
-        background-color: rgb(218, 216, 255);
+      #custom-grid::part(calendar-header),
+      #custom-title::part(datetime-header) {
+        background-color: orange;
       }
 
       #custom-grid::part(month-year-button) {
@@ -193,6 +194,11 @@
           <div class="grid-item">
             <h2>Grid Style</h2>
             <ion-datetime id="custom-calendar-days" value="2023-06-15" presentation="date"></ion-datetime>
+          </div>
+          <div class="grid-item">
+            <ion-datetime id="custom-title" presentation="date">
+              <span slot="title">Select Date</span>
+            </ion-datetime>
           </div>
         </div>
       </ion-content>

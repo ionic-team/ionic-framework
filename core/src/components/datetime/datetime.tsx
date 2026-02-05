@@ -88,7 +88,7 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  * layout with `presentation="date-time"` or `"time-date"`.
  * @part time-button active - The time picker button when the picker is open.
  *
- * @part header - The header container for the calendar when using a grid style layout.
+ * @part calendar-header - The calendar header manages the date navigation controls (month/year picker and prev/next buttons) and the days of the week when using a grid style layout.
  * @part month-year-button - The button that opens the month/year picker when
  * using a grid style layout.
  * @part prev-next-buttons - The buttons used to navigate to the next or previous month when using a grid style layout.
@@ -101,6 +101,8 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  * @part calendar-day active - The currently selected calendar day.
  * @part calendar-day today - The calendar day that contains the current day.
  * @part calendar-day disabled - The calendar day that is disabled.
+ *
+ * @part datetime-header - The datetime header contains the content for the `title` slot and the selected date.
  */
 @Component({
   tag: 'ion-datetime',
@@ -2171,7 +2173,7 @@ export class Datetime implements ComponentInterface {
     const hostDir = this.el.getAttribute('dir') || undefined;
 
     return (
-      <div class="calendar-header" part="header">
+      <div class="calendar-header" part="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
             <button
@@ -2586,7 +2588,7 @@ export class Datetime implements ComponentInterface {
     }
 
     return (
-      <div class="datetime-header">
+      <div class="datetime-header" part="datetime-header">
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
