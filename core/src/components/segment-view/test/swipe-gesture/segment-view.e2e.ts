@@ -18,8 +18,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForChanges();
-
       const segmentView = page.locator('ion-segment-view');
 
       const allowsSwipe = await segmentView.evaluate((el: HTMLElement) => {
@@ -40,8 +38,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-
-      await page.waitForChanges();
 
       const segmentView = page.locator('ion-segment-view');
 
