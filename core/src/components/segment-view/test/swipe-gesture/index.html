@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Segment View - Swipe Gesture</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin: 24px 16px 8px;
+      }
+
+      ion-segment-view {
+        height: 100px;
+
+        margin-bottom: 20px;
+      }
+
+      ion-segment-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      ion-segment-content:nth-of-type(3n + 1) {
+        background: lightpink;
+      }
+
+      ion-segment-content:nth-of-type(3n + 2) {
+        background: lightblue;
+      }
+
+      ion-segment-content:nth-of-type(3n + 3) {
+        background: lightgreen;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Segment View - Swipe Gesture</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <h2>Swipe Gesture: Segment <ion-text color="success">Enabled</ion-text>; Segment View <ion-text color="success">Enabled</ion-text></h2>
+        <ion-segment value="free">
+          <ion-segment-button content-id="paid" value="paid">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="free" value="free">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="top" value="top">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view>
+          <ion-segment-content id="paid">Paid</ion-segment-content>
+          <ion-segment-content id="free">Free</ion-segment-content>
+          <ion-segment-content id="top">Top</ion-segment-content>
+        </ion-segment-view>
+
+        <h2>Swipe Gesture: Segment <ion-text color="danger">Disabled</ion-text>; Segment View <ion-text color="success">Enabled</ion-text></h2>
+        <ion-segment swipe-gesture="false" value="free2">
+          <ion-segment-button content-id="paid2" value="paid2">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="free2" value="free2">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="top2" value="top2">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view>
+          <ion-segment-content id="paid2">Paid</ion-segment-content>
+          <ion-segment-content id="free2">Free</ion-segment-content>
+          <ion-segment-content id="top2">Top</ion-segment-content>
+        </ion-segment-view>
+
+        <h2>Swipe Gesture: Segment <ion-text color="success">Enabled</ion-text>; Segment View <ion-text color="danger">Disabled</ion-text></h2>
+        <ion-segment value="free3">
+          <ion-segment-button content-id="paid3" value="paid3">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="free3" value="free3">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="top3" value="top3">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view swipe-gesture="false">
+          <ion-segment-content id="paid3">Paid</ion-segment-content>
+          <ion-segment-content id="free3">Free</ion-segment-content>
+          <ion-segment-content id="top3">Top</ion-segment-content>
+        </ion-segment-view>
+
+        <h2>Swipe Gesture: Segment <ion-text color="danger">Disabled</ion-text>; Segment View <ion-text color="danger">Disabled</ion-text></h2>
+        <ion-segment swipe-gesture="false" value="free4">
+          <ion-segment-button content-id="paid4" value="paid4">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="free4" value="free4">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="top4" value="top4">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view swipe-gesture="false">
+          <ion-segment-content id="paid4">Paid</ion-segment-content>
+          <ion-segment-content id="free4">Free</ion-segment-content>
+          <ion-segment-content id="top4">Top</ion-segment-content>
+        </ion-segment-view>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>
