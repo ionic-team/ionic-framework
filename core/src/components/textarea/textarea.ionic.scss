@@ -279,3 +279,12 @@ ion-icon {
   min-width: $text-wrapper-width;
   max-width: globals.$ion-scale-5000;
 }
+
+/*
+ * As the ionic theme introduces padding in the textarea,
+ * there is no need to add margin-top to the textarea.
+ */
+:host(.textarea-label-placement-stacked) textarea,
+:host(.textarea-label-placement-floating) textarea {
+  margin-top: 0;
+}
