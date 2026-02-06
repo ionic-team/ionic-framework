@@ -54,6 +54,15 @@
   --padding-start: #{globals.$ion-space-500};
 }
 
+// When the rows attribute is set, the conatiner of the textarea should
+// should increase in height to accommodate the number of rows.
+// The min-height should accomodate the number of rows, plus a little extra
+// so that the next line is partially visible.
+.textarea-wrapper-inner[data-attr-rows] {
+  --rows-number: attr(data-attr-rows number);
+  min-height: calc(var(--rows-number) * 1.2em + 1.5em);
+}
+  
 // Ionic Textarea Shapes
 // --------------------------------------------------
 
