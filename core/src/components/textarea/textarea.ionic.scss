@@ -59,9 +59,11 @@
 // The min-height should accomodate the number of rows, plus a little extra
 // so that the next line is partially visible. The extra 12px is to account for
 // bottom padding outside the textarea.
+// The --ideal-rows-number is used in the ODC studio, as it misses the ability
+// to get the rows number from the attribute, as it is done in runtime.
 .textarea-wrapper-inner[data-attr-rows] {
   --rows-number: attr(data-attr-rows number);
-  min-height: calc(var(--rows-number) * 1.2em + 1.5em + 12px);
+  min-height: calc(var(--ide-rows-number, var(--rows-number)) * 1.2em + 1.5em + 12px);
 }
   
 // Ionic Textarea Shapes
