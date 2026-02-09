@@ -541,7 +541,7 @@
 
 /**
  * When the rows attribute is set, the textarea should not force a min-height,
- * but rather respect the natural height of the textarea. Specially when
+ * but rather respect the natural height of the textarea, especially when
  * rows is set to 1.
  */
 :host(.textarea-fill-outline.sc-ion-textarea-md-h[rows]),
