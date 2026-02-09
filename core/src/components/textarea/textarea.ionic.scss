@@ -54,16 +54,16 @@
   --padding-start: #{globals.$ion-space-500};
 }
 
-// When the rows attribute is set, the conatiner of the textarea should
+// When the rows attribute is set, the container of the textarea should
 // should increase in height to accommodate the number of rows.
 // The min-height should accomodate the number of rows, plus a little extra
-// so that the next line is partially visible. The extra 12px is to account for
-// bottom padding outside the textarea.
-// The --ideal-rows-number is used in the ODC studio, as it misses the ability
-// to get the rows number from the attribute, as it is done in runtime.
+// so that the next line is partially visible. To that we add the amount of
+// the bottom padding and the border width outside the textarea.
+// If --host-rows is set, then it will be used, otherwise the data-attr-rows
+// attribute will be used.
 .textarea-wrapper-inner[data-attr-rows] {
-  --rows-number: attr(data-attr-rows number);
-  min-height: calc(var(--ide-rows-number, var(--rows-number)) * 1.2em + 1.5em + 12px);
+  --number-rows: var(--host-rows, attr(data-attr-rows number));
+  min-height: calc(var(--number-rows) * 1.2em + 1.5em + var(--padding-bottom, 0px) + var(--border-width, 0px));
 }
   
 // Ionic Textarea Shapes
