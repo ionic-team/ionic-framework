@@ -1757,6 +1757,7 @@ ion-select,css-prop,--placeholder-opacity,ios
 ion-select,css-prop,--placeholder-opacity,md
 ion-select,css-prop,--ripple-color,ios
 ion-select,css-prop,--ripple-color,md
+ion-select,part,bottom
 ion-select,part,container
 ion-select,part,error-text
 ion-select,part,helper-text
@@ -1765,6 +1766,8 @@ ion-select,part,label
 ion-select,part,placeholder
 ion-select,part,supporting-text
 ion-select,part,text
+ion-select,part,wrapper
+ion-select,part,wrapper-inner
 
 ion-select-modal,scoped
 ion-select-modal,prop,cancelText,string,'Close',false,false
