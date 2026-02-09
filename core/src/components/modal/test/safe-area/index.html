@@ -57,27 +57,19 @@
 
         <ion-content class="ion-padding">
           <h2>Fullscreen Modals</h2>
-          <button id="fullscreen-modal" onclick="presentFullscreenModal()">
-            Present Fullscreen Modal
-          </button>
+          <button id="fullscreen-modal" onclick="presentFullscreenModal()">Present Fullscreen Modal</button>
           <button id="fullscreen-modal-no-footer" onclick="presentFullscreenModalNoFooter()">
             Present Fullscreen Modal (No Footer)
           </button>
 
           <h2>Sheet Modals</h2>
-          <button id="sheet-modal" onclick="presentSheetModal()">
-            Present Sheet Modal
-          </button>
+          <button id="sheet-modal" onclick="presentSheetModal()">Present Sheet Modal</button>
 
           <h2>Card Modals (iOS)</h2>
-          <button id="card-modal" onclick="presentCardModal()">
-            Present Card Modal
-          </button>
+          <button id="card-modal" onclick="presentCardModal()">Present Card Modal</button>
 
           <h2>Centered Dialog (Tablet)</h2>
-          <button id="centered-dialog" onclick="presentCenteredDialog()">
-            Present Centered Dialog
-          </button>
+          <button id="centered-dialog" onclick="presentCenteredDialog()">Present Centered Dialog</button>
 
           <h2>Diagnostic Info</h2>
           <div id="diagnostic">
@@ -120,13 +112,17 @@
             </ul>
             <div id="modal-safe-area-info"></div>
           </ion-content>
-          ${showFooter ? `
+          ${
+            showFooter
+              ? `
           <ion-footer>
             <ion-toolbar>
               <ion-title>Footer</ion-title>
             </ion-toolbar>
           </ion-footer>
-          ` : ''}
+          `
+              : ''
+          }
         `;
         return element;
       }

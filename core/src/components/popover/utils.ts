@@ -72,7 +72,7 @@ export const getSafeAreaInsets = (doc: Document): SafeAreaInsets => {
     return cachedInsets;
   }
 
-  if (!doc.body) {
+  if (doc.body === null) {
     return { top: 0, bottom: 0, left: 0, right: 0 };
   }
 
@@ -908,7 +908,7 @@ export const calculateWindowAdjustment = (
     : bodyHeight / 2 - contentHeight / 2;
   const triggerHeight = triggerCoordinates ? triggerCoordinates.height : 0;
   let addPopoverBottomClass = false;
-  let hideArrow = false;
+  const hideArrow = false;
 
   /**
    * Adjust popover so it does not

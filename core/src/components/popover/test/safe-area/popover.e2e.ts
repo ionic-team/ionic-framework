@@ -11,9 +11,7 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screens
       await page.goto('/src/components/popover/test/safe-area', config);
     });
 
-    test('should not overlap the bottom safe area when trigger is near the bottom edge', async ({
-      page,
-    }, testInfo) => {
+    test('should not overlap the bottom safe area when trigger is near the bottom edge', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/28411',
@@ -36,9 +34,7 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screens
       await expect(page).toHaveScreenshot(screenshot('popover-safe-area-bottom'));
     });
 
-    test('should not overlap the right safe area when trigger is near the right edge', async ({
-      page,
-    }, testInfo) => {
+    test('should not overlap the right safe area when trigger is near the right edge', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/28411',

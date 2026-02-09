@@ -5,10 +5,9 @@ import { configs, test, Viewports } from '@utils/test/playwright';
  * These tests verify that safe-area CSS custom properties are correctly
  * applied to modals based on their type and position.
  *
- * FW-6830: Dynamic Modal Safe-Area Handling
+ * Safe-area handling is position-based and not affected by text direction.
+ * Testing only LTR to avoid redundant test runs.
  */
-// Safe-area handling is position-based and not affected by text direction.
-// Testing only LTR to avoid redundant test runs.
 configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('modal: safe-area handling'), () => {
     test.beforeEach(async ({ page }) => {

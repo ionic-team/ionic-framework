@@ -42,7 +42,8 @@ const EDGE_THRESHOLD = 5;
  */
 const isCenteredDialogViewport = (): boolean => {
   if (!win) return false;
-  return win.matchMedia(`(min-width: ${MODAL_INSET_MIN_WIDTH}px) and (min-height: ${MODAL_INSET_MIN_HEIGHT}px)`).matches;
+  return win.matchMedia(`(min-width: ${MODAL_INSET_MIN_WIDTH}px) and (min-height: ${MODAL_INSET_MIN_HEIGHT}px)`)
+    .matches;
 };
 
 /**

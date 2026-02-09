@@ -48,8 +48,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
   const padding = size === 'cover' ? 0 : POPOVER_MD_BODY_PADDING;
   // MD mode now applies safe-area insets (previously passed 0, ignoring all safe areas).
   // This is needed for Android edge-to-edge (API 36+) where system bars overlap content.
-  const safeArea =
-    size === 'cover' ? { top: 0, bottom: 0, left: 0, right: 0 } : getSafeAreaInsets(doc as Document);
+  const safeArea = size === 'cover' ? { top: 0, bottom: 0, left: 0, right: 0 } : getSafeAreaInsets(doc as Document);
 
   const {
     originX,
