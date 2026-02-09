@@ -17,20 +17,32 @@ export interface SafeAreaConfig {
 export interface ModalSafeAreaContext {
   isSheetModal: boolean;
   isCardModal: boolean;
-  mode: 'ios' | 'md';
   presentingElement?: HTMLElement;
   breakpoints?: number[];
   currentBreakpoint?: number;
 }
 
-const TABLET_WIDTH = 768;
+/**
+ * These thresholds match the SCSS media query breakpoints in modal.vars.scss
+ * that trigger the centered dialog layout (non-fullscreen modal).
+ *
+ * SCSS defines two height breakpoints: $modal-inset-min-height-small (600px)
+ * and $modal-inset-min-height-large (768px). We use the smaller one because
+ * that's the threshold where the modal transitions from fullscreen to centered
+ * dialog — the larger breakpoint only increases the dialog's height.
+ */
+const MODAL_INSET_MIN_WIDTH = 768;
+const MODAL_INSET_MIN_HEIGHT = 600;
 const EDGE_THRESHOLD = 5;
 
 /**
- * Determines if the current viewport is tablet-sized (>= 768px width).
+ * Determines if the current viewport meets the CSS media query conditions
+ * that cause regular modals to render as centered dialogs instead of fullscreen.
+ * Matches: @media (min-width: 768px) and (min-height: 600px)
  */
-export const isTabletViewport = (): boolean => {
-  return win ? win.innerWidth >= TABLET_WIDTH : false;
+const isCenteredDialogViewport = (): boolean => {
+  if (!win) return false;
+  return win.matchMedia(`(min-width: ${MODAL_INSET_MIN_WIDTH}px) and (min-height: ${MODAL_INSET_MIN_HEIGHT}px)`).matches;
 };
 
 /**
@@ -41,20 +53,21 @@ export const isTabletViewport = (): boolean => {
  * @returns SafeAreaConfig with initial safe-area values
  */
 export const getInitialSafeAreaConfig = (context: ModalSafeAreaContext): SafeAreaConfig => {
-  const { isSheetModal, isCardModal, mode } = context;
+  const { isSheetModal, isCardModal } = context;
 
-  // Sheet modals always use bottom safe-area only
+  // Sheet modals use bottom safe-area, and top safe-area only when fully expanded
   if (isSheetModal) {
     return {
-      top: '0px',
+      top: context.currentBreakpoint === 1 ? 'inherit' : '0px',
       bottom: 'inherit',
       left: '0px',
       right: '0px',
     };
   }
 
-  // Card modals (iOS only) need safe-area for height calculation
-  if (isCardModal && mode === 'ios') {
+  // Card modals need safe-area for height calculation.
+  // Note: isCardModal is already gated on mode === 'ios' by the caller.
+  if (isCardModal) {
     return {
       top: 'inherit',
       bottom: 'inherit',
@@ -63,7 +76,19 @@ export const getInitialSafeAreaConfig = (context: ModalSafeAreaContext): SafeAre
     };
   }
 
-  // Fullscreen and centered dialogs - inherit all, let position detection decide
+  // On viewports that meet the centered dialog media query breakpoints,
+  // regular modals render as centered dialogs (not fullscreen), so they
+  // don't touch any screen edges and don't need safe-area insets.
+  if (isCenteredDialogViewport()) {
+    return {
+      top: '0px',
+      bottom: '0px',
+      left: '0px',
+      right: '0px',
+    };
+  }
+
+  // Fullscreen modals on phone - inherit all safe areas
   return {
     top: 'inherit',
     bottom: 'inherit',
@@ -76,25 +101,16 @@ export const getInitialSafeAreaConfig = (context: ModalSafeAreaContext): SafeAre
  * Returns safe-area configuration based on actual modal position.
  * Detects which edges the modal overlaps with and only applies safe-area to those edges.
  *
+ * Note: On Android edge-to-edge (API 36+), getBoundingClientRect() may report
+ * inconsistent values. Sheet and card modals avoid this by using configuration-based
+ * prediction instead. Regular modals use coordinate detection which works reliably
+ * on web and iOS; Android edge-to-edge may need a configuration-based fallback
+ * once a reliable detection mechanism is available.
+ *
  * @param wrapperEl - The modal wrapper element to measure
- * @param skipCoordinateDetection - If true, skips coordinate detection and returns inherit for all
  * @returns SafeAreaConfig based on position
  */
-export const getPositionBasedSafeAreaConfig = (
-  wrapperEl: HTMLElement,
-  skipCoordinateDetection = false
-): SafeAreaConfig => {
-  // Skip coordinate detection for Android edge-to-edge compatibility
-  // or when explicitly requested
-  if (skipCoordinateDetection) {
-    return {
-      top: 'inherit',
-      bottom: 'inherit',
-      left: 'inherit',
-      right: 'inherit',
-    };
-  }
-
+export const getPositionBasedSafeAreaConfig = (wrapperEl: HTMLElement): SafeAreaConfig => {
   const rect = wrapperEl.getBoundingClientRect();
   const vh = win?.innerHeight ?? 0;
   const vw = win?.innerWidth ?? 0;

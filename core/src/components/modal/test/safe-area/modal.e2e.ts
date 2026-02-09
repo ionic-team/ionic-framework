@@ -7,6 +7,8 @@ import { configs, test, Viewports } from '@utils/test/playwright';
  *
  * FW-6830: Dynamic Modal Safe-Area Handling
  */
+// Safe-area handling is position-based and not affected by text direction.
+// Testing only LTR to avoid redundant test runs.
 configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('modal: safe-area handling'), () => {
     test.beforeEach(async ({ page }) => {
@@ -16,7 +18,7 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
     test('fullscreen modal should inherit all safe-area values on phone', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/FW-6830',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
       });
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
@@ -27,21 +29,21 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       const modal = page.locator('ion-modal');
 
       // On phone viewport, fullscreen modal should inherit safe-area values
-      const safeAreaTop = await modal.evaluate((el: HTMLElement) => {
-        return getComputedStyle(el).getPropertyValue('--ion-safe-area-top');
+      const safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-top');
       });
-      const safeAreaBottom = await modal.evaluate((el: HTMLElement) => {
-        return getComputedStyle(el).getPropertyValue('--ion-safe-area-bottom');
+      const safeAreaBottom = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-bottom');
       });
 
-      expect(safeAreaTop.trim()).toBe('inherit');
-      expect(safeAreaBottom.trim()).toBe('inherit');
+      expect(safeAreaTop).toBe('inherit');
+      expect(safeAreaBottom).toBe('inherit');
     });
 
-    test('fullscreen modal should inherit all safe-area values on tablet', async ({ page }, testInfo) => {
+    test('regular modal should have safe-area zeroed on tablet (centered dialog)', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/FW-6830',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
       });
 
       await page.setViewportSize(Viewports.tablet.portrait);
@@ -53,23 +55,24 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
 
       const modal = page.locator('ion-modal');
 
-      // On tablet viewport, fullscreen modal should still inherit safe-area values
-      // This is the key fix for FW-6830 - previously these were zeroed out
-      const safeAreaTop = await modal.evaluate((el: HTMLElement) => {
-        return getComputedStyle(el).getPropertyValue('--ion-safe-area-top');
+      // On tablet viewport, the CSS media query renders regular modals as
+      // centered dialogs (600x500). Since they don't touch screen edges,
+      // safe-area values should be zeroed out.
+      const safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-top');
       });
-      const safeAreaBottom = await modal.evaluate((el: HTMLElement) => {
-        return getComputedStyle(el).getPropertyValue('--ion-safe-area-bottom');
+      const safeAreaBottom = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-bottom');
       });
 
-      expect(safeAreaTop.trim()).toBe('inherit');
-      expect(safeAreaBottom.trim()).toBe('inherit');
+      expect(safeAreaTop).toBe('0px');
+      expect(safeAreaBottom).toBe('0px');
     });
 
     test('sheet modal should only use bottom safe-area', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/FW-6830',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
       });
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
@@ -81,21 +84,83 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
 
       // Sheet modals should have top safe-area zeroed (doesn't touch top edge)
       // but bottom safe-area inherited (touches bottom edge)
-      const safeAreaTop = await modal.evaluate((el: HTMLElement) => {
-        return getComputedStyle(el).getPropertyValue('--ion-safe-area-top');
+      const safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-top');
       });
-      const safeAreaBottom = await modal.evaluate((el: HTMLElement) => {
-        return getComputedStyle(el).getPropertyValue('--ion-safe-area-bottom');
+      const safeAreaBottom = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-bottom');
       });
 
-      expect(safeAreaTop.trim()).toBe('0px');
-      expect(safeAreaBottom.trim()).toBe('inherit');
+      expect(safeAreaTop).toBe('0px');
+      expect(safeAreaBottom).toBe('inherit');
+    });
+
+    test('fullscreen modal without footer should have wrapper padding-bottom', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
+      });
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#fullscreen-modal-no-footer');
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+
+      // When no footer is present, the wrapper should have reduced height
+      // and padding-bottom to prevent content from overlapping the system
+      // navigation bar, without changing box-sizing (which would break
+      // custom modals with --border-width).
+      const wrapper = modal.locator('.modal-wrapper');
+      const paddingBottom = await wrapper.evaluate((el: HTMLElement) => {
+        return el.style.getPropertyValue('padding-bottom');
+      });
+      const height = await wrapper.evaluate((el: HTMLElement) => {
+        return el.style.getPropertyValue('height');
+      });
+
+      expect(paddingBottom).toBe('var(--ion-safe-area-bottom, 0px)');
+      expect(height).toBe('calc(var(--height) - var(--ion-safe-area-bottom, 0px))');
+    });
+
+    test('sheet modal at breakpoint 1 should inherit top safe-area', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
+      });
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#sheet-modal');
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+
+      // Initially at breakpoint 0.5 — top safe-area should be zeroed
+      let safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-top');
+      });
+      expect(safeAreaTop).toBe('0px');
+
+      // Move to breakpoint 1 (fully expanded) via the public method
+      const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
+      await modal.evaluate((el: HTMLIonModalElement) => {
+        el.setCurrentBreakpoint(1);
+      });
+      await ionBreakpointDidChange.next();
+
+      // At breakpoint 1, top safe-area should be inherited
+      safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-top');
+      });
+      expect(safeAreaTop).toBe('inherit');
     });
 
     test('centered dialog should have all safe-area values zeroed on tablet', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/FW-6830',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
       });
 
       await page.setViewportSize(Viewports.tablet.portrait);
@@ -108,46 +173,54 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       const modal = page.locator('ion-modal');
 
       // Centered dialogs don't touch any edge, so all safe-areas should be zeroed
-      const safeAreaTop = await modal.evaluate((el: HTMLElement) => {
-        return getComputedStyle(el).getPropertyValue('--ion-safe-area-top');
+      const safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-top');
       });
-      const safeAreaBottom = await modal.evaluate((el: HTMLElement) => {
-        return getComputedStyle(el).getPropertyValue('--ion-safe-area-bottom');
+      const safeAreaBottom = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-bottom');
       });
 
-      expect(safeAreaTop.trim()).toBe('0px');
-      expect(safeAreaBottom.trim()).toBe('0px');
+      expect(safeAreaTop).toBe('0px');
+      expect(safeAreaBottom).toBe('0px');
     });
 
     test('safe-area overrides should be cleared on dismiss', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/FW-6830',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
       });
 
-      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
-
-      await page.click('#fullscreen-modal');
-      await ionModalDidPresent.next();
+      // Present modal programmatically so we control the lifecycle
+      // (the HTML page's presenters call modal.remove() after dismiss,
+      // which races with our post-dismiss evaluation)
+      await page.evaluate(async () => {
+        const modal = document.createElement('ion-modal');
+        modal.component = document.createElement('div');
+        document.body.appendChild(modal);
+        await modal.present();
+      });
 
       const modal = page.locator('ion-modal');
 
       // Verify overrides are set
-      let safeAreaTop = await modal.evaluate((el: HTMLElement) => {
+      let safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) => {
         return el.style.getPropertyValue('--ion-safe-area-top');
       });
       expect(safeAreaTop).not.toBe('');
 
-      // Dismiss the modal
-      await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
-      await ionModalDidDismiss.next();
+      // Dismiss the modal but don't remove the element
+      await modal.evaluate(async (el: HTMLIonModalElement) => {
+        await el.dismiss();
+      });
 
-      // Verify overrides are cleared
-      safeAreaTop = await modal.evaluate((el: HTMLElement) => {
+      // Verify overrides are cleared after dismiss
+      safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) => {
         return el.style.getPropertyValue('--ion-safe-area-top');
       });
       expect(safeAreaTop).toBe('');
+
+      // Clean up
+      await modal.evaluate((el: HTMLIonModalElement) => el.remove());
     });
   });
 });
@@ -161,7 +234,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('card modal should inherit top and bottom safe-area', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/FW-6830',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
       });
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
@@ -172,23 +245,59 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const modal = page.locator('ion-modal');
 
       // Card modals need top safe-area for height calculation
-      const safeAreaTop = await modal.evaluate((el: HTMLElement) => {
-        return getComputedStyle(el).getPropertyValue('--ion-safe-area-top');
+      const safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-top');
       });
-      const safeAreaBottom = await modal.evaluate((el: HTMLElement) => {
-        return getComputedStyle(el).getPropertyValue('--ion-safe-area-bottom');
+      const safeAreaBottom = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-bottom');
       });
-      const safeAreaLeft = await modal.evaluate((el: HTMLElement) => {
-        return getComputedStyle(el).getPropertyValue('--ion-safe-area-left');
+      const safeAreaLeft = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-left');
       });
-      const safeAreaRight = await modal.evaluate((el: HTMLElement) => {
-        return getComputedStyle(el).getPropertyValue('--ion-safe-area-right');
+      const safeAreaRight = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-right');
       });
 
-      expect(safeAreaTop.trim()).toBe('inherit');
-      expect(safeAreaBottom.trim()).toBe('inherit');
-      expect(safeAreaLeft.trim()).toBe('0px');
-      expect(safeAreaRight.trim()).toBe('0px');
+      expect(safeAreaTop).toBe('inherit');
+      expect(safeAreaBottom).toBe('inherit');
+      expect(safeAreaLeft).toBe('0px');
+      expect(safeAreaRight).toBe('0px');
+    });
+
+    test('card modal on tablet should still inherit safe-area values', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
+      });
+
+      await page.setViewportSize(Viewports.tablet.portrait);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#card-modal');
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+
+      // Card modals use safe-area values in CSS calculations regardless of viewport,
+      // so they should inherit even on tablet where regular modals become centered dialogs.
+      const safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-top');
+      });
+      const safeAreaBottom = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-bottom');
+      });
+      const safeAreaLeft = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-left');
+      });
+      const safeAreaRight = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-right');
+      });
+
+      expect(safeAreaTop).toBe('inherit');
+      expect(safeAreaBottom).toBe('inherit');
+      expect(safeAreaLeft).toBe('0px');
+      expect(safeAreaRight).toBe('0px');
     });
   });
 });

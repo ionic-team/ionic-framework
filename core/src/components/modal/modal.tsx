@@ -413,6 +413,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.triggerController.removeClickListener();
     this.cleanupViewTransitionListener();
     this.cleanupParentRemovalObserver();
+    // Also called in dismiss() — intentional dual cleanup covers both
+    // dismiss-then-remove and direct DOM removal without dismiss.
+    this.cleanupSafeAreaOverrides();
   }
 
   componentWillLoad() {
@@ -601,6 +604,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
+    // Recalculate isSheetModal before safe-area setup because framework
+    // bindings (e.g., Angular) may not have been applied when componentWillLoad ran.
+    this.isSheetModal = this.breakpoints !== undefined && this.initialBreakpoint !== undefined;
+
     // Set initial safe-area overrides before animation
     this.setInitialSafeAreaOverrides();
 
@@ -662,14 +669,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       window.addEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
     }
 
-    /**
-     * Recalculate isSheetModal because framework bindings (e.g., Angular)
-     * may not have been applied when componentWillLoad ran.
-     */
-    const isSheetModal = this.breakpoints !== undefined && this.initialBreakpoint !== undefined;
-    this.isSheetModal = isSheetModal;
-
-    if (isSheetModal) {
+    if (this.isSheetModal) {
       this.initSheetGesture();
     } else if (hasCardModal) {
       this.initSwipeToClose();
@@ -1185,8 +1185,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
     transitionAnimation.play().then(() => {
       this.viewTransitionAnimation = undefined;
 
-      // Update safe-area overrides for new orientation
-      this.updateSafeAreaOverrides();
+      // Wait for a layout pass after the transition so getBoundingClientRect()
+      // in getPositionBasedSafeAreaConfig() reflects the new dimensions.
+      raf(() => this.updateSafeAreaOverrides());
 
       // After orientation transition, recreate the swipe-to-close gesture
       // with updated animation that reflects the new presenting element state
@@ -1361,11 +1362,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Creates the context object for safe-area utilities.
    */
   private getSafeAreaContext(): ModalSafeAreaContext {
-    const mode = getIonMode(this);
     return {
       isSheetModal: this.isSheetModal,
-      isCardModal: this.presentingElement !== undefined && mode === 'ios',
-      mode,
+      isCardModal: this.presentingElement !== undefined && getIonMode(this) === 'ios',
       presentingElement: this.presentingElement,
       breakpoints: this.breakpoints,
       currentBreakpoint: this.currentBreakpoint,
@@ -1378,8 +1377,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   private setInitialSafeAreaOverrides(): void {
     const context = this.getSafeAreaContext();
-    const config = getInitialSafeAreaConfig(context);
-    applySafeAreaOverrides(this.el, config);
+    const safeAreaConfig = getInitialSafeAreaConfig(context);
+    applySafeAreaOverrides(this.el, safeAreaConfig);
   }
 
   /**
@@ -1388,12 +1387,32 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   private updateSafeAreaOverrides(): void {
     const { wrapperEl, el } = this;
+    const context = this.getSafeAreaContext();
+
+    // Sheet modals: the wrapper extends beyond the viewport and is translated
+    // via breakpoint gestures, making getBoundingClientRect unreliable for
+    // edge detection. Instead, use breakpoint value to determine top safe-area.
+    if (context.isSheetModal) {
+      const needsTopSafeArea = context.currentBreakpoint === 1;
+      applySafeAreaOverrides(el, {
+        top: needsTopSafeArea ? 'inherit' : '0px',
+        bottom: 'inherit',
+        left: '0px',
+        right: '0px',
+      });
+      return;
+    }
+
+    // Card modals have fixed safe-area requirements set by initial prediction.
+    if (context.isCardModal) return;
+
+    // wrapperEl is required for position-based detection below
     if (!wrapperEl) return;
 
-    // Always use position-based detection to correctly handle both
-    // fullscreen modals and centered dialogs with custom dimensions
-    const config = getPositionBasedSafeAreaConfig(wrapperEl);
-    applySafeAreaOverrides(el, config);
+    // Regular modals: use position-based detection to correctly handle both
+    // fullscreen modals and centered dialogs with custom dimensions.
+    const safeAreaConfig = getPositionBasedSafeAreaConfig(wrapperEl);
+    applySafeAreaOverrides(el, safeAreaConfig);
   }
 
   /**
@@ -1407,12 +1426,31 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const context = this.getSafeAreaContext();
     if (context.isSheetModal || context.isCardModal) return;
 
-    // Check if footer exists
-    const footer = el.querySelector('ion-footer');
-    if (footer) return;
+    // Check for standard Ionic layout children (ion-content, ion-footer),
+    // searching one level deep for wrapped components (e.g.,
+    // <app-footer><ion-footer>...</ion-footer></app-footer>).
+    let hasContent = false;
+    let hasFooter = false;
+    for (const child of Array.from(el.children)) {
+      if (child.tagName === 'ION-CONTENT') hasContent = true;
+      if (child.tagName === 'ION-FOOTER') hasFooter = true;
+      for (const grandchild of Array.from(child.children)) {
+        if (grandchild.tagName === 'ION-CONTENT') hasContent = true;
+        if (grandchild.tagName === 'ION-FOOTER') hasFooter = true;
+      }
+    }
 
-    // Add padding to wrapper to prevent content overlap
-    wrapperEl.style.setProperty('box-sizing', 'border-box');
+    // Only apply wrapper padding for standard Ionic layouts (has ion-content
+    // but no ion-footer). Custom modals with raw HTML are fully
+    // developer-controlled and should not be modified.
+    if (!hasContent || hasFooter) return;
+
+    // Reduce wrapper height by safe-area and add equivalent padding so the
+    // total visual size stays the same but the flex content area shrinks.
+    // Using height + padding instead of box-sizing: border-box avoids
+    // breaking custom modals that set --border-width (border-box would
+    // include the border inside the height, changing the layout).
+    wrapperEl.style.setProperty('height', 'calc(var(--height) - var(--ion-safe-area-bottom, 0px))');
     wrapperEl.style.setProperty('padding-bottom', 'var(--ion-safe-area-bottom, 0px)');
   }
 
@@ -1423,7 +1461,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     clearSafeAreaOverrides(this.el);
 
     if (this.wrapperEl) {
-      this.wrapperEl.style.removeProperty('box-sizing');
+      this.wrapperEl.style.removeProperty('height');
       this.wrapperEl.style.removeProperty('padding-bottom');
     }
   }
