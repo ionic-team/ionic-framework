@@ -55,8 +55,8 @@
 }
 
 // When the rows attribute is set, the container of the textarea should
-// should increase in height to accommodate the number of rows.
-// The min-height should accomodate the number of rows, plus a little extra
+// increase in height to accommodate the number of rows.
+// The min-height should accommodate the number of rows, plus a little extra
 // so that the next line is partially visible. To that we add the amount of
 // the bottom padding and the border width outside the textarea.
 // If --host-rows is set, then it will be used, otherwise the data-attr-rows
