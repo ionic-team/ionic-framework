@@ -56,14 +56,27 @@
 
 // When the rows attribute is set, the container of the textarea should
 // increase in height to accommodate the number of rows.
-// The min-height should accommodate the number of rows, plus a little extra
-// so that the next line is partially visible. To that we add the amount of
-// the bottom padding and the border width outside the textarea.
-// If --host-rows is set, then it will be used, otherwise the data-attr-rows
-// attribute will be used.
-.textarea-wrapper-inner[data-attr-rows] {
-  --number-rows: var(--host-rows, attr(data-attr-rows number));
-  min-height: calc(var(--number-rows) * 1.2em + 1.5em + var(--padding-bottom, 0px) + var(--border-width, 0px));
+:host([rows]) .textarea-wrapper-inner {
+  /**
+   * Clamp the minimum value to 1 to prevent 0 or negative heights.
+   * Add 0.5 to show a half-line peek at the next row.
+   */
+  --number-rows: calc(max(var(--host-rows, 1), 1) + 0.5);
+
+  /**
+   * Calculate the minimum height for the textarea container based on the number of rows.
+   * - $textarea-row-line-height: Approximate height of a single line based on
+   *   the browser's default line-height: normal (~1.2 × font-size).
+   * - (var(--number-rows) + 0.5): Show the requested rows plus a half-line peek
+   *   at the next row, hinting that the textarea is scrollable.
+   * - var(--padding-top), var(--padding-bottom), var(--border-width): Account for
+   *   box-sizing: border-box, which includes padding and border in min-height.
+   */
+  $textarea-row-line-height: 1.2em;
+
+  min-height: calc(
+    var(--number-rows) * #{$textarea-row-line-height} + var(--padding-top, 0px) + var(--padding-bottom, 0px) + var(--border-width, 0px)
+  );
 }
 
 // Ionic Textarea Shapes
