@@ -65,7 +65,7 @@
   --number-rows: var(--host-rows, attr(data-attr-rows number));
   min-height: calc(var(--number-rows) * 1.2em + 1.5em + var(--padding-bottom, 0px) + var(--border-width, 0px));
 }
-  
+
 // Ionic Textarea Shapes
 // --------------------------------------------------
 
