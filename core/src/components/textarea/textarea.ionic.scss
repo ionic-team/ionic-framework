@@ -109,12 +109,16 @@
 // ----------------------------------------------------------------
 
 // The height should be auto only when auto-grow is enabled.
+// If rows is not set, the height should be auto.
+:host(:not([rows])) .textarea-wrapper-inner,
 :host([auto-grow]:not([auto-grow="false"])) .textarea-wrapper-inner {
   height: auto;
 }
 
 // The min and max height should be inherited if auto-grow is enabled.
 // This allows the textarea to grow and shrink as needed.
+// If rows is not set, the height should be auto.
+:host(:not([rows])) .native-wrapper,
 :host([auto-grow]:not([auto-grow="false"])) .native-wrapper {
   min-height: inherit;
   max-height: inherit;
