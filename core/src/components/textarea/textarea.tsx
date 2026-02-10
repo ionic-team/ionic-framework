@@ -902,10 +902,7 @@ export class Textarea implements ComponentInterface {
          */}
         <label class="textarea-wrapper" htmlFor={inputId} onClick={this.onLabelClick} part="wrapper">
           {this.renderLabelContainer()}
-          <div
-            class="textarea-wrapper-inner"
-            {...(theme === 'ionic' && { 'data-attr-rows': this.rows !== undefined ? this.rows.toString() : undefined })}
-          >
+          <div class="textarea-wrapper-inner">
             {
               /**
                * For the ionic theme, we render the outline container here
