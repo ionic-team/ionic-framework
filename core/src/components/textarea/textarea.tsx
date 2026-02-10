@@ -893,6 +893,10 @@ export class Textarea implements ComponentInterface {
           'textarea-disabled': disabled,
           'textarea-readonly': readonly,
         })}
+        // For ionic theme, we need to define this css variable
+        style={
+          theme === 'ionic' ? { '--host-rows': this.rows !== undefined ? this.rows.toString() : undefined } : undefined
+        }
       >
         {/**
          * htmlFor is needed so that clicking the label always focuses
