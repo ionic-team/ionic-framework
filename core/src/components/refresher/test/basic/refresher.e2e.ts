@@ -24,14 +24,12 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       });
 
       test('should emit ionPullStart and ionPullEnd with reason complete', async ({ page }) => {
-        await page.locator('ion-refresher.hydrated').waitFor({ state: 'attached' });
-
         const ionPullStartEvent = await page.spyOnEvent('ionPullStartFired');
         const ionPullEndEvent = await page.spyOnEvent('ionPullEndFired');
 
         await pullToRefresh(page);
 
-        // Wait for the close animation timeout (600ms) to complete
+        // Wait for the close animation to complete
         await page.waitForTimeout(700);
 
         expect(ionPullStartEvent).toHaveReceivedEventTimes(1);
@@ -41,8 +39,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 
       test('should emit ionPullEnd with reason cancel when pull is released early', async ({ page }) => {
         const target = page.locator('body');
-
-        await page.locator('ion-refresher.hydrated').waitFor({ state: 'attached' });
 
         const ionPullStartEvent = await page.spyOnEvent('ionPullStartFired');
         const ionPullEndEvent = await page.spyOnEvent('ionPullEndFired');
@@ -85,8 +81,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
         });
 
         await page.waitForChanges();
-
-        await page.locator('ion-refresher.hydrated').waitFor({ state: 'attached' });
 
         const ionPullStartEvent = await page.spyOnEvent('ionPullStartFired');
         const ionPullEndEvent = await page.spyOnEvent('ionPullEndFired');
