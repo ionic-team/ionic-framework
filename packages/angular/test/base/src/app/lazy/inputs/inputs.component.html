@@ -11,18 +11,18 @@
 
     <ion-item>
       <ion-label>DateTime</ion-label>
-      <ion-datetime [(ngModel)]="datetime" min="1994-03-14" max="2017-12-09" display-format="MM/DD/YYYY"></ion-datetime>
+      <ion-datetime [(ngModel)]="datetime" min="1994-03-14" max="2017-12-09" display-format="MM/DD/YYYY" [disabled]="isDisabled" [readonly]="isReadonly"></ion-datetime>
       <ion-note slot="end" id="datetime-note">{{datetime}}</ion-note>
     </ion-item>
 
     <ion-item color="dark">
       <ion-label>DateTime Mirror</ion-label>
-      <ion-datetime [(ngModel)]="datetime" min="1994-03-14" max="2017-12-09" display-format="MM/DD/YYYY"></ion-datetime>
+      <ion-datetime [(ngModel)]="datetime" min="1994-03-14" max="2017-12-09" display-format="MM/DD/YYYY" [disabled]="isDisabled" [readonly]="isReadonly"></ion-datetime>
       <ion-note slot="end">{{datetime}}</ion-note>
     </ion-item>
 
     <ion-item>
-      <ion-select label="Select" [(ngModel)]="select" id="game-console">
+      <ion-select label="Select" [(ngModel)]="select" id="game-console" [disabled]="isDisabled">
         <ion-select-option value="">No Game Console</ion-select-option>
         <ion-select-option value="nes">NES</ion-select-option>
         <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
@@ -48,7 +48,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-toggle [(ngModel)]="toggle" slot="end">
+      <ion-toggle [(ngModel)]="toggle" slot="end" [disabled]="isDisabled">
         Toggle
       </ion-toggle>
       <ion-note slot="end" id="toggle-note">{{toggle}}</ion-note>
@@ -62,27 +62,27 @@
     </ion-item>
 
     <ion-item>
-      <ion-input label="Input" [(ngModel)]="input"></ion-input>
+      <ion-input label="Input" [(ngModel)]="input" [disabled]="isDisabled" [readonly]="isReadonly"></ion-input>
       <ion-note slot="end" id="input-note">{{input}}</ion-note>
     </ion-item>
 
     <ion-item color="dark">
-      <ion-input label="Input Mirror" [(ngModel)]="input"></ion-input>
+      <ion-input label="Input Mirror" [(ngModel)]="input" [disabled]="isDisabled" [readonly]="isReadonly"></ion-input>
       <ion-note slot="end">{{input}}</ion-note>
     </ion-item>
 
     <ion-item>
-      <ion-input-otp [(ngModel)]="inputOtp">Input OTP</ion-input-otp>
+      <ion-input-otp [(ngModel)]="inputOtp" [disabled]="isDisabled" [readonly]="isReadonly">Input OTP</ion-input-otp>
       <ion-note slot="end" id="input-otp-note">{{inputOtp}}</ion-note>
     </ion-item>
 
     <ion-item color="dark">
-      <ion-input-otp [(ngModel)]="inputOtp">Input OTP Mirror</ion-input-otp>
+      <ion-input-otp [(ngModel)]="inputOtp" [disabled]="isDisabled" [readonly]="isReadonly">Input OTP Mirror</ion-input-otp>
       <ion-note slot="end">{{inputOtp}}</ion-note>
     </ion-item>
 
     <ion-item>
-      <ion-checkbox [(ngModel)]="checkbox" slot="start" id="first-checkbox">
+      <ion-checkbox [(ngModel)]="checkbox" slot="start" id="first-checkbox" [disabled]="isDisabled">
         Checkbox
       </ion-checkbox>
       <ion-note slot="end" id="checkbox-note">{{checkbox}}</ion-note>
@@ -97,7 +97,7 @@
 
     <ion-item>
       <ion-radio-group value="nes" [(ngModel)]="radio" id="first-radio">
-        <ion-radio value="nes">Radio</ion-radio>
+        <ion-radio value="nes" [disabled]="isDisabled">Radio</ion-radio>
       </ion-radio-group>
       <ion-note slot="end" id="radio-note">{{radio}}</ion-note>
     </ion-item>
@@ -110,14 +110,20 @@
     </ion-item>
 
     <ion-item>
-      <ion-range [(ngModel)]="range" min="0" max="100" id="first-range">
+      <ion-range [(ngModel)]="range" min="0" max="100" id="first-range" [disabled]="isDisabled">
         <ion-label slot="start">Range</ion-label>
       </ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea [(ngModel)]="textarea" minLength="0" maxLength="100" [disabled]="isDisabled" [readonly]="isReadonly" label="Textarea"></ion-textarea>
     </ion-item>
 
   </ion-list>
   <p>
     <ion-button (click)="setValues()" id="set-button">Set values</ion-button>
     <ion-button (click)="resetValues()" id="reset-button">Reset values</ion-button>
+    <ion-button (click)="toggleDisable()" id="disable-button">Toggle Disabled</ion-button>
+    <ion-button (click)="toggleReadonly()" id="readonly-button">Toggle Readonly</ion-button>
   </p>
 </ion-content>
