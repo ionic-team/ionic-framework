@@ -1,14 +1,16 @@
 import { win } from '@utils/browser';
 
+type SafeAreaValue = '0px' | 'inherit';
+
 /**
  * Configuration for safe-area CSS custom properties.
- * Values can be 'inherit' (use root value) or '0px' (no safe-area).
+ * Each direction can inherit the root safe-area value or be zeroed out.
  */
 export interface SafeAreaConfig {
-  top: string;
-  bottom: string;
-  left: string;
-  right: string;
+  top: SafeAreaValue;
+  bottom: SafeAreaValue;
+  left: SafeAreaValue;
+  right: SafeAreaValue;
 }
 
 /**

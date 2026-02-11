@@ -1429,16 +1429,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // Check for standard Ionic layout children (ion-content, ion-footer),
     // searching one level deep for wrapped components (e.g.,
     // <app-footer><ion-footer>...</ion-footer></app-footer>).
-    let hasContent = false;
-    let hasFooter = false;
-    for (const child of Array.from(el.children)) {
-      if (child.tagName === 'ION-CONTENT') hasContent = true;
-      if (child.tagName === 'ION-FOOTER') hasFooter = true;
-      for (const grandchild of Array.from(child.children)) {
-        if (grandchild.tagName === 'ION-CONTENT') hasContent = true;
-        if (grandchild.tagName === 'ION-FOOTER') hasFooter = true;
-      }
-    }
+    // Uses :scope to limit the search depth rather than matching deeply
+    // nested elements inside inner modals or other overlays.
+    const hasContent = el.querySelector(':scope > ion-content, :scope > * > ion-content') !== null;
+    const hasFooter = el.querySelector(':scope > ion-footer, :scope > * > ion-footer') !== null;
 
     // Only apply wrapper padding for standard Ionic layouts (has ion-content
     // but no ion-footer). Custom modals with raw HTML are fully
