@@ -150,5 +150,90 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       const textarea = page.locator('ion-textarea');
       await expect(textarea).toHaveScreenshot(screenshot(`textarea-rows-3-autogrow`));
     });
+
+    test('should respect rows attribute with different label placements', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="container" style="display: flex; flex-direction: column; gap: 20px;">
+          <ion-textarea
+            rows="3"
+            fill="outline"
+            label="Start"
+            label-placement="start"
+            value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+          ></ion-textarea>
+          <ion-textarea
+            rows="3"
+            fill="outline"
+            label="End"
+            label-placement="end"
+            value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+          ></ion-textarea>
+          <ion-textarea
+            rows="3"
+            fill="outline"
+            label="Floating"
+            label-placement="floating"
+            value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+          ></ion-textarea>
+          <ion-textarea
+            rows="3"
+            fill="outline"
+            label="Fixed"
+            label-placement="fixed"
+            value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+          ></ion-textarea>
+          <ion-textarea
+            rows="3"
+            fill="outline"
+            label="Stacked"
+            label-placement="stacked"
+            value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+          ></ion-textarea>
+        </div>
+      `,
+        config
+      );
+
+      const container = page.locator('#container');
+      await expect(container).toHaveScreenshot(screenshot(`textarea-rows-label-placements`));
+    });
+
+    test('should respect rows attribute with different shapes', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="container" style="display: flex; flex-direction: column; gap: 20px;">
+          <ion-textarea
+            rows="3"
+            shape="soft"
+            fill="outline"
+            label="Soft"
+            label-placement="stacked"
+            value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+          ></ion-textarea>
+          <ion-textarea
+            rows="3"
+            shape="round"
+            fill="outline"
+            label="Round"
+            label-placement="stacked"
+            value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+          ></ion-textarea>
+          <ion-textarea
+            rows="3"
+            shape="rectangular"
+            fill="outline"
+            label="Rectangular"
+            label-placement="stacked"
+            value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+          ></ion-textarea>
+        </div>
+      `,
+        config
+      );
+
+      const container = page.locator('#container');
+      await expect(container).toHaveScreenshot(screenshot(`textarea-rows-shapes`));
+    });
   });
 });
