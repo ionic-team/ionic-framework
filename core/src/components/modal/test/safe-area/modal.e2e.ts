@@ -164,7 +164,9 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       expect(safeAreaTop).toBe('0px');
     });
 
-    test('sheet modal should have --ion-modal-offset-top set with resolved safe-area value', async ({ page }, testInfo) => {
+    test('sheet modal should have --ion-modal-offset-top set with resolved safe-area value', async ({
+      page,
+    }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
@@ -200,7 +202,7 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       const modal = page.locator('ion-modal');
 
       // On phone viewport, modal should inherit safe-area
-      let safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) => {
+      const safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) => {
         return el.style.getPropertyValue('--ion-safe-area-top');
       });
       expect(safeAreaTop).toBe('inherit');
@@ -209,11 +211,11 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       await page.setViewportSize(Viewports.tablet.portrait);
 
       // Poll until the debounced resize handler updates safe-area overrides
-      await expect.poll(async () => {
-        return modal.evaluate((el: HTMLIonModalElement) =>
-          el.style.getPropertyValue('--ion-safe-area-top')
-        );
-      }).toBe('0px');
+      await expect
+        .poll(async () => {
+          return modal.evaluate((el: HTMLIonModalElement) => el.style.getPropertyValue('--ion-safe-area-top'));
+        })
+        .toBe('0px');
 
       const safeAreaBottom = await modal.evaluate((el: HTMLIonModalElement) => {
         return el.style.getPropertyValue('--ion-safe-area-bottom');

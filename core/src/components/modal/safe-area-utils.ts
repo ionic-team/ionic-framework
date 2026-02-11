@@ -75,8 +75,7 @@ export const getRootSafeAreaTop = (): number => {
 
   const el = doc.createElement('div');
   el.style.cssText =
-    'position:fixed;visibility:hidden;pointer-events:none;top:0;left:0;' +
-    'padding-top:var(--ion-safe-area-top,0px);';
+    'position:fixed;visibility:hidden;pointer-events:none;top:0;left:0;' + 'padding-top:var(--ion-safe-area-top,0px);';
   doc.body.appendChild(el);
   const value = parseFloat(getComputedStyle(el).paddingTop) || 0;
   el.remove();
