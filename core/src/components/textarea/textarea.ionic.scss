@@ -108,6 +108,15 @@
 // Textarea Auto Grow
 // ----------------------------------------------------------------
 
+// In the Ionic theme, padding is on textarea-wrapper-inner, not on the textarea.
+// The ::after padding from common.scss duplicates this and causes ~3 extra lines
+// of blank space. Remove it so the auto-grow height matches the content.
+:host([auto-grow]:not([auto-grow="false"])) .native-wrapper::after {
+  margin-top: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 // The height should be auto only when auto-grow is enabled.
 // If rows is not set, the height should be auto.
 :host(:not([rows])) .textarea-wrapper-inner,
