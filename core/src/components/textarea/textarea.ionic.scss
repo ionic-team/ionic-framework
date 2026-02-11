@@ -102,20 +102,24 @@
 }
 
 .textarea-wrapper-inner {
-  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include globals.padding(0, var(--padding-end), 0, var(--padding-start));
+}
+
+/**
+ * Top and bottom padding are on the textarea so that when scrolling,
+ * text can scroll behind the outline borders. When at rest at top or bottom,
+ * the text is not glued to the outline lines.
+ */
+.textarea-wrapper-inner .native-textarea {
+  padding-top: var(--padding-top);
+  padding-bottom: var(--padding-bottom);
 }
 
 // Textarea Auto Grow
 // ----------------------------------------------------------------
 
-// In the Ionic theme, padding is on textarea-wrapper-inner, not on the textarea.
-// The ::after padding from common.scss duplicates this and causes ~3 extra lines
-// of blank space. Remove it so the auto-grow height matches the content.
-:host([auto-grow]:not([auto-grow="false"])) .native-wrapper::after {
-  margin-top: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-}
+// In the Ionic theme, padding is on the textarea. The ::after in common.scss
+// has matching padding so the auto-grow height calculation is correct.
 
 // The height should be auto only when auto-grow is enabled.
 // If rows is not set, the height should be auto.
