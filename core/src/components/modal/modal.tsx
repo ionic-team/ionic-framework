@@ -49,6 +49,7 @@ import {
   getPositionBasedSafeAreaConfig,
   applySafeAreaOverrides,
   clearSafeAreaOverrides,
+  getRootSafeAreaTop,
   type ModalSafeAreaContext,
 } from './safe-area-utils';
 import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
@@ -283,14 +284,35 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   @Listen('resize', { target: 'window' })
   onWindowResize() {
-    // Only handle resize for iOS card modals when no custom animations are provided
-    if (getIonMode(this) !== 'ios' || !this.presentingElement || this.enterAnimation || this.leaveAnimation) {
-      return;
-    }
+    if (!this.presented) return;
 
     clearTimeout(this.resizeTimeout);
     this.resizeTimeout = setTimeout(() => {
-      this.handleViewTransition();
+      const context = this.getSafeAreaContext();
+
+      // iOS card modals: handle portrait/landscape view transitions
+      if (context.isCardModal && !this.enterAnimation && !this.leaveAnimation) {
+        this.handleViewTransition();
+      }
+
+      // Sheet modals: re-compute the internal offset property since safe-area
+      // values may change on device rotation (e.g., portrait notch vs landscape).
+      if (context.isSheetModal) {
+        this.updateSheetOffsetTop();
+      }
+
+      // Regular (non-sheet, non-card) modals: update safe-area overrides
+      // since the viewport may have crossed the centered-dialog breakpoint.
+      if (!context.isSheetModal && !context.isCardModal) {
+        this.updateSafeAreaOverrides();
+
+        // Re-evaluate fullscreen safe-area padding: clear first, then re-apply
+        if (this.wrapperEl) {
+          this.wrapperEl.style.removeProperty('height');
+          this.wrapperEl.style.removeProperty('padding-bottom');
+        }
+        this.applyFullscreenSafeArea();
+      }
     }, 50); // Debounce to avoid excessive calls during active resizing
   }
 
@@ -770,8 +792,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
         if (this.currentBreakpoint !== breakpoint) {
           this.currentBreakpoint = breakpoint;
           this.ionBreakpointDidChange.emit({ breakpoint });
-          // Update safe-area overrides based on new position
-          this.updateSafeAreaOverrides();
         }
       }
     );
@@ -902,6 +922,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (this.gestureAnimationDismissing && role !== GESTURE) {
       return false;
     }
+
+    // Cancel any pending resize timeout to prevent stale updates during dismiss
+    clearTimeout(this.resizeTimeout);
+    this.resizeTimeout = undefined;
 
     /**
      * Because the canDismiss check below is async,
@@ -1374,11 +1398,32 @@ export class Modal implements ComponentInterface, OverlayInterface {
   /**
    * Sets initial safe-area overrides before modal animation.
    * Called in present() before animation starts.
+   *
+   * For sheet modals, the SCSS --height formula uses --ion-modal-offset-top
+   * (an internal property) instead of --ion-safe-area-top. We resolve the
+   * root safe-area-top to pixels and set --ion-modal-offset-top, decoupling
+   * the height calculation from --ion-safe-area-top (which is zeroed for
+   * sheets to prevent header content from getting double-offset padding).
    */
   private setInitialSafeAreaOverrides(): void {
     const context = this.getSafeAreaContext();
     const safeAreaConfig = getInitialSafeAreaConfig(context);
     applySafeAreaOverrides(this.el, safeAreaConfig);
+
+    // Set the internal offset property with the resolved root safe-area-top value
+    if (context.isSheetModal) {
+      this.updateSheetOffsetTop();
+    }
+  }
+
+  /**
+   * Resolves the current root --ion-safe-area-top value and sets the
+   * internal --ion-modal-offset-top property on the host element.
+   * Called on present and on resize (e.g., device rotation changes safe-area).
+   */
+  private updateSheetOffsetTop(): void {
+    const safeAreaTop = getRootSafeAreaTop();
+    this.el.style.setProperty('--ion-modal-offset-top', `${safeAreaTop}px`);
   }
 
   /**
@@ -1389,19 +1434,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const { wrapperEl, el } = this;
     const context = this.getSafeAreaContext();
 
-    // Sheet modals: the wrapper extends beyond the viewport and is translated
-    // via breakpoint gestures, making getBoundingClientRect unreliable for
-    // edge detection. Instead, use breakpoint value to determine top safe-area.
-    if (context.isSheetModal) {
-      const needsTopSafeArea = context.currentBreakpoint === 1;
-      applySafeAreaOverrides(el, {
-        top: needsTopSafeArea ? 'inherit' : '0px',
-        bottom: 'inherit',
-        left: '0px',
-        right: '0px',
-      });
-      return;
-    }
+    // Sheet modals: safe-area is fully determined at presentation time
+    // (top is always 0px, height is frozen). Nothing to update.
+    if (context.isSheetModal) return;
 
     // Card modals have fixed safe-area requirements set by initial prediction.
     if (context.isCardModal) return;
@@ -1453,6 +1488,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   private cleanupSafeAreaOverrides(): void {
     clearSafeAreaOverrides(this.el);
+
+    // Remove internal sheet offset property
+    this.el.style.removeProperty('--ion-modal-offset-top');
 
     if (this.wrapperEl) {
       this.wrapperEl.style.removeProperty('height');

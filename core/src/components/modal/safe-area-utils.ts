@@ -1,4 +1,5 @@
 import { win } from '@utils/browser';
+import { raf } from '@utils/helpers';
 
 type SafeAreaValue = '0px' | 'inherit';
 
@@ -38,6 +39,12 @@ const MODAL_INSET_MIN_HEIGHT = 600;
 const EDGE_THRESHOLD = 5;
 
 /**
+ * Cache for resolved root safe-area-top value, invalidated once per frame.
+ */
+let cachedRootSafeAreaTop: number | null = null;
+let cacheInvalidationScheduled = false;
+
+/**
  * Determines if the current viewport meets the CSS media query conditions
  * that cause regular modals to render as centered dialogs instead of fullscreen.
  * Matches: @media (min-width: 768px) and (min-height: 600px)
@@ -46,6 +53,44 @@ const isCenteredDialogViewport = (): boolean => {
   if (!win) return false;
   return win.matchMedia(`(min-width: ${MODAL_INSET_MIN_WIDTH}px) and (min-height: ${MODAL_INSET_MIN_HEIGHT}px)`)
     .matches;
+};
+
+/**
+ * Resolves the current root --ion-safe-area-top value to pixels.
+ * Uses a temporary element because getComputedStyle on :root returns
+ * the declared value of custom properties (e.g. "env(safe-area-inset-top)")
+ * rather than a resolved number.
+ *
+ * Results are cached for the current frame to avoid repeated reflows.
+ */
+export const getRootSafeAreaTop = (): number => {
+  if (cachedRootSafeAreaTop !== null) {
+    return cachedRootSafeAreaTop;
+  }
+
+  const doc = win?.document;
+  if (!doc?.body) {
+    return 0;
+  }
+
+  const el = doc.createElement('div');
+  el.style.cssText =
+    'position:fixed;visibility:hidden;pointer-events:none;top:0;left:0;' +
+    'padding-top:var(--ion-safe-area-top,0px);';
+  doc.body.appendChild(el);
+  const value = parseFloat(getComputedStyle(el).paddingTop) || 0;
+  el.remove();
+
+  cachedRootSafeAreaTop = value;
+  if (!cacheInvalidationScheduled) {
+    cacheInvalidationScheduled = true;
+    raf(() => {
+      cachedRootSafeAreaTop = null;
+      cacheInvalidationScheduled = false;
+    });
+  }
+
+  return value;
 };
 
 /**
@@ -58,10 +103,14 @@ const isCenteredDialogViewport = (): boolean => {
 export const getInitialSafeAreaConfig = (context: ModalSafeAreaContext): SafeAreaConfig => {
   const { isSheetModal, isCardModal } = context;
 
-  // Sheet modals use bottom safe-area, and top safe-area only when fully expanded
+  // Sheet modals always zero top safe-area. The sheet height offset from the
+  // top edge is handled by --ion-modal-offset-top (set in modal.tsx) using
+  // the resolved root value, so --ion-safe-area-top is never needed for
+  // height calculation. Keeping it at 0px prevents header content from
+  // getting double-offset padding.
   if (isSheetModal) {
     return {
-      top: context.currentBreakpoint === 1 ? 'inherit' : '0px',
+      top: '0px',
       bottom: 'inherit',
       left: '0px',
       right: '0px',

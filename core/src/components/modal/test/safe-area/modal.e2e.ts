@@ -8,6 +8,12 @@ import { configs, test, Viewports } from '@utils/test/playwright';
  * Safe-area handling is position-based and not affected by text direction.
  * Testing only LTR to avoid redundant test runs.
  */
+
+/**
+ * The test page (index.html) sets these root safe-area values.
+ * Keep in sync with the :root block in test/safe-area/index.html.
+ */
+const TEST_SAFE_AREA_TOP = '47px';
 configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('modal: safe-area handling'), () => {
     test.beforeEach(async ({ page }) => {
@@ -123,7 +129,7 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       expect(height).toBe('calc(var(--height) - var(--ion-safe-area-bottom, 0px))');
     });
 
-    test('sheet modal at breakpoint 1 should inherit top safe-area', async ({ page }, testInfo) => {
+    test('sheet modal at breakpoint 1 should keep top safe-area zeroed', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
@@ -149,11 +155,71 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       });
       await ionBreakpointDidChange.next();
 
-      // At breakpoint 1, top safe-area should be inherited
+      // At breakpoint 1, top safe-area should still be 0px because the
+      // sheet height is frozen with the resolved root value. This prevents
+      // header content from getting double-offset padding.
       safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) => {
         return el.style.getPropertyValue('--ion-safe-area-top');
       });
+      expect(safeAreaTop).toBe('0px');
+    });
+
+    test('sheet modal should have --ion-modal-offset-top set with resolved safe-area value', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
+      });
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#sheet-modal');
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+
+      // The internal --ion-modal-offset-top property should be set to the
+      // resolved root --ion-safe-area-top value. The SCSS --height formula
+      // uses this instead of --ion-safe-area-top directly.
+      const offsetTop = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-modal-offset-top');
+      });
+      expect(offsetTop).toBe(TEST_SAFE_AREA_TOP);
+    });
+
+    test('fullscreen modal safe-area should update on resize from phone to tablet', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
+      });
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#fullscreen-modal');
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+
+      // On phone viewport, modal should inherit safe-area
+      let safeAreaTop = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-top');
+      });
       expect(safeAreaTop).toBe('inherit');
+
+      // Resize to tablet viewport (centered dialog breakpoint)
+      await page.setViewportSize(Viewports.tablet.portrait);
+
+      // Poll until the debounced resize handler updates safe-area overrides
+      await expect.poll(async () => {
+        return modal.evaluate((el: HTMLIonModalElement) =>
+          el.style.getPropertyValue('--ion-safe-area-top')
+        );
+      }).toBe('0px');
+
+      const safeAreaBottom = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.style.getPropertyValue('--ion-safe-area-bottom');
+      });
+
+      expect(safeAreaBottom).toBe('0px');
     });
 
     test('centered dialog should have all safe-area values zeroed on tablet', async ({ page }, testInfo) => {
