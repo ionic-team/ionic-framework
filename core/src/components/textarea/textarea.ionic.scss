@@ -69,13 +69,13 @@
    *   the browser's default line-height: normal (~1.2 × font-size).
    * - (var(--number-rows) + 0.5): Show the requested rows plus a half-line peek
    *   at the next row, hinting that the textarea is scrollable.
-   * - var(--padding-top), var(--padding-bottom), var(--border-width): Account for
+   * - var(--padding-top), var(--border-width): Account for
    *   box-sizing: border-box, which includes padding and border in min-height.
    */
   $textarea-row-line-height: 1.2em;
 
   min-height: calc(
-    var(--number-rows) * #{$textarea-row-line-height} + var(--padding-top, 0px) + var(--padding-bottom, 0px) + var(--border-width, 0px)
+    var(--number-rows) * #{$textarea-row-line-height} + var(--padding-top, 0px) + var(--border-width, 0px)
   );
 }
 
