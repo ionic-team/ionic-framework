@@ -166,6 +166,7 @@ ion-icon {
 
 .start-slot-wrapper,
 .end-slot-wrapper {
+  @include globals.padding(var(--padding-top), 0, var(--padding-bottom), 0);
   margin-top: globals.$ion-space-050;
 }
 
