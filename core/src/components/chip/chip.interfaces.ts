@@ -13,8 +13,8 @@ export type IonChipRecipe = {
 
   // Hues with fills
   hue?: {
-    bold?: ChipFills;
-    subtle?: ChipFills;
+    bold?: IonChipFillDefinition;
+    subtle?: IonChipFillDefinition;
   };
 
   // Sizes
@@ -49,26 +49,26 @@ export type IonChipRecipe = {
   avatar?: IonChipAvatarDefinition;
 };
 
-type ChipFills = {
-  solid: ChipStates & {
-    semantic?: ChipStates;
+type IonChipFillDefinition = {
+  solid: IonChipStateDefinition & {
+    semantic?: IonChipStateDefinition;
   };
 
-  outline: ChipStates & {
-    semantic?: ChipStates;
+  outline: IonChipStateDefinition & {
+    semantic?: IonChipStateDefinition;
   };
 };
 
-type ChipStates = {
-  default: ChipColors;
-  hover?: ChipColors;
-  focus?: ChipColors;
-  activated?: ChipColors;
-  disabled?: ChipColors;
+type IonChipStateDefinition = {
+  default: IonChipColorDefinition;
+  hover?: IonChipColorDefinition;
+  focus?: IonChipColorDefinition;
+  activated?: IonChipColorDefinition;
+  disabled?: IonChipColorDefinition;
 };
 
 // Basic colors for a state
-type ChipColors = {
+type IonChipColorDefinition = {
   bg?: string;
   color?: string;
   border?: {
