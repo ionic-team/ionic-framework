@@ -1,7 +1,6 @@
 import type { IonPadding, IonMargin } from '../../themes/themes.interfaces.js';
 
 export type IonChipRecipe = {
-  cursor?: string;
   letterSpacing?: string | number;
   lineHeight?: string | number;
   margin?: IonMargin;

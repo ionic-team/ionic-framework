@@ -95,8 +95,6 @@ export const defaultTheme: DefaultTheme = {
 
   components: {
     IonChip: {
-      cursor: 'pointer',
-
       margin: {
         top: 'var(--ion-spacing-xxs)',
         end: 'var(--ion-spacing-xxs)',
