@@ -82,10 +82,8 @@ configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, s
 
       const chip = page.locator('ion-chip');
 
-      const backgroundColor = await chip.evaluate((el) =>
-        getComputedStyle(el).backgroundColor
-      );
-      const color = await chip.evaluate(el => getComputedStyle(el).color);
+      const backgroundColor = await chip.evaluate((el) => getComputedStyle(el).backgroundColor);
+      const color = await chip.evaluate((el) => getComputedStyle(el).color);
 
       expect(backgroundColor.trim()).toBe('rgb(0, 128, 0)');
       expect(color.trim()).toBe('rgb(0, 0, 0)');
