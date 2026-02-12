@@ -18,16 +18,16 @@ export type IonChipRecipe = {
   };
 
   // Sizes
-  size: {
-    small: IonChipSizeDefinition;
-    large: IonChipSizeDefinition;
+  size?: {
+    small?: IonChipSizeDefinition;
+    large?: IonChipSizeDefinition;
   };
 
   // Shapes
-  shape: {
-    soft: IonChipShapeDefinition;
-    round: IonChipShapeDefinition;
-    rectangular: IonChipShapeDefinition;
+  shape?: {
+    soft?: IonChipShapeDefinition;
+    round?: IonChipShapeDefinition;
+    rectangular?: IonChipShapeDefinition;
   };
 
   // Shared States
