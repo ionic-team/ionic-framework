@@ -162,7 +162,7 @@ export const defaultTheme: DefaultTheme = {
       hue: {
         bold: {
           solid: {
-            // default non-semantic states
+            // Default non-semantic states
             default: {
               bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.87),
@@ -202,7 +202,7 @@ export const defaultTheme: DefaultTheme = {
           },
 
           outline: {
-            // default non-semantic states
+            // Default non-semantic states
             default: {
               bg: 'transparent',
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.87),
@@ -255,7 +255,7 @@ export const defaultTheme: DefaultTheme = {
 
         subtle: {
           solid: {
-            // default non-semantic states
+            // Default non-semantic states
             default: {
               bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.05),
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.8),
@@ -295,7 +295,7 @@ export const defaultTheme: DefaultTheme = {
           },
 
           outline: {
-            // default non-semantic states
+            // Default non-semantic states
             default: {
               bg: 'transparent',
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.8),

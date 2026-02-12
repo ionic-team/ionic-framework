@@ -164,7 +164,7 @@ export const defaultTheme: DefaultTheme = {
       hue: {
         bold: {
           solid: {
-            // default non-semantic states
+            // Default non-semantic states
             default: {
               bg: '#3b3b3b',
               color: '#ffffff',
@@ -180,7 +180,7 @@ export const defaultTheme: DefaultTheme = {
           },
 
           outline: {
-            // default non-semantic states
+            // Default non-semantic states
             default: {
               bg: '#3b3b3b',
               color: '#ffffff',
@@ -210,7 +210,7 @@ export const defaultTheme: DefaultTheme = {
 
         subtle: {
           solid: {
-            // default non-semantic states
+            // Default non-semantic states
             default: {
               bg: '#f3f3f3',
               color: '#626262',
@@ -226,7 +226,7 @@ export const defaultTheme: DefaultTheme = {
           },
 
           outline: {
-            // default non-semantic states
+            // Default non-semantic states
             default: {
               bg: '#f3f3f3',
               color: '#626262',
