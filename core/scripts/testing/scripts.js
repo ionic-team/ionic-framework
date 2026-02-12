@@ -131,19 +131,19 @@ const DEFAULT_PALETTE = 'light';
   async function loadThemeTokens(themeName, paletteName) {
     try {
       // Store existing theme set from the app initialization
-      const existingTheme = window.Ionic?.config?.customTheme;
+      const customTheme = window.Ionic?.config?.customTheme;
       // Load the default tokens for the theme
       const defaultTokens = await import(`/themes/${themeName}/default.tokens.js`);
       let theme = defaultTokens.defaultTheme;
 
       // Merge with existing theme to preserve any customizations
-      if (existingTheme) {
+      if (customTheme) {
         theme = {
           ...theme,
-          ...existingTheme,
+          ...customTheme,
           palette: {
             ...theme.palette,
-            ...existingTheme.palette,
+            ...customTheme.palette,
           },
         };
       }
