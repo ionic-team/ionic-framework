@@ -67,14 +67,14 @@ configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, s
         `
         <style>
           ion-chip {
-            --ion-chip-hue-bold-bg: green;
-            --ion-chip-hue-bold-color: black;
+            --ion-chip-hue-bold-solid-default-bg: green;
+            --ion-chip-hue-bold-solid-default-color: black;
 
             opacity: 1;
           }
         </style>
 
-        <ion-chip hue="bold">
+        <ion-chip hue="bold" fill="solid">
           <ion-label>Custom</ion-label>
         </ion-chip>`,
         config
@@ -83,12 +83,12 @@ configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, s
       const chip = page.locator('ion-chip');
 
       const backgroundColor = await chip.evaluate((el) =>
-        getComputedStyle(el).getPropertyValue('--ion-chip-hue-bold-bg')
+        getComputedStyle(el).backgroundColor
       );
-      const color = await chip.evaluate((el) => getComputedStyle(el).getPropertyValue('--ion-chip-hue-bold-color'));
+      const color = await chip.evaluate(el => getComputedStyle(el).color);
 
-      expect(backgroundColor.trim()).toBe('green');
-      expect(color.trim()).toBe('black');
+      expect(backgroundColor.trim()).toBe('rgb(0, 128, 0)');
+      expect(color.trim()).toBe('rgb(0, 0, 0)');
     });
   });
 });
