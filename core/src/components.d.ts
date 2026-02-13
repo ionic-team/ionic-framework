@@ -884,7 +884,8 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * @deprecated - Use fill="outline" instead  Display an outline style button.
+          * Display an outline style button.
+          * @deprecated - Use fill="outline" instead
           * @default false
          */
         "outline": boolean;
@@ -6857,7 +6858,8 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * @deprecated - Use fill="outline" instead  Display an outline style button.
+          * Display an outline style button.
+          * @deprecated - Use fill="outline" instead
           * @default false
          */
         "outline"?: boolean;

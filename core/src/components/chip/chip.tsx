@@ -25,9 +25,9 @@ export class Chip implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
-   * @deprecated - Use fill="outline" instead
-   *
    * Display an outline style button.
+   *
+   * @deprecated - Use fill="outline" instead
    */
   @Prop() outline = false;
 
