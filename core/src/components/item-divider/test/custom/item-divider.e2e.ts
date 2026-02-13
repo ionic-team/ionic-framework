@@ -30,11 +30,11 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
         expect(backgroundColor).toBe('rgb(255, 0, 0)');
       });
 
-      test('should be able to customize content part', async ({ page }) => {
+      test('should be able to customize container part', async ({ page }) => {
         await page.setContent(
           `
           <style>
-            ion-item-divider::part(content) {
+            ion-item-divider::part(container) {
               background-color: green;
             }
           </style>
@@ -47,8 +47,8 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
         const divider = page.locator('ion-item-divider');
         const backgroundColor = await divider.evaluate((el) => {
           const shadowRoot = el.shadowRoot;
-          const content = shadowRoot?.querySelector('.item-divider-wrapper');
-          return content ? window.getComputedStyle(content).backgroundColor : '';
+          const container = shadowRoot?.querySelector('.item-divider-wrapper');
+          return container ? window.getComputedStyle(container).backgroundColor : '';
         });
         expect(backgroundColor).toBe('rgb(0, 128, 0)');
       });
