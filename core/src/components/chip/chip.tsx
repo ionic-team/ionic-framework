@@ -71,17 +71,19 @@ export class Chip implements ComponentInterface {
    */
   @Prop() size?: 'small' | 'large';
 
+  componentDidLoad() {
+    if (this.outline) {
+      printIonWarning(
+        `[ion-chip] - The "outline" attribute has been deprecated in favor of the "fill" attribute. Please use the "fill" attribute with the value "outline" instead.`,
+        this.el
+      );
+    }
+  }
+
   /**
    * Set the fill based on the custom theme config
    */
   get fillValue(): string {
-    // Check if the deprecated outline prop is used
-    if (this.outline) {
-      printIonWarning(`[ion-chip] - The "outline" prop is deprecated. Use fill="outline" instead.`, this.el);
-
-      return 'outline';
-    }
-
     const fillConfig = config.getObjectValue('IonChip.fill', 'solid') as string;
     const fill = this.fill || fillConfig;
 
