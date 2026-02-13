@@ -19,7 +19,7 @@ import type { RouterDirection } from '../router/utils/interface';
  *
  * @part native - The native HTML button, anchor or div element that wraps all child elements.
  * @part inner - The inner container element that wraps the item content.
- * @part content - The wrapper element that contains the default slot.
+ * @part container - The wrapper element that contains the default slot.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
  */
 @Component({
@@ -393,7 +393,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         >
           <slot name="start" onSlotchange={this.updateInteractivityOnSlotChange}></slot>
           <div class="item-inner" part="inner">
-            <div class="input-wrapper" part="content">
+            <div class="input-wrapper" part="container">
               <slot onSlotchange={this.updateInteractivityOnSlotChange}></slot>
             </div>
             <slot name="end" onSlotchange={this.updateInteractivityOnSlotChange}></slot>

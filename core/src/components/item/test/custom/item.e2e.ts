@@ -57,11 +57,11 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
         expect(backgroundColor).toBe('rgb(0, 128, 0)');
       });
 
-      test('should be able to customize content part', async ({ page }) => {
+      test('should be able to customize container part', async ({ page }) => {
         await page.setContent(
           `
           <style>
-            ion-item::part(content) {
+            ion-item::part(container) {
               background-color: blue;
             }
           </style>
@@ -76,8 +76,8 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
         const item = page.locator('ion-item');
         const backgroundColor = await item.evaluate((el) => {
           const shadowRoot = el.shadowRoot;
-          const content = shadowRoot?.querySelector('.input-wrapper');
-          return content ? window.getComputedStyle(content).backgroundColor : '';
+          const container = shadowRoot?.querySelector('.input-wrapper');
+          return container ? window.getComputedStyle(container).backgroundColor : '';
         });
         expect(backgroundColor).toBe('rgb(0, 0, 255)');
       });
