@@ -63,6 +63,7 @@ export class Chip implements ComponentInterface {
    */
   @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
+  // TODO(FW-6266): Determine if `medium` size is needed.
   /**
    * Set to `"small"` for a chip with less height and padding.
    *
