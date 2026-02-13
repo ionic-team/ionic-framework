@@ -169,7 +169,7 @@
 
 @media (any-hover: hover) {
   // Default: Hover
-  :host(.chip-hue-bold.chip-fill-outline::hover) {
+  :host(.chip-hue-bold.chip-fill-outline:hover) {
     background: var(--ion-chip-hue-bold-outline-hover-background, var(--ion-chip-hue-bold-outline-default-background));
   }
 }
