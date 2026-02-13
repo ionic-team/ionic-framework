@@ -69,7 +69,7 @@ type IonChipStateDefinition = {
 
 // Basic colors for a state
 type IonChipColorDefinition = {
-  bg?: string;
+  background?: string;
   color?: string;
   border?: {
     color?: string;

@@ -67,7 +67,7 @@ configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, s
         `
         <style>
           ion-chip {
-            --ion-chip-hue-bold-solid-default-bg: green;
+            --ion-chip-hue-bold-solid-default-background: green;
             --ion-chip-hue-bold-solid-default-color: black;
 
             opacity: 1;

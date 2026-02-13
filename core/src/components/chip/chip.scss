@@ -6,7 +6,6 @@
 
 :host {
   /**
-   * @prop --bg: Background of the chip
    * @prop --border-radius: Border radius of the chip
    * @prop --color: Color of the chip
    * @prop --focus-ring-color: Color of the focus ring
@@ -89,47 +88,56 @@
 
 // Default
 :host(.chip-hue-bold.chip-fill-solid) {
-  background: var(--ion-chip-hue-bold-solid-default-bg);
+  background: var(--ion-chip-hue-bold-solid-default-background);
   color: var(--ion-chip-hue-bold-solid-default-color);
 }
 
 // Default: Activated
 :host(.chip-hue-bold.chip-fill-solid.ion-activated) {
-  background: var(--ion-chip-hue-bold-solid-activated-bg, var(--ion-chip-hue-bold-solid-default-bg));
+  background: var(--ion-chip-hue-bold-solid-activated-background, var(--ion-chip-hue-bold-solid-default-background));
 }
 
 // Default: Focus
 :host(.chip-hue-bold.chip-fill-solid.ion-focused) {
-  background: var(--ion-chip-hue-bold-solid-focus-bg, var(--ion-chip-hue-bold-solid-default-bg));
+  background: var(--ion-chip-hue-bold-solid-focus-background, var(--ion-chip-hue-bold-solid-default-background));
 }
 
 @media (any-hover: hover) {
   // Default: Hover
   :host(.chip-hue-bold.chip-fill-solid:hover) {
-    background: var(--ion-chip-hue-bold-solid-hover-bg, var(--ion-chip-hue-bold-solid-default-bg));
+    background: var(--ion-chip-hue-bold-solid-hover-background, var(--ion-chip-hue-bold-solid-default-background));
   }
 }
 
 // Colors
 :host(.chip-hue-bold.chip-fill-solid.ion-color) {
-  background: var(--ion-chip-hue-bold-solid-semantic-default-bg);
+  background: var(--ion-chip-hue-bold-solid-semantic-default-background);
   color: var(--ion-chip-hue-bold-solid-semantic-default-color);
 }
 
 // Colors: Activated
 :host(.chip-hue-bold.chip-fill-solid.ion-color.ion-activated) {
-  background: var(--ion-chip-hue-bold-solid-semantic-activated-bg, var(--ion-chip-hue-bold-solid-semantic-default-bg));
+  background: var(
+    --ion-chip-hue-bold-solid-semantic-activated-background,
+    var(--ion-chip-hue-bold-solid-semantic-default-background)
+  );
 }
 
 // Colors: Focus
 :host(.chip-hue-bold.chip-fill-solid.ion-color.ion-focused) {
-  background: var(--ion-chip-hue-bold-solid-semantic-focus-bg, var(--ion-chip-hue-bold-solid-semantic-default-bg));
+  background: var(
+    --ion-chip-hue-bold-solid-semantic-focus-background,
+    var(--ion-chip-hue-bold-solid-semantic-default-background)
+  );
 }
 
 @media (any-hover: hover) {
   // Colors: Hover
   :host(.chip-hue-bold.chip-fill-solid.ion-color:hover) {
-    background: var(--ion-chip-hue-bold-solid-semantic-hover-bg, var(--ion-chip-hue-bold-solid-semantic-default-bg));
+    background: var(
+      --ion-chip-hue-bold-solid-semantic-hover-background,
+      var(--ion-chip-hue-bold-solid-semantic-default-background)
+    );
   }
 }
 
@@ -142,24 +150,27 @@
   border-style: var(--ion-chip-hue-bold-outline-default-border-style);
   border-color: var(--ion-chip-hue-bold-outline-default-border-color);
 
-  background: var(--ion-chip-hue-bold-outline-default-bg);
+  background: var(--ion-chip-hue-bold-outline-default-background);
   color: var(--ion-chip-hue-bold-outline-default-color);
 }
 
 // Default: Activated
 :host(.chip-hue-bold.chip-fill-outline.ion-activated) {
-  background: var(--ion-chip-hue-bold-outline-activated-bg, var(--ion-chip-hue-bold-outline-default-bg));
+  background: var(
+    --ion-chip-hue-bold-outline-activated-background,
+    var(--ion-chip-hue-bold-outline-default-background)
+  );
 }
 
 // Default: Focus
 :host(.chip-hue-bold.chip-fill-outline.ion-focused) {
-  background: var(--ion-chip-hue-bold-outline-focus-bg, var(--ion-chip-hue-bold-outline-default-bg));
+  background: var(--ion-chip-hue-bold-outline-focus-background, var(--ion-chip-hue-bold-outline-default-background));
 }
 
 @media (any-hover: hover) {
   // Default: Hover
   :host(.chip-hue-bold.chip-fill-outline::hover) {
-    background: var(--ion-chip-hue-bold-outline-hover-bg, var(--ion-chip-hue-bold-outline-default-bg));
+    background: var(--ion-chip-hue-bold-outline-hover-background, var(--ion-chip-hue-bold-outline-default-background));
   }
 }
 
@@ -169,29 +180,32 @@
   border-style: var(--ion-chip-hue-bold-outline-semantic-default-border-style);
   border-color: var(--ion-chip-hue-bold-outline-semantic-default-border-color);
 
-  background: var(--ion-chip-hue-bold-outline-semantic-default-bg);
+  background: var(--ion-chip-hue-bold-outline-semantic-default-background);
   color: var(--ion-chip-hue-bold-outline-semantic-default-color);
 }
 
 // Colors: Activated
 :host(.chip-hue-bold.chip-fill-outline.ion-color.ion-activated) {
   background: var(
-    --ion-chip-hue-bold-outline-semantic-activated-bg,
-    var(--ion-chip-hue-bold-outline-semantic-default-bg)
+    --ion-chip-hue-bold-outline-semantic-activated-background,
+    var(--ion-chip-hue-bold-outline-semantic-default-background)
   );
 }
 
 // Colors: Focus
 :host(.chip-hue-bold.chip-fill-outline.ion-color.ion-focused) {
-  background: var(--ion-chip-hue-bold-outline-semantic-focus-bg, var(--ion-chip-hue-bold-outline-semantic-default-bg));
+  background: var(
+    --ion-chip-hue-bold-outline-semantic-focus-background,
+    var(--ion-chip-hue-bold-outline-semantic-default-background)
+  );
 }
 
 @media (any-hover: hover) {
   // Colors: Hover
   :host(.chip-hue-bold.chip-fill-outline.ion-color:hover) {
     background: var(
-      --ion-chip-hue-bold-outline-semantic-hover-bg,
-      var(--ion-chip-hue-bold-outline-semantic-default-bg)
+      --ion-chip-hue-bold-outline-semantic-hover-background,
+      var(--ion-chip-hue-bold-outline-semantic-default-background)
     );
   }
 }
@@ -201,52 +215,58 @@
 
 // Default
 :host(.chip-hue-subtle.chip-fill-solid) {
-  background: var(--ion-chip-hue-subtle-solid-default-bg);
+  background: var(--ion-chip-hue-subtle-solid-default-background);
   color: var(--ion-chip-hue-subtle-solid-default-color);
 }
 
 // Default: Activated
 :host(.chip-hue-subtle.chip-fill-solid.ion-activated) {
-  background: var(--ion-chip-hue-subtle-solid-activated-bg, var(--ion-chip-hue-subtle-solid-default-bg));
+  background: var(
+    --ion-chip-hue-subtle-solid-activated-background,
+    var(--ion-chip-hue-subtle-solid-default-background)
+  );
 }
 
 // Default: Focus
 :host(.chip-hue-subtle.chip-fill-solid.ion-focused) {
-  background: var(--ion-chip-hue-subtle-solid-focus-bg, var(--ion-chip-hue-subtle-solid-default-bg));
+  background: var(--ion-chip-hue-subtle-solid-focus-background, var(--ion-chip-hue-subtle-solid-default-background));
 }
 
 @media (any-hover: hover) {
   // Default: Hover
   :host(.chip-hue-subtle.chip-fill-solid:hover) {
-    background: var(--ion-chip-hue-subtle-solid-hover-bg, var(--ion-chip-hue-subtle-solid-default-bg));
+    background: var(--ion-chip-hue-subtle-solid-hover-background, var(--ion-chip-hue-subtle-solid-default-background));
   }
 }
 
 // Colors
 :host(.chip-hue-subtle.chip-fill-solid.ion-color) {
-  background: var(--ion-chip-hue-subtle-solid-semantic-default-bg);
+  background: var(--ion-chip-hue-subtle-solid-semantic-default-background);
   color: var(--ion-chip-hue-subtle-solid-semantic-default-color);
 }
 
 // Colors: Activated
 :host(.chip-hue-subtle.chip-fill-solid.ion-color.ion-activated) {
   background: var(
-    --ion-chip-hue-subtle-solid-semantic-activated-bg,
-    var(--ion-chip-hue-subtle-solid-semantic-default-bg)
+    --ion-chip-hue-subtle-solid-semantic-activated-background,
+    var(--ion-chip-hue-subtle-solid-semantic-default-background)
   );
 }
 
 // Colors: Focus
 :host(.chip-hue-subtle.chip-fill-solid.ion-color.ion-focused) {
-  background: var(--ion-chip-hue-subtle-solid-semantic-focus-bg, var(--ion-chip-hue-subtle-solid-semantic-default-bg));
+  background: var(
+    --ion-chip-hue-subtle-solid-semantic-focus-background,
+    var(--ion-chip-hue-subtle-solid-semantic-default-background)
+  );
 }
 
 @media (any-hover: hover) {
   // Colors: Hover
   :host(.chip-hue-subtle.chip-fill-solid.ion-color:hover) {
     background: var(
-      --ion-chip-hue-subtle-solid-semantic-hover-bg,
-      var(--ion-chip-hue-subtle-solid-semantic-default-bg)
+      --ion-chip-hue-subtle-solid-semantic-hover-background,
+      var(--ion-chip-hue-subtle-solid-semantic-default-background)
     );
   }
 }
@@ -260,24 +280,33 @@
   border-style: var(--ion-chip-hue-subtle-outline-default-border-style);
   border-color: var(--ion-chip-hue-subtle-outline-default-border-color);
 
-  background: var(--ion-chip-hue-subtle-outline-default-bg);
+  background: var(--ion-chip-hue-subtle-outline-default-background);
   color: var(--ion-chip-hue-subtle-outline-default-color);
 }
 
 // Default: Activated
 :host(.chip-hue-subtle.chip-fill-outline.ion-activated) {
-  background: var(--ion-chip-hue-subtle-outline-activated-bg, var(--ion-chip-hue-subtle-outline-default-bg));
+  background: var(
+    --ion-chip-hue-subtle-outline-activated-background,
+    var(--ion-chip-hue-subtle-outline-default-background)
+  );
 }
 
 // Default: Focus
 :host(.chip-hue-subtle.chip-fill-outline.ion-focused) {
-  background: var(--ion-chip-hue-subtle-outline-focus-bg, var(--ion-chip-hue-subtle-outline-default-bg));
+  background: var(
+    --ion-chip-hue-subtle-outline-focus-background,
+    var(--ion-chip-hue-subtle-outline-default-background)
+  );
 }
 
 @media (any-hover: hover) {
   // Default: Hover
   :host(.chip-hue-subtle.chip-fill-outline:hover) {
-    background: var(--ion-chip-hue-subtle-outline-hover-bg, var(--ion-chip-hue-subtle-outline-default-bg));
+    background: var(
+      --ion-chip-hue-subtle-outline-hover-background,
+      var(--ion-chip-hue-subtle-outline-default-background)
+    );
   }
 }
 
@@ -287,23 +316,23 @@
   border-style: var(--ion-chip-hue-subtle-outline-semantic-default-border-style);
   border-color: var(--ion-chip-hue-subtle-outline-semantic-default-border-color);
 
-  background: var(--ion-chip-hue-subtle-outline-semantic-default-bg);
+  background: var(--ion-chip-hue-subtle-outline-semantic-default-background);
   color: var(--ion-chip-hue-subtle-outline-semantic-default-color);
 }
 
 // Colors: Activated
 :host(.chip-hue-subtle.chip-fill-outline.ion-color.ion-activated) {
   background: var(
-    --ion-chip-hue-subtle-outline-semantic-activated-bg,
-    var(--ion-chip-hue-subtle-outline-semantic-default-bg)
+    --ion-chip-hue-subtle-outline-semantic-activated-background,
+    var(--ion-chip-hue-subtle-outline-semantic-default-background)
   );
 }
 
 // Colors: Focus
 :host(.chip-hue-subtle.chip-fill-outline.ion-color.ion-focused) {
   background: var(
-    --ion-chip-hue-subtle-outline-semantic-focus-bg,
-    var(--ion-chip-hue-subtle-outline-semantic-default-bg)
+    --ion-chip-hue-subtle-outline-semantic-focus-background,
+    var(--ion-chip-hue-subtle-outline-semantic-default-background)
   );
 }
 
@@ -311,8 +340,8 @@
   // Colors: Hover
   :host(.chip-hue-subtle.chip-fill-outline.ion-color:hover) {
     background: var(
-      --ion-chip-hue-subtle-outline-semantic-hover-bg,
-      var(--ion-chip-hue-subtle-outline-semantic-default-bg)
+      --ion-chip-hue-subtle-outline-semantic-hover-background,
+      var(--ion-chip-hue-subtle-outline-semantic-default-background)
     );
   }
 }

@@ -166,39 +166,39 @@ export const defaultTheme: DefaultTheme = {
           solid: {
             // Default non-semantic states
             default: {
-              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.87),
             },
 
             hover: {
-              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
             },
 
             focus: {
-              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
             },
 
             activated: {
-              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.2),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.2),
             },
 
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
-                bg: currentColor('base', 0.08),
+                background: currentColor('base', 0.08),
                 color: currentColor('shade'),
               },
 
               hover: {
-                bg: currentColor('base', 0.12),
+                background: currentColor('base', 0.12),
               },
 
               focus: {
-                bg: currentColor('base', 0.12),
+                background: currentColor('base', 0.12),
               },
 
               activated: {
-                bg: currentColor('base', 0.16),
+                background: currentColor('base', 0.16),
               },
             },
           },
@@ -206,7 +206,7 @@ export const defaultTheme: DefaultTheme = {
           outline: {
             // Default non-semantic states
             default: {
-              bg: 'transparent',
+              background: 'transparent',
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.87),
 
               border: {
@@ -217,21 +217,21 @@ export const defaultTheme: DefaultTheme = {
             },
 
             hover: {
-              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
             },
 
             focus: {
-              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
             },
 
             activated: {
-              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.08),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.08),
             },
 
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
-                bg: 'transparent',
+                background: 'transparent',
                 color: currentColor('shade'),
 
                 border: {
@@ -242,15 +242,15 @@ export const defaultTheme: DefaultTheme = {
               },
 
               hover: {
-                bg: currentColor('base', 0.12),
+                background: currentColor('base', 0.12),
               },
 
               focus: {
-                bg: currentColor('base', 0.12),
+                background: currentColor('base', 0.12),
               },
 
               activated: {
-                bg: currentColor('base', 0.16),
+                background: currentColor('base', 0.16),
               },
             },
           },
@@ -260,39 +260,39 @@ export const defaultTheme: DefaultTheme = {
           solid: {
             // Default non-semantic states
             default: {
-              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.05),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.05),
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.8),
             },
 
             hover: {
-              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.1),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.1),
             },
 
             focus: {
-              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.1),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.1),
             },
 
             activated: {
-              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.14),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.14),
             },
 
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
-                bg: currentColor('base', null, true),
+                background: currentColor('base', null, true),
                 color: currentColor('contrast', null, true),
               },
 
               hover: {
-                bg: currentColor('base', 0.6, true),
+                background: currentColor('base', 0.6, true),
               },
 
               focus: {
-                bg: currentColor('base', 0.6, true),
+                background: currentColor('base', 0.6, true),
               },
 
               activated: {
-                bg: currentColor('base', 0.8, true),
+                background: currentColor('base', 0.8, true),
               },
             },
           },
@@ -300,7 +300,7 @@ export const defaultTheme: DefaultTheme = {
           outline: {
             // Default non-semantic states
             default: {
-              bg: 'transparent',
+              background: 'transparent',
               color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.8),
 
               border: {
@@ -311,21 +311,21 @@ export const defaultTheme: DefaultTheme = {
             },
 
             hover: {
-              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
             },
 
             focus: {
-              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
             },
 
             activated: {
-              bg: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
             },
 
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
-                bg: 'transparent',
+                background: 'transparent',
                 color: currentColor('contrast', null, true),
 
                 border: {
@@ -336,15 +336,15 @@ export const defaultTheme: DefaultTheme = {
               },
 
               hover: {
-                bg: currentColor('base', 0.6, true),
+                background: currentColor('base', 0.6, true),
               },
 
               focus: {
-                bg: currentColor('base', 0.6, true),
+                background: currentColor('base', 0.6, true),
               },
 
               activated: {
-                bg: currentColor('base', 0.8, true),
+                background: currentColor('base', 0.8, true),
               },
             },
           },
