@@ -50,17 +50,17 @@ export type IonChipRecipe = {
 };
 
 type IonChipFillDefinition = {
-  solid: IonChipStateDefinition & {
+  solid?: IonChipStateDefinition & {
     semantic?: IonChipStateDefinition;
   };
 
-  outline: IonChipStateDefinition & {
+  outline?: IonChipStateDefinition & {
     semantic?: IonChipStateDefinition;
   };
 };
 
 type IonChipStateDefinition = {
-  default: IonChipColorDefinition;
+  default?: IonChipColorDefinition;
   hover?: IonChipColorDefinition;
   focus?: IonChipColorDefinition;
   activated?: IonChipColorDefinition;
@@ -79,16 +79,16 @@ type IonChipColorDefinition = {
 };
 
 type IonChipSizeDefinition = {
-  minHeight: string | number;
+  minHeight?: string | number;
 
-  font: {
-    size: string | number;
+  font?: {
+    size?: string | number;
   };
 };
 
 type IonChipShapeDefinition = {
-  border: {
-    radius: string | number;
+  border?: {
+    radius?: string | number;
   };
 };
 
@@ -107,7 +107,7 @@ type IonChipMediaDefinition = {
 type IonChipIconDefinition = IonChipMediaDefinition & {
   color?: string;
 
-  font: {
+  font?: {
     size?: string | number;
   };
 };
