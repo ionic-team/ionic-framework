@@ -86,7 +86,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
               background-color: red;
             }
 
-            ion-select::part(wrapper-inner) {
+            ion-select::part(inner) {
               background-color: orange;
             }
 

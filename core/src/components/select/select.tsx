@@ -47,7 +47,7 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
  * @part error-text - Supporting text displayed beneath the select when the select is invalid and touched.
  * @part bottom - The container element for helper text, error text, and counter.
  * @part wrapper - The clickable label element that wraps the entire form field (label text, slots, selected values or placeholder, and toggle icons).
- * @part wrapper-inner - The inner element of the wrapper that does not include the label text.
+ * @part inner - The inner element of the wrapper that does not include the label text.
  */
 @Component({
   tag: 'ion-select',
@@ -1255,7 +1255,7 @@ export class Select implements ComponentInterface {
       >
         <label class="select-wrapper" id="select-label" onClick={this.onLabelClick} part="wrapper">
           {this.renderLabelContainer()}
-          <div class="select-wrapper-inner" part="wrapper-inner">
+          <div class="select-wrapper-inner" part="inner">
             <slot name="start"></slot>
             <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
               {this.renderSelectText()}
