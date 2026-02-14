@@ -47,7 +47,7 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
  * @part error-text - Supporting text displayed beneath the select when the select is invalid and touched.
  * @part bottom - The container element for helper text, error text, and counter.
  * @part wrapper - The clickable label element that wraps the entire form field (label text, slots, selected values or placeholder, and toggle icons).
- * @part inner - The inner element of the wrapper that does not include the label text.
+ * @part inner - The inner element of the wrapper that manages the slots, selected values or placeholder, and toggle icons.
  */
 @Component({
   tag: 'ion-select',
