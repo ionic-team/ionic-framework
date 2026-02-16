@@ -27,7 +27,7 @@
 // Ionic Textarea Sizes
 // --------------------------------------------------
 
-:host .native-wrapper::after  {
+:host .native-wrapper::after {
   @include globals.padding(0);
 }
 
