@@ -93,7 +93,7 @@
  * text can scroll behind the outline borders. When at rest at top or bottom,
  * the text is not glued to the outline lines.
  */
- :host([rows]:not([auto-grow])) .textarea-wrapper-inner .native-textarea {
+:host([rows]:not([auto-grow])) .textarea-wrapper-inner .native-textarea {
   padding-top: var(--padding-top);
   padding-bottom: var(--padding-bottom);
 }
