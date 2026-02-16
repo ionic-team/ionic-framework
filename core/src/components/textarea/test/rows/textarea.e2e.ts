@@ -33,49 +33,49 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
             rows="1"
             label="Small"
             label-placement="stacked"
-            helper-text="rows=2, label-placement=stacked"
+            helper-text="rows=1, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
             rows="1"
             label="Medium"
             label-placement="stacked"
-            helper-text="rows=5, label-placement=stacked"
+            helper-text="rows=1, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
             rows="1"
             label="Large"
             label-placement="stacked"
-            helper-text="rows=8, label-placement=stacked"
+            helper-text="rows=1, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
             rows="3"
             label="Small"
             label-placement="stacked"
-            helper-text="rows=2, label-placement=stacked"
+            helper-text="rows=3, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
             rows="3"
             label="Medium"
             label-placement="stacked"
-            helper-text="rows=5, label-placement=stacked"
+            helper-text="rows=3, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
             rows="3"
             label="Large"
             label-placement="stacked"
-            helper-text="rows=8, label-placement=stacked"
+            helper-text="rows=3, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
             rows="5"
             label="Small"
             label-placement="stacked"
-            helper-text="rows=2, label-placement=stacked"
+            helper-text="rows=5, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
@@ -89,7 +89,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
             rows="5"
             label="Large"
             label-placement="stacked"
-            helper-text="rows=8, label-placement=stacked"
+            helper-text="rows=5, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
         </div>
