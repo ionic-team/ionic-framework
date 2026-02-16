@@ -29,7 +29,7 @@
 
 // Setting height to 0 allows it to collapse in height
 // instead of growing above the min height by default.
-.textarea-wrapper-inner {
+:host(:not([rows])) .textarea-wrapper-inner {
   height: 0;
 }
 
