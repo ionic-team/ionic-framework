@@ -58,10 +58,14 @@
 :host(.textarea-size-large) .textarea-wrapper-inner {
   --padding-top: #{globals.$ion-space-400};
   --padding-end: #{globals.$ion-space-500};
-  --padding-bottom: calc(#{globals.$ion-space-400} + 0.6em);
+  --padding-bottom: #{globals.$ion-space-400};
   --padding-start: #{globals.$ion-space-500};
 
   //min-height: globals.$ion-scale-3600;
+}
+
+:host([rows]) .native-wrapper {
+  grid-auto-rows: calc(100% + 0.6em);
 }
 
 // Ionic Textarea Shapes
