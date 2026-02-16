@@ -395,38 +395,16 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 });
 
 /**
- * Synthetic IntersectionObserver fallback behavior.
- *
- * This test stubs IntersectionObserver so that the callback
- * never reports an intersecting entry. The datetime should
- * still become ready via its internal fallback logic.
+ * Verify that datetime becomes ready via ResizeObserver.
+ * This tests that the datetime properly initializes when it has
+ * dimensions, using ResizeObserver to detect visibility.
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('datetime: IO fallback'), () => {
-    test('should become ready even if IntersectionObserver never reports visible', async ({ page }, testInfo) => {
+  test.describe(title('datetime: visibility detection'), () => {
+    test('should become ready when rendered with dimensions', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30706',
-      });
-
-      await page.addInitScript(() => {
-        const OriginalIO = window.IntersectionObserver;
-        (window as any).IntersectionObserver = function (callback: any, options: any) {
-          const instance = new OriginalIO(() => {}, options);
-          const originalObserve = instance.observe.bind(instance);
-
-          instance.observe = (target: Element) => {
-            originalObserve(target);
-            callback([
-              {
-                isIntersecting: false,
-                target,
-              } as IntersectionObserverEntry,
-            ]);
-          };
-
-          return instance;
-        } as any;
       });
 
       await page.setContent(
@@ -438,8 +416,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       const datetime = page.locator('ion-datetime');
 
-      // Give the fallback a short amount of time to run
-      await page.waitForTimeout(100);
+      // Wait for the datetime to become ready via ResizeObserver
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(datetime).toHaveClass(/datetime-ready/);
 
