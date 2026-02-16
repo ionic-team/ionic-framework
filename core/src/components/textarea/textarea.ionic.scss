@@ -40,19 +40,15 @@
 :host(.textarea-size-small) .textarea-wrapper-inner {
   --padding-top: #{globals.$ion-space-200};
   --padding-end: #{globals.$ion-space-300};
-  --padding-bottom: calc(#{globals.$ion-space-200} + 0.6em);
+  --padding-bottom: #{globals.$ion-space-200};
   --padding-start: #{globals.$ion-space-300};
-
-  //min-height: globals.$ion-scale-2800;
 }
 
 :host(.textarea-size-medium) .textarea-wrapper-inner {
   --padding-top: #{globals.$ion-space-300};
   --padding-end: #{globals.$ion-space-400};
-  --padding-bottom: calc(#{globals.$ion-space-300} + 0.6em);
+  --padding-bottom: #{globals.$ion-space-300};
   --padding-start: #{globals.$ion-space-400};
-
-  //min-height: globals.$ion-scale-3400;
 }
 
 :host(.textarea-size-large) .textarea-wrapper-inner {
@@ -60,12 +56,6 @@
   --padding-end: #{globals.$ion-space-500};
   --padding-bottom: #{globals.$ion-space-400};
   --padding-start: #{globals.$ion-space-500};
-
-  //min-height: globals.$ion-scale-3600;
-}
-
-:host([rows]) .native-wrapper {
-  grid-auto-rows: calc(100% + 0.6em);
 }
 
 // Ionic Textarea Shapes
@@ -92,6 +82,20 @@
 
 .textarea-wrapper-inner {
   @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+}
+
+:host([rows]:not([auto-grow])) .textarea-wrapper-inner {
+  @include globals.padding(0, var(--padding-end), 0, var(--padding-start));
+}
+
+/**
+ * Top and bottom padding are on the textarea so that when scrolling,
+ * text can scroll behind the outline borders. When at rest at top or bottom,
+ * the text is not glued to the outline lines.
+ */
+ :host([rows]:not([auto-grow])) .textarea-wrapper-inner .native-textarea {
+  padding-top: var(--padding-top);
+  padding-bottom: var(--padding-bottom);
 }
 
 // Textarea Auto Grow
@@ -139,6 +143,11 @@ ion-icon {
 .start-slot-wrapper,
 .end-slot-wrapper {
   margin-top: globals.$ion-space-050;
+}
+
+:host([rows]:not([auto-grow])) .start-slot-wrapper,
+:host([rows]:not([auto-grow])) .end-slot-wrapper {
+  @include globals.padding(var(--padding-top), 0, var(--padding-bottom), 0);
 }
 
 // Textarea Bottom Content
