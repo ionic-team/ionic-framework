@@ -277,7 +277,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       expect(backgroundColor).toBe('rgb(173, 216, 230)');
     });
 
-    test('should be able to customize prev/next buttons part', async ({ page }, testInfo) => {
+    test('should be able to customize navigation button parts', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30830',
@@ -288,6 +288,14 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           <style>
             ion-datetime::part(navigation-buttons) {
               background-color: firebrick;
+            }
+
+            ion-datetime::part(previous-button) {
+              color: blue;
+            }
+
+            ion-datetime::part(next-button) {
+              color: green;
             }
           </style>
           <ion-datetime value="2020-03-14T14:23:00.000Z"></ion-datetime>
@@ -303,71 +311,28 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         return window.getComputedStyle(el).backgroundColor;
       });
 
+      const prevColor = await prevButton.evaluate((el) => {
+        return window.getComputedStyle(el).color;
+      });
+
       const nextBackgroundColor = await nextButton.evaluate((el) => {
         return window.getComputedStyle(el).backgroundColor;
       });
 
+      const nextColor = await nextButton.evaluate((el) => {
+        return window.getComputedStyle(el).color;
+      });
+
+      // Verify the navigation-buttons part applies the styles
       expect(prevBackgroundColor).toBe('rgb(178, 34, 34)');
       expect(nextBackgroundColor).toBe('rgb(178, 34, 34)');
+      // Verify the previous-button part applies the styles
+      expect(prevColor).toBe('rgb(0, 0, 255)');
+      // Verify the next-button part applies the styles
+      expect(nextColor).toBe('rgb(0, 128, 0)');
     });
 
-    test('should be able to customize prev button part', async ({ page }, testInfo) => {
-      testInfo.annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/30830',
-      });
-
-      await page.setContent(
-        `
-          <style>
-            ion-datetime::part(previous-button) {
-              color: blue;
-            }
-          </style>
-          <ion-datetime value="2020-03-14T14:23:00.000Z"></ion-datetime>
-        `,
-        config
-      );
-
-      const datetime = page.locator('ion-datetime');
-      const prevButton = datetime.locator('.calendar-next-prev ion-button').first();
-
-      const color = await prevButton.evaluate((el) => {
-        return window.getComputedStyle(el).color;
-      });
-
-      expect(color).toBe('rgb(0, 0, 255)');
-    });
-
-    test('should be able to customize next button part', async ({ page }, testInfo) => {
-      testInfo.annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/30830',
-      });
-
-      await page.setContent(
-        `
-          <style>
-            ion-datetime::part(next-button) {
-              color: blue;
-            }
-          </style>
-          <ion-datetime value="2020-03-14T14:23:00.000Z"></ion-datetime>
-        `,
-        config
-      );
-
-      const datetime = page.locator('ion-datetime');
-      const nextButton = datetime.locator('.calendar-next-prev ion-button').last();
-
-      const color = await nextButton.evaluate((el) => {
-        return window.getComputedStyle(el).color;
-      });
-
-      expect(color).toBe('rgb(0, 0, 255)');
-    });
-
-    test.only('should be able to customize days of the week part', async ({ page }, testInfo) => {
+    test('should be able to customize days of the week part', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30830',
