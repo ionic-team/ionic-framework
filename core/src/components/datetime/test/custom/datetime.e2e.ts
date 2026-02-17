@@ -357,7 +357,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `
           <style>
             ion-datetime::part(days-of-week) {
-              background-color: #9ad162;
+              background-color: green;
             }
           </style>
           <ion-datetime value="2020-03-14T14:23:00.000Z"></ion-datetime>
@@ -372,7 +372,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         return window.getComputedStyle(el).backgroundColor;
       });
 
-      expect(backgroundColor).toBe('rgb(154, 209, 98)');
+      expect(backgroundColor).toBe('rgb(0, 128, 0)');
     });
   });
 });
