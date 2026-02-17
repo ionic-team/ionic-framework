@@ -104,6 +104,7 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  *
  * @part datetime-header - The datetime header contains the content for the `title` slot and the selected date.
  * @part datetime-title - The element that contains the `title` slot content.
+ * @part datetime-selected-date - The element that contains the selected date.
  */
 @Component({
   tag: 'ion-datetime',
@@ -2593,7 +2594,11 @@ export class Datetime implements ComponentInterface {
         <div class="datetime-title" part="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        {showExpandedHeader && <div class="datetime-selected-date">{this.getHeaderSelectedDateText()}</div>}
+        {showExpandedHeader && (
+          <div class="datetime-selected-date" part="datetime-selected-date">
+            {this.getHeaderSelectedDateText()}
+          </div>
+        )}
       </div>
     );
   }

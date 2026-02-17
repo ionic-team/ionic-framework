@@ -192,6 +192,10 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
             ion-datetime::part(datetime-title) {
               background-color: pink;
             }
+
+            ion-datetime::part(datetime-selected-date) {
+              background-color: violet;
+            }
           </style>
           <ion-datetime value="2020-03-14T14:23:00.000Z">
             <span slot="title">Select Date</span>
@@ -203,6 +207,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const datetime = page.locator('ion-datetime');
       const header = datetime.locator('.datetime-header');
       const title = datetime.locator('.datetime-title');
+      const selectedDate = datetime.locator('.datetime-selected-date');
 
       const headerBackgroundColor = await header.evaluate((el) => {
         return window.getComputedStyle(el).backgroundColor;
@@ -212,8 +217,13 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         return window.getComputedStyle(el).backgroundColor;
       });
 
+      const selectedDateBackgroundColor = await selectedDate.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
       expect(headerBackgroundColor).toBe('rgb(255, 165, 0)');
       expect(titleBackgroundColor).toBe('rgb(255, 192, 203)');
+      expect(selectedDateBackgroundColor).toBe('rgb(238, 130, 238)');
     });
 
     test('should be able to customize calendar header part', async ({ page }) => {
