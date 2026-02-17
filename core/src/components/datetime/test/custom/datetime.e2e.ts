@@ -206,7 +206,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       expect(backgroundColor).toBe('rgb(255, 165, 0)');
     });
 
-    test('should be able to customize calendar header part within the grid style', async ({ page }) => {
+    test('should be able to customize calendar header part', async ({ page }) => {
       await page.setContent(
         `
           <style>
@@ -229,7 +229,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       expect(backgroundColor).toBe('rgb(255, 165, 0)');
     });
 
-    test('should be able to customize month/year picker part within the grid style', async ({ page }, testInfo) => {
+    test('should be able to customize month/year picker part', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/26596',
@@ -257,7 +257,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       expect(backgroundColor).toBe('rgb(173, 216, 230)');
     });
 
-    test('should be able to customize prev/next buttons part within the grid style', async ({ page }, testInfo) => {
+    test('should be able to customize prev/next buttons part', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30830',
@@ -291,7 +291,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       expect(nextBackgroundColor).toBe('rgb(178, 34, 34)');
     });
 
-    test('should be able to customize prev button part within the grid style', async ({ page }, testInfo) => {
+    test('should be able to customize prev button part', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30830',
@@ -319,7 +319,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       expect(color).toBe('rgb(0, 0, 255)');
     });
 
-    test('should be able to customize next button part within the grid style', async ({ page }, testInfo) => {
+    test('should be able to customize next button part', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30830',
@@ -347,7 +347,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       expect(color).toBe('rgb(0, 0, 255)');
     });
 
-    test('should be able to customize days of the week part within the grid style', async ({ page }, testInfo) => {
+    test('should be able to customize days of the week part', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30830',
