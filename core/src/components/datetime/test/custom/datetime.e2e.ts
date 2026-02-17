@@ -320,7 +320,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await page.setContent(
         `
           <style>
-            ion-datetime::part(prev-button) {
+            ion-datetime::part(previous-button) {
               color: blue;
             }
           </style>

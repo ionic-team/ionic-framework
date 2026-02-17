@@ -574,7 +574,7 @@ ion-datetime,part,days-of-week
 ion-datetime,part,month-year-button
 ion-datetime,part,navigation-buttons
 ion-datetime,part,next-button
-ion-datetime,part,prev-button
+ion-datetime,part,previous-button
 ion-datetime,part,time-button
 ion-datetime,part,time-button active
 ion-datetime,part,wheel
