@@ -367,7 +367,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       expect(color).toBe('rgb(0, 0, 255)');
     });
 
-    test('should be able to customize days of the week part', async ({ page }, testInfo) => {
+    test.only('should be able to customize days of the week part', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30830',
@@ -376,7 +376,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await page.setContent(
         `
           <style>
-            ion-datetime::part(days-of-week) {
+            ion-datetime::part(calendar-days-of-week) {
               background-color: green;
             }
           </style>

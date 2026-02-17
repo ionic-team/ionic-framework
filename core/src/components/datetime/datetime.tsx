@@ -94,7 +94,7 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  * @part navigation-buttons - The buttons used to navigate to the next or previous month when using a grid style layout.
  * @part previous-button - The button used to navigate to the previous month when using a grid style layout.
  * @part next-button - The button used to navigate to the next month when using a grid style layout.
- * @part days-of-week - The container for the day-of-the-week header (both weekdays and weekends) when using a grid style layout.
+ * @part calendar-days-of-week - The container for the day-of-the-week header (both weekdays and weekends) when using a grid style layout.
  *
  * @part calendar-day - The individual buttons that display a day inside of the datetime
  * calendar.
@@ -2237,7 +2237,7 @@ export class Datetime implements ComponentInterface {
             </ion-buttons>
           </div>
         </div>
-        <div class="calendar-days-of-week" aria-hidden="true" part="days-of-week">
+        <div class="calendar-days-of-week" aria-hidden="true" part="calendar-days-of-week">
           {getDaysOfWeek(this.locale, mode, this.firstDayOfWeek % 7).map((d) => {
             return <div class="day-of-week">{d}</div>;
           })}

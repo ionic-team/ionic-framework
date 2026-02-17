@@ -566,11 +566,11 @@ ion-datetime,part,calendar-day
 ion-datetime,part,calendar-day active
 ion-datetime,part,calendar-day disabled
 ion-datetime,part,calendar-day today
+ion-datetime,part,calendar-days-of-week
 ion-datetime,part,calendar-header
 ion-datetime,part,datetime-header
 ion-datetime,part,datetime-selected-date
 ion-datetime,part,datetime-title
-ion-datetime,part,days-of-week
 ion-datetime,part,month-year-button
 ion-datetime,part,navigation-buttons
 ion-datetime,part,next-button
