@@ -91,7 +91,7 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  * @part calendar-header - The calendar header manages the date navigation controls (month/year picker and prev/next buttons) and the days of the week when using a grid style layout.
  * @part month-year-button - The button that opens the month/year picker when
  * using a grid style layout.
- * @part prev-next-buttons - The buttons used to navigate to the next or previous month when using a grid style layout.
+ * @part navigation-buttons - The buttons used to navigate to the next or previous month when using a grid style layout.
  * @part prev-button - The button used to navigate to the previous month when using a grid style layout.
  * @part next-button - The button used to navigate to the next month when using a grid style layout.
  * @part days-of-week - The container for the day-of-the-week header (both weekdays and weekends) when using a grid style layout.
@@ -2206,7 +2206,7 @@ export class Datetime implements ComponentInterface {
                 aria-label="Previous month"
                 disabled={prevMonthDisabled}
                 onClick={() => this.prevMonth()}
-                part="prev-next-buttons prev-button"
+                part="navigation-buttons prev-button"
               >
                 <ion-icon
                   dir={hostDir}
@@ -2221,7 +2221,7 @@ export class Datetime implements ComponentInterface {
                 aria-label="Next month"
                 disabled={nextMonthDisabled}
                 onClick={() => this.nextMonth()}
-                part="prev-next-buttons next-button"
+                part="navigation-buttons next-button"
               >
                 <ion-icon
                   dir={hostDir}

@@ -266,7 +266,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await page.setContent(
         `
           <style>
-            ion-datetime::part(prev-next-buttons) {
+            ion-datetime::part(navigation-buttons) {
               background-color: firebrick;
             }
           </style>

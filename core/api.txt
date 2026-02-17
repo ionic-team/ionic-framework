@@ -570,9 +570,9 @@ ion-datetime,part,calendar-header
 ion-datetime,part,datetime-header
 ion-datetime,part,days-of-week
 ion-datetime,part,month-year-button
+ion-datetime,part,navigation-buttons
 ion-datetime,part,next-button
 ion-datetime,part,prev-button
-ion-datetime,part,prev-next-buttons
 ion-datetime,part,time-button
 ion-datetime,part,time-button active
 ion-datetime,part,wheel
