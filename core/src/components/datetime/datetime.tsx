@@ -2589,7 +2589,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <div class="datetime-header" part="datetime-header">
-        <div class="datetime-title">
+        <div class="datetime-title" part="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
         {showExpandedHeader && <div class="datetime-selected-date">{this.getHeaderSelectedDateText()}</div>}
