@@ -7,6 +7,7 @@ export const routes: Routes = [
     component: AppComponent,
     children: [
       { path: '', loadComponent: () => import('../home-page/home-page.component').then(c => c.HomePageComponent) },
+      { path: 'inputs', loadComponent: () => import('../inputs/inputs.component').then(c => c.InputsComponent) },
       { path: 'menu-controller', loadComponent: () => import('../menu-controller/menu-controller.component').then(c => c.MenuControllerComponent) },
       { path: 'action-sheet-controller', loadComponent: () => import('../action-sheet-controller/action-sheet-controller.component').then(c => c.ActionSheetControllerComponent) },
       { path: 'popover', loadComponent: () => import('../popover/popover.component').then(c => c.PopoverComponent) },
