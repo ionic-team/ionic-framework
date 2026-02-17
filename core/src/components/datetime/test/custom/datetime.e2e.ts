@@ -176,7 +176,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       expect(backgroundColor).toBe('rgb(0, 0, 255)');
     });
 
-    test('should be able to customize datetime header part', async ({ page }, testInfo) => {
+    test('should be able to customize datetime header parts', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30083',
@@ -188,6 +188,10 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
             ion-datetime::part(datetime-header) {
               background-color: orange;
             }
+
+            ion-datetime::part(datetime-title) {
+              background-color: pink;
+            }
           </style>
           <ion-datetime value="2020-03-14T14:23:00.000Z">
             <span slot="title">Select Date</span>
@@ -198,12 +202,18 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const datetime = page.locator('ion-datetime');
       const header = datetime.locator('.datetime-header');
+      const title = datetime.locator('.datetime-title');
 
-      const backgroundColor = await header.evaluate((el) => {
+      const headerBackgroundColor = await header.evaluate((el) => {
         return window.getComputedStyle(el).backgroundColor;
       });
 
-      expect(backgroundColor).toBe('rgb(255, 165, 0)');
+      const titleBackgroundColor = await title.evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor;
+      });
+
+      expect(headerBackgroundColor).toBe('rgb(255, 165, 0)');
+      expect(titleBackgroundColor).toBe('rgb(255, 192, 203)');
     });
 
     test('should be able to customize calendar header part', async ({ page }) => {

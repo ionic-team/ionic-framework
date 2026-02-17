@@ -103,6 +103,7 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  * @part calendar-day disabled - The calendar day that is disabled.
  *
  * @part datetime-header - The datetime header contains the content for the `title` slot and the selected date.
+ * @part datetime-title - The element that contains the `title` slot content.
  */
 @Component({
   tag: 'ion-datetime',
