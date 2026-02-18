@@ -85,7 +85,7 @@ export class Chip implements ComponentInterface {
    */
   get fillValue(): string {
     const fillConfig = config.getObjectValue('IonChip.fill', 'solid') as string;
-    const fill = this.fill || fillConfig;
+    const fill = this.fill || (this.outline ? 'outline' : undefined) || fillConfig;
 
     return fill;
   }
