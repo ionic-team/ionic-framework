@@ -572,7 +572,7 @@ ion-datetime,part,datetime-header
 ion-datetime,part,datetime-selected-date
 ion-datetime,part,datetime-title
 ion-datetime,part,month-year-button
-ion-datetime,part,navigation-buttons
+ion-datetime,part,navigation-button
 ion-datetime,part,next-button
 ion-datetime,part,previous-button
 ion-datetime,part,time-button

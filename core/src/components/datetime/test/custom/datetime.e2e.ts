@@ -286,7 +286,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await page.setContent(
         `
           <style>
-            ion-datetime::part(navigation-buttons) {
+            ion-datetime::part(navigation-button) {
               background-color: firebrick;
             }
 
@@ -323,7 +323,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         return window.getComputedStyle(el).color;
       });
 
-      // Verify the navigation-buttons part applies the styles
+      // Verify the navigation-button part applies the styles
       expect(prevBackgroundColor).toBe('rgb(178, 34, 34)');
       expect(nextBackgroundColor).toBe('rgb(178, 34, 34)');
       // Verify the previous-button part applies the styles
