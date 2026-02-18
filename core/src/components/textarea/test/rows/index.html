@@ -43,29 +43,21 @@
 
       <ion-content id="content" class="ion-padding">
         <div class="grid">
+          <!-- Different row values -->
+          <div class="grid-item">
+            <h2>Rows: 1</h2>
+            <ion-textarea
+              rows="1"
+              label="Small"
+              value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+            ></ion-textarea>
+          </div>
+
           <div class="grid-item">
             <h2>Rows: 3</h2>
             <ion-textarea
               rows="3"
-              label="Comments"
-              value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
-            ></ion-textarea>
-          </div>
-
-          <div class="grid-item">
-            <h2>Rows: 2</h2>
-            <ion-textarea
-              rows="2"
-              label="Text Area"
-              value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
-            ></ion-textarea>
-          </div>
-
-          <div class="grid-item">
-            <h2>Rows: 5</h2>
-            <ion-textarea
-              rows="5"
-              label="Text Area"
+              label="Medium"
               value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
             ></ion-textarea>
           </div>
@@ -74,11 +66,12 @@
             <h2>Rows: 8</h2>
             <ion-textarea
               rows="8"
-              label="Text Area"
+              label="Large"
               value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
             ></ion-textarea>
           </div>
 
+          <!-- Different sizes -->
           <div class="grid-item">
             <h2>Rows: 3, Size Small</h2>
             <ion-textarea
@@ -109,6 +102,7 @@
             ></ion-textarea>
           </div>
 
+          <!-- Auto-grow -->
           <div class="grid-item">
             <h2>Rows: 3, Auto-grow</h2>
             <ion-textarea
@@ -117,18 +111,6 @@
               label="Comments"
               value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
             ></ion-textarea>
-          </div>
-
-          <div class="grid-item">
-            <h2>Rows: 3, Start and End Slot Icons</h2>
-            <ion-textarea
-              rows="3"
-              label="Comments"
-              value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
-            >
-              <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
-              <ion-icon slot="end" name="square-outline" aria-hidden="true"></ion-icon>
-            </ion-textarea>
           </div>
         </div>
       </ion-content>
