@@ -27,10 +27,6 @@
 // Ionic Textarea Sizes
 // --------------------------------------------------
 
-:host .native-wrapper::after {
-  @include globals.padding(0);
-}
-
 :host(.textarea-size-small) .textarea-wrapper-inner {
   --padding-top: #{globals.$ion-space-200};
   --padding-end: #{globals.$ion-space-300};
@@ -52,6 +48,13 @@
   --padding-start: #{globals.$ion-space-500};
 }
 
+// Native Textarea
+// --------------------------------------------------
+
+:host .native-wrapper::after {
+  @include globals.padding(0);
+}
+
 // Ionic Textarea Shapes
 // --------------------------------------------------
 
@@ -65,6 +68,21 @@
 
 :host(.textarea-shape-rectangular) {
   --border-radius: #{globals.$ion-rectangular-xl};
+}
+
+// Textarea Auto Grow
+// ----------------------------------------------------------------
+
+// The height should be auto only when auto-grow is enabled.
+:host([auto-grow]) .textarea-wrapper-inner {
+  height: auto;
+}
+
+// The min and max height should be inherited if auto-grow is enabled.
+// This allows the textarea to grow and shrink as needed.
+:host([auto-grow]) .native-wrapper {
+  min-height: inherit;
+  max-height: inherit;
 }
 
 // Textarea Wrapper
@@ -92,56 +110,27 @@
   padding-bottom: var(--padding-bottom);
 }
 
-// Textarea Auto Grow
+// Textarea Highlight
 // ----------------------------------------------------------------
 
-// The height should be auto only when auto-grow is enabled.
-:host([auto-grow]) .textarea-wrapper-inner {
-  height: auto;
+:host(.has-focus.ion-valid),
+:host(.ion-touched.ion-invalid) {
+  --border-width: #{globals.$ion-border-size-025};
 }
 
-// The min and max height should be inherited if auto-grow is enabled.
-// This allows the textarea to grow and shrink as needed.
-:host([auto-grow]) .native-wrapper {
-  min-height: inherit;
-  max-height: inherit;
-}
+.textarea-highlight {
+  @include globals.position(null, null, -1px, 0);
 
-// Textarea Label
-// ----------------------------------------------------------------
+  position: absolute;
 
-.label-text-wrapper {
-  @include globals.typography(globals.$ion-body-sm-medium);
+  width: 100%;
+  height: globals.$ion-border-size-050;
 
-  max-width: globals.$ion-scale-5000;
+  transform: scale(0);
 
-  transition: color globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive,
-    transform globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive;
+  transition: transform globals.$ion-transition-time-200;
 
-  color: globals.$ion-text-subtle;
-}
-
-:host(.label-floating) .label-text-wrapper {
-  @include globals.transform(none);
-}
-
-// Textarea Slotted Content
-// ----------------------------------------------------------------
-
-ion-icon {
-  --color: globals.$ion-icon-subtlest;
-
-  font-size: globals.$ion-scale-400;
-}
-
-.start-slot-wrapper,
-.end-slot-wrapper {
-  margin-top: globals.$ion-space-050;
-}
-
-:host([rows]:not([auto-grow])) .start-slot-wrapper,
-:host([rows]:not([auto-grow])) .end-slot-wrapper {
-  @include globals.padding(var(--padding-top), 0, var(--padding-bottom), 0);
+  background: var(--border-color);
 }
 
 // Textarea Bottom Content
@@ -165,27 +154,83 @@ ion-icon {
   color: var(--highlight-color-valid);
 }
 
-:host(.has-focus.ion-valid),
-:host(.ion-touched.ion-invalid) {
-  --border-width: #{globals.$ion-border-size-025};
-}
-
-// Textarea Highlight
+// Textarea Label
 // ----------------------------------------------------------------
 
-.textarea-highlight {
-  @include globals.position(null, null, -1px, 0);
+.label-text-wrapper {
+  @include globals.typography(globals.$ion-body-sm-medium);
 
-  position: absolute;
+  max-width: globals.$ion-scale-5000;
 
-  width: 100%;
-  height: globals.$ion-border-size-050;
+  transition: color globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive,
+    transform globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive;
 
-  transform: scale(0);
+  color: globals.$ion-text-subtle;
+}
 
-  transition: transform globals.$ion-transition-time-200;
+:host(.label-floating) .label-text-wrapper {
+  @include globals.transform(none);
+}
 
-  background: var(--border-color);
+/**
+ * This makes the label sit above the textarea.
+ */
+:host(.label-floating) .label-text-wrapper {
+  $form-control-label-stacked-scale: 0.75;
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the textarea.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+.textarea-wrapper textarea {
+  /**
+   * When the floating label appears on top of the
+   * textarea, we need to fade the textarea out so that the
+   * label does not overlap with the placeholder.
+   */
+  transition: opacity globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive;
+}
+
+// Textarea Label Placement - Fixed
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the textarea in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.textarea-label-placement-fixed) .label-text {
+  $text-wrapper-width: calc(globals.$ion-scale-2400 + globals.$ion-space-100);
+
+  flex: 0 0 $text-wrapper-width;
+
+  width: $text-wrapper-width;
+  min-width: $text-wrapper-width;
+  max-width: globals.$ion-scale-5000;
+}
+
+// Textarea Slotted Content
+// ----------------------------------------------------------------
+
+ion-icon {
+  --color: globals.$ion-icon-subtlest;
+
+  font-size: globals.$ion-scale-400;
+}
+
+// Start / End Slots
+// ----------------------------------------------------------------
+
+.start-slot-wrapper,
+.end-slot-wrapper {
+  margin-top: globals.$ion-space-050;
+}
+
+:host([rows]:not([auto-grow])) .start-slot-wrapper,
+:host([rows]:not([auto-grow])) .end-slot-wrapper {
+  @include globals.padding(var(--padding-top), 0, var(--padding-bottom), 0);
 }
 
 // Textarea Focus
@@ -247,43 +292,4 @@ ion-icon {
 
 :host(.textarea-readonly) {
   --background: #{globals.$ion-bg-input-read-only};
-}
-
-/**
- * This makes the label sit above the textarea.
- */
-:host(.label-floating) .label-text-wrapper {
-  $form-control-label-stacked-scale: 0.75;
-
-  /**
-   * Label text should not extend
-   * beyond the bounds of the textarea.
-   */
-  max-width: calc(100% / #{$form-control-label-stacked-scale});
-}
-
-.textarea-wrapper textarea {
-  /**
-   * When the floating label appears on top of the
-   * textarea, we need to fade the textarea out so that the
-   * label does not overlap with the placeholder.
-   */
-  transition: opacity globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive;
-}
-
-// Textarea Label Placement - Fixed
-// ----------------------------------------------------------------
-
-/**
- * Label is on the left of the textarea in LTR and
- * on the right in RTL. Label also has a fixed width.
- */
-:host(.textarea-label-placement-fixed) .label-text {
-  $text-wrapper-width: calc(globals.$ion-scale-2400 + globals.$ion-space-100);
-
-  flex: 0 0 $text-wrapper-width;
-
-  width: $text-wrapper-width;
-  min-width: $text-wrapper-width;
-  max-width: globals.$ion-scale-5000;
 }
