@@ -101,9 +101,11 @@
 }
 
 /**
- * Top and bottom padding are on the textarea so that when scrolling,
- * text can scroll behind the outline borders. When at rest at top or bottom,
- * the text is not glued to the outline lines.
+ * Top and bottom padding are applied to ensure that text remains visible 
+ * as it scrolls past the container boundaries. This provides a "sneak peek" 
+ * of the content transitioning off-screen, mirroring native textarea behavior 
+ * where text isn't immediately clipped or "glued" to the border at the 
+ * scroll limits.
  */
 :host([rows]:not([auto-grow])) .textarea-wrapper-inner .native-textarea {
   padding-top: var(--padding-top);
