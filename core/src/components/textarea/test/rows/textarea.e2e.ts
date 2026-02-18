@@ -2,8 +2,8 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * Rows attribute is only available in the Ionic theme.
- * When set, it increases the container min-height to accommodate the number of rows.
+ * This behavior does not vary across directions
+ * This behavior only applies to the `ionic` theme.
  */
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: rows'), () => {
