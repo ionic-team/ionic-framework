@@ -18,7 +18,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
           ></ion-textarea>
           <ion-textarea
             rows="3"
-            label="Medium"
+            label="Comments"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
