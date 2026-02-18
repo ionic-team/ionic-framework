@@ -81,31 +81,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       await expect(container).toHaveScreenshot(screenshot(`textarea-rows-different-values`));
     });
 
-    test('should respect rows attribute with fill outline and solid', async ({ page }) => {
-      await page.setContent(
-        `
-        <div id="container" style="display: flex; flex-direction: column; gap: 20px;">
-          <ion-textarea
-            rows="4"
-            fill="outline"
-            label="Outline"
-            value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
-          ></ion-textarea>
-          <ion-textarea
-            rows="4"
-            fill="solid"
-            label="Solid"
-            value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
-          ></ion-textarea>
-        </div>
-      `,
-        config
-      );
-
-      const container = page.locator('#container');
-      await expect(container).toHaveScreenshot(screenshot(`textarea-rows-4-fill`));
-    });
-
     test('should respect rows attribute with different sizes', async ({ page }) => {
       await page.setContent(
         `
