@@ -169,5 +169,24 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       const textarea = page.locator('ion-textarea');
       await expect(textarea).toHaveScreenshot(screenshot(`textarea-rows-3-autogrow`));
     });
+
+    test('should respect rows with start and end slot icons', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-textarea
+          rows="3"
+          label="Comments"
+          value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+        >
+          <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+          <ion-icon slot="end" name="square-outline" aria-hidden="true"></ion-icon>
+        </ion-textarea>
+      `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+      await expect(textarea).toHaveScreenshot(screenshot(`textarea-rows-3-end-slot-icon`));
+    });
   });
 });
