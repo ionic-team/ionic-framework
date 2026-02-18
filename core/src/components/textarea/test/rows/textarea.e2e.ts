@@ -35,7 +35,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       await expect(container).toHaveScreenshot(screenshot(`textarea-rows`));
     });
 
-    test('should respect rows attribute', async ({ page }) => {
+    test('should respect rows attribute with different sizes', async ({ page }) => {
       await page.setContent(
         `
         <div id="container" style="display: flex; flex-direction: column; gap: 20px;">
