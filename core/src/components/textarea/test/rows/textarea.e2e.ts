@@ -7,7 +7,7 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: rows'), () => {
-    test('should respect rows attribute and set min-height', async ({ page }) => {
+    test('should respect rows attribute, async ({ page }) => {
       await page.setContent(
         `
         <ion-textarea
