@@ -13,7 +13,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
         <ion-textarea
           rows="3"
           label="Comments"
-          label-placement="stacked"
           helper-text="rows=3, label-placement=stacked"
           value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
         ></ion-textarea>
@@ -32,63 +31,54 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
           <ion-textarea
             rows="1"
             label="Small"
-            label-placement="stacked"
             helper-text="rows=1, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
             rows="1"
             label="Medium"
-            label-placement="stacked"
             helper-text="rows=1, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
             rows="1"
             label="Large"
-            label-placement="stacked"
             helper-text="rows=1, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
             rows="3"
             label="Small"
-            label-placement="stacked"
             helper-text="rows=3, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
             rows="3"
             label="Medium"
-            label-placement="stacked"
             helper-text="rows=3, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
             rows="3"
             label="Large"
-            label-placement="stacked"
             helper-text="rows=3, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
             rows="5"
             label="Small"
-            label-placement="stacked"
             helper-text="rows=5, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
             rows="5"
             label="Medium"
-            label-placement="stacked"
             helper-text="rows=5, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
           <ion-textarea
             rows="5"
             label="Large"
-            label-placement="stacked"
             helper-text="rows=5, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
@@ -109,7 +99,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
             rows="4"
             fill="outline"
             label="Outline"
-            label-placement="stacked"
             helper-text="rows=4, fill=outline, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
@@ -117,7 +106,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
             rows="4"
             fill="solid"
             label="Solid"
-            label-placement="stacked"
             helper-text="rows=4, fill=solid, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
@@ -138,7 +126,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
             rows="3"
             size="small"
             label="Small Size"
-            label-placement="stacked"
             helper-text="rows=3, size=small, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
@@ -146,7 +133,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
             rows="3"
             size="medium"
             label="Medium Size"
-            label-placement="stacked"
             helper-text="rows=3, size=medium, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
@@ -154,7 +140,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
             rows="3"
             size="large"
             label="Large Size"
-            label-placement="stacked"
             helper-text="rows=3, size=large, label-placement=stacked"
             value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
           ></ion-textarea>
@@ -173,7 +158,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
         <ion-textarea
           rows="3"
           label="Comments"
-          label-placement="stacked"
           helper-text="rows=3, label-placement=stacked"
           value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
         ></ion-textarea>
@@ -192,7 +176,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
           rows="3"
           auto-grow="true"
           label="Comments"
-          label-placement="stacked"
           helper-text="rows=3, auto-grow=true, label-placement=stacked"
           value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
         ></ion-textarea>
