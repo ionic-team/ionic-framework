@@ -1695,6 +1695,7 @@ ion-segment-content,shadow
 
 ion-segment-view,shadow
 ion-segment-view,prop,disabled,boolean,false,false,false
+ion-segment-view,prop,swipeGesture,boolean,true,false,false
 ion-segment-view,event,ionSegmentViewScroll,SegmentViewScrollEvent,true
 
 ion-select,shadow
@@ -1759,14 +1760,17 @@ ion-select,css-prop,--placeholder-opacity,ios
 ion-select,css-prop,--placeholder-opacity,md
 ion-select,css-prop,--ripple-color,ios
 ion-select,css-prop,--ripple-color,md
+ion-select,part,bottom
 ion-select,part,container
 ion-select,part,error-text
 ion-select,part,helper-text
 ion-select,part,icon
+ion-select,part,inner
 ion-select,part,label
 ion-select,part,placeholder
 ion-select,part,supporting-text
 ion-select,part,text
+ion-select,part,wrapper
 
 ion-select-modal,scoped
 ion-select-modal,prop,cancelText,string,'Close',false,false
@@ -1877,7 +1881,7 @@ ion-textarea,prop,cols,number | undefined,undefined,false,true
 ion-textarea,prop,counter,boolean,false,false,false
 ion-textarea,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
 ion-textarea,prop,debounce,number | undefined,undefined,false,false
-ion-textarea,prop,disabled,boolean,false,false,false
+ion-textarea,prop,disabled,boolean,false,false,true
 ion-textarea,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-textarea,prop,errorText,string | undefined,undefined,false,false
 ion-textarea,prop,fill,"outline" | "solid" | undefined,undefined,false,false
@@ -1890,7 +1894,7 @@ ion-textarea,prop,minlength,number | undefined,undefined,false,false
 ion-textarea,prop,mode,"ios" | "md",undefined,false,false
 ion-textarea,prop,name,string,this.inputId,false,false
 ion-textarea,prop,placeholder,string | undefined,undefined,false,false
-ion-textarea,prop,readonly,boolean,false,false,false
+ion-textarea,prop,readonly,boolean,false,false,true
 ion-textarea,prop,required,boolean,false,false,false
 ion-textarea,prop,rows,number | undefined,undefined,false,false
 ion-textarea,prop,shape,"round" | undefined,undefined,false,false

@@ -903,6 +903,7 @@ export const IonSegmentContent: StencilVueComponent<JSX.IonSegmentContent> = /*@
 
 export const IonSegmentView: StencilVueComponent<JSX.IonSegmentView> = /*@__PURE__*/ defineContainer<JSX.IonSegmentView>('ion-segment-view', defineIonSegmentView, [
   'disabled',
+  'swipeGesture',
   'ionSegmentViewScroll'
 ], [
   'ionSegmentViewScroll'

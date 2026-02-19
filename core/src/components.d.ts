@@ -3113,6 +3113,11 @@ export namespace Components {
           * @param smoothScroll : Whether to animate the scroll transition.
          */
         "setContent": (id: string, smoothScroll?: boolean) => Promise<void>;
+        /**
+          * If `true`, users will be able to swipe the segment view to navigate between segment contents.
+          * @default true
+         */
+        "swipeGesture": boolean;
     }
     interface IonSelect {
         /**
@@ -8435,6 +8440,11 @@ declare namespace LocalJSX {
           * Emitted when the segment view is scrolled.
          */
         "onIonSegmentViewScroll"?: (event: IonSegmentViewCustomEvent<SegmentViewScrollEvent>) => void;
+        /**
+          * If `true`, users will be able to swipe the segment view to navigate between segment contents.
+          * @default true
+         */
+        "swipeGesture"?: boolean;
     }
     interface IonSelect {
         /**
