@@ -1,3 +1,4 @@
+import { currentColor } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
@@ -16,6 +17,15 @@ export const defaultTheme: DefaultTheme = {
 
   config: {
     formHighlight: true,
+
+    components: {
+      IonChip: {
+        fill: 'solid',
+        hue: 'subtle',
+        shape: 'round',
+        size: 'large',
+      },
+    },
   },
 
   fontFamily:
@@ -75,5 +85,181 @@ export const defaultTheme: DefaultTheme = {
     xxl: 'var(--ion-radii-500)',
     xxxl: 'var(--ion-radii-1000)',
     xxxxl: 'var(--ion-radii-full)',
+  },
+
+  components: {
+    IonChip: {
+      margin: {
+        top: 'var(--ion-spacing-0)',
+        end: 'var(--ion-spacing-0)',
+        bottom: 'var(--ion-spacing-0)',
+        start: 'var(--ion-spacing-0)',
+      },
+
+      padding: {
+        top: 'var(--ion-spacing-xs)',
+        end: 'var(--ion-spacing-sm)',
+        bottom: 'var(--ion-spacing-xs)',
+        start: 'var(--ion-spacing-sm)',
+      },
+
+      lineHeight: '100%',
+      letterSpacing: '0%',
+      gap: 'var(--ion-spacing-xxs)',
+
+      font: {
+        weight: 500,
+      },
+
+      // Sizes
+      size: {
+        small: {
+          minHeight: 'var(--ion-scaling-xs)',
+          font: {
+            size: 'var(--ion-font-size-xs)',
+          },
+        },
+        large: {
+          minHeight: 'var(--ion-scaling-md)',
+          font: {
+            size: 'var(--ion-font-size-sm)',
+          },
+        },
+      },
+
+      // States
+      state: {
+        disabled: {
+          opacity: '0.4',
+        },
+        focus: {
+          ring: {
+            color: '#b5c0f7',
+            style: 'solid',
+            width: 'var(--ion-border-width-xxs)',
+          },
+        },
+      },
+
+      // Shapes
+      shape: {
+        soft: {
+          border: {
+            radius: 'var(--ion-radii-sm)',
+          },
+        },
+        round: {
+          border: {
+            radius: 'var(--ion-radii-xl)',
+          },
+        },
+        rectangular: {
+          border: {
+            radius: 'var(--ion-radii-xxxxs)',
+          },
+        },
+      },
+
+      // Hues
+      hue: {
+        bold: {
+          solid: {
+            // Default non-semantic states
+            default: {
+              background: '#3b3b3b',
+              color: '#ffffff',
+            },
+
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                background: currentColor('base'),
+                color: currentColor('contrast'),
+              },
+            },
+          },
+
+          outline: {
+            // Default non-semantic states
+            default: {
+              background: '#3b3b3b',
+              color: '#ffffff',
+
+              border: {
+                color: '#242424',
+                style: 'solid',
+                width: '1px',
+              },
+            },
+
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                background: currentColor('base'),
+                color: currentColor('contrast'),
+
+                border: {
+                  color: currentColor('shade'),
+                  style: 'solid',
+                  width: '1px',
+                },
+              },
+            },
+          },
+        },
+
+        subtle: {
+          solid: {
+            // Default non-semantic states
+            default: {
+              background: '#f3f3f3',
+              color: '#626262',
+            },
+
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                background: currentColor('base', null, true),
+                color: currentColor('contrast', null, true),
+              },
+            },
+          },
+
+          outline: {
+            // Default non-semantic states
+            default: {
+              background: '#f3f3f3',
+              color: '#626262',
+
+              border: {
+                color: '#e0e0e0',
+                style: 'solid',
+                width: '1px',
+              },
+            },
+
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                background: currentColor('base', null, true),
+                color: currentColor('contrast', null, true),
+
+                border: {
+                  color: currentColor('shade', null, true),
+                  style: 'solid',
+                  width: '1px',
+                },
+              },
+            },
+          },
+        },
+      },
+
+      icon: {
+        font: {
+          size: 'var(--ion-scaling-xxxs)',
+        },
+      },
+    },
   },
 };

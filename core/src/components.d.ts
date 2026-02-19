@@ -872,8 +872,11 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Only applies to the `ionic` theme.
-          * @default 'subtle'
+          * The fill for the chip.  Set to `"outline"` for a chip with a border and background. Set to `"solid"` for a chip with a background.  Defaults to `"solid"`.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"`.
          */
         "hue"?: 'bold' | 'subtle';
         /**
@@ -882,21 +885,18 @@ export namespace Components {
         "mode"?: "ios" | "md";
         /**
           * Display an outline style button.
+          * @deprecated - Use fill="outline" instead
           * @default false
          */
         "outline": boolean;
         /**
-          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners. Defaults to `"round"` for the `"ionic"` theme and `"soft"` for all other themes.
+          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"`.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"`.
          */
         "size"?: 'small' | 'large';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonCol {
         /**
@@ -6846,8 +6846,11 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Only applies to the `ionic` theme.
-          * @default 'subtle'
+          * The fill for the chip.  Set to `"outline"` for a chip with a border and background. Set to `"solid"` for a chip with a background.  Defaults to `"solid"`.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"`.
          */
         "hue"?: 'bold' | 'subtle';
         /**
@@ -6856,21 +6859,18 @@ declare namespace LocalJSX {
         "mode"?: "ios" | "md";
         /**
           * Display an outline style button.
+          * @deprecated - Use fill="outline" instead
           * @default false
          */
         "outline"?: boolean;
         /**
-          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners. Defaults to `"round"` for the `"ionic"` theme and `"soft"` for all other themes.
+          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"`.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"`.
          */
         "size"?: 'small' | 'large';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonCol {
         /**

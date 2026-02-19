@@ -266,6 +266,7 @@ export const IonCheckbox: StencilVueComponent<JSX.IonCheckbox, JSX.IonCheckbox["
 export const IonChip: StencilVueComponent<JSX.IonChip> = /*@__PURE__*/ defineContainer<JSX.IonChip>('ion-chip', defineIonChip, [
   'color',
   'outline',
+  'fill',
   'disabled',
   'hue',
   'shape',
