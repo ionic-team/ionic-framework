@@ -29,7 +29,7 @@ import { PickerButton, PickerColumn } from "./components/picker-legacy/picker-in
 import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
 import { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
-import { RefresherEventDetail } from "./components/refresher/refresher-interface";
+import { RefresherEventDetail, RefresherPullEndEventDetail } from "./components/refresher/refresher-interface";
 import { ItemReorderEventDetail, ReorderEndEventDetail, ReorderMoveEventDetail } from "./components/reorder-group/reorder-group-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
@@ -67,7 +67,7 @@ export { PickerButton, PickerColumn } from "./components/picker-legacy/picker-in
 export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
 export { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
-export { RefresherEventDetail } from "./components/refresher/refresher-interface";
+export { RefresherEventDetail, RefresherPullEndEventDetail } from "./components/refresher/refresher-interface";
 export { ItemReorderEventDetail, ReorderEndEventDetail, ReorderMoveEventDetail } from "./components/reorder-group/reorder-group-interface";
 export { NavigationHookCallback } from "./components/route/route-interface";
 export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
@@ -2745,7 +2745,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.  Does not apply when the refresher content uses a spinner, enabling the native refresher.
+          * How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example, If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels, the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.  Does not apply when the refresher content uses a spinner, enabling the native refresher.
           * @default 1
          */
         "pullFactor": number;
@@ -4754,6 +4754,8 @@ declare global {
         "ionRefresh": RefresherEventDetail;
         "ionPull": void;
         "ionStart": void;
+        "ionPullStart": void;
+        "ionPullEnd": RefresherPullEndEventDetail;
     }
     interface HTMLIonRefresherElement extends Components.IonRefresher, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonRefresherElementEventMap>(type: K, listener: (this: HTMLIonRefresherElement, ev: IonRefresherCustomEvent<HTMLIonRefresherElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -8015,15 +8017,24 @@ declare namespace LocalJSX {
          */
         "onIonPull"?: (event: IonRefresherCustomEvent<void>) => void;
         /**
+          * Emitted when the refresher has returned to the inactive state after a pull gesture. This fires whether the refresh completed successfully or was canceled.
+         */
+        "onIonPullEnd"?: (event: IonRefresherCustomEvent<RefresherPullEndEventDetail>) => void;
+        /**
+          * Emitted when the user begins to start pulling down.
+         */
+        "onIonPullStart"?: (event: IonRefresherCustomEvent<void>) => void;
+        /**
           * Emitted when the user lets go of the content and has pulled down further than the `pullMin` or pulls the content down and exceeds the pullMax. Updates the refresher state to `refreshing`. The `complete()` method should be called when the async operation has completed.
          */
         "onIonRefresh"?: (event: IonRefresherCustomEvent<RefresherEventDetail>) => void;
         /**
-          * Emitted when the user begins to start pulling down.
+          * Emitted when the user begins to start pulling down. TODO(FW-7044): Remove this in a major release
+          * @deprecated Use `ionPullStart` instead.
          */
         "onIonStart"?: (event: IonRefresherCustomEvent<void>) => void;
         /**
-          * How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.  Does not apply when the refresher content uses a spinner, enabling the native refresher.
+          * How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example, If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels, the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.  Does not apply when the refresher content uses a spinner, enabling the native refresher.
           * @default 1
          */
         "pullFactor"?: number;
