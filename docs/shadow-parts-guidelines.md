@@ -75,7 +75,6 @@ return (
 </div>
 ```
 
-
 ### `wrapper`
 
 **What it does:** The HTML `<label>` element that wraps the entire form control. Clicking anywhere on it focuses the control.
