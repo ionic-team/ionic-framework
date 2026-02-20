@@ -50,9 +50,9 @@ import type {
  * @part knob-b - The visual knob element for the second knob. Only available when `dualKnobs` is `true`.
  * @part knob-lower - The visual knob element for the lower knob. Only available when `dualKnobs` is `true`.
  * @part knob-upper - The visual knob element for the upper knob. Only available when `dualKnobs` is `true`.
- * @part pressed - Added to the knob-handle, knob, and pin that is currently being pressed to drag. Only one set has this part at a time when `dualKnobs` is `true`.
  * @part focused - Added to the knob-handle, knob, and pin that currently has focus. Only one set has this part at a time when `dualKnobs` is `true`.
- * @part hover - Added to the knob-handle, knob, and pin when the knob has hover. Only one set has this part at a time.
+ * @part hover - Added to the knob-handle, knob, and pin when the knob has hover. Only one set has this part at a time when `dualKnobs` is `true`.
+ * @part pressed - Added to the knob-handle, knob, and pin that is currently being pressed to drag. Only one set has this part at a time when `dualKnobs` is `true`.
  */
 @Component({
   tag: 'ion-range',
@@ -878,7 +878,7 @@ export class Range implements ComponentInterface {
 
         {renderKnob(rtl, {
           knob: 'A',
-          position: this.dualKnobs ? (this.ratioA <= this.ratioB ? 'lower' : 'upper') : 'lower',
+          position: getKnobPosition('A', this.ratioA, this.ratioB, this.dualKnobs),
           dualKnobs: this.dualKnobs,
           focused: focusedKnob === 'A',
           hovered: hoveredKnob === 'A',
@@ -901,7 +901,7 @@ export class Range implements ComponentInterface {
         {this.dualKnobs &&
           renderKnob(rtl, {
             knob: 'B',
-            position: this.ratioB <= this.ratioA ? 'lower' : 'upper',
+            position: getKnobPosition('B', this.ratioA, this.ratioB, this.dualKnobs),
             dualKnobs: this.dualKnobs,
             focused: focusedKnob === 'B',
             hovered: hoveredKnob === 'B',
@@ -949,6 +949,14 @@ export class Range implements ComponentInterface {
     const mode = getIonMode(this);
 
     /**
+     * Determine the name and position of the pressed knob to apply
+     * Host classes for styling.
+     */
+    const pressedKnobName = dualKnobs ? pressedKnob?.toLowerCase() : undefined;
+    const pressedKnobPosition =
+      dualKnobs && pressedKnob ? getKnobPosition(pressedKnob, this.ratioA, this.ratioB, dualKnobs) : undefined;
+
+    /**
      * Determine if any knob is at the min or max value to
      * apply Host classes for styling.
      */
@@ -968,6 +976,8 @@ export class Range implements ComponentInterface {
           'range-disabled': disabled,
           'range-dual-knobs': dualKnobs,
           'range-pressed': pressedKnob !== undefined,
+          [`range-pressed-${pressedKnobName}`]: pressedKnob !== undefined && pressedKnobName !== undefined,
+          [`range-pressed-${pressedKnobPosition}`]: pressedKnob !== undefined && pressedKnobPosition !== undefined,
           'range-has-pin': pin,
           [`range-label-placement-${labelPlacement}`]: true,
           'range-item-start-adjustment': needsStartAdjustment,
@@ -1030,9 +1040,9 @@ const renderKnob = (
     min,
     max,
     disabled,
-    pressed,
     focused,
     hovered,
+    pressed,
     pin,
     handleKeyboard,
     pinFormatter,
@@ -1145,6 +1155,20 @@ const renderKnob = (
       />
     </div>
   );
+};
+
+/**
+ * Returns whether the given knob is at the lower or upper position based
+ * on current ratios for the given knob.
+ */
+const getKnobPosition = (knob: 'A' | 'B', ratioA: number, ratioB: number, dualKnobs: boolean): 'lower' | 'upper' => {
+  if (dualKnobs) {
+    if (knob === 'A') {
+      return ratioA <= ratioB ? 'lower' : 'upper';
+    }
+    return ratioB <= ratioA ? 'lower' : 'upper';
+  }
+  return 'lower';
 };
 
 const ratioToValue = (ratio: number, min: number, max: number, step: number): number => {

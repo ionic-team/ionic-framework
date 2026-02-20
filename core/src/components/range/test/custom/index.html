@@ -194,6 +194,20 @@
      * -----------------------------------
      */
 
+    /* Style the start slot knob value when the lower knob is pressed */
+    #lower-upper-dual-knobs-range.range-pressed-lower [slot='start'] {
+      background: var(--color-blue-light);
+      border-color: var(--color-blue-light);
+      color: #fff;
+    }
+
+    /* Style the end slot knob value when the upper knob is pressed */
+    #lower-upper-dual-knobs-range.range-pressed-upper [slot='end'] {
+      background: var(--color-blue-dark);
+      border-color: var(--color-blue-dark);
+      color: #fff;
+    }
+
     /* Knob lower */
     #lower-upper-dual-knobs-range::part(knob-lower) {
       border-radius: 50% 0 0 50%;
@@ -241,6 +255,20 @@
      *       Knobs A & B
      * -----------------------------------
      */
+
+    /* Style the start slot knob value when the A knob is pressed */
+    #a-b-dual-knobs-range.range-pressed-a [slot='start'] {
+      background: var(--color-blue-light);
+      border-color: var(--color-blue-light);
+      color: #fff;
+    }
+
+    /* Style the end slot knob value when the B knob is pressed */
+    #a-b-dual-knobs-range.range-pressed-b [slot='end'] {
+      background: var(--color-blue-dark);
+      border-color: var(--color-blue-dark);
+      color: #fff;
+    }
 
     /* Hovered knob A */
     #a-b-dual-knobs-range::part(knob-a hover) {
