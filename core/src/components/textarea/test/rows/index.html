@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Textarea - Rows</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+        color: #6f7378;
+        margin-top: 10px;
+      }
+
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Textarea - Rows</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" class="ion-padding">
+        <div class="grid">
+          <!-- Different row values -->
+          <div class="grid-item">
+            <h2>Rows: 1</h2>
+            <ion-textarea
+              rows="1"
+              label="Small"
+              value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+            ></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Rows: 3</h2>
+            <ion-textarea
+              rows="3"
+              label="Medium"
+              value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+            ></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Rows: 8</h2>
+            <ion-textarea
+              rows="8"
+              label="Large"
+              value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+            ></ion-textarea>
+          </div>
+
+          <!-- Different sizes -->
+          <div class="grid-item">
+            <h2>Rows: 3, Size Small</h2>
+            <ion-textarea
+              rows="3"
+              size="small"
+              label="Small Size"
+              value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+            ></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Rows: 3, Size Medium</h2>
+            <ion-textarea
+              rows="3"
+              size="medium"
+              label="Medium Size"
+              value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+            ></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Rows: 3, Size Large</h2>
+            <ion-textarea
+              rows="3"
+              size="large"
+              label="Large Size"
+              value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+            ></ion-textarea>
+          </div>
+
+          <!-- Auto-grow -->
+          <div class="grid-item">
+            <h2>Rows: 3, Auto-grow</h2>
+            <ion-textarea
+              rows="3"
+              auto-grow="true"
+              label="Comments"
+              value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;0"
+            ></ion-textarea>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>
