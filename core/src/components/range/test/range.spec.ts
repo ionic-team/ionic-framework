@@ -377,6 +377,87 @@ describe('range: boolean property classes', () => {
   });
 });
 
+describe('range: pressed state classes', () => {
+  it('should have range-pressed class when knob is pressed', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range min="0" max="100"></ion-range>`,
+    });
+
+    const range = page.body.querySelector('ion-range')!;
+    const component = page.rootInstance;
+    component.pressedKnob = 'A';
+
+    await page.waitForChanges();
+
+    expect(range.classList.contains('range-pressed')).toBe(true);
+    expect(range.classList.contains('range-pressed-a')).toBe(false);
+    expect(range.classList.contains('range-pressed-lower')).toBe(false);
+    expect(range.classList.contains('range-pressed-b')).toBe(false);
+    expect(range.classList.contains('range-pressed-upper')).toBe(false);
+  });
+
+  it('should have range-pressed-lower class when lower knob is pressed', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range dual-knobs="true" min="0" max="100"></ion-range>`,
+    });
+
+    const range = page.body.querySelector('ion-range')!;
+    const component = page.rootInstance;
+    component.pressedKnob = 'A';
+    component.ratioA = 0.5;
+    component.ratioB = 0.8;
+
+    await page.waitForChanges();
+    expect(range.classList.contains('range-pressed-lower')).toBe(true);
+  });
+
+  it('should have range-pressed-upper class when upper knob is pressed', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range dual-knobs="true" min="0" max="100"></ion-range>`,
+    });
+
+    const range = page.body.querySelector('ion-range')!;
+    const component = page.rootInstance;
+    component.pressedKnob = 'B';
+    component.ratioA = 0.5;
+    component.ratioB = 0.8;
+
+    await page.waitForChanges();
+    expect(range.classList.contains('range-pressed-upper')).toBe(true);
+  });
+
+  it('should have range-pressed-a class when knob A is pressed', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range dual-knobs="true" min="0" max="100"></ion-range>`,
+    });
+
+    const range = page.body.querySelector('ion-range')!;
+    const component = page.rootInstance;
+    component.pressedKnob = 'A';
+
+    await page.waitForChanges();
+    expect(range.classList.contains('range-pressed-a')).toBe(true);
+  });
+
+  it('should have range-pressed-b class when knob B is pressed', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range dual-knobs="true" min="0" max="100"></ion-range>`,
+    });
+
+    const range = page.body.querySelector('ion-range')!;
+    const component = page.rootInstance;
+    component.pressedKnob = 'B';
+
+    await page.waitForChanges();
+    expect(range.classList.contains('range-pressed-b')).toBe(true);
+  });
+});
+
 describe('range: shadow parts', () => {
   it('should have default shadow parts', async () => {
     const page = await newSpecPage({
@@ -528,7 +609,7 @@ describe('range: shadow parts', () => {
     expect(shadowRoot.querySelector('[part~="pin"][part~="pressed"]')).toBeNull();
 
     // Simulate a pressed knob by setting state on component instance
-    const component = page.rootInstance as any;
+    const component = page.rootInstance;
     component.pressedKnob = 'A';
     await page.waitForChanges();
 
@@ -588,7 +669,7 @@ describe('range: shadow parts', () => {
     });
     const range = page.body.querySelector('ion-range')!;
     const shadowRoot = range.shadowRoot!;
-    const component = page.rootInstance as any;
+    const component = page.rootInstance;
 
     // pressed part should not exist on any element by default
     expect(shadowRoot.querySelector('[part~="knob-handle-a"][part~="pressed"]')).toBeNull();
