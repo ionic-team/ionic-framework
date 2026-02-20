@@ -50,6 +50,7 @@ import type {
  * @part knob-b - The visual knob element for the second knob. Only available when `dualKnobs` is `true`.
  * @part knob-lower - The visual knob element for the lower knob. Only available when `dualKnobs` is `true`.
  * @part knob-upper - The visual knob element for the upper knob. Only available when `dualKnobs` is `true`.
+ * @part activated - Added to the knob-handle, knob, and pin when the knob is activated (has the `ion-activated` class). Only one set has this part at a time when `dualKnobs` is `true`.
  * @part focused - Added to the knob-handle, knob, and pin that currently has focus. Only one set has this part at a time when `dualKnobs` is `true`.
  * @part hover - Added to the knob-handle, knob, and pin when the knob has hover. Only one set has this part at a time when `dualKnobs` is `true`.
  * @part pressed - Added to the knob-handle, knob, and pin that is currently being pressed to drag. Only one set has this part at a time when `dualKnobs` is `true`.
@@ -75,11 +76,13 @@ export class Range implements ComponentInterface {
   private initialContentScrollY = true;
   private originalIonInput?: EventEmitter<RangeChangeEventDetail>;
   private focusFromPointer = false;
+  private activatedObserver?: MutationObserver;
 
   @Element() el!: HTMLIonRangeElement;
 
   @State() private ratioA = 0;
   @State() private ratioB = 0;
+  @State() private activatedKnob: KnobName;
   @State() private focusedKnob: KnobName;
   @State() private hoveredKnob: KnobName;
   @State() private pressedKnob: KnobName;
@@ -344,6 +347,32 @@ export class Range implements ComponentInterface {
     }
   };
 
+  /**
+   * Observes the knob handles for the ion-activated class and syncs
+   * activatedKnob so the activated part is correctly set on the handle,
+   * knob, and pin.
+   */
+  private setupActivatedObserver = () => {
+    const knobHandleA = this.el.shadowRoot!.querySelector('.range-knob-handle-a');
+    const knobHandleB = this.el.shadowRoot!.querySelector('.range-knob-handle-b');
+
+    const syncActivated = () => {
+      this.activatedKnob = (knobHandleA as HTMLElement)?.classList.contains('ion-activated')
+        ? 'A'
+        : (knobHandleB as HTMLElement)?.classList.contains('ion-activated')
+        ? 'B'
+        : undefined;
+    };
+
+    this.activatedObserver = new MutationObserver(syncActivated);
+    this.activatedObserver.observe(this.el.shadowRoot!, {
+      attributes: true,
+      attributeFilter: ['class'],
+      subtree: true,
+    });
+    syncActivated();
+  };
+
   componentWillLoad() {
     /**
      * If user has custom ID set then we should
@@ -365,6 +394,7 @@ export class Range implements ComponentInterface {
     this.originalIonInput = this.ionInput;
     this.setupGesture();
     this.updateRatio();
+    this.setupActivatedObserver();
     this.didLoad = true;
   }
 
@@ -392,6 +422,10 @@ export class Range implements ComponentInterface {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
+    }
+    if (this.activatedObserver) {
+      this.activatedObserver.disconnect();
+      this.activatedObserver = undefined;
     }
   }
 
@@ -731,6 +765,7 @@ export class Range implements ComponentInterface {
       max,
       step,
       handleKeyboard,
+      activatedKnob,
       focusedKnob,
       hoveredKnob,
       pressedKnob,
@@ -880,6 +915,7 @@ export class Range implements ComponentInterface {
           knob: 'A',
           position: getKnobPosition('A', this.ratioA, this.ratioB, this.dualKnobs),
           dualKnobs: this.dualKnobs,
+          activated: activatedKnob === 'A',
           focused: focusedKnob === 'A',
           hovered: hoveredKnob === 'A',
           pressed: pressedKnob === 'A',
@@ -903,6 +939,7 @@ export class Range implements ComponentInterface {
             knob: 'B',
             position: getKnobPosition('B', this.ratioA, this.ratioB, this.dualKnobs),
             dualKnobs: this.dualKnobs,
+            activated: activatedKnob === 'B',
             focused: focusedKnob === 'B',
             hovered: hoveredKnob === 'B',
             pressed: pressedKnob === 'B',
@@ -1019,6 +1056,7 @@ interface RangeKnob {
   pressed: boolean;
   focused: boolean;
   hovered: boolean;
+  activated: boolean;
   pin: boolean;
   pinFormatter: PinFormatter;
   inheritedAttributes: Attributes;
@@ -1040,6 +1078,7 @@ const renderKnob = (
     min,
     max,
     disabled,
+    activated,
     focused,
     hovered,
     pressed,
@@ -1104,6 +1143,7 @@ const renderKnob = (
         pressed && 'pressed',
         focused && 'focused',
         hovered && 'hover',
+        activated && 'activated',
       ]
         .filter(Boolean)
         .join(' ')}
@@ -1130,6 +1170,7 @@ const renderKnob = (
             pressed && 'pressed',
             focused && 'focused',
             hovered && 'hover',
+            activated && 'activated',
           ]
             .filter(Boolean)
             .join(' ')}
@@ -1149,6 +1190,7 @@ const renderKnob = (
           pressed && 'pressed',
           focused && 'focused',
           hovered && 'hover',
+          activated && 'activated',
         ]
           .filter(Boolean)
           .join(' ')}

@@ -1473,6 +1473,7 @@ ion-range,css-prop,--pin-background,ios
 ion-range,css-prop,--pin-background,md
 ion-range,css-prop,--pin-color,ios
 ion-range,css-prop,--pin-color,md
+ion-range,part,activated
 ion-range,part,bar
 ion-range,part,bar-active
 ion-range,part,focused

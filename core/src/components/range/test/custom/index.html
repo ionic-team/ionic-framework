@@ -121,6 +121,7 @@
     }
 
     /* Override the default hover/focus indicator */
+    .custom-knobs-range::part(knob activated)::before,
     .custom-knobs-range::part(knob hover)::before,
     .custom-knobs-range::part(knob pressed)::before,
     .custom-knobs-range::part(knob focused)::before {
@@ -188,6 +189,11 @@
       background: var(--color-blue-primary);
     }
 
+    /* Activated knob */
+    #single-knob-range::part(knob activated) {
+      background: var(--color-blue-dark);
+    }
+
     /**
      * 3rd Custom Range: Dual Knobs
      *     Knobs Lower & Upper
@@ -228,6 +234,11 @@
       background: var(--color-blue-light);
     }
 
+    /* Activated knob lower */
+    #lower-upper-dual-knobs-range::part(knob-lower activated) {
+      background: var(--color-blue-primary);
+    }
+
     /* Hovered knob upper */
     #lower-upper-dual-knobs-range::part(knob-upper hover) {
       background: rgba(var(--color-blue-dark-rgb), 0.5);
@@ -236,6 +247,11 @@
     /* Pressed knob upper */
     #lower-upper-dual-knobs-range::part(knob-upper pressed) {
       background: var(--color-blue-dark);
+    }
+
+    /* Activated knob upper */
+    #lower-upper-dual-knobs-range::part(knob-upper activated) {
+      background: var(--color-blue-primary);
     }
 
     /* Pin lower */
@@ -280,6 +296,11 @@
       background: var(--color-blue-light);
     }
 
+    /* Activated knob A */
+    #a-b-dual-knobs-range::part(knob-a activated) {
+      background: var(--color-blue-primary);
+    }
+
     /* Hovered knob B */
     #a-b-dual-knobs-range::part(knob-b hover) {
       background: rgba(var(--color-blue-dark-rgb), 0.5);
@@ -288,6 +309,11 @@
     /* Pressed knob B */
     #a-b-dual-knobs-range::part(knob-b pressed) {
       background: var(--color-blue-dark);
+    }
+
+    /* Activated knob B */
+    #a-b-dual-knobs-range::part(knob-b activated) {
+      background: var(--color-blue-primary);
     }
 
     /* Pin A */
