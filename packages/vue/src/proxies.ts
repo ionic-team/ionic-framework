@@ -783,11 +783,15 @@ export const IonRefresher: StencilVueComponent<JSX.IonRefresher> = /*@__PURE__*/
   'disabled',
   'ionRefresh',
   'ionPull',
-  'ionStart'
+  'ionStart',
+  'ionPullStart',
+  'ionPullEnd'
 ], [
   'ionRefresh',
   'ionPull',
-  'ionStart'
+  'ionStart',
+  'ionPullStart',
+  'ionPullEnd'
 ]);
 
 
