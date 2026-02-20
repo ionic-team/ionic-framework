@@ -47,3 +47,11 @@ export interface ModalCustomEvent extends CustomEvent {
  * The behavior setting for modals when the handle is pressed.
  */
 export type ModalHandleBehavior = 'none' | 'cycle';
+
+export interface ModalDragEventDetail {
+  currentY: number;
+  deltaY?: number;
+  velocityY?: number;
+  progress?: number;
+  currentBreakpoint?: number;
+}

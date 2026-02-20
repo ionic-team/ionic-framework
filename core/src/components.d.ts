@@ -20,7 +20,7 @@ import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
 import { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
-import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
+import { ModalBreakpointChangeEventDetail, ModalDragEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 import { ViewController } from "./components/nav/view-controller";
 import { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
@@ -58,7 +58,7 @@ export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
 export { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
-export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
+export { ModalBreakpointChangeEventDetail, ModalDragEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 export { ViewController } from "./components/nav/view-controller";
 export { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
@@ -4534,6 +4534,9 @@ declare global {
         "willDismiss": OverlayEventDetail;
         "didDismiss": OverlayEventDetail;
         "ionMount": void;
+        "ionDragStart": void;
+        "ionDragMove": ModalDragEventDetail;
+        "ionDragEnd": ModalDragEventDetail;
     }
     interface HTMLIonModalElement extends Components.IonModal, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonModalElementEventMap>(type: K, listener: (this: HTMLIonModalElement, ev: IonModalCustomEvent<HTMLIonModalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -7346,6 +7349,18 @@ declare namespace LocalJSX {
           * Emitted after the modal breakpoint has changed.
          */
         "onIonBreakpointDidChange"?: (event: IonModalCustomEvent<ModalBreakpointChangeEventDetail>) => void;
+        /**
+          * Event that is emitted when the sheet modal or card modal gesture ends.
+         */
+        "onIonDragEnd"?: (event: IonModalCustomEvent<ModalDragEventDetail>) => void;
+        /**
+          * Event that is emitted when the sheet modal or card modal gesture moves.
+         */
+        "onIonDragMove"?: (event: IonModalCustomEvent<ModalDragEventDetail>) => void;
+        /**
+          * Event that is emitted when the sheet modal or card modal gesture starts.
+         */
+        "onIonDragStart"?: (event: IonModalCustomEvent<void>) => void;
         /**
           * Emitted after the modal has dismissed.
          */

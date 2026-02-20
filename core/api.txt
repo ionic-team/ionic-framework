@@ -1172,6 +1172,9 @@ ion-modal,method,setCurrentBreakpoint,setCurrentBreakpoint(breakpoint: number) =
 ion-modal,event,didDismiss,OverlayEventDetail<any>,true
 ion-modal,event,didPresent,void,true
 ion-modal,event,ionBreakpointDidChange,ModalBreakpointChangeEventDetail,true
+ion-modal,event,ionDragEnd,ModalDragEventDetail,true
+ion-modal,event,ionDragMove,ModalDragEventDetail,true
+ion-modal,event,ionDragStart,void,true
 ion-modal,event,ionModalDidDismiss,OverlayEventDetail<any>,true
 ion-modal,event,ionModalDidPresent,void,true
 ion-modal,event,ionModalWillDismiss,OverlayEventDetail<any>,true
