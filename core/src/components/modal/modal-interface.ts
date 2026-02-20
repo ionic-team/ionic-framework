@@ -50,8 +50,8 @@ export type ModalHandleBehavior = 'none' | 'cycle';
 
 export interface ModalDragEventDetail {
   currentY: number;
-  deltaY?: number;
-  velocityY?: number;
-  progress?: number;
+  deltaY: number;
+  velocityY: number;
+  progress: number;
   currentBreakpoint?: number;
 }

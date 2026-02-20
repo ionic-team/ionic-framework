@@ -429,17 +429,7 @@ export const createSheetGesture = (
     offset = clamp(0.0001, processedStep, maxStep);
     animation.progressStep(offset);
 
-    /**
-     * When the gesture moves, we need to determine
-     * the closest breakpoint to snap to.
-     */
-    const velocity = detail.velocityY;
-    const threshold = (detail.deltaY + velocity * 350) / height;
-
-    const diff = currentBreakpoint - threshold;
-    const closest = breakpoints.reduce((a, b) => {
-      return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
-    });
+    const closest = calculateClosestBreakpoint(detail.velocityY, detail.deltaY);
 
     const eventDetail: ModalDragEventDetail = {
       currentY: detail.currentY,
@@ -470,17 +460,7 @@ export const createSheetGesture = (
       return;
     }
 
-    /**
-     * When the gesture releases, we need to determine
-     * the closest breakpoint to snap to.
-     */
-    const velocity = detail.velocityY;
-    const threshold = (detail.deltaY + velocity * 350) / height;
-
-    const diff = currentBreakpoint - threshold;
-    const closest = breakpoints.reduce((a, b) => {
-      return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
-    });
+    const closest = calculateClosestBreakpoint(detail.velocityY, detail.deltaY);
 
     moveSheetToBreakpoint({
       breakpoint: closest,
@@ -659,6 +639,26 @@ export const createSheetGesture = (
         )
         .progressEnd(1, 0, animated ? 500 : 0);
     });
+  };
+
+  /**
+   * Calculates the closest breakpoint based on the current velocity and deltaY.
+   * This determines where the sheet should snap to when the user releases the
+   * gesture.
+   *
+   * @param velocityY The current velocity of the gesture in the Y direction.
+   * @param deltaY The change in Y position since the gesture started.
+   * @returns The closest breakpoint value.
+   */
+  const calculateClosestBreakpoint = (velocityY: number, deltaY: number): number => {
+    const threshold = (deltaY + velocityY * 350) / height;
+
+    const diff = currentBreakpoint - threshold;
+    const closest = breakpoints.reduce((a, b) => {
+      return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
+    });
+
+    return closest;
   };
 
   /**
