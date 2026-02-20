@@ -60,12 +60,6 @@
   --border-radius: #{globals.$ion-border-radius-0};
 }
 
-// Chip Icon
-// ---------------------------------------------
-::slotted(ion-icon) {
-  font-size: globals.$ion-font-size-400;
-}
-
 // Size
 // ---------------------------------------------
 
@@ -73,12 +67,20 @@
   min-height: globals.$ion-scale-600;
 
   font-size: globals.$ion-font-size-300;
+
+  ::slotted(ion-icon) {
+    font-size: globals.$ion-font-size-300;
+  }
 }
 
 :host(.chip-large) {
   min-height: globals.$ion-scale-800;
 
   font-size: globals.$ion-font-size-350;
+
+  ::slotted(ion-icon) {
+    font-size: globals.$ion-font-size-400;
+  }
 }
 
 // Subtle Chip
