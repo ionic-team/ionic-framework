@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, dragElementBy, test } from '@utils/test/playwright';
 
 import { CardModalPage } from '../fixtures';
 
@@ -93,6 +93,41 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
         const content = page.locator('ion-modal ion-content');
         await expect(content).toHaveJSProperty('scrollY', true);
       });
+    });
+  });
+
+  test.describe(title('card modal: drag events'), () => {
+    test('should emit ionDragStart, ionDragMove, and ionDragEnd events', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/23955',
+      });
+
+      await page.goto('/src/components/modal/test/card', config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#drag-events');
+      await ionModalDidPresent.next();
+
+      const ionDragStart = await page.spyOnEvent('ionDragStart');
+      const ionDragMove = await page.spyOnEvent('ionDragMove');
+      const ionDragEnd = await page.spyOnEvent('ionDragEnd');
+
+      const header = page.locator('.modal-card ion-header');
+      await dragElementBy(header, page, 0, 100);
+
+      await ionDragStart.next();
+      const dragMoveEvent = await ionDragMove.next();
+      const dragEndEvent = await ionDragEnd.next();
+
+      expect(ionDragStart.length).toBe(1);
+
+      expect(ionDragMove.length).toBeGreaterThan(0);
+      expect(Object.keys(dragMoveEvent.detail).length).toBe(4);
+
+      expect(ionDragEnd.length).toBe(1);
+      expect(Object.keys(dragEndEvent.detail).length).toBe(4);
     });
   });
 });

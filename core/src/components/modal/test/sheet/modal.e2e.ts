@@ -353,4 +353,39 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(dragHandle).toBeFocused();
     });
   });
+
+  test.describe(title('sheet modal: drag events'), () => {
+    test('should emit ionDragStart, ionDragMove, and ionDragEnd events', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/23955',
+      });
+
+      await page.goto('/src/components/modal/test/sheet', config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#drag-events');
+      await ionModalDidPresent.next();
+
+      const ionDragStart = await page.spyOnEvent('ionDragStart');
+      const ionDragMove = await page.spyOnEvent('ionDragMove');
+      const ionDragEnd = await page.spyOnEvent('ionDragEnd');
+
+      const header = page.locator('.modal-sheet ion-header');
+      await dragElementBy(header, page, 0, 100);
+
+      await ionDragStart.next();
+      const dragMoveEvent = await ionDragMove.next();
+      const dragEndEvent = await ionDragEnd.next();
+
+      expect(ionDragStart.length).toBe(1);
+
+      expect(ionDragMove.length).toBeGreaterThan(0);
+      expect(Object.keys(dragMoveEvent.detail).length).toBe(5);
+
+      expect(ionDragEnd.length).toBe(1);
+      expect(Object.keys(dragEndEvent.detail).length).toBe(5);
+    });
+  });
 });
