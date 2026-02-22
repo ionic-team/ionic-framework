@@ -103,8 +103,14 @@
    * this optimization.
    *
    * See: https://bugs.webkit.org/show_bug.cgi?id=216701
+   *
+   * The z-index must also be greater than the z-index of
+   * ion-refresher.refresher-native (z-index: 1) so that the
+   * scroll content appears above the native iOS refresher spinner
+   * when the user scrolls back up after a pull-to-refresh.
+   * See: https://github.com/ionic-team/ionic-framework/issues/22358
    */
-  z-index: 0;
+  z-index: 2;
 
   will-change: scroll-position;
 }
