@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, dragElementBy, test } from '@utils/test/playwright';
 
 /**
  * This behavior does not vary across modes/directions
@@ -310,6 +310,91 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
           return pinUpper ? window.getComputedStyle(pinUpper).backgroundColor : '';
         });
         expect(pinUpperBackgroundColor).toBe('rgb(128, 0, 128)');
+      });
+
+      test('should keep a & b parts on same elements and swap lower & upper parts when values swap', async ({
+        page,
+      }) => {
+        await page.setContent(
+          `
+          <ion-range label="Label" dual-knobs="true" pin="true"></ion-range>
+        `,
+          config
+        );
+
+        const range = page.locator('ion-range');
+        await range.evaluate((el) => {
+          (el as any).value = { lower: 25, upper: 75 };
+        });
+        await page.waitForChanges();
+
+        // On load: query each a & b part to check lower & upper
+        const handleAHasLowerOnLoad = await range.evaluate((el) => {
+          const handleA = el.shadowRoot?.querySelector('[part~="knob-handle-a"]');
+          const part = handleA?.getAttribute('part') ?? '';
+          return part.includes('knob-handle-lower');
+        });
+        const handleAHasUpperOnLoad = await range.evaluate((el) => {
+          const handleA = el.shadowRoot?.querySelector('[part~="knob-handle-a"]');
+          const part = handleA?.getAttribute('part') ?? '';
+          return part.includes('knob-handle-upper');
+        });
+        const handleBHasLowerOnLoad = await range.evaluate((el) => {
+          const handleB = el.shadowRoot?.querySelector('[part~="knob-handle-b"]');
+          const part = handleB?.getAttribute('part') ?? '';
+          return part.includes('knob-handle-lower');
+        });
+        const handleBHasUpperOnLoad = await range.evaluate((el) => {
+          const handleB = el.shadowRoot?.querySelector('[part~="knob-handle-b"]');
+          const part = handleB?.getAttribute('part') ?? '';
+          return part.includes('knob-handle-upper');
+        });
+
+        // The lower knob is assigned to the a part and the
+        // upper knob is assigned to the b part on load
+        expect(handleAHasLowerOnLoad).toBe(true);
+        expect(handleAHasUpperOnLoad).toBe(false);
+        expect(handleBHasLowerOnLoad).toBe(false);
+        expect(handleBHasUpperOnLoad).toBe(true);
+
+        // Drag the lower knob right so the two knobs swap positions
+        const box = await range.boundingBox();
+        expect(box).not.toBeNull();
+        const startX = box!.x + box!.width * 0.25;
+        const startY = box!.y + box!.height / 2;
+        const dragDistance = Math.round(box!.width * 0.55);
+        await dragElementBy(range, page, dragDistance, 0, startX, startY);
+        await page.waitForChanges();
+
+        // After swap: the same elements have parts A and B
+        // but lower and upper have swapped positions
+        const handleAHasLowerAfterSwap = await range.evaluate((el) => {
+          const handleA = el.shadowRoot?.querySelector('[part~="knob-handle-a"]');
+          const part = handleA?.getAttribute('part') ?? '';
+          return part.includes('knob-handle-lower');
+        });
+        const handleAHasUpperAfterSwap = await range.evaluate((el) => {
+          const handleA = el.shadowRoot?.querySelector('[part~="knob-handle-a"]');
+          const part = handleA?.getAttribute('part') ?? '';
+          return part.includes('knob-handle-upper');
+        });
+        const handleBHasLowerAfterSwap = await range.evaluate((el) => {
+          const handleB = el.shadowRoot?.querySelector('[part~="knob-handle-b"]');
+          const part = handleB?.getAttribute('part') ?? '';
+          return part.includes('knob-handle-lower');
+        });
+        const handleBHasUpperAfterSwap = await range.evaluate((el) => {
+          const handleB = el.shadowRoot?.querySelector('[part~="knob-handle-b"]');
+          const part = handleB?.getAttribute('part') ?? '';
+          return part.includes('knob-handle-upper');
+        });
+
+        // After swap: the lower knob is assigned to the b part and the
+        // upper knob is assigned to the a part
+        expect(handleAHasLowerAfterSwap).toBe(false);
+        expect(handleAHasUpperAfterSwap).toBe(true);
+        expect(handleBHasLowerAfterSwap).toBe(true);
+        expect(handleBHasUpperAfterSwap).toBe(false);
       });
     });
   });
