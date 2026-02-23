@@ -7,6 +7,30 @@ import { configs, dragElementBy, test } from '@utils/test/playwright';
 configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
   test.describe(title('range: custom'), () => {
     test.describe(title('CSS shadow parts'), () => {
+      test('should be able to customize label part', async ({ page }) => {
+        await page.setContent(
+          `
+          <style>
+            ion-range::part(label) {
+              color: red;
+            }
+          </style>
+
+          <ion-range label="Label" value="50"></ion-range>
+        `,
+          config
+        );
+
+        const range = page.locator('ion-range');
+
+        const labelColor = await range.evaluate((el) => {
+          const shadowRoot = el.shadowRoot;
+          const label = shadowRoot?.querySelector('.label-text-wrapper');
+          return label ? window.getComputedStyle(label).color : '';
+        });
+        expect(labelColor).toBe('rgb(255, 0, 0)');
+      });
+
       test('should be able to customize bar parts', async ({ page }) => {
         await page.setContent(
           `
