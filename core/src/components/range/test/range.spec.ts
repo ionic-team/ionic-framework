@@ -466,31 +466,41 @@ describe('range: shadow parts', () => {
     });
     const range = page.body.querySelector('ion-range')!;
 
+    // bar and bar-active parts always exist
     expect(range).toHaveShadowPart('bar');
     expect(range).toHaveShadowPart('bar-active');
 
+    // label part always exists
     expect(range).toHaveShadowPart('label');
 
-    // knob and knob-handle parts always exist
-    expect(range).toHaveShadowPart('knob');
+    // knob-handle and knob parts always exist
     expect(range).toHaveShadowPart('knob-handle');
+    expect(range).toHaveShadowPart('knob');
 
-    // knob a and knob b only exist when dualKnobs is true
-    expect(range).not.toHaveShadowPart('knob-a');
-    expect(range).not.toHaveShadowPart('knob-b');
+    // knob-handle a, b, lower, and upper parts only exist when dualKnobs is true
     expect(range).not.toHaveShadowPart('knob-handle-a');
     expect(range).not.toHaveShadowPart('knob-handle-b');
+    expect(range).not.toHaveShadowPart('knob-handle-lower');
+    expect(range).not.toHaveShadowPart('knob-handle-upper');
 
-    // ticks only exist when ticks is true
-    expect(range).not.toHaveShadowPart('tick');
-    expect(range).not.toHaveShadowPart('tick-active');
+    // knob a, b, lower, and upper parts only exist when dualKnobs is true
+    expect(range).not.toHaveShadowPart('knob-a');
+    expect(range).not.toHaveShadowPart('knob-b');
+    expect(range).not.toHaveShadowPart('knob-lower');
+    expect(range).not.toHaveShadowPart('knob-upper');
 
     // pin only exists when pin is true
     expect(range).not.toHaveShadowPart('pin');
 
-    // pin a and pin b only exist when pin is true and dualKnobs is true
+    // pin a, b, lower, and upper only exist when both pin and dualKnobs are true
     expect(range).not.toHaveShadowPart('pin-a');
     expect(range).not.toHaveShadowPart('pin-b');
+    expect(range).not.toHaveShadowPart('pin-lower');
+    expect(range).not.toHaveShadowPart('pin-upper');
+
+    // ticks only exist when ticks is true
+    expect(range).not.toHaveShadowPart('tick');
+    expect(range).not.toHaveShadowPart('tick-active');
   });
 
   it('should have tick shadow parts', async () => {
@@ -500,31 +510,9 @@ describe('range: shadow parts', () => {
     });
     const range = page.body.querySelector('ion-range')!;
 
-    expect(range).toHaveShadowPart('bar');
-    expect(range).toHaveShadowPart('bar-active');
-
-    expect(range).toHaveShadowPart('label');
-
-    // knob and knob-handle parts always exist
-    expect(range).toHaveShadowPart('knob');
-    expect(range).toHaveShadowPart('knob-handle');
-
-    // knob a and knob b only exist when dualKnobs is true
-    expect(range).not.toHaveShadowPart('knob-a');
-    expect(range).not.toHaveShadowPart('knob-b');
-    expect(range).not.toHaveShadowPart('knob-handle-a');
-    expect(range).not.toHaveShadowPart('knob-handle-b');
-
-    // ticks only exist when snaps and ticks are true
+    // ticks only exist when both snaps and ticks are true
     expect(range).toHaveShadowPart('tick');
     expect(range).toHaveShadowPart('tick-active');
-
-    // pin only exists when pin is true
-    expect(range).not.toHaveShadowPart('pin');
-
-    // pin a and pin b only exist when pin is true and dualKnobs is true
-    expect(range).not.toHaveShadowPart('pin-a');
-    expect(range).not.toHaveShadowPart('pin-b');
   });
 
   it('should have pin shadow part', async () => {
@@ -534,31 +522,14 @@ describe('range: shadow parts', () => {
     });
     const range = page.body.querySelector('ion-range')!;
 
-    expect(range).toHaveShadowPart('bar');
-    expect(range).toHaveShadowPart('bar-active');
-
-    expect(range).toHaveShadowPart('label');
-
-    // knob and knob-handle parts always exist
-    expect(range).toHaveShadowPart('knob');
-    expect(range).toHaveShadowPart('knob-handle');
-
-    // knob a and knob b only exist when dualKnobs is true
-    expect(range).not.toHaveShadowPart('knob-a');
-    expect(range).not.toHaveShadowPart('knob-b');
-    expect(range).not.toHaveShadowPart('knob-handle-a');
-    expect(range).not.toHaveShadowPart('knob-handle-b');
-
-    // ticks only exist when snaps and ticks are true
-    expect(range).not.toHaveShadowPart('tick');
-    expect(range).not.toHaveShadowPart('tick-active');
-
     // pin only exists when pin is true
     expect(range).toHaveShadowPart('pin');
 
-    // pin a and pin b only exist when pin is true and dualKnobs is true
+    // pin a, b, lower, and upper only exist when both pin and dualKnobs are true
     expect(range).not.toHaveShadowPart('pin-a');
     expect(range).not.toHaveShadowPart('pin-b');
+    expect(range).not.toHaveShadowPart('pin-lower');
+    expect(range).not.toHaveShadowPart('pin-upper');
   });
 
   it('should have dual knob shadow parts', async () => {
@@ -568,31 +539,26 @@ describe('range: shadow parts', () => {
     });
     const range = page.body.querySelector('ion-range')!;
 
-    expect(range).toHaveShadowPart('bar');
-    expect(range).toHaveShadowPart('bar-active');
-
-    expect(range).toHaveShadowPart('label');
-
-    // knob and knob-handle parts always exist
-    expect(range).toHaveShadowPart('knob');
-    expect(range).toHaveShadowPart('knob-handle');
-
-    // knob a and knob b only exist when dualKnobs is true
-    expect(range).toHaveShadowPart('knob-a');
-    expect(range).toHaveShadowPart('knob-b');
+    // knob-handle a, b, lower, and upper parts only exist when dualKnobs is true
     expect(range).toHaveShadowPart('knob-handle-a');
     expect(range).toHaveShadowPart('knob-handle-b');
+    expect(range).toHaveShadowPart('knob-handle-lower');
+    expect(range).toHaveShadowPart('knob-handle-upper');
 
-    // ticks only exist when snaps and ticks are true
-    expect(range).not.toHaveShadowPart('tick');
-    expect(range).not.toHaveShadowPart('tick-active');
+    // knob a, b, lower, and upper parts only exist when dualKnobs is true
+    expect(range).toHaveShadowPart('knob-a');
+    expect(range).toHaveShadowPart('knob-b');
+    expect(range).toHaveShadowPart('knob-lower');
+    expect(range).toHaveShadowPart('knob-upper');
 
     // pin only exists when pin is true
     expect(range).toHaveShadowPart('pin');
 
-    // pin a and pin b only exist when pin is true and dualKnobs is true
+    // pin a, b, lower, and upper only exist when both pin and dualKnobs are true
     expect(range).toHaveShadowPart('pin-a');
     expect(range).toHaveShadowPart('pin-b');
+    expect(range).toHaveShadowPart('pin-lower');
+    expect(range).toHaveShadowPart('pin-upper');
   });
 
   it('should have pressed shadow part when pressed', async () => {
