@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, clamp, debounceEvent, renderHiddenInput, isSafeNumber } from '@utils/helpers';
@@ -364,12 +364,14 @@ export class Range implements ComponentInterface {
         : undefined;
     };
 
-    this.activatedObserver = new MutationObserver(syncActivated);
-    this.activatedObserver.observe(this.el.shadowRoot!, {
-      attributes: true,
-      attributeFilter: ['class'],
-      subtree: true,
-    });
+    if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
+      this.activatedObserver = new MutationObserver(syncActivated);
+      this.activatedObserver.observe(this.el.shadowRoot!, {
+        attributes: true,
+        attributeFilter: ['class'],
+        subtree: true,
+      });
+    }
     syncActivated();
   };
 
