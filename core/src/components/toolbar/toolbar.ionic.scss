@@ -13,6 +13,8 @@
   --padding-start: #{globals.$ion-space-200};
   --padding-end: #{globals.$ion-space-200};
   --min-height: #{globals.$ion-scale-1400};
+  --start-size: var(--start-end-size, 0);
+  --end-size: var(--start-end-size, 0);
 }
 
 .toolbar-container {
@@ -87,7 +89,7 @@
 :host(.show-end) slot[name="end"] {
   display: flex;
 
-  flex: 0 0 var(--start-end-size, 0);
+  flex: 0 0 var(--end-size, 0);
   justify-content: flex-end;
 
   text-align: end;
@@ -97,7 +99,7 @@
 :host(.show-start) slot[name="start"] {
   display: flex;
 
-  flex: 0 0 var(--start-end-size, 0);
+  flex: 0 0 var(--start-size, 0);
 }
 
 :host(.has-primary-content) slot[name="primary"],
