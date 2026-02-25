@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.18](https://github.com/ionic-team/ionic-framework/compare/v8.7.17...v8.7.18) (2026-02-25)
+
+
+### Bug Fixes
+
+* **nav-controller:** reset direction state when navigation is canceled ([#30955](https://github.com/ionic-team/ionic-framework/issues/30955)) ([53172d1](https://github.com/ionic-team/ionic-framework/commit/53172d1a4035d5b510c230553aabd53dc1389e4b))
+
+
+
+
+
 ## [8.7.17](https://github.com/ionic-team/ionic-framework/compare/v8.7.15...v8.7.17) (2026-01-14)
 
 **Note:** Version bump only for package @ionic/angular

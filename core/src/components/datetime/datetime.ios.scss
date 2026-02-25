@@ -57,7 +57,9 @@
 }
 
 :host .calendar-action-buttons ion-buttons {
-  @include padding($datetime-ios-padding * 0.5, 0, 0, 0);
+  align-items: stretch;
+
+  height: 100%;
 }
 
 :host .calendar-action-buttons ion-buttons ion-button {

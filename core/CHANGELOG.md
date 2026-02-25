@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.18](https://github.com/ionic-team/ionic-framework/compare/v8.7.17...v8.7.18) (2026-02-25)
+
+
+### Bug Fixes
+
+* **datetime:** stretch ion-buttons to fill space for ios ([#30963](https://github.com/ionic-team/ionic-framework/issues/30963)) ([d46b0b1](https://github.com/ionic-team/ionic-framework/commit/d46b0b15f6a652da6f863cf303e7ce06cfc820a8))
+* **many:** clear timeouts ([#30851](https://github.com/ionic-team/ionic-framework/issues/30851)) ([70b1237](https://github.com/ionic-team/ionic-framework/commit/70b1237823dd0cdab852486a6b2cbbfe0d0aaae9)), closes [#30860](https://github.com/ionic-team/ionic-framework/issues/30860)
+* **modal, popover:** respect safe area insets on popovers and modals ([#30949](https://github.com/ionic-team/ionic-framework/issues/30949)) ([6490797](https://github.com/ionic-team/ionic-framework/commit/6490797851cede3bfda893a19b10f165259ec988)), closes [#28411](https://github.com/ionic-team/ionic-framework/issues/28411)
+* **radio-group:** prevent DOMException and NotFoundError when filtering radios ([#30958](https://github.com/ionic-team/ionic-framework/issues/30958)) ([682a17e](https://github.com/ionic-team/ionic-framework/commit/682a17ebb754da7714989623cf84b75e715e20e1)), closes [#30279](https://github.com/ionic-team/ionic-framework/issues/30279) [#30359](https://github.com/ionic-team/ionic-framework/issues/30359)
+* **toast:** keep icon on the same line as long message in stacked layout ([#30923](https://github.com/ionic-team/ionic-framework/issues/30923)) ([442e3e9](https://github.com/ionic-team/ionic-framework/commit/442e3e983107a69cea4fb5587fb33da718eee8a3)), closes [#30908](https://github.com/ionic-team/ionic-framework/issues/30908)
+
+
+
+
+
 ## [8.7.17](https://github.com/ionic-team/ionic-framework/compare/v8.7.15...v8.7.17) (2026-01-14)
 
 
