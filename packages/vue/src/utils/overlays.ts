@@ -24,9 +24,6 @@ export const defineOverlayContainer = <Props extends object>(
         { componentEv: `${name}DidPresent`, frameworkEv: "didPresent" },
         { componentEv: `${name}WillDismiss`, frameworkEv: "willDismiss" },
         { componentEv: `${name}DidDismiss`, frameworkEv: "didDismiss" },
-        { componentEv: "ionDragStart", frameworkEv: "dragStart" },
-        { componentEv: "ionDragMove", frameworkEv: "dragMove" },
-        { componentEv: "ionDragEnd", frameworkEv: "dragEnd" },
       ];
 
       if (defineCustomElement !== undefined) {
@@ -112,9 +109,11 @@ export const defineOverlayContainer = <Props extends object>(
         delete restOfProps.onDidPresent;
         delete restOfProps.onWillDismiss;
         delete restOfProps.onDidDismiss;
-        delete restOfProps.onDragStart;
-        delete restOfProps.onDragMove;
-        delete restOfProps.onDragEnd;
+        if (name === "ion-modal") {
+          delete restOfProps.onDragStart;
+          delete restOfProps.onDragMove;
+          delete restOfProps.onDragEnd;
+        }
 
         const component = slots.default && slots.default()[0];
         overlay.value = controller.create({
@@ -181,24 +180,26 @@ export const defineOverlayContainer = <Props extends object>(
           emit(componentName + "DidPresent", ev);
         });
         /**
-         * Drag events:
+         * Modal drag events:
          * Adding these ensures they are re-emitted so developers can
          * use @ionDragStart, @ionDragMove, etc. in their templates.
          */
-        elementRef.value.addEventListener("ionDragStart", (ev: Event) => {
-          emit("ionDragStart", ev);
-          emit(componentName + "IonDragStart", ev);
-        });
+        if (name === "ion-modal") {
+          elementRef.value.addEventListener("ionDragStart", (ev: Event) => {
+            emit("ionDragStart", ev);
+            emit(componentName + "IonDragStart", ev);
+          });
 
-        elementRef.value.addEventListener("ionDragMove", (ev: Event) => {
-          emit("ionDragMove", ev);
-          emit(componentName + "IonDragMove", ev);
-        });
+          elementRef.value.addEventListener("ionDragMove", (ev: Event) => {
+            emit("ionDragMove", ev);
+            emit(componentName + "IonDragMove", ev);
+          });
 
-        elementRef.value.addEventListener("ionDragEnd", (ev: Event) => {
-          emit("ionDragEnd", ev);
-          emit(componentName + "IonDragEnd", ev);
-        });
+          elementRef.value.addEventListener("ionDragEnd", (ev: Event) => {
+            emit("ionDragEnd", ev);
+            emit(componentName + "IonDragEnd", ev);
+          });
+        }
       });
 
       return () => {
@@ -263,15 +264,7 @@ export const defineOverlayContainer = <Props extends object>(
     },
     emits:
       typeof controller !== "undefined"
-        ? [
-            "willPresent",
-            "didPresent",
-            "willDismiss",
-            "didDismiss",
-            "ionDragStart",
-            "ionDragMove",
-            "ionDragEnd",
-          ]
+        ? ["willPresent", "didPresent", "willDismiss", "didDismiss"]
         : undefined,
   };
 
