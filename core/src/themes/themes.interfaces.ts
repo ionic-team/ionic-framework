@@ -301,10 +301,17 @@ export type Colors = {
 };
 
 type Components = {
-  IonChip?: IonChipRecipe;
-
+  IonActionSheet?: any;
   IonCard?: any;
+  IonChip?: IonChipRecipe;
+  IonBreadcrumb?: any;
+  IonDatetime?: any;
+  IonDatetimeButton?: any;
   IonItem?: any;
+  IonPicker?: any;
+  IonRange?: any;
+  IonRefresher?: any;
+  IonSegmentButton?: any;
   IonTabBar?: any;
   IonModal?: any;
   IonToolbar?: any;
