@@ -6,7 +6,7 @@
 // --------------------------------------------------
 
 :host {
-  --background: var(--ion-components-ion-datetime-bg);
+  --background: var(--ion-datetime-bg);
   --title-color: #{current-color(contrast)};
 }
 

@@ -2,9 +2,9 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * This behavior does not vary across modes/directions.
+ * This behavior does not vary across directions.
  */
-configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('chip: size'), () => {
     test('should render small chip', async ({ page }) => {
       await page.setContent(

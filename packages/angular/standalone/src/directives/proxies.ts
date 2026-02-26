@@ -618,14 +618,14 @@ export declare interface IonCardTitle extends Components.IonCardTitle {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonChip,
-  inputs: ['color', 'disabled', 'hue', 'mode', 'outline', 'shape', 'size', 'theme']
+  inputs: ['color', 'disabled', 'fill', 'hue', 'mode', 'outline', 'shape', 'size']
 })
 @Component({
   selector: 'ion-chip',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'hue', 'mode', 'outline', 'shape', 'size', 'theme'],
+  inputs: ['color', 'disabled', 'fill', 'hue', 'mode', 'outline', 'shape', 'size'],
   standalone: true
 })
 export class IonChip {

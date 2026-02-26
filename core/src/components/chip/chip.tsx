@@ -1,25 +1,22 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Prop, h } from '@stencil/core';
+import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonTheme } from '../../global/ionic-global';
+import { config } from '../../global/config';
 import type { Color } from '../../interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-chip',
-  styleUrls: {
-    ios: 'chip.ios.scss',
-    md: 'chip.md.scss',
-    ionic: 'chip.ionic.scss',
-  },
+  styleUrl: 'chip.scss',
   shadow: true,
 })
 export class Chip implements ComponentInterface {
+  @Element() el!: HTMLElement;
+
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -29,8 +26,20 @@ export class Chip implements ComponentInterface {
 
   /**
    * Display an outline style button.
+   *
+   * @deprecated - Use fill="outline" instead
    */
   @Prop() outline = false;
+
+  /**
+   * The fill for the chip.
+   *
+   * Set to `"outline"` for a chip with a border and background.
+   * Set to `"solid"` for a chip with a background.
+   *
+   * Defaults to `"solid"`.
+   */
+  @Prop() fill?: 'outline' | 'solid';
 
   /**
    * If `true`, the user cannot interact with the chip.
@@ -41,75 +50,95 @@ export class Chip implements ComponentInterface {
    * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for
    * a chip with muted, subtle colors.
    *
-   * Only applies to the `ionic` theme.
+   * Defaults to `"subtle"`.
    */
-  @Prop() hue?: 'bold' | 'subtle' = 'subtle';
+  @Prop() hue?: 'bold' | 'subtle';
 
   /**
-   * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully
-   * rounded corners, or `"rectangular"` for a chip without rounded corners.
-   * Defaults to `"round"` for the `"ionic"` theme and `"soft"` for all other themes.
+   * Set to `"soft"` for a chip with slightly rounded corners,
+   * `"round"` for a chip with fully rounded corners,
+   * or `"rectangular"` for a chip without rounded corners.
+   *
+   * Defaults to `"round"`.
    */
   @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
+  // TODO(FW-6266): Determine if `medium` size is needed.
   /**
-   * Set the shape based on the theme
+   * Set to `"small"` for a chip with less height and padding.
+   *
+   * Defaults to `"large"`.
    */
-  private getShape(): string {
-    const theme = getIonTheme(this);
-    const { shape } = this;
+  @Prop() size?: 'small' | 'large';
 
-    if (shape === undefined) {
-      return theme === 'ionic' ? 'round' : 'soft';
+  componentDidLoad() {
+    if (this.outline) {
+      printIonWarning(
+        `[ion-chip] - The "outline" attribute has been deprecated in favor of the "fill" attribute. Please use the "fill" attribute with the value "outline" instead.`,
+        this.el
+      );
     }
+  }
+
+  /**
+   * Set the fill based on the custom theme config
+   */
+  get fillValue(): string {
+    const fillConfig = config.getObjectValue('IonChip.fill', 'solid') as string;
+    const fill = this.fill || (this.outline ? 'outline' : undefined) || fillConfig;
+
+    return fill;
+  }
+
+  /**
+   * Set the hue based on the custom theme config
+   */
+  get hueValue(): string {
+    const hueConfig = config.getObjectValue('IonChip.hue', 'subtle') as string;
+    const hue = this.hue || hueConfig;
+
+    return hue;
+  }
+
+  /**
+   * Set the shape based on the custom theme config
+   */
+  get shapeValue(): string {
+    const shapeConfig = config.getObjectValue('IonChip.shape', 'round') as string;
+    const shape = this.shape || shapeConfig;
 
     return shape;
   }
 
   /**
-   * Set to `"small"` for a chip with less height and padding.
-   *
-   * Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+   * Set the size based on the custom theme config
    */
-  @Prop() size?: 'small' | 'large';
+  get sizeValue(): string {
+    const sizeConfig = config.getObjectValue('IonChip.size', 'large') as string;
+    const size = this.size || sizeConfig;
 
-  private getSize() {
-    const theme = getIonTheme(this);
-    const { size } = this;
-
-    if (theme === 'ionic') {
-      return size !== undefined ? size : 'large';
-      // TODO(ROU-10695): remove the size !== undefined when we add support for
-      // the `ios` and `md` themes.
-    } else if (size !== undefined) {
-      printIonWarning(`The "${size}" size is not supported in the ${theme} theme.`);
-    }
-
-    return undefined;
+    return size;
   }
 
   render() {
-    const { hue } = this;
-    const theme = getIonTheme(this);
-    const size = this.getSize();
-    const shape = this.getShape();
+    const { fillValue, hueValue, shapeValue, sizeValue } = this;
+    const useRippleEffect = config.getBoolean('rippleEffect', false);
 
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
-          [theme]: true,
-          [`chip-${shape}`]: true,
-          'chip-outline': this.outline,
+          [`chip-fill-${fillValue}`]: true,
+          [`chip-hue-${hueValue}`]: true,
+          [`chip-shape-${shapeValue}`]: true,
+          [`chip-size-${sizeValue}`]: true,
           'chip-disabled': this.disabled,
           'ion-activatable': true,
           'ion-focusable': !this.disabled,
-          [`chip-${size}`]: size !== undefined,
-          [`chip-${hue}`]: hue !== undefined,
         })}
       >
         <slot></slot>
-        {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        {useRippleEffect && <ion-ripple-effect></ion-ripple-effect>}
       </Host>
     );
   }

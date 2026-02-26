@@ -4,22 +4,22 @@
 // --------------------------------------------------
 
 /// @prop - Color of the breadcrumb
-$breadcrumb-md-color: var(--ion-components-ion-breadcrumb-color);
+$breadcrumb-md-color: var(--ion-breadcrumb-color);
 
 /// @prop - Color of the active breadcrumb
 $breadcrumb-md-color-active: var(--ion-text-color, #03060b);
 
 /// @prop - Color of the focused breadcrumb
-$breadcrumb-md-color-focused: var(--ion-components-ion-breadcrumb-color-focused);
+$breadcrumb-md-color-focused: var(--ion-breadcrumb-color-focused);
 
 /// @prop - Background color of the focused breadcrumb
-$breadcrumb-md-background-focused: var(--ion-components-ion-breadcrumb-bg-focused);
+$breadcrumb-md-background-focused: var(--ion-breadcrumb-bg-focused);
 
 /// @prop - Color of the breadcrumb icon
-$breadcrumb-md-icon-color: var(--ion-components-ion-breadcrumb-icon-color);
+$breadcrumb-md-icon-color: var(--ion-breadcrumb-icon-color);
 
 /// @prop - Color of the breadcrumb icon when active
-$breadcrumb-md-icon-color-active: var(--ion-components-ion-breadcrumb-icon-color-active);
+$breadcrumb-md-icon-color-active: var(--ion-breadcrumb-icon-color-active);
 
 /// @prop - Margin top of the breadcrumb separator
 $breadcrumb-md-separator-margin-top: -1px;
@@ -40,7 +40,7 @@ $breadcrumb-md-separator-color: $breadcrumb-separator-color;
 $breadcrumb-md-indicator-color: $breadcrumb-md-separator-color;
 
 /// @prop - Background color of the breadcrumb indicator
-$breadcrumb-md-indicator-background: var(--ion-components-ion-breadcrumb-indicator-bg);
+$breadcrumb-md-indicator-background: var(--ion-breadcrumb-indicator-bg);
 
 /// @prop - Background color of the breadcrumb indicator when focused
-$breadcrumb-md-indicator-background-focused: var(--ion-components-ion-breadcrumb-indicator-bg-focused);
+$breadcrumb-md-indicator-background-focused: var(--ion-breadcrumb-indicator-bg-focused);

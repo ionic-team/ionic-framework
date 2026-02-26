@@ -11,22 +11,22 @@ $overlay-ios-background-color: var(--ion-overlay-background-color, var(--ion-col
 
 // iOS Tabs & Tab bar
 // --------------------------------------------------
-$tabbar-ios-background: var(--ion-tab-bar-background, var(--ion-components-ion-tab-bar-bg));
+$tabbar-ios-background: var(--ion-tab-bar-background, var(--ion-tab-bar-bg));
 $tabbar-ios-background-focused: var(--ion-tab-bar-background-focused, get-color-shade(#fff));
-$tabbar-ios-border-color: var(--ion-tab-bar-border-color, var(--ion-components-ion-tab-bar-border-color));
+$tabbar-ios-border-color: var(--ion-tab-bar-border-color, var(--ion-tab-bar-border-color));
 $tabbar-ios-color: var(--ion-tab-bar-color, var(--ion-color-text-600));
 $tabbar-ios-color-selected: var(--ion-tab-bar-color-selected, ion-color(primary, base));
 
 // iOS Toolbar
 // --------------------------------------------------
-$toolbar-ios-background: var(--ion-toolbar-background, var(--ion-components-ion-toolbar-bg));
-$toolbar-ios-border-color: var(--ion-toolbar-border-color, var(--ion-components-ion-toolbar-border-color));
+$toolbar-ios-background: var(--ion-toolbar-background, var(--ion-toolbar-bg));
+$toolbar-ios-border-color: var(--ion-toolbar-border-color, var(--ion-toolbar-border-color));
 $toolbar-ios-color: var(--ion-toolbar-color, $text-color);
 
 // iOS List & List Items
 // --------------------------------------------------
 $item-ios-background: var(--ion-item-background, $background-color);
-$item-ios-border-color: var(--ion-components-ion-item-border-color);
+$item-ios-border-color: var(--ion-item-border-color);
 $item-ios-color: var(--ion-item-color, $text-color);
 
 // iOS Card

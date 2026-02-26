@@ -1,3 +1,4 @@
+import { rgba, currentColor } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
@@ -5,6 +6,11 @@ import { darkTheme } from './dark.tokens';
 import { highContrastDarkTheme } from './high-contrast-dark.tokens';
 import { highContrastTheme } from './high-contrast.tokens';
 import { lightTheme } from './light.tokens';
+
+const fontSizes = {
+  chipBase: 14,
+  root: parseFloat(baseDefaultTheme.fontSize!.root as string),
+};
 
 export const defaultTheme: DefaultTheme = {
   ...baseDefaultTheme,
@@ -21,6 +27,15 @@ export const defaultTheme: DefaultTheme = {
   config: {
     formHighlight: true,
     rippleEffect: true,
+
+    components: {
+      IonChip: {
+        fill: 'solid',
+        hue: 'bold',
+        shape: 'soft',
+        size: 'large',
+      },
+    },
   },
 
   fontFamily: '"Roboto", "Helvetica Neue", sans-serif',
@@ -91,6 +106,306 @@ export const defaultTheme: DefaultTheme = {
       indicatorBg: 'var(--ion-color-gray-100)',
       indicatorBgFocused: 'var(--ion-color-gray-150)',
       separatorColor: 'var(--ion-color-gray-550)',
+    },
+    IonChip: {
+      margin: {
+        top: 'var(--ion-spacing-xxs)',
+        end: 'var(--ion-spacing-xxs)',
+        bottom: 'var(--ion-spacing-xxs)',
+        start: 'var(--ion-spacing-xxs)',
+      },
+
+      padding: {
+        top: 'var(--ion-spacing-xs)',
+        end: 'var(--ion-spacing-md)',
+        bottom: 'var(--ion-spacing-xs)',
+        start: 'var(--ion-spacing-md)',
+      },
+
+      // Sizes
+      size: {
+        small: {
+          minHeight: 'var(--ion-scaling-xs)',
+
+          font: {
+            size: `${((fontSizes.chipBase - 2) / fontSizes.root).toFixed(2)}rem`,
+          },
+        },
+        large: {
+          minHeight: 'var(--ion-scaling-md)',
+
+          font: {
+            size: `${(fontSizes.chipBase / fontSizes.root).toFixed(2)}rem`,
+          },
+        },
+      },
+
+      // States
+      state: {
+        disabled: {
+          opacity: '0.4',
+        },
+      },
+
+      // Shapes
+      shape: {
+        soft: {
+          border: {
+            radius: 'var(--ion-radii-md)',
+          },
+        },
+
+        round: {
+          border: {
+            radius: 'var(--ion-radii-xxxxl)',
+          },
+        },
+
+        rectangular: {
+          border: {
+            radius: 'var(--ion-radii-xxxxs)',
+          },
+        },
+      },
+
+      // Hues
+      hue: {
+        bold: {
+          solid: {
+            // Default non-semantic states
+            default: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.12),
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.87),
+            },
+
+            hover: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
+            },
+
+            focus: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
+            },
+
+            activated: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.2),
+            },
+
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                background: currentColor('base', 0.08),
+                color: currentColor('shade'),
+              },
+
+              hover: {
+                background: currentColor('base', 0.12),
+              },
+
+              focus: {
+                background: currentColor('base', 0.12),
+              },
+
+              activated: {
+                background: currentColor('base', 0.16),
+              },
+            },
+          },
+
+          outline: {
+            // Default non-semantic states
+            default: {
+              background: 'transparent',
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.87),
+
+              border: {
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.32),
+                style: 'solid',
+                width: 'var(--ion-border-width-xxxs)',
+              },
+            },
+
+            hover: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+            },
+
+            focus: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+            },
+
+            activated: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.08),
+            },
+
+            semantic: {
+              default: {
+                background: 'transparent',
+                color: currentColor('shade'),
+
+                border: {
+                  color: currentColor('base', 0.32),
+                  style: 'solid',
+                  width: 'var(--ion-border-width-xxxs)',
+                },
+              },
+
+              hover: {
+                background: currentColor('base', 0.12),
+              },
+
+              focus: {
+                background: currentColor('base', 0.12),
+              },
+
+              activated: {
+                background: currentColor('base', 0.16),
+              },
+            },
+          },
+        },
+
+        subtle: {
+          solid: {
+            // Default non-semantic states
+            default: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.05),
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.8),
+            },
+
+            hover: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.1),
+            },
+
+            focus: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.1),
+            },
+
+            activated: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.14),
+            },
+
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                background: currentColor('base', null, true),
+                color: currentColor('contrast', null, true),
+              },
+
+              hover: {
+                background: currentColor('base', 0.6, true),
+              },
+
+              focus: {
+                background: currentColor('base', 0.6, true),
+              },
+
+              activated: {
+                background: currentColor('base', 0.8, true),
+              },
+            },
+          },
+
+          outline: {
+            // Default non-semantic states
+            default: {
+              background: 'transparent',
+              color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.8),
+
+              border: {
+                color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.16),
+                style: 'solid',
+                width: 'var(--ion-border-width-xxxs)',
+              },
+            },
+
+            hover: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+            },
+
+            focus: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+            },
+
+            activated: {
+              background: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.04),
+            },
+
+            // Any of the semantic colors like primary, secondary, etc.
+            semantic: {
+              default: {
+                background: 'transparent',
+                color: currentColor('contrast', null, true),
+
+                border: {
+                  color: currentColor('base', 0.12),
+                  style: 'solid',
+                  width: 'var(--ion-border-width-xxxs)',
+                },
+              },
+
+              hover: {
+                background: currentColor('base', 0.6, true),
+              },
+
+              focus: {
+                background: currentColor('base', 0.6, true),
+              },
+
+              activated: {
+                background: currentColor('base', 0.8, true),
+              },
+            },
+          },
+        },
+      },
+
+      icon: {
+        color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.54),
+
+        font: {
+          size: `${(20 / fontSizes.chipBase).toFixed(2)}em`,
+        },
+
+        leading: {
+          margin: {
+            top: '-4px',
+            end: 'var(--ion-spacing-sm)',
+            bottom: '-4px',
+            start: '-4px',
+          },
+        },
+
+        trailing: {
+          margin: {
+            top: '-4px',
+            end: '-4px',
+            bottom: '-4px',
+            start: 'var(--ion-spacing-sm)',
+          },
+        },
+      },
+
+      avatar: {
+        height: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
+        width: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
+
+        leading: {
+          margin: {
+            top: '-4px',
+            end: 'var(--ion-spacing-sm)',
+            bottom: '-4px',
+            start: '-8px',
+          },
+        },
+
+        trailing: {
+          margin: {
+            top: '-4px',
+            end: '-8px',
+            bottom: '-4px',
+            start: 'var(--ion-spacing-sm)',
+          },
+        },
+      },
     },
     IonDatetime: {
       bg: 'var(--ion-color-gray-100)',

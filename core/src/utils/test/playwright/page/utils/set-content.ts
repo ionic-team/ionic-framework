@@ -1,6 +1,11 @@
 import type { Page, TestInfo } from '@playwright/test';
 import type { Direction, E2EPageOptions, Mode, Palette, Theme } from '@utils/test/playwright';
 
+import { defaultTheme as baseTheme } from '../../../../../themes/base/default.tokens';
+import { defaultTheme as ionicTheme } from '../../../../../themes/ionic/default.tokens';
+import { defaultTheme as iosTheme } from '../../../../../themes/ios/default.tokens';
+import { defaultTheme as mdTheme } from '../../../../../themes/md/default.tokens';
+
 /**
  * Overwrites the default Playwright page.setContent method.
  *
@@ -68,6 +73,15 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
     `;
   }
 
+  const themes = {
+    ios: iosTheme,
+    md: mdTheme,
+    ionic: ionicTheme,
+    base: baseTheme,
+  };
+
+  const tokens = themes[theme];
+
   /**
    * This object is CRITICAL for Playwright stability.
    *
@@ -78,12 +92,16 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
    * 2. Prevents Incorrect Palettes: It directly initializes with the
    * required 'enabled: "always"' palette before any scripts run. This guarantees that correct CSS variables are loaded from the start.
    * Otherwise, it would load the default light palette.
-   *
-   * These issues were only happening in Playwright Firefox tests
-   * that use `setContent`.
+   * 3. Ensures Component Setup: Since components do not automatically
+   * re-render if 'window.Ionic.config' is modified post-load, tokens MUST
+   * be present during the initial render to ensure properties and classes
+   * (e.g., 'chip-size-large') are correctly applied. Hence, the need to
+   * import the tokens and set the 'customTheme' here.
    */
   const customTheme = {
+    ...tokens,
     palette: {
+      ...tokens.palette,
       dark: {
         enabled: palette === 'dark' ? 'always' : 'never',
       },
