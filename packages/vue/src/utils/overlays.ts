@@ -186,18 +186,18 @@ export const defineOverlayContainer = <Props extends object>(
          * use @ionDragStart, @ionDragMove, etc. in their templates.
          */
         elementRef.value.addEventListener("ionDragStart", (ev: Event) => {
-          emit("dragStart", ev);
-          emit(componentName + "DragStart", ev);
+          emit("ionDragStart", ev);
+          emit(componentName + "IonDragStart", ev);
         });
 
         elementRef.value.addEventListener("ionDragMove", (ev: Event) => {
-          emit("dragMove", ev);
-          emit(componentName + "DragMove", ev);
+          emit("ionDragMove", ev);
+          emit(componentName + "IonDragMove", ev);
         });
 
         elementRef.value.addEventListener("ionDragEnd", (ev: Event) => {
-          emit("dragEnd", ev);
-          emit(componentName + "DragEnd", ev);
+          emit("ionDragEnd", ev);
+          emit(componentName + "IonDragEnd", ev);
         });
       });
 
@@ -268,9 +268,9 @@ export const defineOverlayContainer = <Props extends object>(
             "didPresent",
             "willDismiss",
             "didDismiss",
-            "dragStart",
-            "dragMove",
-            "dragEnd",
+            "ionDragStart",
+            "ionDragMove",
+            "ionDragEnd",
           ]
         : undefined,
   };
