@@ -11,8 +11,8 @@ export const highContrastDarkTheme: HighContrastDarkTheme = {
       borderColor: 'var(--ion-color-gray-400)',
     },
     IonModal: {
-      bg: 'var(--ion-color-gray-100)',
-      toolbarBg: 'var(--ion-color-gray-150)',
+      background: 'var(--ion-color-gray-100)',
+      toolbarBackground: 'var(--ion-color-gray-150)',
       toolbarBorderColor: 'var(--ion-color-gray-250)',
     },
   },

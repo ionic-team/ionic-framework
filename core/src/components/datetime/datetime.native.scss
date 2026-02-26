@@ -93,7 +93,7 @@
   @include globals.border-radius(8px);
   @include globals.padding(6px, 12px, 6px, 12px);
 
-  background: var(--ion-datetime-time-body-bg);
+  background: var(--ion-datetime-time-body-background);
 
   color: globals.$text-color;
 }

@@ -10,7 +10,7 @@ $breadcrumb-ios-color: var(--ion-breadcrumb-color);
 $breadcrumb-ios-color-active: var(--ion-text-color, #03060b);
 
 /// @prop - Background color of the focused breadcrumb
-$breadcrumb-ios-background-focused: var(--ion-breadcrumb-bg-focused);
+$breadcrumb-ios-background-focused: var(--ion-breadcrumb-background-focused);
 
 /// @prop - Color of the breadcrumb icon
 $breadcrumb-ios-icon-color: var(--ion-breadcrumb-icon-color);
@@ -28,7 +28,7 @@ $breadcrumb-ios-separator-color: $breadcrumb-separator-color;
 $breadcrumb-ios-indicator-color: $breadcrumb-ios-separator-color;
 
 /// @prop - Background color of the breadcrumb indicator
-$breadcrumb-ios-indicator-background: var(--ion-breadcrumb-indicator-bg);
+$breadcrumb-ios-indicator-background: var(--ion-breadcrumb-indicator-background);
 
 /// @prop - Background color of the breadcrumb indicator when focused
-$breadcrumb-ios-indicator-background-focused: var(--ion-breadcrumb-indicator-bg-focused);
+$breadcrumb-ios-indicator-background-focused: var(--ion-breadcrumb-indicator-background-focused);

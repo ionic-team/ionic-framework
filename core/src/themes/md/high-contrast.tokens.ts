@@ -6,7 +6,7 @@ export const highContrastTheme: HighContrastTheme = {
 
   components: {
     IonToolbar: {
-      bg: '#1f1f1f',
+      background: '#1f1f1f',
     },
   },
 

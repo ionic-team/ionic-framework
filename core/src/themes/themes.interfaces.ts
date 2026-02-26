@@ -289,7 +289,7 @@ export type NumberStringKeys = {
 export type PrimitiveColors = 'gray' | 'black' | 'white' | 'gray-contrast';
 
 // Functional color keys
-export type FunctionalColors = 'text' | 'overlay-bg';
+export type FunctionalColors = 'text' | 'overlay-background';
 
 // Colors interface
 export type Colors = {

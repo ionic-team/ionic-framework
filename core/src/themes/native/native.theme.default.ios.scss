@@ -7,11 +7,11 @@
 // iOS General Colors
 // --------------------------------------------------
 $backdrop-ios-color: var(--ion-backdrop-color, #000);
-$overlay-ios-background-color: var(--ion-overlay-background-color, var(--ion-color-overlay-bg));
+$overlay-ios-background-color: var(--ion-overlay-background-color, var(--ion-color-overlay-background));
 
 // iOS Tabs & Tab bar
 // --------------------------------------------------
-$tabbar-ios-background: var(--ion-tab-bar-background, var(--ion-tab-bar-bg));
+$tabbar-ios-background: var(--ion-tab-bar-background, var(--ion-tab-bar-background));
 $tabbar-ios-background-focused: var(--ion-tab-bar-background-focused, get-color-shade(#fff));
 $tabbar-ios-border-color: var(--ion-tab-bar-border-color, var(--ion-tab-bar-border-color));
 $tabbar-ios-color: var(--ion-tab-bar-color, var(--ion-color-text-600));
@@ -19,7 +19,7 @@ $tabbar-ios-color-selected: var(--ion-tab-bar-color-selected, ion-color(primary,
 
 // iOS Toolbar
 // --------------------------------------------------
-$toolbar-ios-background: var(--ion-toolbar-background, var(--ion-toolbar-bg));
+$toolbar-ios-background: var(--ion-toolbar-background);
 $toolbar-ios-border-color: var(--ion-toolbar-border-color, var(--ion-toolbar-border-color));
 $toolbar-ios-color: var(--ion-toolbar-color, $text-color);
 

@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --ion-background-color: var(--ion-modal-bg);
+  --ion-background-color: var(--ion-modal-background);
   --ion-toolbar-background: var(--ion-modal-toolbar-background);
   --ion-toolbar-border-color: var(--ion-modal-toolbar-border-color);
   --backdrop-opacity: var(--ion-backdrop-opacity, 0.4);

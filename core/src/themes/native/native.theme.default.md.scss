@@ -19,7 +19,7 @@ $tabbar-md-color-selected: var(--ion-tab-bar-color-selected, ion-color(primary, 
 
 // Material Design Toolbar
 // --------------------------------------------------
-$toolbar-md-background: var(--ion-toolbar-background, var(--ion-toolbar-bg));
+$toolbar-md-background: var(--ion-toolbar-background, $background-color);
 $toolbar-md-border-color: var(--ion-toolbar-border-color, var(--ion-toolbar-border-color));
 $toolbar-md-color: var(--ion-toolbar-color, var(--ion-text-color, #424242));
 

@@ -8,23 +8,23 @@ const colors = {
 export const lightTheme: LightTheme = {
   color: {
     gray: colors.gray,
-    'overlay-bg': 'var(--ion-overlay-background-color, #f9f9f9)',
+    'overlay-background': 'var(--ion-overlay-background-color, #f9f9f9)',
   },
   components: {
     IonActionSheet: {
-      buttonBgSelected: `var(--ion-background-color, ${defaultColors.white})`,
+      buttonBackgroundSelected: `var(--ion-background-color, ${defaultColors.white})`,
     },
     IonDatetime: {
-      timeBodyBg: '#edeef0',
+      timeBodyBackground: '#edeef0',
     },
     IonBreadcrumb: {
       color: '#2d4665',
-      bgFocused: 'rgba(233, 237, 243, 0.7)',
+      backgroundFocused: 'rgba(233, 237, 243, 0.7)',
       iconColor: '#92a0b3',
       iconColorActive: '#242d39',
       iconColorFocused: '#445b78',
-      indicatorBg: '#e9edf3',
-      indicatorBgFocused: '#d9e0ea',
+      indicatorBackground: '#e9edf3',
+      indicatorBackgroundFocused: '#d9e0ea',
       separatorColor: '#73849a',
     },
     IonItem: {
@@ -32,26 +32,26 @@ export const lightTheme: LightTheme = {
       borderColor: 'var(--ion-item-border-color, var(--ion-border-color, #c8c7cc))',
     },
     IonModal: {
-      handleBg: '#c0c0be',
+      handleBackground: '#c0c0be',
     },
     IonPicker: {
-      highlightBg: '#eeeeef',
+      highlightBackground: '#eeeeef',
     },
     IonRange: {
-      bg: 'var(--ion-color-gray-100)',
+      background: 'var(--ion-color-gray-100)',
     },
     IonRefresher: {
       nativeSpinnerColor: '#747577',
     },
     IonSegmentButton: {
-      checkedIndicatorBg: defaultColors.white,
+      checkedIndicatorBackground: defaultColors.white,
     },
     IonTabBar: {
-      bg: 'var(--ion-tab-bar-background-color, #f7f7f7)',
+      background: 'var(--ion-tab-bar-background-color, #f7f7f7)',
       borderColor: 'var(--ion-border-color, rgba(0, 0, 0, 0.2))',
     },
     IonToolbar: {
-      bg: '#f7f7f7',
+      background: '#f7f7f7',
       borderColor: 'var(--ion-border-color, rgba(0, 0, 0, 0.2))',
     },
   },

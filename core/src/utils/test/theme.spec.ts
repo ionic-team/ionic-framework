@@ -498,9 +498,9 @@ describe('generateGlobalThemeCSS', () => {
     expect(css).toContain('--ion-spacing-md: 12px');
 
     // Should NOT include component variables
-    expect(css).not.toContain('--ion-chip-hue-subtle-bg');
+    expect(css).not.toContain('--ion-chip-hue-subtle-solid-default-background');
     expect(css).not.toContain('--ion-chip-shape-round-border-radius');
-    expect(css).not.toContain('--ion-button-color-primary-bg');
+    expect(css).not.toContain('--ion-button-color-primary-background');
     expect(css).not.toContain('components');
 
     // Should NOT include palette variables
@@ -766,10 +766,10 @@ describe('generateComponentsThemeCSS', () => {
 
     const expectedCSS = `
       ion-chip {
-        --ion-chip-hue-subtle-bg: red;
+        --ion-chip-hue-subtle-solid-default-background: red;
         --ion-chip-hue-subtle-color: white;
         --ion-chip-hue-subtle-border-color: black;
-        --ion-chip-hue-bold-bg: blue;
+        --ion-chip-hue-bold-solid-default-background: blue;
         --ion-chip-hue-bold-color: white;
         --ion-chip-hue-bold-border-color: black;
       }
@@ -814,19 +814,19 @@ describe('generateComponentsThemeCSS', () => {
 
     const expectedCSS = `
       ion-chip {
-        --ion-chip-hue-subtle-bg: red;
+        --ion-chip-hue-subtle-solid-default-background: red;
         --ion-chip-hue-subtle-color: white;
         --ion-chip-hue-subtle-border-color: black;
-        --ion-chip-hue-bold-bg: blue;
+        --ion-chip-hue-bold-solid-default-background: blue;
         --ion-chip-hue-bold-color: white;
         --ion-chip-hue-bold-border-color: black;
       }
 
       ion-badge {
-        --ion-badge-hue-subtle-bg: green;
+        --ion-badge-hue-subtle-background: green;
         --ion-badge-hue-subtle-color: white;
         --ion-badge-hue-subtle-border-color: black;
-        --ion-badge-hue-bold-bg: blue;
+        --ion-badge-hue-bold-background: blue;
         --ion-badge-hue-bold-color: white;
         --ion-badge-hue-bold-border-color: black;
       }

@@ -38,7 +38,7 @@ export const defaultTheme: DefaultTheme = {
   fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif',
 
   color: {
-    'overlay-bg': 'var(--ion-overlay-background-color, var(--ion-color-gray-100))',
+    'overlay-background': 'var(--ion-overlay-background-color, var(--ion-color-gray-100))',
   },
 
   spacing: {
@@ -99,16 +99,16 @@ export const defaultTheme: DefaultTheme = {
   components: {
     IonActionSheet: {
       buttonColorDisabled: 'var(--ion-color-gray-850)',
-      buttonBgSelected: 'var(--ion-color-gray-150)',
+      buttonBackgroundSelected: 'var(--ion-color-gray-150)',
     },
     IonBreadcrumb: {
       color: 'var(--ion-color-text-850)',
-      bgFocused: 'var(--ion-color-gray-50)',
+      backgroundFocused: 'var(--ion-color-gray-50)',
       iconColor: 'var(--ion-color-text-400)',
       iconColorActive: 'var(--ion-color-text-850)',
       iconColorFocused: 'var(--ion-color-text-750)',
-      indicatorBg: 'var(--ion-color-gray-100)',
-      indicatorBgFocused: 'var(--ion-color-gray-150)',
+      indicatorBackground: 'var(--ion-color-gray-100)',
+      indicatorBackgroundFocused: 'var(--ion-color-gray-150)',
       separatorColor: 'var(--ion-color-text-550)',
     },
     IonChip: {
@@ -418,35 +418,35 @@ export const defaultTheme: DefaultTheme = {
       },
     },
     IonDatetime: {
-      bg: 'var(--ion-color-gray-950)',
-      timeBodyBg: 'var(--ion-color-gray-300)',
+      background: 'var(--ion-color-gray-950)',
+      timeBodyBackground: 'var(--ion-color-gray-300)',
     },
     IonItem: {
       paragraphTextColor: 'var(--ion-color-text-450)',
       borderColor: 'var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-gray-250)))',
     },
     IonModal: {
-      handleBg: 'var(--ion-color-gray-350)',
+      handleBackground: 'var(--ion-color-gray-350)',
     },
     IonPicker: {
-      highlightBg: 'var(--ion-color-text-150)',
+      highlightBackground: 'var(--ion-color-text-150)',
     },
     IonRange: {
-      bg: 'var(--ion-color-gray-900)',
+      background: 'var(--ion-color-gray-900)',
     },
     IonRefresher: {
       nativeSpinnerColor: 'var(--ion-color-gray-450)',
     },
     IonSegmentButton: {
-      checkedIndicatorBg: 'var(--ion-color-gray-350)',
+      checkedIndicatorBackground: 'var(--ion-color-gray-350)',
     },
     IonTabBar: {
-      bg: 'var(--ion-tab-bar-background-color, var(--ion-color-gray-50))',
+      background: 'var(--ion-tab-bar-background-color, var(--ion-color-gray-50))',
       borderColor: 'var(--ion-border-color, var(--ion-color-gray-150))',
     },
     IonToolbar: {
       activatedButtonColor: 'var(--ion-toolbar-background, var(--background), ion-color(primary, contrast))',
-      bg: 'var(--ion-color-gray-50)',
+      background: 'var(--ion-color-gray-50)',
       borderColor: 'var(--ion-border-color, var(--ion-color-gray-150))',
     },
   },
