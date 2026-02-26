@@ -24,6 +24,9 @@ export const defineOverlayContainer = <Props extends object>(
         { componentEv: `${name}DidPresent`, frameworkEv: "didPresent" },
         { componentEv: `${name}WillDismiss`, frameworkEv: "willDismiss" },
         { componentEv: `${name}DidDismiss`, frameworkEv: "didDismiss" },
+        { componentEv: "ionDragStart", frameworkEv: "dragStart" },
+        { componentEv: "ionDragMove", frameworkEv: "dragMove" },
+        { componentEv: "ionDragEnd", frameworkEv: "dragEnd" },
       ];
 
       if (defineCustomElement !== undefined) {
@@ -109,6 +112,9 @@ export const defineOverlayContainer = <Props extends object>(
         delete restOfProps.onDidPresent;
         delete restOfProps.onWillDismiss;
         delete restOfProps.onDidDismiss;
+        delete restOfProps.onDragStart;
+        delete restOfProps.onDragMove;
+        delete restOfProps.onDragEnd;
 
         const component = slots.default && slots.default()[0];
         overlay.value = controller.create({
@@ -174,6 +180,25 @@ export const defineOverlayContainer = <Props extends object>(
           emit("didPresent", ev);
           emit(componentName + "DidPresent", ev);
         });
+        /**
+         * Drag events:
+         * Adding these ensures they are re-emitted so developers can
+         * use @ionDragStart, @ionDragMove, etc. in their templates.
+         */
+        elementRef.value.addEventListener("ionDragStart", (ev: Event) => {
+          emit("dragStart", ev);
+          emit(componentName + "DragStart", ev);
+        });
+
+        elementRef.value.addEventListener("ionDragMove", (ev: Event) => {
+          emit("dragMove", ev);
+          emit(componentName + "DragMove", ev);
+        });
+
+        elementRef.value.addEventListener("ionDragEnd", (ev: Event) => {
+          emit("dragEnd", ev);
+          emit(componentName + "DragEnd", ev);
+        });
       });
 
       return () => {
@@ -238,7 +263,15 @@ export const defineOverlayContainer = <Props extends object>(
     },
     emits:
       typeof controller !== "undefined"
-        ? ["willPresent", "didPresent", "willDismiss", "didDismiss"]
+        ? [
+            "willPresent",
+            "didPresent",
+            "willDismiss",
+            "didDismiss",
+            "dragStart",
+            "dragMove",
+            "dragEnd",
+          ]
         : undefined,
   };
 
