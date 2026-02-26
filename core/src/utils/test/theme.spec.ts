@@ -498,7 +498,7 @@ describe('generateGlobalThemeCSS', () => {
     expect(css).toContain('--ion-spacing-md: 12px');
 
     // Should NOT include component variables
-    expect(css).not.toContain('--ion-chip-hue-subtle-solid-default-background');
+    expect(css).not.toContain('--ion-chip-hue-subtle-bg');
     expect(css).not.toContain('--ion-chip-shape-round-border-radius');
     expect(css).not.toContain('--ion-button-color-primary-background');
     expect(css).not.toContain('components');
@@ -766,10 +766,10 @@ describe('generateComponentsThemeCSS', () => {
 
     const expectedCSS = `
       ion-chip {
-        --ion-chip-hue-subtle-solid-default-background: red;
+        --ion-chip-hue-subtle-bg: red;
         --ion-chip-hue-subtle-color: white;
         --ion-chip-hue-subtle-border-color: black;
-        --ion-chip-hue-bold-solid-default-background: blue;
+        --ion-chip-hue-bold-bg: blue;
         --ion-chip-hue-bold-color: white;
         --ion-chip-hue-bold-border-color: black;
       }
@@ -797,12 +797,12 @@ describe('generateComponentsThemeCSS', () => {
       IonBadge: {
         hue: {
           subtle: {
-            bg: 'green',
+            background: 'green',
             color: 'white',
             borderColor: 'black',
           },
           bold: {
-            bg: 'blue',
+            background: 'blue',
             color: 'white',
             borderColor: 'black',
           },
@@ -814,10 +814,10 @@ describe('generateComponentsThemeCSS', () => {
 
     const expectedCSS = `
       ion-chip {
-        --ion-chip-hue-subtle-solid-default-background: red;
+        --ion-chip-hue-subtle-bg: red;
         --ion-chip-hue-subtle-color: white;
         --ion-chip-hue-subtle-border-color: black;
-        --ion-chip-hue-bold-solid-default-background: blue;
+        --ion-chip-hue-bold-bg: blue;
         --ion-chip-hue-bold-color: white;
         --ion-chip-hue-bold-border-color: black;
       }
