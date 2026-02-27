@@ -35,22 +35,22 @@ import type {
  * @part tick-active - An active tick mark.
  * @part bar - The inactive part of the bar.
  * @part bar-active - The active part of the bar.
- * @part knob-handle - The container element that wraps the knob and handles drag interactions.
- * @part knob-handle-a - The container element for the first knob. Only available when `dualKnobs` is `true`.
- * @part knob-handle-b - The container element for the second knob. Only available when `dualKnobs` is `true`.
- * @part knob-handle-lower - The container element for the lower knob. Only available when `dualKnobs` is `true`.
- * @part knob-handle-upper - The container element for the upper knob. Only available when `dualKnobs` is `true`.
- * @part pin - The counter that appears above a knob.
- * @part pin-a - The counter that appears above the first knob. Only available when `dualKnobs` is `true`.
- * @part pin-b - The counter that appears above the second knob. Only available when `dualKnobs` is `true`.
- * @part pin-lower - The counter that appears above the lower knob. Only available when `dualKnobs` is `true`.
- * @part pin-upper - The counter that appears above the upper knob. Only available when `dualKnobs` is `true`.
- * @part knob - The visual knob element that appears on the range track.
- * @part knob-a - The visual knob element for the first knob. Only available when `dualKnobs` is `true`.
- * @part knob-b - The visual knob element for the second knob. Only available when `dualKnobs` is `true`.
- * @part knob-lower - The visual knob element for the lower knob. Only available when `dualKnobs` is `true`.
- * @part knob-upper - The visual knob element for the upper knob. Only available when `dualKnobs` is `true`.
- * @part activated - Added to the knob-handle, knob, and pin when the knob is activated (has the `ion-activated` class). Only one set has this part at a time when `dualKnobs` is `true`.
+ * @part knob-handle - The container that wraps the knob and handles drag interactions.
+ * @part knob-handle-a - The container for the knob with the static `A` identity when `dualKnobs` is `true`. This identity does not change, even if the knobs cross and swap which one represents the lower or upper value.
+ * @part knob-handle-b - The container for the knob with the static `B` identity when `dualKnobs` is `true`. This identity does not change, even if the knobs cross and swap which one represents the lower or upper value.
+ * @part knob-handle-lower - The container for the knob whose current `value` is `lower` when `dualKnobs` is `true`. The lower and upper parts swap which knob handle they refer to when the knobs cross.
+ * @part knob-handle-upper - The container for the knob whose current `value` is `upper` when `dualKnobs` is `true`. The lower and upper parts swap which knob handle they refer to when the knobs cross.
+ * @part pin - The value indicator displayed above a knob.
+ * @part pin-a - The value indicator above the knob with the static `A` identity when `dualKnobs` is `true`. This identity does not change, even if the knobs cross and swap which one represents the lower or upper value.
+ * @part pin-b - The value indicator above the knob with the static `B` identity when `dualKnobs` is `true`. This identity does not change, even if the knobs cross and swap which one represents the lower or upper value.
+ * @part pin-lower - The value indicator above the knob whose current `value` is `lower` when `dualKnobs` is `true`. The lower and upper parts swap which pin they refer to when the knobs cross.
+ * @part pin-upper - The value indicator above the knob whose current `value` is `upper` when `dualKnobs` is `true`. The lower and upper parts swap which pin they refer to when the knobs cross.
+ * @part knob - The visual knob element on the range track.
+ * @part knob-a - The visual knob for the static `A` identity when `dualKnobs` is `true`. This identity does not change, even if the knobs cross and swap which one represents the lower or upper value.
+ * @part knob-b - The visual knob for the static `B` identity when `dualKnobs` is `true`. This identity does not change, even if the knobs cross and swap which one represents the lower or upper value.
+ * @part knob-lower - The visual knob whose current `value` is `lower` when `dualKnobs` is `true`. The lower and upper parts swap which knob they refer to when the knobs cross.
+ * @part knob-upper - The visual knob whose current `value` is `upper` when `dualKnobs` is `true`. The lower and upper parts swap which knob they refer to when the knobs cross.
+ * @part activated - Added to the knob-handle, knob, and pin when the knob is active. Only one set has this part at a time when `dualKnobs` is `true`.
  * @part focused - Added to the knob-handle, knob, and pin that currently has focus. Only one set has this part at a time when `dualKnobs` is `true`.
  * @part hover - Added to the knob-handle, knob, and pin when the knob has hover. Only one set has this part at a time when `dualKnobs` is `true`.
  * @part pressed - Added to the knob-handle, knob, and pin that is currently being pressed to drag. Only one set has this part at a time when `dualKnobs` is `true`.
@@ -523,7 +523,7 @@ export class Range implements ComponentInterface {
      * started dragging the knob.
      *
      * This is necessary to determine which knob the user is dragging,
-     * especially when it's a dual knob.
+     * especially when using dual knobs.
      * Plus, it determines when to apply certain styles.
      *
      * This only needs to be done once since the knob won't change
@@ -552,7 +552,7 @@ export class Range implements ComponentInterface {
      * dragged the knob. They just tapped on the bar.
      *
      * This is necessary to determine which knob the user is changing,
-     * especially when it's a dual knob.
+     * especially when using dual knobs.
      * Plus, it determines when to apply certain styles.
      */
     if (this.pressedKnob === undefined) {
