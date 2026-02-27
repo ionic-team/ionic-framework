@@ -443,6 +443,16 @@ export const createSheetGesture = (
   };
 
   const onEnd = (detail: GestureDetail) => {
+    const predicted = calculatePredictedBreakpoint(detail.velocityY, detail.deltaY);
+
+    const eventDetail: ModalDragEventDetail = {
+      currentY: detail.currentY,
+      deltaY: detail.deltaY,
+      velocityY: detail.velocityY,
+      progress: calculateProgress(detail.currentY),
+      predictedBreakpoint: predicted,
+    };
+
     /**
      * If expandToScroll is disabled, we should not allow the moveSheetToBreakpoint
      * function to be called if the user is trying to swipe content upwards and the content
@@ -457,10 +467,10 @@ export const createSheetGesture = (
        * swap to moving on drag and if we don't swap back here then the footer will get stuck.
        */
       swapFooterPosition('stationary');
+      onDragEnd(eventDetail);
+
       return;
     }
-
-    const predicted = calculatePredictedBreakpoint(detail.velocityY, detail.deltaY);
 
     moveSheetToBreakpoint({
       breakpoint: predicted,
@@ -473,14 +483,6 @@ export const createSheetGesture = (
        */
       animated: true,
     });
-
-    const eventDetail: ModalDragEventDetail = {
-      currentY: detail.currentY,
-      deltaY: detail.deltaY,
-      velocityY: detail.velocityY,
-      progress: calculateProgress(detail.currentY),
-      predictedBreakpoint: predicted,
-    };
 
     onDragEnd(eventDetail);
   };
