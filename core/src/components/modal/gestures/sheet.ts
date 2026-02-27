@@ -429,14 +429,14 @@ export const createSheetGesture = (
     offset = clamp(0.0001, processedStep, maxStep);
     animation.progressStep(offset);
 
-    const closest = calculateClosestBreakpoint(detail.velocityY, detail.deltaY);
+    const predicted = calculatePredictedBreakpoint(detail.velocityY, detail.deltaY);
 
     const eventDetail: ModalDragEventDetail = {
       currentY: detail.currentY,
       deltaY: detail.deltaY,
       velocityY: detail.velocityY,
       progress: calculateProgress(detail.currentY),
-      currentBreakpoint: closest,
+      predictedBreakpoint: predicted,
     };
 
     onDragMove(eventDetail);
@@ -460,10 +460,10 @@ export const createSheetGesture = (
       return;
     }
 
-    const closest = calculateClosestBreakpoint(detail.velocityY, detail.deltaY);
+    const predicted = calculatePredictedBreakpoint(detail.velocityY, detail.deltaY);
 
     moveSheetToBreakpoint({
-      breakpoint: closest,
+      breakpoint: predicted,
       breakpointOffset: offset,
       canDismiss: canDismissBlocksGesture,
 
@@ -479,7 +479,7 @@ export const createSheetGesture = (
       deltaY: detail.deltaY,
       velocityY: detail.velocityY,
       progress: calculateProgress(detail.currentY),
-      currentBreakpoint: closest,
+      predictedBreakpoint: predicted,
     };
 
     onDragEnd(eventDetail);
@@ -642,23 +642,23 @@ export const createSheetGesture = (
   };
 
   /**
-   * Calculates the closest breakpoint based on the current velocity and deltaY.
+   * Calculates the predicted breakpoint based on the current velocity and deltaY.
    * This determines where the sheet should snap to when the user releases the
    * gesture.
    *
    * @param velocityY The current velocity of the gesture in the Y direction.
    * @param deltaY The change in Y position since the gesture started.
-   * @returns The closest breakpoint value.
+   * @returns The predicted breakpoint value.
    */
-  const calculateClosestBreakpoint = (velocityY: number, deltaY: number): number => {
+  const calculatePredictedBreakpoint = (velocityY: number, deltaY: number): number => {
     const threshold = (deltaY + velocityY * 350) / height;
 
     const diff = currentBreakpoint - threshold;
-    const closest = breakpoints.reduce((a, b) => {
+    const predicted = breakpoints.reduce((a, b) => {
       return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
     });
 
-    return closest;
+    return predicted;
   };
 
   /**

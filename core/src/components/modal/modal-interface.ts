@@ -53,5 +53,5 @@ export interface ModalDragEventDetail {
   deltaY: number;
   velocityY: number;
   progress: number;
-  currentBreakpoint?: number;
+  predictedBreakpoint?: number;
 }
