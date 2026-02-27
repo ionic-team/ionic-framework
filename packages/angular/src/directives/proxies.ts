@@ -1810,12 +1810,13 @@ export class IonRefresher {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionRefresh', 'ionPull', 'ionStart']);
+    proxyOutputs(this, this.el, ['ionRefresh', 'ionPull', 'ionStart', 'ionPullStart', 'ionPullEnd']);
   }
 }
 
 
 import type { RefresherEventDetail as IIonRefresherRefresherEventDetail } from '@ionic/core';
+import type { RefresherPullEndEventDetail as IIonRefresherRefresherPullEndEventDetail } from '@ionic/core';
 
 export declare interface IonRefresher extends Components.IonRefresher {
   /**
@@ -1831,8 +1832,19 @@ called when the async operation has completed.
   ionPull: EventEmitter<CustomEvent<void>>;
   /**
    * Emitted when the user begins to start pulling down.
+TODO(FW-7044): Remove this in a major release @deprecated Use `ionPullStart` instead.
    */
   ionStart: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted when the user begins to start pulling down.
+   */
+  ionPullStart: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted when the refresher has returned to the inactive state
+after a pull gesture. This fires whether the refresh completed
+successfully or was canceled.
+   */
+  ionPullEnd: EventEmitter<CustomEvent<IIonRefresherRefresherPullEndEventDetail>>;
 }
 
 
@@ -2113,14 +2125,14 @@ export declare interface IonSegmentContent extends Components.IonSegmentContent 
 
 
 @ProxyCmp({
-  inputs: ['disabled']
+  inputs: ['disabled', 'swipeGesture']
 })
 @Component({
   selector: 'ion-segment-view',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled'],
+  inputs: ['disabled', 'swipeGesture'],
 })
 export class IonSegmentView {
   protected el: HTMLIonSegmentViewElement;
@@ -2192,14 +2204,14 @@ This event will not emit when programmatically setting the `value` property.
 
 
 @ProxyCmp({
-  inputs: ['header', 'multiple', 'options']
+  inputs: ['cancelText', 'header', 'multiple', 'options']
 })
 @Component({
   selector: 'ion-select-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['header', 'multiple', 'options'],
+  inputs: ['cancelText', 'header', 'multiple', 'options'],
 })
 export class IonSelectModal {
   protected el: HTMLIonSelectModalElement;

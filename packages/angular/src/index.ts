@@ -32,6 +32,7 @@ export {
   ViewDidEnter,
   ViewDidLeave,
 } from '@ionic/angular/common';
+export type { ModalOptions, PopoverOptions } from '@ionic/angular/common';
 export { AlertController } from './providers/alert-controller';
 export { AnimationController } from './providers/animation-controller';
 export { ActionSheetController } from './providers/action-sheet-controller';
@@ -98,14 +99,12 @@ export {
   IonicSafeString,
   LoadingOptions,
   MenuCustomEvent,
-  ModalOptions,
   NavCustomEvent,
   PickerOptions,
   PickerButton,
   PickerColumn,
   PickerColumnOption,
   PlatformConfig,
-  PopoverOptions,
   RadioGroupCustomEvent,
   RadioGroupChangeEventDetail,
   RangeCustomEvent,
