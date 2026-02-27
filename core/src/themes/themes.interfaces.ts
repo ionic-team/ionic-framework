@@ -12,12 +12,6 @@ export type BaseTheme = {
   backgroundColorRgb?: string;
   textColor?: string;
   textColorRgb?: string;
-  backgroundColorStep?: {
-    [key: string]: string;
-  };
-  textColorStep?: {
-    [key: string]: string;
-  };
 
   // TODO(FW-6864): Remove once IonToolbar themes are added
   toolbar?: any;
