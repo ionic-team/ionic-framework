@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, h, forceUpdate } from '@stencil/core';
 import { checkInvalidState } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
@@ -382,7 +382,7 @@ export class Checkbox implements ComponentInterface {
             id={this.inputLabelId}
             onClick={this.onDivLabelClick}
           >
-            <slot></slot>
+            <slot onSlotchange={() => forceUpdate(this)}></slot>
             {this.renderHintText()}
           </div>
           <div class="native-wrapper">
