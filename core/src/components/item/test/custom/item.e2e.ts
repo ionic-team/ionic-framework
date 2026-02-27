@@ -6,7 +6,7 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
   test.describe(title('item: custom'), () => {
-    test.describe(title('CSS shadow parts'), () => {
+    test.describe('CSS shadow parts', () => {
       test('should be able to customize native part', async ({ page }) => {
         await page.setContent(
           `
@@ -108,7 +108,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
       });
     });
 
-    test.describe(title('CSS variables'), () => {
+    test.describe('CSS variables', () => {
       test('should be able to customize background using css variables', async ({ page }) => {
         await page.setContent(
           `
