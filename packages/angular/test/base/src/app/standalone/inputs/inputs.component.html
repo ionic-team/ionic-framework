@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Inputs test
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="form">
+    <ion-list>
+      <ion-item>
+        <ion-label>DateTime</ion-label>
+        <ion-datetime formControlName="datetime" min="1994-03-14" max="2017-12-09" display-format="MM/DD/YYYY" [disabled]="isDisabled" [readonly]="isReadonly"></ion-datetime>
+        <ion-note slot="end" id="datetime-note">{{form.value.datetime}}</ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Select" formControlName="select" id="game-console" [disabled]="isDisabled">
+          <ion-select-option value="">No Game Console</ion-select-option>
+          <ion-select-option value="nes">NES</ion-select-option>
+          <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
+          <ion-select-option value="ps">PlayStation</ion-select-option>
+          <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+          <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+          <ion-select-option value="snes">SNES</ion-select-option>
+        </ion-select>
+        <ion-note slot="end" id="select-note">{{form.value.select}}</ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-toggle formControlName="toggle" slot="end" [disabled]="isDisabled">
+          Toggle
+        </ion-toggle>
+        <ion-note slot="end" id="toggle-note">{{form.value.toggle}}</ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Input" formControlName="input" [disabled]="isDisabled" [readonly]="isReadonly"></ion-input>
+        <ion-note slot="end" id="input-note">{{form.value.input}}</ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-input-otp formControlName="inputOtp" [disabled]="isDisabled" [readonly]="isReadonly">Input OTP</ion-input-otp>
+        <ion-note slot="end" id="input-otp-note">{{form.value.inputOtp}}</ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-checkbox formControlName="checkbox" slot="start" id="first-checkbox" [disabled]="isDisabled">
+          Checkbox
+        </ion-checkbox>
+        <ion-note slot="end" id="checkbox-note">{{form.value.checkbox}}</ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-radio-group value="nes" formControlName="radio" id="first-radio">
+          <ion-radio value="nes" [disabled]="isDisabled">Radio</ion-radio>
+        </ion-radio-group>
+        <ion-note slot="end" id="radio-note">{{form.value.radio}}</ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-range formControlName="range" min="0" max="100" id="first-range" [disabled]="isDisabled">
+          <ion-label slot="start">Range</ion-label>
+        </ion-range>
+      </ion-item>
+
+      <ion-item>
+        <ion-textarea formControlName="textarea" minLength="0" maxLength="100" [disabled]="isDisabled" [readonly]="isReadonly" label="Textarea"></ion-textarea>
+      </ion-item>
+
+    </ion-list>
+  </form>
+  <p>
+    <ion-button (click)="setValues()" id="set-button">Set values</ion-button>
+    <ion-button (click)="resetValues()" id="reset-button">Reset values</ion-button>
+    <ion-button (click)="toggleDisable()" id="disable-button">Toggle Disabled</ion-button>
+    <ion-button (click)="toggleReadonly()" id="readonly-button">Toggle Readonly</ion-button>
+  </p>
+</ion-content>

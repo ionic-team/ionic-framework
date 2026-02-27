@@ -24,6 +24,11 @@ export class SegmentView implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * If `true`, users will be able to swipe the segment view to navigate between segment contents.
+   */
+  @Prop() swipeGesture = true;
+
+  /**
    * @internal
    *
    * If `true`, the segment view is scrollable.
@@ -141,13 +146,14 @@ export class SegmentView implements ComponentInterface {
   }
 
   render() {
-    const { disabled, isManualScroll } = this;
+    const { disabled, isManualScroll, swipeGesture } = this;
 
     return (
       <Host
         class={{
           'segment-view-disabled': disabled,
           'segment-view-scroll-disabled': isManualScroll === false,
+          'segment-view-swipe-disabled': swipeGesture === false,
         }}
       >
         <slot></slot>
