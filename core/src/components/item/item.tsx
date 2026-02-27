@@ -18,7 +18,7 @@ import type { RouterDirection } from '../router/utils/interface';
  * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
  *
  * @part native - The native HTML button, anchor or div element that wraps all child elements.
- * @part inner - The inner container element that wraps the item content.
+ * @part inner - The inner wrapper element that arranges the item content.
  * @part container - The wrapper element that contains the default slot.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
  */
