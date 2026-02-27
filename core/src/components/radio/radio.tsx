@@ -151,6 +151,7 @@ export class Radio implements ComponentInterface {
     if (radioGroup) {
       this.updateState();
       addEventListener(radioGroup, 'ionValueChange', this.updateState);
+      radioGroup.updateRadiosTabindex();
     }
   }
 
@@ -158,6 +159,8 @@ export class Radio implements ComponentInterface {
     const radioGroup = this.radioGroup;
     if (radioGroup) {
       removeEventListener(radioGroup, 'ionValueChange', this.updateState);
+      radioGroup.updateRadiosTabindex();
+      
       this.radioGroup = null;
     }
   }
@@ -167,7 +170,6 @@ export class Radio implements ComponentInterface {
       const { compareWith, value: radioGroupValue } = this.radioGroup;
 
       this.checked = isOptionSelected(radioGroupValue, this.value, compareWith);
-      this.radioGroup.updateRadiosTabindex();
     }
   };
 
