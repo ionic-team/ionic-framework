@@ -386,6 +386,8 @@ describe('range: css classes', () => {
       });
 
       const range = page.body.querySelector('ion-range')!;
+
+      // Simulate a pressed knob A by setting state on component instance
       const component = page.rootInstance;
       component.pressedKnob = 'A';
 
@@ -405,12 +407,16 @@ describe('range: css classes', () => {
       });
 
       const range = page.body.querySelector('ion-range')!;
+
+      // Simulate a pressed knob A by setting state on component instance
       const component = page.rootInstance;
       component.pressedKnob = 'A';
+
       component.ratioA = 0.5;
       component.ratioB = 0.8;
 
       await page.waitForChanges();
+
       expect(range.classList.contains('range-pressed-lower')).toBe(true);
     });
 
@@ -421,12 +427,16 @@ describe('range: css classes', () => {
       });
 
       const range = page.body.querySelector('ion-range')!;
+
+      // Simulate a pressed knob B by setting state on component instance
       const component = page.rootInstance;
       component.pressedKnob = 'B';
+
       component.ratioA = 0.5;
       component.ratioB = 0.8;
 
       await page.waitForChanges();
+
       expect(range.classList.contains('range-pressed-upper')).toBe(true);
     });
 
@@ -437,10 +447,13 @@ describe('range: css classes', () => {
       });
 
       const range = page.body.querySelector('ion-range')!;
+
+      // Simulate a pressed knob A by setting state on component instance
       const component = page.rootInstance;
       component.pressedKnob = 'A';
 
       await page.waitForChanges();
+
       expect(range.classList.contains('range-pressed-a')).toBe(true);
     });
 
@@ -451,10 +464,13 @@ describe('range: css classes', () => {
       });
 
       const range = page.body.querySelector('ion-range')!;
+
+      // Simulate a pressed knob B by setting state on component instance
       const component = page.rootInstance;
       component.pressedKnob = 'B';
 
       await page.waitForChanges();
+
       expect(range.classList.contains('range-pressed-b')).toBe(true);
     });
   });
@@ -580,6 +596,7 @@ describe('range: shadow parts', () => {
       // Simulate a pressed knob by setting state on component instance
       const component = page.rootInstance;
       component.pressedKnob = 'A';
+
       await page.waitForChanges();
 
       // The pressed part should exist on the knob when pressed
@@ -587,6 +604,7 @@ describe('range: shadow parts', () => {
 
       // Clear the pressed knob
       component.pressedKnob = undefined;
+
       await page.waitForChanges();
 
       // The pressed part should not exist after clearing the pressed knob
@@ -607,6 +625,7 @@ describe('range: shadow parts', () => {
       // Focus the knob handle
       const knobHandle = shadowRoot.querySelector('.range-knob-handle') as HTMLElement;
       knobHandle.focus();
+
       await page.waitForChanges();
 
       // The focused part should exist on the knob when focused
@@ -615,6 +634,7 @@ describe('range: shadow parts', () => {
       // Blur the knob handle
       knobHandle.blur();
       await waitForEvent(range, 'ionBlur');
+
       await page.waitForChanges();
 
       // The focused part should not exist after blur
@@ -628,20 +648,22 @@ describe('range: shadow parts', () => {
       });
       const range = page.body.querySelector('ion-range')!;
       const shadowRoot = range.shadowRoot!;
-      const component = page.rootInstance;
 
       // The activated part should not exist on the knob by default
       expect(shadowRoot.querySelector('[part~="knob"][part~="activated"]')).toBeNull();
 
       // Simulate an activated knob by setting state on component instance
-      (component as any).activatedKnob = 'A';
+      const component = page.rootInstance;
+      component.activatedKnob = 'A';
+
       await page.waitForChanges();
 
       // The activated part should exist on the knob when activated
       expect(shadowRoot.querySelector('[part~="knob"][part~="activated"]')).not.toBeNull();
 
       // Clear the activated knob
-      (component as any).activatedKnob = undefined;
+      component.activatedKnob = undefined;
+
       await page.waitForChanges();
 
       // The activated part should not exist after clearing the activated knob
@@ -655,20 +677,22 @@ describe('range: shadow parts', () => {
       });
       const range = page.body.querySelector('ion-range')!;
       const shadowRoot = range.shadowRoot!;
-      const component = page.rootInstance;
 
       // The hover part should not exist on the knob by default
       expect(shadowRoot.querySelector('[part~="knob"][part~="hover"]')).toBeNull();
 
       // Simulate a hovered knob by setting state on component instance
-      (component as any).hoveredKnob = 'A';
+      const component = page.rootInstance;
+      component.hoveredKnob = 'A';
+
       await page.waitForChanges();
 
       // The hover part should exist on the knob when hovered
       expect(shadowRoot.querySelector('[part~="knob"][part~="hover"]')).not.toBeNull();
 
       // Clear the hovered knob
-      (component as any).hoveredKnob = undefined;
+      component.hoveredKnob = undefined;
+
       await page.waitForChanges();
 
       // The hover part should not exist after clearing the hovered knob
@@ -682,14 +706,15 @@ describe('range: shadow parts', () => {
       });
       const range = page.body.querySelector('ion-range')!;
       const shadowRoot = range.shadowRoot!;
-      const component = page.rootInstance;
 
       // The pressed part should not exist on either knob by default
       expect(shadowRoot.querySelector('[part~="knob-a"][part~="pressed"]')).toBeNull();
       expect(shadowRoot.querySelector('[part~="knob-b"][part~="pressed"]')).toBeNull();
 
       // Simulate a pressed knob A by setting state on component instance
+      const component = page.rootInstance;
       component.pressedKnob = 'A';
+
       await page.waitForChanges();
 
       // The pressed part should exist on knob A only
@@ -698,6 +723,7 @@ describe('range: shadow parts', () => {
 
       // Simulate a pressed knob B by setting state on component instance
       component.pressedKnob = 'B';
+
       await page.waitForChanges();
 
       // The pressed part should now exist on knob B only
@@ -706,6 +732,7 @@ describe('range: shadow parts', () => {
 
       // Clear the pressed knob
       component.pressedKnob = undefined;
+
       await page.waitForChanges();
 
       // The pressed part should not exist after clearing the pressed knob
@@ -728,6 +755,7 @@ describe('range: shadow parts', () => {
       // Focus knob handle A
       const knobHandleA = shadowRoot.querySelector('.range-knob-handle-a') as HTMLElement;
       knobHandleA.focus();
+
       await page.waitForChanges();
 
       // The focused part should exist on knob A only
@@ -737,6 +765,7 @@ describe('range: shadow parts', () => {
       // Focus knob handle B
       const knobHandleB = shadowRoot.querySelector('.range-knob-handle-b') as HTMLElement;
       knobHandleB.focus();
+
       await page.waitForChanges();
 
       // The focused part should now exist on knob B only
@@ -746,6 +775,7 @@ describe('range: shadow parts', () => {
       // Blur knob handle B
       knobHandleB.blur();
       await waitForEvent(range, 'ionBlur');
+
       await page.waitForChanges();
 
       // The focused part should not exist after blurring the knob handle
@@ -760,14 +790,15 @@ describe('range: shadow parts', () => {
       });
       const range = page.body.querySelector('ion-range')!;
       const shadowRoot = range.shadowRoot!;
-      const component = page.rootInstance;
 
       // The activated part should not exist on either knob by default
       expect(shadowRoot.querySelector('[part~="knob-a"][part~="activated"]')).toBeNull();
       expect(shadowRoot.querySelector('[part~="knob-b"][part~="activated"]')).toBeNull();
 
       // Simulate an activated knob A by setting state on component instance
-      (component as any).activatedKnob = 'A';
+      const component = page.rootInstance;
+      component.activatedKnob = 'A';
+
       await page.waitForChanges();
 
       // The activated part should exist on knob A only
@@ -775,7 +806,8 @@ describe('range: shadow parts', () => {
       expect(shadowRoot.querySelector('[part~="knob-b"][part~="activated"]')).toBeNull();
 
       // Simulate an activated knob B by setting state on component instance
-      (component as any).activatedKnob = 'B';
+      component.activatedKnob = 'B';
+
       await page.waitForChanges();
 
       // The activated part should now exist on knob B only
@@ -783,7 +815,8 @@ describe('range: shadow parts', () => {
       expect(shadowRoot.querySelector('[part~="knob-b"][part~="activated"]')).not.toBeNull();
 
       // Clear the activated knob
-      (component as any).activatedKnob = undefined;
+      component.activatedKnob = undefined;
+
       await page.waitForChanges();
 
       // The activated part should not exist after clearing the activated knob
@@ -798,14 +831,15 @@ describe('range: shadow parts', () => {
       });
       const range = page.body.querySelector('ion-range')!;
       const shadowRoot = range.shadowRoot!;
-      const component = page.rootInstance;
 
       // The hover part should not exist on either knob by default
       expect(shadowRoot.querySelector('[part~="knob-a"][part~="hover"]')).toBeNull();
       expect(shadowRoot.querySelector('[part~="knob-b"][part~="hover"]')).toBeNull();
 
       // Simulate a hovered knob A by setting state on component instance
-      (component as any).hoveredKnob = 'A';
+      const component = page.rootInstance;
+      component.hoveredKnob = 'A';
+
       await page.waitForChanges();
 
       // The hover part should exist on knob A only
@@ -813,7 +847,8 @@ describe('range: shadow parts', () => {
       expect(shadowRoot.querySelector('[part~="knob-b"][part~="hover"]')).toBeNull();
 
       // Simulate a hovered knob B by setting state on component instance
-      (component as any).hoveredKnob = 'B';
+      component.hoveredKnob = 'B';
+
       await page.waitForChanges();
 
       // The hover part should now exist on knob B only
@@ -821,7 +856,8 @@ describe('range: shadow parts', () => {
       expect(shadowRoot.querySelector('[part~="knob-b"][part~="hover"]')).not.toBeNull();
 
       // Clear the hovered knob
-      (component as any).hoveredKnob = undefined;
+      component.hoveredKnob = undefined;
+
       await page.waitForChanges();
 
       // The hover part should not exist after clearing the hovered knob
