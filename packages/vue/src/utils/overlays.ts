@@ -110,9 +110,9 @@ export const defineOverlayContainer = <Props extends object>(
         delete restOfProps.onWillDismiss;
         delete restOfProps.onDidDismiss;
         if (name === "ion-modal") {
-          delete restOfProps.onDragStart;
-          delete restOfProps.onDragMove;
-          delete restOfProps.onDragEnd;
+          delete restOfProps.onIonDragStart;
+          delete restOfProps.onIonDragMove;
+          delete restOfProps.onIonDragEnd;
         }
 
         const component = slots.default && slots.default()[0];
