@@ -6,7 +6,7 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
   test.describe(title('list-header: custom'), () => {
-    test.describe(title('CSS shadow parts'), () => {
+    test.describe('CSS shadow parts', () => {
       test('should be able to customize inner part', async ({ page }) => {
         await page.setContent(
           `
