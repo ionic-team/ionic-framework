@@ -269,7 +269,7 @@ Shadow parts must be documented in the component's JSDoc comments using the `@pa
 /**
  * @part native - The native HTML button, anchor or div element that wraps all child elements.
  * @part inner - The inner container element that wraps the item content.
- * @part content - The wrapper element that contains the default slot.
+ * @part container - The wrapper element that contains the default slot.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
  */
 ```
