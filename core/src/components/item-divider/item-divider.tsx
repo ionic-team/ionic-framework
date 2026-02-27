@@ -12,7 +12,7 @@ import type { Color } from '../../interface';
  * @slot start - Content is placed to the left of the divider text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the divider text in LTR, and to the left in RTL.
  *
- * @part inner - The inner container element that wraps the divider content.
+ * @part inner - The inner wrapper element that arranges the divider content.
  * @part container - The wrapper element that contains the default slot.
  */
 @Component({
