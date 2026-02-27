@@ -51,7 +51,7 @@
 /* Full */
 :host(.tab-bar-full) {
   /* stylelint-disable */
-  padding-top: globals.$ion-space-100;
+  padding-top: globals.$ion-space-250;
   padding-bottom: calc(globals.$ion-space-100 + var(--ion-safe-area-bottom, 0));
 
   padding-right: calc(globals.$ion-space-400 + var(--ion-safe-area-right, 0));
@@ -61,7 +61,7 @@
 
 :host([slot="top"].tab-bar-full) {
   padding-top: calc(globals.$ion-space-100 + var(--ion-safe-area-top, 0));
-  padding-bottom: globals.$ion-space-100;
+  padding-bottom: globals.$ion-space-250;
 }
 
 /* Compact */
