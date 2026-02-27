@@ -1,11 +1,22 @@
+import { generateColorSteps } from '../../utils/theme';
 import { darkTheme as baseDarkTheme } from '../base/dark.tokens';
 import type { DarkTheme } from '../themes.interfaces';
+
+const colors = {
+  gray: generateColorSteps('#ffffff', '#000000', true),
+  text: generateColorSteps('#ffffff', '#000000'),
+};
 
 export const darkTheme: DarkTheme = {
   ...baseDarkTheme,
 
   backgroundColor: '#000000',
   textColor: '#ffffff',
+
+  color: {
+    gray: colors.gray,
+    text: colors.text,
+  },
 
   backgroundColorStep: {
     50: '#0d0d0d',
