@@ -167,6 +167,7 @@ export class Radio implements ComponentInterface {
       const { compareWith, value: radioGroupValue } = this.radioGroup;
 
       this.checked = isOptionSelected(radioGroupValue, this.value, compareWith);
+      this.radioGroup.updateRadiosTabindex();
     }
   };
 

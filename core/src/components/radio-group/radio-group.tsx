@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 import { checkInvalidState } from '@utils/forms';
-import { renderHiddenInput } from '@utils/helpers';
+import { debounce, renderHiddenInput } from '@utils/helpers';
 import { hostContext } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -109,6 +109,15 @@ export class RadioGroup implements ComponentInterface {
      */
     this.valueChanged(this.value);
   }
+
+  /** @internal - Recompute which radio has tabindex 0. Call when radios are added/removed. */
+  @Method()
+  async updateRadiosTabindex() {
+    this.scheduleTabindexUpdate();
+  }
+
+  /** Ensures that the tabindex update is debounced and only called once. */
+  private scheduleTabindexUpdate = debounce(() => this.setRadioTabindex(this.value), 0);
 
   private setRadioTabindex = (value: any | undefined) => {
     const radios = this.getRadios();
