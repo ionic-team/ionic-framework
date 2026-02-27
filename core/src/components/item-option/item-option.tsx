@@ -17,7 +17,7 @@ import type { Color } from '../../interface';
  * @slot end - Content is placed to the right of the option text in LTR, and to the left in RTL.
  *
  * @part native - The native HTML button or anchor element that wraps all child elements.
- * @part inner - The inner container element that wraps the option content.
+ * @part inner - The inner wrapper element that arranges the option content.
  * @part container - The container element that wraps the start, icon-only, default, and end slots.
  */
 @Component({
