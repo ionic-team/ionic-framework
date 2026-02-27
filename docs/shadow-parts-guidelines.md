@@ -36,7 +36,7 @@ This document establishes a standardized naming convention for CSS Shadow Parts 
 | `container` | Does it wrap the main content itself (default slot or native control)? |
 | `content` | Is it the main user-content area of an overlay or primary content region? |
 
-The following examples shows the correct usage for the standard parts.
+The following examples show the correct usage for the standard parts.
 
 ### `native`
 
