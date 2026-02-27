@@ -75,7 +75,18 @@ export class Range implements ComponentInterface {
   private contentEl: HTMLElement | null = null;
   private initialContentScrollY = true;
   private originalIonInput?: EventEmitter<RangeChangeEventDetail>;
+  /**
+   * Used to avoid setting the focused state on click or tap. The focused
+   * state is only set when the focus comes from the keyboard (e.g. Tab).
+   * This is set to true on pointer down (mouse/touch).
+   */
   private focusFromPointer = false;
+  /**
+   * Observes class changes on the knob handles to keep the activatedKnob
+   * state in sync with the ion-activated class. This is necessary to
+   * determine which knob the user is dragging when using dual knobs and
+   * apply the activated part correctly.
+   */
   private activatedObserver?: MutationObserver;
 
   @Element() el!: HTMLIonRangeElement;
