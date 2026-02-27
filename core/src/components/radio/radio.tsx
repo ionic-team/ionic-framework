@@ -160,7 +160,6 @@ export class Radio implements ComponentInterface {
     if (radioGroup) {
       removeEventListener(radioGroup, 'ionValueChange', this.updateState);
       radioGroup.updateRadiosTabindex();
-      
       this.radioGroup = null;
     }
   }
