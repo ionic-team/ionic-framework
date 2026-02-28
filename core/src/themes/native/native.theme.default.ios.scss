@@ -17,7 +17,7 @@ $tabbar-ios-border-color: var(
   --ion-tab-bar-border-color,
   var(--ion-border-color, var(--ion-color-gray-150, rgba(0, 0, 0, 0.2)))
 );
-$tabbar-ios-color: var(--ion-tab-bar-color, $text-color-step-400);
+$tabbar-ios-color: var(--ion-tab-bar-color, $text-color-400);
 $tabbar-ios-color-selected: var(--ion-tab-bar-color-selected, ion-color(primary, base));
 
 // iOS Toolbar
@@ -38,7 +38,7 @@ $item-ios-color: var(--ion-item-color, $text-color);
 // iOS Card
 // --------------------------------------------------
 $card-ios-background: var(--ion-card-background, $item-ios-background);
-$card-ios-color: var(--ion-card-color, var(--ion-item-color, $text-color-step-400));
+$card-ios-color: var(--ion-card-color, var(--ion-item-color, $text-color-400));
 
 // iOS Form Controls
 // --------------------------------------------------

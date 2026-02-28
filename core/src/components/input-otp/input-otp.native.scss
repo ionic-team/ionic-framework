@@ -26,7 +26,7 @@
 // ----------------------------------------------------------------
 
 .input-otp-description {
-  color: $text-color-step-300;
+  color: $text-color-300;
 
   font-size: dynamic-font(12px);
 
@@ -91,7 +91,7 @@
 // --------------------------------------------------
 
 :host(.input-otp-disabled) {
-  --color: #{$text-color-step-650};
+  --color: #{$text-color-650};
 }
 
 :host(.input-otp-fill-outline.input-otp-disabled) {

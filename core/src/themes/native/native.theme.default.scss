@@ -23,7 +23,7 @@ $text-color-rgb: var(--ion-text-color-rgb, $text-color-rgb-value);
 // -------------------------------------------------------------------------------------------
 // Color Steps are used to provide variations in text and background colors of elements.
 // Steps move towards their contrasting color.
-// For example, $text-color-step-XXX will be $text-color stepping towards $background-color,
+// For example, $text-color-XXX will be $text-color stepping towards $background-color,
 // but a $background-color-step-XXX will be $background-color stepping towards $text-color.
 
 $background-color-step-0: var(--ion-color-gray-0, mix($text-color-value, $background-color-value, 0%));
@@ -47,28 +47,28 @@ $background-color-step-850: var(--ion-color-gray-850, mix($text-color-value, $ba
 $background-color-step-900: var(--ion-color-gray-900, mix($text-color-value, $background-color-value, 90%));
 $background-color-step-950: var(--ion-color-gray-950, mix($text-color-value, $background-color-value, 95%));
 $background-color-step-1000: var(--ion-color-gray-1000, mix($text-color-value, $background-color-value, 100%));
-$text-color-step-0: var(--ion-color-text-0, mix($background-color-value, $text-color-value, 0%));
-$text-color-step-50: var(--ion-color-text-50, mix($background-color-value, $text-color-value, 5%));
-$text-color-step-100: var(--ion-color-text-100, mix($background-color-value, $text-color-value, 10%));
-$text-color-step-150: var(--ion-color-text-150, mix($background-color-value, $text-color-value, 15%));
-$text-color-step-200: var(--ion-color-text-200, mix($background-color-value, $text-color-value, 20%));
-$text-color-step-250: var(--ion-color-text-250, mix($background-color-value, $text-color-value, 25%));
-$text-color-step-300: var(--ion-color-text-300, mix($background-color-value, $text-color-value, 30%));
-$text-color-step-350: var(--ion-color-text-350, mix($background-color-value, $text-color-value, 35%));
-$text-color-step-400: var(--ion-color-text-400, mix($background-color-value, $text-color-value, 40%));
-$text-color-step-450: var(--ion-color-text-450, mix($background-color-value, $text-color-value, 45%));
-$text-color-step-500: var(--ion-color-text-500, mix($background-color-value, $text-color-value, 50%));
-$text-color-step-550: var(--ion-color-text-550, mix($background-color-value, $text-color-value, 55%));
-$text-color-step-600: var(--ion-color-text-600, mix($background-color-value, $text-color-value, 60%));
-$text-color-step-650: var(--ion-color-text-650, mix($background-color-value, $text-color-value, 65%));
-$text-color-step-700: var(--ion-color-text-700, mix($background-color-value, $text-color-value, 70%));
-$text-color-step-750: var(--ion-color-text-750, mix($background-color-value, $text-color-value, 75%));
-$text-color-step-800: var(--ion-color-text-800, mix($background-color-value, $text-color-value, 80%));
-$text-color-step-850: var(--ion-color-text-850, mix($background-color-value, $text-color-value, 85%));
-$text-color-step-900: var(--ion-color-text-900, mix($background-color-value, $text-color-value, 90%));
-$text-color-step-950: var(--ion-color-text-950, mix($background-color-value, $text-color-value, 95%));
-$text-color-step-1000: var(--ion-color-text-1000, mix($background-color-value, $text-color-value, 100%));
+$text-color-0: var(--ion-color-text-0, mix($background-color-value, $text-color-value, 0%));
+$text-color-50: var(--ion-color-text-50, mix($background-color-value, $text-color-value, 5%));
+$text-color-100: var(--ion-color-text-100, mix($background-color-value, $text-color-value, 10%));
+$text-color-150: var(--ion-color-text-150, mix($background-color-value, $text-color-value, 15%));
+$text-color-200: var(--ion-color-text-200, mix($background-color-value, $text-color-value, 20%));
+$text-color-250: var(--ion-color-text-250, mix($background-color-value, $text-color-value, 25%));
+$text-color-300: var(--ion-color-text-300, mix($background-color-value, $text-color-value, 30%));
+$text-color-350: var(--ion-color-text-350, mix($background-color-value, $text-color-value, 35%));
+$text-color-400: var(--ion-color-text-400, mix($background-color-value, $text-color-value, 40%));
+$text-color-450: var(--ion-color-text-450, mix($background-color-value, $text-color-value, 45%));
+$text-color-500: var(--ion-color-text-500, mix($background-color-value, $text-color-value, 50%));
+$text-color-550: var(--ion-color-text-550, mix($background-color-value, $text-color-value, 55%));
+$text-color-600: var(--ion-color-text-600, mix($background-color-value, $text-color-value, 60%));
+$text-color-650: var(--ion-color-text-650, mix($background-color-value, $text-color-value, 65%));
+$text-color-700: var(--ion-color-text-700, mix($background-color-value, $text-color-value, 70%));
+$text-color-750: var(--ion-color-text-750, mix($background-color-value, $text-color-value, 75%));
+$text-color-800: var(--ion-color-text-800, mix($background-color-value, $text-color-value, 80%));
+$text-color-850: var(--ion-color-text-850, mix($background-color-value, $text-color-value, 85%));
+$text-color-900: var(--ion-color-text-900, mix($background-color-value, $text-color-value, 90%));
+$text-color-950: var(--ion-color-text-950, mix($background-color-value, $text-color-value, 95%));
+$text-color-1000: var(--ion-color-text-1000, mix($background-color-value, $text-color-value, 100%));
 
 // Default General Colors
 // --------------------------------------------------
-$placeholder-text-color: var(--ion-placeholder-color, $text-color-step-600);
+$placeholder-text-color: var(--ion-placeholder-color, $text-color-600);

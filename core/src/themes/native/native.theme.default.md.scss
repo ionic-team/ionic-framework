@@ -18,7 +18,7 @@ $tabbar-md-border-color: var(
   --ion-tab-bar-border-color,
   var(--ion-border-color, var(--ion-color-gray-150, rgba(0, 0, 0, 0.07)))
 );
-$tabbar-md-color: var(--ion-tab-bar-color, $text-color-step-350);
+$tabbar-md-color: var(--ion-tab-bar-color, $text-color-350);
 $tabbar-md-color-selected: var(--ion-tab-bar-color-selected, ion-color(primary, base));
 
 // Material Design Toolbar
@@ -39,7 +39,7 @@ $item-md-color: var(--ion-item-color, $text-color);
 // Material Design Card
 // --------------------------------------------------
 $card-md-background: var(--ion-card-background, $item-md-background);
-$card-md-color: var(--ion-card-color, var(--ion-item-color, $text-color-step-450));
+$card-md-color: var(--ion-card-color, var(--ion-item-color, $text-color-450));
 
 // Material Design Form Controls
 // --------------------------------------------------
