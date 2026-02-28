@@ -8,7 +8,7 @@
 :host {
   --background: #{ion-color(light, base)};
   --background-rgb: #{ion-color(light, base, null, true)};
-  --title-color: #{$text-color-step-400};
+  --title-color: #{$text-color-400};
 }
 
 :host(.datetime-presentation-date-time:not(.datetime-prefer-wheel)),
@@ -72,7 +72,7 @@
 :host .calendar-days-of-week {
   @include padding(0, $datetime-ios-padding * 0.5, 0, $datetime-ios-padding * 0.5);
 
-  color: $text-color-step-700;
+  color: $text-color-700;
 
   font-size: dynamic-font-max(12px, 1.6);
 
@@ -280,7 +280,7 @@
 }
 
 :host .calendar-day.calendar-day-adjacent-day {
-  color: $text-color-step-700;
+  color: $text-color-700;
 }
 
 // Time / Header

@@ -30,6 +30,7 @@
 
       .row {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
         margin: 16px 10px;
         gap: 10px;
@@ -85,6 +86,13 @@
       .ion-color.ion-color-subtle.ion-color-tint {
         background: var(--ion-color-subtle-tint);
         color: var(--ion-color-subtle-contrast);
+      }
+
+      .color-tile {
+        border: 1px solid #f2f2f2;
+        height: 40px;
+        width: 80px;
+        cursor: pointer;
       }
     </style>
   </head>
@@ -233,7 +241,110 @@
             </div>
           </div>
         </div>
+
+        <div class="grid">
+          <div class="column">
+            <h2>Gray</h2>
+            <div id="gray" class="row"></div>
+          </div>
+
+          <div class="column">
+            <h2>Text</h2>
+            <div id="text" class="row"></div>
+          </div>
+        </div>
       </ion-content>
     </ion-app>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const generateGrayColors = () => {
+          const grayContainer = document.getElementById('gray');
+          const bodyStyles = getComputedStyle(document.body);
+
+          if (!bodyStyles.getPropertyValue('--ion-color-gray-0')) {
+            const error = document.createElement('span');
+            error.textContent = 'Gray color variables not found.';
+            grayContainer.appendChild(error);
+
+            return;
+          }
+
+          for (let i = 0; i <= 1000; i += 50) {
+            const grayColor = `--ion-color-gray-${i}`;
+
+            const colorValue = bodyStyles.getPropertyValue(grayColor).trim();
+
+            const item = document.createElement('span');
+
+            const color = document.createElement('div');
+            color.classList.add('block', 'color-tile');
+            color.style.backgroundColor = `var(${grayColor})`;
+
+            color.addEventListener('click', () => {
+              navigator.clipboard.writeText(grayColor);
+              console.log(`${grayColor} copied to clipboard`);
+            });
+
+            item.appendChild(color);
+
+            const name = document.createElement('div');
+            name.textContent = `gray-${i}`;
+            item.appendChild(name);
+
+            const value = document.createElement('div');
+            value.textContent = colorValue;
+            item.appendChild(value);
+
+            grayContainer.appendChild(item);
+          }
+        };
+
+        const generateTextColors = () => {
+          const textContainer = document.getElementById('text');
+          const bodyStyles = getComputedStyle(document.body);
+
+          if (!bodyStyles.getPropertyValue('--ion-color-text-0')) {
+            const error = document.createElement('span');
+            error.textContent = 'Text color variables not found.';
+            textContainer.appendChild(error);
+
+            return;
+          }
+
+          for (let i = 0; i <= 1000; i += 50) {
+            const textColor = `--ion-color-text-${i}`;
+
+            const colorValue = bodyStyles.getPropertyValue(textColor).trim();
+
+            const item = document.createElement('span');
+
+            const color = document.createElement('div');
+            color.classList.add('block', 'color-tile');
+            color.style.backgroundColor = `var(${textColor})`;
+
+            color.addEventListener('click', () => {
+              navigator.clipboard.writeText(textColor);
+              console.log(`${textColor} copied to clipboard`);
+            });
+
+            item.appendChild(color);
+
+            const name = document.createElement('div');
+            name.textContent = `text-${i}`;
+            item.appendChild(name);
+
+            const value = document.createElement('div');
+            value.textContent = colorValue;
+            item.appendChild(value);
+
+            textContainer.appendChild(item);
+          }
+        };
+
+        generateGrayColors();
+        generateTextColors();
+      });
+    </script>
   </body>
 </html>

@@ -1,4 +1,5 @@
 import type { IonChipRecipe, IonChipConfig } from '../components/chip/chip.interfaces';
+import type { PredefinedColors } from '../interface';
 import type { IonicConfig as IonicGlobalConfig } from '../utils/config';
 
 // Platform-specific theme
@@ -11,12 +12,6 @@ export type BaseTheme = {
   backgroundColorRgb?: string;
   textColor?: string;
   textColorRgb?: string;
-  backgroundColorStep?: {
-    [key: string]: string;
-  };
-  textColorStep?: {
-    [key: string]: string;
-  };
 
   // TODO(FW-6864): Remove once IonToolbar themes are added
   toolbar?: any;
@@ -218,24 +213,7 @@ export type BaseTheme = {
   components?: Components;
 
   // COLOR TOKENS
-  color?: {
-    [key: string]: {
-      bold: {
-        base: string;
-        contrast: string;
-        foreground: string;
-        shade: string;
-        tint: string;
-      };
-      subtle: {
-        base: string;
-        contrast: string;
-        foreground: string;
-        shade: string;
-        tint: string;
-      };
-    };
-  };
+  color?: Colors;
 
   // PLATFORM SPECIFIC OVERRIDES
   ios?: PlatformTheme;
@@ -302,4 +280,40 @@ export type IonPadding = {
   end?: string | number;
   bottom?: string | number;
   start?: string | number;
+};
+
+// Semantic color value structure
+type SemanticColorValue = {
+  base: string;
+  contrast: string;
+  foreground: string;
+  shade: string;
+  tint: string;
+};
+
+// Semantic color hue value structure
+type SemanticHue = {
+  bold?: SemanticColorValue;
+  subtle?: SemanticColorValue;
+};
+
+// Number string keys structure
+export type NumberStringKeys = {
+  // Enforce keys are strings of numbers (like 50, '50', etc.)
+  [K in number as `${K}`]?: string;
+};
+
+// Primitive color keys
+export type PrimitiveColors = 'gray' | 'black' | 'white' | 'gray-contrast';
+
+// Functional color keys
+export type FunctionalColors = 'text' | 'overlay-background';
+
+// Colors interface
+export type Colors = {
+  [K in PredefinedColors]?: SemanticHue;
+} & {
+  [K in PrimitiveColors]?: NumberStringKeys;
+} & {
+  [K in FunctionalColors]?: NumberStringKeys;
 };
