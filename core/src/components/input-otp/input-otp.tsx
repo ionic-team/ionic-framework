@@ -535,9 +535,16 @@ export class InputOTP implements ComponentInterface {
    * - Tab: Allows normal tab navigation between components
    */
   private onKeyDown = (index: number) => (event: KeyboardEvent) => {
-    const { length } = this;
+    const { length, readonly } = this;
     const rtl = isRTL(this.el);
     const input = event.target as HTMLInputElement;
+
+    if (readonly) {
+      if (event.key === 'Backspace' || event.key === 'Delete') {
+        event.preventDefault();
+      }
+      return;
+    }
 
     // Meta shortcuts are used to copy, paste, and select text
     // We don't want to handle these keys here
@@ -603,6 +610,11 @@ export class InputOTP implements ComponentInterface {
    * 5. Single character replacement
    */
   private onInput = (index: number) => (event: InputEvent) => {
+    if (this.readonly) {
+      event.preventDefault();
+      return;
+    }
+
     const { length, validKeyPattern } = this;
     const input = event.target as HTMLInputElement;
     const value = input.value;
@@ -735,6 +747,11 @@ export class InputOTP implements ComponentInterface {
    * the next empty input after pasting.
    */
   private onPaste = (event: ClipboardEvent) => {
+    if (this.readonly) {
+      event.preventDefault();
+      return;
+    }
+
     const { inputRefs, length, validKeyPattern } = this;
 
     event.preventDefault();

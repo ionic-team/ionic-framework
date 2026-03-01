@@ -690,6 +690,21 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
   });
 
   test.describe(title('input-otp: backspace functionality'), () => {
+    test('should not modify values with Backspace or Delete when readonly', async ({ page }) => {
+      await page.setContent(`<ion-input-otp value="1234" readonly>Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const ionInput = await page.spyOnEvent('ionInput');
+
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Backspace');
+      await page.keyboard.press('Delete');
+      await page.keyboard.type('5');
+
+      await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
+      await expect(ionInput).not.toHaveReceivedEvent();
+    });
+
     test('should backspace the first input box when backspace is pressed twice from the 2nd input box and the first input box has a value', async ({
       page,
     }) => {
