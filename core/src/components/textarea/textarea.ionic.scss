@@ -118,8 +118,8 @@
  */
 :host(.textarea-label-placement-stacked) textarea,
 :host(.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after {
-   @include globals.margin(0px);
- }
+  @include globals.margin(0px);
+}
 
 // Textarea Highlight
 // ----------------------------------------------------------------
