@@ -201,7 +201,7 @@
 
 /**
  * Removes the margin between the textarea and the label,
- * as ionic team already handles the margin.
+ * as ionic theme already handles the margin.
  */
 :host(.textarea-label-placement-stacked) textarea,
 :host(.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after {
