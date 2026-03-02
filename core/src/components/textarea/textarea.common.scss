@@ -507,17 +507,6 @@
 }
 
 /**
- * Ensures the textarea does not
- * overlap the label.
- */
-:host(.textarea-label-placement-stacked) textarea,
-:host(.textarea-label-placement-floating) textarea,
-:host(.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after,
-:host(.textarea-label-placement-floating[auto-grow]) .native-wrapper::after {
-  @include margin(8px, 0px, 0px, 0px);
-}
-
-/**
  * This makes the label sit over the textarea
  * when the textarea is blurred and has no value.
  */
