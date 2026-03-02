@@ -3098,6 +3098,7 @@ export namespace Components {
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
+        "updateRadiosTabindex": () => Promise<void>;
         /**
           * the value of the radio group.
          */
