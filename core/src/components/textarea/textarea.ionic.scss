@@ -196,18 +196,6 @@
   transition: opacity globals.$ion-transition-time-150 globals.$ion-transition-curve-expressive;
 }
 
-// Textarea Label Placement - Stacked
-// ----------------------------------------------------------------
-
-/**
- * Removes the margin between the textarea and the label,
- * as ionic theme already handles the margin.
- */
-:host(.textarea-label-placement-stacked) textarea,
-:host(.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after {
-  @include globals.margin(0);
-}
-
 // Textarea Label Placement - Fixed
 // ----------------------------------------------------------------
 
