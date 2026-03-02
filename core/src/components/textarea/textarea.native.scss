@@ -120,6 +120,20 @@
   @include globals.margin(0, globals.$form-control-label-margin, 0, 0);
 }
 
+// Textarea Label Placement - Stacked & Floating
+// ----------------------------------------------------------------
+
+/**
+ * Ensures the textarea does not
+ * overlap the label.
+ */
+:host(.textarea-label-placement-stacked) textarea,
+:host(.textarea-label-placement-floating) textarea,
+:host(.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after,
+:host(.textarea-label-placement-floating[auto-grow]) .native-wrapper::after {
+  @include globals.margin(8px, 0px, 0px, 0px);
+}
+
 // Start / End Slots
 // ----------------------------------------------------------------
 
