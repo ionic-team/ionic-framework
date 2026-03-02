@@ -103,7 +103,13 @@
 // --------------------------------------------------
 
 :host ::slotted(ion-badge) {
-  @include globals.position(null, null, null, calc(50% + globals.$ion-scale-300));
+  @include globals.position(calc(globals.$ion-scale-100 * -2), null, null, calc(50% + globals.$ion-scale-300));
+  transform: translateX(-50%);
+}
+
+// Status badge (empty) needs less offset to overlap the icon
+:host ::slotted(ion-badge:empty) {
+  @include globals.position(calc(globals.$ion-scale-100 * -1), null, null, calc(50% + globals.$ion-scale-250));
 }
 
 :host ::slotted(ion-badge.badge-vertical-top) {
