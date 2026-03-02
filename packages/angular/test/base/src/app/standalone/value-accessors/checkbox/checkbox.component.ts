@@ -17,7 +17,7 @@ import { ValueAccessorTestComponent } from "../value-accessor-test/value-accesso
 export class CheckboxComponent {
   dynamicLabel = '';
 
-  ngAfterViewChecked(): void {
+  ngAfterViewInit(): void {
     this.dynamicLabel = 'Dynamic Checkbox Label';
   }
 

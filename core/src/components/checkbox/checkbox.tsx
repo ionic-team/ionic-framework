@@ -265,6 +265,10 @@ export class Checkbox implements ComponentInterface {
     ev.stopPropagation();
   };
 
+  private onSlotChange = () => {
+    forceUpdate(this)
+  }
+
   private getHintTextId(): string | undefined {
     const { helperText, errorText, helperTextId, errorTextId, isInvalid } = this;
 
@@ -382,7 +386,7 @@ export class Checkbox implements ComponentInterface {
             id={this.inputLabelId}
             onClick={this.onDivLabelClick}
           >
-            <slot onSlotchange={() => forceUpdate(this)}></slot>
+            <slot onSlotchange={this.onSlotChange}></slot>
             {this.renderHintText()}
           </div>
           <div class="native-wrapper">
