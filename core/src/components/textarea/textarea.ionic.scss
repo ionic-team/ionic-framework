@@ -117,9 +117,7 @@
  * as ionic team already handles the margin.
  */
  :host(.textarea-label-placement-stacked) textarea,
- :host(.textarea-label-placement-floating) textarea,
- :host(.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after,
- :host(.textarea-label-placement-floating[auto-grow]) .native-wrapper::after {
+  :host(.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after {
    @include globals.margin(0px);
  }
 
