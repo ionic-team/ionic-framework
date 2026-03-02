@@ -266,7 +266,7 @@ export class Checkbox implements ComponentInterface {
   };
 
   private onSlotChange = () => {
-    forceUpdate(this)
+    forceUpdate(this);
   }
 
   private getHintTextId(): string | undefined {
