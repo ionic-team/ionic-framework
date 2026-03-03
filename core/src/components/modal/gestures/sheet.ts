@@ -687,7 +687,6 @@ export const createSheetGesture = (
     const minBreakpoint = breakpoints[0];
     const maxBreakpoint = breakpoints[breakpoints.length - 1];
 
-    // Convert breakpoints to pixel Y coordinates
     /**
      * The lowest point the sheet can be dragged to aka the point at which
      * the sheet is fully closed.
