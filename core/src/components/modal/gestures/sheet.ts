@@ -429,7 +429,7 @@ export const createSheetGesture = (
     offset = clamp(0.0001, processedStep, maxStep);
     animation.progressStep(offset);
 
-    const predicted = calculatePredictedBreakpoint(detail.velocityY, detail.deltaY);
+    const predicted = calculatePredictedBreakpoint(detail.deltaY);
 
     const eventDetail: ModalDragEventDetail = {
       currentY: detail.currentY,
@@ -443,7 +443,7 @@ export const createSheetGesture = (
   };
 
   const onEnd = (detail: GestureDetail) => {
-    const predicted = calculatePredictedBreakpoint(detail.velocityY, detail.deltaY);
+    const predicted = calculatePredictedBreakpoint(detail.deltaY);
 
     const eventDetail: ModalDragEventDetail = {
       currentY: detail.currentY,
@@ -644,20 +644,28 @@ export const createSheetGesture = (
   };
 
   /**
-   * Calculates the predicted breakpoint based on the current velocity and deltaY.
+   * Calculates the predicted breakpoint based on the current deltaY.
    * This determines where the sheet should snap to when the user releases the
    * gesture.
    *
-   * @param velocityY The current velocity of the gesture in the Y direction.
    * @param deltaY The change in Y position since the gesture started.
    * @returns The predicted breakpoint value.
    */
-  const calculatePredictedBreakpoint = (velocityY: number, deltaY: number): number => {
-    const threshold = (deltaY + velocityY * 350) / height;
+  const calculatePredictedBreakpoint = (deltaY: number): number => {
+    /**
+     * Calculates the real-time vertical position of the modal.
+     * We combine the wrapper's current bounding box position with the gesture's
+     * deltaY to account for the physical movement during the drag.
+     */
+    const currentY = wrapperEl.getBoundingClientRect().top + deltaY;
+    const currentProgress = calculateProgress(currentY);
 
-    const diff = currentBreakpoint - threshold;
+    /**
+     * Find the breakpoint in the array that has the
+     * smallest absolute distance to our current progress.
+     */
     const predicted = breakpoints.reduce((a, b) => {
-      return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
+      return Math.abs(b - currentProgress) < Math.abs(a - currentProgress) ? b : a;
     });
 
     return predicted;
