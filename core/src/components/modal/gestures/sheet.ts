@@ -429,28 +429,28 @@ export const createSheetGesture = (
     offset = clamp(0.0001, processedStep, maxStep);
     animation.progressStep(offset);
 
-    const predicted = calculatePredictedBreakpoint(detail.deltaY);
+    const snapBreakpoint = calculateSnapBreakpoint(detail.deltaY);
 
     const eventDetail: ModalDragEventDetail = {
       currentY: detail.currentY,
       deltaY: detail.deltaY,
       velocityY: detail.velocityY,
       progress: calculateProgress(detail.currentY),
-      predictedBreakpoint: predicted,
+      snapBreakpoint: snapBreakpoint,
     };
 
     onDragMove(eventDetail);
   };
 
   const onEnd = (detail: GestureDetail) => {
-    const predicted = calculatePredictedBreakpoint(detail.deltaY);
+    const snapBreakpoint = calculateSnapBreakpoint(detail.deltaY);
 
     const eventDetail: ModalDragEventDetail = {
       currentY: detail.currentY,
       deltaY: detail.deltaY,
       velocityY: detail.velocityY,
       progress: calculateProgress(detail.currentY),
-      predictedBreakpoint: predicted,
+      snapBreakpoint,
     };
 
     /**
@@ -473,7 +473,7 @@ export const createSheetGesture = (
     }
 
     moveSheetToBreakpoint({
-      breakpoint: predicted,
+      breakpoint: snapBreakpoint,
       breakpointOffset: offset,
       canDismiss: canDismissBlocksGesture,
 
@@ -644,31 +644,34 @@ export const createSheetGesture = (
   };
 
   /**
-   * Calculates the predicted breakpoint based on the current deltaY.
+   * Calculates the breakpoint based on the current deltaY.
    * This determines where the sheet should snap to when the user releases the
    * gesture.
    *
    * @param deltaY The change in Y position since the gesture started.
-   * @returns The predicted breakpoint value.
+   * @returns The snap breakpoint value.
    */
-  const calculatePredictedBreakpoint = (deltaY: number): number => {
+  const calculateSnapBreakpoint = (deltaY: number): number => {
     /**
      * Calculates the real-time vertical position of the modal.
-     * We combine the wrapper's current bounding box position with the gesture's
-     * deltaY to account for the physical movement during the drag.
+     * We combine the wrapper's current bounding box position with the
+     * gesture's deltaY to account for the physical movement during the drag.
      */
     const currentY = wrapperEl.getBoundingClientRect().top + deltaY;
+    /**
+     * Convert that pixel position back into a 0 to 1 progress value.
+     */
     const currentProgress = calculateProgress(currentY);
 
     /**
-     * Find the breakpoint in the array that has the
-     * smallest absolute distance to our current progress.
+     * Find and return the defined breakpoint that is closest to the
+     * current progress.
      */
-    const predicted = breakpoints.reduce((a, b) => {
+    const snapBreakpoint = breakpoints.reduce((a, b) => {
       return Math.abs(b - currentProgress) < Math.abs(a - currentProgress) ? b : a;
     });
 
-    return predicted;
+    return snapBreakpoint;
   };
 
   /**

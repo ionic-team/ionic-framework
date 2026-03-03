@@ -72,6 +72,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private sheetTransition?: Promise<any>;
   @State() private isSheetModal = false;
+  /**
+   * The breakpoint value that has been committed for a sheet modal.
+   * This represents the modal's resting state when it is not being dragged
+   * or animating toward a new position.
+   */
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;

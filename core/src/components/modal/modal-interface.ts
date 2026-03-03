@@ -53,5 +53,9 @@ export interface ModalDragEventDetail {
   deltaY: number;
   velocityY: number;
   progress: number;
-  predictedBreakpoint?: number;
+  /**
+   * The breakpoint that the sheet will snap to if the user releases
+   * the gesture.
+   */
+  snapBreakpoint?: number;
 }
