@@ -110,16 +110,29 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       const ionDragEnd = await page.spyOnEvent('ionDragEnd');
 
       const header = page.locator('.modal-card ion-header');
-      await dragElementBy(header, page, 0, 100);
+
+      // Start the drag to verify it emits the events before the gesture ends
+      await dragElementBy(header, page, 0, 50, undefined, undefined, false);
 
       await ionDragStart.next();
       const dragMoveEvent = await ionDragMove.next();
-      const dragEndEvent = await ionDragEnd.next();
 
       expect(ionDragStart.length).toBe(1);
 
       expect(ionDragMove.length).toBeGreaterThan(0);
       expect(Object.keys(dragMoveEvent.detail).length).toBe(4);
+
+      expect(ionDragEnd.length).toBe(0);
+
+      // Drag the modal item further to verify it does not emit the event
+      // again for `ionDragStart` or `ionDragMove`, but does emit `ionDragEnd`
+      // when the gesture is released
+      await dragElementBy(header, page, 0, 100);
+
+      const dragEndEvent = await ionDragEnd.next();
+
+      expect(ionDragStart.length).toBe(1);
+      expect(ionDragMove.length).toBeGreaterThan(0);
 
       expect(ionDragEnd.length).toBe(1);
       expect(Object.keys(dragEndEvent.detail).length).toBe(4);
