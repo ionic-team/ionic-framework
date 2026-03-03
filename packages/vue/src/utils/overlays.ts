@@ -187,17 +187,14 @@ export const defineOverlayContainer = <Props extends object>(
         if (name === "ion-modal") {
           elementRef.value.addEventListener("ionDragStart", (ev: Event) => {
             emit("ionDragStart", ev);
-            emit(componentName + "IonDragStart", ev);
           });
 
           elementRef.value.addEventListener("ionDragMove", (ev: Event) => {
             emit("ionDragMove", ev);
-            emit(componentName + "IonDragMove", ev);
           });
 
           elementRef.value.addEventListener("ionDragEnd", (ev: Event) => {
             emit("ionDragEnd", ev);
-            emit(componentName + "IonDragEnd", ev);
           });
         }
       });
