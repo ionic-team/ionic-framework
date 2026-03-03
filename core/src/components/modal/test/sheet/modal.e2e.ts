@@ -355,12 +355,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   });
 
   test.describe(title('sheet modal: drag events'), () => {
-    test('should emit ionDragStart, ionDragMove, and ionDragEnd events', async ({ page }, testInfo) => {
-      testInfo.annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/23955',
-      });
-
+    test('should emit ionDragStart, ionDragMove, and ionDragEnd events', async ({ page }) => {
       await page.goto('/src/components/modal/test/sheet', config);
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');

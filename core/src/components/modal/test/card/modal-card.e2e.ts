@@ -97,12 +97,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
   });
 
   test.describe(title('card modal: drag events'), () => {
-    test('should emit ionDragStart, ionDragMove, and ionDragEnd events', async ({ page }, testInfo) => {
-      testInfo.annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/23955',
-      });
-
+    test('should emit ionDragStart, ionDragMove, and ionDragEnd events', async ({ page }) => {
       await page.goto('/src/components/modal/test/card', config);
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
