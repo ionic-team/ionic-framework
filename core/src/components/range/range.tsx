@@ -425,6 +425,7 @@ export class Range implements ComponentInterface {
      */
     if (this.didLoad) {
       this.setupGesture();
+      this.setupActivatedObserver();
     }
 
     const ionContent = findClosestIonContent(this.el);
