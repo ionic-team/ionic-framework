@@ -1216,15 +1216,26 @@ const renderKnob = (
 /**
  * Returns whether the given knob is at the lower or upper position based
  * on current ratios for the given knob.
+ *
+ * When both knobs have the same ratio, we only want one "lower" and one
+ * "upper" position so that the `lower` and `upper` parts are not applied to
+ * the same knob. In that case, we treat knob "A" as the lower position and
+ * knob "B" as the upper position.
  */
 const getKnobPosition = (knob: 'A' | 'B', ratioA: number, ratioB: number, dualKnobs: boolean): 'lower' | 'upper' => {
-  if (dualKnobs) {
-    if (knob === 'A') {
-      return ratioA <= ratioB ? 'lower' : 'upper';
-    }
-    return ratioB <= ratioA ? 'lower' : 'upper';
+  if (!dualKnobs) {
+    return 'lower';
   }
-  return 'lower';
+
+  if (ratioA === ratioB) {
+    return knob === 'A' ? 'lower' : 'upper';
+  }
+
+  if (knob === 'A') {
+    return ratioA < ratioB ? 'lower' : 'upper';
+  }
+
+  return ratioB < ratioA ? 'lower' : 'upper';
 };
 
 const ratioToValue = (ratio: number, min: number, max: number, step: number): number => {
