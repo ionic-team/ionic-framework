@@ -355,7 +355,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   });
 
   test.describe(title('sheet modal: drag events'), () => {
-    test.only('should emit ionDragStart, ionDragMove, and ionDragEnd events', async ({ page }) => {
+    test('should emit ionDragStart, ionDragMove, and ionDragEnd events', async ({ page }) => {
       await page.goto('/src/components/modal/test/sheet', config);
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
