@@ -142,6 +142,9 @@ export class IonModal {
       'willPresent',
       'willDismiss',
       'didDismiss',
+      'ionDragStart',
+      'ionDragMove',
+      'ionDragEnd',
     ]);
   }
 }
