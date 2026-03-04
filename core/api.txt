@@ -712,7 +712,7 @@ ion-infinite-scroll-content,prop,loadingText,IonicSafeString | string | undefine
 
 ion-input,scoped
 ion-input,prop,autocapitalize,string,'off',false,false
-ion-input,prop,autocomplete,"name" | "email" | "tel" | "url" | "on" | "off" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "impp" | "photo",'off',false,false
+ion-input,prop,autocomplete,"additional-name" | "address-level1" | "address-level2" | "address-level3" | "address-level4" | "address-line1" | "address-line2" | "address-line3" | "bday" | "bday-day" | "bday-month" | "bday-year" | "cc-additional-name" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-family-name" | "cc-given-name" | "cc-name" | "cc-number" | "cc-type" | "country" | "country-name" | "current-password" | "email" | "family-name" | "given-name" | "honorific-prefix" | "honorific-suffix" | "impp" | "language" | "name" | "new-password" | "nickname" | "off" | "on" | "one-time-code" | "organization" | "organization-title" | "photo" | "postal-code" | "sex" | "street-address" | "tel" | "tel-area-code" | "tel-country-code" | "tel-extension" | "tel-local" | "tel-national" | "transaction-amount" | "transaction-currency" | "url" | "username",'off',false,false
 ion-input,prop,autocorrect,"off" | "on",'off',false,false
 ion-input,prop,autofocus,boolean,false,false,false
 ion-input,prop,clearInput,boolean,false,false,false
@@ -1228,7 +1228,7 @@ ion-nav,shadow
 ion-nav,prop,animated,boolean,true,false,false
 ion-nav,prop,animation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-nav,prop,root,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
-ion-nav,prop,rootParams,undefined | { [key: string]: any; },undefined,false,false
+ion-nav,prop,rootParams,T | undefined,undefined,false,false
 ion-nav,prop,swipeGesture,boolean | undefined,undefined,false,false
 ion-nav,method,canGoBack,canGoBack(view?: ViewController) => Promise<boolean>
 ion-nav,method,getActive,getActive() => Promise<ViewController | undefined>
@@ -1249,7 +1249,7 @@ ion-nav,event,ionNavWillChange,void,false
 
 ion-nav-link,none
 ion-nav-link,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
-ion-nav-link,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
+ion-nav-link,prop,componentProps,T | undefined,undefined,false,false
 ion-nav-link,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-nav-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 
@@ -1342,7 +1342,7 @@ ion-popover,prop,animated,boolean,true,false,false
 ion-popover,prop,arrow,boolean,true,false,false
 ion-popover,prop,backdropDismiss,boolean,true,false,false
 ion-popover,prop,component,Function | HTMLElement | null | string | undefined,undefined,false,false
-ion-popover,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
+ion-popover,prop,componentProps,T | undefined,undefined,false,false
 ion-popover,prop,dismissOnSelect,boolean,false,false,false
 ion-popover,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-popover,prop,event,any,undefined,false,false
@@ -1595,7 +1595,7 @@ ion-row,shadow
 ion-searchbar,scoped
 ion-searchbar,prop,animated,boolean,false,false,false
 ion-searchbar,prop,autocapitalize,string,'off',false,false
-ion-searchbar,prop,autocomplete,"name" | "email" | "tel" | "url" | "on" | "off" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "impp" | "photo",'off',false,false
+ion-searchbar,prop,autocomplete,"additional-name" | "address-level1" | "address-level2" | "address-level3" | "address-level4" | "address-line1" | "address-line2" | "address-line3" | "bday" | "bday-day" | "bday-month" | "bday-year" | "cc-additional-name" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-family-name" | "cc-given-name" | "cc-name" | "cc-number" | "cc-type" | "country" | "country-name" | "current-password" | "email" | "family-name" | "given-name" | "honorific-prefix" | "honorific-suffix" | "impp" | "language" | "name" | "new-password" | "nickname" | "off" | "on" | "one-time-code" | "organization" | "organization-title" | "photo" | "postal-code" | "sex" | "street-address" | "tel" | "tel-area-code" | "tel-country-code" | "tel-extension" | "tel-local" | "tel-national" | "transaction-amount" | "transaction-currency" | "url" | "username",'off',false,false
 ion-searchbar,prop,autocorrect,"off" | "on",'off',false,false
 ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', arrowBackSharp) as string,false,false
 ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
