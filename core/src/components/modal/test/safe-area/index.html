@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - Safe Area</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      :root {
+        --ion-safe-area-top: 47px;
+        --ion-safe-area-bottom: 34px;
+        --ion-safe-area-right: 0px;
+        --ion-safe-area-left: 0px;
+      }
+
+      /* Visual indicators for safe area regions */
+      .safe-area-indicator {
+        position: fixed;
+        background: rgba(255, 0, 0, 0.3);
+        pointer-events: none;
+        z-index: 99999;
+      }
+      .safe-area-indicator.top {
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--ion-safe-area-top, 0px);
+      }
+      .safe-area-indicator.bottom {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: var(--ion-safe-area-bottom, 0px);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Visual indicators for safe areas -->
+    <div class="safe-area-indicator top"></div>
+    <div class="safe-area-indicator bottom"></div>
+
+    <ion-app>
+      <div class="ion-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Modal - Safe Area</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <h2>Fullscreen Modals</h2>
+          <button id="fullscreen-modal" onclick="presentFullscreenModal()">Present Fullscreen Modal</button>
+          <button id="fullscreen-modal-no-footer" onclick="presentFullscreenModalNoFooter()">
+            Present Fullscreen Modal (No Footer)
+          </button>
+
+          <h2>Sheet Modals</h2>
+          <button id="sheet-modal" onclick="presentSheetModal()">Present Sheet Modal</button>
+
+          <h2>Card Modals (iOS)</h2>
+          <button id="card-modal" onclick="presentCardModal()">Present Card Modal</button>
+
+          <h2>Centered Dialog (Tablet)</h2>
+          <button id="centered-dialog" onclick="presentCenteredDialog()">Present Centered Dialog</button>
+
+          <h2>Diagnostic Info</h2>
+          <div id="diagnostic">
+            <p>Window Width: <span id="window-width"></span></p>
+            <p>Window Height: <span id="window-height"></span></p>
+            <p>Is Tablet: <span id="is-tablet"></span></p>
+          </div>
+        </ion-content>
+      </div>
+    </ion-app>
+
+    <script>
+      // Update diagnostic info
+      function updateDiagnostics() {
+        document.getElementById('window-width').textContent = window.innerWidth + 'px';
+        document.getElementById('window-height').textContent = window.innerHeight + 'px';
+        document.getElementById('is-tablet').textContent = window.innerWidth >= 768 ? 'Yes' : 'No';
+      }
+      updateDiagnostics();
+      window.addEventListener('resize', updateDiagnostics);
+
+      function createModalContent(title, showFooter = true) {
+        const element = document.createElement('div');
+        element.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>${title}</ion-title>
+              <ion-buttons slot="end">
+                <ion-button class="dismiss">Close</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <h1>Modal Content</h1>
+            <p>This modal tests safe-area handling.</p>
+            <p>Safe-area values set on :root:</p>
+            <ul>
+              <li>Top: 47px (simulates iPhone notch)</li>
+              <li>Bottom: 34px (simulates home indicator)</li>
+            </ul>
+            <div id="modal-safe-area-info"></div>
+            <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse scelerisque dui vitae massa tincidunt, id volutpat sapien dapibus. Nunc libero ante, tristique vel imperdiet vitae, aliquet a arcu. Proin vestibulum augue neque, posuere posuere nisl mattis vel. Ut interdum quam ut nulla ultrices tristique vitae in arcu. Nulla ac magna tincidunt mauris tincidunt porttitor. Integer tincidunt imperdiet ante. Mauris quam arcu, dictum quis commodo a, tempus at nulla. Curabitur non tellus a leo tempor lobortis.
+            </p>
+            <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse scelerisque dui vitae massa tincidunt, id volutpat sapien dapibus. Nunc libero ante, tristique vel imperdiet vitae, aliquet a arcu. Proin vestibulum augue neque, posuere posuere nisl mattis vel. Ut interdum quam ut nulla ultrices tristique vitae in arcu. Nulla ac magna tincidunt mauris tincidunt porttitor. Integer tincidunt imperdiet ante. Mauris quam arcu, dictum quis commodo a, tempus at nulla. Curabitur non tellus a leo tempor lobortis.
+            </p>
+            <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse scelerisque dui vitae massa tincidunt, id volutpat sapien dapibus. Nunc libero ante, tristique vel imperdiet vitae, aliquet a arcu. Proin vestibulum augue neque, posuere posuere nisl mattis vel. Ut interdum quam ut nulla ultrices tristique vitae in arcu. Nulla ac magna tincidunt mauris tincidunt porttitor. Integer tincidunt imperdiet ante. Mauris quam arcu, dictum quis commodo a, tempus at nulla. Curabitur non tellus a leo tempor lobortis.
+            </p>
+            <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse scelerisque dui vitae massa tincidunt, id volutpat sapien dapibus. Nunc libero ante, tristique vel imperdiet vitae, aliquet a arcu. Proin vestibulum augue neque, posuere posuere nisl mattis vel. Ut interdum quam ut nulla ultrices tristique vitae in arcu. Nulla ac magna tincidunt mauris tincidunt porttitor. Integer tincidunt imperdiet ante. Mauris quam arcu, dictum quis commodo a, tempus at nulla. Curabitur non tellus a leo tempor lobortis.
+            </p>
+            <p>This text should help demonstrate appropriate usage of safe area in modals on the bottom.</p>
+          </ion-content>
+          ${
+            showFooter
+              ? `
+          <ion-footer>
+            <ion-toolbar>
+              <ion-title>Footer</ion-title>
+            </ion-toolbar>
+          </ion-footer>
+          `
+              : ''
+          }
+        `;
+        return element;
+      }
+
+      function updateModalDiagnostics(modalEl) {
+        const infoEl = modalEl.querySelector('#modal-safe-area-info');
+        if (infoEl) {
+          const styles = getComputedStyle(modalEl);
+          infoEl.innerHTML = `
+            <h3>Modal Safe-Area Overrides:</h3>
+            <ul>
+              <li>--ion-safe-area-top: ${styles.getPropertyValue('--ion-safe-area-top') || 'not set'}</li>
+              <li>--ion-safe-area-bottom: ${styles.getPropertyValue('--ion-safe-area-bottom') || 'not set'}</li>
+              <li>--ion-safe-area-left: ${styles.getPropertyValue('--ion-safe-area-left') || 'not set'}</li>
+              <li>--ion-safe-area-right: ${styles.getPropertyValue('--ion-safe-area-right') || 'not set'}</li>
+            </ul>
+          `;
+        }
+      }
+
+      async function presentFullscreenModal() {
+        const element = createModalContent('Fullscreen Modal');
+        const modal = Object.assign(document.createElement('ion-modal'), {
+          component: element,
+        });
+
+        element.querySelector('.dismiss').addEventListener('click', () => modal.dismiss());
+        document.body.appendChild(modal);
+
+        await modal.present();
+        updateModalDiagnostics(modal);
+
+        await modal.onDidDismiss();
+        modal.remove();
+      }
+
+      async function presentFullscreenModalNoFooter() {
+        const element = createModalContent('Fullscreen Modal (No Footer)', false);
+        const modal = Object.assign(document.createElement('ion-modal'), {
+          component: element,
+        });
+
+        element.querySelector('.dismiss').addEventListener('click', () => modal.dismiss());
+        document.body.appendChild(modal);
+
+        await modal.present();
+        updateModalDiagnostics(modal);
+
+        await modal.onDidDismiss();
+        modal.remove();
+      }
+
+      async function presentSheetModal() {
+        const element = createModalContent('Sheet Modal');
+        const modal = Object.assign(document.createElement('ion-modal'), {
+          component: element,
+          initialBreakpoint: 0.5,
+          breakpoints: [0, 0.25, 0.5, 0.75, 1],
+        });
+
+        element.querySelector('.dismiss').addEventListener('click', () => modal.dismiss());
+        document.body.appendChild(modal);
+
+        await modal.present();
+        updateModalDiagnostics(modal);
+
+        modal.addEventListener('ionBreakpointDidChange', () => {
+          updateModalDiagnostics(modal);
+        });
+
+        await modal.onDidDismiss();
+        modal.remove();
+      }
+
+      async function presentCardModal() {
+        const presentingEl = document.querySelector('.ion-page');
+        const element = createModalContent('Card Modal');
+        const modal = Object.assign(document.createElement('ion-modal'), {
+          component: element,
+          presentingElement: presentingEl,
+        });
+
+        element.querySelector('.dismiss').addEventListener('click', () => modal.dismiss());
+        document.body.appendChild(modal);
+
+        await modal.present();
+        updateModalDiagnostics(modal);
+
+        await modal.onDidDismiss();
+        modal.remove();
+      }
+
+      async function presentCenteredDialog() {
+        const element = createModalContent('Centered Dialog');
+        // Centered dialog uses custom dimensions
+        const modal = Object.assign(document.createElement('ion-modal'), {
+          component: element,
+          cssClass: 'centered-dialog',
+        });
+
+        // Add style for centered dialog
+        const style = document.createElement('style');
+        style.textContent = `
+          .centered-dialog {
+            --width: 400px;
+            --height: 300px;
+            --border-radius: 16px;
+          }
+        `;
+        document.head.appendChild(style);
+
+        element.querySelector('.dismiss').addEventListener('click', () => modal.dismiss());
+        document.body.appendChild(modal);
+
+        await modal.present();
+        updateModalDiagnostics(modal);
+
+        await modal.onDidDismiss();
+        modal.remove();
+        style.remove();
+      }
+    </script>
+  </body>
+</html>

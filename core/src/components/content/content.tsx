@@ -188,6 +188,11 @@ export class Content implements ComponentInterface {
       this.tabsElement = null;
       this.tabsLoadCallback = undefined;
     }
+
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = null;
+    }
   }
 
   /**

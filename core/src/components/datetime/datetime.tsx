@@ -134,6 +134,7 @@ export class Datetime implements ComponentInterface {
   private maxParts?: any;
   private todayParts!: DatetimeParts;
   private defaultParts!: DatetimeParts;
+  private loadTimeout: ReturnType<typeof setTimeout> | undefined;
 
   private prevPresentation: string | null = null;
 
@@ -1087,6 +1088,9 @@ export class Datetime implements ComponentInterface {
       this.clearFocusVisible();
       this.clearFocusVisible = undefined;
     }
+    if (this.loadTimeout) {
+      clearTimeout(this.loadTimeout);
+    }
   }
 
   /**
@@ -1185,7 +1189,7 @@ export class Datetime implements ComponentInterface {
      *
      * We schedule this after everything has had a chance to run.
      */
-    setTimeout(() => {
+    this.loadTimeout = setTimeout(() => {
       this.ensureReadyIfVisible();
     }, 100);
 
