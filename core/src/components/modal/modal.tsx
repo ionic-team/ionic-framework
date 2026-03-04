@@ -43,7 +43,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture, SwipeToCloseDefaults } from './gestures/swipe-to-close';
-import type { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from './modal-interface';
+import type { ModalBreakpointChangeEventDetail, ModalHandleBehavior, ModalDragEventDetail } from './modal-interface';
 import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
 // TODO(FW-2832): types
@@ -72,6 +72,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private sheetTransition?: Promise<any>;
   @State() private isSheetModal = false;
+  /**
+   * The breakpoint value that has been committed for a sheet modal.
+   * This represents the modal's resting state when it is not being dragged
+   * or animating toward a new position.
+   */
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
@@ -390,6 +395,21 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Event() ionMount!: EventEmitter<void>;
 
+  /**
+   * Event that is emitted when the sheet modal or card modal gesture starts.
+   */
+  @Event() ionDragStart!: EventEmitter<void>;
+
+  /**
+   * Event that is emitted when the sheet modal or card modal gesture moves.
+   */
+  @Event() ionDragMove!: EventEmitter<ModalDragEventDetail>;
+
+  /**
+   * Event that is emitted when the sheet modal or card modal gesture ends.
+   */
+  @Event() ionDragEnd!: EventEmitter<ModalDragEventDetail>;
+
   breakpointsChanged(breakpoints: number[] | undefined) {
     if (breakpoints !== undefined) {
       this.sortedBreakpoints = breakpoints.sort((a, b) => a - b);
@@ -692,33 +712,15 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const statusBarStyle = this.statusBarStyle ?? StatusBarStyle.Default;
 
-    this.gesture = createSwipeToCloseGesture(el, ani, statusBarStyle, () => {
-      /**
-       * While the gesture animation is finishing
-       * it is possible for a user to tap the backdrop.
-       * This would result in the dismiss animation
-       * being played again. Typically this is avoided
-       * by setting `presented = false` on the overlay
-       * component; however, we cannot do that here as
-       * that would prevent the element from being
-       * removed from the DOM.
-       */
-      this.gestureAnimationDismissing = true;
-
-      /**
-       * Reset the status bar style as the dismiss animation
-       * starts otherwise the status bar will be the wrong
-       * color for the duration of the dismiss animation.
-       * The dismiss method does this as well, but
-       * in this case it's only called once the animation
-       * has finished.
-       */
-      setCardStatusBarDefault(this.statusBarStyle);
-      this.animation!.onFinish(async () => {
-        await this.dismiss(undefined, GESTURE);
-        this.gestureAnimationDismissing = false;
-      });
-    });
+    this.gesture = createSwipeToCloseGesture(
+      el,
+      ani,
+      statusBarStyle,
+      () => this.cardOnDismiss(),
+      () => this.onDragStart(),
+      (detail: ModalDragEventDetail) => this.onDragMove(detail),
+      (detail: ModalDragEventDetail) => this.onDragEnd(detail)
+    );
     this.gesture.enable(true);
   }
 
@@ -755,7 +757,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
           this.currentBreakpoint = breakpoint;
           this.ionBreakpointDidChange.emit({ breakpoint });
         }
-      }
+      },
+      () => this.onDragStart(),
+      (detail: ModalDragEventDetail) => this.onDragMove(detail),
+      (detail: ModalDragEventDetail) => this.onDragEnd(detail)
     );
 
     this.gesture = gesture;
@@ -864,6 +869,34 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.animation!.onFinish(async () => {
       this.currentBreakpoint = 0;
       this.ionBreakpointDidChange.emit({ breakpoint: this.currentBreakpoint });
+      await this.dismiss(undefined, GESTURE);
+      this.gestureAnimationDismissing = false;
+    });
+  }
+
+  private cardOnDismiss() {
+    /**
+     * While the gesture animation is finishing
+     * it is possible for a user to tap the backdrop.
+     * This would result in the dismiss animation
+     * being played again. Typically this is avoided
+     * by setting `presented = false` on the overlay
+     * component; however, we cannot do that here as
+     * that would prevent the element from being
+     * removed from the DOM.
+     */
+    this.gestureAnimationDismissing = true;
+
+    /**
+     * Reset the status bar style as the dismiss animation
+     * starts otherwise the status bar will be the wrong
+     * color for the duration of the dismiss animation.
+     * The dismiss method does this as well, but
+     * in this case it's only called once the animation
+     * has finished.
+     */
+    setCardStatusBarDefault(this.statusBarStyle);
+    this.animation!.onFinish(async () => {
       await this.dismiss(undefined, GESTURE);
       this.gestureAnimationDismissing = false;
     });
@@ -1333,6 +1366,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private cleanupParentRemovalObserver() {
     this.parentRemovalObserver?.disconnect();
     this.parentRemovalObserver = undefined;
+  }
+
+  private onDragStart() {
+    this.ionDragStart.emit();
+  }
+
+  private onDragMove(detail: ModalDragEventDetail) {
+    this.ionDragMove.emit(detail);
+  }
+
+  private onDragEnd(detail: ModalDragEventDetail) {
+    this.ionDragEnd.emit(detail);
   }
 
   render() {
