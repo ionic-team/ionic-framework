@@ -11,7 +11,6 @@ import type { RouterDirection } from '../models/RouterDirection';
 import type { RouterOptions } from '../models/RouterOptions';
 
 import type { LocationHistory } from './LocationHistory';
-import PageManager from './PageManager';
 
 // TODO(FW-2959): types
 
@@ -30,7 +29,6 @@ interface NavManagerProps {
   onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
   onChangeTab: (tab: string, path: string, routeOptions?: any) => void;
   onResetTab: (tab: string, path: string, routeOptions?: any) => void;
-  ionRedirect: any;
   ionRoute: any;
   stackManager: any;
   locationHistory: LocationHistory;
@@ -61,10 +59,8 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
       goBack: this.goBack.bind(this),
       hasIonicRouter: () => true,
       navigate: this.navigate.bind(this),
-      getIonRedirect: this.getIonRedirect.bind(this),
       getIonRoute: this.getIonRoute.bind(this),
       getStackManager: this.getStackManager.bind(this),
-      getPageManager: this.getPageManager.bind(this),
       routeInfo: this.props.routeInfo,
       setCurrentTab: this.props.onSetCurrentTab,
       changeTab: this.props.onChangeTab,
@@ -109,14 +105,6 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
     tab?: string
   ) {
     this.props.onNavigate(path, action, direction, animationBuilder, options, tab);
-  }
-
-  getPageManager() {
-    return PageManager;
-  }
-
-  getIonRedirect() {
-    return this.props.ionRedirect;
   }
 
   getIonRoute() {

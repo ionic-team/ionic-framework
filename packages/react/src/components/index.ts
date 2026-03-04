@@ -124,7 +124,7 @@ export { IonBackButton } from './navigation/IonBackButton';
 export { IonRouterOutlet } from './IonRouterOutlet';
 export { IonIcon } from './IonIcon';
 export * from './IonRoute';
-export * from './IonRedirect';
+
 export * from './IonRouterContext';
 
 // Utils

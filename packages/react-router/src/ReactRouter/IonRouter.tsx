@@ -138,7 +138,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     let leavingLocationInfo: RouteInfo;
     /**
      * A programmatic navigation was triggered.
-     * e.g., `<Redirect />`, `history.push()`, or `handleNavigate()`
+     * e.g., `<Navigate />`, `navigate()`, or `handleNavigate()`
      */
     if (incomingRouteParams.current) {
       /**
@@ -176,7 +176,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
 
         /**
          * A `REPLACE` action can be triggered by React Router's
-         * `<Redirect />` component.
+         * `<Navigate />` component.
          */
         if (action === 'REPLACE') {
           incomingRouteParams.current = {
@@ -280,7 +280,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
           } else {
             routeInfo.pushedByRoute = lastRoute?.pushedByRoute ?? leavingLocationInfo.pathname;
           }
-          // Triggered by `history.replace()` or a `<Redirect />` component, etc.
+          // Triggered by `navigate()` with replace or a `<Navigate />` component, etc.
         } else if (routeInfo.routeAction === 'replace') {
           /**
            * Make sure to set the `lastPathname`, etc.. to the current route
@@ -566,7 +566,6 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     <RouteManagerContext.Provider value={routeMangerContextValue}>
       <NavManager
         ionRoute={IonRouteInner}
-        ionRedirect={{}}
         stackManager={StackManager}
         routeInfo={routeInfo}
         onNativeBack={handleNativeBack}
