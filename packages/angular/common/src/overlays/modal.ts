@@ -35,7 +35,7 @@ export declare interface IonModal extends Components.IonModal {
   /**
    * Emitted when the sheet or card modal has started being dragged.
    */
-  ionDragStart: EventEmitter<CustomEvent<ModalDragEventDetail>>;
+  ionDragStart: EventEmitter<void>;
   /**
    * Emitted while the sheet or card modal is being dragged.
    */
