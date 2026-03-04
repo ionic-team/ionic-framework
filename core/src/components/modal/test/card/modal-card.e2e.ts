@@ -124,9 +124,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       expect(ionDragEnd.length).toBe(0);
 
-      // Drag the modal item further to verify it does not emit the event
-      // again for `ionDragStart` or `ionDragMove`, but does emit `ionDragEnd`
-      // when the gesture is released
+      /**
+       * Drage the modal further to verify it does:
+       * - not emit the event again for `ionDragStart`
+       * - emit more `ionDragMove` events
+       * - emit the `ionDragEnd` event when the gesture ends
+       */
       await dragElementBy(header, page, 0, 100);
 
       const dragEndEvent = await ionDragEnd.next();
