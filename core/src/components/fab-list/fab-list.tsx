@@ -10,6 +10,7 @@ import { getIonMode } from '../../global/ionic-global';
 })
 export class FabList implements ComponentInterface {
   @Element() el!: HTMLIonFabElement;
+  private activateTimeouts: ReturnType<typeof setTimeout>[] = [];
 
   /**
    * If `true`, the fab list will show all fab buttons in the list.
@@ -18,12 +19,15 @@ export class FabList implements ComponentInterface {
 
   @Watch('activated')
   protected activatedChanged(activated: boolean) {
+    this.activateTimeouts.forEach(clearTimeout);
+    this.activateTimeouts = [];
+
     const fabs = Array.from(this.el.querySelectorAll('ion-fab-button'));
 
     // if showing the fabs add a timeout, else show immediately
     const timeout = activated ? 30 : 0;
     fabs.forEach((fab, i) => {
-      setTimeout(() => (fab.show = activated), i * timeout);
+      this.activateTimeouts.push(setTimeout(() => (fab.show = activated), i * timeout));
     });
   }
 
@@ -31,6 +35,11 @@ export class FabList implements ComponentInterface {
    * The side the fab list will show on relative to the main fab button.
    */
   @Prop() side: 'start' | 'end' | 'top' | 'bottom' = 'bottom';
+
+  disconnectedCallback() {
+    this.activateTimeouts.forEach(clearTimeout);
+    this.activateTimeouts = [];
+  }
 
   render() {
     const mode = getIonMode(this);

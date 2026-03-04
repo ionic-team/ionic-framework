@@ -94,10 +94,6 @@ ion-backdrop {
   :host {
     --width: #{$modal-inset-width};
     --height: #{$modal-inset-height-small};
-    --ion-safe-area-top: 0px;
-    --ion-safe-area-bottom: 0px;
-    --ion-safe-area-right: 0px;
-    --ion-safe-area-left: 0px;
   }
 }
 
@@ -156,9 +152,14 @@ ion-backdrop {
 /**
  * Ensure that the sheet modal does not
  * completely cover the content.
+ *
+ * --ion-modal-offset-top is an internal property set by modal.tsx
+ * with the resolved root safe-area-top pixel value. This decouples
+ * the height calculation from --ion-safe-area-top (which is zeroed
+ * for sheet modals to prevent header double-padding).
  */
 :host(.modal-sheet) {
-  --height: calc(100% - (var(--ion-safe-area-top) + 10px));
+  --height: calc(100% - (var(--ion-modal-offset-top, 0px) + 10px));
 }
 
 :host(.modal-sheet) .modal-wrapper,
