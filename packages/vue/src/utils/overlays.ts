@@ -109,6 +109,11 @@ export const defineOverlayContainer = <Props extends object>(
         delete restOfProps.onDidPresent;
         delete restOfProps.onWillDismiss;
         delete restOfProps.onDidDismiss;
+        if (name === "ion-modal") {
+          delete restOfProps.onIonDragStart;
+          delete restOfProps.onIonDragMove;
+          delete restOfProps.onIonDragEnd;
+        }
 
         const component = slots.default && slots.default()[0];
         overlay.value = controller.create({
@@ -174,6 +179,24 @@ export const defineOverlayContainer = <Props extends object>(
           emit("didPresent", ev);
           emit(componentName + "DidPresent", ev);
         });
+        /**
+         * Modal drag events:
+         * Adding these ensures they are re-emitted so developers can
+         * use @ionDragStart, @ionDragMove, etc. in their templates.
+         */
+        if (name === "ion-modal") {
+          elementRef.value.addEventListener("ionDragStart", (ev: Event) => {
+            emit("ionDragStart", ev);
+          });
+
+          elementRef.value.addEventListener("ionDragMove", (ev: Event) => {
+            emit("ionDragMove", ev);
+          });
+
+          elementRef.value.addEventListener("ionDragEnd", (ev: Event) => {
+            emit("ionDragEnd", ev);
+          });
+        }
       });
 
       return () => {
