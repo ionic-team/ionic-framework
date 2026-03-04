@@ -27,24 +27,24 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('ionPageVisible', (pageId) => {
-  // cy.get(`div.ion-page[data-pageid=${pageId}]`)
-  //   .should('exist')
-  //   .should('not.have.class', 'ion-page-hidden')
-  //   .should('not.have.class', 'ion-page-visible')
+  cy.log(`[ionPageVisible] Checking for visible page: ${pageId}`);
+
+  // First, log all current ion-page elements for debugging
+  cy.get('div.ion-page').then(($pages) => {
+    const pageStates = [];
+    $pages.each((i, el) => {
+      const id = el.getAttribute('data-pageid') || 'unknown';
+      const classes = el.className;
+      const ariaHidden = el.getAttribute('aria-hidden');
+      pageStates.push(`${id}: classes="${classes}" aria-hidden="${ariaHidden}"`);
+    });
+    cy.log(`[ionPageVisible] All ion-page elements: ${pageStates.join(' | ')}`);
+  });
 
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('not.have.class', 'ion-page-hidden')
     .should('not.have.class', 'ion-page-invisible')
     .should('have.length', 1);
-
-  // cy.get(`div.ion-page[data-pageid=${pageId}]`)
-  //   .should('not.have.class', 'ion-page')
-  //   .should('have.length', 1)
-  // .not('')
-  // .should('have.length', 1)
-
-  // cy.get(`div.ion-page[data-pageid=${pageId}]`).should('not.have.class', 'ion-page-visible')
-  // cy.get(`div.ion-page[data-pageid=${pageId}]`).should('have.attr', 'style', 'z-index: 101;')
 });
 
 Cypress.Commands.add('ionPageHidden', (pageId) => {
@@ -79,49 +79,27 @@ Cypress.Commands.add('ionSwipeToGoBack', (complete = false, selector = 'ion-rout
 })
 
 Cypress.Commands.add('ionMenuNav', (contains) => {
-  // cy.get('ion-menu.show-menu').should('exist');
-  // cy.wait(1000)
   cy.contains('ion-item', contains).click({ force: true });
-  // cy.get('div.ion-page').click();
-  // cy.get('ion-menu').then(menu => {
-  //   cy.wait(1000)
-  //   menu[0].isOpen(open => {
-  //     if(open) {
-  //       menu[0].toggle()
-  //     }
-  //     cy.get('ion-menu.show-menu').should('not.exist');
-  //   })
-  // })
-  // cy.get('ion-menu.show-menu').should('not.exist');
-
-  // cy.wait(1000)
-  // cy.wait(1000)
-  // cy.contains('ion-item', contains).click()
-  // cy.contains('ion-item', contains).parent('ion-menu-toggle').click({ force: true });
+  cy.wait(250);
 });
 
 Cypress.Commands.add('ionTabClick', (tabText) => {
   // TODO FW-2800: figure out how to get rid of this wait. Switching tabs after a forward nav to a details page needs it
   cy.wait(500);
   cy.contains('ion-tab-button', tabText).click({ force: true });
-  // cy.get('ion-tab-button.tab-selected').contains(tabText)
 });
 
 Cypress.Commands.add('ionBackClick', (pageId) => {
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('be.visible', true)
-    // .should('have.length', 1)
     .find('ion-back-button')
     .click();
 });
 
 Cypress.Commands.add('ionMenuClick', () => {
-  // Todo: figure out how to get menu to close
-  // cy.get(`div.ion-page[aria-hidden!=true]`)
-  //   .should('have.length', 1)
-  //   .find('ion-menu-button')
-  //   .click()
-  // cy.get('ion-menu.show-menu').should('exist');
+  cy.log('[ionMenuClick] Clicking menu button');
+  cy.get('ion-menu-button').first().click({ force: true });
+  cy.wait(500); // Wait for menu animation
 });
 
 Cypress.Commands.add('ionHardwareBackEvent', () => {

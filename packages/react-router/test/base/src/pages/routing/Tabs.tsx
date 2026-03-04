@@ -1,41 +1,40 @@
+import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonPage, IonContent } from '@ionic/react';
+import { triangle, ellipse, square } from 'ionicons/icons';
 import React from 'react';
-import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/react';
-import { Route, Redirect } from 'react-router';
-import Tab1 from './Tab1';
+import { Route, Navigate } from 'react-router';
+
 import Details from './Details';
+import SettingsDetails from './SettingsDetails';
+import Tab1 from './Tab1';
 import Tab2 from './Tab2';
 import Tab3 from './Tab3';
-import { triangle, ellipse, square } from 'ionicons/icons';
-import SettingsDetails from './SettingsDetails';
 
-interface TabsProps {}
 
-const Tabs: React.FC<TabsProps> = () => {
+
+const Tabs: React.FC = () => {
   return (
     <IonTabs>
       <IonRouterOutlet id="tabs">
-        <Route path="/routing/tabs/home" component={Tab1} exact />
-        <Route path="/routing/tabs/home/details/:id" component={Details} exact={true} />
-        {/* <Route path="/routing/tabs/home/details/:id" render={(props) => {
-          return <Details />
-        }} exact={true} /> */}
-        <Route path="/routing/tabs/settings" component={Tab2} exact={true} />
-        <Route path="/routing/tabs/settings/details/:id" component={SettingsDetails} exact={true} />
-        <Route path="/routing/tabs/tab3" component={Tab3} />
+        <Route index element={<Navigate to="home" replace />} />
+        <Route path="home" element={<Tab1 />} />
+        <Route path="home/details/:id" element={<Details />} />
+        <Route path="settings" element={<Tab2 />} />
+        <Route path="settings/details/:id" element={<SettingsDetails />} />
+        <Route path="tab3" element={<Tab3 />} />
+        <Route path="redirect" element={<Navigate to="settings" replace />} />
         <Route
-          path="/routing/tabs"
-          render={() => <Redirect to="/routing/tabs/home" />}
-          exact={true}
+          path="*"
+          element={
+            <IonPage data-pageid="not-found-tabs">
+              <IonContent>
+                <div>Not found in tabs.tsx</div>
+              </IonContent>
+            </IonPage>
+          }
         />
-        <Route
-          path="/routing/tabs/redirect"
-          render={() => <Redirect to="/routing/tabs/settings" />}
-          exact={true}
-        />
-        {/* <Route path="/routing/tabs" render={() => <Route render={() => <Redirect to="/tabs/home" />} />} /> */}
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="home" href="/routing/tabs/home" routerOptions={{ unmount: true }}>
+        <IonTabButton tab="home" href="/routing/tabs/home">
           <IonIcon icon={triangle} />
           <IonLabel>Home</IonLabel>
         </IonTabButton>

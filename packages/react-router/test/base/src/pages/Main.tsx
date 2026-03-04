@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   IonContent,
   IonHeader,
@@ -9,10 +8,9 @@ import {
   IonItem,
   IonLabel,
 } from '@ionic/react';
+import React from 'react';
 
-interface MainProps {}
-
-const Main: React.FC<MainProps> = () => {
+const Main: React.FC = () => {
   return (
     <IonPage data-pageid="home">
       <IonHeader>
@@ -64,8 +62,26 @@ const Main: React.FC<MainProps> = () => {
           <IonItem routerLink="/tabs" id="go-to-tabs">
             <IonLabel>Tabs</IonLabel>
           </IonItem>
+          <IonItem routerLink="/tab-history-isolation">
+            <IonLabel>Tab History Isolation</IonLabel>
+          </IonItem>
           <IonItem routerLink="/params/0">
             <IonLabel>Params</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/nested-params">
+            <IonLabel>Nested Params</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/relative-paths">
+            <IonLabel>Relative Paths</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/nested-tabs-relative-links">
+            <IonLabel>Nested Tabs Relative Links</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/root-splat-tabs">
+            <IonLabel>Root Splat Tabs</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/content-change-navigation">
+            <IonLabel>Content Change Navigation</IonLabel>
           </IonItem>
         </IonList>
       </IonContent>

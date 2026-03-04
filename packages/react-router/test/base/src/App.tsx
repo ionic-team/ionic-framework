@@ -1,6 +1,6 @@
 import { IonApp, setupIonicReact, IonRouterOutlet } from '@ionic/react';
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Navigate } from 'react-router-dom';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -21,23 +21,31 @@ import '@ionic/react/css/text-transformation.css';
 /* Theme variables */
 import './theme/variables.css';
 import Main from './pages/Main';
+
 import { IonReactRouter } from '@ionic/react-router';
+
+import DynamicIonpageClassnames from './pages/dynamic-ionpage-classnames/DynamicIonpageClassnames';
 import DynamicRoutes from './pages/dynamic-routes/DynamicRoutes';
-import Routing from './pages/routing/Routing';
-import MultipleTabs from './pages/muiltiple-tabs/MultipleTabs';
 import DynamicTabs from './pages/dynamic-tabs/DynamicTabs';
+import MultipleTabs from './pages/muiltiple-tabs/MultipleTabs';
 import NestedOutlet from './pages/nested-outlet/NestedOutlet';
 import NestedOutlet2 from './pages/nested-outlet/NestedOutlet2';
-import ReplaceAction from './pages/replace-action/Replace';
-import TabsContext from './pages/tab-context/TabContext';
+import NestedParams from './pages/nested-params/NestedParams';
+import RelativePaths from './pages/relative-paths/RelativePaths';
 import { OutletRef } from './pages/outlet-ref/OutletRef';
-import { SwipeToGoBack } from './pages/swipe-to-go-back/SwipToGoBack';
+import Params from './pages/params/Params';
 import Refs from './pages/refs/Refs';
-import DynamicIonpageClassnames from './pages/dynamic-ionpage-classnames/DynamicIonpageClassnames';
+import { Page1, Page2, Page3 } from './pages/replace-action/Replace';
+import Routing from './pages/routing/Routing';
+import { SwipeToGoBack } from './pages/swipe-to-go-back/SwipeToGoBack';
+import TabsContext from './pages/tab-context/TabContext';
 import Tabs from './pages/tabs/Tabs';
 import TabsSecondary from './pages/tabs/TabsSecondary';
-import Params from './pages/params/Params';
+import TabHistoryIsolation from './pages/tab-history-isolation/TabHistoryIsolation';
 import Overlays from './pages/overlays/Overlays';
+import NestedTabsRelativeLinks from './pages/nested-tabs-relative-links/NestedTabsRelativeLinks';
+import RootSplatTabs from './pages/root-splat-tabs/RootSplatTabs';
+import ContentChangeNavigation from './pages/content-change-navigation/ContentChangeNavigation';
 
 setupIonicReact();
 
@@ -46,23 +54,33 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
-          <Route path="/" component={Main} exact />
-          <Route path="/routing" component={Routing} />
-          <Route path="/dynamic-routes" component={DynamicRoutes} />
-          <Route path="/multiple-tabs" component={MultipleTabs} />
-          <Route path="/dynamic-tabs" component={DynamicTabs} />
-          <Route path="/nested-outlet" component={NestedOutlet} />
-          <Route path="/nested-outlet2" component={NestedOutlet2} />
-          <Route path="/replace-action" component={ReplaceAction} />
-          <Route path="/tab-context" component={TabsContext} />
-          <Route path="/outlet-ref" component={OutletRef} />
-          <Route path="/swipe-to-go-back" component={SwipeToGoBack} />
-          <Route path="/dynamic-ionpage-classnames" component={DynamicIonpageClassnames} />
-          <Route path="/tabs" component={Tabs} />
-          <Route path="/tabs-secondary" component={TabsSecondary} />
-          <Route path="/refs" component={Refs} />
-          <Route path="/overlays" component={Overlays} />
-          <Route path="/params/:id" component={Params} />
+          <Route path="/" element={<Main />} />
+          <Route path="/routing/*" element={<Routing />} />
+          <Route path="/dynamic-routes/*" element={<DynamicRoutes />} />
+          <Route path="/multiple-tabs/*" element={<MultipleTabs />} />
+          <Route path="/dynamic-tabs/*" element={<DynamicTabs />} />
+          <Route path="/nested-outlet/*" element={<NestedOutlet />} />
+          <Route path="/nested-outlet2/*" element={<NestedOutlet2 />} />
+          <Route path="/replace-action/page1" element={<Page1 />} />
+          <Route path="/replace-action/page2" element={<Page2 />} />
+          <Route path="/replace-action/page3" element={<Page3 />} />
+          <Route path="/replace-action" element={<Navigate to="/replace-action/page1" replace />} />
+          <Route path="/tab-context/*" element={<TabsContext />} />
+          <Route path="/outlet-ref" element={<OutletRef />} />
+          <Route path="/swipe-to-go-back/*" element={<SwipeToGoBack />} />
+          <Route path="/dynamic-ionpage-classnames" element={<DynamicIonpageClassnames />} />
+          <Route path="/tabs/*" element={<Tabs />} />
+          <Route path="/tabs-secondary/*" element={<TabsSecondary />} />
+          <Route path="/tab-history-isolation/*" element={<TabHistoryIsolation />} />
+          <Route path="/refs/*" element={<Refs />} />
+          <Route path="/overlays" element={<Overlays />} />
+          <Route path="/params/:id" element={<Params />} />
+          <Route path="/nested-params/*" element={<NestedParams />} />
+          {/* Test root-level relative path - no leading slash */}
+          <Route path="relative-paths/*" element={<RelativePaths />} />
+          <Route path="/nested-tabs-relative-links/*" element={<NestedTabsRelativeLinks />} />
+          <Route path="/root-splat-tabs/*" element={<RootSplatTabs />} />
+          <Route path="/content-change-navigation/*" element={<ContentChangeNavigation />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
