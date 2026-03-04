@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.8.0](https://github.com/ionic-team/ionic-framework/compare/v8.7.18...v8.8.0) (2026-03-04)
+
+
+### Features
+
+* **angular:** add custom injector support for modal and popover controllers ([#30899](https://github.com/ionic-team/ionic-framework/issues/30899)) ([822da42](https://github.com/ionic-team/ionic-framework/commit/822da428af86cd9b036b81515272321eb8fa586c)), closes [#30638](https://github.com/ionic-team/ionic-framework/issues/30638)
+* **modal:** add drag events for sheet and card modals ([#30962](https://github.com/ionic-team/ionic-framework/issues/30962)) ([d29ac71](https://github.com/ionic-team/ionic-framework/commit/d29ac713fad604c256fb385eb0c26eb9717e1ff4))
+* **refresher:** add ionPullStart and ionPullEnd events ([#30946](https://github.com/ionic-team/ionic-framework/issues/30946)) ([814c2e5](https://github.com/ionic-team/ionic-framework/commit/814c2e5ccd6d5bfda12bdf13a566cd66ff830d5b)), closes [#24524](https://github.com/ionic-team/ionic-framework/issues/24524)
+* **segment-view:** add swipeGesture property to disable swiping ([#30948](https://github.com/ionic-team/ionic-framework/issues/30948)) ([46806bd](https://github.com/ionic-team/ionic-framework/commit/46806bd6e2af90a0b31fca68f508c06d3d281ec0)), closes [#30290](https://github.com/ionic-team/ionic-framework/issues/30290)
+* **select:** pass cancelText property to modal interface ([#30282](https://github.com/ionic-team/ionic-framework/issues/30282)) ([6e4f60a](https://github.com/ionic-team/ionic-framework/commit/6e4f60af4c188ae04028b444aa21118ae27c2ca7))
+* **textarea:** reflect disabled and readonly props ([#30910](https://github.com/ionic-team/ionic-framework/issues/30910)) ([55735df](https://github.com/ionic-team/ionic-framework/commit/55735df3fa62c8e259c56db3169f3d5459e71c0c))
+
+
+
+
+
 ## [8.7.18](https://github.com/ionic-team/ionic-framework/compare/v8.7.17...v8.7.18) (2026-02-25)
 
 
