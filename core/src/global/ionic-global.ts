@@ -292,7 +292,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
       cIC(rICHandle);
     }
 
-    rICHandle =rIC(async () => {
+    rICHandle = rIC(async () => {
       const isHybrid = isPlatform(window, 'hybrid');
       if (!config.getBoolean('_testing')) {
         import('../utils/tap-click').then((module) => module.startTapClick(config));
