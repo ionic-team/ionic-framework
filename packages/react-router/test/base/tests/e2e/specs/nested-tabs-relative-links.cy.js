@@ -100,6 +100,43 @@ describe('Nested Tabs with Relative Links', () => {
     cy.get('[data-testid="page-a-content"]').should('exist');
   });
 
+  /**
+   * This test navigates from the home page (/) to nested-tabs-relative-links
+   * via routerLink, rather than visiting the URL directly.
+   *
+   * This is a distinct scenario because NestedTabsRelativeLinks is a container
+   * route that does NOT wrap its content in IonPage — it renders IonRouterOutlet
+   * directly. When the root outlet transitions to a container without IonPage,
+   * the nested <Navigate to="tab1" replace /> redirect fires before the root
+   * outlet's timeout, causing the leaving view reference to shift. Without
+   * proper handling, the home page is never hidden.
+   */
+  it('should navigate from home page to nested tabs', () => {
+    cy.visit(`http://localhost:${port}/`);
+    cy.ionPageVisible('home');
+
+    // Click the Nested Tabs Relative Links item
+    cy.get('ion-item[router-link="/nested-tabs-relative-links"]').click();
+
+    // Should navigate to tab1 (via index redirect)
+    cy.ionPageVisible('nested-tabs-relative-tab1');
+    cy.get('[data-testid="tab1-content"]').should('exist');
+
+    // Home page should be hidden
+    cy.ionPageHidden('home');
+
+    // URL should be correct
+    cy.url().should('include', '/nested-tabs-relative-links/tab1');
+
+    // Verify the container route does NOT have an IonPage wrapper.
+    // This is the key invariant: NestedTabsRelativeLinks renders IonRouterOutlet
+    // directly without IonPage. If someone adds IonPage to the container, this
+    // test would pass trivially and no longer cover the container-without-IonPage
+    // transition path. The ion-tabs element should have no [data-pageid] ancestors,
+    // confirming no IonPage wraps the container.
+    cy.get('ion-tabs').parents('[data-pageid]').should('have.length', 0);
+  });
+
   it('should switch tabs and maintain correct relative link resolution', () => {
     cy.visit(`http://localhost:${port}/nested-tabs-relative-links/tab1`);
     cy.ionPageVisible('nested-tabs-relative-tab1');

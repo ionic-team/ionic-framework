@@ -232,8 +232,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       this.outOfScopeUnmountTimeout = undefined;
     }
 
-    const allViewsInOutlet = this.context.getViewItemsForOutlet ? this.context.getViewItemsForOutlet(this.id) : [];
-
+    const allViewsInOutlet = this.context.getViewItemsForOutlet(this.id);
     allViewsInOutlet.forEach((viewItem) => {
       hideIonPageElement(viewItem.ionPageElement);
       this.context.unMountViewItem(viewItem);
@@ -501,8 +500,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       return;
     }
 
-    const allViewsInOutlet = this.context.getViewItemsForOutlet ? this.context.getViewItemsForOutlet(this.id) : [];
-
+    const allViewsInOutlet = this.context.getViewItemsForOutlet(this.id);
     const areSiblingRoutes = (path1: string, path2: string): boolean => {
       const path1IsRelative = !path1.startsWith('/');
       const path2IsRelative = !path2.startsWith('/');
@@ -569,8 +567,15 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       }
       this.pendingPageTransition = false;
 
-      // Hide the leaving view immediately for Navigate redirects
-      hideIonPageElement(leavingViewItem?.ionPageElement);
+      // Hide ALL other visible views in this outlet for Navigate redirects.
+      // Same rationale as the timeout path: intermediate redirects can shift
+      // the leaving view reference, leaving the original page visible.
+      const allViewsInOutlet = this.context.getViewItemsForOutlet(this.id);
+      allViewsInOutlet.forEach((viewItem) => {
+        if (viewItem.id !== enteringViewItem.id && viewItem.ionPageElement) {
+          hideIonPageElement(viewItem.ionPageElement);
+        }
+      });
 
       // Don't unmount if entering and leaving are the same view item
       if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
@@ -617,11 +622,16 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         /**
          * Timeout fired and entering view still has no ionPageElement.
          * This happens for container routes that render nested outlets without a direct IonPage.
-         * Hide the leaving view since there's no entering IonPage to wait for.
+         * Hide ALL other visible views in this outlet, not just the computed leaving view.
+         * This handles cases where intermediate redirects (e.g., Navigate in nested routes)
+         * change the leaving view reference, leaving the original page still visible.
          */
-        if (latestLeavingView?.ionPageElement) {
-          hideIonPageElement(latestLeavingView.ionPageElement);
-        }
+        const allViewsInOutlet = this.context.getViewItemsForOutlet(this.id);
+        allViewsInOutlet.forEach((viewItem) => {
+          if (viewItem.id !== latestEnteringView.id && viewItem.ionPageElement) {
+            hideIonPageElement(viewItem.ionPageElement);
+          }
+        });
         this.forceUpdate();
       }
     }, ION_PAGE_WAIT_TIMEOUT_MS);
@@ -688,7 +698,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     // the nested outlet's componentDidUpdate won't be called, so we must hide
     // the ion-page elements here to prevent them from remaining visible on top
     // of other content after navigation to a different route.
-    const allViewsInOutlet = this.context.getViewItemsForOutlet ? this.context.getViewItemsForOutlet(this.id) : [];
+    const allViewsInOutlet = this.context.getViewItemsForOutlet(this.id);
     allViewsInOutlet.forEach((viewItem) => {
       hideIonPageElement(viewItem.ionPageElement);
     });
