@@ -226,7 +226,13 @@ export const config: Config = {
         dest: 'components',
         warn: true
       }],
-      includeGlobalScripts: false
+      includeGlobalScripts: false,
+      /**
+       * External Runtime uses default runtime settings instead of this file's definitions. Disabling it enables
+       * `experimentalSlotFixes` to be applied and prevents `@stencil/core/internal/client` from being imported, which
+       * contains a dynamic import that caused a warning in Angular.
+      */
+      externalRuntime: false,
     },
     {
       type: 'docs-json',

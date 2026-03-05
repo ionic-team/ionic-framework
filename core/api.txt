@@ -566,9 +566,18 @@ ion-datetime,part,calendar-day
 ion-datetime,part,calendar-day active
 ion-datetime,part,calendar-day disabled
 ion-datetime,part,calendar-day today
+ion-datetime,part,calendar-days-of-week
+ion-datetime,part,calendar-header
+ion-datetime,part,datetime-header
+ion-datetime,part,datetime-selected-date
+ion-datetime,part,datetime-title
 ion-datetime,part,month-year-button
+ion-datetime,part,navigation-button
+ion-datetime,part,next-button
+ion-datetime,part,previous-button
 ion-datetime,part,time-button
 ion-datetime,part,time-button active
+ion-datetime,part,wheel
 ion-datetime,part,wheel-item
 ion-datetime,part,wheel-item active
 
@@ -703,7 +712,7 @@ ion-infinite-scroll-content,prop,loadingText,IonicSafeString | string | undefine
 
 ion-input,scoped
 ion-input,prop,autocapitalize,string,'off',false,false
-ion-input,prop,autocomplete,"name" | "email" | "tel" | "url" | "on" | "off" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "impp" | "photo",'off',false,false
+ion-input,prop,autocomplete,"additional-name" | "address-level1" | "address-level2" | "address-level3" | "address-level4" | "address-line1" | "address-line2" | "address-line3" | "bday" | "bday-day" | "bday-month" | "bday-year" | "cc-additional-name" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-family-name" | "cc-given-name" | "cc-name" | "cc-number" | "cc-type" | "country" | "country-name" | "current-password" | "email" | "family-name" | "given-name" | "honorific-prefix" | "honorific-suffix" | "impp" | "language" | "name" | "new-password" | "nickname" | "off" | "on" | "one-time-code" | "organization" | "organization-title" | "photo" | "postal-code" | "sex" | "street-address" | "tel" | "tel-area-code" | "tel-country-code" | "tel-extension" | "tel-local" | "tel-national" | "transaction-amount" | "transaction-currency" | "url" | "username",'off',false,false
 ion-input,prop,autocorrect,"off" | "on",'off',false,false
 ion-input,prop,autofocus,boolean,false,false,false
 ion-input,prop,clearInput,boolean,false,false,false
@@ -930,7 +939,9 @@ ion-item,css-prop,--ripple-color,ios
 ion-item,css-prop,--ripple-color,md
 ion-item,css-prop,--transition,ios
 ion-item,css-prop,--transition,md
+ion-item,part,container
 ion-item,part,detail-icon
+ion-item,part,inner
 ion-item,part,native
 
 ion-item-divider,shadow
@@ -957,6 +968,8 @@ ion-item-divider,css-prop,--padding-start,ios
 ion-item-divider,css-prop,--padding-start,md
 ion-item-divider,css-prop,--padding-top,ios
 ion-item-divider,css-prop,--padding-top,md
+ion-item-divider,part,container
+ion-item-divider,part,inner
 
 ion-item-group,none
 
@@ -974,6 +987,8 @@ ion-item-option,css-prop,--background,ios
 ion-item-option,css-prop,--background,md
 ion-item-option,css-prop,--color,ios
 ion-item-option,css-prop,--color,md
+ion-item-option,part,container
+ion-item-option,part,inner
 ion-item-option,part,native
 
 ion-item-options,none
@@ -1018,6 +1033,7 @@ ion-list-header,css-prop,--color,ios
 ion-list-header,css-prop,--color,md
 ion-list-header,css-prop,--inner-border-width,ios
 ion-list-header,css-prop,--inner-border-width,md
+ion-list-header,part,inner
 
 ion-loading,scoped
 ion-loading,prop,animated,boolean,true,false,false
@@ -1171,6 +1187,9 @@ ion-modal,method,setCurrentBreakpoint,setCurrentBreakpoint(breakpoint: number) =
 ion-modal,event,didDismiss,OverlayEventDetail<any>,true
 ion-modal,event,didPresent,void,true
 ion-modal,event,ionBreakpointDidChange,ModalBreakpointChangeEventDetail,true
+ion-modal,event,ionDragEnd,ModalDragEventDetail,true
+ion-modal,event,ionDragMove,ModalDragEventDetail,true
+ion-modal,event,ionDragStart,void,true
 ion-modal,event,ionModalDidDismiss,OverlayEventDetail<any>,true
 ion-modal,event,ionModalDidPresent,void,true
 ion-modal,event,ionModalWillDismiss,OverlayEventDetail<any>,true
@@ -1209,7 +1228,7 @@ ion-nav,shadow
 ion-nav,prop,animated,boolean,true,false,false
 ion-nav,prop,animation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-nav,prop,root,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
-ion-nav,prop,rootParams,undefined | { [key: string]: any; },undefined,false,false
+ion-nav,prop,rootParams,T | undefined,undefined,false,false
 ion-nav,prop,swipeGesture,boolean | undefined,undefined,false,false
 ion-nav,method,canGoBack,canGoBack(view?: ViewController) => Promise<boolean>
 ion-nav,method,getActive,getActive() => Promise<ViewController | undefined>
@@ -1230,7 +1249,7 @@ ion-nav,event,ionNavWillChange,void,false
 
 ion-nav-link,none
 ion-nav-link,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
-ion-nav-link,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
+ion-nav-link,prop,componentProps,T | undefined,undefined,false,false
 ion-nav-link,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-nav-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 
@@ -1323,7 +1342,7 @@ ion-popover,prop,animated,boolean,true,false,false
 ion-popover,prop,arrow,boolean,true,false,false
 ion-popover,prop,backdropDismiss,boolean,true,false,false
 ion-popover,prop,component,Function | HTMLElement | null | string | undefined,undefined,false,false
-ion-popover,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
+ion-popover,prop,componentProps,T | undefined,undefined,false,false
 ion-popover,prop,dismissOnSelect,boolean,false,false,false
 ion-popover,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-popover,prop,event,any,undefined,false,false
@@ -1472,11 +1491,28 @@ ion-range,css-prop,--pin-background,ios
 ion-range,css-prop,--pin-background,md
 ion-range,css-prop,--pin-color,ios
 ion-range,css-prop,--pin-color,md
+ion-range,part,activated
 ion-range,part,bar
 ion-range,part,bar-active
+ion-range,part,focused
+ion-range,part,hover
 ion-range,part,knob
+ion-range,part,knob-a
+ion-range,part,knob-b
+ion-range,part,knob-handle
+ion-range,part,knob-handle-a
+ion-range,part,knob-handle-b
+ion-range,part,knob-handle-lower
+ion-range,part,knob-handle-upper
+ion-range,part,knob-lower
+ion-range,part,knob-upper
 ion-range,part,label
 ion-range,part,pin
+ion-range,part,pin-a
+ion-range,part,pin-b
+ion-range,part,pin-lower
+ion-range,part,pin-upper
+ion-range,part,pressed
 ion-range,part,tick
 ion-range,part,tick-active
 
@@ -1492,6 +1528,8 @@ ion-refresher,method,cancel,cancel() => Promise<void>
 ion-refresher,method,complete,complete() => Promise<void>
 ion-refresher,method,getProgress,getProgress() => Promise<number>
 ion-refresher,event,ionPull,void,true
+ion-refresher,event,ionPullEnd,RefresherPullEndEventDetail,true
+ion-refresher,event,ionPullStart,void,true
 ion-refresher,event,ionRefresh,RefresherEventDetail,true
 ion-refresher,event,ionStart,void,true
 
@@ -1557,7 +1595,7 @@ ion-row,shadow
 ion-searchbar,scoped
 ion-searchbar,prop,animated,boolean,false,false,false
 ion-searchbar,prop,autocapitalize,string,'off',false,false
-ion-searchbar,prop,autocomplete,"name" | "email" | "tel" | "url" | "on" | "off" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "impp" | "photo",'off',false,false
+ion-searchbar,prop,autocomplete,"additional-name" | "address-level1" | "address-level2" | "address-level3" | "address-level4" | "address-line1" | "address-line2" | "address-line3" | "bday" | "bday-day" | "bday-month" | "bday-year" | "cc-additional-name" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-family-name" | "cc-given-name" | "cc-name" | "cc-number" | "cc-type" | "country" | "country-name" | "current-password" | "email" | "family-name" | "given-name" | "honorific-prefix" | "honorific-suffix" | "impp" | "language" | "name" | "new-password" | "nickname" | "off" | "on" | "one-time-code" | "organization" | "organization-title" | "photo" | "postal-code" | "sex" | "street-address" | "tel" | "tel-area-code" | "tel-country-code" | "tel-extension" | "tel-local" | "tel-national" | "transaction-amount" | "transaction-currency" | "url" | "username",'off',false,false
 ion-searchbar,prop,autocorrect,"off" | "on",'off',false,false
 ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', arrowBackSharp) as string,false,false
 ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
@@ -1692,6 +1730,7 @@ ion-segment-content,shadow
 
 ion-segment-view,shadow
 ion-segment-view,prop,disabled,boolean,false,false,false
+ion-segment-view,prop,swipeGesture,boolean,true,false,false
 ion-segment-view,event,ionSegmentViewScroll,SegmentViewScrollEvent,true
 
 ion-select,shadow
@@ -1756,16 +1795,20 @@ ion-select,css-prop,--placeholder-opacity,ios
 ion-select,css-prop,--placeholder-opacity,md
 ion-select,css-prop,--ripple-color,ios
 ion-select,css-prop,--ripple-color,md
+ion-select,part,bottom
 ion-select,part,container
 ion-select,part,error-text
 ion-select,part,helper-text
 ion-select,part,icon
+ion-select,part,inner
 ion-select,part,label
 ion-select,part,placeholder
 ion-select,part,supporting-text
 ion-select,part,text
+ion-select,part,wrapper
 
 ion-select-modal,scoped
+ion-select-modal,prop,cancelText,string,'Close',false,false
 ion-select-modal,prop,header,string | undefined,undefined,false,false
 ion-select-modal,prop,multiple,boolean | undefined,undefined,false,false
 ion-select-modal,prop,options,SelectModalOption[],[],false,false
@@ -1873,7 +1916,7 @@ ion-textarea,prop,cols,number | undefined,undefined,false,true
 ion-textarea,prop,counter,boolean,false,false,false
 ion-textarea,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
 ion-textarea,prop,debounce,number | undefined,undefined,false,false
-ion-textarea,prop,disabled,boolean,false,false,false
+ion-textarea,prop,disabled,boolean,false,false,true
 ion-textarea,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-textarea,prop,errorText,string | undefined,undefined,false,false
 ion-textarea,prop,fill,"outline" | "solid" | undefined,undefined,false,false
@@ -1886,7 +1929,7 @@ ion-textarea,prop,minlength,number | undefined,undefined,false,false
 ion-textarea,prop,mode,"ios" | "md",undefined,false,false
 ion-textarea,prop,name,string,this.inputId,false,false
 ion-textarea,prop,placeholder,string | undefined,undefined,false,false
-ion-textarea,prop,readonly,boolean,false,false,false
+ion-textarea,prop,readonly,boolean,false,false,true
 ion-textarea,prop,required,boolean,false,false,false
 ion-textarea,prop,rows,number | undefined,undefined,false,false
 ion-textarea,prop,shape,"round" | undefined,undefined,false,false
@@ -2016,9 +2059,11 @@ ion-toast,css-prop,--width,md
 ion-toast,part,button
 ion-toast,part,button cancel
 ion-toast,part,container
+ion-toast,part,content
 ion-toast,part,header
 ion-toast,part,icon
 ion-toast,part,message
+ion-toast,part,wrapper
 
 ion-toggle,shadow
 ion-toggle,prop,alignment,"center" | "start" | undefined,undefined,false,false

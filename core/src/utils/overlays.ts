@@ -473,7 +473,9 @@ export const getPresentedOverlay = (
   id?: string
 ): HTMLIonOverlayElement | undefined => {
   const overlays = getPresentedOverlays(doc, overlayTag);
-  return id === undefined ? overlays[overlays.length - 1] : overlays.find((o) => o.id === id);
+  // If no id is provided, return the last presented overlay
+  // Otherwise, return the last overlay with the given id
+  return (id === undefined ? overlays : overlays.filter((o: HTMLIonOverlayElement) => o.id === id)).slice(-1)[0];
 };
 
 /**

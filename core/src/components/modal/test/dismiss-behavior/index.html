@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - Dismiss Behavior</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <div class="ion-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Modal - Dismiss Behavior</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <button id="present-first-modal" onclick="presentFirstModal()">Present Modal</button>
+        </ion-content>
+      </div>
+    </ion-app>
+
+    <script type="module">
+      import { modalController } from '../../../../../dist/ionic/index.esm.js';
+
+      window.modalController = modalController;
+
+      const sharedId = 'shared-modal-id';
+      const maxModals = 5;
+      let modalCount = 0;
+
+      function createModalComponent(modalNumber) {
+        const element = document.createElement('div');
+        const canPresentNext = modalNumber < maxModals;
+        const presentNextButton = canPresentNext
+          ? `<ion-button id="present-next-modal" onclick="presentNextModal(${modalNumber + 1})">Present Modal ${
+              modalNumber + 1
+            }</ion-button>`
+          : '';
+        element.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Modal ${modalNumber}</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <p>This is modal number ${modalNumber}</p>
+            ${presentNextButton}
+            <ion-button class="dismiss-by-id">Dismiss By ID</ion-button>
+            <ion-button class="dismiss-default">Dismiss Default</ion-button>
+          </ion-content>
+        `;
+        return element;
+      }
+
+      window.presentFirstModal = async () => {
+        modalCount = 0;
+        await presentNextModal(1);
+      };
+
+      window.presentNextModal = async (modalNumber) => {
+        if (modalNumber > maxModals) {
+          return;
+        }
+        modalCount = Math.max(modalCount, modalNumber);
+        const element = createModalComponent(modalNumber);
+        const modal = await modalController.create({
+          component: element,
+          htmlAttributes: {
+            id: sharedId,
+            'data-testid': `modal-${modalNumber}`,
+          },
+        });
+        await modal.present();
+
+        const dismissByIdButton = element.querySelector('ion-button.dismiss-by-id');
+        dismissByIdButton.addEventListener('click', () => {
+          modalController.dismiss(undefined, undefined, sharedId);
+        });
+
+        const dismissDefaultButton = element.querySelector('ion-button.dismiss-default');
+        dismissDefaultButton.addEventListener('click', () => {
+          modalController.dismiss();
+        });
+      };
+    </script>
+  </body>
+</html>

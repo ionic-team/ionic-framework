@@ -43,7 +43,15 @@ import { mdLeaveAnimation } from './animations/md.leave';
 import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture, SwipeToCloseDefaults } from './gestures/swipe-to-close';
-import type { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from './modal-interface';
+import type { ModalBreakpointChangeEventDetail, ModalHandleBehavior, ModalDragEventDetail } from './modal-interface';
+import {
+  getInitialSafeAreaConfig,
+  getPositionBasedSafeAreaConfig,
+  applySafeAreaOverrides,
+  clearSafeAreaOverrides,
+  getRootSafeAreaTop,
+  type ModalSafeAreaContext,
+} from './safe-area-utils';
 import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
 // TODO(FW-2832): types
@@ -72,6 +80,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private sheetTransition?: Promise<any>;
   @State() private isSheetModal = false;
+  /**
+   * The breakpoint value that has been committed for a sheet modal.
+   * This represents the modal's resting state when it is not being dragged
+   * or animating toward a new position.
+   */
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
@@ -276,14 +289,35 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   @Listen('resize', { target: 'window' })
   onWindowResize() {
-    // Only handle resize for iOS card modals when no custom animations are provided
-    if (getIonMode(this) !== 'ios' || !this.presentingElement || this.enterAnimation || this.leaveAnimation) {
-      return;
-    }
+    if (!this.presented) return;
 
     clearTimeout(this.resizeTimeout);
     this.resizeTimeout = setTimeout(() => {
-      this.handleViewTransition();
+      const context = this.getSafeAreaContext();
+
+      // iOS card modals: handle portrait/landscape view transitions
+      if (context.isCardModal && !this.enterAnimation && !this.leaveAnimation) {
+        this.handleViewTransition();
+      }
+
+      // Sheet modals: re-compute the internal offset property since safe-area
+      // values may change on device rotation (e.g., portrait notch vs landscape).
+      if (context.isSheetModal) {
+        this.updateSheetOffsetTop();
+      }
+
+      // Regular (non-sheet, non-card) modals: update safe-area overrides
+      // since the viewport may have crossed the centered-dialog breakpoint.
+      if (!context.isSheetModal && !context.isCardModal) {
+        this.updateSafeAreaOverrides();
+
+        // Re-evaluate fullscreen safe-area padding: clear first, then re-apply
+        if (this.wrapperEl) {
+          this.wrapperEl.style.removeProperty('height');
+          this.wrapperEl.style.removeProperty('padding-bottom');
+        }
+        this.applyFullscreenSafeArea();
+      }
     }, 50); // Debounce to avoid excessive calls during active resizing
   }
 
@@ -390,6 +424,21 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Event() ionMount!: EventEmitter<void>;
 
+  /**
+   * Event that is emitted when the sheet modal or card modal gesture starts.
+   */
+  @Event() ionDragStart!: EventEmitter<void>;
+
+  /**
+   * Event that is emitted when the sheet modal or card modal gesture moves.
+   */
+  @Event() ionDragMove!: EventEmitter<ModalDragEventDetail>;
+
+  /**
+   * Event that is emitted when the sheet modal or card modal gesture ends.
+   */
+  @Event() ionDragEnd!: EventEmitter<ModalDragEventDetail>;
+
   breakpointsChanged(breakpoints: number[] | undefined) {
     if (breakpoints !== undefined) {
       this.sortedBreakpoints = breakpoints.sort((a, b) => a - b);
@@ -406,6 +455,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.triggerController.removeClickListener();
     this.cleanupViewTransitionListener();
     this.cleanupParentRemovalObserver();
+    // Also called in dismiss() — intentional dual cleanup covers both
+    // dismiss-then-remove and direct DOM removal without dismiss.
+    this.cleanupSafeAreaOverrides();
   }
 
   componentWillLoad() {
@@ -594,6 +646,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
+    // Recalculate isSheetModal before safe-area setup because framework
+    // bindings (e.g., Angular) may not have been applied when componentWillLoad ran.
+    this.isSheetModal = this.breakpoints !== undefined && this.initialBreakpoint !== undefined;
+
+    // Set initial safe-area overrides before animation
+    this.setInitialSafeAreaOverrides();
+
     const hasCardModal = presentingElement !== undefined;
 
     /**
@@ -613,6 +672,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
       backdropBreakpoint: this.backdropBreakpoint,
       expandToScroll: this.expandToScroll,
     });
+
+    // Update safe-area based on actual position after animation
+    this.updateSafeAreaOverrides();
+
+    // Apply fullscreen safe-area padding if needed
+    this.applyFullscreenSafeArea();
 
     /* tslint:disable-next-line */
     if (typeof window !== 'undefined') {
@@ -646,14 +711,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       window.addEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
     }
 
-    /**
-     * Recalculate isSheetModal because framework bindings (e.g., Angular)
-     * may not have been applied when componentWillLoad ran.
-     */
-    const isSheetModal = this.breakpoints !== undefined && this.initialBreakpoint !== undefined;
-    this.isSheetModal = isSheetModal;
-
-    if (isSheetModal) {
+    if (this.isSheetModal) {
       this.initSheetGesture();
     } else if (hasCardModal) {
       this.initSwipeToClose();
@@ -692,33 +750,15 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const statusBarStyle = this.statusBarStyle ?? StatusBarStyle.Default;
 
-    this.gesture = createSwipeToCloseGesture(el, ani, statusBarStyle, () => {
-      /**
-       * While the gesture animation is finishing
-       * it is possible for a user to tap the backdrop.
-       * This would result in the dismiss animation
-       * being played again. Typically this is avoided
-       * by setting `presented = false` on the overlay
-       * component; however, we cannot do that here as
-       * that would prevent the element from being
-       * removed from the DOM.
-       */
-      this.gestureAnimationDismissing = true;
-
-      /**
-       * Reset the status bar style as the dismiss animation
-       * starts otherwise the status bar will be the wrong
-       * color for the duration of the dismiss animation.
-       * The dismiss method does this as well, but
-       * in this case it's only called once the animation
-       * has finished.
-       */
-      setCardStatusBarDefault(this.statusBarStyle);
-      this.animation!.onFinish(async () => {
-        await this.dismiss(undefined, GESTURE);
-        this.gestureAnimationDismissing = false;
-      });
-    });
+    this.gesture = createSwipeToCloseGesture(
+      el,
+      ani,
+      statusBarStyle,
+      () => this.cardOnDismiss(),
+      () => this.onDragStart(),
+      (detail: ModalDragEventDetail) => this.onDragMove(detail),
+      (detail: ModalDragEventDetail) => this.onDragEnd(detail)
+    );
     this.gesture.enable(true);
   }
 
@@ -755,7 +795,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
           this.currentBreakpoint = breakpoint;
           this.ionBreakpointDidChange.emit({ breakpoint });
         }
-      }
+      },
+      () => this.onDragStart(),
+      (detail: ModalDragEventDetail) => this.onDragMove(detail),
+      (detail: ModalDragEventDetail) => this.onDragEnd(detail)
     );
 
     this.gesture = gesture;
@@ -869,6 +912,34 @@ export class Modal implements ComponentInterface, OverlayInterface {
     });
   }
 
+  private cardOnDismiss() {
+    /**
+     * While the gesture animation is finishing
+     * it is possible for a user to tap the backdrop.
+     * This would result in the dismiss animation
+     * being played again. Typically this is avoided
+     * by setting `presented = false` on the overlay
+     * component; however, we cannot do that here as
+     * that would prevent the element from being
+     * removed from the DOM.
+     */
+    this.gestureAnimationDismissing = true;
+
+    /**
+     * Reset the status bar style as the dismiss animation
+     * starts otherwise the status bar will be the wrong
+     * color for the duration of the dismiss animation.
+     * The dismiss method does this as well, but
+     * in this case it's only called once the animation
+     * has finished.
+     */
+    setCardStatusBarDefault(this.statusBarStyle);
+    this.animation!.onFinish(async () => {
+      await this.dismiss(undefined, GESTURE);
+      this.gestureAnimationDismissing = false;
+    });
+  }
+
   /**
    * Dismiss the modal overlay after it has been presented.
    * This is a no-op if the overlay has not been presented yet. If you want
@@ -884,6 +955,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (this.gestureAnimationDismissing && role !== GESTURE) {
       return false;
     }
+
+    // Cancel any pending resize timeout to prevent stale updates during dismiss
+    clearTimeout(this.resizeTimeout);
+    this.resizeTimeout = undefined;
 
     /**
      * Because the canDismiss check below is async,
@@ -956,6 +1031,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       }
       this.cleanupViewTransitionListener();
       this.cleanupParentRemovalObserver();
+      this.cleanupSafeAreaOverrides();
 
       this.cleanupChildRoutePassthrough();
     }
@@ -1116,6 +1192,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private handleViewTransition() {
+    // Only run view transitions when the modal is presented
+    if (!this.presented) {
+      return;
+    }
+
     const isPortrait = window.innerWidth < 768;
 
     // Only transition if view state actually changed
@@ -1160,6 +1241,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     transitionAnimation.play().then(() => {
       this.viewTransitionAnimation = undefined;
+
+      // Wait for a layout pass after the transition so getBoundingClientRect()
+      // in getPositionBasedSafeAreaConfig() reflects the new dimensions.
+      raf(() => this.updateSafeAreaOverrides());
 
       // After orientation transition, recreate the swipe-to-close gesture
       // with updated animation that reflects the new presenting element state
@@ -1328,6 +1413,142 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private cleanupParentRemovalObserver() {
     this.parentRemovalObserver?.disconnect();
     this.parentRemovalObserver = undefined;
+  }
+
+  private onDragStart() {
+    this.ionDragStart.emit();
+  }
+
+  private onDragMove(detail: ModalDragEventDetail) {
+    this.ionDragMove.emit(detail);
+  }
+
+  private onDragEnd(detail: ModalDragEventDetail) {
+    this.ionDragEnd.emit(detail);
+  }
+
+  /**
+   * Creates the context object for safe-area utilities.
+   */
+  private getSafeAreaContext(): ModalSafeAreaContext {
+    return {
+      isSheetModal: this.isSheetModal,
+      isCardModal: this.presentingElement !== undefined && getIonMode(this) === 'ios',
+      presentingElement: this.presentingElement,
+      breakpoints: this.breakpoints,
+      currentBreakpoint: this.currentBreakpoint,
+    };
+  }
+
+  /**
+   * Sets initial safe-area overrides before modal animation.
+   * Called in present() before animation starts.
+   *
+   * For sheet modals, the SCSS --height formula uses --ion-modal-offset-top
+   * (an internal property) instead of --ion-safe-area-top. We resolve the
+   * root safe-area-top to pixels and set --ion-modal-offset-top, decoupling
+   * the height calculation from --ion-safe-area-top (which is zeroed for
+   * sheets to prevent header content from getting double-offset padding).
+   */
+  private setInitialSafeAreaOverrides(): void {
+    const context = this.getSafeAreaContext();
+    const safeAreaConfig = getInitialSafeAreaConfig(context);
+    applySafeAreaOverrides(this.el, safeAreaConfig);
+
+    // Set the internal offset property with the resolved root safe-area-top value
+    if (context.isSheetModal) {
+      this.updateSheetOffsetTop();
+    }
+  }
+
+  /**
+   * Resolves the current root --ion-safe-area-top value and sets the
+   * internal --ion-modal-offset-top property on the host element.
+   * Called on present and on resize (e.g., device rotation changes safe-area).
+   */
+  private updateSheetOffsetTop(): void {
+    const safeAreaTop = getRootSafeAreaTop();
+    this.el.style.setProperty('--ion-modal-offset-top', `${safeAreaTop}px`);
+  }
+
+  /**
+   * Updates safe-area overrides during dynamic state changes.
+   * Called after animations, during gestures, and on orientation changes.
+   */
+  private updateSafeAreaOverrides(): void {
+    const { wrapperEl, el } = this;
+    const context = this.getSafeAreaContext();
+
+    // Sheet modals: safe-area is fully determined at presentation time
+    // (top is always 0px, height is frozen). Nothing to update.
+    if (context.isSheetModal) return;
+
+    // Card modals have fixed safe-area requirements set by initial prediction.
+    if (context.isCardModal) return;
+
+    // wrapperEl is required for position-based detection below
+    if (!wrapperEl) return;
+
+    // Regular modals: use position-based detection to correctly handle both
+    // fullscreen modals and centered dialogs with custom dimensions.
+    const safeAreaConfig = getPositionBasedSafeAreaConfig(wrapperEl);
+    applySafeAreaOverrides(el, safeAreaConfig);
+  }
+
+  /**
+   * Applies padding-bottom to fullscreen modal wrapper to prevent
+   * content from overlapping system navigation bar.
+   */
+  private applyFullscreenSafeArea(): void {
+    const { wrapperEl, el } = this;
+    if (!wrapperEl) return;
+
+    const context = this.getSafeAreaContext();
+    if (context.isSheetModal || context.isCardModal) return;
+
+    // Check for standard Ionic layout children (ion-content, ion-footer),
+    // searching one level deep for wrapped components (e.g.,
+    // <app-footer><ion-footer>...</ion-footer></app-footer>).
+    // Note: uses a manual loop instead of querySelector(':scope > ...') because
+    // Stencil's mock-doc (used in spec tests) does not support :scope.
+    let hasContent = false;
+    let hasFooter = false;
+    for (const child of Array.from(el.children)) {
+      if (child.tagName === 'ION-CONTENT') hasContent = true;
+      if (child.tagName === 'ION-FOOTER') hasFooter = true;
+      for (const grandchild of Array.from(child.children)) {
+        if (grandchild.tagName === 'ION-CONTENT') hasContent = true;
+        if (grandchild.tagName === 'ION-FOOTER') hasFooter = true;
+      }
+    }
+
+    // Only apply wrapper padding for standard Ionic layouts (has ion-content
+    // but no ion-footer). Custom modals with raw HTML are fully
+    // developer-controlled and should not be modified.
+    if (!hasContent || hasFooter) return;
+
+    // Reduce wrapper height by safe-area and add equivalent padding so the
+    // total visual size stays the same but the flex content area shrinks.
+    // Using height + padding instead of box-sizing: border-box avoids
+    // breaking custom modals that set --border-width (border-box would
+    // include the border inside the height, changing the layout).
+    wrapperEl.style.setProperty('height', 'calc(var(--height) - var(--ion-safe-area-bottom, 0px))');
+    wrapperEl.style.setProperty('padding-bottom', 'var(--ion-safe-area-bottom, 0px)');
+  }
+
+  /**
+   * Clears all safe-area overrides and padding from wrapper.
+   */
+  private cleanupSafeAreaOverrides(): void {
+    clearSafeAreaOverrides(this.el);
+
+    // Remove internal sheet offset property
+    this.el.style.removeProperty('--ion-modal-offset-top');
+
+    if (this.wrapperEl) {
+      this.wrapperEl.style.removeProperty('height');
+      this.wrapperEl.style.removeProperty('padding-bottom');
+    }
   }
 
   render() {
