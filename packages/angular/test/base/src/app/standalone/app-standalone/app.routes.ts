@@ -7,6 +7,7 @@ export const routes: Routes = [
     component: AppComponent,
     children: [
       { path: '', loadComponent: () => import('../home-page/home-page.component').then(c => c.HomePageComponent) },
+      { path: 'inputs', loadComponent: () => import('../inputs/inputs.component').then(c => c.InputsComponent) },
       { path: 'menu-controller', loadComponent: () => import('../menu-controller/menu-controller.component').then(c => c.MenuControllerComponent) },
       { path: 'action-sheet-controller', loadComponent: () => import('../action-sheet-controller/action-sheet-controller.component').then(c => c.ActionSheetControllerComponent) },
       { path: 'popover', loadComponent: () => import('../popover/popover.component').then(c => c.PopoverComponent) },
@@ -22,6 +23,8 @@ export const routes: Routes = [
         ]
       },
       { path: 'programmatic-modal', loadComponent: () => import('../programmatic-modal/programmatic-modal.component').then(c => c.ProgrammaticModalComponent) },
+      { path: 'modal-custom-injector', loadComponent: () => import('../modal-custom-injector/modal-custom-injector.component').then(c => c.ModalCustomInjectorComponent) },
+      { path: 'popover-custom-injector', loadComponent: () => import('../popover-custom-injector/popover-custom-injector.component').then(c => c.PopoverCustomInjectorComponent) },
       { path: 'router-outlet', loadComponent: () => import('../router-outlet/router-outlet.component').then(c => c.RouterOutletComponent) },
       { path: 'back-button', loadComponent: () => import('../back-button/back-button.component').then(c => c.BackButtonComponent) },
       { path: 'router-link', loadComponent: () => import('../router-link/router-link.component').then(c => c.RouterLinkComponent) },

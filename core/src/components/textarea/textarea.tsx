@@ -150,7 +150,7 @@ export class Textarea implements ComponentInterface {
   /**
    * If `true`, the user cannot interact with the textarea.
    */
-  @Prop() disabled = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /**
    * Update element internals when disabled prop changes
@@ -203,7 +203,7 @@ export class Textarea implements ComponentInterface {
   /**
    * If `true`, the user cannot modify the value.
    */
-  @Prop() readonly = false;
+  @Prop({ reflect: true }) readonly = false;
 
   /**
    * If `true`, the user must fill in a value before submitting a form.

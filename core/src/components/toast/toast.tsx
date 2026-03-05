@@ -48,12 +48,14 @@ import type {
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
- * @part button - Any button element that is displayed inside of the toast.
- * @part button cancel - Any button element with role "cancel" that is displayed inside of the toast.
- * @part container - The element that wraps all child elements.
+ * @part wrapper - The outer wrapper for the toast overlay.
+ * @part container - Groups the icon, content, and buttons.
+ * @part content - The live region that contains the header and message.
  * @part header - The header text of the toast.
  * @part message - The body text of the toast.
  * @part icon - The icon that appears next to the toast content.
+ * @part button - Any button element that is displayed inside of the toast.
+ * @part button cancel - Any button element with role "cancel" that is displayed inside of the toast.
  */
 @Component({
   tag: 'ion-toast',
@@ -767,7 +769,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
         })}
         onIonToastWillDismiss={this.dispatchCancelHandler}
       >
-        <div class={wrapperClass}>
+        <div class={wrapperClass} part="wrapper">
           <div class="toast-container" part="container">
             {this.renderButtons(startButtons, 'start')}
 
@@ -786,7 +788,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
               not interrupt the user which is why this has
               a "status" role and a "polite" presentation.
             */}
-            <div class="toast-content" role="status" aria-atomic="true" aria-live="polite">
+            <div class="toast-content" part="content" role="status" aria-atomic="true" aria-live="polite">
               {/*
                 This logic below is done to improve consistency
                 across platforms when showing and updating live regions.

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Popover - Safe Area</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <script type="module">
+      import { popoverController } from '../../../../../dist/ionic/index.esm.js';
+      window.popoverController = popoverController;
+    </script>
+    <style>
+      :root {
+        --ion-safe-area-top: 47px;
+        --ion-safe-area-bottom: 34px;
+        --ion-safe-area-left: 44px;
+        --ion-safe-area-right: 44px;
+      }
+
+      /* Visual indicators for safe area regions */
+      .safe-area-indicator {
+        position: fixed;
+        background: rgba(255, 0, 0, 0.15);
+        pointer-events: none;
+        z-index: 99999;
+      }
+      .safe-area-indicator.top {
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--ion-safe-area-top, 0px);
+      }
+      .safe-area-indicator.bottom {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: var(--ion-safe-area-bottom, 0px);
+      }
+      .safe-area-indicator.left {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: var(--ion-safe-area-left, 0px);
+      }
+      .safe-area-indicator.right {
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: var(--ion-safe-area-right, 0px);
+      }
+
+      .trigger-button {
+        position: fixed;
+        padding: 8px 12px;
+        font-size: 14px;
+        z-index: 1;
+      }
+
+      #bottom-trigger {
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      #right-trigger {
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      #large-popover-trigger {
+        bottom: 8px;
+        right: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Visual indicators for safe areas -->
+    <div class="safe-area-indicator top"></div>
+    <div class="safe-area-indicator bottom"></div>
+    <div class="safe-area-indicator left"></div>
+    <div class="safe-area-indicator right"></div>
+
+    <ion-app>
+      <ion-content class="ion-padding">
+        <p>Popover safe area test. Triggers are positioned near screen edges.</p>
+      </ion-content>
+    </ion-app>
+
+    <!-- Fixed-position trigger buttons near screen edges -->
+    <button id="bottom-trigger" class="trigger-button" onclick="presentPopover(event)">Bottom Edge</button>
+    <button id="right-trigger" class="trigger-button" onclick="presentPopover(event)">Right Edge</button>
+    <button id="large-popover-trigger" class="trigger-button" onclick="presentLargePopover(event)">
+      Large Popover
+    </button>
+
+    <script>
+      customElements.define(
+        'popover-content',
+        class PopoverContent extends HTMLElement {
+          connectedCallback() {
+            this.innerHTML = `
+              <ion-list>
+                <ion-item button><ion-label>Item 1</ion-label></ion-item>
+                <ion-item button><ion-label>Item 2</ion-label></ion-item>
+                <ion-item button><ion-label>Item 3</ion-label></ion-item>
+              </ion-list>
+            `;
+          }
+        }
+      );
+
+      customElements.define(
+        'popover-large-content',
+        class PopoverLargeContent extends HTMLElement {
+          connectedCallback() {
+            let items = '';
+            for (let i = 0; i < 15; i++) {
+              items += `<ion-item button><ion-label>Item ${i}</ion-label></ion-item>`;
+            }
+            this.innerHTML = `
+              <ion-list>
+                ${items}
+              </ion-list>
+            `;
+          }
+        }
+      );
+
+      async function presentPopover(ev) {
+        const popover = await popoverController.create({
+          component: 'popover-content',
+          event: ev,
+        });
+        await popover.present();
+      }
+
+      async function presentLargePopover(ev) {
+        const popover = await popoverController.create({
+          component: 'popover-large-content',
+          event: ev,
+        });
+        await popover.present();
+      }
+    </script>
+  </body>
+</html>

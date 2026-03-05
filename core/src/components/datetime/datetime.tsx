@@ -83,6 +83,7 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  * @slot buttons - The buttons in the datetime.
  * @slot time-label - The label for the time selector in the datetime.
  *
+ * @part wheel - The wheel container when using a wheel style layout, or in the month/year picker when using a grid style layout.
  * @part wheel-item - The individual items when using a wheel style layout, or in the
  * month/year picker when using a grid style layout.
  * @part wheel-item active - The currently selected wheel-item.
@@ -91,14 +92,23 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  * layout with `presentation="date-time"` or `"time-date"`.
  * @part time-button active - The time picker button when the picker is open.
  *
+ * @part calendar-header - The calendar header manages the date navigation controls (month/year picker and previous/next buttons) and the days of the week when using a grid style layout.
  * @part month-year-button - The button that opens the month/year picker when
  * using a grid style layout.
+ * @part navigation-button - The buttons used to navigate to the next or previous month when using a grid style layout.
+ * @part previous-button - The button used to navigate to the previous month when using a grid style layout.
+ * @part next-button - The button used to navigate to the next month when using a grid style layout.
+ * @part calendar-days-of-week - The container for the day-of-the-week header (both weekdays and weekends) when using a grid style layout.
  *
  * @part calendar-day - The individual buttons that display a day inside of the datetime
  * calendar.
  * @part calendar-day active - The currently selected calendar day.
  * @part calendar-day today - The calendar day that contains the current day.
  * @part calendar-day disabled - The calendar day that is disabled.
+ *
+ * @part datetime-header - The datetime header contains the content for the `title` slot and the selected date.
+ * @part datetime-title - The element that contains the `title` slot content.
+ * @part datetime-selected-date - The element that contains the selected date.
  */
 @Component({
   tag: 'ion-datetime',
@@ -129,6 +139,7 @@ export class Datetime implements ComponentInterface {
   private maxParts?: any;
   private todayParts!: DatetimeParts;
   private defaultParts!: DatetimeParts;
+  private loadTimeout: ReturnType<typeof setTimeout> | undefined;
 
   private prevPresentation: string | null = null;
 
@@ -1082,6 +1093,9 @@ export class Datetime implements ComponentInterface {
       this.clearFocusVisible();
       this.clearFocusVisible = undefined;
     }
+    if (this.loadTimeout) {
+      clearTimeout(this.loadTimeout);
+    }
   }
 
   /**
@@ -1180,7 +1194,7 @@ export class Datetime implements ComponentInterface {
      *
      * We schedule this after everything has had a chance to run.
      */
-    setTimeout(() => {
+    this.loadTimeout = setTimeout(() => {
       this.ensureReadyIfVisible();
     }, 100);
 
@@ -1730,6 +1744,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        part={WHEEL_PART}
         aria-label="Select a date"
         class="date-column"
         color={this.color}
@@ -1850,6 +1865,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        part={WHEEL_PART}
         aria-label="Select a day"
         class="day-column"
         color={this.color}
@@ -1894,6 +1910,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        part={WHEEL_PART}
         aria-label="Select a month"
         class="month-column"
         color={this.color}
@@ -1937,6 +1954,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        part={WHEEL_PART}
         aria-label="Select a year"
         class="year-column"
         color={this.color}
@@ -2011,6 +2029,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        part={WHEEL_PART}
         aria-label="Select an hour"
         color={this.color}
         disabled={disabled}
@@ -2051,6 +2070,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        part={WHEEL_PART}
         aria-label="Select a minute"
         color={this.color}
         disabled={disabled}
@@ -2094,6 +2114,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        part={WHEEL_PART}
         aria-label="Select a day period"
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
@@ -2162,7 +2183,7 @@ export class Datetime implements ComponentInterface {
     const hostDir = this.el.getAttribute('dir') || undefined;
 
     return (
-      <div class="calendar-header">
+      <div class="calendar-header" part="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
             <button
@@ -2192,7 +2213,7 @@ export class Datetime implements ComponentInterface {
           </div>
 
           <div class="calendar-next-prev">
-            <ion-button aria-label="Previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
+            <ion-button aria-label="Previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()} part="navigation-button previous-button">
               <ion-icon
                 dir={hostDir}
                 aria-hidden="true"
@@ -2202,7 +2223,7 @@ export class Datetime implements ComponentInterface {
                 flipRtl
               ></ion-icon>
             </ion-button>
-            <ion-button aria-label="Next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
+            <ion-button aria-label="Next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()} part="navigation-button next-button">
               <ion-icon
                 dir={hostDir}
                 aria-hidden="true"
@@ -2214,7 +2235,7 @@ export class Datetime implements ComponentInterface {
             </ion-button>
           </div>
         </div>
-        <div class="calendar-days-of-week" aria-hidden="true">
+        <div class="calendar-days-of-week" aria-hidden="true" part="calendar-days-of-week">
           {getDaysOfWeek(this.locale, theme, this.firstDayOfWeek % 7).map((d) => {
             return <div class="day-of-week">{d}</div>;
           })}
@@ -2567,11 +2588,15 @@ export class Datetime implements ComponentInterface {
     }
 
     return (
-      <div class="datetime-header">
-        <div class="datetime-title">
+      <div class="datetime-header" part="datetime-header">
+        <div class="datetime-title" part="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        {showExpandedHeader && <div class="datetime-selected-date">{this.getHeaderSelectedDateText()}</div>}
+        {showExpandedHeader && (
+          <div class="datetime-selected-date" part="datetime-selected-date">
+            {this.getHeaderSelectedDateText()}
+          </div>
+        )}
       </div>
     );
   }
@@ -2806,5 +2831,6 @@ export class Datetime implements ComponentInterface {
 let datetimeIds = 0;
 const CANCEL_ROLE = 'datetime-cancel';
 const CONFIRM_ROLE = 'datetime-confirm';
+const WHEEL_PART = 'wheel';
 const WHEEL_ITEM_PART = 'wheel-item';
 const WHEEL_ITEM_ACTIVE_PART = `active`;

@@ -9,6 +9,7 @@ import { config, configFromSession, configFromURL, saveConfig } from './config';
 
 let defaultMode: Mode;
 let defaultTheme: Theme = 'md';
+let rICHandle: number | undefined;
 
 /**
  * Prints a warning message to the developer to inform them of
@@ -132,11 +133,18 @@ export const getIonTheme = (ref?: any): Theme => {
   return defaultTheme;
 };
 
-export const rIC = (callback: () => void) => {
+export const rIC = (callback: () => void): number => {
   if ('requestIdleCallback' in window) {
-    (window as any).requestIdleCallback(callback);
+    return (window as any).requestIdleCallback(callback);
+  }
+  return setTimeout(callback, 32) as any;
+};
+
+export const cIC = (id: number) => {
+  if ('cancelIdleCallback' in window) {
+    (window as any).cancelIdleCallback(id);
   } else {
-    setTimeout(callback, 32);
+    clearTimeout(id);
   }
 };
 
@@ -279,7 +287,12 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   // ----------------------------------------------
 
   if (Build.isBrowser) {
-    rIC(async () => {
+    // If initialize is called again, clear the previous pending callback
+    if (rICHandle !== undefined) {
+      cIC(rICHandle);
+    }
+
+    rICHandle =rIC(async () => {
       const isHybrid = isPlatform(window, 'hybrid');
       if (!config.getBoolean('_testing')) {
         import('../utils/tap-click').then((module) => module.startTapClick(config));
@@ -316,6 +329,9 @@ export const initialize = (userConfig: IonicConfig = {}) => {
         import('../utils/keyboard/keyboard').then((module) => module.startKeyboardAssist(window));
       }
       import('../utils/focus-visible').then((module) => module.getOrInitFocusVisibleUtility());
+
+      // Reset handle once executed
+      rICHandle = undefined;
     });
   }
 };

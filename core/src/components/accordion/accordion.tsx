@@ -533,6 +533,7 @@ export class Accordion implements ComponentInterface {
 
           'in-accordion-group-expand-inset': hostContext('.accordion-group-expand-inset', this.el),
         }}
+        tabindex={disabled ? '-1' : undefined}
       >
         <div
           onClick={() => this.toggleExpanded()}

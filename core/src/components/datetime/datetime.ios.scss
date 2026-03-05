@@ -63,8 +63,10 @@
   @include margin(0, 0, 0, 0);
 }
 
-:host .calendar-next-prev {
-  @include padding($datetime-ios-padding * 0.5, 0, 0, 0);
+:host .calendar-action-buttons ion-buttons {
+  align-items: stretch;
+
+  height: 100%;
 }
 
 // These styles are copied from buttons.ios.scss
