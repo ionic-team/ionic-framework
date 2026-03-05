@@ -63,10 +63,8 @@
   @include margin(0, 0, 0, 0);
 }
 
-:host .calendar-action-buttons ion-buttons {
+:host .calendar-action-buttons .calendar-next-prev {
   align-items: stretch;
-
-  height: 100%;
 }
 
 // These styles are copied from buttons.ios.scss
