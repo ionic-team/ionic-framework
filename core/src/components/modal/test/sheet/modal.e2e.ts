@@ -353,4 +353,50 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(dragHandle).toBeFocused();
     });
   });
+
+  test.describe(title('sheet modal: drag events'), () => {
+    test('should emit ionDragStart, ionDragMove, and ionDragEnd events', async ({ page }) => {
+      await page.goto('/src/components/modal/test/sheet', config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#drag-events');
+      await ionModalDidPresent.next();
+
+      const ionDragStart = await page.spyOnEvent('ionDragStart');
+      const ionDragMove = await page.spyOnEvent('ionDragMove');
+      const ionDragEnd = await page.spyOnEvent('ionDragEnd');
+
+      const header = page.locator('.modal-sheet ion-header');
+
+      // Start the drag to verify it emits the events before the gesture ends
+      await dragElementBy(header, page, 0, 50, undefined, undefined, false);
+
+      await ionDragStart.next();
+      const dragMoveEvent = await ionDragMove.next();
+
+      expect(ionDragStart.length).toBe(1);
+
+      expect(ionDragMove.length).toBeGreaterThan(0);
+      expect(Object.keys(dragMoveEvent.detail).length).toBe(5);
+
+      expect(ionDragEnd.length).toBe(0);
+
+      /**
+       * Drage the modal further to verify it does:
+       * - not emit the event again for `ionDragStart`
+       * - emit more `ionDragMove` events
+       * - emit the `ionDragEnd` event when the gesture ends
+       */
+      await dragElementBy(header, page, 0, 100);
+
+      const dragEndEvent = await ionDragEnd.next();
+
+      expect(ionDragStart.length).toBe(1);
+      expect(ionDragMove.length).toBeGreaterThan(0);
+
+      expect(ionDragEnd.length).toBe(1);
+      expect(Object.keys(dragEndEvent.detail).length).toBe(5);
+    });
+  });
 });

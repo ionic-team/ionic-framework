@@ -54,6 +54,7 @@ export {
   IonicSafeString,
   LoadingOptions,
   MenuCustomEvent,
+  ModalDragEventDetail,
   ModalOptions,
   NavCustomEvent,
   PickerOptions,

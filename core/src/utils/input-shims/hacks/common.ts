@@ -68,11 +68,26 @@ const addClone = (
   if (disabledClonedInput) {
     clonedEl.disabled = true;
   }
+
+  /**
+   * Position the clone at the same horizontal offset as the native input
+   * to prevent the placeholder from overlapping start slot content (e.g., icons).
+   */
+  const doc = componentEl.ownerDocument!;
+  const isRTL = doc.dir === 'rtl';
+
+  if (isRTL) {
+    const parentWidth = (parentEl as HTMLElement).offsetWidth;
+    const startOffset = parentWidth - inputEl.offsetLeft - inputEl.offsetWidth;
+    clonedEl.style.insetInlineStart = `${startOffset}px`;
+  } else {
+    clonedEl.style.insetInlineStart = `${inputEl.offsetLeft}px`;
+  }
+
   parentEl.appendChild(clonedEl);
   cloneMap.set(componentEl, clonedEl);
 
-  const doc = componentEl.ownerDocument!;
-  const tx = doc.dir === 'rtl' ? 9999 : -9999;
+  const tx = isRTL ? 9999 : -9999;
   componentEl.style.pointerEvents = 'none';
   inputEl.style.transform = `translate3d(${tx}px,${inputRelativeY}px,0) scale(0)`;
 };

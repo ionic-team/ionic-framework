@@ -1,6 +1,14 @@
 import { Location } from '@angular/common';
 import { Injectable, Optional } from '@angular/core';
-import { NavigationExtras, Router, UrlSerializer, UrlTree, NavigationStart } from '@angular/router';
+import {
+  NavigationExtras,
+  Router,
+  UrlSerializer,
+  UrlTree,
+  NavigationStart,
+  NavigationCancel,
+  NavigationError,
+} from '@angular/router';
 import type { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core/components';
 
 import { IonRouterOutlet } from '../directives/navigation/router-outlet';
@@ -41,6 +49,14 @@ export class NavController {
           const id = ev.restoredState ? ev.restoredState.navigationId : ev.id;
           this.guessDirection = this.guessAnimation = id < this.lastNavId ? 'back' : 'forward';
           this.lastNavId = this.guessDirection === 'forward' ? ev.id : id;
+        }
+
+        // Reset explicit direction when navigation is canceled (e.g., guard rejection)
+        // to prevent stale direction from leaking into the next navigation
+        if (ev instanceof NavigationCancel || ev instanceof NavigationError) {
+          this.direction = DEFAULT_DIRECTION;
+          this.animated = DEFAULT_ANIMATED;
+          this.animationBuilder = undefined;
         }
       });
     }
