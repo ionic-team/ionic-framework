@@ -52,6 +52,7 @@ export const createGesture = (config: GestureConfig): Gesture => {
     name: config.gestureName,
     priority: config.gesturePriority,
     disableScroll: config.disableScroll,
+    el: config.el,
   });
 
   const pointerDown = (ev: UIEvent): boolean => {

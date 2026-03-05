@@ -119,7 +119,19 @@ export const startTapClick = (config: Config) => {
     }
   };
 
-  doc.addEventListener('ionGestureCaptured', cancelActive);
+  doc.addEventListener('ionGestureCaptured', (ev: Event) => {
+    const { el } = (ev as CustomEvent).detail;
+    /**
+     * Do not cancel the active ripple if the gesture was captured
+     * on an activatable element (e.g. ion-button). The ripple effect
+     * should still apply in this case.
+     * See https://github.com/ionic-team/ionic-framework/issues/22491
+     */
+    if (el instanceof Element && el.closest('.ion-activatable')) {
+      return;
+    }
+    cancelActive();
+  });
 
   doc.addEventListener('pointerdown', pointerDown, true);
   doc.addEventListener('pointerup', pointerUp, true);
