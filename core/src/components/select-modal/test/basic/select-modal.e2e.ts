@@ -64,6 +64,24 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await expect(selectModalPage.modal).not.toBeVisible();
       });
 
+      test('pressing Enter on an unselected option should dismiss the modal', async () => {
+        await selectModalPage.setup(config, options, false);
+
+        await selectModalPage.pressEnterOnOption('apple');
+        await selectModalPage.ionModalDidDismiss.next();
+        await expect(selectModalPage.modal).not.toBeVisible();
+      });
+
+      test('pressing Enter on a selected option should dismiss the modal', async ({ browserName }) => {
+        test.skip(browserName === 'firefox', 'Same behavior as ROU-5437');
+
+        await selectModalPage.setup(config, checkedOptions, false);
+
+        await selectModalPage.pressEnterOnOption('apple');
+        await selectModalPage.ionModalDidDismiss.next();
+        await expect(selectModalPage.modal).not.toBeVisible();
+      });
+
       test('clicking the close button should dismiss the modal', async () => {
         await selectModalPage.setup(config, options, false);
 
