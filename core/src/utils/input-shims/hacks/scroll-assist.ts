@@ -291,8 +291,14 @@ const jsSetFocus = async (
       // give the native text input focus
       relocateInput(componentEl, inputEl, false, scrollData.inputSafeY);
 
-      // ensure this is the focused input
-      setManualFocus(inputEl);
+      /**
+       * If focus has moved to another element while scroll assist was running,
+       * don't steal focus back. This prevents focus jumping when users
+       * quickly switch between inputs or tap other elements.
+       */
+      if (document.activeElement === inputEl) {
+        setManualFocus(inputEl);
+      }
 
       /**
        * When the input is about to be blurred

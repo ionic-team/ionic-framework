@@ -20,6 +20,7 @@ import type { Color, StyleEventDetail } from '../../interface';
 })
 export class Label implements ComponentInterface {
   private inRange = false;
+  private loadTimeout: ReturnType<typeof setTimeout> | undefined;
 
   @Element() el!: HTMLElement;
 
@@ -58,9 +59,15 @@ export class Label implements ComponentInterface {
 
   componentDidLoad() {
     if (this.noAnimate) {
-      setTimeout(() => {
+      this.loadTimeout = setTimeout(() => {
         this.noAnimate = false;
       }, 1000);
+    }
+  }
+
+  disconnectedCallback() {
+    if (this.loadTimeout) {
+      clearTimeout(this.loadTimeout);
     }
   }
 

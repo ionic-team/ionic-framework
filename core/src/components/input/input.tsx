@@ -53,6 +53,7 @@ export class Input implements ComponentInterface {
   private inputId = `ion-input-${inputIds++}`;
   private helperTextId = `${this.inputId}-helper-text`;
   private errorTextId = `${this.inputId}-error-text`;
+  private labelTextId = `${this.inputId}-label`;
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
   private slotMutationController?: SlotMutationController;
@@ -428,7 +429,12 @@ export class Input implements ComponentInterface {
   connectedCallback() {
     const { el } = this;
 
-    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => forceUpdate(this));
+    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => {
+      this.setSlottedLabelId();
+      forceUpdate(this);
+    });
+
+    this.setSlottedLabelId();
     this.notchController = createNotchController(
       el,
       () => this.notchSpacerEl,
@@ -803,7 +809,7 @@ export class Input implements ComponentInterface {
   }
 
   private renderLabel() {
-    const { label } = this;
+    const { label, labelTextId } = this;
 
     return (
       <div
@@ -811,8 +817,17 @@ export class Input implements ComponentInterface {
           'label-text-wrapper': true,
           'label-text-wrapper-hidden': !this.hasLabel,
         }}
+        // Prevents Android TalkBack from focusing the label separately.
+        // The input remains labelled via aria-labelledby.
+        aria-hidden={this.hasLabel ? 'true' : null}
       >
-        {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}
+        {label === undefined ? (
+          <slot name="label"></slot>
+        ) : (
+          <div class="label-text" id={labelTextId}>
+            {label}
+          </div>
+        )}
       </div>
     );
   }
@@ -823,6 +838,33 @@ export class Input implements ComponentInterface {
    */
   private get labelSlot() {
     return this.el.querySelector('[slot="label"]');
+  }
+
+  /**
+   * Ensures the slotted label element has an ID for aria-labelledby.
+   * If no ID exists, we assign one using our generated labelTextId.
+   */
+  private setSlottedLabelId() {
+    const slottedLabel = this.labelSlot;
+    if (slottedLabel && !slottedLabel.id) {
+      slottedLabel.id = this.labelTextId;
+    }
+  }
+
+  /**
+   * Returns the ID to use for aria-labelledby on the native input,
+   * or undefined if aria-label is explicitly set (to avoid conflicts).
+   */
+  private getLabelledById(): string | undefined {
+    if (this.inheritedAttributes['aria-label']) {
+      return undefined;
+    }
+
+    if (this.label !== undefined) {
+      return this.labelTextId;
+    }
+
+    return this.labelSlot?.id || undefined;
   }
 
   /**
@@ -1026,6 +1068,7 @@ export class Input implements ComponentInterface {
               onCompositionend={this.onCompositionEnd}
               aria-describedby={this.getHintTextID()}
               aria-invalid={this.isInvalid ? 'true' : undefined}
+              aria-labelledby={this.getLabelledById()}
               {...this.inheritedAttributes}
             />
             {clearInput && !readonly && !disabled && (

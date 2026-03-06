@@ -192,6 +192,11 @@ export class Content implements ComponentInterface {
       this.tabsElement = null;
       this.tabsLoadCallback = undefined;
     }
+
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = null;
+    }
   }
 
   /**
@@ -466,6 +471,7 @@ export class Content implements ComponentInterface {
         role={isMainContent ? 'main' : undefined}
         class={createColorClasses(this.color, {
           [theme]: true,
+          'content-fullscreen': this.fullscreen,
           'content-sizing': hostContext('ion-popover', this.el),
           overscroll: forceOverscroll,
           [`content-${rtl}`]: true,

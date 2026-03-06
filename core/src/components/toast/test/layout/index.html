@@ -29,6 +29,9 @@
       <ion-content class="ion-padding">
         <button id="baseline" onclick="openToast(baselineConfig)">Open Baseline Layout Toast</button>
         <button id="stacked" onclick="openToast(stackedConfig)">Open Stacked Layout Toast</button>
+        <button id="stacked-long-message" onclick="openToast(stackedLongMessageConfig)">
+          Open Stacked Layout Toast with Long Message
+        </button>
       </ion-content>
 
       <script>
@@ -50,6 +53,13 @@
         const stackedConfig = {
           ...baselineConfig,
           message: 'This is a stacked layout toast.',
+          layout: 'stacked',
+        };
+
+        const stackedLongMessageConfig = {
+          ...baselineConfig,
+          message:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in elit varius, maximus sem in, bibendum justo.',
           layout: 'stacked',
         };
       </script>

@@ -8,7 +8,7 @@
         <ion-title>Inputs</ion-title>
       </ion-toolbar>
       <ion-toolbar>
-        <ion-segment v-model="segment">
+        <ion-segment v-model="segment" :disabled="isDisabled">
           <ion-segment-button value="dogs">
             <ion-label>Dogs</ion-label>
           </ion-segment-button>
@@ -18,7 +18,7 @@
         </ion-segment>
       </ion-toolbar>
       <ion-toolbar>
-        <ion-searchbar v-model="searchbar"></ion-searchbar>
+        <ion-searchbar v-model="searchbar" :disabled="isDisabled"></ion-searchbar>
       </ion-toolbar>
     </ion-header>
 
@@ -30,48 +30,48 @@
       </ion-header>
 
       <ion-item>
-        <ion-checkbox v-model="checkbox">Checkbox</ion-checkbox>
+        <ion-checkbox v-model="checkbox" :disabled="isDisabled">Checkbox</ion-checkbox>
       </ion-item>
 
       <ion-item>
-        <ion-toggle v-model="toggle">Toggle</ion-toggle>
+        <ion-toggle v-model="toggle" :disabled="isDisabled">Toggle</ion-toggle>
       </ion-item>
 
       <ion-item>
-        <ion-input v-model="input" label="Input" required @ionBlur="handleValidation" @ionInput="handleValidation"></ion-input>
+        <ion-input v-model="input" label="Input" required @ionBlur="handleValidation" @ionInput="handleValidation" :disabled="isDisabled" :readonly="isReadonly"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input-otp v-model="inputOtp"></ion-input-otp>
+        <ion-input-otp v-model="inputOtp" :disabled="isDisabled" :readonly="isReadonly"></ion-input-otp>
       </ion-item>
 
       <ion-item>
-        <ion-range label="Range" :dual-knobs="true" :min="0" :max="100" slot="end" v-model="range"></ion-range>
+        <ion-range label="Range" :dual-knobs="true" :min="0" :max="100" slot="end" v-model="range" :disabled="isDisabled"></ion-range>
       </ion-item>
 
       <ion-item>
-        <ion-textarea label="Textarea" v-model="textarea" required @ionBlur="handleValidation" @ionInput="handleValidation"></ion-textarea>
+        <ion-textarea label="Textarea" v-model="textarea" required @ionBlur="handleValidation" @ionInput="handleValidation" :disabled="isDisabled" :readonly="isReadonly"></ion-textarea>
       </ion-item>
 
       <ion-item>
         <ion-label>Datetime</ion-label>
-        <ion-datetime v-model="datetime"></ion-datetime>
+        <ion-datetime v-model="datetime" :disabled="isDisabled" :readonly="isReadonly"></ion-datetime>
       </ion-item>
 
       <ion-radio-group v-model="radio">
         <ion-item>
-          <ion-radio value="red">Red</ion-radio>
+          <ion-radio value="red" :disabled="isDisabled">Red</ion-radio>
         </ion-item>
         <ion-item>
-          <ion-radio value="green">Green</ion-radio>
+          <ion-radio value="green" :disabled="isDisabled">Green</ion-radio>
         </ion-item>
         <ion-item>
-          <ion-radio value="blue">Blue</ion-radio>
+          <ion-radio value="blue" :disabled="isDisabled">Blue</ion-radio>
         </ion-item>
       </ion-radio-group>
 
       <ion-item>
-        <ion-select v-model="select" label="Select">
+        <ion-select v-model="select" label="Select" :disabled="isDisabled">
           <ion-select-option value="apples">Apples</ion-select-option>
           <ion-select-option value="bananas">Bananas</ion-select-option>
         </ion-select>
@@ -94,6 +94,8 @@
 
         <ion-button expand="block" @click="reset" id="reset">Reset Values</ion-button>
         <ion-button expand="block" @click="set" id="set">Set Values</ion-button>
+        <ion-button expand="block" @click="toggleDisable" id="disable">Toggle Disabled</ion-button>
+        <ion-button expand="block" @click="toggleReadonly" id="readonly">Toggle Readonly</ion-button>
       </div>
     </ion-content>
   </ion-page>
@@ -143,6 +145,10 @@ const radio = ref('red');
 const segment = ref('dogs');
 const select = ref('apples');
 
+// States
+const isDisabled = ref(false);
+const isReadonly = ref(false);
+
 const reset = () => {
   checkbox.value = false;
   toggle.value = false;
@@ -176,6 +182,14 @@ const set = () => {
   segment.value = 'cats';
   select.value = 'bananas';
 }
+
+const toggleDisable = () => {
+  isDisabled.value = !isDisabled.value;
+};
+
+const toggleReadonly = () => {
+  isReadonly.value = !isReadonly.value;
+};
 
 const setIonicClasses = (element: HTMLElement, isBlurEvent: boolean) => {
   requestAnimationFrame(() => {

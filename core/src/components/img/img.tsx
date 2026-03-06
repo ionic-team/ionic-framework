@@ -19,6 +19,7 @@ import { getIonTheme } from '../../global/ionic-global';
 export class Img implements ComponentInterface {
   private io?: IntersectionObserver;
   private inheritedAttributes: Attributes = {};
+  private loadTimeout: ReturnType<typeof setTimeout> | undefined;
 
   @Element() el!: HTMLElement;
 
@@ -59,7 +60,17 @@ export class Img implements ComponentInterface {
     this.addIO();
   }
 
+  disconnectedCallback() {
+    if (this.loadTimeout) {
+      clearTimeout(this.loadTimeout);
+    }
+  }
+
   private addIO() {
+    if (this.loadTimeout) {
+      clearTimeout(this.loadTimeout);
+      this.loadTimeout = undefined;
+    }
     if (this.src === undefined) {
       return;
     }
@@ -85,7 +96,7 @@ export class Img implements ComponentInterface {
       this.io.observe(this.el);
     } else {
       // fall back to setTimeout for Safari and IE
-      setTimeout(() => this.load(), 200);
+      this.loadTimeout = setTimeout(() => this.load(), 200);
     }
   }
 

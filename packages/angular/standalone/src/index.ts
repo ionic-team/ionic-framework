@@ -28,6 +28,7 @@ export {
   ViewWillLeave,
   ViewDidLeave,
 } from '@ionic/angular/common';
+export type { ModalOptions, PopoverOptions } from '@ionic/angular/common';
 export { IonNav } from './navigation/nav';
 export {
   IonCheckbox,
@@ -96,14 +97,13 @@ export {
   IonicSafeString,
   LoadingOptions,
   MenuCustomEvent,
-  ModalOptions,
+  ModalDragEventDetail,
   NavCustomEvent,
   PickerOptions,
   PickerButton,
   PickerColumn,
   PickerColumnOption,
   PlatformConfig,
-  PopoverOptions,
   RadioGroupCustomEvent,
   RadioGroupChangeEventDetail,
   RangeCustomEvent,
