@@ -31,6 +31,8 @@ import {
 export class Header implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private contentScrollCallback?: () => void;
+  private snapScrollCallback?: () => void;
+  private snapTimeout?: ReturnType<typeof setTimeout>;
   private intersectionObserver?: IntersectionObserver;
   private collapsibleMainHeader?: HTMLElement;
   private inheritedAttributes: Attributes = {};
@@ -136,6 +138,16 @@ export class Header implements ComponentInterface {
       this.contentScrollCallback = undefined;
     }
 
+    if (this.scrollEl && this.snapScrollCallback) {
+      this.scrollEl.removeEventListener('scroll', this.snapScrollCallback);
+      this.snapScrollCallback = undefined;
+    }
+
+    if (this.snapTimeout !== undefined) {
+      clearTimeout(this.snapTimeout);
+      this.snapTimeout = undefined;
+    }
+
     if (this.collapsibleMainHeader) {
       this.collapsibleMainHeader.classList.remove('header-collapse-main');
       this.collapsibleMainHeader = undefined;
@@ -197,6 +209,30 @@ export class Header implements ComponentInterface {
       handleContentScroll(this.scrollEl!, scrollHeaderIndex, contentEl);
     };
     this.scrollEl!.addEventListener('scroll', this.contentScrollCallback);
+
+    /**
+     * Handle snapping the header to either the expanded or collapsed
+     * state when the user releases the scroll in an intermediate state.
+     * This matches the native iOS behavior where the large title snaps
+     * to fully expanded or fully collapsed based on how far the transition
+     * was when the pointer was released.
+     */
+    this.snapScrollCallback = () => {
+      if (this.snapTimeout !== undefined) {
+        clearTimeout(this.snapTimeout);
+      }
+      this.snapTimeout = setTimeout(() => {
+        const scrollEl = this.scrollEl!;
+        const scrollTop = scrollEl.scrollTop;
+        const condenseHeaderHeight = this.el.offsetHeight;
+
+        if (scrollTop > 0 && scrollTop < condenseHeaderHeight) {
+          const snapTo = scrollTop >= condenseHeaderHeight / 2 ? condenseHeaderHeight : 0;
+          scrollEl.scrollTo({ top: snapTo, behavior: 'smooth' });
+        }
+      }, 100);
+    };
+    this.scrollEl!.addEventListener('scroll', this.snapScrollCallback);
 
     writeTask(() => {
       if (this.collapsibleMainHeader !== undefined) {
