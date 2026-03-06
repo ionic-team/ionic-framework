@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.1](https://github.com/ionic-team/ionic-framework/compare/v8.8.0...v8.8.1) (2026-03-06)
+
+
+### Bug Fixes
+
+* **accordion:** update tabindex based on disabled state ([#30986](https://github.com/ionic-team/ionic-framework/issues/30986)) ([0e76a69](https://github.com/ionic-team/ionic-framework/commit/0e76a69370083702568825c29d63cf257d6b88f1))
+* **angular:** export RefresherPullEnd types ([#30991](https://github.com/ionic-team/ionic-framework/issues/30991)) ([72abcca](https://github.com/ionic-team/ionic-framework/commit/72abccaad8df3c1db004da28610fddd95ac93c02))
+
+
+### Features
+
+* **toast:** add wrapper and content parts ([#30992](https://github.com/ionic-team/ionic-framework/issues/30992)) ([366f00e](https://github.com/ionic-team/ionic-framework/commit/366f00e25f06e28aa7166275445716c2d301e44a)), closes [#30735](https://github.com/ionic-team/ionic-framework/issues/30735)
+
+
+
+
+
 # [8.8.0](https://github.com/ionic-team/ionic-framework/compare/v8.7.18...v8.8.0) (2026-03-04)
 
 

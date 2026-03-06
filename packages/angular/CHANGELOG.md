@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.1](https://github.com/ionic-team/ionic-framework/compare/v8.8.0...v8.8.1) (2026-03-06)
+
+
+### Bug Fixes
+
+* **angular:** export RefresherPullEnd types ([#30991](https://github.com/ionic-team/ionic-framework/issues/30991)) ([72abcca](https://github.com/ionic-team/ionic-framework/commit/72abccaad8df3c1db004da28610fddd95ac93c02))
+
+
+
+
+
 # [8.8.0](https://github.com/ionic-team/ionic-framework/compare/v8.7.18...v8.8.0) (2026-03-04)
 
 
