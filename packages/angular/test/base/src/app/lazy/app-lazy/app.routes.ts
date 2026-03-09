@@ -34,7 +34,7 @@ export const routes: Routes = [
       { path: 'textarea', loadChildren: () => import('../textarea/textarea.module').then(m => m.TextareaModule) },
       { path: 'searchbar', loadChildren: () => import('../searchbar/searchbar.module').then(m => m.SearchbarModule) },
       { path: 'form', component: FormComponent },
-      { path: 'template-form', component: TemplateFormComponent },
+      { path: 'template-form', loadChildren: () => import('../template-form/template-form.module').then(m => m.TemplateFormModule) },
       { path: 'modals', component: ModalComponent },
       { path: 'modal-inline', loadChildren: () => import('../modal-inline').then(m => m.ModalInlineModule) },
       { path: 'modal-sheet-inline', loadChildren: () => import('../modal-sheet-inline').then(m => m.ModalSheetInlineModule) },
