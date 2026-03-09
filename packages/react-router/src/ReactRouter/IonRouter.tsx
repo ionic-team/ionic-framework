@@ -82,6 +82,13 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
   const currentTab = useRef<string | undefined>(undefined);
   const viewStack = useRef(new ReactRouterViewStack());
   const incomingRouteParams = useRef<Partial<RouteInfo> | null>(null);
+  /**
+   * Tracks URLs (pathname + search) that the user navigated away from via
+   * browser back. When a POP event's destination matches the top of this
+   * stack, it's a browser forward navigation. Cleared on PUSH (new
+   * navigation invalidates forward history, just like in the browser).
+   */
+  const forwardStack = useRef<string[]>([]);
 
   const [routeInfo, setRouteInfo] = useState<RouteInfo>({
     id: generateId('routeInfo'),
@@ -187,19 +194,31 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
         }
         /**
          * A `POP` action can be triggered by the browser's back/forward
-         * button.
+         * button. Both fire as POP events, so we use a forward stack to
+         * distinguish them: when going back, we push the leaving pathname
+         * onto the stack. When the next POP's destination matches the top
+         * of the stack, it's a forward navigation.
          */
         if (action === 'POP') {
           const currentRoute = locationHistory.current.current();
-          /**
-           * Check if the current route was "pushed" by a previous route
-           * (indicates a linear history path).
-           */
-          if (currentRoute && currentRoute.pushedByRoute) {
+          const isForwardNavigation =
+            forwardStack.current.length > 0 &&
+            forwardStack.current[forwardStack.current.length - 1] === location.pathname + location.search;
+
+          if (isForwardNavigation) {
+            forwardStack.current.pop();
+            incomingRouteParams.current = {
+              routeAction: 'push',
+              routeDirection: 'forward',
+              tab: tabToUse,
+            };
+          } else if (currentRoute && currentRoute.pushedByRoute) {
+            // Back navigation — record current URL for potential forward
+            forwardStack.current.push(currentRoute.pathname + (currentRoute.search || ''));
             const prevInfo = locationHistory.current.findLastLocation(currentRoute);
             incomingRouteParams.current = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
-            // It's a non-linear history path like a direct link.
           } else {
+            // It's a non-linear history path like a direct link.
             incomingRouteParams.current = {
               routeAction: 'pop',
               routeDirection: 'none',
@@ -216,6 +235,12 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
             tab: tabToUse,
           };
         }
+      }
+
+      // New navigation (PUSH) invalidates browser forward history,
+      // so clear our forward stack to stay in sync.
+      if (action === 'PUSH') {
+        forwardStack.current = [];
       }
 
       let routeInfo: RouteInfo;
@@ -456,12 +481,17 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
         const condition1 = routeInfo.lastPathname === routeInfo.pushedByRoute;
         const condition2 = prevInfo.pathname === routeInfo.pushedByRoute && routeInfo.tab === '' && prevInfo.tab === '';
         if (condition1 || condition2) {
+          // Record current URL so browser forward is detectable
+          forwardStack.current.push(routeInfo.pathname + (routeInfo.search || ''));
           navigate(-1);
         } else {
           /**
            * It's a non-linear back navigation.
            * e.g., direct link or tab switch or nested navigation with redirects
+           * Clear forward stack since the REPLACE-based navigate resets history
+           * position, making any prior forward entries unreachable.
            */
+          forwardStack.current = [];
           handleNavigate(prevInfo.pathname + (prevInfo.search || ''), 'pop', 'back', incomingAnimation);
         }
         /**

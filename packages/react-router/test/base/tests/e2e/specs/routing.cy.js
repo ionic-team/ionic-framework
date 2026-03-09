@@ -204,6 +204,36 @@ describe('Routing Tests', () => {
     cy.ionPageVisible('home-page');
   });
 
+  it('/ > Details 1 > Details 2 > Details 3 > Browser Back > Browser Forward, should be back on Details 3', () => {
+    // Tests browser forward button within a tab's own navigation stack
+    cy.visit(`http://localhost:${port}/routing/`);
+    cy.ionNav('ion-item', 'Details 1');
+    cy.ionPageVisible('home-details-page-1');
+    cy.ionNav('ion-button', 'Go to Details 2');
+    cy.ionPageVisible('home-details-page-2');
+    cy.ionNav('ion-button', 'Go to Details 3');
+    cy.ionPageVisible('home-details-page-3');
+    cy.go('back');
+    cy.ionPageVisible('home-details-page-2');
+    cy.go('forward');
+    cy.wait(500);
+    cy.ionPageVisible('home-details-page-3');
+  });
+
+  it('/ > Details 1 > Settings Details 1 > Browser Back > Browser Forward, should show Settings Details 1', () => {
+    // Tests browser forward button across tabs (cross-tab forward)
+    cy.visit(`http://localhost:${port}/routing/`);
+    cy.ionNav('ion-item', 'Details 1');
+    cy.ionPageVisible('home-details-page-1');
+    cy.ionNav('ion-button', 'Go to Settings Details 1');
+    cy.ionPageVisible('settings-details-page-1');
+    cy.go('back');
+    cy.ionPageVisible('home-details-page-1');
+    cy.go('forward');
+    cy.wait(500);
+    cy.ionPageVisible('settings-details-page-1');
+  });
+
   it('when props get passed into a route render, the component should update', () => {
     cy.visit(`http://localhost:${port}/routing/propstest`);
     cy.ionPageVisible('props-test');

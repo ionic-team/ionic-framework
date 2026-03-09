@@ -117,4 +117,30 @@ describe('Nested Outlets 2', () => {
     cy.ionBackClick('list');
     cy.ionPageVisible('home');
   });
+
+  it('/nested-outlet2 > Browser back/forward across nested outlets should show correct page', () => {
+    cy.visit(`http://localhost:${port}/nested-outlet2`);
+    cy.ionPageVisible('home');
+
+    // Navigate: Home → Welcome → List → Item #1
+    cy.ionNav('ion-item', 'Go to Welcome');
+    cy.ionPageVisible('welcome');
+    cy.ionNav('ion-item', 'Go to list from Welcome');
+    cy.ionPageVisible('list');
+    cy.ionNav('ion-item', 'Item #1');
+    cy.ionPageVisible('item');
+    cy.location('pathname').should('eq', '/nested-outlet2/list/1');
+
+    // Browser back: Item → List
+    cy.go('back');
+    cy.ionPageVisible('list');
+    cy.location('pathname').should('eq', '/nested-outlet2/list');
+
+    // Browser forward: List → Item (this was showing Welcome page before the fix)
+    cy.go('forward');
+    cy.wait(500);
+    cy.ionPageVisible('item');
+    cy.location('pathname').should('eq', '/nested-outlet2/list/1');
+    cy.ionPageDoesNotExist('welcome');
+  });
 });
