@@ -5,7 +5,7 @@ import { IonicModule } from "@ionic/angular";
 
 import { TemplateFormRoutingModule } from "./template-form-routing.module";
 import { TemplateFormComponent } from "./template-form.component";
-import { RequireTrueValidatorDirective } from "../validators/require-true.directive";
+import { ValidatorsModule } from "../validators/validators.module";
 
 @NgModule({
   imports: [
@@ -14,7 +14,7 @@ import { RequireTrueValidatorDirective } from "../validators/require-true.direct
     ReactiveFormsModule,
     IonicModule,
     TemplateFormRoutingModule,
-    RequireTrueValidatorDirective
+    ValidatorsModule
   ],
   declarations: [
     TemplateFormComponent

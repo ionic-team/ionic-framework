@@ -10,6 +10,7 @@ import { NG_VALIDATORS, Validator, AbstractControl, ValidationErrors, Validators
       multi: true,
     },
   ],
+  standalone: false,
 })
 export class RequireTrueValidatorDirective implements Validator {
   validate(control: AbstractControl): ValidationErrors | null {
