@@ -66,7 +66,7 @@ runs:
       working-directory: ./core
     - name: 📦 Archive Updated Screenshots
       if: inputs.update == 'true' && steps.test-and-update.outputs.hasUpdatedScreenshots == 'true'
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: updated-screenshots-${{ inputs.shard }}-${{ inputs.totalShards }}
         path: UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip

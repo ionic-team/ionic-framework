@@ -10,7 +10,7 @@ runs:
     - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
       with:
         node-version: 24.x
-    - uses: actions/download-artifact@v7
+    - uses: actions/download-artifact@v8
       with:
         path: ./artifacts
     - name: 🔎 Extract Archives
