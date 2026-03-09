@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, h, forceUpdate } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
 import { checkInvalidState } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
@@ -126,6 +126,8 @@ export class Checkbox implements ComponentInterface {
    * Track validation state for proper aria-live announcements.
    */
   @State() isInvalid = false;
+
+  @State() private hasLabelContent = false;
 
   @State() private hintTextId?: string;
 
@@ -266,7 +268,7 @@ export class Checkbox implements ComponentInterface {
   };
 
   private onSlotChange = () => {
-    forceUpdate(this);
+    this.hasLabelContent = this.el.textContent !== '';
   };
 
   private getHintTextId(): string | undefined {
@@ -330,7 +332,6 @@ export class Checkbox implements ComponentInterface {
     } = this;
     const mode = getIonMode(this);
     const path = getSVGPath(mode, indeterminate);
-    const hasLabelContent = el.textContent !== '';
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
@@ -342,7 +343,7 @@ export class Checkbox implements ComponentInterface {
         aria-checked={indeterminate ? 'mixed' : `${checked}`}
         aria-describedby={this.hintTextId}
         aria-invalid={this.isInvalid ? 'true' : undefined}
-        aria-labelledby={hasLabelContent ? this.inputLabelId : null}
+        aria-labelledby={this.hasLabelContent ? this.inputLabelId : null}
         aria-label={inheritedAttributes['aria-label'] || null}
         aria-disabled={disabled ? 'true' : null}
         aria-required={required ? 'true' : undefined}
@@ -380,7 +381,7 @@ export class Checkbox implements ComponentInterface {
           <div
             class={{
               'label-text-wrapper': true,
-              'label-text-wrapper-hidden': !hasLabelContent,
+              'label-text-wrapper-hidden': !this.hasLabelContent,
             }}
             part="label"
             id={this.inputLabelId}
