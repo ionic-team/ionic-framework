@@ -490,7 +490,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
          * e.g., `/home` → `/settings` → back to `/home`
          */
         const condition1 = routeInfo.lastPathname === routeInfo.pushedByRoute;
-        const condition2 = prevInfo.pathname === routeInfo.pushedByRoute && routeInfo.tab === '' && prevInfo.tab === '';
+        const condition2 = prevInfo.pathname === routeInfo.pushedByRoute && !routeInfo.tab && !prevInfo.tab;
         if (condition1 || condition2) {
           // Record the current location key so browser forward is detectable
           forwardStack.current.push(currentLocationKeyRef.current);
