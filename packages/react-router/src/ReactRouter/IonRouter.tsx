@@ -177,7 +177,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     }
 
     const leavingUrl = leavingLocationInfo.pathname + leavingLocationInfo.search;
-    if (leavingUrl !== location.pathname) {
+    if (leavingUrl !== location.pathname + location.search) {
       if (!incomingRouteParams.current) {
         // Determine if the destination is a tab route by checking if it matches
         // the pattern of tab routes (containing /tabs/ in the path)

@@ -46,6 +46,7 @@ import Overlays from './pages/overlays/Overlays';
 import NestedTabsRelativeLinks from './pages/nested-tabs-relative-links/NestedTabsRelativeLinks';
 import RootSplatTabs from './pages/root-splat-tabs/RootSplatTabs';
 import ContentChangeNavigation from './pages/content-change-navigation/ContentChangeNavigation';
+import SearchParams from './pages/search-params/SearchParams';
 
 setupIonicReact();
 
@@ -81,6 +82,7 @@ const App: React.FC = () => {
           <Route path="/nested-tabs-relative-links/*" element={<NestedTabsRelativeLinks />} />
           <Route path="/root-splat-tabs/*" element={<RootSplatTabs />} />
           <Route path="/content-change-navigation/*" element={<ContentChangeNavigation />} />
+          <Route path="/search-params" element={<SearchParams />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
