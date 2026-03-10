@@ -49,6 +49,34 @@ describe('Nested Params', () => {
     cy.get('[data-testid="user-settings-param"]').should('contain', 'Settings view user: 123');
   });
 
+  it('/nested-params > Deep link to child then navigate to landing > Landing should show correctly', () => {
+    // Deep-link directly to a nested child route
+    cy.visit(`http://localhost:${port}/nested-params/user/42/details`);
+    cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 42');
+
+    // Navigate back to the landing (index route)
+    cy.get('#back-to-landing').click();
+    cy.ionPageVisible('nested-params-landing');
+
+    // The user layout page should be hidden (Ionic preserves it in DOM for back navigation)
+    cy.get('[data-pageid^="nested-params-user-"]').should('have.class', 'ion-page-hidden');
+  });
+
+  it('/nested-params > Deep link then navigate to landing and back > Round-trip should work', () => {
+    // Deep-link directly to a nested child route
+    cy.visit(`http://localhost:${port}/nested-params/user/42/details`);
+    cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 42');
+
+    // Navigate to the landing page
+    cy.get('#back-to-landing').click();
+    cy.ionPageVisible('nested-params-landing');
+
+    // Navigate back to user details
+    cy.get('#go-to-user-42').click();
+    cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 42');
+    cy.get('[data-testid="user-layout-param"]').should('contain', 'Layout sees user: 42');
+  });
+
   it('/nested-params > Navigate to user then back > No visual overlap during transition', () => {
     cy.visit(`http://localhost:${port}/nested-params`);
     cy.ionPageVisible('nested-params-landing');

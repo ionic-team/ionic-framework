@@ -82,6 +82,9 @@ const UserDetails: React.FC = () => {
       </IonHeader>
       <IonContent>
         <IonLabel data-testid="user-details-param">Details view user: {userId ?? 'missing'}</IonLabel>
+        <IonButton routerLink="/nested-params" id="back-to-landing">
+          Back to Landing
+        </IonButton>
         <IonButton routerLink={`/nested-params/user/${userId}/settings`} id="go-to-settings">
           Go to Settings
         </IonButton>

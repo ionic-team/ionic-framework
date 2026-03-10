@@ -207,6 +207,13 @@ const resolveIndexRouteMatch = (
 };
 
 export class ReactRouterViewStack extends ViewStacks {
+  /**
+   * Stores the computed parent path for each outlet.
+   * Used by findViewItemByPath to correctly evaluate index route matches
+   * without requiring the outlet's React element or route children.
+   */
+  private outletParentPaths = new Map<string, string>();
+
   constructor() {
     super();
   }
@@ -542,6 +549,11 @@ export class ReactRouterViewStack extends ViewStacks {
       // Non-fatal: if we fail to compute parentPath, fall back to previous behavior
     }
 
+    // Store the computed parentPath for use in findViewItemByPath
+    if (parentPath !== undefined) {
+      this.outletParentPaths.set(outletId, parentPath);
+    }
+
     // Sync child elements with stored viewItems (e.g. to reflect new props)
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
       // Ensure the child is a valid React element since we
@@ -661,6 +673,8 @@ export class ReactRouterViewStack extends ViewStacks {
     let viewItem: ViewItem | undefined;
     let match: PathMatch<string> | null = null;
     let viewStack: ViewItem[];
+    // Capture stored parent paths for use in nested matchView/matchDefaultRoute functions
+    const storedParentPaths = this.outletParentPaths;
 
     if (outletId) {
       viewStack = sortViewsBySpecificity(this.getViewItemsForOutlet(outletId));
@@ -693,7 +707,8 @@ export class ReactRouterViewStack extends ViewStacks {
       const result = v.reactElement ? matchComponent(v.reactElement, pathname) : null;
 
       if (!result) {
-        const indexMatch = resolveIndexRouteMatch(v, pathname, undefined);
+        const outletParentPath = storedParentPaths.get(v.outletId);
+        const indexMatch = resolveIndexRouteMatch(v, pathname, outletParentPath);
         if (indexMatch) {
           match = indexMatch;
           viewItem = v;
@@ -763,7 +778,8 @@ export class ReactRouterViewStack extends ViewStacks {
       const isIndexRoute = !!childProps.index;
 
       if (isIndexRoute) {
-        const indexMatch = resolveIndexRouteMatch(v, pathname, undefined);
+        const outletParentPath = storedParentPaths.get(v.outletId);
+        const indexMatch = resolveIndexRouteMatch(v, pathname, outletParentPath);
         if (indexMatch) {
           match = indexMatch;
           viewItem = v;
@@ -834,6 +850,14 @@ export class ReactRouterViewStack extends ViewStacks {
     super.add(viewItem);
 
     this.cleanupStaleViewItems(viewItem.outletId);
+  };
+
+  /**
+   * Override clear to also clean up the stored parent path for the outlet.
+   */
+  clear = (outletId: string) => {
+    this.outletParentPaths.delete(outletId);
+    return super.clear(outletId);
   };
 
   /**
