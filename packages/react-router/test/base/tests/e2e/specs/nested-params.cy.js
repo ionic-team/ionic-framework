@@ -49,6 +49,76 @@ describe('Nested Params', () => {
     cy.get('[data-testid="user-settings-param"]').should('contain', 'Settings view user: 123');
   });
 
+  it('/nested-params > Navigate to user then back > No visual overlap during transition', () => {
+    cy.visit(`http://localhost:${port}/nested-params`);
+    cy.ionPageVisible('nested-params-landing');
+
+    // Navigate to user 99
+    cy.get('#go-to-user-99').click();
+    cy.get('[data-testid="user-layout-param"]').should('contain', 'Layout sees user: 99');
+
+    // Install an overlap detector that runs every animation frame.
+    // It checks whether the landing page and user page IonPage elements are
+    // simultaneously visible — which is the root cause of the overlap bug.
+    // We check the IonPage elements directly (not descendants) because CSS
+    // display is not inherited — a child's computed display can be 'block'
+    // even when a parent has display:none.
+    cy.window().then((win) => {
+      win.__overlapDetected = false;
+      const check = () => {
+        const landing = win.document.querySelector('[data-pageid="nested-params-landing"]');
+        const userPage = win.document.querySelector('[data-pageid^="nested-params-user-"]');
+        if (landing && userPage) {
+          const landingStyle = win.getComputedStyle(landing);
+          const userStyle = win.getComputedStyle(userPage);
+          const landingVisible = landingStyle.display !== 'none' && landingStyle.visibility !== 'hidden' && landingStyle.opacity !== '0';
+          const userVisible = userStyle.display !== 'none' && userStyle.visibility !== 'hidden' && userStyle.opacity !== '0';
+          if (landingVisible && userVisible) {
+            win.__overlapDetected = true;
+          }
+        }
+        if (!win.__overlapCheckDone) {
+          requestAnimationFrame(check);
+        }
+      };
+      requestAnimationFrame(check);
+    });
+
+    // Go back to landing
+    cy.go('back');
+    cy.ionPageVisible('nested-params-landing');
+    cy.get('[data-testid="user-layout-param"]').should('not.exist');
+
+    // Stop the observer and verify no overlap was detected
+    cy.window().then((win) => {
+      win.__overlapCheckDone = true;
+      expect(win.__overlapDetected).to.be.false;
+    });
+  });
+
+  it('/nested-params > Navigate to user, back, forward, back > Pages should not persist', () => {
+    cy.visit(`http://localhost:${port}/nested-params`);
+    cy.ionPageVisible('nested-params-landing');
+
+    // Navigate to user 99
+    cy.get('#go-to-user-99').click();
+    cy.get('[data-testid="user-layout-param"]').should('contain', 'Layout sees user: 99');
+
+    // Go back
+    cy.go('back');
+    cy.ionPageVisible('nested-params-landing');
+
+    // Go forward — wait for async POP event processing and transition to settle
+    cy.go('forward');
+    cy.wait(500);
+    cy.get('[data-testid="user-layout-param"]').should('contain', 'Layout sees user: 99');
+
+    // Go back again
+    cy.go('back');
+    cy.ionPageVisible('nested-params-landing');
+    cy.get('[data-testid="user-layout-param"]').should('not.exist');
+  });
+
   it('/nested-params > Different users should have different params', () => {
     cy.visit(`http://localhost:${port}/nested-params`);
     cy.ionPageVisible('nested-params-landing');
@@ -66,5 +136,140 @@ describe('Nested Params', () => {
     cy.get('#go-to-user-99').click();
     cy.get('[data-testid="user-layout-param"]').should('contain', 'Layout sees user: 99');
     cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 99');
+  });
+
+  it('/nested-params > Full back navigation from sibling routes to root > Root page should show', () => {
+    // Start at root
+    cy.visit(`http://localhost:${port}/`);
+    cy.ionPageVisible('home');
+
+    // Navigate to nested-params
+    cy.contains('ion-item', 'Nested Params').click();
+    cy.ionPageVisible('nested-params-landing');
+
+    // Navigate to user 99 details
+    cy.get('#go-to-user-99').click();
+    cy.get('[data-testid="user-layout-param"]').should('contain', 'Layout sees user: 99');
+    cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 99');
+
+    // Go to settings
+    cy.get('#go-to-settings').click();
+    cy.get('[data-testid="user-settings-param"]').should('contain', 'Settings view user: 99');
+
+    // Hit "Back to Details" (this is a forward push via routerLink)
+    cy.contains('ion-button', 'Back to Details').click();
+    cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 99');
+
+    // Browser back repeatedly to root
+    // Back 1: details -> settings
+    cy.go('back');
+    cy.get('[data-testid="user-settings-param"]').should('contain', 'Settings view user: 99');
+
+    // Back 2: settings -> details
+    cy.go('back');
+    cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 99');
+
+    // Back 3: details -> nested-params landing
+    cy.go('back');
+    cy.ionPageVisible('nested-params-landing');
+
+    // Back 4: nested-params -> root
+    cy.go('back');
+    cy.ionPageVisible('home');
+    cy.get('[data-testid="user-layout-param"]').should('not.exist');
+  });
+
+  it('/nested-params > Sibling route transitions (details <-> settings) > No visual overlap', () => {
+    // Start directly on the details page
+    cy.visit(`http://localhost:${port}/nested-params/user/99/details`);
+    cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 99');
+
+    // Install overlap detector that checks whether details and settings IonPage
+    // elements are simultaneously visible inside the nested outlet.
+    cy.window().then((win) => {
+      win.__siblingOverlapDetected = false;
+      const check = () => {
+        const details = win.document.querySelector('[data-pageid="nested-params-details"]');
+        const settings = win.document.querySelector('[data-pageid="nested-params-settings"]');
+        if (details && settings) {
+          const detailsStyle = win.getComputedStyle(details);
+          const settingsStyle = win.getComputedStyle(settings);
+          const detailsVisible = detailsStyle.display !== 'none' && detailsStyle.visibility !== 'hidden' && detailsStyle.opacity !== '0';
+          const settingsVisible = settingsStyle.display !== 'none' && settingsStyle.visibility !== 'hidden' && settingsStyle.opacity !== '0';
+          if (detailsVisible && settingsVisible) {
+            win.__siblingOverlapDetected = true;
+          }
+        }
+        if (!win.__siblingOverlapCheckDone) {
+          requestAnimationFrame(check);
+        }
+      };
+      requestAnimationFrame(check);
+    });
+
+    // Navigate details -> settings
+    cy.get('#go-to-settings').click();
+    cy.get('[data-testid="user-settings-param"]').should('contain', 'Settings view user: 99');
+
+    // Navigate settings -> details
+    cy.contains('ion-button', 'Back to Details').click();
+    cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 99');
+
+    // Stop the observer and verify no overlap was detected in either direction
+    cy.window().then((win) => {
+      win.__siblingOverlapCheckDone = true;
+      expect(win.__siblingOverlapDetected).to.be.false;
+    });
+  });
+
+  it('/nested-params > Sibling route transitions > No nested scrollbars during transition', () => {
+    // Start directly on the details page
+    cy.visit(`http://localhost:${port}/nested-params/user/99/details`);
+    cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 99');
+
+    // Install a detector that checks for multiple visible ion-content elements
+    // inside the nested outlet. Multiple visible ion-content elements cause
+    // nested scrollbars during transitions.
+    cy.window().then((win) => {
+      win.__nestedScrollbarsDetected = false;
+      const check = () => {
+        const outlet = win.document.querySelector('#nested-params-user-outlet');
+        if (outlet) {
+          const contents = outlet.querySelectorAll('ion-content');
+          let visibleCount = 0;
+          contents.forEach((content) => {
+            // Check the parent IonPage element's visibility
+            const page = content.closest('.ion-page');
+            if (page) {
+              const style = win.getComputedStyle(page);
+              if (style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0') {
+                visibleCount++;
+              }
+            }
+          });
+          if (visibleCount > 1) {
+            win.__nestedScrollbarsDetected = true;
+          }
+        }
+        if (!win.__nestedScrollbarsCheckDone) {
+          requestAnimationFrame(check);
+        }
+      };
+      requestAnimationFrame(check);
+    });
+
+    // Navigate details -> settings
+    cy.get('#go-to-settings').click();
+    cy.get('[data-testid="user-settings-param"]').should('contain', 'Settings view user: 99');
+
+    // Navigate settings -> details
+    cy.contains('ion-button', 'Back to Details').click();
+    cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 99');
+
+    // Stop the observer and verify no nested scrollbars were detected
+    cy.window().then((win) => {
+      win.__nestedScrollbarsCheckDone = true;
+      expect(win.__nestedScrollbarsDetected).to.be.false;
+    });
   });
 });

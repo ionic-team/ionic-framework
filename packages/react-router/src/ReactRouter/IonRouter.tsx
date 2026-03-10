@@ -83,12 +83,20 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
   const viewStack = useRef(new ReactRouterViewStack());
   const incomingRouteParams = useRef<Partial<RouteInfo> | null>(null);
   /**
-   * Tracks URLs (pathname + search) that the user navigated away from via
-   * browser back. When a POP event's destination matches the top of this
-   * stack, it's a browser forward navigation. Cleared on PUSH (new
-   * navigation invalidates forward history, just like in the browser).
+   * Tracks location keys that the user navigated away from via browser back.
+   * When a POP event's destination key matches the top of this stack, it's a
+   * browser forward navigation. Uses React Router's unique location.key
+   * instead of URLs to correctly handle duplicate URLs in history (e.g.,
+   * navigating to /details, then /settings, then /details via routerLink,
+   * then pressing back).
+   * Cleared on PUSH (new navigation invalidates forward history).
    */
   const forwardStack = useRef<string[]>([]);
+  /**
+   * Tracks the current location key so we can push it onto the forward stack
+   * when navigating back. Updated after each history change.
+   */
+  const currentLocationKeyRef = useRef<string>(location.key);
 
   const [routeInfo, setRouteInfo] = useState<RouteInfo>({
     id: generateId('routeInfo'),
@@ -203,7 +211,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
           const currentRoute = locationHistory.current.current();
           const isForwardNavigation =
             forwardStack.current.length > 0 &&
-            forwardStack.current[forwardStack.current.length - 1] === location.pathname + location.search;
+            forwardStack.current[forwardStack.current.length - 1] === location.key;
 
           if (isForwardNavigation) {
             forwardStack.current.pop();
@@ -213,8 +221,8 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
               tab: tabToUse,
             };
           } else if (currentRoute && currentRoute.pushedByRoute) {
-            // Back navigation — record current URL for potential forward
-            forwardStack.current.push(currentRoute.pathname + (currentRoute.search || ''));
+            // Back navigation. Record current location key for potential forward
+            forwardStack.current.push(currentLocationKeyRef.current);
             const prevInfo = locationHistory.current.findLastLocation(currentRoute);
             incomingRouteParams.current = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
           } else {
@@ -346,6 +354,9 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
       setRouteInfo(routeInfo);
     }
 
+    // Update the current location key after processing the history change.
+    // This ensures the forward stack records the correct key when navigating back.
+    currentLocationKeyRef.current = location.key;
     incomingRouteParams.current = null;
   };
 
@@ -481,8 +492,8 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
         const condition1 = routeInfo.lastPathname === routeInfo.pushedByRoute;
         const condition2 = prevInfo.pathname === routeInfo.pushedByRoute && routeInfo.tab === '' && prevInfo.tab === '';
         if (condition1 || condition2) {
-          // Record current URL so browser forward is detectable
-          forwardStack.current.push(routeInfo.pathname + (routeInfo.search || ''));
+          // Record the current location key so browser forward is detectable
+          forwardStack.current.push(currentLocationKeyRef.current);
           navigate(-1);
         } else {
           /**

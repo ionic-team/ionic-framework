@@ -33,7 +33,7 @@ interface StackManagerProps {
 }
 
 const isViewVisible = (el: HTMLElement) =>
-  !el.classList.contains('ion-page-invisible') && !el.classList.contains('ion-page-hidden');
+  !el.classList.contains('ion-page-invisible') && !el.classList.contains('ion-page-hidden') && el.style.display !== 'none';
 
 const hideIonPageElement = (element: HTMLElement | undefined): void => {
   if (element) {
@@ -44,6 +44,7 @@ const hideIonPageElement = (element: HTMLElement | undefined): void => {
 
 const showIonPageElement = (element: HTMLElement | undefined): void => {
   if (element) {
+    element.style.removeProperty('display');
     element.classList.remove('ion-page-hidden');
     element.removeAttribute('aria-hidden');
   }
@@ -322,8 +323,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
         const enteringEl = enteringViewItem.ionPageElement;
         if (enteringEl) {
-          enteringEl.classList.remove('ion-page-hidden', 'ion-page-invisible');
-          enteringEl.removeAttribute('aria-hidden');
+          showIonPageElement(enteringEl);
+          enteringEl.classList.remove('ion-page-invisible');
         }
 
         this.forceUpdate();
@@ -417,7 +418,9 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
     this.lastTransition = currentTransition;
 
-    this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
+    const shouldSkipAnimation = this.applySkipAnimationIfNeeded(enteringViewItem, leavingViewItem);
+
+    this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, undefined, false, shouldSkipAnimation);
 
     if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
       leavingViewItem.mount = false;
@@ -548,6 +551,36 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   }
 
   /**
+   * Determines whether to skip the transition animation and, if so, immediately
+   * hides the leaving view with inline `display:none`.
+   *
+   * Skips transitions in outlets nested inside a parent IonPage. These outlets
+   * render pages inside a parent page's content area. The MD animation shows
+   * both entering and leaving pages simultaneously, causing text overlap and
+   * nested scrollbars (each page has its own IonContent). Top-level outlets
+   * are unaffected and animate normally.
+   *
+   * Uses inline display:none rather than ion-page-hidden class because core's
+   * beforeTransition() removes ion-page-hidden via setPageHidden().
+   * Inline display:none survives that removal, keeping the page hidden
+   * until React unmounts it after ionViewDidLeave fires.
+   */
+  private applySkipAnimationIfNeeded(
+    enteringViewItem: ViewItem,
+    leavingViewItem: ViewItem | undefined
+  ): boolean {
+    const isNestedOutlet = !!this.routerOutletElement?.closest('.ion-page');
+    const shouldSkip = isNestedOutlet && !!leavingViewItem && enteringViewItem !== leavingViewItem;
+
+    if (shouldSkip && leavingViewItem?.ionPageElement) {
+      leavingViewItem.ionPageElement.style.setProperty('display', 'none');
+      leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
+    }
+
+    return shouldSkip;
+  }
+
+  /**
    * Handles entering view with no ion-page element yet (waiting for render).
    */
   private handleWaitingForIonPage(
@@ -609,7 +642,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       const latestLeavingView = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id) ?? leavingViewItem;
 
       if (latestEnteringView?.ionPageElement) {
-        this.transitionPage(routeInfo, latestEnteringView, latestLeavingView ?? undefined);
+        const shouldSkipAnimation = this.applySkipAnimationIfNeeded(latestEnteringView, latestLeavingView ?? undefined);
+        this.transitionPage(routeInfo, latestEnteringView, latestLeavingView ?? undefined, undefined, false, shouldSkipAnimation);
 
         if (shouldUnmountLeavingViewItem && latestLeavingView && latestEnteringView !== latestLeavingView) {
           latestLeavingView.mount = false;
@@ -863,6 +897,17 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         return;
       }
 
+      /**
+       * Don't let a nested element (e.g., ion-router-outlet with ionPage prop)
+       * override an existing IonPage registration when the existing element is
+       * an ancestor of the new one. This ensures ionPageElement always points
+       * to the outermost IonPage, which is needed to properly hide the entire
+       * page during back navigation (not just the inner outlet).
+       */
+      if (oldPageElement && oldPageElement !== page && oldPageElement.isConnected && oldPageElement.contains(page)) {
+        return;
+      }
+
       foundView.ionPageElement = page;
       foundView.ionRoute = true;
 
@@ -1008,13 +1053,18 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
    * @param progressAnimation Indicates if the transition is part of a
    * gesture controlled animation (e.g., swipe to go back).
    * Defaults to `false`.
+   * @param skipAnimation When true, forces `duration: 0` so the page
+   * swap is instant (no visible animation). Used for ionPage outlets
+   * and back navigations that unmount the leaving view to prevent
+   * overlapping content during the transition. Defaults to `false`.
    */
   async transitionPage(
     routeInfo: RouteInfo,
     enteringViewItem: ViewItem,
     leavingViewItem?: ViewItem,
     direction?: 'forward' | 'back',
-    progressAnimation = false
+    progressAnimation = false,
+    skipAnimation = false
   ) {
     const runCommit = async (enteringEl: HTMLElement, leavingEl?: HTMLElement) => {
       const skipTransition = this.skipTransition;
@@ -1055,7 +1105,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       }
 
       await routerOutlet.commit(enteringEl, leavingEl, {
-        duration: skipTransition || directionToUse === undefined ? 0 : undefined,
+        duration: skipTransition || skipAnimation || directionToUse === undefined ? 0 : undefined,
         direction: directionToUse,
         showGoBack: !!routeInfo.pushedByRoute,
         progressAnimation,
