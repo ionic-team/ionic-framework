@@ -4,6 +4,8 @@ import { NavContext } from '../contexts/NavContext';
 
 export interface IonRouteProps {
   path?: string;
+  index?: boolean;
+  caseSensitive?: boolean;
   show?: boolean;
   element: React.ReactElement;
   disableIonPageManagement?: boolean;

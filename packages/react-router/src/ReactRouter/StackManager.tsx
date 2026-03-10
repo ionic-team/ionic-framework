@@ -5,7 +5,7 @@
  */
 
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
-import { RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
+import { IonRoute, RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
 import React from 'react';
 import { Route } from 'react-router-dom';
 
@@ -258,7 +258,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     const routesChildren =
       getRoutesChildren(this.ionRouterOutlet.props.children) ?? this.ionRouterOutlet.props.children;
     const routeChildren = React.Children.toArray(routesChildren).filter(
-      (child): child is React.ReactElement => React.isValidElement(child) && child.type === Route
+      (child): child is React.ReactElement =>
+        React.isValidElement(child) && (child.type === Route || child.type === IonRoute)
     );
 
     const hasRelativeRoutes = routeChildren.some((route) => {
@@ -1306,7 +1307,8 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
 
   // Collect all route children
   const routeChildren = React.Children.toArray(routesChildren).filter(
-    (child): child is React.ReactElement => React.isValidElement(child) && child.type === Route
+    (child): child is React.ReactElement =>
+      React.isValidElement(child) && (child.type === Route || child.type === IonRoute)
   );
 
   // Sort routes by specificity (most specific first)

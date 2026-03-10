@@ -1,3 +1,4 @@
+import { IonRoute } from '@ionic/react';
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
@@ -33,7 +34,8 @@ export const getRoutesChildren = (node: React.ReactNode): React.ReactNode | unde
 export const extractRouteChildren = (children: React.ReactNode): React.ReactElement[] => {
   const routesChildren = getRoutesChildren(children) ?? children;
   return React.Children.toArray(routesChildren).filter(
-    (child): child is React.ReactElement => React.isValidElement(child) && child.type === Route
+    (child): child is React.ReactElement =>
+      React.isValidElement(child) && (child.type === Route || child.type === IonRoute)
   );
 };
 

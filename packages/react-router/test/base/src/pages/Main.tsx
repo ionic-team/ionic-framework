@@ -86,6 +86,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/search-params">
             <IonLabel>Search Params</IonLabel>
           </IonItem>
+          <IonItem routerLink="/ion-route-props">
+            <IonLabel>IonRoute Props</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
