@@ -222,6 +222,95 @@ describe('Nested Params', () => {
     });
   });
 
+  /**
+   * Deep nesting tests (4 levels) to validate derivePathnameToMatch
+   * handles relative paths correctly at depth > 2 parent segments.
+   *
+   * Route structure:
+   *   /nested-params/* (App level)
+   *     user/:userId/* (NestedParamsRoot outlet)
+   *       details (UserLayout outlet)
+   *       settings (UserLayout outlet)
+   *       profile/* (UserLayout outlet)
+   *         edit (ProfileLayout outlet - 4th level)
+   *         view (ProfileLayout outlet - 4th level)
+   */
+
+  it('/nested-params > Deep nesting > Navigate to profile edit (4 levels deep)', () => {
+    cy.visit(`http://localhost:${port}/nested-params`);
+    cy.ionPageVisible('nested-params-landing');
+
+    // Navigate to user 42 details
+    cy.get('#go-to-user-42').click();
+    cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 42');
+
+    // Navigate to profile edit (4th level)
+    cy.get('#go-to-profile-edit').click();
+    cy.get('[data-testid="profile-layout-param"]').should('contain', 'Profile layout user: 42');
+    cy.get('[data-testid="profile-edit-param"]').should('contain', 'Profile edit user: 42');
+    cy.location('pathname').should('eq', '/nested-params/user/42/profile/edit');
+  });
+
+  it('/nested-params > Deep nesting > Direct navigation to 4th level route', () => {
+    // Navigate directly to a deeply nested route
+    cy.visit(`http://localhost:${port}/nested-params/user/42/profile/edit`);
+
+    cy.get('[data-testid="profile-layout-param"]').should('contain', 'Profile layout user: 42');
+    cy.get('[data-testid="profile-edit-param"]').should('contain', 'Profile edit user: 42');
+  });
+
+  it('/nested-params > Deep nesting > Navigate between 4th level siblings (edit <-> view)', () => {
+    cy.visit(`http://localhost:${port}/nested-params/user/42/profile/edit`);
+    cy.get('[data-testid="profile-edit-param"]').should('contain', 'Profile edit user: 42');
+
+    // Navigate to profile view (sibling at 4th level)
+    cy.get('#go-to-profile-view').click();
+    cy.get('[data-testid="profile-view-param"]').should('contain', 'Profile view user: 42');
+    cy.location('pathname').should('eq', '/nested-params/user/42/profile/view');
+
+    // Navigate back to profile edit
+    cy.get('#back-to-profile-edit').click();
+    cy.get('[data-testid="profile-edit-param"]').should('contain', 'Profile edit user: 42');
+    cy.location('pathname').should('eq', '/nested-params/user/42/profile/edit');
+  });
+
+  it('/nested-params > Deep nesting > Back navigation from 4th level to root', () => {
+    cy.visit(`http://localhost:${port}/`);
+    cy.ionPageVisible('home');
+
+    // Navigate to nested-params
+    cy.contains('ion-item', 'Nested Params').click();
+    cy.ionPageVisible('nested-params-landing');
+
+    // Navigate to user 42 details
+    cy.get('#go-to-user-42').click();
+    cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 42');
+
+    // Navigate to profile edit (4th level)
+    cy.get('#go-to-profile-edit').click();
+    cy.get('[data-testid="profile-edit-param"]').should('contain', 'Profile edit user: 42');
+
+    // Navigate to profile view (sibling at 4th level)
+    cy.get('#go-to-profile-view').click();
+    cy.get('[data-testid="profile-view-param"]').should('contain', 'Profile view user: 42');
+
+    // Browser back: view -> edit
+    cy.go('back');
+    cy.get('[data-testid="profile-edit-param"]').should('contain', 'Profile edit user: 42');
+
+    // Browser back: edit -> details
+    cy.go('back');
+    cy.get('[data-testid="user-details-param"]').should('contain', 'Details view user: 42');
+
+    // Browser back: details -> landing
+    cy.go('back');
+    cy.ionPageVisible('nested-params-landing');
+
+    // Browser back: landing -> home
+    cy.go('back');
+    cy.ionPageVisible('home');
+  });
+
   it('/nested-params > Sibling route transitions > No nested scrollbars during transition', () => {
     // Start directly on the details page
     cy.visit(`http://localhost:${port}/nested-params/user/99/details`);

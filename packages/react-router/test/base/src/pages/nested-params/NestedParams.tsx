@@ -63,6 +63,7 @@ const UserLayout: React.FC = () => {
           <Route index element={<Navigate to="details" replace />} />
           <Route path="details" element={<UserDetails />} />
           <Route path="settings" element={<UserSettings />} />
+          <Route path="profile/*" element={<ProfileLayout />} />
         </IonRouterOutlet>
       </IonContent>
     </IonPage>
@@ -83,6 +84,79 @@ const UserDetails: React.FC = () => {
         <IonLabel data-testid="user-details-param">Details view user: {userId ?? 'missing'}</IonLabel>
         <IonButton routerLink={`/nested-params/user/${userId}/settings`} id="go-to-settings">
           Go to Settings
+        </IonButton>
+        <IonButton routerLink={`/nested-params/user/${userId}/profile/edit`} id="go-to-profile-edit">
+          Go to Profile Edit
+        </IonButton>
+      </IonContent>
+    </IonPage>
+  );
+};
+
+/**
+ * Deeply nested layout: /nested-params/user/:userId/profile/*
+ * This tests 4 levels of outlet nesting with relative paths to validate
+ * that derivePathnameToMatch correctly handles depth > 2 parent segments.
+ */
+const ProfileLayout: React.FC = () => {
+  const { userId } = useParams<{ userId: string }>();
+
+  return (
+    <IonPage data-pageid="nested-params-profile-layout">
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Profile Layout</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonLabel data-testid="profile-layout-param">Profile layout user: {userId ?? 'missing'}</IonLabel>
+        <IonRouterOutlet ionPage id="nested-params-profile-outlet">
+          <Route index element={<Navigate to="edit" replace />} />
+          <Route path="edit" element={<ProfileEdit />} />
+          <Route path="view" element={<ProfileView />} />
+        </IonRouterOutlet>
+      </IonContent>
+    </IonPage>
+  );
+};
+
+const ProfileEdit: React.FC = () => {
+  const { userId } = useParams<{ userId: string }>();
+
+  return (
+    <IonPage data-pageid="nested-params-profile-edit">
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Profile Edit</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonLabel data-testid="profile-edit-param">Profile edit user: {userId ?? 'missing'}</IonLabel>
+        <IonButton routerLink={`/nested-params/user/${userId}/profile/view`} id="go-to-profile-view">
+          Go to Profile View
+        </IonButton>
+        <IonButton routerLink={`/nested-params/user/${userId}/details`} id="back-to-details">
+          Back to Details
+        </IonButton>
+      </IonContent>
+    </IonPage>
+  );
+};
+
+const ProfileView: React.FC = () => {
+  const { userId } = useParams<{ userId: string }>();
+
+  return (
+    <IonPage data-pageid="nested-params-profile-view">
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Profile View</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonLabel data-testid="profile-view-param">Profile view user: {userId ?? 'missing'}</IonLabel>
+        <IonButton routerLink={`/nested-params/user/${userId}/profile/edit`} id="back-to-profile-edit">
+          Back to Profile Edit
         </IonButton>
       </IonContent>
     </IonPage>
