@@ -6,7 +6,7 @@
 
 import type { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import type { PropsWithChildren } from 'react';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import type { MemoryRouterProps } from 'react-router';
 import { MemoryRouter, useLocation, useNavigationType } from 'react-router';
 
@@ -18,9 +18,9 @@ const RouterContent = ({ children }: PropsWithChildren<{}>) => {
 
   const historyListenHandler = useRef<(location: HistoryLocation, action: HistoryAction) => void>();
 
-  const registerHistoryListener = (cb: (location: HistoryLocation, action: HistoryAction) => void) => {
+  const registerHistoryListener = useCallback((cb: (location: HistoryLocation, action: HistoryAction) => void) => {
     historyListenHandler.current = cb;
-  };
+  }, []);
 
   /**
    * Processes navigation changes within the application.
@@ -34,15 +34,15 @@ const RouterContent = ({ children }: PropsWithChildren<{}>) => {
    * @param action The type of navigation action ('PUSH', 'POP', or
    * 'REPLACE').
    */
-  const handleHistoryChange = (location: HistoryLocation, action: HistoryAction) => {
+  const handleHistoryChange = useCallback((loc: HistoryLocation, act: HistoryAction) => {
     if (historyListenHandler.current) {
-      historyListenHandler.current(location, action);
+      historyListenHandler.current(loc, act);
     }
-  };
+  }, []);
 
   useEffect(() => {
     handleHistoryChange(location, navigationType);
-  }, [location, navigationType]);
+  }, [location, navigationType, handleHistoryChange]);
 
   return <IonRouter registerHistoryListener={registerHistoryListener}>{children}</IonRouter>;
 };
