@@ -137,9 +137,31 @@ const findSpecificMatch = (routeChildren: React.ReactElement[], remainingPath: s
 /**
  * Checks if any specific route could plausibly match the remaining path.
  * Used to determine if we should fall back to a wildcard match.
+ *
+ * When the outlet's mount path is established, uses exact first-segment
+ * matching to avoid false positives from routes sharing a prefix
+ * (e.g., "settings" vs "setup"). On first visit (no mount path), uses a
+ * conservative 3-char prefix heuristic to prevent premature wildcard
+ * matching for parent path segments.
  */
-const couldSpecificRouteMatch = (routeChildren: React.ReactElement[], remainingPath: string): boolean => {
-  const remainingFirstSegment = remainingPath.split('/')[0];
+const couldSpecificRouteMatch = (
+  routeChildren: React.ReactElement[],
+  remainingPath: string,
+  outletMountPath: string | undefined
+): boolean => {
+  const segments = remainingPath.split('/');
+  const remainingFirstSegment = segments[0];
+
+  // For multi-segment paths, check if consuming more parent segments
+  // would produce a specific route match at a deeper level
+  for (let j = 1; j < segments.length; j++) {
+    const futureRemaining = segments.slice(j).join('/');
+    if (findSpecificMatch(routeChildren, futureRemaining)) {
+      return true;
+    }
+  }
+
+  // Check first-segment overlap with route paths
   return routeChildren.some((route) => {
     const routePath = route.props.path as string | undefined;
     if (!routePath || routePath === '*' || routePath === '/*') return false;
@@ -148,7 +170,14 @@ const couldSpecificRouteMatch = (routeChildren: React.ReactElement[], remainingP
     const routeFirstSegment = routePath.split('/')[0].replace(/[*:]/g, '');
     if (!routeFirstSegment) return false;
 
-    // Check for prefix overlap (either direction)
+    if (outletMountPath) {
+      // After mount path is established, use exact matching to avoid
+      // false positives from routes sharing a common prefix.
+      return routeFirstSegment === remainingFirstSegment;
+    }
+
+    // On first visit (no mount path), use conservative prefix matching
+    // to prevent premature wildcard matches for parent path segments.
     return (
       routeFirstSegment.startsWith(remainingFirstSegment.slice(0, 3)) ||
       remainingFirstSegment.startsWith(routeFirstSegment.slice(0, 3))
@@ -263,7 +292,11 @@ export const computeParentPath = (options: ComputeParentPathOptions): ParentPath
         // Check for wildcard match (only if remaining path is non-empty)
         const hasNonEmptyRemaining = remainingPath !== '' && remainingPath !== '/';
         if (!firstWildcardMatch && hasNonEmptyRemaining && hasWildcardRoute) {
-          if (!couldSpecificRouteMatch(routeChildren, remainingPath)) {
+          // When mount path is established, don't allow wildcard matches shallower
+          // than the mount path — the remaining segments at that depth are parent
+          // path segments, not content for the wildcard to catch.
+          const isTooShallow = outletMountPath && parentPath.length < outletMountPath.length;
+          if (!isTooShallow && !couldSpecificRouteMatch(routeChildren, remainingPath, outletMountPath)) {
             firstWildcardMatch = parentPath;
           }
         }

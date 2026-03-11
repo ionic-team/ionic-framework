@@ -48,6 +48,7 @@ import RootSplatTabs from './pages/root-splat-tabs/RootSplatTabs';
 import ContentChangeNavigation from './pages/content-change-navigation/ContentChangeNavigation';
 import SearchParams from './pages/search-params/SearchParams';
 import IonRoutePropsTest from './pages/ion-route-props/IonRouteProps';
+import PrefixMatchWildcard from './pages/prefix-match-wildcard/PrefixMatchWildcard';
 
 setupIonicReact();
 
@@ -85,6 +86,7 @@ const App: React.FC = () => {
           <Route path="/content-change-navigation/*" element={<ContentChangeNavigation />} />
           <Route path="/search-params" element={<SearchParams />} />
           <Route path="/ion-route-props/*" element={<IonRoutePropsTest />} />
+          <Route path="/prefix-match-wildcard/*" element={<PrefixMatchWildcard />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

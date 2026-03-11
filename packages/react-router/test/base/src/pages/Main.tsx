@@ -89,6 +89,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/ion-route-props">
             <IonLabel>IonRoute Props</IonLabel>
           </IonItem>
+          <IonItem routerLink="/prefix-match-wildcard">
+            <IonLabel>Prefix Match Wildcard</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

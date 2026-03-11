@@ -419,7 +419,9 @@ export class ReactRouterViewStack extends ViewStacks {
 
     // Reactivate view if it matches but was previously deactivated
     // Don't reactivate if this is a parameterized route navigating to a different path instance
-    if (match && !viewItem.mount && !shouldSkipForDifferentParam) {
+    // Don't reactivate catch-all wildcard routes — they are created fresh by createViewItem
+    const isCatchAllWildcard = routePath === '*' || routePath === '/*';
+    if (match && !viewItem.mount && !shouldSkipForDifferentParam && !isCatchAllWildcard) {
       viewItem.mount = true;
       viewItem.routeData.match = match;
     }
@@ -702,6 +704,11 @@ export class ReactRouterViewStack extends ViewStacks {
       if (mustBeIonRoute && !v.ionRoute) return false;
 
       const viewItemPath = v.routeData.childProps.path || '';
+
+      // Skip unmounted catch-all wildcard views. After back navigation unmounts
+      // a wildcard view, it should not be reused for subsequent navigations.
+      // A fresh wildcard view will be created by createViewItem when needed.
+      if ((viewItemPath === '*' || viewItemPath === '/*') && !v.mount) return false;
       const isIndexRoute = !!v.routeData.childProps.index;
       const previousMatch = v.routeData?.match;
       const result = v.reactElement ? matchComponent(v.reactElement, pathname) : null;
