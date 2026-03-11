@@ -49,6 +49,7 @@ import ContentChangeNavigation from './pages/content-change-navigation/ContentCh
 import SearchParams from './pages/search-params/SearchParams';
 import IonRoutePropsTest from './pages/ion-route-props/IonRouteProps';
 import PrefixMatchWildcard from './pages/prefix-match-wildcard/PrefixMatchWildcard';
+import StaleViewCleanup from './pages/stale-view-cleanup/StaleViewCleanup';
 
 setupIonicReact();
 
@@ -87,6 +88,7 @@ const App: React.FC = () => {
           <Route path="/search-params" element={<SearchParams />} />
           <Route path="/ion-route-props/*" element={<IonRoutePropsTest />} />
           <Route path="/prefix-match-wildcard/*" element={<PrefixMatchWildcard />} />
+          <Route path="/stale-view-cleanup/*" element={<StaleViewCleanup />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

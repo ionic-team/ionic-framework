@@ -339,7 +339,7 @@ export class ReactRouterViewStack extends ViewStacks {
    * - Wraps the route element in <Routes> to support nested routing and ensure remounting
    * - Adds a unique key to <Routes> so React Router remounts routes when switching
    */
-  private renderViewItem = (viewItem: ViewItem, routeInfo: RouteInfo, parentPath?: string) => {
+  private renderViewItem = (viewItem: ViewItem, routeInfo: RouteInfo, parentPath?: string, reRender?: () => void) => {
     const routePath = viewItem.reactElement.props.path || '';
     let match = matchComponent(viewItem.reactElement, routeInfo.pathname);
 
@@ -383,6 +383,7 @@ export class ReactRouterViewStack extends ViewStacks {
         // This ensures the redirect completes before removal
         setTimeout(() => {
           this.remove(viewItem);
+          reRender?.();
         }, NAVIGATE_REDIRECT_DELAY_MS);
       }
     }
@@ -409,6 +410,7 @@ export class ReactRouterViewStack extends ViewStacks {
           const stillNotNeeded = !viewItem.mount && !viewItem.ionPageElement;
           if (stillNotNeeded) {
             this.remove(viewItem);
+            reRender?.();
           }
         }, VIEW_CLEANUP_DELAY_MS);
       } else {
@@ -522,7 +524,12 @@ export class ReactRouterViewStack extends ViewStacks {
    * 3. Returns a list of React components that will be rendered inside the outlet
    *    Each view is wrapped in <ViewLifeCycleManager> to manage lifecycle and rendering
    */
-  getChildrenToRender = (outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo) => {
+  getChildrenToRender = (
+    outletId: string,
+    ionRouterOutlet: React.ReactElement,
+    routeInfo: RouteInfo,
+    reRender: () => void
+  ) => {
     const viewItems = this.getViewItemsForOutlet(outletId);
 
     // Determine parentPath for nested outlets to properly evaluate index routes
@@ -621,6 +628,7 @@ export class ReactRouterViewStack extends ViewStacks {
             // View is outside current route hierarchy, remove it
             setTimeout(() => {
               this.remove(viewItem);
+              reRender();
             }, 0);
             return false;
           }
@@ -630,7 +638,9 @@ export class ReactRouterViewStack extends ViewStacks {
       return true;
     });
 
-    const renderedItems = renderableViewItems.map((viewItem) => this.renderViewItem(viewItem, routeInfo, parentPath));
+    const renderedItems = renderableViewItems.map((viewItem) =>
+      this.renderViewItem(viewItem, routeInfo, parentPath, reRender)
+    );
     return renderedItems;
   };
 

@@ -92,6 +92,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/prefix-match-wildcard">
             <IonLabel>Prefix Match Wildcard</IonLabel>
           </IonItem>
+          <IonItem routerLink="/stale-view-cleanup/non-ionpage">
+            <IonLabel>Stale View Cleanup</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
