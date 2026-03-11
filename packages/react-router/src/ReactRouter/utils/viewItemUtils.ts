@@ -3,7 +3,7 @@ import type { ViewItem } from '@ionic/react';
 /**
  * Sorts view items by route specificity (most specific first).
  *
- * Sort order aligns with findRouteByRouteInfo in StackManager.tsx:
+ * Sort order aligns with findViewItemByPath in ReactRouterViewStack.tsx:
  * 1. Index routes come first
  * 2. Wildcard-only routes (* or /*) come last
  * 3. Exact matches (no wildcards/params) come before wildcard/param routes

@@ -321,15 +321,28 @@ export const computeParentPath = (options: ComputeParentPathOptions): ParentPath
           // should catch the full remaining path instead.
           // Literal routes (e.g., "settings", "redirect") can still match beyond
           // the wildcard depth to support redirect scenarios.
+          //
+          // Also don't let empty/default path routes (path="" or undefined) drive
+          // the parent deeper than a wildcard match. An empty path route matching
+          // when remainingPath is "" just means all segments were consumed — it's
+          // not a meaningful specific match.
           const shouldSkipParameterized =
             (outletMountPath && parentPath.length > outletMountPath.length) ||
             (!outletMountPath && firstWildcardMatch);
-          if (shouldSkipParameterized) {
+          if (shouldSkipParameterized || firstWildcardMatch) {
             const matchingRoute = findFirstSpecificMatchingRoute(routeChildren, remainingPath);
-            if (matchingRoute && isPurelyParameterized(matchingRoute.props.path as string)) {
-              continue;
+            if (matchingRoute) {
+              const matchingPath = matchingRoute.props.path as string | undefined;
+              const isEmptyPath = !matchingPath || matchingPath === '';
+              if (shouldSkipParameterized && (isPurelyParameterized(matchingPath as string) || isEmptyPath)) {
+                continue;
+              }
+              if (firstWildcardMatch && isEmptyPath) {
+                continue;
+              }
             }
           }
+
           firstSpecificMatch = parentPath;
           break;
         }

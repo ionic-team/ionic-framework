@@ -41,4 +41,28 @@ describe('Relative Paths Tests', () => {
     cy.ionBackClick('relative-paths-page-b');
     cy.ionPageVisible('relative-paths-home');
   });
+
+  it('should render catch-all * route for unknown paths via navigation', () => {
+    cy.visit(`http://localhost:${port}/relative-paths`);
+    cy.ionPageVisible('relative-paths-home');
+    cy.ionNav('ion-item', 'Go to Unknown Page');
+    cy.ionPageVisible('relative-paths-catch-all');
+    cy.ionPageHidden('relative-paths-home');
+    cy.get('[data-testid="catch-all-content"]').should('contain', 'not found');
+  });
+
+  it('should render catch-all * route for unknown paths via direct URL', () => {
+    cy.visit(`http://localhost:${port}/relative-paths/some-nonexistent-page`);
+    cy.ionPageVisible('relative-paths-catch-all');
+    cy.get('[data-testid="catch-all-content"]').should('contain', 'not found');
+  });
+
+  it('should navigate to catch-all and back to home', () => {
+    cy.visit(`http://localhost:${port}/relative-paths`);
+    cy.ionPageVisible('relative-paths-home');
+    cy.ionNav('ion-item', 'Go to Unknown Page');
+    cy.ionPageVisible('relative-paths-catch-all');
+    cy.ionBackClick('relative-paths-catch-all');
+    cy.ionPageVisible('relative-paths-home');
+  });
 });

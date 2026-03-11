@@ -226,6 +226,13 @@ export class ReactRouterViewStack extends ViewStacks {
    */
   private outletParentPaths = new Map<string, string>();
 
+  /**
+   * Stores the computed mount path for each outlet.
+   * Fed back into computeParentPath on subsequent calls to stabilize
+   * the parent path computation across navigations (mirrors StackManager.outletMountPath).
+   */
+  private outletMountPaths = new Map<string, string>();
+
   constructor() {
     super();
   }
@@ -440,11 +447,12 @@ export class ReactRouterViewStack extends ViewStacks {
       viewItem.routeData.match = match;
     }
 
-    // Deactivate wildcard routes and catch-all routes (empty path) when we have specific route matches
-    // This prevents "Not found" or fallback pages from showing alongside valid routes
+    // Deactivate wildcard (catch-all) and empty-path (default) routes when a more-specific route matches.
+    // This prevents "Not found" or fallback pages from showing alongside valid routes.
     if (routePath === '*' || routePath === '') {
       // Check if any other view in this outlet has a match for the current route
-      const hasSpecificMatch = this.getViewItemsForOutlet(viewItem.outletId).some((v) => {
+      const outletViews = this.getViewItemsForOutlet(viewItem.outletId);
+      let hasSpecificMatch = outletViews.some((v) => {
         if (v.id === viewItem.id) return false; // Skip self
         const vRoutePath = v.reactElement?.props?.path || '';
         if (vRoutePath === '*' || vRoutePath === '') return false; // Skip other wildcard/empty routes
@@ -453,6 +461,28 @@ export class ReactRouterViewStack extends ViewStacks {
         const vMatch = v.reactElement ? matchComponent(v.reactElement, routeInfo.pathname) : null;
         return !!vMatch;
       });
+
+      // For catch-all * routes, also deactivate when the pathname matches the outlet's
+      // parent path exactly. This means there are no remaining segments for the wildcard
+      // to catch, so the empty-path or index route should handle it instead.
+      if (!hasSpecificMatch && routePath === '*') {
+        const outletParentPath = this.outletParentPaths.get(viewItem.outletId);
+        if (outletParentPath) {
+          const normalizedParent = normalizePathnameForComparison(outletParentPath);
+          const normalizedPathname = normalizePathnameForComparison(routeInfo.pathname);
+          if (normalizedPathname === normalizedParent) {
+            // Check if there's an empty-path or index view item that should handle this
+            const hasDefaultRoute = outletViews.some((v) => {
+              if (v.id === viewItem.id) return false;
+              const vRoutePath = v.reactElement?.props?.path;
+              return vRoutePath === '' || vRoutePath === undefined || !!v.routeData?.childProps?.index;
+            });
+            if (hasDefaultRoute) {
+              hasSpecificMatch = true;
+            }
+          }
+        }
+      }
 
       if (hasSpecificMatch) {
         viewItem.mount = false;
@@ -544,35 +574,42 @@ export class ReactRouterViewStack extends ViewStacks {
   ) => {
     const viewItems = this.getViewItemsForOutlet(outletId);
 
-    // Determine parentPath for nested outlets to properly evaluate index routes
+    // Determine parentPath for outlets with relative or index routes.
+    // This populates outletParentPaths for findViewItemByPath's matchView
+    // and the catch-all deactivation logic in renderViewItem.
     let parentPath: string | undefined = undefined;
     try {
-      // Only attempt parent path computation for non-root outlets
-      // Root outlets have IDs like 'routerOutlet' or 'routerOutlet-2'
-      const isRootOutlet = outletId.startsWith('routerOutlet');
-      if (!isRootOutlet) {
-        const routeChildren = extractRouteChildren(ionRouterOutlet.props.children);
-        const { hasRelativeRoutes, hasIndexRoute, hasWildcardRoute } = analyzeRouteChildren(routeChildren);
+      const routeChildren = extractRouteChildren(ionRouterOutlet.props.children);
+      const { hasRelativeRoutes, hasIndexRoute, hasWildcardRoute } = analyzeRouteChildren(routeChildren);
 
-        if (hasRelativeRoutes || hasIndexRoute) {
-          const result = computeParentPath({
-            currentPathname: routeInfo.pathname,
-            outletMountPath: undefined,
-            routeChildren,
-            hasRelativeRoutes,
-            hasIndexRoute,
-            hasWildcardRoute,
-          });
-          parentPath = result.parentPath;
+      if (hasRelativeRoutes || hasIndexRoute) {
+        const result = computeParentPath({
+          currentPathname: routeInfo.pathname,
+          outletMountPath: this.outletMountPaths.get(outletId),
+          routeChildren,
+          hasRelativeRoutes,
+          hasIndexRoute,
+          hasWildcardRoute,
+        });
+        parentPath = result.parentPath;
+
+        // Persist the mount path for subsequent calls, mirroring StackManager.outletMountPath.
+        // Unlike outletParentPaths (cleared when parentPath is undefined), the mount path is
+        // intentionally sticky — it anchors the outlet's scope and is only removed in clear().
+        if (result.outletMountPath && !this.outletMountPaths.has(outletId)) {
+          this.outletMountPaths.set(outletId, result.outletMountPath);
         }
       }
     } catch (e) {
       // Non-fatal: if we fail to compute parentPath, fall back to previous behavior
     }
 
-    // Store the computed parentPath for use in findViewItemByPath
+    // Store the computed parentPath for use in findViewItemByPath.
+    // Clear stale entries when parentPath is undefined (e.g., navigated out of scope).
     if (parentPath !== undefined) {
       this.outletParentPaths.set(outletId, parentPath);
+    } else if (this.outletParentPaths.has(outletId)) {
+      this.outletParentPaths.delete(outletId);
     }
 
     // Sync child elements with stored viewItems (e.g. to reflect new props)
@@ -731,6 +768,7 @@ export class ReactRouterViewStack extends ViewStacks {
       // a wildcard view, it should not be reused for subsequent navigations.
       // A fresh wildcard view will be created by createViewItem when needed.
       if ((viewItemPath === '*' || viewItemPath === '/*') && !v.mount) return false;
+
       const isIndexRoute = !!v.routeData.childProps.index;
       const previousMatch = v.routeData?.match;
       const result = v.reactElement ? matchComponent(v.reactElement, pathname) : null;
@@ -742,6 +780,21 @@ export class ReactRouterViewStack extends ViewStacks {
           match = indexMatch;
           viewItem = v;
           return true;
+        }
+
+        // Empty path routes (path="") should match when the pathname matches the
+        // outlet's parent path exactly (no remaining segments). matchComponent doesn't
+        // handle this because it lacks parent path context. Without this check, a
+        // catch-all * view item (which matches any pathname) would be incorrectly
+        // returned instead of the empty path route on back navigation.
+        if (viewItemPath === '' && !isIndexRoute && outletParentPath) {
+          const normalizedParent = normalizePathnameForComparison(outletParentPath);
+          const normalizedPathname = normalizePathnameForComparison(pathname);
+          if (normalizedPathname === normalizedParent) {
+            match = createDefaultMatch(pathname, v.routeData.childProps);
+            viewItem = v;
+            return true;
+          }
         }
       }
 
@@ -886,6 +939,7 @@ export class ReactRouterViewStack extends ViewStacks {
    */
   clear = (outletId: string) => {
     this.outletParentPaths.delete(outletId);
+    this.outletMountPaths.delete(outletId);
     return super.clear(outletId);
   };
 

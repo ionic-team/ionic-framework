@@ -39,6 +39,9 @@ const RelativePathsHome: React.FC = () => {
           <IonItem routerLink="/relative-paths/page-b">
             <IonLabel>Go to Page B (relative path route)</IonLabel>
           </IonItem>
+          <IonItem routerLink="/relative-paths/unknown-page">
+            <IonLabel>Go to Unknown Page (catch-all route)</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
@@ -85,6 +88,26 @@ const PageB: React.FC = () => {
   );
 };
 
+const CatchAllPage: React.FC = () => {
+  return (
+    <IonPage data-pageid="relative-paths-catch-all">
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/relative-paths" />
+          </IonButtons>
+          <IonTitle>Not Found</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <div data-testid="catch-all-content">
+          This page was not found - caught by relative * route
+        </div>
+      </IonContent>
+    </IonPage>
+  );
+};
+
 const RelativePaths: React.FC = () => {
   return (
     <IonRouterOutlet>
@@ -93,6 +116,9 @@ const RelativePaths: React.FC = () => {
 
       {/* Route with relative path (no leading slash) */}
       <Route path="page-b" element={<PageB />} />
+
+      {/* Catch-all route - using relative wildcard */}
+      <Route path="*" element={<CatchAllPage />} />
 
       {/* Home route - using relative path */}
       <Route path="" element={<RelativePathsHome />} />
