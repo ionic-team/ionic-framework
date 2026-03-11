@@ -95,6 +95,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/stale-view-cleanup/non-ionpage">
             <IonLabel>Stale View Cleanup</IonLabel>
           </IonItem>
+          <IonItem routerLink="/index-param-priority">
+            <IonLabel>Index Param Priority</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

@@ -69,6 +69,17 @@ const matchesEmbeddedWildcardRoute = (route: React.ReactElement, pathname: strin
 };
 
 /**
+ * Checks if a route path consists entirely of parameterized segments (e.g., ":slug", ":category/:id").
+ * These routes match any single segment and should not drive the parent path deeper
+ * than the outlet's established mount point.
+ */
+const isPurelyParameterized = (routePath: string | undefined): boolean => {
+  if (!routePath) return false;
+  const segments = routePath.split('/').filter(Boolean);
+  return segments.length > 0 && segments.every((segment) => segment.startsWith(':'));
+};
+
+/**
  * Checks if a route is a specific match (not wildcard-only or index).
  */
 export const isSpecificRouteMatch = (route: React.ReactElement, remainingPath: string): boolean => {
@@ -135,6 +146,18 @@ const findSpecificMatch = (routeChildren: React.ReactElement[], remainingPath: s
 };
 
 /**
+ * Returns the first route that matches as a specific (non-wildcard, non-index) route.
+ */
+const findFirstSpecificMatchingRoute = (
+  routeChildren: React.ReactElement[],
+  remainingPath: string
+): React.ReactElement | undefined => {
+  return routeChildren.find(
+    (route) => isSpecificRouteMatch(route, remainingPath) || matchesEmbeddedWildcardRoute(route, remainingPath)
+  );
+};
+
+/**
  * Checks if any specific route could plausibly match the remaining path.
  * Used to determine if we should fall back to a wildcard match.
  *
@@ -152,12 +175,18 @@ const couldSpecificRouteMatch = (
   const segments = remainingPath.split('/');
   const remainingFirstSegment = segments[0];
 
-  // For multi-segment paths, check if consuming more parent segments
-  // would produce a specific route match at a deeper level
-  for (let j = 1; j < segments.length; j++) {
-    const futureRemaining = segments.slice(j).join('/');
-    if (findSpecificMatch(routeChildren, futureRemaining)) {
-      return true;
+  // For multi-segment paths on first visit (no mount path), check if consuming
+  // more parent segments would produce a specific route match at a deeper level.
+  // When mount path is established, skip this lookahead: the parent depth is known,
+  // and purely parameterized routes (e.g., :slug) matching the last segment should
+  // not prevent the wildcard from claiming the full remaining path.
+  if (!outletMountPath) {
+    for (let j = 1; j < segments.length; j++) {
+      const futureRemaining = segments.slice(j).join('/');
+      const futureMatch = findFirstSpecificMatchingRoute(routeChildren, futureRemaining);
+      if (futureMatch && !isPurelyParameterized(futureMatch.props.path as string)) {
+        return true;
+      }
     }
   }
 
@@ -285,6 +314,22 @@ export const computeParentPath = (options: ComputeParentPathOptions): ParentPath
 
         // Check for specific route match (highest priority)
         if (!firstSpecificMatch && findSpecificMatch(routeChildren, remainingPath)) {
+          // Don't let purely parameterized routes (e.g., :slug, :id) drive the
+          // parent deeper than where a wildcard already matched. A :slug route
+          // matching the last segment of "deep/nested/path" shouldn't pull the
+          // parent to /parent/deep/nested — the wildcard at the correct depth
+          // should catch the full remaining path instead.
+          // Literal routes (e.g., "settings", "redirect") can still match beyond
+          // the wildcard depth to support redirect scenarios.
+          const shouldSkipParameterized =
+            (outletMountPath && parentPath.length > outletMountPath.length) ||
+            (!outletMountPath && firstWildcardMatch);
+          if (shouldSkipParameterized) {
+            const matchingRoute = findFirstSpecificMatchingRoute(routeChildren, remainingPath);
+            if (matchingRoute && isPurelyParameterized(matchingRoute.props.path as string)) {
+              continue;
+            }
+          }
           firstSpecificMatch = parentPath;
           break;
         }

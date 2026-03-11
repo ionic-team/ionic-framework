@@ -50,6 +50,7 @@ import SearchParams from './pages/search-params/SearchParams';
 import IonRoutePropsTest from './pages/ion-route-props/IonRouteProps';
 import PrefixMatchWildcard from './pages/prefix-match-wildcard/PrefixMatchWildcard';
 import StaleViewCleanup from './pages/stale-view-cleanup/StaleViewCleanup';
+import IndexParamPriority from './pages/index-param-priority/IndexParamPriority';
 
 setupIonicReact();
 
@@ -89,6 +90,7 @@ const App: React.FC = () => {
           <Route path="/ion-route-props/*" element={<IonRoutePropsTest />} />
           <Route path="/prefix-match-wildcard/*" element={<PrefixMatchWildcard />} />
           <Route path="/stale-view-cleanup/*" element={<StaleViewCleanup />} />
+          <Route path="/index-param-priority/*" element={<IndexParamPriority />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
