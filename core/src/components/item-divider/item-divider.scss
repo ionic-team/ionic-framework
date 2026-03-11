@@ -1,6 +1,7 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/mixins" as mixins;
+@use "../../themes/functions.color" as colors;
 
-// Item Divider
+// Item Divider: Common Styles
 // --------------------------------------------------
 
 :host {
@@ -19,26 +20,29 @@
    * @prop --inner-padding-bottom: Bottom inner padding of the item divider
    * @prop --inner-padding-start: Start inner padding of the item divider
    */
-  --padding-top: 0px;
-  --padding-end: 0px;
-  --padding-bottom: 0px;
-  --padding-start: 0px;
-  --inner-padding-top: 0px;
-  --inner-padding-end: 0px;
-  --inner-padding-bottom: 0px;
-  --inner-padding-start: 0px;
+  --background: var(--ion-item-divider-background);
+  --color: var(--ion-item-divider-color);
+  --padding-top: var(--ion-item-divider-padding-top);
+  --padding-end: var(--ion-item-divider-padding-end);
+  --padding-bottom: var(--ion-item-divider-padding-bottom);
+  --padding-start: var(--ion-item-divider-padding-start);
+  --inner-padding-top: var(--ion-item-divider-inner-padding-top);
+  --inner-padding-end: var(--ion-item-divider-inner-padding-end);
+  --inner-padding-bottom: var(--ion-item-divider-inner-padding-bottom);
+  --inner-padding-start: var(--ion-item-divider-inner-padding-start);
 
-  @include font-smoothing();
-  @include margin(0);
-  @include padding(var(--padding-top), null, var(--padding-bottom), null);
+  @include mixins.font-smoothing();
+  @include mixins.margin(0);
+  @include mixins.padding(var(--padding-top), null, var(--padding-bottom), null);
+  @include mixins.border-radius(0);
 
   /* stylelint-disable */
-  @include ltr() {
+  @include mixins.ltr() {
     padding-right: var(--padding-end);
     padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
   }
 
-  @include rtl() {
+  @include mixins.rtl() {
     padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
     padding-left: var(--padding-end);
   }
@@ -51,19 +55,26 @@
 
   width: 100%;
 
+  min-height: var(--ion-item-divider-min-height);
+
+  border-bottom: var(--ion-item-divider-border-bottom);
+
   background: var(--background);
   color: var(--color);
 
-  font-family: $font-family-base;
+  font-family: var(--ion-font-family, inherit);
+  font-size: var(--ion-item-divider-font-size);
+  font-weight: var(--ion-item-divider-font-weight);
 
   overflow: hidden;
-  z-index: $z-index-item-divider;
+
+  z-index: var(--ion-item-divider-z-index, auto);
   box-sizing: border-box;
 }
 
 :host(.ion-color) {
-  background: current-color(base);
-  color: current-color(contrast);
+  background: colors.current-color("base");
+  color: colors.current-color("contrast");
 }
 
 :host(.item-divider-sticky) {
@@ -72,16 +83,16 @@
 }
 
 .item-divider-inner {
-  @include margin(0);
-  @include padding(var(--inner-padding-top), null, var(--inner-padding-bottom), null);
+  @include mixins.margin(0);
+  @include mixins.padding(var(--inner-padding-top), null, var(--inner-padding-bottom), null);
 
   /* stylelint-disable */
-  @include ltr() {
+  @include mixins.ltr() {
     padding-right: calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end));
     padding-left: var(--inner-padding-start);
   }
 
-  @include rtl() {
+  @include mixins.rtl() {
     padding-right: var(--inner-padding-start);
     padding-left: calc(var(--ion-safe-area-left, 0px) + var(--inner-padding-end));
   }
@@ -112,4 +123,284 @@
   text-overflow: ellipsis;
 
   overflow: hidden;
+}
+
+// Item Divider Slots
+// --------------------------------------------------
+
+:host([slot="start"]) {
+  @include mixins.margin(
+    var(--ion-item-divider-leading-anchor-margin-top, revert-layer),
+    var(--ion-item-divider-leading-anchor-margin-end, revert-layer),
+    var(--ion-item-divider-leading-anchor-margin-bottom, revert-layer),
+    var(--ion-item-divider-leading-anchor-margin-start, revert-layer)
+  );
+}
+
+::slotted([slot="start"]) {
+  @include mixins.margin-horizontal(
+    var(--ion-item-divider-leading-edge-margin-start, revert-layer),
+    var(--ion-item-divider-leading-edge-margin-end, revert-layer)
+  ); // for ionic this should be 0
+}
+
+::slotted([slot="end"]) {
+  @include mixins.margin-horizontal(
+    var(--ion-item-divider-trailing-edge-margin-start, revert-layer),
+    var(--ion-item-divider-trailing-edge-margin-end, revert-layer)
+  );
+}
+
+// Slotted Label
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  @include mixins.margin(
+    var(--ion-item-divider-label-margin-top),
+    var(--ion-item-divider-label-margin-end),
+    var(--ion-item-divider-label-margin-bottom),
+    var(--ion-item-divider-label-margin-start)
+  );
+}
+
+// Slotted Icon
+// --------------------------------------------------
+
+::slotted(ion-icon) {
+  color: var(--ion-item-divider-icon-default-color);
+
+  font-size: var(--ion-item-divider-icon-font-size);
+}
+
+:host(.ion-color) ::slotted(ion-icon) {
+  color: var(--ion-item-divider-icon-semantic-default-color);
+}
+
+::slotted(ion-icon[slot="start"]) {
+  @include mixins.margin(
+    var(--ion-item-divider-icon-leading-edge-margin-top, revert-layer),
+    var(--ion-item-divider-icon-leading-edge-margin-end, revert-layer),
+    var(--ion-item-divider-icon-leading-edge-margin-bottom, revert-layer),
+    var(--ion-item-divider-icon-leading-edge-margin-start, revert-layer)
+  );
+}
+
+::slotted(ion-icon[slot="end"]) {
+  @include mixins.margin(
+    var(--ion-item-divider-icon-trailing-edge-margin-top, revert-layer),
+    var(--ion-item-divider-icon-trailing-edge-margin-end, revert-layer),
+    var(--ion-item-divider-icon-trailing-edge-margin-bottom, revert-layer),
+    var(--ion-item-divider-icon-trailing-edge-margin-start, revert-layer)
+  );
+}
+
+// Slotted Note
+// --------------------------------------------------
+
+::slotted(ion-note) {
+  @include mixins.margin(
+    var(--ion-item-divider-note-margin-top),
+    var(--ion-item-divider-note-margin-end),
+    var(--ion-item-divider-note-margin-bottom),
+    var(--ion-item-divider-note-margin-start)
+  );
+
+  align-self: flex-start;
+
+  font-size: var(--ion-item-divider-note-font-size);
+}
+
+::slotted(ion-note[slot]) {
+  @include mixins.padding(
+    var(--ion-item-divider-note-padding-top),
+    var(--ion-item-divider-note-padding-end),
+    var(--ion-item-divider-note-padding-bottom),
+    var(--ion-item-divider-note-padding-start)
+  );
+}
+
+// Slotted Avatar
+// --------------------------------------------------
+
+::slotted(ion-avatar) {
+  @include mixins.margin(
+    var(--ion-item-divider-avatar-margin-top),
+    var(--ion-item-divider-avatar-margin-end),
+    var(--ion-item-divider-avatar-margin-bottom),
+    var(--ion-item-divider-avatar-margin-start)
+  );
+
+  width: var(--ion-item-divider-avatar-width, revert-layer);
+  height: var(--ion-item-divider-avatar-height, revert-layer);
+}
+
+::slotted(ion-avatar[slot="start"]) {
+  @include mixins.margin-horizontal(
+    var(--ion-item-divider-avatar-leading-edge-margin-start),
+    var(--ion-item-divider-avatar-leading-edge-margin-end)
+  );
+}
+
+::slotted(ion-avatar[slot="end"]) {
+  @include mixins.margin-horizontal(
+    var(--ion-item-divider-avatar-trailing-edge-margin-start),
+    var(--ion-item-divider-avatar-trailing-edge-margin-end)
+  );
+}
+
+// Slotted Thumbnail
+// --------------------------------------------------
+
+::slotted(ion-thumbnail) {
+  // TODO(): separate width and height tokens for thumbnails
+  --size: var(--ion-item-divider-thumbnail-width);
+
+  @include mixins.margin(
+    var(--ion-item-divider-thumbnail-margin-top),
+    var(--ion-item-divider-thumbnail-margin-end),
+    var(--ion-item-divider-thumbnail-margin-bottom),
+    var(--ion-item-divider-thumbnail-margin-start)
+  );
+}
+
+::slotted(ion-thumbnail[slot="start"]) {
+  @include mixins.margin-horizontal(
+    var(--ion-item-divider-thumbnail-leading-edge-margin-start),
+    var(--ion-item-divider-thumbnail-leading-edge-margin-end)
+  );
+}
+
+::slotted(ion-thumbnail[slot="end"]) {
+  @include mixins.margin-horizontal(
+    var(--ion-item-divider-thumbnail-trailing-edge-margin-start),
+    var(--ion-item-divider-thumbnail-trailing-edge-margin-end)
+  );
+}
+
+// Slotted Content
+// --------------------------------------------------
+
+::slotted(h1) {
+  @include mixins.margin(
+    var(--ion-item-divider-header1-margin-top),
+    var(--ion-item-divider-header1-margin-end),
+    var(--ion-item-divider-header1-margin-bottom),
+    var(--ion-item-divider-header1-margin-start)
+  );
+}
+
+::slotted(h2) {
+  @include mixins.margin(
+    var(--ion-item-divider-header2-margin-top),
+    var(--ion-item-divider-header2-margin-end),
+    var(--ion-item-divider-header2-margin-bottom),
+    var(--ion-item-divider-header2-margin-start)
+  );
+}
+
+::slotted(h2:last-child) {
+  @include mixins.margin(
+    var(--ion-item-divider-header2-trailing-margin-top),
+    var(--ion-item-divider-header2-trailing-margin-end),
+    var(--ion-item-divider-header2-trailing-margin-bottom, 0),
+    var(--ion-item-divider-header2-trailing-margin-start)
+  );
+}
+
+::slotted(h3) {
+  @include mixins.margin(
+    var(--ion-item-divider-header3-margin-top),
+    var(--ion-item-divider-header3-margin-end),
+    var(--ion-item-divider-header3-margin-bottom),
+    var(--ion-item-divider-header3-margin-start)
+  );
+}
+
+::slotted(h3:last-child) {
+  @include mixins.margin(
+    var(--ion-item-divider-header3-trailing-margin-top),
+    var(--ion-item-divider-header3-trailing-margin-end),
+    var(--ion-item-divider-header3-trailing-margin-bottom, 0),
+    var(--ion-item-divider-header3-trailing-margin-start)
+  );
+}
+
+::slotted(h4) {
+  @include mixins.margin(
+    var(--ion-item-divider-header4-margin-top),
+    var(--ion-item-divider-header4-margin-end),
+    var(--ion-item-divider-header4-margin-bottom),
+    var(--ion-item-divider-header4-margin-start)
+  );
+}
+
+::slotted(h4:last-child) {
+  @include mixins.margin(
+    var(--ion-item-divider-header4-trailing-margin-top),
+    var(--ion-item-divider-header4-trailing-margin-end),
+    var(--ion-item-divider-header4-trailing-margin-bottom, 0),
+    var(--ion-item-divider-header4-trailing-margin-start)
+  );
+}
+
+::slotted(h5) {
+  @include mixins.margin(
+    var(--ion-item-divider-header5-margin-top),
+    var(--ion-item-divider-header5-margin-end),
+    var(--ion-item-divider-header5-margin-bottom),
+    var(--ion-item-divider-header5-margin-start)
+  );
+}
+
+::slotted(h5:last-child) {
+  @include mixins.margin(
+    var(--ion-item-divider-header5-trailing-margin-top),
+    var(--ion-item-divider-header5-trailing-margin-end),
+    var(--ion-item-divider-header5-trailing-margin-bottom, 0),
+    var(--ion-item-divider-header5-trailing-margin-start)
+  );
+}
+
+::slotted(h6) {
+  @include mixins.margin(
+    var(--ion-item-divider-header6-margin-top),
+    var(--ion-item-divider-header6-margin-end),
+    var(--ion-item-divider-header6-margin-bottom),
+    var(--ion-item-divider-header6-margin-start)
+  );
+}
+
+::slotted(h6:last-child) {
+  @include mixins.margin(
+    var(--ion-item-divider-header6-trailing-margin-top),
+    var(--ion-item-divider-header6-trailing-margin-end),
+    var(--ion-item-divider-header6-trailing-margin-bottom, 0),
+    var(--ion-item-divider-header6-trailing-margin-start)
+  );
+}
+
+::slotted(p) {
+  @include mixins.margin(
+    var(--ion-item-divider-paragraph-margin-top),
+    var(--ion-item-divider-paragraph-margin-end),
+    var(--ion-item-divider-paragraph-margin-bottom),
+    var(--ion-item-divider-paragraph-margin-start)
+  );
+
+  color: var(--ion-item-divider-paragraph-color);
+
+  font-size: var(--ion-item-divider-paragraph-font-size);
+
+  text-overflow: var(--ion-item-divider-paragraph-text-overflow);
+
+  overflow: var(--ion-item-divider-paragraph-overflow); // native are the same, can ionic be the same?
+}
+
+::slotted(p:last-child) {
+  @include mixins.margin(
+    var(--ion-item-divider-paragraph-trailing-margin-top),
+    var(--ion-item-divider-paragraph-trailing-margin-end),
+    var(--ion-item-divider-paragraph-trailing-margin-bottom, 0),
+    var(--ion-item-divider-paragraph-trailing-margin-start)
+  );
 }

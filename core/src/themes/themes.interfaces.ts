@@ -282,6 +282,7 @@ export type DefaultTheme = BaseTheme & {
 
 type Components = {
   IonChip?: IonChipRecipe;
+  IonItemDivider?: any;
 
   IonCard?: any;
   IonItem?: any;

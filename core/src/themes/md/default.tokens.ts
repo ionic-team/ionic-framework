@@ -1,4 +1,4 @@
-import { rgba, currentColor } from '../../utils/theme';
+import { rgba, currentColor, mix, dynamicFont } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
@@ -6,11 +6,7 @@ import { darkTheme } from './dark.tokens';
 import { highContrastDarkTheme } from './high-contrast-dark.tokens';
 import { highContrastTheme } from './high-contrast.tokens';
 import { lightTheme } from './light.tokens';
-
-const fontSizes = {
-  chipBase: 14,
-  root: parseFloat(baseDefaultTheme.fontSize!.root as string),
-};
+import { fontSizes, colors, components } from './shared.tokens';
 
 export const defaultTheme: DefaultTheme = {
   ...baseDefaultTheme,
@@ -348,6 +344,7 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
+      // Targets `ion-icon`
       icon: {
         color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.54),
 
@@ -374,6 +371,7 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
+      // Targets `ion-avatar`
       avatar: {
         height: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
         width: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
@@ -394,6 +392,287 @@ export const defaultTheme: DefaultTheme = {
             bottom: '-4px',
             start: 'var(--ion-spacing-sm)',
           },
+        },
+      },
+    },
+
+    IonItemDivider: {
+      background: `var(--ion-background-color, ${colors.white})`,
+      color: `var(--ion-text-color-step-600, ${mix(colors.white, colors.black, '40%')})`,
+      minHeight: 'var(--ion-scaling-750)',
+      zIndex: 100,
+
+      padding: {
+        top: 'var(--ion-spacing-0)',
+        end: 'var(--ion-spacing-0)',
+        bottom: 'var(--ion-spacing-0)',
+        start: components.item.padding.start,
+      },
+
+      inner: {
+        padding: {
+          top: 'var(--ion-spacing-0)',
+          end: components.item.inner.padding.end,
+          bottom: 'var(--ion-spacing-0)',
+          start: 'var(--ion-spacing-0)',
+        },
+      },
+
+      border: {
+        bottom: `1px solid ${components.item.border.color}`,
+      },
+
+      font: {
+        size: dynamicFont(fontSizes.itemDividerBase),
+      },
+
+      leading: {
+        // Targets `::slotted([slot="start"])`
+        edge: {
+          margin: {
+            end: components.item.start.slot.margin.end,
+          },
+        },
+      },
+
+      trailing: {
+        // Targets `::slotted([slot="end"])`
+        edge: {
+          margin: {
+            start: components.item.end.slot.margin.start,
+          },
+        },
+      },
+
+      // Targets `ion-label`
+      label: {
+        margin: {
+          top: '13px',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-250)',
+          start: 'var(--ion-spacing-0)',
+        },
+      },
+
+      // Targets `ion-icon`
+      icon: {
+        font: {
+          /**
+           * The icon's font size should use em units to support
+           * font scaling but evaluate to 24px at 100% font size.
+           * The value in em units is calculated by dividing
+           * the icon's font size in pixels by the item divider's
+           * font size in pixels.
+           * e.g. 24px / 14px = 1.7142857143em
+           */
+          size: `${components.item.icon.slot.font.size / fontSizes.itemDividerBase}em`,
+        },
+
+        leading: {
+          // Targets `ion-icon[slot="start"]`
+          edge: {
+            margin: {
+              top: components.item.icon.slot.margin.top,
+              end: components.item.icon.start.slot.margin.end,
+              bottom: components.item.icon.slot.margin.bottom,
+            },
+          },
+        },
+
+        trailing: {
+          // Targets `ion-icon[slot="end"]`
+          edge: {
+            margin: {
+              top: components.item.icon.slot.margin.top,
+              start: components.item.icon.end.slot.margin.start,
+              bottom: components.item.icon.slot.margin.bottom,
+            },
+          },
+        },
+
+        // Default non-semantic states
+        default: {
+          color: components.item.icon.slot.color,
+        },
+
+        // Any of the semantic colors like primary, secondary, etc.
+        semantic: {
+          default: {
+            color: currentColor('contrast'),
+          },
+        },
+      },
+
+      // Targets `ion-note`
+      note: {
+        align: {
+          self: 'flex-start',
+        },
+
+        font: {
+          size: dynamicFont(components.item.note.slot.font.size),
+        },
+
+        margin: {
+          top: 'var(--ion-spacing-0)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-0)',
+          start: 'var(--ion-spacing-0)',
+        },
+
+        padding: {
+          top: components.item.note.slot.padding.top,
+          end: components.item.note.slot.padding.end,
+          bottom: components.item.note.slot.padding.bottom,
+          start: components.item.note.slot.padding.start,
+        },
+      },
+
+      // Targets `ion-avatar`
+      avatar: {
+        height: components.item.avatar.height,
+        width: components.item.avatar.width,
+
+        margin: {
+          top: components.item.media.slot.margin.top,
+          end: components.item.media.slot.margin.end,
+          bottom: components.item.media.slot.margin.bottom,
+          start: components.item.media.slot.margin.start,
+        },
+
+        leading: {
+          // Targets `ion-avatar[slot="start"]`
+          edge: {
+            margin: {
+              start: components.item.media.start.slot.margin.start,
+              end: components.item.media.start.slot.margin.end,
+            },
+          },
+        },
+
+        trailing: {
+          // Targets `ion-avatar[slot="end"]`
+          edge: {
+            margin: {
+              start: components.item.media.end.slot.margin.start,
+              end: components.item.media.end.slot.margin.end,
+            },
+          },
+        },
+      },
+
+      // Targets `ion-thumbnail`
+      thumbnail: {
+        // TODO: switch from size to height and width
+        height: components.item.thumbnail.height,
+        width: components.item.thumbnail.width,
+
+        margin: {
+          top: components.item.media.slot.margin.top,
+          end: components.item.media.slot.margin.end,
+          bottom: components.item.media.slot.margin.bottom,
+          start: components.item.media.slot.margin.start,
+        },
+
+        leading: {
+          // Targets `ion-thumbnail[slot="start"]`
+          edge: {
+            margin: {
+              start: components.item.media.start.slot.margin.start,
+              end: components.item.media.start.slot.margin.end,
+            },
+          },
+        },
+
+        trailing: {
+          // Targets `ion-thumbnail[slot="end"]`
+          edge: {
+            margin: {
+              start: components.item.media.end.slot.margin.start,
+              end: components.item.media.end.slot.margin.end,
+            },
+          },
+        },
+      },
+
+      // Targets `h1`
+      header1: {
+        margin: {
+          top: 'var(--ion-spacing-0)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-xxxs)',
+          start: 'var(--ion-spacing-0)',
+        },
+      },
+
+      // Targets `h2`
+      header2: {
+        margin: {
+          top: 'var(--ion-spacing-xxxs)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-xxxs)',
+          start: 'var(--ion-spacing-0)',
+        },
+      },
+
+      // Targets `h3`
+      header3: {
+        margin: {
+          top: 'var(--ion-spacing-xxxs)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-xxxs)',
+          start: 'var(--ion-spacing-0)',
+        },
+      },
+
+      // Targets `h4`
+      header4: {
+        margin: {
+          top: 'var(--ion-spacing-xxxs)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-xxxs)',
+          start: 'var(--ion-spacing-0)',
+        },
+      },
+
+      // Targets `h5`
+      header5: {
+        margin: {
+          top: 'var(--ion-spacing-xxxs)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-xxxs)',
+          start: 'var(--ion-spacing-0)',
+        },
+      },
+
+      // Targets `h6`
+      header6: {
+        margin: {
+          top: 'var(--ion-spacing-xxxs)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-xxxs)',
+          start: 'var(--ion-spacing-0)',
+        },
+      },
+
+      // Targets `p`
+      paragraph: {
+        color: components.item.paragraph.color,
+        overflow: 'inherit',
+
+        margin: {
+          top: 'var(--ion-spacing-0)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-xxxs)',
+          start: 'var(--ion-spacing-0)',
+        },
+
+        font: {
+          size: dynamicFont(14),
+        },
+
+        text: {
+          overflow: 'initial',
         },
       },
     },

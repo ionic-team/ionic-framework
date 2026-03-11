@@ -12,7 +12,7 @@
 
   @include border-radius(0);
 
-  position: relative;
+  position: relative; // doesn't seem to be needed?, no issues with it being missing for sticky
 
   min-height: $item-divider-ios-min-height;
 
@@ -33,6 +33,7 @@
   );
 }
 
+// all of these are null
 :host([slot="end"]) {
   @include margin(
     $item-ios-slot-end-margin-top,
@@ -82,7 +83,7 @@
 
   font-size: $item-ios-paragraph-font-size;
 
-  line-height: normal;
+  line-height: normal; // not needed since it's the default
 
   text-overflow: inherit;
 

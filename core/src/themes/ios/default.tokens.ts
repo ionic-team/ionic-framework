@@ -1,4 +1,4 @@
-import { rgba, currentColor, clamp } from '../../utils/theme';
+import { rgba, currentColor, clamp, mix, dynamicFont } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
@@ -6,11 +6,7 @@ import { darkTheme } from './dark.tokens';
 import { highContrastDarkTheme } from './high-contrast-dark.tokens';
 import { highContrastTheme } from './high-contrast.tokens';
 import { lightTheme } from './light.tokens';
-
-const fontSizes = {
-  chipBase: 14,
-  root: parseFloat(baseDefaultTheme.fontSize!.root as string),
-};
+import { fontSizes, colors, components } from './shared.tokens';
 
 export const defaultTheme: DefaultTheme = {
   ...baseDefaultTheme,
@@ -358,6 +354,7 @@ export const defaultTheme: DefaultTheme = {
           size: `${(20 / fontSizes.chipBase).toFixed(2)}em`,
         },
 
+        // Targets `:first-child`
         leading: {
           margin: {
             top: '-4px',
@@ -367,6 +364,7 @@ export const defaultTheme: DefaultTheme = {
           },
         },
 
+        // Targets `:last-child`
         trailing: {
           margin: {
             top: '-4px',
@@ -381,6 +379,7 @@ export const defaultTheme: DefaultTheme = {
         height: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
         width: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
 
+        // Targets `:first-child`
         leading: {
           margin: {
             top: '-4px',
@@ -390,12 +389,187 @@ export const defaultTheme: DefaultTheme = {
           },
         },
 
+        // Targets `:last-child`
         trailing: {
           margin: {
             top: '-4px',
             end: '-8px',
             bottom: '-4px',
             start: 'var(--ion-spacing-sm)',
+          },
+        },
+      },
+    },
+
+    IonItemDivider: {
+      background: `var(--ion-background-color-step-100, ${mix(colors.black, colors.white, '90%')})`,
+      color: `var(--ion-text-color-step-150, ${mix(colors.white, colors.black, '85%')})`,
+      minHeight: 'var(--ion-scaling-sm)',
+
+      padding: {
+        start: components.item.padding.start,
+      },
+
+      inner: {
+        padding: {
+          end: `calc(${components.item.padding.end} * 0.5)`,
+        },
+      },
+
+      font: {
+        size: dynamicFont(17),
+        weight: 'var(--ion-font-weight-semi-bold)',
+      },
+
+      leading: {
+        // Targets `:host([slot="start"])`
+        anchor: {
+          margin: {
+            top: components.item.slot.start.margin.top,
+            end: components.item.slot.start.margin.end,
+            bottom: components.item.slot.start.margin.bottom,
+            start: components.item.slot.start.margin.start,
+          },
+        },
+      },
+
+      // Targets `ion-icon`
+      icon: {
+        leading: {
+          // Targets `ion-icon[slot="start"]`
+          edge: {
+            margin: {
+              top: components.item.icon.slot.margin.top,
+              bottom: components.item.icon.slot.margin.bottom,
+            },
+          },
+        },
+
+        trailing: {
+          // Targets `ion-icon[slot="end"]`
+          edge: {
+            margin: {
+              top: components.item.icon.slot.margin.top,
+              bottom: components.item.icon.slot.margin.bottom,
+            },
+          },
+        },
+      },
+
+      // Targets `h1`
+      header1: {
+        margin: {
+          top: 'var(--ion-spacing-0)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-xxxs)',
+          start: 'var(--ion-spacing-0)',
+        },
+      },
+
+      // Targets `h2`
+      header2: {
+        margin: {
+          top: 'var(--ion-spacing-0)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-xxxs)',
+          start: 'var(--ion-spacing-0)',
+        },
+
+        // Targets `:last-child`
+        trailing: {
+          margin: {
+            bottom: 'var(--ion-spacing-0)',
+          },
+        },
+      },
+
+      // Targets `h3`
+      header3: {
+        margin: {
+          top: 'var(--ion-spacing-0)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-75)',
+          start: 'var(--ion-spacing-0)',
+        },
+
+        trailing: {
+          margin: {
+            bottom: 'var(--ion-spacing-0)',
+          },
+        },
+      },
+
+      // Targets `h4`
+      header4: {
+        margin: {
+          top: 'var(--ion-spacing-0)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-75)',
+          start: 'var(--ion-spacing-0)',
+        },
+
+        trailing: {
+          margin: {
+            bottom: 'var(--ion-spacing-0)',
+          },
+        },
+      },
+
+      // Targets `h5`
+      header5: {
+        margin: {
+          top: 'var(--ion-spacing-0)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-75)',
+          start: 'var(--ion-spacing-0)',
+        },
+
+        trailing: {
+          margin: {
+            bottom: 'var(--ion-spacing-0)',
+          },
+        },
+      },
+
+      // Targets `h6`
+      header6: {
+        margin: {
+          top: 'var(--ion-spacing-0)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-75)',
+          start: 'var(--ion-spacing-0)',
+        },
+
+        trailing: {
+          margin: {
+            bottom: 'var(--ion-spacing-0)',
+          },
+        },
+      },
+
+      // Targets `p`
+      paragraph: {
+        color: components.item.paragraph.color,
+        overflow: 'inherit',
+
+        margin: {
+          top: components.item.paragraph.margin.top,
+          end: components.item.paragraph.margin.end,
+          bottom: components.item.paragraph.margin.bottom,
+          start: components.item.paragraph.margin.start,
+        },
+
+        font: {
+          size: components.item.paragraph.font.size,
+        },
+
+        text: {
+          overflow: 'inherit',
+        },
+
+        trailing: {
+          margin: {
+            bottom: 'var(--ion-spacing-0)',
           },
         },
       },

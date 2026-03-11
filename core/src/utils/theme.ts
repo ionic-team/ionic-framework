@@ -633,3 +633,22 @@ export function currentColor(variation: string, alpha: number | string | null = 
 export function clamp(min: number | string, val: number | string, max: number | string): string {
   return `clamp(${min}, ${val}, ${max})`;
 }
+
+const baselinePixelSize = 16;
+const baselineUnit = 'rem';
+
+/**
+ * Converts a pixel value to a dynamic unit (defaulting to rem).
+ *
+ * Examples:
+ * - `dynamicFont(16)` returns `'1.000rem'`
+ * - `dynamicFont(20, 'em')` returns `'1.250em'`
+ *
+ * @internal
+ * @param size - The numeric pixel value.
+ * @param unit - The CSS unit string.
+ * @returns The calculated CSS value string.
+ */
+export const dynamicFont = (size: number, unit: string = baselineUnit): string => {
+  return `${size / baselinePixelSize}${unit}`;
+};

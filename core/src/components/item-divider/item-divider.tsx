@@ -15,11 +15,7 @@ import type { Color } from '../../interface';
  */
 @Component({
   tag: 'ion-item-divider',
-  styleUrls: {
-    ios: 'item-divider.ios.scss',
-    md: 'item-divider.md.scss',
-    ionic: 'item-divider.md.scss',
-  },
+  styleUrl: 'item-divider.scss',
   shadow: true,
 })
 export class ItemDivider implements ComponentInterface {
@@ -43,6 +39,7 @@ export class ItemDivider implements ComponentInterface {
 
   render() {
     const theme = getIonTheme(this);
+    console.log('theme', theme);
     return (
       <Host
         class={createColorClasses(this.color, {
