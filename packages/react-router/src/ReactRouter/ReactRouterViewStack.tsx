@@ -89,7 +89,7 @@ const getFallbackParamsFromViewItems = (
   currentOutletId: string,
   currentPathname: string
 ): RouteParams => {
-  const params: RouteParams = {};
+  const matchingViews: { params: RouteParams; pathLength: number }[] = [];
 
   for (const otherViewItem of allViewItems) {
     if (otherViewItem.outletId === currentOutletId) continue;
@@ -98,9 +98,21 @@ const getFallbackParamsFromViewItems = (
     if (otherMatch?.params && Object.keys(otherMatch.params).length > 0) {
       const matchedPathname = otherMatch.pathnameBase || otherMatch.pathname;
       if (matchedPathname && currentPathname.startsWith(matchedPathname)) {
-        Object.assign(params, otherMatch.params);
+        matchingViews.push({
+          params: otherMatch.params,
+          pathLength: matchedPathname.length,
+        });
       }
     }
+  }
+
+  // Sort ascending by path length so more-specific (longer) paths are applied
+  // last and their params take priority over less-specific ones.
+  matchingViews.sort((a, b) => a.pathLength - b.pathLength);
+
+  const params: RouteParams = {};
+  for (const view of matchingViews) {
+    Object.assign(params, view.params);
   }
 
   return params;
