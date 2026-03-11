@@ -80,7 +80,7 @@ export const matchPath = ({ pathname, componentProps }: MatchPathOptions): PathM
       return {
         ...match,
         pathname: pathname,
-        pathnameBase: match.pathnameBase === '/' ? '' : match.pathnameBase.slice(1),
+        pathnameBase: match.pathnameBase === '/' ? '/' : match.pathnameBase.slice(1),
         pattern: {
           ...match.pattern,
           path: path,
