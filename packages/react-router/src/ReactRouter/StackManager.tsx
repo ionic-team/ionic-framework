@@ -73,6 +73,12 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
    * duplicate transitions during rapid navigation (e.g., Navigate redirects)
    */
   private lastTransition?: { enteringId: string; leavingId?: string };
+  /** Tracks whether the component is mounted to guard async transition paths. */
+  private _isMounted = false;
+  /** In-flight requestAnimationFrame IDs from transitionPage, cancelled on unmount. */
+  private transitionRafIds: number[] = [];
+  /** In-flight MutationObserver from waitForComponentsReady, disconnected on unmount. */
+  private transitionObserver?: MutationObserver;
 
   constructor(props: StackManagerProps) {
     super(props);
@@ -686,6 +692,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     if (this.clearOutletTimeout) {
       /**
        * The clearOutlet integration with React Router is a bit hacky.
@@ -718,6 +725,20 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   }
 
   componentWillUnmount() {
+    this._isMounted = false;
+
+    // Cancel any in-flight transition rAFs
+    for (const id of this.transitionRafIds) {
+      cancelAnimationFrame(id);
+    }
+    this.transitionRafIds = [];
+
+    // Disconnect any in-flight MutationObserver from waitForComponentsReady
+    if (this.transitionObserver) {
+      this.transitionObserver.disconnect();
+      this.transitionObserver = undefined;
+    }
+
     if (this.ionPageWaitTimeout) {
       clearTimeout(this.ionPageWaitTimeout);
       this.ionPageWaitTimeout = undefined;
@@ -1197,9 +1218,18 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
                 if (!resolved && checkReady()) {
                   resolved = true;
                   observer.disconnect();
+                  if (this.transitionObserver === observer) {
+                    this.transitionObserver = undefined;
+                  }
                   resolve();
                 }
               });
+
+              // Disconnect any previous observer before tracking the new one
+              if (this.transitionObserver) {
+                this.transitionObserver.disconnect();
+              }
+              this.transitionObserver = observer;
 
               observer.observe(enteringEl, {
                 subtree: true,
@@ -1211,6 +1241,9 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
                 if (!resolved) {
                   resolved = true;
                   observer.disconnect();
+                  if (this.transitionObserver === observer) {
+                    this.transitionObserver = undefined;
+                  }
                   resolve();
                 }
               }, 100);
@@ -1219,17 +1252,30 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
           await waitForComponentsReady();
 
+          // Bail out if the component unmounted during waitForComponentsReady
+          if (!this._isMounted) return;
+
           // Swap visibility in sync with browser's render cycle
           await new Promise<void>((resolve) => {
-            requestAnimationFrame(() => {
+            const outerRafId = requestAnimationFrame(() => {
+              this.transitionRafIds = this.transitionRafIds.filter((id) => id !== outerRafId);
+              if (!this._isMounted) {
+                resolve();
+                return;
+              }
               enteringEl.classList.remove('ion-page-invisible');
               // Second rAF ensures entering is painted before hiding leaving
-              requestAnimationFrame(() => {
-                leavingEl.classList.add('ion-page-hidden');
-                leavingEl.setAttribute('aria-hidden', 'true');
+              const innerRafId = requestAnimationFrame(() => {
+                this.transitionRafIds = this.transitionRafIds.filter((id) => id !== innerRafId);
+                if (this._isMounted) {
+                  leavingEl.classList.add('ion-page-hidden');
+                  leavingEl.setAttribute('aria-hidden', 'true');
+                }
                 resolve();
               });
+              this.transitionRafIds.push(innerRafId);
             });
+            this.transitionRafIds.push(outerRafId);
           });
         } else {
           await runCommit(enteringViewItem.ionPageElement, leavingEl);
