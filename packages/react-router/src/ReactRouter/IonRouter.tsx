@@ -227,6 +227,8 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
             incomingRouteParams.current = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
           } else {
             // It's a non-linear history path like a direct link.
+            // Still push the current location key so browser forward is detectable.
+            forwardStack.current.push(currentLocationKeyRef.current);
             incomingRouteParams.current = {
               routeAction: 'pop',
               routeDirection: 'none',
