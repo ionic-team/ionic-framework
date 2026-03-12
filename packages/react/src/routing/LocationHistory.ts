@@ -175,4 +175,16 @@ export class LocationHistory {
   canGoBack() {
     return this.locationHistory.length > 1;
   }
+
+  findTabForPathname(pathname: string): string | undefined {
+    for (const tab of Object.keys(this.tabHistory)) {
+      const routeInfos = this.tabHistory[tab];
+      for (let i = routeInfos.length - 1; i >= 0; i--) {
+        if (routeInfos[i].pathname === pathname) {
+          return tab;
+        }
+      }
+    }
+    return undefined;
+  }
 }

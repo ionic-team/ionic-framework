@@ -114,6 +114,18 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     // for future navigations once React has committed the mount. This avoids
     // duplicate entries when React StrictMode runs an extra render pre-commit.
     locationHistory.current.add(routeInfo);
+
+    // If IonTabBar already called handleSetCurrentTab during render (before this
+    // effect), the tab was stored in currentTab.current but the history entry was
+    // not yet seeded. Apply the pending tab to the seed entry now.
+    if (currentTab.current) {
+      const ri = { ...locationHistory.current.current() };
+      if (ri.tab !== currentTab.current) {
+        ri.tab = currentTab.current;
+        locationHistory.current.update(ri);
+      }
+    }
+
     registerHistoryListener(handleHistoryChange);
 
     didMountRef.current = true;
@@ -179,14 +191,17 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     const leavingUrl = leavingLocationInfo.pathname + leavingLocationInfo.search;
     if (leavingUrl !== location.pathname + location.search) {
       if (!incomingRouteParams.current) {
-        // Determine if the destination is a tab route by checking if it matches
-        // the pattern of tab routes (containing /tabs/ in the path)
-        const isTabRoute = /\/tabs(\/|$)/.test(location.pathname);
-        const tabToUse = isTabRoute ? currentTab.current : undefined;
-
-        // If we're leaving tabs entirely, clear the current tab
-        if (!isTabRoute && currentTab.current) {
-          currentTab.current = undefined;
+        // Use history-based tab detection instead of URL-pattern heuristics,
+        // so tab routes work with any URL structure (not just paths containing "/tabs").
+        // Fall back to currentTab.current only when the destination is within the
+        // current tab's path hierarchy (prevents non-tab routes from inheriting a tab).
+        let tabToUse = locationHistory.current.findTabForPathname(location.pathname);
+        if (!tabToUse && currentTab.current) {
+          const tabFirstRoute = locationHistory.current.getFirstRouteInfoForTab(currentTab.current);
+          const tabRootPath = tabFirstRoute?.pathname;
+          if (tabRootPath && (location.pathname === tabRootPath || location.pathname.startsWith(tabRootPath + '/'))) {
+            tabToUse = currentTab.current;
+          }
         }
 
         /**
@@ -256,7 +271,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
       let routeInfo: RouteInfo;
 
       // If we're navigating away from tabs to a non-tab route, clear the current tab
-      if (!/\/tabs(\/|$)/.test(location.pathname) && currentTab.current) {
+      if (!locationHistory.current.findTabForPathname(location.pathname) && currentTab.current) {
         currentTab.current = undefined;
       }
 
@@ -441,7 +456,13 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
    */
   const handleSetCurrentTab = (tab: string) => {
     currentTab.current = tab;
-    const ri = { ...locationHistory.current.current() };
+    const current = locationHistory.current.current();
+    if (!current) {
+      // locationHistory not yet seeded (e.g., called during initial render
+      // before mount effect). The mount effect will seed the correct entry.
+      return;
+    }
+    const ri = { ...current };
     if (ri.tab !== tab) {
       ri.tab = tab;
       locationHistory.current.update(ri);
@@ -553,26 +574,27 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     let navigationTab = tab;
 
     // If no explicit tab is provided and we're in a tab context,
-    // check if the destination path is outside of the current tab context
+    // check if the destination path is outside of the current tab context.
+    // Uses history-based tab detection instead of URL pattern matching,
+    // so it works with any tab URL structure.
     if (!tab && currentTab.current && path) {
-      // Get the current route info to understand where we are
-      const currentRoute = locationHistory.current.current();
-
-      // If we're navigating from a tab route to a completely different path structure,
-      // we should clear the tab context. This is a simplified check that assumes
-      // tab routes share a common parent path.
-      if (currentRoute && currentRoute.pathname) {
-        // Extract the base tab path (e.g., /routing/tabs from /routing/tabs/home)
-        const tabBaseMatch = currentRoute.pathname.match(/^(.*\/tabs)/);
-        if (tabBaseMatch) {
-          const tabBasePath = tabBaseMatch[1];
-          // If the new path doesn't start with the tab base path, we're leaving tabs
-          if (!path.startsWith(tabBasePath)) {
+      // Check if destination was previously visited in a tab context
+      const destinationTab = locationHistory.current.findTabForPathname(path);
+      if (destinationTab) {
+        // Previously visited as a tab route - use the known tab
+        navigationTab = destinationTab;
+      } else {
+        // New destination - check if it's a child of the current tab's root path
+        const tabFirstRoute = locationHistory.current.getFirstRouteInfoForTab(currentTab.current);
+        if (tabFirstRoute) {
+          const tabRootPath = tabFirstRoute.pathname;
+          if (path === tabRootPath || path.startsWith(tabRootPath + '/')) {
+            // Still within the current tab's path hierarchy
+            navigationTab = currentTab.current;
+          } else {
+            // Destination is outside the current tab context
             currentTab.current = undefined;
             navigationTab = undefined;
-          } else {
-            // Still within tabs, preserve the tab context
-            navigationTab = currentTab.current;
           }
         }
       }
