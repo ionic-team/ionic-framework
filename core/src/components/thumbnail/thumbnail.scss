@@ -8,8 +8,7 @@
    * @prop --border-radius: Border radius of the thumbnail
    * @prop --size: Size of the thumbnail
    */
-  // TODO(): separate width and height tokens for thumbnails
-  --size: 48px;
+  --size: 48px; // TODO(FW-6862): separate width and height tokens for thumbnails
   --border-radius: 0;
 
   @include border-radius(var(--border-radius));

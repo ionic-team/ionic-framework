@@ -253,7 +253,7 @@
 // --------------------------------------------------
 
 ::slotted(ion-thumbnail) {
-  // TODO(): separate width and height tokens for thumbnails
+  // TODO(FW-6862): separate width and height tokens for thumbnails
   --size: var(--ion-item-divider-thumbnail-width);
 
   @include mixins.margin(
