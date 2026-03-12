@@ -101,6 +101,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/index-route-reuse">
             <IonLabel>Index Route Reuse</IonLabel>
           </IonItem>
+          <IonItem routerLink="/tail-slice-ambiguity">
+            <IonLabel>Tail Slice Ambiguity</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

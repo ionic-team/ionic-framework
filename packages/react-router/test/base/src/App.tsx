@@ -52,6 +52,7 @@ import PrefixMatchWildcard from './pages/prefix-match-wildcard/PrefixMatchWildca
 import StaleViewCleanup from './pages/stale-view-cleanup/StaleViewCleanup';
 import IndexParamPriority from './pages/index-param-priority/IndexParamPriority';
 import IndexRouteReuse from './pages/index-route-reuse/IndexRouteReuse';
+import TailSliceAmbiguity from './pages/tail-slice-ambiguity/TailSliceAmbiguity';
 
 setupIonicReact();
 
@@ -93,6 +94,7 @@ const App: React.FC = () => {
           <Route path="/stale-view-cleanup/*" element={<StaleViewCleanup />} />
           <Route path="/index-param-priority/*" element={<IndexParamPriority />} />
           <Route path="/index-route-reuse/*" element={<IndexRouteReuse />} />
+          <Route path="/tail-slice-ambiguity/*" element={<TailSliceAmbiguity />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

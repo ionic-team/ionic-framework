@@ -69,17 +69,6 @@ const matchesEmbeddedWildcardRoute = (route: React.ReactElement, pathname: strin
 };
 
 /**
- * Checks if a route path consists entirely of parameterized segments (e.g., ":slug", ":category/:id").
- * These routes match any single segment and should not drive the parent path deeper
- * than the outlet's established mount point.
- */
-const isPurelyParameterized = (routePath: string | undefined): boolean => {
-  if (!routePath) return false;
-  const segments = routePath.split('/').filter(Boolean);
-  return segments.length > 0 && segments.every((segment) => segment.startsWith(':'));
-};
-
-/**
  * Checks if a route is a specific match (not wildcard-only or index).
  */
 export const isSpecificRouteMatch = (route: React.ReactElement, remainingPath: string): boolean => {
@@ -180,12 +169,21 @@ const couldSpecificRouteMatch = (
   // When mount path is established, skip this lookahead: the parent depth is known,
   // and purely parameterized routes (e.g., :slug) matching the last segment should
   // not prevent the wildcard from claiming the full remaining path.
+  //
+  // Only allow purely literal routes (no :params) in the lookahead. Routes with
+  // parameters are positionally ambiguous — their params match any segment, so a
+  // coincidental match at a deeper level (e.g., details/:id matching "details/99"
+  // inside "extra/details/99") should not prevent the wildcard from capturing the
+  // full remaining path.
   if (!outletMountPath) {
     for (let j = 1; j < segments.length; j++) {
       const futureRemaining = segments.slice(j).join('/');
       const futureMatch = findFirstSpecificMatchingRoute(routeChildren, futureRemaining);
-      if (futureMatch && !isPurelyParameterized(futureMatch.props.path as string)) {
-        return true;
+      if (futureMatch) {
+        const futurePath = futureMatch.props.path as string | undefined;
+        if (futurePath && !futurePath.includes(':')) {
+          return true;
+        }
       }
     }
   }
@@ -314,13 +312,12 @@ export const computeParentPath = (options: ComputeParentPathOptions): ParentPath
 
         // Check for specific route match (highest priority)
         if (!firstSpecificMatch && findSpecificMatch(routeChildren, remainingPath)) {
-          // Don't let purely parameterized routes (e.g., :slug, :id) drive the
-          // parent deeper than where a wildcard already matched. A :slug route
-          // matching the last segment of "deep/nested/path" shouldn't pull the
-          // parent to /parent/deep/nested — the wildcard at the correct depth
-          // should catch the full remaining path instead.
-          // Literal routes (e.g., "settings", "redirect") can still match beyond
-          // the wildcard depth to support redirect scenarios.
+          // Don't let routes containing parameter segments (e.g., :slug, details/:id)
+          // drive the parent deeper than where a wildcard already matched. Parameter
+          // segments match any value, making tail-slice matches positionally ambiguous:
+          // e.g., "details/:id" matching "details/99" inside "extra/details/99" is a
+          // coincidental match at the wrong depth. Only purely literal routes (e.g.,
+          // "settings", "redirect") can override the wildcard at deeper levels.
           //
           // Also don't let empty/default path routes (path="" or undefined) drive
           // the parent deeper than a wildcard match. An empty path route matching
@@ -334,7 +331,13 @@ export const computeParentPath = (options: ComputeParentPathOptions): ParentPath
             if (matchingRoute) {
               const matchingPath = matchingRoute.props.path as string | undefined;
               const isEmptyPath = !matchingPath || matchingPath === '';
-              if (shouldSkipParameterized && (isPurelyParameterized(matchingPath as string) || isEmptyPath)) {
+              // When the parent path is deeper than expected (shouldSkipParameterized),
+              // skip routes containing ANY parameterized segments. Parameters make tail-
+              // slice matches positionally ambiguous: e.g., "details/:id" matching
+              // "details/99" inside "extra/details/99" is a coincidental match at the
+              // wrong depth. Only purely literal routes (e.g., "settings") can override
+              // the wildcard at deeper levels.
+              if (shouldSkipParameterized && (matchingPath?.includes(':') || isEmptyPath)) {
                 continue;
               }
               if (firstWildcardMatch && isEmptyPath) {

@@ -452,12 +452,35 @@ export class ReactRouterViewStack extends ViewStacks {
     if (routePath === '*' || routePath === '') {
       // Check if any other view in this outlet has a match for the current route
       const outletViews = this.getViewItemsForOutlet(viewItem.outletId);
+
+      // When parent path context is available, compute the relative pathname once
+      // outside the loop since both routeInfo.pathname and parentPath are invariant.
+      const relativePathname = parentPath
+        ? computeRelativeToParent(routeInfo.pathname, parentPath)
+        : null;
+
       let hasSpecificMatch = outletViews.some((v) => {
         if (v.id === viewItem.id) return false; // Skip self
         const vRoutePath = v.reactElement?.props?.path || '';
         if (vRoutePath === '*' || vRoutePath === '') return false; // Skip other wildcard/empty routes
 
-        // Check if this view item would match the current route
+        // When parent path context is available and the route is relative, use
+        // parent-path-aware matching. This avoids false positives from
+        // derivePathnameToMatch's tail-slice heuristic, which can incorrectly
+        // match route literals that appear at the wrong position in the pathname.
+        // Example: pathname /parent/extra/details/99 with route details/:id —
+        // the tail-slice extracts ["details","99"] producing a false match.
+        if (parentPath && vRoutePath && !vRoutePath.startsWith('/')) {
+          if (relativePathname === null) {
+            return false; // Pathname is outside this outlet's parent scope
+          }
+          return !!matchPath({
+            pathname: relativePathname,
+            componentProps: v.reactElement.props,
+          });
+        }
+
+        // Fallback to matchComponent when no parent path context is available
         const vMatch = v.reactElement ? matchComponent(v.reactElement, routeInfo.pathname) : null;
         return !!vMatch;
       });
