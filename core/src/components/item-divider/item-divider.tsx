@@ -39,7 +39,7 @@ export class ItemDivider implements ComponentInterface {
 
   render() {
     const theme = getIonTheme(this);
-    console.log('theme', theme);
+
     return (
       <Host
         class={createColorClasses(this.color, {
