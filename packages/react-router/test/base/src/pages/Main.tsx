@@ -98,6 +98,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/index-param-priority">
             <IonLabel>Index Param Priority</IonLabel>
           </IonItem>
+          <IonItem routerLink="/index-route-reuse">
+            <IonLabel>Index Route Reuse</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
