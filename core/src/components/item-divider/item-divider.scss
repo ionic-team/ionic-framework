@@ -207,7 +207,7 @@
 
   align-self: flex-start;
 
-  font-size: var(--ion-item-divider-note-font-size);
+  font-size: var(--ion-item-divider-note-font-size, revert-layer);
 }
 
 ::slotted(ion-note[slot]) {
