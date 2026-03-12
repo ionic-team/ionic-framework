@@ -19,7 +19,6 @@ import { NavigationPage3Component } from '../navigation-page3/navigation-page3.c
 import { AlertComponent } from '../alert/alert.component';
 import { AccordionComponent } from '../accordion/accordion.component';
 import { TabsBasicComponent } from '../tabs-basic/tabs-basic.component';
-import { TemplateFormComponent } from '../template-form/template-form.component';
 
 export const routes: Routes = [
   {
