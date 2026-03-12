@@ -403,16 +403,13 @@ export const defaultTheme: DefaultTheme = {
 
         margin: {
           top: components.item.media.slot.margin.top,
-          end: components.item.media.slot.margin.end,
           bottom: components.item.media.slot.margin.bottom,
-          start: components.item.media.slot.margin.start,
         },
 
         leading: {
           // Targets `ion-avatar[slot="start"]`
           edge: {
             margin: {
-              start: components.item.media.start.slot.margin.start,
               end: components.item.media.start.slot.margin.end,
             },
           },
@@ -423,7 +420,6 @@ export const defaultTheme: DefaultTheme = {
           edge: {
             margin: {
               start: components.item.media.end.slot.margin.start,
-              end: components.item.media.end.slot.margin.end,
             },
           },
         },
@@ -437,16 +433,13 @@ export const defaultTheme: DefaultTheme = {
 
         margin: {
           top: components.item.media.slot.margin.top,
-          end: components.item.media.slot.margin.end,
           bottom: components.item.media.slot.margin.bottom,
-          start: components.item.media.slot.margin.start,
         },
 
         leading: {
           // Targets `ion-thumbnail[slot="start"]`
           edge: {
             margin: {
-              start: components.item.media.start.slot.margin.start,
               end: components.item.media.start.slot.margin.end,
             },
           },
@@ -457,7 +450,6 @@ export const defaultTheme: DefaultTheme = {
           edge: {
             margin: {
               start: components.item.media.end.slot.margin.start,
-              end: components.item.media.end.slot.margin.end,
             },
           },
         },

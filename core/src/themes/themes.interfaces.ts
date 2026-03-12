@@ -1,4 +1,5 @@
 import type { IonChipRecipe, IonChipConfig } from '../components/chip/chip.interfaces';
+import type { IonItemDividerRecipe } from '../components/item-divider/item-divider.interfaces';
 import type { IonicConfig as IonicGlobalConfig } from '../utils/config';
 
 // Platform-specific theme
@@ -282,7 +283,7 @@ export type DefaultTheme = BaseTheme & {
 
 type Components = {
   IonChip?: IonChipRecipe;
-  IonItemDivider?: any;
+  IonItemDivider?: IonItemDividerRecipe;
 
   IonCard?: any;
   IonItem?: any;

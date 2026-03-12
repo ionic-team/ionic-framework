@@ -103,9 +103,7 @@ export const components = {
       slot: {
         margin: {
           top: 'var(--ion-spacing-sm)',
-          end: null,
           bottom: 'var(--ion-spacing-sm)',
-          start: null,
         },
       },
 
@@ -113,7 +111,6 @@ export const components = {
         slot: {
           margin: {
             end: 'var(--ion-spacing-lg)',
-            start: null,
           },
         },
       },
@@ -121,7 +118,6 @@ export const components = {
       end: {
         slot: {
           margin: {
-            end: null,
             start: 'var(--ion-spacing-lg)',
           },
         },
