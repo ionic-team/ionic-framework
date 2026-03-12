@@ -1,6 +1,5 @@
 /**
- * Tokens shared between the MD theme files or are being used in the files
- * multiple times.
+ * Common tokens utilized multiple times across `ionic` theme files.
  */
 
 import { mix, rgba } from '../../utils/theme';

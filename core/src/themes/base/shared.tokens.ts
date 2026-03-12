@@ -1,5 +1,5 @@
 /**
- * Tokens shared between the theme files.
+ * Common tokens utilized multiple times across all theme files.
  */
 
 const hexColors = {

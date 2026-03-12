@@ -1,6 +1,5 @@
 /**
- * Tokens shared between the iOS theme files or are being used in the files
- * multiple times.
+ * Common tokens utilized multiple times across `ios` theme files.
  */
 
 import { dynamicFont } from '../../utils/theme';
