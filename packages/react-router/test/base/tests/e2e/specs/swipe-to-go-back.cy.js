@@ -149,4 +149,54 @@ describe('Swipe To Go Back', () => {
 
     cy.ionPageVisible('params-1');
   })
+
+  it('should keep correct view visible after swipe-back completes then abort on previous page', () => {
+    // Navigate three levels deep: main → details → details2
+    cy.visit(`http://localhost:${port}/swipe-to-go-back?${IOS_MODE}`);
+    cy.ionPageVisible('main');
+
+    cy.ionNav('ion-item', 'Details');
+    cy.ionPageVisible('details');
+    cy.ionPageHidden('main');
+
+    cy.get('#go-to-details2').click();
+    cy.wait(250);
+    cy.ionPageVisible('details2');
+    cy.ionPageHidden('details');
+
+    // Complete swipe back from details2 → details
+    cy.ionSwipeToGoBack(true, 'ion-router-outlet#swipe-to-go-back');
+    cy.ionPageVisible('details');
+    cy.ionPageDoesNotExist('details2');
+
+    // Now on details, abort a swipe back toward main
+    // This validates that the abort doesn't hide the currently-visible page
+    cy.ionSwipeToGoBack(false, 'ion-router-outlet#swipe-to-go-back');
+    cy.ionPageVisible('details');
+    cy.ionPageHidden('main');
+  })
+
+  it('should handle multiple consecutive swipe aborts without hiding current page', () => {
+    cy.visit(`http://localhost:${port}/swipe-to-go-back?${IOS_MODE}`);
+    cy.ionPageVisible('main');
+
+    cy.ionNav('ion-item', 'Details');
+    cy.ionPageVisible('details');
+    cy.ionPageHidden('main');
+
+    // First abort
+    cy.ionSwipeToGoBack(false, 'ion-router-outlet#swipe-to-go-back');
+    cy.ionPageVisible('details');
+    cy.ionPageHidden('main');
+
+    // Second abort
+    cy.ionSwipeToGoBack(false, 'ion-router-outlet#swipe-to-go-back');
+    cy.ionPageVisible('details');
+    cy.ionPageHidden('main');
+
+    // Third abort
+    cy.ionSwipeToGoBack(false, 'ion-router-outlet#swipe-to-go-back');
+    cy.ionPageVisible('details');
+    cy.ionPageHidden('main');
+  })
 });

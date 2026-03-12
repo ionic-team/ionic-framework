@@ -17,6 +17,7 @@ export const SwipeToGoBack: React.FC = () => {
     <IonRouterOutlet id="swipe-to-go-back">
       <Route path="/swipe-to-go-back" element={<Main />} />
       <Route path="/swipe-to-go-back/details" element={<Details />} />
+      <Route path="/swipe-to-go-back/details2" element={<Details2 />} />
     </IonRouterOutlet>
   );
 };
@@ -49,6 +50,25 @@ const Details: React.FC = () => {
       </IonHeader>
       <IonContent>
         <div>Details</div>
+        <IonItem routerLink="/swipe-to-go-back/details2" id="go-to-details2">Details 2</IonItem>
+      </IonContent>
+    </IonPage>
+  );
+};
+
+const Details2: React.FC = () => {
+  return (
+    <IonPage data-pageid="details2">
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton></IonBackButton>
+          </IonButtons>
+          <IonTitle>Details 2</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <div>Details 2</div>
       </IonContent>
     </IonPage>
   );
