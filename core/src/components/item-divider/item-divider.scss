@@ -57,6 +57,7 @@
 
   min-height: var(--ion-item-divider-min-height);
 
+  // TODO(FW-6848): remove border-bottom and replace it with the `ion-divider`
   border-bottom: var(--ion-item-divider-border-bottom);
 
   background: var(--background);
