@@ -1058,14 +1058,14 @@ export declare interface IonItem extends Components.IonItem {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonItemDivider,
-  inputs: ['color', 'mode', 'sticky', 'theme']
+  inputs: ['color', 'mode', 'sticky']
 })
 @Component({
   selector: 'ion-item-divider',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'sticky', 'theme'],
+  inputs: ['color', 'mode', 'sticky'],
   standalone: true
 })
 export class IonItemDivider {
