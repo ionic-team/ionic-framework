@@ -138,6 +138,10 @@
   );
 }
 
+// Item Divider Slotted Elements
+// ---------------------------------------------
+
+// Slotted Start
 ::slotted([slot="start"]) {
   @include mixins.margin-horizontal(
     var(--ion-item-divider-leading-edge-margin-start, revert-layer),
@@ -145,6 +149,7 @@
   ); // for ionic this should be 0
 }
 
+// Slotted End
 ::slotted([slot="end"]) {
   @include mixins.margin-horizontal(
     var(--ion-item-divider-trailing-edge-margin-start, revert-layer),
@@ -152,9 +157,7 @@
   );
 }
 
-// Slotted Label
-// --------------------------------------------------
-
+// Label
 ::slotted(ion-label) {
   @include mixins.margin(
     var(--ion-item-divider-label-margin-top),
@@ -164,9 +167,7 @@
   );
 }
 
-// Slotted Icon
-// --------------------------------------------------
-
+// Icon
 ::slotted(ion-icon) {
   color: var(--ion-item-divider-icon-default-color);
 
@@ -195,9 +196,7 @@
   );
 }
 
-// Slotted Note
-// --------------------------------------------------
-
+// Note
 ::slotted(ion-note) {
   @include mixins.margin(
     var(--ion-item-divider-note-margin-top),
@@ -220,9 +219,7 @@
   );
 }
 
-// Slotted Avatar
-// --------------------------------------------------
-
+// Avatar
 ::slotted(ion-avatar) {
   @include mixins.margin(
     var(--ion-item-divider-avatar-margin-top),
@@ -249,9 +246,7 @@
   );
 }
 
-// Slotted Thumbnail
-// --------------------------------------------------
-
+// Thumbnail
 ::slotted(ion-thumbnail) {
   // TODO(FW-6862): separate width and height tokens for thumbnails
   --size: var(--ion-item-divider-thumbnail-width);
@@ -278,9 +273,7 @@
   );
 }
 
-// Slotted Content
-// --------------------------------------------------
-
+// Headers
 ::slotted(h1) {
   @include mixins.margin(
     var(--ion-item-divider-header1-margin-top),
@@ -380,6 +373,7 @@
   );
 }
 
+// Paragraph
 ::slotted(p) {
   @include mixins.margin(
     var(--ion-item-divider-paragraph-margin-top),
