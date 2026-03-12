@@ -282,7 +282,7 @@ export class ReactRouterViewStack extends ViewStacks {
         if (hasParams) {
           if (isWildcard) {
             const existingPathnameBase = v.routeData?.match?.pathnameBase;
-            const newMatch = matchComponent(reactElement, routeInfo.pathname, false);
+            const newMatch = matchComponent(reactElement, routeInfo.pathname, false, this.outletParentPaths.get(outletId));
             const newPathnameBase = newMatch?.pathnameBase;
             if (existingPathnameBase !== newPathnameBase) {
               return false;
@@ -309,7 +309,7 @@ export class ReactRouterViewStack extends ViewStacks {
       existingViewItem.mount = true;
       existingViewItem.ionPageElement = page || existingViewItem.ionPageElement;
       const updatedMatch =
-        matchComponent(reactElement, routeInfo.pathname, false) ||
+        matchComponent(reactElement, routeInfo.pathname, false, this.outletParentPaths.get(outletId)) ||
         existingViewItem.routeData?.match ||
         createDefaultMatch(routeInfo.pathname, reactElement.props);
 
@@ -337,7 +337,7 @@ export class ReactRouterViewStack extends ViewStacks {
     }
 
     const initialMatch =
-      matchComponent(reactElement, routeInfo.pathname, true) ||
+      matchComponent(reactElement, routeInfo.pathname, true, this.outletParentPaths.get(outletId)) ||
       createDefaultMatch(routeInfo.pathname, reactElement.props);
 
     viewItem.routeData = {
@@ -360,7 +360,7 @@ export class ReactRouterViewStack extends ViewStacks {
    */
   private renderViewItem = (viewItem: ViewItem, routeInfo: RouteInfo, parentPath?: string, reRender?: () => void) => {
     const routePath = viewItem.reactElement.props.path || '';
-    let match = matchComponent(viewItem.reactElement, routeInfo.pathname);
+    let match = matchComponent(viewItem.reactElement, routeInfo.pathname, false, parentPath);
 
     if (!match) {
       const indexMatch = resolveIndexRouteMatch(viewItem, routeInfo.pathname, parentPath);
@@ -593,9 +593,17 @@ export class ReactRouterViewStack extends ViewStacks {
     outletId: string,
     ionRouterOutlet: React.ReactElement,
     routeInfo: RouteInfo,
-    reRender: () => void
+    reRender: () => void,
+    parentPathnameBase?: string
   ) => {
     const viewItems = this.getViewItemsForOutlet(outletId);
+
+    // Seed the mount path from the parent route context if available.
+    // This provides the outlet's mount path immediately on first render,
+    // eliminating the need for heuristic-based discovery in computeParentPath.
+    if (parentPathnameBase && !this.outletMountPaths.has(outletId)) {
+      this.outletMountPaths.set(outletId, parentPathnameBase);
+    }
 
     // Determine parentPath for outlets with relative or index routes.
     // This populates outletParentPaths for findViewItemByPath's matchView
@@ -680,7 +688,7 @@ export class ReactRouterViewStack extends ViewStacks {
         const viewRoutePath = viewItem.reactElement?.props?.path as string | undefined;
         if (viewRoutePath) {
           // First try exact match using matchComponent
-          const routeMatch = matchComponent(viewItem.reactElement, routeInfo.pathname);
+          const routeMatch = matchComponent(viewItem.reactElement, routeInfo.pathname, false, parentPath);
           if (routeMatch) {
             // View matches current route, keep it
             return true;
@@ -794,10 +802,10 @@ export class ReactRouterViewStack extends ViewStacks {
 
       const isIndexRoute = !!v.routeData.childProps.index;
       const previousMatch = v.routeData?.match;
-      const result = v.reactElement ? matchComponent(v.reactElement, pathname) : null;
+      const outletParentPath = storedParentPaths.get(v.outletId);
+      const result = v.reactElement ? matchComponent(v.reactElement, pathname, false, outletParentPath) : null;
 
       if (!result) {
-        const outletParentPath = storedParentPaths.get(v.outletId);
         const indexMatch = resolveIndexRouteMatch(v, pathname, outletParentPath);
         if (indexMatch) {
           match = indexMatch;
@@ -977,10 +985,21 @@ export class ReactRouterViewStack extends ViewStacks {
 /**
  * Utility to apply matchPath to a React element and return its match state.
  */
-function matchComponent(node: React.ReactElement, pathname: string, allowFallback = false) {
+function matchComponent(node: React.ReactElement, pathname: string, allowFallback = false, parentPath?: string) {
   const routeProps = node?.props ?? {};
   const routePath: string | undefined = routeProps.path;
-  const pathnameToMatch = derivePathnameToMatch(pathname, routePath);
+
+  let pathnameToMatch: string;
+  if (parentPath && routePath && !routePath.startsWith('/')) {
+    // When parent path is known, compute exact relative pathname
+    // instead of using the tail-slice heuristic
+    const relative = pathname.startsWith(parentPath)
+      ? pathname.slice(parentPath.length).replace(/^\//, '')
+      : pathname;
+    pathnameToMatch = relative;
+  } else {
+    pathnameToMatch = derivePathnameToMatch(pathname, routePath);
+  }
 
   const match = matchPath({
     pathname: pathnameToMatch,

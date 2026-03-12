@@ -7,13 +7,19 @@
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
 import { IonRoute, RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, UNSAFE_RouteContext as RouteContext } from 'react-router-dom';
 
 import { clonePageElement } from './clonePageElement';
-import { analyzeRouteChildren, computeCommonPrefix, computeParentPath } from './utils/computeParentPath';
+import {
+  analyzeRouteChildren,
+  computeCommonPrefix,
+  computeParentPath,
+  isPathnameInScope,
+} from './utils/computeParentPath';
 import { derivePathnameToMatch, matchPath } from './utils/pathMatching';
 import { stripTrailingSlash } from './utils/pathNormalization';
 import { extractRouteChildren, getRoutesChildren, isNavigateElement } from './utils/routeElements';
+import { compareRouteSpecificity } from './utils/viewItemUtils';
 
 /**
  * Delay in milliseconds before unmounting a view after a transition completes.
@@ -91,27 +97,42 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   }
 
   private outletMountPath: string | undefined = undefined;
+  /**
+   * Whether this outlet is at the root level (no parent route matches).
+   * Derived from UNSAFE_RouteContext in render() — empty matches means root.
+   */
+  private isRootOutlet = true;
 
   /**
    * Determines the parent path for nested routing in React Router 6.
-   * Priority: specific routes > wildcard routes > index routes (only at mount point)
+   *
+   * When the mount path is known (seeded from UNSAFE_RouteContext), returns
+   * it directly — no iterative discovery needed. The computeParentPath
+   * fallback only runs for root outlets where RouteContext doesn't provide
+   * a parent match.
    */
   private getParentPath(): string | undefined {
     const currentPathname = this.props.routeInfo.pathname;
 
-    // Prevent out-of-scope outlets from adopting unrelated routes
-    if (this.outletMountPath && !currentPathname.startsWith(this.outletMountPath)) {
+    // Prevent out-of-scope outlets from adopting unrelated routes.
+    // Uses segment-aware comparison: /tabs-secondary must NOT match /tabs scope.
+    if (this.outletMountPath && !isPathnameInScope(currentPathname, this.outletMountPath)) {
       return undefined;
     }
 
+    // Fast path: mount path is known from RouteContext. The parent path IS the
+    // mount path — no need to run the iterative computeParentPath algorithm.
+    if (this.outletMountPath && !this.isRootOutlet) {
+      return this.outletMountPath;
+    }
+
+    // Fallback: root outlet or mount path not yet seeded. Run the full
+    // computeParentPath algorithm to discover the parent depth.
     if (this.ionRouterOutlet) {
       const routeChildren = extractRouteChildren(this.ionRouterOutlet.props.children);
       const { hasRelativeRoutes, hasIndexRoute, hasWildcardRoute } = analyzeRouteChildren(routeChildren);
 
-      const isRootOutlet = this.id.startsWith('routerOutlet');
-      const needsParentPath = !isRootOutlet || hasRelativeRoutes || hasIndexRoute;
-
-      if (needsParentPath) {
+      if (!this.isRootOutlet || hasRelativeRoutes || hasIndexRoute) {
         const result = computeParentPath({
           currentPathname,
           outletMountPath: this.outletMountPath,
@@ -256,8 +277,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     parentPath: string | undefined,
     leavingViewItem: ViewItem | undefined
   ): boolean {
-    const isRootOutlet = this.id.startsWith('routerOutlet');
-    if (isRootOutlet || parentPath !== undefined || !this.ionRouterOutlet) {
+    if (this.isRootOutlet || parentPath !== undefined || !this.ionRouterOutlet) {
       return false;
     }
 
@@ -293,8 +313,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     enteringViewItem: ViewItem | undefined,
     leavingViewItem: ViewItem | undefined
   ): boolean {
-    const isRootOutlet = this.id.startsWith('routerOutlet');
-    if (isRootOutlet || enteringRoute || enteringViewItem) {
+    if (this.isRootOutlet || enteringRoute || enteringViewItem) {
       return false;
     }
 
@@ -323,7 +342,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     // When entering === leaving, the view is already visible - skip transition to prevent flash
     if (enteringViewItem === leavingViewItem) {
       if (isParameterizedRoute || isWildcardContainerRoute) {
-        const updatedMatch = matchComponent(enteringViewItem.reactElement, routeInfo.pathname, true);
+        const updatedMatch = matchComponent(enteringViewItem.reactElement, routeInfo.pathname, true, this.outletMountPath);
         if (updatedMatch) {
           enteringViewItem.routeData.match = updatedMatch;
         }
@@ -352,7 +371,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         routeInfo.lastPathname.startsWith(containerBase + '/') || routeInfo.lastPathname === containerBase;
 
       if (currentInContainer && previousInContainer) {
-        const updatedMatch = matchComponent(enteringViewItem.reactElement, routeInfo.pathname, true);
+        const updatedMatch = matchComponent(enteringViewItem.reactElement, routeInfo.pathname, true, this.outletMountPath);
         if (updatedMatch) {
           enteringViewItem.routeData.match = updatedMatch;
         }
@@ -1144,7 +1163,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     if (enteringViewItem && enteringViewItem.ionPageElement && this.routerOutletElement) {
       if (leavingViewItem && leavingViewItem.ionPageElement && enteringViewItem === leavingViewItem) {
         // Clone page for same-view transitions (e.g., /user/1 → /user/2)
-        const match = matchComponent(leavingViewItem.reactElement, routeInfo.pathname);
+        const match = matchComponent(leavingViewItem.reactElement, routeInfo.pathname, undefined, this.outletMountPath);
         if (match) {
           const newLeavingElement = clonePageElement(leavingViewItem.ionPageElement.outerHTML);
           if (newLeavingElement) {
@@ -1295,36 +1314,65 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     // Store reference for use in getParentPath() and handlePageTransition()
     this.ionRouterOutlet = ionRouterOutlet;
 
-    const components = this.context.getChildrenToRender(this.id, this.ionRouterOutlet, this.props.routeInfo, () => {
-      // Callback triggers re-render when view items are modified during getChildrenToRender
-      this.forceUpdate();
-    });
-
     return (
-      <StackContext.Provider value={this.stackContextValue}>
-        {React.cloneElement(
-          ionRouterOutlet as any,
-          {
-            ref: (node: HTMLIonRouterOutletElement) => {
-              if (ionRouterOutlet.props.setRef) {
-                // Needed to handle external refs from devs.
-                ionRouterOutlet.props.setRef(node);
-              }
-              if (ionRouterOutlet.props.forwardedRef) {
-                // Needed to handle external refs from devs.
-                ionRouterOutlet.props.forwardedRef.current = node;
-              }
-              this.routerOutletElement = node;
-              const { ref } = ionRouterOutlet as any;
-              // Check for legacy refs.
-              if (typeof ref === 'function') {
-                ref(node);
-              }
+      <RouteContext.Consumer>
+        {(parentContext) => {
+          // Derive the outlet's mount path from React Router's matched route context.
+          // This eliminates the need for heuristic-based mount path discovery in
+          // computeParentPath, since React Router already knows the matched base path.
+          const parentMatches = parentContext?.matches as Array<{ pathnameBase: string }> | undefined;
+          const parentPathnameBase =
+            parentMatches && parentMatches.length > 0
+              ? parentMatches[parentMatches.length - 1].pathnameBase
+              : undefined;
+
+          // Derive isRootOutlet from RouteContext: empty matches means root.
+          this.isRootOutlet = !parentMatches || parentMatches.length === 0;
+
+          // Seed StackManager's mount path from the parent route context
+          if (parentPathnameBase && !this.outletMountPath) {
+            this.outletMountPath = parentPathnameBase;
+          }
+
+          const components = this.context.getChildrenToRender(
+            this.id,
+            this.ionRouterOutlet,
+            this.props.routeInfo,
+            () => {
+              // Callback triggers re-render when view items are modified during getChildrenToRender
+              this.forceUpdate();
             },
-          },
-          components
-        )}
-      </StackContext.Provider>
+            parentPathnameBase
+          );
+
+          return (
+            <StackContext.Provider value={this.stackContextValue}>
+              {React.cloneElement(
+                ionRouterOutlet as any,
+                {
+                  ref: (node: HTMLIonRouterOutletElement) => {
+                    if (ionRouterOutlet.props.setRef) {
+                      // Needed to handle external refs from devs.
+                      ionRouterOutlet.props.setRef(node);
+                    }
+                    if (ionRouterOutlet.props.forwardedRef) {
+                      // Needed to handle external refs from devs.
+                      ionRouterOutlet.props.forwardedRef.current = node;
+                    }
+                    this.routerOutletElement = node;
+                    const { ref } = ionRouterOutlet as any;
+                    // Check for legacy refs.
+                    if (typeof ref === 'function') {
+                      ref(node);
+                    }
+                  },
+                },
+                components
+              )}
+            </StackContext.Provider>
+          );
+        }}
+      </RouteContext.Consumer>
     );
   }
 
@@ -1358,35 +1406,12 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
   );
 
   // Sort routes by specificity (most specific first)
-  const sortedRoutes = routeChildren.sort((a, b) => {
-    const pathA = a.props.path || '';
-    const pathB = b.props.path || '';
-
-    // Index routes come first
-    if (a.props.index && !b.props.index) return -1;
-    if (!a.props.index && b.props.index) return 1;
-
-    // Wildcard-only routes (*) should come LAST
-    const aIsWildcardOnly = pathA === '*';
-    const bIsWildcardOnly = pathB === '*';
-
-    if (!aIsWildcardOnly && bIsWildcardOnly) return -1;
-    if (aIsWildcardOnly && !bIsWildcardOnly) return 1;
-
-    // Exact matches (no wildcards/params) come before wildcard/param routes
-    const aHasWildcard = pathA.includes('*') || pathA.includes(':');
-    const bHasWildcard = pathB.includes('*') || pathB.includes(':');
-
-    if (!aHasWildcard && bHasWildcard) return -1;
-    if (aHasWildcard && !bHasWildcard) return 1;
-
-    // Among routes with same wildcard status, longer paths are more specific
-    if (pathA.length !== pathB.length) {
-      return pathB.length - pathA.length;
-    }
-
-    return 0;
-  });
+  const sortedRoutes = routeChildren.sort((a, b) =>
+    compareRouteSpecificity(
+      { path: a.props.path || '', index: !!a.props.index },
+      { path: b.props.path || '', index: !!b.props.index }
+    )
+  );
 
   // For nested routes in React Router 6, we need to extract the relative path
   // that this outlet should be responsible for matching
@@ -1397,7 +1422,7 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
   const hasRelativeRoutes = sortedRoutes.some((r) => r.props.path && !r.props.path.startsWith('/'));
   const hasIndexRoute = sortedRoutes.some((r) => r.props.index);
 
-  // SIMPLIFIED: Trust React Router 6's matching more, compute relative path when parent is known
+  // When parent path is known, compute the relative pathname for matching
   if ((hasRelativeRoutes || hasIndexRoute) && parentPath) {
     const parentPrefix = parentPath.replace('/*', '');
     // Normalize both paths to start with '/' for consistent comparison
@@ -1422,15 +1447,9 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
     // - For absolute routes: use the original full pathname
     // - For relative routes with a parent: use the computed relative pathname
     // - For relative routes at root level (no parent): use the original pathname
-    //   (matchPath will handle the relative-to-absolute normalization)
     const pathnameToMatch = isAbsoluteRoute ? originalPathname : relativePathnameToMatch;
 
-    // Determine the path portion to match:
-    // - For absolute routes: use derivePathnameToMatch
-    // - For relative routes at root level (no parent): use original pathname
-    //   directly since matchPath normalizes both path and pathname
-    // - For relative routes with parent: use derivePathnameToMatch for wildcards,
-    //   or the computed relative pathname for non-wildcards
+    // Determine the path portion to match
     let pathForMatch: string;
     if (isAbsoluteRoute) {
       pathForMatch = derivePathnameToMatch(pathnameToMatch, childPath);
@@ -1439,8 +1458,9 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
       // handle the normalization (it adds '/' to both path and pathname)
       pathForMatch = originalPathname;
     } else if (childPath && childPath.includes('*')) {
-      // Relative wildcard route with parent path: use derivePathnameToMatch
-      pathForMatch = derivePathnameToMatch(pathnameToMatch, childPath);
+      // Relative wildcard route with parent path: the relative pathname was already
+      // computed above using the parent path, so it's already correct
+      pathForMatch = pathnameToMatch;
     } else {
       pathForMatch = pathnameToMatch;
     }
@@ -1460,27 +1480,23 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
     return matchedNode;
   }
 
-  // If we haven't found a node, try to find one that doesn't have a path prop (fallback route)
-  // BUT only return the fallback if the current pathname is within the outlet's scope.
-  // For outlets with absolute paths, compute the common prefix to determine scope.
-  const absolutePathRoutes = routeChildren.filter((r) => r.props.path && r.props.path.startsWith('/'));
+  // Fallback: try pathless routes, but only if pathname is within scope.
+  let pathnameInScope = true;
 
-  // Determine if pathname is within scope before returning fallback
-  let isPathnameInScope = true;
-
-  if (absolutePathRoutes.length > 0) {
-    // Find common prefix of all absolute paths to determine outlet scope
-    const absolutePaths = absolutePathRoutes.map((r) => r.props.path as string);
-    const commonPrefix = computeCommonPrefix(absolutePaths);
-
-    // If we have a common prefix, check if the current pathname is within that scope
-    if (commonPrefix && commonPrefix !== '/') {
-      isPathnameInScope = routeInfo.pathname.startsWith(commonPrefix);
+  if (parentPath) {
+    pathnameInScope = isPathnameInScope(routeInfo.pathname, parentPath);
+  } else {
+    const absolutePathRoutes = routeChildren.filter((r) => r.props.path && r.props.path.startsWith('/'));
+    if (absolutePathRoutes.length > 0) {
+      const absolutePaths = absolutePathRoutes.map((r) => r.props.path as string);
+      const commonPrefix = computeCommonPrefix(absolutePaths);
+      if (commonPrefix && commonPrefix !== '/') {
+        pathnameInScope = routeInfo.pathname.startsWith(commonPrefix);
+      }
     }
   }
 
-  // Only look for fallback route if pathname is within scope
-  if (isPathnameInScope) {
+  if (pathnameInScope) {
     for (const child of routeChildren) {
       if (!child.props.path) {
         fallbackNode = child;
@@ -1492,9 +1508,19 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
   return matchedNode ?? fallbackNode;
 }
 
-function matchComponent(node: React.ReactElement, pathname: string, forceExact?: boolean) {
+function matchComponent(node: React.ReactElement, pathname: string, forceExact?: boolean, parentPath?: string) {
   const routePath: string | undefined = node?.props?.path;
-  const pathnameToMatch = derivePathnameToMatch(pathname, routePath);
+
+  let pathnameToMatch: string;
+  if (parentPath && routePath && !routePath.startsWith('/')) {
+    // When parent path is known, compute exact relative pathname
+    const relative = pathname.startsWith(parentPath)
+      ? pathname.slice(parentPath.length).replace(/^\//, '')
+      : pathname;
+    pathnameToMatch = relative;
+  } else {
+    pathnameToMatch = derivePathnameToMatch(pathname, routePath);
+  }
 
   return matchPath({
     pathname: pathnameToMatch,

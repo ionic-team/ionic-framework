@@ -21,7 +21,7 @@ const Tabs: React.FC = () => {
         <Route path="settings" element={<Tab2 />} />
         <Route path="settings/details/:id" element={<SettingsDetails />} />
         <Route path="tab3" element={<Tab3 />} />
-        <Route path="redirect" element={<Navigate to="settings" replace />} />
+        <Route path="redirect" element={<Navigate to="../settings" replace />} />
         <Route
           path="*"
           element={

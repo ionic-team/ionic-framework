@@ -21,7 +21,8 @@ export interface RouteManagerContextState {
     outletId: string,
     ionRouterOutlet: React.ReactElement,
     routeInfo: RouteInfo,
-    reRender: () => void
+    reRender: () => void,
+    parentPathnameBase?: string
   ) => React.ReactNode[];
   /**
    * Returns all view items currently registered for a given outlet id.

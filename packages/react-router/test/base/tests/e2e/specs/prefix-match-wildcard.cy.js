@@ -42,6 +42,16 @@ describe('Prefix Match Wildcard', () => {
     cy.get('[data-testid="settings-content"]').should('exist');
   });
 
+  it('should load setup directly via wildcard when visiting URL (no prior mount path)', () => {
+    // Direct visit — no prior navigation, so outletMountPath is undefined.
+    // Bug: the 3-char prefix heuristic in couldSpecificRouteMatch sees that
+    // "settings" and "setup" both start with "set", blocks the wildcard,
+    // and the index route incorrectly claims the match at the wrong depth.
+    cy.visit(`http://localhost:${port}/prefix-match-wildcard/setup`);
+    cy.ionPageVisible('prefix-catchall');
+    cy.get('[data-testid="catchall-content"]').should('exist');
+  });
+
   it('should navigate to wildcard, go back, then navigate to settings', () => {
     cy.visit(`http://localhost:${port}/prefix-match-wildcard`);
     cy.ionPageVisible('prefix-home');

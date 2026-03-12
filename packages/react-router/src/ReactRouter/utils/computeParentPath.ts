@@ -44,6 +44,16 @@ export const computeCommonPrefix = (paths: string[]): string => {
 };
 
 /**
+ * Checks if a pathname falls within the scope of a mount path using
+ * segment-aware comparison. Prevents false positives like "/tabs-secondary"
+ * matching mount path "/tabs".
+ */
+export const isPathnameInScope = (pathname: string, mountPath: string): boolean => {
+  if (mountPath === '/') return true;
+  return pathname === mountPath || pathname.startsWith(mountPath + '/');
+};
+
+/**
  * Checks if a route path is a "splat-only" route (just `*` or `/*`).
  */
 const isSplatOnlyRoute = (routePath: string | undefined): boolean => {
@@ -150,45 +160,17 @@ const findFirstSpecificMatchingRoute = (
  * Checks if any specific route could plausibly match the remaining path.
  * Used to determine if we should fall back to a wildcard match.
  *
- * When the outlet's mount path is established, uses exact first-segment
- * matching to avoid false positives from routes sharing a prefix
- * (e.g., "settings" vs "setup"). On first visit (no mount path), uses a
- * conservative 3-char prefix heuristic to prevent premature wildcard
- * matching for parent path segments.
+ * Uses exact first-segment matching: the remaining path's first segment
+ * must exactly equal a route's first segment to block the wildcard.
+ * The outlet's mount path is always known from React Router's RouteContext,
+ * so no heuristic-based discovery is needed.
  */
 const couldSpecificRouteMatch = (
   routeChildren: React.ReactElement[],
-  remainingPath: string,
-  outletMountPath: string | undefined
+  remainingPath: string
 ): boolean => {
-  const segments = remainingPath.split('/');
-  const remainingFirstSegment = segments[0];
+  const remainingFirstSegment = remainingPath.split('/')[0];
 
-  // For multi-segment paths on first visit (no mount path), check if consuming
-  // more parent segments would produce a specific route match at a deeper level.
-  // When mount path is established, skip this lookahead: the parent depth is known,
-  // and purely parameterized routes (e.g., :slug) matching the last segment should
-  // not prevent the wildcard from claiming the full remaining path.
-  //
-  // Only allow purely literal routes (no :params) in the lookahead. Routes with
-  // parameters are positionally ambiguous — their params match any segment, so a
-  // coincidental match at a deeper level (e.g., details/:id matching "details/99"
-  // inside "extra/details/99") should not prevent the wildcard from capturing the
-  // full remaining path.
-  if (!outletMountPath) {
-    for (let j = 1; j < segments.length; j++) {
-      const futureRemaining = segments.slice(j).join('/');
-      const futureMatch = findFirstSpecificMatchingRoute(routeChildren, futureRemaining);
-      if (futureMatch) {
-        const futurePath = futureMatch.props.path as string | undefined;
-        if (futurePath && !futurePath.includes(':')) {
-          return true;
-        }
-      }
-    }
-  }
-
-  // Check first-segment overlap with route paths
   return routeChildren.some((route) => {
     const routePath = route.props.path as string | undefined;
     if (!routePath || routePath === '*' || routePath === '/*') return false;
@@ -197,40 +179,8 @@ const couldSpecificRouteMatch = (
     const routeFirstSegment = routePath.split('/')[0].replace(/[*:]/g, '');
     if (!routeFirstSegment) return false;
 
-    if (outletMountPath) {
-      // After mount path is established, use exact matching to avoid
-      // false positives from routes sharing a common prefix.
-      return routeFirstSegment === remainingFirstSegment;
-    }
-
-    // On first visit (no mount path), use conservative prefix matching
-    // to prevent premature wildcard matches for parent path segments.
-    return (
-      routeFirstSegment.startsWith(remainingFirstSegment.slice(0, 3)) ||
-      remainingFirstSegment.startsWith(routeFirstSegment.slice(0, 3))
-    );
+    return routeFirstSegment === remainingFirstSegment;
   });
-};
-
-/**
- * Checks for index route match when remaining path is empty.
- * Index routes only match at the outlet's mount path level.
- */
-const checkIndexMatch = (
-  parentPath: string,
-  remainingPath: string,
-  hasIndexRoute: boolean,
-  outletMountPath: string | undefined
-): string | undefined => {
-  if ((remainingPath === '' || remainingPath === '/') && hasIndexRoute) {
-    if (outletMountPath) {
-      // Index should only match at the existing mount path
-      return parentPath === outletMountPath ? parentPath : undefined;
-    }
-    // No mount path yet - this would establish it
-    return parentPath;
-  }
-  return undefined;
 };
 
 /**
@@ -282,8 +232,10 @@ const computeAbsoluteRoutesParentPath = (
  * Computes the parent path for a nested outlet based on the current pathname
  * and the outlet's route configuration.
  *
- * The algorithm finds the shortest parent path where a route matches the remaining path.
- * Priority: specific routes > wildcard routes > index routes (only at mount point)
+ * When the mount path is known (seeded from React Router's RouteContext), the
+ * parent path is simply the mount path — no iterative discovery needed. The
+ * iterative fallback only runs for outlets where RouteContext doesn't provide
+ * a parent match (typically root-level outlets on first render).
  *
  * @param options The options for computing the parent path.
  * @returns The computed parent path result.
@@ -292,12 +244,25 @@ export const computeParentPath = (options: ComputeParentPathOptions): ParentPath
   const { currentPathname, outletMountPath, routeChildren, hasRelativeRoutes, hasIndexRoute, hasWildcardRoute } =
     options;
 
-  // If pathname is outside the established mount path scope, skip computation
-  if (outletMountPath && !currentPathname.startsWith(outletMountPath)) {
+  // If pathname is outside the established mount path scope, skip computation.
+  // Use segment-aware comparison: /tabs-secondary must NOT match /tabs scope.
+  if (outletMountPath && !isPathnameInScope(currentPathname, outletMountPath)) {
     return { parentPath: undefined, outletMountPath };
   }
 
-  if ((hasRelativeRoutes || hasIndexRoute) && currentPathname.includes('/')) {
+  // Fast path: when the mount path is known (from React Router's RouteContext),
+  // the parent path IS the mount path. The iterative segment-by-segment discovery
+  // below was needed when the mount depth had to be guessed from URL structure,
+  // but with RouteContext we already know exactly where this outlet is mounted.
+  if (outletMountPath && (hasRelativeRoutes || hasIndexRoute)) {
+    return { parentPath: outletMountPath, outletMountPath };
+  }
+
+  // Fallback: mount path not yet known. Iterate through path segments to discover
+  // the correct parent depth. This only runs on first render of outlets where
+  // RouteContext doesn't provide a parent match (typically root-level outlets,
+  // which usually have absolute routes and take the absolute routes path below).
+  if (!outletMountPath && (hasRelativeRoutes || hasIndexRoute) && currentPathname.includes('/')) {
     const segments = currentPathname.split('/').filter(Boolean);
 
     if (segments.length >= 1) {
@@ -305,42 +270,20 @@ export const computeParentPath = (options: ComputeParentPathOptions): ParentPath
       let firstWildcardMatch: string | undefined;
       let indexMatchAtMount: string | undefined;
 
-      // Iterate through path segments to find the shortest matching parent path
       for (let i = 1; i <= segments.length; i++) {
         const parentPath = '/' + segments.slice(0, i).join('/');
         const remainingPath = segments.slice(i).join('/');
 
         // Check for specific route match (highest priority)
         if (!firstSpecificMatch && findSpecificMatch(routeChildren, remainingPath)) {
-          // Don't let routes containing parameter segments (e.g., :slug, details/:id)
-          // drive the parent deeper than where a wildcard already matched. Parameter
-          // segments match any value, making tail-slice matches positionally ambiguous:
-          // e.g., "details/:id" matching "details/99" inside "extra/details/99" is a
-          // coincidental match at the wrong depth. Only purely literal routes (e.g.,
-          // "settings", "redirect") can override the wildcard at deeper levels.
-          //
-          // Also don't let empty/default path routes (path="" or undefined) drive
+          // Don't let empty/default path routes (path="" or undefined) drive
           // the parent deeper than a wildcard match. An empty path route matching
-          // when remainingPath is "" just means all segments were consumed — it's
-          // not a meaningful specific match.
-          const shouldSkipParameterized =
-            (outletMountPath && parentPath.length > outletMountPath.length) ||
-            (!outletMountPath && firstWildcardMatch);
-          if (shouldSkipParameterized || firstWildcardMatch) {
+          // when remainingPath is "" just means all segments were consumed.
+          if (firstWildcardMatch) {
             const matchingRoute = findFirstSpecificMatchingRoute(routeChildren, remainingPath);
             if (matchingRoute) {
               const matchingPath = matchingRoute.props.path as string | undefined;
-              const isEmptyPath = !matchingPath || matchingPath === '';
-              // When the parent path is deeper than expected (shouldSkipParameterized),
-              // skip routes containing ANY parameterized segments. Parameters make tail-
-              // slice matches positionally ambiguous: e.g., "details/:id" matching
-              // "details/99" inside "extra/details/99" is a coincidental match at the
-              // wrong depth. Only purely literal routes (e.g., "settings") can override
-              // the wildcard at deeper levels.
-              if (shouldSkipParameterized && (matchingPath?.includes(':') || isEmptyPath)) {
-                continue;
-              }
-              if (firstWildcardMatch && isEmptyPath) {
+              if (!matchingPath || matchingPath === '') {
                 continue;
               }
             }
@@ -353,19 +296,14 @@ export const computeParentPath = (options: ComputeParentPathOptions): ParentPath
         // Check for wildcard match (only if remaining path is non-empty)
         const hasNonEmptyRemaining = remainingPath !== '' && remainingPath !== '/';
         if (!firstWildcardMatch && hasNonEmptyRemaining && hasWildcardRoute) {
-          // When mount path is established, don't allow wildcard matches shallower
-          // than the mount path — the remaining segments at that depth are parent
-          // path segments, not content for the wildcard to catch.
-          const isTooShallow = outletMountPath && parentPath.length < outletMountPath.length;
-          if (!isTooShallow && !couldSpecificRouteMatch(routeChildren, remainingPath, outletMountPath)) {
+          if (!couldSpecificRouteMatch(routeChildren, remainingPath)) {
             firstWildcardMatch = parentPath;
           }
         }
 
         // Check for index route match
-        const indexMatch = checkIndexMatch(parentPath, remainingPath, hasIndexRoute, outletMountPath);
-        if (indexMatch) {
-          indexMatchAtMount = indexMatch;
+        if ((remainingPath === '' || remainingPath === '/') && hasIndexRoute) {
+          indexMatchAtMount = parentPath;
         }
       }
 
@@ -379,14 +317,7 @@ export const computeParentPath = (options: ComputeParentPathOptions): ParentPath
 
       const bestPath = selectBestMatch(firstSpecificMatch, firstWildcardMatch, indexMatchAtMount);
 
-      // Establish mount path on first successful match
-      const newOutletMountPath = outletMountPath || bestPath;
-
-      if (newOutletMountPath && !currentPathname.startsWith(newOutletMountPath)) {
-        return { parentPath: undefined, outletMountPath: newOutletMountPath };
-      }
-
-      return { parentPath: bestPath, outletMountPath: newOutletMountPath };
+      return { parentPath: bestPath, outletMountPath: bestPath };
     }
   }
 

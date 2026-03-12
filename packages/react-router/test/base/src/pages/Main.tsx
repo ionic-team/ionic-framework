@@ -104,6 +104,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/tail-slice-ambiguity">
             <IonLabel>Tail Slice Ambiguity</IonLabel>
           </IonItem>
+          <IonItem routerLink="/wildcard-no-heuristic">
+            <IonLabel>Wildcard No Heuristic</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
