@@ -303,7 +303,7 @@
   @include mixins.margin(
     var(--ion-item-divider-header2-trailing-margin-top),
     var(--ion-item-divider-header2-trailing-margin-end),
-    var(--ion-item-divider-header2-trailing-margin-bottom, 0),
+    var(--ion-item-divider-header2-trailing-margin-bottom),
     var(--ion-item-divider-header2-trailing-margin-start)
   );
 }
@@ -321,7 +321,7 @@
   @include mixins.margin(
     var(--ion-item-divider-header3-trailing-margin-top),
     var(--ion-item-divider-header3-trailing-margin-end),
-    var(--ion-item-divider-header3-trailing-margin-bottom, 0),
+    var(--ion-item-divider-header3-trailing-margin-bottom),
     var(--ion-item-divider-header3-trailing-margin-start)
   );
 }
@@ -339,7 +339,7 @@
   @include mixins.margin(
     var(--ion-item-divider-header4-trailing-margin-top),
     var(--ion-item-divider-header4-trailing-margin-end),
-    var(--ion-item-divider-header4-trailing-margin-bottom, 0),
+    var(--ion-item-divider-header4-trailing-margin-bottom),
     var(--ion-item-divider-header4-trailing-margin-start)
   );
 }
@@ -357,7 +357,7 @@
   @include mixins.margin(
     var(--ion-item-divider-header5-trailing-margin-top),
     var(--ion-item-divider-header5-trailing-margin-end),
-    var(--ion-item-divider-header5-trailing-margin-bottom, 0),
+    var(--ion-item-divider-header5-trailing-margin-bottom),
     var(--ion-item-divider-header5-trailing-margin-start)
   );
 }
@@ -375,7 +375,7 @@
   @include mixins.margin(
     var(--ion-item-divider-header6-trailing-margin-top),
     var(--ion-item-divider-header6-trailing-margin-end),
-    var(--ion-item-divider-header6-trailing-margin-bottom, 0),
+    var(--ion-item-divider-header6-trailing-margin-bottom),
     var(--ion-item-divider-header6-trailing-margin-start)
   );
 }
