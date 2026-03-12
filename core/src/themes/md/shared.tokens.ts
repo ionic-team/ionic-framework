@@ -5,34 +5,19 @@
 
 import { mix, rgba } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
+import { colors as baseColors } from '../base/shared.tokens';
 
-const hexColors = {
-  white: '#ffffff',
-  black: '#000000',
-};
-
-const rgbColors = {
-  white: '255, 255, 255',
-  black: '0, 0, 0',
-};
-
-export const colors = {
-  ...hexColors,
-
-  backgroundColor: `var(--ion-background-color, ${hexColors.white})`,
-  backgroundColorRgb: `var(--ion-background-color-rgb, ${rgbColors.white})`,
-
-  textColor: `var(--ion-text-color, ${hexColors.black})`,
-  textColorRgb: `var(--ion-text-color-rgb, ${rgbColors.black})`,
-};
-
-export const fontSizes = {
-  chipBase: 14,
+export const global = {
   root: parseFloat(baseDefaultTheme.fontSize!.root as string),
-  itemDividerBase: 14,
 };
 
 export const components = {
+  chip: {
+    font: {
+      size: 14,
+    },
+  },
+
   item: {
     padding: {
       start: 'var(--ion-spacing-lg)',
@@ -46,7 +31,7 @@ export const components = {
 
     border: {
       color: `var(--ion-item-border-color, var(--ion-border-color, var(--ion-background-color-step-150, ${rgba(
-        '0, 0, 0',
+        baseColors.textColorRgb,
         0.13
       )})))`,
     },
@@ -71,7 +56,7 @@ export const components = {
 
     icon: {
       slot: {
-        color: rgba(colors.textColorRgb, 0.54),
+        color: rgba(baseColors.textColorRgb, 0.54),
 
         font: {
           size: 24,
@@ -156,7 +141,13 @@ export const components = {
     },
 
     paragraph: {
-      color: `var(--ion-text-color-400, ${mix(colors.white, colors.black, '40%')})`,
+      color: `var(--ion-text-color-400, ${mix(baseColors.white, baseColors.black, '40%')})`,
     },
   },
+
+  itemDivider: {
+    font: {
+      size: 14,
+    }
+  }
 };

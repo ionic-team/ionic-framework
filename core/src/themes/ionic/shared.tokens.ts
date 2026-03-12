@@ -4,30 +4,7 @@
  */
 
 import { mix, rgba } from '../../utils/theme';
-
-const hexColors = {
-  white: '#ffffff',
-  black: '#000000',
-};
-
-const rgbColors = {
-  white: '255, 255, 255',
-  black: '0, 0, 0',
-};
-
-export const colors = {
-  ...hexColors,
-
-  backgroundColor: `var(--ion-background-color, ${hexColors.white})`,
-  backgroundColorRgb: `var(--ion-background-color-rgb, ${rgbColors.white})`,
-
-  textColor: `var(--ion-text-color, ${hexColors.black})`,
-  textColorRgb: `var(--ion-text-color-rgb, ${rgbColors.black})`,
-};
-
-export const fontSizes = {
-  itemDividerBase: 14,
-};
+import { colors as baseColors } from '../base/shared.tokens';
 
 export const components = {
   item: {
@@ -68,7 +45,7 @@ export const components = {
 
     icon: {
       slot: {
-        color: rgba(colors.textColorRgb, 0.54),
+        color: rgba(baseColors.textColorRgb, 0.54),
 
         font: {
           size: 24,
@@ -153,7 +130,13 @@ export const components = {
     },
 
     paragraph: {
-      color: `var(--ion-text-color-400, ${mix(colors.white, colors.black, '40%')})`,
+      color: `var(--ion-text-color-400, ${mix(baseColors.white, baseColors.black, '40%')})`,
+    },
+  },
+
+  itemDivider: {
+    font: {
+      size: 14,
     },
   },
 };

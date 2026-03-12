@@ -1,12 +1,13 @@
 import { rgba, currentColor, clamp, mix, dynamicFont } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
+import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
 import { darkTheme } from './dark.tokens';
 import { highContrastDarkTheme } from './high-contrast-dark.tokens';
 import { highContrastTheme } from './high-contrast.tokens';
 import { lightTheme } from './light.tokens';
-import { fontSizes, colors, components } from './shared.tokens';
+import { global, components } from './shared.tokens';
 
 export const defaultTheme: DefaultTheme = {
   ...baseDefaultTheme,
@@ -113,7 +114,7 @@ export const defaultTheme: DefaultTheme = {
           font: {
             size: clamp(
               'var(--ion-font-size-xs)',
-              `${((fontSizes.chipBase - 2) / fontSizes.root).toFixed(2)}rem`,
+              `${((components.chip.font.size - 2) / global.root).toFixed(2)}rem`,
               'var(--ion-font-size-xl)'
             ),
           },
@@ -123,7 +124,7 @@ export const defaultTheme: DefaultTheme = {
           minHeight: 'var(--ion-scaling-md)',
 
           font: {
-            size: clamp('13px', `${(fontSizes.chipBase / fontSizes.root).toFixed(2)}rem`, '22px'),
+            size: clamp('13px', `${(components.chip.font.size / global.root).toFixed(2)}rem`, '22px'),
           },
         },
       },
@@ -351,7 +352,7 @@ export const defaultTheme: DefaultTheme = {
         color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.54),
 
         font: {
-          size: `${(20 / fontSizes.chipBase).toFixed(2)}em`,
+          size: `${(20 / components.chip.font.size).toFixed(2)}em`,
         },
 
         // Targets `:first-child`
@@ -376,8 +377,8 @@ export const defaultTheme: DefaultTheme = {
       },
 
       avatar: {
-        height: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
-        width: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
+        height: `${(24 / components.chip.font.size).toFixed(2)}em`,
+        width: `${(24 / components.chip.font.size).toFixed(2)}em`,
 
         // Targets `:first-child`
         leading: {
@@ -402,8 +403,8 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonItemDivider: {
-      background: `var(--ion-background-color-step-100, ${mix(colors.black, colors.white, '90%')})`,
-      color: `var(--ion-text-color-step-150, ${mix(colors.white, colors.black, '85%')})`,
+      background: `var(--ion-background-color-step-100, ${mix(baseColors.black, baseColors.white, '90%')})`,
+      color: `var(--ion-text-color-step-150, ${mix(baseColors.white, baseColors.black, '85%')})`,
       minHeight: 'var(--ion-scaling-sm)',
 
       padding: {

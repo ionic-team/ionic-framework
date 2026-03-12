@@ -1,10 +1,11 @@
 import { currentColor, mix, dynamicFont } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
+import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
 import { darkTheme } from './dark.tokens';
 import { lightTheme } from './light.tokens';
-import { fontSizes, colors, components } from './shared.tokens';
+import { components } from './shared.tokens';
 
 export const defaultTheme: DefaultTheme = {
   ...baseDefaultTheme,
@@ -264,8 +265,8 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonItemDivider: {
-      background: `var(--ion-background-color, ${colors.white})`,
-      color: `var(--ion-text-color-step-600, ${mix(colors.white, colors.black, '40%')})`,
+      background: baseColors.backgroundColor,
+      color: `var(--ion-text-color-step-600, ${mix(baseColors.white, baseColors.black, '40%')})`,
       minHeight: 'var(--ion-scaling-750)',
       zIndex: 100,
 
@@ -290,7 +291,7 @@ export const defaultTheme: DefaultTheme = {
       },
 
       font: {
-        size: dynamicFont(fontSizes.itemDividerBase),
+        size: dynamicFont(components.itemDivider.font.size),
       },
 
       leading: {
@@ -332,7 +333,7 @@ export const defaultTheme: DefaultTheme = {
            * font size in pixels.
            * e.g. 24px / 14px = 1.7142857143em
            */
-          size: `${components.item.icon.slot.font.size / fontSizes.itemDividerBase}em`,
+          size: `${components.item.icon.slot.font.size / components.itemDivider.font.size}em`,
         },
 
         leading: {

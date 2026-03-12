@@ -6,32 +6,17 @@
 import { dynamicFont } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 
-const hexColors = {
-  white: '#ffffff',
-  black: '#000000',
-};
-
-const rgbColors = {
-  white: '255, 255, 255',
-  black: '0, 0, 0',
-};
-
-export const colors = {
-  ...hexColors,
-
-  backgroundColor: `var(--ion-background-color, ${hexColors.white})`,
-  backgroundColorRgb: `var(--ion-background-color-rgb, ${rgbColors.white})`,
-
-  textColor: `var(--ion-text-color, ${hexColors.black})`,
-  textColorRgb: `var(--ion-text-color-rgb, ${rgbColors.black})`,
-};
-
-export const fontSizes = {
-  chipBase: 14,
+export const global = {
   root: parseFloat(baseDefaultTheme.fontSize!.root as string),
 };
 
 export const components = {
+  chip: {
+    font: {
+      size: 14,
+    },
+  },
+
   item: {
     padding: {
       start: 'var(--ion-spacing-lg)',

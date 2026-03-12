@@ -1,12 +1,13 @@
 import { rgba, currentColor, mix, dynamicFont } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
+import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
 import { darkTheme } from './dark.tokens';
 import { highContrastDarkTheme } from './high-contrast-dark.tokens';
 import { highContrastTheme } from './high-contrast.tokens';
 import { lightTheme } from './light.tokens';
-import { fontSizes, colors, components } from './shared.tokens';
+import { global, components } from './shared.tokens';
 
 export const defaultTheme: DefaultTheme = {
   ...baseDefaultTheme,
@@ -114,14 +115,14 @@ export const defaultTheme: DefaultTheme = {
           minHeight: 'var(--ion-scaling-xs)',
 
           font: {
-            size: `${((fontSizes.chipBase - 2) / fontSizes.root).toFixed(2)}rem`,
+            size: `${((components.chip.font.size - 2) / global.root).toFixed(2)}rem`,
           },
         },
         large: {
           minHeight: 'var(--ion-scaling-md)',
 
           font: {
-            size: `${(fontSizes.chipBase / fontSizes.root).toFixed(2)}rem`,
+            size: `${(components.chip.font.size / global.root).toFixed(2)}rem`,
           },
         },
       },
@@ -349,7 +350,7 @@ export const defaultTheme: DefaultTheme = {
         color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.54),
 
         font: {
-          size: `${(20 / fontSizes.chipBase).toFixed(2)}em`,
+          size: `${(20 / components.chip.font.size).toFixed(2)}em`,
         },
 
         leading: {
@@ -373,8 +374,8 @@ export const defaultTheme: DefaultTheme = {
 
       // Targets `ion-avatar`
       avatar: {
-        height: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
-        width: `${(24 / fontSizes.chipBase).toFixed(2)}em`,
+        height: `${(24 / components.chip.font.size).toFixed(2)}em`,
+        width: `${(24 / components.chip.font.size).toFixed(2)}em`,
 
         leading: {
           margin: {
@@ -397,8 +398,8 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonItemDivider: {
-      background: `var(--ion-background-color, ${colors.white})`,
-      color: `var(--ion-text-color-step-600, ${mix(colors.white, colors.black, '40%')})`,
+      background: baseColors.backgroundColor,
+      color: `var(--ion-text-color-step-600, ${mix(baseColors.white, baseColors.black, '40%')})`,
       minHeight: 'var(--ion-scaling-750)',
       zIndex: 100,
 
@@ -423,7 +424,7 @@ export const defaultTheme: DefaultTheme = {
       },
 
       font: {
-        size: dynamicFont(fontSizes.itemDividerBase),
+        size: dynamicFont(components.itemDivider.font.size),
       },
 
       leading: {
@@ -465,7 +466,7 @@ export const defaultTheme: DefaultTheme = {
            * font size in pixels.
            * e.g. 24px / 14px = 1.7142857143em
            */
-          size: `${components.item.icon.slot.font.size / fontSizes.itemDividerBase}em`,
+          size: `${components.item.icon.slot.font.size / components.itemDivider.font.size}em`,
         },
 
         leading: {
