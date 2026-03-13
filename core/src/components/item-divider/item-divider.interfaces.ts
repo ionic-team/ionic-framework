@@ -62,10 +62,12 @@ export type IonItemDividerRecipe = {
       };
     };
 
+    // Default non-semantic states
     default?: {
       color?: string;
     };
 
+    // Any of the semantic colors like primary, secondary, etc.
     semantic?: {
       default?: {
         color?: string;

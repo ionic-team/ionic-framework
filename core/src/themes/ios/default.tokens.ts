@@ -429,7 +429,6 @@ export const defaultTheme: DefaultTheme = {
       },
 
       leading: {
-        // Targets `:host([slot="start"])`
         anchor: {
           margin: {
             top: components.item.slot.start.margin.top,
@@ -440,10 +439,8 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `ion-icon`
       icon: {
         leading: {
-          // Targets `ion-icon[slot="start"]`
           edge: {
             margin: {
               top: components.item.icon.slot.margin.top,
@@ -453,7 +450,6 @@ export const defaultTheme: DefaultTheme = {
         },
 
         trailing: {
-          // Targets `ion-icon[slot="end"]`
           edge: {
             margin: {
               top: components.item.icon.slot.margin.top,
@@ -463,7 +459,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `h1`
       header1: {
         margin: {
           top: 'var(--ion-spacing-0)',
@@ -473,7 +468,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `h2`
       header2: {
         margin: {
           top: 'var(--ion-spacing-0)',
@@ -482,7 +476,6 @@ export const defaultTheme: DefaultTheme = {
           start: 'var(--ion-spacing-0)',
         },
 
-        // Targets `:last-child`
         trailing: {
           margin: {
             bottom: 'var(--ion-spacing-0)',
@@ -490,7 +483,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `h3`
       header3: {
         margin: {
           top: 'var(--ion-spacing-0)',
@@ -506,7 +498,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `h4`
       header4: {
         margin: {
           top: 'var(--ion-spacing-0)',
@@ -522,7 +513,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `h5`
       header5: {
         margin: {
           top: 'var(--ion-spacing-0)',
@@ -538,7 +528,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `h6`
       header6: {
         margin: {
           top: 'var(--ion-spacing-0)',
@@ -554,7 +543,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `p`
       paragraph: {
         color: components.item.paragraph.color,
         overflow: 'inherit',

@@ -427,7 +427,6 @@ export const defaultTheme: DefaultTheme = {
       },
 
       leading: {
-        // Targets `::slotted([slot="start"])`
         edge: {
           margin: {
             end: components.item.start.slot.margin.end,
@@ -436,7 +435,6 @@ export const defaultTheme: DefaultTheme = {
       },
 
       trailing: {
-        // Targets `::slotted([slot="end"])`
         edge: {
           margin: {
             start: components.item.end.slot.margin.start,
@@ -444,7 +442,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `ion-label`
       label: {
         margin: {
           top: '13px',
@@ -454,7 +451,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `ion-icon`
       icon: {
         font: {
           /**
@@ -469,7 +465,6 @@ export const defaultTheme: DefaultTheme = {
         },
 
         leading: {
-          // Targets `ion-icon[slot="start"]`
           edge: {
             margin: {
               top: components.item.icon.slot.margin.top,
@@ -480,7 +475,6 @@ export const defaultTheme: DefaultTheme = {
         },
 
         trailing: {
-          // Targets `ion-icon[slot="end"]`
           edge: {
             margin: {
               top: components.item.icon.slot.margin.top,
@@ -490,12 +484,10 @@ export const defaultTheme: DefaultTheme = {
           },
         },
 
-        // Default non-semantic states
         default: {
           color: components.item.icon.slot.color,
         },
 
-        // Any of the semantic colors like primary, secondary, etc.
         semantic: {
           default: {
             color: currentColor('contrast'),
@@ -503,7 +495,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `ion-note`
       note: {
         align: {
           self: 'flex-start',
@@ -528,7 +519,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `ion-avatar`
       avatar: {
         height: components.item.avatar.height,
         width: components.item.avatar.width,
@@ -539,7 +529,6 @@ export const defaultTheme: DefaultTheme = {
         },
 
         leading: {
-          // Targets `ion-avatar[slot="start"]`
           edge: {
             margin: {
               end: components.item.media.start.slot.margin.end,
@@ -548,7 +537,6 @@ export const defaultTheme: DefaultTheme = {
         },
 
         trailing: {
-          // Targets `ion-avatar[slot="end"]`
           edge: {
             margin: {
               start: components.item.media.end.slot.margin.start,
@@ -557,9 +545,7 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `ion-thumbnail`
       thumbnail: {
-        // TODO: switch from size to height and width
         height: components.item.thumbnail.height,
         width: components.item.thumbnail.width,
 
@@ -569,7 +555,6 @@ export const defaultTheme: DefaultTheme = {
         },
 
         leading: {
-          // Targets `ion-thumbnail[slot="start"]`
           edge: {
             margin: {
               end: components.item.media.start.slot.margin.end,
@@ -578,7 +563,6 @@ export const defaultTheme: DefaultTheme = {
         },
 
         trailing: {
-          // Targets `ion-thumbnail[slot="end"]`
           edge: {
             margin: {
               start: components.item.media.end.slot.margin.start,
@@ -587,7 +571,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `h1`
       header1: {
         margin: {
           top: 'var(--ion-spacing-0)',
@@ -597,7 +580,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `h2`
       header2: {
         margin: {
           top: 'var(--ion-spacing-xxxs)',
@@ -607,7 +589,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `h3`
       header3: {
         margin: {
           top: 'var(--ion-spacing-xxxs)',
@@ -617,7 +598,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `h4`
       header4: {
         margin: {
           top: 'var(--ion-spacing-xxxs)',
@@ -627,7 +607,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `h5`
       header5: {
         margin: {
           top: 'var(--ion-spacing-xxxs)',
@@ -637,7 +616,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `h6`
       header6: {
         margin: {
           top: 'var(--ion-spacing-xxxs)',
@@ -647,7 +625,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `p`
       paragraph: {
         color: components.item.paragraph.color,
         overflow: 'inherit',
