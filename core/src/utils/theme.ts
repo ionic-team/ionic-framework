@@ -634,15 +634,14 @@ export function clamp(min: number | string, val: number | string, max: number | 
   return `clamp(${min}, ${val}, ${max})`;
 }
 
-const baselinePixelSize = 16;
 const baselineUnit = 'rem';
 
 /**
  * Converts a pixel value to a dynamic unit (defaulting to rem).
  *
  * Examples:
- * - `dynamicFont(16)` returns `'1.000rem'`
- * - `dynamicFont(20, 'em')` returns `'1.250em'`
+ * - `dynamicFont(16)` returns `'1rem'`
+ * - `dynamicFont(20, 'em')` returns `'1.25em'`
  *
  * @internal
  * @param size - The numeric pixel value.
@@ -650,5 +649,7 @@ const baselineUnit = 'rem';
  * @returns The calculated CSS value string.
  */
 export const dynamicFont = (size: number, unit: string = baselineUnit): string => {
+  const baselinePixelSize = 16;
+
   return `${size / baselinePixelSize}${unit}`;
 };
