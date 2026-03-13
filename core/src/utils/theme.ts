@@ -639,7 +639,7 @@ const baselineUnit = 'rem';
 /**
  * Converts a pixel value to a dynamic unit (defaulting to rem).
  *
- * Examples:
+ * Examples based on a root font size of 16px:
  * - `dynamicFont(16)` returns `'1rem'`
  * - `dynamicFont(20, 'em')` returns `'1.25em'`
  *
@@ -648,8 +648,8 @@ const baselineUnit = 'rem';
  * @param unit - The CSS unit string.
  * @returns The calculated CSS value string.
  */
-export const dynamicFont = (size: number, unit: string = baselineUnit): string => {
-  const baselinePixelSize = 16;
+export const dynamicFont = (size: number, unit: string | undefined = baselineUnit): string => {
+  const baselinePixelSize = parseFloat((window as any).Ionic?.config?.get?.('theme')?.fontSizes?.root ?? 16);
 
   return `${size / baselinePixelSize}${unit}`;
 };
