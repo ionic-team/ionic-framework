@@ -649,7 +649,16 @@ const baselineUnit = 'rem';
  * @returns The calculated CSS value string.
  */
 export const dynamicFont = (size: number, unit: string | undefined = baselineUnit): string => {
-  const baselinePixelSize = parseFloat((window as any).Ionic?.config?.get?.('theme')?.fontSizes?.root ?? 16);
+  let baselinePixelSize = 16;
+
+  if (typeof window !== 'undefined') {
+    const configRootFontSize = (window as any)?.Ionic?.config?.get?.('theme')?.fontSizes?.root;
+
+    const parsedSize = parseFloat(configRootFontSize);
+    if (!isNaN(parsedSize)) {
+      baselinePixelSize = parsedSize;
+    }
+  }
 
   return `${size / baselinePixelSize}${unit}`;
 };
