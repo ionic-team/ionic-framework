@@ -17,15 +17,14 @@ describe('Non-linear POP Forward Navigation', () => {
 
     // Browser back - this is a non-linear POP because settings route has no pushedByRoute.
     // The else branch should push the current location key onto forwardStack.
-    cy.go('back');
+    cy.ionGoBack('/routing/tabs/home/details/1');
     cy.ionPageVisible('home-details-page-1');
     cy.get('ion-tab-button.tab-selected').contains('Home');
 
     // Browser forward - should be detected as forward navigation via forwardStack.
     // Without the fix, forwardStack is empty so this falls into the wrong branch
     // (else-if, treating it as back navigation with wrong animation).
-    cy.go('forward');
-    cy.wait(500);
+    cy.ionGoForward('/routing/tabs/settings');
     cy.ionPageVisible('settings-page');
     cy.get('ion-tab-button.tab-selected').contains('Settings');
   });
@@ -43,27 +42,25 @@ describe('Non-linear POP Forward Navigation', () => {
     cy.ionPageVisible('settings-page');
 
     // Browser back (non-linear POP)
-    cy.go('back');
+    cy.ionGoBack('/routing/tabs/home/details/1');
     cy.ionPageVisible('home-details-page-1');
 
     // Browser forward
-    cy.go('forward');
-    cy.wait(500);
+    cy.ionGoForward('/routing/tabs/settings');
     cy.ionPageVisible('settings-page');
 
     // Browser back again - without the fix, the forward stack is corrupted from
     // the previous misclassification, causing this back to be treated as forward.
-    cy.go('back');
+    cy.ionGoBack('/routing/tabs/home/details/1');
     cy.ionPageVisible('home-details-page-1');
     cy.get('ion-tab-button.tab-selected').contains('Home');
 
     // One more forward/back cycle to verify stack integrity
-    cy.go('forward');
-    cy.wait(500);
+    cy.ionGoForward('/routing/tabs/settings');
     cy.ionPageVisible('settings-page');
     cy.get('ion-tab-button.tab-selected').contains('Settings');
 
-    cy.go('back');
+    cy.ionGoBack('/routing/tabs/home/details/1');
     cy.ionPageVisible('home-details-page-1');
     cy.get('ion-tab-button.tab-selected').contains('Home');
   });
@@ -81,22 +78,21 @@ describe('Non-linear POP Forward Navigation', () => {
     cy.ionPageVisible('settings-page');
 
     // Browser back (non-linear POP)
-    cy.go('back');
+    cy.ionGoBack('/routing/tabs/home/details/1');
     cy.ionPageVisible('home-details-page-1');
 
     // Browser forward to Settings
-    cy.go('forward');
-    cy.wait(500);
+    cy.ionGoForward('/routing/tabs/settings');
     cy.ionPageVisible('settings-page');
 
     // Browser back to D1
-    cy.go('back');
+    cy.ionGoBack('/routing/tabs/home/details/1');
     cy.ionPageVisible('home-details-page-1');
 
     // Browser back to Home. The D1 route lost its pushedByRoute when it was
     // recreated via a non-linear POP, so this back also goes through the
     // non-linear else branch.
-    cy.go('back');
+    cy.ionGoBack('/routing/tabs/home');
     cy.ionPageVisible('home-page');
     cy.contains('[data-pageid=home-page]', '"routeAction":"pop"');
     cy.contains('[data-pageid=home-page]', '"pathname":"/routing/tabs/home"');

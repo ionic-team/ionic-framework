@@ -28,10 +28,12 @@ import { extractRouteChildren, getRoutesChildren, isNavigateElement } from './ut
 const VIEW_UNMOUNT_DELAY_MS = 250;
 
 /**
- * Delay in milliseconds to wait for an IonPage element to be mounted before
- * proceeding with a page transition.
+ * Delay (ms) to wait for an IonPage to mount before proceeding with a
+ * page transition. Only container routes (nested outlets with no direct
+ * IonPage) actually hit this timeout; normal routes clear it early via
+ * registerIonPage, so a larger value here doesn't affect the happy path.
  */
-const ION_PAGE_WAIT_TIMEOUT_MS = 50;
+const ION_PAGE_WAIT_TIMEOUT_MS = 300;
 
 interface StackManagerProps {
   routeInfo: RouteInfo;
@@ -39,7 +41,7 @@ interface StackManagerProps {
 }
 
 const isViewVisible = (el: HTMLElement) =>
-  !el.classList.contains('ion-page-invisible') && !el.classList.contains('ion-page-hidden') && el.style.display !== 'none';
+  !el.classList.contains('ion-page-invisible') && !el.classList.contains('ion-page-hidden') && el.style.visibility !== 'hidden';
 
 const hideIonPageElement = (element: HTMLElement | undefined): void => {
   if (element) {
@@ -50,7 +52,7 @@ const hideIonPageElement = (element: HTMLElement | undefined): void => {
 
 const showIonPageElement = (element: HTMLElement | undefined): void => {
   if (element) {
-    element.style.removeProperty('display');
+    element.style.removeProperty('visibility');
     element.classList.remove('ion-page-hidden');
     element.removeAttribute('aria-hidden');
   }
@@ -586,10 +588,12 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
    * nested scrollbars (each page has its own IonContent). Top-level outlets
    * are unaffected and animate normally.
    *
-   * Uses inline display:none rather than ion-page-hidden class because core's
-   * beforeTransition() removes ion-page-hidden via setPageHidden().
-   * Inline display:none survives that removal, keeping the page hidden
-   * until React unmounts it after ionViewDidLeave fires.
+   * Uses inline visibility:hidden rather than ion-page-hidden class because
+   * core's beforeTransition() removes ion-page-hidden via setPageHidden().
+   * Inline visibility:hidden survives that removal, keeping the page hidden
+   * until React unmounts it after ionViewDidLeave fires. Unlike display:none,
+   * visibility:hidden preserves element geometry so commit() animations
+   * can resolve normally.
    */
   private applySkipAnimationIfNeeded(
     enteringViewItem: ViewItem,
@@ -599,7 +603,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     const shouldSkip = isNestedOutlet && !!leavingViewItem && enteringViewItem !== leavingViewItem;
 
     if (shouldSkip && leavingViewItem?.ionPageElement) {
-      leavingViewItem.ionPageElement.style.setProperty('display', 'none');
+      leavingViewItem.ionPageElement.style.setProperty('visibility', 'hidden');
       leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
     }
 
@@ -693,6 +697,20 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
           }
         });
         this.forceUpdate();
+
+        // Safety net: after forceUpdate triggers a React render cycle, check if
+        // any pages in this outlet are stuck with ion-page-invisible. This can
+        // happen when view lookup fails (e.g., wildcard-to-index transitions
+        // where the view item gets corrupted). The forceUpdate above causes
+        // React to render the correct component, but ion-page-invisible may
+        // persist if no transition runs for that page.
+        setTimeout(() => {
+          if (!this._isMounted || !this.routerOutletElement) return;
+          const stuckPages = this.routerOutletElement.querySelectorAll(':scope > .ion-page-invisible');
+          stuckPages.forEach((page) => {
+            page.classList.remove('ion-page-invisible');
+          });
+        }, ION_PAGE_WAIT_TIMEOUT_MS);
       }
     }, ION_PAGE_WAIT_TIMEOUT_MS);
 
@@ -1145,13 +1163,29 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         }
       }
 
-      await routerOutlet.commit(enteringEl, leavingEl, {
-        duration: skipTransition || skipAnimation || directionToUse === undefined ? 0 : undefined,
+      const commitDuration = skipTransition || skipAnimation || directionToUse === undefined ? 0 : undefined;
+
+      // Race commit against a timeout to recover from hangs
+      const commitPromise = routerOutlet.commit(enteringEl, leavingEl, {
+        duration: commitDuration,
         direction: directionToUse,
         showGoBack: !!routeInfo.pushedByRoute,
         progressAnimation,
         animationBuilder: routeInfo.routeAnimation,
       });
+
+      const timeoutMs = 5000;
+      const timeoutPromise = new Promise<'timeout'>((resolve) => setTimeout(() => resolve('timeout'), timeoutMs));
+      const result = await Promise.race([commitPromise.then(() => 'done' as const), timeoutPromise]);
+
+      if (result === 'timeout') {
+        // Force entering page visible even though commit hung
+        enteringEl.classList.remove('ion-page-invisible');
+      }
+
+      if (!progressAnimation) {
+        enteringEl.classList.remove('ion-page-invisible');
+      }
     };
 
     const routerOutlet = this.routerOutletElement!;
@@ -1183,22 +1217,23 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
         if (isNonAnimatedTransition && leavingEl) {
           /**
-           * Flicker prevention for non-animated transitions:
-           * Skip commit() entirely for simple visibility swaps (like tab switches).
-           * commit() runs animation logic that can cause intermediate paints even with
-           * duration: 0. Instead, we directly swap visibility classes and wait for
-           * components to be ready before showing the entering element.
+           * Skip commit() for non-animated transitions (like tab switches).
+           * commit() runs animation logic that can cause intermediate paints
+           * even with duration: 0. Instead, swap visibility synchronously.
+           *
+           * Synchronous DOM class changes are batched into a single browser
+           * paint, so there's no gap frame where neither page is visible and
+           * no overlap frame where both pages are visible.
            */
           const enteringEl = enteringViewItem.ionPageElement;
 
           // Ensure entering element has proper base classes
           enteringEl.classList.add('ion-page');
-          // Only add ion-page-invisible if not already visible (e.g., tab switches)
-          if (!isViewVisible(enteringEl)) {
-            enteringEl.classList.add('ion-page-invisible');
-          }
-          enteringEl.classList.remove('ion-page-hidden');
-          enteringEl.removeAttribute('aria-hidden');
+
+          // Clear ALL hidden state from entering element. showIonPageElement
+          // removes visibility:hidden (from applySkipAnimationIfNeeded),
+          // ion-page-hidden, and aria-hidden in one call.
+          showIonPageElement(enteringEl);
 
           // Handle can-go-back class since we're skipping commit() which normally sets this
           if (routeInfo.pushedByRoute) {
@@ -1274,31 +1309,12 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
           // Bail out if the component unmounted during waitForComponentsReady
           if (!this._isMounted) return;
 
-          // Swap visibility in sync with browser's render cycle
-          await new Promise<void>((resolve) => {
-            const outerRafId = requestAnimationFrame(() => {
-              this.transitionRafIds = this.transitionRafIds.filter((id) => id !== outerRafId);
-              if (!this._isMounted) {
-                resolve();
-                return;
-              }
-              enteringEl.classList.remove('ion-page-invisible');
-              // Second rAF ensures entering is painted before hiding leaving
-              const innerRafId = requestAnimationFrame(() => {
-                this.transitionRafIds = this.transitionRafIds.filter((id) => id !== innerRafId);
-                if (this._isMounted) {
-                  leavingEl.classList.add('ion-page-hidden');
-                  leavingEl.setAttribute('aria-hidden', 'true');
-                }
-                resolve();
-              });
-              this.transitionRafIds.push(innerRafId);
-            });
-            this.transitionRafIds.push(outerRafId);
-          });
+          // Swap visibility synchronously - show entering, hide leaving
+          enteringEl.classList.remove('ion-page-invisible');
+          leavingEl.classList.add('ion-page-hidden');
+          leavingEl.setAttribute('aria-hidden', 'true');
         } else {
           await runCommit(enteringViewItem.ionPageElement, leavingEl);
-          // For animated transitions, hide leaving element after commit completes
           if (leavingEl && !progressAnimation) {
             leavingEl.classList.add('ion-page-hidden');
             leavingEl.setAttribute('aria-hidden', 'true');

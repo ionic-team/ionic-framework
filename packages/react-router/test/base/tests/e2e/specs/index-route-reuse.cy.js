@@ -23,12 +23,10 @@ describe('Index Route Reuse - Nested Outlet Index Routes', () => {
 
     // Switch to Tab 2
     cy.ionTabClick('Tab 2');
+    cy.url().should('include', '/index-route-reuse/tab2');
     cy.ionPageVisible('irr-tab2-home');
     cy.get('[data-testid="irr-tab2-home-content"]').should('be.visible');
     cy.get('[data-testid="irr-tab2-home-content"]').should('contain', 'Tab 2 Index Route Content');
-
-    // Verify URL changed to tab2
-    cy.url().should('include', '/index-route-reuse/tab2');
   });
 
   it('should show tab3 index content when switching to tab3', () => {
@@ -37,12 +35,10 @@ describe('Index Route Reuse - Nested Outlet Index Routes', () => {
 
     // Switch to Tab 3
     cy.ionTabClick('Tab 3');
+    cy.url().should('include', '/index-route-reuse/tab3');
     cy.ionPageVisible('irr-tab3-home');
     cy.get('[data-testid="irr-tab3-home-content"]').should('be.visible');
     cy.get('[data-testid="irr-tab3-home-content"]').should('contain', 'Tab 3 Index Route Content');
-
-    // Verify URL changed to tab3
-    cy.url().should('include', '/index-route-reuse/tab3');
   });
 
   it('should correctly show each tab index when cycling through all tabs', () => {
@@ -52,18 +48,21 @@ describe('Index Route Reuse - Nested Outlet Index Routes', () => {
 
     // Tab 1 -> Tab 2
     cy.ionTabClick('Tab 2');
+    cy.url().should('include', '/index-route-reuse/tab2');
     cy.ionPageVisible('irr-tab2-home');
     cy.get('[data-testid="irr-tab2-home-content"]').should('be.visible');
     cy.get('[data-testid="irr-tab2-home-content"]').should('contain', 'Tab 2 Index Route Content');
 
     // Tab 2 -> Tab 3
     cy.ionTabClick('Tab 3');
+    cy.url().should('include', '/index-route-reuse/tab3');
     cy.ionPageVisible('irr-tab3-home');
     cy.get('[data-testid="irr-tab3-home-content"]').should('be.visible');
     cy.get('[data-testid="irr-tab3-home-content"]').should('contain', 'Tab 3 Index Route Content');
 
     // Tab 3 -> Tab 1 (back to start)
     cy.ionTabClick('Tab 1');
+    cy.url().should('include', '/index-route-reuse/tab1');
     cy.ionPageVisible('irr-tab1-home');
     cy.get('[data-testid="irr-tab1-home-content"]').should('be.visible');
     cy.get('[data-testid="irr-tab1-home-content"]').should('contain', 'Tab 1 Index Route Content');
@@ -80,11 +79,13 @@ describe('Index Route Reuse - Nested Outlet Index Routes', () => {
 
     // Switch to Tab 2
     cy.ionTabClick('Tab 2');
+    cy.url().should('include', '/index-route-reuse/tab2');
     cy.ionPageVisible('irr-tab2-home');
     cy.get('[data-testid="irr-tab2-home-content"]').should('be.visible');
 
     // Switch back to Tab 1 - should show detail (preserved history)
     cy.ionTabClick('Tab 1');
+    cy.url().should('include', '/index-route-reuse/tab1');
     cy.ionPageVisible('irr-tab1-detail');
     cy.get('[data-testid="irr-tab1-detail-content"]').should('be.visible');
   });
@@ -95,17 +96,21 @@ describe('Index Route Reuse - Nested Outlet Index Routes', () => {
 
     // Rapid switching: Tab1 -> Tab2 -> Tab3 -> Tab2 -> Tab1
     cy.ionTabClick('Tab 2');
+    cy.url().should('include', '/index-route-reuse/tab2');
     cy.ionPageVisible('irr-tab2-home');
 
     cy.ionTabClick('Tab 3');
+    cy.url().should('include', '/index-route-reuse/tab3');
     cy.ionPageVisible('irr-tab3-home');
 
     cy.ionTabClick('Tab 2');
+    cy.url().should('include', '/index-route-reuse/tab2');
     cy.ionPageVisible('irr-tab2-home');
     cy.get('[data-testid="irr-tab2-home-content"]').should('be.visible');
     cy.get('[data-testid="irr-tab2-home-content"]').should('contain', 'Tab 2 Index Route Content');
 
     cy.ionTabClick('Tab 1');
+    cy.url().should('include', '/index-route-reuse/tab1');
     cy.ionPageVisible('irr-tab1-home');
     cy.get('[data-testid="irr-tab1-home-content"]').should('be.visible');
     cy.get('[data-testid="irr-tab1-home-content"]').should('contain', 'Tab 1 Index Route Content');

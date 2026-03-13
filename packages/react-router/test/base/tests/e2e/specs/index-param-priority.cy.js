@@ -141,6 +141,8 @@ describe('Index Param Priority', () => {
     cy.get('[data-testid="notfound-page-label"]').should('contain', 'Page not found');
 
     cy.get('#back-to-index-from-notfound').click();
+    cy.url().should('include', '/index-param-priority');
+    cy.wait(300);
     cy.ionPageVisible('index-param-priority-index');
     cy.get('[data-testid="index-page-label"]').should('contain', 'This is the index page');
   });

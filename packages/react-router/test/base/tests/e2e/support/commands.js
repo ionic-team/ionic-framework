@@ -27,20 +27,6 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('ionPageVisible', (pageId) => {
-  cy.log(`[ionPageVisible] Checking for visible page: ${pageId}`);
-
-  // First, log all current ion-page elements for debugging
-  cy.get('div.ion-page').then(($pages) => {
-    const pageStates = [];
-    $pages.each((i, el) => {
-      const id = el.getAttribute('data-pageid') || 'unknown';
-      const classes = el.className;
-      const ariaHidden = el.getAttribute('aria-hidden');
-      pageStates.push(`${id}: classes="${classes}" aria-hidden="${ariaHidden}"`);
-    });
-    cy.log(`[ionPageVisible] All ion-page elements: ${pageStates.join(' | ')}`);
-  });
-
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('not.have.class', 'ion-page-hidden')
     .should('not.have.class', 'ion-page-invisible')
@@ -89,6 +75,22 @@ Cypress.Commands.add('ionTabClick', (tabText) => {
   cy.contains('ion-tab-button', tabText).click({ force: true });
 });
 
+Cypress.Commands.add('ionGoBack', (expectedUrlPart) => {
+  cy.go('back');
+  if (expectedUrlPart) {
+    cy.url().should('include', expectedUrlPart);
+  }
+  cy.wait(500);
+});
+
+Cypress.Commands.add('ionGoForward', (expectedUrlPart) => {
+  cy.go('forward');
+  if (expectedUrlPart) {
+    cy.url().should('include', expectedUrlPart);
+  }
+  cy.wait(500);
+});
+
 Cypress.Commands.add('ionBackClick', (pageId) => {
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('be.visible', true)
@@ -97,7 +99,6 @@ Cypress.Commands.add('ionBackClick', (pageId) => {
 });
 
 Cypress.Commands.add('ionMenuClick', () => {
-  cy.log('[ionMenuClick] Clicking menu button');
   cy.get('ion-menu-button').first().click({ force: true });
   cy.wait(500); // Wait for menu animation
 });
