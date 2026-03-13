@@ -7,7 +7,8 @@
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
 import { IonRoute, RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
 import React from 'react';
-import { Route, UNSAFE_RouteContext as RouteContext } from 'react-router-dom';
+import type { RouteObject } from 'react-router-dom';
+import { Route, UNSAFE_RouteContext as RouteContext, matchRoutes } from 'react-router-dom';
 
 import { clonePageElement } from './clonePageElement';
 import {
@@ -19,7 +20,6 @@ import {
 import { derivePathnameToMatch, matchPath } from './utils/pathMatching';
 import { stripTrailingSlash } from './utils/pathNormalization';
 import { extractRouteChildren, getRoutesChildren, isNavigateElement } from './utils/routeElements';
-import { compareRouteSpecificity } from './utils/viewItemUtils';
 
 /**
  * Delay in milliseconds before unmounting a view after a transition completes.
@@ -1320,7 +1320,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
           // Derive the outlet's mount path from React Router's matched route context.
           // This eliminates the need for heuristic-based mount path discovery in
           // computeParentPath, since React Router already knows the matched base path.
-          const parentMatches = parentContext?.matches as Array<{ pathnameBase: string }> | undefined;
+          const parentMatches = parentContext?.matches as { pathnameBase: string }[] | undefined;
           const parentPathnameBase =
             parentMatches && parentMatches.length > 0
               ? parentMatches[parentMatches.length - 1].pathnameBase
@@ -1384,6 +1384,49 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 export default StackManager;
 
 /**
+ * Converts React Route elements to RouteObject format for use with matchRoutes().
+ * Filters out pathless routes (which are handled by fallback logic separately).
+ *
+ * When a basename is provided, absolute route paths are relativized by stripping
+ * the basename prefix. This is necessary because matchRoutes() strips the basename
+ * from the LOCATION pathname but not from route paths — absolute paths must be
+ * made relative to the basename for matching to work correctly.
+ *
+ * @param routeChildren The flat array of Route/IonRoute elements from the outlet.
+ * @param basename The resolved parent path (without trailing slash or `/*`) used to relativize absolute paths.
+ */
+function routeElementsToRouteObjects(routeChildren: React.ReactElement[], basename?: string): RouteObject[] {
+  return routeChildren
+    .filter((child) => child.props.path != null || child.props.index)
+    .map((child): RouteObject => {
+      const handle = { _element: child };
+      let path = child.props.path as string | undefined;
+
+      // Relativize absolute paths by stripping the basename prefix
+      if (path && path.startsWith('/') && basename) {
+        if (path === basename) {
+          path = '';
+        } else if (path.startsWith(basename + '/')) {
+          path = path.slice(basename.length + 1);
+        }
+      }
+
+      if (child.props.index) {
+        return {
+          index: true,
+          handle,
+          caseSensitive: child.props.caseSensitive || undefined,
+        };
+      }
+      return {
+        path,
+        handle,
+        caseSensitive: child.props.caseSensitive || undefined,
+      };
+    });
+}
+
+/**
  * Finds the `<Route />` node matching the current route info.
  * If no `<Route />` can be matched, a fallback node is returned.
  * Routes are prioritized by specificity (most specific first).
@@ -1405,102 +1448,39 @@ function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo, paren
       React.isValidElement(child) && (child.type === Route || child.type === IonRoute)
   );
 
-  // Sort routes by specificity (most specific first)
-  const sortedRoutes = routeChildren.sort((a, b) =>
-    compareRouteSpecificity(
-      { path: a.props.path || '', index: !!a.props.index },
-      { path: b.props.path || '', index: !!b.props.index }
-    )
-  );
+  // Delegate route matching to RR6's matchRoutes(), which handles specificity ranking internally.
+  const basename = parentPath ? stripTrailingSlash(parentPath.replace('/*', '')) : undefined;
+  const routeObjects = routeElementsToRouteObjects(routeChildren, basename);
+  const matches = matchRoutes(routeObjects, { pathname: routeInfo.pathname }, basename);
 
-  // For nested routes in React Router 6, we need to extract the relative path
-  // that this outlet should be responsible for matching
-  const originalPathname = routeInfo.pathname;
-  let relativePathnameToMatch = routeInfo.pathname;
-
-  // Check if we have relative routes (routes that don't start with '/')
-  const hasRelativeRoutes = sortedRoutes.some((r) => r.props.path && !r.props.path.startsWith('/'));
-  const hasIndexRoute = sortedRoutes.some((r) => r.props.index);
-
-  // When parent path is known, compute the relative pathname for matching
-  if ((hasRelativeRoutes || hasIndexRoute) && parentPath) {
-    const parentPrefix = parentPath.replace('/*', '');
-    // Normalize both paths to start with '/' for consistent comparison
-    const normalizedParent = stripTrailingSlash(parentPrefix.startsWith('/') ? parentPrefix : `/${parentPrefix}`);
-    const normalizedPathname = stripTrailingSlash(routeInfo.pathname);
-
-    // Only compute relative path if pathname is within parent scope
-    if (normalizedPathname.startsWith(normalizedParent + '/') || normalizedPathname === normalizedParent) {
-      const pathSegments = routeInfo.pathname.split('/').filter(Boolean);
-      const parentSegments = normalizedParent.split('/').filter(Boolean);
-      const relativeSegments = pathSegments.slice(parentSegments.length);
-      relativePathnameToMatch = relativeSegments.join('/'); // Empty string is valid for index routes
-    }
-  }
-
-  // Find the first matching route
-  for (const child of sortedRoutes) {
-    const childPath = child.props.path as string | undefined;
-    const isAbsoluteRoute = childPath && childPath.startsWith('/');
-
-    // Determine which pathname to match against:
-    // - For absolute routes: use the original full pathname
-    // - For relative routes with a parent: use the computed relative pathname
-    // - For relative routes at root level (no parent): use the original pathname
-    const pathnameToMatch = isAbsoluteRoute ? originalPathname : relativePathnameToMatch;
-
-    // Determine the path portion to match
-    let pathForMatch: string;
-    if (isAbsoluteRoute) {
-      pathForMatch = derivePathnameToMatch(pathnameToMatch, childPath);
-    } else if (!parentPath && childPath) {
-      // Root-level relative route: use the full pathname and let matchPath
-      // handle the normalization (it adds '/' to both path and pathname)
-      pathForMatch = originalPathname;
-    } else if (childPath && childPath.includes('*')) {
-      // Relative wildcard route with parent path: the relative pathname was already
-      // computed above using the parent path, so it's already correct
-      pathForMatch = pathnameToMatch;
-    } else {
-      pathForMatch = pathnameToMatch;
-    }
-
-    const match = matchPath({
-      pathname: pathForMatch,
-      componentProps: child.props,
-    });
-
-    if (match) {
-      matchedNode = child;
-      break;
-    }
-  }
-
-  if (matchedNode) {
-    return matchedNode;
+  if (matches && matches.length > 0) {
+    const bestMatch = matches[matches.length - 1];
+    matchedNode = (bestMatch.route as any).handle?._element ?? undefined;
   }
 
   // Fallback: try pathless routes, but only if pathname is within scope.
-  let pathnameInScope = true;
+  if (!matchedNode) {
+    let pathnameInScope = true;
 
-  if (parentPath) {
-    pathnameInScope = isPathnameInScope(routeInfo.pathname, parentPath);
-  } else {
-    const absolutePathRoutes = routeChildren.filter((r) => r.props.path && r.props.path.startsWith('/'));
-    if (absolutePathRoutes.length > 0) {
-      const absolutePaths = absolutePathRoutes.map((r) => r.props.path as string);
-      const commonPrefix = computeCommonPrefix(absolutePaths);
-      if (commonPrefix && commonPrefix !== '/') {
-        pathnameInScope = routeInfo.pathname.startsWith(commonPrefix);
+    if (parentPath) {
+      pathnameInScope = isPathnameInScope(routeInfo.pathname, parentPath);
+    } else {
+      const absolutePathRoutes = routeChildren.filter((r) => r.props.path && r.props.path.startsWith('/'));
+      if (absolutePathRoutes.length > 0) {
+        const absolutePaths = absolutePathRoutes.map((r) => r.props.path as string);
+        const commonPrefix = computeCommonPrefix(absolutePaths);
+        if (commonPrefix && commonPrefix !== '/') {
+          pathnameInScope = routeInfo.pathname.startsWith(commonPrefix);
+        }
       }
     }
-  }
 
-  if (pathnameInScope) {
-    for (const child of routeChildren) {
-      if (!child.props.path) {
-        fallbackNode = child;
-        break;
+    if (pathnameInScope) {
+      for (const child of routeChildren) {
+        if (!child.props.path) {
+          fallbackNode = child;
+          break;
+        }
       }
     }
   }
