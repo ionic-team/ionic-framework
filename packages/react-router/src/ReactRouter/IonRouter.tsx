@@ -454,7 +454,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
    *
    * @param tab The tab to set as active.
    */
-  const handleSetCurrentTab = (tab: string) => {
+  const handleSetCurrentTab = (tab: string, _routeInfo?: RouteInfo) => {
     currentTab.current = tab;
     const current = locationHistory.current.current();
     if (!current) {

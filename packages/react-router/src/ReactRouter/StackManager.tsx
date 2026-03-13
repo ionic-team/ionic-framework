@@ -253,7 +253,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
    * Handles out-of-scope outlet. Returns true if transition should be aborted.
    */
   private handleOutOfScopeOutlet(routeInfo: RouteInfo): boolean {
-    if (!this.outletMountPath || routeInfo.pathname.startsWith(this.outletMountPath)) {
+    if (!this.outletMountPath || isPathnameInScope(routeInfo.pathname, this.outletMountPath)) {
       return false;
     }
 
