@@ -107,6 +107,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/wildcard-no-heuristic">
             <IonLabel>Wildcard No Heuristic</IonLabel>
           </IonItem>
+          <IonItem routerLink="/route-context-shape">
+            <IonLabel>Route Context Shape</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

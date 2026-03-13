@@ -54,6 +54,7 @@ import IndexParamPriority from './pages/index-param-priority/IndexParamPriority'
 import IndexRouteReuse from './pages/index-route-reuse/IndexRouteReuse';
 import TailSliceAmbiguity from './pages/tail-slice-ambiguity/TailSliceAmbiguity';
 import WildcardNoHeuristic from './pages/wildcard-no-heuristic/WildcardNoHeuristic';
+import RouteContextShape from './pages/route-context-shape/RouteContextShape';
 
 setupIonicReact();
 
@@ -97,6 +98,7 @@ const App: React.FC = () => {
           <Route path="/index-route-reuse/*" element={<IndexRouteReuse />} />
           <Route path="/tail-slice-ambiguity/*" element={<TailSliceAmbiguity />} />
           <Route path="/wildcard-no-heuristic/*" element={<WildcardNoHeuristic />} />
+          <Route path="/route-context-shape/*" element={<RouteContextShape />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
