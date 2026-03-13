@@ -69,7 +69,8 @@
 
   overflow: hidden;
 
-  z-index: var(--ion-item-divider-z-index, auto);
+  //
+  z-index: 100;
   box-sizing: border-box;
 }
 

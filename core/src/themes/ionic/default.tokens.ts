@@ -268,7 +268,6 @@ export const defaultTheme: DefaultTheme = {
       background: baseColors.backgroundColor,
       color: `var(--ion-text-color-step-600, ${mix(baseColors.white, baseColors.black, '40%')})`,
       minHeight: 'var(--ion-scaling-750)',
-      zIndex: 100,
 
       padding: {
         top: 'var(--ion-spacing-0)',

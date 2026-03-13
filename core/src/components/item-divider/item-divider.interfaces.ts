@@ -4,7 +4,6 @@ export type IonItemDividerRecipe = {
   background?: string;
   color?: string;
   minHeight?: string;
-  zIndex?: number;
 
   padding?: IonPadding;
 
@@ -22,16 +21,19 @@ export type IonItemDividerRecipe = {
   };
 
   leading?: {
+    // Targets `:host([slot="start"])`
     anchor?: {
       margin?: IonMargin;
     };
 
+    // Targets `::slotted([slot="start"])`
     edge?: {
       margin?: IonMargin;
     };
   };
 
   trailing?: {
+    // Targets `::slotted([slot="end"])`
     edge?: {
       margin?: IonMargin;
     };
@@ -47,12 +49,14 @@ export type IonItemDividerRecipe = {
     };
 
     leading?: {
+      // Targets `::slotted([slot="start"])`
       edge?: {
         margin?: IonMargin;
       };
     };
 
     trailing?: {
+      // Targets `::slotted([slot="end"])`
       edge?: {
         margin?: IonMargin;
       };
@@ -89,12 +93,14 @@ export type IonItemDividerRecipe = {
     margin?: IonMargin;
 
     leading?: {
+      // Targets `::slotted([slot="start"])`
       edge?: {
         margin?: IonMargin;
       };
     };
 
     trailing?: {
+      // Targets `::slotted([slot="end"])`
       edge?: {
         margin?: IonMargin;
       };
@@ -108,12 +114,14 @@ export type IonItemDividerRecipe = {
     margin?: IonMargin;
 
     leading?: {
+      // Targets `::slotted([slot="start"])`
       edge?: {
         margin?: IonMargin;
       };
     };
 
     trailing?: {
+      // Targets `::slotted([slot="end"])`
       edge?: {
         margin?: IonMargin;
       };
@@ -127,6 +135,7 @@ export type IonItemDividerRecipe = {
   header2?: {
     margin?: IonMargin;
 
+    // Targets `:last-child`
     trailing?: {
       margin?: IonMargin;
     };
@@ -135,6 +144,7 @@ export type IonItemDividerRecipe = {
   header3?: {
     margin?: IonMargin;
 
+    // Targets `:last-child`
     trailing?: {
       margin?: IonMargin;
     };
@@ -143,6 +153,7 @@ export type IonItemDividerRecipe = {
   header4?: {
     margin?: IonMargin;
 
+    // Targets `:last-child`
     trailing?: {
       margin?: IonMargin;
     };
@@ -151,6 +162,7 @@ export type IonItemDividerRecipe = {
   header5?: {
     margin?: IonMargin;
 
+    // Targets `:last-child`
     trailing?: {
       margin?: IonMargin;
     };
@@ -159,6 +171,7 @@ export type IonItemDividerRecipe = {
   header6?: {
     margin?: IonMargin;
 
+    // Targets `:last-child`
     trailing?: {
       margin?: IonMargin;
     };
@@ -178,6 +191,7 @@ export type IonItemDividerRecipe = {
       overflow?: string;
     };
 
+    // Targets `:last-child`
     trailing?: {
       margin?: IonMargin;
     };

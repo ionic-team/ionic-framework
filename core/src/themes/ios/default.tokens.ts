@@ -408,12 +408,18 @@ export const defaultTheme: DefaultTheme = {
       minHeight: 'var(--ion-scaling-sm)',
 
       padding: {
+        top: 'var(--ion-spacing-0)',
+        end: 'var(--ion-spacing-0)',
+        bottom: 'var(--ion-spacing-0)',
         start: components.item.padding.start,
       },
 
       inner: {
         padding: {
+          top: 'var(--ion-spacing-0)',
           end: `calc(${components.item.padding.end} * 0.5)`,
+          bottom: 'var(--ion-spacing-0)',
+          start: 'var(--ion-spacing-0)',
         },
       },
 
