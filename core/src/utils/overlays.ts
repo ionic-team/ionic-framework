@@ -515,6 +515,32 @@ export const setRootAriaHidden = (hidden = false) => {
   }
 };
 
+/**
+ * Cleans up root `aria-hidden` and `backdrop-no-scroll` when
+ * an overlay is removed from the DOM without going through
+ * the `dismiss()` flow (e.g., when a framework unmounts the
+ * overlay during a route change).
+ *
+ * Should be called from an overlay's `disconnectedCallback`
+ * when the overlay was still presented at the time of removal.
+ */
+export const cleanupRootFocusTrapAccessibility = () => {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
+  const remainingOverlays = getPresentedOverlays(document);
+  const hasRemainingLocking = remainingOverlays.some((o) => {
+    const el = o as OverlayWithFocusTrapProps;
+    return el.tagName !== 'ION-TOAST' && el.focusTrap !== false && isBackdropAlwaysBlocking(el);
+  });
+
+  if (!hasRemainingLocking) {
+    setRootAriaHidden(false);
+    document.body.classList.remove(BACKDROP_NO_SCROLL);
+  }
+};
+
 export const present = async <OverlayPresentOptions>(
   overlay: OverlayInterface,
   name: keyof IonicConfig,

@@ -8,15 +8,16 @@ import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import { Style as StatusBarStyle, StatusBar } from '@utils/native/status-bar';
 import {
-  GESTURE,
   BACKDROP,
+  cleanupRootFocusTrapAccessibility,
+  createTriggerController,
   dismiss,
   eventMethod,
+  FOCUS_TRAP_DISABLE_CLASS,
+  GESTURE,
   prepareOverlay,
   present,
-  createTriggerController,
   setOverlayId,
-  FOCUS_TRAP_DISABLE_CLASS,
 } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
@@ -458,6 +459,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // Also called in dismiss() — intentional dual cleanup covers both
     // dismiss-then-remove and direct DOM removal without dismiss.
     this.cleanupSafeAreaOverrides();
+
+    // Clean up aria-hidden if removed without dismiss() being called
+    if (this.presented) {
+      cleanupRootFocusTrapAccessibility();
+    }
   }
 
   componentWillLoad() {

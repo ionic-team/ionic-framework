@@ -55,6 +55,7 @@ import IndexRouteReuse from './pages/index-route-reuse/IndexRouteReuse';
 import TailSliceAmbiguity from './pages/tail-slice-ambiguity/TailSliceAmbiguity';
 import WildcardNoHeuristic from './pages/wildcard-no-heuristic/WildcardNoHeuristic';
 import RouteContextShape from './pages/route-context-shape/RouteContextShape';
+import ModalAriaHidden from './pages/modal-aria-hidden/ModalAriaHidden';
 
 setupIonicReact();
 
@@ -99,6 +100,7 @@ const App: React.FC = () => {
           <Route path="/tail-slice-ambiguity/*" element={<TailSliceAmbiguity />} />
           <Route path="/wildcard-no-heuristic/*" element={<WildcardNoHeuristic />} />
           <Route path="/route-context-shape/*" element={<RouteContextShape />} />
+          <Route path="/modal-aria-hidden/*" element={<ModalAriaHidden />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

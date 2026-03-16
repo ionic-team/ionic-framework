@@ -110,6 +110,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/route-context-shape">
             <IonLabel>Route Context Shape</IonLabel>
           </IonItem>
+          <IonItem routerLink="/modal-aria-hidden">
+            <IonLabel>Modal Aria Hidden</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
