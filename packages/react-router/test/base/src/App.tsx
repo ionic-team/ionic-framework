@@ -56,6 +56,7 @@ import TailSliceAmbiguity from './pages/tail-slice-ambiguity/TailSliceAmbiguity'
 import WildcardNoHeuristic from './pages/wildcard-no-heuristic/WildcardNoHeuristic';
 import RouteContextShape from './pages/route-context-shape/RouteContextShape';
 import ModalAriaHidden from './pages/modal-aria-hidden/ModalAriaHidden';
+import RedirectParams from './pages/redirect-params/RedirectParams';
 
 setupIonicReact();
 
@@ -101,6 +102,7 @@ const App: React.FC = () => {
           <Route path="/wildcard-no-heuristic/*" element={<WildcardNoHeuristic />} />
           <Route path="/route-context-shape/*" element={<RouteContextShape />} />
           <Route path="/modal-aria-hidden/*" element={<ModalAriaHidden />} />
+          <Route path="/redirect-params/*" element={<RedirectParams />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

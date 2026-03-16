@@ -113,6 +113,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/modal-aria-hidden">
             <IonLabel>Modal Aria Hidden</IonLabel>
           </IonItem>
+          <IonItem routerLink="/redirect-params">
+            <IonLabel>Redirect Params</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
