@@ -92,9 +92,9 @@ export class Spinner implements ComponentInterface {
     return (
       <Host
         class={createColorClasses(color, {
-          [`spinner-${spinnerName}`]: true,
+          [`spinner-name-${spinnerName}`]: true,
           'spinner-paused': paused || config.getBoolean('_testing'),
-          [`spinner-${sizeValue}`]: true,
+          [`spinner-size-${sizeValue}`]: true,
         })}
         role="progressbar"
         style={spinner.elmDuration ? { animationDuration: duration + 'ms' } : {}}

@@ -46,50 +46,50 @@ svg {
 // --------------------------------------------------
 
 // lines / lines-small / lines-sharp / lines-sharp-small
-:host(.spinner-lines) line,
-:host(.spinner-lines-small) line,
-:host(.spinner-lines-sharp) line,
-:host(.spinner-lines-sharp-small) line {
+:host(.spinner-name-lines) line,
+:host(.spinner-name-lines-small) line,
+:host(.spinner-name-lines-sharp) line,
+:host(.spinner-name-lines-sharp-small) line {
   stroke-linecap: round;
   stroke: currentColor;
 }
 
-:host(.spinner-lines) svg,
-:host(.spinner-lines-small) svg,
-:host(.spinner-lines-sharp) svg,
-:host(.spinner-lines-sharp-small) svg {
+:host(.spinner-name-lines) svg,
+:host(.spinner-name-lines-small) svg,
+:host(.spinner-name-lines-sharp) svg,
+:host(.spinner-name-lines-sharp-small) svg {
   animation: spinner-fade-out 1s linear infinite;
 }
 
-:host(.spinner-lines) line {
+:host(.spinner-name-lines) line {
   stroke-width: var(--ion-spinner-lines-stroke-width);
 }
 
-:host(.spinner-lines-small) line {
+:host(.spinner-name-lines-small) line {
   stroke-width: var(--ion-spinner-lines-small-stroke-width);
 }
 
-:host(.spinner-lines-sharp) line {
+:host(.spinner-name-lines-sharp) line {
   stroke-width: var(--ion-spinner-lines-sharp-stroke-width);
 }
 
-:host(.spinner-lines-sharp-small) line {
+:host(.spinner-name-lines-sharp-small) line {
   stroke-width: var(--ion-spinner-lines-sharp-small-stroke-width);
 }
 
 // bubbles
-:host(.spinner-bubbles) svg {
+:host(.spinner-name-bubbles) svg {
   animation: spinner-scale-out 1s linear infinite;
   fill: currentColor;
 }
 
 // circles
-:host(.spinner-circles) svg {
+:host(.spinner-name-circles) svg {
   animation: spinner-fade-out 1s linear infinite;
   fill: currentColor;
 }
 
-:host(.spinner-crescent) circle {
+:host(.spinner-name-crescent) circle {
   fill: transparent;
   stroke-width: var(--ion-spinner-crescent-stroke-width);
   stroke-dasharray: 128px;
@@ -98,26 +98,26 @@ svg {
 }
 
 // crescent
-:host(.spinner-crescent) svg {
+:host(.spinner-name-crescent) svg {
   animation: spinner-rotate 1s linear infinite;
 }
 
 // dots
-:host(.spinner-dots) circle {
+:host(.spinner-name-dots) circle {
   stroke-width: var(--ion-spinner-dots-stroke-width);
   fill: currentColor;
 }
 
-:host(.spinner-dots) svg {
+:host(.spinner-name-dots) svg {
   animation: spinner-dots 1s linear infinite;
 }
 
 // circular
-:host(.spinner-circular) svg {
+:host(.spinner-name-circular) svg {
   animation: spinner-circular linear infinite;
 }
 
-:host(.spinner-circular) circle {
+:host(.spinner-name-circular) circle {
   animation: spinner-circular-inner ease-in-out infinite;
   stroke: currentColor;
   stroke-dasharray: 80px, 200px;
@@ -129,27 +129,27 @@ svg {
 // Spinner Sizes
 // --------------------------------------------------
 
-:host(.spinner-xsmall) {
+:host(.spinner-size-xsmall) {
   width: var(--ion-spinner-size-xsmall-width);
   height: var(--ion-spinner-size-xsmall-height);
 }
 
-:host(.spinner-small) {
+:host(.spinner-size-small) {
   width: var(--ion-spinner-size-small-width);
   height: var(--ion-spinner-size-small-height);
 }
 
-:host(.spinner-medium) {
+:host(.spinner-size-medium) {
   width: var(--ion-spinner-size-medium-width);
   height: var(--ion-spinner-size-medium-height);
 }
 
-:host(.spinner-large) {
+:host(.spinner-size-large) {
   width: var(--ion-spinner-size-large-width);
   height: var(--ion-spinner-size-large-height);
 }
 
-:host(.spinner-xlarge) {
+:host(.spinner-size-xlarge) {
   width: var(--ion-spinner-size-xlarge-width);
   height: var(--ion-spinner-size-xlarge-height);
 }
