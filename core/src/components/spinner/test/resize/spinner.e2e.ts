@@ -18,7 +18,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `
           <style>
-            ion-spinner.spinner-medium {
+            ion-spinner.spinner-size-medium {
               --ion-spinner-size-medium-width: 100px;
               --ion-spinner-size-medium-height: 100px;
             }
