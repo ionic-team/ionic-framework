@@ -26,7 +26,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
 
       const container = page.locator('.container');
 
-      await expect(container).toHaveScreenshot(screenshot(`spinner-color-diff`));
+      await expect(container).toHaveScreenshot(screenshot('spinner-color'));
     });
   });
 });

@@ -37,7 +37,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
         config
       );
 
-      await expect(page).toHaveScreenshot(screenshot(`spinner-resize-diff`));
+      await expect(page).toHaveScreenshot(screenshot('spinner-resize'));
     });
   });
 });
