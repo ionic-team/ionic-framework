@@ -3881,13 +3881,9 @@ export namespace Components {
          */
         "paused": boolean;
         /**
-          * Set to `"xsmall"` for the smallest size. Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a large size. Set to `"xlarge"` for the largest size.  Defaults to `"xsmall"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"xsmall"` for the smallest size. Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a large size. Set to `"xlarge"` for the largest size.  Defaults to `"medium"`.
          */
         "size"?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonSplitPane {
         /**
@@ -9911,13 +9907,9 @@ declare namespace LocalJSX {
          */
         "paused"?: boolean;
         /**
-          * Set to `"xsmall"` for the smallest size. Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a large size. Set to `"xlarge"` for the largest size.  Defaults to `"xsmall"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"xsmall"` for the smallest size. Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a large size. Set to `"xlarge"` for the largest size.  Defaults to `"medium"`.
          */
         "size"?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonSplitPane {
         /**

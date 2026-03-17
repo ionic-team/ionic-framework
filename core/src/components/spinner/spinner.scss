@@ -1,20 +1,17 @@
-@import "../../themes/mixins";
-// Required to use the current-color function
-@import "../../themes/functions.color";
+@use "../../themes/mixins" as mixins;
+@use "../../themes/functions.color" as colors;
 
-// Spinners
+// Spinner: Common Styles
 // --------------------------------------------------
 
 :host {
   /**
    * @prop --color: Color of the spinner
    */
+  --color: var(--ion-spinner-color);
 
   display: inline-block;
   position: relative;
-
-  width: 28px;
-  height: 28px;
 
   color: var(--color);
 
@@ -22,11 +19,11 @@
 }
 
 :host(.ion-color) {
-  color: current-color(base);
+  color: colors.current-color(base);
 }
 
 svg {
-  @include transform-origin(center);
+  @include mixins.transform-origin(center);
 
   position: absolute;
 
@@ -45,9 +42,10 @@ svg {
   transform: translateZ(0);
 }
 
-// Spinner: lines / lines-small / lines-sharp / lines-sharp-small
+// Spinner Names
 // --------------------------------------------------
 
+// lines / lines-small / lines-sharp / lines-sharp-small
 :host(.spinner-lines) line,
 :host(.spinner-lines-small) line,
 :host(.spinner-lines-sharp) line,
@@ -63,42 +61,50 @@ svg {
   animation: spinner-fade-out 1s linear infinite;
 }
 
-// Spinner: bubbles
-// --------------------------------------------------
+:host(.spinner-lines) line {
+  stroke-width: var(--ion-spinner-lines-stroke-width);
+}
 
+:host(.spinner-lines-small) line {
+  stroke-width: var(--ion-spinner-lines-small-stroke-width);
+}
+
+:host(.spinner-lines-sharp) line {
+  stroke-width: var(--ion-spinner-lines-sharp-stroke-width);
+}
+
+:host(.spinner-lines-sharp-small) line {
+  stroke-width: var(--ion-spinner-lines-sharp-small-stroke-width);
+}
+
+// bubbles
 :host(.spinner-bubbles) svg {
   animation: spinner-scale-out 1s linear infinite;
   fill: currentColor;
 }
 
-// Spinner: circles
-// --------------------------------------------------
-
+// circles
 :host(.spinner-circles) svg {
   animation: spinner-fade-out 1s linear infinite;
   fill: currentColor;
 }
 
-// Spinner: crescent
-// --------------------------------------------------
-
 :host(.spinner-crescent) circle {
   fill: transparent;
-  stroke-width: 4px;
+  stroke-width: var(--ion-spinner-crescent-stroke-width);
   stroke-dasharray: 128px;
   stroke-dashoffset: 82px;
   stroke: currentColor;
 }
 
+// crescent
 :host(.spinner-crescent) svg {
   animation: spinner-rotate 1s linear infinite;
 }
 
-// Spinner: dots
-// --------------------------------------------------
-
+// dots
 :host(.spinner-dots) circle {
-  stroke-width: 0;
+  stroke-width: var(--ion-spinner-dots-stroke-width);
   fill: currentColor;
 }
 
@@ -106,9 +112,7 @@ svg {
   animation: spinner-dots 1s linear infinite;
 }
 
-// Spinner: circular
-// --------------------------------------------------
-
+// circular
 :host(.spinner-circular) svg {
   animation: spinner-circular linear infinite;
 }
@@ -118,13 +122,42 @@ svg {
   stroke: currentColor;
   stroke-dasharray: 80px, 200px;
   stroke-dashoffset: 0px;
-  stroke-width: 5.6;
+  stroke-width: var(--ion-spinner-circular-stroke-width);
   fill: none;
 }
 
-// Spinner: paused
+// Spinner Sizes
 // --------------------------------------------------
 
+:host(.spinner-xsmall) {
+  width: var(--ion-spinner-size-xsmall-width);
+  height: var(--ion-spinner-size-xsmall-height);
+}
+
+:host(.spinner-small) {
+  width: var(--ion-spinner-size-small-width);
+  height: var(--ion-spinner-size-small-height);
+}
+
+:host(.spinner-medium) {
+  width: var(--ion-spinner-size-medium-width);
+  height: var(--ion-spinner-size-medium-height);
+}
+
+:host(.spinner-large) {
+  width: var(--ion-spinner-size-large-width);
+  height: var(--ion-spinner-size-large-height);
+}
+
+:host(.spinner-xlarge) {
+  width: var(--ion-spinner-size-xlarge-width);
+  height: var(--ion-spinner-size-xlarge-height);
+}
+
+// Spinner States
+// --------------------------------------------------
+
+// Paused
 :host(.spinner-paused),
 :host(.spinner-paused) svg,
 :host(.spinner-paused) circle {

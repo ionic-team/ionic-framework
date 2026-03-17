@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 /**
  * This behavior does not vary across directions.
  */
-configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screenshot, title }) => {
+configs({ directions: ['ltr'], modes: ['md', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('spinner: size'), () => {
     test('should render xsmall spinner', async ({ page }) => {
       await page.setContent(

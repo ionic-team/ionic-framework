@@ -3,7 +3,7 @@ import { Component, Host, Prop, h } from '@stencil/core';
 import { createColorClasses } from '@utils/theme';
 
 import { config } from '../../global/config';
-import { getIonTheme, getIonMode } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 import type { SpinnerTypes } from './spinner-configs';
@@ -12,15 +12,10 @@ import type { SpinnerConfig } from './spinner-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-spinner',
-  styleUrls: {
-    ios: 'spinner.native.scss',
-    md: 'spinner.native.scss',
-    ionic: 'spinner.ionic.scss',
-  },
+  styleUrl: 'spinner.scss',
   shadow: true,
 })
 export class Spinner implements ComponentInterface {
@@ -54,7 +49,7 @@ export class Spinner implements ComponentInterface {
    * Set to `"large"` for a large size.
    * Set to `"xlarge"` for the largest size.
    *
-   * Defaults to `"xsmall"` for the `ionic` theme, undefined for all other themes.
+   * Defaults to `"medium"`.
    */
   @Prop() size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
@@ -67,29 +62,22 @@ export class Spinner implements ComponentInterface {
     return mode === 'ios' ? 'lines' : 'circular';
   }
 
-  private getSize(): string | undefined {
-    const theme = getIonTheme(this);
-    const { size } = this;
-
-    // TODO(ROU-10912): Remove theme check when sizes are defined for all themes.
-    if (theme !== 'ionic') {
-      return undefined;
-    }
-
-    if (size === undefined) {
-      return 'xsmall';
-    }
+  /**
+   * Set the size based on the custom theme config
+   */
+  get sizeValue(): string {
+    const sizeConfig = config.getObjectValue('IonSpinner.size', 'medium') as string;
+    console.log('sizeConfig', sizeConfig);
+    const size = this.size || sizeConfig;
 
     return size;
   }
 
   render() {
-    const self = this;
-    const theme = getIonTheme(self);
-    const spinnerName = self.getName();
-    const size = this.getSize();
+    const { duration: animatedDuration, color, paused, sizeValue } = this;
+    const spinnerName = this.getName();
     const spinner = SPINNERS[spinnerName] ?? SPINNERS['lines'];
-    const duration = typeof self.duration === 'number' && self.duration > 10 ? self.duration : spinner.dur;
+    const duration = typeof animatedDuration === 'number' && animatedDuration > 10 ? animatedDuration : spinner.dur;
     const svgs: SVGElement[] = [];
 
     if (spinner.circles !== undefined) {
@@ -104,11 +92,10 @@ export class Spinner implements ComponentInterface {
 
     return (
       <Host
-        class={createColorClasses(self.color, {
-          [theme]: true,
+        class={createColorClasses(color, {
           [`spinner-${spinnerName}`]: true,
-          'spinner-paused': self.paused || config.getBoolean('_testing'),
-          [`spinner-${size}`]: size !== undefined,
+          'spinner-paused': paused || config.getBoolean('_testing'),
+          [`spinner-${sizeValue}`]: true,
         })}
         role="progressbar"
         style={spinner.elmDuration ? { animationDuration: duration + 'ms' } : {}}

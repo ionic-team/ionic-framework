@@ -1,5 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@use "./spinner.common";
+@use "./spinner";
 
 // Ionic Spinner
 // --------------------------------------------------
@@ -11,6 +11,7 @@
   height: globals.$ion-scale-700;
 }
 
+// TODO add this
 :host(.ion-color-medium) {
   color: #{globals.ion-color(medium, contrast, $subtle: true)};
 }

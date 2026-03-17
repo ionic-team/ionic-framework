@@ -245,6 +245,7 @@ export type BaseTheme = {
 export type IonicConfig = IonicGlobalConfig & {
   components?: {
     IonChip?: IonChipConfig;
+    IonSpinner?: any;
   };
 };
 
@@ -282,6 +283,7 @@ export type DefaultTheme = BaseTheme & {
 
 type Components = {
   IonChip?: IonChipRecipe;
+  IonSpinner?: any;
 
   IonCard?: any;
   IonItem?: any;

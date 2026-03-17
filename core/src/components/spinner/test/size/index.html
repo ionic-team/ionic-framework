@@ -12,6 +12,14 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+    </style>
   </head>
 
   <body>
@@ -22,34 +30,79 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content id="content">
-        <ion-list>
-          <ion-item>
-            <ion-spinner slot="start"></ion-spinner>
-            <p>Default</p>
-          </ion-item>
-          <ion-item>
-            <ion-spinner slot="start" size="xsmall"></ion-spinner>
-            <p>xsmall</p>
-          </ion-item>
-          <ion-item>
-            <ion-spinner slot="start" size="small"></ion-spinner>
-            <p>small</p>
-          </ion-item>
-          <ion-item>
-            <ion-spinner slot="start" size="medium"></ion-spinner>
-            <p>medium</p>
-          </ion-item>
-          <ion-item>
-            <ion-spinner slot="start" size="large"></ion-spinner>
-            <p>large</p>
-          </ion-item>
-          <ion-item>
-            <ion-spinner slot="start" size="xlarge"></ion-spinner>
-            <p>xlarge</p>
-          </ion-item>
-        </ion-list>
-      </ion-content>
+      <ion-content id="content"> </ion-content>
     </ion-app>
+
+    <script>
+      const sections = [
+        {
+          id: 'lines-container',
+          spinners: ['lines', 'lines-small', 'lines-sharp', 'lines-sharp-small'],
+        },
+        {
+          id: 'radial-container',
+          spinners: ['circular', 'crescent'],
+        },
+        {
+          id: 'dots-container',
+          spinners: ['bubbles', 'circles', 'dots'],
+        },
+      ];
+
+      const spinnerSizes = [
+        { value: undefined, label: 'Default' },
+        { value: 'xsmall', label: 'Extra Small' },
+        { value: 'small', label: 'Small' },
+        { value: 'medium', label: 'Medium' },
+        { value: 'large', label: 'Large' },
+        { value: 'xlarge', label: 'Extra Large' },
+      ];
+
+      // Helper to turn 'lines-sharp-small' into 'Lines Sharp Small'
+      const formatTitle = (str) => {
+        return str
+          .split('-')
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+      };
+
+      const contentEl = document.getElementById('content');
+
+      sections.forEach((section) => {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.id = section.id;
+
+        section.spinners.forEach((spinnerName) => {
+          const heading = document.createElement('h2');
+          heading.textContent = formatTitle(spinnerName);
+          sectionDiv.appendChild(heading);
+
+          const grid = document.createElement('div');
+          grid.className = 'grid';
+
+          spinnerSizes.forEach((size) => {
+            const item = document.createElement('div');
+            item.className = 'grid-item';
+
+            const spinner = document.createElement('ion-spinner');
+            spinner.setAttribute('name', spinnerName);
+            if (size.value) {
+              spinner.setAttribute('size', size.value);
+            }
+
+            const label = document.createElement('p');
+            label.textContent = size.label;
+
+            item.appendChild(spinner);
+            item.appendChild(label);
+            grid.appendChild(item);
+          });
+
+          sectionDiv.appendChild(grid);
+        });
+
+        contentEl.appendChild(sectionDiv);
+      });
+    </script>
   </body>
 </html>
