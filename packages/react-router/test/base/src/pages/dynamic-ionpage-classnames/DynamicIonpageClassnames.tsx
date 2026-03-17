@@ -4,8 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 /**
  * Test page for verifying that dynamically changing className on IonPage
  * preserves framework-added classes (can-go-back, ion-page-invisible, etc.).
- *
- * Related issue: https://github.com/ionic-team/ionic-framework/issues/22631
  */
 const DynamicIonpageClassnames: React.FC = () => {
   return <Page />;

@@ -344,8 +344,19 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
           // This preserves tab context for same-tab navigation while allowing cross-tab navigation.
           routeInfo.tab = routeInfo.tab || leavingLocationInfo.tab;
           routeInfo.pushedByRoute = leavingLocationInfo.pathname;
-          // Triggered by a browser back button or handleNavigateBack.
+        } else if (
+          routeInfo.routeAction === 'push' &&
+          routeInfo.routeDirection === 'none' &&
+          routeInfo.tab === leavingLocationInfo.tab
+        ) {
+          // Push with routerDirection="none" within the same tab (or non-tab) context.
+          // Still needs pushedByRoute so the back button can navigate back correctly.
+          // Cross-tab navigations with direction "none" are handled by the tab-switching
+          // block below which has different pushedByRoute semantics.
+          routeInfo.tab = routeInfo.tab || leavingLocationInfo.tab;
+          routeInfo.pushedByRoute = leavingLocationInfo.pathname;
         } else if (routeInfo.routeAction === 'pop') {
+          // Triggered by a browser back button or handleNavigateBack.
           // Find the route that pushed this one.
           const r = locationHistory.current.findLastLocation(routeInfo);
           routeInfo.pushedByRoute = r?.pushedByRoute;

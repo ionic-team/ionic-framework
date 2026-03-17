@@ -1,8 +1,6 @@
 /**
  * Verifies that useParams() returns correct values after a Navigate
  * (catch-all redirect) fires inside IonRouterOutlet.
- *
- * @see https://github.com/ionic-team/ionic-framework/issues/23743
  */
 
 import {

@@ -16,8 +16,6 @@ import { Route, useNavigate } from 'react-router-dom';
  * Tests for navigate(-n) where n > 1 (multi-step back navigation).
  * Verifies that the correct view is shown when skipping multiple
  * entries in the history stack.
- *
- * @see https://github.com/ionic-team/ionic-framework/issues/23775
  */
 const PageA: React.FC = () => {
   const navigate = useNavigate();

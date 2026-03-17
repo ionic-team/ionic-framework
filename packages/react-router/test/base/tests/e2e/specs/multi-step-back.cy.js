@@ -7,7 +7,7 @@ const port = 3000;
  *
  * @see https://github.com/ionic-team/ionic-framework/issues/23775
  */
-describe('Multi-Step Back Navigation (#23775)', () => {
+describe('Multi-Step Back Navigation', () => {
 
   it('A > B > C > navigate(-2) should show Page A', () => {
     cy.visit(`http://localhost:${port}/multi-step-back/a`);

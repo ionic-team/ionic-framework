@@ -58,6 +58,7 @@ import RouteContextShape from './pages/route-context-shape/RouteContextShape';
 import ModalAriaHidden from './pages/modal-aria-hidden/ModalAriaHidden';
 import RedirectParams from './pages/redirect-params/RedirectParams';
 import MultiStepBack from './pages/multi-step-back/MultiStepBack';
+import DirectionNoneBack from './pages/direction-none-back/DirectionNoneBack';
 
 setupIonicReact();
 
@@ -105,6 +106,7 @@ const App: React.FC = () => {
           <Route path="/modal-aria-hidden/*" element={<ModalAriaHidden />} />
           <Route path="/redirect-params/*" element={<RedirectParams />} />
           <Route path="/multi-step-back/*" element={<MultiStepBack />} />
+          <Route path="/direction-none-back/*" element={<DirectionNoneBack />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
