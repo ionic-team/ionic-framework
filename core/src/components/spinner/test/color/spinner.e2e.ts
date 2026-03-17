@@ -6,15 +6,27 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('spinner: color'), () => {
-    test.beforeEach(async ({ page }) => {
-      await page.goto('/src/components/spinner/test/color', config);
-    });
-    test.describe('spinner: visual regression tests', () => {
-      test('should not have visual regressions', async ({ page }) => {
-        await page.setIonViewport();
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(
+        `
+          <div class="container">
+            <ion-spinner name="lines" paused color="primary"></ion-spinner>
+            <ion-spinner name="lines" paused color="secondary"></ion-spinner>
+            <ion-spinner name="lines" paused color="tertiary"></ion-spinner>
+            <ion-spinner name="lines" paused color="success"></ion-spinner>
+            <ion-spinner name="lines" paused color="warning"></ion-spinner>
+            <ion-spinner name="lines" paused color="danger"></ion-spinner>
+            <ion-spinner name="lines" paused color="light"></ion-spinner>
+            <ion-spinner name="lines" paused color="medium"></ion-spinner>
+            <ion-spinner name="lines" paused color="dark"></ion-spinner>
+          </div>
+        `,
+        config
+      );
 
-        await expect(page).toHaveScreenshot(screenshot(`spinner-color-diff`));
-      });
+      const container = page.locator('.container');
+
+      await expect(container).toHaveScreenshot(screenshot(`spinner-color-diff`));
     });
   });
 });

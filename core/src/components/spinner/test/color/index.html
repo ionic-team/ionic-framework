@@ -17,7 +17,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
         gap: 20px;
-        margin-bottom: 40px;
+        margin-top: 40px;
       }
     </style>
   </head>
@@ -33,43 +33,48 @@
       <ion-content id="content">
         <div class="grid">
           <div class="grid-item">
-            <ion-spinner color="primary"></ion-spinner>
+            <ion-spinner name="lines" paused color="primary"></ion-spinner>
             <p>Primary</p>
           </div>
 
           <div class="grid-item">
-            <ion-spinner color="secondary"></ion-spinner>
+            <ion-spinner name="lines" paused color="secondary"></ion-spinner>
             <p>Secondary</p>
           </div>
 
           <div class="grid-item">
-            <ion-spinner color="tertiary"></ion-spinner>
+            <ion-spinner name="lines" paused color="tertiary"></ion-spinner>
             <p>Tertiary</p>
           </div>
 
           <div class="grid-item">
-            <ion-spinner color="success"></ion-spinner>
+            <ion-spinner name="lines" paused color="success"></ion-spinner>
             <p>Success</p>
           </div>
 
           <div class="grid-item">
-            <ion-spinner color="warning"></ion-spinner>
+            <ion-spinner name="lines" paused color="warning"></ion-spinner>
             <p>Warning</p>
           </div>
 
           <div class="grid-item">
-            <ion-spinner color="danger"></ion-spinner>
+            <ion-spinner name="lines" paused color="danger"></ion-spinner>
             <p>Danger</p>
           </div>
 
           <div class="grid-item">
-            <ion-spinner color="dark"></ion-spinner>
-            <p>Dark</p>
+            <ion-spinner name="lines" paused color="light"></ion-spinner>
+            <p>Light</p>
           </div>
 
           <div class="grid-item">
-            <ion-spinner color="medium" paused></ion-spinner>
-            <p>Paused (Medium)</p>
+            <ion-spinner name="lines" paused color="medium"></ion-spinner>
+            <p>Medium</p>
+          </div>
+
+          <div class="grid-item">
+            <ion-spinner name="lines" paused color="dark"></ion-spinner>
+            <p>Dark</p>
           </div>
         </div>
       </ion-content>
