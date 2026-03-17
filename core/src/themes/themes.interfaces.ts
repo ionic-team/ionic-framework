@@ -1,4 +1,5 @@
 import type { IonChipRecipe, IonChipConfig } from '../components/chip/chip.interfaces';
+import type { IonSpinnerRecipe, IonSpinnerConfig } from '../components/spinner/spinner.interfaces';
 import type { IonicConfig as IonicGlobalConfig } from '../utils/config';
 
 // Platform-specific theme
@@ -245,7 +246,7 @@ export type BaseTheme = {
 export type IonicConfig = IonicGlobalConfig & {
   components?: {
     IonChip?: IonChipConfig;
-    IonSpinner?: any;
+    IonSpinner?: IonSpinnerConfig;
   };
 };
 
@@ -283,7 +284,7 @@ export type DefaultTheme = BaseTheme & {
 
 type Components = {
   IonChip?: IonChipRecipe;
-  IonSpinner?: any;
+  IonSpinner?: IonSpinnerRecipe;
 
   IonCard?: any;
   IonItem?: any;

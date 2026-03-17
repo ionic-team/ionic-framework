@@ -3,7 +3,7 @@ import { configs, test } from '@utils/test/playwright';
 
 /**
  * This behavior does not vary across directions.
- * 
+ *
  * `ios` does not differ from `md`.
  */
 configs({ directions: ['ltr'], modes: ['md', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
