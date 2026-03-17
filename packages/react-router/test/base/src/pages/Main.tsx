@@ -122,6 +122,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/direction-none-back/a">
             <IonLabel>Direction None Back</IonLabel>
           </IonItem>
+          <IonItem routerLink="/tab-search-params">
+            <IonLabel>Tab Search Params</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

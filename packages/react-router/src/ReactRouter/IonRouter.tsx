@@ -433,8 +433,10 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
   const handleResetTab = (tab: string, originalHref: string, originalRouteOptions: any) => {
     const routeInfo = locationHistory.current.getFirstRouteInfoForTab(tab);
     if (routeInfo) {
+      const [pathname, search] = originalHref.split('?');
       const newRouteInfo = { ...routeInfo };
-      newRouteInfo.pathname = originalHref;
+      newRouteInfo.pathname = pathname;
+      newRouteInfo.search = search ? '?' + search : '';
       newRouteInfo.routeOptions = originalRouteOptions;
       incomingRouteParams.current = { ...newRouteInfo, routeAction: 'pop', routeDirection: 'back' };
       navigate(newRouteInfo.pathname + (newRouteInfo.search || ''));
@@ -467,12 +469,14 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
        * e.g., `/tabs/home` → `/tabs/home`
        */
       if (routeInfo.pathname === pathname) {
+        const newSearch = search ? '?' + search : routeInfo.search;
         incomingRouteParams.current = {
           ...routeParams,
+          search: newSearch || '',
           routeOptions,
         };
 
-        navigate(routeInfo.pathname + (routeInfo.search || ''));
+        navigate(routeInfo.pathname + (newSearch || ''));
         /**
          * User is navigating to a different tab.
          * e.g., `/tabs/home` → `/tabs/settings`
@@ -481,7 +485,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
         incomingRouteParams.current = {
           ...routeParams,
           pathname,
-          search: search ? '?' + search : undefined,
+          search: search ? '?' + search : '',
           routeOptions,
         };
 
@@ -489,7 +493,8 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
       }
       // User has not navigated to this tab before.
     } else {
-      handleNavigate(pathname, 'push', 'none', undefined, routeOptions, tab);
+      const fullPath = pathname + (search ? '?' + search : '');
+      handleNavigate(fullPath, 'push', 'none', undefined, routeOptions, tab);
     }
   };
 

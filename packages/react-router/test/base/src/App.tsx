@@ -59,6 +59,7 @@ import ModalAriaHidden from './pages/modal-aria-hidden/ModalAriaHidden';
 import RedirectParams from './pages/redirect-params/RedirectParams';
 import MultiStepBack from './pages/multi-step-back/MultiStepBack';
 import DirectionNoneBack from './pages/direction-none-back/DirectionNoneBack';
+import TabSearchParams from './pages/tab-search-params/TabSearchParams';
 
 setupIonicReact();
 
@@ -107,6 +108,7 @@ const App: React.FC = () => {
           <Route path="/redirect-params/*" element={<RedirectParams />} />
           <Route path="/multi-step-back/*" element={<MultiStepBack />} />
           <Route path="/direction-none-back/*" element={<DirectionNoneBack />} />
+          <Route path="/tab-search-params/*" element={<TabSearchParams />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
