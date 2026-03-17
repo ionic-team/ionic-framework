@@ -3,14 +3,16 @@ import { configs, test } from '@utils/test/playwright';
 
 /**
  * This behavior does not vary across directions.
+ * 
+ * `ios` does not differ from `md`.
  */
 configs({ directions: ['ltr'], modes: ['md', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('spinner: size'), () => {
     test('should render xsmall spinner', async ({ page }) => {
       await page.setContent(
         `
-        <ion-spinner size="xsmall"></ion-spinner>
-      `,
+          <ion-spinner size="xsmall"></ion-spinner>
+        `,
         config
       );
 
@@ -22,8 +24,8 @@ configs({ directions: ['ltr'], modes: ['md', 'ionic-md'] }).forEach(({ config, s
     test('should render small spinner', async ({ page }) => {
       await page.setContent(
         `
-        <ion-spinner size="small"></ion-spinner>
-      `,
+          <ion-spinner size="small"></ion-spinner>
+        `,
         config
       );
 
@@ -35,8 +37,8 @@ configs({ directions: ['ltr'], modes: ['md', 'ionic-md'] }).forEach(({ config, s
     test('should render medium spinner', async ({ page }) => {
       await page.setContent(
         `
-        <ion-spinner size="medium"></ion-spinner>
-      `,
+          <ion-spinner size="medium"></ion-spinner>
+        `,
         config
       );
 
@@ -48,8 +50,8 @@ configs({ directions: ['ltr'], modes: ['md', 'ionic-md'] }).forEach(({ config, s
     test('should render large spinner', async ({ page }) => {
       await page.setContent(
         `
-        <ion-spinner size="large"></ion-spinner>
-      `,
+          <ion-spinner size="large"></ion-spinner>
+        `,
         config
       );
 
@@ -61,8 +63,8 @@ configs({ directions: ['ltr'], modes: ['md', 'ionic-md'] }).forEach(({ config, s
     test('should render xlarge spinner', async ({ page }) => {
       await page.setContent(
         `
-        <ion-spinner size="xlarge"></ion-spinner>
-      `,
+          <ion-spinner size="xlarge"></ion-spinner>
+        `,
         config
       );
 
