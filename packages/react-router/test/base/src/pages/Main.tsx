@@ -116,6 +116,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/redirect-params">
             <IonLabel>Redirect Params</IonLabel>
           </IonItem>
+          <IonItem routerLink="/multi-step-back/a">
+            <IonLabel>Multi-Step Back</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

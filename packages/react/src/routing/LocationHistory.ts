@@ -139,6 +139,21 @@ export class LocationHistory {
     return undefined;
   }
 
+  /**
+   * Returns the most recent RouteInfo in global history (excluding the current
+   * entry) whose pathname matches the given value. Unlike findLastLocation,
+   * this search is tab-agnostic. Used by the multi-step back detection.
+   */
+  findLastLocationByPathname(pathname: string) {
+    for (let i = this.locationHistory.length - 2; i >= 0; i--) {
+      const ri = this.locationHistory[i];
+      if (ri && ri.pathname === pathname) {
+        return ri;
+      }
+    }
+    return undefined;
+  }
+
   findLastLocation(routeInfo: RouteInfo) {
     const routeInfos = this._getRouteInfosByKey(routeInfo.tab);
     if (routeInfos) {

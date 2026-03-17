@@ -50,6 +50,29 @@ const filterUndefinedParams = (params: RouteParams): SafeRouteParams => {
   return result;
 };
 
+/**
+ * Checks if a POP event is a multi-step back navigation (navigate(-n) where n > 1).
+ * Walks the pushedByRoute chain from prevInfo to verify the destination is an ancestor
+ * in the same navigation chain. This distinguishes multi-step back from tab-crossing
+ * back navigation where prevInfo.pathname also differs from the browser destination.
+ */
+const checkIsMultiStepBack = (
+  prevInfo: RouteInfo | undefined,
+  destinationPathname: string,
+  history: LocationHistory
+): boolean => {
+  if (!prevInfo || prevInfo.pathname === destinationPathname) return false;
+  const visited = new Set<string>();
+  let walker: RouteInfo | undefined = prevInfo;
+  while (walker?.pushedByRoute) {
+    if (visited.has(walker.id)) break; // cycle guard
+    visited.add(walker.id);
+    if (walker.pushedByRoute === destinationPathname) return true;
+    walker = history.findLastLocation(walker);
+  }
+  return false;
+};
+
 const areParamsEqual = (a?: RouteParams, b?: RouteParams) => {
   const paramsA = a || {};
   const paramsB = b || {};
@@ -239,7 +262,19 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
             // Back navigation. Record current location key for potential forward
             forwardStack.current.push(currentLocationKeyRef.current);
             const prevInfo = locationHistory.current.findLastLocation(currentRoute);
-            incomingRouteParams.current = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
+
+            const isMultiStepBack = checkIsMultiStepBack(prevInfo, location.pathname, locationHistory.current);
+
+            if (isMultiStepBack) {
+              const destinationInfo = locationHistory.current.findLastLocationByPathname(location.pathname);
+              incomingRouteParams.current = {
+                ...(destinationInfo || {}),
+                routeAction: 'pop',
+                routeDirection: 'back',
+              };
+            } else {
+              incomingRouteParams.current = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
+            }
           } else {
             // It's a non-linear history path like a direct link.
             // Still push the current location key so browser forward is detectable.
