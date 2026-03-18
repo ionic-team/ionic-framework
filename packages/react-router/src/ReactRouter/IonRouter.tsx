@@ -272,6 +272,13 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
                 routeAction: 'pop',
                 routeDirection: 'back',
               };
+            } else if (prevInfo && prevInfo.pathname !== location.pathname && currentRoute.tab) {
+              // Browser POP destination differs from within-tab back target.
+              // Sync URL via replace, like handleNavigateBack's non-linear path (#25141).
+              incomingRouteParams.current = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
+              forwardStack.current = [];
+              handleNavigate(prevInfo.pathname + (prevInfo.search || ''), 'pop', 'back', undefined, undefined, prevInfo.tab);
+              return;
             } else {
               incomingRouteParams.current = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
             }

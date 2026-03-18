@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import {
   ionPageVisible, ionPageHidden, ionPageDoesNotExist,
-  ionNav, ionBackClick, ionTabClick, withTestingMode
+  ionNav, ionBackClick, ionTabClick, ionGoBack, withTestingMode
 } from './utils/test-utils';
 
 test.describe('Tabs', () => {
@@ -34,6 +34,34 @@ test.describe('Tabs', () => {
     await page.locator('#tabs-secondary').click();
     await ionPageVisible(page, 'tab1-secondary');
     await ionPageDoesNotExist(page, 'tab1');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/25141
+  test('browser back from preserved child page should sync URL and display', async ({ page }, testInfo) => {
+    testInfo.annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/25141',
+    });
+
+    await page.goto(withTestingMode('/tabs/tab1'));
+    await ionPageVisible(page, 'tab1');
+
+    await page.locator('#child-one').click();
+    await ionPageHidden(page, 'tab1');
+    await ionPageVisible(page, 'tab1child1');
+
+    await ionTabClick(page, 'Tab2');
+    await ionPageHidden(page, 'tab1child1');
+    await ionPageVisible(page, 'tab2');
+
+    await ionTabClick(page, 'Tab1');
+    await ionPageHidden(page, 'tab2');
+    await ionPageVisible(page, 'tab1child1');
+
+    await ionGoBack(page, '/tabs/tab1');
+    await ionPageDoesNotExist(page, 'tab1child1');
+    await ionPageVisible(page, 'tab1');
+    await expect(page.locator('ion-tab-button.tab-selected')).toContainText('Tab1');
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23087
