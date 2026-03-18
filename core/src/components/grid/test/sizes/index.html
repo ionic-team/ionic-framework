@@ -19,10 +19,15 @@
       <ion-header>
         <ion-toolbar>
           <ion-title>Grid - Sizes</ion-title>
+          <ion-buttons slot="end">
+            <ion-button onClick="toggleLayout()">Toggle Layout</ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
 
       <ion-content id="content" class="grid-demo">
+        <h2 class="ion-padding-start">Layout: <span id="layout-name">Uniform</span></h2>
+
         <h2 class="ion-padding-start">10 Column Layout</h2>
         <ion-grid class="grid-10">
           <ion-row id="row10"></ion-row>
@@ -103,6 +108,14 @@
       <script>
         let cols = [];
         const sizes = [1, 3, 3, 2, 1];
+        let layout = 'uniform';
+        const grids = document.querySelectorAll('ion-grid');
+
+        function toggleLayout() {
+          layout = layout === 'uniform' ? 'masonry' : 'uniform';
+          grids.forEach((grid) => (grid.layout = layout));
+          document.getElementById('layout-name').textContent = layout.charAt(0).toUpperCase() + layout.slice(1);
+        }
 
         for (var i = 0; i < sizes.length; i++) {
           const col = `

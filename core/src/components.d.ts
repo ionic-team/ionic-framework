@@ -16,6 +16,7 @@ import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/bre
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { GridLayoutChangeEventDetail } from "./components/grid/grid";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
@@ -54,6 +55,7 @@ export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/bre
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { GridLayoutChangeEventDetail } from "./components/grid/grid";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
@@ -1225,6 +1227,11 @@ export namespace Components {
           * @default false
          */
         "fixed": boolean;
+        /**
+          * The layout of the grid. The 'uniform' layout means the grid rows will have a uniform height. The `masonry` layout means the grid rows will have a variable height. based on the content of the rows, without gaps in between.
+          * @default 'uniform'
+         */
+        "layout": 'uniform' | 'masonry';
     }
     interface IonHeader {
         /**
@@ -3806,6 +3813,10 @@ export interface IonFabButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonFabButtonElement;
 }
+export interface IonGridCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIonGridElement;
+}
 export interface IonImgCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonImgElement;
@@ -4277,7 +4288,18 @@ declare global {
         prototype: HTMLIonFooterElement;
         new (): HTMLIonFooterElement;
     };
+    interface HTMLIonGridElementEventMap {
+        "gridLayoutChange": GridLayoutChangeEventDetail;
+    }
     interface HTMLIonGridElement extends Components.IonGrid, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonGridElementEventMap>(type: K, listener: (this: HTMLIonGridElement, ev: IonGridCustomEvent<HTMLIonGridElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonGridElementEventMap>(type: K, listener: (this: HTMLIonGridElement, ev: IonGridCustomEvent<HTMLIonGridElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonGridElement: {
         prototype: HTMLIonGridElement;
@@ -6504,6 +6526,15 @@ declare namespace LocalJSX {
           * @default false
          */
         "fixed"?: boolean;
+        /**
+          * The layout of the grid. The 'uniform' layout means the grid rows will have a uniform height. The `masonry` layout means the grid rows will have a variable height. based on the content of the rows, without gaps in between.
+          * @default 'uniform'
+         */
+        "layout"?: 'uniform' | 'masonry';
+        /**
+          * Emitted when the grid layout changes. This is used by row and col to adjust their layout.
+         */
+        "onGridLayoutChange"?: (event: IonGridCustomEvent<GridLayoutChangeEventDetail>) => void;
     }
     interface IonHeader {
         /**
@@ -9406,6 +9437,7 @@ declare namespace LocalJSX {
     }
     interface IonGridAttributes {
         "fixed": boolean;
+        "layout": 'uniform' | 'masonry';
     }
     interface IonHeaderAttributes {
         "collapse": 'condense' | 'fade';

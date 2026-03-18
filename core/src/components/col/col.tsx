@@ -1,8 +1,9 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
+import { Component, Element, Host, Listen, Prop, State, forceUpdate, h } from '@stencil/core';
 import { matchBreakpoint } from '@utils/media';
 
 import { getIonMode } from '../../global/ionic-global';
+import type { GridLayoutChangeEventDetail } from '../grid/grid';
 
 const win = typeof (window as any) !== 'undefined' ? (window as any) : undefined;
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
@@ -15,6 +16,10 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true,
 })
 export class Col implements ComponentInterface {
+  @Element() el!: HTMLElement;
+
+  @State() private layout: 'uniform' | 'masonry' = 'uniform';
+
   /**
    * The amount to offset the column, in terms of how many columns it should shift to the end
    * of the total available.
@@ -160,6 +165,29 @@ export class Col implements ComponentInterface {
     forceUpdate(this);
   }
 
+  private grid: HTMLIonGridElement | null = null;
+
+  private onGridLayoutChange = (ev: CustomEvent<GridLayoutChangeEventDetail>) => {
+    this.layout = ev.detail.layout;
+  };
+
+  connectedCallback() {
+    this.grid = this.el.closest('ion-grid');
+
+    if (this.grid) {
+      this.layout = this.grid.layout;
+
+      this.grid.addEventListener('gridLayoutChange', this.onGridLayoutChange);
+    }
+  }
+
+  disconnectedCallback() {
+    if (this.grid) {
+      this.grid.removeEventListener('gridLayoutChange', this.onGridLayoutChange);
+      this.grid = null;
+    }
+  }
+
   // Loop through all of the breakpoints to see if the media query
   // matches and grab the column value from the relevant prop if so
   private getColumns(property: string) {
@@ -191,6 +219,21 @@ export class Col implements ComponentInterface {
     // e.g. <ion-col size-md>
     if (!columns || columns === '') {
       return;
+    }
+
+    // In masonry (CSS Grid) layout, column sizing is driven by the grid
+    // template columns on the grid container, so we do not apply the
+    // flex-based width/max-width overrides here. Instead, we set the grid
+    // column to span the number of columns specified in the size prop.
+    if (this.layout === 'masonry') {
+      // If the size is set to auto then don't calculate a size
+      if (columns === 'auto') {
+        return;
+      }
+
+      return {
+        gridColumn: `span ${columns}`,
+      };
     }
 
     // If the size is set to auto then don't calculate a size

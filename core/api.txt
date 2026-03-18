@@ -673,6 +673,7 @@ ion-footer,prop,translucent,boolean,false,false,false
 
 ion-grid,shadow
 ion-grid,prop,fixed,boolean,false,false,false
+ion-grid,prop,layout,"masonry" | "uniform",'uniform',false,false
 ion-grid,css-prop,--ion-grid-padding
 ion-grid,css-prop,--ion-grid-padding-lg
 ion-grid,css-prop,--ion-grid-padding-md

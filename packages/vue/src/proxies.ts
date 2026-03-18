@@ -405,7 +405,11 @@ export const IonFooter: StencilVueComponent<JSX.IonFooter> = /*@__PURE__*/ defin
 
 
 export const IonGrid: StencilVueComponent<JSX.IonGrid> = /*@__PURE__*/ defineContainer<JSX.IonGrid>('ion-grid', defineIonGrid, [
-  'fixed'
+  'fixed',
+  'layout',
+  'gridLayoutChange'
+], [
+  'gridLayoutChange'
 ]);
 
 

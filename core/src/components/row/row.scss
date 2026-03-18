@@ -8,3 +8,12 @@
 
   flex-wrap: wrap;
 }
+
+// Masonry Layout
+// --------------------------------------------------
+
+:host(.in-grid-masonry) {
+  display: grid;
+  grid-template-columns: repeat(var(--ion-grid-columns, 12), 1fr);
+  grid-auto-rows: 8px;
+}

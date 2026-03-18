@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Grid - Layout</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Grid - Layout</ion-title>
+          <ion-buttons slot="end">
+            <ion-button onClick="toggleLayout()">Toggle Layout</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <h2 class="ion-padding-start">Layout: <span id="layout-name">Uniform</span></h2>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="1"> 1 </ion-col>
+            <ion-col size="1"> 2 </ion-col>
+            <ion-col size="1"> 3 </ion-col>
+            <ion-col size="1"> 4 </ion-col>
+            <ion-col size="1"> 5 </ion-col>
+            <ion-col size="1"> 6 </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+
+      <script>
+        let layout = 'uniform';
+        const grids = document.querySelectorAll('ion-grid');
+
+        function toggleLayout() {
+          layout = layout === 'uniform' ? 'masonry' : 'uniform';
+          grids.forEach((grid) => (grid.layout = layout));
+          document.getElementById('layout-name').textContent = layout.charAt(0).toUpperCase() + layout.slice(1);
+        }
+      </script>
+
+      <style>
+        ion-grid {
+          --ion-grid-columns: 3;
+        }
+
+        ion-col {
+          border-radius: 8px;
+
+          display: grid;
+          place-items: center;
+
+          font-size: 24px;
+          font-weight: bold;
+          color: white;
+        }
+
+        ion-col:nth-child(1) {
+          height: 120px;
+          background: #ff6b6b;
+        }
+        ion-col:nth-child(2) {
+          height: 200px;
+          background: #4ecdc4;
+        }
+        ion-col:nth-child(3) {
+          height: 160px;
+          background: #ffe66d;
+          color: #333;
+        }
+        ion-col:nth-child(4) {
+          height: 260px;
+          background: #5f27cd;
+        }
+        ion-col:nth-child(5) {
+          height: 140px;
+          background: #1dd1a1;
+        }
+        ion-col:nth-child(6) {
+          height: 220px;
+          background: #ff9f43;
+        }
+      </style>
+    </ion-app>
+  </body>
+</html>

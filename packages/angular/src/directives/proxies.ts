@@ -800,14 +800,14 @@ export declare interface IonFooter extends Components.IonFooter {}
 
 
 @ProxyCmp({
-  inputs: ['fixed']
+  inputs: ['fixed', 'layout']
 })
 @Component({
   selector: 'ion-grid',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['fixed'],
+  inputs: ['fixed', 'layout'],
 })
 export class IonGrid {
   protected el: HTMLIonGridElement;
