@@ -34,6 +34,9 @@ echo "Installing dependencies..."
 npm install --legacy-peer-deps > npm_install.log 2>&1
 npm run sync
 
+# Install Playwright browsers if not already present
+npx playwright install chromium 2>/dev/null || true
+
 echo "Cleaning up port 3000..."
 lsof -ti:3000 | xargs kill -9 || true
 
@@ -45,24 +48,29 @@ SERVER_PID=$!
 # Ensure server is killed on script exit
 trap "kill $SERVER_PID" EXIT
 
-echo "Waiting for server to start (30s)..."
-sleep 30
-
-echo "Checking server status..."
-SERVER_RESPONSE=$(curl -s -v http://localhost:3000 2>&1)
-if echo "$SERVER_RESPONSE" | grep -q "Child compilation failed"; then
-  echo "Server started but has compilation errors. Exiting."
-  echo "$SERVER_RESPONSE"
-  exit 1
-fi
-
-if ! echo "$SERVER_RESPONSE" | grep -q "200 OK"; then
-  echo "Server did not return 200 OK. Exiting."
-  echo "$SERVER_RESPONSE"
-  exit 1
-fi
-echo "Server is healthy."
+echo "Waiting for server to start..."
+# Poll until the server responds (up to 60s)
+for i in $(seq 1 60); do
+  if curl -s -o /dev/null -w "%{http_code}" http://localhost:3000 2>/dev/null | grep -q "200"; then
+    echo "Server is healthy."
+    break
+  fi
+  if [ "$i" -eq 60 ]; then
+    echo "Server did not start within 60s. Exiting."
+    cat server.log
+    exit 1
+  fi
+  sleep 1
+done
 
 echo "Running Cypress tests..."
-npm run cypress
+npm run cypress || CYPRESS_FAILED=1
+
+echo "Running Playwright tests..."
+npx playwright test --retries=2 || PLAYWRIGHT_FAILED=1
+
+if [ "${CYPRESS_FAILED:-0}" = "1" ] || [ "${PLAYWRIGHT_FAILED:-0}" = "1" ]; then
+  echo "One or more test suites failed."
+  exit 1
+fi
 
