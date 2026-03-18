@@ -6,6 +6,8 @@ import { createColorClasses } from '@utils/theme';
 import { config } from '../../global/config';
 import type { Color } from '../../interface';
 
+import type { IonChipFill, IonChipHue, IonChipSize, IonChipShape } from './chip.interfaces';
+
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  */
@@ -39,7 +41,7 @@ export class Chip implements ComponentInterface {
    *
    * Defaults to `"solid"`.
    */
-  @Prop() fill?: 'outline' | 'solid';
+  @Prop() fill?: IonChipFill;
 
   /**
    * If `true`, the user cannot interact with the chip.
@@ -52,7 +54,7 @@ export class Chip implements ComponentInterface {
    *
    * Defaults to `"subtle"`.
    */
-  @Prop() hue?: 'bold' | 'subtle';
+  @Prop() hue?: IonChipHue;
 
   /**
    * Set to `"soft"` for a chip with slightly rounded corners,
@@ -61,7 +63,7 @@ export class Chip implements ComponentInterface {
    *
    * Defaults to `"round"`.
    */
-  @Prop() shape?: 'soft' | 'round' | 'rectangular';
+  @Prop() shape?: IonChipShape;
 
   // TODO(FW-6266): Determine if `medium` size is needed.
   /**
@@ -69,7 +71,7 @@ export class Chip implements ComponentInterface {
    *
    * Defaults to `"large"`.
    */
-  @Prop() size?: 'small' | 'large';
+  @Prop() size?: IonChipSize;
 
   componentDidLoad() {
     if (this.outline) {
