@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * This behavior does not vary across directions/modes.
+ * The resize behavior does not vary across directions or modes.
  */
 configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('spinner: resize'), () => {
