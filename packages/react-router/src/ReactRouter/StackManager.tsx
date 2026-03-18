@@ -262,9 +262,19 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       this.outOfScopeUnmountTimeout = undefined;
     }
 
+    // Remove view items from the stack but do NOT apply ion-page-hidden.
+    // ion-page-hidden sets display:none which immediately removes content
+    // from the layout, causing the parent outlet's leaving page to flash
+    // blank during its transition animation (issue #25477).
+    //
+    // Removing from the stack triggers React reconciliation via forceUpdate,
+    // which removes the DOM elements. React batches this re-render after all
+    // componentDidUpdate calls in the current cycle, so the parent outlet's
+    // commit() captures the current DOM state (with content visible) before
+    // React processes the removal. The compositor's cached layer is unaffected
+    // by subsequent DOM changes during the animation.
     const allViewsInOutlet = this.context.getViewItemsForOutlet(this.id);
     allViewsInOutlet.forEach((viewItem) => {
-      hideIonPageElement(viewItem.ionPageElement);
       this.context.unMountViewItem(viewItem);
     });
 
@@ -580,13 +590,15 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
   /**
    * Determines whether to skip the transition animation and, if so, immediately
-   * hides the leaving view with inline `display:none`.
+   * hides the leaving view with inline `visibility:hidden`.
    *
-   * Skips transitions in outlets nested inside a parent IonPage. These outlets
-   * render pages inside a parent page's content area. The MD animation shows
-   * both entering and leaving pages simultaneously, causing text overlap and
-   * nested scrollbars (each page has its own IonContent). Top-level outlets
-   * are unaffected and animate normally.
+   * Skips transitions only for outlets nested inside a parent IonPage's content
+   * area (i.e., an ion-content sits between the outlet and the .ion-page). These
+   * outlets render child pages inside a parent page's scrollable area, and the MD
+   * animation shows both entering and leaving pages simultaneously — causing text
+   * overlap and nested scrollbars. Standard page-level outlets (tabs, routing,
+   * swipe-to-go-back) animate normally even though they sit inside a framework-
+   * managed .ion-page wrapper from the parent outlet's view stack.
    *
    * Uses inline visibility:hidden rather than ion-page-hidden class because
    * core's beforeTransition() removes ion-page-hidden via setPageHidden().
@@ -599,8 +611,22 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     enteringViewItem: ViewItem,
     leavingViewItem: ViewItem | undefined
   ): boolean {
-    const isNestedOutlet = !!this.routerOutletElement?.closest('.ion-page');
-    const shouldSkip = isNestedOutlet && !!leavingViewItem && enteringViewItem !== leavingViewItem;
+    // Only skip for outlets genuinely nested inside a page's content area.
+    // Walk from the outlet up to the nearest .ion-page; if an ion-content
+    // sits in between, the outlet is inside scrollable page content and
+    // animating would cause overlapping pages with duplicate scrollbars.
+    let isInsidePageContent = false;
+    let el: HTMLElement | null = this.routerOutletElement?.parentElement ?? null;
+    while (el) {
+      if (el.classList.contains('ion-page')) break;
+      if (el.tagName === 'ION-CONTENT') {
+        isInsidePageContent = true;
+        break;
+      }
+      el = el.parentElement;
+    }
+
+    const shouldSkip = isInsidePageContent && !!leavingViewItem && enteringViewItem !== leavingViewItem;
 
     if (shouldSkip && leavingViewItem?.ionPageElement) {
       leavingViewItem.ionPageElement.style.setProperty('visibility', 'hidden');
