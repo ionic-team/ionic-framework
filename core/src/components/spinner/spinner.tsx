@@ -8,7 +8,7 @@ import type { Color } from '../../interface';
 
 import type { SpinnerTypes } from './spinner-configs';
 import { SPINNERS } from './spinner-configs';
-import type { SpinnerConfig, IonSpinnerSizes } from './spinner.interfaces';
+import type { SpinnerConfig, IonSpinnerSize } from './spinner.interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -51,7 +51,7 @@ export class Spinner implements ComponentInterface {
    *
    * Defaults to `"medium"`.
    */
-  @Prop() size?: IonSpinnerSizes;
+  @Prop() size?: IonSpinnerSize;
 
   private getName(): SpinnerTypes {
     const spinnerName = this.name || config.get('spinner');
