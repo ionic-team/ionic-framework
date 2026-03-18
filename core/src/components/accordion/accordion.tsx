@@ -200,6 +200,15 @@ export class Accordion implements ComponentInterface {
     if (ionItem.lines === undefined) {
       ionItem.lines = 'full';
     }
+
+    /**
+     * Set the pressed state background color for ionic theme.
+     * This overrides the default blue color from ion-item.
+     */
+    const theme = getIonTheme(this);
+    if (theme === 'ionic') {
+      ionItem.style.setProperty('--background-activated', 'var(--token-bg-neutral-subtlest-press)');
+    }
   };
 
   private getSlottedHeaderIonItem = () => {
