@@ -62,7 +62,7 @@ export type IonSpinnerRecipe = {
 
   // Sizes
   size?: {
-    [K in IonSpinnerSize]?: IonSpinnerSizeDefinition;
+    [K in SpinnerSize]?: IonSpinnerSizeDefinition;
   };
 };
 
@@ -72,7 +72,7 @@ type IonSpinnerSizeDefinition = {
 };
 
 export type IonSpinnerConfig = {
-  size?: IonSpinnerSize;
+  size?: SpinnerSize;
 };
 
-export type IonSpinnerSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+export type SpinnerSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';

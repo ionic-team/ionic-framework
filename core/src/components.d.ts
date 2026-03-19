@@ -39,7 +39,7 @@ import { SegmentViewScrollEvent } from "./components/segment-view/segment-view-i
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 import { SelectModalOption } from "./components/select-modal/select-modal-interface";
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
-import { IonSpinnerSize } from "./components/spinner/spinner.interfaces";
+import { SpinnerSize } from "./components/spinner/spinner.interfaces";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 import { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
@@ -78,7 +78,7 @@ export { SegmentViewScrollEvent } from "./components/segment-view/segment-view-i
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 export { SelectModalOption } from "./components/select-modal/select-modal-interface";
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
-export { IonSpinnerSize } from "./components/spinner/spinner.interfaces";
+export { SpinnerSize } from "./components/spinner/spinner.interfaces";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 export { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
@@ -3885,7 +3885,7 @@ export namespace Components {
         /**
           * Set to `"xsmall"` for the smallest size. Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a large size. Set to `"xlarge"` for the largest size.  Defaults to `"medium"`.
          */
-        "size"?: IonSpinnerSize;
+        "size"?: SpinnerSize;
     }
     interface IonSplitPane {
         /**
@@ -9911,7 +9911,7 @@ declare namespace LocalJSX {
         /**
           * Set to `"xsmall"` for the smallest size. Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a large size. Set to `"xlarge"` for the largest size.  Defaults to `"medium"`.
          */
-        "size"?: IonSpinnerSize;
+        "size"?: SpinnerSize;
     }
     interface IonSplitPane {
         /**
