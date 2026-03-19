@@ -1713,8 +1713,7 @@ called when the async operation has completed.
    */
   ionPull: EventEmitter<CustomEvent<void>>;
   /**
-   * Emitted when the user begins to start pulling down.
-TODO(FW-7044): Remove this in a major release @deprecated Use `ionPullStart` instead.
+   * Emitted when the user begins to start pulling down. @deprecated Use `ionPullStart` instead.
    */
   ionStart: EventEmitter<CustomEvent<void>>;
   /**

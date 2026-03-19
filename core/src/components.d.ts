@@ -9236,7 +9236,7 @@ declare namespace LocalJSX {
          */
         "onIonRefresh"?: (event: IonRefresherCustomEvent<RefresherEventDetail>) => void;
         /**
-          * Emitted when the user begins to start pulling down. TODO(FW-7044): Remove this in a major release
+          * Emitted when the user begins to start pulling down.
           * @deprecated Use `ionPullStart` instead.
          */
         "onIonStart"?: (event: IonRefresherCustomEvent<void>) => void;
