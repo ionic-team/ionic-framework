@@ -202,6 +202,12 @@ export class Accordion implements ComponentInterface {
     }
 
     /**
+     * Add a class to identify this item as an accordion header
+     * for specific styling purposes
+     */
+    ionItem.classList.add('accordion-header-item');
+
+    /**
      * Set the pressed state background color for ionic theme.
      * This overrides the default blue color from ion-item.
      */

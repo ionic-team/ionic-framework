@@ -122,3 +122,10 @@ slot[name="end"]::slotted(*) {
 :host(.in-select-modal.ion-focused) .item-native {
   --border-radius: #{globals.$ion-border-radius-400};
 }
+
+// Item in Accordion
+// --------------------------------------------------
+// Ensure button element in accordion header has proper horizontal padding
+:host(.accordion-header-item) .item-native {
+  @include globals.padding-horizontal(globals.$ion-space-400);
+}
