@@ -114,6 +114,8 @@ export {
   RangeKnobMoveEndEventDetail,
   RefresherCustomEvent,
   RefresherEventDetail,
+  RefresherPullEndCustomEvent,
+  RefresherPullEndEventDetail,
   ReorderMoveCustomEvent,
   ReorderMoveEventDetail,
   ReorderEndCustomEvent,
