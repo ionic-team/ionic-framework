@@ -56,6 +56,7 @@
   --padding-end: #{globals.$ion-space-400};
   --padding-bottom: #{globals.$ion-space-300};
   --padding-start: #{globals.$ion-space-400};
+  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
 
   @include globals.typography(globals.$ion-heading-h6-medium);
 }

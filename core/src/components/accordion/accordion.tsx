@@ -206,15 +206,6 @@ export class Accordion implements ComponentInterface {
      * for specific styling purposes
      */
     ionItem.classList.add('accordion-header-item');
-
-    /**
-     * Set the pressed state background color for ionic theme.
-     * This overrides the default blue color from ion-item.
-     */
-    const theme = getIonTheme(this);
-    if (theme === 'ionic') {
-      ionItem.style.setProperty('--background-activated', 'var(--token-bg-neutral-subtlest-press)');
-    }
   };
 
   private getSlottedHeaderIonItem = () => {
