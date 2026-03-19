@@ -2068,6 +2068,7 @@ ion-toast,part,wrapper
 ion-toggle,shadow
 ion-toggle,prop,alignment,"center" | "start" | undefined,undefined,false,false
 ion-toggle,prop,checked,boolean,false,false,false
+ion-toggle,prop,checkedIcon,null | string | undefined,undefined,false,false
 ion-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toggle,prop,disabled,boolean,false,false,false
 ion-toggle,prop,enableOnOffLabels,boolean | undefined,config.get('toggleOnOffLabels'),false,false
@@ -2078,6 +2079,7 @@ ion-toggle,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',fal
 ion-toggle,prop,mode,"ios" | "md",undefined,false,false
 ion-toggle,prop,name,string,this.inputId,false,false
 ion-toggle,prop,required,boolean,false,false,false
+ion-toggle,prop,uncheckedIcon,null | string | undefined,undefined,false,false
 ion-toggle,prop,value,null | string | undefined,'on',false,false
 ion-toggle,event,ionBlur,void,true
 ion-toggle,event,ionChange,ToggleChangeEventDetail<any>,true
