@@ -1034,7 +1034,7 @@ export class Datetime implements ComponentInterface {
             this.resolveForceDateScrolling();
           }
 
-          const activeEl = document.activeElement as HTMLElement | null;
+          const activeEl = this.el.shadowRoot!.activeElement as HTMLElement | null;
           if (activeEl) {
             activeEl.blur();
             calendarBodyRef.focus();
