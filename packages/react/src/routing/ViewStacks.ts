@@ -22,10 +22,7 @@ export abstract class ViewStacks {
   }
 
   clear(outletId: string) {
-    // Give some time for the leaving views to transition before removing
-    return setTimeout(() => {
-      delete this.viewStacks[outletId];
-    }, 500);
+    delete this.viewStacks[outletId];
   }
 
   getViewItemsForOutlet(outletId: string) {

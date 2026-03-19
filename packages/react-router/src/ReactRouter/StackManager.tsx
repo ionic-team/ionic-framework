@@ -71,7 +71,6 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     isInOutlet: () => true,
   };
 
-  private clearOutletTimeout: any;
   private pendingPageTransition = false;
   private waitingForIonPage = false;
   private ionPageWaitTimeout?: ReturnType<typeof setTimeout>;
@@ -756,18 +755,6 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
   componentDidMount() {
     this._isMounted = true;
-    if (this.clearOutletTimeout) {
-      /**
-       * The clearOutlet integration with React Router is a bit hacky.
-       * It uses a timeout to clear the outlet after a transition.
-       * In React v18, components are mounted and unmounted in development mode
-       * to check for side effects.
-       *
-       * This clearTimeout prevents the outlet from being cleared when the component is re-mounted,
-       * which should only happen in development mode and as a result of a hot reload.
-       */
-      clearTimeout(this.clearOutletTimeout);
-    }
     if (this.routerOutletElement) {
       this.setupRouterOutlet(this.routerOutletElement);
       this.handlePageTransition(this.props.routeInfo);
@@ -822,7 +809,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       hideIonPageElement(viewItem.ionPageElement);
     });
 
-    this.clearOutletTimeout = this.context.clearOutlet(this.id);
+    this.context.clearOutlet(this.id);
   }
 
   /**
