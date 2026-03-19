@@ -10,15 +10,15 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `
           <div class="container">
-            <ion-spinner name="lines" paused color="primary"></ion-spinner>
-            <ion-spinner name="lines" paused color="secondary"></ion-spinner>
-            <ion-spinner name="lines" paused color="tertiary"></ion-spinner>
-            <ion-spinner name="lines" paused color="success"></ion-spinner>
-            <ion-spinner name="lines" paused color="warning"></ion-spinner>
-            <ion-spinner name="lines" paused color="danger"></ion-spinner>
-            <ion-spinner name="lines" paused color="light"></ion-spinner>
-            <ion-spinner name="lines" paused color="medium"></ion-spinner>
-            <ion-spinner name="lines" paused color="dark"></ion-spinner>
+            <ion-spinner name="lines" color="primary"></ion-spinner>
+            <ion-spinner name="lines-small" color="secondary"></ion-spinner>
+            <ion-spinner name="lines-sharp" color="tertiary"></ion-spinner>
+            <ion-spinner name="lines-sharp-small" color="success"></ion-spinner>
+            <ion-spinner name="circular" color="warning"></ion-spinner>
+            <ion-spinner name="dots" color="danger"></ion-spinner>
+            <ion-spinner name="bubbles" color="light"></ion-spinner>
+            <ion-spinner name="circles" color="medium"></ion-spinner>
+            <ion-spinner name="crescent" color="dark"></ion-spinner>
           </div>
         `,
         config
