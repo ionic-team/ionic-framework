@@ -1,5 +1,5 @@
-import type { IonChipRecipe, IonChipConfig } from '../components/chip/chip.interfaces';
-import type { IonSpinnerRecipe, IonSpinnerConfig } from '../components/spinner/spinner.interfaces';
+import type { IonChipConfig, IonChipRecipe } from '../components/chip/chip.interfaces';
+import type { IonSpinnerConfig, IonSpinnerRecipe } from '../components/spinner/spinner.interfaces';
 import type { IonicConfig as IonicGlobalConfig } from '../utils/config';
 
 // Platform-specific theme
