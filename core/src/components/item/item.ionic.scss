@@ -125,7 +125,8 @@ slot[name="end"]::slotted(*) {
 
 // Item in Accordion
 // --------------------------------------------------
-// Ensure button element in accordion header has proper horizontal padding
 :host(.accordion-header-item) .item-native {
+  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
+
   @include globals.padding-horizontal(globals.$ion-space-400);
 }
