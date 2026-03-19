@@ -347,7 +347,6 @@ export class Checkbox implements ComponentInterface {
     } = this;
     const theme = getIonTheme(this);
     const path = getSVGPath(theme, indeterminate);
-    const hasLabelContent = el.textContent !== '';
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
