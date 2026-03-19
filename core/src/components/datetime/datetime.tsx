@@ -1033,6 +1033,12 @@ export class Datetime implements ComponentInterface {
           if (this.resolveForceDateScrolling) {
             this.resolveForceDateScrolling();
           }
+
+          const activeEl = document.activeElement as HTMLElement | null;
+          if (activeEl) {
+            activeEl.blur();
+            calendarBodyRef.focus();
+          }
         });
       };
 
