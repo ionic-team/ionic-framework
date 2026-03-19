@@ -1035,9 +1035,8 @@ export class Datetime implements ComponentInterface {
           }
 
           const activeEl = this.el.shadowRoot!.activeElement as HTMLElement | null;
-          if (activeEl) {
-            activeEl.blur();
-            calendarBodyRef.focus();
+          if (activeEl && activeEl.classList.contains('calendar-day')) {
+            (activeEl.closest('.calendar-body') as HTMLElement | null)?.focus();
           }
         });
       };
