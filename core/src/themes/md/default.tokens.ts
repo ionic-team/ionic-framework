@@ -345,7 +345,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `ion-icon`
       icon: {
         color: rgba('var(--ion-text-color-rgb, 0, 0, 0)', 0.54),
 
@@ -372,7 +371,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      // Targets `ion-avatar`
       avatar: {
         height: `${(24 / components.chip.font.size).toFixed(2)}em`,
         width: `${(24 / components.chip.font.size).toFixed(2)}em`,
