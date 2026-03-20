@@ -11,7 +11,7 @@ test.describe('Tab Lifecycle Events', () => {
   test('ionViewDidLeave should fire on active tab child page when navigating away from tabs', async ({ page }, testInfo) => {
     testInfo.annotations.push({
       type: 'issue',
-      description: 'https://outsystemsrd.atlassian.net/browse/FW-6788',
+      description: 'FW-6788',
     });
 
     await page.goto(withTestingMode('/tab-lifecycle/home'));
@@ -30,7 +30,7 @@ test.describe('Tab Lifecycle Events', () => {
   test('ionViewDidLeave should fire on active tab child page when navigating from non-default tab', async ({ page }, testInfo) => {
     testInfo.annotations.push({
       type: 'issue',
-      description: 'https://outsystemsrd.atlassian.net/browse/FW-6788',
+      description: 'FW-6788',
     });
 
     await page.goto(withTestingMode('/tab-lifecycle/home'));
@@ -52,7 +52,7 @@ test.describe('Tab Lifecycle Events', () => {
   test('ionViewDidEnter should fire on tab child page when navigating back to tabs', async ({ page }, testInfo) => {
     testInfo.annotations.push({
       type: 'issue',
-      description: 'https://outsystemsrd.atlassian.net/browse/FW-6788',
+      description: 'FW-6788',
     });
 
     await page.goto(withTestingMode('/tab-lifecycle/home'));
