@@ -3,7 +3,12 @@
  */
 
 import { mix, rgba } from '../../utils/theme';
+import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
+
+export const global = {
+  root: parseFloat(baseDefaultTheme.fontSize!.root as string),
+};
 
 export const components = {
   item: {

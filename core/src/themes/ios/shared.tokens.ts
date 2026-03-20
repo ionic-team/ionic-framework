@@ -61,7 +61,7 @@ export const components = {
       },
 
       font: {
-        size: dynamicFont(14),
+        size: dynamicFont(global.root, 14),
       },
     },
   },

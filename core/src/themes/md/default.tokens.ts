@@ -423,7 +423,7 @@ export const defaultTheme: DefaultTheme = {
       },
 
       font: {
-        size: dynamicFont(components.itemDivider.font.size),
+        size: dynamicFont(global.root, components.itemDivider.font.size),
       },
 
       leading: {
@@ -501,7 +501,7 @@ export const defaultTheme: DefaultTheme = {
         },
 
         font: {
-          size: dynamicFont(components.item.note.slot.font.size),
+          size: dynamicFont(global.root, components.item.note.slot.font.size),
         },
 
         margin: {
@@ -637,7 +637,7 @@ export const defaultTheme: DefaultTheme = {
         },
 
         font: {
-          size: dynamicFont(14),
+          size: dynamicFont(global.root, 14),
         },
 
         text: {

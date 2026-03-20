@@ -424,7 +424,7 @@ export const defaultTheme: DefaultTheme = {
       },
 
       font: {
-        size: dynamicFont(17),
+        size: dynamicFont(global.root, 17),
         weight: 'var(--ion-font-weight-semi-bold)',
       },
 

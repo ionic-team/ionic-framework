@@ -640,24 +640,28 @@ const baselineUnit = 'rem';
  * Converts a pixel value to a dynamic unit (defaulting to rem).
  *
  * Examples based on a root font size of 16px:
- * - `dynamicFont(16)` returns `'1rem'`
- * - `dynamicFont(20, 'em')` returns `'1.25em'`
+ * - `dynamicFont('16px', 16)` returns `'1rem'`
+ * - `dynamicFont('16px', 20, 'em')` returns `'1.25em'`
  *
  * @internal
  * @param size - The numeric pixel value.
  * @param unit - The CSS unit string.
  * @returns The calculated CSS value string.
  */
-export const dynamicFont = (size: number, unit: string | undefined = baselineUnit): string => {
+export const dynamicFont = (
+  configRootFontSize: string | number,
+  size: number,
+  unit: string | undefined = baselineUnit
+): string => {
   let baselinePixelSize = 16;
+  const cleanSize = typeof configRootFontSize === 'string' ? parseFloat(configRootFontSize) : configRootFontSize;
 
-  if (typeof window !== 'undefined') {
-    const configRootFontSize = (window as any)?.Ionic?.config?.get?.('theme')?.fontSizes?.root;
-
-    const parsedSize = parseFloat(configRootFontSize);
-    if (!isNaN(parsedSize)) {
-      baselinePixelSize = parsedSize;
-    }
+  if (!isNaN(cleanSize)) {
+    baselinePixelSize = cleanSize;
+  } else {
+    printIonWarning(
+      `Invalid root font size in theme config: ${configRootFontSize}. Falling back to default of ${baselinePixelSize}px.`
+    );
   }
 
   return `${size / baselinePixelSize}${unit}`;
