@@ -69,7 +69,6 @@
 
   overflow: hidden;
 
-  //
   z-index: 100;
   box-sizing: border-box;
 }
@@ -387,11 +386,11 @@
 
   font-size: var(--ion-item-divider-paragraph-font-size);
 
+  line-height: normal;
+
   text-overflow: var(--ion-item-divider-paragraph-text-overflow);
 
   overflow: var(--ion-item-divider-paragraph-overflow);
-
-  line-height: normal;
 }
 
 ::slotted(p:last-child) {

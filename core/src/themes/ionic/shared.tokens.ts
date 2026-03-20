@@ -45,7 +45,7 @@ export const components = {
             start: 'var(--ion-spacing-lg)',
           },
         },
-      }
+      },
     },
 
     icon: {
