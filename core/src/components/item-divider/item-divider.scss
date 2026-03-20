@@ -206,7 +206,7 @@
     var(--ion-item-divider-note-margin-start)
   );
 
-  align-self: flex-start;
+  align-self: var(--ion-item-divider-note-align-self);
 
   font-size: var(--ion-item-divider-note-font-size, revert-layer);
 }
