@@ -131,6 +131,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/param-swipe-back">
             <IonLabel>Param Swipe Back</IonLabel>
           </IonItem>
+          <IonItem routerLink="/tab-lifecycle">
+            <IonLabel>Tab Lifecycle</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

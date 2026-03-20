@@ -242,6 +242,24 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       this.outOfScopeUnmountTimeout = undefined;
     }
 
+    // Fire lifecycle events on any visible view before unmounting.
+    // When navigating away from a tabbed section, the parent outlet fires
+    // ionViewDidLeave on the tabs container, but the active tab child page
+    // never receives its own lifecycle events because the core transition
+    // dispatches events with bubbles:false. This ensures tab child pages
+    // get ionViewWillLeave/ionViewDidLeave so useIonViewDidLeave fires.
+    const allViewsInOutlet = this.context.getViewItemsForOutlet(this.id);
+    allViewsInOutlet.forEach((viewItem) => {
+      if (viewItem.ionPageElement && isViewVisible(viewItem.ionPageElement)) {
+        viewItem.ionPageElement.dispatchEvent(
+          new CustomEvent('ionViewWillLeave', { bubbles: false, cancelable: false })
+        );
+        viewItem.ionPageElement.dispatchEvent(
+          new CustomEvent('ionViewDidLeave', { bubbles: false, cancelable: false })
+        );
+      }
+    });
+
     // Remove view items from the stack but do NOT apply ion-page-hidden.
     // ion-page-hidden sets display:none which immediately removes content
     // from the layout, causing the parent outlet's leaving page to flash
@@ -253,7 +271,6 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     // commit() captures the current DOM state (with content visible) before
     // React processes the removal. The compositor's cached layer is unaffected
     // by subsequent DOM changes during the animation.
-    const allViewsInOutlet = this.context.getViewItemsForOutlet(this.id);
     allViewsInOutlet.forEach((viewItem) => {
       this.context.unMountViewItem(viewItem);
     });

@@ -62,6 +62,8 @@ import DirectionNoneBack from './pages/direction-none-back/DirectionNoneBack';
 import TabSearchParams from './pages/tab-search-params/TabSearchParams';
 import { Step1, Step2, Step3, Step4 } from './pages/replace-params/ReplaceParams';
 import { ParamSwipeBack, ParamSwipeBackB } from './pages/param-swipe-back/ParamSwipeBack';
+import TabLifecycle from './pages/tab-lifecycle/TabLifecycle';
+import TabLifecycleOutside from './pages/tab-lifecycle/TabLifecycleOutside';
 
 setupIonicReact();
 
@@ -118,6 +120,8 @@ const App: React.FC = () => {
           <Route path="/replace-params/step3/:id" element={<Step3 />} />
           <Route path="/replace-params/step4/:id" element={<Step4 />} />
           <Route path="/replace-params" element={<Navigate to="/replace-params/step1" replace />} />
+          <Route path="/tab-lifecycle/*" element={<TabLifecycle />} />
+          <Route path="/tab-lifecycle-outside" element={<TabLifecycleOutside />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
