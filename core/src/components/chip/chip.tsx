@@ -81,10 +81,8 @@ export class Chip implements ComponentInterface {
   }
 
   /**
-   * Get the fill by checking the instance property,
-   * falling back to the custom theme config.
-   *
-   * If neither is set, it will use a default value.
+   * Gets the chip fill. Uses the `fill` property if set, otherwise
+   * checks the theme config and falls back to 'solid' if neither is provided.
    */
   get fillValue(): string {
     const fillConfig = config.getObjectValue('IonChip.fill', 'solid') as string;
@@ -94,10 +92,8 @@ export class Chip implements ComponentInterface {
   }
 
   /**
-   * Get the hue by checking the instance property,
-   * falling back to the custom theme config.
-   *
-   * If neither is set, it will use a default value.
+   * Gets the chip hue. Uses the `hue` property if set, otherwise
+   * checks the theme config and falls back to 'subtle' if neither is provided.
    */
   get hueValue(): string {
     const hueConfig = config.getObjectValue('IonChip.hue', 'subtle') as string;
@@ -107,10 +103,8 @@ export class Chip implements ComponentInterface {
   }
 
   /**
-   * Get the shape by checking the instance property,
-   * falling back to the custom theme config.
-   *
-   * If neither is set, it will use a default value.
+   * Gets the chip shape. Uses the `shape` property if set, otherwise
+   * checks the theme config and falls back to 'round' if neither is provided.
    */
   get shapeValue(): string {
     const shapeConfig = config.getObjectValue('IonChip.shape', 'round') as string;
@@ -120,10 +114,8 @@ export class Chip implements ComponentInterface {
   }
 
   /**
-   * Get the size by checking the instance property,
-   * falling back to the custom theme config.
-   *
-   * If neither is set, it will use a default value.
+   * Gets the chip size. Uses the `size` property if set, otherwise
+   * checks the theme config and falls back to 'large' if neither is provided.
    */
   get sizeValue(): string {
     const sizeConfig = config.getObjectValue('IonChip.size', 'large') as string;

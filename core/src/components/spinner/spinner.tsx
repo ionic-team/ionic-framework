@@ -63,10 +63,8 @@ export class Spinner implements ComponentInterface {
   }
 
   /**
-   * Get the size by checking the instance property,
-   * falling back to the custom theme config.
-   *
-   * If neither is set, it will use a default value.
+   * Gets the spinner size. Uses the `size` property if set, otherwise
+   * checks the theme config and falls back to 'medium' if neither is provided.
    */
   get sizeValue(): string {
     const sizeConfig = config.getObjectValue('IonSpinner.size', 'medium') as string;
