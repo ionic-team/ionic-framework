@@ -62,10 +62,6 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
         config
       );
 
-      /**
-       * Accordion headers must receive `accordion-header-item` after hydration so ionic item
-       * styles apply (activated background). Screenshots alone won't catch a missing class.
-       */
       const firstHeaderItem = page.locator('ion-accordion').first().locator('ion-item[slot="header"]');
       await expect(firstHeaderItem).toHaveClass(/accordion-header-item/);
 

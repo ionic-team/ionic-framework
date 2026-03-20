@@ -123,15 +123,9 @@ slot[name="end"]::slotted(*) {
   --border-radius: #{globals.$ion-border-radius-400};
 }
 
-// Accordion header (ionic theme adds `accordion-header-item` on the slotted header item)
-// Neutral press for `.ion-activated`. Avoid `:host-context(ion-accordion)` — unsupported
-// in WebKit/Firefox; the whole rule group would be ignored (see core mixins.scss).
+// Item in Accordion
 // --------------------------------------------------
-:host(.accordion-header-item) {
-  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
-  --background-activated-opacity: 1;
-}
-
+// Ensure button element in accordion header has proper horizontal padding specifically for nested accordions
 :host(.accordion-header-item) .item-native {
   @include globals.padding-horizontal(globals.$ion-space-400);
 }

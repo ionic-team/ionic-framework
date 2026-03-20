@@ -168,11 +168,6 @@ export class Accordion implements ComponentInterface {
      */
     raf(() => {
       /**
-       * Header slot assignment can lag first paint; re-apply defaults so
-       * `accordion-header-item` and button props are set before a11y/screenshots.
-       */
-      this.setItemDefaults();
-      /**
        * Set aria label on button inside of ion-item
        * once the inner content has been rendered.
        */
@@ -206,6 +201,10 @@ export class Accordion implements ComponentInterface {
       ionItem.lines = 'full';
     }
 
+    /**
+     * Add a class to identify this item as an accordion header
+     * for specific styling purposes
+     */
     ionItem.classList.add('accordion-header-item');
   };
 
