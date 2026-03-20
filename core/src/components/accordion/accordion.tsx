@@ -202,10 +202,11 @@ export class Accordion implements ComponentInterface {
     }
 
     /**
-     * Add a class to identify this item as an accordion header
-     * for specific styling purposes
+     * Ionic theme only: class for accordion header item styling.
      */
-    ionItem.classList.add('accordion-header-item');
+    if (getIonTheme(this) === 'ionic') {
+      ionItem.classList.add('accordion-header-item');
+    }
   };
 
   private getSlottedHeaderIonItem = () => {
