@@ -429,7 +429,7 @@ export const defaultTheme: DefaultTheme = {
       leading: {
         edge: {
           margin: {
-            end: components.item.start.slot.margin.end,
+            end: components.item.slot.child.start.margin.end,
           },
         },
       },
@@ -437,7 +437,7 @@ export const defaultTheme: DefaultTheme = {
       trailing: {
         edge: {
           margin: {
-            start: components.item.end.slot.margin.start,
+            start: components.item.slot.child.end.margin.start,
           },
         },
       },

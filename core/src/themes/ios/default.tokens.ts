@@ -431,10 +431,10 @@ export const defaultTheme: DefaultTheme = {
       leading: {
         anchor: {
           margin: {
-            top: components.item.slot.start.margin.top,
-            end: components.item.slot.start.margin.end,
-            bottom: components.item.slot.start.margin.bottom,
-            start: components.item.slot.start.margin.start,
+            top: components.item.slot.host.start.margin.top,
+            end: components.item.slot.host.start.margin.end,
+            bottom: components.item.slot.host.start.margin.bottom,
+            start: components.item.slot.host.start.margin.start,
           },
         },
       },

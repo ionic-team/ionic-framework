@@ -29,22 +29,23 @@ export const components = {
       )})))`,
     },
 
-    // ::slotted([slot="start"])
-    start: {
-      slot: {
-        margin: {
-          end: 'var(--ion-spacing-lg)',
+    // Targets host with slots or all children with slots
+    slot: {
+      child: {
+        // Targets `::slotted([slot="start"])`
+        start: {
+          margin: {
+            end: 'var(--ion-spacing-lg)',
+          },
         },
-      },
-    },
 
-    // ::slotted([slot="end"])
-    end: {
-      slot: {
-        margin: {
-          start: 'var(--ion-spacing-lg)',
+        // Targets `::slotted([slot="end"])`
+        end: {
+          margin: {
+            start: 'var(--ion-spacing-lg)',
+          },
         },
-      },
+      }
     },
 
     icon: {

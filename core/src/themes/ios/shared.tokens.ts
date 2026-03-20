@@ -28,15 +28,17 @@ export const components = {
       },
     },
 
-    // Targets `:host([slot="start"])`
+    // Targets host with slots or all children with slots
     slot: {
-      start: {
-        margin: {
-          top: 'var(--ion-spacing-xxxs)',
-          // Same as `padding-end`
-          end: 'var(--ion-spacing-lg)',
-          bottom: 'var(--ion-spacing-xxxs)',
-          start: 'var(--ion-spacing-0)',
+      host: {
+        // Targets `:host([slot="start"])`
+        start: {
+          margin: {
+            top: 'var(--ion-spacing-xxxs)',
+            end: 'var(--ion-spacing-lg)',
+            bottom: 'var(--ion-spacing-xxxs)',
+            start: 'var(--ion-spacing-0)',
+          },
         },
       },
     },
