@@ -206,9 +206,7 @@ export class Accordion implements ComponentInterface {
       ionItem.lines = 'full';
     }
 
-
     ionItem.classList.add('accordion-header-item');
-    
   };
 
   private getSlottedHeaderIonItem = () => {
