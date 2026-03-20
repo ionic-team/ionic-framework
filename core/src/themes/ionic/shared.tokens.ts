@@ -19,7 +19,7 @@ export const components = {
 
     border: {
       color: `var(--ion-item-border-color, var(--ion-border-color, var(--ion-background-color-step-150, ${rgba(
-        '0, 0, 0',
+        baseColors.textColorRgb,
         0.13
       )})))`,
     },
