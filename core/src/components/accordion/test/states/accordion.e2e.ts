@@ -62,6 +62,13 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
         config
       );
 
+      /**
+       * Accordion headers must receive `accordion-header-item` after hydration so ionic item
+       * styles apply (activated background). Screenshots alone won't catch a missing class.
+       */
+      const firstHeaderItem = page.locator('ion-accordion').first().locator('ion-item[slot="header"]');
+      await expect(firstHeaderItem).toHaveClass(/accordion-header-item/);
+
       const accordionGroup = page.locator('ion-accordion-group');
 
       await expect(accordionGroup).toHaveScreenshot(screenshot('accordion-states-activated'));
@@ -157,6 +164,9 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
     `,
         config
       );
+
+      const firstHeaderItem = page.locator('ion-accordion').first().locator('ion-item[slot="header"]');
+      await expect(firstHeaderItem).toHaveClass(/accordion-header-item/);
 
       const accordionGroup = page.locator('ion-accordion-group');
 

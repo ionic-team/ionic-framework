@@ -168,6 +168,11 @@ export class Accordion implements ComponentInterface {
      */
     raf(() => {
       /**
+       * Header slot assignment can lag first paint; re-apply defaults so
+       * `accordion-header-item` and button props are set before a11y/screenshots.
+       */
+      this.setItemDefaults();
+      /**
        * Set aria label on button inside of ion-item
        * once the inner content has been rendered.
        */
@@ -202,7 +207,10 @@ export class Accordion implements ComponentInterface {
     }
 
     /**
-     * Ionic theme only: class for accordion header item styling.
+     * Ionic theme: mark header items so `item.ionic.scss` can set pressed tokens.
+     * We cannot use `:host-context(ion-accordion)` for this — that selector is dropped
+     * in WebKit/Firefox (see `mixins.scss` notes on `:host-context`), which breaks
+     * screenshot tests and real Safari.
      */
     if (getIonTheme(this) === 'ionic') {
       ionItem.classList.add('accordion-header-item');

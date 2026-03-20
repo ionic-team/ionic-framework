@@ -57,13 +57,6 @@
   --padding-bottom: #{globals.$ion-space-300};
   --padding-start: #{globals.$ion-space-400};
 
-  /**
-   * Headers use neutral press instead of default item select (blue) when `.ion-activated`.
-   * Variables are read by `ion-item`’s activated styles in `item.ionic.scss` / `item.common.scss`.
-   */
-  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
-  --background-activated-opacity: 1;
-
   @include globals.typography(globals.$ion-heading-h6-medium);
 }
 
