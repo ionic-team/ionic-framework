@@ -93,13 +93,13 @@ type IonChipShapeDefinition = {
 };
 
 type IonChipMediaDefinition = {
-  // Styles for the media component only if it is the first element in the slot
-  leading?: {
+  // Targets `:first-child`
+  first?: {
     margin?: IonMargin;
   };
 
-  // Styles for the media component only if it is the last element in the slot
-  trailing?: {
+  // Targets `:last-child`
+  last?: {
     margin?: IonMargin;
   };
 };

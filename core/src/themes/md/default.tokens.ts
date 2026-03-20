@@ -353,7 +353,7 @@ export const defaultTheme: DefaultTheme = {
           size: `${(20 / components.chip.font.size).toFixed(2)}em`,
         },
 
-        leading: {
+        first: {
           margin: {
             top: '-4px',
             end: 'var(--ion-spacing-sm)',
@@ -362,7 +362,7 @@ export const defaultTheme: DefaultTheme = {
           },
         },
 
-        trailing: {
+        last: {
           margin: {
             top: '-4px',
             end: '-4px',
@@ -377,7 +377,7 @@ export const defaultTheme: DefaultTheme = {
         height: `${(24 / components.chip.font.size).toFixed(2)}em`,
         width: `${(24 / components.chip.font.size).toFixed(2)}em`,
 
-        leading: {
+        first: {
           margin: {
             top: '-4px',
             end: 'var(--ion-spacing-sm)',
@@ -386,7 +386,7 @@ export const defaultTheme: DefaultTheme = {
           },
         },
 
-        trailing: {
+        last: {
           margin: {
             top: '-4px',
             end: '-8px',

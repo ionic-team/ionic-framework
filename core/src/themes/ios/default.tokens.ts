@@ -356,7 +356,7 @@ export const defaultTheme: DefaultTheme = {
         },
 
         // Targets `:first-child`
-        leading: {
+        first: {
           margin: {
             top: '-4px',
             end: 'var(--ion-spacing-sm)',
@@ -366,7 +366,7 @@ export const defaultTheme: DefaultTheme = {
         },
 
         // Targets `:last-child`
-        trailing: {
+        last: {
           margin: {
             top: '-4px',
             end: '-4px',
@@ -381,7 +381,7 @@ export const defaultTheme: DefaultTheme = {
         width: `${(24 / components.chip.font.size).toFixed(2)}em`,
 
         // Targets `:first-child`
-        leading: {
+        first: {
           margin: {
             top: '-4px',
             end: 'var(--ion-spacing-sm)',
@@ -391,7 +391,7 @@ export const defaultTheme: DefaultTheme = {
         },
 
         // Targets `:last-child`
-        trailing: {
+        last: {
           margin: {
             top: '-4px',
             end: '-8px',
@@ -476,7 +476,7 @@ export const defaultTheme: DefaultTheme = {
           start: 'var(--ion-spacing-0)',
         },
 
-        trailing: {
+        last: {
           margin: {
             bottom: 'var(--ion-spacing-0)',
           },
@@ -491,7 +491,7 @@ export const defaultTheme: DefaultTheme = {
           start: 'var(--ion-spacing-0)',
         },
 
-        trailing: {
+        last: {
           margin: {
             bottom: 'var(--ion-spacing-0)',
           },
@@ -506,7 +506,7 @@ export const defaultTheme: DefaultTheme = {
           start: 'var(--ion-spacing-0)',
         },
 
-        trailing: {
+        last: {
           margin: {
             bottom: 'var(--ion-spacing-0)',
           },
@@ -521,7 +521,7 @@ export const defaultTheme: DefaultTheme = {
           start: 'var(--ion-spacing-0)',
         },
 
-        trailing: {
+        last: {
           margin: {
             bottom: 'var(--ion-spacing-0)',
           },
@@ -536,7 +536,7 @@ export const defaultTheme: DefaultTheme = {
           start: 'var(--ion-spacing-0)',
         },
 
-        trailing: {
+        last: {
           margin: {
             bottom: 'var(--ion-spacing-0)',
           },
@@ -562,7 +562,7 @@ export const defaultTheme: DefaultTheme = {
           overflow: 'inherit',
         },
 
-        trailing: {
+        last: {
           margin: {
             bottom: 'var(--ion-spacing-0)',
           },
