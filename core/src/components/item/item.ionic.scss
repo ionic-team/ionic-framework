@@ -125,10 +125,7 @@ slot[name="end"]::slotted(*) {
 
 // Item in Accordion
 // --------------------------------------------------
-:host(.accordion-header-item) {
-  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
-}
-
 :host(.accordion-header-item) .item-native {
   @include globals.padding-horizontal(globals.$ion-space-400);
 }
+
