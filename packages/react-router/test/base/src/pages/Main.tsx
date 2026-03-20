@@ -125,6 +125,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/tab-search-params">
             <IonLabel>Tab Search Params</IonLabel>
           </IonItem>
+          <IonItem routerLink="/replace-params/step1">
+            <IonLabel>Replace Params</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

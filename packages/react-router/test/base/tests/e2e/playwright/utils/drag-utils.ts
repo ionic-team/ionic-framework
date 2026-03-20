@@ -49,10 +49,21 @@ export const ionSwipeToGoBack = async (
   const endX = complete ? box.x + box.width - 50 : box.x + 25;
   const y = box.y + box.height / 2;
 
+  const urlBefore = page.url();
+
   await page.mouse.move(startX, y);
   await page.mouse.down();
   // steps: 10 produces intermediate mousemove events essential for gesture recognition
   await page.mouse.move(endX, y, { steps: 10 });
   await page.mouse.up();
+
+  if (complete) {
+    // Wait for goBack() to trigger the URL change, confirming navigation completed.
+    // Falls back to a fixed timeout if the URL doesn't change (abort edge cases).
+    await page.waitForURL((url) => url.toString() !== urlBefore, { timeout: 3000 })
+      .catch((e: Error) => { if (e.name !== 'TimeoutError') throw e; });
+  }
+
+  // Small settle time for the transition animation to finish
   await page.waitForTimeout(150);
 };

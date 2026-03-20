@@ -209,34 +209,15 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     }
 
     if (routeInfo.routeAction === 'replace') {
-      const enteringRoutePath = enteringViewItem?.reactElement?.props?.path as string | undefined;
       const leavingRoutePath = leavingViewItem?.reactElement?.props?.path as string | undefined;
 
-      // Never unmount root path - needed for back navigation
-      if (leavingRoutePath === '/' || leavingRoutePath === '') {
+      // Never unmount root path or views without a path - needed for back navigation
+      if (!leavingRoutePath || leavingRoutePath === '/' || leavingRoutePath === '') {
         return false;
       }
 
-      if (enteringRoutePath && leavingRoutePath) {
-        const getParentPath = (path: string) => {
-          const normalized = path.replace(/\/\*$/, '');
-          const lastSlash = normalized.lastIndexOf('/');
-          return lastSlash > 0 ? normalized.substring(0, lastSlash) : '/';
-        };
-
-        const enteringParent = getParentPath(enteringRoutePath);
-        const leavingParent = getParentPath(leavingRoutePath);
-
-        // Unmount if routes are siblings or entering is a child of leaving (redirect)
-        const areSiblings = enteringParent === leavingParent && enteringParent !== '/';
-        const isChildRedirect =
-          enteringRoutePath.startsWith(leavingRoutePath) ||
-          (leavingRoutePath.endsWith('/*') && enteringRoutePath.startsWith(leavingRoutePath.slice(0, -2)));
-
-        return areSiblings || isChildRedirect;
-      }
-
-      return false;
+      // Replace actions unmount the leaving view since it's being replaced in history.
+      return true;
     }
 
     // For non-replace actions, only unmount for back navigation
@@ -460,7 +441,12 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, undefined, false, shouldSkipAnimation);
 
     if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
-      leavingViewItem.mount = false;
+      // For non-replace actions (back nav), set mount=false here to hide the view.
+      // For replace actions, handleLeavingViewUnmount sets mount=false only after
+      // its container-to-container guard passes, avoiding zombie state.
+      if (routeInfo.routeAction !== 'replace') {
+        leavingViewItem.mount = false;
+      }
       this.handleLeavingViewUnmount(routeInfo, enteringViewItem, leavingViewItem);
     }
 
@@ -472,12 +458,18 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
    * Handles leaving view unmount for replace actions.
    */
   private handleLeavingViewUnmount(routeInfo: RouteInfo, enteringViewItem: ViewItem, leavingViewItem: ViewItem): void {
-    if (!leavingViewItem.ionPageElement) {
+    // Only replace actions unmount views; push/pop cache for navigation history
+    if (routeInfo.routeAction !== 'replace') {
       return;
     }
 
-    // Only replace actions unmount views; push/pop cache for navigation history
-    if (routeInfo.routeAction !== 'replace') {
+    if (!leavingViewItem.ionPageElement) {
+      leavingViewItem.mount = false;
+      const viewToUnmount = leavingViewItem;
+      setTimeout(() => {
+        this.context.unMountViewItem(viewToUnmount);
+        this.forceUpdate();
+      }, VIEW_UNMOUNT_DELAY_MS);
       return;
     }
 
@@ -496,6 +488,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     if (isEnteringContainerRoute && !isLeavingSpecificRoute) {
       return;
     }
+
+    leavingViewItem.mount = false;
 
     const viewToUnmount = leavingViewItem;
     setTimeout(() => {
@@ -553,11 +547,25 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
       const getParent = (path: string) => {
         const normalized = path.replace(/\/\*$/, '');
-        const lastSlash = normalized.lastIndexOf('/');
-        return lastSlash > 0 ? normalized.substring(0, lastSlash) : '/';
+        const segments = normalized.split('/').filter(Boolean);
+        // Strip trailing parameter segments (e.g., :id) so that
+        // sibling routes like /items/list/:id and /items/detail/:id
+        // resolve to the same parent (/items).
+        while (segments.length > 0 && segments[segments.length - 1].startsWith(':')) {
+          segments.pop();
+        }
+        segments.pop();
+        return segments.length > 0 ? '/' + segments.join('/') : '/';
       };
 
-      return getParent(path1) === getParent(path2);
+      const parent = getParent(path1);
+      // Exclude root-level routes from sibling detection to avoid unintended
+      // cleanup of unrelated top-level routes. Also covers single-depth param
+      // routes (e.g., /items/:id) which resolve to root after param stripping.
+      if (parent === '/') {
+        return false;
+      }
+      return parent === getParent(path2);
     };
 
     for (const viewItem of allViewsInOutlet) {
@@ -568,13 +576,23 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         (leavingViewItem && viewItem.id === leavingViewItem.id) ||
         !viewItem.mount ||
         !viewRoutePath ||
+        // Don't clean up container routes when entering a container route
+        // (e.g., /tabs/* and /settings/* coexist for tab switching)
         (viewRoutePath.endsWith('/*') && enteringRoutePath.endsWith('/*'));
 
       if (shouldSkip) {
         continue;
       }
 
-      if (areSiblingRoutes(enteringRoutePath, viewRoutePath)) {
+      const isOrphanedSpecificRoute = !viewRoutePath.endsWith('/*');
+
+      // Clean up sibling non-container routes that are no longer reachable.
+      let shouldCleanup = false;
+      if ((isReplaceAction || isPushToContainer) && isOrphanedSpecificRoute) {
+        shouldCleanup = areSiblingRoutes(enteringRoutePath, viewRoutePath);
+      }
+
+      if (shouldCleanup) {
         hideIonPageElement(viewItem.ionPageElement);
         viewItem.mount = false;
 
@@ -667,7 +685,10 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
       // Don't unmount if entering and leaving are the same view item
       if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
-        leavingViewItem.mount = false;
+        if (routeInfo.routeAction !== 'replace') {
+          leavingViewItem.mount = false;
+        }
+        this.handleLeavingViewUnmount(routeInfo, enteringViewItem, leavingViewItem);
       }
 
       this.forceUpdate();
@@ -701,8 +722,9 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         this.transitionPage(routeInfo, latestEnteringView, latestLeavingView ?? undefined, undefined, false, shouldSkipAnimation);
 
         if (shouldUnmountLeavingViewItem && latestLeavingView && latestEnteringView !== latestLeavingView) {
-          latestLeavingView.mount = false;
-          // Call handleLeavingViewUnmount to ensure the view is properly removed
+          if (routeInfo.routeAction !== 'replace') {
+            latestLeavingView.mount = false;
+          }
           this.handleLeavingViewUnmount(routeInfo, latestEnteringView, latestLeavingView);
         }
 

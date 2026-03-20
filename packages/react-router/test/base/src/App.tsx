@@ -60,6 +60,7 @@ import RedirectParams from './pages/redirect-params/RedirectParams';
 import MultiStepBack from './pages/multi-step-back/MultiStepBack';
 import DirectionNoneBack from './pages/direction-none-back/DirectionNoneBack';
 import TabSearchParams from './pages/tab-search-params/TabSearchParams';
+import { Step1, Step2, Step3, Step4 } from './pages/replace-params/ReplaceParams';
 
 setupIonicReact();
 
@@ -109,6 +110,11 @@ const App: React.FC = () => {
           <Route path="/multi-step-back/*" element={<MultiStepBack />} />
           <Route path="/direction-none-back/*" element={<DirectionNoneBack />} />
           <Route path="/tab-search-params/*" element={<TabSearchParams />} />
+          <Route path="/replace-params/step1" element={<Step1 />} />
+          <Route path="/replace-params/step2/:id" element={<Step2 />} />
+          <Route path="/replace-params/step3/:id" element={<Step3 />} />
+          <Route path="/replace-params/step4/:id" element={<Step4 />} />
+          <Route path="/replace-params" element={<Navigate to="/replace-params/step1" replace />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
