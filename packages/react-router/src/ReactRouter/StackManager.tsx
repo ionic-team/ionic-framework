@@ -1073,10 +1073,16 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         enteringViewItem?.ionPageElement && document.body.contains(enteringViewItem.ionPageElement)
       );
 
+      // For wildcard/parameterized routes, the pattern path (e.g. "/foo/*") will
+      // never equal the resolved pathname (e.g. "/foo/bar"), so the pattern check
+      // alone isn't sufficient. Also, verify the entering view's resolved pathname
+      // differs from the current pathname — if they match, the entering and leaving
+      // views are the same and the swipe gesture shouldn't start.
       const canStartSwipe =
         !!enteringViewItem &&
         (enteringViewItem.mount || ionPageInDocument) &&
-        enteringViewItem.routeData.match.pattern.path !== routeInfo.pathname;
+        enteringViewItem.routeData.match.pattern.path !== routeInfo.pathname &&
+        enteringViewItem.routeData.match.pathname !== routeInfo.pathname;
 
       return canStartSwipe;
     };

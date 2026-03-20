@@ -128,6 +128,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/replace-params/step1">
             <IonLabel>Replace Params</IonLabel>
           </IonItem>
+          <IonItem routerLink="/param-swipe-back">
+            <IonLabel>Param Swipe Back</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

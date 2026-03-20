@@ -61,6 +61,7 @@ import MultiStepBack from './pages/multi-step-back/MultiStepBack';
 import DirectionNoneBack from './pages/direction-none-back/DirectionNoneBack';
 import TabSearchParams from './pages/tab-search-params/TabSearchParams';
 import { Step1, Step2, Step3, Step4 } from './pages/replace-params/ReplaceParams';
+import { ParamSwipeBack, ParamSwipeBackB } from './pages/param-swipe-back/ParamSwipeBack';
 
 setupIonicReact();
 
@@ -110,6 +111,8 @@ const App: React.FC = () => {
           <Route path="/multi-step-back/*" element={<MultiStepBack />} />
           <Route path="/direction-none-back/*" element={<DirectionNoneBack />} />
           <Route path="/tab-search-params/*" element={<TabSearchParams />} />
+          <Route path="/param-swipe-back/*" element={<ParamSwipeBack />} />
+          <Route path="/param-swipe-back-b/*" element={<ParamSwipeBackB />} />
           <Route path="/replace-params/step1" element={<Step1 />} />
           <Route path="/replace-params/step2/:id" element={<Step2 />} />
           <Route path="/replace-params/step3/:id" element={<Step3 />} />
