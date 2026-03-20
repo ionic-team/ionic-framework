@@ -390,6 +390,8 @@
   text-overflow: var(--ion-item-divider-paragraph-text-overflow);
 
   overflow: var(--ion-item-divider-paragraph-overflow); // native are the same, can ionic be the same?
+
+  line-height: normal;
 }
 
 ::slotted(p:last-child) {
