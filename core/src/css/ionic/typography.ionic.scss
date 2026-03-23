@@ -8,8 +8,8 @@ html {
 // this should only be enabled on iOS devices.
 @supports (-webkit-touch-callout: none) {
   html {
-      font: var(--ionic-dynamic-font, 16px #{globals.$ion-font-family});
-      font-family: globals.$ion-font-family;
+    font: var(--ionic-dynamic-font, 16px #{globals.$ion-font-family});
+    font-family: globals.$ion-font-family;
   }
 }
 
