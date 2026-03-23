@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Item Sliding - Full Swipe</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-content>
+      <h2>Full Swipe - Expandable Options</h2>
+      <ion-list>
+        <!-- Expandable option on end side -->
+        <ion-item-sliding id="expandable-end">
+          <ion-item>
+            <ion-label>Expandable End (Swipe Left)</ion-label>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option expandable="true" color="danger">Delete</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+
+        <!-- Expandable on start side -->
+        <ion-item-sliding id="expandable-start">
+          <ion-item>
+            <ion-label>Expandable Start (Swipe Right)</ion-label>
+          </ion-item>
+          <ion-item-options side="start">
+            <ion-item-option expandable="true" color="success">Archive</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+
+        <!-- Both sides with expandable -->
+        <ion-item-sliding id="expandable-both">
+          <ion-item>
+            <ion-label>Expandable Both Sides</ion-label>
+          </ion-item>
+          <ion-item-options side="start">
+            <ion-item-option expandable="true" color="success">Archive</ion-item-option>
+          </ion-item-options>
+          <ion-item-options side="end">
+            <ion-item-option expandable="true" color="danger">Delete</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+
+      <h2>Non-Expandable Options (No Full Swipe)</h2>
+      <ion-list>
+        <!-- Non-expandable option -->
+        <ion-item-sliding id="non-expandable">
+          <ion-item>
+            <ion-label>Non-Expandable (Should Show Options)</ion-label>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option color="primary">Edit</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+
+        <!-- Multiple non-expandable options -->
+        <ion-item-sliding id="non-expandable-multiple">
+          <ion-item>
+            <ion-label>Multiple Non-Expandable Options</ion-label>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option color="primary">Edit</ion-item-option>
+            <ion-item-option color="secondary">Share</ion-item-option>
+            <ion-item-option color="danger">Delete</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+
+      <h2>Mixed Scenarios</h2>
+      <ion-list>
+        <!-- Expandable with multiple options -->
+        <ion-item-sliding id="expandable-with-others">
+          <ion-item>
+            <ion-label>Expandable + Other Options</ion-label>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option color="primary">Edit</ion-item-option>
+            <ion-item-option expandable="true" color="danger">Delete</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </ion-content>
+
+    <script>
+      // Log swipe events for debugging
+      document.querySelectorAll('ion-item-sliding').forEach((item) => {
+        const id = item.getAttribute('id');
+        const options = item.querySelectorAll('ion-item-option');
+        options.forEach((option) => {
+          option.addEventListener('ionSwipe', () => {
+            console.log(`[${id}] ionSwipe event fired for:`, option.textContent);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
