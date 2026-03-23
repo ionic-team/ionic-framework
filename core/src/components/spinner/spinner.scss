@@ -5,15 +5,10 @@
 // --------------------------------------------------
 
 :host {
-  /**
-   * @prop --color: Color of the spinner
-   */
-  --color: var(--ion-spinner-color);
-
   display: inline-block;
   position: relative;
 
-  color: var(--color);
+  color: var(--ion-spinner-color);
 
   user-select: none;
 }

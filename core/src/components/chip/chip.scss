@@ -5,19 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  /**
-   * @prop --border-radius: Border radius of the chip
-   * @prop --color: Color of the chip
-   * @prop --focus-ring-color: Color of the focus ring
-   * @prop --focus-ring-style: Style of the focus ring
-   * @prop --focus-ring-width: Width of the focus ring
-   */
-  --focus-ring-color: var(--ion-chip-state-focus-ring-color);
-  --focus-ring-style: var(--ion-chip-state-focus-ring-style);
-  --focus-ring-width: var(--ion-chip-state-focus-ring-width);
-
   @include mixins.font-smoothing();
-  @include mixins.border-radius(var(--border-radius));
   @include mixins.margin(
     var(--ion-chip-margin-top),
     var(--ion-chip-margin-end),
@@ -36,8 +24,6 @@
 
   align-items: center;
   justify-content: center;
-
-  color: var(--color);
 
   font-weight: var(--ion-chip-font-weight);
 
@@ -72,15 +58,15 @@
 // ---------------------------------------------
 
 :host(.chip-shape-soft) {
-  --border-radius: var(--ion-chip-shape-soft-border-radius);
+  @include mixins.border-radius(var(--ion-chip-shape-soft-border-radius));
 }
 
 :host(.chip-shape-round) {
-  --border-radius: var(--ion-chip-shape-round-border-radius);
+  @include mixins.border-radius(var(--ion-chip-shape-round-border-radius));
 }
 
 :host(.chip-shape-rectangular) {
-  --border-radius: var(--ion-chip-shape-rectangular-border-radius);
+  @include mixins.border-radius(var(--ion-chip-shape-rectangular-border-radius));
 }
 
 // Chip: Bold Solid
@@ -358,7 +344,11 @@
 
 // Focus
 :host(.ion-focused) {
-  @include mixins.focused-state(var(--focus-ring-width), var(--focus-ring-style), var(--focus-ring-color));
+  @include mixins.focused-state(
+    var(--ion-chip-state-focus-ring-width),
+    var(--ion-chip-state-focus-ring-style),
+    var(--ion-chip-state-focus-ring-color)
+  );
 }
 
 // Chip Slotted Elements

@@ -602,11 +602,6 @@ ion-chip,prop,mode,"ios" | "md",undefined,false,false
 ion-chip,prop,outline,boolean,false,false,false
 ion-chip,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-chip,prop,size,"large" | "small" | undefined,undefined,false,false
-ion-chip,css-prop,--border-radius
-ion-chip,css-prop,--color
-ion-chip,css-prop,--focus-ring-color
-ion-chip,css-prop,--focus-ring-style
-ion-chip,css-prop,--focus-ring-width
 
 ion-col,shadow
 ion-col,prop,mode,"ios" | "md",undefined,false,false
@@ -2309,7 +2304,6 @@ ion-spinner,prop,mode,"ios" | "md",undefined,false,false
 ion-spinner,prop,name,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-sharp" | "lines-sharp-small" | "lines-small" | undefined,undefined,false,false
 ion-spinner,prop,paused,boolean,false,false,false
 ion-spinner,prop,size,"large" | "medium" | "small" | "xlarge" | "xsmall" | undefined,undefined,false,false
-ion-spinner,css-prop,--color
 
 ion-split-pane,shadow
 ion-split-pane,prop,contentId,string | undefined,undefined,false,true
