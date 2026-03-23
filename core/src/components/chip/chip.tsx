@@ -85,8 +85,8 @@ export class Chip implements ComponentInterface {
   /**
    * Set the fill based on the custom theme config
    */
-  get fillValue(): string {
-    const fillConfig = config.getObjectValue('IonChip.fill', 'solid') as string;
+  get fillValue(): IonChipFill {
+    const fillConfig = config.getObjectValue('IonChip.fill', 'solid') as IonChipFill;
     const fill = this.fill || (this.outline ? 'outline' : undefined) || fillConfig;
 
     return fill;
@@ -95,8 +95,8 @@ export class Chip implements ComponentInterface {
   /**
    * Set the hue based on the custom theme config
    */
-  get hueValue(): string {
-    const hueConfig = config.getObjectValue('IonChip.hue', 'subtle') as string;
+  get hueValue(): IonChipHue {
+    const hueConfig = config.getObjectValue('IonChip.hue', 'subtle') as IonChipHue;
     const hue = this.hue || hueConfig;
 
     return hue;
@@ -105,8 +105,8 @@ export class Chip implements ComponentInterface {
   /**
    * Set the shape based on the custom theme config
    */
-  get shapeValue(): string {
-    const shapeConfig = config.getObjectValue('IonChip.shape', 'round') as string;
+  get shapeValue(): IonChipShape {
+    const shapeConfig = config.getObjectValue('IonChip.shape', 'round') as IonChipShape;
     const shape = this.shape || shapeConfig;
 
     return shape;
@@ -115,8 +115,8 @@ export class Chip implements ComponentInterface {
   /**
    * Set the size based on the custom theme config
    */
-  get sizeValue(): string {
-    const sizeConfig = config.getObjectValue('IonChip.size', 'large') as string;
+  get sizeValue(): IonChipSize {
+    const sizeConfig = config.getObjectValue('IonChip.size', 'large') as IonChipSize;
     const size = this.size || sizeConfig;
 
     return size;
