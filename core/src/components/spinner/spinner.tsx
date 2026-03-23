@@ -49,7 +49,7 @@ export class Spinner implements ComponentInterface {
    * Set to `"large"` for a large size.
    * Set to `"xlarge"` for the largest size.
    *
-   * Defaults to `"medium"`.
+   * Defaults to `"medium"` if both the size property and theme config are unset.
    */
   @Prop() size?: SpinnerSize;
 

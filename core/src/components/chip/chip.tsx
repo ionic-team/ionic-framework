@@ -37,7 +37,7 @@ export class Chip implements ComponentInterface {
    * Set to `"outline"` for a chip with a border and background.
    * Set to `"solid"` for a chip with a background.
    *
-   * Defaults to `"solid"`.
+   * Defaults to `"solid"` if both the fill property and theme config are unset.
    */
   @Prop() fill?: 'outline' | 'solid';
 
@@ -50,7 +50,7 @@ export class Chip implements ComponentInterface {
    * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for
    * a chip with muted, subtle colors.
    *
-   * Defaults to `"subtle"`.
+   * Defaults to `"subtle"` if both the hue property and theme config are unset.
    */
   @Prop() hue?: 'bold' | 'subtle';
 
@@ -59,7 +59,7 @@ export class Chip implements ComponentInterface {
    * `"round"` for a chip with fully rounded corners,
    * or `"rectangular"` for a chip without rounded corners.
    *
-   * Defaults to `"round"`.
+   * Defaults to `"round"` if both the shape property and theme config are unset.
    */
   @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
@@ -67,7 +67,7 @@ export class Chip implements ComponentInterface {
   /**
    * Set to `"small"` for a chip with less height and padding.
    *
-   * Defaults to `"large"`.
+   * Defaults to `"large"` if both the size property and theme config are unset.
    */
   @Prop() size?: 'small' | 'large';
 

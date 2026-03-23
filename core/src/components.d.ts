@@ -874,11 +874,11 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The fill for the chip.  Set to `"outline"` for a chip with a border and background. Set to `"solid"` for a chip with a background.  Defaults to `"solid"`.
+          * The fill for the chip.  Set to `"outline"` for a chip with a border and background. Set to `"solid"` for a chip with a background.  Defaults to `"solid"` if both the fill property and theme config are unset.
          */
         "fill"?: 'outline' | 'solid';
         /**
-          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"`.
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if both the hue property and theme config are unset.
          */
         "hue"?: 'bold' | 'subtle';
         /**
@@ -892,11 +892,11 @@ export namespace Components {
          */
         "outline": boolean;
         /**
-          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"`.
+          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"` if both the shape property and theme config are unset.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"`.
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` if both the size property and theme config are unset.
          */
         "size"?: 'small' | 'large';
     }
@@ -3883,7 +3883,7 @@ export namespace Components {
          */
         "paused": boolean;
         /**
-          * Set to `"xsmall"` for the smallest size. Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a large size. Set to `"xlarge"` for the largest size.  Defaults to `"medium"`.
+          * Set to `"xsmall"` for the smallest size. Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a large size. Set to `"xlarge"` for the largest size.  Defaults to `"medium"` if both the size property and theme config are unset.
          */
         "size"?: SpinnerSize;
     }
@@ -6844,11 +6844,11 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The fill for the chip.  Set to `"outline"` for a chip with a border and background. Set to `"solid"` for a chip with a background.  Defaults to `"solid"`.
+          * The fill for the chip.  Set to `"outline"` for a chip with a border and background. Set to `"solid"` for a chip with a background.  Defaults to `"solid"` if both the fill property and theme config are unset.
          */
         "fill"?: 'outline' | 'solid';
         /**
-          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"`.
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if both the hue property and theme config are unset.
          */
         "hue"?: 'bold' | 'subtle';
         /**
@@ -6862,11 +6862,11 @@ declare namespace LocalJSX {
          */
         "outline"?: boolean;
         /**
-          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"`.
+          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"` if both the shape property and theme config are unset.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"`.
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` if both the size property and theme config are unset.
          */
         "size"?: 'small' | 'large';
     }
@@ -9909,7 +9909,7 @@ declare namespace LocalJSX {
          */
         "paused"?: boolean;
         /**
-          * Set to `"xsmall"` for the smallest size. Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a large size. Set to `"xlarge"` for the largest size.  Defaults to `"medium"`.
+          * Set to `"xsmall"` for the smallest size. Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a large size. Set to `"xlarge"` for the largest size.  Defaults to `"medium"` if both the size property and theme config are unset.
          */
         "size"?: SpinnerSize;
     }
