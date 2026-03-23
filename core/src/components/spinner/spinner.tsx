@@ -8,7 +8,7 @@ import type { Color } from '../../interface';
 
 import type { SpinnerTypes } from './spinner-configs';
 import { SPINNERS } from './spinner-configs';
-import type { SpinnerSize, SpinnerTemplate } from './spinner.interfaces';
+import type { SpinnerSize, SpinnerDefinition } from './spinner.interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -106,7 +106,7 @@ export class Spinner implements ComponentInterface {
   }
 }
 
-const buildCircle = (spinner: SpinnerTemplate, duration: number, index: number, total: number) => {
+const buildCircle = (spinner: SpinnerDefinition, duration: number, index: number, total: number) => {
   const data = spinner.fn(duration, index, total);
   data.style['animation-duration'] = duration + 'ms';
 
@@ -123,7 +123,7 @@ const buildCircle = (spinner: SpinnerTemplate, duration: number, index: number, 
   );
 };
 
-const buildLine = (spinner: SpinnerTemplate, duration: number, index: number, total: number) => {
+const buildLine = (spinner: SpinnerDefinition, duration: number, index: number, total: number) => {
   const data = spinner.fn(duration, index, total);
   data.style['animation-duration'] = duration + 'ms';
 

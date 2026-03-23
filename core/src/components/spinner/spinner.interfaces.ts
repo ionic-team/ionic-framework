@@ -1,8 +1,8 @@
-export interface SpinnerTemplates {
-  [spinnerName: string]: SpinnerTemplate;
+export interface SpinnerDefinitions {
+  [spinnerName: string]: SpinnerDefinition;
 }
 
-export interface SpinnerTemplate {
+export interface SpinnerDefinition {
   dur: number;
   circles?: number;
   lines?: number;
