@@ -60,6 +60,12 @@ export type IonSpinnerRecipe = {
     };
   };
 
+  dots?: {
+    stroke?: {
+      width?: string;
+    };
+  };
+
   // Sizes
   size?: {
     [K in SpinnerSize]?: IonSpinnerSizeDefinition;

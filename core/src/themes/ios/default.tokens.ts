@@ -444,6 +444,12 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
+      dots: {
+        stroke: {
+          width: 'var(--ion-scaling-0)',
+        },
+      },
+
       // Sizes
       size: {
         xsmall: {
