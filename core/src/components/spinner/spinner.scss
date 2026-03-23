@@ -5,13 +5,10 @@
 // --------------------------------------------------
 
 :host {
-  // This variable controls the component's color when nested within parent elements (e.g., `ion-button`). It is intended for internal styling only.
-  --color: var(--ion-spinner-color);
-
   display: inline-block;
   position: relative;
 
-  color: var(--color);
+  color: var(--ion-spinner-color);
 
   user-select: none;
 }
