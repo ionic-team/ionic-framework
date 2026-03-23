@@ -1244,16 +1244,6 @@ ion-item-divider,shadow
 ion-item-divider,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-item-divider,prop,mode,"ios" | "md",undefined,false,false
 ion-item-divider,prop,sticky,boolean,false,false,false
-ion-item-divider,css-prop,--background
-ion-item-divider,css-prop,--color
-ion-item-divider,css-prop,--inner-padding-bottom
-ion-item-divider,css-prop,--inner-padding-end
-ion-item-divider,css-prop,--inner-padding-start
-ion-item-divider,css-prop,--inner-padding-top
-ion-item-divider,css-prop,--padding-bottom
-ion-item-divider,css-prop,--padding-end
-ion-item-divider,css-prop,--padding-start
-ion-item-divider,css-prop,--padding-top
 
 ion-item-group,none
 ion-item-group,prop,mode,"ios" | "md",undefined,false,false
