@@ -1,8 +1,16 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 
-// TODO(ROU-10833): add font loading solution here, as a @font-face, base64 or cdn
 html {
   font-family: globals.$ion-font-family;
+}
+
+// Dynamic Type is an iOS-only feature, so
+// this should only be enabled on iOS devices.
+@supports (-webkit-touch-callout: none) {
+  html {
+      font: var(--ionic-dynamic-font, 16px #{globals.$ion-font-family});
+      font-family: globals.$ion-font-family;
+  }
 }
 
 body {
