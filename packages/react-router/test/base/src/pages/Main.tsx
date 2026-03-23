@@ -134,6 +134,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/tab-lifecycle">
             <IonLabel>Tab Lifecycle</IonLabel>
           </IonItem>
+          <IonItem routerLink="/router-link-modifier-click">
+            <IonLabel>Router Link Modifier Click</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

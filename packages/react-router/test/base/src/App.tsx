@@ -64,6 +64,7 @@ import { Step1, Step2, Step3, Step4 } from './pages/replace-params/ReplaceParams
 import { ParamSwipeBack, ParamSwipeBackB } from './pages/param-swipe-back/ParamSwipeBack';
 import TabLifecycle from './pages/tab-lifecycle/TabLifecycle';
 import TabLifecycleOutside from './pages/tab-lifecycle/TabLifecycleOutside';
+import { RouterLinkModifierClick, RouterLinkModifierClickTarget } from './pages/router-link-modifier-click/RouterLinkModifierClick';
 
 setupIonicReact();
 
@@ -122,6 +123,8 @@ const App: React.FC = () => {
           <Route path="/replace-params" element={<Navigate to="/replace-params/step1" replace />} />
           <Route path="/tab-lifecycle/*" element={<TabLifecycle />} />
           <Route path="/tab-lifecycle-outside" element={<TabLifecycleOutside />} />
+          <Route path="/router-link-modifier-click" element={<RouterLinkModifierClick />} />
+          <Route path="/router-link-modifier-click/target" element={<RouterLinkModifierClickTarget />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
