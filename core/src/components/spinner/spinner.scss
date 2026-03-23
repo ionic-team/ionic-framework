@@ -5,6 +5,30 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --ion-spinner-color: Color of the spinner
+   *
+   * @prop --ion-spinner-lines-stroke-width: Stroke width of the `lines` spinner
+   * @prop --ion-spinner-lines-small-stroke-width: Stroke width of the `lines-small` spinner
+   * @prop --ion-spinner-lines-sharp-stroke-width: Stroke width of the `lines-sharp` spinner
+   * @prop --ion-spinner-lines-sharp-small-stroke-width: Stroke width of the `lines-sharp-small` spinner
+   * @prop --ion-spinner-crescent-stroke-width: Stroke width of the `crescent` spinner
+   * @prop --ion-spinner-dots-stroke-width: Stroke width of the `dots` spinner
+   * @prop --ion-spinner-circular-stroke-width: Stroke width of the `circular` spinner
+   *
+   * Sizes
+   * @prop --ion-spinner-size-xsmall-width: Width of the `xsmall` spinner
+   * @prop --ion-spinner-size-xsmall-height: Height of the `xsmall` spinner
+   * @prop --ion-spinner-size-small-width: Width of the `small` spinner
+   * @prop --ion-spinner-size-small-height: Height of the `small` spinner
+   * @prop --ion-spinner-size-medium-width: Width of the `medium` spinner
+   * @prop --ion-spinner-size-medium-height: Height of the `medium` spinner
+   * @prop --ion-spinner-size-large-width: Width of the `large` spinner
+   * @prop --ion-spinner-size-large-height: Height of the `large` spinner
+   * @prop --ion-spinner-size-xlarge-width: Width of the `xlarge` spinner
+   * @prop --ion-spinner-size-xlarge-height: Height of the `xlarge` spinner
+   */
+
   display: inline-block;
   position: relative;
 
