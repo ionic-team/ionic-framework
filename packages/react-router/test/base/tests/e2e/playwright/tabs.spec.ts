@@ -64,6 +64,16 @@ test.describe('Tabs', () => {
     await expect(page.locator('ion-tab-button.tab-selected')).toContainText('Tab1');
   });
 
+  // Verifies that defaultHref works on direct deep-link load of a tab child page
+  test('back button defaultHref should work on direct deep-link load of tab child page', async ({ page }) => {
+    await page.goto(withTestingMode('/tabs/tab1/child'));
+    await ionPageVisible(page, 'tab1child1');
+
+    await ionBackClick(page, 'tab1child1');
+    await ionPageVisible(page, 'tab1');
+    await expect(page).toHaveURL(/\/tabs\/tab1$/);
+  });
+
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23087
   test('should return to correct view and url when going back from child page after switching tabs', async ({ page }) => {
     await page.goto(withTestingMode('/tabs/tab1'));

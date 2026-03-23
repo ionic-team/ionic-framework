@@ -546,9 +546,9 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
    * @param routeAnimation A custom animation builder to override the
    * default "back" animation.
    */
-  const handleNavigateBack = (defaultHref: string | RouteInfo = '/', routeAnimation?: AnimationBuilder) => {
+  const handleNavigateBack = (defaultHref?: string | RouteInfo, routeAnimation?: AnimationBuilder) => {
     const config = getConfig();
-    defaultHref = defaultHref ? defaultHref : config && config.get('backButtonDefaultHref' as any);
+    defaultHref = defaultHref ?? (config && config.get('backButtonDefaultHref' as any));
     const routeInfo = locationHistory.current.current();
     // It's a linear navigation.
     if (routeInfo && routeInfo.pushedByRoute) {
@@ -590,17 +590,18 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
          * `pushedByRoute` exists, but no corresponding previous entry in
          * the history stack.
          */
-      } else {
+      } else if (defaultHref) {
         handleNavigate(defaultHref as string, 'pop', 'back', routeAnimation);
       }
       /**
        * No `pushedByRoute` (e.g., initial page load or tab root).
-       * Tabs with no back history should not navigate.
+       * Navigate to defaultHref so the back button works on direct
+       * deep-link loads (e.g., loading /tab1/child directly).
+       * Only navigate when defaultHref is explicitly set. The core
+       * back-button component hides itself when no defaultHref is
+       * provided, so a click here means the user set one intentionally.
        */
-    } else {
-      if (routeInfo && routeInfo.tab) {
-        return;
-      }
+    } else if (defaultHref) {
       handleNavigate(defaultHref as string, 'pop', 'back', routeAnimation);
     }
   };

@@ -64,7 +64,7 @@ const Tab1Child1 = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton />
+            <IonBackButton defaultHref="/tabs/tab1" />
           </IonButtons>
           <IonTitle>Tab1</IonTitle>
         </IonToolbar>
