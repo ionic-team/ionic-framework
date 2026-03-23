@@ -14,7 +14,7 @@
    * @prop --ion-chip-padding-top: Top padding of the chip
    * @prop --ion-chip-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the chip
    * @prop --ion-chip-padding-bottom: Bottom padding of the chip
-   * @prop --ion-chip-padding-start: Left padding if direction is left-to-right, and right margin if direction is right-to-left of the chip
+   * @prop --ion-chip-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the chip
    *
    * @prop --ion-chip-font-weight: Font weight of the chip
    * @prop --ion-chip-letter-spacing: Letter spacing of the chip
@@ -102,25 +102,25 @@
    * @prop --ion-chip-icon-color: Color of the slotted `ion-icon`
    * @prop --ion-chip-icon-font-size: Font size of the slotted `ion-icon`
    * @prop --ion-chip-icon-leading-margin-top: Top margin of the slotted `ion-icon` when it is the first child
-   * @prop --ion-chip-icon-leading-margin-end: End margin of the slotted `ion-icon` when it is the first child
+   * @prop --ion-chip-icon-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-icon` when it is the first child
    * @prop --ion-chip-icon-leading-margin-bottom: Bottom margin of the slotted `ion-icon` when it is the first child
-   * @prop --ion-chip-icon-leading-margin-start: Start margin of the slotted `ion-icon` when it is the first child
+   * @prop --ion-chip-icon-leading-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted `ion-icon` when it is the first child
    * @prop --ion-chip-icon-trailing-margin-top: Top margin of the slotted `ion-icon` when it is the last child
-   * @prop --ion-chip-icon-trailing-margin-end: End margin of the slotted `ion-icon` when it is the last child
+   * @prop --ion-chip-icon-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-icon` when it is the last child
    * @prop --ion-chip-icon-trailing-margin-bottom: Bottom margin of the slotted `ion-icon` when it is the last child
-   * @prop --ion-chip-icon-trailing-margin-start: Start margin of the slotted `ion-icon` when it is the last child
+   * @prop --ion-chip-icon-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted `ion-icon` when it is the last child
    *
    * Slotted Avatar
    * @prop --ion-chip-avatar-width: Width of the slotted `ion-avatar`
    * @prop --ion-chip-avatar-height: Height of the slotted `ion-avatar`
    * @prop --ion-chip-avatar-leading-margin-top: Top margin of the slotted `ion-avatar` when it is the first child
-   * @prop --ion-chip-avatar-leading-margin-end: End margin of the slotted `ion-avatar` when it is the first child
+   * @prop --ion-chip-avatar-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-avatar` when it is the first child
    * @prop --ion-chip-avatar-leading-margin-bottom: Bottom margin of the slotted `ion-avatar` when it is the first child
-   * @prop --ion-chip-avatar-leading-margin-start: Start margin of the slotted `ion-avatar` when it is the first child
+   * @prop --ion-chip-avatar-leading-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted `ion-avatar` when it is the first child
    * @prop --ion-chip-avatar-trailing-margin-top: Top margin of the slotted `ion-avatar` when it is the last child
-   * @prop --ion-chip-avatar-trailing-margin-end: End margin of the slotted `ion-avatar` when it is the last child
+   * @prop --ion-chip-avatar-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-avatar` when it is the last child
    * @prop --ion-chip-avatar-trailing-margin-bottom: Bottom margin of the slotted `ion-avatar` when it is the last child
-   * @prop --ion-chip-avatar-trailing-margin-start: Start margin of the slotted `ion-avatar` when it is the last child
+   * @prop --ion-chip-avatar-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted `ion-avatar` when it is the last child
    */
 
   @include mixins.font-smoothing();
