@@ -11,6 +11,7 @@ interface IonPageProps extends IonicReactProps {}
 
 interface IonPageInternalProps extends IonPageProps {
   forwardedRef?: React.ForwardedRef<HTMLDivElement>;
+  children: React.ReactNode;
 }
 
 class IonPageInternal extends React.Component<IonPageInternalProps> {

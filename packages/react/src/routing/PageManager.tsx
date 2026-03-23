@@ -9,6 +9,7 @@ import { StackContext } from './StackContext';
 interface PageManagerProps {
   className?: string;
   forwardedRef?: React.ForwardedRef<HTMLDivElement>;
+  children: React.ReactNode;
   routeInfo?: RouteInfo;
 }
 

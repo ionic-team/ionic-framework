@@ -16,6 +16,7 @@ type Props = LocalJSX.IonRouterOutlet & {
 
 interface InternalProps extends Props {
   forwardedRef?: React.ForwardedRef<HTMLIonRouterOutletElement>;
+  children: React.ReactNode;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

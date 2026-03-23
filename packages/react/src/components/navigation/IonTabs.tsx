@@ -42,7 +42,7 @@ type ChildFunction = (ionTabContext: IonTabsContextState) => React.ReactNode;
 
 interface Props extends LocalJSX.IonTabs {
   className?: string;
-  children: ChildFunction | React.ReactNode;
+  children: React.ReactNode;
   onIonTabsWillChange?: (event: CustomEvent<{ tab: string }>) => void;
   onIonTabsDidChange?: (event: CustomEvent<{ tab: string }>) => void;
 }
