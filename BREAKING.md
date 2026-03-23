@@ -19,6 +19,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Card](#version-9x-card)
   - [Chip](#version-9x-chip)
   - [Grid](#version-9x-grid)
+  - [Radio Group](#version-9x-radio-group)
+  - [Spinner](#version-9x-spinner)
 
 <h2 id="version-9x-components">Components</h2>
 
@@ -37,12 +39,6 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 <h4 id="version-9x-grid">Grid</h4>
 
 - The properties `pull` and `push` have been deprecated and no longer work. A similar look can be achieved with the newly added property `order`.
-
-<h4 id="version-9x-radio-group">Radio Group</h4>
-
-- Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).<br/>
-If you were targeting the internals of `ion-radio-group` in your CSS, you will need to target the `supporting-text`, `helper-text` or `error-text` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.<br/>
-Additionally, the `radio-group-wrapper` div element has been removed, causing slotted elements to be direct children of the `ion-radio-group`.
 
 <h5>Example 1: Swap two columns</h5>
 
@@ -141,3 +137,18 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
+<h4 id="version-9x-radio-group">Radio Group</h4>
+
+- Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).<br/>
+If you were targeting the internals of `ion-radio-group` in your CSS, you will need to target the `supporting-text`, `helper-text` or `error-text` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.<br/>
+Additionally, the `radio-group-wrapper` div element has been removed, causing slotted elements to be direct children of the `ion-radio-group`.
+
+<h4 id="version-9x-spinner">Spinner</h4>
+
+- Component CSS variables have been removed. The component now utilizes the centralized Ionic Theming system. Global updates should be managed via the theme tokens file, while component-specific overrides are handled through localized CSS variables.
+   - `--color` is replaced by `IonSpinner.color` for global styles and
+`--ion-spinner-color` for component-specific styles.
+- CSS classes now include the property name to improve clarity.
+  - `.spinner-[spinner-name]` → `.spinner-name-[spinner-name]`
+- Specific theme classes (e.g., `ion-spinner.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
