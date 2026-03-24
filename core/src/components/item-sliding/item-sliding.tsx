@@ -293,9 +293,9 @@ export class ItemSliding implements ComponentInterface {
    * Calculate the swipe threshold distance required to trigger a full swipe animation.
    * Returns the maximum options width plus a margin to ensure it's achievable.
    */
-  private getSwipeThreshold(): number {
-    const maxWidth = Math.max(this.optsWidthRightSide, this.optsWidthLeftSide);
-    return maxWidth + 100; // Slightly larger than SWIPE_MARGIN to be achievable
+  private getSwipeThreshold(direction: 'start' | 'end'): number {
+    const maxWidth = direction === 'end' ? this.optsWidthRightSide : this.optsWidthLeftSide;
+    return maxWidth + 30; // Slightly larger than SWIPE_MARGIN to be achievable
   }
 
   /**
@@ -312,7 +312,6 @@ export class ItemSliding implements ComponentInterface {
     el.classList.add('item-sliding-full-swipe');
 
     try {
-      // Calculate which options we're using
       const options = direction === 'end' ? this.rightOptions : this.leftOptions;
 
       // Trigger expandable state without moving the item
@@ -485,9 +484,9 @@ export class ItemSliding implements ComponentInterface {
 
     const shouldTriggerFullSwipe =
       hasExpandable &&
-      (rawSwipeDistance > this.getSwipeThreshold() ||
+      (rawSwipeDistance > this.getSwipeThreshold(direction) ||
         (Math.abs(gesture.velocityX) > 0.5 &&
-          rawSwipeDistance > Math.max(this.optsWidthRightSide, this.optsWidthLeftSide) * 0.5));
+          rawSwipeDistance > (direction === 'end' ? this.optsWidthRightSide : this.optsWidthLeftSide) * 0.5));
 
     if (shouldTriggerFullSwipe) {
       this.animateFullSwipe(direction);
@@ -507,14 +506,7 @@ export class ItemSliding implements ComponentInterface {
       restingPoint = 0;
     }
 
-    const state = this.state;
     this.setOpenAmount(restingPoint, true);
-
-    if ((state & SlidingState.SwipeEnd) !== 0 && this.rightOptions) {
-      this.rightOptions.fireSwipeEvent();
-    } else if ((state & SlidingState.SwipeStart) !== 0 && this.leftOptions) {
-      this.leftOptions.fireSwipeEvent();
-    }
   }
 
   private calculateOptsWidth() {
