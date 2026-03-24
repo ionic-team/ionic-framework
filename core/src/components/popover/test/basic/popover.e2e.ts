@@ -3,7 +3,7 @@ import { configs, test } from '@utils/test/playwright';
 
 import { PopoverFixture } from '../fixture';
 
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('popover: rendering'), async () => {
     test('should not have visual regressions', async ({ page }) => {
       const popoverFixture = new PopoverFixture(page);
@@ -18,7 +18,7 @@ configs().forEach(({ title, screenshot, config }) => {
 /**
  * This behavior does not vary across directions.
  */
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('popover: rendering variants'), async () => {
     let popoverFixture!: PopoverFixture;
     test.beforeEach(async ({ page }) => {
