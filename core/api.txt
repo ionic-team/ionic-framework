@@ -2754,6 +2754,7 @@ ion-toolbar,shadow
 ion-toolbar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toolbar,prop,mode,"ios" | "md",undefined,false,false
 ion-toolbar,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-toolbar,prop,titlePlacement,"center" | "end" | "start" | undefined,undefined,false,false
 ion-toolbar,css-prop,--background,ionic
 ion-toolbar,css-prop,--background,ios
 ion-toolbar,css-prop,--background,md
