@@ -4,9 +4,6 @@ import type { HighContrastTheme } from '../themes.interfaces';
 export const highContrastTheme: HighContrastTheme = {
   ...baseHighContrastTheme,
 
-  backgroundColor: '#ffffff',
-  textColor: '#000000',
-
   backgroundColorStep: {
     50: '#818181',
     100: '#7a7a7a',

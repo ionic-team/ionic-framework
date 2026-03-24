@@ -6,8 +6,6 @@ export const darkTheme: DarkTheme = {
 
   backgroundColor: '#121212',
   backgroundColorRgb: '18, 18, 18',
-  textColor: '#ffffff',
-  textColorRgb: '255, 255, 255',
 
   // TODO(FW-6864): Remove once IonToolbar themes are added
   toolbar: {

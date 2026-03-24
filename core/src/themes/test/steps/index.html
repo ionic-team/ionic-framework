@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Themes - Steps</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic/bundle.ionic.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <link id="palette" rel="stylesheet" />
+
+    <style>
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin: 40px 0;
+      }
+
+      .column {
+        min-width: 400px;
+        max-width: 500px;
+      }
+
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 16px 10px;
+        gap: 10px;
+      }
+
+      .color-tile {
+        border: 1px solid #f2f2f2;
+        height: 40px;
+        width: 80px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Themes - Steps</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="column">
+            <h2>Background</h2>
+            <div id="background" class="row"></div>
+          </div>
+
+          <div class="column">
+            <h2>Text</h2>
+            <div id="text" class="row"></div>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const themeName = document.documentElement.getAttribute('theme');
+        const paletteQuery = window.location.search.match(/palette=([a-z-]+)/);
+        const paletteHash = window.location.hash.match(/palette=([a-z-]+)/);
+        const paletteName = paletteQuery?.[1] || paletteHash?.[1] || 'light';
+
+        const generateBackgroundColors = () => {
+          const backgroundContainer = document.getElementById('background');
+          const bodyStyles = getComputedStyle(document.body);
+
+          if (!bodyStyles.getPropertyValue('--ion-background-color-step-50')) {
+            const error = document.createElement('span');
+            error.textContent = 'Background color variables not found for theme: ' + themeName + ' and palette: ' + paletteName;
+            backgroundContainer.appendChild(error);
+
+            return;
+          }
+
+          for (let i = 50; i < 950; i += 50) {
+            const backgroundColor = `--ion-background-color-step-${i}`;
+
+            const colorValue = bodyStyles.getPropertyValue(backgroundColor).trim();
+
+            const item = document.createElement('span');
+
+            const color = document.createElement('div');
+            color.classList.add('block', 'color-tile');
+            color.style.backgroundColor = `var(${backgroundColor})`;
+
+            color.addEventListener('click', () => {
+              navigator.clipboard.writeText(backgroundColor);
+              console.log(`${backgroundColor} copied to clipboard`);
+            });
+
+            item.appendChild(color);
+
+            const name = document.createElement('div');
+            name.textContent = `background-${i}`;
+            item.appendChild(name);
+
+            const value = document.createElement('div');
+            value.textContent = colorValue;
+            item.appendChild(value);
+
+            backgroundContainer.appendChild(item);
+          }
+        };
+
+        const generateTextColors = () => {
+          const textContainer = document.getElementById('text');
+          const bodyStyles = getComputedStyle(document.body);
+
+          if (!bodyStyles.getPropertyValue('--ion-text-color-step-50')) {
+            const error = document.createElement('span');
+            error.textContent = 'Text color variables not found for theme: ' + themeName + ' and palette: ' + paletteName;
+            textContainer.appendChild(error);
+
+            return;
+          }
+
+          for (let i = 50; i <= 950; i += 50) {
+            const textColor = `--ion-text-color-step-${i}`;
+
+            const colorValue = bodyStyles.getPropertyValue(textColor).trim();
+
+            const item = document.createElement('span');
+
+            const color = document.createElement('div');
+            color.classList.add('block', 'color-tile');
+            color.style.backgroundColor = `var(${textColor})`;
+
+            color.addEventListener('click', () => {
+              navigator.clipboard.writeText(textColor);
+              console.log(`${textColor} copied to clipboard`);
+            });
+
+            item.appendChild(color);
+
+            const name = document.createElement('div');
+            name.textContent = `text-${i}`;
+            item.appendChild(name);
+
+            const value = document.createElement('div');
+            value.textContent = colorValue;
+            item.appendChild(value);
+
+            textContainer.appendChild(item);
+          }
+        };
+
+        generateBackgroundColors();
+        generateTextColors();
+      });
+    </script>
+  </body>
+</html>

@@ -4,9 +4,6 @@ import type { DarkTheme } from '../themes.interfaces';
 export const darkTheme: DarkTheme = {
   ...baseDarkTheme,
 
-  backgroundColor: '#000000',
-  textColor: '#ffffff',
-
   backgroundColorStep: {
     50: '#0d0d0d',
     100: '#1a1a1a',

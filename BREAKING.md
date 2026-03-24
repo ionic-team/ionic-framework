@@ -14,11 +14,18 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Version 9.x
 
+- [Global Styles](#version-9x-global-styles)
 - [Components](#version-9x-components)
   - [Button](#version-9x-button)
   - [Card](#version-9x-card)
   - [Chip](#version-9x-chip)
   - [Grid](#version-9x-grid)
+
+<h2 id="version-9x-global-styles">Global Styles</h2>
+
+<h4 id="version-9x-color-steps">Color Steps</h4>
+
+- The deprecated color step CSS variables, `--ion-color-step-[number]`, have been removed and should be replaced with either `--ion-background-color-step-[number]` or `--ion-text-color-step-[number]` depending on the specific use case, as outlined in the [migration guide](https://ionicframework.com/docs/updating/8-0#step-color-tokens).
 
 <h2 id="version-9x-components">Components</h2>
 
