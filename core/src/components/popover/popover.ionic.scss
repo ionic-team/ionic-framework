@@ -1,0 +1,21 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./popover.common";
+
+// Ionic Popover
+// --------------------------------------------------
+
+:host {
+  --width: 250px;
+  --max-height: 90%;
+  --box-shadow: #{globals.$ion-elevation-4};
+  --backdrop-opacity: 0.3;
+}
+
+.popover-content {
+  @include globals.border-radius(globals.$ion-border-radius-400);
+  @include globals.transform-origin(start, top);
+}
+
+.popover-viewport {
+  transition-delay: 100ms;
+}
