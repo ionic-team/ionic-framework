@@ -2286,14 +2286,14 @@ export declare interface IonSkeletonText extends Components.IonSkeletonText {}
 
 
 @ProxyCmp({
-  inputs: ['color', 'duration', 'mode', 'name', 'paused', 'size', 'theme']
+  inputs: ['color', 'duration', 'mode', 'name', 'paused', 'size']
 })
 @Component({
   selector: 'ion-spinner',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'duration', 'mode', 'name', 'paused', 'size', 'theme'],
+  inputs: ['color', 'duration', 'mode', 'name', 'paused', 'size'],
 })
 export class IonSpinner {
   protected el: HTMLIonSpinnerElement;

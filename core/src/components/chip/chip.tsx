@@ -37,7 +37,7 @@ export class Chip implements ComponentInterface {
    * Set to `"outline"` for a chip with a border and background.
    * Set to `"solid"` for a chip with a background.
    *
-   * Defaults to `"solid"`.
+   * Defaults to `"solid"` if both the fill property and theme config are unset.
    */
   @Prop() fill?: 'outline' | 'solid';
 
@@ -50,7 +50,7 @@ export class Chip implements ComponentInterface {
    * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for
    * a chip with muted, subtle colors.
    *
-   * Defaults to `"subtle"`.
+   * Defaults to `"subtle"` if both the hue property and theme config are unset.
    */
   @Prop() hue?: 'bold' | 'subtle';
 
@@ -59,7 +59,7 @@ export class Chip implements ComponentInterface {
    * `"round"` for a chip with fully rounded corners,
    * or `"rectangular"` for a chip without rounded corners.
    *
-   * Defaults to `"round"`.
+   * Defaults to `"round"` if both the shape property and theme config are unset.
    */
   @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
@@ -67,7 +67,7 @@ export class Chip implements ComponentInterface {
   /**
    * Set to `"small"` for a chip with less height and padding.
    *
-   * Defaults to `"large"`.
+   * Defaults to `"large"` if both the size property and theme config are unset.
    */
   @Prop() size?: 'small' | 'large';
 
@@ -81,7 +81,8 @@ export class Chip implements ComponentInterface {
   }
 
   /**
-   * Set the fill based on the custom theme config
+   * Gets the chip fill. Uses the `fill` property if set, otherwise
+   * checks the theme config and falls back to 'solid' if neither is provided.
    */
   get fillValue(): string {
     const fillConfig = config.getObjectValue('IonChip.fill', 'solid') as string;
@@ -91,7 +92,8 @@ export class Chip implements ComponentInterface {
   }
 
   /**
-   * Set the hue based on the custom theme config
+   * Gets the chip hue. Uses the `hue` property if set, otherwise
+   * checks the theme config and falls back to 'subtle' if neither is provided.
    */
   get hueValue(): string {
     const hueConfig = config.getObjectValue('IonChip.hue', 'subtle') as string;
@@ -101,7 +103,8 @@ export class Chip implements ComponentInterface {
   }
 
   /**
-   * Set the shape based on the custom theme config
+   * Gets the chip shape. Uses the `shape` property if set, otherwise
+   * checks the theme config and falls back to 'round' if neither is provided.
    */
   get shapeValue(): string {
     const shapeConfig = config.getObjectValue('IonChip.shape', 'round') as string;
@@ -111,7 +114,8 @@ export class Chip implements ComponentInterface {
   }
 
   /**
-   * Set the size based on the custom theme config
+   * Gets the chip size. Uses the `size` property if set, otherwise
+   * checks the theme config and falls back to 'large' if neither is provided.
    */
   get sizeValue(): string {
     const sizeConfig = config.getObjectValue('IonChip.size', 'large') as string;

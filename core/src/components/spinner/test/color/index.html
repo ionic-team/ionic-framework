@@ -12,6 +12,14 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
+        gap: 20px;
+        margin-top: 40px;
+      }
+    </style>
   </head>
 
   <body>
@@ -23,37 +31,52 @@
       </ion-header>
 
       <ion-content id="content">
-        <ion-list>
-          <ion-item
-            ><ion-spinner color="primary" slot="start" name="lines"></ion-spinner><code>lines</code> (primary)</ion-item
-          >
-          <ion-item
-            ><ion-spinner color="secondary" slot="start" name="lines-small"></ion-spinner
-            ><code>lines-small</code> (secondary)</ion-item
-          >
-          <ion-item
-            ><ion-spinner color="tertiary" slot="start" name="circular"></ion-spinner
-            ><code>circular</code> (tertiary)</ion-item
-          >
-          <ion-item
-            ><ion-spinner color="success" slot="start" name="dots"></ion-spinner><code>dots</code> (success)</ion-item
-          >
-          <ion-item
-            ><ion-spinner color="warning" slot="start" name="bubbles"></ion-spinner
-            ><code>bubbles</code> (warning)</ion-item
-          >
-          <ion-item
-            ><ion-spinner color="danger" slot="start" name="circles"></ion-spinner
-            ><code>circles</code> (danger)</ion-item
-          >
-          <ion-item
-            ><ion-spinner color="dark" slot="start" name="crescent"></ion-spinner><code>crescent</code> (dark)</ion-item
-          >
-          <ion-item
-            ><ion-spinner color="medium" slot="start" name="lines" paused></ion-spinner><code>lines</code> (paused,
-            medium)</ion-item
-          >
-        </ion-list>
+        <div class="grid">
+          <div class="grid-item">
+            <ion-spinner name="lines" color="primary"></ion-spinner>
+            <p>Primary</p>
+          </div>
+
+          <div class="grid-item">
+            <ion-spinner name="lines-small" color="secondary"></ion-spinner>
+            <p>Secondary</p>
+          </div>
+
+          <div class="grid-item">
+            <ion-spinner name="lines-sharp" color="tertiary"></ion-spinner>
+            <p>Tertiary</p>
+          </div>
+
+          <div class="grid-item">
+            <ion-spinner name="lines-sharp-small" color="success"></ion-spinner>
+            <p>Success</p>
+          </div>
+
+          <div class="grid-item">
+            <ion-spinner name="circular" color="warning"></ion-spinner>
+            <p>Warning</p>
+          </div>
+
+          <div class="grid-item">
+            <ion-spinner name="dots" color="danger"></ion-spinner>
+            <p>Danger</p>
+          </div>
+
+          <div class="grid-item">
+            <ion-spinner name="bubbles" color="light"></ion-spinner>
+            <p>Light</p>
+          </div>
+
+          <div class="grid-item">
+            <ion-spinner name="circles" color="medium"></ion-spinner>
+            <p>Medium</p>
+          </div>
+
+          <div class="grid-item">
+            <ion-spinner name="crescent" color="dark"></ion-spinner>
+            <p>Dark</p>
+          </div>
+        </div>
       </ion-content>
     </ion-app>
   </body>

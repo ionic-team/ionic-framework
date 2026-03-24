@@ -6,18 +6,124 @@
 
 :host {
   /**
-   * @prop --border-radius: Border radius of the chip
-   * @prop --color: Color of the chip
-   * @prop --focus-ring-color: Color of the focus ring
-   * @prop --focus-ring-style: Style of the focus ring
-   * @prop --focus-ring-width: Width of the focus ring
+   * @prop --ion-chip-margin-top: Top margin of the chip
+   * @prop --ion-chip-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the chip
+   * @prop --ion-chip-margin-bottom: Bottom margin of the chip
+   * @prop --ion-chip-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the chip
+   *
+   * @prop --ion-chip-padding-top: Top padding of the chip
+   * @prop --ion-chip-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the chip
+   * @prop --ion-chip-padding-bottom: Bottom padding of the chip
+   * @prop --ion-chip-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the chip
+   *
+   * @prop --ion-chip-font-weight: Font weight of the chip
+   * @prop --ion-chip-letter-spacing: Letter spacing of the chip
+   * @prop --ion-chip-line-height: Line height of the chip
+   * @prop --ion-chip-gap: Gap between slotted elements in the chip
+   *
+   * Sizes
+   * @prop --ion-chip-size-small-min-height: Minimum height of the `small` chip size
+   * @prop --ion-chip-size-small-font-size: Font size of the `small` chip size
+   * @prop --ion-chip-size-large-min-height: Minimum height of the `large` chip size
+   * @prop --ion-chip-size-large-font-size: Font size of the `large` chip size
+   *
+   * Shapes
+   * @prop --ion-chip-shape-soft-border-radius: Border radius of the `soft` chip shape
+   * @prop --ion-chip-shape-round-border-radius: Border radius of the `round` chip shape
+   * @prop --ion-chip-shape-rectangular-border-radius: Border radius of the `rectangular` chip shape
+   *
+   * Bold Solid
+   * @prop --ion-chip-hue-bold-solid-default-color: Color of the `bold` hue and `solid` fill combination in the default state
+   * @prop --ion-chip-hue-bold-solid-default-background: Background color of the `bold` hue and `solid` fill combination in the default state
+   * @prop --ion-chip-hue-bold-solid-activated-background: Background color of the `bold` hue and `solid` fill combination in the activated state
+   * @prop --ion-chip-hue-bold-solid-focus-background: Background color of the `bold` hue and `solid` fill combination in the focus state
+   * @prop --ion-chip-hue-bold-solid-hover-background: Background color of the `bold` hue and `solid` fill combination in the hover state
+   * @prop --ion-chip-hue-bold-solid-semantic-default-color: Color of the `bold` hue and `solid` fill combination when a semantic color is applied
+   * @prop --ion-chip-hue-bold-solid-semantic-default-background: Background color of the `bold` hue and `solid` fill combination when a semantic color is applied
+   * @prop --ion-chip-hue-bold-solid-semantic-activated-background: Background color of the `bold` hue and `solid` fill combination when a semantic color is applied and in the activated state
+   * @prop --ion-chip-hue-bold-solid-semantic-focus-background: Background color of the `bold` hue and `solid` fill combination when a semantic color is applied and in the focus state
+   * @prop --ion-chip-hue-bold-solid-semantic-hover-background: Background color of the `bold` hue and `solid` fill combination when a semantic color is applied and in the hover state
+   *
+   * Bold Outline
+   * @prop --ion-chip-hue-bold-outline-default-color: Color of the `bold` hue and `outline` fill combination in the default state
+   * @prop --ion-chip-hue-bold-outline-default-background: Background color of the `bold` hue and `outline` fill combination in the default state
+   * @prop --ion-chip-hue-bold-outline-activated-background: Background color of the `bold` hue and `outline` fill combination in the activated state
+   * @prop --ion-chip-hue-bold-outline-focus-background: Background color of the `bold` hue and `outline` fill combination in the focus state
+   * @prop --ion-chip-hue-bold-outline-hover-background: Background color of the `bold` hue and `outline` fill combination in the hover state
+   * @prop --ion-chip-hue-bold-outline-default-border-width: Border width of the `bold` hue and `outline` fill combination in the default state
+   * @prop --ion-chip-hue-bold-outline-default-border-style: Border style of the `bold` hue and `outline` fill combination in the default state
+   * @prop --ion-chip-hue-bold-outline-default-border-color: Border color of the `bold` hue and `outline` fill combination in the default state
+   * @prop --ion-chip-hue-bold-outline-semantic-default-color: Color of the `bold` hue and `outline` fill combination when a semantic color is applied
+   * @prop --ion-chip-hue-bold-outline-semantic-default-background: Background color of the `bold` hue and `outline` fill combination when a semantic color is applied
+   * @prop --ion-chip-hue-bold-outline-semantic-activated-background: Background color of the `bold` hue and `outline` fill combination when a semantic color is applied and in the activated state
+   * @prop --ion-chip-hue-bold-outline-semantic-focus-background: Background color of the `bold` hue and `outline` fill combination when a semantic color is applied and in the focus state
+   * @prop --ion-chip-hue-bold-outline-semantic-hover-background: Background color of the `bold` hue and `outline` fill combination when a semantic color is applied and in the hover state
+   * @prop --ion-chip-hue-bold-outline-semantic-default-border-width: Border width of the `bold` hue and `outline` fill combination when a semantic color is applied
+   * @prop --ion-chip-hue-bold-outline-semantic-default-border-style: Border style of the `bold` hue and `outline` fill combination when a semantic color is applied
+   * @prop --ion-chip-hue-bold-outline-semantic-default-border-color: Border color of the `bold` hue and `outline` fill combination when a semantic color is applied
+   *
+   * Subtle Solid
+   * @prop --ion-chip-hue-subtle-solid-default-color: Color of the `subtle` hue and `solid` fill combination in the default state
+   * @prop --ion-chip-hue-subtle-solid-default-background: Background color of the `subtle` hue and `solid` fill combination in the default state
+   * @prop --ion-chip-hue-subtle-solid-activated-background: Background color of the `subtle` hue and `solid` fill combination in the activated state
+   * @prop --ion-chip-hue-subtle-solid-focus-background: Background color of the `subtle` hue and `solid` fill combination in the focus state
+   * @prop --ion-chip-hue-subtle-solid-hover-background: Background color of the `subtle` hue and `solid` fill combination in the hover state
+   * @prop --ion-chip-hue-subtle-solid-semantic-default-color: Color of the `subtle` hue and `solid` fill combination when a semantic color is applied
+   * @prop --ion-chip-hue-subtle-solid-semantic-default-background: Background color of the `subtle` hue and `solid` fill combination when a semantic color is applied
+   * @prop --ion-chip-hue-subtle-solid-semantic-activated-background: Background color of the `subtle` hue and `solid` fill combination when a semantic color is applied and in the activated state
+   * @prop --ion-chip-hue-subtle-solid-semantic-focus-background: Background color of the `subtle` hue and `solid` fill combination when a semantic color is applied and in the focus state
+   * @prop --ion-chip-hue-subtle-solid-semantic-hover-background: Background color of the `subtle` hue and `solid` fill combination when a semantic color is applied and in the hover state
+   *
+   * Subtle Outline
+   * @prop --ion-chip-hue-subtle-outline-default-color: Color of the `subtle` hue and `outline` fill combination in the default state
+   * @prop --ion-chip-hue-subtle-outline-default-background: Background color of the `subtle` hue and `outline` fill combination in the default state
+   * @prop --ion-chip-hue-subtle-outline-activated-background: Background color of the `subtle` hue and `outline` fill combination in the activated state
+   * @prop --ion-chip-hue-subtle-outline-focus-background: Background color of the `subtle` hue and `outline` fill combination in the focus state
+   * @prop --ion-chip-hue-subtle-outline-hover-background: Background color of the `subtle` hue and `outline` fill combination in the hover state
+   * @prop --ion-chip-hue-subtle-outline-default-border-width: Border width of the `subtle` hue and `outline` fill combination in the default state
+   * @prop --ion-chip-hue-subtle-outline-default-border-style: Border style of the `subtle` hue and `outline` fill combination in the default state
+   * @prop --ion-chip-hue-subtle-outline-default-border-color: Border color of the `subtle` hue and `outline` fill combination in the default state
+   * @prop --ion-chip-hue-subtle-outline-semantic-default-color: Color of the `subtle` hue and `outline` fill combination when a semantic color is applied
+   * @prop --ion-chip-hue-subtle-outline-semantic-default-background: Background color of the `subtle` hue and `outline` fill combination when a semantic color is applied
+   * @prop --ion-chip-hue-subtle-outline-semantic-activated-background: Background color of the `subtle` hue and `outline` fill combination when a semantic color is applied and in the activated state
+   * @prop --ion-chip-hue-subtle-outline-semantic-focus-background: Background color of the `subtle` hue and `outline` fill combination when a semantic color is applied and in the focus state
+   * @prop --ion-chip-hue-subtle-outline-semantic-hover-background: Background color of the `subtle` hue and `outline` fill combination when a semantic color is applied and in the hover state
+   * @prop --ion-chip-hue-subtle-outline-semantic-default-border-width: Border width of the `subtle` hue and `outline` fill combination when a semantic color is applied
+   * @prop --ion-chip-hue-subtle-outline-semantic-default-border-style: Border style of the `subtle` hue and `outline` fill combination when a semantic color is applied
+   * @prop --ion-chip-hue-subtle-outline-semantic-default-border-color: Border color of the `subtle` hue and `outline` fill combination when a semantic color is applied
+   *
+   * States
+   * @prop --ion-chip-state-focus-ring-color: Color of the focus ring
+   * @prop --ion-chip-state-focus-ring-style: Style of the focus ring
+   * @prop --ion-chip-state-focus-ring-width: Width of the focus ring
+   * @prop --ion-chip-state-disabled-opacity: Opacity of the chip when it is disabled
+   *
+   * Slotted Icon
+   * @prop --ion-chip-icon-color: Color of the slotted `ion-icon`
+   * @prop --ion-chip-icon-font-size: Font size of the slotted `ion-icon`
+   * @prop --ion-chip-icon-leading-margin-top: Top margin of the slotted `ion-icon` when it is the first child
+   * @prop --ion-chip-icon-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-icon` when it is the first child
+   * @prop --ion-chip-icon-leading-margin-bottom: Bottom margin of the slotted `ion-icon` when it is the first child
+   * @prop --ion-chip-icon-leading-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted `ion-icon` when it is the first child
+   * @prop --ion-chip-icon-trailing-margin-top: Top margin of the slotted `ion-icon` when it is the last child
+   * @prop --ion-chip-icon-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-icon` when it is the last child
+   * @prop --ion-chip-icon-trailing-margin-bottom: Bottom margin of the slotted `ion-icon` when it is the last child
+   * @prop --ion-chip-icon-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted `ion-icon` when it is the last child
+   *
+   * Slotted Avatar
+   * @prop --ion-chip-avatar-width: Width of the slotted `ion-avatar`
+   * @prop --ion-chip-avatar-height: Height of the slotted `ion-avatar`
+   * @prop --ion-chip-avatar-leading-margin-top: Top margin of the slotted `ion-avatar` when it is the first child
+   * @prop --ion-chip-avatar-leading-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-avatar` when it is the first child
+   * @prop --ion-chip-avatar-leading-margin-bottom: Bottom margin of the slotted `ion-avatar` when it is the first child
+   * @prop --ion-chip-avatar-leading-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted `ion-avatar` when it is the first child
+   * @prop --ion-chip-avatar-trailing-margin-top: Top margin of the slotted `ion-avatar` when it is the last child
+   * @prop --ion-chip-avatar-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted `ion-avatar` when it is the last child
+   * @prop --ion-chip-avatar-trailing-margin-bottom: Bottom margin of the slotted `ion-avatar` when it is the last child
+   * @prop --ion-chip-avatar-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted `ion-avatar` when it is the last child
    */
-  --focus-ring-color: var(--ion-chip-state-focus-ring-color);
-  --focus-ring-style: var(--ion-chip-state-focus-ring-style);
-  --focus-ring-width: var(--ion-chip-state-focus-ring-width);
 
   @include mixins.font-smoothing();
-  @include mixins.border-radius(var(--border-radius));
   @include mixins.margin(
     var(--ion-chip-margin-top),
     var(--ion-chip-margin-end),
@@ -36,8 +142,6 @@
 
   align-items: center;
   justify-content: center;
-
-  color: var(--color);
 
   font-weight: var(--ion-chip-font-weight);
 
@@ -72,15 +176,15 @@
 // ---------------------------------------------
 
 :host(.chip-shape-soft) {
-  --border-radius: var(--ion-chip-shape-soft-border-radius);
+  @include mixins.border-radius(var(--ion-chip-shape-soft-border-radius));
 }
 
 :host(.chip-shape-round) {
-  --border-radius: var(--ion-chip-shape-round-border-radius);
+  @include mixins.border-radius(var(--ion-chip-shape-round-border-radius));
 }
 
 :host(.chip-shape-rectangular) {
-  --border-radius: var(--ion-chip-shape-rectangular-border-radius);
+  @include mixins.border-radius(var(--ion-chip-shape-rectangular-border-radius));
 }
 
 // Chip: Bold Solid
@@ -358,7 +462,11 @@
 
 // Focus
 :host(.ion-focused) {
-  @include mixins.focused-state(var(--focus-ring-width), var(--focus-ring-style), var(--focus-ring-color));
+  @include mixins.focused-state(
+    var(--ion-chip-state-focus-ring-width),
+    var(--ion-chip-state-focus-ring-style),
+    var(--ion-chip-state-focus-ring-color)
+  );
 }
 
 // Chip Slotted Elements
