@@ -295,7 +295,7 @@ export class ItemSliding implements ComponentInterface {
    */
   private getSwipeThreshold(): number {
     const maxWidth = Math.max(this.optsWidthRightSide, this.optsWidthLeftSide);
-    return maxWidth + 2000; // Slightly larger than SWIPE_MARGIN to be achievable
+    return maxWidth + 100; // Slightly larger than SWIPE_MARGIN to be achievable
   }
 
   /**
@@ -304,7 +304,6 @@ export class ItemSliding implements ComponentInterface {
    */
   private async animateFullSwipe(direction: 'start' | 'end') {
     // Prevent interruption during animation
-    this.state = SlidingState.AnimatingFullSwipe;
     if (this.gesture) {
       this.gesture.enable(false);
     }
@@ -317,12 +316,17 @@ export class ItemSliding implements ComponentInterface {
       const options = direction === 'end' ? this.rightOptions : this.leftOptions;
       const optsWidth = direction === 'end' ? this.optsWidthRightSide : this.optsWidthLeftSide;
 
-      // Phase 1: First reveal the options fully (so expandable option fills space)
-      const initialOpenAmount = direction === 'end' ? optsWidth : -optsWidth;
-      this.setOpenAmount(initialOpenAmount, false);
-      await new Promise((resolve) => setTimeout(resolve, 50));
+      // Phase 1: Reveal options beyond threshold to trigger expandable state
+      // This sets the SwipeEnd or SwipeStart state which expands the expandable option
+      const thresholdAmount = direction === 'end' ? optsWidth + SWIPE_MARGIN : -(optsWidth + SWIPE_MARGIN);
+      this.setOpenAmount(thresholdAmount, false);
 
-      // Phase 2: Animate off-screen from current position
+      // Add AnimatingFullSwipe flag while preserving the SwipeEnd/SwipeStart state
+      this.state = this.state | SlidingState.AnimatingFullSwipe;
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      // Phase 2: Animate off-screen while maintaining the expanded state
       const offScreenDistance = direction === 'end' ? window.innerWidth : -window.innerWidth;
       await this.animateToPosition(offScreenDistance, 250);
 
@@ -332,7 +336,7 @@ export class ItemSliding implements ComponentInterface {
       }
 
       // Phase 4: Small delay before returning
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 300));
 
       // Phase 5: Return to closed state
       await this.animateToPosition(0, 250);
