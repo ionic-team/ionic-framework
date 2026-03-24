@@ -185,31 +185,13 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
    * @param action The action that triggered the history change.
    */
   const handleHistoryChange = (location: HistoryLocation, action: HistoryAction) => {
-    let leavingLocationInfo: RouteInfo;
     /**
-     * A programmatic navigation was triggered.
-     * e.g., `<Navigate />`, `navigate()`, or `handleNavigate()`
+     * The leaving location is always the current route, for both programmatic
+     * and external navigations. Using `previous()` for replace actions was
+     * incorrect: it caused the equality check below to skip navigation when
+     * the replace destination matched the entry two slots back in history.
      */
-    if (incomingRouteParams.current) {
-      /**
-       * The current history entry is overwritten, so the previous entry
-       * is the one we are leaving.
-       */
-      if (incomingRouteParams.current?.routeAction === 'replace') {
-        leavingLocationInfo = locationHistory.current.previous();
-      } else {
-        // If the action is 'push' or 'pop', we want to use the current route.
-        leavingLocationInfo = locationHistory.current.current();
-      }
-    } else {
-      /**
-       * An external navigation was triggered
-       * e.g., browser back/forward button or direct link
-       *
-       * The leaving location is the current route.
-       */
-      leavingLocationInfo = locationHistory.current.current();
-    }
+    const leavingLocationInfo = locationHistory.current.current();
 
     const leavingUrl = leavingLocationInfo.pathname + leavingLocationInfo.search;
     if (leavingUrl !== location.pathname + location.search) {
@@ -512,6 +494,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
    *
    * @param tab The tab to set as active.
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSetCurrentTab = (tab: string, _routeInfo?: RouteInfo) => {
     currentTab.current = tab;
     const current = locationHistory.current.current();
