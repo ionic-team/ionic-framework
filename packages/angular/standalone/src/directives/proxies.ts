@@ -2298,14 +2298,14 @@ Shorthand for ionToastDidDismiss.
 
 @ProxyCmp({
   defineCustomElementFn: defineIonToolbar,
-  inputs: ['color', 'mode', 'theme']
+  inputs: ['color', 'mode', 'theme', 'titlePlacement']
 })
 @Component({
   selector: 'ion-toolbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'theme'],
+  inputs: ['color', 'mode', 'theme', 'titlePlacement'],
   standalone: true
 })
 export class IonToolbar {

@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, forceUpdate, h, Host, Listen, Prop } from '@stencil/core';
+import { Component, Element, forceUpdate, h, Host, Listen, Prop, Watch } from '@stencil/core';
 import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -30,6 +30,14 @@ import type { Color, CssClassMap, StyleEventDetail } from '../../interface';
 })
 export class Toolbar implements ComponentInterface {
   private childrenStyles = new Map<string, CssClassMap>();
+  private readonly slotClasses = [
+    'has-start-content',
+    'has-end-content',
+    'has-primary-content',
+    'has-secondary-content',
+  ];
+  private readonly showClasses = ['show-start', 'show-end', 'show-primary', 'show-secondary'];
+  private readonly slotSizeVars = ['--start-end-size', '--primary-secondary-size'];
 
   @Element() el!: HTMLIonToolbarElement;
 
@@ -39,6 +47,14 @@ export class Toolbar implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop({ reflect: true }) color?: Color;
+
+  /**
+   * Where to place the title relative to the other toolbar content.
+   * `"start"`: The title will appear to the left of the toolbar content in LTR and to the right in RTL.
+   * `"center"`: The title will appear in the center of the toolbar.
+   * `"end"`: The title will appear to the right of the toolbar content in LTR and to the left in RTL.
+   */
+  @Prop() titlePlacement?: 'start' | 'center' | 'end';
 
   componentWillLoad() {
     const buttons = Array.from(this.el.querySelectorAll('ion-buttons'));
@@ -65,6 +81,24 @@ export class Toolbar implements ComponentInterface {
   componentDidLoad() {
     this.updateSlotClasses();
     this.updateSlotWidths();
+  }
+
+  @Watch('titlePlacement')
+  titlePlacementChanged() {
+    this.updateSlotClasses();
+  }
+
+  /**
+   * Gets the title placement.
+   * Returns the title placement if it is set, otherwise returns `"center"`
+   * for `ionic` and `ios`, and `"start"` for `md`.
+   */
+  private getTitlePlacement(): 'start' | 'center' | 'end' {
+    if (this.titlePlacement !== undefined) {
+      return this.titlePlacement;
+    }
+
+    return getIonTheme(this) === 'ionic' || getIonTheme(this) === 'ios' ? 'center' : 'start';
   }
 
   /**
@@ -164,7 +198,21 @@ export class Toolbar implements ComponentInterface {
     return allMeasurementsSuccessful;
   }
 
+  /**
+   * Removes all slot visibility classes and slot width CSS variables.
+   */
+  private removeSlotClasses() {
+    this.el.classList.remove(...this.slotClasses, ...this.showClasses);
+    this.slotSizeVars.forEach((cssVar) => this.el.style.removeProperty(cssVar));
+  }
+
   private updateSlotClasses() {
+    const titlePlacement = this.getTitlePlacement();
+    if (titlePlacement !== 'center') {
+      this.removeSlotClasses();
+      return;
+    }
+
     // Check if slots have content
     const slots = ['start', 'end', 'primary', 'secondary'];
 
@@ -250,12 +298,15 @@ export class Toolbar implements ComponentInterface {
       Object.assign(childStyles, style);
     });
 
+    const titlePlacement = this.getTitlePlacement();
+
     return (
       <Host
         class={{
           ...createColorClasses(this.color, {
             [theme]: true,
             'in-toolbar': hostContext('ion-toolbar', this.el),
+            [`toolbar-title-placement-${titlePlacement}`]: true,
           }),
           ...childStyles,
         }}

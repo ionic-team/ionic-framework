@@ -59,10 +59,6 @@
   @include globals.padding-horizontal(globals.$ion-space-200);
 }
 
-:host(.toolbar-title-default) ::slotted(ion-title) {
-  text-align: center;
-}
-
 :host(.toolbar-title-large) ::slotted(ion-title) {
   @include globals.padding-horizontal(globals.$ion-space-400);
 }
@@ -115,4 +111,19 @@
   display: flex;
 
   flex: 0 0 var(--primary-secondary-size, 0);
+}
+
+// Toolbar Title Placement
+// --------------------------------------------------
+
+:host(.toolbar-title-placement-start) {
+  text-align: start;
+}
+
+:host(.toolbar-title-placement-center) {
+  text-align: center;
+}
+
+:host(.toolbar-title-placement-end) {
+  text-align: end;
 }
