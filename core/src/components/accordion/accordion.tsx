@@ -438,9 +438,6 @@ export class Accordion implements ComponentInterface {
 
     const shouldExpand = Array.isArray(value) ? value.includes(accordionValue) : value === accordionValue;
 
-    /**
-     * Check if this is the last accordion in the group.
-     */
     const nextAccordion = this.getNextSibling();
     this.isLast = nextAccordion === undefined;
 
