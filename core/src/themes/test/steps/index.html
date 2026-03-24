@@ -81,7 +81,8 @@
 
           if (!bodyStyles.getPropertyValue('--ion-background-color-step-50')) {
             const error = document.createElement('span');
-            error.textContent = 'Background color variables not found for theme: ' + themeName + ' and palette: ' + paletteName;
+            error.textContent =
+              'Background color variables not found for theme: ' + themeName + ' and palette: ' + paletteName;
             backgroundContainer.appendChild(error);
 
             return;
@@ -123,7 +124,8 @@
 
           if (!bodyStyles.getPropertyValue('--ion-text-color-step-50')) {
             const error = document.createElement('span');
-            error.textContent = 'Text color variables not found for theme: ' + themeName + ' and palette: ' + paletteName;
+            error.textContent =
+              'Text color variables not found for theme: ' + themeName + ' and palette: ' + paletteName;
             textContainer.appendChild(error);
 
             return;
