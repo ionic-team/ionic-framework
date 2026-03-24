@@ -6,8 +6,8 @@ import { NavContext } from '../../contexts/NavContext';
 import PageManager from '../../routing/PageManager';
 import { HTMLElementSSR } from '../../utils/HTMLElementSSR';
 import { IonRouterOutlet } from '../IonRouterOutlet';
+import { IonTab } from '../components';
 import { IonTabsInner } from '../inner-proxies';
-import { IonTab } from '../proxies';
 
 import type { IonTabsContextState } from './IonTabsContext';
 import { IonTabsContext } from './IonTabsContext';
