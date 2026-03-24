@@ -200,12 +200,6 @@ export class Accordion implements ComponentInterface {
     if (ionItem.lines === undefined) {
       ionItem.lines = 'full';
     }
-
-    /**
-     * Add a class to identify this item as an accordion header
-     * for specific styling purposes
-     */
-    ionItem.classList.add('accordion-header-item');
   };
 
   private getSlottedHeaderIonItem = () => {
