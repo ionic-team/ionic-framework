@@ -314,34 +314,33 @@ export class ItemSliding implements ComponentInterface {
     try {
       // Calculate which options we're using
       const options = direction === 'end' ? this.rightOptions : this.leftOptions;
-      const optsWidth = direction === 'end' ? this.optsWidthRightSide : this.optsWidthLeftSide;
 
-      // Phase 1: Reveal options beyond threshold to trigger expandable state
-      // This sets the SwipeEnd or SwipeStart state which expands the expandable option
-      const thresholdAmount = direction === 'end' ? optsWidth + SWIPE_MARGIN : -(optsWidth + SWIPE_MARGIN);
-      this.setOpenAmount(thresholdAmount, false);
-
-      // Add AnimatingFullSwipe flag while preserving the SwipeEnd/SwipeStart state
-      this.state = this.state | SlidingState.AnimatingFullSwipe;
+      // Trigger expandable state without moving the item
+      // Set state directly so expandable option fills its container, starting from
+      // the exact position where the user released, without any visual snap.
+      this.state =
+        direction === 'end'
+          ? SlidingState.End | SlidingState.SwipeEnd | SlidingState.AnimatingFullSwipe
+          : SlidingState.Start | SlidingState.SwipeStart | SlidingState.AnimatingFullSwipe;
 
       await new Promise((resolve) => setTimeout(resolve, 100));
 
-      // Phase 2: Animate off-screen while maintaining the expanded state
+      // Animate off-screen while maintaining the expanded state
       const offScreenDistance = direction === 'end' ? window.innerWidth : -window.innerWidth;
       await this.animateToPosition(offScreenDistance, 250);
 
-      // Phase 3: Trigger action
+      // Trigger action
       if (options) {
         options.fireSwipeEvent();
       }
 
-      // Phase 4: Small delay before returning
+      // Small delay before returning
       await new Promise((resolve) => setTimeout(resolve, 300));
 
-      // Phase 5: Return to closed state
+      // Return to closed state
       await this.animateToPosition(0, 250);
 
-      // Phase 6: Reset state
+      // Reset state
       if (this.item) {
         this.item.style.transition = '';
       }

@@ -96,10 +96,9 @@
       // Log swipe events for debugging
       document.querySelectorAll('ion-item-sliding').forEach((item) => {
         const id = item.getAttribute('id');
-        const options = item.querySelectorAll('ion-item-option');
-        options.forEach((option) => {
-          option.addEventListener('ionSwipe', () => {
-            console.log(`[${id}] ionSwipe event fired for:`, option.textContent);
+        item.querySelectorAll('ion-item-options').forEach((options) => {
+          options.addEventListener('ionSwipe', () => {
+            console.log(`[${id}] ionSwipe fired on ${options.getAttribute('side')} side`);
           });
         });
       });
