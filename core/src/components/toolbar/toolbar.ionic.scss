@@ -116,14 +116,14 @@
 // Toolbar Title Placement
 // --------------------------------------------------
 
-:host(.toolbar-title-placement-start) {
+:host(.toolbar-title-placement-start) ::slotted(ion-title) {
   text-align: start;
 }
 
-:host(.toolbar-title-placement-center) {
+:host(.toolbar-title-placement-center) ::slotted(ion-title) {
   text-align: center;
 }
 
-:host(.toolbar-title-placement-end) {
+:host(.toolbar-title-placement-end) ::slotted(ion-title) {
   text-align: end;
 }
