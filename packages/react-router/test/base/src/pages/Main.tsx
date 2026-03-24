@@ -137,6 +137,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/router-link-modifier-click">
             <IonLabel>Router Link Modifier Click</IonLabel>
           </IonItem>
+          <IonItem routerLink="/navigate-root/page-a">
+            <IonLabel>Navigate Root</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

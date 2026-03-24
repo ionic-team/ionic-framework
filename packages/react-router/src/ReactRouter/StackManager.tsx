@@ -280,6 +280,31 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   }
 
   /**
+   * Handles root navigation by unmounting all non-entering views in this outlet.
+   * Fires ionViewWillLeave / ionViewDidLeave only on views that are currently visible.
+   * Views that are mounted but not visible (e.g., pages earlier in the back stack)
+   * are silently unmounted without lifecycle events, consistent with the behavior
+   * of out-of-scope outlet cleanup.
+   */
+  private handleRootNavigation(enteringViewItem: ViewItem | undefined): void {
+    const allViewsInOutlet = this.context.getViewItemsForOutlet(this.id);
+    allViewsInOutlet.forEach((viewItem) => {
+      if (viewItem === enteringViewItem) {
+        return;
+      }
+      if (viewItem.ionPageElement && isViewVisible(viewItem.ionPageElement)) {
+        viewItem.ionPageElement.dispatchEvent(
+          new CustomEvent('ionViewWillLeave', { bubbles: false, cancelable: false })
+        );
+        viewItem.ionPageElement.dispatchEvent(
+          new CustomEvent('ionViewDidLeave', { bubbles: false, cancelable: false })
+        );
+      }
+      this.context.unMountViewItem(viewItem);
+    });
+  }
+
+  /**
    * Handles nested outlet with relative routes but no parent path. Returns true to abort.
    */
   private handleOutOfContextNestedOutlet(
@@ -875,8 +900,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     // Find entering and leaving view items
     const viewItems = this.findViewItems(routeInfo);
     let enteringViewItem = viewItems.enteringViewItem;
-    const leavingViewItem = viewItems.leavingViewItem;
-    const shouldUnmountLeavingViewItem = this.shouldUnmountLeavingView(routeInfo, enteringViewItem, leavingViewItem);
+    let leavingViewItem = viewItems.leavingViewItem;
+    let shouldUnmountLeavingViewItem = this.shouldUnmountLeavingView(routeInfo, enteringViewItem, leavingViewItem);
 
     // Get parent path for nested outlets
     const parentPath = this.getParentPath();
@@ -884,6 +909,13 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     // Handle out-of-scope outlet (route outside mount path)
     if (this.handleOutOfScopeOutlet(routeInfo)) {
       return;
+    }
+
+    // Handle root navigation: unmount all non-entering views
+    if (routeInfo.routeDirection === 'root') {
+      this.handleRootNavigation(enteringViewItem);
+      leavingViewItem = undefined;
+      shouldUnmountLeavingViewItem = false;
     }
 
     // Clear any pending out-of-scope unmount timeout

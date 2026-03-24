@@ -65,6 +65,7 @@ import { ParamSwipeBack, ParamSwipeBackB } from './pages/param-swipe-back/ParamS
 import TabLifecycle from './pages/tab-lifecycle/TabLifecycle';
 import TabLifecycleOutside from './pages/tab-lifecycle/TabLifecycleOutside';
 import { RouterLinkModifierClick, RouterLinkModifierClickTarget } from './pages/router-link-modifier-click/RouterLinkModifierClick';
+import { NavigateRootPageA, NavigateRootPageB, NavigateRootPageC } from './pages/navigate-root/NavigateRoot';
 
 setupIonicReact();
 
@@ -125,6 +126,9 @@ const App: React.FC = () => {
           <Route path="/tab-lifecycle-outside" element={<TabLifecycleOutside />} />
           <Route path="/router-link-modifier-click" element={<RouterLinkModifierClick />} />
           <Route path="/router-link-modifier-click/target" element={<RouterLinkModifierClickTarget />} />
+          <Route path="/navigate-root/page-a" element={<NavigateRootPageA />} />
+          <Route path="/navigate-root/page-b" element={<NavigateRootPageB />} />
+          <Route path="/navigate-root/page-c" element={<NavigateRootPageC />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

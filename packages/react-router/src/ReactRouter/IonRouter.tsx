@@ -655,6 +655,27 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     navigate(path, { replace: routeAction !== 'push' });
   };
 
+  /**
+   * Navigates to a new root path, clearing Ionic's navigation history so that
+   * canGoBack() returns false after the transition. All previously mounted views
+   * are unmounted. Useful for post-login / post-logout root navigation.
+   *
+   * @param pathname The path to navigate to.
+   * @param routeAnimation An optional custom animation builder.
+   */
+  const handleNavigateRoot = (pathname: string, routeAnimation?: AnimationBuilder) => {
+    currentTab.current = undefined;
+    forwardStack.current = [];
+
+    incomingRouteParams.current = {
+      routeAction: 'replace',
+      routeDirection: 'root',
+      routeAnimation,
+    };
+
+    navigate(pathname, { replace: true });
+  };
+
   const routeMangerContextValue: RouteManagerContextState = {
     canGoBack: () => locationHistory.current.canGoBack(),
     clearOutlet: viewStack.current.clear,
@@ -678,6 +699,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
         onNativeBack={handleNativeBack}
         onNavigateBack={handleNavigateBack}
         onNavigate={handleNavigate}
+        onNavigateRoot={handleNavigateRoot}
         onSetCurrentTab={handleSetCurrentTab}
         onChangeTab={handleChangeTab}
         onResetTab={handleResetTab}

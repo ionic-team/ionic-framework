@@ -26,6 +26,7 @@ interface NavManagerProps {
     options?: any,
     tab?: string
   ) => void;
+  onNavigateRoot: (pathname: string, animationBuilder?: AnimationBuilder) => void;
   onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
   onChangeTab: (tab: string, path: string, routeOptions?: any) => void;
   onResetTab: (tab: string, path: string, routeOptions?: any) => void;
@@ -47,6 +48,9 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
     },
     back: (animationBuilder?: AnimationBuilder) => {
       this.goBack(undefined, animationBuilder);
+    },
+    navigateRoot: (pathname: string, animationBuilder?: AnimationBuilder) => {
+      this.props.onNavigateRoot(pathname, animationBuilder);
     },
     canGoBack: () => this.props.locationHistory.canGoBack(),
     nativeBack: () => this.props.onNativeBack(),
