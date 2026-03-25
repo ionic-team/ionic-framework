@@ -69,12 +69,10 @@ export async function ionBackClick(page: Page, pageId: string): Promise<void> {
 }
 
 /**
- * Click a tab button by text. Includes a 500ms wait before clicking
- * to handle the timing issue with tab switches after forward navigation (FW-2800).
+ * Click a tab button by text.
  * Equivalent to Cypress `cy.ionTabClick(tabText)`.
  */
 export async function ionTabClick(page: Page, tabText: string): Promise<void> {
-  await page.waitForTimeout(500);
   await page.locator('ion-tab-button').filter({ hasText: tabText }).click({ force: true });
 }
 
