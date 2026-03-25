@@ -87,6 +87,7 @@ export class Accordion implements ComponentInterface {
   @State() state: AccordionState = AccordionState.Collapsed;
   @State() isNext = false;
   @State() isPrevious = false;
+  @State() isLast = false;
   /**
    * Tracks whether a user-initiated interaction has occurred.
    * Animations are disabled until the first interaction happens.
@@ -431,6 +432,9 @@ export class Accordion implements ComponentInterface {
 
     const shouldExpand = Array.isArray(value) ? value.includes(accordionValue) : value === accordionValue;
 
+    const nextAccordion = this.getNextSibling();
+    this.isLast = nextAccordion === undefined;
+
     if (shouldExpand) {
       this.expandAccordion();
       this.isNext = this.isPrevious = false;
@@ -444,7 +448,6 @@ export class Accordion implements ComponentInterface {
        * applied. Check to see if the
        * next or previous accordion is selected.
        */
-      const nextAccordion = this.getNextSibling();
       const nextAccordionValue = nextAccordion?.value;
 
       if (nextAccordionValue !== undefined) {
@@ -525,6 +528,7 @@ export class Accordion implements ComponentInterface {
 
           'accordion-next': this.isNext,
           'accordion-previous': this.isPrevious,
+          'accordion-last': this.isLast,
 
           'accordion-disabled': disabled,
           'accordion-readonly': readonly,
