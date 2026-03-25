@@ -5,6 +5,6 @@ import type { HighContrastDarkTheme } from '../themes.interfaces';
 export const highContrastDarkTheme: HighContrastDarkTheme = {
   ...baseHighContrastDarkTheme,
 
-  backgroundColorStep: generateColorSteps('#ffffff', '#000000'),
-  textColorStep: generateColorSteps('#888888', '#ffffff'),
+  backgroundColorStep: generateColorSteps('#000000', '#ffffff'),
+  textColorStep: generateColorSteps('#ffffff', '#888888'),
 };

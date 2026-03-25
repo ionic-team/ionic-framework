@@ -12,6 +12,6 @@ export const highContrastDarkTheme: HighContrastDarkTheme = {
     background: '#1f1f1f',
   },
 
-  backgroundColorStep: generateColorSteps('#ffffff', '#121212'),
-  textColorStep: generateColorSteps('#888888', '#ffffff'),
+  backgroundColorStep: generateColorSteps('#121212', '#ffffff'),
+  textColorStep: generateColorSteps('#ffffff', '#888888'),
 };
