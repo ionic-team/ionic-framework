@@ -535,9 +535,13 @@ export class InputOTP implements ComponentInterface {
    * - Tab: Allows normal tab navigation between components
    */
   private onKeyDown = (index: number) => (event: KeyboardEvent) => {
-    const { length, readonly } = this;
+    const { disabled, length, readonly } = this;
     const rtl = isRTL(this.el);
     const input = event.target as HTMLInputElement;
+
+    if (disabled) {
+      return;
+    }
 
     if (readonly) {
       if (event.key === 'Backspace' || event.key === 'Delete') {
@@ -610,12 +614,12 @@ export class InputOTP implements ComponentInterface {
    * 5. Single character replacement
    */
   private onInput = (index: number) => (event: InputEvent) => {
-    const { length, readonly, validKeyPattern } = this;
+    const { disabled, length, readonly, validKeyPattern } = this;
     const input = event.target as HTMLInputElement;
     const value = input.value;
     const previousValue = this.previousInputValues[index] || '';
 
-    if (readonly) {
+    if (disabled || readonly) {
       event.preventDefault();
       return;
     }
@@ -747,11 +751,11 @@ export class InputOTP implements ComponentInterface {
    * the next empty input after pasting.
    */
   private onPaste = (event: ClipboardEvent) => {
-    const { inputRefs, length, readonly, validKeyPattern } = this;
+    const { disabled, inputRefs, length, readonly, validKeyPattern } = this;
 
     event.preventDefault();
 
-    if (readonly) {
+    if (disabled || readonly) {
       return;
     }
 

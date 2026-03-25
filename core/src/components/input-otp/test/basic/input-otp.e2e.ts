@@ -869,6 +869,17 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       await verifyInputValues(inputOtp, ['أ', 'ب', 'ج', 'د', '1', '2']);
     });
 
+    test('should not paste text when disabled is true', async ({ page }) => {
+      await page.setContent(`<ion-input-otp value="1234" disabled>Description</ion-input-otp>`, config);
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+      await simulatePaste(firstInput, '5678');
+
+      const inputOtp = page.locator('ion-input-otp');
+      await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
+    });
+
     test('should not paste text when readonly is true', async ({ page }) => {
       await page.setContent(`<ion-input-otp value="1234" readonly>Description</ion-input-otp>`, config);
 
