@@ -1289,16 +1289,16 @@ ion-item-divider,css-prop,--ion-item-divider-header4-margin-start
 ion-item-divider,css-prop,--ion-item-divider-header4-margin-top
 ion-item-divider,css-prop,--ion-item-divider-header5-last-margin-bottom
 ion-item-divider,css-prop,--ion-item-divider-header5-last-margin-end
+ion-item-divider,css-prop,--ion-item-divider-header5-last-margin-start
 ion-item-divider,css-prop,--ion-item-divider-header5-last-margin-top
-ion-item-divider,css-prop,--ion-item-divider-header5-last-margin_start
 ion-item-divider,css-prop,--ion-item-divider-header5-margin-bottom
 ion-item-divider,css-prop,--ion-item-divider-header5-margin-end
 ion-item-divider,css-prop,--ion-item-divider-header5-margin-start
 ion-item-divider,css-prop,--ion-item-divider-header5-margin-top
 ion-item-divider,css-prop,--ion-item-divider-header6-last-margin-bottom
 ion-item-divider,css-prop,--ion-item-divider-header6-last-margin-end
+ion-item-divider,css-prop,--ion-item-divider-header6-last-margin-start
 ion-item-divider,css-prop,--ion-item-divider-header6-last-margin-top
-ion-item-divider,css-prop,--ion-item-divider-header6-last-margin_start
 ion-item-divider,css-prop,--ion-item-divider-header6-margin-bottom
 ion-item-divider,css-prop,--ion-item-divider-header6-margin-end
 ion-item-divider,css-prop,--ion-item-divider-header6-margin-start
@@ -1337,6 +1337,7 @@ ion-item-divider,css-prop,--ion-item-divider-note-margin-start
 ion-item-divider,css-prop,--ion-item-divider-note-margin-top
 ion-item-divider,css-prop,--ion-item-divider-note-padding-bottom
 ion-item-divider,css-prop,--ion-item-divider-note-padding-end
+ion-item-divider,css-prop,--ion-item-divider-note-padding-start
 ion-item-divider,css-prop,--ion-item-divider-note-padding-top
 ion-item-divider,css-prop,--ion-item-divider-padding-bottom
 ion-item-divider,css-prop,--ion-item-divider-padding-end
@@ -1366,7 +1367,6 @@ ion-item-divider,css-prop,--ion-item-divider-thumbnail-trailing-edge-margin-star
 ion-item-divider,css-prop,--ion-item-divider-thumbnail-width
 ion-item-divider,css-prop,--ion-item-divider-trailing-edge-margin-end
 ion-item-divider,css-prop,--ion-item-divider-trailing-edge-margin-start
-ion-item-divider,css-prop,--ion-item-divider_note_padding_start
 
 ion-item-group,none
 ion-item-group,prop,mode,"ios" | "md",undefined,false,false
