@@ -542,8 +542,8 @@ export class InputOTP implements ComponentInterface {
     if (readonly) {
       if (event.key === 'Backspace' || event.key === 'Delete') {
         event.preventDefault();
+        return;
       }
-      return;
     }
 
     // Meta shortcuts are used to copy, paste, and select text
@@ -610,15 +610,15 @@ export class InputOTP implements ComponentInterface {
    * 5. Single character replacement
    */
   private onInput = (index: number) => (event: InputEvent) => {
-    if (this.readonly) {
-      event.preventDefault();
-      return;
-    }
-
-    const { length, validKeyPattern } = this;
+    const { length, readonly, validKeyPattern } = this;
     const input = event.target as HTMLInputElement;
     const value = input.value;
     const previousValue = this.previousInputValues[index] || '';
+
+    if (readonly) {
+      event.preventDefault();
+      return;
+    }
 
     // 1. Autofill handling
     // If the length of the value increases by more than 1 from the previous
@@ -747,14 +747,13 @@ export class InputOTP implements ComponentInterface {
    * the next empty input after pasting.
    */
   private onPaste = (event: ClipboardEvent) => {
-    if (this.readonly) {
-      event.preventDefault();
-      return;
-    }
-
-    const { inputRefs, length, validKeyPattern } = this;
+    const { inputRefs, length, readonly, validKeyPattern } = this;
 
     event.preventDefault();
+
+    if (readonly) {
+      return;
+    }
 
     const pastedText = event.clipboardData?.getData('text');
 
