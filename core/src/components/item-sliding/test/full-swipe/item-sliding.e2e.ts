@@ -20,9 +20,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
       await page.goto(`/src/components/item-sliding/test/full-swipe`, config);
     });
 
-    test('should fire ionSwipe when expandable option is swiped fully (end side)', async ({
-      page,
-    }) => {
+    test('should fire ionSwipe when expandable option is swiped fully (end side)', async ({ page }) => {
       const ionSwipe = await page.spyOnEvent('ionSwipe');
       const item = page.locator('#expandable-end');
 
@@ -32,9 +30,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
       expect(ionSwipe.length).toBeGreaterThan(0);
     });
 
-    test('should fire ionSwipe when expandable option is swiped fully (start side)', async ({
-      page,
-    }) => {
+    test('should fire ionSwipe when expandable option is swiped fully (start side)', async ({ page }) => {
       const ionSwipe = await page.spyOnEvent('ionSwipe');
       const item = page.locator('#expandable-start');
 
@@ -51,9 +47,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
       await page.waitForTimeout(FULL_ANIMATION_MS);
       await page.waitForChanges();
 
-      const openAmount = await item.evaluate((el: HTMLIonItemSlidingElement) =>
-        el.getOpenAmount()
-      );
+      const openAmount = await item.evaluate((el: HTMLIonItemSlidingElement) => el.getOpenAmount());
       expect(openAmount).toBe(0);
     });
 
@@ -104,23 +98,21 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
  * RTL support: swipe direction is mirrored. In RTL, swiping right
  * reveals the "end" side options and should trigger the full animation.
  */
-configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEach(
-  ({ title, config }) => {
-    test.describe(title('item-sliding: full swipe'), () => {
-      test('should fire ionSwipe in the correct swipe direction', async ({ page }) => {
-        await page.goto(`/src/components/item-sliding/test/full-swipe`, config);
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEach(({ title, config }) => {
+  test.describe(title('item-sliding: full swipe'), () => {
+    test('should fire ionSwipe in the correct swipe direction', async ({ page }) => {
+      await page.goto(`/src/components/item-sliding/test/full-swipe`, config);
 
-        const ionSwipe = await page.spyOnEvent('ionSwipe');
-        const item = page.locator('#expandable-end');
+      const ionSwipe = await page.spyOnEvent('ionSwipe');
+      const item = page.locator('#expandable-end');
 
-        // In RTL the "end" side is on the left, revealed by dragging right
-        const dragByX = config.direction === 'rtl' ? 190 : -190;
+      // In RTL the "end" side is on the left, revealed by dragging right
+      const dragByX = config.direction === 'rtl' ? 190 : -190;
 
-        await dragElementBy(item, page, dragByX);
-        await page.waitForTimeout(FULL_ANIMATION_MS);
+      await dragElementBy(item, page, dragByX);
+      await page.waitForTimeout(FULL_ANIMATION_MS);
 
-        expect(ionSwipe.length).toBeGreaterThan(0);
-      });
+      expect(ionSwipe.length).toBeGreaterThan(0);
     });
-  }
-);
+  });
+});
