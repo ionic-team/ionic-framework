@@ -620,7 +620,6 @@ export class InputOTP implements ComponentInterface {
     const previousValue = this.previousInputValues[index] || '';
 
     if (disabled || readonly) {
-      event.preventDefault();
       return;
     }
 
