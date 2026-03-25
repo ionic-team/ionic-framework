@@ -86,6 +86,18 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   private transitionRafIds: number[] = [];
   /** In-flight MutationObserver from waitForComponentsReady, disconnected on unmount. */
   private transitionObserver?: MutationObserver;
+  /**
+   * Monotonically increasing counter incremented at the start of each transitionPage call.
+   * Used to detect when an async commit() resolves after a newer transition has already run,
+   * preventing the stale commit from hiding an element that the newer transition made visible.
+   */
+  private transitionGeneration = 0;
+  /**
+   * The entering element of the most recent transitionPage call.
+   * Used alongside transitionGeneration to undo incorrect ion-page-hidden applied
+   * by a stale animated commit that raced with a newer non-animated transition.
+   */
+  private transitionEnteringElement?: HTMLElement;
 
   constructor(props: StackManagerProps) {
     super(props);
@@ -1215,6 +1227,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     progressAnimation = false,
     skipAnimation = false
   ) {
+    const myGeneration = ++this.transitionGeneration;
+
     const runCommit = async (enteringEl: HTMLElement, leavingEl?: HTMLElement) => {
       const skipTransition = this.skipTransition;
 
@@ -1268,9 +1282,22 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       const timeoutPromise = new Promise<'timeout'>((resolve) => setTimeout(() => resolve('timeout'), timeoutMs));
       const result = await Promise.race([commitPromise.then(() => 'done' as const), timeoutPromise]);
 
+      // Bail out if the component unmounted during the commit animation
+      if (!this._isMounted) return;
+
       if (result === 'timeout') {
         // Force entering page visible even though commit hung
         enteringEl.classList.remove('ion-page-invisible');
+      }
+
+      /**
+       * If a newer transitionPage call ran while this commit was in-flight (e.g., a tab
+       * switch fired during a forward animation), the core commit may have applied
+       * ion-page-hidden to leavingEl even though the newer transition already made it
+       * visible. Undo that stale hide so the newer transition's DOM state wins.
+       */
+      if (myGeneration !== this.transitionGeneration && leavingEl && leavingEl === this.transitionEnteringElement) {
+        showIonPageElement(leavingEl);
       }
 
       if (!progressAnimation) {
@@ -1285,6 +1312,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     const directionToUse = direction ?? routeInfoFallbackDirection;
 
     if (enteringViewItem && enteringViewItem.ionPageElement && this.routerOutletElement) {
+      this.transitionEnteringElement = enteringViewItem.ionPageElement;
+
       if (leavingViewItem && leavingViewItem.ionPageElement && enteringViewItem === leavingViewItem) {
         // Clone page for same-view transitions (e.g., /user/1 → /user/2)
         const match = matchComponent(leavingViewItem.reactElement, routeInfo.pathname, undefined, this.outletMountPath);
@@ -1400,14 +1429,21 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
           if (!this._isMounted) return;
 
           // Swap visibility synchronously - show entering, hide leaving
+          // Skip hiding if a newer transition already made leavingEl the entering view
           enteringEl.classList.remove('ion-page-invisible');
-          leavingEl.classList.add('ion-page-hidden');
-          leavingEl.setAttribute('aria-hidden', 'true');
+          if (myGeneration === this.transitionGeneration || leavingEl !== this.transitionEnteringElement) {
+            leavingEl.classList.add('ion-page-hidden');
+            leavingEl.setAttribute('aria-hidden', 'true');
+          }
         } else {
           await runCommit(enteringViewItem.ionPageElement, leavingEl);
           if (leavingEl && !progressAnimation) {
-            leavingEl.classList.add('ion-page-hidden');
-            leavingEl.setAttribute('aria-hidden', 'true');
+            // Skip hiding if a newer transition already made leavingEl the entering view
+            // runCommit's generation check has already restored its visibility in that case
+            if (myGeneration === this.transitionGeneration || leavingEl !== this.transitionEnteringElement) {
+              leavingEl.classList.add('ion-page-hidden');
+              leavingEl.setAttribute('aria-hidden', 'true');
+            }
           }
         }
       }

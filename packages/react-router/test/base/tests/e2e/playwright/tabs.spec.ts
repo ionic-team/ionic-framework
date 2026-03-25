@@ -64,6 +64,17 @@ test.describe('Tabs', () => {
     await expect(page.locator('ion-tab-button.tab-selected')).toContainText('Tab1');
   });
 
+  // Verifies that an animated forward commit racing with a tab switch does not leave the home page hidden.
+  // No withTestingMode() - animations must run for the race to be exercisable.
+  test('should show home page after cross-tab nav then immediate tab click', async ({ page }) => {
+    await page.goto('/routing/tabs/home');
+    await ionPageVisible(page, 'home-page');
+
+    await ionNav(page, 'ion-item', 'Details 1 on settings');
+    await ionTabClick(page, 'Home');
+    await ionPageVisible(page, 'home-page');
+  });
+
   // Verifies that defaultHref works on direct deep-link load of a tab child page
   test('back button defaultHref should work on direct deep-link load of tab child page', async ({ page }) => {
     await page.goto(withTestingMode('/tabs/tab1/child'));
