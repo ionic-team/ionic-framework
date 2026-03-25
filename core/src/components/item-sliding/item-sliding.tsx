@@ -259,14 +259,14 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
-   * Check if the given item options element contains at least one expandable option.
+   * Check if the given item options element contains at least one expandable, non-disabled option.
    */
   private hasExpandableOptions(options: HTMLIonItemOptionsElement | undefined): boolean {
     if (!options) return false;
 
     const optionElements = options.querySelectorAll('ion-item-option');
     return Array.from(optionElements).some((option: any) => {
-      return option.expandable === true;
+      return option.expandable === true && !option.disabled;
     });
   }
 
