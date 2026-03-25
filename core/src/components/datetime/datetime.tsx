@@ -1525,7 +1525,13 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    nextMonth.scrollIntoView({ behavior: 'smooth' });
+    const left = (nextMonth as HTMLElement).offsetWidth * 2;
+
+    calendarBodyRef.scrollTo({
+      top: 0,
+      left: left * (isRTL(this.el) ? -1 : 1),
+      behavior: 'smooth',
+    });
   };
 
   private prevMonth = () => {
@@ -1538,7 +1544,14 @@ export class Datetime implements ComponentInterface {
     if (!prevMonth) {
       return;
     }
-    prevMonth.scrollIntoView({ behavior: 'smooth' });
+
+    const left = (prevMonth as HTMLElement).offsetWidth * 2;
+
+    calendarBodyRef.scrollTo({
+      top: 0,
+      left: left * (isRTL(this.el) ? 1 : -1),
+      behavior: 'smooth',
+    });
   };
 
   private toggleMonthAndYearView = () => {
