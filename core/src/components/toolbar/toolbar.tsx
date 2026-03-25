@@ -53,6 +53,8 @@ export class Toolbar implements ComponentInterface {
    * `"start"`: The title will appear to the left of the toolbar content in LTR and to the right in RTL.
    * `"center"`: The title will appear in the center of the toolbar.
    * `"end"`: The title will appear to the right of the toolbar content in LTR and to the left in RTL.
+   *
+   * Only applies in the `ionic` theme.
    */
   @Prop() titlePlacement?: 'start' | 'center' | 'end';
 
