@@ -10,7 +10,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should not have visual regressions', async ({ page }) => {
         await page.setIonViewport();
 
-        await expect(page).toHaveScreenshot(screenshot(`spinner-basic-diff`));
+        await expect(page).toHaveScreenshot(screenshot('spinner-basic'));
       });
     });
   });

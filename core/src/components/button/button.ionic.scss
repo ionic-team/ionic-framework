@@ -166,9 +166,6 @@
 
 // Button with Spinner
 // -------------------------------------------------------------------------------
-::slotted(ion-spinner) {
-  --color: currentColor;
-}
 
 /* Button containing only a spinner */
 ::slotted(ion-spinner[slot="start"]),

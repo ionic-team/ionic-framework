@@ -32,6 +32,10 @@ export const defaultTheme: DefaultTheme = {
         shape: 'soft',
         size: 'large',
       },
+
+      IonSpinner: {
+        size: 'medium',
+      },
     },
   },
 
@@ -640,6 +644,80 @@ export const defaultTheme: DefaultTheme = {
 
         text: {
           overflow: 'initial',
+        },
+      },
+    },
+
+    IonSpinner: {
+      color: 'var(--ion-text-color, #000)',
+
+      lines: {
+        stroke: {
+          width: '7px',
+        },
+
+        small: {
+          stroke: {
+            width: '7px',
+          },
+        },
+
+        sharp: {
+          stroke: {
+            width: 'var(--ion-scaling-100)',
+          },
+
+          small: {
+            stroke: {
+              width: 'var(--ion-scaling-100)',
+            },
+          },
+        },
+      },
+
+      circular: {
+        stroke: {
+          width: '5.6',
+        },
+      },
+
+      crescent: {
+        stroke: {
+          width: 'var(--ion-scaling-100)',
+        },
+      },
+
+      dots: {
+        stroke: {
+          width: 'var(--ion-scaling-0)',
+        },
+      },
+
+      // Sizes
+      size: {
+        xsmall: {
+          width: 'var(--ion-scaling-xxxs)',
+          height: 'var(--ion-scaling-xxxs)',
+        },
+
+        small: {
+          width: 'var(--ion-scaling-xxs)',
+          height: 'var(--ion-scaling-xxs)',
+        },
+
+        medium: {
+          width: 'var(--ion-scaling-sm)',
+          height: 'var(--ion-scaling-sm)',
+        },
+
+        large: {
+          width: 'var(--ion-scaling-lg)',
+          height: 'var(--ion-scaling-lg)',
+        },
+
+        xlarge: {
+          width: 'var(--ion-scaling-xxxl)',
+          height: 'var(--ion-scaling-xxxl)',
         },
       },
     },

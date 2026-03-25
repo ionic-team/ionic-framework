@@ -39,6 +39,7 @@ import { SegmentViewScrollEvent } from "./components/segment-view/segment-view-i
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 import { SelectModalOption } from "./components/select-modal/select-modal-interface";
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
+import { SpinnerSize } from "./components/spinner/spinner.interfaces";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 import { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
@@ -77,6 +78,7 @@ export { SegmentViewScrollEvent } from "./components/segment-view/segment-view-i
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 export { SelectModalOption } from "./components/select-modal/select-modal-interface";
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
+export { SpinnerSize } from "./components/spinner/spinner.interfaces";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 export { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
@@ -872,11 +874,11 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The fill for the chip.  Set to `"outline"` for a chip with a border and background. Set to `"solid"` for a chip with a background.  Defaults to `"solid"`.
+          * The fill for the chip.  Set to `"outline"` for a chip with a border and background. Set to `"solid"` for a chip with a background.  Defaults to `"solid"` if both the fill property and theme config are unset.
          */
         "fill"?: 'outline' | 'solid';
         /**
-          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"`.
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if both the hue property and theme config are unset.
          */
         "hue"?: 'bold' | 'subtle';
         /**
@@ -890,11 +892,11 @@ export namespace Components {
          */
         "outline": boolean;
         /**
-          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"`.
+          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"` if both the shape property and theme config are unset.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"`.
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` if both the size property and theme config are unset.
          */
         "size"?: 'small' | 'large';
     }
@@ -3877,13 +3879,9 @@ export namespace Components {
          */
         "paused": boolean;
         /**
-          * Set to `"xsmall"` for the smallest size. Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a large size. Set to `"xlarge"` for the largest size.  Defaults to `"xsmall"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"xsmall"` for the smallest size. Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a large size. Set to `"xlarge"` for the largest size.  Defaults to `"medium"` if both the size property and theme config are unset.
          */
-        "size"?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
+        "size"?: SpinnerSize;
     }
     interface IonSplitPane {
         /**
@@ -6842,11 +6840,11 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The fill for the chip.  Set to `"outline"` for a chip with a border and background. Set to `"solid"` for a chip with a background.  Defaults to `"solid"`.
+          * The fill for the chip.  Set to `"outline"` for a chip with a border and background. Set to `"solid"` for a chip with a background.  Defaults to `"solid"` if both the fill property and theme config are unset.
          */
         "fill"?: 'outline' | 'solid';
         /**
-          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"`.
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if both the hue property and theme config are unset.
          */
         "hue"?: 'bold' | 'subtle';
         /**
@@ -6860,11 +6858,11 @@ declare namespace LocalJSX {
          */
         "outline"?: boolean;
         /**
-          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"`.
+          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"` if both the shape property and theme config are unset.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"`.
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` if both the size property and theme config are unset.
          */
         "size"?: 'small' | 'large';
     }
@@ -9903,13 +9901,9 @@ declare namespace LocalJSX {
          */
         "paused"?: boolean;
         /**
-          * Set to `"xsmall"` for the smallest size. Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a large size. Set to `"xlarge"` for the largest size.  Defaults to `"xsmall"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"xsmall"` for the smallest size. Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a large size. Set to `"xlarge"` for the largest size.  Defaults to `"medium"` if both the size property and theme config are unset.
          */
-        "size"?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
+        "size"?: SpinnerSize;
     }
     interface IonSplitPane {
         /**

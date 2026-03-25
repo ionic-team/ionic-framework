@@ -20,6 +20,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Chip](#version-9x-chip)
   - [Grid](#version-9x-grid)
   - [Item Divider](#version-9x-item-divider)
+  - [Spinner](#version-9x-spinner)
 
 <h2 id="version-9x-components">Components</h2>
 
@@ -33,7 +34,14 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 <h4 id="version-9x-chip">Chip</h4>
 
-- The `border-radius` of the `ios` and `md` chip now defaults to `10px` and `8px`, respectively, instead of `16px` in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"round"`, or override the `--border-radius` CSS variable to specify a different value.
+- Component CSS variables have been removed. The component now utilizes the centralized Ionic Theming system. Global updates should be managed via the theme tokens file, while component-specific overrides are handled through localized CSS variables.
+   - `--color` is replaced by `IonChip.hue.bold.solid.default` for global styles and `--ion-chip-hue-bold-solid-default-color` for component-specific styles if the chip has a bold hue and solid fill.
+   - `--color` is replaced by `IonChip.hue.bold.outline.default` for global styles and `--ion-chip-hue-bold-outline-default-color` for component-specific styles if the chip has a bold hue and outline fill.
+   - `--color` is replaced by `IonChip.hue.subtle.solid.default` for global styles and `--ion-chip-hue-subtle-solid-default-color` for component-specific styles if the chip has a subtle hue and solid fill.
+   - `--color` is replaced by `IonChip.hue.subtle.outline.default` for global styles and `--ion-chip-hue-subtle-outline-default-color` for component-specific styles if the chip has a subtle hue and outline fill.
+- The `outline` property has been deprecated. To achieve an outlined chip, set the `fill` property to `"outline"`. The class `.chip-outline` has also been updated to `.chip-fill-outline` for clarity.
+- Specific theme classes (e.g., `ion-chip.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
+- The `border-radius` of the `ios` and `md` chip now defaults to `10px` and `8px`, respectively, instead of `16px` in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"round"`, or override the `IonChip.shape.round.border.radius` to specify a different value for global styles and `--ion-chip-shape-round-border-radius` for component-specific styles.
 
 <h4 id="version-9x-grid">Grid</h4>
 
@@ -157,3 +165,12 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
    - `--inner-padding-bottom` is replaced by `IonItemDivider.inner.padding.bottom` for global styles and `--ion-item-divider-inner-padding-bottom` for component-specific overrides.
    - `--inner-padding-start` is replaced by `IonItemDivider.inner.padding.start` for global styles and `--ion-item-divider-inner-padding-start` for component-specific overrides.
 - Specific theme classes (e.g., `ion-item-divider.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
+
+<h4 id="version-9x-spinner">Spinner</h4>
+
+- Component CSS variables have been removed. The component now utilizes the centralized Ionic Theming system. Global updates should be managed via the theme tokens file, while component-specific overrides are handled through localized CSS variables.
+   - `--color` is replaced by `IonSpinner.color` for global styles and
+`--ion-spinner-color` for component-specific styles.
+- CSS classes now include the property name to improve clarity.
+  - `.spinner-[spinner-name]` → `.spinner-name-[spinner-name]`
+- Specific theme classes (e.g., `ion-spinner.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
