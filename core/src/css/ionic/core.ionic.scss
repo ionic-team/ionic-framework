@@ -332,11 +332,14 @@ ion-accordion > [slot="content"] ion-item {
 
   color: globals.$ion-primitives-neutral-1000;
 
-  --padding-start: 0;
   --padding-top: #{globals.$ion-space-300};
   --padding-bottom: #{globals.$ion-space-300};
-  --padding-end: 0;
   --min-height: #{globals.$ion-scale-700};
+}
+
+ion-accordion > [slot="content"] ion-item:not([slot="header"]) {
+  --padding-start: 0;
+  --padding-end: 0;
 }
 
 // Datetime Styles
