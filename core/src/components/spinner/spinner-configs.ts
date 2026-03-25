@@ -1,4 +1,4 @@
-import type { SpinnerConfigs } from './spinner-interface';
+import type { SpinnerDefinitions } from './spinner.interfaces';
 
 const spinners = {
   bubbles: {
@@ -150,5 +150,5 @@ const spinners = {
   },
 };
 
-export const SPINNERS: SpinnerConfigs = spinners;
+export const SPINNERS: SpinnerDefinitions = spinners;
 export type SpinnerTypes = keyof typeof spinners;
