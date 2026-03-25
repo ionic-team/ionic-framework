@@ -687,24 +687,34 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       const firstInput = page.locator('ion-input-otp input').first();
       await expect(firstInput).toBeFocused();
     });
-  });
 
-  test.describe(title('input-otp: backspace functionality'), () => {
-    test('should not modify values with Backspace or Delete when readonly', async ({ page }) => {
+    test('should allow arrow key navigation when readonly is true', async ({ page }) => {
       await page.setContent(`<ion-input-otp value="1234" readonly>Description</ion-input-otp>`, config);
 
       const inputOtp = page.locator('ion-input-otp');
-      const ionInput = await page.spyOnEvent('ionInput');
+      const inputBoxes = page.locator('ion-input-otp input');
+      await inputBoxes.nth(1).focus();
 
-      await page.keyboard.press('Tab');
-      await page.keyboard.press('Backspace');
-      await page.keyboard.press('Delete');
-      await page.keyboard.type('5');
+      const isRTL = await page.evaluate(() => document.dir === 'rtl');
+      if (isRTL) {
+        await page.keyboard.press('ArrowLeft');
+        await expect(inputBoxes.nth(2)).toBeFocused();
+
+        await page.keyboard.press('ArrowRight');
+        await expect(inputBoxes.nth(1)).toBeFocused();
+      } else {
+        await page.keyboard.press('ArrowRight');
+        await expect(inputBoxes.nth(2)).toBeFocused();
+
+        await page.keyboard.press('ArrowLeft');
+        await expect(inputBoxes.nth(1)).toBeFocused();
+      }
 
       await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
-      await expect(ionInput).not.toHaveReceivedEvent();
     });
+  });
 
+  test.describe(title('input-otp: backspace functionality'), () => {
     test('should backspace the first input box when backspace is pressed twice from the 2nd input box and the first input box has a value', async ({
       page,
     }) => {
@@ -751,6 +761,21 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
 
       const inputOtp = page.locator('ion-input-otp');
       await verifyInputValues(inputOtp, ['1', '3', '', '']);
+    });
+
+    test('should not modify values with backspace or delete when readonly is true', async ({ page }) => {
+      await page.setContent(`<ion-input-otp value="1234" readonly>Description</ion-input-otp>`, config);
+
+      const inputOtp = page.locator('ion-input-otp');
+      const ionInput = await page.spyOnEvent('ionInput');
+
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Backspace');
+      await page.keyboard.press('Delete');
+      await page.keyboard.type('5');
+
+      await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
+      await expect(ionInput).not.toHaveReceivedEvent();
     });
   });
 
@@ -842,6 +867,17 @@ configs({ modes: ['ios'] }).forEach(({ title, config }) => {
       const inputOtp = page.locator('ion-input-otp');
 
       await verifyInputValues(inputOtp, ['أ', 'ب', 'ج', 'د', '1', '2']);
+    });
+
+    test('should not paste text when readonly is true', async ({ page }) => {
+      await page.setContent(`<ion-input-otp value="1234" readonly>Description</ion-input-otp>`, config);
+
+      const firstInput = page.locator('ion-input-otp input').first();
+      await firstInput.focus();
+      await simulatePaste(firstInput, '5678');
+
+      const inputOtp = page.locator('ion-input-otp');
+      await verifyInputValues(inputOtp, ['1', '2', '3', '4']);
     });
   });
 });
