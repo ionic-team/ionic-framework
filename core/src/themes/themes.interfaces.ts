@@ -12,12 +12,8 @@ export type BaseTheme = {
   backgroundColorRgb?: string;
   textColor?: string;
   textColorRgb?: string;
-  backgroundColorStep?: {
-    [key: string]: string;
-  };
-  textColorStep?: {
-    [key: string]: string;
-  };
+  backgroundColorStep?: NumberStringKeys;
+  textColorStep?: NumberStringKeys;
 
   // TODO(FW-6864): Remove once IonToolbar themes are added
   toolbar?: any;
@@ -305,4 +301,9 @@ export type IonPadding = {
   end?: string | number;
   bottom?: string | number;
   start?: string | number;
+};
+
+export type NumberStringKeys = {
+  // Enforce keys are strings of numbers (like 50, '50', etc.)
+  [K in number as `${K}`]?: string;
 };
