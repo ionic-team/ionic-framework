@@ -4464,7 +4464,7 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * Where to place the title relative to the other toolbar content. `"start"`: The title will appear to the left of the toolbar content in LTR and to the right in RTL. `"center"`: The title will appear in the center of the toolbar. `"end"`: The title will appear to the right of the toolbar content in LTR and to the left in RTL.
+          * Where to place the title relative to the other toolbar content. `"start"`: The title will appear to the left of the toolbar content in LTR and to the right in RTL. `"center"`: The title will appear in the center of the toolbar. `"end"`: The title will appear to the right of the toolbar content in LTR and to the left in RTL.  Only applies in the `ionic` theme.
          */
         "titlePlacement"?: 'start' | 'center' | 'end';
     }
@@ -10595,7 +10595,7 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * Where to place the title relative to the other toolbar content. `"start"`: The title will appear to the left of the toolbar content in LTR and to the right in RTL. `"center"`: The title will appear in the center of the toolbar. `"end"`: The title will appear to the right of the toolbar content in LTR and to the left in RTL.
+          * Where to place the title relative to the other toolbar content. `"start"`: The title will appear to the left of the toolbar content in LTR and to the right in RTL. `"center"`: The title will appear in the center of the toolbar. `"end"`: The title will appear to the right of the toolbar content in LTR and to the left in RTL.  Only applies in the `ionic` theme.
          */
         "titlePlacement"?: 'start' | 'center' | 'end';
     }
