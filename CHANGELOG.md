@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.2](https://github.com/ionic-team/ionic-framework/compare/v8.8.1...v8.8.2) (2026-03-25)
+
+
+### Bug Fixes
+
+* **angular:** forward generic type parameter on ModalOptions and PopoverOptions ([#31022](https://github.com/ionic-team/ionic-framework/issues/31022)) ([cbfe7cc](https://github.com/ionic-team/ionic-framework/commit/cbfe7cce3be345eacbf9fe29e74438a927c16679)), closes [#31012](https://github.com/ionic-team/ionic-framework/issues/31012)
+* **checkbox:** re-evaluate label visibility when label is updated ([#30980](https://github.com/ionic-team/ionic-framework/issues/30980)) ([ce83407](https://github.com/ionic-team/ionic-framework/commit/ce83407e1debbe74f20d2d6dc2535a0ef3f974a0))
+* **datetime:** days keep in focus after changing the month ([#31021](https://github.com/ionic-team/ionic-framework/issues/31021)) ([5fdaba2](https://github.com/ionic-team/ionic-framework/commit/5fdaba2b021fe8b2b43a49eae7c687544c97d502))
+
+
+
+
+
 ## [8.8.1](https://github.com/ionic-team/ionic-framework/compare/v8.8.0...v8.8.1) (2026-03-06)
 
 
