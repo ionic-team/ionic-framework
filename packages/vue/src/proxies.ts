@@ -1122,6 +1122,7 @@ export const IonToggle: StencilVueComponent<JSX.IonToggle, JSX.IonToggle["checke
 
 
 export const IonToolbar: StencilVueComponent<JSX.IonToolbar> = /*@__PURE__*/ defineContainer<JSX.IonToolbar>('ion-toolbar', defineIonToolbar, [
-  'color'
+  'color',
+  'titlePlacement'
 ]);
 
