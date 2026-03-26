@@ -2636,14 +2636,14 @@ This event will not emit when programmatically setting the `checked` property.
 
 
 @ProxyCmp({
-  inputs: ['color', 'mode', 'theme']
+  inputs: ['color', 'mode', 'theme', 'titlePlacement']
 })
 @Component({
   selector: 'ion-toolbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'theme'],
+  inputs: ['color', 'mode', 'theme', 'titlePlacement'],
 })
 export class IonToolbar {
   protected el: HTMLIonToolbarElement;
