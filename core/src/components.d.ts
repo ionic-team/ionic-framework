@@ -14,6 +14,7 @@ import { AlertButton, AlertInput } from "./components/alert/alert-interface";
 import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
+import { IonChipFill, IonChipHue, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
@@ -53,6 +54,7 @@ export { AlertButton, AlertInput } from "./components/alert/alert-interface";
 export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
+export { IonChipFill, IonChipHue, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
@@ -876,11 +878,11 @@ export namespace Components {
         /**
           * The fill for the chip.  Set to `"outline"` for a chip with a border and background. Set to `"solid"` for a chip with a background.  Defaults to `"solid"` if both the fill property and theme config are unset.
          */
-        "fill"?: 'outline' | 'solid';
+        "fill"?: IonChipFill;
         /**
           * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if both the hue property and theme config are unset.
          */
-        "hue"?: 'bold' | 'subtle';
+        "hue"?: IonChipHue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -894,11 +896,11 @@ export namespace Components {
         /**
           * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'soft' | 'round' | 'rectangular';
+        "shape"?: IonChipShape;
         /**
           * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` if both the size property and theme config are unset.
          */
-        "size"?: 'small' | 'large';
+        "size"?: IonChipSize;
     }
     interface IonCol {
         /**
@@ -6842,11 +6844,11 @@ declare namespace LocalJSX {
         /**
           * The fill for the chip.  Set to `"outline"` for a chip with a border and background. Set to `"solid"` for a chip with a background.  Defaults to `"solid"` if both the fill property and theme config are unset.
          */
-        "fill"?: 'outline' | 'solid';
+        "fill"?: IonChipFill;
         /**
           * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if both the hue property and theme config are unset.
          */
-        "hue"?: 'bold' | 'subtle';
+        "hue"?: IonChipHue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -6860,11 +6862,11 @@ declare namespace LocalJSX {
         /**
           * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners.  Defaults to `"round"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'soft' | 'round' | 'rectangular';
+        "shape"?: IonChipShape;
         /**
           * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` if both the size property and theme config are unset.
          */
-        "size"?: 'small' | 'large';
+        "size"?: IonChipSize;
     }
     interface IonCol {
         /**

@@ -1,6 +1,7 @@
 import { printIonWarning } from '@utils/logging';
 
 import type { Color, CssClassMap } from '../interface';
+import type { NumberStringKeys } from '../themes/themes.interfaces';
 
 import { deepMerge } from './helpers';
 
@@ -633,6 +634,27 @@ export function currentColor(variation: string, alpha: number | string | null = 
 export function clamp(min: number | string, val: number | string, max: number | string): string {
   return `clamp(${min}, ${val}, ${max})`;
 }
+
+/**
+ * Generates a series of color steps between a base color and a mix color.
+ *
+ * @param baseColor Base color (e.g. `'#0054e9'`)
+ * @param mixColor Color to mix in (e.g. `'#000000'` or `'#fff'`)
+ *
+ * @internal
+ * @returns An object containing the generated color steps
+ */
+export const generateColorSteps = (baseColor: string, mixColor: string): NumberStringKeys => {
+  const colorSteps: NumberStringKeys = {};
+
+  for (let step = 50; step <= 950; step += 50) {
+    const weight = `${step / 10}%`;
+
+    colorSteps[`${step}`] = mix(baseColor, mixColor, weight);
+  }
+
+  return colorSteps;
+};
 
 const baselineUnit = 'rem';
 
