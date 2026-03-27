@@ -428,20 +428,9 @@ export const defaultTheme: DefaultTheme = {
         weight: 'var(--ion-font-weight-semi-bold)',
       },
 
-      leading: {
-        anchor: {
-          margin: {
-            top: components.item.slot.host.start.margin.top,
-            end: components.item.slot.host.start.margin.end,
-            bottom: components.item.slot.host.start.margin.bottom,
-            start: components.item.slot.host.start.margin.start,
-          },
-        },
-      },
-
       icon: {
-        leading: {
-          edge: {
+        start: {
+          slotted: {
             margin: {
               top: components.item.icon.slot.margin.top,
               bottom: components.item.icon.slot.margin.bottom,
@@ -449,8 +438,8 @@ export const defaultTheme: DefaultTheme = {
           },
         },
 
-        trailing: {
-          edge: {
+        end: {
+          slotted: {
             margin: {
               top: components.item.icon.slot.margin.top,
               bottom: components.item.icon.slot.margin.bottom,
@@ -478,7 +467,7 @@ export const defaultTheme: DefaultTheme = {
           overflow: 'inherit',
         },
 
-        last: {
+        trailing: {
           margin: {
             bottom: 'var(--ion-spacing-0)',
           },

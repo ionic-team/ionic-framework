@@ -428,16 +428,16 @@ export const defaultTheme: DefaultTheme = {
         size: dynamicFont(global.root, components.itemDivider.font.size),
       },
 
-      leading: {
-        edge: {
+      start: {
+        slotted: {
           margin: {
             end: components.item.slot.child.start.margin.end,
           },
         },
       },
 
-      trailing: {
-        edge: {
+      end: {
+        slotted: {
           margin: {
             start: components.item.slot.child.end.margin.start,
           },
@@ -466,8 +466,8 @@ export const defaultTheme: DefaultTheme = {
           size: `${components.item.icon.slot.font.size / components.itemDivider.font.size}em`,
         },
 
-        leading: {
-          edge: {
+        start: {
+          slotted: {
             margin: {
               top: components.item.icon.slot.margin.top,
               end: components.item.icon.start.slot.margin.end,
@@ -476,8 +476,8 @@ export const defaultTheme: DefaultTheme = {
           },
         },
 
-        trailing: {
-          edge: {
+        end: {
+          slotted: {
             margin: {
               top: components.item.icon.slot.margin.top,
               start: components.item.icon.end.slot.margin.start,
@@ -530,16 +530,16 @@ export const defaultTheme: DefaultTheme = {
           bottom: components.item.media.slot.margin.bottom,
         },
 
-        leading: {
-          edge: {
+        start: {
+          slotted: {
             margin: {
               end: components.item.media.start.slot.margin.end,
             },
           },
         },
 
-        trailing: {
-          edge: {
+        end: {
+          slotted: {
             margin: {
               start: components.item.media.end.slot.margin.start,
             },
@@ -556,16 +556,16 @@ export const defaultTheme: DefaultTheme = {
           bottom: components.item.media.slot.margin.bottom,
         },
 
-        leading: {
-          edge: {
+        start: {
+          slotted: {
             margin: {
               end: components.item.media.start.slot.margin.end,
             },
           },
         },
 
-        trailing: {
-          edge: {
+        end: {
+          slotted: {
             margin: {
               start: components.item.media.end.slot.margin.start,
             },

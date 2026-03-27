@@ -20,54 +20,55 @@ export type IonItemDividerRecipe = {
     weight?: string;
   };
 
-  leading?: {
-    // Targets `:host([slot="start"])`
-    anchor?: {
-      margin?: IonMargin;
-    };
-
-    // Targets `::slotted([slot="start"])`
-    edge?: {
+  /** Targets `[slot="start"]` */
+  start?: {
+    /** Targets `::slotted([slot="start"])` */
+    slotted?: {
       margin?: IonMargin;
     };
   };
 
-  trailing?: {
-    // Targets `::slotted([slot="end"])`
-    edge?: {
+  /** Targets `[slot="end"]` */
+  end?: {
+    /** Targets `::slotted([slot="end"])` */
+    slotted?: {
       margin?: IonMargin;
     };
   };
 
+  /** Targets `::slotted(ion-label)` */
   label?: {
     margin?: IonMargin;
   };
 
+  /** Targets `::slotted(ion-icon)` */
   icon?: {
     font?: {
       size?: string;
     };
 
-    leading?: {
-      // Targets `::slotted([slot="start"])`
-      edge?: {
+    /** Targets `[slot="start"]` */
+    start?: {
+      /** Targets `::slotted(ion-icon[slot="start"])` */
+      slotted?: {
         margin?: IonMargin;
       };
     };
 
-    trailing?: {
-      // Targets `::slotted([slot="end"])`
-      edge?: {
+    /** Targets `[slot="end"]` */
+    end?: {
+      /** Targets `::slotted(ion-icon[slot="end"])` */
+      slotted?: {
         margin?: IonMargin;
       };
     };
 
-    // Default non-semantic states
+    /** Default non-semantic states */
     default?: {
       color?: string;
     };
 
-    // Any of the semantic colors like primary, secondary, etc.
+    /** Any of the semantic colors like primary, secondary, etc. */
     semantic?: {
       default?: {
         color?: string;
@@ -75,6 +76,7 @@ export type IonItemDividerRecipe = {
     };
   };
 
+  /** Targets `::slotted(ion-note)` */
   note?: {
     align?: {
       self?: string;
@@ -88,48 +90,55 @@ export type IonItemDividerRecipe = {
     padding?: IonPadding;
   };
 
+  /** Targets `::slotted(ion-avatar)` */
   avatar?: {
     height?: string;
     width?: string;
 
     margin?: IonMargin;
 
-    leading?: {
-      // Targets `::slotted([slot="start"])`
-      edge?: {
+    /** Targets `[slot="start"]` */
+    start?: {
+      /** Targets `::slotted(ion-avatar[slot="start"])` */
+      slotted?: {
         margin?: IonMargin;
       };
     };
 
-    trailing?: {
-      // Targets `::slotted([slot="end"])`
-      edge?: {
+    /** Targets `[slot="end"]` */
+    end?: {
+      /** Targets `::slotted(ion-avatar[slot="end"])` */
+      slotted?: {
         margin?: IonMargin;
       };
     };
   };
 
+  /** Targets `::slotted(ion-thumbnail)` */
   thumbnail?: {
     height?: string;
     width?: string;
 
     margin?: IonMargin;
 
-    leading?: {
-      // Targets `::slotted([slot="start"])`
-      edge?: {
+    /** Targets `[slot="start"]` */
+    start?: {
+      /** Targets `::slotted(ion-thumbnail[slot="start"])` */
+      slotted?: {
         margin?: IonMargin;
       };
     };
 
-    trailing?: {
-      // Targets `::slotted([slot="end"])`
-      edge?: {
+    /** Targets `[slot="end"]` */
+    end?: {
+      /** Targets `::slotted(ion-thumbnail[slot="end"])` */
+      slotted?: {
         margin?: IonMargin;
       };
     };
   };
 
+  /** Targets `::slotted(p)` */
   paragraph?: {
     color?: string;
     overflow?: string;
@@ -144,8 +153,8 @@ export type IonItemDividerRecipe = {
       overflow?: string;
     };
 
-    // Targets `:last-child`
-    last?: {
+    /** Targets `::slotted(p:last-child)` */
+    trailing?: {
       margin?: IonMargin;
     };
   };
