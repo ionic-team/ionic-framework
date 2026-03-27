@@ -89,7 +89,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.mouse.up();
       await page.waitForTimeout(FULL_ANIMATION_MS);
 
-      expect(ionSwipe.length).toBeGreaterThan(0);
+      expect(ionSwipe.length).toBe(1);
     });
   });
 });
