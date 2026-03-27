@@ -27,7 +27,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
       await dragElementBy(item, page, -190);
       await page.waitForTimeout(FULL_ANIMATION_MS);
 
-      expect(ionSwipe.length).toBeGreaterThan(0);
+      expect(ionSwipe.length).toBe(1);
     });
 
     test('should fire ionSwipe when expandable option is swiped fully (start side)', async ({ page }) => {
@@ -37,7 +37,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
       await dragElementBy(item, page, 190);
       await page.waitForTimeout(FULL_ANIMATION_MS);
 
-      expect(ionSwipe.length).toBeGreaterThan(0);
+      expect(ionSwipe.length).toBe(1);
     });
 
     test('should return to closed state after full swipe animation completes', async ({ page }) => {

@@ -14,7 +14,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
       await page.goto(`/src/components/item-sliding/test/basic`, config);
     });
     test.describe('start options', () => {
-      //TODO(FW-7184): remove skip once issue is resolved
+      // TODO(FW-7184): remove skip once issue is resolved
       test.skip('should not have visual regressions', async ({ page }) => {
         const item = page.locator('#item2');
 
@@ -109,7 +109,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: basic'), () => {
     test.describe('safe area left', () => {
-      //TODO(FW-7184): remove skip once issue is resolved
+      // TODO(FW-7184): remove skip once issue is resolved
       test.skip('should have padding on the left only', async ({ page }) => {
         await page.setContent(
           `
@@ -151,7 +151,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
     });
 
     test.describe('safe area right', () => {
-      //TODO(FW-7184): remove skip once issue is resolved
+      // TODO(FW-7184): remove skip once issue is resolved
       test.skip('should have padding on the right only', async ({ page }) => {
         await page.setContent(
           `
