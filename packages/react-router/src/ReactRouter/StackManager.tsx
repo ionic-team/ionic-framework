@@ -833,7 +833,15 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     this._isMounted = true;
     if (this.routerOutletElement) {
       this.setupRouterOutlet(this.routerOutletElement);
-      this.handlePageTransition(this.props.routeInfo);
+      // Defer to a microtask to avoid calling forceUpdate() synchronously during
+      // React 19's reappearLayoutEffects phase, which re-runs componentDidMount
+      // without a preceding componentWillUnmount and causes "Maximum update depth exceeded".
+      const routeInfo = this.props.routeInfo;
+      queueMicrotask(() => {
+        if (this._isMounted && this.props.routeInfo.pathname === routeInfo.pathname) {
+          this.handlePageTransition(routeInfo);
+        }
+      });
     }
   }
 

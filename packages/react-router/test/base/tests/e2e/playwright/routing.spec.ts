@@ -302,6 +302,7 @@ test.describe('Routing Tests', () => {
 
   test('/routing/tabs/home Menu > Favorites > Menu > Home with redirect, Home page should be visible, and Favorites should be destroyed', async ({ page }) => {
     await page.goto(withTestingMode('/routing/tabs/home'));
+    await ionPageVisible(page, 'home-page');
     await ionMenuClick(page);
     await ionMenuNav(page, 'Favorites');
     await ionPageVisible(page, 'favorites-page');
@@ -313,6 +314,7 @@ test.describe('Routing Tests', () => {
 
   test('/routing/tabs/home Menu > Favorites > Menu > Home with router, Home page should be visible, and Favorites should be destroyed', async ({ page }) => {
     await page.goto(withTestingMode('/routing/tabs/home'));
+    await ionPageVisible(page, 'home-page');
     await ionMenuClick(page);
     await ionMenuNav(page, 'Favorites');
     await ionPageVisible(page, 'favorites-page');

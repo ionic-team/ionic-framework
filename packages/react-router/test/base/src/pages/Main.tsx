@@ -140,6 +140,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/navigate-root/page-a">
             <IonLabel>Navigate Root</IonLabel>
           </IonItem>
+          <IonItem routerLink="/suspense-outlet/content" id="go-to-suspense-outlet">
+            <IonLabel>Suspense Outlet</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

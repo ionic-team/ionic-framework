@@ -5,34 +5,75 @@ set -x
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-# Inside core
-echo "Building core..."
-cd ../../../core
-npm run build
+# ---------------------------------------------------------------------------
+# Flags
+#   --skip-build         Skip all build steps (reuse existing build artifacts)
+#   --playwright-only    Skip Cypress, run only Playwright
+#   --spec <pattern>     Filter Playwright tests by file path pattern
+# ---------------------------------------------------------------------------
+SKIP_BUILD=0
+PLAYWRIGHT_ONLY=0
+PLAYWRIGHT_SPEC=""
 
-# Inside packages/react
-echo "Building packages/react..."
-cd ../packages/react
-npm ci
-npm run sync
-npm run build
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --skip-build)
+      SKIP_BUILD=1
+      shift
+      ;;
+    --playwright-only)
+      PLAYWRIGHT_ONLY=1
+      shift
+      ;;
+    --spec)
+      if [[ -z "$2" || "$2" == --* ]]; then
+        echo "Error: --spec requires a value"
+        exit 1
+      fi
+      PLAYWRIGHT_SPEC="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown flag: $1"
+      echo "Usage: $0 [--skip-build] [--playwright-only] [--spec <pattern>]"
+      exit 1
+      ;;
+  esac
+done
 
-# Inside packages/react-router
-echo "Building packages/react-router..."
-cd ../react-router
-npm ci
-npm run sync
-npm run build
+if [ "$SKIP_BUILD" = "0" ]; then
+  # Inside core
+  echo "Building core..."
+  cd ../../../core
+  npm run build
 
-# Inside packages/react-router/test
-echo "Building test app..."
-cd ./test
-rm -rf build/reactrouter6 || true
-sh ./build.sh reactrouter6
-cd build/reactrouter6
-echo "Installing dependencies..."
-npm install --legacy-peer-deps > npm_install.log 2>&1
-npm run sync
+  # Inside packages/react
+  echo "Building packages/react..."
+  cd ../packages/react
+  npm ci
+  npm run sync
+  npm run build
+
+  # Inside packages/react-router
+  echo "Building packages/react-router..."
+  cd ../react-router
+  npm ci
+  npm run sync
+  npm run build
+
+  # Inside packages/react-router/test
+  echo "Building test app..."
+  cd ./test
+  rm -rf build/reactrouter6 || true
+  sh ./build.sh reactrouter6
+  cd build/reactrouter6
+  echo "Installing dependencies..."
+  npm install --legacy-peer-deps > npm_install.log 2>&1
+  npm run sync
+else
+  echo "Skipping build (--skip-build)."
+  cd ../test/build/reactrouter6
+fi
 
 # Install Playwright browsers if not already present
 npx playwright install chromium 2>/dev/null || true
@@ -63,14 +104,19 @@ for i in $(seq 1 60); do
   sleep 1
 done
 
-echo "Running Cypress tests..."
-npm run cypress || CYPRESS_FAILED=1
+if [ "$PLAYWRIGHT_ONLY" = "0" ]; then
+  echo "Running Cypress tests..."
+  npm run cypress || CYPRESS_FAILED=1
+fi
 
 echo "Running Playwright tests..."
-npx playwright test --retries=2 || PLAYWRIGHT_FAILED=1
+if [ -n "$PLAYWRIGHT_SPEC" ]; then
+  npx playwright test --retries=2 "$PLAYWRIGHT_SPEC" || PLAYWRIGHT_FAILED=1
+else
+  npx playwright test --retries=2 || PLAYWRIGHT_FAILED=1
+fi
 
 if [ "${CYPRESS_FAILED:-0}" = "1" ] || [ "${PLAYWRIGHT_FAILED:-0}" = "1" ]; then
   echo "One or more test suites failed."
   exit 1
 fi
-
