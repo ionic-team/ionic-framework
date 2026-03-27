@@ -442,60 +442,6 @@ export const defaultTheme: DefaultTheme = {
         },
       },
 
-      header1: {
-        margin: {
-          top: 'var(--ion-spacing-0)',
-          end: 'var(--ion-spacing-0)',
-          bottom: 'var(--ion-spacing-xxxs)',
-          start: 'var(--ion-spacing-0)',
-        },
-      },
-
-      header2: {
-        margin: {
-          top: 'var(--ion-spacing-xxxs)',
-          end: 'var(--ion-spacing-0)',
-          bottom: 'var(--ion-spacing-xxxs)',
-          start: 'var(--ion-spacing-0)',
-        },
-      },
-
-      header3: {
-        margin: {
-          top: 'var(--ion-spacing-xxxs)',
-          end: 'var(--ion-spacing-0)',
-          bottom: 'var(--ion-spacing-xxxs)',
-          start: 'var(--ion-spacing-0)',
-        },
-      },
-
-      header4: {
-        margin: {
-          top: 'var(--ion-spacing-xxxs)',
-          end: 'var(--ion-spacing-0)',
-          bottom: 'var(--ion-spacing-xxxs)',
-          start: 'var(--ion-spacing-0)',
-        },
-      },
-
-      header5: {
-        margin: {
-          top: 'var(--ion-spacing-xxxs)',
-          end: 'var(--ion-spacing-0)',
-          bottom: 'var(--ion-spacing-xxxs)',
-          start: 'var(--ion-spacing-0)',
-        },
-      },
-
-      header6: {
-        margin: {
-          top: 'var(--ion-spacing-xxxs)',
-          end: 'var(--ion-spacing-0)',
-          bottom: 'var(--ion-spacing-xxxs)',
-          start: 'var(--ion-spacing-0)',
-        },
-      },
-
       paragraph: {
         color: components.item.paragraph.color,
         overflow: 'inherit',

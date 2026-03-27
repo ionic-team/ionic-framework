@@ -130,55 +130,6 @@ export type IonItemDividerRecipe = {
     };
   };
 
-  header1?: {
-    margin?: IonMargin;
-  };
-
-  header2?: {
-    margin?: IonMargin;
-
-    // Targets `:last-child`
-    last?: {
-      margin?: IonMargin;
-    };
-  };
-
-  header3?: {
-    margin?: IonMargin;
-
-    // Targets `:last-child`
-    last?: {
-      margin?: IonMargin;
-    };
-  };
-
-  header4?: {
-    margin?: IonMargin;
-
-    // Targets `:last-child`
-    last?: {
-      margin?: IonMargin;
-    };
-  };
-
-  header5?: {
-    margin?: IonMargin;
-
-    // Targets `:last-child`
-    last?: {
-      margin?: IonMargin;
-    };
-  };
-
-  header6?: {
-    margin?: IonMargin;
-
-    // Targets `:last-child`
-    last?: {
-      margin?: IonMargin;
-    };
-  };
-
   paragraph?: {
     color?: string;
     overflow?: string;
