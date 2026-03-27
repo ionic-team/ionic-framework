@@ -108,7 +108,7 @@ export const defaultTheme: DefaultTheme = {
       display: 'inline-block',
 
       font: {
-        // size: dynamicFont(13), // TODO: uncomment this when dynamic font is implemented
+        // size: dynamicFontMin(1, 13), // TODO: uncomment this when dynamic font is implemented
         size: `13px`, // TODO: remove this when dynamic font is implemented
         weight: 'var(--ion-font-weight-bold)',
       },

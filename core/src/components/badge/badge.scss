@@ -64,10 +64,6 @@
 // Badge Shapes
 // ---------------------------------------------
 
-:host(.badge-crisp) {
-  @include mixins.border-radius(var(--ion-badge-shape-crisp-border-radius));
-} // 4px
-
 :host(.badge-soft) {
   @include mixins.border-radius(var(--ion-badge-shape-soft-border-radius));
 }
