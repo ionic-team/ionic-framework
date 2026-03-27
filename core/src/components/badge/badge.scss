@@ -180,26 +180,6 @@
   bottom: 0;
 }
 
-// In Button
-:host(.in-button:not(:empty)) {
-  min-width: var(--ion-badge-indicator-in-button-default-min-width);
-  height: var(--ion-badge-indicator-in-button-default-height);
-
-  font-size: var(--ion-badge-indicator-in-button-default-font-size);
-
-  line-height: var(--ion-badge-indicator-in-button-default-line-height);
-
-  ::slotted(ion-icon) {
-    width: var(--ion-badge-indicator-in-button-default-icon-width, revert-layer);
-    height: var(--ion-badge-indicator-in-button-default-icon-height, revert-layer);
-  }
-}
-
-:host(.in-button:not(:empty)) ::slotted(ion-icon) {
-  width: var(--ion-badge-indicator-in-button-default-icon-width, revert-layer);
-  height: var(--ion-badge-indicator-in-button-default-icon-height, revert-layer);
-}
-
 // TODO: remove from the tab-button.common
 // In Tab Button
 :host([vertical].in-tab-button) {
@@ -208,7 +188,7 @@
 
 // Slotted Icon
 :host([vertical]) ::slotted(ion-icon) {
-  @include globals.position(
+  @include mixins.position(
     var(
       --ion-badge-indicator-icon-position-top,
       --ion-badge-indicator-icon-position-end,
@@ -217,7 +197,22 @@
     )
   );
 
-  position: absolute;
+  position: var(--ion-badge-indicator-icon-position);
 
-  transform: translate(-50%, -50%);
+  transform: translate(var(--ion-badge-indicator-icon-translate-x), var(--ion-badge-indicator-icon-translate-y));
+}
+
+// In Button
+:host(.in-button:not(:empty)) {
+  min-width: var(--ion-badge-indicator-in-button-default-min-width);
+  height: var(--ion-badge-indicator-in-button-default-height);
+
+  font-size: var(--ion-badge-indicator-in-button-default-font-size);
+
+  line-height: var(--ion-badge-indicator-in-button-default-line-height);
+}
+
+:host(.in-button:not(:empty)) ::slotted(ion-icon) {
+  width: var(--ion-badge-indicator-in-button-default-icon-width, revert-layer);
+  height: var(--ion-badge-indicator-in-button-default-icon-height, revert-layer);
 }
