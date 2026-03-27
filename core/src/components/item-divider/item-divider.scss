@@ -147,8 +147,8 @@
 }
 
 :host(.ion-color) {
-  background: colors.current-color("base");
-  color: colors.current-color("contrast");
+  background: colors.current-color(base);
+  color: colors.current-color(contrast);
 }
 
 :host(.item-divider-sticky) {
