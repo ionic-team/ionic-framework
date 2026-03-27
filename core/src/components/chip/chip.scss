@@ -482,19 +482,19 @@
 
 ::slotted(ion-icon:first-child) {
   @include mixins.margin(
-    var(--ion-chip-icon-first-margin-top),
-    var(--ion-chip-icon-first-margin-end),
-    var(--ion-chip-icon-first-margin-bottom),
-    var(--ion-chip-icon-first-margin-start)
+    var(--ion-chip-icon-leading-margin-top),
+    var(--ion-chip-icon-leading-margin-end),
+    var(--ion-chip-icon-leading-margin-bottom),
+    var(--ion-chip-icon-leading-margin-start)
   );
 }
 
 ::slotted(ion-icon:last-child) {
   @include mixins.margin(
-    var(--ion-chip-icon-last-margin-top),
-    var(--ion-chip-icon-last-margin-end),
-    var(--ion-chip-icon-last-margin-bottom),
-    var(--ion-chip-icon-last-margin-start)
+    var(--ion-chip-icon-trailing-margin-top),
+    var(--ion-chip-icon-trailing-margin-end),
+    var(--ion-chip-icon-trailing-margin-bottom),
+    var(--ion-chip-icon-trailing-margin-start)
   );
 }
 
@@ -508,18 +508,18 @@
 
 ::slotted(ion-avatar:first-child) {
   @include mixins.margin(
-    var(--ion-chip-avatar-first-margin-top),
-    var(--ion-chip-avatar-first-margin-end),
-    var(--ion-chip-avatar-first-margin-bottom),
-    var(--ion-chip-avatar-first-margin-start)
+    var(--ion-chip-avatar-leading-margin-top),
+    var(--ion-chip-avatar-leading-margin-end),
+    var(--ion-chip-avatar-leading-margin-bottom),
+    var(--ion-chip-avatar-leading-margin-start)
   );
 }
 
 ::slotted(ion-avatar:last-child) {
   @include mixins.margin(
-    var(--ion-chip-avatar-last-margin-top),
-    var(--ion-chip-avatar-last-margin-end),
-    var(--ion-chip-avatar-last-margin-bottom),
-    var(--ion-chip-avatar-last-margin-start)
+    var(--ion-chip-avatar-trailing-margin-top),
+    var(--ion-chip-avatar-trailing-margin-end),
+    var(--ion-chip-avatar-trailing-margin-bottom),
+    var(--ion-chip-avatar-trailing-margin-start)
   );
 }

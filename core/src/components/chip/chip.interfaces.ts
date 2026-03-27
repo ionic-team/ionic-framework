@@ -85,13 +85,13 @@ type IonChipShapeDefinition = {
 };
 
 type IonChipMediaDefinition = {
-  // Targets `:first-child`
-  first?: {
+  /** Targets `:first-child` */
+  leading?: {
     margin?: IonMargin;
   };
 
-  // Targets `:last-child`
-  last?: {
+  /** Targets `:last-child` */
+  trailing?: {
     margin?: IonMargin;
   };
 };
