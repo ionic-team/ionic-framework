@@ -107,7 +107,6 @@
     * @prop --ion-item-divider-paragraph-last-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted p when it is the last child
    */
   @include mixins.font-smoothing();
-  @include mixins.margin(0);
   @include mixins.padding(var(--ion-item-divider-padding-top), null, var(--ion-item-divider-padding-bottom), null);
 
   /* stylelint-disable */
