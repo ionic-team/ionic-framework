@@ -1,8 +1,3 @@
-/**
- * Verifies that useParams() returns correct values after a Navigate
- * (catch-all redirect) fires inside IonRouterOutlet.
- */
-
 import {
   IonTabs,
   IonRouterOutlet,
@@ -23,11 +18,6 @@ import { Route, Navigate, useParams } from 'react-router-dom';
 
 /**
  * Scenario 1: Tabs with catch-all Navigate redirect
- *
- * Structure:
- *   /redirect-params/tabs → redirects to /redirect-params/tabs/tab2
- *   /redirect-params/tabs/tab1/:id → Tab1 with param
- *   /redirect-params/tabs/tab2 → Tab2
  */
 const TabsWithRedirect: React.FC = () => {
   return (
@@ -88,11 +78,6 @@ const Tab2Page: React.FC = () => {
 
 /**
  * Scenario 2: Flat outlet with catch-all Navigate redirect
- *
- * Structure:
- *   /redirect-params/flat → redirects to /redirect-params/flat/home
- *   /redirect-params/flat/home → Home page
- *   /redirect-params/flat/details/:id → Details with param
  */
 const FlatOutletWithRedirect: React.FC = () => {
   return (
@@ -119,6 +104,9 @@ const HomePage: React.FC = () => {
         </IonButton>
         <IonButton routerLink="/redirect-params/flat/details/99" id="go-to-details-99">
           Go to Details 99
+        </IonButton>
+        <IonButton routerLink="/redirect-params/flat/this-route-does-not-exist" id="go-to-non-existing">
+          Go to Non-Existing Route
         </IonButton>
       </IonContent>
     </IonPage>
