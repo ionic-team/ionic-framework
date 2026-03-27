@@ -594,6 +594,11 @@ export function rgba(colorRgb: string, alpha: number | string): string {
   return `rgba(${colorRgb}, ${alpha})`;
 }
 
+interface CurrentColorOptions {
+  alpha?: number | string | null;
+  subtle?: boolean;
+}
+
 /**
  * Mimics the Ionic Framework `current-color` function logic to construct CSS color values.
  *
@@ -603,7 +608,9 @@ export function rgba(colorRgb: string, alpha: number | string): string {
  * @param subtle If true, uses the '--ion-color-subtle-' prefix.
  * @returns A string containing the CSS value (e.g., 'var(--ion-color-primary)' or 'rgba(var(--ion-color-primary-rgb), 0.16)').
  */
-export function currentColor(variation: string, alpha: number | string | null = null, subtle: boolean = false): string {
+export function currentColor(variation: string, options: CurrentColorOptions = {}): string {
+  const { alpha = null, subtle = false } = options;
+
   // 1. Determine the base CSS variable name
   const variable = subtle ? `--ion-color-subtle-${variation}` : `--ion-color-${variation}`;
 
@@ -611,14 +618,53 @@ export function currentColor(variation: string, alpha: number | string | null = 
   if (alpha === null) {
     // Corresponds to: @return var(#{$variable});
     return `var(${variable})`;
-  } else {
-    // 3. Handle the case where alpha is provided
-    // Corresponds to: @return rgba(var(#{$variable}-rgb), #{$alpha});
-
-    // NOTE: The resulting string uses the CSS variable for the RGB components
-    // (e.g., '255, 0, 0') and the provided alpha.
-    return `rgba(var(${variable}-rgb), ${alpha})`;
   }
+
+  // 3. Handle the case where alpha is provided
+  // Corresponds to: @return rgba(var(#{$variable}-rgb), #{$alpha});
+
+  // NOTE: The resulting string uses the CSS variable for the RGB components
+  // (e.g., '255, 0, 0') and the provided alpha.
+  return `rgba(var(${variable}-rgb), ${alpha})`;
+}
+
+interface IonColorOptions {
+  alpha?: number | string | null;
+  rgb?: boolean;
+  subtle?: boolean;
+}
+
+export function ionColor(name: string, variation: string, options: IonColorOptions = {}): string {
+  const { alpha = null, rgb = false, subtle = false } = options;
+
+  // Build base variable name
+  const base = subtle ? `--ion-color-${name}-subtle` : `--ion-color-${name}`;
+  const variationSuffix = variation === 'base' ? '' : `-${variation}`;
+  let variable = `${base}${variationSuffix}`;
+
+  // Build the fallback variable name (only for bold colors)
+  let fallbackVariable: string | null = null;
+
+  if (!subtle) {
+    const fallbackBase = `--ion-color-${name}-bold`;
+    fallbackVariable = `${fallbackBase}${variationSuffix}`;
+  }
+
+  // Handle alpha transparency
+  if (alpha !== null) {
+    const rgbVar = `${variable}-rgb`;
+    const fallbackRgb = fallbackVariable ? `${fallbackVariable}-rgb` : null;
+
+    return fallbackRgb ? `rgba(var(${rgbVar}, var(${fallbackRgb})), ${alpha})` : `rgba(var(${rgbVar}), ${alpha})`;
+  }
+
+  // Handle RGB variables
+  if (rgb) {
+    variable = `${variable}-rgb`;
+    fallbackVariable = fallbackVariable ? `${fallbackVariable}-rgb` : null;
+  }
+
+  return fallbackVariable ? `var(${variable}, var(${fallbackVariable}))` : `var(${variable})`;
 }
 
 /**
@@ -628,7 +674,7 @@ export function currentColor(variation: string, alpha: number | string | null = 
  * @param min The minimum value
  * @param val The preferred value
  * @param max The maximum value
- * @returns
+ * @returns A string containing the CSS clamp() function call (e.g., 'clamp(1rem, 2vw, 3rem)').
  */
 export function clamp(min: number | string, val: number | string, max: number | string): string {
   return `clamp(${min}, ${val}, ${max})`;

@@ -1,0 +1,223 @@
+@use "../../themes/mixins" as mixins;
+@use "../../themes/functions.color" as colors;
+
+// Badge: Common Styles
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the badge
+   * @prop --color: Text color of the badge
+   *
+   * @prop --padding-top: Top padding of the badge
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the badge
+   * @prop --padding-bottom: Bottom padding of the badge
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the badge
+   */
+  @include mixins.font-smoothing();
+
+  display: var(--ion-badge-display);
+
+  font-size: var(--ion-badge-font-size);
+  font-weight: var(--ion-badge-font-weight);
+
+  line-height: var(--ion-badge-line-height);
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  contain: content;
+  vertical-align: baseline;
+}
+
+// Badge: Bold
+// ---------------------------------------------
+
+// Default
+:host(.badge-bold) {
+  background: var(--ion-badge-hue-bold-default-background);
+  color: var(--ion-badge-hue-bold-default-color);
+}
+
+// Colors
+:host(.badge-bold.ion-color) {
+  background: var(--ion-badge-hue-bold-semantic-default-background);
+  color: var(--ion-badge-hue-bold-semantic-default-color);
+}
+
+// Badge: Subtle
+// ---------------------------------------------
+
+// Default
+:host(.badge-subtle) {
+  background: var(--ion-badge-hue-subtle-default-background);
+  color: var(--ion-badge-hue-subtle-default-color);
+}
+
+// Colors
+:host(.badge-subtle.ion-color) {
+  background: var(--ion-badge-hue-subtle-semantic-default-background);
+  color: var(--ion-badge-hue-subtle-semantic-default-color);
+}
+
+// Badge Shapes
+// ---------------------------------------------
+
+:host(.badge-crisp) {
+  @include mixins.border-radius(var(--ion-badge-shape-crisp-border-radius));
+} // 4px
+
+:host(.badge-soft) {
+  @include mixins.border-radius(var(--ion-badge-shape-soft-border-radius));
+}
+
+:host(.badge-round) {
+  @include mixins.border-radius(var(--ion-badge-shape-round-border-radius));
+}
+
+:host(.badge-rectangular) {
+  @include mixins.border-radius(var(--ion-badge-shape-rectangular-border-radius));
+}
+
+// Badge Sizes: Standalone
+// ---------------------------------------------
+
+// Small
+:host(.badge-small) {
+  @include mixins.padding(
+    var(--ion-badge-size-small-default-padding-top),
+    var(--ion-badge-size-small-default-padding-end),
+    var(--ion-badge-size-small-default-padding-bottom),
+    var(--ion-badge-size-small-default-padding-start)
+  );
+
+  min-width: var(--ion-badge-size-small-default-min-width);
+  height: var(--ion-badge-size-small-default-height);
+}
+
+:host(.badge-small) ::slotted(ion-icon) {
+  width: var(--ion-badge-size-small-default-icon-width, revert-layer);
+  height: var(--ion-badge-size-small-default-icon-height, revert-layer);
+}
+
+// Medium
+:host(.badge-medium) {
+  @include mixins.padding(
+    var(--ion-badge-size-medium-default-padding-top),
+    var(--ion-badge-size-medium-default-padding-end),
+    var(--ion-badge-size-medium-default-padding-bottom),
+    var(--ion-badge-size-medium-default-padding-start)
+  );
+
+  min-width: var(--ion-badge-size-medium-default-min-width);
+  height: var(--ion-badge-size-medium-default-height);
+}
+
+:host(.badge-medium) ::slotted(ion-icon) {
+  width: var(--ion-badge-size-medium-default-icon-width, revert-layer);
+  height: var(--ion-badge-size-medium-default-icon-height, revert-layer);
+}
+
+// Large
+:host(.badge-large) {
+  @include mixins.padding(
+    var(--ion-badge-size-large-default-padding-top),
+    var(--ion-badge-size-large-default-padding-end),
+    var(--ion-badge-size-large-default-padding-bottom),
+    var(--ion-badge-size-large-default-padding-start)
+  );
+
+  min-width: var(--ion-badge-size-large-default-min-width);
+  height: var(--ion-badge-size-large-default-height);
+}
+
+:host(.badge-large) ::slotted(ion-icon) {
+  width: var(--ion-badge-size-large-default-icon-width, revert-layer);
+  height: var(--ion-badge-size-large-default-icon-height, revert-layer);
+}
+
+// Badge Sizes: Indicator
+// ---------------------------------------------
+
+:host(.badge-small:empty) {
+  min-width: var(--ion-badge-size-small-empty-min-width);
+  height: var(--ion-badge-size-small-empty-height);
+}
+
+/* md */
+:host(.badge-medium:empty) {
+  min-width: var(--ion-badge-size-medium-empty-min-width);
+  height: var(--ion-badge-size-medium-empty-height);
+}
+
+/* lg */
+:host(.badge-large:empty) {
+  min-width: var(--ion-badge-size-large-empty-min-width);
+  height: var(--ion-badge-size-large-empty-height);
+}
+
+// Empty Badge
+// ---------------------------------------------
+
+:host(:empty) {
+  @include mixins.padding(0);
+}
+
+// Badge Indicator (within a component)
+// ---------------------------------------------
+
+:host([vertical]:not(.in-tab-button)) {
+  @include mixins.position(null, 0, null, null);
+  position: absolute;
+}
+
+:host([vertical]:not(.in-tab-button).badge-vertical-top) {
+  top: 0;
+}
+
+:host([vertical]:not(.in-tab-button).badge-vertical-bottom) {
+  bottom: 0;
+}
+
+// In Button
+:host(.in-button:not(:empty)) {
+  min-width: var(--ion-badge-indicator-in-button-default-min-width);
+  height: var(--ion-badge-indicator-in-button-default-height);
+
+  font-size: var(--ion-badge-indicator-in-button-default-font-size);
+
+  line-height: var(--ion-badge-indicator-in-button-default-line-height);
+
+  ::slotted(ion-icon) {
+    width: var(--ion-badge-indicator-in-button-default-icon-width, revert-layer);
+    height: var(--ion-badge-indicator-in-button-default-icon-height, revert-layer);
+  }
+}
+
+:host(.in-button:not(:empty)) ::slotted(ion-icon) {
+  width: var(--ion-badge-indicator-in-button-default-icon-width, revert-layer);
+  height: var(--ion-badge-indicator-in-button-default-icon-height, revert-layer);
+}
+
+// TODO: remove from the tab-button.common
+// In Tab Button
+:host([vertical].in-tab-button) {
+  position: var(--ion-badge-indicator-in-tab-button-default-position);
+}
+
+// Slotted Icon
+:host([vertical]) ::slotted(ion-icon) {
+  @include globals.position(
+    var(
+      --ion-badge-indicator-icon-position-top,
+      --ion-badge-indicator-icon-position-end,
+      --ion-badge-indicator-icon-position-bottom,
+      --ion-badge-indicator-icon-position-start
+    )
+  );
+
+  position: absolute;
+
+  transform: translate(-50%, -50%);
+}

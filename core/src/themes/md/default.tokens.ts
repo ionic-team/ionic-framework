@@ -1,4 +1,4 @@
-import { rgba, currentColor } from '../../utils/theme';
+import { rgba, currentColor, ionColor } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
@@ -29,6 +29,12 @@ export const defaultTheme: DefaultTheme = {
     rippleEffect: true,
 
     components: {
+      IonBadge: {
+        hue: 'bold',
+        shape: 'crisp',
+        size: 'small',
+      },
+
       IonChip: {
         fill: 'solid',
         hue: 'bold',
@@ -101,6 +107,165 @@ export const defaultTheme: DefaultTheme = {
   },
 
   components: {
+    IonBadge: {
+      display: 'inline-block',
+
+      font: {
+        // size: dynamicFont(13), // TODO: uncomment this when dynamic font is implemented
+        size: `13px`, // TODO: remove this when dynamic font is implemented
+        weight: 'var(--ion-font-weight-bold)',
+      },
+
+      line: {
+        height: '1',
+      },
+
+      // Hues
+      hue: {
+        bold: {
+          default: {
+            background: ionColor('primary', 'base'),
+            color: ionColor('primary', 'contrast'),
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base'),
+              color: currentColor('contrast'),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            background: ionColor('primary', 'base', { subtle: true }),
+            color: ionColor('primary', 'contrast', { subtle: true }),
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base', { subtle: true }),
+              color: currentColor('contrast', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      // Shapes
+      shape: {
+        crisp: {
+          border: {
+            radius: 'var(--ion-radii-sm)',
+          },
+        },
+
+        soft: {
+          border: {
+            radius: 'var(--ion-radii-md)',
+          },
+        },
+
+        round: {
+          border: {
+            radius: 'var(--ion-radii-xxxxl)',
+          },
+        },
+
+        rectangular: {
+          border: {
+            radius: 'var(--ion-radii-xxxxs)',
+          },
+        },
+      },
+
+      // Sizes
+      size: {
+        small: {
+          default: {
+            min: {
+              width: 'var(--ion-scaling-250)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-75)',
+              end: 'var(--ion-spacing-xxs)',
+              bottom: 'var(--ion-spacing-xxs)',
+              start: 'var(--ion-spacing-xxs)',
+            },
+          },
+        },
+
+        medium: {
+          default: {
+            min: {
+              width: 'var(--ion-scaling-xxxs)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-xs)',
+              end: 'var(--ion-spacing-xs)',
+              bottom: 'var(--ion-spacing-xs)',
+              start: 'var(--ion-spacing-xs)',
+            },
+          },
+        },
+
+        large: {
+          default: {
+            min: {
+              width: 'var(--ion-scaling-xxxs)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-sm)',
+              end: 'var(--ion-spacing-sm)',
+              bottom: 'var(--ion-spacing-sm)',
+              start: 'var(--ion-spacing-sm)',
+            },
+          },
+        },
+      },
+
+      indicator: {
+        in: {
+          button: {
+            default: {
+              height: 'var(--ion-scaling-xxxs)',
+
+              min: {
+                width: 'var(--ion-scaling-xxxs)',
+              },
+
+              line: {
+                height: 'var(--ion-scaling-xxs)',
+              },
+
+              font: {
+                size: `${(12 / fontSizes.root).toFixed(2)}rem`,
+              },
+
+              icon: {
+                width: 'var(--ion-scaling-xxxxs)',
+                height: 'var(--ion-scaling-xxxxs)',
+              },
+            },
+          },
+
+          tab: {
+            button: {
+              default: {
+                position: 'absolute',
+              },
+            },
+          },
+        },
+
+        icon: {
+          position: {},
+        },
+      },
+    },
+
     IonChip: {
       margin: {
         top: 'var(--ion-spacing-xxs)',
@@ -187,20 +352,20 @@ export const defaultTheme: DefaultTheme = {
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
-                background: currentColor('base', 0.08),
+                background: currentColor('base', { alpha: 0.08 }),
                 color: currentColor('shade'),
               },
 
               hover: {
-                background: currentColor('base', 0.12),
+                background: currentColor('base', { alpha: 0.12 }),
               },
 
               focus: {
-                background: currentColor('base', 0.12),
+                background: currentColor('base', { alpha: 0.12 }),
               },
 
               activated: {
-                background: currentColor('base', 0.16),
+                background: currentColor('base', { alpha: 0.16 }),
               },
             },
           },
@@ -236,22 +401,22 @@ export const defaultTheme: DefaultTheme = {
                 color: currentColor('shade'),
 
                 border: {
-                  color: currentColor('base', 0.32),
+                  color: currentColor('base', { alpha: 0.32 }),
                   style: 'solid',
                   width: 'var(--ion-border-width-xxxs)',
                 },
               },
 
               hover: {
-                background: currentColor('base', 0.12),
+                background: currentColor('base', { alpha: 0.12 }),
               },
 
               focus: {
-                background: currentColor('base', 0.12),
+                background: currentColor('base', { alpha: 0.12 }),
               },
 
               activated: {
-                background: currentColor('base', 0.16),
+                background: currentColor('base', { alpha: 0.16 }),
               },
             },
           },
@@ -280,20 +445,20 @@ export const defaultTheme: DefaultTheme = {
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
-                background: currentColor('base', null, true),
-                color: currentColor('contrast', null, true),
+                background: currentColor('base', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
               },
 
               hover: {
-                background: currentColor('base', 0.6, true),
+                background: currentColor('base', { alpha: 0.6, subtle: true }),
               },
 
               focus: {
-                background: currentColor('base', 0.6, true),
+                background: currentColor('base', { alpha: 0.6, subtle: true }),
               },
 
               activated: {
-                background: currentColor('base', 0.8, true),
+                background: currentColor('base', { alpha: 0.8, subtle: true }),
               },
             },
           },
@@ -327,25 +492,25 @@ export const defaultTheme: DefaultTheme = {
             semantic: {
               default: {
                 background: 'transparent',
-                color: currentColor('contrast', null, true),
+                color: currentColor('contrast', { subtle: true }),
 
                 border: {
-                  color: currentColor('base', 0.12),
+                  color: currentColor('base', { alpha: 0.12 }),
                   style: 'solid',
                   width: 'var(--ion-border-width-xxxs)',
                 },
               },
 
               hover: {
-                background: currentColor('base', 0.6, true),
+                background: currentColor('base', { alpha: 0.6, subtle: true }),
               },
 
               focus: {
-                background: currentColor('base', 0.6, true),
+                background: currentColor('base', { alpha: 0.6, subtle: true }),
               },
 
               activated: {
-                background: currentColor('base', 0.8, true),
+                background: currentColor('base', { alpha: 0.8, subtle: true }),
               },
             },
           },

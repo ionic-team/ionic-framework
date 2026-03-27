@@ -467,7 +467,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Only applies to the `ionic` theme.
+          * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
          */
         "hue"?: 'bold' | 'subtle';
         /**
@@ -475,11 +475,11 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Set to `"rectangular"` for non-rounded corners. Set to `"soft"` for slightly rounded corners. Set to `"round"` for fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"crisp"` for a badge with minimally rounded corners, `"soft"` for a badge with slightly rounded corners, `"round"` for a badge with fully rounded corners, or `"rectangular"` for a badge without rounded corners.  Defaults to `"soft"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'soft' | 'round | rectangular';
+        "shape"?: 'crisp' | 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a small badge. Set to `"medium"` for a medium badge. Set to `"large"` for a large badge, when it is empty (no text or icon).  Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a larger size.  Defaults to `"small"` if both the size property and theme config are unset.
          */
         "size"?: 'small' | 'medium' | 'large';
         /**
@@ -896,7 +896,7 @@ export namespace Components {
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` if both the size property and theme config are unset.
+          * Set to `"small"` for a chip with less height and padding, or `"large"` for a chip with more height and padding.  Defaults to `"large"` if both the size property and theme config are unset.
          */
         "size"?: 'small' | 'large';
     }
@@ -6402,7 +6402,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Only applies to the `ionic` theme.
+          * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
          */
         "hue"?: 'bold' | 'subtle';
         /**
@@ -6410,11 +6410,11 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Set to `"rectangular"` for non-rounded corners. Set to `"soft"` for slightly rounded corners. Set to `"round"` for fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"crisp"` for a badge with minimally rounded corners, `"soft"` for a badge with slightly rounded corners, `"round"` for a badge with fully rounded corners, or `"rectangular"` for a badge without rounded corners.  Defaults to `"soft"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'soft' | 'round | rectangular';
+        "shape"?: 'crisp' | 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a small badge. Set to `"medium"` for a medium badge. Set to `"large"` for a large badge, when it is empty (no text or icon).  Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a larger size.  Defaults to `"small"` if both the size property and theme config are unset.
          */
         "size"?: 'small' | 'medium' | 'large';
         /**
@@ -6866,7 +6866,7 @@ declare namespace LocalJSX {
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` if both the size property and theme config are unset.
+          * Set to `"small"` for a chip with less height and padding, or `"large"` for a chip with more height and padding.  Defaults to `"large"` if both the size property and theme config are unset.
          */
         "size"?: 'small' | 'large';
     }

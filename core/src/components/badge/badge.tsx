@@ -2,6 +2,7 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { createColorClasses, hostContext } from '@utils/theme';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
@@ -11,11 +12,7 @@ import type { Color } from '../../interface';
  */
 @Component({
   tag: 'ion-badge',
-  styleUrls: {
-    ios: 'badge.ios.scss',
-    md: 'badge.md.scss',
-    ionic: 'badge.ionic.scss',
-  },
+  styleUrl: 'badge.scss',
   shadow: true,
 })
 export class Badge implements ComponentInterface {
@@ -32,25 +29,26 @@ export class Badge implements ComponentInterface {
    * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for
    * a badge with muted, subtle colors.
    *
-   * Only applies to the `ionic` theme.
+   * Defaults to `"bold"` if both the hue property and theme config are unset.
    */
   @Prop() hue?: 'bold' | 'subtle';
 
   /**
-   * Set to `"rectangular"` for non-rounded corners.
-   * Set to `"soft"` for slightly rounded corners.
-   * Set to `"round"` for fully rounded corners.
+   * Set to `"crisp"` for a badge with minimally rounded corners,
+   * `"soft"` for a badge with slightly rounded corners,
+   * `"round"` for a badge with fully rounded corners,
+   * or `"rectangular"` for a badge without rounded corners.
    *
-   * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+   * Defaults to `"soft"` if both the shape property and theme config are unset.
    */
-  @Prop() shape?: 'soft' | 'round | rectangular';
+  @Prop() shape?: 'crisp' | 'soft' | 'round' | 'rectangular';
 
   /**
-   * Set to `"small"` for a small badge.
-   * Set to `"medium"` for a medium badge.
-   * Set to `"large"` for a large badge, when it is empty (no text or icon).
+   * Set to `"small"` for a smaller size.
+   * Set to `"medium"` for a medium size.
+   * Set to `"large"` for a larger size.
    *
-   * Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
+   * Defaults to `"small"` if both the size property and theme config are unset.
    */
   @Prop() size?: 'small' | 'medium' | 'large';
 
@@ -60,34 +58,24 @@ export class Badge implements ComponentInterface {
    */
   @Prop() vertical?: 'top' | 'bottom';
 
-  private getShape(): string | undefined {
-    const theme = getIonTheme(this);
-    const { shape } = this;
-
-    // TODO(ROU-10777): Remove theme check when shapes are defined for all themes.
-    if (theme !== 'ionic') {
-      return undefined;
-    }
-
-    if (shape === undefined) {
-      return 'round';
-    }
+  /**
+   * Gets the badge shape. Uses the `shape` property if set, otherwise
+   * checks the theme config and falls back to 'soft' if neither is provided.
+   */
+  get shapeValue(): string {
+    const shapeConfig = config.getObjectValue('IonBadge.shape', 'soft') as string;
+    const shape = this.shape || shapeConfig;
 
     return shape;
   }
 
-  private getSize(): string | undefined {
-    const theme = getIonTheme(this);
-    const { size } = this;
-
-    // TODO(FW-6355): Remove theme check when sizes are defined for all themes.
-    if (theme !== 'ionic') {
-      return undefined;
-    }
-
-    if (size === undefined) {
-      return 'small';
-    }
+  /**
+   * Gets the badge size. Uses the `size` property if set, otherwise
+   * checks the theme config and falls back to 'small' if neither is provided.
+   */
+  get sizeValue(): string {
+    const sizeConfig = config.getObjectValue('IonBadge.size', 'small') as string;
+    const size = this.size || sizeConfig;
 
     return size;
   }
@@ -117,23 +105,32 @@ export class Badge implements ComponentInterface {
     return 'subtle';
   }
 
+  /**
+   * Gets the badge hue. Uses the `hue` property if set, otherwise
+   * checks the theme config and falls back to 'subtle' if neither is provided.
+   */
+  get hueValue(): string {
+    const hueConfig = config.getObjectValue('IonBadge.hue', 'bold') as string;
+    const hue = this.hue || hueConfig;
+
+    return hue;
+  }
+
   render() {
-    const hue = this.getHue();
-    const shape = this.getShape();
-    const size = this.getSize();
     const theme = getIonTheme(this);
+    const { hueValue, shapeValue, sizeValue, color, vertical, el } = this;
 
     return (
       <Host
-        class={createColorClasses(this.color, {
+        class={createColorClasses(color, {
           [theme]: true,
-          [`badge-${hue}`]: hue !== undefined,
-          [`badge-${shape}`]: shape !== undefined,
-          [`badge-${size}`]: size !== undefined,
-          [`badge-vertical-${this.vertical}`]: this.vertical !== undefined,
-          'in-button': hostContext('ion-button', this.el),
-          'in-tab-button': hostContext('ion-tab-button', this.el),
-          'long-badge': (this.el.textContent?.trim().length ?? 0) > 2,
+          [`badge-${hueValue}`]: true,
+          [`badge-${shapeValue}`]: true,
+          [`badge-${sizeValue}`]: true,
+          [`badge-vertical-${vertical}`]: vertical !== undefined,
+          'in-button': hostContext('ion-button', el),
+          'in-tab-button': hostContext('ion-tab-button', el),
+          'long-badge': (el.textContent?.trim().length ?? 0) > 2,
         })}
       >
         <slot></slot>

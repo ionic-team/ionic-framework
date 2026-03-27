@@ -1,5 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@use "./badge.common";
+@use "./badge";
 
 // Ionic Badge
 // --------------------------------------------------
@@ -51,21 +51,22 @@
 
 /* Soft Badge */
 :host(.badge-soft) {
-  @include globals.border-radius(globals.$ion-soft-xs);
+  @include globals.border-radius(globals.$ion-soft-xs); // 8px
 }
 
+// TODO: add example that this needs to be done by passing props of small size ane crisp shape
 :host(.badge-small.badge-soft) {
-  @include globals.border-radius(globals.$ion-soft-2xs);
+  @include globals.border-radius(globals.$ion-soft-2xs); // 4px
 }
 
 /* Round Badge */
 :host(.badge-round) {
-  @include globals.border-radius(globals.$ion-round-sm);
+  @include globals.border-radius(globals.$ion-round-sm); // 999px
 }
 
 /* Rectangular Badge */
 :host(.badge-rectangular) {
-  @include globals.border-radius(globals.$ion-rectangular-sm);
+  @include globals.border-radius(globals.$ion-rectangular-sm); // 0
 }
 
 // Badge Sizes
@@ -77,7 +78,7 @@
   --padding-end: #{globals.$ion-space-050};
 
   min-width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
+  height: globals.$ion-scale-400; // 16px
 }
 
 :host(.badge-small) ::slotted(ion-icon) {
@@ -92,10 +93,10 @@
   --padding-start: #{globals.$ion-space-100};
   --padding-end: #{globals.$ion-space-100};
 
-  @include globals.typography(globals.$ion-body-md-medium);
+  @include globals.typography(globals.$ion-body-md-medium); // TODO: Add this
 
   min-width: globals.$ion-scale-600;
-  height: globals.$ion-scale-600;
+  height: globals.$ion-scale-600; // 24px
 }
 
 :host(.badge-medium) ::slotted(ion-icon),
@@ -112,6 +113,7 @@
   --padding-end: 0;
 }
 
+// TODO: don't add since this is an equivalent of size medium so give example
 :host([vertical]:not(:empty)) {
   --padding-start: #{globals.$ion-scale-100};
   --padding-end: #{globals.$ion-scale-100};

@@ -19,6 +19,12 @@ export const defaultTheme: DefaultTheme = {
     formHighlight: true,
 
     components: {
+      IonBadge: {
+        hue: 'subtle',
+        shape: 'round',
+        size: 'small',
+      },
+
       IonChip: {
         fill: 'solid',
         hue: 'subtle',
@@ -223,8 +229,8 @@ export const defaultTheme: DefaultTheme = {
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
-                background: currentColor('base', null, true),
-                color: currentColor('contrast', null, true),
+                background: currentColor('base', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
               },
             },
           },
@@ -245,11 +251,11 @@ export const defaultTheme: DefaultTheme = {
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
-                background: currentColor('base', null, true),
-                color: currentColor('contrast', null, true),
+                background: currentColor('base', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
 
                 border: {
-                  color: currentColor('shade', null, true),
+                  color: currentColor('shade', { subtle: true }),
                   style: 'solid',
                   width: '1px',
                 },
