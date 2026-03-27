@@ -109,7 +109,6 @@
   @include mixins.font-smoothing();
   @include mixins.margin(0);
   @include mixins.padding(var(--ion-item-divider-padding-top), null, var(--ion-item-divider-padding-bottom), null);
-  @include mixins.border-radius(0);
 
   /* stylelint-disable */
   @include mixins.ltr() {
