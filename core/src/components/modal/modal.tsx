@@ -1522,10 +1522,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
       }
     }
 
-    // Only apply wrapper padding for standard Ionic layouts (has ion-content
-    // but no ion-footer). Custom modals with raw HTML are fully
-    // developer-controlled and should not be modified.
-    if (!hasContent || hasFooter) return;
+    // Only apply wrapper padding when ion-content is absent. When
+    // ion-content is present, it already handles bottom safe-area via
+    // its own scroll container — applying it again at the wrapper level
+    // creates double compensation (visible as a white gap on iOS).
+    // Custom modals with raw HTML are fully developer-controlled and
+    // should not be modified.
+    if (hasContent || hasFooter) return;
 
     // Reduce wrapper height by safe-area and add equivalent padding so the
     // total visual size stays the same but the flex content area shrinks.
