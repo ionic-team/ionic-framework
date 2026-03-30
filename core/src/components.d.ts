@@ -1924,10 +1924,6 @@ export namespace Components {
           * @default false
          */
         "sticky": boolean;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonItemGroup {
         /**
@@ -7918,10 +7914,6 @@ declare namespace LocalJSX {
           * @default false
          */
         "sticky"?: boolean;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonItemGroup {
         /**
