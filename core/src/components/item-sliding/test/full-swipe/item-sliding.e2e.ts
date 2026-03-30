@@ -28,7 +28,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
       await dragElementBy(item, page, dragByX);
       await page.waitForTimeout(FULL_ANIMATION_MS);
 
-      expect(ionSwipe.length).toBe(1);
+      expect(ionSwipe).toHaveReceivedEventTimes(1);
     });
 
     test('should fire ionSwipe when expandable option is swiped fully (start side)', async ({ page }) => {
@@ -39,7 +39,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
       await dragElementBy(item, page, dragByX);
       await page.waitForTimeout(FULL_ANIMATION_MS);
 
-      expect(ionSwipe.length).toBe(1);
+      expect(ionSwipe).toHaveReceivedEventTimes(1);
     });
 
     test('should return to closed state after full swipe animation completes', async ({ page }) => {
@@ -64,7 +64,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
       await page.waitForTimeout(600);
 
       // Non-expandable item should never fire ionSwipe
-      expect(ionSwipe.length).toBe(0);
+      expect(ionSwipe).not.toHaveReceivedEvent();
     });
   });
 });
@@ -100,7 +100,7 @@ configs({ modes: ['md'], directions: ['ltr', 'rtl'] }).forEach(({ title, config 
       await page.mouse.up();
       await page.waitForTimeout(FULL_ANIMATION_MS);
 
-      expect(ionSwipe.length).toBe(1);
+      expect(ionSwipe).toHaveReceivedEventTimes(1);
     });
   });
 });

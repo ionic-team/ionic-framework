@@ -308,9 +308,6 @@ export class ItemSliding implements ComponentInterface {
       this.gesture.enable(false);
     }
 
-    const { el } = this;
-    el.classList.add('item-sliding-full-swipe');
-
     try {
       const options = direction === 'end' ? this.rightOptions : this.leftOptions;
 
@@ -347,7 +344,6 @@ export class ItemSliding implements ComponentInterface {
       this.state = SlidingState.Disabled;
       openSlidingItem = undefined;
     } finally {
-      el.classList.remove('item-sliding-full-swipe');
       if (this.gesture) {
         this.gesture.enable(!this.disabled);
       }
