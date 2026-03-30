@@ -33,72 +33,72 @@
    *
    * Slotted Label
    * @prop --ion-item-divider-label-margin-top: Top margin of the slotted ion-label
-    * @prop --ion-item-divider-label-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-label
-    * @prop --ion-item-divider-label-margin-bottom: Bottom margin of the slotted ion-label
-    * @prop --ion-item-divider-label-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-label
-    *
-    * Slotted Icon
-    * @prop --ion-item-divider-icon-default-color: Color of the slotted ion-icon
-    * @prop --ion-item-divider-icon-semantic-default-color: Color of the slotted ion-icon when the item divider has a semantic color applied
-    * @prop --ion-item-divider-icon-font-size: Font size of the slotted ion-icon
-    * @prop --ion-item-divider-icon-start-slotted-margin-top: Top margin of the slotted ion-icon when it is in the start slot of the item divider
-    * @prop --ion-item-divider-icon-start-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-icon when it is in the start slot of the item divider
-    * @prop --ion-item-divider-icon-start-slotted-margin-bottom: Bottom margin of the slotted ion-icon when it is in the start slot of the item divider
-    * @prop --ion-item-divider-icon-start-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-icon when it is in the start slot of the item divider
-    * @prop --ion-item-divider-icon-end-slotted-margin-top: Top margin of the slotted ion-icon when it is in the end slot of the item divider
-    * @prop --ion-item-divider-icon-end-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-icon when it is in the end slot of the item divider
-    * @prop --ion-item-divider-icon-end-slotted-margin-bottom: Bottom margin of the slotted ion-icon when it is in the end slot of the item divider
-    * @prop --ion-item-divider-icon-end-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-icon when it is in the end slot of the item divider
-    *
-    * Slotted Note
-    * @prop --ion-item-divider-note-margin-top: Top margin of the slotted ion-note
-    * @prop --ion-item-divider-note-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-note
-    * @prop --ion-item-divider-note-margin-bottom: Bottom margin of the slotted ion-note
-    * @prop --ion-item-divider-note-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-note
-    * @prop --ion-item-divider-note-align-self: Align self of the slotted ion-note
-    * @prop --ion-item-divider-note-font-size: Font size of the slotted ion-note
-    * @prop --ion-item-divider-note-padding-top: Top padding of the slotted ion-note when it has a slot
-    * @prop --ion-item-divider-note-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the slotted ion-note when it has a slot
-    * @prop --ion-item-divider-note-padding-bottom: Bottom padding of the slotted ion-note when it has a slot
-    * @prop --ion-item-divider-note-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the slotted ion-note when it has a slot
-    *
-    * Slotted Avatar
-    * @prop --ion-item-divider-avatar-margin-top: Top margin of the slotted ion-avatar
-    * @prop --ion-item-divider-avatar-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-avatar
-    * @prop --ion-item-divider-avatar-margin-bottom: Bottom margin of the slotted ion-avatar
-    * @prop --ion-item-divider-avatar-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-avatar
-    * @prop --ion-item-divider-avatar-width: Width of the slotted ion-avatar
-    * @prop --ion-item-divider-avatar-height: Height of the slotted ion-avatar
-    * @prop --ion-item-divider-avatar-start-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-avatar when it is in the start slot of the item divider
-    * @prop --ion-item-divider-avatar-start-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-avatar when it is in the start slot of the item divider
-    * @prop --ion-item-divider-avatar-end-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-avatar when it is in the end slot of the item divider
-    * @prop --ion-item-divider-avatar-end-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-avatar when it is in the end slot of the item divider
-    *
-    * Slotted Thumbnail
-    * @prop --ion-item-divider-thumbnail-margin-top: Top margin of the slotted ion-thumbnail
-    * @prop --ion-item-divider-thumbnail-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-thumbnail
-    * @prop --ion-item-divider-thumbnail-margin-bottom: Bottom margin of the slotted ion-thumbnail
-    * @prop --ion-item-divider-thumbnail-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-thumbnail
-    * @prop --ion-item-divider-thumbnail-width: Width of the slotted ion-thumbnail
-    * @prop --ion-item-divider-thumbnail-height: Height of the slotted ion-thumbnail
-    * @prop --ion-item-divider-thumbnail-start-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-thumbnail when it is in the start slot of the item divider
-    * @prop --ion-item-divider-thumbnail-start-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-thumbnail when it is in the start slot of the item divider
-    * @prop --ion-item-divider-thumbnail-end-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-thumbnail when it is in the end slot of the item divider
-    * @prop --ion-item-divider-thumbnail-end-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-thumbnail when it is in the end slot of the item divider
-    *
-    * Slotted Paragraph
-    * @prop --ion-item-divider-paragraph-margin-top: Top margin of the slotted p
-    * @prop --ion-item-divider-paragraph-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted p
-    * @prop --ion-item-divider-paragraph-margin-bottom: Bottom margin of the slotted p
-    * @prop --ion-item-divider-paragraph-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted p
-    * @prop --ion-item-divider-paragraph-color: Color of the slotted p
-    * @prop --ion-item-divider-paragraph-font-size: Font size of the slotted p
-    * @prop --ion-item-divider-paragraph-text-overflow: Text overflow of the slotted p
-    * @prop --ion-item-divider-paragraph-overflow: Overflow of the slotted p
-    * @prop --ion-item-divider-paragraph-trailing-margin-top: Top margin of the slotted p when it is the last child
-    * @prop --ion-item-divider-paragraph-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted p when it is the last child
-    * @prop --ion-item-divider-paragraph-trailing-margin-bottom: Bottom margin of the slotted p when it is the last child
-    * @prop --ion-item-divider-paragraph-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted p when it is the last child
+   * @prop --ion-item-divider-label-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-label
+   * @prop --ion-item-divider-label-margin-bottom: Bottom margin of the slotted ion-label
+   * @prop --ion-item-divider-label-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-label
+   *
+   * Slotted Icon
+   * @prop --ion-item-divider-icon-default-color: Color of the slotted ion-icon
+   * @prop --ion-item-divider-icon-semantic-default-color: Color of the slotted ion-icon when the item divider has a semantic color applied
+   * @prop --ion-item-divider-icon-font-size: Font size of the slotted ion-icon
+   * @prop --ion-item-divider-icon-start-slotted-margin-top: Top margin of the slotted ion-icon when it is in the start slot of the item divider
+   * @prop --ion-item-divider-icon-start-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-icon when it is in the start slot of the item divider
+   * @prop --ion-item-divider-icon-start-slotted-margin-bottom: Bottom margin of the slotted ion-icon when it is in the start slot of the item divider
+   * @prop --ion-item-divider-icon-start-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-icon when it is in the start slot of the item divider
+   * @prop --ion-item-divider-icon-end-slotted-margin-top: Top margin of the slotted ion-icon when it is in the end slot of the item divider
+   * @prop --ion-item-divider-icon-end-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-icon when it is in the end slot of the item divider
+   * @prop --ion-item-divider-icon-end-slotted-margin-bottom: Bottom margin of the slotted ion-icon when it is in the end slot of the item divider
+   * @prop --ion-item-divider-icon-end-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-icon when it is in the end slot of the item divider
+   *
+   * Slotted Note
+   * @prop --ion-item-divider-note-margin-top: Top margin of the slotted ion-note
+   * @prop --ion-item-divider-note-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-note
+   * @prop --ion-item-divider-note-margin-bottom: Bottom margin of the slotted ion-note
+   * @prop --ion-item-divider-note-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-note
+   * @prop --ion-item-divider-note-align-self: Align self of the slotted ion-note
+   * @prop --ion-item-divider-note-font-size: Font size of the slotted ion-note
+   * @prop --ion-item-divider-note-padding-top: Top padding of the slotted ion-note when it has a slot
+   * @prop --ion-item-divider-note-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the slotted ion-note when it has a slot
+   * @prop --ion-item-divider-note-padding-bottom: Bottom padding of the slotted ion-note when it has a slot
+   * @prop --ion-item-divider-note-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the slotted ion-note when it has a slot
+   *
+   * Slotted Avatar
+   * @prop --ion-item-divider-avatar-margin-top: Top margin of the slotted ion-avatar
+   * @prop --ion-item-divider-avatar-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-avatar
+   * @prop --ion-item-divider-avatar-margin-bottom: Bottom margin of the slotted ion-avatar
+   * @prop --ion-item-divider-avatar-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-avatar
+   * @prop --ion-item-divider-avatar-width: Width of the slotted ion-avatar
+   * @prop --ion-item-divider-avatar-height: Height of the slotted ion-avatar
+   * @prop --ion-item-divider-avatar-start-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-avatar when it is in the start slot of the item divider
+   * @prop --ion-item-divider-avatar-start-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-avatar when it is in the start slot of the item divider
+   * @prop --ion-item-divider-avatar-end-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-avatar when it is in the end slot of the item divider
+   * @prop --ion-item-divider-avatar-end-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-avatar when it is in the end slot of the item divider
+   *
+   * Slotted Thumbnail
+   * @prop --ion-item-divider-thumbnail-margin-top: Top margin of the slotted ion-thumbnail
+   * @prop --ion-item-divider-thumbnail-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-thumbnail
+   * @prop --ion-item-divider-thumbnail-margin-bottom: Bottom margin of the slotted ion-thumbnail
+   * @prop --ion-item-divider-thumbnail-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-thumbnail
+   * @prop --ion-item-divider-thumbnail-width: Width of the slotted ion-thumbnail
+   * @prop --ion-item-divider-thumbnail-height: Height of the slotted ion-thumbnail
+   * @prop --ion-item-divider-thumbnail-start-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-thumbnail when it is in the start slot of the item divider
+   * @prop --ion-item-divider-thumbnail-start-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-thumbnail when it is in the start slot of the item divider
+   * @prop --ion-item-divider-thumbnail-end-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-thumbnail when it is in the end slot of the item divider
+   * @prop --ion-item-divider-thumbnail-end-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-thumbnail when it is in the end slot of the item divider
+   *
+   * Slotted Paragraph
+   * @prop --ion-item-divider-paragraph-margin-top: Top margin of the slotted p
+   * @prop --ion-item-divider-paragraph-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted p
+   * @prop --ion-item-divider-paragraph-margin-bottom: Bottom margin of the slotted p
+   * @prop --ion-item-divider-paragraph-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted p
+   * @prop --ion-item-divider-paragraph-color: Color of the slotted p
+   * @prop --ion-item-divider-paragraph-font-size: Font size of the slotted p
+   * @prop --ion-item-divider-paragraph-text-overflow: Text overflow of the slotted p
+   * @prop --ion-item-divider-paragraph-overflow: Overflow of the slotted p
+   * @prop --ion-item-divider-paragraph-trailing-margin-top: Top margin of the slotted p when it is the last child
+   * @prop --ion-item-divider-paragraph-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted p when it is the last child
+   * @prop --ion-item-divider-paragraph-trailing-margin-bottom: Bottom margin of the slotted p when it is the last child
+   * @prop --ion-item-divider-paragraph-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted p when it is the last child
    */
   @include mixins.font-smoothing();
   @include mixins.padding(var(--ion-item-divider-padding-top), null, var(--ion-item-divider-padding-bottom), null);
