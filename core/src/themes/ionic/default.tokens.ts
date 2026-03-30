@@ -1,9 +1,11 @@
-import { currentColor } from '../../utils/theme';
+import { currentColor, mix, dynamicFont } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
+import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
 
 import { darkTheme } from './dark.tokens';
 import { lightTheme } from './light.tokens';
+import { global, components } from './shared.tokens';
 
 export const defaultTheme: DefaultTheme = {
   ...baseDefaultTheme,
@@ -268,6 +270,201 @@ export const defaultTheme: DefaultTheme = {
       icon: {
         font: {
           size: 'var(--ion-scaling-xxxs)',
+        },
+      },
+    },
+
+    IonItemDivider: {
+      background: baseColors.backgroundColor,
+      color: `var(--ion-text-color-step-600, ${mix(baseColors.white, baseColors.black, '40%')})`,
+      minHeight: 'var(--ion-scaling-750)',
+
+      padding: {
+        top: 'var(--ion-spacing-0)',
+        end: 'var(--ion-spacing-0)',
+        bottom: 'var(--ion-spacing-0)',
+        start: components.item.padding.start,
+      },
+
+      inner: {
+        padding: {
+          top: 'var(--ion-spacing-0)',
+          end: components.item.inner.padding.end,
+          bottom: 'var(--ion-spacing-0)',
+          start: 'var(--ion-spacing-0)',
+        },
+      },
+
+      border: {
+        bottom: `1px solid ${components.item.border.color}`,
+      },
+
+      font: {
+        size: dynamicFont(global.root, components.itemDivider.font.size),
+      },
+
+      start: {
+        slotted: {
+          margin: {
+            end: components.item.slot.child.start.margin.end,
+          },
+        },
+      },
+
+      end: {
+        slotted: {
+          margin: {
+            start: components.item.slot.child.end.margin.start,
+          },
+        },
+      },
+
+      label: {
+        margin: {
+          top: '13px',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-250)',
+          start: 'var(--ion-spacing-0)',
+        },
+      },
+
+      icon: {
+        font: {
+          /**
+           * The icon's font size should use em units to support
+           * font scaling but evaluate to 24px at 100% font size.
+           * The value in em units is calculated by dividing
+           * the icon's font size in pixels by the item divider's
+           * font size in pixels.
+           * e.g. 24px / 14px = 1.7142857143em
+           */
+          size: `${components.item.icon.slot.font.size / components.itemDivider.font.size}em`,
+        },
+
+        start: {
+          slotted: {
+            margin: {
+              top: components.item.icon.slot.margin.top,
+              end: components.item.icon.start.slot.margin.end,
+              bottom: components.item.icon.slot.margin.bottom,
+            },
+          },
+        },
+
+        end: {
+          slotted: {
+            margin: {
+              top: components.item.icon.slot.margin.top,
+              start: components.item.icon.end.slot.margin.start,
+              bottom: components.item.icon.slot.margin.bottom,
+            },
+          },
+        },
+
+        default: {
+          color: components.item.icon.slot.color,
+        },
+
+        semantic: {
+          default: {
+            color: currentColor('contrast'),
+          },
+        },
+      },
+
+      note: {
+        align: {
+          self: 'flex-start',
+        },
+
+        font: {
+          size: dynamicFont(global.root, components.item.note.slot.font.size),
+        },
+
+        margin: {
+          top: 'var(--ion-spacing-0)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-0)',
+          start: 'var(--ion-spacing-0)',
+        },
+
+        padding: {
+          top: components.item.note.slot.padding.top,
+          end: components.item.note.slot.padding.end,
+          bottom: components.item.note.slot.padding.bottom,
+          start: components.item.note.slot.padding.start,
+        },
+      },
+
+      avatar: {
+        height: components.item.avatar.height,
+        width: components.item.avatar.width,
+
+        margin: {
+          top: components.item.media.slot.margin.top,
+          bottom: components.item.media.slot.margin.bottom,
+        },
+
+        start: {
+          slotted: {
+            margin: {
+              end: components.item.media.start.slot.margin.end,
+            },
+          },
+        },
+
+        end: {
+          slotted: {
+            margin: {
+              start: components.item.media.end.slot.margin.start,
+            },
+          },
+        },
+      },
+
+      thumbnail: {
+        height: components.item.thumbnail.height,
+        width: components.item.thumbnail.width,
+
+        margin: {
+          top: components.item.media.slot.margin.top,
+          bottom: components.item.media.slot.margin.bottom,
+        },
+
+        start: {
+          slotted: {
+            margin: {
+              end: components.item.media.start.slot.margin.end,
+            },
+          },
+        },
+
+        end: {
+          slotted: {
+            margin: {
+              start: components.item.media.end.slot.margin.start,
+            },
+          },
+        },
+      },
+
+      paragraph: {
+        color: components.item.paragraph.color,
+        overflow: 'inherit',
+
+        margin: {
+          top: 'var(--ion-spacing-0)',
+          end: 'var(--ion-spacing-0)',
+          bottom: 'var(--ion-spacing-xxxs)',
+          start: 'var(--ion-spacing-0)',
+        },
+
+        font: {
+          size: dynamicFont(global.root, 14),
+        },
+
+        text: {
+          overflow: 'initial',
         },
       },
     },

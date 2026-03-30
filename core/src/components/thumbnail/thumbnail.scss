@@ -8,15 +8,15 @@
    * @prop --border-radius: Border radius of the thumbnail
    * @prop --size: Size of the thumbnail
    */
-  --size: 48px;
+  --size: 48px; // TODO(FW-6862): separate width and height tokens for thumbnails
   --border-radius: 0;
 
   @include border-radius(var(--border-radius));
 
   display: block;
 
-  width: var(--size);
-  height: var(--size);
+  width: var(--size, 48px);
+  height: var(--size, 48px);
 }
 
 ::slotted(ion-img),

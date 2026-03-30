@@ -1,4 +1,5 @@
 import type { IonChipConfig, IonChipRecipe } from '../components/chip/chip.interfaces';
+import type { IonItemDividerRecipe } from '../components/item-divider/item-divider.interfaces';
 import type { IonSpinnerConfig, IonSpinnerRecipe } from '../components/spinner/spinner.interfaces';
 import type { IonicConfig as IonicGlobalConfig } from '../utils/config';
 
@@ -12,12 +13,8 @@ export type BaseTheme = {
   backgroundColorRgb?: string;
   textColor?: string;
   textColorRgb?: string;
-  backgroundColorStep?: {
-    [key: string]: string;
-  };
-  textColorStep?: {
-    [key: string]: string;
-  };
+  backgroundColorStep?: NumberStringKeys;
+  textColorStep?: NumberStringKeys;
 
   // TODO(FW-6864): Remove once IonToolbar themes are added
   toolbar?: any;
@@ -286,6 +283,7 @@ export type DefaultTheme = BaseTheme & {
 type Components = {
   IonBadge?: any;
   IonChip?: IonChipRecipe;
+  IonItemDivider?: IonItemDividerRecipe;
   IonSpinner?: IonSpinnerRecipe;
 
   IonCard?: any;
@@ -307,4 +305,9 @@ export type IonPadding = {
   end?: string | number;
   bottom?: string | number;
   start?: string | number;
+};
+
+export type NumberStringKeys = {
+  // Enforce keys are strings of numbers (like 50, '50', etc.)
+  [K in number as `${K}`]?: string;
 };

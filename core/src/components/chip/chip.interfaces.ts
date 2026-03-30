@@ -13,21 +13,17 @@ export type IonChipRecipe = {
 
   // Hues with fills
   hue?: {
-    bold?: IonChipFillDefinition;
-    subtle?: IonChipFillDefinition;
+    [K in IonChipHue]?: IonChipFillDefinition;
   };
 
   // Sizes
   size?: {
-    small?: IonChipSizeDefinition;
-    large?: IonChipSizeDefinition;
+    [K in IonChipSize]?: IonChipSizeDefinition;
   };
 
   // Shapes
   shape?: {
-    soft?: IonChipShapeDefinition;
-    round?: IonChipShapeDefinition;
-    rectangular?: IonChipShapeDefinition;
+    [K in IonChipShape]?: IonChipShapeDefinition;
   };
 
   // Shared States
@@ -50,11 +46,7 @@ export type IonChipRecipe = {
 };
 
 type IonChipFillDefinition = {
-  solid?: IonChipStateDefinition & {
-    semantic?: IonChipStateDefinition;
-  };
-
-  outline?: IonChipStateDefinition & {
+  [K in IonChipFill]?: IonChipStateDefinition & {
     semantic?: IonChipStateDefinition;
   };
 };
@@ -93,12 +85,12 @@ type IonChipShapeDefinition = {
 };
 
 type IonChipMediaDefinition = {
-  // Styles for the media component only if it is the first element in the slot
+  /** Targets `:first-child` */
   leading?: {
     margin?: IonMargin;
   };
 
-  // Styles for the media component only if it is the last element in the slot
+  /** Targets `:last-child` */
   trailing?: {
     margin?: IonMargin;
   };
@@ -118,8 +110,13 @@ type IonChipAvatarDefinition = IonChipMediaDefinition & {
 };
 
 export type IonChipConfig = {
-  fill?: 'outline' | 'solid';
-  hue?: 'bold' | 'subtle';
-  size?: 'small' | 'large';
-  shape?: 'soft' | 'round' | 'rectangular';
+  fill?: IonChipFill;
+  hue?: IonChipHue;
+  size?: IonChipSize;
+  shape?: IonChipShape;
 };
+
+export type IonChipFill = 'outline' | 'solid';
+export type IonChipHue = 'bold' | 'subtle';
+export type IonChipSize = 'small' | 'large';
+export type IonChipShape = 'soft' | 'round' | 'rectangular';

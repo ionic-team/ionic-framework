@@ -1,46 +1,117 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/mixins" as mixins;
+@use "../../themes/functions.color" as colors;
 
-// Item Divider
+// Item Divider: Common Styles
 // --------------------------------------------------
 
 :host {
   /**
-   * @prop --background: Background of the item divider
+   * @prop --ion-item-divider-background: Background of the item divider
+   * @prop --ion-item-divider-color: Color of the item divider
+   * @prop --ion-item-divider-min-height: Minimum height of the item divider
+   * @prop --ion-item-divider-border-bottom: Border bottom of the item divider
+   * @prop --ion-item-divider-font-size: Font size of the item divider
+   * @prop --ion-item-divider-font-weight: Font weight of the item divider
    *
-   * @prop --color: Color of the item divider
+   * @prop --ion-item-divider-padding-top: Top padding of the item divider
+   * @prop --ion-item-divider-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the item divider
+   * @prop --ion-item-divider-padding-bottom: Bottom padding of the item divider
+   * @prop --ion-item-divider-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the item divider
    *
-   * @prop --padding-top: Top padding of the item divider
-   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the item divider
-   * @prop --padding-bottom: Bottom padding of the item divider
-   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the item divider
+   * @prop --ion-item-divider-inner-padding-top: Top inner padding of the item divider
+   * @prop --ion-item-divider-inner-padding-end: Right inner padding if direction is left-to-right, and left inner padding if direction is right-to-left of the item divider
+   * @prop --ion-item-divider-inner-padding-bottom: Bottom inner padding of the item divider
+   * @prop --ion-item-divider-inner-padding-start: Left inner padding if direction is left-to-right, and right inner padding if direction is right-to-left of the item divider
    *
-   * @prop --inner-padding-top: Top inner padding of the item divider
-   * @prop --inner-padding-end: End inner padding of the item divider
-   * @prop --inner-padding-bottom: Bottom inner padding of the item divider
-   * @prop --inner-padding-start: Start inner padding of the item divider
+   * ::slotted([slot="start"])
+   * @prop --ion-item-divider-start-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted element when it is in the start slot of the item divider
+   * @prop --ion-item-divider-start-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted element when it is in the start slot of the item divider
+   *
+   * ::slotted([slot="end"])
+   * @prop --ion-item-divider-end-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted element when it is in the end slot of the item divider
+   * @prop --ion-item-divider-end-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted element when it is in the end slot of the item divider
+   *
+   * Slotted Label
+   * @prop --ion-item-divider-label-margin-top: Top margin of the slotted ion-label
+   * @prop --ion-item-divider-label-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-label
+   * @prop --ion-item-divider-label-margin-bottom: Bottom margin of the slotted ion-label
+   * @prop --ion-item-divider-label-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-label
+   *
+   * Slotted Icon
+   * @prop --ion-item-divider-icon-default-color: Color of the slotted ion-icon
+   * @prop --ion-item-divider-icon-semantic-default-color: Color of the slotted ion-icon when the item divider has a semantic color applied
+   * @prop --ion-item-divider-icon-font-size: Font size of the slotted ion-icon
+   * @prop --ion-item-divider-icon-start-slotted-margin-top: Top margin of the slotted ion-icon when it is in the start slot of the item divider
+   * @prop --ion-item-divider-icon-start-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-icon when it is in the start slot of the item divider
+   * @prop --ion-item-divider-icon-start-slotted-margin-bottom: Bottom margin of the slotted ion-icon when it is in the start slot of the item divider
+   * @prop --ion-item-divider-icon-start-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-icon when it is in the start slot of the item divider
+   * @prop --ion-item-divider-icon-end-slotted-margin-top: Top margin of the slotted ion-icon when it is in the end slot of the item divider
+   * @prop --ion-item-divider-icon-end-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-icon when it is in the end slot of the item divider
+   * @prop --ion-item-divider-icon-end-slotted-margin-bottom: Bottom margin of the slotted ion-icon when it is in the end slot of the item divider
+   * @prop --ion-item-divider-icon-end-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-icon when it is in the end slot of the item divider
+   *
+   * Slotted Note
+   * @prop --ion-item-divider-note-margin-top: Top margin of the slotted ion-note
+   * @prop --ion-item-divider-note-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-note
+   * @prop --ion-item-divider-note-margin-bottom: Bottom margin of the slotted ion-note
+   * @prop --ion-item-divider-note-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-note
+   * @prop --ion-item-divider-note-align-self: Align self of the slotted ion-note
+   * @prop --ion-item-divider-note-font-size: Font size of the slotted ion-note
+   * @prop --ion-item-divider-note-padding-top: Top padding of the slotted ion-note when it has a slot
+   * @prop --ion-item-divider-note-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the slotted ion-note when it has a slot
+   * @prop --ion-item-divider-note-padding-bottom: Bottom padding of the slotted ion-note when it has a slot
+   * @prop --ion-item-divider-note-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the slotted ion-note when it has a slot
+   *
+   * Slotted Avatar
+   * @prop --ion-item-divider-avatar-margin-top: Top margin of the slotted ion-avatar
+   * @prop --ion-item-divider-avatar-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-avatar
+   * @prop --ion-item-divider-avatar-margin-bottom: Bottom margin of the slotted ion-avatar
+   * @prop --ion-item-divider-avatar-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-avatar
+   * @prop --ion-item-divider-avatar-width: Width of the slotted ion-avatar
+   * @prop --ion-item-divider-avatar-height: Height of the slotted ion-avatar
+   * @prop --ion-item-divider-avatar-start-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-avatar when it is in the start slot of the item divider
+   * @prop --ion-item-divider-avatar-start-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-avatar when it is in the start slot of the item divider
+   * @prop --ion-item-divider-avatar-end-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-avatar when it is in the end slot of the item divider
+   * @prop --ion-item-divider-avatar-end-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-avatar when it is in the end slot of the item divider
+   *
+   * Slotted Thumbnail
+   * @prop --ion-item-divider-thumbnail-margin-top: Top margin of the slotted ion-thumbnail
+   * @prop --ion-item-divider-thumbnail-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-thumbnail
+   * @prop --ion-item-divider-thumbnail-margin-bottom: Bottom margin of the slotted ion-thumbnail
+   * @prop --ion-item-divider-thumbnail-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-thumbnail
+   * @prop --ion-item-divider-thumbnail-width: Width of the slotted ion-thumbnail
+   * @prop --ion-item-divider-thumbnail-height: Height of the slotted ion-thumbnail
+   * @prop --ion-item-divider-thumbnail-start-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-thumbnail when it is in the start slot of the item divider
+   * @prop --ion-item-divider-thumbnail-start-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-thumbnail when it is in the start slot of the item divider
+   * @prop --ion-item-divider-thumbnail-end-slotted-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted ion-thumbnail when it is in the end slot of the item divider
+   * @prop --ion-item-divider-thumbnail-end-slotted-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted ion-thumbnail when it is in the end slot of the item divider
+   *
+   * Slotted Paragraph
+   * @prop --ion-item-divider-paragraph-margin-top: Top margin of the slotted p
+   * @prop --ion-item-divider-paragraph-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted p
+   * @prop --ion-item-divider-paragraph-margin-bottom: Bottom margin of the slotted p
+   * @prop --ion-item-divider-paragraph-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted p
+   * @prop --ion-item-divider-paragraph-color: Color of the slotted p
+   * @prop --ion-item-divider-paragraph-font-size: Font size of the slotted p
+   * @prop --ion-item-divider-paragraph-text-overflow: Text overflow of the slotted p
+   * @prop --ion-item-divider-paragraph-overflow: Overflow of the slotted p
+   * @prop --ion-item-divider-paragraph-trailing-margin-top: Top margin of the slotted p when it is the last child
+   * @prop --ion-item-divider-paragraph-trailing-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the slotted p when it is the last child
+   * @prop --ion-item-divider-paragraph-trailing-margin-bottom: Bottom margin of the slotted p when it is the last child
+   * @prop --ion-item-divider-paragraph-trailing-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the slotted p when it is the last child
    */
-  --padding-top: 0px;
-  --padding-end: 0px;
-  --padding-bottom: 0px;
-  --padding-start: 0px;
-  --inner-padding-top: 0px;
-  --inner-padding-end: 0px;
-  --inner-padding-bottom: 0px;
-  --inner-padding-start: 0px;
-
-  @include font-smoothing();
-  @include margin(0);
-  @include padding(var(--padding-top), null, var(--padding-bottom), null);
+  @include mixins.font-smoothing();
+  @include mixins.padding(var(--ion-item-divider-padding-top), null, var(--ion-item-divider-padding-bottom), null);
 
   /* stylelint-disable */
-  @include ltr() {
-    padding-right: var(--padding-end);
-    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
+  @include mixins.ltr() {
+    padding-right: var(--ion-item-divider-padding-end);
+    padding-left: calc(var(--ion-item-divider-padding-start) + var(--ion-safe-area-left, 0px));
   }
 
-  @include rtl() {
-    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
-    padding-left: var(--padding-end);
+  @include mixins.rtl() {
+    padding-right: calc(var(--ion-item-divider-padding-start) + var(--ion-safe-area-right, 0px));
+    padding-left: var(--ion-item-divider-padding-end);
   }
   /* stylelint-enable */
 
@@ -51,19 +122,27 @@
 
   width: 100%;
 
-  background: var(--background);
-  color: var(--color);
+  min-height: var(--ion-item-divider-min-height);
 
-  font-family: $font-family-base;
+  // TODO(FW-6848): remove border-bottom and replace it with the `ion-divider`
+  border-bottom: var(--ion-item-divider-border-bottom);
+
+  background: var(--ion-item-divider-background);
+  color: var(--ion-item-divider-color);
+
+  font-family: var(--ion-font-family, inherit);
+  font-size: var(--ion-item-divider-font-size);
+  font-weight: var(--ion-item-divider-font-weight);
 
   overflow: hidden;
-  z-index: $z-index-item-divider;
+
+  z-index: 100;
   box-sizing: border-box;
 }
 
 :host(.ion-color) {
-  background: current-color(base);
-  color: current-color(contrast);
+  background: colors.current-color(base);
+  color: colors.current-color(contrast);
 }
 
 :host(.item-divider-sticky) {
@@ -72,18 +151,23 @@
 }
 
 .item-divider-inner {
-  @include margin(0);
-  @include padding(var(--inner-padding-top), null, var(--inner-padding-bottom), null);
+  @include mixins.margin(0);
+  @include mixins.padding(
+    var(--ion-item-divider-inner-padding-top),
+    null,
+    var(--ion-item-divider-inner-padding-bottom),
+    null
+  );
 
   /* stylelint-disable */
-  @include ltr() {
-    padding-right: calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end));
-    padding-left: var(--inner-padding-start);
+  @include mixins.ltr() {
+    padding-right: calc(var(--ion-safe-area-right, 0px) + var(--ion-item-divider-inner-padding-end));
+    padding-left: var(--ion-item-divider-inner-padding-start);
   }
 
-  @include rtl() {
-    padding-right: var(--inner-padding-start);
-    padding-left: calc(var(--ion-safe-area-left, 0px) + var(--inner-padding-end));
+  @include mixins.rtl() {
+    padding-right: var(--ion-item-divider-inner-padding-start);
+    padding-left: calc(var(--ion-safe-area-left, 0px) + var(--ion-item-divider-inner-padding-end));
   }
   /* stylelint-enable */
 
@@ -112,4 +196,168 @@
   text-overflow: ellipsis;
 
   overflow: hidden;
+}
+
+// Item Divider Slotted Elements
+// ---------------------------------------------
+
+// Slotted Start
+::slotted([slot="start"]) {
+  @include mixins.margin-horizontal(
+    var(--ion-item-divider-start-slotted-margin-start, revert-layer),
+    var(--ion-item-divider-start-slotted-margin-end, revert-layer)
+  );
+}
+
+// Slotted End
+::slotted([slot="end"]) {
+  @include mixins.margin-horizontal(
+    var(--ion-item-end-slotted-margin-start, revert-layer),
+    var(--ion-item-end-slotted-margin-end, revert-layer)
+  );
+}
+
+// Label
+::slotted(ion-label) {
+  @include mixins.margin(
+    var(--ion-item-divider-label-margin-top),
+    var(--ion-item-divider-label-margin-end),
+    var(--ion-item-divider-label-margin-bottom),
+    var(--ion-item-divider-label-margin-start)
+  );
+}
+
+// Icon
+::slotted(ion-icon) {
+  color: var(--ion-item-divider-icon-default-color);
+
+  font-size: var(--ion-item-divider-icon-font-size);
+}
+
+:host(.ion-color) ::slotted(ion-icon) {
+  color: var(--ion-item-divider-icon-semantic-default-color);
+}
+
+::slotted(ion-icon[slot="start"]) {
+  @include mixins.margin(
+    var(--ion-item-divider-icon-start-slotted-margin-top, revert-layer),
+    var(--ion-item-divider-icon-start-slotted-margin-end, revert-layer),
+    var(--ion-item-divider-icon-start-slotted-margin-bottom, revert-layer),
+    var(--ion-item-divider-icon-start-slotted-margin-start, revert-layer)
+  );
+}
+
+::slotted(ion-icon[slot="end"]) {
+  @include mixins.margin(
+    var(--ion-item-divider-icon-end-slotted-margin-top, revert-layer),
+    var(--ion-item-divider-icon-end-slotted-margin-end, revert-layer),
+    var(--ion-item-divider-icon-end-slotted-margin-bottom, revert-layer),
+    var(--ion-item-divider-icon-end-slotted-margin-start, revert-layer)
+  );
+}
+
+// Note
+::slotted(ion-note) {
+  @include mixins.margin(
+    var(--ion-item-divider-note-margin-top),
+    var(--ion-item-divider-note-margin-end),
+    var(--ion-item-divider-note-margin-bottom),
+    var(--ion-item-divider-note-margin-start)
+  );
+
+  align-self: var(--ion-item-divider-note-align-self);
+
+  font-size: var(--ion-item-divider-note-font-size, revert-layer);
+}
+
+::slotted(ion-note[slot]) {
+  @include mixins.padding(
+    var(--ion-item-divider-note-padding-top),
+    var(--ion-item-divider-note-padding-end),
+    var(--ion-item-divider-note-padding-bottom),
+    var(--ion-item-divider-note-padding-start)
+  );
+}
+
+// Avatar
+::slotted(ion-avatar) {
+  @include mixins.margin(
+    var(--ion-item-divider-avatar-margin-top),
+    var(--ion-item-divider-avatar-margin-end),
+    var(--ion-item-divider-avatar-margin-bottom),
+    var(--ion-item-divider-avatar-margin-start)
+  );
+
+  width: var(--ion-item-divider-avatar-width, revert-layer);
+  height: var(--ion-item-divider-avatar-height, revert-layer);
+}
+
+::slotted(ion-avatar[slot="start"]) {
+  @include mixins.margin-horizontal(
+    var(--ion-item-divider-avatar-start-slotted-margin-start),
+    var(--ion-item-divider-avatar-start-slotted-margin-end)
+  );
+}
+
+::slotted(ion-avatar[slot="end"]) {
+  @include mixins.margin-horizontal(
+    var(--ion-item-divider-avatar-end-slotted-margin-start),
+    var(--ion-item-divider-avatar-end-slotted-margin-end)
+  );
+}
+
+// Thumbnail
+::slotted(ion-thumbnail) {
+  // TODO(FW-6862): separate width and height tokens for thumbnails
+  --size: var(--ion-item-divider-thumbnail-width);
+
+  @include mixins.margin(
+    var(--ion-item-divider-thumbnail-margin-top),
+    var(--ion-item-divider-thumbnail-margin-end),
+    var(--ion-item-divider-thumbnail-margin-bottom),
+    var(--ion-item-divider-thumbnail-margin-start)
+  );
+}
+
+::slotted(ion-thumbnail[slot="start"]) {
+  @include mixins.margin-horizontal(
+    var(--ion-item-divider-thumbnail-start-slotted-margin-start),
+    var(--ion-item-divider-thumbnail-start-slotted-margin-end)
+  );
+}
+
+::slotted(ion-thumbnail[slot="end"]) {
+  @include mixins.margin-horizontal(
+    var(--ion-item-divider-thumbnail-end-slotted-margin-start),
+    var(--ion-item-divider-thumbnail-end-slotted-margin-end)
+  );
+}
+
+// Paragraph
+::slotted(p) {
+  @include mixins.margin(
+    var(--ion-item-divider-paragraph-margin-top),
+    var(--ion-item-divider-paragraph-margin-end),
+    var(--ion-item-divider-paragraph-margin-bottom),
+    var(--ion-item-divider-paragraph-margin-start)
+  );
+
+  color: var(--ion-item-divider-paragraph-color);
+
+  font-size: var(--ion-item-divider-paragraph-font-size);
+
+  line-height: normal;
+
+  text-overflow: var(--ion-item-divider-paragraph-text-overflow);
+
+  overflow: var(--ion-item-divider-paragraph-overflow);
+}
+
+::slotted(p:last-child) {
+  @include mixins.margin(
+    var(--ion-item-divider-paragraph-trailing-margin-top),
+    var(--ion-item-divider-paragraph-trailing-margin-end),
+    var(--ion-item-divider-paragraph-trailing-margin-bottom, 0),
+    var(--ion-item-divider-paragraph-trailing-margin-start)
+  );
 }

@@ -14,12 +14,20 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Version 9.x
 
+- [Global Styles](#version-9x-global-styles)
 - [Components](#version-9x-components)
   - [Button](#version-9x-button)
   - [Card](#version-9x-card)
   - [Chip](#version-9x-chip)
   - [Grid](#version-9x-grid)
+  - [Item Divider](#version-9x-item-divider)
   - [Spinner](#version-9x-spinner)
+
+<h2 id="version-9x-global-styles">Global Styles</h2>
+
+<h4 id="version-9x-color-steps">Color Steps</h4>
+
+- The deprecated color step CSS variables, `--ion-color-step-[number]`, have been removed and should be replaced with either `--ion-background-color-step-[number]` or `--ion-text-color-step-[number]` depending on the specific use case, as outlined in the [migration guide](https://ionicframework.com/docs/updating/8-0#step-color-tokens).
 
 <h2 id="version-9x-components">Components</h2>
 
@@ -149,6 +157,21 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
+<h4 id="version-9x-item-divider">Item Divider</h4>
+
+- Component CSS variables have been removed. The component now utilizes the centralized Ionic Theming system. Global updates should be managed via the theme tokens file, while component-specific overrides are handled through localized CSS variables.
+   - `--background` is replaced by `IonItemDivider.background` for global styles and `--ion-item-divider-background` for component-specific overrides.
+   - `--color` is replaced by `IonItemDivider.color` for global styles and `--ion-item-divider-color` for component-specific overrides.
+   - `--padding-top` is replaced by `IonItemDivider.padding.top` for global styles and `--ion-item-divider-padding-top` for component-specific overrides.
+   - `--padding-end` is replaced by `IonItemDivider.padding.end` for global styles and `--ion-item-divider-padding-end` for component-specific overrides.
+   - `--padding-bottom` is replaced by `IonItemDivider.padding.bottom` for global styles and `--ion-item-divider-padding-bottom` for component-specific overrides.
+   - `--padding-start` is replaced by `IonItemDivider.padding.start` for global styles and `--ion-item-divider-padding-start` for component-specific overrides.
+   - `--inner-padding-top` is replaced by `IonItemDivider.inner.padding.top` for global styles and `--ion-item-divider-inner-padding-top` for component-specific overrides.
+   - `--inner-padding-end` is replaced by `IonItemDivider.inner.padding.end` for global styles and `--ion-item-divider-inner-padding-end` for component-specific overrides.
+   - `--inner-padding-bottom` is replaced by `IonItemDivider.inner.padding.bottom` for global styles and `--ion-item-divider-inner-padding-bottom` for component-specific overrides.
+   - `--inner-padding-start` is replaced by `IonItemDivider.inner.padding.start` for global styles and `--ion-item-divider-inner-padding-start` for component-specific overrides.
+- Specific theme classes (e.g., `ion-item-divider.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
 
 <h4 id="version-9x-spinner">Spinner</h4>
 

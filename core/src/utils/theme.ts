@@ -1,6 +1,7 @@
 import { printIonWarning } from '@utils/logging';
 
 import type { Color, CssClassMap } from '../interface';
+import type { NumberStringKeys } from '../themes/themes.interfaces';
 
 import { deepMerge } from './helpers';
 
@@ -679,3 +680,57 @@ export function ionColor(name: string, variation: string, options: IonColorOptio
 export function clamp(min: number | string, val: number | string, max: number | string): string {
   return `clamp(${min}, ${val}, ${max})`;
 }
+
+/**
+ * Generates a series of color steps between a base color and a mix color.
+ *
+ * @param baseColor Base color (e.g. `'#0054e9'`)
+ * @param mixColor Color to mix in (e.g. `'#000000'` or `'#fff'`)
+ *
+ * @internal
+ * @returns An object containing the generated color steps
+ */
+export const generateColorSteps = (baseColor: string, mixColor: string): NumberStringKeys => {
+  const colorSteps: NumberStringKeys = {};
+
+  for (let step = 50; step <= 950; step += 50) {
+    const weight = `${step / 10}%`;
+
+    colorSteps[`${step}`] = mix(baseColor, mixColor, weight);
+  }
+
+  return colorSteps;
+};
+
+const baselineUnit = 'rem';
+
+/**
+ * Converts a pixel value to a dynamic unit (defaulting to rem).
+ *
+ * Examples based on a root font size of 16px:
+ * - `dynamicFont('16px', 16)` returns `'1rem'`
+ * - `dynamicFont('16px', 20, 'em')` returns `'1.25em'`
+ *
+ * @internal
+ * @param size - The numeric pixel value.
+ * @param unit - The CSS unit string.
+ * @returns The calculated CSS value string.
+ */
+export const dynamicFont = (
+  configRootFontSize: string | number,
+  size: number,
+  unit: string | undefined = baselineUnit
+): string => {
+  let baselinePixelSize = 16;
+  const cleanSize = typeof configRootFontSize === 'string' ? parseFloat(configRootFontSize) : configRootFontSize;
+
+  if (!isNaN(cleanSize)) {
+    baselinePixelSize = cleanSize;
+  } else {
+    printIonWarning(
+      `Invalid root font size in theme config: ${configRootFontSize}. Falling back to default of ${baselinePixelSize}px.`
+    );
+  }
+
+  return `${size / baselinePixelSize}${unit}`;
+};
