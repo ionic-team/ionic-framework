@@ -10,10 +10,12 @@ cd "$SCRIPT_DIR"
 #   --skip-build         Skip all build steps (reuse existing build artifacts)
 #   --playwright-only    Skip Cypress, run only Playwright
 #   --spec <pattern>     Filter Playwright tests by file path pattern
+#   --app <name>         Test app variant (default: reactrouter6-react18)
 # ---------------------------------------------------------------------------
 SKIP_BUILD=0
 PLAYWRIGHT_ONLY=0
 PLAYWRIGHT_SPEC=""
+APP_NAME="reactrouter6-react18"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -33,9 +35,17 @@ while [[ $# -gt 0 ]]; do
       PLAYWRIGHT_SPEC="$2"
       shift 2
       ;;
+    --app)
+      if [[ -z "$2" || "$2" == --* ]]; then
+        echo "Error: --app requires a value"
+        exit 1
+      fi
+      APP_NAME="$2"
+      shift 2
+      ;;
     *)
       echo "Unknown flag: $1"
-      echo "Usage: $0 [--skip-build] [--playwright-only] [--spec <pattern>]"
+      echo "Usage: $0 [--skip-build] [--playwright-only] [--spec <pattern>] [--app <name>]"
       exit 1
       ;;
   esac
@@ -62,17 +72,17 @@ if [ "$SKIP_BUILD" = "0" ]; then
   npm run build
 
   # Inside packages/react-router/test
-  echo "Building test app..."
+  echo "Building test app ($APP_NAME)..."
   cd ./test
-  rm -rf build/reactrouter6 || true
-  sh ./build.sh reactrouter6
-  cd build/reactrouter6
+  rm -rf "build/$APP_NAME" || true
+  sh ./build.sh "$APP_NAME"
+  cd "build/$APP_NAME"
   echo "Installing dependencies..."
   npm install --legacy-peer-deps > npm_install.log 2>&1
   npm run sync
 else
   echo "Skipping build (--skip-build)."
-  cd ../test/build/reactrouter6
+  cd "../test/build/$APP_NAME"
 fi
 
 # Install Playwright browsers if not already present

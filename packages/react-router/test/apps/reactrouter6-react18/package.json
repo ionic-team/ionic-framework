@@ -1,5 +1,5 @@
 {
-  "name": "react-router-new",
+  "name": "test-app",
   "version": "0.0.1",
   "private": true,
   "overrides": {
@@ -21,7 +21,7 @@
     "react-dom": "^18.2.0",
     "react-router": "^6.0.0",
     "react-router-dom": "^6.0.0",
-    "typescript": "^4.4.2"
+    "typescript": "^5.1.6"
   },
   "scripts": {
     "dev": "vite",

@@ -1,11 +1,29 @@
 import { test, expect } from '@playwright/test';
-import { ionPageVisible, ionBackClick, withTestingMode } from './utils/test-utils';
+import { ionPageVisible, ionBackClick, ionTabClick, withTestingMode } from './utils/test-utils';
 
 test.describe('Suspense outlet', () => {
   // The "Maximum update depth exceeded" crash only manifests in React 19 where
   // reappearLayoutEffects re-runs componentDidMount without a preceding componentWillUnmount.
   // React 18 unmounts/remounts suspended content, so these tests verify behavioral outcomes only.
   // Repro: https://github.com/ptmkenny/ionic-react-router-6-test/tree/404-issue
+
+  test('should not crash when navigating to Suspense-wrapped tab via in-app navigation', async ({ page }) => {
+    // This is the primary regression test for the React 19 reappearLayoutEffects crash.
+    // The bug only triggers via in-app tab navigation (not direct page.goto), because
+    // the StackManager is revealed by Suspense after being mounted by the tab system,
+    // causing reappearLayoutEffects to re-run componentDidMount -> forceUpdate -> infinite loop.
+    const pageErrors: Error[] = [];
+    page.on('pageerror', (err) => pageErrors.push(err));
+
+    await page.goto(withTestingMode('/suspense-outlet/tab1'));
+    await ionPageVisible(page, 'suspense-tab1');
+
+    await ionTabClick(page, 'Content');
+    await ionPageVisible(page, 'content-index');
+
+    const maxUpdateError = pageErrors.find((e) => e.message.includes('Maximum update depth exceeded'));
+    expect(maxUpdateError, 'Should not throw "Maximum update depth exceeded"').toBeUndefined();
+  });
 
   test('should render content index inside Suspense-wrapped outlet', async ({ page }) => {
     await page.goto(withTestingMode('/suspense-outlet/content'));
