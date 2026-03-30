@@ -27,9 +27,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('focused tab button should not use light-mode fallback color', async ({ page }) => {
-      const bgColor = await page.locator('.e2eTabOneButton').evaluate((el: HTMLElement) =>
-        window.getComputedStyle(el, '::after').backgroundColor
-      );
+      const bgColor = await page
+        .locator('.e2eTabOneButton')
+        .evaluate((el: HTMLElement) => window.getComputedStyle(el, '::after').backgroundColor);
       // #e0e0e0 (rgb(224, 224, 224)) is the light-mode fallback from get-color-shade(#fff)
       expect(bgColor).not.toBe('rgb(224, 224, 224)');
     });
