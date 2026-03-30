@@ -502,7 +502,14 @@ export class ItemSliding implements ComponentInterface {
       restingPoint = 0;
     }
 
+    const state = this.state;
     this.setOpenAmount(restingPoint, true);
+
+    if ((state & SlidingState.SwipeEnd) !== 0 && this.rightOptions) {
+      this.rightOptions.fireSwipeEvent();
+    } else if ((state & SlidingState.SwipeStart) !== 0 && this.leftOptions) {
+      this.leftOptions.fireSwipeEvent();
+    }
   }
 
   private calculateOptsWidth() {

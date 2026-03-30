@@ -25,8 +25,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
       const item = page.locator('#expandable-end');
       const dragByX = config.direction === 'rtl' ? 190 : -190;
 
-      await dragElementBy(item, page, dragByX);
-      await page.waitForTimeout(FULL_ANIMATION_MS);
+      await dragElementBy(item, page, dragByX);await ionSwipe.next()
 
       expect(ionSwipe).toHaveReceivedEventTimes(1);
     });
@@ -37,7 +36,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
       const dragByX = config.direction === 'rtl' ? -190 : 190;
 
       await dragElementBy(item, page, dragByX);
-      await page.waitForTimeout(FULL_ANIMATION_MS);
+      await ionSwipe.next();
 
       expect(ionSwipe).toHaveReceivedEventTimes(1);
     });
@@ -56,15 +55,29 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
     });
 
     test('should NOT trigger full swipe animation for non-expandable options', async ({ page }) => {
-      const ionSwipe = await page.spyOnEvent('ionSwipe');
       const item = page.locator('#non-expandable');
       const dragByX = config.direction === 'rtl' ? 180 : -180;
 
       await dragElementBy(item, page, dragByX);
-      await page.waitForTimeout(600);
 
-      // Non-expandable item should never fire ionSwipe
-      expect(ionSwipe).not.toHaveReceivedEvent();
+      // Wait long enough for the full swipe animation to complete if it had triggered
+      await page.waitForTimeout(FULL_ANIMATION_MS);
+
+      // The full swipe animation closes the item (openAmount === 0) after completing.
+      // For a non-expandable item, no animation runs and the item stays open at optsWidth.
+      const openAmount = await item.evaluate((el: HTMLIonItemSlidingElement) => el.getOpenAmount());
+      expect(Math.abs(openAmount)).toBeGreaterThan(0);
+    });
+
+    test('should fire ionSwipe when non-expandable options are swiped past the threshold', async ({ page }) => {
+      const ionSwipe = await page.spyOnEvent('ionSwipe');
+      const item = page.locator('#non-expandable');
+      const dragByX = config.direction === 'rtl' ? 190 : -190;
+
+      await dragElementBy(item, page, dragByX);
+      await ionSwipe.next();
+
+      expect(ionSwipe).toHaveReceivedEventTimes(1);
     });
   });
 });
@@ -84,21 +97,15 @@ configs({ modes: ['md'], directions: ['ltr', 'rtl'] }).forEach(({ title, config 
       const box = (await item.boundingBox())!;
 
       // Few steps = high velocity gesture
-      const startX = box.x + box.width - 10;
+      const startX = config.direction === 'rtl' ? box.x + 30 : box.x + box.width - 10;
+      const endX = config.direction === 'rtl' ? box.x + box.width - 10 : box.x + 30;
       const startY = box.y + box.height / 2;
-      const endX = box.x + 30;
 
-      if (config.direction === 'rtl') {
-        await page.mouse.move(endX, startY);
-        await page.mouse.down();
-        await page.mouse.move(startX, startY, { steps: 3 });
-      } else {
-        await page.mouse.move(startX, startY);
-        await page.mouse.down();
-        await page.mouse.move(endX, startY, { steps: 3 });
-      }
+      await page.mouse.move(startX, startY);
+      await page.mouse.down();
+      await page.mouse.move(endX, startY, { steps: 3 });
       await page.mouse.up();
-      await page.waitForTimeout(FULL_ANIMATION_MS);
+      await ionSwipe.next();
 
       expect(ionSwipe).toHaveReceivedEventTimes(1);
     });
