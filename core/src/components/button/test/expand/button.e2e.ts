@@ -11,7 +11,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      await expect(page).toHaveScreenshot(screenshot(`button-expand`));
+      const content = page.locator('ion-content');
+
+      await expect(content).toHaveScreenshot(screenshot(`button-expand`));
     });
   });
 });

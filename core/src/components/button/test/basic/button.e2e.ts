@@ -8,7 +8,9 @@ configs().forEach(({ config, screenshot, title }) => {
 
       await page.setIonViewport();
 
-      await expect(page).toHaveScreenshot(screenshot(`button-diff`));
+      const content = page.locator('ion-content');
+
+      await expect(content).toHaveScreenshot(screenshot(`button-diff`));
     });
   });
 });
