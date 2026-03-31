@@ -353,7 +353,7 @@ export class ItemSliding implements ComponentInterface {
 
       // Return to closed state
       await this.animateToPosition(0, 250);
-
+    } finally {
       // Reset state
       if (this.item) {
         this.item.style.transition = '';
@@ -361,7 +361,7 @@ export class ItemSliding implements ComponentInterface {
       this.openAmount = 0;
       this.state = SlidingState.Disabled;
       openSlidingItem = undefined;
-    } finally {
+
       if (this.gesture) {
         this.gesture.enable(!this.disabled);
       }

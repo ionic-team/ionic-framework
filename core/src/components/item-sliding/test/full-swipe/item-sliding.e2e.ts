@@ -25,7 +25,8 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
       const item = page.locator('#expandable-end');
       const dragByX = config.direction === 'rtl' ? 190 : -190;
 
-      await dragElementBy(item, page, dragByX);await ionSwipe.next()
+      await dragElementBy(item, page, dragByX);
+      await ionSwipe.next();
 
       expect(ionSwipe).toHaveReceivedEventTimes(1);
     });
