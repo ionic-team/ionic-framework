@@ -16,13 +16,23 @@ const FULL_ANIMATION_MS = 1100;
 
 configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEach(({ title, config }) => {
   test.describe(title('item-sliding: full swipe'), () => {
-    test.beforeEach(async ({ page }) => {
-      await page.goto(`/src/components/item-sliding/test/full-swipe`, config);
-    });
-
     test('should fire ionSwipe when expandable option is swiped fully (end side)', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-item-sliding>
+            <ion-item>
+              <ion-label>Expandable End (Swipe Left)</ion-label>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option expandable="true">Delete</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+         `,
+        config
+      );
+
       const ionSwipe = await page.spyOnEvent('ionSwipe');
-      const item = page.locator('#expandable-end');
+      const item = page.locator('ion-item-sliding');
       const dragByX = config.direction === 'rtl' ? 190 : -190;
 
       await dragElementBy(item, page, dragByX);
@@ -32,8 +42,22 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
     });
 
     test('should fire ionSwipe when expandable option is swiped fully (start side)', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-item-sliding>
+            <ion-item>
+              <ion-label>Expandable Start (Swipe Right)</ion-label>
+            </ion-item>
+            <ion-item-options side="start">
+              <ion-item-option expandable="true">Archive</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+         `,
+        config
+      );
+
       const ionSwipe = await page.spyOnEvent('ionSwipe');
-      const item = page.locator('#expandable-start');
+      const item = page.locator('ion-item-sliding');
       const dragByX = config.direction === 'rtl' ? -190 : 190;
 
       await dragElementBy(item, page, dragByX);
@@ -43,26 +67,53 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
     });
 
     test('should return to closed state after full swipe animation completes', async ({ page }) => {
-      const item = page.locator('#expandable-end');
+      await page.setContent(
+        `
+          <ion-item-sliding>
+            <ion-item>
+              <ion-label>Expandable End (Swipe Left)</ion-label>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option expandable="true">Delete</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+         `,
+        config
+      );
 
+      const item = page.locator('ion-item-sliding');
       const dragByX = config.direction === 'rtl' ? 190 : -190;
 
       await dragElementBy(item, page, dragByX);
       await page.waitForTimeout(FULL_ANIMATION_MS);
-      await page.waitForChanges();
 
       const openAmount = await item.evaluate((el: HTMLIonItemSlidingElement) => el.getOpenAmount());
       expect(openAmount).toBe(0);
     });
 
     test('should NOT trigger full swipe animation for non-expandable options', async ({ page }) => {
-      const item = page.locator('#non-expandable');
+      await page.setContent(
+        `
+            <ion-item-sliding>
+              <ion-item>
+                <ion-label>Non-Expandable (Should Show Options)</ion-label>
+              </ion-item>
+              <ion-item-options side="end">
+                <ion-item-option>Edit</ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+           `,
+        config
+      );
+
+      const ionSwipe = await page.spyOnEvent('ionSwipe');
+      const item = page.locator('ion-item-sliding');
       const dragByX = config.direction === 'rtl' ? 180 : -180;
 
       await dragElementBy(item, page, dragByX);
 
-      // Wait long enough for the full swipe animation to complete if it had triggered
-      await page.waitForTimeout(FULL_ANIMATION_MS);
+      await ionSwipe.next();
+      await page.waitForChanges();
 
       // The full swipe animation closes the item (openAmount === 0) after completing.
       // For a non-expandable item, no animation runs and the item stays open at optsWidth.
@@ -71,8 +122,22 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
     });
 
     test('should fire ionSwipe when non-expandable options are swiped past the threshold', async ({ page }) => {
+      await page.setContent(
+        `
+            <ion-item-sliding>
+              <ion-item>
+                <ion-label>Non-Expandable (Should Show Options)</ion-label>
+              </ion-item>
+              <ion-item-options side="end">
+                <ion-item-option>Edit</ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+           `,
+        config
+      );
+
       const ionSwipe = await page.spyOnEvent('ionSwipe');
-      const item = page.locator('#non-expandable');
+      const item = page.locator('ion-item-sliding');
       const dragByX = config.direction === 'rtl' ? 190 : -190;
 
       await dragElementBy(item, page, dragByX);
@@ -91,10 +156,22 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
 configs({ modes: ['md'], directions: ['ltr', 'rtl'] }).forEach(({ title, config }) => {
   test.describe(title('item-sliding: full swipe velocity'), () => {
     test('should trigger full swipe animation with fast velocity', async ({ page }) => {
-      await page.goto(`/src/components/item-sliding/test/full-swipe`, config);
+      await page.setContent(
+        `
+          <ion-item-sliding>
+            <ion-item>
+              <ion-label>Expandable End (Swipe Left)</ion-label>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option expandable="true">Delete</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+         `,
+        config
+      );
 
       const ionSwipe = await page.spyOnEvent('ionSwipe');
-      const item = page.locator('#expandable-end');
+      const item = page.locator('ion-item-sliding');
       const box = (await item.boundingBox())!;
 
       // Few steps = high velocity gesture
