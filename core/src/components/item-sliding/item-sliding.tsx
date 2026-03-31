@@ -114,6 +114,11 @@ export class ItemSliding implements ComponentInterface {
       this.gesture = undefined;
     }
 
+    if (this.tmr !== undefined) {
+      clearTimeout(this.tmr);
+      this.tmr = undefined;
+    }
+
     // Cancel animation if in progress
     if ((this.state & SlidingState.AnimatingFullSwipe) !== 0) {
       if (this.item) {
@@ -283,7 +288,10 @@ export class ItemSliding implements ComponentInterface {
       this.item.style.transition = `transform ${duration}ms ease-out`;
       this.item.style.transform = `translate3d(${-position}px, 0, 0)`;
 
-      setTimeout(() => {
+      // tmr is shared with setOpenAmount's close timer; this is safe because
+      // animateFullSwipe only runs while the gesture is disabled.
+      this.tmr = setTimeout(() => {
+        this.tmr = undefined;
         resolve();
       }, duration);
     });
@@ -319,7 +327,12 @@ export class ItemSliding implements ComponentInterface {
           ? SlidingState.End | SlidingState.SwipeEnd | SlidingState.AnimatingFullSwipe
           : SlidingState.Start | SlidingState.SwipeStart | SlidingState.AnimatingFullSwipe;
 
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise<void>((resolve) => {
+        this.tmr = setTimeout(() => {
+          this.tmr = undefined;
+          resolve();
+        }, 100);
+      });
 
       // Animate off-screen while maintaining the expanded state
       const offScreenDistance = direction === 'end' ? window.innerWidth : -window.innerWidth;
@@ -331,7 +344,12 @@ export class ItemSliding implements ComponentInterface {
       }
 
       // Small delay before returning
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      await new Promise<void>((resolve) => {
+        this.tmr = setTimeout(() => {
+          this.tmr = undefined;
+          resolve();
+        }, 300);
+      });
 
       // Return to closed state
       await this.animateToPosition(0, 250);
