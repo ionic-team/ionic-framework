@@ -94,15 +94,15 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
     test('should NOT trigger full swipe animation for non-expandable options', async ({ page }) => {
       await page.setContent(
         `
-            <ion-item-sliding>
-              <ion-item>
-                <ion-label>Non-Expandable (Should Show Options)</ion-label>
-              </ion-item>
-              <ion-item-options side="end">
-                <ion-item-option>Edit</ion-item-option>
-              </ion-item-options>
-            </ion-item-sliding>
-           `,
+          <ion-item-sliding>
+            <ion-item>
+              <ion-label>Non-Expandable (Should Show Options)</ion-label>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option>Edit</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        `,
         config
       );
 
