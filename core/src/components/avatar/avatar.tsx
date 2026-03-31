@@ -54,13 +54,7 @@ export class Avatar implements ComponentInterface {
   }
 
   private getSize(): string | undefined {
-    const theme = getIonTheme(this);
     const { size } = this;
-
-    // TODO(ROU-10752): Remove theme check when sizes are defined for all themes.
-    if (theme !== 'ionic') {
-      return undefined;
-    }
 
     if (size === undefined) {
       return 'medium';

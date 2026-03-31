@@ -300,21 +300,15 @@ ion-ripple-effect {
   color: #{var(--ion-toolbar-background, var(--color))};
 }
 
-// Button Badge
-// --------------------------------------------------
-
 .button-native ion-ripple-effect,
 .button-native::after {
   @include border-radius(inherit);
 }
 
+// Button Slotted Elements
+// ---------------------------------------------
+
+// Badge Indicator
 :host(.button-has-badge) .button-native {
   --overflow: visible;
-}
-
-:host ::slotted(ion-badge[vertical]:not(:empty)) {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
 }
