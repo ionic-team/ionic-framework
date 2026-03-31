@@ -17,6 +17,14 @@
       ion-tab-bar {
         width: 100%;
       }
+
+      .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        margin: 16px;
+      }
     </style>
   </head>
 
@@ -35,15 +43,15 @@
           </ion-list-header>
           <ion-item>
             <ion-label>Badge small</ion-label>
-            <ion-badge color="primary" shape="round" size="small"></ion-badge>
+            <ion-badge hue="bold" color="primary" shape="round" size="small"></ion-badge>
           </ion-item>
           <ion-item>
             <ion-label>Badge Medium</ion-label>
-            <ion-badge color="danger" shape="round" size="medium"></ion-badge>
+            <ion-badge hue="bold" color="danger" shape="round" size="medium"></ion-badge>
           </ion-item>
           <ion-item>
             <ion-label>Badge Large</ion-label>
-            <ion-badge color="warning" shape="round" size="large"></ion-badge>
+            <ion-badge hue="bold" color="warning" shape="round" size="large"></ion-badge>
           </ion-item>
         </ion-list>
 
@@ -52,184 +60,184 @@
             <ion-label> Inside Avatar </ion-label>
           </ion-list-header>
 
-          <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
+          <div class="row">
             <ion-avatar size="xxsmall">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="top"></ion-badge>
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="top"></ion-badge>
             </ion-avatar>
             <ion-avatar size="xsmall">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="top"></ion-badge>
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="top"></ion-badge>
             </ion-avatar>
             <ion-avatar size="small">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="medium" vertical="top"></ion-badge>
+              <ion-badge hue="bold" color="danger" shape="round" size="medium" vertical="top"></ion-badge>
             </ion-avatar>
             <ion-avatar size="medium">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="medium" vertical="top"></ion-badge>
+              <ion-badge hue="bold" color="danger" shape="round" size="medium" vertical="top"></ion-badge>
             </ion-avatar>
             <ion-avatar size="large">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="medium" vertical="top"></ion-badge>
+              <ion-badge hue="bold" color="danger" shape="round" size="medium" vertical="top"></ion-badge>
             </ion-avatar>
             <ion-avatar size="xlarge">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="large" vertical="top"></ion-badge>
+              <ion-badge hue="bold" color="danger" shape="round" size="large" vertical="top"></ion-badge>
             </ion-avatar>
           </div>
-          <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
+          <div class="row">
             <ion-avatar size="xxsmall">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="bottom"></ion-badge>
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="bottom"></ion-badge>
             </ion-avatar>
             <ion-avatar size="xsmall">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="bottom"></ion-badge>
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="bottom"></ion-badge>
             </ion-avatar>
             <ion-avatar size="small">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="medium" vertical="bottom"></ion-badge>
+              <ion-badge hue="bold" color="danger" shape="round" size="medium" vertical="bottom"></ion-badge>
             </ion-avatar>
             <ion-avatar size="medium">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="medium" vertical="bottom"></ion-badge>
+              <ion-badge hue="bold" color="danger" shape="round" size="medium" vertical="bottom"></ion-badge>
             </ion-avatar>
             <ion-avatar size="large">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="medium" vertical="bottom"></ion-badge>
+              <ion-badge hue="bold" color="danger" shape="round" size="medium" vertical="bottom"></ion-badge>
             </ion-avatar>
             <ion-avatar size="xlarge">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="large" vertical="bottom"></ion-badge>
-            </ion-avatar>
-          </div>
-
-          <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
-            <ion-avatar size="xxsmall">
-              <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="top">1</ion-badge>
-            </ion-avatar>
-            <ion-avatar size="xsmall">
-              <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="top">1</ion-badge>
-            </ion-avatar>
-            <ion-avatar size="small">
-              <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="top">1</ion-badge>
-            </ion-avatar>
-            <ion-avatar size="medium">
-              <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="top">1</ion-badge>
-            </ion-avatar>
-            <ion-avatar size="large">
-              <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="top">1</ion-badge>
-            </ion-avatar>
-            <ion-avatar size="xlarge">
-              <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="top">1</ion-badge>
-            </ion-avatar>
-          </div>
-          <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
-            <ion-avatar size="xxsmall">
-              <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="bottom">1</ion-badge>
-            </ion-avatar>
-            <ion-avatar size="xsmall">
-              <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="bottom">1</ion-badge>
-            </ion-avatar>
-            <ion-avatar size="small">
-              <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="bottom">1</ion-badge>
-            </ion-avatar>
-            <ion-avatar size="medium">
-              <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="bottom">1</ion-badge>
-            </ion-avatar>
-            <ion-avatar size="large">
-              <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="bottom">1</ion-badge>
-            </ion-avatar>
-            <ion-avatar size="xlarge">
-              <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="bottom">1</ion-badge>
+              <ion-badge hue="bold" color="danger" shape="round" size="large" vertical="bottom"></ion-badge>
             </ion-avatar>
           </div>
 
-          <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
+          <div class="row">
             <ion-avatar size="xxsmall">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="top">
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="top">1</ion-badge>
+            </ion-avatar>
+            <ion-avatar size="xsmall">
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="top">1</ion-badge>
+            </ion-avatar>
+            <ion-avatar size="small">
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="top">1</ion-badge>
+            </ion-avatar>
+            <ion-avatar size="medium">
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="top">1</ion-badge>
+            </ion-avatar>
+            <ion-avatar size="large">
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="top">1</ion-badge>
+            </ion-avatar>
+            <ion-avatar size="xlarge">
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="top">1</ion-badge>
+            </ion-avatar>
+          </div>
+          <div class="row">
+            <ion-avatar size="xxsmall">
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="bottom">1</ion-badge>
+            </ion-avatar>
+            <ion-avatar size="xsmall">
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="bottom">1</ion-badge>
+            </ion-avatar>
+            <ion-avatar size="small">
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="bottom">1</ion-badge>
+            </ion-avatar>
+            <ion-avatar size="medium">
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="bottom">1</ion-badge>
+            </ion-avatar>
+            <ion-avatar size="large">
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="bottom">1</ion-badge>
+            </ion-avatar>
+            <ion-avatar size="xlarge">
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="bottom">1</ion-badge>
+            </ion-avatar>
+          </div>
+
+          <div class="row">
+            <ion-avatar size="xxsmall">
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="top">
                 <ion-icon icon="star"></ion-icon>
               </ion-badge>
             </ion-avatar>
             <ion-avatar size="xsmall">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="top">
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="top">
                 <ion-icon icon="star"></ion-icon>
               </ion-badge>
             </ion-avatar>
             <ion-avatar size="small">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="top">
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="top">
                 <ion-icon icon="star"></ion-icon>
               </ion-badge>
             </ion-avatar>
             <ion-avatar size="medium">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="top">
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="top">
                 <ion-icon icon="star"></ion-icon>
               </ion-badge>
             </ion-avatar>
             <ion-avatar size="large">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="top">
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="top">
                 <ion-icon icon="star"></ion-icon>
               </ion-badge>
             </ion-avatar>
             <ion-avatar size="xlarge">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="top">
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="top">
                 <ion-icon icon="star"></ion-icon>
               </ion-badge>
             </ion-avatar>
           </div>
-          <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
+          <div class="row">
             <ion-avatar size="xxsmall">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="bottom">
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="bottom">
                 <ion-icon icon="star"></ion-icon>
               </ion-badge>
             </ion-avatar>
             <ion-avatar size="xsmall">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="bottom">
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="bottom">
                 <ion-icon icon="star"></ion-icon>
               </ion-badge>
             </ion-avatar>
             <ion-avatar size="small">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="bottom">
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="bottom">
                 <ion-icon icon="star"></ion-icon>
               </ion-badge>
             </ion-avatar>
             <ion-avatar size="medium">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="bottom">
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="bottom">
                 <ion-icon icon="star"></ion-icon>
               </ion-badge>
             </ion-avatar>
             <ion-avatar size="large">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="bottom">
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="bottom">
                 <ion-icon icon="star"></ion-icon>
               </ion-badge>
             </ion-avatar>
             <ion-avatar size="xlarge">
               <img src="/src/components/avatar/test/avatar.svg" />
-              <ion-badge color="danger" shape="round" size="small" vertical="bottom">
+              <ion-badge hue="bold" color="danger" shape="round" size="small" vertical="bottom">
                 <ion-icon icon="star"></ion-icon>
               </ion-badge>
             </ion-avatar>
@@ -241,18 +249,18 @@
             <ion-label> Inside Tab Button - Top Icon </ion-label>
           </ion-list-header>
 
-          <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
+          <div class="row">
             <ion-tab-bar>
               <ion-tab-button href="" tab="tab-one">
                 <ion-label>Tab One</ion-label>
                 <ion-icon name="star"></ion-icon>
-                <ion-badge shape="round" size="small" vertical="top" color="danger">9</ion-badge>
+                <ion-badge hue="bold" shape="round" size="small" vertical="top" color="danger">9</ion-badge>
               </ion-tab-button>
 
               <ion-tab-button tab="schedule" class="e2eTabTwoButton">
                 <ion-label>Tab Two</ion-label>
                 <ion-icon name="globe"></ion-icon>
-                <ion-badge shape="round" size="small" vertical="top" color="primary">
+                <ion-badge hue="bold" shape="round" size="small" vertical="top" color="primary">
                   <ion-icon name="star"></ion-icon>
                 </ion-badge>
               </ion-tab-button>
@@ -260,28 +268,28 @@
               <ion-tab-button tab="tab-three">
                 <ion-label>Tab Three</ion-label>
                 <ion-icon name="logo-facebook"></ion-icon>
-                <ion-badge shape="round" size="small" vertical="top" color="warning">999</ion-badge>
+                <ion-badge hue="bold" shape="round" size="small" vertical="top" color="warning">999</ion-badge>
               </ion-tab-button>
 
               <ion-tab-button tab="tab-four" class="e2eTabFourButton">
                 <ion-label>Tab Four</ion-label>
                 <ion-icon name="chatbox"></ion-icon>
-                <ion-badge shape="round" vertical="top" color="success" size="small"></ion-badge>
+                <ion-badge hue="bold" shape="round" vertical="top" color="success" size="small"></ion-badge>
               </ion-tab-button>
             </ion-tab-bar>
           </div>
-          <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
+          <div class="row">
             <ion-tab-bar>
               <ion-tab-button href="" tab="tab-one">
                 <ion-label>Tab One</ion-label>
                 <ion-icon name="star"></ion-icon>
-                <ion-badge shape="round" size="small" vertical="bottom" color="danger">9</ion-badge>
+                <ion-badge hue="bold" shape="round" size="small" vertical="bottom" color="danger">9</ion-badge>
               </ion-tab-button>
 
               <ion-tab-button tab="schedule" class="e2eTabTwoButton">
                 <ion-label>Tab Two</ion-label>
                 <ion-icon name="globe"></ion-icon>
-                <ion-badge shape="round" size="small" vertical="bottom" color="primary">
+                <ion-badge hue="bold" shape="round" size="small" vertical="bottom" color="primary">
                   <ion-icon name="star"></ion-icon>
                 </ion-badge>
               </ion-tab-button>
@@ -289,13 +297,13 @@
               <ion-tab-button tab="tab-three">
                 <ion-label>Tab Three</ion-label>
                 <ion-icon name="logo-facebook"></ion-icon>
-                <ion-badge shape="round" size="small" vertical="bottom" color="warning">999</ion-badge>
+                <ion-badge hue="bold" shape="round" size="small" vertical="bottom" color="warning">999</ion-badge>
               </ion-tab-button>
 
               <ion-tab-button tab="tab-four" class="e2eTabFourButton">
                 <ion-label>Tab Four</ion-label>
                 <ion-icon name="chatbox"></ion-icon>
-                <ion-badge shape="round" vertical="bottom" color="success" size="small"></ion-badge>
+                <ion-badge hue="bold" shape="round" vertical="bottom" color="success" size="small"></ion-badge>
               </ion-tab-button>
             </ion-tab-bar>
           </div>
@@ -306,18 +314,18 @@
             <ion-label> Inside Tab Button - Bottom Icon </ion-label>
           </ion-list-header>
 
-          <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
+          <div class="row">
             <ion-tab-bar>
               <ion-tab-button href="" tab="tab-one" layout="icon-bottom">
                 <ion-label>Tab One</ion-label>
                 <ion-icon name="star"></ion-icon>
-                <ion-badge shape="round" size="small" vertical="top" color="danger">9</ion-badge>
+                <ion-badge hue="bold" shape="round" size="small" vertical="top" color="danger">9</ion-badge>
               </ion-tab-button>
 
               <ion-tab-button tab="schedule" class="e2eTabTwoButton" layout="icon-bottom">
                 <ion-label>Tab Two</ion-label>
                 <ion-icon name="globe"></ion-icon>
-                <ion-badge shape="round" size="small" vertical="top" color="primary">
+                <ion-badge hue="bold" shape="round" size="small" vertical="top" color="primary">
                   <ion-icon name="star"></ion-icon>
                 </ion-badge>
               </ion-tab-button>
@@ -325,28 +333,28 @@
               <ion-tab-button tab="tab-three" layout="icon-bottom">
                 <ion-label>Tab Three</ion-label>
                 <ion-icon name="logo-facebook"></ion-icon>
-                <ion-badge shape="round" size="small" vertical="top" color="warning">999</ion-badge>
+                <ion-badge hue="bold" shape="round" size="small" vertical="top" color="warning">999</ion-badge>
               </ion-tab-button>
 
               <ion-tab-button tab="tab-four" class="e2eTabFourButton" layout="icon-bottom">
                 <ion-label>Tab Four</ion-label>
                 <ion-icon name="chatbox"></ion-icon>
-                <ion-badge shape="round" vertical="top" color="success" size="small"></ion-badge>
+                <ion-badge hue="bold" shape="round" vertical="top" color="success" size="small"></ion-badge>
               </ion-tab-button>
             </ion-tab-bar>
           </div>
-          <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
+          <div class="row">
             <ion-tab-bar>
               <ion-tab-button href="" tab="tab-one" layout="icon-bottom">
                 <ion-label>Tab One</ion-label>
                 <ion-icon name="star"></ion-icon>
-                <ion-badge shape="round" size="small" vertical="bottom" color="danger">9</ion-badge>
+                <ion-badge hue="bold" shape="round" size="small" vertical="bottom" color="danger">9</ion-badge>
               </ion-tab-button>
 
               <ion-tab-button tab="schedule" class="e2eTabTwoButton" layout="icon-bottom">
                 <ion-label>Tab Two</ion-label>
                 <ion-icon name="globe"></ion-icon>
-                <ion-badge shape="round" size="small" vertical="bottom" color="primary">
+                <ion-badge hue="bold" shape="round" size="small" vertical="bottom" color="primary">
                   <ion-icon name="star"></ion-icon>
                 </ion-badge>
               </ion-tab-button>
@@ -354,13 +362,13 @@
               <ion-tab-button tab="tab-three" layout="icon-bottom">
                 <ion-label>Tab Three</ion-label>
                 <ion-icon name="logo-facebook"></ion-icon>
-                <ion-badge shape="round" size="small" vertical="bottom" color="warning">999</ion-badge>
+                <ion-badge hue="bold" shape="round" size="small" vertical="bottom" color="warning">999</ion-badge>
               </ion-tab-button>
 
               <ion-tab-button tab="tab-four" class="e2eTabFourButton" layout="icon-bottom">
                 <ion-label>Tab Four</ion-label>
                 <ion-icon name="chatbox"></ion-icon>
-                <ion-badge shape="round" vertical="bottom" color="success" size="small"></ion-badge>
+                <ion-badge hue="bold" shape="round" vertical="bottom" color="success" size="small"></ion-badge>
               </ion-tab-button>
             </ion-tab-bar>
           </div>
@@ -370,22 +378,22 @@
           <ion-list-header>
             <ion-label> Inside Button - Top Placement </ion-label>
           </ion-list-header>
-          <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
+          <div class="row">
             <ion-button fill="clear">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="round" color="danger" size="medium" vertical="top"></ion-badge>
+              <ion-badge hue="bold" shape="round" color="danger" size="small" vertical="top"></ion-badge>
             </ion-button>
             <ion-button fill="clear">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="soft" color="danger" size="small" vertical="top">1</ion-badge>
+              <ion-badge hue="bold" shape="soft" color="danger" size="small" vertical="top">1</ion-badge>
             </ion-button>
             <ion-button fill="clear">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="soft" color="danger" size="small" vertical="top">99+</ion-badge>
+              <ion-badge hue="bold" shape="soft" color="danger" size="small" vertical="top">99+</ion-badge>
             </ion-button>
             <ion-button fill="clear">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="soft" color="danger" size="small" vertical="top">
+              <ion-badge hue="bold" shape="soft" color="danger" size="small" vertical="top">
                 <ion-icon name="star"></ion-icon>
               </ion-badge>
             </ion-button>
@@ -396,22 +404,22 @@
           <ion-list-header>
             <ion-label> Inside Button - Bottom Placement </ion-label>
           </ion-list-header>
-          <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
+          <div class="row">
             <ion-button fill="clear">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="round" color="danger" size="medium" vertical="bottom"></ion-badge>
+              <ion-badge hue="bold" shape="round" color="danger" size="small" vertical="bottom"></ion-badge>
             </ion-button>
             <ion-button fill="clear">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="soft" color="danger" size="small" vertical="bottom">1</ion-badge>
+              <ion-badge hue="bold" shape="soft" color="danger" size="small" vertical="bottom">1</ion-badge>
             </ion-button>
             <ion-button fill="clear">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="soft" color="danger" size="small" vertical="bottom">99+</ion-badge>
+              <ion-badge hue="bold" shape="soft" color="danger" size="small" vertical="bottom">99+</ion-badge>
             </ion-button>
             <ion-button fill="clear">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="soft" color="danger" size="small" vertical="bottom">
+              <ion-badge hue="bold" shape="soft" color="danger" size="small" vertical="bottom">
                 <ion-icon name="star"></ion-icon>
               </ion-badge>
             </ion-button>
@@ -421,40 +429,40 @@
           <ion-list-header>
             <ion-label> Inside Button - Button Size </ion-label>
           </ion-list-header>
-          <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
+          <div class="row">
             <ion-button fill="clear">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="soft" color="danger" size="small" vertical="top">1</ion-badge>
+              <ion-badge hue="bold" shape="soft" color="danger" size="small" vertical="top">1</ion-badge>
             </ion-button>
             <ion-button fill="clear" size="small">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="soft" color="danger" size="small" vertical="top">1</ion-badge>
+              <ion-badge hue="bold" shape="soft" color="danger" size="small" vertical="top">1</ion-badge>
             </ion-button>
             <ion-button fill="clear" size="medium">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="soft" color="danger" size="small" vertical="top">1</ion-badge>
+              <ion-badge hue="bold" shape="soft" color="danger" size="small" vertical="top">1</ion-badge>
             </ion-button>
             <ion-button fill="clear" size="large">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="soft" color="danger" size="small" vertical="top">1</ion-badge>
+              <ion-badge hue="bold" shape="soft" color="danger" size="small" vertical="top">1</ion-badge>
             </ion-button>
           </div>
-          <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
+          <div class="row">
             <ion-button fill="clear">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="soft" color="danger" size="small" vertical="bottom">1</ion-badge>
+              <ion-badge hue="bold" shape="soft" color="danger" size="small" vertical="bottom">1</ion-badge>
             </ion-button>
             <ion-button fill="clear" size="small">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="soft" color="danger" size="small" vertical="bottom">1</ion-badge>
+              <ion-badge hue="bold" shape="soft" color="danger" size="small" vertical="bottom">1</ion-badge>
             </ion-button>
             <ion-button fill="clear" size="medium">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="soft" color="danger" size="small" vertical="bottom">1</ion-badge>
+              <ion-badge hue="bold" shape="soft" color="danger" size="small" vertical="bottom">1</ion-badge>
             </ion-button>
             <ion-button fill="clear" size="large">
               <ion-icon slot="icon-only" name="add"></ion-icon>
-              <ion-badge shape="soft" color="danger" size="small" vertical="bottom">1</ion-badge>
+              <ion-badge hue="bold" shape="soft" color="danger" size="small" vertical="bottom">1</ion-badge>
             </ion-button>
           </div>
         </ion-list>

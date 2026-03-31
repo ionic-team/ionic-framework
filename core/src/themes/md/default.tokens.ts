@@ -105,16 +105,9 @@ export const defaultTheme: DefaultTheme = {
 
   components: {
     IonBadge: {
-      display: 'inline-block',
-
       font: {
-        // size: dynamicFont(13), // TODO: uncomment this when dynamic font is implemented
-        size: `13px`, // TODO: remove this when dynamic font is implemented
+        size: dynamicFont(global.root, 13),
         weight: 'var(--ion-font-weight-bold)',
-      },
-
-      line: {
-        height: '1',
       },
 
       // Hues
@@ -183,6 +176,15 @@ export const defaultTheme: DefaultTheme = {
               bottom: 'var(--ion-spacing-xxs)',
               start: 'var(--ion-spacing-xxs)',
             },
+
+            font: {
+              size: dynamicFont(global.root, 13),
+              weight: 'var(--ion-font-weight-bold)',
+            },
+
+            line: {
+              height: '1',
+            },
           },
 
           empty: {
@@ -205,6 +207,15 @@ export const defaultTheme: DefaultTheme = {
               end: 'var(--ion-spacing-xs)',
               bottom: 'var(--ion-spacing-xs)',
               start: 'var(--ion-spacing-xs)',
+            },
+
+            font: {
+              size: dynamicFont(global.root, 13),
+              weight: 'var(--ion-font-weight-bold)',
+            },
+
+            line: {
+              height: '1',
             },
           },
 
@@ -229,6 +240,15 @@ export const defaultTheme: DefaultTheme = {
               bottom: 'var(--ion-spacing-sm)',
               start: 'var(--ion-spacing-sm)',
             },
+
+            font: {
+              size: dynamicFont(global.root, 13),
+              weight: 'var(--ion-font-weight-bold)',
+            },
+
+            line: {
+              height: '1',
+            },
           },
 
           empty: {
@@ -240,43 +260,29 @@ export const defaultTheme: DefaultTheme = {
           },
         },
       },
+    },
 
-      indicator: {
-        in: {
-          button: {
-            default: {
-              height: 'var(--ion-scaling-xxxs)',
+    IonButton: {
+      badge: {
+        indicator: {
+          height: 'var(--ion-scaling-xxxs)',
 
-              min: {
-                width: 'var(--ion-scaling-xxxs)',
-              },
-
-              line: {
-                height: 'var(--ion-scaling-xxs)',
-              },
-
-              font: {
-                size: `${(12 / global.root).toFixed(2)}rem`,
-              },
-
-              icon: {
-                width: 'var(--ion-scaling-xxxxs)',
-                height: 'var(--ion-scaling-xxxxs)',
-              },
-            },
+          min: {
+            width: 'var(--ion-scaling-xxxs)',
           },
 
-          tab: {
-            button: {
-              default: {
-                position: 'absolute',
-              },
-            },
+          line: {
+            height: 'var(--ion-scaling-xxs)',
           },
-        },
 
-        icon: {
-          position: {},
+          font: {
+            size: `${(12 / global.root).toFixed(2)}rem`,
+          },
+
+          icon: {
+            width: 'var(--ion-scaling-xxxxs)',
+            height: 'var(--ion-scaling-xxxxs)',
+          },
         },
       },
     },
@@ -847,6 +853,14 @@ export const defaultTheme: DefaultTheme = {
         xlarge: {
           width: 'var(--ion-scaling-xxxl)',
           height: 'var(--ion-scaling-xxxl)',
+        },
+      },
+    },
+
+    IonTabButton: {
+      badge: {
+        indicator: {
+          position: 'absolute',
         },
       },
     },

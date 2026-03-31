@@ -1,4 +1,4 @@
-import { currentColor, mix, dynamicFont } from '../../utils/theme';
+import { currentColor, mix, dynamicFont, ionColor } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
@@ -100,6 +100,501 @@ export const defaultTheme: DefaultTheme = {
   },
 
   components: {
+    IonAvatar: {
+      size: {
+        xxsmall: {
+          badge: {
+            indicator: {
+              default: {
+                top: {
+                  translate: {
+                    x: '50%',
+                    y: '-50%',
+                  },
+
+                  position: {
+                    top: 'var(--ion-scaling-50)',
+                    end: 'var(--ion-scaling-0)',
+                  },
+                },
+
+                bottom: {
+                  translate: {
+                    x: '100%',
+                    y: '100%',
+                  },
+
+                  position: {
+                    end: 'var(--ion-scaling-100)',
+                    bottom: 'var(--ion-scaling-100)',
+                  },
+                },
+              },
+
+              empty: {
+                top: {
+                  translate: {
+                    x: 'var(--ion-scaling-100)',
+                    y: 'calc(var(--ion-scaling-100) * -1)',
+                  },
+                },
+
+                bottom: {
+                  translate: {
+                    x: 'var(--ion-scaling-100)',
+                    y: 'var(--ion-scaling-100)',
+                  },
+                },
+              },
+            },
+          },
+        },
+
+        xsmall: {
+          badge: {
+            indicator: {
+              default: {
+                top: {
+                  translate: {
+                    x: '50%',
+                    y: '-50%',
+                  },
+
+                  position: {
+                    top: 'var(--ion-scaling-100)',
+                    end: 'var(--ion-scaling-50)',
+                  },
+                },
+
+                bottom: {
+                  translate: {
+                    x: '50%',
+                    y: '50%',
+                  },
+
+                  position: {
+                    end: 'calc(var(--ion-scaling-50) * -1)',
+                    bottom: 'calc(var(--ion-scaling-50) * -1)',
+                  },
+                },
+              },
+
+              empty: {
+                top: {
+                  translate: {
+                    x: 'var(--ion-scaling-50)',
+                    y: 'calc(var(--ion-scaling-50) * -1)',
+                  },
+                },
+
+                bottom: {
+                  translate: {
+                    x: 'var(--ion-scaling-0)',
+                    y: 'var(--ion-scaling-100)',
+                  },
+                },
+              },
+            },
+          },
+        },
+
+        small: {
+          badge: {
+            indicator: {
+              default: {
+                top: {
+                  translate: {
+                    x: '50%',
+                    y: '-50%',
+                  },
+
+                  position: {
+                    top: 'var(--ion-scaling-150)',
+                    end: 'var(--ion-scaling-0)',
+                  },
+                },
+
+                bottom: {
+                  translate: {
+                    x: '50%',
+                    y: '50%',
+                  },
+
+                  position: {
+                    end: 'var(--ion-scaling-50)',
+                    bottom: 'var(--ion-scaling-50)',
+                  },
+                },
+              },
+
+              empty: {
+                top: {
+                  translate: {
+                    x: 'var(--ion-scaling-50)',
+                    y: 'calc(var(--ion-scaling-50) * -1)',
+                  },
+                },
+
+                bottom: {
+                  translate: {
+                    x: 'var(--ion-scaling-0)',
+                    y: 'var(--ion-scaling-100)',
+                  },
+                },
+              },
+            },
+          },
+        },
+
+        medium: {
+          badge: {
+            indicator: {
+              default: {
+                top: {
+                  translate: {
+                    x: '50%',
+                    y: '-50%',
+                  },
+
+                  position: {
+                    top: 'var(--ion-scaling-150)',
+                    end: 'var(--ion-scaling-0)',
+                  },
+                },
+
+                bottom: {
+                  translate: {
+                    x: '50%',
+                    y: '50%',
+                  },
+
+                  position: {
+                    end: 'var(--ion-scaling-50)',
+                    bottom: 'var(--ion-scaling-50)',
+                  },
+                },
+              },
+
+              empty: {
+                top: {
+                  translate: {
+                    x: 'var(--ion-scaling-50)',
+                    y: 'calc(var(--ion-scaling-50) * -1)',
+                  },
+                },
+
+                bottom: {
+                  translate: {
+                    x: 'var(--ion-scaling-0)',
+                    y: 'var(--ion-scaling-100)',
+                  },
+                },
+              },
+            },
+          },
+        },
+
+        large: {
+          badge: {
+            indicator: {
+              default: {
+                top: {
+                  translate: {
+                    x: '50%',
+                    y: '-50%',
+                  },
+
+                  position: {
+                    top: 'var(--ion-scaling-150)',
+                    end: 'var(--ion-scaling-50)',
+                  },
+                },
+
+                bottom: {
+                  translate: {
+                    x: '50%',
+                    y: '50%',
+                  },
+
+                  position: {
+                    end: 'var(--ion-scaling-50)',
+                    bottom: 'var(--ion-scaling-50)',
+                  },
+                },
+              },
+
+              empty: {
+                top: {
+                  translate: {
+                    x: 'var(--ion-scaling-50)',
+                    y: 'calc(var(--ion-scaling-50) * -1)',
+                  },
+                },
+
+                bottom: {
+                  translate: {
+                    x: 'var(--ion-scaling-0)',
+                    y: 'var(--ion-scaling-100)',
+                  },
+                },
+              },
+            },
+          },
+        },
+
+        xlarge: {
+          badge: {
+            indicator: {
+              default: {
+                top: {
+                  translate: {
+                    x: '50%',
+                    y: '-50%',
+                  },
+
+                  position: {
+                    top: 'var(--ion-scaling-150)',
+                    end: 'var(--ion-scaling-150)',
+                  },
+                },
+
+                bottom: {
+                  translate: {
+                    x: '50%',
+                    y: '50%',
+                  },
+
+                  position: {
+                    end: 'var(--ion-scaling-150)',
+                    bottom: 'var(--ion-scaling-150)',
+                  },
+                },
+              },
+
+              empty: {
+                top: {
+                  translate: {
+                    x: 'var(--ion-scaling-50)',
+                    y: 'calc(var(--ion-scaling-50) * -1)',
+                  },
+                },
+
+                bottom: {
+                  translate: {
+                    x: 'var(--ion-scaling-0)',
+                    y: 'var(--ion-scaling-100)',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+
+    IonBadge: {
+      // Hues
+      hue: {
+        bold: {
+          default: {
+            background: ionColor('primary', 'base'),
+            color: ionColor('primary', 'contrast'),
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base'),
+              color: currentColor('contrast'),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            background: ionColor('primary', 'base', { subtle: true }),
+            color: ionColor('primary', 'contrast', { subtle: true }),
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base', { subtle: true }),
+              color: currentColor('contrast', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      // Shapes
+      shape: {
+        crisp: {
+          border: {
+            radius: 'var(--ion-radii-sm)',
+          },
+        },
+
+        soft: {
+          border: {
+            radius: 'var(--ion-radii-md)',
+          },
+        },
+
+        round: {
+          border: {
+            radius: 'var(--ion-radii-xxxxl)',
+          },
+        },
+
+        rectangular: {
+          border: {
+            radius: 'var(--ion-radii-xxxxs)',
+          },
+        },
+      },
+
+      // Sizes
+      size: {
+        small: {
+          default: {
+            height: 'var(--ion-scaling-xxxs)',
+            letterSpacing: '0%',
+
+            min: {
+              width: 'var(--ion-scaling-xxxs)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-xxxs)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-xxxs)',
+            },
+
+            font: {
+              size: 'var(--ion-font-size-xs)',
+              weight: 'var(--ion-font-weight-medium)',
+            },
+
+            line: {
+              height: 'var(--ion-scaling-xxs)',
+            },
+
+            icon: {
+              width: 'var(--ion-scaling-xxxxs)',
+              height: 'var(--ion-scaling-xxxxs)',
+            },
+          },
+
+          empty: {
+            height: 'var(--ion-scaling-200)',
+
+            min: {
+              width: 'var(--ion-scaling-200)',
+            },
+          },
+        },
+
+        medium: {
+          default: {
+            height: 'var(--ion-scaling-xs)',
+            letterSpacing: '0%',
+
+            min: {
+              width: 'var(--ion-scaling-xs)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-xxs)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-xxs)',
+            },
+
+            font: {
+              size: 'var(--ion-font-size-sm)',
+              weight: 'var(--ion-font-weight-medium)',
+            },
+
+            line: {
+              height: 'var(--ion-scaling-xs)',
+            },
+
+            icon: {
+              width: 'var(--ion-scaling-xxxs)',
+              height: 'var(--ion-scaling-xxxs)',
+            },
+          },
+
+          empty: {
+            height: 'var(--ion-scaling-xxxxs)',
+
+            min: {
+              width: 'var(--ion-scaling-xxxxs)',
+            },
+          },
+        },
+
+        large: {
+          default: {
+            height: 'var(--ion-scaling-xs)',
+            letterSpacing: '0%',
+
+            min: {
+              width: 'var(--ion-scaling-xs)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-xxs)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-xxs)',
+            },
+
+            font: {
+              size: 'var(--ion-font-size-sm)',
+              weight: 'var(--ion-font-weight-medium)',
+            },
+
+            line: {
+              height: 'var(--ion-scaling-xs)',
+            },
+
+            icon: {
+              width: 'var(--ion-scaling-xxxs)',
+              height: 'var(--ion-scaling-xxxs)',
+            },
+          },
+
+          empty: {
+            height: 'var(--ion-scaling-xxxs)',
+
+            min: {
+              width: 'var(--ion-scaling-xxxs)',
+            },
+          },
+        },
+      },
+
+      indicator: {
+        height: 'var(--ion-scaling-xxxs)',
+
+        min: {
+          width: 'var(--ion-scaling-xxxs)',
+        },
+
+        padding: {
+          top: 'var(--ion-spacing-0)',
+          end: 'var(--ion-spacing-xxxs)',
+          bottom: 'var(--ion-spacing-0)',
+          start: 'var(--ion-spacing-xxxs)',
+        },
+
+        icon: {
+          width: 'var(--ion-scaling-xxxxs)',
+          height: 'var(--ion-scaling-xxxxs)',
+        },
+      },
+    },
+
     IonChip: {
       margin: {
         top: 'var(--ion-spacing-0)',
@@ -539,6 +1034,14 @@ export const defaultTheme: DefaultTheme = {
         xlarge: {
           width: 'var(--ion-scaling-xxl)',
           height: 'var(--ion-scaling-xxl)',
+        },
+      },
+    },
+
+    IonTabButton: {
+      badge: {
+        indicator: {
+          position: 'relative',
         },
       },
     },

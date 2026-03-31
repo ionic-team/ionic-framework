@@ -34,13 +34,14 @@ export class Badge implements ComponentInterface {
   @Prop() hue?: 'bold' | 'subtle';
 
   /**
-   * Set to `"soft"` for a badge with slightly rounded corners,
+   * Set to `"crisp"` for a badge with even slightly rounded corners,
+   * `"soft"` for a badge with slightly rounded corners,
    * `"round"` for a badge with fully rounded corners,
    * or `"rectangular"` for a badge without rounded corners.
    *
    * Defaults to `"soft"` if both the shape property and theme config are unset.
    */
-  @Prop() shape?: 'soft' | 'round' | 'rectangular';
+  @Prop() shape?: 'crisp' | 'soft' | 'round' | 'rectangular';
 
   /**
    * Set to `"small"` for a smaller size.

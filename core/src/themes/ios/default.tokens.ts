@@ -102,18 +102,6 @@ export const defaultTheme: DefaultTheme = {
 
   components: {
     IonBadge: {
-      display: 'inline-block',
-
-      font: {
-        // size: dynamicFontMin(1, 13), // TODO: uncomment this when dynamic font is implemented
-        size: `13px`, // TODO: remove this when dynamic font is implemented
-        weight: 'var(--ion-font-weight-bold)',
-      },
-
-      line: {
-        height: '1',
-      },
-
       // Hues
       hue: {
         bold: {
@@ -186,6 +174,15 @@ export const defaultTheme: DefaultTheme = {
               bottom: 'var(--ion-spacing-xxs)',
               start: 'var(--ion-spacing-xxs)',
             },
+
+            font: {
+              size: dynamicFont(global.root, 13),
+              weight: 'var(--ion-font-weight-bold)',
+            },
+
+            line: {
+              height: '1',
+            },
           },
 
           empty: {
@@ -209,6 +206,15 @@ export const defaultTheme: DefaultTheme = {
               bottom: 'var(--ion-spacing-xs)',
               start: 'var(--ion-spacing-xs)',
             },
+
+            font: {
+              size: dynamicFont(global.root, 13),
+              weight: 'var(--ion-font-weight-bold)',
+            },
+
+            line: {
+              height: '1',
+            },
           },
 
           empty: {
@@ -231,6 +237,15 @@ export const defaultTheme: DefaultTheme = {
               end: 'var(--ion-spacing-sm)',
               bottom: 'var(--ion-spacing-sm)',
               start: 'var(--ion-spacing-sm)',
+            },
+
+            font: {
+              size: dynamicFont(global.root, 13),
+              weight: 'var(--ion-font-weight-bold)',
+            },
+
+            line: {
+              height: '1',
             },
           },
 
@@ -276,10 +291,6 @@ export const defaultTheme: DefaultTheme = {
               },
             },
           },
-        },
-
-        icon: {
-          position: {},
         },
       },
     },

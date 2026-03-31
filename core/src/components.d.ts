@@ -477,9 +477,9 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Set to `"soft"` for a badge with slightly rounded corners, `"round"` for a badge with fully rounded corners, or `"rectangular"` for a badge without rounded corners.  Defaults to `"soft"` if both the shape property and theme config are unset.
+          * Set to `"crisp"` for a badge with even slightly rounded corners, `"soft"` for a badge with slightly rounded corners, `"round"` for a badge with fully rounded corners, or `"rectangular"` for a badge without rounded corners.  Defaults to `"soft"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'soft' | 'round' | 'rectangular';
+        "shape"?: 'crisp' | 'soft' | 'round' | 'rectangular';
         /**
           * Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a larger size.  Defaults to `"small"` if both the size property and theme config are unset.
          */
@@ -6408,9 +6408,9 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Set to `"soft"` for a badge with slightly rounded corners, `"round"` for a badge with fully rounded corners, or `"rectangular"` for a badge without rounded corners.  Defaults to `"soft"` if both the shape property and theme config are unset.
+          * Set to `"crisp"` for a badge with even slightly rounded corners, `"soft"` for a badge with slightly rounded corners, `"round"` for a badge with fully rounded corners, or `"rectangular"` for a badge without rounded corners.  Defaults to `"soft"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'soft' | 'round' | 'rectangular';
+        "shape"?: 'crisp' | 'soft' | 'round' | 'rectangular';
         /**
           * Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a larger size.  Defaults to `"small"` if both the size property and theme config are unset.
          */
