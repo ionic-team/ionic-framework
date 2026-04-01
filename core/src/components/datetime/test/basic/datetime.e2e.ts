@@ -270,6 +270,29 @@ configs().forEach(({ title, screenshot, config }) => {
       const datetime = page.locator('ion-datetime');
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-footer-custom-buttons`));
     });
+    test('should only have one active month option after changing month twice', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime value="2022-05-03"></ion-datetime>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      const nextMonthButton = page.locator('ion-datetime .calendar-next-prev ion-button').nth(1);
+      const monthYearButton = page.locator('ion-datetime .calendar-month-year');
+
+      await nextMonthButton.click();
+      await nextMonthButton.click();
+      await page.waitForChanges();
+
+      await monthYearButton.click();
+      await page.waitForChanges();
+
+      const selectedMonthOptions = page.locator('.month-column ion-picker-column-option.option-active');
+      await expect(selectedMonthOptions).toHaveCount(1);
+    });
   });
 });
 

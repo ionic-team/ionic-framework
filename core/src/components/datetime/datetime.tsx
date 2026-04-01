@@ -1086,6 +1086,9 @@ export class Datetime implements ComponentInterface {
 
   connectedCallback() {
     this.clearFocusVisible = startFocusVisible(this.el).destroy;
+    this.loadTimeout = setTimeout(() => {
+      this.ensureReadyIfVisible();
+    }, 100);
   }
 
   disconnectedCallback() {
@@ -1095,6 +1098,7 @@ export class Datetime implements ComponentInterface {
     }
     if (this.loadTimeout) {
       clearTimeout(this.loadTimeout);
+      this.loadTimeout = undefined;
     }
   }
 
