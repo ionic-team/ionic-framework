@@ -54,6 +54,14 @@ export const routes: Routes = [
       },
       { path: 'tabs-basic', loadComponent: () => import('../tabs-basic/tabs-basic.component').then(c => c.TabsBasicComponent) },
       {
+        path: 'swipe-gesture-disabled',
+        loadComponent: () => import('../swipe-gesture-disabled/swipe-gesture-disabled.component').then(c => c.SwipeGestureDisabledComponent),
+        children: [
+          { path: '', loadComponent: () => import('../swipe-gesture-disabled/swipe-gesture-disabled-main.component').then(c => c.SwipeGestureDisabledMainComponent) },
+          { path: 'details', loadComponent: () => import('../swipe-gesture-disabled/swipe-gesture-disabled-details.component').then(c => c.SwipeGestureDisabledDetailsComponent) }
+        ]
+      },
+      {
         path: 'validation',
         children: [
           { path: 'input-validation', loadComponent: () => import('../validation/input-validation/input-validation.component').then(c => c.InputValidationComponent) },

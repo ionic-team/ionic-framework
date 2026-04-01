@@ -19,22 +19,6 @@ test.describe('Routing', () => {
     await expect(page.locator('app-router-link-page')).toHaveAttribute('class', 'ion-page can-go-back');
   });
 
-  test('should not swipe back when swipeGesture is false', async ({ page }) => {
-    await page.locator('#routerLink').click();
-
-    await ionPageHidden(page, 'app-router-link');
-    await ionPageVisible(page, 'app-router-link-page');
-
-    await page.locator('ion-router-outlet').evaluate((el: any) => {
-      el.swipeGesture = false;
-    });
-
-    await ionSwipeToGoBack(page, true);
-
-    await ionPageVisible(page, 'app-router-link-page');
-    await ionPageHidden(page, 'app-router-link');
-  });
-
   test('should swipe and go back', async ({ page }) => {
     await page.locator('#routerLink').click();
 
