@@ -1033,6 +1033,11 @@ export class Datetime implements ComponentInterface {
           if (this.resolveForceDateScrolling) {
             this.resolveForceDateScrolling();
           }
+
+          const activeEl = this.el.shadowRoot!.activeElement as HTMLElement | null;
+          if (activeEl && activeEl.classList.contains('calendar-day')) {
+            (activeEl.closest('.calendar-body') as HTMLElement | null)?.focus();
+          }
         });
       };
 
@@ -1540,9 +1545,11 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
+    const left = (prevMonth as HTMLElement).offsetWidth * 2;
+
     calendarBodyRef.scrollTo({
       top: 0,
-      left: 0,
+      left: left * (isRTL(this.el) ? 1 : -1),
       behavior: 'smooth',
     });
   };
