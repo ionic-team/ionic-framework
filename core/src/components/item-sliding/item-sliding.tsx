@@ -48,6 +48,7 @@ export class ItemSliding implements ComponentInterface {
   private optsWidthLeftSide = 0;
   private sides = ItemSide.None;
   private tmr?: ReturnType<typeof setTimeout>;
+  private animationAbortController?: AbortController;
   private leftOptions?: HTMLIonItemOptionsElement;
   private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
@@ -119,14 +120,9 @@ export class ItemSliding implements ComponentInterface {
       this.tmr = undefined;
     }
 
-    // Cancel animation if in progress
-    if ((this.state & SlidingState.AnimatingFullSwipe) !== 0) {
-      if (this.item) {
-        this.item.style.transition = '';
-        this.item.style.transform = '';
-      }
-      this.state = SlidingState.Disabled;
-    }
+    // Abort any in-progress animation. The abort handler rejects the pending
+    // promise, causing animateFullSwipe's finally block to run cleanup.
+    this.animationAbortController?.abort();
 
     this.item = null;
     this.leftOptions = this.rightOptions = undefined;
@@ -168,6 +164,10 @@ export class ItemSliding implements ComponentInterface {
    */
   @Method()
   async open(side: Side | undefined) {
+    if ((this.state & SlidingState.AnimatingFullSwipe) !== 0) {
+      return;
+    }
+
     /**
      * It is possible for the item to be added to the DOM
      * after the item-sliding component was created. As a result,
@@ -231,6 +231,9 @@ export class ItemSliding implements ComponentInterface {
    */
   @Method()
   async close() {
+    if ((this.state & SlidingState.AnimatingFullSwipe) !== 0) {
+      return;
+    }
     this.setOpenAmount(0, true);
   }
 
@@ -276,11 +279,30 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
-   * Animate the item to a specific position using CSS transitions.
-   * Returns a Promise that resolves when the animation completes.
+   * Returns a Promise that resolves after `ms` milliseconds, or rejects if the
+   * given AbortSignal is fired before the timer expires.
    */
-  private animateToPosition(position: number, duration: number): Promise<void> {
-    return new Promise((resolve) => {
+  private delay(ms: number, signal: AbortSignal): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const id = setTimeout(resolve, ms);
+      signal.addEventListener(
+        'abort',
+        () => {
+          clearTimeout(id);
+          reject(new DOMException('Animation cancelled', 'AbortError'));
+        },
+        { once: true }
+      );
+    });
+  }
+
+  /**
+   * Animate the item to a specific position using CSS transitions.
+   * Returns a Promise that resolves when the animation completes, or rejects if
+   * the given AbortSignal is fired.
+   */
+  private animateToPosition(position: number, duration: number, signal: AbortSignal): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
       if (!this.item) {
         return resolve();
       }
@@ -288,12 +310,15 @@ export class ItemSliding implements ComponentInterface {
       this.item.style.transition = `transform ${duration}ms ease-out`;
       this.item.style.transform = `translate3d(${-position}px, 0, 0)`;
 
-      // tmr is shared with setOpenAmount's close timer; this is safe because
-      // animateFullSwipe only runs while the gesture is disabled.
-      this.tmr = setTimeout(() => {
-        this.tmr = undefined;
-        resolve();
-      }, duration);
+      const id = setTimeout(resolve, duration);
+      signal.addEventListener(
+        'abort',
+        () => {
+          clearTimeout(id);
+          reject(new DOMException('Animation cancelled', 'AbortError'));
+        },
+        { once: true }
+      );
     });
   }
 
@@ -303,7 +328,7 @@ export class ItemSliding implements ComponentInterface {
    */
   private getSwipeThreshold(direction: 'start' | 'end'): number {
     const maxWidth = direction === 'end' ? this.optsWidthRightSide : this.optsWidthLeftSide;
-    return maxWidth + 30; // Slightly larger than SWIPE_MARGIN to be achievable
+    return maxWidth + SWIPE_MARGIN;
   }
 
   /**
@@ -311,6 +336,10 @@ export class ItemSliding implements ComponentInterface {
    * This is used when an expandable option is swiped beyond the threshold.
    */
   private async animateFullSwipe(direction: 'start' | 'end') {
+    const abortController = new AbortController();
+    this.animationAbortController = abortController;
+    const { signal } = abortController;
+
     // Prevent interruption during animation
     if (this.gesture) {
       this.gesture.enable(false);
@@ -327,16 +356,11 @@ export class ItemSliding implements ComponentInterface {
           ? SlidingState.End | SlidingState.SwipeEnd | SlidingState.AnimatingFullSwipe
           : SlidingState.Start | SlidingState.SwipeStart | SlidingState.AnimatingFullSwipe;
 
-      await new Promise<void>((resolve) => {
-        this.tmr = setTimeout(() => {
-          this.tmr = undefined;
-          resolve();
-        }, 100);
-      });
+      await this.delay(100, signal);
 
       // Animate off-screen while maintaining the expanded state
       const offScreenDistance = direction === 'end' ? window.innerWidth : -window.innerWidth;
-      await this.animateToPosition(offScreenDistance, 250);
+      await this.animateToPosition(offScreenDistance, 250, signal);
 
       // Trigger action
       if (options) {
@@ -344,23 +368,26 @@ export class ItemSliding implements ComponentInterface {
       }
 
       // Small delay before returning
-      await new Promise<void>((resolve) => {
-        this.tmr = setTimeout(() => {
-          this.tmr = undefined;
-          resolve();
-        }, 300);
-      });
+      await this.delay(300, signal);
 
       // Return to closed state
-      await this.animateToPosition(0, 250);
+      await this.animateToPosition(0, 250, signal);
+    } catch {
+      // Animation was aborted (e.g. component disconnected). finally handles cleanup.
     } finally {
+      this.animationAbortController = undefined;
+
       // Reset state
       if (this.item) {
         this.item.style.transition = '';
+        this.item.style.transform = '';
       }
       this.openAmount = 0;
       this.state = SlidingState.Disabled;
-      openSlidingItem = undefined;
+
+      if (openSlidingItem === this.el) {
+        openSlidingItem = undefined;
+      }
 
       if (this.gesture) {
         this.gesture.enable(!this.disabled);
@@ -503,7 +530,11 @@ export class ItemSliding implements ComponentInterface {
           rawSwipeDistance > (direction === 'end' ? this.optsWidthRightSide : this.optsWidthLeftSide) * 0.5));
 
     if (shouldTriggerFullSwipe) {
-      this.animateFullSwipe(direction);
+      this.animateFullSwipe(direction).catch(() => {
+        if (this.gesture) {
+          this.gesture.enable(!this.disabled);
+        }
+      });
       return;
     }
 
