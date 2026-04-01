@@ -108,6 +108,8 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
           onEnd: (shouldContinue) => this.stackCtrl.endBackTransition(shouldContinue),
         }
       : undefined;
+
+    this.nativeEl.swipeGesture = swipe;
   }
 
   constructor(

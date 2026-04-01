@@ -141,4 +141,17 @@ describe('Swipe To Go Back', () => {
 
     cy.ionPageVisible('params-1');
   })
+
+  it('should not swipe back when swipeGesture is false', () => {
+    cy.visit(`http://localhost:${port}/swipe-to-go-back-disabled?${IOS_MODE}`);
+    cy.ionPageVisible('disabled-main');
+
+    cy.ionNav('ion-item', 'Details');
+    cy.ionPageVisible('disabled-details');
+    cy.ionPageHidden('disabled-main');
+
+    cy.ionSwipeToGoBack(true, 'ion-router-outlet#swipe-to-go-back-disabled');
+    cy.ionPageVisible('disabled-details');
+    cy.ionPageHidden('disabled-main');
+  });
 });

@@ -1,5 +1,5 @@
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
-import { RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
+import { RouteManagerContext, StackContext, generateId } from '@ionic/react';
 import React from 'react';
 
 import { clonePageElement } from './clonePageElement';
@@ -211,12 +211,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
   async setupRouterOutlet(routerOutlet: HTMLIonRouterOutletElement) {
     const canStart = () => {
-      const config = getConfig();
-      const swipeEnabled = config && config.get('swipeBackEnabled', routerOutlet.mode === 'ios');
-      if (!swipeEnabled) {
-        return false;
-      }
-
       const { routeInfo } = this.props;
 
       const propsToUse =
