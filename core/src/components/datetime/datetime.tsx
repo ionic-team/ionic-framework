@@ -1545,9 +1545,11 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
+    const left = (prevMonth as HTMLElement).offsetWidth * 2;
+
     calendarBodyRef.scrollTo({
       top: 0,
-      left: 0,
+      left: left * (isRTL(this.el) ? 1 : -1),
       behavior: 'smooth',
     });
   };
