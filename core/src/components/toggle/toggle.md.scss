@@ -64,14 +64,9 @@
 }
 
 .toggle-inner .toggle-switch-icon {
+@include padding(1px);
 width: var(--on-off-label-icon-size);
-height: var(--on-off-label-icon-size);
-min-width: var(--on-off-label-icon-size);
-min-height: var(--on-off-label-icon-size);
-display: block;
-opacity: 0.86;
-transition: transform $toggle-md-transition-duration, opacity $toggle-md-transition-duration, color $toggle-md-transition-duration;
-}
+height: var(--on-off-label-icon-size);}
 
 // Material Design Toggle: Disabled
 // ----------------------------------------------------------
