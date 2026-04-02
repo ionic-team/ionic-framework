@@ -153,7 +153,10 @@ export class Checkbox implements ComponentInterface {
 
     // Watch for class changes to update validation state.
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
-      this.validationObserver = new MutationObserver(() => {
+      this.validationObserver = new MutationObserver((mutations) => {
+        if (mutations.some((mutation) => mutation.type === 'characterData')) {
+          this.hasLabelContent = this.el.textContent !== '';
+        }
         const newIsInvalid = checkInvalidState(el);
         if (this.isInvalid !== newIsInvalid) {
           this.isInvalid = newIsInvalid;
@@ -184,11 +187,14 @@ export class Checkbox implements ComponentInterface {
       this.validationObserver.observe(el, {
         attributes: true,
         attributeFilter: ['class'],
+        characterData: true,
+        subtree: true,
       });
     }
 
     // Always set initial state
     this.isInvalid = checkInvalidState(el);
+    this.hasLabelContent = this.el.textContent !== '';
   }
 
   componentWillLoad() {
@@ -265,10 +271,6 @@ export class Checkbox implements ComponentInterface {
    */
   private onDivLabelClick = (ev: MouseEvent) => {
     ev.stopPropagation();
-  };
-
-  private onSlotChange = () => {
-    this.hasLabelContent = this.el.textContent !== '';
   };
 
   private getHintTextId(): string | undefined {
@@ -387,7 +389,7 @@ export class Checkbox implements ComponentInterface {
             id={this.inputLabelId}
             onClick={this.onDivLabelClick}
           >
-            <slot onSlotchange={this.onSlotChange}></slot>
+            <slot></slot>
             {this.renderHintText()}
           </div>
           <div class="native-wrapper">
