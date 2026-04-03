@@ -642,6 +642,28 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
       }
     }
 
+    // When a replace action targets the same URL as the immediately previous
+    // history entry, using replaceState would create a duplicate browser history
+    // entry (the previous and current entries would both have the same URL).
+    // Navigate back to the previous entry instead to avoid the duplicate.
+    // Use 'back' direction so the leaving view is unmounted (same as replace).
+    if (routeAction === 'replace') {
+      const prevEntry = locationHistory.current.previous();
+      const currentEntry = locationHistory.current.current();
+      const prevPath = prevEntry ? prevEntry.pathname + (prevEntry.search || '') : undefined;
+      if (prevEntry && currentEntry && prevEntry !== currentEntry && prevPath === path) {
+        incomingRouteParams.current = {
+          ...prevEntry,
+          routeAction: 'pop',
+          routeDirection: 'back',
+          routeAnimation,
+        };
+        forwardStack.current.push(currentLocationKeyRef.current);
+        navigate(-1);
+        return;
+      }
+    }
+
     const baseParams = incomingRouteParams.current ?? {};
     incomingRouteParams.current = {
       ...baseParams,

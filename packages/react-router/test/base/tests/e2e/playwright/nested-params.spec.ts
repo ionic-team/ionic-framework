@@ -23,17 +23,19 @@ test.describe('Nested Params', () => {
     await expect(page.getByText('Details view user: 99')).toBeVisible();
 
     // Step 2: Back to landing via routerLink (push).
-    // Use .first() because the hidden user 99 details page stays in the DOM,
-    // leaving a duplicate #back-to-landing button.
-    await page.locator('#back-to-landing').first().click();
+    // Scope to user 99's layout page -- the details page inside it doesn't get
+    // .ion-page-hidden (only the parent UserLayout does), so filtering by the
+    // nearest .ion-page ancestor is insufficient when multiple user layouts exist.
+    await page.locator('[data-pageid="nested-params-user-99"]:not(.ion-page-hidden) #back-to-landing').click();
     await ionPageVisible(page, 'nested-params-landing');
 
     // Step 3: Navigate to user 42 details
     await page.locator('#go-to-user-42').click();
     await expect(page.getByText('Details view user: 42')).toBeVisible();
 
-    // Step 4: Back to landing via routerLink (push)
-    await page.locator('#back-to-landing').first().click();
+    // Step 4: Back to landing via routerLink (push).
+    // Scope to user 42's layout page (same rationale as step 2).
+    await page.locator('[data-pageid="nested-params-user-42"]:not(.ion-page-hidden) #back-to-landing').click();
     await ionPageVisible(page, 'nested-params-landing');
 
     // Step 5: Navigate to user 42 details AGAIN -- this triggered the infinite loop
