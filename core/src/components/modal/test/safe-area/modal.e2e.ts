@@ -13,7 +13,11 @@ import { configs, test, Viewports } from '@utils/test/playwright';
  * The test page (index.html) sets these root safe-area values.
  * Keep in sync with the :root block in test/safe-area/index.html.
  */
-const TEST_SAFE_AREA_TOP = '47px';
+const TEST_SAFE_AREA_TOP = 47;
+const TEST_SAFE_AREA_BOTTOM = 34;
+/** Default value of --ion-padding (16px), applied via the .ion-padding class on ion-content in the test modal. */
+const TEST_ION_PADDING = 16;
+
 configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('modal: safe-area handling'), () => {
     test.beforeEach(async ({ page }) => {
@@ -100,10 +104,12 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       expect(safeAreaBottom).toBe('inherit');
     });
 
-    test('fullscreen modal without footer should have wrapper padding-bottom', async ({ page }, testInfo) => {
+    test('fullscreen modal without footer should set safe-area scroll padding on ion-content', async ({
+      page,
+    }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/30900',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31015',
       });
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
@@ -113,20 +119,85 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
 
       const modal = page.locator('ion-modal');
 
-      // When no footer is present, the wrapper should have reduced height
-      // and padding-bottom to prevent content from overlapping the system
-      // navigation bar, without changing box-sizing (which would break
-      // custom modals with --border-width).
+      // The wrapper should NOT have reduced height or padding-bottom.
+      // Safe-area compensation is handled by ion-content's scroll padding.
       const wrapper = modal.locator('.modal-wrapper');
-      const paddingBottom = await wrapper.evaluate((el: HTMLElement) => {
+      const wrapperPaddingBottom = await wrapper.evaluate((el: HTMLElement) => {
         return el.style.getPropertyValue('padding-bottom');
       });
-      const height = await wrapper.evaluate((el: HTMLElement) => {
+      const wrapperHeight = await wrapper.evaluate((el: HTMLElement) => {
         return el.style.getPropertyValue('height');
       });
 
-      expect(paddingBottom).toBe('var(--ion-safe-area-bottom, 0px)');
-      expect(height).toBe('calc(var(--height) - var(--ion-safe-area-bottom, 0px))');
+      expect(wrapperPaddingBottom).toBe('');
+      expect(wrapperHeight).toBe('');
+
+      // ion-content should have --ion-content-safe-area-padding-bottom set so its
+      // .inner-scroll element includes safe-area in its bottom padding.
+      const content = modal.locator('ion-content');
+      const safeAreaPadding = await content.evaluate((el: HTMLElement) => {
+        return el.style.getPropertyValue('--ion-content-safe-area-padding-bottom');
+      });
+      expect(safeAreaPadding).toBe('var(--ion-safe-area-bottom, 0px)');
+    });
+
+    test('fullscreen modal with ion-content and no footer should not reduce wrapper content area', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31015',
+      });
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#fullscreen-modal-no-footer');
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+      const wrapper = modal.locator('.modal-wrapper');
+
+      // The wrapper's content area should equal the full viewport height.
+      // Safe-area compensation is handled by ion-content's scroll padding,
+      // not by reducing the wrapper. This prevents the visible white gap
+      // reported in #31015.
+      const { contentHeight, paddingBottom } = await wrapper.evaluate((el: HTMLElement) => {
+        const computed = getComputedStyle(el);
+        return {
+          contentHeight: parseFloat(computed.height),
+          paddingBottom: parseFloat(computed.paddingBottom),
+        };
+      });
+      const viewportHeight = await page.evaluate(() => window.innerHeight);
+
+      expect(paddingBottom).toBeCloseTo(0, 0);
+      expect(contentHeight).toBeCloseTo(viewportHeight, 0);
+    });
+
+    test('fullscreen modal ion-content scroll padding should include safe-area-bottom', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31015',
+      });
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#fullscreen-modal-no-footer');
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+      const content = modal.locator('ion-content');
+
+      // The .inner-scroll element inside ion-content's shadow DOM should
+      // have padding-bottom that includes the safe-area-bottom value.
+      const innerScroll = content.locator('.inner-scroll');
+      const scrollPaddingBottom = await innerScroll.evaluate((el: Element) => {
+        return parseFloat(getComputedStyle(el).paddingBottom);
+      });
+
+      expect(scrollPaddingBottom).toBe(TEST_ION_PADDING + TEST_SAFE_AREA_BOTTOM);
     });
 
     test('sheet modal at breakpoint 1 should keep top safe-area zeroed', async ({ page }, testInfo) => {
@@ -185,7 +256,7 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       const offsetTop = await modal.evaluate((el: HTMLIonModalElement) => {
         return el.style.getPropertyValue('--ion-modal-offset-top');
       });
-      expect(offsetTop).toBe(TEST_SAFE_AREA_TOP);
+      expect(offsetTop).toBe(`${TEST_SAFE_AREA_TOP}px`);
     });
 
     test('fullscreen modal safe-area should update on resize from phone to tablet', async ({ page }, testInfo) => {

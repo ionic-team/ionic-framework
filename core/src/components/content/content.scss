@@ -28,6 +28,8 @@
   --keyboard-offset: 0px;
   --offset-top: 0px;
   --offset-bottom: 0px;
+  // Internal: set by modal applyFullscreenSafeArea() for modals without footer. Not a public API.
+  --ion-content-safe-area-padding-bottom: 0px;
   --overflow: auto;
 
   display: block;
@@ -64,7 +66,7 @@
 
 .inner-scroll {
   @include position(calc(var(--offset-top) * -1), 0px,calc(var(--offset-bottom) * -1), 0px);
-  @include padding(calc(var(--padding-top) + var(--offset-top)), var(--padding-end), calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom)), var(--padding-start));
+  @include padding(calc(var(--padding-top) + var(--offset-top)), var(--padding-end), calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom) + var(--ion-content-safe-area-padding-bottom, 0px)), var(--padding-start));
 
   position: absolute;
 
