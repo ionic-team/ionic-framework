@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Button - Badge</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      .row {
+        /* display: flex; */
+        flex-wrap: wrap;
+        gap: 20px;
+        margin: 16px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+        color: #6f7378;
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Button - Badge</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content">
+        <ion-button size="medium">
+          Primary
+          <ion-badge hue="bold" shape="round" color="danger" size="small">99</ion-badge>
+        </ion-button>
+
+        <ion-button size="medium">
+          Primary
+          <ion-badge hue="bold" shape="round" color="danger" size="small" vertical="top"></ion-badge>
+        </ion-button>
+
+        <ion-button size="medium">
+          Button
+          <ion-badge hue="bold" shape="round" color="danger" size="small" vertical="top"></ion-badge>
+        </ion-button>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const buttonSizes = ['small', 'medium', 'large'];
+      const badgeSizes = ['small', 'medium', 'large'];
+      const positions = ['top', 'bottom'];
+
+      const badgeContents = [
+        { label: 'empty', html: '' },
+        { label: 'text', html: '1' },
+        { label: 'longText', html: '999+' },
+        { label: 'icon', html: '<ion-icon icon="star"></ion-icon>' },
+      ];
+
+      const content = document.getElementById('content');
+
+      buttonSizes.forEach((buttonSize) => {
+        positions.forEach((position) => {
+          const heading = document.createElement('h2');
+          heading.textContent = `${buttonSize} — ${position}`;
+          content.appendChild(heading);
+
+          const row = document.createElement('div');
+          row.className = 'row';
+
+          badgeSizes.forEach((badgeSize) => {
+            badgeContents.forEach(({ html }) => {
+              const iconButton = document.createElement('ion-button');
+              iconButton.setAttribute('size', buttonSize);
+              iconButton.setAttribute('shape', 'round');
+
+              const icon = document.createElement('ion-icon');
+              icon.setAttribute('slot', 'icon-only');
+              icon.setAttribute('name', 'add');
+              iconButton.appendChild(icon);
+
+              const badge = document.createElement('ion-badge');
+              badge.setAttribute('hue', 'bold');
+              badge.setAttribute('shape', 'round');
+              badge.setAttribute('color', 'danger');
+              badge.setAttribute('size', badgeSize);
+              badge.setAttribute('vertical', position);
+              badge.innerHTML = html;
+
+              iconButton.appendChild(badge);
+              row.appendChild(iconButton);
+
+              // Standard button with badge
+              const textButton = document.createElement('ion-button');
+              textButton.setAttribute('size', buttonSize);
+              textButton.setAttribute('shape', 'round');
+              textButton.textContent = 'Button';
+
+              const standardBadge = document.createElement('ion-badge');
+              standardBadge.setAttribute('hue', 'bold');
+              standardBadge.setAttribute('shape', 'round');
+              standardBadge.setAttribute('color', 'danger');
+              standardBadge.setAttribute('size', badgeSize);
+              standardBadge.setAttribute('vertical', position);
+              standardBadge.innerHTML = html;
+
+              textButton.appendChild(standardBadge);
+              row.appendChild(textButton);
+            });
+          });
+
+          content.appendChild(row);
+        });
+      });
+    </script>
+  </body>
+</html>

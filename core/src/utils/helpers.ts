@@ -475,3 +475,121 @@ export const deepMerge = (target: any, source: any): any => {
   }
   return result;
 };
+
+export interface BadgePositionConfig {
+  /**
+   * The host element that contains the badge slots.
+   */
+  host: HTMLElement;
+
+  /**
+   * The element whose border-radius defines the corner arc.
+   * This is the visual outer edge (e.g. .button-native).
+   *
+   * If omitted, host is used (e.g. avatar, where the host
+   * element is the visual outer edge).
+   */
+  outerEl?: Element;
+
+  /**
+   * The element that the badge's `position: absolute` resolves
+   * against. Only needed when the positioned ancestor differs
+   * from outerEl (e.g. .button-inner inside .button-native).
+   *
+   * If omitted, outerEl is used — meaning no delta compensation
+   * is needed (e.g. avatar, where the badge resolves directly
+   * against the host).
+   */
+  innerEl?: Element;
+
+  /**
+   * The badge element to position.
+   */
+  badge: HTMLElement;
+}
+
+/**
+ * Positions badges on the edge of a parent component's
+ * corner arc at 45°.
+ *
+ * Formula:
+ *   offset = borderRadius * 0.2929 - badgeSize / 2
+ *
+ * Where 0.2929 = 1 - cos(45°).
+ *
+ * Adapts to any shape of the parent component:
+ * - any border radius -> badge on corner arc
+ * - rectangular -> badge at exact corner
+ */
+export function positionBadges(config: BadgePositionConfig): void {
+  const { host, innerEl } = config;
+  const outerEl = config.outerEl ?? host;
+
+  const outerRect = outerEl.getBoundingClientRect();
+
+  // If innerEl is provided, calculate the delta between outer and inner edges.
+  // Otherwise, delta is 0 (badge resolves directly against outerEl).
+  let deltaTop = 0;
+  let deltaRight = 0;
+  let deltaBottom = 0;
+
+  if (innerEl) {
+    const innerRect = innerEl.getBoundingClientRect();
+    deltaTop = innerRect.top - outerRect.top;
+    deltaRight = outerRect.right - innerRect.right;
+    deltaBottom = outerRect.bottom - innerRect.bottom;
+  }
+
+  // Resolve border-radius to pixels
+  const computedStyles = getComputedStyle(outerEl);
+  let borderRadius = parseFloat(computedStyles.borderTopRightRadius) || 0;
+
+  // Clamp to half the smallest dimension (matches browser behavior)
+  const maxRadius = Math.min(outerRect.width, outerRect.height) / 2;
+  borderRadius = Math.min(borderRadius, maxRadius);
+
+  // 0.2929 = 1 - cos(45°)
+  const cornerOffset = borderRadius * 0.2929;
+
+  const badge = host.querySelector('ion-badge[vertical]') as HTMLElement | null;
+  if (!badge) return;
+
+  const vertical = badge.getAttribute('vertical');
+  const badgeRect = badge.getBoundingClientRect();
+
+  const right = cornerOffset - deltaRight - badgeRect.width / 2;
+  const top = cornerOffset - deltaTop - badgeRect.height / 2;
+  const bottom = cornerOffset - deltaBottom - badgeRect.height / 2;
+
+  badge.style.right = `${right}px`;
+
+  if (vertical === 'top') {
+    badge.style.top = `${top}px`;
+    badge.style.bottom = '';
+  } else if (vertical === 'bottom') {
+    badge.style.bottom = `${bottom}px`;
+    badge.style.top = '';
+  }
+}
+
+export interface BadgeObserver {
+  disconnect: () => void;
+}
+
+/**
+ * Creates a ResizeObserver that repositions badges whenever
+ * the observed element changes size.
+ *
+ * @returns BadgeObserver with a disconnect method
+ */
+export function createBadgeObserver(config: BadgePositionConfig): BadgeObserver {
+  const observer = new ResizeObserver(() => {
+    positionBadges(config);
+  });
+
+  observer.observe(config.outerEl ?? config.host);
+
+  return {
+    disconnect: () => observer.disconnect(),
+  };
+}

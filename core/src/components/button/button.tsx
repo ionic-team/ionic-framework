@@ -1,8 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, State, forceUpdate, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, hasShadowDom, openURL } from '@utils/helpers';
+import type { Attributes, BadgeObserver } from '@utils/helpers';
+import { inheritAriaAttributes, hasShadowDom, openURL, createBadgeObserver } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext } from '@utils/theme';
 
@@ -37,6 +37,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private formButtonEl: HTMLButtonElement | null = null;
   private formEl: HTMLFormElement | null = null;
   private inheritedAttributes: Attributes = {};
+  private badgeObserver?: BadgeObserver;
 
   @Element() el!: HTMLElement;
 
@@ -222,6 +223,14 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
+  componentDidLoad() {
+    this.setupBadgeObserver();
+  }
+
+  disconnectedCallback() {
+    this.destroyBadgeObserver();
+  }
+
   private get hasIconOnly() {
     return !!this.el.querySelector('[slot="icon-only"]');
   }
@@ -356,7 +365,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.ionBlur.emit();
   };
 
-  private slotChanged = () => {
+  private iconOnlySlotChanged = () => {
     /**
      * Ensures that the 'has-icon-only' class is properly added
      * or removed from `ion-button` when manipulating the
@@ -367,6 +376,50 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
      */
     this.isCircle = this.hasIconOnly;
   };
+
+  private onSlotChanged = () => {
+    /**
+     * Badges can be added or removed dynamically to mimic use
+     * cases like notifications. Based on the presence of a
+     * badge, we need to set up or destroy the badge observer.
+     *
+     * If the badge observer is already set up and there is a badge, then we don't need to do anything.
+     */
+    if (this.hasBadge && this.badgeObserver) {
+      return;
+    }
+
+    if (this.hasBadge) {
+      this.setupBadgeObserver();
+    } else {
+      this.destroyBadgeObserver();
+    }
+  };
+
+  private setupBadgeObserver() {
+    this.destroyBadgeObserver();
+
+    // Only set up the badge observer if there is a badge and it's anchored
+    const badge = this.el.querySelector('ion-badge[vertical]') as HTMLElement | null;
+
+    if (!badge) {
+      return;
+    }
+
+    const outerEl = this.el.shadowRoot!.querySelector('.button-native')!;
+    const innerEl = this.el.shadowRoot!.querySelector('.button-inner')!;
+
+    this.badgeObserver = createBadgeObserver({
+      host: this.el,
+      outerEl,
+      innerEl,
+      badge,
+    });
+  }
+
+  private destroyBadgeObserver() {
+    this.badgeObserver?.disconnect();
+  }
 
   render() {
     const {
@@ -446,9 +499,9 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           {...inheritedAttributes}
         >
           <span class="button-inner">
-            <slot name="icon-only" onSlotchange={this.slotChanged}></slot>
+            <slot name="icon-only" onSlotchange={this.iconOnlySlotChanged}></slot>
             <slot name="start"></slot>
-            <slot></slot>
+            <slot onSlotchange={this.onSlotChanged}></slot>
             <slot name="end"></slot>
           </span>
           {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}

@@ -14,12 +14,11 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
 
     <style>
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        grid-row-gap: 20px;
-        grid-column-gap: 20px;
-        padding-bottom: 20px;
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin: 16px;
       }
 
       h2 {
@@ -53,6 +52,7 @@
       const badgeContents = [
         { label: 'empty', html: '' },
         { label: 'text', html: '1' },
+        { label: 'longText', html: '999+' },
         { label: 'icon', html: '<ion-icon icon="star"></ion-icon>' },
       ];
 
@@ -64,8 +64,8 @@
           heading.textContent = `${avatarSize} — ${position}`;
           content.appendChild(heading);
 
-          const grid = document.createElement('div');
-          grid.className = 'grid';
+          const row = document.createElement('div');
+          row.className = 'row';
 
           badgeSizes.forEach((badgeSize) => {
             badgeContents.forEach(({ html }) => {
@@ -85,11 +85,11 @@
               badge.innerHTML = html;
 
               avatar.appendChild(badge);
-              grid.appendChild(avatar);
+              row.appendChild(avatar);
             });
           });
 
-          content.appendChild(grid);
+          content.appendChild(row);
         });
       });
     </script>

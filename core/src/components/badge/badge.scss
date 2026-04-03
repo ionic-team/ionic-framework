@@ -175,20 +175,5 @@
 // ---------------------------------------------
 
 :host([vertical]:not(.in-tab-button)) {
-  @include mixins.position(null, 0, null, null);
   position: absolute;
-}
-
-:host([vertical]:not(.in-tab-button).badge-vertical-top) {
-  top: 0;
-}
-
-:host([vertical]:not(.in-tab-button).badge-vertical-bottom) {
-  bottom: 0;
-}
-
-// TODO: remove from the tab-button.common
-// In Tab Button
-:host([vertical].in-tab-button) {
-  position: var(--ion-tab-button-badge-indicator-position);
 }

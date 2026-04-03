@@ -1,5 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
+import type { BadgeObserver } from '@utils/helpers';
+import { createBadgeObserver } from '@utils/helpers';
 
 import { getIonTheme } from '../../global/ionic-global';
 
@@ -18,6 +20,7 @@ import { getIonTheme } from '../../global/ionic-global';
 })
 export class Avatar implements ComponentInterface {
   @Element() el!: HTMLElement;
+  private badgeObserver?: BadgeObserver;
 
   /**
    * Set to `"xxsmall"` for the smallest size.
@@ -45,12 +48,63 @@ export class Avatar implements ComponentInterface {
    */
   @Prop() disabled = false;
 
+  componentDidLoad(): void {
+    this.setupBadgeObserver();
+  }
+
+  disconnectedCallback() {
+    this.destroyBadgeObserver();
+  }
+
   get hasImage() {
     return !!this.el.querySelector('ion-img') || !!this.el.querySelector('img');
   }
 
   get hasIcon() {
     return !!this.el.querySelector('ion-icon');
+  }
+
+  private get hasBadge() {
+    return !!this.el.querySelector('ion-badge');
+  }
+
+  private onSlotChanged = () => {
+    /**
+     * Badges can be added or removed dynamically to mimic use
+     * cases like notifications. Based on the presence of a
+     * badge, we need to set up or destroy the badge observer.
+     *
+     * If the badge observer is already set up and there is a badge, then we don't need to do anything.
+     */
+    if (this.hasBadge && this.badgeObserver) {
+      return;
+    }
+
+    if (this.hasBadge) {
+      this.setupBadgeObserver();
+    } else {
+      this.destroyBadgeObserver();
+    }
+  };
+
+  private setupBadgeObserver() {
+    this.destroyBadgeObserver();
+
+    // Only set up the badge observer if there is a badge and it's anchored
+    const badge = this.el.querySelector('ion-badge[vertical]') as HTMLElement | null;
+
+    if (!badge) {
+      return;
+    }
+
+    this.badgeObserver = createBadgeObserver({
+      host: this.el,
+      badge,
+    });
+  }
+
+  private destroyBadgeObserver() {
+    this.badgeObserver?.disconnect();
   }
 
   private getSize(): string | undefined {
@@ -96,7 +150,7 @@ export class Avatar implements ComponentInterface {
           [`avatar-disabled`]: disabled,
         }}
       >
-        <slot></slot>
+        <slot onSlotchange={this.onSlotChanged}></slot>
       </Host>
     );
   }

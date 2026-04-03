@@ -52,9 +52,9 @@
 // Button Badge
 // --------------------------------------------------
 
-.button-native ::slotted(ion-badge) {
-  position: fixed;
-}
+// .button-native ::slotted(ion-badge) {
+//   position: fixed;
+// }
 
 :host ::slotted(ion-badge[vertical]:not(:empty)) {
   @include globals.padding(2px);

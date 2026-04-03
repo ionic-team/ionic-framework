@@ -17,6 +17,7 @@ import type { Color } from '../../interface';
 })
 export class Badge implements ComponentInterface {
   @Element() el!: HTMLElement;
+  private resizeObserver?: ResizeObserver;
 
   /**
    * The color to use from your application's color palette.
@@ -130,7 +131,6 @@ export class Badge implements ComponentInterface {
           [`badge-vertical-${vertical}`]: vertical !== undefined,
           'in-button': hostContext('ion-button', el),
           'in-tab-button': hostContext('ion-tab-button', el),
-          'long-badge': (el.textContent?.trim().length ?? 0) > 2,
         })}
       >
         <slot></slot>
