@@ -303,16 +303,6 @@ export const defaultTheme: DefaultTheme = {
       },
     },
 
-    IonButton: {
-      size: {
-        small: {
-          badge: {
-            indicator: {},
-          },
-        },
-      },
-    },
-
     IonChip: {
       margin: {
         top: 'var(--ion-spacing-0)',

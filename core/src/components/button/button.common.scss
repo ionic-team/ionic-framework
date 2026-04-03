@@ -312,3 +312,12 @@ ion-ripple-effect {
 :host(.button-has-badge) .button-native {
   --overflow: visible;
 }
+
+:host ::slotted(ion-badge[vertical]:not(:empty)) {
+  @include mixins.padding(
+    --ion-button-default-padding-top,
+    --ion-button-default-padding-end,
+    --ion-button-default-padding-bottom,
+    --ion-button-default-padding-start
+  );
+}

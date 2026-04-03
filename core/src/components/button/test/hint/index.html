@@ -14,13 +14,6 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
 
     <style>
-      .row {
-        /* display: flex; */
-        flex-wrap: wrap;
-        gap: 20px;
-        margin: 16px;
-      }
-
       h2 {
         font-size: 12px;
         font-weight: normal;
@@ -39,22 +32,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content id="content">
-        <ion-button size="medium">
-          Primary
-          <ion-badge hue="bold" shape="round" color="danger" size="small">99</ion-badge>
-        </ion-button>
-
-        <ion-button size="medium">
-          Primary
-          <ion-badge hue="bold" shape="round" color="danger" size="small" vertical="top"></ion-badge>
-        </ion-button>
-
-        <ion-button size="medium">
-          Button
-          <ion-badge hue="bold" shape="round" color="danger" size="small" vertical="top"></ion-badge>
-        </ion-button>
-      </ion-content>
+      <ion-content id="content"></ion-content>
     </ion-app>
 
     <script>
@@ -78,7 +56,6 @@
           content.appendChild(heading);
 
           const row = document.createElement('div');
-          row.className = 'row';
 
           badgeSizes.forEach((badgeSize) => {
             badgeContents.forEach(({ html }) => {

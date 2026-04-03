@@ -295,6 +295,19 @@ export const defaultTheme: DefaultTheme = {
       },
     },
 
+    IonButton: {
+      badge: {
+        default: {
+          padding: {
+            top: 'var(--ion-spacing-xxxs)',
+            end: 'var(--ion-spacing-xxxs)',
+            bottom: 'var(--ion-spacing-xxxs)',
+            start: 'var(--ion-spacing-xxxs)',
+          },
+        },
+      },
+    },
+
     IonChip: {
       margin: {
         top: 'var(--ion-spacing-xxs)',

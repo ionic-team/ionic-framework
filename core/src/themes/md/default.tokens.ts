@@ -264,24 +264,12 @@ export const defaultTheme: DefaultTheme = {
 
     IonButton: {
       badge: {
-        indicator: {
-          height: 'var(--ion-scaling-xxxs)',
-
-          min: {
-            width: 'var(--ion-scaling-xxxs)',
-          },
-
-          line: {
-            height: 'var(--ion-scaling-xxs)',
-          },
-
-          font: {
-            size: `${(12 / global.root).toFixed(2)}rem`,
-          },
-
-          icon: {
-            width: 'var(--ion-scaling-xxxxs)',
-            height: 'var(--ion-scaling-xxxxs)',
+        default: {
+          padding: {
+            top: 'var(--ion-spacing-xxxs)',
+            end: 'var(--ion-spacing-xxxs)',
+            bottom: 'var(--ion-spacing-xxxs)',
+            start: 'var(--ion-spacing-xxxs)',
           },
         },
       },
