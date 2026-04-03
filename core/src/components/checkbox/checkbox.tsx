@@ -151,36 +151,39 @@ export class Checkbox implements ComponentInterface {
   connectedCallback() {
     const { el } = this;
 
-    // Watch for class changes to update validation state.
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
       this.validationObserver = new MutationObserver((mutations) => {
+        // Watch for label content changes
         if (mutations.some((mutation) => mutation.type === 'characterData')) {
           this.hasLabelContent = this.el.textContent !== '';
         }
-        const newIsInvalid = checkInvalidState(el);
-        if (this.isInvalid !== newIsInvalid) {
-          this.isInvalid = newIsInvalid;
-          /**
-           * Screen readers tend to announce changes
-           * to `aria-describedby` when the attribute
-           * is changed during a blur event for a
-           * native form control.
-           * However, the announcement can be spotty
-           * when using a non-native form control
-           * and `forceUpdate()`.
-           * This is due to `forceUpdate()` internally
-           * rescheduling the DOM update to a lower
-           * priority queue regardless if it's called
-           * inside a Promise or not, thus causing
-           * the screen reader to potentially miss the
-           * change.
-           * By using a State variable inside a Promise,
-           * it guarantees a re-render immediately at
-           * a higher priority.
-           */
-          Promise.resolve().then(() => {
-            this.hintTextId = this.getHintTextId();
-          });
+        // Watch for class changes to update validation state.
+        if (mutations.some((mutation) => mutation.type === 'attributes')) {
+          const newIsInvalid = checkInvalidState(el);
+          if (this.isInvalid !== newIsInvalid) {
+            this.isInvalid = newIsInvalid;
+            /**
+             * Screen readers tend to announce changes
+             * to `aria-describedby` when the attribute
+             * is changed during a blur event for a
+             * native form control.
+             * However, the announcement can be spotty
+             * when using a non-native form control
+             * and `forceUpdate()`.
+             * This is due to `forceUpdate()` internally
+             * rescheduling the DOM update to a lower
+             * priority queue regardless if it's called
+             * inside a Promise or not, thus causing
+             * the screen reader to potentially miss the
+             * change.
+             * By using a State variable inside a Promise,
+             * it guarantees a re-render immediately at
+             * a higher priority.
+             */
+            Promise.resolve().then(() => {
+              this.hintTextId = this.getHintTextId();
+            });
+          }
         }
       });
 
