@@ -55,6 +55,7 @@ if [ "$SKIP_BUILD" = "0" ]; then
   # Inside core
   echo "Building core..."
   cd ../../../core
+  npm ci
   npm run build
 
   # Inside packages/react
