@@ -75,6 +75,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   private waitingForIonPage = false;
   private ionPageWaitTimeout?: ReturnType<typeof setTimeout>;
   private outOfScopeUnmountTimeout?: ReturnType<typeof setTimeout>;
+  /** Whether this outlet was previously in scope. */
+  private wasInScope = true;
   /**
    * Track the last transition's entering and leaving view IDs to prevent
    * duplicate transitions during rapid navigation (e.g., Navigate redirects)
@@ -246,8 +248,19 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
    */
   private handleOutOfScopeOutlet(routeInfo: RouteInfo): boolean {
     if (!this.outletMountPath || isPathnameInScope(routeInfo.pathname, this.outletMountPath)) {
+      this.wasInScope = true;
       return false;
     }
+
+    // Only run the out-of-scope cleanup on the first transition out of scope.
+    // When parameterized routes create multiple StackManager instances with the
+    // same outlet ID, a stale (hidden) instance must not destroy views that an
+    // active instance just created. After the initial cleanup, the stale instance
+    // stays dormant until its mount path becomes in-scope again.
+    if (!this.wasInScope) {
+      return true;
+    }
+    this.wasInScope = false;
 
     if (this.outOfScopeUnmountTimeout) {
       clearTimeout(this.outOfScopeUnmountTimeout);
