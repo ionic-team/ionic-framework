@@ -11,6 +11,8 @@ import type { ReactElement } from 'react';
 import { Route, Navigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 const DynamicRoutes: React.FC = () => {
   const addRoute = () => {
     const newRoute = (
@@ -67,6 +69,7 @@ const Home: React.FC<{
           <br />
           <Link to="/dynamic-routes/newRoute">Take me to the newRoute</Link>
         </div>
+        <TestDescription>Click "Add Route", then click the link to navigate to newRoute. The "New Route" page should render. If the "New Route Failed" page appears instead, the dynamic route was not registered correctly.</TestDescription>
       </IonContent>
     </IonPage>
   );

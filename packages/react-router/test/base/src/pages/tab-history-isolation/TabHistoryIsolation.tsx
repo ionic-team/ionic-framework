@@ -18,6 +18,8 @@ import { triangle, square, ellipse } from 'ionicons/icons';
 import React from 'react';
 import { Route, Navigate } from 'react-router';
 
+import TestDescription from '../../components/TestDescription';
+
 const TabHistoryIsolation: React.FC = () => {
   return (
     <IonTabs>
@@ -64,6 +66,7 @@ const TabA = () => {
         <IonButton routerLink="/tab-history-isolation/a/details" id="go-to-a-details">
           Go to A Details
         </IonButton>
+        <TestDescription>Navigate to a detail page in Tab A, switch to Tab B, then switch back to Tab A. Tab A should still show its detail page, not reset to the root. Each tab's navigation stack should be independent.</TestDescription>
       </IonContent>
     </IonPage>
   );

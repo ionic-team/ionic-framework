@@ -11,6 +11,8 @@ import {
 import React from 'react';
 import { Route, useLocation, useParams } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * Test page for tail-slice ambiguity in derivePathnameToMatch.
  *
@@ -52,6 +54,7 @@ const ListPage: React.FC = () => (
       <IonButton routerLink="/tail-slice-ambiguity/extra/details/99" id="go-to-ambiguous">
         Ambiguous Path
       </IonButton>
+      <TestDescription>Tap "Details 42" to visit the details page, then go back. Tap "Ambiguous Path" -- it should show the Catch-All page with the path displayed. If the ambiguous path shows a blank page or incorrectly shows the Details page, the test fails.</TestDescription>
     </IonContent>
   </IonPage>
 );

@@ -10,6 +10,8 @@ import {
 import React, { useRef } from "react";
 import { Route } from "react-router";
 
+import TestDescription from '../../components/TestDescription';
+
 const Refs: React.FC = () => {
   return (
     <IonRouterOutlet>
@@ -32,6 +34,7 @@ const RefsFC: React.FC = () => {
         <IonText>
           <p>This view is used for automated ref regression tests.</p>
         </IonText>
+        <TestDescription>Verify this page renders without errors. React refs on Ionic components (IonContent here) should resolve to the underlying HTML element. If the page crashes or shows a ref-related error in the console, the test fails.</TestDescription>
       </IonContent>
     </IonPage>
   );

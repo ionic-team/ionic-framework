@@ -11,6 +11,8 @@ import {
 } from '@ionic/react';
 import React from 'react';
 
+import TestDescription from '../../components/TestDescription';
+
 export const NavigateRootPageA: React.FC = () => {
   const ionRouter = useIonRouter();
 
@@ -29,6 +31,7 @@ export const NavigateRootPageA: React.FC = () => {
         <IonButton id="go-to-page-b" routerLink="/navigate-root/page-b">
           Go to Page B
         </IonButton>
+        <TestDescription>Go A to B to C, then tap "Navigate Root to Page A". Page A should appear with a root transition (no back animation). canGoBack should show "no" after a root navigation and "yes" after a forward push.</TestDescription>
       </IonContent>
     </IonPage>
   );

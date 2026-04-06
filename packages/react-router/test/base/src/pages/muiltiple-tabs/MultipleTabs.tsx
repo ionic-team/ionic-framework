@@ -19,7 +19,7 @@ import React from 'react';
 import { Route, Navigate } from 'react-router';
 
 import { Menu } from './Menu';
-
+import TestDescription from '../../components/TestDescription';
 
 const MultipleTabs: React.FC = () => {
   return (
@@ -104,7 +104,10 @@ const Page: React.FC<{ name: string }> = ({ name }) => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonContent>{name}</IonContent>
+      <IonContent>
+        {name}
+        <TestDescription>Use the side menu to switch between Tab1 (Page A/B) and Tab2 (Page C/D) groups. Each group has its own tab bar and independent navigation. Switching between groups should show the correct tab bar and preserve each group's selected tab.</TestDescription>
+      </IonContent>
     </IonPage>
   );
 };

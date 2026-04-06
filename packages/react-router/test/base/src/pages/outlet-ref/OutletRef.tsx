@@ -9,6 +9,8 @@ import {
 import React, { useRef, useEffect, useState } from 'react';
 import { Route } from 'react-router';
 
+import TestDescription from '../../components/TestDescription';
+
 export const OutletRef: React.FC = () => {
   const ref = useRef<HTMLIonRouterOutletElement>(null);
   const [outletId, setOutletId] = useState<string | undefined>(undefined);
@@ -40,6 +42,7 @@ const Main: React.FC<{ outletId?: string }> = ({ outletId }) => {
       </IonHeader>
       <IonContent>
         <div>{outletId}</div>
+        <TestDescription>Verify the text "main-outlet" appears below. This confirms the ref on IonRouterOutlet resolves to the DOM element and its id is accessible. If the text is missing or blank, the ref is not working.</TestDescription>
       </IonContent>
     </IonPage>
   );

@@ -20,6 +20,8 @@ import {
 import React, { useState } from 'react';
 import { Route, Navigate, useNavigate } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 const ListPage: React.FC = () => {
   const [items, setItems] = useState(['Item 1', 'Item 2', 'Item 3']);
   const navigate = useNavigate();
@@ -91,6 +93,7 @@ const HomePage: React.FC = () => {
         <IonButton routerLink="/content-change-navigation/list" data-testid="go-to-list">
           Go to list page
         </IonButton>
+        <TestDescription>Go to the list page and tap "Remove all items and navigate to home". This clears the list content and navigates simultaneously. You should land back on this Home page cleanly, not on a stale or invalid list view.</TestDescription>
       </IonContent>
     </IonPage>
   );

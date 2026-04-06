@@ -18,6 +18,8 @@ import { triangle, ellipse, square } from 'ionicons/icons';
 import React from 'react';
 import { Route, Navigate } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * Test page for index route reuse across tabs with nested outlets.
  *
@@ -41,6 +43,7 @@ const Tab1Content: React.FC = () => {
         <IonButton routerLink="/index-route-reuse/tab1/detail" id="irr-tab1-detail-btn">
           Go to Tab 1 Detail
         </IonButton>
+        <TestDescription>Switch between all three tabs and verify each shows its own content ("Tab 1 Index Route Content", "Tab 2 Index Route Content", "Tab 3 Index Route Content"). Navigate to a detail page within a tab, switch tabs, then switch back -- the detail page should be preserved. If a tab shows another tab's content or goes blank, the test fails.</TestDescription>
       </IonContent>
     </IonPage>
   );

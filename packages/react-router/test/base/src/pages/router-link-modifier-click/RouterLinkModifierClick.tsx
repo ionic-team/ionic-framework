@@ -11,6 +11,8 @@ import {
 } from '@ionic/react';
 import React from 'react';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * Test for issue #26394: routerLink should allow modifier key clicks (ctrl/cmd/shift)
  * to open links in a new tab without triggering SPA navigation on the current page.
@@ -28,6 +30,7 @@ export const RouterLinkModifierClick: React.FC = () => {
         <IonItem id="nav-to-target" routerLink="/router-link-modifier-click/target">
           <IonLabel>Navigate to Target</IonLabel>
         </IonItem>
+        <TestDescription>Normal-click the link below and verify it navigates to the Target page in the same tab. Then go back and Ctrl+click (or Cmd+click on Mac). The link should open in a new tab and this page should remain unchanged.</TestDescription>
       </IonContent>
     </IonPage>
   );

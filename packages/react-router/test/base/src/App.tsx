@@ -24,6 +24,8 @@ import Main from './pages/Main';
 
 import { IonReactRouter } from '@ionic/react-router';
 
+import ModeSwitcher from './components/ModeSwitcher';
+
 import DynamicIonpageClassnames from './pages/dynamic-ionpage-classnames/DynamicIonpageClassnames';
 import DynamicRoutes from './pages/dynamic-routes/DynamicRoutes';
 import DynamicTabs from './pages/dynamic-tabs/DynamicTabs';
@@ -73,6 +75,7 @@ setupIonicReact();
 const App: React.FC = () => {
   return (
     <IonApp>
+      <ModeSwitcher />
       <IonReactRouter>
         <IonRouterOutlet>
           <Route path="/" element={<Main />} />

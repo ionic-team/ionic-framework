@@ -17,6 +17,8 @@ import { triangle, square } from 'ionicons/icons';
 import React from 'react';
 import { Route, Navigate } from 'react-router';
 
+import TestDescription from '../../components/TestDescription';
+
 const TabsSecondary: React.FC = () => {
   return (
     <IonTabs>
@@ -52,6 +54,7 @@ const Tab1 = () => {
       </IonHeader>
       <IonContent>
         Tab 1
+        <TestDescription>This is a second, independent tabs group navigated to from the primary Tabs test. Verify that this tab bar and navigation work independently. Use the back button to return to the primary tabs and confirm their state is preserved.</TestDescription>
       </IonContent>
     </IonPage>
   );

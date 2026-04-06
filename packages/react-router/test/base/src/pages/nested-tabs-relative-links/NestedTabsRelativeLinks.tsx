@@ -17,6 +17,8 @@ import { triangle, ellipse, square } from 'ionicons/icons';
 import React from 'react';
 import { Link, Navigate, Route } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * This test page verifies that relative links work correctly within
  * nested IonRouterOutlet components, specifically in a tabs-based layout.
@@ -56,6 +58,7 @@ const Tab1Content: React.FC = () => {
             Go to Page B (relative)
           </Link>
         </div>
+        <TestDescription>Tap relative and absolute links to Page A and Page B. Both link types should navigate to the correct page without duplicating path segments (e.g., /tab1/tab1/page-a is wrong). The catch-all 404 route should not interfere with absolute links.</TestDescription>
       </IonContent>
     </IonPage>
   );

@@ -14,6 +14,8 @@ import {
 import React from 'react';
 import { Navigate, Route, useParams } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 const ListPage: React.FC = () => {
   return (
     <IonRouterOutlet ionPage id="listpage">
@@ -117,6 +119,7 @@ const Home: React.FC = () => {
             <IonLabel>Go to list from Home</IonLabel>
           </IonItem>
         </IonList>
+        <TestDescription>Navigate Home to Welcome to List to an Item detail. Use back buttons at each level to walk backward. Verify each nested outlet (Home outlet, List outlet) renders the correct page and that cross-outlet navigation (e.g. "Go to list from Welcome") works without blank screens.</TestDescription>
       </IonContent>
     </IonPage>
   );

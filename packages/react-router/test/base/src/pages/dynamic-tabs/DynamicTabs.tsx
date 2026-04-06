@@ -16,6 +16,8 @@ import { triangle, square } from 'ionicons/icons';
 import React, { useState, useCallback } from 'react';
 import { Route, Navigate } from 'react-router';
 
+import TestDescription from '../../components/TestDescription';
+
 const DynamicTabs: React.FC = () => {
   const [display2ndTab, setDisplayThirdTab] = useState<boolean>(false);
 
@@ -64,6 +66,7 @@ const Tab1: React.FC<{
       <IonContent>
         <div>Tab 1 Page</div>
         <IonButton onClick={doIt}>Add Tab 2</IonButton>
+        <TestDescription>Tap "Add Tab 2" to dynamically add a second tab. The new tab should appear in the tab bar and be navigable. Before tapping, only Tab 1 should be visible in the tab bar.</TestDescription>
       </IonContent>
     </IonPage>
   );

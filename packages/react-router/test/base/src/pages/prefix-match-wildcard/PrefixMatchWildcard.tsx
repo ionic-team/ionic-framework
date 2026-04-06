@@ -10,6 +10,8 @@ import {
 import React from 'react';
 import { Route, useNavigate } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * Test page for verifying that wildcard routes work correctly when
  * specific routes share a common prefix with the navigation target.
@@ -67,6 +69,7 @@ const PrefixMatchHome: React.FC = () => {
             Go to Unknown (should hit wildcard)
           </IonButton>
         </div>
+        <TestDescription>Tap "Go to Settings" and verify the Settings page loads. Go back, then tap "Go to Setup" and "Go to Unknown" -- both should land on the Catch-All page. If Setup incorrectly shows a blank page or the Settings page (because "setup" and "settings" share a prefix), the test fails.</TestDescription>
       </IonContent>
     </IonPage>
   );

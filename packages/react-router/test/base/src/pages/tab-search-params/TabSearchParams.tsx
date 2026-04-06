@@ -16,6 +16,8 @@ import React from 'react';
 import { Route, Navigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 const TabSearchParams: React.FC = () => {
   return (
     <IonTabs data-pageid="tab-search-params">
@@ -52,6 +54,7 @@ const Tab1 = () => {
       <IonContent>
         <div id="tab1-foo-value">{foo}</div>
         <div id="tab1-search">{searchParams.toString()}</div>
+        <TestDescription>Tab1 should display foo=bar and Tab2 should display baz=qux from their URL search params. Switch between tabs and verify the correct search params are shown on each tab. Params should not be lost or mixed up when switching.</TestDescription>
       </IonContent>
     </IonPage>
   );

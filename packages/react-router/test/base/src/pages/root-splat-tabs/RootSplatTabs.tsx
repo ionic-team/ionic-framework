@@ -17,6 +17,8 @@ import { triangle, ellipse, square } from 'ionicons/icons';
 import React from 'react';
 import { Link, Navigate, Route } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * Test page for root-level splat routes with relative tab paths.
  *
@@ -46,6 +48,7 @@ const Tab1Content: React.FC = () => {
             Go to Page A (absolute)
           </Link>
         </div>
+        <TestDescription>Tap relative and absolute links to Page A. Both should navigate correctly even though the tabs are rendered inside a root-level splat ("*") route with relative tab paths (no leading slash). Switching between tabs should also work.</TestDescription>
       </IonContent>
     </IonPage>
   );

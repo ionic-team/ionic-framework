@@ -20,6 +20,8 @@ import { triangle, square } from 'ionicons/icons';
 import React from 'react';
 import { Route, Navigate } from 'react-router';
 
+import TestDescription from '../../components/TestDescription';
+
 const pushEvent = (event: string) => {
   (window as any).lifecycleEvents = (window as any).lifecycleEvents || [];
   (window as any).lifecycleEvents.push(event);
@@ -64,6 +66,7 @@ const HomeTab: React.FC = () => {
         <IonButton routerLink="/tab-lifecycle-outside" id="go-outside">
           Go Outside Tabs
         </IonButton>
+        <TestDescription>Switch between Home and Settings tabs and navigate outside tabs. Check the browser console for lifecycle events (ionViewWillEnter, ionViewDidEnter, ionViewWillLeave, ionViewDidLeave). Events should fire in the correct order on each transition and not fire spuriously.</TestDescription>
       </IonContent>
     </IonPage>
   );

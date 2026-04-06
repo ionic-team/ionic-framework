@@ -14,6 +14,8 @@ import {
 import React from 'react';
 import { Route } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * This test page verifies that IonRouterOutlet correctly handles
  * relative paths (paths without a leading slash) the same way
@@ -43,6 +45,7 @@ const RelativePathsHome: React.FC = () => {
             <IonLabel>Go to Unknown Page (catch-all route)</IonLabel>
           </IonItem>
         </IonList>
+        <TestDescription>Tap each link. Page A (absolute path) and Page B (relative path, no leading slash) should both render their content. The "Unknown Page" link should land on the catch-all "Not Found" page. Back navigation should return here each time.</TestDescription>
       </IonContent>
     </IonPage>
   );

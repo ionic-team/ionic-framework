@@ -19,6 +19,8 @@ import { triangle, square } from 'ionicons/icons';
 import React, { useContext } from 'react';
 import { Route, Navigate } from 'react-router';
 
+import TestDescription from '../../components/TestDescription';
+
 const TabsContext: React.FC = () => {
   return (
     <IonTabs>
@@ -57,6 +59,7 @@ const Tab1 = () => {
       <IonContent>
         <div>Page: {tabContext.activeTab}</div>
         <IonButton onClick={() => tabContext.selectTab('tab2')}>Go to tab2</IonButton>
+        <TestDescription>Verify the "Page:" label shows the correct active tab name (tab1 or tab2). Use the "Go to tab2"/"Go to tab1" buttons to switch tabs programmatically via IonTabsContext.selectTab. The displayed tab name should update to match the selected tab.</TestDescription>
       </IonContent>
     </IonPage>
   );

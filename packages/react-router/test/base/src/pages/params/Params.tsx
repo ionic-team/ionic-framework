@@ -11,6 +11,8 @@ import {
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 const Page: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const parseID = id ? parseInt(id) : NaN;
@@ -31,6 +33,7 @@ const Page: React.FC = () => {
         <IonButton id="next-page" routerLink={nextParamLink} >Go to next param</IonButton>
         <br />
         Page ID: { displayId }
+        <TestDescription>The "Page ID" above should match the URL parameter. Tap "Go to next param" to increment the ID and verify the displayed value updates to match the new URL.</TestDescription>
       </IonContent>
     </IonPage>
   );

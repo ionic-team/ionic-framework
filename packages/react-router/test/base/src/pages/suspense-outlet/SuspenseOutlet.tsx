@@ -16,6 +16,8 @@ import {
 import React, { Suspense } from 'react';
 import { Navigate, Route, useParams } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /** Simulated Suspense-enabled data source (mimics React Query / SWR behavior) */
 
 type Item = { id: string; name: string };
@@ -158,6 +160,7 @@ const Tab1Page: React.FC = () => (
     </IonHeader>
     <IonContent className="ion-padding">
       <p>Tab 1 content</p>
+      <TestDescription>Switch to the Content tab. A spinner should briefly appear while data loads via React Suspense, then a list of items renders. Tap an item to view its detail page, then go back. Try the "unknown item" link and verify the error page renders. Switch between tabs and confirm the Content tab preserves its navigation stack.</TestDescription>
     </IonContent>
   </IonPage>
 );

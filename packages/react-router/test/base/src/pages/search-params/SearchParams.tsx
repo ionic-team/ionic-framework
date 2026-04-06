@@ -11,6 +11,8 @@ import {
 import React from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 const SearchParams: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,6 +44,7 @@ const SearchParams: React.FC = () => {
         <IonButton id="go-home" routerLink="/">
           Go Home
         </IonButton>
+        <TestDescription>Tap "Add Search Param" and verify the path shows "?q=test" and the query value shows "test". Tap "Change Search Param" and verify it updates to "?q=changed". Tap "Remove Search Param" and verify the query value clears. The page should not remount between changes.</TestDescription>
       </IonContent>
     </IonPage>
   );

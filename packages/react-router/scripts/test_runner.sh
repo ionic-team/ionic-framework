@@ -11,9 +11,12 @@ cd "$SCRIPT_DIR"
 #   --playwright-only    Skip Cypress, run only Playwright
 #   --spec <pattern>     Filter Playwright tests by file path pattern
 #   --app <name>         Test app variant (default: reactrouter6-react18)
+#   --serve              Build and start the dev server only (no tests), open browser
+#                        Combine with --skip-build to serve an existing build
 # ---------------------------------------------------------------------------
 SKIP_BUILD=0
 PLAYWRIGHT_ONLY=0
+SERVE_ONLY=0
 PLAYWRIGHT_SPEC=""
 APP_NAME="reactrouter6-react18"
 
@@ -25,6 +28,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --playwright-only)
       PLAYWRIGHT_ONLY=1
+      shift
+      ;;
+    --serve)
+      SERVE_ONLY=1
       shift
       ;;
     --spec)
@@ -45,7 +52,7 @@ while [[ $# -gt 0 ]]; do
       ;;
     *)
       echo "Unknown flag: $1"
-      echo "Usage: $0 [--skip-build] [--playwright-only] [--spec <pattern>] [--app <name>]"
+      echo "Usage: $0 [--skip-build] [--playwright-only] [--serve] [--spec <pattern>] [--app <name>]"
       exit 1
       ;;
   esac
@@ -86,11 +93,39 @@ else
   cd "../test/build/$APP_NAME"
 fi
 
-# Install Playwright browsers if not already present
-npx playwright install chromium 2>/dev/null || true
-
 echo "Cleaning up port 3000..."
 lsof -ti:3000 | xargs kill -9 || true
+
+if [ "$SERVE_ONLY" = "1" ]; then
+  echo "Starting server for manual testing..."
+  echo "Press Ctrl+C to stop."
+
+  # Start server in background, wait for it, then open browser
+  npm start > server.log 2>&1 &
+  SERVER_PID=$!
+  trap "kill $SERVER_PID 2>/dev/null" EXIT
+
+  for i in $(seq 1 60); do
+    if curl -s -o /dev/null -w "%{http_code}" http://localhost:3000 2>/dev/null | grep -q "200"; then
+      echo "Server is ready at http://localhost:3000"
+      open "http://localhost:3000" 2>/dev/null || true
+      break
+    fi
+    if [ "$i" -eq 60 ]; then
+      echo "Server did not start within 60s."
+      cat server.log
+      exit 1
+    fi
+    sleep 1
+  done
+
+  # Keep running until Ctrl+C
+  wait $SERVER_PID
+  exit $?
+fi
+
+# Install Playwright browsers if not already present
+npx playwright install chromium 2>/dev/null || true
 
 echo "Starting server..."
 # Start server in background and save PID
@@ -98,7 +133,7 @@ npm start > server.log 2>&1 &
 SERVER_PID=$!
 
 # Ensure server is killed on script exit
-trap "kill $SERVER_PID" EXIT
+trap "kill $SERVER_PID 2>/dev/null" EXIT
 
 echo "Waiting for server to start..."
 # Poll until the server responds (up to 60s)

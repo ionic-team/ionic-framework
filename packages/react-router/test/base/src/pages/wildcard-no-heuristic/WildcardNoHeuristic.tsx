@@ -10,6 +10,8 @@ import {
 import React from 'react';
 import { Route, useNavigate } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * Test page that validates wildcard routing works without relying on
  * string-similarity heuristics. The route names are intentionally chosen
@@ -91,6 +93,7 @@ const HeuristicHome: React.FC = () => {
         <IonButton id="go-to-unknown" onClick={() => navigate('unknown')}>
           Go to Unknown (wildcard)
         </IonButton>
+        <TestDescription>"Page" and "AB" buttons should navigate to their specific pages. "Page2", "ABC", "Pager", and "Unknown" should all land on the Catch-All page. If any wildcard target incorrectly shows a specific page (e.g., "Page2" shows the "Page" route because the names are similar), the test fails.</TestDescription>
       </IonContent>
     </IonPage>
   );

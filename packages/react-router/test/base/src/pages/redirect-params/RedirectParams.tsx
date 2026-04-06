@@ -16,6 +16,8 @@ import { triangle, square } from 'ionicons/icons';
 import React from 'react';
 import { Route, Navigate, useParams } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * Scenario 1: Tabs with catch-all Navigate redirect
  */
@@ -154,6 +156,7 @@ const RedirectParams: React.FC = () => {
               <IonButton routerLink="/redirect-params/flat" id="go-to-flat-scenario">
                 Flat Outlet Scenario
               </IonButton>
+              <TestDescription>In both Tabs and Flat scenarios, verify that parameterized routes display the correct param value after a catch-all redirect. In Tabs: the initial redirect should land on Tab 2, then navigating to Tab 1 should show "TESTING". In Flat: navigating to a non-existing route should redirect to Home, and details pages should display the correct ID.</TestDescription>
             </IonContent>
           </IonPage>
         }

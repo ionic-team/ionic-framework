@@ -11,6 +11,8 @@ import {
 import React, { useState } from 'react';
 import { Navigate, Route, useNavigate } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * Tests that aria-hidden is cleaned up on the root router outlet
  * when a modal is removed from the DOM without being dismissed
@@ -39,6 +41,7 @@ const PageA: React.FC = () => {
         <IonButton id="openModal" onClick={() => setIsOpen(true)}>
           Open Modal
         </IonButton>
+        <TestDescription>Open the modal, then tap "Navigate to Section B" inside it (navigates without dismissing). Verify Page B content is visible and interactive. In dev tools, check that the root outlet (id="modal-aria-hidden-root") does NOT have aria-hidden="true". If aria-hidden is stuck on the outlet, the page will be inaccessible to screen readers.</TestDescription>
         <IonModal isOpen={isOpen} onDidDismiss={() => setIsOpen(false)}>
           <IonContent>
             <IonButton

@@ -11,6 +11,8 @@ import {
 import React from 'react';
 import { Route } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * Test page for IonRoute index and caseSensitive props.
  *
@@ -31,6 +33,7 @@ const IndexHome: React.FC = () => (
       <IonButton id="go-to-details" routerLink="/ion-route-props/details">
         Go to Details
       </IonButton>
+      <TestDescription>This page should render as the default (index) route when navigating to /ion-route-props. Navigate to Details and back to verify forward/back works. Manually visit /ion-route-props/CaseSensitive (exact case) -- it should match. Visit /ion-route-props/casesensitive (lowercase) -- it should fall through to this index page instead.</TestDescription>
     </IonContent>
   </IonPage>
 );

@@ -12,6 +12,8 @@ import {
 import React from 'react';
 import { Route } from 'react-router';
 
+import TestDescription from '../../components/TestDescription';
+
 export const SwipeToGoBack: React.FC = () => {
   return (
     <IonRouterOutlet id="swipe-to-go-back">
@@ -32,6 +34,7 @@ const Main: React.FC = () => {
       </IonHeader>
       <IonContent>
         <IonItem routerLink="/swipe-to-go-back/details">Details</IonItem>
+        <TestDescription>Navigate to Details, then Details 2. Swipe from the left edge of the screen to go back. Each swipe should show a smooth slide animation with no blank flash, revealing the correct previous page.</TestDescription>
       </IonContent>
     </IonPage>
   );

@@ -12,6 +12,8 @@ import React from 'react';
 import { Navigate, Route } from 'react-router';
 import { useParams } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 const NestedParamsRoot: React.FC = () => (
   <IonPage data-pageid="nested-params-root">
     <IonHeader>
@@ -43,6 +45,7 @@ const Landing: React.FC = () => (
       <IonButton routerLink="/nested-params/user/99/details" id="go-to-user-99" className="ion-margin-top">
         Go to User 99 Details
       </IonButton>
+      <TestDescription>Navigate to User 42 Details, then Settings, then Profile Edit and Profile View. At every level, the displayed userId should match the URL (e.g., "42"). This verifies that 4 levels of nested outlets with relative paths correctly inherit parent route params.</TestDescription>
     </IonContent>
   </IonPage>
 );

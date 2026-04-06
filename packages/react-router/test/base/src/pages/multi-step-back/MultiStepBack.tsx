@@ -12,6 +12,8 @@ import {
 import React from 'react';
 import { Route, useNavigate } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * Tests for navigate(-n) where n > 1 (multi-step back navigation).
  * Verifies that the correct view is shown when skipping multiple
@@ -30,6 +32,7 @@ const PageA: React.FC = () => {
         <IonButton id="go-to-b" onClick={() => navigate('/multi-step-back/b')}>
           Go to Page B
         </IonButton>
+        <TestDescription>Navigate A -&gt; B -&gt; C -&gt; D, then use the "Go Back N" buttons to skip multiple history entries. "Go Back 2" from D should land on B; "Go Back 3" from D should land on A. The correct page should display with no blank screen.</TestDescription>
       </IonContent>
     </IonPage>
   );

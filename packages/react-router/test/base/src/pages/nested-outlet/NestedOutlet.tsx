@@ -10,6 +10,8 @@ import {
 import React, { useEffect } from 'react';
 import { Route, Navigate } from 'react-router';
 
+import TestDescription from '../../components/TestDescription';
+
 const Page: React.FC = () => {
   useEffect(() => {
     console.log('mount MySubPage');
@@ -72,6 +74,7 @@ const FirstPage: React.FC = () => {
         <IonButton routerLink="/nested-outlet/secondpage/page" routerDirection="forward">
           Go to second page
         </IonButton>
+        <TestDescription>Go to the second page (hosted in a nested IonRouterOutlet). Use "Back with direction back" and "Back with direction root" to return. Both should bring you back here without blank pages or console errors about unmounting.</TestDescription>
       </IonContent>
     </IonPage>
   );

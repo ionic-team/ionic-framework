@@ -17,6 +17,8 @@ import React, { useEffect, useContext } from 'react';
 import './Tab1.css';
 import { Link } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 const Tab1: React.FC = () => {
   useEffect(() => {
     console.log('Home mount');
@@ -80,6 +82,7 @@ const Tab1: React.FC = () => {
         <br />
         <br />
         RouteInfo: {JSON.stringify(ionRouter.routeInfo)}
+        <TestDescription>Navigate to Details pages, then back. Verify each detail page stacks (not replaced), the back button walks through the stack in order, and switching tabs preserves each tab's navigation stack. Try navigating to Settings Details from Home and confirm the Settings tab activates with the correct view.</TestDescription>
       </IonContent>
     </IonPage>
   );

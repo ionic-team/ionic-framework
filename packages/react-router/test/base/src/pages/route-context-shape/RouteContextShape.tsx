@@ -28,6 +28,8 @@ import {
 import React, { useContext, useMemo } from 'react';
 import { Route, useParams, useNavigate, UNSAFE_RouteContext } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * Validates a single match entry from the RouteContext matches array.
  */
@@ -153,6 +155,7 @@ const RouteContextShape: React.FC = () => {
                   </IonLabel>
                 </IonItem>
               </IonList>
+              <TestDescription>Verify "Valid: yes" and "Details: all-valid" appear in the validator below. Tap "Go to Nested" and check the same on the nested page. These confirm that Ionic's internal RouteContext matches the shape React Router expects. If "Valid: no" appears or fields are listed as missing, the context shape is broken.</TestDescription>
             </IonContent>
           </IonPage>
         }

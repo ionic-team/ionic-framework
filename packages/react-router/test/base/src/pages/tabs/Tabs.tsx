@@ -18,6 +18,8 @@ import { triangle, square } from 'ionicons/icons';
 import React from 'react';
 import { Route, Navigate } from 'react-router';
 
+import TestDescription from '../../components/TestDescription';
+
 const Tabs: React.FC = () => {
   return (
     <IonTabs data-pageid="tabs">
@@ -53,6 +55,7 @@ const Tab1 = () => {
       <IonContent>
         <IonButton routerLink="/tabs/tab1/child" id="child-one">Go to Tab1Child1</IonButton>
         <IonButton routerLink="/tabs-secondary/tab1" id="tabs-secondary">Go to Secondary Tabs</IonButton>
+        <TestDescription>Switch between Tab1 and Tab2, then navigate to child pages within Tab1 (Child1, Child2). Switching tabs and going back should preserve each tab's view stack. The back button on child pages should return to the previous page in the stack.</TestDescription>
       </IonContent>
     </IonPage>
   );

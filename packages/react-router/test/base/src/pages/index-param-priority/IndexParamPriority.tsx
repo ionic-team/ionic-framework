@@ -12,6 +12,8 @@ import React from 'react';
 import { Route } from 'react-router';
 import { useParams } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * Test page for route specificity and priority:
  *
@@ -62,6 +64,7 @@ const IndexPage: React.FC = () => (
       <IonButton routerLink="/index-param-priority/deep/nested/path" id="go-to-wildcard">
         Go to Deep Path (wildcard)
       </IonButton>
+      <TestDescription>This page should load as the index route (not the :slug route). Navigate to "hello" or "world" and verify the slug page displays the correct value. Navigate to "deep/nested/path" and verify it hits the wildcard "Not Found" page, not the slug page. Returning here should always show the index page.</TestDescription>
     </IonContent>
   </IonPage>
 );

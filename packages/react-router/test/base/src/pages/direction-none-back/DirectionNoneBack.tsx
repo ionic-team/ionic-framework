@@ -12,6 +12,8 @@ import {
 import React from 'react';
 import { Route, Navigate } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * Tests that IonBackButton works correctly after navigating with
  * routerDirection="none". The back button should use history to
@@ -32,6 +34,7 @@ const PageA: React.FC = () => {
         <IonButton id="go-none" routerLink="/direction-none-back/b" routerDirection="none">
           Go to B (none)
         </IonButton>
+        <TestDescription>Tap "Go to B (none)" to navigate with routerDirection="none", then tap the back button on Page B. It should return to Page A using history, not the "Fallback (defaultHref)" page. Repeat with "Go to B (forward)" to confirm the back button also works after a normal forward navigation.</TestDescription>
       </IonContent>
     </IonPage>
   );

@@ -14,6 +14,8 @@ import React from 'react';
 import { Route } from 'react-router';
 import { useParams, useNavigate } from 'react-router-dom';
 
+import TestDescription from '../../components/TestDescription';
+
 /**
  * Test scenarios for issue #27900:
  * Swipe back gesture breaks when navigating between parameterized routes.
@@ -51,6 +53,7 @@ const Start: React.FC = () => {
         <IonItem routerLink="/param-swipe-back/middle" id="go-to-middle">
           Go to Middle
         </IonItem>
+        <TestDescription>Navigate User Alex -&gt; Middle -&gt; User Sean, then swipe back twice from the left edge. Both swipes should animate smoothly and reveal the correct previous page. This verifies swipe back works when navigating between routes that share the same parameterized path pattern (issue #27900).</TestDescription>
       </IonContent>
     </IonPage>
   );
