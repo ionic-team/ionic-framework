@@ -283,10 +283,20 @@ configs().forEach(({ title, screenshot, config }) => {
       const nextMonthButton = page.locator('ion-datetime .calendar-next-prev ion-button').nth(1);
       const monthYearButton = page.locator('ion-datetime .calendar-month-year');
 
-      await nextMonthButton.click();
+      await monthYearButton.click();
+      await page.waitForChanges();
+      await monthYearButton.click();
+      await page.waitForChanges();
       await nextMonthButton.click();
       await page.waitForChanges();
-
+      await page.waitForTimeout(2000);
+      await monthYearButton.click();
+      await page.waitForChanges();
+      await monthYearButton.click();
+      await page.waitForChanges();
+      await nextMonthButton.click();
+      await page.waitForChanges();
+      await page.waitForTimeout(2000);
       await monthYearButton.click();
       await page.waitForChanges();
 
