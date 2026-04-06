@@ -270,39 +270,6 @@ configs().forEach(({ title, screenshot, config }) => {
       const datetime = page.locator('ion-datetime');
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-footer-custom-buttons`));
     });
-    test('should only have one active month option after changing month twice', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-datetime value="2022-05-03"></ion-datetime>
-      `,
-        config
-      );
-
-      await page.locator('.datetime-ready').waitFor();
-
-      const nextMonthButton = page.locator('ion-datetime .calendar-next-prev ion-button').nth(1);
-      const monthYearButton = page.locator('ion-datetime .calendar-month-year');
-
-      await monthYearButton.click();
-      await page.waitForChanges();
-      await monthYearButton.click();
-      await page.waitForChanges();
-      await nextMonthButton.click();
-      await page.waitForChanges();
-      await page.waitForTimeout(2000);
-      await monthYearButton.click();
-      await page.waitForChanges();
-      await monthYearButton.click();
-      await page.waitForChanges();
-      await nextMonthButton.click();
-      await page.waitForChanges();
-      await page.waitForTimeout(2000);
-      await monthYearButton.click();
-      await page.waitForChanges();
-
-      const selectedMonthOptions = page.locator('.month-column ion-picker-column-option.option-active');
-      await expect(selectedMonthOptions).toHaveCount(1);
-    });
   });
 });
 
@@ -378,6 +345,43 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await expect(calendarHeader).toHaveText(/May 2022/);
       }
+    });
+  });
+});
+
+/**
+ * This behavior does not differ across
+ * modes/directions.
+ */
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime: month picker selection'), () => {
+    test('datetime: month picker selection', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime value="2022-05-03"></ion-datetime>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      const nextMonthButton = page.locator('ion-datetime .calendar-next-prev ion-button').nth(1);
+      const monthYearButton = page.locator('ion-datetime .calendar-month-year');
+
+      await expect(monthYearButton).toHaveText(/May 2022/);
+
+      await nextMonthButton.click();
+      await expect(monthYearButton).toHaveText(/June 2022/);
+
+      await nextMonthButton.click();
+      await expect(monthYearButton).toHaveText(/July 2022/);
+
+      await monthYearButton.click();
+      await page.waitForChanges();
+
+      const selectedMonthOptions = page.locator('.month-column ion-picker-column-option.option-active');
+      await expect(selectedMonthOptions).toHaveCount(1);
     });
   });
 });

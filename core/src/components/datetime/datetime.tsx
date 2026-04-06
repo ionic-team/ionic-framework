@@ -1096,10 +1096,7 @@ export class Datetime implements ComponentInterface {
       this.clearFocusVisible();
       this.clearFocusVisible = undefined;
     }
-    if (this.loadTimeout) {
-      clearTimeout(this.loadTimeout);
-      this.loadTimeout = undefined;
-    }
+    this.loadTimeoutCleanup();
   }
 
   /**
@@ -1150,6 +1147,13 @@ export class Datetime implements ComponentInterface {
     });
   };
 
+  private loadTimeoutCleanup = () => {
+    if (this.loadTimeout) {
+      clearTimeout(this.loadTimeout);
+      this.loadTimeout = undefined;
+    }
+  };
+
   componentDidLoad() {
     const { el, intersectionTrackerRef } = this;
 
@@ -1197,7 +1201,10 @@ export class Datetime implements ComponentInterface {
      * we still initialize listeners and mark the component as ready.
      *
      * We schedule this after everything has had a chance to run.
+     *
+     * We also clean up the load timeout to ensure that we don't have multiple timeouts running.
      */
+    this.loadTimeoutCleanup();
     this.loadTimeout = setTimeout(() => {
       this.ensureReadyIfVisible();
     }, 100);
