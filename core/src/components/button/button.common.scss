@@ -1,4 +1,4 @@
-@use "../../themes/mixins" as mixins;
+@import "../../themes/mixins";
 @import "../../themes/functions.color";
 
 // Button
@@ -95,7 +95,7 @@
 }
 
 :host(.button-block) .button-native {
-  @include mixins.margin-horizontal(0);
+  @include margin-horizontal(0);
 
   width: 100%;
 
@@ -116,7 +116,7 @@
 }
 
 :host(.button-full) .button-native {
-  @include mixins.margin-horizontal(0);
+  @include margin-horizontal(0);
 
   width: 100%;
 
@@ -124,18 +124,18 @@
 }
 
 :host(.button-full:not(.button-round)) .button-native {
-  @include mixins.border-radius(0);
+  @include border-radius(0);
 
   border-right-width: 0;
   border-left-width: 0;
 }
 
 .button-native {
-  @include mixins.border-radius(var(--border-radius));
-  @include mixins.font-smoothing();
-  @include mixins.margin(0);
-  @include mixins.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include mixins.text-inherit();
+  @include border-radius(var(--border-radius));
+  @include font-smoothing();
+  @include margin(0);
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include text-inherit();
 
   display: flex;
 
@@ -223,7 +223,7 @@ ion-ripple-effect {
 // --------------------------------------------------
 
 .button-native::after {
-  @include mixins.button-state();
+  @include button-state();
 }
 
 // Button Focused
@@ -302,7 +302,7 @@ ion-ripple-effect {
 
 .button-native ion-ripple-effect,
 .button-native::after {
-  @include mixins.border-radius(inherit);
+  @include border-radius(inherit);
 }
 
 // Button Slotted Elements
@@ -311,13 +311,4 @@ ion-ripple-effect {
 // Badge Indicator
 :host(.button-has-badge) .button-native {
   --overflow: visible;
-}
-
-:host ::slotted(ion-badge[vertical]:not(:empty)) {
-  @include mixins.padding(
-    --ion-button-default-padding-top,
-    --ion-button-default-padding-end,
-    --ion-button-default-padding-bottom,
-    --ion-button-default-padding-start
-  );
 }

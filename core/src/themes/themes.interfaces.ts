@@ -283,7 +283,6 @@ export type DefaultTheme = BaseTheme & {
 type Components = {
   IonAvatar?: any;
   IonBadge?: any;
-  IonButton?: any;
   IonChip?: IonChipRecipe;
   IonItemDivider?: IonItemDividerRecipe;
   IonSpinner?: IonSpinnerRecipe;

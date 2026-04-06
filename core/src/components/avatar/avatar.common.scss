@@ -1,4 +1,4 @@
-@use "../../themes/mixins" as mixins;
+@import "../../themes/mixins.scss";
 
 // Avatar
 // --------------------------------------------------
@@ -7,7 +7,7 @@
   /**
    * @prop --border-radius: Border radius of the avatar and inner image
    */
-  @include mixins.border-radius(var(--border-radius));
+  @include border-radius(var(--border-radius));
 
   display: block;
 
@@ -16,7 +16,7 @@
 
 ::slotted(ion-img),
 ::slotted(img) {
-  @include mixins.border-radius(var(--border-radius));
+  @include border-radius(var(--border-radius));
 
   width: 100%;
   height: 100%;
