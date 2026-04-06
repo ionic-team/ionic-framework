@@ -72,130 +72,123 @@
   @include mixins.border-radius(var(--ion-badge-shape-rectangular-border-radius));
 }
 
-// Badge Sizes: Standalone
+// Badge Sizes: Content (with text or an icon)
 // ---------------------------------------------
 
 // Small
 :host(.badge-small) {
   @include mixins.padding(
-    var(--ion-badge-size-small-default-padding-top),
-    var(--ion-badge-size-small-default-padding-end),
-    var(--ion-badge-size-small-default-padding-bottom),
-    var(--ion-badge-size-small-default-padding-start)
+    var(--ion-badge-size-small-content-padding-top),
+    var(--ion-badge-size-small-content-padding-end),
+    var(--ion-badge-size-small-content-padding-bottom),
+    var(--ion-badge-size-small-content-padding-start)
   );
 
-  min-width: var(--ion-badge-size-small-default-min-width);
-  height: var(--ion-badge-size-small-default-height);
+  min-width: var(--ion-badge-size-small-content-min-width);
+  height: var(--ion-badge-size-small-content-height);
 
-  font-size: var(--ion-badge-size-small-default-font-size);
-  font-weight: var(--ion-badge-size-small-default-font-weight);
+  font-size: var(--ion-badge-size-small-content-font-size);
+  font-weight: var(--ion-badge-size-small-content-font-weight);
 
-  line-height: var(--ion-badge-size-small-default-line-height);
+  line-height: var(--ion-badge-size-small-content-line-height);
 }
 
 :host(.badge-small) ::slotted(ion-icon) {
-  width: var(--ion-badge-size-small-default-icon-width, revert-layer);
-  height: var(--ion-badge-size-small-default-icon-height, revert-layer);
+  width: var(--ion-badge-size-small-content-icon-width, revert-layer);
+  height: var(--ion-badge-size-small-content-icon-height, revert-layer);
 }
 
 // Medium
 :host(.badge-medium) {
   @include mixins.padding(
-    var(--ion-badge-size-medium-default-padding-top),
-    var(--ion-badge-size-medium-default-padding-end),
-    var(--ion-badge-size-medium-default-padding-bottom),
-    var(--ion-badge-size-medium-default-padding-start)
+    var(--ion-badge-size-medium-content-padding-top),
+    var(--ion-badge-size-medium-content-padding-end),
+    var(--ion-badge-size-medium-content-padding-bottom),
+    var(--ion-badge-size-medium-content-padding-start)
   );
 
-  min-width: var(--ion-badge-size-medium-default-min-width);
-  height: var(--ion-badge-size-medium-default-height);
+  min-width: var(--ion-badge-size-medium-content-min-width);
+  height: var(--ion-badge-size-medium-content-height);
 
-  font-size: var(--ion-badge-size-medium-default-font-size);
-  font-weight: var(--ion-badge-size-medium-default-font-weight);
+  font-size: var(--ion-badge-size-medium-content-font-size);
+  font-weight: var(--ion-badge-size-medium-content-font-weight);
 
-  line-height: var(--ion-badge-size-medium-default-line-height);
+  line-height: var(--ion-badge-size-medium-content-line-height);
 }
 
 :host(.badge-medium) ::slotted(ion-icon) {
-  width: var(--ion-badge-size-medium-default-icon-width, revert-layer);
-  height: var(--ion-badge-size-medium-default-icon-height, revert-layer);
+  width: var(--ion-badge-size-medium-content-icon-width, revert-layer);
+  height: var(--ion-badge-size-medium-content-icon-height, revert-layer);
 }
 
 // Large
 :host(.badge-large) {
   @include mixins.padding(
-    var(--ion-badge-size-large-default-padding-top),
-    var(--ion-badge-size-large-default-padding-end),
-    var(--ion-badge-size-large-default-padding-bottom),
-    var(--ion-badge-size-large-default-padding-start)
+    var(--ion-badge-size-large-content-padding-top),
+    var(--ion-badge-size-large-content-padding-end),
+    var(--ion-badge-size-large-content-padding-bottom),
+    var(--ion-badge-size-large-content-padding-start)
   );
 
-  min-width: var(--ion-badge-size-large-default-min-width);
-  height: var(--ion-badge-size-large-default-height);
+  min-width: var(--ion-badge-size-large-content-min-width);
+  height: var(--ion-badge-size-large-content-height);
 
-  font-size: var(--ion-badge-size-large-default-font-size);
-  font-weight: var(--ion-badge-size-large-default-font-weight);
+  font-size: var(--ion-badge-size-large-content-font-size);
+  font-weight: var(--ion-badge-size-large-content-font-weight);
 
-  line-height: var(--ion-badge-size-large-default-line-height);
+  line-height: var(--ion-badge-size-large-content-line-height);
 }
 
 :host(.badge-large) ::slotted(ion-icon) {
-  width: var(--ion-badge-size-large-default-icon-width, revert-layer);
-  height: var(--ion-badge-size-large-default-icon-height, revert-layer);
+  width: var(--ion-badge-size-large-content-icon-width, revert-layer);
+  height: var(--ion-badge-size-large-content-icon-height, revert-layer);
 }
 
-// Badge Sizes: Indicator
+// Badge Sizes: Dot (empty with no text or icon)
 // ---------------------------------------------
 
+// Small
 :host(.badge-small:empty) {
   @include mixins.padding(
-    var(--ion-badge-size-small-empty-padding-top),
-    var(--ion-badge-size-small-empty-padding-end),
-    var(--ion-badge-size-small-empty-padding-bottom),
-    var(--ion-badge-size-small-empty-padding-start)
+    var(--ion-badge-size-small-dot-padding-top),
+    var(--ion-badge-size-small-dot-padding-end),
+    var(--ion-badge-size-small-dot-padding-bottom),
+    var(--ion-badge-size-small-dot-padding-start)
   );
 
-  min-width: var(--ion-badge-size-small-empty-min-width);
-  height: var(--ion-badge-size-small-empty-height);
+  min-width: var(--ion-badge-size-small-dot-min-width);
+  height: var(--ion-badge-size-small-dot-height);
 }
 
-/* md */
+// Medium
 :host(.badge-medium:empty) {
   @include mixins.padding(
-    var(--ion-badge-size-medium-empty-padding-top),
-    var(--ion-badge-size-medium-empty-padding-end),
-    var(--ion-badge-size-medium-empty-padding-bottom),
-    var(--ion-badge-size-medium-empty-padding-start)
+    var(--ion-badge-size-medium-dot-padding-top),
+    var(--ion-badge-size-medium-dot-padding-end),
+    var(--ion-badge-size-medium-dot-padding-bottom),
+    var(--ion-badge-size-medium-dot-padding-start)
   );
 
-  min-width: var(--ion-badge-size-medium-empty-min-width);
-  height: var(--ion-badge-size-medium-empty-height);
+  min-width: var(--ion-badge-size-medium-dot-min-width);
+  height: var(--ion-badge-size-medium-dot-height);
 }
 
-/* lg */
+// Large
 :host(.badge-large:empty) {
   @include mixins.padding(
-    var(--ion-badge-size-large-empty-padding-top),
-    var(--ion-badge-size-large-empty-padding-end),
-    var(--ion-badge-size-large-empty-padding-bottom),
-    var(--ion-badge-size-large-empty-padding-start)
+    var(--ion-badge-size-large-dot-padding-top),
+    var(--ion-badge-size-large-dot-padding-end),
+    var(--ion-badge-size-large-dot-padding-bottom),
+    var(--ion-badge-size-large-dot-padding-start)
   );
 
-  min-width: var(--ion-badge-size-large-empty-min-width);
-  height: var(--ion-badge-size-large-empty-height);
+  min-width: var(--ion-badge-size-large-dot-min-width);
+  height: var(--ion-badge-size-large-dot-height);
 }
 
-// Empty Badge
+// Anchored Badge (positioned at a specific corner of its parent element)
 // ---------------------------------------------
 
-:host(:empty) {
-  @include mixins.padding(0);
-}
-
-// Badge Indicator (within a component)
-// ---------------------------------------------
-
-// Anchored
 :host([vertical]) {
   position: absolute;
 

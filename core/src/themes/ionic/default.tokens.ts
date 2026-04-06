@@ -162,7 +162,7 @@ export const defaultTheme: DefaultTheme = {
       // Sizes
       size: {
         small: {
-          default: {
+          content: {
             height: 'var(--ion-scaling-xxxs)',
             letterSpacing: '0%',
 
@@ -192,7 +192,7 @@ export const defaultTheme: DefaultTheme = {
             },
           },
 
-          empty: {
+          dot: {
             height: 'var(--ion-scaling-200)',
 
             min: {
@@ -202,7 +202,7 @@ export const defaultTheme: DefaultTheme = {
         },
 
         medium: {
-          default: {
+          content: {
             height: 'var(--ion-scaling-xs)',
             letterSpacing: '0%',
 
@@ -232,7 +232,7 @@ export const defaultTheme: DefaultTheme = {
             },
           },
 
-          empty: {
+          dot: {
             height: 'var(--ion-scaling-xxxxs)',
 
             min: {
@@ -242,7 +242,7 @@ export const defaultTheme: DefaultTheme = {
         },
 
         large: {
-          default: {
+          content: {
             height: 'var(--ion-scaling-xs)',
             letterSpacing: '0%',
 
@@ -272,33 +272,13 @@ export const defaultTheme: DefaultTheme = {
             },
           },
 
-          empty: {
+          dot: {
             height: 'var(--ion-scaling-xxxs)',
 
             min: {
               width: 'var(--ion-scaling-xxxs)',
             },
           },
-        },
-      },
-
-      indicator: {
-        height: 'var(--ion-scaling-xxxs)',
-
-        min: {
-          width: 'var(--ion-scaling-xxxs)',
-        },
-
-        padding: {
-          top: 'var(--ion-spacing-0)',
-          end: 'var(--ion-spacing-xxxs)',
-          bottom: 'var(--ion-spacing-0)',
-          start: 'var(--ion-spacing-xxxs)',
-        },
-
-        icon: {
-          width: 'var(--ion-scaling-xxxxs)',
-          height: 'var(--ion-scaling-xxxxs)',
         },
       },
     },

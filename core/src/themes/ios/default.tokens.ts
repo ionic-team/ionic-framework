@@ -163,7 +163,7 @@ export const defaultTheme: DefaultTheme = {
       // Sizes
       size: {
         small: {
-          default: {
+          content: {
             min: {
               width: 'var(--ion-scaling-250)',
             },
@@ -185,7 +185,7 @@ export const defaultTheme: DefaultTheme = {
             },
           },
 
-          empty: {
+          dot: {
             height: 'var(--ion-scaling-150)',
 
             min: {
@@ -195,7 +195,7 @@ export const defaultTheme: DefaultTheme = {
         },
 
         medium: {
-          default: {
+          content: {
             min: {
               width: 'var(--ion-scaling-xxxs)',
             },
@@ -217,7 +217,7 @@ export const defaultTheme: DefaultTheme = {
             },
           },
 
-          empty: {
+          dot: {
             height: 'var(--ion-scaling-250)',
 
             min: {
@@ -227,7 +227,7 @@ export const defaultTheme: DefaultTheme = {
         },
 
         large: {
-          default: {
+          content: {
             min: {
               width: 'var(--ion-scaling-xxxs)',
             },
@@ -249,46 +249,11 @@ export const defaultTheme: DefaultTheme = {
             },
           },
 
-          empty: {
+          dot: {
             height: 'var(--ion-scaling-350)',
 
             min: {
               width: 'var(--ion-scaling-350)',
-            },
-          },
-        },
-      },
-
-      indicator: {
-        in: {
-          button: {
-            default: {
-              height: 'var(--ion-scaling-xxxs)',
-
-              min: {
-                width: 'var(--ion-scaling-xxxs)',
-              },
-
-              line: {
-                height: 'var(--ion-scaling-xxs)',
-              },
-
-              font: {
-                size: `${(12 / global.root).toFixed(2)}rem`,
-              },
-
-              icon: {
-                width: 'var(--ion-scaling-xxxxs)',
-                height: 'var(--ion-scaling-xxxxs)',
-              },
-            },
-          },
-
-          tab: {
-            button: {
-              default: {
-                position: 'absolute',
-              },
             },
           },
         },

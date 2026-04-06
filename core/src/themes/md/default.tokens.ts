@@ -165,7 +165,7 @@ export const defaultTheme: DefaultTheme = {
       // Sizes
       size: {
         small: {
-          default: {
+          content: {
             height: 'var(--ion-scaling-xxxxs)',
 
             min: {
@@ -189,7 +189,7 @@ export const defaultTheme: DefaultTheme = {
             },
           },
 
-          empty: {
+          dot: {
             height: 'var(--ion-scaling-150)',
 
             min: {
@@ -206,7 +206,7 @@ export const defaultTheme: DefaultTheme = {
         },
 
         medium: {
-          default: {
+          content: {
             height: 'var(--ion-scaling-350)',
 
             min: {
@@ -230,7 +230,7 @@ export const defaultTheme: DefaultTheme = {
             },
           },
 
-          empty: {
+          dot: {
             height: 'var(--ion-scaling-250)',
 
             min: {
@@ -247,7 +247,7 @@ export const defaultTheme: DefaultTheme = {
         },
 
         large: {
-          default: {
+          content: {
             height: 'var(--ion-scaling-xxxs)',
 
             min: {
@@ -271,7 +271,7 @@ export const defaultTheme: DefaultTheme = {
             },
           },
 
-          empty: {
+          dot: {
             height: 'var(--ion-scaling-350)',
 
             min: {
