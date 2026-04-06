@@ -38,7 +38,7 @@
     <script>
       const buttonSizes = ['small', 'medium', 'large'];
       const badgeSizes = ['small', 'medium', 'large'];
-      const positions = ['top', 'bottom'];
+      const positions = ['top', 'bottom', ''];
 
       const badgeContents = [
         { label: 'empty', html: '' },
@@ -52,7 +52,7 @@
       buttonSizes.forEach((buttonSize) => {
         positions.forEach((position) => {
           const heading = document.createElement('h2');
-          heading.textContent = `${buttonSize} — ${position}`;
+          heading.textContent = `button size: ${buttonSize} / badge position: ${position || 'none'}`;
           content.appendChild(heading);
 
           const row = document.createElement('div');
@@ -73,7 +73,9 @@
               badge.setAttribute('shape', 'round');
               badge.setAttribute('color', 'danger');
               badge.setAttribute('size', badgeSize);
-              badge.setAttribute('vertical', position);
+              if (position) {
+                badge.setAttribute('vertical', position);
+              }
               badge.innerHTML = html;
 
               iconButton.appendChild(badge);
@@ -90,7 +92,9 @@
               standardBadge.setAttribute('shape', 'round');
               standardBadge.setAttribute('color', 'danger');
               standardBadge.setAttribute('size', badgeSize);
-              standardBadge.setAttribute('vertical', position);
+              if (position) {
+                standardBadge.setAttribute('vertical', position);
+              }
               standardBadge.innerHTML = html;
 
               textButton.appendChild(standardBadge);

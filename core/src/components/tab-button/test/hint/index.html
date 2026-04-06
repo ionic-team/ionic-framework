@@ -36,8 +36,8 @@
     </ion-app>
 
     <script>
-      const positions = ['top', 'bottom'];
-      const layouts = ['', 'icon-bottom'];
+      const positions = ['top', 'bottom', ''];
+      const layouts = ['icon-top', 'icon-bottom'];
       const badgeSizes = ['small', 'medium', 'large'];
 
       // What each tab button contains (besides the badge)
@@ -65,25 +65,22 @@
           slotVariants.forEach((variant) => {
             layouts.forEach((layout) => {
               // Skip icon-bottom layout when there's no icon
-              if (layout === 'icon-bottom' && !variant.hasIcon) return;
+              if (!variant.hasIcon && layout === 'icon-bottom') return;
 
-              const layoutLabel = layout || 'icon-top';
               const heading = document.createElement('h2');
-              heading.textContent = `badge position: ${position} / badge size: ${badgeSize} / ${variant.label} / icon layout: ${layoutLabel}`;
+              heading.textContent = `badge position: ${position || 'none'} / badge size: ${badgeSize} / ${
+                variant.label
+              } / icon layout: ${layout}`;
               content.appendChild(heading);
 
               const row = document.createElement('div');
-              row.className = 'row';
 
               const tabBar = document.createElement('ion-tab-bar');
 
               badgeContents.forEach(({ html }, i) => {
                 const tabButton = document.createElement('ion-tab-button');
-                tabButton.setAttribute('tab', `tab-${position}-${badgeSize}-${variant.label}-${layoutLabel}-${i}`);
-
-                if (layout) {
-                  tabButton.setAttribute('layout', layout);
-                }
+                tabButton.setAttribute('tab', `tab-${position}-${badgeSize}-${variant.label}-${layout}-${i}`);
+                tabButton.setAttribute('layout', layout);
 
                 if (variant.hasLabel) {
                   const label = document.createElement('ion-label');
@@ -101,7 +98,9 @@
                 badge.setAttribute('hue', 'bold');
                 badge.setAttribute('shape', 'round');
                 badge.setAttribute('size', badgeSize);
-                badge.setAttribute('vertical', position);
+                if (position) {
+                  badge.setAttribute('vertical', position);
+                }
                 badge.setAttribute('color', colors[i % colors.length]);
                 badge.innerHTML = html;
 

@@ -45,7 +45,7 @@
     <script>
       const avatarSizes = ['xxsmall', 'xsmall', 'small', 'medium', 'large', 'xlarge'];
       const badgeSizes = ['small', 'medium', 'large'];
-      const positions = ['top', 'bottom'];
+      const positions = ['top', 'bottom', ''];
       const imgSrc = '/src/components/avatar/test/avatar.svg';
 
       // Badge content variants: empty (dot), text, icon
@@ -61,7 +61,7 @@
       avatarSizes.forEach((avatarSize) => {
         positions.forEach((position) => {
           const heading = document.createElement('h2');
-          heading.textContent = `${avatarSize} — ${position}`;
+          heading.textContent = `avatar size: ${avatarSize} / badge position: ${position || 'none'}`;
           content.appendChild(heading);
 
           const row = document.createElement('div');
@@ -81,7 +81,9 @@
               badge.setAttribute('color', 'danger');
               badge.setAttribute('shape', 'round');
               badge.setAttribute('size', badgeSize);
-              badge.setAttribute('vertical', position);
+              if (position) {
+                badge.setAttribute('vertical', position);
+              }
               badge.innerHTML = html;
 
               avatar.appendChild(badge);
