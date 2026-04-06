@@ -172,10 +172,6 @@ export const defaultTheme: DefaultTheme = {
               width: 'var(--ion-scaling-xxxxs)',
             },
 
-            max: {
-              width: 'var(--ion-scaling-xxxxl)',
-            },
-
             padding: {
               top: 'var(--ion-spacing-0)',
               end: 'var(--ion-spacing-xxxs)',
@@ -217,10 +213,6 @@ export const defaultTheme: DefaultTheme = {
               width: 'var(--ion-scaling-350)',
             },
 
-            max: {
-              width: 'var(--ion-scaling-750)',
-            },
-
             padding: {
               top: 'var(--ion-spacing-0)',
               end: 'var(--ion-spacing-75)',
@@ -260,10 +252,6 @@ export const defaultTheme: DefaultTheme = {
 
             min: {
               width: 'var(--ion-scaling-xxxs)',
-            },
-
-            max: {
-              width: 'var(--ion-scaling-850)',
             },
 
             padding: {
