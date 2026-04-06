@@ -98,7 +98,7 @@ export class Avatar implements ComponentInterface {
     }
 
     this.badgeObserver = createBadgeObserver({
-      host: this.el,
+      target: this.el,
       badge,
     });
   }

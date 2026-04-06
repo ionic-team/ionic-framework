@@ -1,8 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, h } from '@stencil/core';
 import type { AnchorInterface } from '@utils/element-interface';
-import type { Attributes } from '@utils/helpers';
-import { inheritAttributes } from '@utils/helpers';
+import type { Attributes, BadgeObserver } from '@utils/helpers';
+import { inheritAttributes, createBadgeObserver } from '@utils/helpers';
 
 import { config } from '../../global/config';
 import { getIonMode, getIonTheme } from '../../global/ionic-global';
@@ -29,6 +29,7 @@ import type {
 })
 export class TabButton implements ComponentInterface, AnchorInterface {
   private inheritedAttributes: Attributes = {};
+  private badgeObserver?: BadgeObserver;
 
   @Element() el!: HTMLElement;
 
@@ -116,6 +117,14 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     }
   }
 
+  componentDidLoad() {
+    this.setupBadgeObserver();
+  }
+
+  disconnectedCallback() {
+    this.destroyBadgeObserver();
+  }
+
   private getShape(): string | undefined {
     const theme = getIonTheme(this);
     const { shape } = this;
@@ -150,7 +159,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   }
 
   private get hasIcon() {
-    return !!this.el.querySelector('ion-icon');
+    return !!this.el.querySelector(':scope > ion-icon');
   }
 
   private onKeyUp = (ev: KeyboardEvent) => {
@@ -170,6 +179,36 @@ export class TabButton implements ComponentInterface, AnchorInterface {
       return true;
     }
     return mode === 'md';
+  }
+
+  private setupBadgeObserver() {
+    this.destroyBadgeObserver();
+
+    // Only set up the badge observer if there is a badge and it's anchored
+    const badge = this.el.querySelector('ion-badge[vertical]') as HTMLElement | null;
+
+    if (!badge) {
+      return;
+    }
+
+    const target = this.el.querySelector(':scope > ion-icon') || this.el.querySelector('ion-label')!;
+    console.log('target', target);
+
+    const relativeTo = this.el.shadowRoot!.querySelector('.button-inner')!;
+    // Only clamp when tab button has an icon and label to prevent the badge from overlapping the label
+    const clamp = this.hasIcon && this.hasLabel;
+
+    this.badgeObserver = createBadgeObserver({
+      badge,
+      host: this.el,
+      clamp,
+      relativeTo,
+      target,
+    });
+  }
+
+  private destroyBadgeObserver() {
+    this.badgeObserver?.disconnect();
   }
 
   render() {

@@ -166,19 +166,25 @@ export const defaultTheme: DefaultTheme = {
       size: {
         small: {
           default: {
+            height: 'var(--ion-scaling-xxxxs)',
+
             min: {
-              width: 'var(--ion-scaling-250)',
+              width: 'var(--ion-scaling-xxxxs)',
+            },
+
+            max: {
+              width: 'var(--ion-scaling-xxxxl)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-75)',
-              end: 'var(--ion-spacing-xxs)',
-              bottom: 'var(--ion-spacing-xxs)',
-              start: 'var(--ion-spacing-xxs)',
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-xxxs)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-xxxs)',
             },
 
             font: {
-              size: dynamicFont(global.root, 13),
+              size: dynamicFont(global.root, 8),
               weight: 'var(--ion-font-weight-bold)',
             },
 
@@ -193,24 +199,37 @@ export const defaultTheme: DefaultTheme = {
             min: {
               width: 'var(--ion-scaling-150)',
             },
+
+            padding: {
+              top: 'var(--ion-spacing-xxxs)',
+              end: 'var(--ion-spacing-xxxs)',
+              bottom: 'var(--ion-spacing-xxxs)',
+              start: 'var(--ion-spacing-xxxs)',
+            },
           },
         },
 
         medium: {
           default: {
+            height: 'var(--ion-scaling-350)',
+
             min: {
-              width: 'var(--ion-scaling-xxxs)',
+              width: 'var(--ion-scaling-350)',
+            },
+
+            max: {
+              width: 'var(--ion-scaling-750)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-xs)',
-              end: 'var(--ion-spacing-xs)',
-              bottom: 'var(--ion-spacing-xs)',
-              start: 'var(--ion-spacing-xs)',
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-75)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-75)',
             },
 
             font: {
-              size: dynamicFont(global.root, 13),
+              size: dynamicFont(global.root, 10),
               weight: 'var(--ion-font-weight-bold)',
             },
 
@@ -225,24 +244,37 @@ export const defaultTheme: DefaultTheme = {
             min: {
               width: 'var(--ion-scaling-250)',
             },
+
+            padding: {
+              top: 'var(--ion-spacing-75)',
+              end: 'var(--ion-spacing-75)',
+              bottom: 'var(--ion-spacing-75)',
+              start: 'var(--ion-spacing-75)',
+            },
           },
         },
 
         large: {
           default: {
+            height: 'var(--ion-scaling-xxxs)',
+
             min: {
               width: 'var(--ion-scaling-xxxs)',
             },
 
+            max: {
+              width: 'var(--ion-scaling-850)',
+            },
+
             padding: {
-              top: 'var(--ion-spacing-sm)',
-              end: 'var(--ion-spacing-sm)',
-              bottom: 'var(--ion-spacing-sm)',
-              start: 'var(--ion-spacing-sm)',
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-xxs)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-xxs)',
             },
 
             font: {
-              size: dynamicFont(global.root, 13),
+              size: dynamicFont(global.root, 11),
               weight: 'var(--ion-font-weight-bold)',
             },
 
@@ -256,6 +288,13 @@ export const defaultTheme: DefaultTheme = {
 
             min: {
               width: 'var(--ion-scaling-350)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-xxs)',
+              end: 'var(--ion-spacing-xxs)',
+              bottom: 'var(--ion-spacing-xxs)',
+              start: 'var(--ion-spacing-xxs)',
             },
           },
         },
@@ -841,14 +880,6 @@ export const defaultTheme: DefaultTheme = {
         xlarge: {
           width: 'var(--ion-scaling-xxxl)',
           height: 'var(--ion-scaling-xxxl)',
-        },
-      },
-    },
-
-    IonTabButton: {
-      badge: {
-        indicator: {
-          position: 'absolute',
         },
       },
     },

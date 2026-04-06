@@ -148,18 +148,39 @@
 // ---------------------------------------------
 
 :host(.badge-small:empty) {
+  @include mixins.padding(
+    var(--ion-badge-size-small-empty-padding-top),
+    var(--ion-badge-size-small-empty-padding-end),
+    var(--ion-badge-size-small-empty-padding-bottom),
+    var(--ion-badge-size-small-empty-padding-start)
+  );
+
   min-width: var(--ion-badge-size-small-empty-min-width);
   height: var(--ion-badge-size-small-empty-height);
 }
 
 /* md */
 :host(.badge-medium:empty) {
+  @include mixins.padding(
+    var(--ion-badge-size-medium-empty-padding-top),
+    var(--ion-badge-size-medium-empty-padding-end),
+    var(--ion-badge-size-medium-empty-padding-bottom),
+    var(--ion-badge-size-medium-empty-padding-start)
+  );
+
   min-width: var(--ion-badge-size-medium-empty-min-width);
   height: var(--ion-badge-size-medium-empty-height);
 }
 
 /* lg */
 :host(.badge-large:empty) {
+  @include mixins.padding(
+    var(--ion-badge-size-large-empty-padding-top),
+    var(--ion-badge-size-large-empty-padding-end),
+    var(--ion-badge-size-large-empty-padding-bottom),
+    var(--ion-badge-size-large-empty-padding-start)
+  );
+
   min-width: var(--ion-badge-size-large-empty-min-width);
   height: var(--ion-badge-size-large-empty-height);
 }
@@ -174,6 +195,9 @@
 // Badge Indicator (within a component)
 // ---------------------------------------------
 
-:host([vertical]:not(.in-tab-button)) {
+// Anchored
+:host([vertical]) {
   position: absolute;
+
+  z-index: 1;
 }

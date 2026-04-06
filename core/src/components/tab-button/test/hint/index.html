@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tab Button - Hint</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+        color: #6f7378;
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Tab Button - Hint</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content"></ion-content>
+    </ion-app>
+
+    <script>
+      const positions = ['top', 'bottom'];
+      const layouts = ['', 'icon-bottom'];
+      const badgeSizes = ['small', 'medium', 'large'];
+
+      // What each tab button contains (besides the badge)
+      const slotVariants = [
+        { label: 'icon + label', hasIcon: true, hasLabel: true },
+        { label: 'icon only', hasIcon: true, hasLabel: false },
+        { label: 'label only', hasIcon: false, hasLabel: true },
+      ];
+
+      // Badge content variations
+      const badgeContents = [
+        { label: 'number', html: '9' },
+        { label: 'large number', html: '999' },
+        { label: 'icon', html: '<ion-icon name="star"></ion-icon>' },
+        { label: 'empty', html: '' },
+      ];
+
+      const icons = ['star', 'globe', 'logo-facebook', 'chatbox'];
+      const colors = ['danger', 'primary', 'warning', 'success'];
+
+      const content = document.getElementById('content');
+
+      positions.forEach((position) => {
+        badgeSizes.forEach((badgeSize) => {
+          slotVariants.forEach((variant) => {
+            layouts.forEach((layout) => {
+              // Skip icon-bottom layout when there's no icon
+              if (layout === 'icon-bottom' && !variant.hasIcon) return;
+
+              const layoutLabel = layout || 'icon-top';
+              const heading = document.createElement('h2');
+              heading.textContent = `badge position: ${position} / badge size: ${badgeSize} / ${variant.label} / icon layout: ${layoutLabel}`;
+              content.appendChild(heading);
+
+              const row = document.createElement('div');
+              row.className = 'row';
+
+              const tabBar = document.createElement('ion-tab-bar');
+
+              badgeContents.forEach(({ html }, i) => {
+                const tabButton = document.createElement('ion-tab-button');
+                tabButton.setAttribute('tab', `tab-${position}-${badgeSize}-${variant.label}-${layoutLabel}-${i}`);
+
+                if (layout) {
+                  tabButton.setAttribute('layout', layout);
+                }
+
+                if (variant.hasLabel) {
+                  const label = document.createElement('ion-label');
+                  label.textContent = `Tab ${i + 1}`;
+                  tabButton.appendChild(label);
+                }
+
+                if (variant.hasIcon) {
+                  const icon = document.createElement('ion-icon');
+                  icon.setAttribute('name', icons[i % icons.length]);
+                  tabButton.appendChild(icon);
+                }
+
+                const badge = document.createElement('ion-badge');
+                badge.setAttribute('hue', 'bold');
+                badge.setAttribute('shape', 'round');
+                badge.setAttribute('size', badgeSize);
+                badge.setAttribute('vertical', position);
+                badge.setAttribute('color', colors[i % colors.length]);
+                badge.innerHTML = html;
+
+                tabButton.appendChild(badge);
+                tabBar.appendChild(tabButton);
+              });
+
+              row.appendChild(tabBar);
+              content.appendChild(row);
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

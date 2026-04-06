@@ -17,7 +17,6 @@ import type { Color } from '../../interface';
 })
 export class Badge implements ComponentInterface {
   @Element() el!: HTMLElement;
-  private resizeObserver?: ResizeObserver;
 
   /**
    * The color to use from your application's color palette.

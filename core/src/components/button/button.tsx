@@ -406,19 +406,20 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       return;
     }
 
-    const outerEl = this.el.shadowRoot!.querySelector('.button-native')!;
-    const innerEl = this.el.shadowRoot!.querySelector('.button-inner')!;
+    const target = this.el.shadowRoot!.querySelector('.button-native')!;
+    const relativeTo = this.el.shadowRoot!.querySelector('.button-inner')!;
 
     this.badgeObserver = createBadgeObserver({
-      host: this.el,
-      outerEl,
-      innerEl,
       badge,
+      host: this.el,
+      target,
+      relativeTo,
     });
   }
 
   private destroyBadgeObserver() {
     this.badgeObserver?.disconnect();
+    this.badgeObserver = undefined;
   }
 
   render() {

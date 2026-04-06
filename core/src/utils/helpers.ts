@@ -1,6 +1,7 @@
 import type { EventEmitter } from '@stencil/core';
 import { focusElements } from '@utils/focus-visible';
 import { printIonError } from '@utils/logging';
+import { isRTL } from '@utils/rtl';
 
 import type { Side } from '../components/menu/menu-interface';
 import type { RouterDirection } from '../components/router/utils/interface';
@@ -478,96 +479,126 @@ export const deepMerge = (target: any, source: any): any => {
 
 export interface BadgePositionConfig {
   /**
-   * The host element that contains the badge slots.
-   */
-  host: HTMLElement;
-
-  /**
-   * The element whose border-radius defines the corner arc.
-   * This is the visual outer edge (e.g. .button-native).
-   *
-   * If omitted, host is used (e.g. avatar, where the host
-   * element is the visual outer edge).
-   */
-  outerEl?: Element;
-
-  /**
-   * The element that the badge's `position: absolute` resolves
-   * against. Only needed when the positioned ancestor differs
-   * from outerEl (e.g. .button-inner inside .button-native).
-   *
-   * If omitted, outerEl is used — meaning no delta compensation
-   * is needed (e.g. avatar, where the badge resolves directly
-   * against the host).
-   */
-  innerEl?: Element;
-
-  /**
    * The badge element to position.
    */
   badge: HTMLElement;
+
+  /**
+   * The host element. Used to determine text direction (RTL/LTR).
+   *
+   * If omitted, `target` is used for direction detection.
+   */
+  host?: HTMLElement;
+
+  /**
+   * The element the badge visually anchors to. Its border-radius
+   * defines the corner arc, and the badge center is placed at
+   * the 45 degrees point on that arc.
+   *
+   * Examples:
+   *   - Avatar: the host element
+   *   - Button: .button-native
+   *   - Tab button: the sibling ion-icon
+   */
+  target: Element;
+
+  /**
+   * The element that the badge's `position: absolute` resolves
+   * against (its nearest positioned ancestor). Only needed when
+   * this differs from `target`.
+   *
+   * If omitted, the badge is assumed to resolve against `target`.
+   *
+   * Examples:
+   *   - Avatar: omitted (badge resolves against host)
+   *   - Button: .button-inner (has position: relative)
+   *   - Tab button: .button-inner (has position: relative)
+   */
+  relativeTo?: Element;
+
+  /**
+   * If `true`, clamps the badge's vertical position so it does
+   * not extend past the top or bottom edge of `target`.
+   *
+   * Useful when the badge is anchored to a sibling and nearby
+   * content (like a label) would otherwise be overlapped.
+   */
+  clamp?: boolean;
 }
 
 /**
- * Positions badges on the edge of a parent component's
- * corner arc at 45°.
+ * Positions a badge at the 45 degrees point on a target element's
+ * corner arc, placing the badge center on the curve defined
+ * by the target's border radius.
  *
- * Formula:
- *   offset = borderRadius * 0.2929 - badgeSize / 2
+ * The offset from the corner is calculated as:
  *
- * Where 0.2929 = 1 - cos(45°).
+ *   borderRadius * 0.2929 - badgeSize / 2
  *
- * Adapts to any shape of the parent component:
- * - any border radius -> badge on corner arc
- * - rectangular -> badge at exact corner
+ * Where 0.2929 = 1 - cos(45 degrees). This naturally adapts to radius: circular, pill, rounded, or rectangular.
+ *
+ * If `relativeTo` is provided, the position accounts for
+ * the delta between the target and the badge's positioned
+ * ancestor (e.g. `.button-inner` with `position: relative`).
+ *
+ * If `clamp` is true, the badge is constrained to the
+ * target's edges so it doesn't overlap adjacent content.
  */
-export function positionBadges(config: BadgePositionConfig): void {
-  const { host, innerEl } = config;
-  const outerEl = config.outerEl ?? host;
+export function positionBadge(config: BadgePositionConfig): void {
+  const { badge, target, clamp } = config;
+  const relativeTo = config.relativeTo ?? target;
+  const host = (config.host ?? target) as HTMLElement;
+  const rtl = isRTL(host);
 
-  const outerRect = outerEl.getBoundingClientRect();
+  const targetRect = target.getBoundingClientRect();
+  const relativeToRect = relativeTo.getBoundingClientRect();
 
-  // If innerEl is provided, calculate the delta between outer and inner edges.
-  // Otherwise, delta is 0 (badge resolves directly against outerEl).
-  let deltaTop = 0;
-  let deltaRight = 0;
-  let deltaBottom = 0;
+  // Delta from the relativeTo element's edges to the target's edges
+  const deltaTop = targetRect.top - relativeToRect.top;
+  const deltaBottom = relativeToRect.bottom - targetRect.bottom;
+  // Horizontal delta flips depending on direction
+  const deltaInlineEnd = rtl ? targetRect.left - relativeToRect.left : relativeToRect.right - targetRect.right;
 
-  if (innerEl) {
-    const innerRect = innerEl.getBoundingClientRect();
-    deltaTop = innerRect.top - outerRect.top;
-    deltaRight = outerRect.right - innerRect.right;
-    deltaBottom = outerRect.bottom - innerRect.bottom;
-  }
-
-  // Resolve border-radius to pixels
-  const computedStyles = getComputedStyle(outerEl);
+  // Resolve border-radius of the target element
+  const computedStyles = getComputedStyle(target);
   let borderRadius = parseFloat(computedStyles.borderTopRightRadius) || 0;
 
   // Clamp to half the smallest dimension (matches browser behavior)
-  const maxRadius = Math.min(outerRect.width, outerRect.height) / 2;
+  const maxRadius = Math.min(targetRect.width, targetRect.height) / 2;
   borderRadius = Math.min(borderRadius, maxRadius);
 
   // 0.2929 = 1 - cos(45°)
   const cornerOffset = borderRadius * 0.2929;
 
-  const badge = host.querySelector('ion-badge[vertical]') as HTMLElement | null;
-  if (!badge) return;
-
   const vertical = badge.getAttribute('vertical');
   const badgeRect = badge.getBoundingClientRect();
 
-  const right = cornerOffset - deltaRight - badgeRect.width / 2;
-  const top = cornerOffset - deltaTop - badgeRect.height / 2;
-  const bottom = cornerOffset - deltaBottom - badgeRect.height / 2;
+  /**
+   * Uses `left` instead of `right` for horizontal positioning
+   * so wider badges (e.g. "999+") extend outward (to the right)
+   */
+  const inlineStart = relativeToRect.width - cornerOffset - deltaInlineEnd - badgeRect.height / 2;
+  const top = cornerOffset + deltaTop - badgeRect.height / 2;
+  const bottom = cornerOffset + deltaBottom - badgeRect.height / 2;
 
-  badge.style.right = `${right}px`;
+  // Optionally clamp so the badge doesn't extend past the target's edges
+  const clampedTop = clamp ? Math.max(top, deltaTop) : top;
+  const clampedBottom = clamp ? Math.max(bottom, deltaBottom) : bottom;
+
+  // Set horizontal position based on direction
+  if (rtl) {
+    badge.style.right = `${inlineStart}px`;
+    badge.style.left = '';
+  } else {
+    badge.style.left = `${inlineStart}px`;
+    badge.style.right = '';
+  }
 
   if (vertical === 'top') {
-    badge.style.top = `${top}px`;
+    badge.style.top = `${clampedTop}px`;
     badge.style.bottom = '';
   } else if (vertical === 'bottom') {
-    badge.style.bottom = `${bottom}px`;
+    badge.style.bottom = `${clampedBottom}px`;
     badge.style.top = '';
   }
 }
@@ -577,17 +608,30 @@ export interface BadgeObserver {
 }
 
 /**
- * Creates a ResizeObserver that repositions badges whenever
- * the observed element changes size.
+ * Creates a ResizeObserver that repositions the badge whenever
+ * the target element changes size.
  *
- * @returns BadgeObserver with a disconnect method
+ * @returns BadgeObserver
  */
 export function createBadgeObserver(config: BadgePositionConfig): BadgeObserver {
   const observer = new ResizeObserver(() => {
-    positionBadges(config);
+    positionBadge(config);
   });
 
-  observer.observe(config.outerEl ?? config.host);
+  observer.observe(config.target);
+
+  /**
+   * The `relativeTo` element must also be observed when it differs
+   * from `target`. Slotted content (like `ion-icon`) may render
+   * asynchronously after the parent component loads, causing
+   * `relativeTo` to resize to its final dimensions in a later
+   * frame. Without observing it, the badge position would be
+   * calculated against stale dimensions and never corrected.
+   */
+  const relativeTo = config.relativeTo ?? config.target;
+  if (relativeTo !== config.target) {
+    observer.observe(relativeTo);
+  }
 
   return {
     disconnect: () => observer.disconnect(),
