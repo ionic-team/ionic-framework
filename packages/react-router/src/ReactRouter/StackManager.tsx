@@ -249,6 +249,11 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   private handleOutOfScopeOutlet(routeInfo: RouteInfo): boolean {
     if (!this.outletMountPath || isPathnameInScope(routeInfo.pathname, this.outletMountPath)) {
       this.wasInScope = true;
+      // Cancel any pending deferred unmount from a previous out-of-scope transition.
+      if (this.outOfScopeUnmountTimeout) {
+        clearTimeout(this.outOfScopeUnmountTimeout);
+        this.outOfScopeUnmountTimeout = undefined;
+      }
       return false;
     }
 
@@ -261,11 +266,6 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       return true;
     }
     this.wasInScope = false;
-
-    if (this.outOfScopeUnmountTimeout) {
-      clearTimeout(this.outOfScopeUnmountTimeout);
-      this.outOfScopeUnmountTimeout = undefined;
-    }
 
     // Fire lifecycle events on any visible view before unmounting.
     // When navigating away from a tabbed section, the parent outlet fires
@@ -285,22 +285,22 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       }
     });
 
-    // Remove view items from the stack but do NOT apply ion-page-hidden.
-    // ion-page-hidden sets display:none which immediately removes content
-    // from the layout, causing the parent outlet's leaving page to flash
-    // blank during its transition animation (issue #25477).
+    // Defer removal of view items to allow the parent outlet's leaving-page
+    // animation to complete with content still visible. When the nested outlet
+    // unmounts views immediately, React removes the child DOM elements before
+    // the parent's transition animation can render them. On MD mode the back
+    // animation only animates the leaving page (slide down + fade), so an
+    // empty shell is invisible and the transition appears instant.
     //
-    // Removing from the stack triggers React reconciliation via forceUpdate,
-    // which removes the DOM elements. React batches this re-render after all
-    // componentDidUpdate calls in the current cycle, so the parent outlet's
-    // commit() captures the current DOM state (with content visible) before
-    // React processes the removal. The compositor's cached layer is unaffected
-    // by subsequent DOM changes during the animation.
-    allViewsInOutlet.forEach((viewItem) => {
-      this.context.unMountViewItem(viewItem);
-    });
+    // VIEW_UNMOUNT_DELAY_MS exceeds the MD back transition (200ms).
+    this.outOfScopeUnmountTimeout = setTimeout(() => {
+      if (!this._isMounted) return;
+      allViewsInOutlet.forEach((viewItem) => {
+        this.context.unMountViewItem(viewItem);
+      });
+      this.forceUpdate();
+    }, VIEW_UNMOUNT_DELAY_MS);
 
-    this.forceUpdate();
     return true;
   }
 

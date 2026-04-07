@@ -47,7 +47,22 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
       if (!this.outletIsReady) {
         componentOnReady(this.ionRouterOutlet, () => {
           this.outletIsReady = true;
-          this.context.registerIonPage(this.ionRouterOutlet!, this.props.routeInfo!);
+
+          /**
+           * Add ion-page + ion-page-invisible AFTER Stencil hydration but
+           * BEFORE registerIonPage. Stencil hydration overwrites className,
+           * so classes added in a React ref callback get wiped. Adding them
+           * here -- after hydration -- ensures they persist until the parent
+           * outlet's forward animation removes ion-page-invisible, preventing
+           * a flash where the outlet is briefly visible at full opacity.
+           */
+          const el = this.ionRouterOutlet!;
+          if (!el.classList.contains('ion-page-invisible') && !el.classList.contains('ion-page-hidden')) {
+            el.classList.add('ion-page');
+            el.classList.add('ion-page-invisible');
+          }
+
+          this.context.registerIonPage(el, this.props.routeInfo!);
         });
       }
 
