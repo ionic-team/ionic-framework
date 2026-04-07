@@ -82,7 +82,6 @@
 }
 
 :host(.badge-small) ::slotted(ion-icon) {
-  @include globals.typography(globals.$ion-body-sm-medium);
   width: globals.$ion-scale-300;
   height: globals.$ion-scale-300;
 }
