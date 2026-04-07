@@ -90,7 +90,7 @@ export class Avatar implements ComponentInterface {
   private setupBadgeObserver() {
     this.destroyBadgeObserver();
 
-    // Only set up the badge observer if there is a badge and it's anchored
+    // Only set up the badge observer if there's an anchored badge
     const badge = this.el.querySelector('ion-badge[vertical]') as HTMLElement | null;
 
     if (!badge) {

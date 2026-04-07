@@ -45,30 +45,29 @@
     <script>
       const avatarSizes = ['xxsmall', 'xsmall', 'small', 'medium', 'large', 'xlarge'];
       const badgeSizes = ['small', 'medium', 'large'];
-      const positions = ['top', 'bottom', ''];
+      const badgePositions = ['top', 'bottom', ''];
       const imgSrc = '/src/components/avatar/test/avatar.svg';
 
-      // Badge content variants: empty (dot), text, icon
       const badgeContents = [
-        { label: 'empty', html: '' },
-        { label: 'text', html: '1' },
-        { label: 'longText', html: '999+' },
-        { label: 'icon', html: '<ion-icon icon="star"></ion-icon>' },
-      ];
+  '',
+  '1',
+  '999+',
+  '<ion-icon icon="star"></ion-icon>',
+];
 
       const content = document.getElementById('content');
 
       avatarSizes.forEach((avatarSize) => {
-        positions.forEach((position) => {
+        badgePositions.forEach((badgePosition) => {
           const heading = document.createElement('h2');
-          heading.textContent = `avatar size: ${avatarSize} / badge position: ${position || 'none'}`;
+          heading.textContent = `avatar size: ${avatarSize} / badge position: ${badgePosition || 'none'}`;
           content.appendChild(heading);
 
           const row = document.createElement('div');
           row.className = 'row';
 
           badgeSizes.forEach((badgeSize) => {
-            badgeContents.forEach(({ html }) => {
+            badgeContents.forEach((html) => {
               const avatar = document.createElement('ion-avatar');
               avatar.setAttribute('size', avatarSize);
 
@@ -81,8 +80,8 @@
               badge.setAttribute('color', 'danger');
               badge.setAttribute('shape', 'round');
               badge.setAttribute('size', badgeSize);
-              if (position) {
-                badge.setAttribute('vertical', position);
+              if (badgePosition) {
+                badge.setAttribute('vertical', badgePosition);
               }
               badge.innerHTML = html;
 
