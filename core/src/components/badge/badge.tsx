@@ -91,17 +91,14 @@ export class Badge implements ComponentInterface {
   }
 
   render() {
-    const { hueValue, shapeValue, sizeValue, color, vertical, el } = this;
+    const { hueValue, shapeValue, sizeValue, color } = this;
 
     return (
       <Host
         class={createColorClasses(color, {
-          [`badge-${hueValue}`]: true,
-          [`badge-${shapeValue}`]: true,
-          [`badge-${sizeValue}`]: true,
-          [`badge-vertical-${vertical}`]: vertical !== undefined,
-          'in-button': hostContext('ion-button', el),
-          'in-tab-button': hostContext('ion-tab-button', el),
+          [`badge-hue-${hueValue}`]: true,
+          [`badge-shape-${shapeValue}`]: true,
+          [`badge-size-${sizeValue}`]: true,
         })}
       >
         <slot></slot>
