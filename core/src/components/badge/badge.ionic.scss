@@ -54,7 +54,6 @@
   @include globals.border-radius(globals.$ion-soft-xs);
 }
 
-// TODO: add example that this needs to be done by passing props of small size ane crisp shape
 :host(.badge-small.badge-soft) {
   @include globals.border-radius(globals.$ion-soft-2xs);
 }
@@ -113,7 +112,6 @@
   --padding-end: 0;
 }
 
-// TODO: don't add since this is an equivalent of size medium so give example
 :host([vertical]:not(:empty)) {
   --padding-start: #{globals.$ion-scale-100};
   --padding-end: #{globals.$ion-scale-100};
@@ -162,7 +160,6 @@
 // Badge in Button
 // --------------------------------------------------
 
-// TODO: add example that this should be using the small size within the ion-button
 :host(:not(:empty).in-button) {
   --padding-start: #{globals.$ion-scale-050}; // not needed since it is the same as small, give example that it should be using small size
   --padding-end: #{globals.$ion-scale-050};
