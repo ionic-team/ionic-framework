@@ -1,4 +1,4 @@
-import type { IonBadgeRecipe } from '../components/badge/badge.interfaces';
+import type { IonBadgeConfig, IonBadgeRecipe } from '../components/badge/badge.interfaces';
 import type { IonChipConfig, IonChipRecipe } from '../components/chip/chip.interfaces';
 import type { IonItemDividerRecipe } from '../components/item-divider/item-divider.interfaces';
 import type { IonSpinnerConfig, IonSpinnerRecipe } from '../components/spinner/spinner.interfaces';
@@ -243,7 +243,7 @@ export type BaseTheme = {
 
 export type IonicConfig = IonicGlobalConfig & {
   components?: {
-    IonBadge?: any;
+    IonBadge?: IonBadgeConfig;
     IonChip?: IonChipConfig;
     IonSpinner?: IonSpinnerConfig;
   };

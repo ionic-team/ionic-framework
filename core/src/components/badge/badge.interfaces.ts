@@ -77,6 +77,12 @@ type IonBadgeSizeContentDefinition = IonBadgeSizeDefinition & {
 
 type IonBadgeSizeDotDefinition = IonBadgeSizeDefinition;
 
+export type IonBadgeConfig = {
+  hue?: IonBadgeHue;
+  size?: IonBadgeSize;
+  shape?: IonBadgeShape;
+};
+
 export type IonBadgeHue = 'bold' | 'subtle';
 export type IonBadgeShape = 'crisp' | 'soft' | 'round' | 'rectangular';
 export type IonBadgeSize = 'small' | 'medium' | 'large';
