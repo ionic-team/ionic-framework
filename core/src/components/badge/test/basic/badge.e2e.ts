@@ -8,7 +8,9 @@ configs().forEach(({ config, screenshot, title }) => {
 
       await page.setIonViewport();
 
-      await expect(page).toHaveScreenshot(screenshot(`badge-basic`));
+      const content = page.locator('ion-content');
+
+      await expect(content).toHaveScreenshot(screenshot(`badge-basic`));
     });
   });
 });
