@@ -1,8 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, h } from '@stencil/core';
+import { createBadgeManager } from '@utils/badge-position';
 import type { AnchorInterface } from '@utils/element-interface';
-import type { Attributes, BadgeObserver } from '@utils/helpers';
-import { inheritAttributes, createBadgeObserver } from '@utils/helpers';
+import type { Attributes } from '@utils/helpers';
+import { inheritAttributes } from '@utils/helpers';
 
 import { config } from '../../global/config';
 import { getIonMode, getIonTheme } from '../../global/ionic-global';
@@ -29,9 +30,23 @@ import type {
 })
 export class TabButton implements ComponentInterface, AnchorInterface {
   private inheritedAttributes: Attributes = {};
-  private badgeObserver?: BadgeObserver;
 
   @Element() el!: HTMLElement;
+
+  private badgeManager = createBadgeManager(this.el, () => {
+    const target = this.el.querySelector(':scope > ion-icon') || this.el.querySelector('ion-label');
+
+    if (!target) {
+      return undefined;
+    }
+
+    return {
+      host: this.el,
+      target,
+      relativeTo: this.el.shadowRoot!.querySelector('.button-inner')!,
+      clamp: this.hasIcon && this.hasLabel,
+    };
+  });
 
   /**
    * If `true`, the user cannot interact with the tab button.
@@ -118,11 +133,11 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   }
 
   componentDidLoad() {
-    this.setupBadgeObserver();
+    this.badgeManager.init();
   }
 
   disconnectedCallback() {
-    this.destroyBadgeObserver();
+    this.badgeManager.destroy();
   }
 
   private getShape(): string | undefined {
@@ -162,10 +177,6 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     return !!this.el.querySelector(':scope > ion-icon');
   }
 
-  private get hasBadge() {
-    return !!this.el.querySelector('ion-badge');
-  }
-
   private onKeyUp = (ev: KeyboardEvent) => {
     if (ev.key === 'Enter' || ev.key === ' ') {
       this.selectTab(ev);
@@ -186,57 +197,8 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   }
 
   private onSlotChanged = () => {
-    /**
-     * Badges can be added or removed dynamically to mimic use
-     * cases like notifications. Based on the presence of a
-     * badge, we need to set up or destroy the badge observer.
-     *
-     * If the badge observer is already set up and there is a badge, then we don't need to do anything.
-     */
-    if (this.hasBadge && this.badgeObserver) {
-      return;
-    }
-
-    if (this.hasBadge) {
-      this.setupBadgeObserver();
-    } else {
-      this.destroyBadgeObserver();
-    }
+    this.badgeManager.onSlotChanged();
   };
-
-  private setupBadgeObserver() {
-    this.destroyBadgeObserver();
-
-    // Only set up the badge observer if there is a badge and it's anchored
-    const badge = this.el.querySelector('ion-badge[vertical]') as HTMLElement | null;
-
-    if (!badge) {
-      return;
-    }
-
-    const target = this.el.querySelector(':scope > ion-icon') || this.el.querySelector('ion-label');
-
-    // If there is no icon or label, the badge will not be anchored to anything
-    if (!target) {
-      return;
-    }
-
-    const relativeTo = this.el.shadowRoot!.querySelector('.button-inner')!;
-    // Only clamp when tab button has an icon and label to prevent the badge from overlapping the label
-    const clamp = this.hasIcon && this.hasLabel;
-
-    this.badgeObserver = createBadgeObserver({
-      badge,
-      host: this.el,
-      clamp,
-      relativeTo,
-      target,
-    });
-  }
-
-  private destroyBadgeObserver() {
-    this.badgeObserver?.disconnect();
-  }
 
   render() {
     const { disabled, hasIcon, hasLabel, href, rel, target, layout, selected, tab, inheritedAttributes } = this;

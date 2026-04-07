@@ -1,8 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, State, forceUpdate, h } from '@stencil/core';
+import { createBadgeManager } from '@utils/badge-position';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import type { Attributes, BadgeObserver } from '@utils/helpers';
-import { inheritAriaAttributes, hasShadowDom, openURL, createBadgeObserver } from '@utils/helpers';
+import type { Attributes } from '@utils/helpers';
+import { inheritAriaAttributes, hasShadowDom, openURL } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext } from '@utils/theme';
 
@@ -37,9 +38,14 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private formButtonEl: HTMLButtonElement | null = null;
   private formEl: HTMLFormElement | null = null;
   private inheritedAttributes: Attributes = {};
-  private badgeObserver?: BadgeObserver;
 
   @Element() el!: HTMLElement;
+
+  private badgeManager = createBadgeManager(this.el, () => ({
+    host: this.el,
+    target: this.el.shadowRoot!.querySelector('.button-native')!,
+    relativeTo: this.el.shadowRoot!.querySelector('.button-inner')!,
+  }));
 
   /**
    * If `true`, the button only has an icon.
@@ -224,11 +230,11 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   }
 
   componentDidLoad() {
-    this.setupBadgeObserver();
+    this.badgeManager.init();
   }
 
   disconnectedCallback() {
-    this.destroyBadgeObserver();
+    this.badgeManager.destroy();
   }
 
   private get hasIconOnly() {
@@ -378,49 +384,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   };
 
   private onSlotChanged = () => {
-    /**
-     * Badges can be added or removed dynamically to mimic use
-     * cases like notifications. Based on the presence of a
-     * badge, we need to set up or destroy the badge observer.
-     *
-     * If the badge observer is already set up and there is a badge, then we don't need to do anything.
-     */
-    if (this.hasBadge && this.badgeObserver) {
-      return;
-    }
-
-    if (this.hasBadge) {
-      this.setupBadgeObserver();
-    } else {
-      this.destroyBadgeObserver();
-    }
+    this.badgeManager.onSlotChanged();
   };
-
-  private setupBadgeObserver() {
-    this.destroyBadgeObserver();
-
-    // Only set up the badge observer if there is a badge and it's anchored
-    const badge = this.el.querySelector('ion-badge[vertical]') as HTMLElement | null;
-
-    if (!badge) {
-      return;
-    }
-
-    const target = this.el.shadowRoot!.querySelector('.button-native')!;
-    const relativeTo = this.el.shadowRoot!.querySelector('.button-inner')!;
-
-    this.badgeObserver = createBadgeObserver({
-      badge,
-      host: this.el,
-      target,
-      relativeTo,
-    });
-  }
-
-  private destroyBadgeObserver() {
-    this.badgeObserver?.disconnect();
-    this.badgeObserver = undefined;
-  }
 
   render() {
     const {

@@ -1,7 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
-import type { BadgeObserver } from '@utils/helpers';
-import { createBadgeObserver } from '@utils/helpers';
+import { createBadgeManager } from '@utils/badge-position';
 
 import { getIonTheme } from '../../global/ionic-global';
 
@@ -20,7 +19,10 @@ import { getIonTheme } from '../../global/ionic-global';
 })
 export class Avatar implements ComponentInterface {
   @Element() el!: HTMLElement;
-  private badgeObserver?: BadgeObserver;
+
+  private badgeManager = createBadgeManager(this.el, () => ({
+    target: this.el,
+  }));
 
   /**
    * Set to `"xxsmall"` for the smallest size.
@@ -48,12 +50,12 @@ export class Avatar implements ComponentInterface {
    */
   @Prop() disabled = false;
 
-  componentDidLoad(): void {
-    this.setupBadgeObserver();
+  componentDidLoad() {
+    this.badgeManager.init();
   }
 
   disconnectedCallback() {
-    this.destroyBadgeObserver();
+    this.badgeManager.destroy();
   }
 
   get hasImage() {
@@ -64,48 +66,9 @@ export class Avatar implements ComponentInterface {
     return !!this.el.querySelector('ion-icon');
   }
 
-  private get hasBadge() {
-    return !!this.el.querySelector('ion-badge');
-  }
-
   private onSlotChanged = () => {
-    /**
-     * Badges can be added or removed dynamically to mimic use
-     * cases like notifications. Based on the presence of a
-     * badge, we need to set up or destroy the badge observer.
-     *
-     * If the badge observer is already set up and there is a badge, then we don't need to do anything.
-     */
-    if (this.hasBadge && this.badgeObserver) {
-      return;
-    }
-
-    if (this.hasBadge) {
-      this.setupBadgeObserver();
-    } else {
-      this.destroyBadgeObserver();
-    }
+    this.badgeManager.onSlotChanged();
   };
-
-  private setupBadgeObserver() {
-    this.destroyBadgeObserver();
-
-    // Only set up the badge observer if there's an anchored badge
-    const badge = this.el.querySelector('ion-badge[vertical]') as HTMLElement | null;
-
-    if (!badge) {
-      return;
-    }
-
-    this.badgeObserver = createBadgeObserver({
-      target: this.el,
-      badge,
-    });
-  }
-
-  private destroyBadgeObserver() {
-    this.badgeObserver?.disconnect();
-  }
 
   private getSize(): string | undefined {
     const { size } = this;
