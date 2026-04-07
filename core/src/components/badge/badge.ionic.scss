@@ -10,7 +10,7 @@
   --padding-top: #{globals.$ion-space-0};
   --padding-bottom: #{globals.$ion-space-0};
 
-  @include globals.typography(globals.$ion-body-sm-medium); // TODO: Add this
+  @include globals.typography(globals.$ion-body-sm-medium);
 
   display: inline-flex;
 
@@ -51,22 +51,22 @@
 
 /* Soft Badge */
 :host(.badge-soft) {
-  @include globals.border-radius(globals.$ion-soft-xs); // 8px
+  @include globals.border-radius(globals.$ion-soft-xs);
 }
 
 // TODO: add example that this needs to be done by passing props of small size ane crisp shape
 :host(.badge-small.badge-soft) {
-  @include globals.border-radius(globals.$ion-soft-2xs); // 4px
+  @include globals.border-radius(globals.$ion-soft-2xs);
 }
 
 /* Round Badge */
 :host(.badge-round) {
-  @include globals.border-radius(globals.$ion-round-sm); // 999px
+  @include globals.border-radius(globals.$ion-round-sm);
 }
 
 /* Rectangular Badge */
 :host(.badge-rectangular) {
-  @include globals.border-radius(globals.$ion-rectangular-sm); // 0
+  @include globals.border-radius(globals.$ion-rectangular-sm);
 }
 
 // Badge Sizes
@@ -78,12 +78,12 @@
   --padding-end: #{globals.$ion-space-050};
 
   min-width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400; // 16px
+  height: globals.$ion-scale-400;
 }
 
 :host(.badge-small) ::slotted(ion-icon) {
-  @include globals.typography(globals.$ion-body-sm-medium); // TODO: Add this
-  width: globals.$ion-scale-300; // 12px
+  @include globals.typography(globals.$ion-body-sm-medium);
+  width: globals.$ion-scale-300;
   height: globals.$ion-scale-300;
 }
 
@@ -94,10 +94,10 @@
   --padding-start: #{globals.$ion-space-100};
   --padding-end: #{globals.$ion-space-100};
 
-  @include globals.typography(globals.$ion-body-md-medium); // TODO: Add this
+  @include globals.typography(globals.$ion-body-md-medium);
 
   min-width: globals.$ion-scale-600;
-  height: globals.$ion-scale-600; // 24px
+  height: globals.$ion-scale-600;
 }
 
 :host(.badge-medium) ::slotted(ion-icon),
