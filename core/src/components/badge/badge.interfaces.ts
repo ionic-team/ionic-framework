@@ -80,4 +80,4 @@ type IonBadgeSizeDotDefinition = IonBadgeSizeDefinition;
 export type IonBadgeHue = 'bold' | 'subtle';
 export type IonBadgeShape = 'crisp' | 'soft' | 'round' | 'rectangular';
 export type IonBadgeSize = 'small' | 'medium' | 'large';
-type IonBadgeType = 'content' | 'dot';
+export type IonBadgeVerticalPosition = 'top' | 'bottom';

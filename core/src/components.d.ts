@@ -11,6 +11,7 @@ import { ActionSheetButton } from "./components/action-sheet/action-sheet-interf
 import { OverlayEventDetail } from "./utils/overlays-interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { AlertButton, AlertInput } from "./components/alert/alert-interface";
+import { IonBadgeHue, IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
 import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
@@ -51,6 +52,7 @@ export { ActionSheetButton } from "./components/action-sheet/action-sheet-interf
 export { OverlayEventDetail } from "./utils/overlays-interface";
 export { IonicSafeString } from "./utils/sanitization";
 export { AlertButton, AlertInput } from "./components/alert/alert-interface";
+export { IonBadgeHue, IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
 export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
@@ -471,7 +473,7 @@ export namespace Components {
         /**
           * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
          */
-        "hue"?: 'bold' | 'subtle';
+        "hue"?: IonBadgeHue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -479,11 +481,11 @@ export namespace Components {
         /**
           * Set to `"crisp"` for a badge with even slightly rounded corners, `"soft"` for a badge with slightly rounded corners, `"round"` for a badge with fully rounded corners, or `"rectangular"` for a badge without rounded corners.  Defaults to `"soft"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'crisp' | 'soft' | 'round' | 'rectangular';
+        "shape"?: IonBadgeShape;
         /**
           * Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a larger size.  Defaults to `"small"` if both the size property and theme config are unset.
          */
-        "size"?: 'small' | 'medium' | 'large';
+        "size"?: IonBadgeSize;
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -491,7 +493,7 @@ export namespace Components {
         /**
           * Set to `"top"` to position the badge on top right absolute position of the parent element. Set to `"bottom"` to position the badge on bottom right absolute position of the parent element.
          */
-        "vertical"?: 'top' | 'bottom';
+        "vertical"?: IonBadgeVerticalPosition;
     }
     interface IonBreadcrumb {
         /**
@@ -6402,7 +6404,7 @@ declare namespace LocalJSX {
         /**
           * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
          */
-        "hue"?: 'bold' | 'subtle';
+        "hue"?: IonBadgeHue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -6410,11 +6412,11 @@ declare namespace LocalJSX {
         /**
           * Set to `"crisp"` for a badge with even slightly rounded corners, `"soft"` for a badge with slightly rounded corners, `"round"` for a badge with fully rounded corners, or `"rectangular"` for a badge without rounded corners.  Defaults to `"soft"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'crisp' | 'soft' | 'round' | 'rectangular';
+        "shape"?: IonBadgeShape;
         /**
           * Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a larger size.  Defaults to `"small"` if both the size property and theme config are unset.
          */
-        "size"?: 'small' | 'medium' | 'large';
+        "size"?: IonBadgeSize;
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -6422,7 +6424,7 @@ declare namespace LocalJSX {
         /**
           * Set to `"top"` to position the badge on top right absolute position of the parent element. Set to `"bottom"` to position the badge on bottom right absolute position of the parent element.
          */
-        "vertical"?: 'top' | 'bottom';
+        "vertical"?: IonBadgeVerticalPosition;
     }
     interface IonBreadcrumb {
         /**

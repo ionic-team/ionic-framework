@@ -1,9 +1,11 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
-import { createColorClasses, hostContext } from '@utils/theme';
+import { createColorClasses } from '@utils/theme';
 
 import { config } from '../../global/config';
 import type { Color } from '../../interface';
+
+import type { IonBadgeHue, IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from './badge.interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -30,7 +32,7 @@ export class Badge implements ComponentInterface {
    *
    * Defaults to `"bold"` if both the hue property and theme config are unset.
    */
-  @Prop() hue?: 'bold' | 'subtle';
+  @Prop() hue?: IonBadgeHue;
 
   /**
    * Set to `"crisp"` for a badge with even slightly rounded corners,
@@ -40,7 +42,7 @@ export class Badge implements ComponentInterface {
    *
    * Defaults to `"soft"` if both the shape property and theme config are unset.
    */
-  @Prop() shape?: 'crisp' | 'soft' | 'round' | 'rectangular';
+  @Prop() shape?: IonBadgeShape;
 
   /**
    * Set to `"small"` for a smaller size.
@@ -49,20 +51,20 @@ export class Badge implements ComponentInterface {
    *
    * Defaults to `"small"` if both the size property and theme config are unset.
    */
-  @Prop() size?: 'small' | 'medium' | 'large';
+  @Prop() size?: IonBadgeSize;
 
   /**
    * Set to `"top"` to position the badge on top right absolute position of the parent element.
    * Set to `"bottom"` to position the badge on bottom right absolute position of the parent element.
    */
-  @Prop() vertical?: 'top' | 'bottom';
+  @Prop() vertical?: IonBadgeVerticalPosition;
 
   /**
    * Gets the badge shape. Uses the `shape` property if set, otherwise
    * checks the theme config and falls back to 'soft' if neither is provided.
    */
-  get shapeValue(): string {
-    const shapeConfig = config.getObjectValue('IonBadge.shape', 'soft') as string;
+  get shapeValue(): IonBadgeShape {
+    const shapeConfig = config.getObjectValue('IonBadge.shape', 'soft') as IonBadgeShape;
     const shape = this.shape || shapeConfig;
 
     return shape;
@@ -72,8 +74,8 @@ export class Badge implements ComponentInterface {
    * Gets the badge size. Uses the `size` property if set, otherwise
    * checks the theme config and falls back to 'small' if neither is provided.
    */
-  get sizeValue(): string {
-    const sizeConfig = config.getObjectValue('IonBadge.size', 'small') as string;
+  get sizeValue(): IonBadgeSize {
+    const sizeConfig = config.getObjectValue('IonBadge.size', 'small') as IonBadgeSize;
     const size = this.size || sizeConfig;
 
     return size;
@@ -81,10 +83,10 @@ export class Badge implements ComponentInterface {
 
   /**
    * Gets the badge hue. Uses the `hue` property if set, otherwise
-   * checks the theme config and falls back to 'subtle' if neither is provided.
+   * checks the theme config and falls back to 'bold' if neither is provided.
    */
-  get hueValue(): string {
-    const hueConfig = config.getObjectValue('IonBadge.hue', 'bold') as string;
+  get hueValue(): IonBadgeHue {
+    const hueConfig = config.getObjectValue('IonBadge.hue', 'bold') as IonBadgeHue;
     const hue = this.hue || hueConfig;
 
     return hue;

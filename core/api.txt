@@ -316,28 +316,16 @@ ion-badge,shadow
 ion-badge,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-badge,prop,hue,"bold" | "subtle" | undefined,undefined,false,false
 ion-badge,prop,mode,"ios" | "md",undefined,false,false
-ion-badge,prop,shape,"round | rectangular" | "soft" | undefined,undefined,false,false
+ion-badge,prop,shape,"crisp" | "rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-badge,prop,size,"large" | "medium" | "small" | undefined,undefined,false,false
 ion-badge,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-badge,prop,vertical,"bottom" | "top" | undefined,undefined,false,false
-ion-badge,css-prop,--background,ionic
-ion-badge,css-prop,--background,ios
-ion-badge,css-prop,--background,md
-ion-badge,css-prop,--color,ionic
-ion-badge,css-prop,--color,ios
-ion-badge,css-prop,--color,md
-ion-badge,css-prop,--padding-bottom,ionic
-ion-badge,css-prop,--padding-bottom,ios
-ion-badge,css-prop,--padding-bottom,md
-ion-badge,css-prop,--padding-end,ionic
-ion-badge,css-prop,--padding-end,ios
-ion-badge,css-prop,--padding-end,md
-ion-badge,css-prop,--padding-start,ionic
-ion-badge,css-prop,--padding-start,ios
-ion-badge,css-prop,--padding-start,md
-ion-badge,css-prop,--padding-top,ionic
-ion-badge,css-prop,--padding-top,ios
-ion-badge,css-prop,--padding-top,md
+ion-badge,css-prop,--background
+ion-badge,css-prop,--color
+ion-badge,css-prop,--padding-bottom
+ion-badge,css-prop,--padding-end
+ion-badge,css-prop,--padding-start
+ion-badge,css-prop,--padding-top
 
 ion-breadcrumb,shadow
 ion-breadcrumb,prop,active,boolean,false,false,false
