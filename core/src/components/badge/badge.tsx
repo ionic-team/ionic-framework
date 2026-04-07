@@ -80,31 +80,6 @@ export class Badge implements ComponentInterface {
     return size;
   }
 
-  // The 'subtle' hue is the default for badges containing text or icons
-  // The 'bold' hue is used when inside of an avatar, button, tab button,
-  // or when the badge is empty (no text or icon).
-  private getHue(): string | undefined {
-    const { hue } = this;
-
-    if (hue !== undefined) {
-      return hue;
-    }
-
-    const inAvatar = hostContext('ion-avatar', this.el);
-    const inButton = hostContext('ion-button', this.el);
-    const inTabButton = hostContext('ion-tab-button', this.el);
-    const hasContent = this.el.textContent?.trim() !== '' || this.el.querySelector('ion-icon') !== null;
-
-    // Return 'bold' if the badge is inside an avatar, button, tab button,
-    // or has no content
-    if (inAvatar || inButton || inTabButton || !hasContent) {
-      return 'bold';
-    }
-
-    // Return 'subtle' if the badge contains visible text or an icon
-    return 'subtle';
-  }
-
   /**
    * Gets the badge hue. Uses the `hue` property if set, otherwise
    * checks the theme config and falls back to 'subtle' if neither is provided.
