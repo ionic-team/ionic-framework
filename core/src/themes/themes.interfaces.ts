@@ -286,7 +286,6 @@ type Components = {
   IonChip?: IonChipRecipe;
   IonItemDivider?: IonItemDividerRecipe;
   IonSpinner?: IonSpinnerRecipe;
-  IonTabButton?: any;
 
   IonCard?: any;
   IonItem?: any;

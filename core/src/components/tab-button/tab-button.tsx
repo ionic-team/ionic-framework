@@ -162,6 +162,10 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     return !!this.el.querySelector(':scope > ion-icon');
   }
 
+  private get hasBadge() {
+    return !!this.el.querySelector('ion-badge');
+  }
+
   private onKeyUp = (ev: KeyboardEvent) => {
     if (ev.key === 'Enter' || ev.key === ' ') {
       this.selectTab(ev);
@@ -180,6 +184,25 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     }
     return mode === 'md';
   }
+
+  private onSlotChanged = () => {
+    /**
+     * Badges can be added or removed dynamically to mimic use
+     * cases like notifications. Based on the presence of a
+     * badge, we need to set up or destroy the badge observer.
+     *
+     * If the badge observer is already set up and there is a badge, then we don't need to do anything.
+     */
+    if (this.hasBadge && this.badgeObserver) {
+      return;
+    }
+
+    if (this.hasBadge) {
+      this.setupBadgeObserver();
+    } else {
+      this.destroyBadgeObserver();
+    }
+  };
 
   private setupBadgeObserver() {
     this.destroyBadgeObserver();
@@ -258,7 +281,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
           {...inheritedAttributes}
         >
           <span class="button-inner">
-            <slot></slot>
+            <slot onSlotchange={this.onSlotChanged}></slot>
           </span>
           {theme === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
         </a>

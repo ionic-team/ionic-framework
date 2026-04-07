@@ -725,13 +725,5 @@ export const defaultTheme: DefaultTheme = {
         },
       },
     },
-
-    IonTabButton: {
-      badge: {
-        indicator: {
-          position: 'relative',
-        },
-      },
-    },
   },
 };

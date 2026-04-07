@@ -60,7 +60,7 @@
         badgeSizes.forEach((badgeSize) => {
           slotVariants.forEach((variant) => {
             iconLayouts.forEach((layout) => {
-              // Skip icon-bottom layout when there's no icon
+              // Only one layout needed when there's no icon
               if (!variant.hasIcon && layout === 'icon-bottom') return;
 
               const heading = document.createElement('h2');

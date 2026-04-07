@@ -749,7 +749,7 @@ export const dynamicFont = (
  * @param minScale - The minimum scale of the font (e.g. 0.8 for 80%).
  * @param size - The numeric pixel value.
  * @param unit - The CSS unit string.
- * @returns A CSS max() string that prevents the font from shrinking below the minimum.
+ * @returns A string containing the CSS max() function with the minimum pixel value and the dynamic font value (e.g., 'max(8.8px, 0.6875rem)').
  */
 export const dynamicFontMin = (
   configRootFontSize: string | number,
