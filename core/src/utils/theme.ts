@@ -712,6 +712,7 @@ const baselineUnit = 'rem';
  * - `dynamicFont('16px', 20, 'em')` returns `'1.25em'`
  *
  * @internal
+ * @param configRootFontSize - The root font size from the theme config.
  * @param size - The numeric pixel value.
  * @param unit - The CSS unit string.
  * @returns The calculated CSS value string.
@@ -733,4 +734,31 @@ export const dynamicFont = (
   }
 
   return `${size / baselinePixelSize}${unit}`;
+};
+
+/**
+ * Converts a pixel value to a dynamic unit (defaulting to rem)
+ * but imposes a minimum font size using CSS max().
+ *
+ * Examples based on a root font size of 16px:
+ * - `dynamicFontMin('16px', 0.8, 11)` returns `'max(8.8px, 0.6875rem)'`
+ * - A minimum of 80% of 11px = 8.8px, but the rem value scales with root font size
+ *
+ * @internal
+ * @param configRootFontSize - The root font size from the theme config.
+ * @param minScale - The minimum scale of the font (e.g. 0.8 for 80%).
+ * @param size - The numeric pixel value.
+ * @param unit - The CSS unit string.
+ * @returns A CSS max() string that prevents the font from shrinking below the minimum.
+ */
+export const dynamicFontMin = (
+  configRootFontSize: string | number,
+  minScale: number,
+  size: number,
+  unit: string | undefined = baselineUnit
+): string => {
+  const baseScale = dynamicFont(configRootFontSize, size, unit);
+  const minSize = size * minScale;
+
+  return `max(${minSize}px, ${baseScale})`;
 };

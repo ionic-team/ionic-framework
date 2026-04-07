@@ -1,4 +1,4 @@
-import { rgba, currentColor, clamp, mix, dynamicFont, ionColor } from '../../utils/theme';
+import { rgba, currentColor, clamp, mix, dynamicFont, dynamicFontMin, ionColor } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
@@ -102,6 +102,10 @@ export const defaultTheme: DefaultTheme = {
 
   components: {
     IonBadge: {
+      font: {
+        family: 'var(--ion-font-family)',
+      },
+
       // Hues
       hue: {
         bold: {
@@ -135,15 +139,9 @@ export const defaultTheme: DefaultTheme = {
 
       // Shapes
       shape: {
-        crisp: {
-          border: {
-            radius: 'var(--ion-radii-sm)',
-          },
-        },
-
         soft: {
           border: {
-            radius: 'var(--ion-radii-md)',
+            radius: 'var(--ion-radii-sm)',
           },
         },
 
@@ -164,19 +162,28 @@ export const defaultTheme: DefaultTheme = {
       size: {
         small: {
           content: {
+            height: 'var(--ion-scaling-xxs)',
+
             min: {
-              width: 'var(--ion-scaling-250)',
+              width: 'var(--ion-scaling-xxs)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-75)',
-              end: 'var(--ion-spacing-xxs)',
-              bottom: 'var(--ion-spacing-xxs)',
-              start: 'var(--ion-spacing-xxs)',
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-xs)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-xs)',
             },
 
             font: {
-              size: dynamicFont(global.root, 13),
+              /**
+               * "-apple-system-body" on iOS never goes smaller than
+               * 14px according to https://developer.apple.com/design/human-interface-guidelines/typography#Specifications.
+               * However, we still keep the max() usage here for consistency
+               * with other components and in case "-apple-system-body" does
+               * go smaller than 14px in the future.
+               */
+              size: dynamicFontMin(global.root, 1, 13),
               weight: 'var(--ion-font-weight-bold)',
             },
 
@@ -191,24 +198,33 @@ export const defaultTheme: DefaultTheme = {
             min: {
               width: 'var(--ion-scaling-150)',
             },
+
+            padding: {
+              top: 'var(--ion-spacing-xxxs)',
+              end: 'var(--ion-spacing-xxxs)',
+              bottom: 'var(--ion-spacing-xxxs)',
+              start: 'var(--ion-spacing-xxxs)',
+            },
           },
         },
 
         medium: {
           content: {
+            height: 'var(--ion-scaling-550)',
+
             min: {
-              width: 'var(--ion-scaling-xxxs)',
+              width: 'var(--ion-scaling-550)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-xs)',
-              end: 'var(--ion-spacing-xs)',
-              bottom: 'var(--ion-spacing-xs)',
-              start: 'var(--ion-spacing-xs)',
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-sm)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-sm)',
             },
 
             font: {
-              size: dynamicFont(global.root, 13),
+              size: dynamicFontMin(global.root, 1, 15),
               weight: 'var(--ion-font-weight-bold)',
             },
 
@@ -223,24 +239,33 @@ export const defaultTheme: DefaultTheme = {
             min: {
               width: 'var(--ion-scaling-250)',
             },
+
+            padding: {
+              top: 'var(--ion-spacing-75)',
+              end: 'var(--ion-spacing-75)',
+              bottom: 'var(--ion-spacing-75)',
+              start: 'var(--ion-spacing-75)',
+            },
           },
         },
 
         large: {
           content: {
+            height: 'var(--ion-scaling-xs)',
+
             min: {
-              width: 'var(--ion-scaling-xxxs)',
+              width: 'var(--ion-scaling-xs)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-sm)',
-              end: 'var(--ion-spacing-sm)',
-              bottom: 'var(--ion-spacing-sm)',
-              start: 'var(--ion-spacing-sm)',
+              top: 'var(--ion-spacing-0)',
+              end: 'var(--ion-spacing-250)',
+              bottom: 'var(--ion-spacing-0)',
+              start: 'var(--ion-spacing-250)',
             },
 
             font: {
-              size: dynamicFont(global.root, 13),
+              size: dynamicFontMin(global.root, 1, 17),
               weight: 'var(--ion-font-weight-bold)',
             },
 
@@ -254,6 +279,13 @@ export const defaultTheme: DefaultTheme = {
 
             min: {
               width: 'var(--ion-scaling-350)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-xxs)',
+              end: 'var(--ion-spacing-xxs)',
+              bottom: 'var(--ion-spacing-xxs)',
+              start: 'var(--ion-spacing-xxs)',
             },
           },
         },

@@ -106,8 +106,7 @@ export const defaultTheme: DefaultTheme = {
   components: {
     IonBadge: {
       font: {
-        size: dynamicFont(global.root, 13),
-        weight: 'var(--ion-font-weight-bold)',
+        family: 'var(--ion-font-family)',
       },
 
       // Hues

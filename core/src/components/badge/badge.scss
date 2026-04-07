@@ -21,6 +21,8 @@
   align-items: center;
   justify-content: center;
 
+  font-family: var(--ion-badge-font-family, inherit);
+
   white-space: nowrap;
 
   contain: content;
