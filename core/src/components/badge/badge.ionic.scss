@@ -161,16 +161,16 @@
 // --------------------------------------------------
 
 :host(:not(:empty).in-button) {
-  --padding-start: #{globals.$ion-scale-050}; // not needed since it is the same as small, give example that it should be using small size
+  --padding-start: #{globals.$ion-scale-050};
   --padding-end: #{globals.$ion-scale-050};
 
-  @include globals.typography(globals.$ion-body-action-xs); // this is wrong when compared to designs
+  @include globals.typography(globals.$ion-body-action-xs);
 
-  min-width: globals.$ion-scale-400; // not needed since it is the same as small, give example that it should be using small size
+  min-width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
 
   ::slotted(ion-icon) {
-    width: globals.$ion-scale-300; // not needed since it is the same as small, give example that it should be using small size
+    width: globals.$ion-scale-300;
     height: globals.$ion-scale-300;
   }
 }
