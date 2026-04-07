@@ -38,19 +38,14 @@
     <script>
       const buttonSizes = ['small', 'medium', 'large'];
       const badgeSizes = ['small', 'medium', 'large'];
-      const positions = ['top', 'bottom', ''];
+      const badgePositions = ['top', 'bottom', ''];
 
-      const badgeContents = [
-        { label: 'empty', html: '' },
-        { label: 'text', html: '1' },
-        { label: 'longText', html: '999+' },
-        { label: 'icon', html: '<ion-icon icon="star"></ion-icon>' },
-      ];
+      const badgeContents = ['', '1', '999+', '<ion-icon icon="star"></ion-icon>'];
 
       const content = document.getElementById('content');
 
       buttonSizes.forEach((buttonSize) => {
-        positions.forEach((position) => {
+        badgePositions.forEach((position) => {
           const heading = document.createElement('h2');
           heading.textContent = `button size: ${buttonSize} / badge position: ${position || 'none'}`;
           content.appendChild(heading);
@@ -58,7 +53,7 @@
           const row = document.createElement('div');
 
           badgeSizes.forEach((badgeSize) => {
-            badgeContents.forEach(({ html }) => {
+            badgeContents.forEach((html) => {
               const iconButton = document.createElement('ion-button');
               iconButton.setAttribute('size', buttonSize);
               iconButton.setAttribute('shape', 'round');

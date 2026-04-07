@@ -191,7 +191,12 @@ export class TabButton implements ComponentInterface, AnchorInterface {
       return;
     }
 
-    const target = this.el.querySelector(':scope > ion-icon') || this.el.querySelector('ion-label')!;
+    const target = this.el.querySelector(':scope > ion-icon') || this.el.querySelector('ion-label');
+
+    // If there is no icon or label, the badge will not be anchored to anything
+    if (!target) {
+      return;
+    }
 
     const relativeTo = this.el.shadowRoot!.querySelector('.button-inner')!;
     // Only clamp when tab button has an icon and label to prevent the badge from overlapping the label

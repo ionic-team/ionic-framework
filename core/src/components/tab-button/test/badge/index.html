@@ -36,8 +36,8 @@
     </ion-app>
 
     <script>
-      const positions = ['top', 'bottom', ''];
-      const layouts = ['icon-top', 'icon-bottom'];
+      const iconLayouts = ['icon-top', 'icon-bottom'];
+      const badgePositions = ['top', 'bottom', ''];
       const badgeSizes = ['small', 'medium', 'large'];
 
       // What each tab button contains (besides the badge)
@@ -45,25 +45,21 @@
         { label: 'icon + label', hasIcon: true, hasLabel: true },
         { label: 'icon only', hasIcon: true, hasLabel: false },
         { label: 'label only', hasIcon: false, hasLabel: true },
+        { label: 'no icon or label', hasIcon: false, hasLabel: false },
       ];
 
       // Badge content variations
-      const badgeContents = [
-        { label: 'number', html: '9' },
-        { label: 'large number', html: '999' },
-        { label: 'icon', html: '<ion-icon name="star"></ion-icon>' },
-        { label: 'empty', html: '' },
-      ];
+      const badgeContents = ['', '1', '999+', '<ion-icon icon="star"></ion-icon>'];
 
       const icons = ['star', 'globe', 'logo-facebook', 'chatbox'];
       const colors = ['danger', 'primary', 'warning', 'success'];
 
       const content = document.getElementById('content');
 
-      positions.forEach((position) => {
+      badgePositions.forEach((position) => {
         badgeSizes.forEach((badgeSize) => {
           slotVariants.forEach((variant) => {
-            layouts.forEach((layout) => {
+            iconLayouts.forEach((layout) => {
               // Skip icon-bottom layout when there's no icon
               if (!variant.hasIcon && layout === 'icon-bottom') return;
 
@@ -77,7 +73,7 @@
 
               const tabBar = document.createElement('ion-tab-bar');
 
-              badgeContents.forEach(({ html }, i) => {
+              badgeContents.forEach((html, i) => {
                 const tabButton = document.createElement('ion-tab-button');
                 tabButton.setAttribute('tab', `tab-${position}-${badgeSize}-${variant.label}-${layout}-${i}`);
                 tabButton.setAttribute('layout', layout);
