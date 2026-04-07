@@ -29,7 +29,7 @@ export const defaultTheme: DefaultTheme = {
       IonBadge: {
         hue: 'bold',
         shape: 'soft',
-        size: 'small',
+        size: 'large',
       },
 
       IonChip: {
