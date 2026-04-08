@@ -34,7 +34,47 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   @Element() el!: HTMLElement;
 
   private badgeManager = createBadgeManager(this.el, () => {
-    const target = this.el.querySelector(':scope > ion-icon') || this.el.querySelector('ion-label');
+    const layout = this.layout || config.get('tabButtonLayout', 'icon-top');
+    const hasIcon = this.hasIcon;
+    const hasLabel = this.hasLabel;
+
+    // Clamp the badge if icon and label exists and layout is either `icon-top` or `icon-bottom` since the badge is positioned in the center of the button and could overlap with both the icon and label.
+    const clamp = hasIcon && hasLabel && (layout === 'icon-top' || layout === 'icon-bottom');
+
+    let target: HTMLElement | null = null;
+
+    switch (layout) {
+      case 'icon-top':
+      case 'icon-bottom':
+        if (hasIcon) {
+          target = this.el.querySelector(':scope > ion-icon');
+        }
+        break;
+      case 'icon-start':
+        if (hasIcon && hasLabel) {
+          target = this.el.querySelector('ion-label');
+        } else if (hasIcon) {
+          target = this.el.querySelector(':scope > ion-icon');
+        }
+        break;
+      case 'icon-end':
+        if (hasIcon && hasLabel) {
+          target = this.el.querySelector(':scope > ion-icon');
+        } else if (hasLabel) {
+          target = this.el.querySelector('ion-label');
+        }
+        break;
+      case 'icon-hide':
+        if (hasLabel) {
+          target = this.el.querySelector('ion-label');
+        }
+        break;
+      case 'label-hide':
+        if (hasIcon) {
+          target = this.el.querySelector(':scope > ion-icon');
+        }
+        break;
+    }
 
     if (!target) {
       return undefined;
@@ -44,7 +84,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
       host: this.el,
       target,
       relativeTo: this.el.shadowRoot!.querySelector('.button-inner')!,
-      clamp: this.hasIcon && this.hasLabel,
+      clamp,
     };
   });
 

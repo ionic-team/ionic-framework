@@ -10,7 +10,7 @@ configs().forEach(({ title, screenshot, config }) => {
           <ion-tab-button tab="1" layout="icon-start">
             <ion-label>Recents</ion-label>
             <ion-icon name="call"></ion-icon>
-            <ion-badge color="danger">12</ion-badge>
+            <ion-badge color="danger" vertical="top" size="small">12</ion-badge>
           </ion-tab-button>
 
           <ion-tab-button tab="2" layout="icon-start">
@@ -44,7 +44,7 @@ configs().forEach(({ title, screenshot, config }) => {
           <ion-tab-button tab="2" layout="icon-end">
             <ion-label>Favorites</ion-label>
             <ion-icon name="heart"></ion-icon>
-            <ion-badge color="dark">33</ion-badge>
+            <ion-badge color="dark" vertical="top" size="small">33</ion-badge>
           </ion-tab-button>
 
           <ion-tab-button tab="3" layout="icon-end">
@@ -71,7 +71,7 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-tab-button>
 
           <ion-tab-button tab="2">
-            <ion-badge>16</ion-badge>
+            <ion-badge vertical="top" size="small">16</ion-badge>
             <ion-label>Favorites</ion-label>
             <ion-icon name="heart"></ion-icon>
           </ion-tab-button>
@@ -100,7 +100,7 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-tab-button>
 
           <ion-tab-button tab="2">
-            <ion-badge color="danger">44</ion-badge>
+            <ion-badge color="danger" vertical="top" size="small">44</ion-badge>
             <ion-icon name="heart"></ion-icon>
           </ion-tab-button>
 
@@ -135,7 +135,7 @@ configs().forEach(({ title, screenshot, config }) => {
           <ion-tab-button tab="3" layout="icon-hide">
             <ion-label>Settings</ion-label>
             <ion-icon name="settings"></ion-icon>
-            <ion-badge color="danger">2</ion-badge>
+            <ion-badge color="danger" vertical="top" size="small">2</ion-badge>
           </ion-tab-button>
         </ion-tab-bar>
       `,
