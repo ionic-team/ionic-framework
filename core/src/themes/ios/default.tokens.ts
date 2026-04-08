@@ -168,9 +168,8 @@ export const defaultTheme: DefaultTheme = {
       size: {
         small: {
           content: {
-            height: 'var(--ion-scaling-xxs)',
-
             min: {
+              height: 'var(--ion-scaling-xxs)',
               width: 'var(--ion-scaling-xxs)',
             },
 
@@ -216,9 +215,8 @@ export const defaultTheme: DefaultTheme = {
 
         medium: {
           content: {
-            height: 'var(--ion-scaling-550)',
-
             min: {
+              height: 'var(--ion-scaling-550)',
               width: 'var(--ion-scaling-550)',
             },
 
@@ -257,9 +255,8 @@ export const defaultTheme: DefaultTheme = {
 
         large: {
           content: {
-            height: 'var(--ion-scaling-xs)',
-
             min: {
+              height: 'var(--ion-scaling-xs)',
               width: 'var(--ion-scaling-xs)',
             },
 

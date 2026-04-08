@@ -48,17 +48,16 @@ type IonBadgeShapeDefinition = {
 };
 
 type IonBadgeSizeDefinition = {
-  height?: string;
-
-  min?: {
-    width?: string;
-  };
-
   padding?: IonPadding;
 };
 
 type IonBadgeSizeContentDefinition = IonBadgeSizeDefinition & {
   letterSpacing?: string | number;
+
+  min?: {
+    height?: string;
+    width?: string;
+  };
 
   font?: {
     size?: string;
@@ -75,7 +74,13 @@ type IonBadgeSizeContentDefinition = IonBadgeSizeDefinition & {
   };
 };
 
-type IonBadgeSizeDotDefinition = IonBadgeSizeDefinition;
+type IonBadgeSizeDotDefinition = IonBadgeSizeDefinition & {
+  height?: string;
+
+  min?: {
+    width?: string;
+  };
+};
 
 export type IonBadgeConfig = {
   hue?: IonBadgeHue;
