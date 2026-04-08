@@ -14,8 +14,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
       await page.goto(`/src/components/item-sliding/test/basic`, config);
     });
     test.describe('start options', () => {
-      // TODO(FW-7184): remove skip once issue is resolved
-      test.skip('should not have visual regressions', async ({ page }) => {
+      test('should not have visual regressions', async ({ page }) => {
         const item = page.locator('#item2');
 
         /**
@@ -24,9 +23,9 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
          * Positive dragByX value to drag element from the left to the right
          * to reveal the options on the left side.
          */
-        const dragByX = config.direction === 'rtl' ? -150 : 150;
+        const dragByX = config.direction === 'rtl' ? -100 : 100;
 
-        await dragElementBy(item, page, dragByX);
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 20);
         await page.waitForChanges();
 
         await expect(item).toHaveScreenshot(screenshot('item-sliding-start'));
@@ -45,7 +44,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
          */
         const dragByX = config.direction === 'rtl' ? 150 : -150;
 
-        await dragElementBy(item, page, dragByX);
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 20);
 
         await expect(item).toHaveScreenshot(screenshot('item-sliding-end'));
       });
@@ -62,7 +61,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.goto(`/src/components/item-sliding/test/basic`, config);
       const item = page.locator('#item2');
 
-      await dragElementBy(item, page, -150);
+      await dragElementBy(item, page, -150, 0, undefined, undefined, true, 20);
       await page.waitForChanges();
 
       // item-sliding doesn't have an easy way to tell whether it's fully open so just screenshot it
@@ -109,8 +108,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: basic'), () => {
     test.describe('safe area left', () => {
-      // TODO(FW-7184): remove skip once issue is resolved
-      test.skip('should have padding on the left only', async ({ page }) => {
+      test('should have padding on the left only', async ({ page }) => {
         await page.setContent(
           `
           <style>
@@ -143,7 +141,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         const item = page.locator('ion-item-sliding');
 
         const dragByX = direction == 'rtl' ? -150 : 150;
-        await dragElementBy(item, page, dragByX);
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 20);
         await page.waitForChanges();
 
         await expect(item).toHaveScreenshot(screenshot(`item-sliding-safe-area-left`));
@@ -151,8 +149,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
     });
 
     test.describe('safe area right', () => {
-      // TODO(FW-7184): remove skip once issue is resolved
-      test.skip('should have padding on the right only', async ({ page }) => {
+      test('should have padding on the right only', async ({ page }) => {
         await page.setContent(
           `
           <style>
@@ -185,7 +182,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         const item = page.locator('ion-item-sliding');
 
         const dragByX = direction == 'rtl' ? 150 : -150;
-        await dragElementBy(item, page, dragByX);
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 20);
         await page.waitForChanges();
 
         await expect(item).toHaveScreenshot(screenshot(`item-sliding-safe-area-right`));
