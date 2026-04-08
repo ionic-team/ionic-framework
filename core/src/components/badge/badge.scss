@@ -136,6 +136,10 @@
 // Badge Shapes
 // ---------------------------------------------
 
+:host(.badge-shape-crisp) {
+  @include mixins.border-radius(var(--ion-badge-shape-crisp-border-radius));
+}
+
 :host(.badge-shape-soft) {
   @include mixins.border-radius(var(--ion-badge-shape-soft-border-radius));
 }
