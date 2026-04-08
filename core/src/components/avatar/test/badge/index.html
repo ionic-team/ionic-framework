@@ -17,7 +17,7 @@
       .row {
         display: flex;
         flex-wrap: wrap;
-        gap: 20px;
+        gap: 30px;
         margin: 16px;
       }
 
@@ -27,6 +27,13 @@
         color: #6f7378;
         margin-top: 10px;
         margin-left: 5px;
+      }
+
+      .avatar-group {
+        border: 1px solid #e2e4e7;
+        border-radius: 12px;
+        margin: 16px;
+        padding: 8px;
       }
     </style>
   </head>
@@ -53,10 +60,14 @@
       const content = document.getElementById('content');
 
       avatarSizes.forEach((avatarSize) => {
+        const group = document.createElement('div');
+        group.id = `avatar-${avatarSize}`;
+        group.classList.add('avatar-group');
+
         badgePositions.forEach((badgePosition) => {
           const heading = document.createElement('h2');
           heading.textContent = `avatar size: ${avatarSize} / badge position: ${badgePosition || 'none'}`;
-          content.appendChild(heading);
+          group.appendChild(heading);
 
           const row = document.createElement('div');
           row.className = 'row';
@@ -85,8 +96,10 @@
             });
           });
 
-          content.appendChild(row);
+          group.appendChild(row);
         });
+
+        content.appendChild(group);
       });
     </script>
   </body>
