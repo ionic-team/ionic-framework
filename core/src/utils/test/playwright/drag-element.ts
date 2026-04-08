@@ -17,7 +17,8 @@ export const dragElementBy = async (
   dragByY = 0,
   startXCoord?: number,
   startYCoord?: number,
-  releaseDrag = true
+  releaseDrag = true,
+  steps?: number
 ) => {
   const boundingBox = await el.boundingBox();
 
@@ -36,7 +37,7 @@ export const dragElementBy = async (
   await page.mouse.down();
 
   // Drag the element.
-  await moveElement(page, startX, startY, dragByX, dragByY);
+  await moveElement(page, startX, startY, dragByX, dragByY, steps);
 
   if (releaseDrag) {
     await page.mouse.up();
@@ -115,8 +116,7 @@ const validateDragByY = (startY: number, dragByY: number, viewportHeight: number
   }
 };
 
-const moveElement = async (page: E2EPage, startX: number, startY: number, dragByX = 0, dragByY = 0) => {
-  const steps = 10;
+const moveElement = async (page: E2EPage, startX: number, startY: number, dragByX = 0, dragByY = 0, steps = 10) => {
   const browser = page.context().browser()!.browserType().name();
 
   const viewport = page.viewportSize();
