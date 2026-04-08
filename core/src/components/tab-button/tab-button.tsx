@@ -35,45 +35,28 @@ export class TabButton implements ComponentInterface, AnchorInterface {
 
   private badgeManager = createBadgeManager(this.el, () => {
     const layout = this.layout || config.get('tabButtonLayout', 'icon-top');
+
     const hasIcon = this.hasIcon;
     const hasLabel = this.hasLabel;
 
     // Clamp the badge if icon and label exists and layout is either `icon-top` or `icon-bottom` since the badge is positioned in the center of the button and could overlap with both the icon and label.
     const clamp = hasIcon && hasLabel && (layout === 'icon-top' || layout === 'icon-bottom');
 
-    let target: HTMLElement | null = null;
+    const iconEl = hasIcon ? this.el.querySelector(':scope > ion-icon') : null;
+    const labelEl = hasLabel ? this.el.querySelector('ion-label') : null;
 
-    switch (layout) {
-      case 'icon-top':
-      case 'icon-bottom':
-        if (hasIcon) {
-          target = this.el.querySelector(':scope > ion-icon');
-        }
-        break;
-      case 'icon-start':
-        if (hasIcon && hasLabel) {
-          target = this.el.querySelector('ion-label');
-        } else if (hasIcon) {
-          target = this.el.querySelector(':scope > ion-icon');
-        }
-        break;
-      case 'icon-end':
-        if (hasIcon && hasLabel) {
-          target = this.el.querySelector(':scope > ion-icon');
-        } else if (hasLabel) {
-          target = this.el.querySelector('ion-label');
-        }
-        break;
-      case 'icon-hide':
-        if (hasLabel) {
-          target = this.el.querySelector('ion-label');
-        }
-        break;
-      case 'label-hide':
-        if (hasIcon) {
-          target = this.el.querySelector(':scope > ion-icon');
-        }
-        break;
+    let target: Element | null = null;
+
+    if (layout === 'icon-hide') {
+      target = labelEl;
+    } else if (layout === 'label-hide') {
+      target = iconEl;
+    } else if (layout === 'icon-start') {
+      // Badge anchors to the trailing element
+      target = labelEl || iconEl;
+    } else {
+      // icon-top, icon-bottom, icon-end: badge anchors to the icon
+      target = iconEl || labelEl;
     }
 
     if (!target) {

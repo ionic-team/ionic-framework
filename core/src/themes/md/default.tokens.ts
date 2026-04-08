@@ -29,7 +29,7 @@ export const defaultTheme: DefaultTheme = {
       IonBadge: {
         hue: 'bold',
         shape: 'soft',
-        size: 'small',
+        size: 'medium',
       },
 
       IonChip: {
@@ -172,19 +172,19 @@ export const defaultTheme: DefaultTheme = {
         small: {
           content: {
             min: {
-              height: 'var(--ion-scaling-250)',
-              width: 'var(--ion-scaling-250)',
+              height: 'var(--ion-scaling-xxxxs)',
+              width: 'var(--ion-scaling-xxxxs)',
             },
 
             padding: {
               top: 'var(--ion-spacing-75)',
-              end: 'var(--ion-spacing-xxs)',
-              bottom: 'var(--ion-spacing-xxs)',
-              start: 'var(--ion-spacing-xxs)',
+              end: 'var(--ion-spacing-xxxs)',
+              bottom: 'var(--ion-spacing-xxxs)',
+              start: 'var(--ion-spacing-xxxs)',
             },
 
             font: {
-              size: dynamicFont(global.root, 13),
+              size: dynamicFont(global.root, 8),
               weight: 'var(--ion-font-weight-bold)',
             },
 
@@ -212,19 +212,19 @@ export const defaultTheme: DefaultTheme = {
         medium: {
           content: {
             min: {
-              height: 'var(--ion-scaling-xxxxs)',
-              width: 'var(--ion-scaling-xxxxs)',
+              height: 'var(--ion-scaling-250)',
+              width: 'var(--ion-scaling-250)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-xxs)',
+              top: 'var(--ion-spacing-75)',
               end: 'var(--ion-spacing-xxs)',
               bottom: 'var(--ion-spacing-xxs)',
               start: 'var(--ion-spacing-xxs)',
             },
 
             font: {
-              size: dynamicFont(global.root, 15),
+              size: dynamicFont(global.root, 13),
               weight: 'var(--ion-font-weight-bold)',
             },
 
@@ -252,19 +252,19 @@ export const defaultTheme: DefaultTheme = {
         large: {
           content: {
             min: {
-              height: 'var(--ion-scaling-350)',
-              width: 'var(--ion-scaling-350)',
+              height: 'var(--ion-scaling-xxxxs)',
+              width: 'var(--ion-scaling-xxxxs)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-xxs)',
-              end: 'var(--ion-spacing-xxs)',
-              bottom: 'var(--ion-spacing-xxs)',
-              start: 'var(--ion-spacing-xxs)',
+              top: 'var(--ion-spacing-75)',
+              end: 'var(--ion-spacing-xs)',
+              bottom: 'var(--ion-spacing-xs)',
+              start: 'var(--ion-spacing-xs)',
             },
 
             font: {
-              size: dynamicFont(global.root, 17),
+              size: dynamicFont(global.root, 15),
               weight: 'var(--ion-font-weight-bold)',
             },
 

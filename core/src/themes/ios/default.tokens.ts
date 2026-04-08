@@ -169,26 +169,19 @@ export const defaultTheme: DefaultTheme = {
         small: {
           content: {
             min: {
-              height: 'var(--ion-scaling-250)',
-              width: 'var(--ion-scaling-250)',
+              height: 'var(--ion-scaling-400)',
+              width: 'var(--ion-scaling-400)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-75)',
-              end: 'var(--ion-spacing-sm)',
-              bottom: 'var(--ion-spacing-75)',
-              start: 'var(--ion-spacing-sm)',
+              top: 'var(--ion-spacing-xxxs)',
+              end: 'var(--ion-spacing-xxxs)',
+              bottom: 'var(--ion-spacing-xxxs)',
+              start: 'var(--ion-spacing-xxxs)',
             },
 
             font: {
-              /**
-               * "-apple-system-body" on iOS never goes smaller than
-               * 14px according to https://developer.apple.com/design/human-interface-guidelines/typography#Specifications.
-               * However, we still keep the max() usage here for consistency
-               * with other components and in case "-apple-system-body" does
-               * go smaller than 14px in the future.
-               */
-              size: dynamicFontMin(global.root, 1, 13),
+              size: dynamicFont(global.root, 12),
               weight: 'var(--ion-font-weight-bold)',
             },
 
@@ -216,19 +209,26 @@ export const defaultTheme: DefaultTheme = {
         medium: {
           content: {
             min: {
-              height: 'var(--ion-scaling-xxxxs)',
-              width: 'var(--ion-scaling-xxxxs)',
+              height: 'var(--ion-scaling-450)',
+              width: 'var(--ion-scaling-450)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-75)',
-              end: 'var(--ion-spacing-sm)',
-              bottom: 'var(--ion-spacing-75)',
-              start: 'var(--ion-spacing-sm)',
+              top: 'var(--ion-spacing-xxxs)',
+              end: 'var(--ion-spacing-xxs)',
+              bottom: 'var(--ion-spacing-xxxs)',
+              start: 'var(--ion-spacing-xxs)',
             },
 
             font: {
-              size: dynamicFontMin(global.root, 1, 15),
+              /**
+               * "-apple-system-body" on iOS never goes smaller than
+               * 14px according to https://developer.apple.com/design/human-interface-guidelines/typography#Specifications.
+               * However, we still keep the max() usage here for consistency
+               * with other components and in case "-apple-system-body" does
+               * go smaller than 14px in the future.
+               */
+              size: dynamicFontMin(global.root, 1, 13),
               weight: 'var(--ion-font-weight-bold)',
             },
 
@@ -256,19 +256,19 @@ export const defaultTheme: DefaultTheme = {
         large: {
           content: {
             min: {
-              height: 'var(--ion-scaling-350)',
-              width: 'var(--ion-scaling-350)',
+              height: 'var(--ion-scaling-xxs)',
+              width: 'var(--ion-scaling-xxs)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-75)',
-              end: 'var(--ion-spacing-sm)',
-              bottom: 'var(--ion-spacing-75)',
-              start: 'var(--ion-spacing-sm)',
+              top: 'var(--ion-spacing-xxxs)',
+              end: 'var(--ion-spacing-xxs)',
+              bottom: 'var(--ion-spacing-xxxs)',
+              start: 'var(--ion-spacing-xxs)',
             },
 
             font: {
-              size: dynamicFontMin(global.root, 1, 17),
+              size: dynamicFontMin(global.root, 1, 15),
               weight: 'var(--ion-font-weight-bold)',
             },
 
