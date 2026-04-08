@@ -21,6 +21,13 @@
         margin-top: 10px;
         margin-left: 5px;
       }
+
+      .badge-group {
+        border: 1px solid #e2e4e7;
+        border-radius: 12px;
+        margin: 16px;
+        padding: 8px;
+      }
     </style>
   </head>
 
@@ -58,6 +65,10 @@
 
       badgePositions.forEach((position) => {
         badgeSizes.forEach((badgeSize) => {
+          const group = document.createElement('div');
+          group.id = `badge-${badgeSize}`;
+          group.classList.add('badge-group');
+
           slotVariants.forEach((variant) => {
             iconLayouts.forEach((layout) => {
               // Only one layout needed when there's no icon
@@ -67,7 +78,7 @@
               heading.textContent = `badge position: ${position || 'none'} / badge size: ${badgeSize} / ${
                 variant.label
               } / icon layout: ${layout}`;
-              content.appendChild(heading);
+              group.appendChild(heading);
 
               const row = document.createElement('div');
 
@@ -105,9 +116,11 @@
               });
 
               row.appendChild(tabBar);
-              content.appendChild(row);
+              group.appendChild(row);
             });
           });
+
+          content.appendChild(group);
         });
       });
     </script>

@@ -21,6 +21,17 @@
         margin-top: 10px;
         margin-left: 5px;
       }
+
+      .button-group {
+        border: 1px solid #e2e4e7;
+        border-radius: 12px;
+        margin: 16px;
+        padding: 8px;
+      }
+
+      ion-button {
+        margin-inline-end: 20px;
+      }
     </style>
   </head>
 
@@ -45,10 +56,14 @@
       const content = document.getElementById('content');
 
       buttonSizes.forEach((buttonSize) => {
+        const group = document.createElement('div');
+        group.id = `button-${buttonSize}`;
+        group.classList.add('button-group');
+
         badgePositions.forEach((position) => {
           const heading = document.createElement('h2');
           heading.textContent = `button size: ${buttonSize} / badge position: ${position || 'none'}`;
-          content.appendChild(heading);
+          group.appendChild(heading);
 
           const row = document.createElement('div');
 
@@ -97,8 +112,10 @@
             });
           });
 
-          content.appendChild(row);
+          group.appendChild(row);
         });
+
+        content.appendChild(group);
       });
     </script>
   </body>

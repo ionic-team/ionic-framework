@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('avatar: badge'), () => {
     ['xxsmall', 'xsmall', 'small', 'medium', 'large', 'xlarge'].forEach((avatarSize) => {
-      test(`${avatarSize} - should not have visual regressions`, async ({ page }) => {
+      test(`${avatarSize} - should not have visual regressions with badges`, async ({ page }) => {
         const badgeSizes = ['small', 'medium', 'large'];
         const positions = ['top', 'bottom'];
         const contents = ['', '1', '999+', '<ion-icon icon="star"></ion-icon>'];
@@ -25,7 +25,20 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
           .join('\n');
 
         await page.setContent(
-          `<div id="container" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 16px;">${avatars}</div>`,
+          `
+            <style>
+              #container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                padding: 16px;
+              }
+            </style>
+
+            <div id="container">
+              ${avatars}
+            </div>
+          `,
           config
         );
 
