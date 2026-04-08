@@ -43,6 +43,7 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
         );
 
         const container = page.locator('#container');
+
         await expect(container).toHaveScreenshot(screenshot(`avatar-${avatarSize}-badge`));
       });
     });

@@ -57,6 +57,7 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
          */
         if (buttonSize === 'large') {
           const box = await container.boundingBox();
+
           await page.setViewportSize({ width: Math.ceil(box!.width) + 32, height: Math.ceil(box!.height) + 32 });
         }
 

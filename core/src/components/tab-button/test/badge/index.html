@@ -72,7 +72,9 @@
           slotVariants.forEach((variant) => {
             iconLayouts.forEach((layout) => {
               // Only one layout needed when there's no icon
-              if (!variant.hasIcon && layout === 'icon-bottom') return;
+              if (!variant.hasIcon && layout === 'icon-bottom') {
+                return;
+              }
 
               const heading = document.createElement('h2');
               heading.textContent = `badge position: ${position || 'none'} / badge size: ${badgeSize} / ${
