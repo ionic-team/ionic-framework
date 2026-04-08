@@ -25,7 +25,7 @@ export const defaultTheme: DefaultTheme = {
     components: {
       IonBadge: {
         hue: 'bold',
-        shape: 'round',
+        shape: 'soft',
         size: 'small',
       },
 
@@ -147,7 +147,7 @@ export const defaultTheme: DefaultTheme = {
 
         soft: {
           border: {
-            radius: 'var(--ion-radii-sm)',
+            radius: 'var(--ion-radii-md)',
           },
         },
 
