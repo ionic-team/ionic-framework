@@ -154,11 +154,11 @@ export class Checkbox implements ComponentInterface {
     if (Build.isBrowser && typeof MutationObserver !== 'undefined') {
       this.validationObserver = new MutationObserver((mutations) => {
         // Watch for label content changes
-        if (mutations.some((mutation) => mutation.type === 'characterData')) {
+        if (mutations.some((mutation) => mutation.type === 'characterData' || mutation.type === 'childList')) {
           this.hasLabelContent = this.el.textContent !== '';
         }
         // Watch for class changes to update validation state.
-        if (mutations.some((mutation) => mutation.type === 'attributes')) {
+        if (mutations.some((mutation) => mutation.type === 'attributes' && mutation.target === el)) {
           const newIsInvalid = checkInvalidState(el);
           if (this.isInvalid !== newIsInvalid) {
             this.isInvalid = newIsInvalid;
@@ -191,6 +191,7 @@ export class Checkbox implements ComponentInterface {
         attributes: true,
         attributeFilter: ['class'],
         characterData: true,
+        childList: true,
         subtree: true,
       });
     }
