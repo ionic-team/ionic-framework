@@ -339,6 +339,7 @@ ion-badge,css-prop,--ion-badge-shape-round-border-radius - Border radius of the 
 ion-badge,css-prop,--ion-badge-shape-soft-border-radius - Border radius of the `soft` shape
 ion-badge,css-prop,--ion-badge-size-large-content-font-size - Font size of the `large` size when badge has content
 ion-badge,css-prop,--ion-badge-size-large-content-font-weight - Font weight of the `large` size when badge has content
+ion-badge,css-prop,--ion-badge-size-large-content-height - Height of the `large` size when badge has content
 ion-badge,css-prop,--ion-badge-size-large-content-icon-height - Height of the slotted `ion-icon` of the `large` size Sizes
 ion-badge,css-prop,--ion-badge-size-large-content-icon-width - Width of the slotted `ion-icon` of the `large` size
 ion-badge,css-prop,--ion-badge-size-large-content-letter-spacing - Letter spacing of the `large` size when badge has content
@@ -357,6 +358,7 @@ ion-badge,css-prop,--ion-badge-size-large-dot-padding-start - Left padding if di
 ion-badge,css-prop,--ion-badge-size-large-dot-padding-top - Top padding of the `large` size when badge is empty
 ion-badge,css-prop,--ion-badge-size-medium-content-font-size - Font size of the `medium` size when badge has content
 ion-badge,css-prop,--ion-badge-size-medium-content-font-weight - Font weight of the `medium` size when badge has content
+ion-badge,css-prop,--ion-badge-size-medium-content-height - Height of the `medium` size when badge has content
 ion-badge,css-prop,--ion-badge-size-medium-content-icon-height - Height of the slotted `ion-icon` of the `medium` size
 ion-badge,css-prop,--ion-badge-size-medium-content-icon-width - Width of the slotted `ion-icon` of the `medium` size
 ion-badge,css-prop,--ion-badge-size-medium-content-letter-spacing - Letter spacing of the `medium` size when badge has content
@@ -375,6 +377,7 @@ ion-badge,css-prop,--ion-badge-size-medium-dot-padding-start - Left padding if d
 ion-badge,css-prop,--ion-badge-size-medium-dot-padding-top - Top padding of the `medium` size when badge is empty
 ion-badge,css-prop,--ion-badge-size-small-content-font-size - Font size of the `small` size when badge has content
 ion-badge,css-prop,--ion-badge-size-small-content-font-weight - Font weight of the `small` size when badge has content
+ion-badge,css-prop,--ion-badge-size-small-content-height - Height of the `small` size when badge has content
 ion-badge,css-prop,--ion-badge-size-small-content-icon-height - Height of the slotted `ion-icon` of the `small` size
 ion-badge,css-prop,--ion-badge-size-small-content-icon-width - Width of the slotted `ion-icon` of the `small` size
 ion-badge,css-prop,--ion-badge-size-small-content-letter-spacing - Letter spacing of the `small` size when badge has content

@@ -48,6 +48,8 @@ type IonBadgeShapeDefinition = {
 };
 
 type IonBadgeSizeDefinition = {
+  height?: string;
+
   padding?: IonPadding;
 };
 
@@ -75,8 +77,6 @@ type IonBadgeSizeContentDefinition = IonBadgeSizeDefinition & {
 };
 
 type IonBadgeSizeDotDefinition = IonBadgeSizeDefinition & {
-  height?: string;
-
   min?: {
     width?: string;
   };

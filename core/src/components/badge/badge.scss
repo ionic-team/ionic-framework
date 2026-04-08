@@ -31,6 +31,7 @@
    * @prop --ion-badge-shape-rectangular-border-radius - Border radius of the `rectangular` shape
    *
    * Sizes: Content (with text or an icon)
+   * @prop --ion-badge-size-small-content-height - Height of the `small` size when badge has content
    * @prop --ion-badge-size-small-content-min-height - Minimum height of the `small` size when badge has content
    * @prop --ion-badge-size-small-content-min-width - Minimum width of the `small` size when badge has content
    * @prop --ion-badge-size-small-content-padding-top - Top padding of the `small` size when badge has content
@@ -43,6 +44,7 @@
    * @prop --ion-badge-size-small-content-line-height - Line height of the `small` size when badge has content
    * @prop --ion-badge-size-small-content-icon-width - Width of the slotted `ion-icon` of the `small` size
    * @prop --ion-badge-size-small-content-icon-height - Height of the slotted `ion-icon` of the `small` size
+   * @prop --ion-badge-size-medium-content-height - Height of the `medium` size when badge has content
    * @prop --ion-badge-size-medium-content-min-height - Minimum height of the `medium` size when badge has content
    * @prop --ion-badge-size-medium-content-min-width - Minimum width of the `medium` size when badge has content
    * @prop --ion-badge-size-medium-content-padding-top - Top padding of the `medium` size when badge has content
@@ -55,6 +57,7 @@
    * @prop --ion-badge-size-medium-content-line-height - Line height of the `medium` size when badge has content
    * @prop --ion-badge-size-medium-content-icon-width - Width of the slotted `ion-icon` of the `medium` size
    * @prop --ion-badge-size-medium-content-icon-height - Height of the slotted `ion-icon` of the `medium` size
+   * @prop --ion-badge-size-large-content-height - Height of the `large` size when badge has content
    * @prop --ion-badge-size-large-content-min-height - Minimum height of the `large` size when badge has content
    * @prop --ion-badge-size-large-content-min-width - Minimum width of the `large` size when badge has content
    * @prop --ion-badge-size-large-content-padding-top - Top padding of the `large` size when badge has content
@@ -165,6 +168,7 @@
   );
 
   min-width: var(--ion-badge-size-small-content-min-width);
+  height: var(--ion-badge-size-small-content-height);
   min-height: var(--ion-badge-size-small-content-min-height);
 
   font-size: var(--ion-badge-size-small-content-font-size);
@@ -188,6 +192,7 @@
   );
 
   min-width: var(--ion-badge-size-medium-content-min-width);
+  height: var(--ion-badge-size-medium-content-height);
   min-height: var(--ion-badge-size-medium-content-min-height);
 
   font-size: var(--ion-badge-size-medium-content-font-size);
@@ -211,6 +216,7 @@
   );
 
   min-width: var(--ion-badge-size-large-content-min-width);
+  height: var(--ion-badge-size-large-content-height);
   min-height: var(--ion-badge-size-large-content-min-height);
 
   font-size: var(--ion-badge-size-large-content-font-size);
