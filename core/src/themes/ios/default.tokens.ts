@@ -139,6 +139,12 @@ export const defaultTheme: DefaultTheme = {
 
       // Shapes
       shape: {
+        crisp: {
+          border: {
+            radius: 'var(--ion-radii-xxs)',
+          },
+        },
+
         soft: {
           border: {
             radius: 'var(--ion-radii-sm)',
