@@ -25,7 +25,7 @@ export const defaultTheme: DefaultTheme = {
     components: {
       IonBadge: {
         hue: 'bold',
-        shape: 'soft',
+        shape: 'round',
         size: 'small',
       },
 
@@ -169,15 +169,15 @@ export const defaultTheme: DefaultTheme = {
         small: {
           content: {
             min: {
-              height: 'var(--ion-scaling-xxs)',
-              width: 'var(--ion-scaling-xxs)',
+              height: 'var(--ion-scaling-250)',
+              width: 'var(--ion-scaling-250)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-0)',
-              end: 'var(--ion-spacing-xs)',
-              bottom: 'var(--ion-spacing-0)',
-              start: 'var(--ion-spacing-xs)',
+              top: 'var(--ion-spacing-75)',
+              end: 'var(--ion-spacing-sm)',
+              bottom: 'var(--ion-spacing-75)',
+              start: 'var(--ion-spacing-sm)',
             },
 
             font: {
@@ -216,14 +216,14 @@ export const defaultTheme: DefaultTheme = {
         medium: {
           content: {
             min: {
-              height: 'var(--ion-scaling-550)',
-              width: 'var(--ion-scaling-550)',
+              height: 'var(--ion-scaling-xxxxs)',
+              width: 'var(--ion-scaling-xxxxs)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-0)',
+              top: 'var(--ion-spacing-75)',
               end: 'var(--ion-spacing-sm)',
-              bottom: 'var(--ion-spacing-0)',
+              bottom: 'var(--ion-spacing-75)',
               start: 'var(--ion-spacing-sm)',
             },
 
@@ -256,15 +256,15 @@ export const defaultTheme: DefaultTheme = {
         large: {
           content: {
             min: {
-              height: 'var(--ion-scaling-xs)',
-              width: 'var(--ion-scaling-xs)',
+              height: 'var(--ion-scaling-350)',
+              width: 'var(--ion-scaling-350)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-0)',
-              end: 'var(--ion-spacing-250)',
-              bottom: 'var(--ion-spacing-0)',
-              start: 'var(--ion-spacing-250)',
+              top: 'var(--ion-spacing-75)',
+              end: 'var(--ion-spacing-sm)',
+              bottom: 'var(--ion-spacing-75)',
+              start: 'var(--ion-spacing-sm)',
             },
 
             font: {

@@ -29,7 +29,7 @@ export const defaultTheme: DefaultTheme = {
       IonBadge: {
         hue: 'bold',
         shape: 'soft',
-        size: 'medium',
+        size: 'small',
       },
 
       IonChip: {
@@ -172,19 +172,19 @@ export const defaultTheme: DefaultTheme = {
         small: {
           content: {
             min: {
-              height: 'var(--ion-scaling-350)',
-              width: 'var(--ion-scaling-350)',
+              height: 'var(--ion-scaling-250)',
+              width: 'var(--ion-scaling-250)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-0)',
-              end: 'var(--ion-spacing-75)',
-              bottom: 'var(--ion-spacing-0)',
-              start: 'var(--ion-spacing-75)',
+              top: 'var(--ion-spacing-75)',
+              end: 'var(--ion-spacing-xxs)',
+              bottom: 'var(--ion-spacing-xxs)',
+              start: 'var(--ion-spacing-xxs)',
             },
 
             font: {
-              size: dynamicFont(global.root, 10),
+              size: dynamicFont(global.root, 13),
               weight: 'var(--ion-font-weight-bold)',
             },
 
@@ -212,19 +212,19 @@ export const defaultTheme: DefaultTheme = {
         medium: {
           content: {
             min: {
-              height: 'var(--ion-scaling-xxxs)',
-              width: 'var(--ion-scaling-xxxs)',
+              height: 'var(--ion-scaling-xxxxs)',
+              width: 'var(--ion-scaling-xxxxs)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-0)',
+              top: 'var(--ion-spacing-xxs)',
               end: 'var(--ion-spacing-xxs)',
-              bottom: 'var(--ion-spacing-0)',
+              bottom: 'var(--ion-spacing-xxs)',
               start: 'var(--ion-spacing-xxs)',
             },
 
             font: {
-              size: dynamicFont(global.root, 11),
+              size: dynamicFont(global.root, 15),
               weight: 'var(--ion-font-weight-bold)',
             },
 
@@ -241,10 +241,10 @@ export const defaultTheme: DefaultTheme = {
             },
 
             padding: {
-              top: 'var(--ion-spacing-75)',
-              end: 'var(--ion-spacing-75)',
-              bottom: 'var(--ion-spacing-75)',
-              start: 'var(--ion-spacing-75)',
+              top: 'var(--ion-spacing-xxs)',
+              end: 'var(--ion-spacing-xxs)',
+              bottom: 'var(--ion-spacing-xxs)',
+              start: 'var(--ion-spacing-xxs)',
             },
           },
         },
@@ -252,19 +252,19 @@ export const defaultTheme: DefaultTheme = {
         large: {
           content: {
             min: {
-              height: 'var(--ion-scaling-xxs)',
-              width: 'var(--ion-scaling-xxs)',
+              height: 'var(--ion-scaling-350)',
+              width: 'var(--ion-scaling-350)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-0)',
-              end: 'var(--ion-spacing-xs)',
-              bottom: 'var(--ion-spacing-0)',
-              start: 'var(--ion-spacing-xs)',
+              top: 'var(--ion-spacing-xxs)',
+              end: 'var(--ion-spacing-xxs)',
+              bottom: 'var(--ion-spacing-xxs)',
+              start: 'var(--ion-spacing-xxs)',
             },
 
             font: {
-              size: dynamicFont(global.root, 13),
+              size: dynamicFont(global.root, 17),
               weight: 'var(--ion-font-weight-bold)',
             },
 
