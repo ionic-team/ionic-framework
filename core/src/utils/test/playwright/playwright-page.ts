@@ -1,3 +1,5 @@
+import { voiceOver } from '@guidepup/guidepup';
+import { voiceOverTest } from '@guidepup/playwright';
 import type {
   PlaywrightTestArgs,
   PlaywrightTestOptions,
@@ -5,7 +7,7 @@ import type {
   PlaywrightWorkerOptions,
   TestInfo,
 } from '@playwright/test';
-import { test as base } from '@playwright/test';
+import { mergeTests, test as base } from '@playwright/test';
 
 import { PageUtils } from '../press-keys';
 
@@ -59,7 +61,7 @@ export async function extendPageFixture(page: E2EPage, testInfo: TestInfo) {
   return page;
 }
 
-export const test = base.extend<CustomFixtures>({
+const ionicTest = base.extend<CustomFixtures>({
   page: async ({ page }: CustomTestArgs, use: (r: E2EPage) => Promise<void>, testInfo: TestInfo) => {
     page = await extendPageFixture(page, testInfo);
     await use(page);
@@ -89,3 +91,40 @@ export const test = base.extend<CustomFixtures>({
     await use(new PageUtils({ page }));
   },
 });
+
+/**
+ * Merge Ionic and Guidepup test helpers to create a single test fixture.
+ */
+export const test = mergeTests(ionicTest, voiceOverTest);
+
+const VOICE_OVER_SAFARI = 'VoiceOver Safari';
+
+export type VoiceOverTestStartOptions = {
+  capture?: 'initial' | 'all';
+};
+
+/**
+ * Register Guidepup test helpers for a `test.describe` block.
+ *
+ * Call once at the start of each test `describe` or the file's
+ * top-level `describe`.
+ */
+export function configureVoiceOverTests(options?: { voiceOverStartOptions?: VoiceOverTestStartOptions }): void {
+  test.use({
+    voiceOverStartOptions: {
+      capture: 'initial',
+      ...options?.voiceOverStartOptions,
+    },
+  } as Parameters<typeof test.use>[0]);
+
+  let supported = false;
+
+  test.beforeAll(async () => {
+    supported = await voiceOver.detect();
+  });
+
+  test.beforeEach(() => {
+    test.skip(!supported, 'VoiceOver unavailable (non-macOS or missing Accessibility permissions).');
+    test.skip(test.info().project.name !== VOICE_OVER_SAFARI, 'VoiceOver tests run only in VoiceOver Safari.');
+  });
+}

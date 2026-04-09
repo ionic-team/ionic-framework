@@ -1,7 +1,10 @@
+import { screenReaderConfig } from '@guidepup/playwright';
 import type { PlaywrightTestConfig, PlaywrightTestOptions, PlaywrightWorkerOptions, Project } from '@playwright/test';
 import { devices, expect } from '@playwright/test';
 
 import { matchers } from './src/utils/test/playwright';
+
+const isMacOS = process.platform === 'darwin';
 
 expect.extend(matchers);
 
@@ -43,9 +46,21 @@ const projects: Project<PlaywrightTestOptions, PlaywrightWorkerOptions>[] = [
 ];
 
 /**
+ * VoiceOver can only be ran on Macs.
+ */
+if (isMacOS) {
+  projects.push({
+    name: 'VoiceOver Safari',
+    testMatch: '**/test/voiceover/**/*.e2e.ts',
+    use: { ...devices['Desktop Safari'], headless: false }
+  });
+}
+
+/**
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
+  ...screenReaderConfig,
   testMatch: '*.e2e.ts',
   expect: {
     /**
@@ -63,8 +78,12 @@ const config: PlaywrightTestConfig = {
   /* Test retries help catch flaky tests on CI */
   retries: process.env.CI ? 2 : 0,
   reportSlowTests: null,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  /**
+   * `screenReaderConfig` sets `workers: 1`. Do not override with `undefined`
+   * on local macOS — `npm run test.e2e` runs VoiceOver Safari alongside other
+   * projects and parallel workers will break or hang screen-reader tests.
+   */
+  workers: process.env.CI || isMacOS ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html'],
