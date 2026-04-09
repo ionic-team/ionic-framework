@@ -44,7 +44,7 @@ setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
-    <IonReactRouter>
+    <IonReactRouter basename={import.meta.env?.BASE_URL?.replace(/\/$/, '') || undefined}>
       <IonRouterOutlet>
         <Route exact path="/" component={Main} />
         <Route path="/overlay-hooks" component={OverlayHooks} />
