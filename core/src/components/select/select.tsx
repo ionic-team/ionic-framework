@@ -1,6 +1,7 @@
 import caretDownRegular from '@phosphor-icons/core/assets/regular/caret-down.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import type { NotchController } from '@utils/forms';
 import { compareOptions, createNotchController, isOptionSelected, checkInvalidState } from '@utils/forms';
 import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
@@ -9,6 +10,7 @@ import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
 import type { OverlaySelect } from '@utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
+import { sanitizeDOMString } from '@utils/sanitization';
 import { createColorClasses, hostContext } from '@utils/theme';
 import { watchForOptions } from '@utils/watch-options';
 import { caretDownSharp, chevronExpand } from 'ionicons/icons';
@@ -72,8 +74,8 @@ export class Select implements ComponentInterface {
   private nativeWrapperEl: HTMLElement | undefined;
   private notchSpacerEl: HTMLElement | undefined;
   private validationObserver?: MutationObserver;
-
   private notchController?: NotchController;
+  private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -576,10 +578,11 @@ export class Select implements ComponentInterface {
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
       const isSelected = isOptionSelected(selectValue, value, this.compareWith);
+      const text = this.customHTMLEnabled ? sanitizeDOMString(getOptionHTML(option)) : option.textContent;
 
       return {
         role: isSelected ? 'selected' : '',
-        text: option.textContent,
+        text: text || '',
         cssClass: optClass,
         handler: () => {
           this.setValue(value);
@@ -616,14 +619,16 @@ export class Select implements ComponentInterface {
         .filter((cls) => cls !== 'hydrated')
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
+      const label = this.customHTMLEnabled ? sanitizeDOMString(getOptionHTML(option)) : option.textContent;
 
       return {
         type: inputType,
         cssClass: optClass,
-        label: option.textContent || '',
+        label: label || '',
         value,
         checked: isOptionSelected(selectValue, value, this.compareWith),
         disabled: option.disabled,
+        description: option.description,
       };
     });
 
@@ -639,9 +644,10 @@ export class Select implements ComponentInterface {
         .filter((cls) => cls !== 'hydrated')
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
+      const text = this.customHTMLEnabled ? sanitizeDOMString(getOptionHTML(option)) : option.textContent;
 
       return {
-        text: option.textContent || '',
+        text: text || '',
         cssClass: optClass,
         value,
         checked: isOptionSelected(selectValue, value, this.compareWith),
@@ -879,12 +885,12 @@ export class Select implements ComponentInterface {
     return;
   }
 
-  private getText(): string {
+  private getText(useHTML = false): string {
     const selectedText = this.selectedText;
     if (selectedText != null && selectedText !== '') {
       return selectedText;
     }
-    return generateText(this.childOpts, this.value, this.compareWith);
+    return generateText(this.childOpts, this.value, this.compareWith, useHTML);
   }
 
   private setFocus() {
@@ -1069,7 +1075,7 @@ export class Select implements ComponentInterface {
   private renderSelectText() {
     const { placeholder } = this;
 
-    const displayValue = this.getText();
+    const displayValue = this.getText(true);
 
     let addPlaceholderClass = false;
     let selectText = displayValue;
@@ -1084,6 +1090,10 @@ export class Select implements ComponentInterface {
     };
 
     const textPart = addPlaceholderClass ? 'placeholder' : 'text';
+
+    if (this.customHTMLEnabled) {
+      return <div aria-hidden="true" class={selectTextClasses} part={textPart} innerHTML={selectText}></div>;
+    }
 
     return (
       <div aria-hidden="true" class={selectTextClasses} part={textPart}>
@@ -1411,30 +1421,104 @@ const parseValue = (value: any) => {
 const generateText = (
   opts: HTMLIonSelectOptionElement[],
   value: any | any[],
-  compareWith?: string | SelectCompareFn | null
+  compareWith?: string | SelectCompareFn | null,
+  useHTML = false
 ) => {
   if (value === undefined) {
     return '';
   }
   if (Array.isArray(value)) {
     return value
-      .map((v) => textForValue(opts, v, compareWith))
+      .map((v) => textForValue(opts, v, compareWith, useHTML))
       .filter((opt) => opt !== null)
       .join(', ');
   } else {
-    return textForValue(opts, value, compareWith) || '';
+    return textForValue(opts, value, compareWith, useHTML) || '';
   }
 };
 
 const textForValue = (
   opts: HTMLIonSelectOptionElement[],
   value: any,
-  compareWith?: string | SelectCompareFn | null
+  compareWith?: string | SelectCompareFn | null,
+  useHTML = false
 ): string | null => {
   const selectOpt = opts.find((opt) => {
     return compareOptions(value, getOptionValue(opt), compareWith);
   });
-  return selectOpt ? selectOpt.textContent : null;
+  const customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
+
+  if (!selectOpt) return null;
+
+  // Use the HTML filter for the UI, but textContent for a11y/strings
+  return customHTMLEnabled && useHTML ? getOptionContentHTML(selectOpt) : selectOpt.textContent;
+};
+
+const trimTextNodes = (node: Node): void => {
+  node.childNodes.forEach((child) => {
+    if (child.nodeType === Node.TEXT_NODE) {
+      child.textContent = child.textContent?.trim() || '';
+    } else if (child.nodeType === Node.ELEMENT_NODE) {
+      trimTextNodes(child);
+    }
+  });
+};
+
+const getOptionContentHTML = (option: HTMLIonSelectOptionElement, slotName?: string): string | null => {
+  let nodes: Node[];
+
+  if (slotName) {
+    // Named slot: get elements with matching slot attribute
+    nodes = Array.from(option.children).filter((el) => el.getAttribute('slot') === slotName);
+  } else {
+    // Default slot: get nodes without a slot attribute
+    nodes = Array.from(option.childNodes).filter((node) => {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        return !(node as HTMLElement).hasAttribute('slot');
+      }
+      return node.textContent?.trim().length !== 0;
+    });
+  }
+
+  if (nodes.length === 0) return null;
+
+  const temp = document.createElement('div');
+  nodes.forEach((n) => {
+    const clone = n.cloneNode(true);
+    if (clone.nodeType === Node.TEXT_NODE) {
+      clone.textContent = clone.textContent?.trim() || '';
+    } else {
+      trimTextNodes(clone);
+    }
+    temp.appendChild(clone);
+  });
+
+  return sanitizeDOMString(temp.innerHTML.trim()) || null;
+};
+
+const getOptionHTML = (option: HTMLIonSelectOptionElement): string => {
+  const startContent = getOptionContentHTML(option, 'start');
+  const endContent = getOptionContentHTML(option, 'end');
+  const defaultContent = getOptionContentHTML(option) || '';
+  const description = option.description;
+
+  let html = '';
+
+  if (startContent) {
+    html += `<div class="select-option-start">${startContent}</div>`;
+  }
+
+  html += `<div class="select-option-content">${defaultContent}`;
+  if (description) {
+    html += `<div class="select-option-description">${description}</div>`;
+  }
+  html += `</div>`;
+
+  if (endContent) {
+    html += `<div class="select-option-end">${endContent}</div>`;
+  }
+
+  return html;
 };
 
 let selectIds = 0;

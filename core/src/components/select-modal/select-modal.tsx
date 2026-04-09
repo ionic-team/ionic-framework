@@ -1,9 +1,12 @@
 import { getIonMode } from '@global/ionic-global';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, forceUpdate, h } from '@stencil/core';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import { safeCall } from '@utils/overlays';
+import { sanitizeDOMString } from '@utils/sanitization';
 import { getClassMap, hostContext } from '@utils/theme';
 
+import { config } from '../../global/config';
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
 
@@ -19,6 +22,8 @@ import type { SelectModalOption } from './select-modal-interface';
   scoped: true,
 })
 export class SelectModal implements ComponentInterface {
+  private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
+
   @Element() el!: HTMLIonSelectModalElement;
 
   @Prop() header?: string;
@@ -118,7 +123,7 @@ export class SelectModal implements ComponentInterface {
                 }
               }}
             >
-              {option.text}
+              {this.customHTMLEnabled ? <span innerHTML={sanitizeDOMString(option.text)}></span> : option.text}
             </ion-radio>
           </ion-item>
         ))}
@@ -148,7 +153,7 @@ export class SelectModal implements ComponentInterface {
             forceUpdate(this);
           }}
         >
-          {option.text}
+          {this.customHTMLEnabled ? <span innerHTML={sanitizeDOMString(option.text)}></span> : option.text}
         </ion-checkbox>
       </ion-item>
     ));

@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Listen, Method, Prop, State, h, readTask } from '@stencil/core';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import type { Gesture } from '@utils/gesture';
 import { createButtonActiveGesture } from '@utils/gesture/button-active';
 import { raf } from '@utils/helpers';
@@ -16,8 +17,10 @@ import {
   safeCall,
   setOverlayId,
 } from '@utils/overlays';
+import { sanitizeDOMString } from '@utils/sanitization';
 import { getClassMap } from '@utils/theme';
 
+import { config } from '../../global/config';
 import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
@@ -49,6 +52,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   private groupEl?: HTMLElement;
   private gesture?: Gesture;
   private hasRadioButtons = false;
+  private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -580,7 +584,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         >
           <span class="action-sheet-button-inner">
             {b.icon && <ion-icon icon={b.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />}
-            {b.text}
+            {this.customHTMLEnabled ? <span innerHTML={sanitizeDOMString(b.text)}></span> : b.text}
           </span>
           {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </button>

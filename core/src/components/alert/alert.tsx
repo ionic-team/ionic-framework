@@ -591,7 +591,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
               <div class="alert-checkbox-icon">
                 <div class="alert-checkbox-inner"></div>
               </div>
-              <div class="alert-checkbox-label">{i.label}</div>
+              {this.renderLabel(i, 'alert-checkbox-label')}
             </div>
             {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </button>
@@ -631,7 +631,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
               <div class="alert-radio-icon">
                 <div class="alert-radio-inner"></div>
               </div>
-              <div class="alert-radio-label">{i.label}</div>
+              {this.renderLabel(i, 'alert-radio-label')}
             </div>
           </button>
         ))}
@@ -745,6 +745,14 @@ export class Alert implements ComponentInterface, OverlayInterface {
         {message}
       </div>
     );
+  }
+
+  private renderLabel(formControl: AlertInput, className: string) {
+    if (this.customHTMLEnabled) {
+      return <div class={className} innerHTML={sanitizeDOMString(formControl.label)}></div>;
+    }
+
+    return <div class={className}>{formControl.label}</div>;
   }
 
   render() {

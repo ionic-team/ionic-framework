@@ -12,6 +12,34 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <script>
+      window.Ionic = {
+        config: {
+          innerHTMLTemplatesEnabled: true,
+        },
+      };
+    </script>
+    <style>
+      .alert-radio-label,
+      ion-select::part(text) {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .alert-radio-label ion-avatar {
+        max-height: 20px;
+        width: auto;
+        object-fit: contain;
+      }
+
+      .alert-radio-label img {
+        max-height: 20px;
+        width: auto;
+        object-fit: contain;
+      }
+    </style>
   </head>
 
   <body>
@@ -30,7 +58,17 @@
 
           <ion-item>
             <ion-select id="alert-select" label="Alert" placeholder="Select one" interface="alert">
-              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="apples" description="Apples are red">
+                <ion-avatar id="avatar" slot="start">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <img
+                  class="my-img"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROhIbd8_083utRrpK3fPB3DEJG3kT_NuZtUA&s"
+                />
+                <div>test</div>
+                Apples
+              </ion-select-option>
               <ion-select-option value="oranges">Oranges</ion-select-option>
               <ion-select-option value="pears">Pears</ion-select-option>
             </ion-select>
@@ -38,7 +76,12 @@
 
           <ion-item>
             <ion-select label="Popover" placeholder="Select one" interface="popover">
-              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="apples"
+                >Apples
+                <img
+                  class="my-img"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROhIbd8_083utRrpK3fPB3DEJG3kT_NuZtUA&s"
+              /></ion-select-option>
               <ion-select-option value="oranges">Oranges</ion-select-option>
               <ion-select-option value="pears">Pears</ion-select-option>
             </ion-select>
@@ -46,7 +89,10 @@
 
           <ion-item>
             <ion-select label="Action Sheet" placeholder="Select one" interface="action-sheet">
-              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="apples"
+                >Apples
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROhIbd8_083utRrpK3fPB3DEJG3kT_NuZtUA&s"
+              /></ion-select-option>
               <ion-select-option value="oranges">Oranges</ion-select-option>
               <ion-select-option value="pears">Pears</ion-select-option>
             </ion-select>
@@ -54,7 +100,10 @@
 
           <ion-item>
             <ion-select label="Modal" placeholder="Select one" interface="modal">
-              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="apples"
+                >Apples
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROhIbd8_083utRrpK3fPB3DEJG3kT_NuZtUA&s"
+              /></ion-select-option>
               <ion-select-option value="oranges">Oranges</ion-select-option>
               <ion-select-option value="pears">Pears</ion-select-option>
             </ion-select>
@@ -68,38 +117,12 @@
 
           <ion-item>
             <ion-select id="alert-select-scroll-to-selected" label="Alert" interface="alert" value="watermelon">
-              <ion-select-option value="apple">Apple</ion-select-option>
-              <ion-select-option value="apricot">Apricot</ion-select-option>
-              <ion-select-option value="avocado">Avocado</ion-select-option>
-              <ion-select-option value="banana">Banana</ion-select-option>
-              <ion-select-option value="blackberry">Blackberry</ion-select-option>
-              <ion-select-option value="blueberry">Blueberry</ion-select-option>
-              <ion-select-option value="cantaloupe">Cantaloupe</ion-select-option>
-              <ion-select-option value="cherry">Cherry</ion-select-option>
-              <ion-select-option value="coconut">Coconut</ion-select-option>
-              <ion-select-option value="cranberry">Cranberry</ion-select-option>
-              <ion-select-option value="dragonfruit">Dragonfruit</ion-select-option>
-              <ion-select-option value="fig">Fig</ion-select-option>
-              <ion-select-option value="grape">Grape</ion-select-option>
-              <ion-select-option value="grapefruit">Grapefruit</ion-select-option>
-              <ion-select-option value="guava">Guava</ion-select-option>
-              <ion-select-option value="kiwi">Kiwi</ion-select-option>
-              <ion-select-option value="lemon">Lemon</ion-select-option>
-              <ion-select-option value="lime">Lime</ion-select-option>
-              <ion-select-option value="lychee">Lychee</ion-select-option>
-              <ion-select-option value="mango">Mango</ion-select-option>
-              <ion-select-option value="nectarine">Nectarine</ion-select-option>
-              <ion-select-option value="orange">Orange</ion-select-option>
-              <ion-select-option value="papaya">Papaya</ion-select-option>
-              <ion-select-option value="passion-fruit">Passion Fruit</ion-select-option>
-              <ion-select-option value="peach">Peach</ion-select-option>
-              <ion-select-option value="pear">Pear</ion-select-option>
-              <ion-select-option value="pineapple">Pineapple</ion-select-option>
-              <ion-select-option value="plum">Plum</ion-select-option>
-              <ion-select-option value="pomegranate">Pomegranate</ion-select-option>
-              <ion-select-option value="raspberry">Raspberry</ion-select-option>
-              <ion-select-option value="strawberry">Strawberry</ion-select-option>
-              <ion-select-option value="tangerine">Tangerine</ion-select-option>
+              <ion-select-option value="apple"
+                >Apple
+                <img
+                  class="my-img"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROhIbd8_083utRrpK3fPB3DEJG3kT_NuZtUA&s"
+              /></ion-select-option>
               <ion-select-option value="watermelon">Watermelon</ion-select-option>
             </ion-select>
           </ion-item>

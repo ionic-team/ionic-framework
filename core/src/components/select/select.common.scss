@@ -36,6 +36,8 @@
   --highlight-color-focused: #{ion-color(primary, base)};
   --highlight-color-valid: #{ion-color(success, base)};
   --highlight-color-invalid: #{ion-color(danger, base)};
+  --select-text-media-height: 1.5em;
+  --select-text-media-width: 1.5em;
 
   /**
    * This is a private API that is used to switch
@@ -150,6 +152,12 @@ button {
   white-space: inherit;
 
   overflow: hidden;
+}
+
+.select-text img,
+.select-text ion-img .select-text ion-icon .select-text ion-thumbnail {
+  width: var(--select-text-media-width);
+  height: var(--select-text-media-height);
 }
 
 // Select Wrapper

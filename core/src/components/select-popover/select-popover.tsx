@@ -1,8 +1,11 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import { safeCall } from '@utils/overlays';
+import { sanitizeDOMString } from '@utils/sanitization';
 import { getClassMap } from '@utils/theme';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
@@ -25,6 +28,8 @@ import type { SelectPopoverOption } from './select-popover-interface';
   scoped: true,
 })
 export class SelectPopover implements ComponentInterface {
+  private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
+
   @Element() el!: HTMLIonSelectPopoverElement;
   /**
    * The header text of the popover
@@ -140,7 +145,7 @@ export class SelectPopover implements ComponentInterface {
             forceUpdate(this);
           }}
         >
-          {option.text}
+          {this.customHTMLEnabled ? <span innerHTML={sanitizeDOMString(option.text)}></span> : option.text}
         </ion-checkbox>
       </ion-item>
     ));
@@ -174,7 +179,7 @@ export class SelectPopover implements ComponentInterface {
                 }
               }}
             >
-              {option.text}
+              {this.customHTMLEnabled ? <span innerHTML={sanitizeDOMString(option.text)}></span> : option.text}
             </ion-radio>
           </ion-item>
         ))}

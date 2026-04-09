@@ -27,8 +27,14 @@ export class SelectOption implements ComponentInterface {
    */
   @Prop() value?: any | null;
 
+  /**
+   * Text that is placed underneath the option text to provide additional details about the option.
+   */
+  @Prop() description?: string;
+
   render() {
     const theme = getIonTheme(this);
+
     return (
       <Host
         class={{
@@ -36,7 +42,14 @@ export class SelectOption implements ComponentInterface {
         }}
         role="option"
         id={this.inputId}
-      ></Host>
+      >
+        <slot name="start"></slot>
+        <div class="select-option-container">
+          <slot></slot>
+          {this.description && <div class="description">{this.description}</div>}
+        </div>
+        <slot name="end"></slot>
+      </Host>
     );
   }
 }
