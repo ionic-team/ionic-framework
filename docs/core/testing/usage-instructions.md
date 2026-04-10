@@ -321,4 +321,5 @@ In the newly created directory, open the `playwright-report/index.html` in your 
 
 ## Further Reading
 
-For more info on how to use Playwright, please see the [Playwright documentation](https://playwright.dev/docs/intro).
+- [Playwright documentation](https://playwright.dev/docs/intro) — general Playwright usage
+- [Accessibility Testing](./accessibility-testing.md) — Axe, Guidepup, VoiceOver specs, and macOS setup

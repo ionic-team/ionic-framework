@@ -11,15 +11,19 @@ The testing directory within Ionic's codebase contains utilities that can be use
 
 ## `test` Function
 
-The default [`test` function](https://playwright.dev/docs/api/class-test) has been extended to provide two custom options.
+The default [`test` function](https://playwright.dev/docs/api/class-test) is merged with [`@guidepup/playwright`](https://www.guidepup.dev/docs/integrations/playwright) and extended with Ionic fixtures below.
 
-| Fixture | Type | Description |
-| ------- | ---- | ----------- |
-| page    | [E2EPage](https://github.com/ionic-team/ionic-framework/blob/main/core/src/utils/test/playwright/playwright-declarations.ts) | An extension of the base `page` test fixture within Playwright |
-| skip    | [E2ESkip](https://github.com/ionic-team/ionic-framework/blob/main/core/src/utils/test/playwright/playwright-declarations.ts) | Used to skip tests based on text direction, mode, or browser |
+| Fixture   | Type | Description |
+| --------- | ---- | ----------- |
+| page      | [E2EPage](https://github.com/ionic-team/ionic-framework/blob/main/core/src/utils/test/playwright/playwright-declarations.ts) | An extension of the base `page` test fixture within Playwright |
+| skip      | [E2ESkip](https://github.com/ionic-team/ionic-framework/blob/main/core/src/utils/test/playwright/playwright-declarations.ts) | Used to skip tests based on text direction, mode, or browser |
+| voiceOver | `VoiceOverPlaywright` | Guidepup's Playwright adapter for VoiceOver. |
+
+> [!NOTE]
+> For Axe checks and screen reader automation refer to [Accessibility Testing](./accessibility-testing.md).
 
 <details>
-  
+
 <summary>Usage</summary>
 
 **`page`**
@@ -72,7 +76,7 @@ configs().forEach(({ config, title }) => {
   test.describe(title('my test block'), () => {
     test('my custom test', ({ page, skip }) => {
       skip.browser('webkit', 'This test does not work in WebKit yet.');
-  
+
       await page.goto('path/to/file', config);
     });
   });
@@ -87,7 +91,7 @@ configs().forEach(({ config, title }) => {
   test.describe(title('my test block'), () => {
     test('my custom test', ({ page, skip }) => {
       skip.browser((browserName: string) => browserName !== 'webkit', 'This tests a WebKit-specific behavior.');
-  
+
       await page.goto('path/to/file', config);
     });
   });
@@ -110,7 +114,7 @@ The [page fixture](https://playwright.dev/docs/test-fixtures) has been extended 
 | `spyOnEvent` | Creates an event spy that can be used to wait for a [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent) to be emitted. |
 
 <details>
-  
+
 <summary>Usage</summary>
 
 ### Using `goto`
@@ -161,12 +165,12 @@ configs().forEach(({ config, title }) => {
   test.describe(title('my test block'), () => {
     test('my custom test', ({ page }) => {
       await page.goto('src/components/test/alert/test/basic', config);
-      
+
       // Alert is not in the DOM yet
       const alert = page.locator('ion-alert');
-      
+
       await page.click('#open-alert');
-      
+
       // Alert is in the DOM
       await expect(alert).toBeVisible();
     });
@@ -198,10 +202,10 @@ configs().forEach(({ config, screenshot, title }) => {
   test.describe(title('my test block'), () => {
     test('my custom test', ({ page }) => {
       await page.goto('src/components/test/alert/test/basic', config);
-      
+
       await page.setIonViewport();
-      
-      await expect(page).toHaveScreenshot(screenshot('alert'));  
+
+      await expect(page).toHaveScreenshot(screenshot('alert'));
     });
   });
 });
@@ -218,11 +222,11 @@ configs().forEach(({ config, title }) => {
   test.describe(title('my test block'), () => {
     test('my custom test', ({ page }) => {
       await page.goto('src/components/test/modal/test/basic', config);
-      
+
       const modal = page.locator('ion-modal');
-      
+
       await modal.evaluate((el: HTMLIonModalElement) => el.canDismiss = false);
-      
+
       // Wait for Stencil to re-render with the canDismiss changes
       await page.waitForChanges();
     });
@@ -239,12 +243,12 @@ configs().forEach(({ config, screenshot, title }) => {
   test.describe(title('my test block'), () => {
     test('my custom test', ({ page }) => {
       await page.goto('src/components/test/modal/test/basic', config);
-      
+
       // Create spy to listen for event
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-      
+
       await page.click('#present-modal');
-      
+
       // Wait for the next emission of `ionModalDidPresent`
       await ionModalDidPresent.next();
     });
@@ -263,7 +267,7 @@ Ionic generates tests to test different modes (iOS or MD), layouts (LTR or RTL),
 The `configs` function accepts an object containing all the configurations you want to test. It then returns an array of each individual configuration combination. This result is iterated over and one or more tests are generated in each iteration.
 
 <details>
-  
+
 <summary>Usage</summary>
 
 **Example 1: Default config**
@@ -335,7 +339,7 @@ Each value in the array returns by `configs` contains the following information:
 | `title` | A helper function that generates a unique test title based on the test configuration. Playwright requires that each test has a unique title since it uses that to generate a test ID. |
 
 <details>
-  
+
 <summary>Usage</summary>
 
 **Example**
@@ -344,8 +348,8 @@ import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, title }) => {
   /**
-   * Use the "title" function to generate 
-   * a "my test block" title with the test 
+   * Use the "title" function to generate
+   * a "my test block" title with the test
    * config appended to make it unique.
    * Example: my test block ios/ltr
    * Using "title" on the describe block
@@ -354,14 +358,14 @@ configs().forEach(({ config, title }) => {
    */
   test.describe(title('my test block'), () => {
     test('my custom test', ({ page }) => {
-      
+
       /**
        * Pass a single config object to
        * load the page with the correct mode,
        * text direction, and theme.
        */
       await page.goto('/src/components/alert/test/basic', config);
-      
+
       /**
        * Use the "screenshot" function to generate
        * a "alert" screenshot title with the test
@@ -369,7 +373,7 @@ configs().forEach(({ config, title }) => {
        * will also append the browser and platform.
        * Example: alert-ios-ltr-chrome-linux.png
        */
-      await expect(page).toHaveScreenshot(screenshot('alert'));  
+      await expect(page).toHaveScreenshot(screenshot('alert'));
     });
   });
 });
@@ -388,7 +392,7 @@ Playwright comes with [a set of matchers to do test assertions](https://playwrig
 | `toHaveReceivedEventTimes` | Ensures an event has been received a certain number of times. |
 
 <details>
-  
+
 <summary>Usage</summary>
 
 ### Using `toHaveReceivedEvent`
@@ -402,12 +406,12 @@ configs().forEach(({ config, screenshot, title }) => {
       await page.setContent(`
         <ion-input label="Email"></ion-input>
       `, config);
-      
+
       const ionChange = await page.spyOnEvent('ionChange');
       const input = page.locator('ion-input');
-      
+
       await input.type('hi@ionic.io');
-  
+
       // In this case you can also use await ionChange.next();
       await expect(ionChange).toHaveReceivedEvent();
     });
@@ -426,12 +430,12 @@ configs().forEach(({ config, screenshot, title }) => {
       await page.setContent(`
         <ion-input label="Email"></ion-input>
       `, config);
-      
+
       const ionChange = await page.spyOnEvent('ionChange');
       const input = page.locator('ion-input');
-      
+
       await input.type('hi@ionic.io');
-  
+
       await ionChange.next();
       await expect(ionChange).toHaveReceivedEventDetail({ value: 'hi@ionic.io' });
     });
@@ -450,18 +454,18 @@ configs().forEach(({ config, screenshot, title }) => {
       await page.setContent(`
         <ion-input label="Email"></ion-input>
       `, config);
-      
+
       const ionChange = await page.spyOnEvent('ionChange');
       const input = page.locator('ion-input');
-      
+
       await input.type('hi@ionic.io');
-  
+
       await ionChange.next();
-      
+
       await input.type('goodbye@ionic.io');
-      
+
       await ionChange.next();
-      
+
       await expect(ionChange).toHaveReceivedEventTimes(2);
     });
   });
