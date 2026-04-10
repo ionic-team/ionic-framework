@@ -93,9 +93,9 @@ export class SelectModal implements ComponentInterface {
 
     return (
       <ion-radio-group value={checked} onIonChange={(ev) => this.callOptionHandler(ev)}>
-        {this.options.map((option) => {
+        {this.options.map((option, index) => {
           const optionLabelOptions = {
-            id: option.value,
+            id: `modal-option-${index}`,
             label: option.text,
             startContent: option.startContent,
             endContent: option.endContent,
@@ -138,9 +138,9 @@ export class SelectModal implements ComponentInterface {
   }
 
   private renderCheckboxOptions() {
-    return this.options.map((option) => {
+    return this.options.map((option, index) => {
       const optionLabelOptions = {
-        id: option.value,
+        id: `modal-option-${index}`,
         label: option.text,
         startContent: option.startContent,
         endContent: option.endContent,

@@ -120,9 +120,9 @@ export class SelectPopover implements ComponentInterface {
   }
 
   renderCheckboxOptions(options: SelectPopoverOption[]) {
-    return options.map((option) => {
+    return options.map((option, index) => {
       const optionLabelOptions = {
-        id: option.value,
+        id: `popover-option-${index}`,
         label: option.text,
         startContent: option.startContent,
         endContent: option.endContent,
@@ -162,9 +162,9 @@ export class SelectPopover implements ComponentInterface {
 
     return (
       <ion-radio-group value={checked} onIonChange={(ev) => this.callOptionHandler(ev)}>
-        {options.map((option) => {
+        {options.map((option, index) => {
           const optionLabelOptions = {
-            id: option.value,
+            id: `popover-option-${index}`,
             label: option.text,
             startContent: option.startContent,
             endContent: option.endContent,

@@ -8,13 +8,20 @@ export interface RichContentOption {
   description?: string;
 }
 
+const contentCache = new WeakMap<HTMLElement, HTMLElement>();
+
 const renderClonedContent = (id: string, content: HTMLElement, className: string) => (
   <span
     class={className}
     key={`${className}-${id}`}
     ref={(el) => {
-      if (el && !el.hasChildNodes()) {
+      if (el) {
+        const cached = contentCache.get(el);
+        if (cached === content) return;
+
+        el.innerHTML = '';
         Array.from(content.childNodes).forEach((n) => el.appendChild(n.cloneNode(true)));
+        contentCache.set(el, content);
       }
     }}
   ></span>

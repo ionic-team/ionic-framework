@@ -29,29 +29,6 @@ ion-label {
   display: flex;
 
   align-items: center;
-  gap: 8px;
-}
-
-.select-option-content {
-  flex: 1;
-}
-
-.select-option-description {
-  @include padding(5px, 0, 0, 0);
-  display: block;
-
-  color: $text-color-step-300;
-
-  font-size: dynamic-font(12px);
-}
-
-// Select Popover: Select Option
-// --------------------------------------------------
-
-.select-option-label {
-  display: flex;
-
-  align-items: center;
 }
 
 .select-option-description {
