@@ -86,8 +86,15 @@
 
 .select-text {
   min-width: 16px;
+}
 
-  gap: 12px;
+/**
+ * If the select text contains rich content, we want to add some
+ * spacing between the items without changing the display to prevent
+ * losing the ellipsis behavior.
+ */
+.select-text > * {
+  margin-inline-start: 8px;
 }
 
 // Select Label

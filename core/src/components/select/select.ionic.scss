@@ -44,12 +44,15 @@
   min-width: globals.$ion-space-400;
 
   color: globals.$ion-text-subtlest;
-
-  gap: globals.$ion-space-300;
 }
 
-:host(.has-value) .select-text {
-  color: globals.$ion-text-default;
+/**
+ * If the select text contains rich content, we want to add some
+ * spacing between the items without changing the display to prevent
+ * losing the ellipsis behavior.
+ */
+.select-text > * {
+  margin-inline-start: globals.$ion-space-200;
 }
 
 // Select Label
