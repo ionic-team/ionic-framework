@@ -578,11 +578,11 @@ export class Select implements ComponentInterface {
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
       const isSelected = isOptionSelected(selectValue, value, this.compareWith);
-      const text = this.customHTMLEnabled ? sanitizeDOMString(getOptionHTML(option)) : option.textContent;
+      const text = this.customHTMLEnabled ? getOptionContentNodes(option) : option.textContent;
 
       return {
         role: isSelected ? 'selected' : '',
-        text: text || '',
+        text: text ?? '',
         cssClass: optClass,
         handler: () => {
           this.setValue(value);
@@ -591,6 +591,9 @@ export class Select implements ComponentInterface {
           'aria-checked': isSelected ? 'true' : 'false',
           role: 'radio',
         },
+        startContent: this.customHTMLEnabled ? getOptionContentNodes(option, 'start') ?? undefined : undefined,
+        endContent: this.customHTMLEnabled ? getOptionContentNodes(option, 'end') ?? undefined : undefined,
+        description: option.description,
       } as ActionSheetButton;
     });
 
@@ -619,15 +622,17 @@ export class Select implements ComponentInterface {
         .filter((cls) => cls !== 'hydrated')
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
-      const label = this.customHTMLEnabled ? sanitizeDOMString(getOptionHTML(option)) : option.textContent;
+      const label = this.customHTMLEnabled ? getOptionContentNodes(option) : option.textContent;
 
       return {
         type: inputType,
         cssClass: optClass,
-        label: label || '',
+        label: label ?? '',
         value,
         checked: isOptionSelected(selectValue, value, this.compareWith),
         disabled: option.disabled,
+        startContent: this.customHTMLEnabled ? getOptionContentNodes(option, 'start') ?? undefined : undefined,
+        endContent: this.customHTMLEnabled ? getOptionContentNodes(option, 'end') ?? undefined : undefined,
         description: option.description,
       };
     });
@@ -644,10 +649,10 @@ export class Select implements ComponentInterface {
         .filter((cls) => cls !== 'hydrated')
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
-      const text = this.customHTMLEnabled ? sanitizeDOMString(getOptionHTML(option)) : option.textContent;
+      const text = this.customHTMLEnabled ? getOptionContentNodes(option) : option.textContent;
 
       return {
-        text: text || '',
+        text: text ?? '',
         cssClass: optClass,
         value,
         checked: isOptionSelected(selectValue, value, this.compareWith),
@@ -658,6 +663,9 @@ export class Select implements ComponentInterface {
             this.close();
           }
         },
+        startContent: this.customHTMLEnabled ? getOptionContentNodes(option, 'start') ?? undefined : undefined,
+        endContent: this.customHTMLEnabled ? getOptionContentNodes(option, 'end') ?? undefined : undefined,
+        description: option.description,
       };
     });
 
@@ -1496,29 +1504,36 @@ const getOptionContentHTML = (option: HTMLIonSelectOptionElement, slotName?: str
   return sanitizeDOMString(temp.innerHTML.trim()) || null;
 };
 
-const getOptionHTML = (option: HTMLIonSelectOptionElement): string => {
-  const startContent = getOptionContentHTML(option, 'start');
-  const endContent = getOptionContentHTML(option, 'end');
-  const defaultContent = getOptionContentHTML(option) || '';
-  const description = option.description;
+const getOptionContentNodes = (option: HTMLIonSelectOptionElement, slotName?: string): HTMLElement | null => {
+  let nodes: Node[];
 
-  let html = '';
-
-  if (startContent) {
-    html += `<div class="select-option-start">${startContent}</div>`;
+  if (slotName) {
+    // Named slot: get elements with matching slot attribute
+    nodes = Array.from(option.children).filter((el) => el.getAttribute('slot') === slotName);
+  } else {
+    // Default slot: get nodes without a slot attribute
+    nodes = Array.from(option.childNodes).filter((node) => {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        return !(node as HTMLElement).hasAttribute('slot');
+      }
+      return node.textContent?.trim().length !== 0;
+    });
   }
 
-  html += `<div class="select-option-content">${defaultContent}`;
-  if (description) {
-    html += `<div class="select-option-description">${description}</div>`;
-  }
-  html += `</div>`;
+  if (nodes.length === 0) return null;
 
-  if (endContent) {
-    html += `<div class="select-option-end">${endContent}</div>`;
-  }
+  const container = document.createElement('div');
+  nodes.forEach((n) => {
+    const clone = n.cloneNode(true);
+    if (clone.nodeType === Node.TEXT_NODE) {
+      clone.textContent = clone.textContent?.trim() || '';
+    } else {
+      trimTextNodes(clone);
+    }
+    container.appendChild(clone);
+  });
 
-  return html;
+  return container;
 };
 
 let selectIds = 0;

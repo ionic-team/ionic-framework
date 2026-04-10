@@ -25,7 +25,7 @@ export interface AlertInput {
   /**
    * The label text to display next to the input, if the input type is `radio` or `checkbox`.
    */
-  label?: string;
+  label?: string | HTMLElement;
   checked?: boolean;
   disabled?: boolean;
   id?: string;
@@ -35,6 +35,9 @@ export interface AlertInput {
   cssClass?: string | string[];
   attributes?: { [key: string]: any };
   tabindex?: number;
+  startContent?: HTMLElement;
+  endContent?: HTMLElement;
+  description?: string;
 }
 
 type AlertButtonOverlayHandler = boolean | void | { [key: string]: any };

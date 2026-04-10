@@ -1,12 +1,10 @@
 import { getIonMode } from '@global/ionic-global';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, forceUpdate, h } from '@stencil/core';
-import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import { safeCall } from '@utils/overlays';
-import { sanitizeDOMString } from '@utils/sanitization';
+import { renderOptionLabel } from '@utils/select-option-render';
 import { getClassMap, hostContext } from '@utils/theme';
 
-import { config } from '../../global/config';
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
 
@@ -22,8 +20,6 @@ import type { SelectModalOption } from './select-modal-interface';
   scoped: true,
 })
 export class SelectModal implements ComponentInterface {
-  private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
-
   @Element() el!: HTMLIonSelectModalElement;
 
   @Prop() header?: string;
@@ -97,66 +93,86 @@ export class SelectModal implements ComponentInterface {
 
     return (
       <ion-radio-group value={checked} onIonChange={(ev) => this.callOptionHandler(ev)}>
-        {this.options.map((option) => (
-          <ion-item
-            lines="none"
-            class={{
-              // TODO FW-4784
-              'item-radio-checked': option.value === checked,
-              ...getClassMap(option.cssClass),
-            }}
-          >
-            <ion-radio
-              value={option.value}
-              disabled={option.disabled}
-              justify="start"
-              labelPlacement="end"
-              onClick={() => this.closeModal()}
-              onKeyUp={(ev) => {
-                if (ev.key === ' ') {
-                  /**
-                   * Selecting a radio option with keyboard navigation,
-                   * either through the Enter or Space keys, should
-                   * dismiss the modal.
-                   */
-                  this.closeModal();
-                }
+        {this.options.map((option) => {
+          const optionLabelOptions = {
+            id: option.value,
+            label: option.text,
+            startContent: option.startContent,
+            endContent: option.endContent,
+            description: option.description,
+          };
+
+          return (
+            <ion-item
+              lines="none"
+              class={{
+                // TODO FW-4784
+                'item-radio-checked': option.value === checked,
+                ...getClassMap(option.cssClass),
               }}
             >
-              {this.customHTMLEnabled ? <span innerHTML={sanitizeDOMString(option.text)}></span> : option.text}
-            </ion-radio>
-          </ion-item>
-        ))}
+              <ion-radio
+                value={option.value}
+                disabled={option.disabled}
+                justify="start"
+                labelPlacement="end"
+                onClick={() => this.closeModal()}
+                onKeyUp={(ev) => {
+                  if (ev.key === ' ') {
+                    /**
+                     * Selecting a radio option with keyboard navigation,
+                     * either through the Enter or Space keys, should
+                     * dismiss the modal.
+                     */
+                    this.closeModal();
+                  }
+                }}
+              >
+                {renderOptionLabel(optionLabelOptions, 'select-option-label')}
+              </ion-radio>
+            </ion-item>
+          );
+        })}
       </ion-radio-group>
     );
   }
 
   private renderCheckboxOptions() {
-    return this.options.map((option) => (
-      <ion-item
-        class={{
-          // TODO FW-4784
-          'item-checkbox-checked': option.checked,
-          ...getClassMap(option.cssClass),
-        }}
-      >
-        <ion-checkbox
-          value={option.value}
-          disabled={option.disabled}
-          checked={option.checked}
-          justify="start"
-          labelPlacement="end"
-          onIonChange={(ev) => {
-            this.setChecked(ev);
-            this.callOptionHandler(ev);
+    return this.options.map((option) => {
+      const optionLabelOptions = {
+        id: option.value,
+        label: option.text,
+        startContent: option.startContent,
+        endContent: option.endContent,
+        description: option.description,
+      };
+
+      return (
+        <ion-item
+          class={{
             // TODO FW-4784
-            forceUpdate(this);
+            'item-checkbox-checked': option.checked,
+            ...getClassMap(option.cssClass),
           }}
         >
-          {this.customHTMLEnabled ? <span innerHTML={sanitizeDOMString(option.text)}></span> : option.text}
-        </ion-checkbox>
-      </ion-item>
-    ));
+          <ion-checkbox
+            value={option.value}
+            disabled={option.disabled}
+            checked={option.checked}
+            justify="start"
+            labelPlacement="end"
+            onIonChange={(ev) => {
+              this.setChecked(ev);
+              this.callOptionHandler(ev);
+              // TODO FW-4784
+              forceUpdate(this);
+            }}
+          >
+            {renderOptionLabel(optionLabelOptions, 'select-option-label')}
+          </ion-checkbox>
+        </ion-item>
+      );
+    });
   }
 
   render() {

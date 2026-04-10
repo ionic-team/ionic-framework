@@ -44,10 +44,7 @@ export class SelectOption implements ComponentInterface {
         id={this.inputId}
       >
         <slot name="start"></slot>
-        <div class="select-option-container">
-          <slot></slot>
-          {this.description && <div class="description">{this.description}</div>}
-        </div>
+        <slot></slot>
         <slot name="end"></slot>
       </Host>
     );

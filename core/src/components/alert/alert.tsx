@@ -19,6 +19,7 @@ import {
   setOverlayId,
 } from '@utils/overlays';
 import { sanitizeDOMString } from '@utils/sanitization';
+import { renderOptionLabel } from '@utils/select-option-render';
 import { getClassMap } from '@utils/theme';
 
 import { config } from '../../global/config';
@@ -44,7 +45,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'alert.ios.scss',
     md: 'alert.md.scss',
-    ionic: 'alert.md.scss',
+    ionic: 'alert.ionic.scss',
   },
   scoped: true,
 })
@@ -346,6 +347,9 @@ export class Alert implements ComponentInterface, OverlayInterface {
           cssClass: i.cssClass ?? '',
           attributes: i.attributes || {},
           tabindex: i.type === 'radio' && i !== focusable ? -1 : 0,
+          startContent: i.startContent,
+          endContent: i.endContent,
+          description: i.description,
         } as AlertInput)
     );
   }
@@ -569,33 +573,43 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
     return (
       <div class="alert-checkbox-group">
-        {inputs.map((i) => (
-          <button
-            type="button"
-            onClick={() => this.cbClick(i)}
-            aria-checked={`${i.checked}`}
-            id={i.id}
-            disabled={i.disabled}
-            tabIndex={i.tabindex}
-            role="checkbox"
-            class={{
-              ...getClassMap(i.cssClass),
-              'alert-tappable': true,
-              'alert-checkbox': true,
-              'alert-checkbox-button': true,
-              'ion-focusable': true,
-              'alert-checkbox-button-disabled': i.disabled || false,
-            }}
-          >
-            <div class="alert-button-inner">
-              <div class="alert-checkbox-icon">
-                <div class="alert-checkbox-inner"></div>
+        {inputs.map((i) => {
+          const optionLabelOptions = {
+            id: i.id!,
+            label: i.label,
+            startContent: i.startContent,
+            endContent: i.endContent,
+            description: i.description,
+          };
+
+          return (
+            <button
+              type="button"
+              onClick={() => this.cbClick(i)}
+              aria-checked={`${i.checked}`}
+              id={i.id}
+              disabled={i.disabled}
+              tabIndex={i.tabindex}
+              role="checkbox"
+              class={{
+                ...getClassMap(i.cssClass),
+                'alert-tappable': true,
+                'alert-checkbox': true,
+                'alert-checkbox-button': true,
+                'ion-focusable': true,
+                'alert-checkbox-button-disabled': i.disabled || false,
+              }}
+            >
+              <div class="alert-button-inner">
+                <div class="alert-checkbox-icon">
+                  <div class="alert-checkbox-inner"></div>
+                </div>
+                {renderOptionLabel(optionLabelOptions, 'alert-checkbox-label')}
               </div>
-              {this.renderLabel(i, 'alert-checkbox-label')}
-            </div>
-            {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-          </button>
-        ))}
+              {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            </button>
+          );
+        })}
       </div>
     );
   }
@@ -609,32 +623,42 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
     return (
       <div class="alert-radio-group" role="radiogroup" aria-activedescendant={this.activeId}>
-        {inputs.map((i) => (
-          <button
-            type="button"
-            onClick={() => this.rbClick(i)}
-            aria-checked={`${i.checked}`}
-            disabled={i.disabled}
-            id={i.id}
-            tabIndex={i.tabindex}
-            class={{
-              ...getClassMap(i.cssClass),
-              'alert-radio-button': true,
-              'alert-tappable': true,
-              'alert-radio': true,
-              'ion-focusable': true,
-              'alert-radio-button-disabled': i.disabled || false,
-            }}
-            role="radio"
-          >
-            <div class="alert-button-inner">
-              <div class="alert-radio-icon">
-                <div class="alert-radio-inner"></div>
+        {inputs.map((i) => {
+          const optionLabelOptions = {
+            id: i.id!,
+            label: i.label,
+            startContent: i.startContent,
+            endContent: i.endContent,
+            description: i.description,
+          };
+
+          return (
+            <button
+              type="button"
+              onClick={() => this.rbClick(i)}
+              aria-checked={`${i.checked}`}
+              disabled={i.disabled}
+              id={i.id}
+              tabIndex={i.tabindex}
+              class={{
+                ...getClassMap(i.cssClass),
+                'alert-radio-button': true,
+                'alert-tappable': true,
+                'alert-radio': true,
+                'ion-focusable': true,
+                'alert-radio-button-disabled': i.disabled || false,
+              }}
+              role="radio"
+            >
+              <div class="alert-button-inner">
+                <div class="alert-radio-icon">
+                  <div class="alert-radio-inner"></div>
+                </div>
+                {renderOptionLabel(optionLabelOptions, 'alert-radio-label')}
               </div>
-              {this.renderLabel(i, 'alert-radio-label')}
-            </div>
-          </button>
-        ))}
+            </button>
+          );
+        })}
       </div>
     );
   }
@@ -745,14 +769,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
         {message}
       </div>
     );
-  }
-
-  private renderLabel(formControl: AlertInput, className: string) {
-    if (this.customHTMLEnabled) {
-      return <div class={className} innerHTML={sanitizeDOMString(formControl.label)}></div>;
-    }
-
-    return <div class={className}>{formControl.label}</div>;
   }
 
   render() {

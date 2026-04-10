@@ -25,6 +25,13 @@
    * @prop --border-width: Width of the select border
    *
    * @prop --ripple-color: The color of the ripple effect on MD mode.
+   *
+   * @prop --select-text-media-width: The width of media (icons/images) in the select text.
+   * @prop --select-text-media-height: The height of media (icons/images) in the select text.
+   * @prop --select-text-media-border-width: The border width of media (icons/images) in the select text.
+   * @prop --select-text-media-border-color: The border color of media (icons/images) in the select text.
+   * @prop --select-text-media-border-radius: The border radius of media (icons/images) in the select text.
+   * @prop --select-text-media-border-style: The border style of media (icons/images) in the select text.
    */
   --padding-top: 0px;
   --padding-end: 0px;
@@ -155,9 +162,18 @@ button {
 }
 
 .select-text img,
-.select-text ion-img .select-text ion-icon .select-text ion-thumbnail {
+.select-text ion-img,
+.select-text ion-icon,
+.select-text ion-thumbnail,
+.select-text ion-avatar {
+  @include mixins.border-radius(var(--select-text-media-border-radius));
+
   width: var(--select-text-media-width);
   height: var(--select-text-media-height);
+
+  border-width: var(--select-text-media-border-width);
+  border-style: var(--select-text-media-border-style);
+  border-color: var(--select-text-media-border-color);
 }
 
 // Select Wrapper

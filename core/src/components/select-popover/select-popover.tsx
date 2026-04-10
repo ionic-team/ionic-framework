@@ -1,11 +1,9 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
-import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import { safeCall } from '@utils/overlays';
-import { sanitizeDOMString } from '@utils/sanitization';
+import { renderOptionLabel } from '@utils/select-option-render';
 import { getClassMap } from '@utils/theme';
 
-import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
@@ -23,13 +21,11 @@ import type { SelectPopoverOption } from './select-popover-interface';
   styleUrls: {
     ios: 'select-popover.ios.scss',
     md: 'select-popover.md.scss',
-    ionic: 'select-popover.md.scss',
+    ionic: 'select-popover.ionic.scss',
   },
   scoped: true,
 })
 export class SelectPopover implements ComponentInterface {
-  private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
-
   @Element() el!: HTMLIonSelectPopoverElement;
   /**
    * The header text of the popover
@@ -124,31 +120,41 @@ export class SelectPopover implements ComponentInterface {
   }
 
   renderCheckboxOptions(options: SelectPopoverOption[]) {
-    return options.map((option) => (
-      <ion-item
-        class={{
-          // TODO FW-4784
-          'item-checkbox-checked': option.checked,
-          ...getClassMap(option.cssClass),
-        }}
-      >
-        <ion-checkbox
-          value={option.value}
-          disabled={option.disabled}
-          checked={option.checked}
-          justify="start"
-          labelPlacement="end"
-          onIonChange={(ev) => {
-            this.setChecked(ev);
-            this.callOptionHandler(ev);
+    return options.map((option) => {
+      const optionLabelOptions = {
+        id: option.value,
+        label: option.text,
+        startContent: option.startContent,
+        endContent: option.endContent,
+        description: option.description,
+      };
+
+      return (
+        <ion-item
+          class={{
             // TODO FW-4784
-            forceUpdate(this);
+            'item-checkbox-checked': option.checked,
+            ...getClassMap(option.cssClass),
           }}
         >
-          {this.customHTMLEnabled ? <span innerHTML={sanitizeDOMString(option.text)}></span> : option.text}
-        </ion-checkbox>
-      </ion-item>
-    ));
+          <ion-checkbox
+            value={option.value}
+            disabled={option.disabled}
+            checked={option.checked}
+            justify="start"
+            labelPlacement="end"
+            onIonChange={(ev) => {
+              this.setChecked(ev);
+              this.callOptionHandler(ev);
+              // TODO FW-4784
+              forceUpdate(this);
+            }}
+          >
+            {renderOptionLabel(optionLabelOptions, 'select-option-label')}
+          </ion-checkbox>
+        </ion-item>
+      );
+    });
   }
 
   renderRadioOptions(options: SelectPopoverOption[]) {
@@ -156,33 +162,43 @@ export class SelectPopover implements ComponentInterface {
 
     return (
       <ion-radio-group value={checked} onIonChange={(ev) => this.callOptionHandler(ev)}>
-        {options.map((option) => (
-          <ion-item
-            class={{
-              // TODO FW-4784
-              'item-radio-checked': option.value === checked,
-              ...getClassMap(option.cssClass),
-            }}
-          >
-            <ion-radio
-              value={option.value}
-              disabled={option.disabled}
-              onClick={() => this.dismissParentPopover()}
-              onKeyUp={(ev) => {
-                if (ev.key === ' ') {
-                  /**
-                   * Selecting a radio option with keyboard navigation,
-                   * either through the Enter or Space keys, should
-                   * dismiss the popover.
-                   */
-                  this.dismissParentPopover();
-                }
+        {options.map((option) => {
+          const optionLabelOptions = {
+            id: option.value,
+            label: option.text,
+            startContent: option.startContent,
+            endContent: option.endContent,
+            description: option.description,
+          };
+
+          return (
+            <ion-item
+              class={{
+                // TODO FW-4784
+                'item-radio-checked': option.value === checked,
+                ...getClassMap(option.cssClass),
               }}
             >
-              {this.customHTMLEnabled ? <span innerHTML={sanitizeDOMString(option.text)}></span> : option.text}
-            </ion-radio>
-          </ion-item>
-        ))}
+              <ion-radio
+                value={option.value}
+                disabled={option.disabled}
+                onClick={() => this.dismissParentPopover()}
+                onKeyUp={(ev) => {
+                  if (ev.key === ' ') {
+                    /**
+                     * Selecting a radio option with keyboard navigation,
+                     * either through the Enter or Space keys, should
+                     * dismiss the popover.
+                     */
+                    this.dismissParentPopover();
+                  }
+                }}
+              >
+                {renderOptionLabel(optionLabelOptions, 'select-option-label')}
+              </ion-radio>
+            </ion-item>
+          );
+        })}
       </ion-radio-group>
     );
   }

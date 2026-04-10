@@ -1,0 +1,22 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./select-popover";
+@use "./select-popover.md" as select-popover-md;
+
+// Ionic Select Popover
+// --------------------------------------------------
+
+// Select Modal: Select Option
+// --------------------------------------------------
+
+.select-option-label {
+  gap: globals.$ion-space-300;
+}
+
+.select-option-description {
+  @include globals.typography(globals.$ion-body-md-regular);
+  @include globals.padding(0);
+
+  color: globals.$ion-text-subtle;
+
+  font-size: globals.$ion-font-size-350;
+}

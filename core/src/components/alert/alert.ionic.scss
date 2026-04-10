@@ -1,0 +1,23 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./alert";
+@use "./alert.md" as alert-md;
+
+// Ionic Alert
+// --------------------------------------------------
+
+// Alert: Select Option
+// --------------------------------------------------
+
+.alert-radio-label,
+.alert-checkbox-label {
+  gap: globals.$ion-space-300;
+}
+
+.select-option-description {
+  @include globals.typography(globals.$ion-body-md-regular);
+  @include globals.padding(0);
+
+  color: globals.$ion-text-subtle;
+
+  font-size: globals.$ion-font-size-350;
+}
