@@ -7,6 +7,10 @@
 
 /* eslint-disable */
 
+import type { EventName, StencilReactComponent } from '@stencil/react-output-target/runtime';
+import { createComponent } from '@stencil/react-output-target/runtime';
+import React from 'react';
+
 import {
   type AccordionGroupChangeEventDetail,
   type BreadcrumbCollapsedClickEventDetail,
@@ -66,6 +70,7 @@ import {
   type TextareaInputEventDetail,
   type ToggleChangeEventDetail,
 } from '@ionic/core';
+import type { Components } from '@ionic/core/components';
 import {
   IonAccordionGroup as IonAccordionGroupElement,
   defineCustomElement as defineIonAccordionGroup,
@@ -318,14 +323,11 @@ import {
   IonToolbar as IonToolbarElement,
   defineCustomElement as defineIonToolbar,
 } from '@ionic/core/components/ion-toolbar.js';
-import type { EventName, StencilReactComponent } from '@stencil/react-output-target/runtime';
-import { createComponent } from '@stencil/react-output-target/runtime';
-import React from 'react';
 
 export type IonAccordionEvents = NonNullable<unknown>;
 
-export const IonAccordion: StencilReactComponent<IonAccordionElement, IonAccordionEvents> =
-  /*@__PURE__*/ createComponent<IonAccordionElement, IonAccordionEvents>({
+export const IonAccordion: StencilReactComponent<IonAccordionElement, IonAccordionEvents, Components.IonAccordion> =
+  /*@__PURE__*/ createComponent<IonAccordionElement, IonAccordionEvents, Components.IonAccordion>({
     tagName: 'ion-accordion',
     elementClass: IonAccordionElement,
     // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
@@ -338,102 +340,103 @@ export type IonAccordionGroupEvents = {
   onIonChange: EventName<IonAccordionGroupCustomEvent<AccordionGroupChangeEventDetail>>;
 };
 
-export const IonAccordionGroup: StencilReactComponent<IonAccordionGroupElement, IonAccordionGroupEvents> =
-  /*@__PURE__*/ createComponent<IonAccordionGroupElement, IonAccordionGroupEvents>({
-    tagName: 'ion-accordion-group',
-    elementClass: IonAccordionGroupElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: { onIonChange: 'ionChange' } as IonAccordionGroupEvents,
-    defineCustomElement: defineIonAccordionGroup,
-  });
+export const IonAccordionGroup: StencilReactComponent<
+  IonAccordionGroupElement,
+  IonAccordionGroupEvents,
+  Components.IonAccordionGroup
+> = /*@__PURE__*/ createComponent<IonAccordionGroupElement, IonAccordionGroupEvents, Components.IonAccordionGroup>({
+  tagName: 'ion-accordion-group',
+  elementClass: IonAccordionGroupElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: { onIonChange: 'ionChange' } as IonAccordionGroupEvents,
+  defineCustomElement: defineIonAccordionGroup,
+});
 
 export type IonAvatarEvents = NonNullable<unknown>;
 
-export const IonAvatar: StencilReactComponent<IonAvatarElement, IonAvatarEvents> = /*@__PURE__*/ createComponent<
-  IonAvatarElement,
-  IonAvatarEvents
->({
-  tagName: 'ion-avatar',
-  elementClass: IonAvatarElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonAvatarEvents,
-  defineCustomElement: defineIonAvatar,
-});
+export const IonAvatar: StencilReactComponent<IonAvatarElement, IonAvatarEvents, Components.IonAvatar> =
+  /*@__PURE__*/ createComponent<IonAvatarElement, IonAvatarEvents, Components.IonAvatar>({
+    tagName: 'ion-avatar',
+    elementClass: IonAvatarElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonAvatarEvents,
+    defineCustomElement: defineIonAvatar,
+  });
 
 export type IonBackdropEvents = { onIonBackdropTap: EventName<IonBackdropCustomEvent<void>> };
 
-export const IonBackdrop: StencilReactComponent<IonBackdropElement, IonBackdropEvents> = /*@__PURE__*/ createComponent<
-  IonBackdropElement,
-  IonBackdropEvents
->({
-  tagName: 'ion-backdrop',
-  elementClass: IonBackdropElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: { onIonBackdropTap: 'ionBackdropTap' } as IonBackdropEvents,
-  defineCustomElement: defineIonBackdrop,
-});
+export const IonBackdrop: StencilReactComponent<IonBackdropElement, IonBackdropEvents, Components.IonBackdrop> =
+  /*@__PURE__*/ createComponent<IonBackdropElement, IonBackdropEvents, Components.IonBackdrop>({
+    tagName: 'ion-backdrop',
+    elementClass: IonBackdropElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: { onIonBackdropTap: 'ionBackdropTap' } as IonBackdropEvents,
+    defineCustomElement: defineIonBackdrop,
+  });
 
 export type IonBadgeEvents = NonNullable<unknown>;
 
-export const IonBadge: StencilReactComponent<IonBadgeElement, IonBadgeEvents> = /*@__PURE__*/ createComponent<
-  IonBadgeElement,
-  IonBadgeEvents
->({
-  tagName: 'ion-badge',
-  elementClass: IonBadgeElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonBadgeEvents,
-  defineCustomElement: defineIonBadge,
-});
+export const IonBadge: StencilReactComponent<IonBadgeElement, IonBadgeEvents, Components.IonBadge> =
+  /*@__PURE__*/ createComponent<IonBadgeElement, IonBadgeEvents, Components.IonBadge>({
+    tagName: 'ion-badge',
+    elementClass: IonBadgeElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonBadgeEvents,
+    defineCustomElement: defineIonBadge,
+  });
 
 export type IonBreadcrumbsEvents = {
   onIonCollapsedClick: EventName<IonBreadcrumbsCustomEvent<BreadcrumbCollapsedClickEventDetail>>;
 };
 
-export const IonBreadcrumbs: StencilReactComponent<IonBreadcrumbsElement, IonBreadcrumbsEvents> =
-  /*@__PURE__*/ createComponent<IonBreadcrumbsElement, IonBreadcrumbsEvents>({
-    tagName: 'ion-breadcrumbs',
-    elementClass: IonBreadcrumbsElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: { onIonCollapsedClick: 'ionCollapsedClick' } as IonBreadcrumbsEvents,
-    defineCustomElement: defineIonBreadcrumbs,
-  });
+export const IonBreadcrumbs: StencilReactComponent<
+  IonBreadcrumbsElement,
+  IonBreadcrumbsEvents,
+  Components.IonBreadcrumbs
+> = /*@__PURE__*/ createComponent<IonBreadcrumbsElement, IonBreadcrumbsEvents, Components.IonBreadcrumbs>({
+  tagName: 'ion-breadcrumbs',
+  elementClass: IonBreadcrumbsElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: { onIonCollapsedClick: 'ionCollapsedClick' } as IonBreadcrumbsEvents,
+  defineCustomElement: defineIonBreadcrumbs,
+});
 
 export type IonButtonsEvents = NonNullable<unknown>;
 
-export const IonButtons: StencilReactComponent<IonButtonsElement, IonButtonsEvents> = /*@__PURE__*/ createComponent<
-  IonButtonsElement,
-  IonButtonsEvents
->({
-  tagName: 'ion-buttons',
-  elementClass: IonButtonsElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonButtonsEvents,
-  defineCustomElement: defineIonButtons,
-});
+export const IonButtons: StencilReactComponent<IonButtonsElement, IonButtonsEvents, Components.IonButtons> =
+  /*@__PURE__*/ createComponent<IonButtonsElement, IonButtonsEvents, Components.IonButtons>({
+    tagName: 'ion-buttons',
+    elementClass: IonButtonsElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonButtonsEvents,
+    defineCustomElement: defineIonButtons,
+  });
 
 export type IonCardContentEvents = NonNullable<unknown>;
 
-export const IonCardContent: StencilReactComponent<IonCardContentElement, IonCardContentEvents> =
-  /*@__PURE__*/ createComponent<IonCardContentElement, IonCardContentEvents>({
-    tagName: 'ion-card-content',
-    elementClass: IonCardContentElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: {} as IonCardContentEvents,
-    defineCustomElement: defineIonCardContent,
-  });
+export const IonCardContent: StencilReactComponent<
+  IonCardContentElement,
+  IonCardContentEvents,
+  Components.IonCardContent
+> = /*@__PURE__*/ createComponent<IonCardContentElement, IonCardContentEvents, Components.IonCardContent>({
+  tagName: 'ion-card-content',
+  elementClass: IonCardContentElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: {} as IonCardContentEvents,
+  defineCustomElement: defineIonCardContent,
+});
 
 export type IonCardHeaderEvents = NonNullable<unknown>;
 
-export const IonCardHeader: StencilReactComponent<IonCardHeaderElement, IonCardHeaderEvents> =
-  /*@__PURE__*/ createComponent<IonCardHeaderElement, IonCardHeaderEvents>({
+export const IonCardHeader: StencilReactComponent<IonCardHeaderElement, IonCardHeaderEvents, Components.IonCardHeader> =
+  /*@__PURE__*/ createComponent<IonCardHeaderElement, IonCardHeaderEvents, Components.IonCardHeader>({
     tagName: 'ion-card-header',
     elementClass: IonCardHeaderElement,
     // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
@@ -444,20 +447,23 @@ export const IonCardHeader: StencilReactComponent<IonCardHeaderElement, IonCardH
 
 export type IonCardSubtitleEvents = NonNullable<unknown>;
 
-export const IonCardSubtitle: StencilReactComponent<IonCardSubtitleElement, IonCardSubtitleEvents> =
-  /*@__PURE__*/ createComponent<IonCardSubtitleElement, IonCardSubtitleEvents>({
-    tagName: 'ion-card-subtitle',
-    elementClass: IonCardSubtitleElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: {} as IonCardSubtitleEvents,
-    defineCustomElement: defineIonCardSubtitle,
-  });
+export const IonCardSubtitle: StencilReactComponent<
+  IonCardSubtitleElement,
+  IonCardSubtitleEvents,
+  Components.IonCardSubtitle
+> = /*@__PURE__*/ createComponent<IonCardSubtitleElement, IonCardSubtitleEvents, Components.IonCardSubtitle>({
+  tagName: 'ion-card-subtitle',
+  elementClass: IonCardSubtitleElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: {} as IonCardSubtitleEvents,
+  defineCustomElement: defineIonCardSubtitle,
+});
 
 export type IonCardTitleEvents = NonNullable<unknown>;
 
-export const IonCardTitle: StencilReactComponent<IonCardTitleElement, IonCardTitleEvents> =
-  /*@__PURE__*/ createComponent<IonCardTitleElement, IonCardTitleEvents>({
+export const IonCardTitle: StencilReactComponent<IonCardTitleElement, IonCardTitleEvents, Components.IonCardTitle> =
+  /*@__PURE__*/ createComponent<IonCardTitleElement, IonCardTitleEvents, Components.IonCardTitle>({
     tagName: 'ion-card-title',
     elementClass: IonCardTitleElement,
     // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
@@ -472,49 +478,43 @@ export type IonCheckboxEvents = {
   onIonBlur: EventName<IonCheckboxCustomEvent<void>>;
 };
 
-export const IonCheckbox: StencilReactComponent<IonCheckboxElement, IonCheckboxEvents> = /*@__PURE__*/ createComponent<
-  IonCheckboxElement,
-  IonCheckboxEvents
->({
-  tagName: 'ion-checkbox',
-  elementClass: IonCheckboxElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {
-    onIonChange: 'ionChange',
-    onIonFocus: 'ionFocus',
-    onIonBlur: 'ionBlur',
-  } as IonCheckboxEvents,
-  defineCustomElement: defineIonCheckbox,
-});
+export const IonCheckbox: StencilReactComponent<IonCheckboxElement, IonCheckboxEvents, Components.IonCheckbox> =
+  /*@__PURE__*/ createComponent<IonCheckboxElement, IonCheckboxEvents, Components.IonCheckbox>({
+    tagName: 'ion-checkbox',
+    elementClass: IonCheckboxElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {
+      onIonChange: 'ionChange',
+      onIonFocus: 'ionFocus',
+      onIonBlur: 'ionBlur',
+    } as IonCheckboxEvents,
+    defineCustomElement: defineIonCheckbox,
+  });
 
 export type IonChipEvents = NonNullable<unknown>;
 
-export const IonChip: StencilReactComponent<IonChipElement, IonChipEvents> = /*@__PURE__*/ createComponent<
-  IonChipElement,
-  IonChipEvents
->({
-  tagName: 'ion-chip',
-  elementClass: IonChipElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonChipEvents,
-  defineCustomElement: defineIonChip,
-});
+export const IonChip: StencilReactComponent<IonChipElement, IonChipEvents, Components.IonChip> =
+  /*@__PURE__*/ createComponent<IonChipElement, IonChipEvents, Components.IonChip>({
+    tagName: 'ion-chip',
+    elementClass: IonChipElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonChipEvents,
+    defineCustomElement: defineIonChip,
+  });
 
 export type IonColEvents = NonNullable<unknown>;
 
-export const IonCol: StencilReactComponent<IonColElement, IonColEvents> = /*@__PURE__*/ createComponent<
-  IonColElement,
-  IonColEvents
->({
-  tagName: 'ion-col',
-  elementClass: IonColElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonColEvents,
-  defineCustomElement: defineIonCol,
-});
+export const IonCol: StencilReactComponent<IonColElement, IonColEvents, Components.IonCol> =
+  /*@__PURE__*/ createComponent<IonColElement, IonColEvents, Components.IonCol>({
+    tagName: 'ion-col',
+    elementClass: IonColElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonColEvents,
+    defineCustomElement: defineIonCol,
+  });
 
 export type IonContentEvents = {
   onIonScrollStart: EventName<IonContentCustomEvent<ScrollBaseDetail>>;
@@ -522,21 +522,19 @@ export type IonContentEvents = {
   onIonScrollEnd: EventName<IonContentCustomEvent<ScrollBaseDetail>>;
 };
 
-export const IonContent: StencilReactComponent<IonContentElement, IonContentEvents> = /*@__PURE__*/ createComponent<
-  IonContentElement,
-  IonContentEvents
->({
-  tagName: 'ion-content',
-  elementClass: IonContentElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {
-    onIonScrollStart: 'ionScrollStart',
-    onIonScroll: 'ionScroll',
-    onIonScrollEnd: 'ionScrollEnd',
-  } as IonContentEvents,
-  defineCustomElement: defineIonContent,
-});
+export const IonContent: StencilReactComponent<IonContentElement, IonContentEvents, Components.IonContent> =
+  /*@__PURE__*/ createComponent<IonContentElement, IonContentEvents, Components.IonContent>({
+    tagName: 'ion-content',
+    elementClass: IonContentElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {
+      onIonScrollStart: 'ionScrollStart',
+      onIonScroll: 'ionScroll',
+      onIonScrollEnd: 'ionScrollEnd',
+    } as IonContentEvents,
+    defineCustomElement: defineIonContent,
+  });
 
 export type IonDatetimeEvents = {
   onIonCancel: EventName<IonDatetimeCustomEvent<void>>;
@@ -545,104 +543,95 @@ export type IonDatetimeEvents = {
   onIonBlur: EventName<IonDatetimeCustomEvent<void>>;
 };
 
-export const IonDatetime: StencilReactComponent<IonDatetimeElement, IonDatetimeEvents> = /*@__PURE__*/ createComponent<
-  IonDatetimeElement,
-  IonDatetimeEvents
->({
-  tagName: 'ion-datetime',
-  elementClass: IonDatetimeElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {
-    onIonCancel: 'ionCancel',
-    onIonChange: 'ionChange',
-    onIonFocus: 'ionFocus',
-    onIonBlur: 'ionBlur',
-  } as IonDatetimeEvents,
-  defineCustomElement: defineIonDatetime,
-});
+export const IonDatetime: StencilReactComponent<IonDatetimeElement, IonDatetimeEvents, Components.IonDatetime> =
+  /*@__PURE__*/ createComponent<IonDatetimeElement, IonDatetimeEvents, Components.IonDatetime>({
+    tagName: 'ion-datetime',
+    elementClass: IonDatetimeElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {
+      onIonCancel: 'ionCancel',
+      onIonChange: 'ionChange',
+      onIonFocus: 'ionFocus',
+      onIonBlur: 'ionBlur',
+    } as IonDatetimeEvents,
+    defineCustomElement: defineIonDatetime,
+  });
 
 export type IonDatetimeButtonEvents = NonNullable<unknown>;
 
-export const IonDatetimeButton: StencilReactComponent<IonDatetimeButtonElement, IonDatetimeButtonEvents> =
-  /*@__PURE__*/ createComponent<IonDatetimeButtonElement, IonDatetimeButtonEvents>({
-    tagName: 'ion-datetime-button',
-    elementClass: IonDatetimeButtonElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: {} as IonDatetimeButtonEvents,
-    defineCustomElement: defineIonDatetimeButton,
-  });
+export const IonDatetimeButton: StencilReactComponent<
+  IonDatetimeButtonElement,
+  IonDatetimeButtonEvents,
+  Components.IonDatetimeButton
+> = /*@__PURE__*/ createComponent<IonDatetimeButtonElement, IonDatetimeButtonEvents, Components.IonDatetimeButton>({
+  tagName: 'ion-datetime-button',
+  elementClass: IonDatetimeButtonElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: {} as IonDatetimeButtonEvents,
+  defineCustomElement: defineIonDatetimeButton,
+});
 
 export type IonFabEvents = NonNullable<unknown>;
 
-export const IonFab: StencilReactComponent<IonFabElement, IonFabEvents> = /*@__PURE__*/ createComponent<
-  IonFabElement,
-  IonFabEvents
->({
-  tagName: 'ion-fab',
-  elementClass: IonFabElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonFabEvents,
-  defineCustomElement: defineIonFab,
-});
+export const IonFab: StencilReactComponent<IonFabElement, IonFabEvents, Components.IonFab> =
+  /*@__PURE__*/ createComponent<IonFabElement, IonFabEvents, Components.IonFab>({
+    tagName: 'ion-fab',
+    elementClass: IonFabElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonFabEvents,
+    defineCustomElement: defineIonFab,
+  });
 
 export type IonFabListEvents = NonNullable<unknown>;
 
-export const IonFabList: StencilReactComponent<IonFabListElement, IonFabListEvents> = /*@__PURE__*/ createComponent<
-  IonFabListElement,
-  IonFabListEvents
->({
-  tagName: 'ion-fab-list',
-  elementClass: IonFabListElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonFabListEvents,
-  defineCustomElement: defineIonFabList,
-});
+export const IonFabList: StencilReactComponent<IonFabListElement, IonFabListEvents, Components.IonFabList> =
+  /*@__PURE__*/ createComponent<IonFabListElement, IonFabListEvents, Components.IonFabList>({
+    tagName: 'ion-fab-list',
+    elementClass: IonFabListElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonFabListEvents,
+    defineCustomElement: defineIonFabList,
+  });
 
 export type IonFooterEvents = NonNullable<unknown>;
 
-export const IonFooter: StencilReactComponent<IonFooterElement, IonFooterEvents> = /*@__PURE__*/ createComponent<
-  IonFooterElement,
-  IonFooterEvents
->({
-  tagName: 'ion-footer',
-  elementClass: IonFooterElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonFooterEvents,
-  defineCustomElement: defineIonFooter,
-});
+export const IonFooter: StencilReactComponent<IonFooterElement, IonFooterEvents, Components.IonFooter> =
+  /*@__PURE__*/ createComponent<IonFooterElement, IonFooterEvents, Components.IonFooter>({
+    tagName: 'ion-footer',
+    elementClass: IonFooterElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonFooterEvents,
+    defineCustomElement: defineIonFooter,
+  });
 
 export type IonGridEvents = NonNullable<unknown>;
 
-export const IonGrid: StencilReactComponent<IonGridElement, IonGridEvents> = /*@__PURE__*/ createComponent<
-  IonGridElement,
-  IonGridEvents
->({
-  tagName: 'ion-grid',
-  elementClass: IonGridElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonGridEvents,
-  defineCustomElement: defineIonGrid,
-});
+export const IonGrid: StencilReactComponent<IonGridElement, IonGridEvents, Components.IonGrid> =
+  /*@__PURE__*/ createComponent<IonGridElement, IonGridEvents, Components.IonGrid>({
+    tagName: 'ion-grid',
+    elementClass: IonGridElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonGridEvents,
+    defineCustomElement: defineIonGrid,
+  });
 
 export type IonHeaderEvents = NonNullable<unknown>;
 
-export const IonHeader: StencilReactComponent<IonHeaderElement, IonHeaderEvents> = /*@__PURE__*/ createComponent<
-  IonHeaderElement,
-  IonHeaderEvents
->({
-  tagName: 'ion-header',
-  elementClass: IonHeaderElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonHeaderEvents,
-  defineCustomElement: defineIonHeader,
-});
+export const IonHeader: StencilReactComponent<IonHeaderElement, IonHeaderEvents, Components.IonHeader> =
+  /*@__PURE__*/ createComponent<IonHeaderElement, IonHeaderEvents, Components.IonHeader>({
+    tagName: 'ion-header',
+    elementClass: IonHeaderElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonHeaderEvents,
+    defineCustomElement: defineIonHeader,
+  });
 
 export type IonImgEvents = {
   onIonImgWillLoad: EventName<IonImgCustomEvent<void>>;
@@ -650,40 +639,46 @@ export type IonImgEvents = {
   onIonError: EventName<IonImgCustomEvent<void>>;
 };
 
-export const IonImg: StencilReactComponent<IonImgElement, IonImgEvents> = /*@__PURE__*/ createComponent<
-  IonImgElement,
-  IonImgEvents
->({
-  tagName: 'ion-img',
-  elementClass: IonImgElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {
-    onIonImgWillLoad: 'ionImgWillLoad',
-    onIonImgDidLoad: 'ionImgDidLoad',
-    onIonError: 'ionError',
-  } as IonImgEvents,
-  defineCustomElement: defineIonImg,
-});
+export const IonImg: StencilReactComponent<IonImgElement, IonImgEvents, Components.IonImg> =
+  /*@__PURE__*/ createComponent<IonImgElement, IonImgEvents, Components.IonImg>({
+    tagName: 'ion-img',
+    elementClass: IonImgElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {
+      onIonImgWillLoad: 'ionImgWillLoad',
+      onIonImgDidLoad: 'ionImgDidLoad',
+      onIonError: 'ionError',
+    } as IonImgEvents,
+    defineCustomElement: defineIonImg,
+  });
 
 export type IonInfiniteScrollEvents = { onIonInfinite: EventName<IonInfiniteScrollCustomEvent<void>> };
 
-export const IonInfiniteScroll: StencilReactComponent<IonInfiniteScrollElement, IonInfiniteScrollEvents> =
-  /*@__PURE__*/ createComponent<IonInfiniteScrollElement, IonInfiniteScrollEvents>({
-    tagName: 'ion-infinite-scroll',
-    elementClass: IonInfiniteScrollElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: { onIonInfinite: 'ionInfinite' } as IonInfiniteScrollEvents,
-    defineCustomElement: defineIonInfiniteScroll,
-  });
+export const IonInfiniteScroll: StencilReactComponent<
+  IonInfiniteScrollElement,
+  IonInfiniteScrollEvents,
+  Components.IonInfiniteScroll
+> = /*@__PURE__*/ createComponent<IonInfiniteScrollElement, IonInfiniteScrollEvents, Components.IonInfiniteScroll>({
+  tagName: 'ion-infinite-scroll',
+  elementClass: IonInfiniteScrollElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: { onIonInfinite: 'ionInfinite' } as IonInfiniteScrollEvents,
+  defineCustomElement: defineIonInfiniteScroll,
+});
 
 export type IonInfiniteScrollContentEvents = NonNullable<unknown>;
 
 export const IonInfiniteScrollContent: StencilReactComponent<
   IonInfiniteScrollContentElement,
-  IonInfiniteScrollContentEvents
-> = /*@__PURE__*/ createComponent<IonInfiniteScrollContentElement, IonInfiniteScrollContentEvents>({
+  IonInfiniteScrollContentEvents,
+  Components.IonInfiniteScrollContent
+> = /*@__PURE__*/ createComponent<
+  IonInfiniteScrollContentElement,
+  IonInfiniteScrollContentEvents,
+  Components.IonInfiniteScrollContent
+>({
   tagName: 'ion-infinite-scroll-content',
   elementClass: IonInfiniteScrollContentElement,
   // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
@@ -699,22 +694,20 @@ export type IonInputEvents = {
   onIonFocus: EventName<IonInputCustomEvent<FocusEvent>>;
 };
 
-export const IonInput: StencilReactComponent<IonInputElement, IonInputEvents> = /*@__PURE__*/ createComponent<
-  IonInputElement,
-  IonInputEvents
->({
-  tagName: 'ion-input',
-  elementClass: IonInputElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {
-    onIonInput: 'ionInput',
-    onIonChange: 'ionChange',
-    onIonBlur: 'ionBlur',
-    onIonFocus: 'ionFocus',
-  } as IonInputEvents,
-  defineCustomElement: defineIonInput,
-});
+export const IonInput: StencilReactComponent<IonInputElement, IonInputEvents, Components.IonInput> =
+  /*@__PURE__*/ createComponent<IonInputElement, IonInputEvents, Components.IonInput>({
+    tagName: 'ion-input',
+    elementClass: IonInputElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {
+      onIonInput: 'ionInput',
+      onIonChange: 'ionChange',
+      onIonBlur: 'ionBlur',
+      onIonFocus: 'ionFocus',
+    } as IonInputEvents,
+    defineCustomElement: defineIonInput,
+  });
 
 export type IonInputOtpEvents = {
   onIonInput: EventName<IonInputOtpCustomEvent<InputOtpInputEventDetail>>;
@@ -724,30 +717,33 @@ export type IonInputOtpEvents = {
   onIonFocus: EventName<IonInputOtpCustomEvent<FocusEvent>>;
 };
 
-export const IonInputOtp: StencilReactComponent<IonInputOtpElement, IonInputOtpEvents> = /*@__PURE__*/ createComponent<
-  IonInputOtpElement,
-  IonInputOtpEvents
->({
-  tagName: 'ion-input-otp',
-  elementClass: IonInputOtpElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {
-    onIonInput: 'ionInput',
-    onIonChange: 'ionChange',
-    onIonComplete: 'ionComplete',
-    onIonBlur: 'ionBlur',
-    onIonFocus: 'ionFocus',
-  } as IonInputOtpEvents,
-  defineCustomElement: defineIonInputOtp,
-});
+export const IonInputOtp: StencilReactComponent<IonInputOtpElement, IonInputOtpEvents, Components.IonInputOtp> =
+  /*@__PURE__*/ createComponent<IonInputOtpElement, IonInputOtpEvents, Components.IonInputOtp>({
+    tagName: 'ion-input-otp',
+    elementClass: IonInputOtpElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {
+      onIonInput: 'ionInput',
+      onIonChange: 'ionChange',
+      onIonComplete: 'ionComplete',
+      onIonBlur: 'ionBlur',
+      onIonFocus: 'ionFocus',
+    } as IonInputOtpEvents,
+    defineCustomElement: defineIonInputOtp,
+  });
 
 export type IonInputPasswordToggleEvents = NonNullable<unknown>;
 
 export const IonInputPasswordToggle: StencilReactComponent<
   IonInputPasswordToggleElement,
-  IonInputPasswordToggleEvents
-> = /*@__PURE__*/ createComponent<IonInputPasswordToggleElement, IonInputPasswordToggleEvents>({
+  IonInputPasswordToggleEvents,
+  Components.IonInputPasswordToggle
+> = /*@__PURE__*/ createComponent<
+  IonInputPasswordToggleElement,
+  IonInputPasswordToggleEvents,
+  Components.IonInputPasswordToggle
+>({
   tagName: 'ion-input-password-toggle',
   elementClass: IonInputPasswordToggleElement,
   // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
@@ -758,20 +754,23 @@ export const IonInputPasswordToggle: StencilReactComponent<
 
 export type IonItemDividerEvents = NonNullable<unknown>;
 
-export const IonItemDivider: StencilReactComponent<IonItemDividerElement, IonItemDividerEvents> =
-  /*@__PURE__*/ createComponent<IonItemDividerElement, IonItemDividerEvents>({
-    tagName: 'ion-item-divider',
-    elementClass: IonItemDividerElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: {} as IonItemDividerEvents,
-    defineCustomElement: defineIonItemDivider,
-  });
+export const IonItemDivider: StencilReactComponent<
+  IonItemDividerElement,
+  IonItemDividerEvents,
+  Components.IonItemDivider
+> = /*@__PURE__*/ createComponent<IonItemDividerElement, IonItemDividerEvents, Components.IonItemDivider>({
+  tagName: 'ion-item-divider',
+  elementClass: IonItemDividerElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: {} as IonItemDividerEvents,
+  defineCustomElement: defineIonItemDivider,
+});
 
 export type IonItemGroupEvents = NonNullable<unknown>;
 
-export const IonItemGroup: StencilReactComponent<IonItemGroupElement, IonItemGroupEvents> =
-  /*@__PURE__*/ createComponent<IonItemGroupElement, IonItemGroupEvents>({
+export const IonItemGroup: StencilReactComponent<IonItemGroupElement, IonItemGroupEvents, Components.IonItemGroup> =
+  /*@__PURE__*/ createComponent<IonItemGroupElement, IonItemGroupEvents, Components.IonItemGroup>({
     tagName: 'ion-item-group',
     elementClass: IonItemGroupElement,
     // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
@@ -782,60 +781,62 @@ export const IonItemGroup: StencilReactComponent<IonItemGroupElement, IonItemGro
 
 export type IonItemOptionsEvents = { onIonSwipe: EventName<IonItemOptionsCustomEvent<any>> };
 
-export const IonItemOptions: StencilReactComponent<IonItemOptionsElement, IonItemOptionsEvents> =
-  /*@__PURE__*/ createComponent<IonItemOptionsElement, IonItemOptionsEvents>({
-    tagName: 'ion-item-options',
-    elementClass: IonItemOptionsElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: { onIonSwipe: 'ionSwipe' } as IonItemOptionsEvents,
-    defineCustomElement: defineIonItemOptions,
-  });
+export const IonItemOptions: StencilReactComponent<
+  IonItemOptionsElement,
+  IonItemOptionsEvents,
+  Components.IonItemOptions
+> = /*@__PURE__*/ createComponent<IonItemOptionsElement, IonItemOptionsEvents, Components.IonItemOptions>({
+  tagName: 'ion-item-options',
+  elementClass: IonItemOptionsElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: { onIonSwipe: 'ionSwipe' } as IonItemOptionsEvents,
+  defineCustomElement: defineIonItemOptions,
+});
 
 export type IonItemSlidingEvents = { onIonDrag: EventName<IonItemSlidingCustomEvent<any>> };
 
-export const IonItemSliding: StencilReactComponent<IonItemSlidingElement, IonItemSlidingEvents> =
-  /*@__PURE__*/ createComponent<IonItemSlidingElement, IonItemSlidingEvents>({
-    tagName: 'ion-item-sliding',
-    elementClass: IonItemSlidingElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: { onIonDrag: 'ionDrag' } as IonItemSlidingEvents,
-    defineCustomElement: defineIonItemSliding,
-  });
+export const IonItemSliding: StencilReactComponent<
+  IonItemSlidingElement,
+  IonItemSlidingEvents,
+  Components.IonItemSliding
+> = /*@__PURE__*/ createComponent<IonItemSlidingElement, IonItemSlidingEvents, Components.IonItemSliding>({
+  tagName: 'ion-item-sliding',
+  elementClass: IonItemSlidingElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: { onIonDrag: 'ionDrag' } as IonItemSlidingEvents,
+  defineCustomElement: defineIonItemSliding,
+});
 
 export type IonLabelEvents = NonNullable<unknown>;
 
-export const IonLabel: StencilReactComponent<IonLabelElement, IonLabelEvents> = /*@__PURE__*/ createComponent<
-  IonLabelElement,
-  IonLabelEvents
->({
-  tagName: 'ion-label',
-  elementClass: IonLabelElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonLabelEvents,
-  defineCustomElement: defineIonLabel,
-});
+export const IonLabel: StencilReactComponent<IonLabelElement, IonLabelEvents, Components.IonLabel> =
+  /*@__PURE__*/ createComponent<IonLabelElement, IonLabelEvents, Components.IonLabel>({
+    tagName: 'ion-label',
+    elementClass: IonLabelElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonLabelEvents,
+    defineCustomElement: defineIonLabel,
+  });
 
 export type IonListEvents = NonNullable<unknown>;
 
-export const IonList: StencilReactComponent<IonListElement, IonListEvents> = /*@__PURE__*/ createComponent<
-  IonListElement,
-  IonListEvents
->({
-  tagName: 'ion-list',
-  elementClass: IonListElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonListEvents,
-  defineCustomElement: defineIonList,
-});
+export const IonList: StencilReactComponent<IonListElement, IonListEvents, Components.IonList> =
+  /*@__PURE__*/ createComponent<IonListElement, IonListEvents, Components.IonList>({
+    tagName: 'ion-list',
+    elementClass: IonListElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonListEvents,
+    defineCustomElement: defineIonList,
+  });
 
 export type IonListHeaderEvents = NonNullable<unknown>;
 
-export const IonListHeader: StencilReactComponent<IonListHeaderElement, IonListHeaderEvents> =
-  /*@__PURE__*/ createComponent<IonListHeaderElement, IonListHeaderEvents>({
+export const IonListHeader: StencilReactComponent<IonListHeaderElement, IonListHeaderEvents, Components.IonListHeader> =
+  /*@__PURE__*/ createComponent<IonListHeaderElement, IonListHeaderEvents, Components.IonListHeader>({
     tagName: 'ion-list-header',
     elementClass: IonListHeaderElement,
     // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
@@ -851,27 +852,25 @@ export type IonMenuEvents = {
   onIonDidClose: EventName<IonMenuCustomEvent<MenuCloseEventDetail>>;
 };
 
-export const IonMenu: StencilReactComponent<IonMenuElement, IonMenuEvents> = /*@__PURE__*/ createComponent<
-  IonMenuElement,
-  IonMenuEvents
->({
-  tagName: 'ion-menu',
-  elementClass: IonMenuElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {
-    onIonWillOpen: 'ionWillOpen',
-    onIonWillClose: 'ionWillClose',
-    onIonDidOpen: 'ionDidOpen',
-    onIonDidClose: 'ionDidClose',
-  } as IonMenuEvents,
-  defineCustomElement: defineIonMenu,
-});
+export const IonMenu: StencilReactComponent<IonMenuElement, IonMenuEvents, Components.IonMenu> =
+  /*@__PURE__*/ createComponent<IonMenuElement, IonMenuEvents, Components.IonMenu>({
+    tagName: 'ion-menu',
+    elementClass: IonMenuElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {
+      onIonWillOpen: 'ionWillOpen',
+      onIonWillClose: 'ionWillClose',
+      onIonDidOpen: 'ionDidOpen',
+      onIonDidClose: 'ionDidClose',
+    } as IonMenuEvents,
+    defineCustomElement: defineIonMenu,
+  });
 
 export type IonMenuButtonEvents = NonNullable<unknown>;
 
-export const IonMenuButton: StencilReactComponent<IonMenuButtonElement, IonMenuButtonEvents> =
-  /*@__PURE__*/ createComponent<IonMenuButtonElement, IonMenuButtonEvents>({
+export const IonMenuButton: StencilReactComponent<IonMenuButtonElement, IonMenuButtonEvents, Components.IonMenuButton> =
+  /*@__PURE__*/ createComponent<IonMenuButtonElement, IonMenuButtonEvents, Components.IonMenuButton>({
     tagName: 'ion-menu-button',
     elementClass: IonMenuButtonElement,
     // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
@@ -882,8 +881,8 @@ export const IonMenuButton: StencilReactComponent<IonMenuButtonElement, IonMenuB
 
 export type IonMenuToggleEvents = NonNullable<unknown>;
 
-export const IonMenuToggle: StencilReactComponent<IonMenuToggleElement, IonMenuToggleEvents> =
-  /*@__PURE__*/ createComponent<IonMenuToggleElement, IonMenuToggleEvents>({
+export const IonMenuToggle: StencilReactComponent<IonMenuToggleElement, IonMenuToggleEvents, Components.IonMenuToggle> =
+  /*@__PURE__*/ createComponent<IonMenuToggleElement, IonMenuToggleEvents, Components.IonMenuToggle>({
     tagName: 'ion-menu-toggle',
     elementClass: IonMenuToggleElement,
     // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
@@ -897,125 +896,128 @@ export type IonNavEvents = {
   onIonNavDidChange: EventName<IonNavCustomEvent<void>>;
 };
 
-export const IonNav: StencilReactComponent<IonNavElement, IonNavEvents> = /*@__PURE__*/ createComponent<
-  IonNavElement,
-  IonNavEvents
->({
-  tagName: 'ion-nav',
-  elementClass: IonNavElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {
-    onIonNavWillChange: 'ionNavWillChange',
-    onIonNavDidChange: 'ionNavDidChange',
-  } as IonNavEvents,
-  defineCustomElement: defineIonNav,
-});
+export const IonNav: StencilReactComponent<IonNavElement, IonNavEvents, Components.IonNav> =
+  /*@__PURE__*/ createComponent<IonNavElement, IonNavEvents, Components.IonNav>({
+    tagName: 'ion-nav',
+    elementClass: IonNavElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {
+      onIonNavWillChange: 'ionNavWillChange',
+      onIonNavDidChange: 'ionNavDidChange',
+    } as IonNavEvents,
+    defineCustomElement: defineIonNav,
+  });
 
 export type IonNavLinkEvents = NonNullable<unknown>;
 
-export const IonNavLink: StencilReactComponent<IonNavLinkElement, IonNavLinkEvents> = /*@__PURE__*/ createComponent<
-  IonNavLinkElement,
-  IonNavLinkEvents
->({
-  tagName: 'ion-nav-link',
-  elementClass: IonNavLinkElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonNavLinkEvents,
-  defineCustomElement: defineIonNavLink,
-});
+export const IonNavLink: StencilReactComponent<IonNavLinkElement, IonNavLinkEvents, Components.IonNavLink> =
+  /*@__PURE__*/ createComponent<IonNavLinkElement, IonNavLinkEvents, Components.IonNavLink>({
+    tagName: 'ion-nav-link',
+    elementClass: IonNavLinkElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonNavLinkEvents,
+    defineCustomElement: defineIonNavLink,
+  });
 
 export type IonNoteEvents = NonNullable<unknown>;
 
-export const IonNote: StencilReactComponent<IonNoteElement, IonNoteEvents> = /*@__PURE__*/ createComponent<
-  IonNoteElement,
-  IonNoteEvents
->({
-  tagName: 'ion-note',
-  elementClass: IonNoteElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonNoteEvents,
-  defineCustomElement: defineIonNote,
-});
+export const IonNote: StencilReactComponent<IonNoteElement, IonNoteEvents, Components.IonNote> =
+  /*@__PURE__*/ createComponent<IonNoteElement, IonNoteEvents, Components.IonNote>({
+    tagName: 'ion-note',
+    elementClass: IonNoteElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonNoteEvents,
+    defineCustomElement: defineIonNote,
+  });
 
 export type IonPickerEvents = NonNullable<unknown>;
 
-export const IonPicker: StencilReactComponent<IonPickerElement, IonPickerEvents> = /*@__PURE__*/ createComponent<
-  IonPickerElement,
-  IonPickerEvents
->({
-  tagName: 'ion-picker',
-  elementClass: IonPickerElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonPickerEvents,
-  defineCustomElement: defineIonPicker,
-});
+export const IonPicker: StencilReactComponent<IonPickerElement, IonPickerEvents, Components.IonPicker> =
+  /*@__PURE__*/ createComponent<IonPickerElement, IonPickerEvents, Components.IonPicker>({
+    tagName: 'ion-picker',
+    elementClass: IonPickerElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonPickerEvents,
+    defineCustomElement: defineIonPicker,
+  });
 
 export type IonPickerColumnEvents = {
   onIonChange: EventName<IonPickerColumnCustomEvent<PickerColumnChangeEventDetail>>;
 };
 
-export const IonPickerColumn: StencilReactComponent<IonPickerColumnElement, IonPickerColumnEvents> =
-  /*@__PURE__*/ createComponent<IonPickerColumnElement, IonPickerColumnEvents>({
-    tagName: 'ion-picker-column',
-    elementClass: IonPickerColumnElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: { onIonChange: 'ionChange' } as IonPickerColumnEvents,
-    defineCustomElement: defineIonPickerColumn,
-  });
+export const IonPickerColumn: StencilReactComponent<
+  IonPickerColumnElement,
+  IonPickerColumnEvents,
+  Components.IonPickerColumn
+> = /*@__PURE__*/ createComponent<IonPickerColumnElement, IonPickerColumnEvents, Components.IonPickerColumn>({
+  tagName: 'ion-picker-column',
+  elementClass: IonPickerColumnElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: { onIonChange: 'ionChange' } as IonPickerColumnEvents,
+  defineCustomElement: defineIonPickerColumn,
+});
 
 export type IonPickerColumnOptionEvents = NonNullable<unknown>;
 
-export const IonPickerColumnOption: StencilReactComponent<IonPickerColumnOptionElement, IonPickerColumnOptionEvents> =
-  /*@__PURE__*/ createComponent<IonPickerColumnOptionElement, IonPickerColumnOptionEvents>({
-    tagName: 'ion-picker-column-option',
-    elementClass: IonPickerColumnOptionElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: {} as IonPickerColumnOptionEvents,
-    defineCustomElement: defineIonPickerColumnOption,
-  });
+export const IonPickerColumnOption: StencilReactComponent<
+  IonPickerColumnOptionElement,
+  IonPickerColumnOptionEvents,
+  Components.IonPickerColumnOption
+> = /*@__PURE__*/ createComponent<
+  IonPickerColumnOptionElement,
+  IonPickerColumnOptionEvents,
+  Components.IonPickerColumnOption
+>({
+  tagName: 'ion-picker-column-option',
+  elementClass: IonPickerColumnOptionElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: {} as IonPickerColumnOptionEvents,
+  defineCustomElement: defineIonPickerColumnOption,
+});
 
 export type IonProgressBarEvents = NonNullable<unknown>;
 
-export const IonProgressBar: StencilReactComponent<IonProgressBarElement, IonProgressBarEvents> =
-  /*@__PURE__*/ createComponent<IonProgressBarElement, IonProgressBarEvents>({
-    tagName: 'ion-progress-bar',
-    elementClass: IonProgressBarElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: {} as IonProgressBarEvents,
-    defineCustomElement: defineIonProgressBar,
-  });
+export const IonProgressBar: StencilReactComponent<
+  IonProgressBarElement,
+  IonProgressBarEvents,
+  Components.IonProgressBar
+> = /*@__PURE__*/ createComponent<IonProgressBarElement, IonProgressBarEvents, Components.IonProgressBar>({
+  tagName: 'ion-progress-bar',
+  elementClass: IonProgressBarElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: {} as IonProgressBarEvents,
+  defineCustomElement: defineIonProgressBar,
+});
 
 export type IonRadioEvents = {
   onIonFocus: EventName<IonRadioCustomEvent<void>>;
   onIonBlur: EventName<IonRadioCustomEvent<void>>;
 };
 
-export const IonRadio: StencilReactComponent<IonRadioElement, IonRadioEvents> = /*@__PURE__*/ createComponent<
-  IonRadioElement,
-  IonRadioEvents
->({
-  tagName: 'ion-radio',
-  elementClass: IonRadioElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {
-    onIonFocus: 'ionFocus',
-    onIonBlur: 'ionBlur',
-  } as IonRadioEvents,
-  defineCustomElement: defineIonRadio,
-});
+export const IonRadio: StencilReactComponent<IonRadioElement, IonRadioEvents, Components.IonRadio> =
+  /*@__PURE__*/ createComponent<IonRadioElement, IonRadioEvents, Components.IonRadio>({
+    tagName: 'ion-radio',
+    elementClass: IonRadioElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {
+      onIonFocus: 'ionFocus',
+      onIonBlur: 'ionBlur',
+    } as IonRadioEvents,
+    defineCustomElement: defineIonRadio,
+  });
 
 export type IonRadioGroupEvents = { onIonChange: EventName<IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>> };
 
-export const IonRadioGroup: StencilReactComponent<IonRadioGroupElement, IonRadioGroupEvents> =
-  /*@__PURE__*/ createComponent<IonRadioGroupElement, IonRadioGroupEvents>({
+export const IonRadioGroup: StencilReactComponent<IonRadioGroupElement, IonRadioGroupEvents, Components.IonRadioGroup> =
+  /*@__PURE__*/ createComponent<IonRadioGroupElement, IonRadioGroupEvents, Components.IonRadioGroup>({
     tagName: 'ion-radio-group',
     elementClass: IonRadioGroupElement,
     // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
@@ -1033,24 +1035,22 @@ export type IonRangeEvents = {
   onIonKnobMoveEnd: EventName<IonRangeCustomEvent<RangeKnobMoveEndEventDetail>>;
 };
 
-export const IonRange: StencilReactComponent<IonRangeElement, IonRangeEvents> = /*@__PURE__*/ createComponent<
-  IonRangeElement,
-  IonRangeEvents
->({
-  tagName: 'ion-range',
-  elementClass: IonRangeElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {
-    onIonChange: 'ionChange',
-    onIonInput: 'ionInput',
-    onIonFocus: 'ionFocus',
-    onIonBlur: 'ionBlur',
-    onIonKnobMoveStart: 'ionKnobMoveStart',
-    onIonKnobMoveEnd: 'ionKnobMoveEnd',
-  } as IonRangeEvents,
-  defineCustomElement: defineIonRange,
-});
+export const IonRange: StencilReactComponent<IonRangeElement, IonRangeEvents, Components.IonRange> =
+  /*@__PURE__*/ createComponent<IonRangeElement, IonRangeEvents, Components.IonRange>({
+    tagName: 'ion-range',
+    elementClass: IonRangeElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {
+      onIonChange: 'ionChange',
+      onIonInput: 'ionInput',
+      onIonFocus: 'ionFocus',
+      onIonBlur: 'ionBlur',
+      onIonKnobMoveStart: 'ionKnobMoveStart',
+      onIonKnobMoveEnd: 'ionKnobMoveEnd',
+    } as IonRangeEvents,
+    defineCustomElement: defineIonRange,
+  });
 
 export type IonRefresherEvents = {
   onIonRefresh: EventName<IonRefresherCustomEvent<RefresherEventDetail>>;
@@ -1060,8 +1060,8 @@ export type IonRefresherEvents = {
   onIonPullEnd: EventName<IonRefresherCustomEvent<RefresherPullEndEventDetail>>;
 };
 
-export const IonRefresher: StencilReactComponent<IonRefresherElement, IonRefresherEvents> =
-  /*@__PURE__*/ createComponent<IonRefresherElement, IonRefresherEvents>({
+export const IonRefresher: StencilReactComponent<IonRefresherElement, IonRefresherEvents, Components.IonRefresher> =
+  /*@__PURE__*/ createComponent<IonRefresherElement, IonRefresherEvents, Components.IonRefresher>({
     tagName: 'ion-refresher',
     elementClass: IonRefresherElement,
     // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
@@ -1078,29 +1078,34 @@ export const IonRefresher: StencilReactComponent<IonRefresherElement, IonRefresh
 
 export type IonRefresherContentEvents = NonNullable<unknown>;
 
-export const IonRefresherContent: StencilReactComponent<IonRefresherContentElement, IonRefresherContentEvents> =
-  /*@__PURE__*/ createComponent<IonRefresherContentElement, IonRefresherContentEvents>({
-    tagName: 'ion-refresher-content',
-    elementClass: IonRefresherContentElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: {} as IonRefresherContentEvents,
-    defineCustomElement: defineIonRefresherContent,
-  });
+export const IonRefresherContent: StencilReactComponent<
+  IonRefresherContentElement,
+  IonRefresherContentEvents,
+  Components.IonRefresherContent
+> = /*@__PURE__*/ createComponent<
+  IonRefresherContentElement,
+  IonRefresherContentEvents,
+  Components.IonRefresherContent
+>({
+  tagName: 'ion-refresher-content',
+  elementClass: IonRefresherContentElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: {} as IonRefresherContentEvents,
+  defineCustomElement: defineIonRefresherContent,
+});
 
 export type IonReorderEvents = NonNullable<unknown>;
 
-export const IonReorder: StencilReactComponent<IonReorderElement, IonReorderEvents> = /*@__PURE__*/ createComponent<
-  IonReorderElement,
-  IonReorderEvents
->({
-  tagName: 'ion-reorder',
-  elementClass: IonReorderElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonReorderEvents,
-  defineCustomElement: defineIonReorder,
-});
+export const IonReorder: StencilReactComponent<IonReorderElement, IonReorderEvents, Components.IonReorder> =
+  /*@__PURE__*/ createComponent<IonReorderElement, IonReorderEvents, Components.IonReorder>({
+    tagName: 'ion-reorder',
+    elementClass: IonReorderElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonReorderEvents,
+    defineCustomElement: defineIonReorder,
+  });
 
 export type IonReorderGroupEvents = {
   onIonItemReorder: EventName<IonReorderGroupCustomEvent<ItemReorderEventDetail>>;
@@ -1109,46 +1114,50 @@ export type IonReorderGroupEvents = {
   onIonReorderEnd: EventName<IonReorderGroupCustomEvent<ReorderEndEventDetail>>;
 };
 
-export const IonReorderGroup: StencilReactComponent<IonReorderGroupElement, IonReorderGroupEvents> =
-  /*@__PURE__*/ createComponent<IonReorderGroupElement, IonReorderGroupEvents>({
-    tagName: 'ion-reorder-group',
-    elementClass: IonReorderGroupElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: {
-      onIonItemReorder: 'ionItemReorder',
-      onIonReorderStart: 'ionReorderStart',
-      onIonReorderMove: 'ionReorderMove',
-      onIonReorderEnd: 'ionReorderEnd',
-    } as IonReorderGroupEvents,
-    defineCustomElement: defineIonReorderGroup,
-  });
+export const IonReorderGroup: StencilReactComponent<
+  IonReorderGroupElement,
+  IonReorderGroupEvents,
+  Components.IonReorderGroup
+> = /*@__PURE__*/ createComponent<IonReorderGroupElement, IonReorderGroupEvents, Components.IonReorderGroup>({
+  tagName: 'ion-reorder-group',
+  elementClass: IonReorderGroupElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: {
+    onIonItemReorder: 'ionItemReorder',
+    onIonReorderStart: 'ionReorderStart',
+    onIonReorderMove: 'ionReorderMove',
+    onIonReorderEnd: 'ionReorderEnd',
+  } as IonReorderGroupEvents,
+  defineCustomElement: defineIonReorderGroup,
+});
 
 export type IonRippleEffectEvents = NonNullable<unknown>;
 
-export const IonRippleEffect: StencilReactComponent<IonRippleEffectElement, IonRippleEffectEvents> =
-  /*@__PURE__*/ createComponent<IonRippleEffectElement, IonRippleEffectEvents>({
-    tagName: 'ion-ripple-effect',
-    elementClass: IonRippleEffectElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: {} as IonRippleEffectEvents,
-    defineCustomElement: defineIonRippleEffect,
-  });
+export const IonRippleEffect: StencilReactComponent<
+  IonRippleEffectElement,
+  IonRippleEffectEvents,
+  Components.IonRippleEffect
+> = /*@__PURE__*/ createComponent<IonRippleEffectElement, IonRippleEffectEvents, Components.IonRippleEffect>({
+  tagName: 'ion-ripple-effect',
+  elementClass: IonRippleEffectElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: {} as IonRippleEffectEvents,
+  defineCustomElement: defineIonRippleEffect,
+});
 
 export type IonRowEvents = NonNullable<unknown>;
 
-export const IonRow: StencilReactComponent<IonRowElement, IonRowEvents> = /*@__PURE__*/ createComponent<
-  IonRowElement,
-  IonRowEvents
->({
-  tagName: 'ion-row',
-  elementClass: IonRowElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonRowEvents,
-  defineCustomElement: defineIonRow,
-});
+export const IonRow: StencilReactComponent<IonRowElement, IonRowEvents, Components.IonRow> =
+  /*@__PURE__*/ createComponent<IonRowElement, IonRowEvents, Components.IonRow>({
+    tagName: 'ion-row',
+    elementClass: IonRowElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonRowEvents,
+    defineCustomElement: defineIonRow,
+  });
 
 export type IonSearchbarEvents = {
   onIonInput: EventName<IonSearchbarCustomEvent<SearchbarInputEventDetail>>;
@@ -1159,8 +1168,8 @@ export type IonSearchbarEvents = {
   onIonFocus: EventName<IonSearchbarCustomEvent<void>>;
 };
 
-export const IonSearchbar: StencilReactComponent<IonSearchbarElement, IonSearchbarEvents> =
-  /*@__PURE__*/ createComponent<IonSearchbarElement, IonSearchbarEvents>({
+export const IonSearchbar: StencilReactComponent<IonSearchbarElement, IonSearchbarEvents, Components.IonSearchbar> =
+  /*@__PURE__*/ createComponent<IonSearchbarElement, IonSearchbarEvents, Components.IonSearchbar>({
     tagName: 'ion-searchbar',
     elementClass: IonSearchbarElement,
     // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
@@ -1178,55 +1187,62 @@ export const IonSearchbar: StencilReactComponent<IonSearchbarElement, IonSearchb
 
 export type IonSegmentEvents = { onIonChange: EventName<IonSegmentCustomEvent<SegmentChangeEventDetail>> };
 
-export const IonSegment: StencilReactComponent<IonSegmentElement, IonSegmentEvents> = /*@__PURE__*/ createComponent<
-  IonSegmentElement,
-  IonSegmentEvents
->({
-  tagName: 'ion-segment',
-  elementClass: IonSegmentElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: { onIonChange: 'ionChange' } as IonSegmentEvents,
-  defineCustomElement: defineIonSegment,
-});
+export const IonSegment: StencilReactComponent<IonSegmentElement, IonSegmentEvents, Components.IonSegment> =
+  /*@__PURE__*/ createComponent<IonSegmentElement, IonSegmentEvents, Components.IonSegment>({
+    tagName: 'ion-segment',
+    elementClass: IonSegmentElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: { onIonChange: 'ionChange' } as IonSegmentEvents,
+    defineCustomElement: defineIonSegment,
+  });
 
 export type IonSegmentButtonEvents = NonNullable<unknown>;
 
-export const IonSegmentButton: StencilReactComponent<IonSegmentButtonElement, IonSegmentButtonEvents> =
-  /*@__PURE__*/ createComponent<IonSegmentButtonElement, IonSegmentButtonEvents>({
-    tagName: 'ion-segment-button',
-    elementClass: IonSegmentButtonElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: {} as IonSegmentButtonEvents,
-    defineCustomElement: defineIonSegmentButton,
-  });
+export const IonSegmentButton: StencilReactComponent<
+  IonSegmentButtonElement,
+  IonSegmentButtonEvents,
+  Components.IonSegmentButton
+> = /*@__PURE__*/ createComponent<IonSegmentButtonElement, IonSegmentButtonEvents, Components.IonSegmentButton>({
+  tagName: 'ion-segment-button',
+  elementClass: IonSegmentButtonElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: {} as IonSegmentButtonEvents,
+  defineCustomElement: defineIonSegmentButton,
+});
 
 export type IonSegmentContentEvents = NonNullable<unknown>;
 
-export const IonSegmentContent: StencilReactComponent<IonSegmentContentElement, IonSegmentContentEvents> =
-  /*@__PURE__*/ createComponent<IonSegmentContentElement, IonSegmentContentEvents>({
-    tagName: 'ion-segment-content',
-    elementClass: IonSegmentContentElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: {} as IonSegmentContentEvents,
-    defineCustomElement: defineIonSegmentContent,
-  });
+export const IonSegmentContent: StencilReactComponent<
+  IonSegmentContentElement,
+  IonSegmentContentEvents,
+  Components.IonSegmentContent
+> = /*@__PURE__*/ createComponent<IonSegmentContentElement, IonSegmentContentEvents, Components.IonSegmentContent>({
+  tagName: 'ion-segment-content',
+  elementClass: IonSegmentContentElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: {} as IonSegmentContentEvents,
+  defineCustomElement: defineIonSegmentContent,
+});
 
 export type IonSegmentViewEvents = {
   onIonSegmentViewScroll: EventName<IonSegmentViewCustomEvent<SegmentViewScrollEvent>>;
 };
 
-export const IonSegmentView: StencilReactComponent<IonSegmentViewElement, IonSegmentViewEvents> =
-  /*@__PURE__*/ createComponent<IonSegmentViewElement, IonSegmentViewEvents>({
-    tagName: 'ion-segment-view',
-    elementClass: IonSegmentViewElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: { onIonSegmentViewScroll: 'ionSegmentViewScroll' } as IonSegmentViewEvents,
-    defineCustomElement: defineIonSegmentView,
-  });
+export const IonSegmentView: StencilReactComponent<
+  IonSegmentViewElement,
+  IonSegmentViewEvents,
+  Components.IonSegmentView
+> = /*@__PURE__*/ createComponent<IonSegmentViewElement, IonSegmentViewEvents, Components.IonSegmentView>({
+  tagName: 'ion-segment-view',
+  elementClass: IonSegmentViewElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: { onIonSegmentViewScroll: 'ionSegmentViewScroll' } as IonSegmentViewEvents,
+  defineCustomElement: defineIonSegmentView,
+});
 
 export type IonSelectEvents = {
   onIonChange: EventName<IonSelectCustomEvent<SelectChangeEventDetail>>;
@@ -1236,78 +1252,83 @@ export type IonSelectEvents = {
   onIonBlur: EventName<IonSelectCustomEvent<void>>;
 };
 
-export const IonSelect: StencilReactComponent<IonSelectElement, IonSelectEvents> = /*@__PURE__*/ createComponent<
-  IonSelectElement,
-  IonSelectEvents
->({
-  tagName: 'ion-select',
-  elementClass: IonSelectElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {
-    onIonChange: 'ionChange',
-    onIonCancel: 'ionCancel',
-    onIonDismiss: 'ionDismiss',
-    onIonFocus: 'ionFocus',
-    onIonBlur: 'ionBlur',
-  } as IonSelectEvents,
-  defineCustomElement: defineIonSelect,
-});
+export const IonSelect: StencilReactComponent<IonSelectElement, IonSelectEvents, Components.IonSelect> =
+  /*@__PURE__*/ createComponent<IonSelectElement, IonSelectEvents, Components.IonSelect>({
+    tagName: 'ion-select',
+    elementClass: IonSelectElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {
+      onIonChange: 'ionChange',
+      onIonCancel: 'ionCancel',
+      onIonDismiss: 'ionDismiss',
+      onIonFocus: 'ionFocus',
+      onIonBlur: 'ionBlur',
+    } as IonSelectEvents,
+    defineCustomElement: defineIonSelect,
+  });
 
 export type IonSelectModalEvents = NonNullable<unknown>;
 
-export const IonSelectModal: StencilReactComponent<IonSelectModalElement, IonSelectModalEvents> =
-  /*@__PURE__*/ createComponent<IonSelectModalElement, IonSelectModalEvents>({
-    tagName: 'ion-select-modal',
-    elementClass: IonSelectModalElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: {} as IonSelectModalEvents,
-    defineCustomElement: defineIonSelectModal,
-  });
+export const IonSelectModal: StencilReactComponent<
+  IonSelectModalElement,
+  IonSelectModalEvents,
+  Components.IonSelectModal
+> = /*@__PURE__*/ createComponent<IonSelectModalElement, IonSelectModalEvents, Components.IonSelectModal>({
+  tagName: 'ion-select-modal',
+  elementClass: IonSelectModalElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: {} as IonSelectModalEvents,
+  defineCustomElement: defineIonSelectModal,
+});
 
 export type IonSelectOptionEvents = NonNullable<unknown>;
 
-export const IonSelectOption: StencilReactComponent<IonSelectOptionElement, IonSelectOptionEvents> =
-  /*@__PURE__*/ createComponent<IonSelectOptionElement, IonSelectOptionEvents>({
-    tagName: 'ion-select-option',
-    elementClass: IonSelectOptionElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: {} as IonSelectOptionEvents,
-    defineCustomElement: defineIonSelectOption,
-  });
+export const IonSelectOption: StencilReactComponent<
+  IonSelectOptionElement,
+  IonSelectOptionEvents,
+  Components.IonSelectOption
+> = /*@__PURE__*/ createComponent<IonSelectOptionElement, IonSelectOptionEvents, Components.IonSelectOption>({
+  tagName: 'ion-select-option',
+  elementClass: IonSelectOptionElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: {} as IonSelectOptionEvents,
+  defineCustomElement: defineIonSelectOption,
+});
 
 export type IonSkeletonTextEvents = NonNullable<unknown>;
 
-export const IonSkeletonText: StencilReactComponent<IonSkeletonTextElement, IonSkeletonTextEvents> =
-  /*@__PURE__*/ createComponent<IonSkeletonTextElement, IonSkeletonTextEvents>({
-    tagName: 'ion-skeleton-text',
-    elementClass: IonSkeletonTextElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: {} as IonSkeletonTextEvents,
-    defineCustomElement: defineIonSkeletonText,
-  });
+export const IonSkeletonText: StencilReactComponent<
+  IonSkeletonTextElement,
+  IonSkeletonTextEvents,
+  Components.IonSkeletonText
+> = /*@__PURE__*/ createComponent<IonSkeletonTextElement, IonSkeletonTextEvents, Components.IonSkeletonText>({
+  tagName: 'ion-skeleton-text',
+  elementClass: IonSkeletonTextElement,
+  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+  react: React,
+  events: {} as IonSkeletonTextEvents,
+  defineCustomElement: defineIonSkeletonText,
+});
 
 export type IonSpinnerEvents = NonNullable<unknown>;
 
-export const IonSpinner: StencilReactComponent<IonSpinnerElement, IonSpinnerEvents> = /*@__PURE__*/ createComponent<
-  IonSpinnerElement,
-  IonSpinnerEvents
->({
-  tagName: 'ion-spinner',
-  elementClass: IonSpinnerElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonSpinnerEvents,
-  defineCustomElement: defineIonSpinner,
-});
+export const IonSpinner: StencilReactComponent<IonSpinnerElement, IonSpinnerEvents, Components.IonSpinner> =
+  /*@__PURE__*/ createComponent<IonSpinnerElement, IonSpinnerEvents, Components.IonSpinner>({
+    tagName: 'ion-spinner',
+    elementClass: IonSpinnerElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonSpinnerEvents,
+    defineCustomElement: defineIonSpinner,
+  });
 
 export type IonSplitPaneEvents = { onIonSplitPaneVisible: EventName<IonSplitPaneCustomEvent<{ visible: boolean }>> };
 
-export const IonSplitPane: StencilReactComponent<IonSplitPaneElement, IonSplitPaneEvents> =
-  /*@__PURE__*/ createComponent<IonSplitPaneElement, IonSplitPaneEvents>({
+export const IonSplitPane: StencilReactComponent<IonSplitPaneElement, IonSplitPaneEvents, Components.IonSplitPane> =
+  /*@__PURE__*/ createComponent<IonSplitPaneElement, IonSplitPaneEvents, Components.IonSplitPane>({
     tagName: 'ion-split-pane',
     elementClass: IonSplitPaneElement,
     // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
@@ -1318,31 +1339,27 @@ export const IonSplitPane: StencilReactComponent<IonSplitPaneElement, IonSplitPa
 
 export type IonTabEvents = NonNullable<unknown>;
 
-export const IonTab: StencilReactComponent<IonTabElement, IonTabEvents> = /*@__PURE__*/ createComponent<
-  IonTabElement,
-  IonTabEvents
->({
-  tagName: 'ion-tab',
-  elementClass: IonTabElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonTabEvents,
-  defineCustomElement: defineIonTab,
-});
+export const IonTab: StencilReactComponent<IonTabElement, IonTabEvents, Components.IonTab> =
+  /*@__PURE__*/ createComponent<IonTabElement, IonTabEvents, Components.IonTab>({
+    tagName: 'ion-tab',
+    elementClass: IonTabElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonTabEvents,
+    defineCustomElement: defineIonTab,
+  });
 
 export type IonTextEvents = NonNullable<unknown>;
 
-export const IonText: StencilReactComponent<IonTextElement, IonTextEvents> = /*@__PURE__*/ createComponent<
-  IonTextElement,
-  IonTextEvents
->({
-  tagName: 'ion-text',
-  elementClass: IonTextElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonTextEvents,
-  defineCustomElement: defineIonText,
-});
+export const IonText: StencilReactComponent<IonTextElement, IonTextEvents, Components.IonText> =
+  /*@__PURE__*/ createComponent<IonTextElement, IonTextEvents, Components.IonText>({
+    tagName: 'ion-text',
+    elementClass: IonTextElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonTextEvents,
+    defineCustomElement: defineIonText,
+  });
 
 export type IonTextareaEvents = {
   onIonChange: EventName<IonTextareaCustomEvent<TextareaChangeEventDetail>>;
@@ -1351,27 +1368,25 @@ export type IonTextareaEvents = {
   onIonFocus: EventName<IonTextareaCustomEvent<FocusEvent>>;
 };
 
-export const IonTextarea: StencilReactComponent<IonTextareaElement, IonTextareaEvents> = /*@__PURE__*/ createComponent<
-  IonTextareaElement,
-  IonTextareaEvents
->({
-  tagName: 'ion-textarea',
-  elementClass: IonTextareaElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {
-    onIonChange: 'ionChange',
-    onIonInput: 'ionInput',
-    onIonBlur: 'ionBlur',
-    onIonFocus: 'ionFocus',
-  } as IonTextareaEvents,
-  defineCustomElement: defineIonTextarea,
-});
+export const IonTextarea: StencilReactComponent<IonTextareaElement, IonTextareaEvents, Components.IonTextarea> =
+  /*@__PURE__*/ createComponent<IonTextareaElement, IonTextareaEvents, Components.IonTextarea>({
+    tagName: 'ion-textarea',
+    elementClass: IonTextareaElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {
+      onIonChange: 'ionChange',
+      onIonInput: 'ionInput',
+      onIonBlur: 'ionBlur',
+      onIonFocus: 'ionFocus',
+    } as IonTextareaEvents,
+    defineCustomElement: defineIonTextarea,
+  });
 
 export type IonThumbnailEvents = NonNullable<unknown>;
 
-export const IonThumbnail: StencilReactComponent<IonThumbnailElement, IonThumbnailEvents> =
-  /*@__PURE__*/ createComponent<IonThumbnailElement, IonThumbnailEvents>({
+export const IonThumbnail: StencilReactComponent<IonThumbnailElement, IonThumbnailEvents, Components.IonThumbnail> =
+  /*@__PURE__*/ createComponent<IonThumbnailElement, IonThumbnailEvents, Components.IonThumbnail>({
     tagName: 'ion-thumbnail',
     elementClass: IonThumbnailElement,
     // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
@@ -1382,17 +1397,15 @@ export const IonThumbnail: StencilReactComponent<IonThumbnailElement, IonThumbna
 
 export type IonTitleEvents = NonNullable<unknown>;
 
-export const IonTitle: StencilReactComponent<IonTitleElement, IonTitleEvents> = /*@__PURE__*/ createComponent<
-  IonTitleElement,
-  IonTitleEvents
->({
-  tagName: 'ion-title',
-  elementClass: IonTitleElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonTitleEvents,
-  defineCustomElement: defineIonTitle,
-});
+export const IonTitle: StencilReactComponent<IonTitleElement, IonTitleEvents, Components.IonTitle> =
+  /*@__PURE__*/ createComponent<IonTitleElement, IonTitleEvents, Components.IonTitle>({
+    tagName: 'ion-title',
+    elementClass: IonTitleElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonTitleEvents,
+    defineCustomElement: defineIonTitle,
+  });
 
 export type IonToggleEvents = {
   onIonChange: EventName<IonToggleCustomEvent<ToggleChangeEventDetail>>;
@@ -1400,32 +1413,28 @@ export type IonToggleEvents = {
   onIonBlur: EventName<IonToggleCustomEvent<void>>;
 };
 
-export const IonToggle: StencilReactComponent<IonToggleElement, IonToggleEvents> = /*@__PURE__*/ createComponent<
-  IonToggleElement,
-  IonToggleEvents
->({
-  tagName: 'ion-toggle',
-  elementClass: IonToggleElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {
-    onIonChange: 'ionChange',
-    onIonFocus: 'ionFocus',
-    onIonBlur: 'ionBlur',
-  } as IonToggleEvents,
-  defineCustomElement: defineIonToggle,
-});
+export const IonToggle: StencilReactComponent<IonToggleElement, IonToggleEvents, Components.IonToggle> =
+  /*@__PURE__*/ createComponent<IonToggleElement, IonToggleEvents, Components.IonToggle>({
+    tagName: 'ion-toggle',
+    elementClass: IonToggleElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {
+      onIonChange: 'ionChange',
+      onIonFocus: 'ionFocus',
+      onIonBlur: 'ionBlur',
+    } as IonToggleEvents,
+    defineCustomElement: defineIonToggle,
+  });
 
 export type IonToolbarEvents = NonNullable<unknown>;
 
-export const IonToolbar: StencilReactComponent<IonToolbarElement, IonToolbarEvents> = /*@__PURE__*/ createComponent<
-  IonToolbarElement,
-  IonToolbarEvents
->({
-  tagName: 'ion-toolbar',
-  elementClass: IonToolbarElement,
-  // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-  react: React,
-  events: {} as IonToolbarEvents,
-  defineCustomElement: defineIonToolbar,
-});
+export const IonToolbar: StencilReactComponent<IonToolbarElement, IonToolbarEvents, Components.IonToolbar> =
+  /*@__PURE__*/ createComponent<IonToolbarElement, IonToolbarEvents, Components.IonToolbar>({
+    tagName: 'ion-toolbar',
+    elementClass: IonToolbarElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as IonToolbarEvents,
+    defineCustomElement: defineIonToolbar,
+  });
