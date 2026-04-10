@@ -150,6 +150,8 @@ button {
 // Select Text
 // --------------------------------------------------
 .select-text {
+  display: flex;
+
   flex: 1;
 
   font-size: inherit;

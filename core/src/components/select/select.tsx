@@ -578,7 +578,11 @@ export class Select implements ComponentInterface {
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
       const isSelected = isOptionSelected(selectValue, value, this.compareWith);
-      const text = this.customHTMLEnabled ? getOptionContentNodes(option) : option.textContent;
+      const text = this.customHTMLEnabled ? getOptionContent(option) : option.textContent;
+      const startContent = this.customHTMLEnabled
+        ? (getOptionContent(option, 'start') as HTMLElement | null)
+        : undefined;
+      const endContent = this.customHTMLEnabled ? (getOptionContent(option, 'end') as HTMLElement | null) : undefined;
 
       return {
         role: isSelected ? 'selected' : '',
@@ -591,8 +595,8 @@ export class Select implements ComponentInterface {
           'aria-checked': isSelected ? 'true' : 'false',
           role: 'radio',
         },
-        startContent: this.customHTMLEnabled ? getOptionContentNodes(option, 'start') ?? undefined : undefined,
-        endContent: this.customHTMLEnabled ? getOptionContentNodes(option, 'end') ?? undefined : undefined,
+        startContent: startContent ?? undefined,
+        endContent: endContent ?? undefined,
         description: option.description,
       } as ActionSheetButton;
     });
@@ -622,7 +626,11 @@ export class Select implements ComponentInterface {
         .filter((cls) => cls !== 'hydrated')
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
-      const label = this.customHTMLEnabled ? getOptionContentNodes(option) : option.textContent;
+      const label = this.customHTMLEnabled ? getOptionContent(option) : option.textContent;
+      const startContent = this.customHTMLEnabled
+        ? (getOptionContent(option, 'start') as HTMLElement | null)
+        : undefined;
+      const endContent = this.customHTMLEnabled ? (getOptionContent(option, 'end') as HTMLElement | null) : undefined;
 
       return {
         type: inputType,
@@ -631,8 +639,8 @@ export class Select implements ComponentInterface {
         value,
         checked: isOptionSelected(selectValue, value, this.compareWith),
         disabled: option.disabled,
-        startContent: this.customHTMLEnabled ? getOptionContentNodes(option, 'start') ?? undefined : undefined,
-        endContent: this.customHTMLEnabled ? getOptionContentNodes(option, 'end') ?? undefined : undefined,
+        startContent: startContent ?? undefined,
+        endContent: endContent ?? undefined,
         description: option.description,
       };
     });
@@ -649,7 +657,11 @@ export class Select implements ComponentInterface {
         .filter((cls) => cls !== 'hydrated')
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
-      const text = this.customHTMLEnabled ? getOptionContentNodes(option) : option.textContent;
+      const text = this.customHTMLEnabled ? getOptionContent(option) : option.textContent;
+      const startContent = this.customHTMLEnabled
+        ? (getOptionContent(option, 'start') as HTMLElement | null)
+        : undefined;
+      const endContent = this.customHTMLEnabled ? (getOptionContent(option, 'end') as HTMLElement | null) : undefined;
 
       return {
         text: text ?? '',
@@ -663,8 +675,8 @@ export class Select implements ComponentInterface {
             this.close();
           }
         },
-        startContent: this.customHTMLEnabled ? getOptionContentNodes(option, 'start') ?? undefined : undefined,
-        endContent: this.customHTMLEnabled ? getOptionContentNodes(option, 'end') ?? undefined : undefined,
+        startContent: startContent ?? undefined,
+        endContent: endContent ?? undefined,
         description: option.description,
       };
     });
@@ -893,6 +905,12 @@ export class Select implements ComponentInterface {
     return;
   }
 
+  /**
+   * Returns the text to display in the select based on the selected value.
+   *
+   * @param useHTML If `true`, the returned text will include any custom HTML content from the selected option. If `false`, the returned text will be plain text without any HTML. Defaults to `false`.
+   * @returns The text to display in the select, either with or without HTML based on the `useHTML` parameter.
+   */
   private getText(useHTML = false): string {
     const selectedText = this.selectedText;
     if (selectedText != null && selectedText !== '') {
@@ -1127,6 +1145,7 @@ export class Select implements ComponentInterface {
 
   private get ariaLabel() {
     const { placeholder, inheritedAttributes } = this;
+    // Get the plain text from the selected text
     const displayValue = this.getText();
 
     // The aria label should be preferred over visible text if both are specified
@@ -1458,10 +1477,20 @@ const textForValue = (
 
   if (!selectOpt) return null;
 
-  // Use the HTML filter for the UI, but textContent for a11y/strings
-  return customHTMLEnabled && useHTML ? getOptionContentHTML(selectOpt) : selectOpt.textContent;
+  return customHTMLEnabled && useHTML
+    ? (getOptionContent(selectOpt, undefined, true) as string | null)
+    : selectOpt.textContent;
 };
 
+/**
+ * Trims whitespace from all text nodes within a DOM tree.
+ * This prevents invisible layout shifts and unwanted gaps between
+ * elements when HTML content is injected via innerHTML or cloneNode,
+ * as browsers preserve whitespace (tabs, newlines, spaces) from
+ * the original source markup.
+ *
+ * @param node The root node to start trimming text nodes from.
+ */
 const trimTextNodes = (node: Node): void => {
   node.childNodes.forEach((child) => {
     if (child.nodeType === Node.TEXT_NODE) {
@@ -1472,7 +1501,22 @@ const trimTextNodes = (node: Node): void => {
   });
 };
 
-const getOptionContentHTML = (option: HTMLIonSelectOptionElement, slotName?: string): string | null => {
+/**
+ * Extracts and clones content from an `ion-select-option` element
+ * for rendering within overlay interfaces or the select text when `customHTMLEnabled` is `true`.
+ *
+ * @param option - The `ion-select-option` element to extract content from.
+ * @param slotName - Optional slot name to extract. If omitted, extracts the default slot content.
+ * @param useHTML - If `true`, the returned string will include any custom HTML content. If `false`, the returned string will be plain text without any HTML.
+ * @returns When `useHTML` is `true`, a sanitized HTML string. When `false`, a
+ * div element containing cloned child nodes. Returns `null` if no matching
+ * content is found.
+ */
+const getOptionContent = (
+  option: HTMLIonSelectOptionElement,
+  slotName?: string,
+  useHTML: boolean = false
+): HTMLElement | string | null => {
   let nodes: Node[];
 
   if (slotName) {
@@ -1484,44 +1528,17 @@ const getOptionContentHTML = (option: HTMLIonSelectOptionElement, slotName?: str
       if (node.nodeType === Node.ELEMENT_NODE) {
         return !(node as HTMLElement).hasAttribute('slot');
       }
+
+      // Exclude whitespace-only text nodes to prevent empty container returns
       return node.textContent?.trim().length !== 0;
     });
   }
 
-  if (nodes.length === 0) return null;
-
-  const temp = document.createElement('div');
-  nodes.forEach((n) => {
-    const clone = n.cloneNode(true);
-    if (clone.nodeType === Node.TEXT_NODE) {
-      clone.textContent = clone.textContent?.trim() || '';
-    } else {
-      trimTextNodes(clone);
-    }
-    temp.appendChild(clone);
-  });
-
-  return sanitizeDOMString(temp.innerHTML.trim()) || null;
-};
-
-const getOptionContentNodes = (option: HTMLIonSelectOptionElement, slotName?: string): HTMLElement | null => {
-  let nodes: Node[];
-
-  if (slotName) {
-    // Named slot: get elements with matching slot attribute
-    nodes = Array.from(option.children).filter((el) => el.getAttribute('slot') === slotName);
-  } else {
-    // Default slot: get nodes without a slot attribute
-    nodes = Array.from(option.childNodes).filter((node) => {
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        return !(node as HTMLElement).hasAttribute('slot');
-      }
-      return node.textContent?.trim().length !== 0;
-    });
+  if (nodes.length === 0) {
+    return null;
   }
 
-  if (nodes.length === 0) return null;
-
+  // Clone each node into a temporary container
   const container = document.createElement('div');
   nodes.forEach((n) => {
     const clone = n.cloneNode(true);
@@ -1532,6 +1549,10 @@ const getOptionContentNodes = (option: HTMLIonSelectOptionElement, slotName?: st
     }
     container.appendChild(clone);
   });
+
+  if (useHTML) {
+    return sanitizeDOMString(container.innerHTML.trim()) || null;
+  }
 
   return container;
 };

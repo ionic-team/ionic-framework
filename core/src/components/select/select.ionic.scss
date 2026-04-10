@@ -44,6 +44,8 @@
   min-width: globals.$ion-space-400;
 
   color: globals.$ion-text-subtlest;
+
+  gap: globals.$ion-space-300;
 }
 
 :host(.has-value) .select-text {
