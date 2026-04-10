@@ -1,5 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@use "./action-sheet";
+@use "./action-sheet.common";
 @use "./action-sheet.md" as action-sheet-md;
 
 // Ionic Action Sheet

@@ -1,5 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@use "./alert";
+@use "./alert.common";
 @use "./alert.md" as alert-md;
 
 // Ionic Alert

@@ -1,5 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@use "./select-popover";
+@use "./select-popover.common";
 @use "./select-popover.md" as select-popover-md;
 
 // Ionic Select Popover

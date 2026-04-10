@@ -1,7 +1,7 @@
 @use "../../themes/native/native.theme.default" as native;
 @use "../../themes/mixins" as mixins;
 @use "../../themes/functions.font" as font;
-@use "./action-sheet";
+@use "./action-sheet.common";
 
 // Action Sheet: Native
 // --------------------------------------------------
