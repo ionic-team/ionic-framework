@@ -46,6 +46,10 @@
   color: globals.$ion-text-subtlest;
 }
 
+:host(.has-value) .select-text {
+  color: globals.$ion-text-default;
+}
+
 /**
  * If the select text contains rich content, we want to add some
  * spacing between the items without changing the display to prevent
