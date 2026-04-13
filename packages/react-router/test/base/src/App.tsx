@@ -31,7 +31,7 @@ import NestedOutlet2 from './pages/nested-outlet/NestedOutlet2';
 import ReplaceAction from './pages/replace-action/Replace';
 import TabsContext from './pages/tab-context/TabContext';
 import { OutletRef } from './pages/outlet-ref/OutletRef';
-import { SwipeToGoBack } from './pages/swipe-to-go-back/SwipToGoBack';
+import { SwipeToGoBack, SwipeToGoBackDisabled } from './pages/swipe-to-go-back/SwipToGoBack';
 import Refs from './pages/refs/Refs';
 import DynamicIonpageClassnames from './pages/dynamic-ionpage-classnames/DynamicIonpageClassnames';
 import Tabs from './pages/tabs/Tabs';
@@ -57,6 +57,7 @@ const App: React.FC = () => {
           <Route path="/tab-context" component={TabsContext} />
           <Route path="/outlet-ref" component={OutletRef} />
           <Route path="/swipe-to-go-back" component={SwipeToGoBack} />
+          <Route path="/swipe-to-go-back-disabled" component={SwipeToGoBackDisabled} />
           <Route path="/dynamic-ionpage-classnames" component={DynamicIonpageClassnames} />
           <Route path="/tabs" component={Tabs} />
           <Route path="/tabs-secondary" component={TabsSecondary} />

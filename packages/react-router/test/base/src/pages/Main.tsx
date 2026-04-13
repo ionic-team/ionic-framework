@@ -52,6 +52,9 @@ const Main: React.FC<MainProps> = () => {
           <IonItem routerLink="/swipe-to-go-back">
             <IonLabel>Swipe to go back</IonLabel>
           </IonItem>
+          <IonItem routerLink="/swipe-to-go-back-disabled">
+            <IonLabel>Swipe to go back (disabled)</IonLabel>
+          </IonItem>
           <IonItem routerLink="/dynamic-ionpage-classnames">
             <IonLabel>Dynamic IonPage Classnames</IonLabel>
           </IonItem>
