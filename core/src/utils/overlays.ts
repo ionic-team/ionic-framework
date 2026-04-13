@@ -17,7 +17,6 @@ import type {
   LoadingOptions,
   ModalOptions,
   OverlayInterface,
-  PickerOptions,
   PopoverOptions,
   ToastOptions,
 } from '../interface';
@@ -72,12 +71,6 @@ export const actionSheetController = /*@__PURE__*/ createController<ActionSheetO
 );
 export const loadingController = /*@__PURE__*/ createController<LoadingOptions, HTMLIonLoadingElement>('ion-loading');
 export const modalController = /*@__PURE__*/ createController<ModalOptions, HTMLIonModalElement>('ion-modal');
-/**
- * @deprecated Use the inline ion-picker component instead.
- */
-export const pickerController = /*@__PURE__*/ createController<PickerOptions, HTMLIonPickerLegacyElement>(
-  'ion-picker-legacy'
-);
 export const popoverController = /*@__PURE__*/ createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover');
 export const toastController = /*@__PURE__*/ createController<ToastOptions, HTMLIonToastElement>('ion-toast');
 
@@ -184,10 +177,7 @@ const focusElementInOverlay = (hostToFocus: HTMLElement | null | undefined, over
  * Should NOT include: Toast
  */
 const trapKeyboardFocus = (ev: Event, doc: Document) => {
-  const lastOverlay = getPresentedOverlay(
-    doc,
-    'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker-legacy,ion-popover'
-  );
+  const lastOverlay = getPresentedOverlay(doc, 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-popover');
   const target = ev.target as HTMLElement | null;
 
   /**
@@ -444,7 +434,7 @@ export const dismissOverlay = (
  */
 export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayElement[] => {
   if (selector === undefined) {
-    selector = 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker-legacy,ion-popover,ion-toast';
+    selector = 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-popover,ion-toast';
   }
   return (Array.from(doc.querySelectorAll(selector)) as HTMLIonOverlayElement[]).filter((c) => c.overlayIndex > 0);
 };
