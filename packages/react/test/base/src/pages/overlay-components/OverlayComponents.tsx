@@ -17,7 +17,6 @@ import ModalComponent from './ModalComponent';
 import ModalFocusTrap from './ModalFocusTrap';
 import ModalSheetChildRoute from './ModalSheetChildRoute';
 import ModalTeleport from './ModalTeleport';
-import PickerComponent from './PickerComponent';
 import PopoverComponent from './PopoverComponent';
 import ToastComponent from './ToastComponent';
 
@@ -35,7 +34,6 @@ const OverlayHooks: React.FC<OverlayHooksProps> = () => {
         <Route path="/overlay-components/modal-focus-trap" component={ModalFocusTrap} />
         <Route path="/overlay-components/modal-sheet-child-route" component={ModalSheetChildRoute} />
         <Route path="/overlay-components/modal-teleport" component={ModalTeleport} />
-        <Route path="/overlay-components/picker" component={PickerComponent} />
         <Route path="/overlay-components/popover" component={PopoverComponent} />
         <Route path="/overlay-components/toast" component={ToastComponent} />
       </IonRouterOutlet>
