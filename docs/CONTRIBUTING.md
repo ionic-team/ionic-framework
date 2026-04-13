@@ -114,10 +114,11 @@ Before creating a pull request, please read our requirements that explains the m
 1. [Download the installer](https://nodejs.org/) for the LTS version of Node.js. This is the best way to also [install npm](https://blog.npmjs.org/post/85484771375/how-to-install-npm#_=_).
 2. Fork this repository.
 3. Clone your fork.
-4. Create a new branch from main for your change.
-5. Navigate into the directory of the package you wish to modify (core, angular, etc.).
-6. Run `npm install` to install dependencies for this package.
-7. Follow the steps for the specific package below.
+4. Ensure [Git LFS](https://git-lfs.com/) is installed and run `git lfs install`. This is required for screenshot test ground truth files. See the [E2E testing guide](core/testing/usage-instructions.md#git-lfs-setup) for details.
+5. Create a new branch from main for your change.
+6. Navigate into the directory of the package you wish to modify (core, angular, etc.).
+7. Run `npm install` to install dependencies for this package.
+8. Follow the steps for the specific package below.
 
 
 ### Core
