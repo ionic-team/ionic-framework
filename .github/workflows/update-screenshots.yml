@@ -48,6 +48,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          lfs: true
       - uses: ./.github/workflows/actions/test-core-screenshot
         with:
           shard: ${{ matrix.shard }}
@@ -69,4 +71,5 @@ jobs:
         # to run when the screenshots are pushed.
         with:
           token: ${{ secrets.IONITRON_TOKEN }}
+          lfs: true
       - uses: ./.github/workflows/actions/update-reference-screenshots
