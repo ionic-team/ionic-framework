@@ -20,7 +20,7 @@ import {
 import type { InjectionKey, Ref } from "vue";
 import { matchedRouteKey, routeLocationKey, useRoute } from "vue-router";
 
-import { fireLifecycle, generateId, getConfig } from "../utils";
+import { fireLifecycle, generateId } from "../utils";
 
 // TODO(FW-2969): types
 
@@ -34,6 +34,12 @@ const isViewVisible = (enteringEl: HTMLElement) => {
 const viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
   name: "IonRouterOutlet",
+  props: {
+    swipeGesture: {
+      type: Boolean,
+      default: undefined,
+    },
+  },
   setup() {
     defineCustomElement();
 
@@ -127,12 +133,6 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
     );
 
     const canStart = () => {
-      const config = getConfig();
-      const swipeEnabled =
-        config &&
-        config.get("swipeBackEnabled", ionRouterOutlet.value.mode === "ios");
-      if (!swipeEnabled) return false;
-
       const stack = viewStacks.getViewStack(id);
       if (!stack || stack.length <= 1) return false;
 
@@ -547,9 +547,18 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
   render() {
     const { components, registerIonPage, injectedRoute } = this;
 
+    /**
+     * Forward props selectively to avoid setting undefined values
+     * that would override the web component's config-based defaults.
+     */
+    const routerOutletProps: Record<string, any> = { ref: "ionRouterOutlet" };
+    if (this.$props.swipeGesture !== undefined) {
+      routerOutletProps.swipeGesture = this.$props.swipeGesture;
+    }
+
     return h(
       "ion-router-outlet",
-      { ref: "ionRouterOutlet" },
+      routerOutletProps,
       components &&
         components.map((c: any) => {
           let props = {

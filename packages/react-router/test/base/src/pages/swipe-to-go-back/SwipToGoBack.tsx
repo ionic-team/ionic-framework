@@ -38,6 +38,48 @@ const Main: React.FC = () => {
   );
 };
 
+export const SwipeToGoBackDisabled: React.FC = () => {
+  return (
+    <IonRouterOutlet id="swipe-to-go-back-disabled" swipeGesture={false}>
+      <Route path="/swipe-to-go-back-disabled" component={DisabledMain} exact />
+      <Route path="/swipe-to-go-back-disabled/details" component={DisabledDetails} />
+    </IonRouterOutlet>
+  );
+};
+
+const DisabledMain: React.FC = () => {
+  return (
+    <IonPage data-pageid="disabled-main">
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Disabled Main</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonItem routerLink="/swipe-to-go-back-disabled/details">Details</IonItem>
+      </IonContent>
+    </IonPage>
+  );
+};
+
+const DisabledDetails: React.FC = () => {
+  return (
+    <IonPage data-pageid="disabled-details">
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons>
+            <IonBackButton></IonBackButton>
+          </IonButtons>
+          <IonTitle>Disabled Details</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <div>Details (swipe disabled)</div>
+      </IonContent>
+    </IonPage>
+  );
+};
+
 const Details: React.FC = () => {
   return (
     <IonPage data-pageid="details">

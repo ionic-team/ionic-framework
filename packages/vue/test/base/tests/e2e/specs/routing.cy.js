@@ -558,6 +558,20 @@ describe('Routing - Swipe to Go Back', () => {
     //cy.ionPageDoesNotExist('navigation');
   });
 
+  it('should not swipe back when swipeGesture is false', () => {
+    cy.visit('/swipe-gesture-disabled?ionic:mode=ios');
+    cy.viewport(320, 568);
+    cy.ionPageVisible('swipe-gesture-disabled-main');
+
+    cy.get('#swipe-disabled-details').click({ force: true });
+    cy.ionPageVisible('swipe-gesture-disabled-details');
+    cy.ionPageHidden('swipe-gesture-disabled-main');
+
+    cy.ionSwipeToGoBack(true);
+    cy.ionPageVisible('swipe-gesture-disabled-details');
+    cy.ionPageHidden('swipe-gesture-disabled-main');
+  });
+
   it.skip('swipe to go back should work when using router.go()', () => {
     cy.visit('?ionic:mode=ios');
     cy.ionPageVisible('home');
