@@ -39,7 +39,7 @@ import Params from './pages/params/Params';
 import Refs from './pages/refs/Refs';
 import { Page1, Page2, Page3 } from './pages/replace-action/Replace';
 import Routing from './pages/routing/Routing';
-import { SwipeToGoBack } from './pages/swipe-to-go-back/SwipeToGoBack';
+import { SwipeToGoBack, SwipeToGoBackDisabled } from './pages/swipe-to-go-back/SwipeToGoBack';
 import TabsContext from './pages/tab-context/TabContext';
 import Tabs from './pages/tabs/Tabs';
 import TabsSecondary from './pages/tabs/TabsSecondary';
@@ -92,6 +92,7 @@ const App: React.FC = () => {
           <Route path="/tab-context/*" element={<TabsContext />} />
           <Route path="/outlet-ref" element={<OutletRef />} />
           <Route path="/swipe-to-go-back/*" element={<SwipeToGoBack />} />
+          <Route path="/swipe-to-go-back-disabled/*" element={<SwipeToGoBackDisabled />} />
           <Route path="/dynamic-ionpage-classnames" element={<DynamicIonpageClassnames />} />
           <Route path="/tabs/*" element={<Tabs />} />
           <Route path="/tabs-secondary/*" element={<TabsSecondary />} />

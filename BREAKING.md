@@ -14,8 +14,44 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Version 9.x
 
+- [Components](#version-9x-components)
+  - [Router Outlet](#version-9x-router-outlet)
 - [Framework Specific](#version-9x-framework-specific)
   - [React](#version-9x-react)
+
+<h2 id="version-9x-components">Components</h2>
+
+<h4 id="version-9x-router-outlet">Router Outlet</h4>
+
+`ion-router-outlet` now exposes a `swipeGesture` property that controls the swipe-to-go-back gesture per outlet. This property defaults to `true` in `"ios"` mode and `false` in `"md"` mode.
+
+**`swipeBackEnabled` Config Behavior Change**
+
+In React and Vue, the `swipeBackEnabled` config option is now read once when the outlet mounts. Apps that dynamically toggle this config value at runtime should migrate to the `swipeGesture` property instead:
+
+**React:**
+
+```diff
+- setupIonicReact({ swipeBackEnabled: someCondition });
++ <IonRouterOutlet swipeGesture={someCondition} />
+```
+
+**Vue:**
+
+```diff
+- createApp(App).use(IonicVue, { swipeBackEnabled: someCondition })
++ <ion-router-outlet :swipe-gesture="someCondition" />
+```
+
+**Disabling Swipe-to-Go-Back**
+
+To disable the gesture on a specific outlet, set `swipeGesture` to `false`:
+
+```tsx
+<IonRouterOutlet swipeGesture={false} />
+```
+
+The `swipeBackEnabled` config option is still respected as the initial default and does not need to change for apps that set it once at startup.
 
 <h2 id="version-9x-framework-specific">Framework Specific</h2>
 

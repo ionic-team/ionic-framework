@@ -2915,6 +2915,10 @@ export namespace Components {
          */
         "mode": "ios" | "md";
         "setRouteId": (id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder) => Promise<RouteWrite>;
+        /**
+          * If `true`, the router-outlet should allow navigation via swipe-to-go-back gesture. Defaults to `true` for `"ios"` mode and `false` for `"md"` mode.
+         */
+        "swipeGesture"?: boolean;
         "swipeHandler"?: SwipeGestureHandler;
     }
     interface IonRow {
@@ -8229,6 +8233,10 @@ declare namespace LocalJSX {
         "onIonNavDidChange"?: (event: IonRouterOutletCustomEvent<void>) => void;
         "onIonNavWillChange"?: (event: IonRouterOutletCustomEvent<void>) => void;
         "onIonNavWillLoad"?: (event: IonRouterOutletCustomEvent<void>) => void;
+        /**
+          * If `true`, the router-outlet should allow navigation via swipe-to-go-back gesture. Defaults to `true` for `"ios"` mode and `false` for `"md"` mode.
+         */
+        "swipeGesture"?: boolean;
         "swipeHandler"?: SwipeGestureHandler;
     }
     interface IonRow {
@@ -9723,6 +9731,7 @@ declare namespace LocalJSX {
     interface IonRouterOutletAttributes {
         "mode": "ios" | "md";
         "animated": boolean;
+        "swipeGesture": boolean;
     }
     interface IonSearchbarAttributes {
         "color": Color;

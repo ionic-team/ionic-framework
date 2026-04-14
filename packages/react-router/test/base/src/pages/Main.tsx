@@ -99,6 +99,9 @@ const Main: React.FC = () => {
           <IonItem routerLink="/swipe-to-go-back">
             <IonLabel>Swipe to Go Back</IonLabel>
           </IonItem>
+          <IonItem routerLink="/swipe-to-go-back-disabled">
+            <IonLabel>Swipe to go back (disabled)</IonLabel>
+          </IonItem>
           <IonItem routerLink="/multi-step-back/a">
             <IonLabel>Multi-Step Back</IonLabel>
           </IonItem>

@@ -76,3 +76,46 @@ const Details2: React.FC = () => {
     </IonPage>
   );
 };
+
+export const SwipeToGoBackDisabled: React.FC = () => {
+  return (
+    <IonRouterOutlet id="swipe-to-go-back-disabled" swipeGesture={false}>
+      <Route path="/swipe-to-go-back-disabled" element={<DisabledMain />} />
+      <Route path="/swipe-to-go-back-disabled/details" element={<DisabledDetails />} />
+    </IonRouterOutlet>
+  );
+};
+
+const DisabledMain: React.FC = () => {
+  return (
+    <IonPage data-pageid="disabled-main">
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Disabled Main</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonItem routerLink="/swipe-to-go-back-disabled/details">Details</IonItem>
+        <TestDescription>Navigate to Details and try swiping from the left edge. The swipe gesture should be disabled -- the page should not move or go back.</TestDescription>
+      </IonContent>
+    </IonPage>
+  );
+};
+
+const DisabledDetails: React.FC = () => {
+  return (
+    <IonPage data-pageid="disabled-details">
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton></IonBackButton>
+          </IonButtons>
+          <IonTitle>Disabled Details</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <div>Details (swipe disabled)</div>
+      </IonContent>
+    </IonPage>
+  );
+};

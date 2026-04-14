@@ -151,7 +151,7 @@ describe('Swipe To Go Back', () => {
   })
 
   it('should keep correct view visible after swipe-back completes then abort on previous page', () => {
-    // Navigate three levels deep: main → details → details2
+    // Navigate three levels deep: main -> details -> details2
     cy.visit(`http://localhost:${port}/swipe-to-go-back?${IOS_MODE}`);
     cy.ionPageVisible('main');
 
@@ -164,7 +164,7 @@ describe('Swipe To Go Back', () => {
     cy.ionPageVisible('details2');
     cy.ionPageHidden('details');
 
-    // Complete swipe back from details2 → details
+    // Complete swipe back from details2 -> details
     cy.ionSwipeToGoBack(true, 'ion-router-outlet#swipe-to-go-back');
     cy.ionPageVisible('details');
     cy.ionPageDoesNotExist('details2');
@@ -199,4 +199,17 @@ describe('Swipe To Go Back', () => {
     cy.ionPageVisible('details');
     cy.ionPageHidden('main');
   })
+
+  it('should not swipe back when swipeGesture is false', () => {
+    cy.visit(`http://localhost:${port}/swipe-to-go-back-disabled?${IOS_MODE}`);
+    cy.ionPageVisible('disabled-main');
+
+    cy.ionNav('ion-item', 'Details');
+    cy.ionPageVisible('disabled-details');
+    cy.ionPageHidden('disabled-main');
+
+    cy.ionSwipeToGoBack(true, 'ion-router-outlet#swipe-to-go-back-disabled');
+    cy.ionPageVisible('disabled-details');
+    cy.ionPageHidden('disabled-main');
+  });
 });

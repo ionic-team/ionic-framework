@@ -203,4 +203,18 @@ test.describe('Swipe To Go Back', () => {
     await ionPageVisible(page, 'details');
     await ionPageHidden(page, 'main');
   });
+
+  test('should not swipe back when swipeGesture is false', async ({ page }) => {
+    await page.goto(`/swipe-to-go-back-disabled?${IOS_MODE}`);
+    await ionPageVisible(page, 'disabled-main');
+
+    await ionNav(page, 'ion-item', 'Details');
+    await ionPageVisible(page, 'disabled-details');
+    await ionPageHidden(page, 'disabled-main');
+
+    // Attempt a full swipe -- should not go back since gesture is disabled
+    await ionSwipeToGoBack(page, true, 'ion-router-outlet#swipe-to-go-back-disabled');
+    await ionPageVisible(page, 'disabled-details');
+    await ionPageHidden(page, 'disabled-main');
+  });
 });

@@ -53,13 +53,21 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   /** This property allows to create custom transition using AnimationBuilder functions. */
   @Prop() animation?: AnimationBuilder;
 
+  /**
+   * If `true`, the router-outlet should allow navigation via swipe-to-go-back gesture.
+   * Defaults to `true` for `"ios"` mode and `false` for `"md"` mode.
+   */
+  @Prop({ mutable: true }) swipeGesture?: boolean;
+  @Watch('swipeGesture')
+  swipeGestureChanged() {
+    this.updateGestureEnabled();
+  }
+
   /** @internal */
   @Prop() swipeHandler?: SwipeGestureHandler;
   @Watch('swipeHandler')
   swipeHandlerChanged() {
-    if (this.gesture) {
-      this.gesture.enable(this.swipeHandler !== undefined);
-    }
+    this.updateGestureEnabled();
   }
 
   /** @internal */
@@ -121,11 +129,22 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
         }
       }
     );
-    this.swipeHandlerChanged();
+
+    if (this.swipeGesture === undefined) {
+      this.swipeGesture = config.getBoolean('swipeBackEnabled', this.mode === 'ios');
+    } else {
+      this.updateGestureEnabled();
+    }
   }
 
   componentWillLoad() {
     this.ionNavWillLoad.emit();
+  }
+
+  private updateGestureEnabled() {
+    if (this.gesture) {
+      this.gesture.enable(this.swipeHandler !== undefined && this.swipeGesture === true);
+    }
   }
 
   disconnectedCallback() {

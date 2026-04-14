@@ -87,6 +87,20 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/ReorderGroup.vue')
   },
   {
+    path: '/swipe-gesture-disabled',
+    component: () => import('@/views/swipe-gesture-disabled/SwipeGestureDisabledOutlet.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/swipe-gesture-disabled/SwipeGestureDisabledMain.vue')
+      },
+      {
+        path: 'details',
+        component: () => import('@/views/swipe-gesture-disabled/SwipeGestureDisabledDetails.vue')
+      }
+    ]
+  },
+  {
     path: '/nested',
     component: () => import('@/views/nested/RouterOutlet.vue'),
     children: [

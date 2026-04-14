@@ -1137,12 +1137,6 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
    */
   async setupRouterOutlet(routerOutlet: HTMLIonRouterOutletElement) {
     const canStart = () => {
-      const config = getConfig();
-      const swipeEnabled = config && config.get('swipeBackEnabled', routerOutlet.mode === 'ios');
-      if (!swipeEnabled) {
-        return false;
-      }
-
       const { routeInfo } = this.props;
       const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
       let enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, this.id, false);
