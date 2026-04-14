@@ -27,17 +27,19 @@ const contentCache = new WeakMap<HTMLElement, HTMLElement>();
  * preventing flicker caused by destroying and recreating web
  * components (e.g., ion-avatar) on every re-render cycle.
  *
- * Uses span elements because this content may render within buttons,
+ * Span elements should be used when this content renders within buttons,
  * depending on the select interface. Buttons can only have phrasing
  * content to prevent accessibility issues.
  *
  * @param id - Unique identifier for generating stable virtual DOM keys.
  * @param content - The HTMLElement container whose child nodes will be cloned.
  * @param className - CSS class applied to the wrapper span.
+ * @param useSpan - Whether to use a span element instead of a div for the wrapper.
  */
-const renderClonedContent = (id: string, content: HTMLElement, className: string) => {
+const renderClonedContent = (id: string, content: HTMLElement, className: string, useSpan = false) => {
+  const Tag = useSpan ? 'span' : 'div';
   return (
-    <span
+    <Tag
       class={className}
       key={`${className}-${id}`}
       ref={(el) => {
@@ -54,7 +56,7 @@ const renderClonedContent = (id: string, content: HTMLElement, className: string
           contentCache.set(el, content);
         }
       }}
-    ></span>
+    ></Tag>
   );
 };
 
@@ -62,55 +64,67 @@ const renderClonedContent = (id: string, content: HTMLElement, className: string
  * Renders the label content for a select option within an overlay
  * interface based on the presence of rich content.
  *
- * Uses span elements because this content may render within buttons,
+ * Span elements should be used when this content renders within buttons,
  * depending on the select interface. Buttons can only have phrasing
  * content to prevent accessibility issues.
  *
  * @param option - The content option data containing label, slots,
  * and description.
  * @param className - The base CSS class for the label element.
+ * @param useSpan - Whether to use a span element instead of a div for the label.
  */
-export const renderOptionLabel = (option: RichContentOption, className: string): HTMLElement | string | undefined => {
+export const renderOptionLabel = (
+  option: RichContentOption,
+  className: string,
+  useSpan = false
+): HTMLElement | string | undefined => {
   const { id, label, startContent, endContent, description } = option;
   const hasRichContent = !!startContent || !!endContent || !!description;
+  const Tag = useSpan ? 'span' : 'div';
 
   // Render simple string label if there is no rich content to display
   if (!hasRichContent && (typeof label === 'string' || !label)) {
-    return label;
+    // const Tag = useSpan ? 'span' : 'div';
+
+    return (
+      <Tag class={className} key={`${className}-${id}`}>
+        {label}
+      </Tag>
+    );
   }
 
   // Render the main label
   const labelEl =
     typeof label === 'string' || !label ? (
       // Label is a simple string or undefined
-      <span key={`${className}-label-${id}`}>{label}</span>
+      <Tag key={`${className}-label-${id}`}>{label}</Tag>
     ) : (
       // Label is an HTMLElement with potential rich content
-      renderClonedContent(id, label, `${className}-text`)
+      renderClonedContent(id, label, `${className}-text`, useSpan)
     );
 
   // No rich content, render just the label
   if (!hasRichContent) {
     return (
-      <span class={className} key={`${className}-${id}`}>
+      <Tag class={className} key={`${className}-${id}`}>
         {labelEl}
-      </span>
+      </Tag>
     );
   }
 
   // Render label with rich content (start, end, description)
   return (
-    <span class={className} key={`${className}-${id}`}>
-      {startContent && renderClonedContent(id, startContent, 'select-option-start')}
-      <span class="select-option-content" key={`${className}-content-${id}`}>
+    <Tag class={className} key={`${className}-${id}`}>
+      {startContent && renderClonedContent(id, startContent, 'select-option-start', useSpan)}
+      <Tag class="select-option-content" key={`${className}-content-${id}`}>
         {labelEl}
         {description && (
-          <span class="select-option-description" key={`${className}-desc-${id}`}>
+          <Tag class="select-option-description" key={`${className}-desc-${id}`}>
             {description}
-          </span>
+          </Tag>
         )}
-      </span>
-      {endContent && renderClonedContent(id, endContent, 'select-option-end')}
-    </span>
+      </Tag>
+      {endContent && renderClonedContent(id, endContent, 'select-option-end', useSpan)}
+    </Tag>
   );
 };

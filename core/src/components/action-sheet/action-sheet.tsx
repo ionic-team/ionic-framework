@@ -597,7 +597,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         >
           <span class="action-sheet-button-inner">
             {b.icon && <ion-icon icon={b.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />}
-            {renderOptionLabel(optionLabelOptions, 'action-sheet-button-label')}
+            {renderOptionLabel(optionLabelOptions, 'action-sheet-button-label', true)}
           </span>
           {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </button>
