@@ -1,0 +1,13 @@
+// Tab Bar Ionic
+// --------------------------------------------------
+/// @prop - Alpha of translucent tab bar background color
+$tab-bar-ionic-translucent-background-color-alpha: 0.6;
+
+/// @prop - Translucent tab bar background color
+$tab-bar-ionic-translucent-background-color: var(
+  --translucent-background,
+  rgba(255, 255, 255, $tab-bar-ionic-translucent-background-color-alpha)
+);
+
+/// @prop - Filter of the translucent tab bar background color
+$tab-bar-ionic-translucent-filter: blur(12px);

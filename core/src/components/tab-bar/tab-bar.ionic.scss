@@ -1,4 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./tab-bar.ionic.vars" as vars;
 @use "./tab-bar.common";
 
 :host {
@@ -83,6 +84,21 @@
 
 :host([slot="bottom"].tab-bar-compact) {
   bottom: calc(globals.$ion-space-400 + var(--ion-safe-area-bottom, 0));
+}
+
+// Tab Bar Translucent
+// --------------------------------------------------
+
+@supports (backdrop-filter: blur(0)) {
+  :host(.tab-bar-translucent) {
+    --background: #{vars.$tab-bar-ionic-translucent-background-color};
+
+    backdrop-filter: var(--backdrop-filter, #{vars.$tab-bar-ionic-translucent-filter});
+  }
+
+  :host(.tab-bar-translucent) ::slotted(ion-tab-button.ion-focused) {
+    --background: transparent;
+  }
 }
 
 // Tab Bar Shapes
