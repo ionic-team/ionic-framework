@@ -1542,6 +1542,11 @@ const getOptionContent = (
     return null;
   }
 
+  // Return plain text if no elements are found
+  if (!slotName && nodes.every((n) => n.nodeType === Node.TEXT_NODE)) {
+    return nodes.map((n) => n.textContent?.trim()).join(' ') || null;
+  }
+
   // Clone each node into a temporary container
   const container = document.createElement('div');
   nodes.forEach((n) => {

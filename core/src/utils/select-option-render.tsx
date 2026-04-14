@@ -70,18 +70,26 @@ const renderClonedContent = (id: string, content: HTMLElement, className: string
  * and description.
  * @param className - The base CSS class for the label element.
  */
-export const renderOptionLabel = (option: RichContentOption, className: string): HTMLElement => {
+export const renderOptionLabel = (option: RichContentOption, className: string): HTMLElement | string | undefined => {
   const { id, label, startContent, endContent, description } = option;
   const hasRichContent = !!startContent || !!endContent || !!description;
+
+  // Render simple string label if there is no rich content to display
+  if (!hasRichContent && (typeof label === 'string' || !label)) {
+    return label;
+  }
 
   // Render the main label
   const labelEl =
     typeof label === 'string' || !label ? (
+      // Label is a simple string or undefined
       <span key={`${className}-label-${id}`}>{label}</span>
     ) : (
+      // Label is an HTMLElement with potential rich content
       renderClonedContent(id, label, `${className}-text`)
     );
 
+  // No rich content, render just the label
   if (!hasRichContent) {
     return (
       <span class={className} key={`${className}-${id}`}>
@@ -90,6 +98,7 @@ export const renderOptionLabel = (option: RichContentOption, className: string):
     );
   }
 
+  // Render label with rich content (start, end, description)
   return (
     <span class={className} key={`${className}-${id}`}>
       {startContent && renderClonedContent(id, startContent, 'select-option-start')}
