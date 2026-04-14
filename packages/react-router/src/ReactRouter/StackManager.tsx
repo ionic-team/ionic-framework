@@ -410,6 +410,15 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         if (enteringEl) {
           showIonPageElement(enteringEl);
           enteringEl.classList.remove('ion-page-invisible');
+
+          // Maintain can-go-back state since we skip transitionPage/commit.
+          // Without this, the back button disappears on re-navigation to a
+          // parameterized route within a nested outlet (e.g. welcome -> item -> back -> item).
+          if (routeInfo.pushedByRoute) {
+            enteringEl.classList.add('can-go-back');
+          } else {
+            enteringEl.classList.remove('can-go-back');
+          }
         }
 
         this.forceUpdate();
