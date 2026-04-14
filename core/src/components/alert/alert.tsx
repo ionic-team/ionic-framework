@@ -27,6 +27,7 @@ import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
+import type { SelectAlertInput } from '../select/select-interface';
 
 import type { AlertButton, AlertInput } from './alert-interface';
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -330,28 +331,20 @@ export class Alert implements ComponentInterface, OverlayInterface {
     }
 
     this.inputType = inputTypes.values().next().value;
-    this.processedInputs = inputs.map(
-      (i, index) =>
-        ({
-          type: i.type || 'text',
-          name: i.name || `${index}`,
-          placeholder: i.placeholder || '',
-          value: i.value,
-          label: i.label,
-          checked: !!i.checked,
-          disabled: !!i.disabled,
-          id: i.id || `alert-input-${this.overlayIndex}-${index}`,
-          handler: i.handler,
-          min: i.min,
-          max: i.max,
-          cssClass: i.cssClass ?? '',
-          attributes: i.attributes || {},
-          tabindex: i.type === 'radio' && i !== focusable ? -1 : 0,
-          startContent: i.startContent,
-          endContent: i.endContent,
-          description: i.description,
-        } as AlertInput)
-    );
+    this.processedInputs = inputs.map((i, index) => {
+      return {
+        ...i,
+        type: i.type || 'text',
+        name: i.name || `${index}`,
+        placeholder: i.placeholder || '',
+        checked: !!i.checked,
+        disabled: !!i.disabled,
+        id: i.id || `alert-input-${this.overlayIndex}-${index}`,
+        cssClass: i.cssClass ?? '',
+        attributes: i.attributes || {},
+        tabindex: i.type === 'radio' && i !== focusable ? -1 : 0,
+      } as AlertInput;
+    });
   }
 
   connectedCallback() {
@@ -574,12 +567,19 @@ export class Alert implements ComponentInterface, OverlayInterface {
     return (
       <div class="alert-checkbox-group">
         {inputs.map((i) => {
+          /**
+           * Cast to `SelectAlertInput` to access rich content
+           * fields (`startContent`, `endContent`, `description`)
+           * that are passed through from `ion-select` but not
+           * part of the public `AlertInput` interface.
+           */
+          const richInput = i as SelectAlertInput;
           const optionLabelOptions = {
-            id: i.id!,
-            label: i.label,
-            startContent: i.startContent,
-            endContent: i.endContent,
-            description: i.description,
+            id: richInput.id!,
+            label: richInput.label,
+            startContent: richInput.startContent,
+            endContent: richInput.endContent,
+            description: richInput.description,
           };
 
           return (
@@ -624,12 +624,19 @@ export class Alert implements ComponentInterface, OverlayInterface {
     return (
       <div class="alert-radio-group" role="radiogroup" aria-activedescendant={this.activeId}>
         {inputs.map((i) => {
+          /**
+           * Cast to `SelectAlertInput` to access rich content
+           * fields (`startContent`, `endContent`, `description`)
+           * that are passed through from `ion-select` but not
+           * part of the public `AlertInput` interface.
+           */
+          const richInput = i as SelectAlertInput;
           const optionLabelOptions = {
-            id: i.id!,
-            label: i.label,
-            startContent: i.startContent,
-            endContent: i.endContent,
-            description: i.description,
+            id: richInput.id!,
+            label: richInput.label,
+            startContent: richInput.startContent,
+            endContent: richInput.endContent,
+            description: richInput.description,
           };
 
           return (

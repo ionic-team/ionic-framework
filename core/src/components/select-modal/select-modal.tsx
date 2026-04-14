@@ -7,6 +7,7 @@ import { getClassMap, hostContext } from '@utils/theme';
 
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
+import type { SelectOverlayOption } from '../select/select-interface';
 
 import type { SelectModalOption } from './select-modal-interface';
 
@@ -94,12 +95,19 @@ export class SelectModal implements ComponentInterface {
     return (
       <ion-radio-group value={checked} onIonChange={(ev) => this.callOptionHandler(ev)}>
         {this.options.map((option, index) => {
+          /**
+           * Cast to `SelectOverlayOption` to access rich content
+           * fields (`startContent`, `endContent`, `description`)
+           * that are passed through from `ion-select` but not
+           * part of the public `SelectModalOption` interface.
+           */
+          const richOption = option as SelectOverlayOption;
           const optionLabelOptions = {
             id: `modal-option-${index}`,
-            label: option.text,
-            startContent: option.startContent,
-            endContent: option.endContent,
-            description: option.description,
+            label: richOption.text,
+            startContent: richOption.startContent,
+            endContent: richOption.endContent,
+            description: richOption.description,
           };
 
           return (
@@ -139,12 +147,19 @@ export class SelectModal implements ComponentInterface {
 
   private renderCheckboxOptions() {
     return this.options.map((option, index) => {
+      /**
+       * Cast to `SelectOverlayOption` to access rich content
+       * fields (`startContent`, `endContent`, `description`)
+       * that are passed through from `ion-select` but not
+       * part of the public `SelectModalOption` interface.
+       */
+      const richOption = option as SelectOverlayOption;
       const optionLabelOptions = {
         id: `modal-option-${index}`,
-        label: option.text,
-        startContent: option.startContent,
-        endContent: option.endContent,
-        description: option.description,
+        label: richOption.text,
+        startContent: richOption.startContent,
+        endContent: richOption.endContent,
+        description: richOption.description,
       };
 
       return (

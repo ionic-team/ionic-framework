@@ -26,11 +26,15 @@ import type {
   StyleEventDetail,
   ModalOptions,
 } from '../../interface';
-import type { ActionSheetButton } from '../action-sheet/action-sheet-interface';
-import type { AlertInput } from '../alert/alert-interface';
-import type { SelectPopoverOption } from '../select-popover/select-popover-interface';
 
-import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from './select-interface';
+import type {
+  SelectChangeEventDetail,
+  SelectInterface,
+  SelectCompareFn,
+  SelectActionSheetButton,
+  SelectAlertInput,
+  SelectOverlayOption,
+} from './select-interface';
 
 // TODO(FW-2832): types
 
@@ -568,7 +572,7 @@ export class Select implements ComponentInterface {
     }
   }
 
-  private createActionSheetButtons(data: HTMLIonSelectOptionElement[], selectValue: any): ActionSheetButton[] {
+  private createActionSheetButtons(data: HTMLIonSelectOptionElement[], selectValue: any): SelectActionSheetButton[] {
     const actionSheetButtons = data.map((option) => {
       const value = getOptionValue(option);
 
@@ -598,7 +602,7 @@ export class Select implements ComponentInterface {
         startContent: startContent ?? undefined,
         endContent: endContent ?? undefined,
         description: option.description,
-      } as ActionSheetButton;
+      } as SelectActionSheetButton;
     });
 
     // Add "cancel" button
@@ -617,7 +621,7 @@ export class Select implements ComponentInterface {
     data: HTMLIonSelectOptionElement[],
     inputType: 'checkbox' | 'radio',
     selectValue: any
-  ): AlertInput[] {
+  ): SelectAlertInput[] {
     const alertInputs = data.map((option) => {
       const value = getOptionValue(option);
 
@@ -648,7 +652,7 @@ export class Select implements ComponentInterface {
     return alertInputs;
   }
 
-  private createOverlaySelectOptions(data: HTMLIonSelectOptionElement[], selectValue: any): SelectPopoverOption[] {
+  private createOverlaySelectOptions(data: HTMLIonSelectOptionElement[], selectValue: any): SelectOverlayOption[] {
     const popoverOptions = data.map((option) => {
       const value = getOptionValue(option);
 

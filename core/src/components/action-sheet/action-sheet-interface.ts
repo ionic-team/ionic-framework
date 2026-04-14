@@ -14,7 +14,7 @@ export interface ActionSheetOptions extends OverlayOptions {
 }
 
 export interface ActionSheetButton<T = any> {
-  text?: string | HTMLElement;
+  text?: string;
   role?: LiteralUnion<'cancel' | 'destructive' | 'selected', string>;
   icon?: string;
   cssClass?: string | string[];
@@ -30,7 +30,4 @@ export interface ActionSheetButton<T = any> {
    * users to dismiss the action sheet.
    */
   disabled?: boolean;
-  startContent?: HTMLElement;
-  endContent?: HTMLElement;
-  description?: string;
 }

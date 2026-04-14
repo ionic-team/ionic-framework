@@ -7,6 +7,7 @@ import { getClassMap } from '@utils/theme';
 import { getIonTheme } from '../../global/ionic-global';
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
+import type { SelectOverlayOption } from '../select/select-interface';
 
 import type { SelectPopoverOption } from './select-popover-interface';
 
@@ -121,12 +122,19 @@ export class SelectPopover implements ComponentInterface {
 
   renderCheckboxOptions(options: SelectPopoverOption[]) {
     return options.map((option, index) => {
+      /**
+       * Cast to `SelectOverlayOption` to access rich content
+       * fields (`startContent`, `endContent`, `description`)
+       * that are passed through from `ion-select` but not
+       * part of the public `SelectPopoverOption` interface.
+       */
+      const richOption = option as SelectOverlayOption;
       const optionLabelOptions = {
         id: `popover-option-${index}`,
-        label: option.text,
-        startContent: option.startContent,
-        endContent: option.endContent,
-        description: option.description,
+        label: richOption.text,
+        startContent: richOption.startContent,
+        endContent: richOption.endContent,
+        description: richOption.description,
       };
 
       return (
@@ -163,12 +171,19 @@ export class SelectPopover implements ComponentInterface {
     return (
       <ion-radio-group value={checked} onIonChange={(ev) => this.callOptionHandler(ev)}>
         {options.map((option, index) => {
+          /**
+           * Cast to `SelectOverlayOption` to access rich content
+           * fields (`startContent`, `endContent`, `description`)
+           * that are passed through from `ion-select` but not
+           * part of the public `SelectPopoverOption` interface.
+           */
+          const richOption = option as SelectOverlayOption;
           const optionLabelOptions = {
             id: `popover-option-${index}`,
-            label: option.text,
-            startContent: option.startContent,
-            endContent: option.endContent,
-            description: option.description,
+            label: richOption.text,
+            startContent: richOption.startContent,
+            endContent: richOption.endContent,
+            description: richOption.description,
           };
 
           return (
