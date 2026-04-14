@@ -1,5 +1,7 @@
 import { h } from '@stencil/core';
 
+import { sanitizeDOMString } from './sanitization';
+
 interface RichContentOption {
   /** Unique identifier for stable virtual DOM keys across re-renders. */
   id: string;
@@ -22,7 +24,7 @@ interface RichContentOption {
 const contentCache = new WeakMap<HTMLElement, HTMLElement>();
 
 /**
- * Renders cloned DOM content into a span element via a ref callback.
+ * Renders cloned DOM content into an element via a ref callback.
  * The content is only cloned when the source element changes,
  * preventing flicker caused by destroying and recreating web
  * components (e.g., ion-avatar) on every re-render cycle.
@@ -50,9 +52,8 @@ const renderClonedContent = (id: string, content: HTMLElement, className: string
             return;
           }
 
-          // Clear previous content and clone new nodes
-          el.innerHTML = '';
-          Array.from(content.childNodes).forEach((n) => el.appendChild(n.cloneNode(true)));
+          const sanitized = sanitizeDOMString(content.innerHTML);
+          el.innerHTML = sanitized ?? '';
           contentCache.set(el, content);
         }
       }}
