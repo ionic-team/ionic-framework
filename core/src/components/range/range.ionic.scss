@@ -15,9 +15,9 @@
   --bar-background-active: #{globals.ion-color(primary, base)};
   --bar-border-radius: #{globals.$ion-border-radius-400};
   --height: #{globals.$ion-scale-1100};
-  
+
   @include globals.typography(globals.$ion-body-md-regular);
-  
+
   z-index: globals.$ion-z-index-100;
 }
 
