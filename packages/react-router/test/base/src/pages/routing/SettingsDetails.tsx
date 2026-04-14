@@ -27,7 +27,7 @@ const SettingsDetails: React.FC = () => {
     <IonPage data-pageid={`settings-details-page-${id}`}>
       <IonHeader>
         <IonToolbar>
-          <IonButtons>
+          <IonButtons slot="start">
             <IonBackButton defaultHref="/routing/tabs/settings"></IonBackButton>
           </IonButtons>
           <IonTitle>Settings Details</IonTitle>
