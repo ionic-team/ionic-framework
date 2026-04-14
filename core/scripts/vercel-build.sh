@@ -29,6 +29,9 @@ done
 echo "=== Ionic Framework Preview Build ==="
 echo "Core dir: ${CORE_DIR}"
 echo "Repo root: ${REPO_ROOT:-NOT FOUND}"
+if [ -z "${REPO_ROOT}" ]; then
+  echo "(This is expected in some Vercel configs -- framework test apps will be skipped)"
+fi
 
 rm -rf "${OUTPUT_DIR}"
 mkdir -p "${OUTPUT_DIR}"
@@ -135,17 +138,17 @@ echo ""
 echo "--- Step 2: Building Framework Packages ---"
 
 build_angular_pkgs() {
-  (cd "${REPO_ROOT}/packages/angular" && npm install && npm run build) || return 1
+  (cd "${REPO_ROOT}/packages/angular" && npm install && npm run sync && npm run build) || return 1
   (cd "${REPO_ROOT}/packages/angular-server" && npm install && npm run build) || return 1
 }
 
 build_react_pkgs() {
-  (cd "${REPO_ROOT}/packages/react" && npm install && npm run build) || return 1
+  (cd "${REPO_ROOT}/packages/react" && npm install && npm run sync && npm run build) || return 1
   (cd "${REPO_ROOT}/packages/react-router" && npm install && npm run build) || return 1
 }
 
 build_vue_pkgs() {
-  (cd "${REPO_ROOT}/packages/vue" && npm install && npm run build) || return 1
+  (cd "${REPO_ROOT}/packages/vue" && npm install && npm run sync && npm run build) || return 1
   (cd "${REPO_ROOT}/packages/vue-router" && npm install && npm run build) || return 1
 }
 
@@ -172,22 +175,20 @@ fi
 echo ""
 echo "--- Step 3: Building Framework Test Apps ---"
 
-# Find the best available app version for a given package
+# Find the best available app version for a given package.
+# Scans the apps/ directory and picks the newest version (reverse version sort).
 pick_app() {
-  local test_dir="$1"
-  shift
-  for v in "$@"; do
-    if [ -d "${test_dir}/apps/${v}" ]; then
-      echo "${v}"
-      return 0
-    fi
-  done
+  local apps_dir="$1/apps"
+  [ -d "${apps_dir}" ] || return 1
+  local app
+  app=$(ls -1d "${apps_dir}"/*/ 2>/dev/null | xargs -n1 basename | sort -V -r | head -1)
+  [ -n "${app}" ] && echo "${app}" && return 0
   return 1
 }
 
 build_angular_test() {
   local APP
-  APP=$(pick_app "${REPO_ROOT}/packages/angular/test" ng20 ng19 ng18) || {
+  APP=$(pick_app "${REPO_ROOT}/packages/angular/test") || {
     echo "[angular] No test app found, skipping."
     return 0
   }
@@ -213,7 +214,7 @@ build_angular_test() {
 
 build_react_test() {
   local APP
-  APP=$(pick_app "${REPO_ROOT}/packages/react/test" react19 react18) || {
+  APP=$(pick_app "${REPO_ROOT}/packages/react/test") || {
     echo "[react] No test app found, skipping."
     return 0
   }
@@ -234,7 +235,7 @@ build_react_test() {
 
 build_vue_test() {
   local APP
-  APP=$(pick_app "${REPO_ROOT}/packages/vue/test" vue3) || {
+  APP=$(pick_app "${REPO_ROOT}/packages/vue/test") || {
     echo "[vue] No test app found, skipping."
     return 0
   }
