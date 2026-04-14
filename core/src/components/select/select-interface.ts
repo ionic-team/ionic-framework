@@ -15,23 +15,26 @@ export interface SelectCustomEvent<T = any> extends CustomEvent {
   target: HTMLIonSelectElement;
 }
 
-export interface SelectActionSheetButton extends Omit<ActionSheetButton, 'text'> {
+export interface SelectActionSheetButton extends Omit<ActionSheetButton, 'text'>, RichContentOption {
+  /** The main text for the option as a string or an HTMLElement. */
   text?: string | HTMLElement;
-  startContent?: HTMLElement;
-  endContent?: HTMLElement;
-  description?: string;
 }
 
-export interface SelectAlertInput extends Omit<AlertInput, 'label'> {
+export interface SelectAlertInput extends Omit<AlertInput, 'label'>, RichContentOption {
+  /** The main label for the option as a string or an HTMLElement. */
   label?: string | HTMLElement;
-  startContent?: HTMLElement;
-  endContent?: HTMLElement;
-  description?: string;
 }
 
-export interface SelectOverlayOption extends Omit<SelectPopoverOption, 'text'> {
+export interface SelectOverlayOption extends Omit<SelectPopoverOption, 'text'>, RichContentOption {
+  /** The main text for the option as a string or an HTMLElement. */
   text?: string | HTMLElement;
+}
+
+interface RichContentOption {
+  /** Content to display at the start of the option. */
   startContent?: HTMLElement;
+  /** Content to display at the end of the option. */
   endContent?: HTMLElement;
+  /** A description for the option. */
   description?: string;
 }
