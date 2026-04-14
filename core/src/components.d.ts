@@ -6019,8 +6019,6 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    type OneOf<K extends string, PropT, AttrT = PropT> = { [P in K]: PropT } & { [P in `attr:${K}` | `prop:${K}`]?: never } | { [P in `attr:${K}`]: AttrT } & { [P in K | `prop:${K}`]?: never } | { [P in `prop:${K}`]: PropT } & { [P in K | `attr:${K}`]?: never };
-
     interface IonAccordion {
         /**
           * If `true`, the accordion cannot be interacted with.
@@ -7784,10 +7782,6 @@ declare namespace LocalJSX {
          */
         "fill"?: 'outline' | 'solid';
         /**
-          * The `id` of a `<form>` element to associate this element with.
-         */
-        "form"?: string;
-        /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.  For numbers (type="number"): "numeric" For text (type="text"): "text"
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
@@ -7800,10 +7794,6 @@ declare namespace LocalJSX {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The name of the element, used when submitting an HTML form.
-         */
-        "name"?: string;
         /**
           * Emitted when the input group loses focus.
          */
@@ -10233,10 +10223,6 @@ declare namespace LocalJSX {
          */
         "fill"?: 'outline' | 'solid';
         /**
-          * The `id` of a `<form>` element to associate this element with.
-         */
-        "form"?: string;
-        /**
           * Text that is placed under the textarea and displayed when no error is detected.
          */
         "helperText"?: string;
@@ -10599,1003 +10585,209 @@ declare namespace LocalJSX {
          */
         "titlePlacement"?: 'start' | 'center' | 'end';
     }
-
-    interface IonAccordionAttributes {
-        "value": string;
-        "disabled": boolean;
-        "readonly": boolean;
-        "toggleIcon": string;
-        "toggleIconSlot": 'start' | 'end';
-    }
-    interface IonAccordionGroupAttributes {
-        "animated": boolean;
-        "multiple": boolean;
-        "value": string | string[] | null;
-        "disabled": boolean;
-        "readonly": boolean;
-        "expand": 'compact' | 'inset';
-        "shape": 'soft' | 'round' | 'rectangular';
-    }
-    interface IonActionSheetAttributes {
-        "overlayIndex": number;
-        "hasController": boolean;
-        "keyboardClose": boolean;
-        "cssClass": string | string[];
-        "backdropDismiss": boolean;
-        "header": string;
-        "subHeader": string;
-        "translucent": boolean;
-        "animated": boolean;
-        "isOpen": boolean;
-        "trigger": string | undefined;
-    }
-    interface IonAlertAttributes {
-        "overlayIndex": number;
-        "hasController": boolean;
-        "keyboardClose": boolean;
-        "cssClass": string | string[];
-        "header": string;
-        "subHeader": string;
-        "message": string | IonicSafeString;
-        "backdropDismiss": boolean;
-        "translucent": boolean;
-        "animated": boolean;
-        "isOpen": boolean;
-        "trigger": string | undefined;
-    }
-    interface IonAvatarAttributes {
-        "size": 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
-        "shape": 'soft' | 'round' | 'rectangular';
-        "disabled": boolean;
-    }
-    interface IonBackButtonAttributes {
-        "color": Color;
-        "defaultHref": string;
-        "disabled": boolean;
-        "icon": string | null;
-        "text": string | null;
-        "type": 'submit' | 'reset' | 'button';
-    }
-    interface IonBackdropAttributes {
-        "visible": boolean;
-        "tappable": boolean;
-        "stopPropagation": boolean;
-    }
-    interface IonBadgeAttributes {
-        "color": Color;
-        "hue": 'bold' | 'subtle';
-        "shape": 'soft' | 'round | rectangular';
-        "size": 'small' | 'medium' | 'large';
-        "vertical": 'top' | 'bottom';
-    }
-    interface IonBreadcrumbAttributes {
-        "collapsed": boolean;
-        "last": boolean;
-        "showCollapsedIndicator": boolean;
-        "color": Color;
-        "active": boolean;
-        "disabled": boolean;
-        "download": string | undefined;
-        "href": string | undefined;
-        "rel": string | undefined;
-        "separator": boolean | undefined;
-        "target": string | undefined;
-        "routerDirection": RouterDirection;
-    }
-    interface IonBreadcrumbsAttributes {
-        "color": Color;
-        "maxItems": number;
-        "itemsBeforeCollapse": number;
-        "itemsAfterCollapse": number;
-    }
-    interface IonButtonAttributes {
-        "color": Color;
-        "buttonType": string;
-        "disabled": boolean;
-        "expand": 'full' | 'block';
-        "fill": 'clear' | 'outline' | 'solid' | 'default';
-        "routerDirection": RouterDirection;
-        "download": string | undefined;
-        "href": string | undefined;
-        "rel": string | undefined;
-        "shape": 'soft' | 'round' | 'rectangular';
-        "size": 'small' | 'default' | 'medium' | 'large';
-        "strong": boolean;
-        "target": string | undefined;
-        "type": 'submit' | 'reset' | 'button';
-        "form": string | HTMLFormElement;
-    }
-    interface IonButtonsAttributes {
-        "collapse": boolean;
-    }
-    interface IonCardAttributes {
-        "color": Color;
-        "button": boolean;
-        "type": 'submit' | 'reset' | 'button';
-        "disabled": boolean;
-        "download": string | undefined;
-        "href": string | undefined;
-        "rel": string | undefined;
-        "routerDirection": RouterDirection;
-        "shape": 'soft' | 'round' | 'rectangular';
-        "target": string | undefined;
-    }
-    interface IonCardHeaderAttributes {
-        "color": Color;
-        "translucent": boolean;
-    }
-    interface IonCardSubtitleAttributes {
-        "color": Color;
-    }
-    interface IonCardTitleAttributes {
-        "color": Color;
-    }
-    interface IonCheckboxAttributes {
-        "color": Color;
-        "name": string;
-        "checked": boolean;
-        "indeterminate": boolean;
-        "disabled": boolean;
-        "errorText": string;
-        "helperText": string;
-        "value": string;
-        "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
-        "justify": 'start' | 'end' | 'space-between';
-        "alignment": 'start' | 'center';
-        "required": boolean;
-        "shape": 'soft' | 'rectangular';
-        "size": 'small';
-    }
-    interface IonChipAttributes {
-        "color": Color;
-        "outline": boolean;
-        "disabled": boolean;
-        "hue": 'bold' | 'subtle';
-        "shape": 'soft' | 'round' | 'rectangular';
-        "size": 'small' | 'large';
-    }
-    interface IonColAttributes {
-        "offset": string;
-        "offsetXs": string;
-        "offsetSm": string;
-        "offsetMd": string;
-        "offsetLg": string;
-        "offsetXl": string;
-        "order": string;
-        "orderXs": string;
-        "orderSm": string;
-        "orderMd": string;
-        "orderLg": string;
-        "orderXl": string;
-        "pull": string;
-        "pullXs": string;
-        "pullSm": string;
-        "pullMd": string;
-        "pullLg": string;
-        "pullXl": string;
-        "push": string;
-        "pushXs": string;
-        "pushSm": string;
-        "pushMd": string;
-        "pushLg": string;
-        "pushXl": string;
-        "size": string;
-        "sizeXs": string;
-        "sizeSm": string;
-        "sizeMd": string;
-        "sizeLg": string;
-        "sizeXl": string;
-    }
-    interface IonContentAttributes {
-        "color": Color;
-        "fullscreen": boolean;
-        "fixedSlotPlacement": 'after' | 'before';
-        "forceOverscroll": boolean;
-        "scrollX": boolean;
-        "scrollY": boolean;
-        "scrollEvents": boolean;
-    }
-    interface IonDatetimeAttributes {
-        "color": Color;
-        "name": string;
-        "disabled": boolean;
-        "readonly": boolean;
-        "showAdjacentDays": boolean;
-        "min": string;
-        "max": string;
-        "presentation": DatetimePresentation;
-        "cancelText": string;
-        "doneText": string;
-        "clearText": string;
-        "yearValues": string;
-        "monthValues": string;
-        "dayValues": string;
-        "hourValues": string;
-        "minuteValues": string;
-        "locale": string;
-        "firstDayOfWeek": number;
-        "multiple": boolean;
-        "value": string | string[] | null;
-        "showDefaultTitle": boolean;
-        "showDefaultButtons": boolean;
-        "showClearButton": boolean;
-        "showDefaultTimeLabel": boolean;
-        "hourCycle": DatetimeHourCycle;
-        "size": 'cover' | 'fixed';
-        "preferWheel": boolean;
-    }
-    interface IonDatetimeButtonAttributes {
-        "color": Color;
-        "disabled": boolean;
-        "datetime": string;
-    }
-    interface IonDividerAttributes {
-        "spacing": 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
-        "inset": boolean;
-    }
-    interface IonFabAttributes {
-        "horizontal": 'start' | 'end' | 'center';
-        "vertical": 'top' | 'bottom' | 'center';
-        "edge": boolean;
-        "activated": boolean;
-    }
-    interface IonFabButtonAttributes {
-        "color": Color;
-        "activated": boolean;
-        "disabled": boolean;
-        "download": string | undefined;
-        "href": string | undefined;
-        "rel": string | undefined;
-        "routerDirection": RouterDirection;
-        "target": string | undefined;
-        "show": boolean;
-        "translucent": boolean;
-        "type": 'submit' | 'reset' | 'button';
-        "size": 'small';
-        "closeIcon": string;
-    }
-    interface IonFabListAttributes {
-        "activated": boolean;
-        "side": 'start' | 'end' | 'top' | 'bottom';
-    }
-    interface IonFooterAttributes {
-        "collapse": 'fade';
-        "translucent": boolean;
-    }
-    interface IonGridAttributes {
-        "fixed": boolean;
-    }
-    interface IonHeaderAttributes {
-        "collapse": 'condense' | 'fade';
-        "divider": boolean;
-        "translucent": boolean;
-    }
-    interface IonImgAttributes {
-        "alt": string;
-        "src": string;
-    }
-    interface IonInfiniteScrollAttributes {
-        "threshold": string;
-        "disabled": boolean;
-        "position": 'top' | 'bottom';
-        "preserveRerenderScrollPosition": boolean;
-    }
-    interface IonInfiniteScrollContentAttributes {
-        "loadingSpinner": SpinnerTypes | null;
-        "loadingText": string | IonicSafeString;
-    }
-    interface IonInputAttributes {
-        "color": Color;
-        "autocapitalize": string;
-        "autocomplete": AutocompleteTypes;
-        "autocorrect": 'on' | 'off';
-        "autofocus": boolean;
-        "clearInput": boolean;
-        "clearInputIcon": string;
-        "clearOnEdit": boolean;
-        "counter": boolean;
-        "debounce": number;
-        "disabled": boolean;
-        "enterkeyhint": 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
-        "errorText": string;
-        "fill": 'outline' | 'solid';
-        "inputmode": 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
-        "helperText": string;
-        "label": string;
-        "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
-        "max": string;
-        "maxlength": number;
-        "min": string;
-        "minlength": number;
-        "multiple": boolean;
-        "name": string;
-        "pattern": string;
-        "placeholder": string;
-        "readonly": boolean;
-        "required": boolean;
-        "shape": 'soft' | 'round' | 'rectangular';
-        "spellcheck": boolean;
-        "step": string;
-        "size": 'medium' | 'large' | 'xlarge';
-        "type": TextFieldTypes;
-        "value": string;
-    }
-    interface IonInputOtpAttributes {
-        "autocapitalize": string;
-        "color": Color;
-        "disabled": boolean;
-        "fill": 'outline' | 'solid';
-        "inputmode": 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
-        "length": number;
-        "pattern": string;
-        "readonly": boolean;
-        "separators": 'all' | string | number[];
-        "shape": 'round' | 'rectangular' | 'soft';
-        "size": 'small' | 'medium' | 'large';
-        "type": 'text' | 'number';
-        "value": string;
-    }
-    interface IonInputPasswordToggleAttributes {
-        "color": Color;
-        "showIcon": string;
-        "hideIcon": string;
-        "type": TextFieldTypes;
-    }
-    interface IonItemAttributes {
-        "color": Color;
-        "button": boolean;
-        "detail": boolean;
-        "detailIcon": string;
-        "disabled": boolean;
-        "download": string | undefined;
-        "href": string | undefined;
-        "rel": string | undefined;
-        "lines": 'full' | 'inset' | 'none';
-        "routerDirection": RouterDirection;
-        "target": string | undefined;
-        "type": 'submit' | 'reset' | 'button';
-    }
-    interface IonItemDividerAttributes {
-        "color": Color;
-        "sticky": boolean;
-    }
-    interface IonItemOptionAttributes {
-        "color": Color;
-        "disabled": boolean;
-        "download": string | undefined;
-        "expandable": boolean;
-        "href": string | undefined;
-        "hue": 'bold' | 'subtle';
-        "rel": string | undefined;
-        "target": string | undefined;
-        "type": 'submit' | 'reset' | 'button';
-        "shape": 'soft' | 'round' | 'rectangular';
-    }
-    interface IonItemOptionsAttributes {
-        "side": Side;
-    }
-    interface IonItemSlidingAttributes {
-        "disabled": boolean;
-    }
-    interface IonLabelAttributes {
-        "color": Color;
-        "position": 'fixed' | 'stacked' | 'floating';
-    }
-    interface IonListAttributes {
-        "lines": 'full' | 'inset' | 'none';
-        "inset": boolean;
-        "shape": 'soft' | 'round' | 'rectangular';
-    }
-    interface IonListHeaderAttributes {
-        "color": Color;
-        "lines": 'full' | 'inset' | 'none';
-    }
-    interface IonLoadingAttributes {
-        "overlayIndex": number;
-        "hasController": boolean;
-        "keyboardClose": boolean;
-        "message": string | IonicSafeString;
-        "cssClass": string | string[];
-        "duration": number;
-        "backdropDismiss": boolean;
-        "showBackdrop": boolean;
-        "spinner": SpinnerTypes | null;
-        "translucent": boolean;
-        "animated": boolean;
-        "isOpen": boolean;
-        "trigger": string | undefined;
-    }
-    interface IonMenuAttributes {
-        "contentId": string;
-        "menuId": string;
-        "type": MenuType;
-        "disabled": boolean;
-        "side": Side;
-        "swipeGesture": boolean;
-        "maxEdgeStart": number;
-    }
-    interface IonMenuButtonAttributes {
-        "color": Color;
-        "disabled": boolean;
-        "menu": string;
-        "autoHide": boolean;
-        "type": 'submit' | 'reset' | 'button';
-    }
-    interface IonMenuToggleAttributes {
-        "menu": string;
-        "autoHide": boolean;
-    }
-    interface IonModalAttributes {
-        "hasController": boolean;
-        "overlayIndex": number;
-        "keyboardClose": boolean;
-        "expandToScroll": boolean;
-        "initialBreakpoint": number;
-        "backdropBreakpoint": number;
-        "handle": boolean;
-        "handleBehavior": ModalHandleBehavior;
-        "component": ComponentRef;
-        "cssClass": string | string[];
-        "backdropDismiss": boolean;
-        "showBackdrop": boolean;
-        "animated": boolean;
-        "isOpen": boolean;
-        "trigger": string | undefined;
-        "keepContentsMounted": boolean;
-        "focusTrap": boolean;
-        "canDismiss": boolean | ((data?: any, role?: string) => Promise<boolean>);
-        "shape": 'soft' | 'round' | 'rectangular';
-    }
-    interface IonNavAttributes {
-        "swipeGesture": boolean;
-        "animated": boolean;
-        "root": NavComponent;
-    }
-    interface IonNavLinkAttributes {
-        "component": NavComponent;
-        "routerDirection": RouterDirection;
-    }
-    interface IonNoteAttributes {
-        "color": Color;
-    }
-    interface IonPickerColumnAttributes {
-        "disabled": boolean;
-        "value": string;
-        "color": Color;
-        "numericInput": boolean;
-    }
-    interface IonPickerColumnOptionAttributes {
-        "disabled": boolean;
-        "value": string;
-        "color": Color;
-    }
-    interface IonPickerLegacyAttributes {
-        "overlayIndex": number;
-        "hasController": boolean;
-        "keyboardClose": boolean;
-        "cssClass": string | string[];
-        "duration": number;
-        "showBackdrop": boolean;
-        "backdropDismiss": boolean;
-        "animated": boolean;
-        "isOpen": boolean;
-        "trigger": string | undefined;
-    }
-    interface IonPopoverAttributes {
-        "hasController": boolean;
-        "overlayIndex": number;
-        "component": ComponentRef;
-        "keyboardClose": boolean;
-        "cssClass": string | string[];
-        "backdropDismiss": boolean;
-        "event": string;
-        "showBackdrop": boolean;
-        "translucent": boolean;
-        "animated": boolean;
-        "triggerAction": TriggerAction;
-        "trigger": string | undefined;
-        "size": PopoverSize;
-        "dismissOnSelect": boolean;
-        "reference": PositionReference;
-        "side": PositionSide;
-        "alignment": PositionAlign;
-        "arrow": boolean;
-        "isOpen": boolean;
-        "keyboardEvents": boolean;
-        "focusTrap": boolean;
-        "keepContentsMounted": boolean;
-    }
-    interface IonProgressBarAttributes {
-        "type": 'determinate' | 'indeterminate';
-        "reversed": boolean;
-        "value": number;
-        "buffer": number;
-        "color": Color;
-        "shape": 'round' | 'rectangular';
-    }
-    interface IonRadioAttributes {
-        "color": Color;
-        "name": string;
-        "disabled": boolean;
-        "value": string;
-        "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
-        "justify": 'start' | 'end' | 'space-between';
-        "alignment": 'start' | 'center';
-    }
-    interface IonRadioGroupAttributes {
-        "allowEmptySelection": boolean;
-        "compareWith": string | RadioGroupCompareFn | null;
-        "name": string;
-        "value": string;
-        "helperText": string;
-        "errorText": string;
-    }
-    interface IonRangeAttributes {
-        "color": Color;
-        "debounce": number;
-        "name": string;
-        "label": string;
-        "dualKnobs": boolean;
-        "min": number;
-        "max": number;
-        "pin": boolean;
-        "snaps": boolean;
-        "step": number;
-        "ticks": boolean;
-        "activeBarStart": number;
-        "disabled": boolean;
-        "value": RangeValue;
-        "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
-    }
-    interface IonRefresherAttributes {
-        "pullMin": number;
-        "pullMax": number;
-        "closeDuration": string;
-        "snapbackDuration": string;
-        "pullFactor": number;
-        "disabled": boolean;
-    }
-    interface IonRefresherContentAttributes {
-        "pullingIcon": SpinnerTypes | string | null;
-        "pullingText": string | IonicSafeString;
-        "refreshingSpinner": SpinnerTypes | null;
-        "refreshingText": string | IonicSafeString;
-    }
-    interface IonReorderGroupAttributes {
-        "disabled": boolean;
-    }
-    interface IonRippleEffectAttributes {
-        "type": 'bounded' | 'unbounded';
-    }
-    interface IonRouteAttributes {
-        "url": string;
-        "component": string;
-    }
-    interface IonRouteRedirectAttributes {
-        "from": string;
-        "to": string | undefined | null;
-    }
-    interface IonRouterAttributes {
-        "root": string;
-        "useHash": boolean;
-    }
-    interface IonRouterLinkAttributes {
-        "color": Color;
-        "href": string | undefined;
-        "rel": string | undefined;
-        "routerDirection": RouterDirection;
-        "target": string | undefined;
-    }
-    interface IonRouterOutletAttributes {
-        "mode": "ios" | "md";
-        "animated": boolean;
-    }
-    interface IonSearchbarAttributes {
-        "color": Color;
-        "animated": boolean;
-        "autocapitalize": string;
-        "autocomplete": AutocompleteTypes;
-        "autocorrect": 'on' | 'off';
-        "cancelButtonIcon": string;
-        "cancelButtonText": string;
-        "clearIcon": string;
-        "debounce": number;
-        "disabled": boolean;
-        "inputmode": 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
-        "enterkeyhint": 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
-        "maxlength": number;
-        "minlength": number;
-        "name": string;
-        "placeholder": string;
-        "searchIcon": string;
-        "showCancelButton": 'never' | 'focus' | 'always';
-        "showClearButton": 'never' | 'focus' | 'always';
-        "spellcheck": boolean;
-        "type": 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url';
-        "value": string | null;
-        "shape": 'soft' | 'round' | 'rectangular';
-        "size": 'small' | 'medium' | 'large';
-    }
-    interface IonSegmentAttributes {
-        "color": Color;
-        "disabled": boolean;
-        "scrollable": boolean;
-        "swipeGesture": boolean;
-        "value": string;
-        "selectOnFocus": boolean;
-    }
-    interface IonSegmentButtonAttributes {
-        "contentId": string;
-        "disabled": boolean;
-        "layout": SegmentButtonLayout;
-        "type": 'submit' | 'reset' | 'button';
-        "value": string;
-    }
-    interface IonSegmentViewAttributes {
-        "disabled": boolean;
-        "swipeGesture": boolean;
-    }
-    interface IonSelectAttributes {
-        "cancelText": string;
-        "color": Color;
-        "compareWith": string | SelectCompareFn | null;
-        "disabled": boolean;
-        "fill": 'outline' | 'solid';
-        "errorText": string;
-        "helperText": string;
-        "interface": SelectInterface;
-        "interfaceOptions": string;
-        "justify": 'start' | 'end' | 'space-between';
-        "label": string;
-        "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
-        "multiple": boolean;
-        "name": string;
-        "okText": string;
-        "placeholder": string;
-        "selectedText": string | null;
-        "toggleIcon": string;
-        "expandedIcon": string;
-        "required": boolean;
-        "shape": 'soft' | 'round' | 'rectangular';
-        "size": 'small' | 'medium' | 'large';
-        "value": string;
-    }
-    interface IonSelectModalAttributes {
-        "header": string;
-        "cancelText": string;
-        "multiple": boolean;
-    }
-    interface IonSelectOptionAttributes {
-        "disabled": boolean;
-        "value": string;
-    }
-    interface IonSelectPopoverAttributes {
-        "header": string;
-        "subHeader": string;
-        "message": string;
-        "multiple": boolean;
-    }
-    interface IonSkeletonTextAttributes {
-        "animated": boolean;
-    }
-    interface IonSpinnerAttributes {
-        "color": Color;
-        "duration": number;
-        "name": SpinnerTypes;
-        "paused": boolean;
-        "size": 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
-    }
-    interface IonSplitPaneAttributes {
-        "contentId": string;
-        "disabled": boolean;
-        "when": string;
-    }
-    interface IonTabAttributes {
-        "active": boolean;
-        "tab": string;
-        "component": ComponentRef;
-    }
-    interface IonTabBarAttributes {
-        "color": Color;
-        "selectedTab": string;
-        "translucent": boolean;
-        "expand": 'compact' | 'full';
-        "shape": 'soft' | 'round' | 'rectangular';
-    }
-    interface IonTabButtonAttributes {
-        "disabled": boolean;
-        "download": string | undefined;
-        "href": string | undefined;
-        "rel": string | undefined;
-        "layout": TabButtonLayout;
-        "selected": boolean;
-        "shape": 'soft' | 'round' | 'rectangular';
-        "tab": string;
-        "target": string | undefined;
-    }
-    interface IonTabsAttributes {
-        "useRouter": boolean;
-    }
-    interface IonTextAttributes {
-        "color": Color;
-    }
-    interface IonTextareaAttributes {
-        "color": Color;
-        "autocapitalize": string;
-        "autofocus": boolean;
-        "clearOnEdit": boolean;
-        "debounce": number;
-        "disabled": boolean;
-        "fill": 'outline' | 'solid';
-        "inputmode": 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
-        "enterkeyhint": 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
-        "maxlength": number;
-        "minlength": number;
-        "name": string;
-        "placeholder": string;
-        "readonly": boolean;
-        "required": boolean;
-        "spellcheck": boolean;
-        "cols": number;
-        "rows": number;
-        "wrap": 'hard' | 'soft' | 'off';
-        "autoGrow": boolean;
-        "value": string | null;
-        "counter": boolean;
-        "errorText": string;
-        "helperText": string;
-        "label": string;
-        "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
-        "shape": 'soft' | 'round' | 'rectangular';
-        "size": 'small' | 'medium' | 'large';
-    }
-    interface IonTitleAttributes {
-        "color": Color;
-        "size": 'large' | 'small';
-    }
-    interface IonToastAttributes {
-        "overlayIndex": number;
-        "hasController": boolean;
-        "color": Color;
-        "cssClass": string | string[];
-        "duration": number;
-        "header": string;
-        "hue": 'bold' | 'subtle';
-        "layout": ToastLayout;
-        "message": string | IonicSafeString;
-        "keyboardClose": boolean;
-        "position": ToastPosition;
-        "positionAnchor": HTMLElement | string;
-        "shape": 'soft' | 'round' | 'rectangular';
-        "translucent": boolean;
-        "animated": boolean;
-        "icon": string;
-        "swipeGesture": ToastSwipeGestureDirection;
-        "isOpen": boolean;
-        "trigger": string | undefined;
-    }
-    interface IonToggleAttributes {
-        "color": Color;
-        "name": string;
-        "checked": boolean;
-        "disabled": boolean;
-        "errorText": string;
-        "helperText": string;
-        "value": string | null;
-        "enableOnOffLabels": boolean | undefined;
-        "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
-        "justify": 'start' | 'end' | 'space-between';
-        "alignment": 'start' | 'center';
-        "required": boolean;
-    }
-    interface IonToolbarAttributes {
-        "color": Color;
-        "titlePlacement": 'start' | 'center' | 'end';
-    }
-
     interface IntrinsicElements {
-        "ion-accordion": Omit<IonAccordion, keyof IonAccordionAttributes> & { [K in keyof IonAccordion & keyof IonAccordionAttributes]?: IonAccordion[K] } & { [K in keyof IonAccordion & keyof IonAccordionAttributes as `attr:${K}`]?: IonAccordionAttributes[K] } & { [K in keyof IonAccordion & keyof IonAccordionAttributes as `prop:${K}`]?: IonAccordion[K] };
-        "ion-accordion-group": Omit<IonAccordionGroup, keyof IonAccordionGroupAttributes> & { [K in keyof IonAccordionGroup & keyof IonAccordionGroupAttributes]?: IonAccordionGroup[K] } & { [K in keyof IonAccordionGroup & keyof IonAccordionGroupAttributes as `attr:${K}`]?: IonAccordionGroupAttributes[K] } & { [K in keyof IonAccordionGroup & keyof IonAccordionGroupAttributes as `prop:${K}`]?: IonAccordionGroup[K] };
-        "ion-action-sheet": Omit<IonActionSheet, keyof IonActionSheetAttributes> & { [K in keyof IonActionSheet & keyof IonActionSheetAttributes]?: IonActionSheet[K] } & { [K in keyof IonActionSheet & keyof IonActionSheetAttributes as `attr:${K}`]?: IonActionSheetAttributes[K] } & { [K in keyof IonActionSheet & keyof IonActionSheetAttributes as `prop:${K}`]?: IonActionSheet[K] } & OneOf<"overlayIndex", IonActionSheet["overlayIndex"], IonActionSheetAttributes["overlayIndex"]>;
-        "ion-alert": Omit<IonAlert, keyof IonAlertAttributes> & { [K in keyof IonAlert & keyof IonAlertAttributes]?: IonAlert[K] } & { [K in keyof IonAlert & keyof IonAlertAttributes as `attr:${K}`]?: IonAlertAttributes[K] } & { [K in keyof IonAlert & keyof IonAlertAttributes as `prop:${K}`]?: IonAlert[K] } & OneOf<"overlayIndex", IonAlert["overlayIndex"], IonAlertAttributes["overlayIndex"]>;
+        "ion-accordion": IonAccordion;
+        "ion-accordion-group": IonAccordionGroup;
+        "ion-action-sheet": IonActionSheet;
+        "ion-alert": IonAlert;
         "ion-app": IonApp;
-        "ion-avatar": Omit<IonAvatar, keyof IonAvatarAttributes> & { [K in keyof IonAvatar & keyof IonAvatarAttributes]?: IonAvatar[K] } & { [K in keyof IonAvatar & keyof IonAvatarAttributes as `attr:${K}`]?: IonAvatarAttributes[K] } & { [K in keyof IonAvatar & keyof IonAvatarAttributes as `prop:${K}`]?: IonAvatar[K] };
-        "ion-back-button": Omit<IonBackButton, keyof IonBackButtonAttributes> & { [K in keyof IonBackButton & keyof IonBackButtonAttributes]?: IonBackButton[K] } & { [K in keyof IonBackButton & keyof IonBackButtonAttributes as `attr:${K}`]?: IonBackButtonAttributes[K] } & { [K in keyof IonBackButton & keyof IonBackButtonAttributes as `prop:${K}`]?: IonBackButton[K] };
-        "ion-backdrop": Omit<IonBackdrop, keyof IonBackdropAttributes> & { [K in keyof IonBackdrop & keyof IonBackdropAttributes]?: IonBackdrop[K] } & { [K in keyof IonBackdrop & keyof IonBackdropAttributes as `attr:${K}`]?: IonBackdropAttributes[K] } & { [K in keyof IonBackdrop & keyof IonBackdropAttributes as `prop:${K}`]?: IonBackdrop[K] };
-        "ion-badge": Omit<IonBadge, keyof IonBadgeAttributes> & { [K in keyof IonBadge & keyof IonBadgeAttributes]?: IonBadge[K] } & { [K in keyof IonBadge & keyof IonBadgeAttributes as `attr:${K}`]?: IonBadgeAttributes[K] } & { [K in keyof IonBadge & keyof IonBadgeAttributes as `prop:${K}`]?: IonBadge[K] };
-        "ion-breadcrumb": Omit<IonBreadcrumb, keyof IonBreadcrumbAttributes> & { [K in keyof IonBreadcrumb & keyof IonBreadcrumbAttributes]?: IonBreadcrumb[K] } & { [K in keyof IonBreadcrumb & keyof IonBreadcrumbAttributes as `attr:${K}`]?: IonBreadcrumbAttributes[K] } & { [K in keyof IonBreadcrumb & keyof IonBreadcrumbAttributes as `prop:${K}`]?: IonBreadcrumb[K] } & OneOf<"last", IonBreadcrumb["last"], IonBreadcrumbAttributes["last"]> & OneOf<"showCollapsedIndicator", IonBreadcrumb["showCollapsedIndicator"], IonBreadcrumbAttributes["showCollapsedIndicator"]>;
-        "ion-breadcrumbs": Omit<IonBreadcrumbs, keyof IonBreadcrumbsAttributes> & { [K in keyof IonBreadcrumbs & keyof IonBreadcrumbsAttributes]?: IonBreadcrumbs[K] } & { [K in keyof IonBreadcrumbs & keyof IonBreadcrumbsAttributes as `attr:${K}`]?: IonBreadcrumbsAttributes[K] } & { [K in keyof IonBreadcrumbs & keyof IonBreadcrumbsAttributes as `prop:${K}`]?: IonBreadcrumbs[K] };
-        "ion-button": Omit<IonButton, keyof IonButtonAttributes> & { [K in keyof IonButton & keyof IonButtonAttributes]?: IonButton[K] } & { [K in keyof IonButton & keyof IonButtonAttributes as `attr:${K}`]?: IonButtonAttributes[K] } & { [K in keyof IonButton & keyof IonButtonAttributes as `prop:${K}`]?: IonButton[K] };
-        "ion-buttons": Omit<IonButtons, keyof IonButtonsAttributes> & { [K in keyof IonButtons & keyof IonButtonsAttributes]?: IonButtons[K] } & { [K in keyof IonButtons & keyof IonButtonsAttributes as `attr:${K}`]?: IonButtonsAttributes[K] } & { [K in keyof IonButtons & keyof IonButtonsAttributes as `prop:${K}`]?: IonButtons[K] };
-        "ion-card": Omit<IonCard, keyof IonCardAttributes> & { [K in keyof IonCard & keyof IonCardAttributes]?: IonCard[K] } & { [K in keyof IonCard & keyof IonCardAttributes as `attr:${K}`]?: IonCardAttributes[K] } & { [K in keyof IonCard & keyof IonCardAttributes as `prop:${K}`]?: IonCard[K] };
+        "ion-avatar": IonAvatar;
+        "ion-back-button": IonBackButton;
+        "ion-backdrop": IonBackdrop;
+        "ion-badge": IonBadge;
+        "ion-breadcrumb": IonBreadcrumb;
+        "ion-breadcrumbs": IonBreadcrumbs;
+        "ion-button": IonButton;
+        "ion-buttons": IonButtons;
+        "ion-card": IonCard;
         "ion-card-content": IonCardContent;
-        "ion-card-header": Omit<IonCardHeader, keyof IonCardHeaderAttributes> & { [K in keyof IonCardHeader & keyof IonCardHeaderAttributes]?: IonCardHeader[K] } & { [K in keyof IonCardHeader & keyof IonCardHeaderAttributes as `attr:${K}`]?: IonCardHeaderAttributes[K] } & { [K in keyof IonCardHeader & keyof IonCardHeaderAttributes as `prop:${K}`]?: IonCardHeader[K] };
-        "ion-card-subtitle": Omit<IonCardSubtitle, keyof IonCardSubtitleAttributes> & { [K in keyof IonCardSubtitle & keyof IonCardSubtitleAttributes]?: IonCardSubtitle[K] } & { [K in keyof IonCardSubtitle & keyof IonCardSubtitleAttributes as `attr:${K}`]?: IonCardSubtitleAttributes[K] } & { [K in keyof IonCardSubtitle & keyof IonCardSubtitleAttributes as `prop:${K}`]?: IonCardSubtitle[K] };
-        "ion-card-title": Omit<IonCardTitle, keyof IonCardTitleAttributes> & { [K in keyof IonCardTitle & keyof IonCardTitleAttributes]?: IonCardTitle[K] } & { [K in keyof IonCardTitle & keyof IonCardTitleAttributes as `attr:${K}`]?: IonCardTitleAttributes[K] } & { [K in keyof IonCardTitle & keyof IonCardTitleAttributes as `prop:${K}`]?: IonCardTitle[K] };
-        "ion-checkbox": Omit<IonCheckbox, keyof IonCheckboxAttributes> & { [K in keyof IonCheckbox & keyof IonCheckboxAttributes]?: IonCheckbox[K] } & { [K in keyof IonCheckbox & keyof IonCheckboxAttributes as `attr:${K}`]?: IonCheckboxAttributes[K] } & { [K in keyof IonCheckbox & keyof IonCheckboxAttributes as `prop:${K}`]?: IonCheckbox[K] };
-        "ion-chip": Omit<IonChip, keyof IonChipAttributes> & { [K in keyof IonChip & keyof IonChipAttributes]?: IonChip[K] } & { [K in keyof IonChip & keyof IonChipAttributes as `attr:${K}`]?: IonChipAttributes[K] } & { [K in keyof IonChip & keyof IonChipAttributes as `prop:${K}`]?: IonChip[K] };
-        "ion-col": Omit<IonCol, keyof IonColAttributes> & { [K in keyof IonCol & keyof IonColAttributes]?: IonCol[K] } & { [K in keyof IonCol & keyof IonColAttributes as `attr:${K}`]?: IonColAttributes[K] } & { [K in keyof IonCol & keyof IonColAttributes as `prop:${K}`]?: IonCol[K] };
-        "ion-content": Omit<IonContent, keyof IonContentAttributes> & { [K in keyof IonContent & keyof IonContentAttributes]?: IonContent[K] } & { [K in keyof IonContent & keyof IonContentAttributes as `attr:${K}`]?: IonContentAttributes[K] } & { [K in keyof IonContent & keyof IonContentAttributes as `prop:${K}`]?: IonContent[K] };
-        "ion-datetime": Omit<IonDatetime, keyof IonDatetimeAttributes> & { [K in keyof IonDatetime & keyof IonDatetimeAttributes]?: IonDatetime[K] } & { [K in keyof IonDatetime & keyof IonDatetimeAttributes as `attr:${K}`]?: IonDatetimeAttributes[K] } & { [K in keyof IonDatetime & keyof IonDatetimeAttributes as `prop:${K}`]?: IonDatetime[K] };
-        "ion-datetime-button": Omit<IonDatetimeButton, keyof IonDatetimeButtonAttributes> & { [K in keyof IonDatetimeButton & keyof IonDatetimeButtonAttributes]?: IonDatetimeButton[K] } & { [K in keyof IonDatetimeButton & keyof IonDatetimeButtonAttributes as `attr:${K}`]?: IonDatetimeButtonAttributes[K] } & { [K in keyof IonDatetimeButton & keyof IonDatetimeButtonAttributes as `prop:${K}`]?: IonDatetimeButton[K] };
-        "ion-divider": Omit<IonDivider, keyof IonDividerAttributes> & { [K in keyof IonDivider & keyof IonDividerAttributes]?: IonDivider[K] } & { [K in keyof IonDivider & keyof IonDividerAttributes as `attr:${K}`]?: IonDividerAttributes[K] } & { [K in keyof IonDivider & keyof IonDividerAttributes as `prop:${K}`]?: IonDivider[K] };
-        "ion-fab": Omit<IonFab, keyof IonFabAttributes> & { [K in keyof IonFab & keyof IonFabAttributes]?: IonFab[K] } & { [K in keyof IonFab & keyof IonFabAttributes as `attr:${K}`]?: IonFabAttributes[K] } & { [K in keyof IonFab & keyof IonFabAttributes as `prop:${K}`]?: IonFab[K] };
-        "ion-fab-button": Omit<IonFabButton, keyof IonFabButtonAttributes> & { [K in keyof IonFabButton & keyof IonFabButtonAttributes]?: IonFabButton[K] } & { [K in keyof IonFabButton & keyof IonFabButtonAttributes as `attr:${K}`]?: IonFabButtonAttributes[K] } & { [K in keyof IonFabButton & keyof IonFabButtonAttributes as `prop:${K}`]?: IonFabButton[K] };
-        "ion-fab-list": Omit<IonFabList, keyof IonFabListAttributes> & { [K in keyof IonFabList & keyof IonFabListAttributes]?: IonFabList[K] } & { [K in keyof IonFabList & keyof IonFabListAttributes as `attr:${K}`]?: IonFabListAttributes[K] } & { [K in keyof IonFabList & keyof IonFabListAttributes as `prop:${K}`]?: IonFabList[K] };
-        "ion-footer": Omit<IonFooter, keyof IonFooterAttributes> & { [K in keyof IonFooter & keyof IonFooterAttributes]?: IonFooter[K] } & { [K in keyof IonFooter & keyof IonFooterAttributes as `attr:${K}`]?: IonFooterAttributes[K] } & { [K in keyof IonFooter & keyof IonFooterAttributes as `prop:${K}`]?: IonFooter[K] };
-        "ion-grid": Omit<IonGrid, keyof IonGridAttributes> & { [K in keyof IonGrid & keyof IonGridAttributes]?: IonGrid[K] } & { [K in keyof IonGrid & keyof IonGridAttributes as `attr:${K}`]?: IonGridAttributes[K] } & { [K in keyof IonGrid & keyof IonGridAttributes as `prop:${K}`]?: IonGrid[K] };
-        "ion-header": Omit<IonHeader, keyof IonHeaderAttributes> & { [K in keyof IonHeader & keyof IonHeaderAttributes]?: IonHeader[K] } & { [K in keyof IonHeader & keyof IonHeaderAttributes as `attr:${K}`]?: IonHeaderAttributes[K] } & { [K in keyof IonHeader & keyof IonHeaderAttributes as `prop:${K}`]?: IonHeader[K] };
-        "ion-img": Omit<IonImg, keyof IonImgAttributes> & { [K in keyof IonImg & keyof IonImgAttributes]?: IonImg[K] } & { [K in keyof IonImg & keyof IonImgAttributes as `attr:${K}`]?: IonImgAttributes[K] } & { [K in keyof IonImg & keyof IonImgAttributes as `prop:${K}`]?: IonImg[K] };
-        "ion-infinite-scroll": Omit<IonInfiniteScroll, keyof IonInfiniteScrollAttributes> & { [K in keyof IonInfiniteScroll & keyof IonInfiniteScrollAttributes]?: IonInfiniteScroll[K] } & { [K in keyof IonInfiniteScroll & keyof IonInfiniteScrollAttributes as `attr:${K}`]?: IonInfiniteScrollAttributes[K] } & { [K in keyof IonInfiniteScroll & keyof IonInfiniteScrollAttributes as `prop:${K}`]?: IonInfiniteScroll[K] };
-        "ion-infinite-scroll-content": Omit<IonInfiniteScrollContent, keyof IonInfiniteScrollContentAttributes> & { [K in keyof IonInfiniteScrollContent & keyof IonInfiniteScrollContentAttributes]?: IonInfiniteScrollContent[K] } & { [K in keyof IonInfiniteScrollContent & keyof IonInfiniteScrollContentAttributes as `attr:${K}`]?: IonInfiniteScrollContentAttributes[K] } & { [K in keyof IonInfiniteScrollContent & keyof IonInfiniteScrollContentAttributes as `prop:${K}`]?: IonInfiniteScrollContent[K] };
-        "ion-input": Omit<IonInput, keyof IonInputAttributes> & { [K in keyof IonInput & keyof IonInputAttributes]?: IonInput[K] } & { [K in keyof IonInput & keyof IonInputAttributes as `attr:${K}`]?: IonInputAttributes[K] } & { [K in keyof IonInput & keyof IonInputAttributes as `prop:${K}`]?: IonInput[K] };
-        "ion-input-otp": Omit<IonInputOtp, keyof IonInputOtpAttributes> & { [K in keyof IonInputOtp & keyof IonInputOtpAttributes]?: IonInputOtp[K] } & { [K in keyof IonInputOtp & keyof IonInputOtpAttributes as `attr:${K}`]?: IonInputOtpAttributes[K] } & { [K in keyof IonInputOtp & keyof IonInputOtpAttributes as `prop:${K}`]?: IonInputOtp[K] };
-        "ion-input-password-toggle": Omit<IonInputPasswordToggle, keyof IonInputPasswordToggleAttributes> & { [K in keyof IonInputPasswordToggle & keyof IonInputPasswordToggleAttributes]?: IonInputPasswordToggle[K] } & { [K in keyof IonInputPasswordToggle & keyof IonInputPasswordToggleAttributes as `attr:${K}`]?: IonInputPasswordToggleAttributes[K] } & { [K in keyof IonInputPasswordToggle & keyof IonInputPasswordToggleAttributes as `prop:${K}`]?: IonInputPasswordToggle[K] };
-        "ion-item": Omit<IonItem, keyof IonItemAttributes> & { [K in keyof IonItem & keyof IonItemAttributes]?: IonItem[K] } & { [K in keyof IonItem & keyof IonItemAttributes as `attr:${K}`]?: IonItemAttributes[K] } & { [K in keyof IonItem & keyof IonItemAttributes as `prop:${K}`]?: IonItem[K] };
-        "ion-item-divider": Omit<IonItemDivider, keyof IonItemDividerAttributes> & { [K in keyof IonItemDivider & keyof IonItemDividerAttributes]?: IonItemDivider[K] } & { [K in keyof IonItemDivider & keyof IonItemDividerAttributes as `attr:${K}`]?: IonItemDividerAttributes[K] } & { [K in keyof IonItemDivider & keyof IonItemDividerAttributes as `prop:${K}`]?: IonItemDivider[K] };
+        "ion-card-header": IonCardHeader;
+        "ion-card-subtitle": IonCardSubtitle;
+        "ion-card-title": IonCardTitle;
+        "ion-checkbox": IonCheckbox;
+        "ion-chip": IonChip;
+        "ion-col": IonCol;
+        "ion-content": IonContent;
+        "ion-datetime": IonDatetime;
+        "ion-datetime-button": IonDatetimeButton;
+        "ion-divider": IonDivider;
+        "ion-fab": IonFab;
+        "ion-fab-button": IonFabButton;
+        "ion-fab-list": IonFabList;
+        "ion-footer": IonFooter;
+        "ion-grid": IonGrid;
+        "ion-header": IonHeader;
+        "ion-img": IonImg;
+        "ion-infinite-scroll": IonInfiniteScroll;
+        "ion-infinite-scroll-content": IonInfiniteScrollContent;
+        "ion-input": IonInput;
+        "ion-input-otp": IonInputOtp;
+        "ion-input-password-toggle": IonInputPasswordToggle;
+        "ion-item": IonItem;
+        "ion-item-divider": IonItemDivider;
         "ion-item-group": IonItemGroup;
-        "ion-item-option": Omit<IonItemOption, keyof IonItemOptionAttributes> & { [K in keyof IonItemOption & keyof IonItemOptionAttributes]?: IonItemOption[K] } & { [K in keyof IonItemOption & keyof IonItemOptionAttributes as `attr:${K}`]?: IonItemOptionAttributes[K] } & { [K in keyof IonItemOption & keyof IonItemOptionAttributes as `prop:${K}`]?: IonItemOption[K] };
-        "ion-item-options": Omit<IonItemOptions, keyof IonItemOptionsAttributes> & { [K in keyof IonItemOptions & keyof IonItemOptionsAttributes]?: IonItemOptions[K] } & { [K in keyof IonItemOptions & keyof IonItemOptionsAttributes as `attr:${K}`]?: IonItemOptionsAttributes[K] } & { [K in keyof IonItemOptions & keyof IonItemOptionsAttributes as `prop:${K}`]?: IonItemOptions[K] };
-        "ion-item-sliding": Omit<IonItemSliding, keyof IonItemSlidingAttributes> & { [K in keyof IonItemSliding & keyof IonItemSlidingAttributes]?: IonItemSliding[K] } & { [K in keyof IonItemSliding & keyof IonItemSlidingAttributes as `attr:${K}`]?: IonItemSlidingAttributes[K] } & { [K in keyof IonItemSliding & keyof IonItemSlidingAttributes as `prop:${K}`]?: IonItemSliding[K] };
-        "ion-label": Omit<IonLabel, keyof IonLabelAttributes> & { [K in keyof IonLabel & keyof IonLabelAttributes]?: IonLabel[K] } & { [K in keyof IonLabel & keyof IonLabelAttributes as `attr:${K}`]?: IonLabelAttributes[K] } & { [K in keyof IonLabel & keyof IonLabelAttributes as `prop:${K}`]?: IonLabel[K] };
-        "ion-list": Omit<IonList, keyof IonListAttributes> & { [K in keyof IonList & keyof IonListAttributes]?: IonList[K] } & { [K in keyof IonList & keyof IonListAttributes as `attr:${K}`]?: IonListAttributes[K] } & { [K in keyof IonList & keyof IonListAttributes as `prop:${K}`]?: IonList[K] };
-        "ion-list-header": Omit<IonListHeader, keyof IonListHeaderAttributes> & { [K in keyof IonListHeader & keyof IonListHeaderAttributes]?: IonListHeader[K] } & { [K in keyof IonListHeader & keyof IonListHeaderAttributes as `attr:${K}`]?: IonListHeaderAttributes[K] } & { [K in keyof IonListHeader & keyof IonListHeaderAttributes as `prop:${K}`]?: IonListHeader[K] };
-        "ion-loading": Omit<IonLoading, keyof IonLoadingAttributes> & { [K in keyof IonLoading & keyof IonLoadingAttributes]?: IonLoading[K] } & { [K in keyof IonLoading & keyof IonLoadingAttributes as `attr:${K}`]?: IonLoadingAttributes[K] } & { [K in keyof IonLoading & keyof IonLoadingAttributes as `prop:${K}`]?: IonLoading[K] } & OneOf<"overlayIndex", IonLoading["overlayIndex"], IonLoadingAttributes["overlayIndex"]>;
-        "ion-menu": Omit<IonMenu, keyof IonMenuAttributes> & { [K in keyof IonMenu & keyof IonMenuAttributes]?: IonMenu[K] } & { [K in keyof IonMenu & keyof IonMenuAttributes as `attr:${K}`]?: IonMenuAttributes[K] } & { [K in keyof IonMenu & keyof IonMenuAttributes as `prop:${K}`]?: IonMenu[K] };
-        "ion-menu-button": Omit<IonMenuButton, keyof IonMenuButtonAttributes> & { [K in keyof IonMenuButton & keyof IonMenuButtonAttributes]?: IonMenuButton[K] } & { [K in keyof IonMenuButton & keyof IonMenuButtonAttributes as `attr:${K}`]?: IonMenuButtonAttributes[K] } & { [K in keyof IonMenuButton & keyof IonMenuButtonAttributes as `prop:${K}`]?: IonMenuButton[K] };
-        "ion-menu-toggle": Omit<IonMenuToggle, keyof IonMenuToggleAttributes> & { [K in keyof IonMenuToggle & keyof IonMenuToggleAttributes]?: IonMenuToggle[K] } & { [K in keyof IonMenuToggle & keyof IonMenuToggleAttributes as `attr:${K}`]?: IonMenuToggleAttributes[K] } & { [K in keyof IonMenuToggle & keyof IonMenuToggleAttributes as `prop:${K}`]?: IonMenuToggle[K] };
-        "ion-modal": Omit<IonModal, keyof IonModalAttributes> & { [K in keyof IonModal & keyof IonModalAttributes]?: IonModal[K] } & { [K in keyof IonModal & keyof IonModalAttributes as `attr:${K}`]?: IonModalAttributes[K] } & { [K in keyof IonModal & keyof IonModalAttributes as `prop:${K}`]?: IonModal[K] } & OneOf<"overlayIndex", IonModal["overlayIndex"], IonModalAttributes["overlayIndex"]>;
-        "ion-nav": Omit<IonNav, keyof IonNavAttributes> & { [K in keyof IonNav & keyof IonNavAttributes]?: IonNav[K] } & { [K in keyof IonNav & keyof IonNavAttributes as `attr:${K}`]?: IonNavAttributes[K] } & { [K in keyof IonNav & keyof IonNavAttributes as `prop:${K}`]?: IonNav[K] };
-        "ion-nav-link": Omit<IonNavLink, keyof IonNavLinkAttributes> & { [K in keyof IonNavLink & keyof IonNavLinkAttributes]?: IonNavLink[K] } & { [K in keyof IonNavLink & keyof IonNavLinkAttributes as `attr:${K}`]?: IonNavLinkAttributes[K] } & { [K in keyof IonNavLink & keyof IonNavLinkAttributes as `prop:${K}`]?: IonNavLink[K] };
-        "ion-note": Omit<IonNote, keyof IonNoteAttributes> & { [K in keyof IonNote & keyof IonNoteAttributes]?: IonNote[K] } & { [K in keyof IonNote & keyof IonNoteAttributes as `attr:${K}`]?: IonNoteAttributes[K] } & { [K in keyof IonNote & keyof IonNoteAttributes as `prop:${K}`]?: IonNote[K] };
+        "ion-item-option": IonItemOption;
+        "ion-item-options": IonItemOptions;
+        "ion-item-sliding": IonItemSliding;
+        "ion-label": IonLabel;
+        "ion-list": IonList;
+        "ion-list-header": IonListHeader;
+        "ion-loading": IonLoading;
+        "ion-menu": IonMenu;
+        "ion-menu-button": IonMenuButton;
+        "ion-menu-toggle": IonMenuToggle;
+        "ion-modal": IonModal;
+        "ion-nav": IonNav;
+        "ion-nav-link": IonNavLink;
+        "ion-note": IonNote;
         "ion-picker": IonPicker;
-        "ion-picker-column": Omit<IonPickerColumn, keyof IonPickerColumnAttributes> & { [K in keyof IonPickerColumn & keyof IonPickerColumnAttributes]?: IonPickerColumn[K] } & { [K in keyof IonPickerColumn & keyof IonPickerColumnAttributes as `attr:${K}`]?: IonPickerColumnAttributes[K] } & { [K in keyof IonPickerColumn & keyof IonPickerColumnAttributes as `prop:${K}`]?: IonPickerColumn[K] };
-        "ion-picker-column-option": Omit<IonPickerColumnOption, keyof IonPickerColumnOptionAttributes> & { [K in keyof IonPickerColumnOption & keyof IonPickerColumnOptionAttributes]?: IonPickerColumnOption[K] } & { [K in keyof IonPickerColumnOption & keyof IonPickerColumnOptionAttributes as `attr:${K}`]?: IonPickerColumnOptionAttributes[K] } & { [K in keyof IonPickerColumnOption & keyof IonPickerColumnOptionAttributes as `prop:${K}`]?: IonPickerColumnOption[K] };
-        "ion-picker-legacy": Omit<IonPickerLegacy, keyof IonPickerLegacyAttributes> & { [K in keyof IonPickerLegacy & keyof IonPickerLegacyAttributes]?: IonPickerLegacy[K] } & { [K in keyof IonPickerLegacy & keyof IonPickerLegacyAttributes as `attr:${K}`]?: IonPickerLegacyAttributes[K] } & { [K in keyof IonPickerLegacy & keyof IonPickerLegacyAttributes as `prop:${K}`]?: IonPickerLegacy[K] } & OneOf<"overlayIndex", IonPickerLegacy["overlayIndex"], IonPickerLegacyAttributes["overlayIndex"]>;
+        "ion-picker-column": IonPickerColumn;
+        "ion-picker-column-option": IonPickerColumnOption;
+        "ion-picker-legacy": IonPickerLegacy;
         "ion-picker-legacy-column": IonPickerLegacyColumn;
-        "ion-popover": Omit<IonPopover, keyof IonPopoverAttributes> & { [K in keyof IonPopover & keyof IonPopoverAttributes]?: IonPopover[K] } & { [K in keyof IonPopover & keyof IonPopoverAttributes as `attr:${K}`]?: IonPopoverAttributes[K] } & { [K in keyof IonPopover & keyof IonPopoverAttributes as `prop:${K}`]?: IonPopover[K] } & OneOf<"overlayIndex", IonPopover["overlayIndex"], IonPopoverAttributes["overlayIndex"]>;
-        "ion-progress-bar": Omit<IonProgressBar, keyof IonProgressBarAttributes> & { [K in keyof IonProgressBar & keyof IonProgressBarAttributes]?: IonProgressBar[K] } & { [K in keyof IonProgressBar & keyof IonProgressBarAttributes as `attr:${K}`]?: IonProgressBarAttributes[K] } & { [K in keyof IonProgressBar & keyof IonProgressBarAttributes as `prop:${K}`]?: IonProgressBar[K] };
-        "ion-radio": Omit<IonRadio, keyof IonRadioAttributes> & { [K in keyof IonRadio & keyof IonRadioAttributes]?: IonRadio[K] } & { [K in keyof IonRadio & keyof IonRadioAttributes as `attr:${K}`]?: IonRadioAttributes[K] } & { [K in keyof IonRadio & keyof IonRadioAttributes as `prop:${K}`]?: IonRadio[K] };
-        "ion-radio-group": Omit<IonRadioGroup, keyof IonRadioGroupAttributes> & { [K in keyof IonRadioGroup & keyof IonRadioGroupAttributes]?: IonRadioGroup[K] } & { [K in keyof IonRadioGroup & keyof IonRadioGroupAttributes as `attr:${K}`]?: IonRadioGroupAttributes[K] } & { [K in keyof IonRadioGroup & keyof IonRadioGroupAttributes as `prop:${K}`]?: IonRadioGroup[K] };
-        "ion-range": Omit<IonRange, keyof IonRangeAttributes> & { [K in keyof IonRange & keyof IonRangeAttributes]?: IonRange[K] } & { [K in keyof IonRange & keyof IonRangeAttributes as `attr:${K}`]?: IonRangeAttributes[K] } & { [K in keyof IonRange & keyof IonRangeAttributes as `prop:${K}`]?: IonRange[K] };
-        "ion-refresher": Omit<IonRefresher, keyof IonRefresherAttributes> & { [K in keyof IonRefresher & keyof IonRefresherAttributes]?: IonRefresher[K] } & { [K in keyof IonRefresher & keyof IonRefresherAttributes as `attr:${K}`]?: IonRefresherAttributes[K] } & { [K in keyof IonRefresher & keyof IonRefresherAttributes as `prop:${K}`]?: IonRefresher[K] };
-        "ion-refresher-content": Omit<IonRefresherContent, keyof IonRefresherContentAttributes> & { [K in keyof IonRefresherContent & keyof IonRefresherContentAttributes]?: IonRefresherContent[K] } & { [K in keyof IonRefresherContent & keyof IonRefresherContentAttributes as `attr:${K}`]?: IonRefresherContentAttributes[K] } & { [K in keyof IonRefresherContent & keyof IonRefresherContentAttributes as `prop:${K}`]?: IonRefresherContent[K] };
+        "ion-popover": IonPopover;
+        "ion-progress-bar": IonProgressBar;
+        "ion-radio": IonRadio;
+        "ion-radio-group": IonRadioGroup;
+        "ion-range": IonRange;
+        "ion-refresher": IonRefresher;
+        "ion-refresher-content": IonRefresherContent;
         "ion-reorder": IonReorder;
-        "ion-reorder-group": Omit<IonReorderGroup, keyof IonReorderGroupAttributes> & { [K in keyof IonReorderGroup & keyof IonReorderGroupAttributes]?: IonReorderGroup[K] } & { [K in keyof IonReorderGroup & keyof IonReorderGroupAttributes as `attr:${K}`]?: IonReorderGroupAttributes[K] } & { [K in keyof IonReorderGroup & keyof IonReorderGroupAttributes as `prop:${K}`]?: IonReorderGroup[K] };
-        "ion-ripple-effect": Omit<IonRippleEffect, keyof IonRippleEffectAttributes> & { [K in keyof IonRippleEffect & keyof IonRippleEffectAttributes]?: IonRippleEffect[K] } & { [K in keyof IonRippleEffect & keyof IonRippleEffectAttributes as `attr:${K}`]?: IonRippleEffectAttributes[K] } & { [K in keyof IonRippleEffect & keyof IonRippleEffectAttributes as `prop:${K}`]?: IonRippleEffect[K] };
-        "ion-route": Omit<IonRoute, keyof IonRouteAttributes> & { [K in keyof IonRoute & keyof IonRouteAttributes]?: IonRoute[K] } & { [K in keyof IonRoute & keyof IonRouteAttributes as `attr:${K}`]?: IonRouteAttributes[K] } & { [K in keyof IonRoute & keyof IonRouteAttributes as `prop:${K}`]?: IonRoute[K] } & OneOf<"component", IonRoute["component"], IonRouteAttributes["component"]>;
-        "ion-route-redirect": Omit<IonRouteRedirect, keyof IonRouteRedirectAttributes> & { [K in keyof IonRouteRedirect & keyof IonRouteRedirectAttributes]?: IonRouteRedirect[K] } & { [K in keyof IonRouteRedirect & keyof IonRouteRedirectAttributes as `attr:${K}`]?: IonRouteRedirectAttributes[K] } & { [K in keyof IonRouteRedirect & keyof IonRouteRedirectAttributes as `prop:${K}`]?: IonRouteRedirect[K] } & OneOf<"from", IonRouteRedirect["from"], IonRouteRedirectAttributes["from"]> & OneOf<"to", IonRouteRedirect["to"], IonRouteRedirectAttributes["to"]>;
-        "ion-router": Omit<IonRouter, keyof IonRouterAttributes> & { [K in keyof IonRouter & keyof IonRouterAttributes]?: IonRouter[K] } & { [K in keyof IonRouter & keyof IonRouterAttributes as `attr:${K}`]?: IonRouterAttributes[K] } & { [K in keyof IonRouter & keyof IonRouterAttributes as `prop:${K}`]?: IonRouter[K] };
-        "ion-router-link": Omit<IonRouterLink, keyof IonRouterLinkAttributes> & { [K in keyof IonRouterLink & keyof IonRouterLinkAttributes]?: IonRouterLink[K] } & { [K in keyof IonRouterLink & keyof IonRouterLinkAttributes as `attr:${K}`]?: IonRouterLinkAttributes[K] } & { [K in keyof IonRouterLink & keyof IonRouterLinkAttributes as `prop:${K}`]?: IonRouterLink[K] };
-        "ion-router-outlet": Omit<IonRouterOutlet, keyof IonRouterOutletAttributes> & { [K in keyof IonRouterOutlet & keyof IonRouterOutletAttributes]?: IonRouterOutlet[K] } & { [K in keyof IonRouterOutlet & keyof IonRouterOutletAttributes as `attr:${K}`]?: IonRouterOutletAttributes[K] } & { [K in keyof IonRouterOutlet & keyof IonRouterOutletAttributes as `prop:${K}`]?: IonRouterOutlet[K] };
+        "ion-reorder-group": IonReorderGroup;
+        "ion-ripple-effect": IonRippleEffect;
+        "ion-route": IonRoute;
+        "ion-route-redirect": IonRouteRedirect;
+        "ion-router": IonRouter;
+        "ion-router-link": IonRouterLink;
+        "ion-router-outlet": IonRouterOutlet;
         "ion-row": IonRow;
-        "ion-searchbar": Omit<IonSearchbar, keyof IonSearchbarAttributes> & { [K in keyof IonSearchbar & keyof IonSearchbarAttributes]?: IonSearchbar[K] } & { [K in keyof IonSearchbar & keyof IonSearchbarAttributes as `attr:${K}`]?: IonSearchbarAttributes[K] } & { [K in keyof IonSearchbar & keyof IonSearchbarAttributes as `prop:${K}`]?: IonSearchbar[K] };
-        "ion-segment": Omit<IonSegment, keyof IonSegmentAttributes> & { [K in keyof IonSegment & keyof IonSegmentAttributes]?: IonSegment[K] } & { [K in keyof IonSegment & keyof IonSegmentAttributes as `attr:${K}`]?: IonSegmentAttributes[K] } & { [K in keyof IonSegment & keyof IonSegmentAttributes as `prop:${K}`]?: IonSegment[K] };
-        "ion-segment-button": Omit<IonSegmentButton, keyof IonSegmentButtonAttributes> & { [K in keyof IonSegmentButton & keyof IonSegmentButtonAttributes]?: IonSegmentButton[K] } & { [K in keyof IonSegmentButton & keyof IonSegmentButtonAttributes as `attr:${K}`]?: IonSegmentButtonAttributes[K] } & { [K in keyof IonSegmentButton & keyof IonSegmentButtonAttributes as `prop:${K}`]?: IonSegmentButton[K] };
+        "ion-searchbar": IonSearchbar;
+        "ion-segment": IonSegment;
+        "ion-segment-button": IonSegmentButton;
         "ion-segment-content": IonSegmentContent;
-        "ion-segment-view": Omit<IonSegmentView, keyof IonSegmentViewAttributes> & { [K in keyof IonSegmentView & keyof IonSegmentViewAttributes]?: IonSegmentView[K] } & { [K in keyof IonSegmentView & keyof IonSegmentViewAttributes as `attr:${K}`]?: IonSegmentViewAttributes[K] } & { [K in keyof IonSegmentView & keyof IonSegmentViewAttributes as `prop:${K}`]?: IonSegmentView[K] };
-        "ion-select": Omit<IonSelect, keyof IonSelectAttributes> & { [K in keyof IonSelect & keyof IonSelectAttributes]?: IonSelect[K] } & { [K in keyof IonSelect & keyof IonSelectAttributes as `attr:${K}`]?: IonSelectAttributes[K] } & { [K in keyof IonSelect & keyof IonSelectAttributes as `prop:${K}`]?: IonSelect[K] };
-        "ion-select-modal": Omit<IonSelectModal, keyof IonSelectModalAttributes> & { [K in keyof IonSelectModal & keyof IonSelectModalAttributes]?: IonSelectModal[K] } & { [K in keyof IonSelectModal & keyof IonSelectModalAttributes as `attr:${K}`]?: IonSelectModalAttributes[K] } & { [K in keyof IonSelectModal & keyof IonSelectModalAttributes as `prop:${K}`]?: IonSelectModal[K] };
-        "ion-select-option": Omit<IonSelectOption, keyof IonSelectOptionAttributes> & { [K in keyof IonSelectOption & keyof IonSelectOptionAttributes]?: IonSelectOption[K] } & { [K in keyof IonSelectOption & keyof IonSelectOptionAttributes as `attr:${K}`]?: IonSelectOptionAttributes[K] } & { [K in keyof IonSelectOption & keyof IonSelectOptionAttributes as `prop:${K}`]?: IonSelectOption[K] };
-        "ion-select-popover": Omit<IonSelectPopover, keyof IonSelectPopoverAttributes> & { [K in keyof IonSelectPopover & keyof IonSelectPopoverAttributes]?: IonSelectPopover[K] } & { [K in keyof IonSelectPopover & keyof IonSelectPopoverAttributes as `attr:${K}`]?: IonSelectPopoverAttributes[K] } & { [K in keyof IonSelectPopover & keyof IonSelectPopoverAttributes as `prop:${K}`]?: IonSelectPopover[K] };
-        "ion-skeleton-text": Omit<IonSkeletonText, keyof IonSkeletonTextAttributes> & { [K in keyof IonSkeletonText & keyof IonSkeletonTextAttributes]?: IonSkeletonText[K] } & { [K in keyof IonSkeletonText & keyof IonSkeletonTextAttributes as `attr:${K}`]?: IonSkeletonTextAttributes[K] } & { [K in keyof IonSkeletonText & keyof IonSkeletonTextAttributes as `prop:${K}`]?: IonSkeletonText[K] };
-        "ion-spinner": Omit<IonSpinner, keyof IonSpinnerAttributes> & { [K in keyof IonSpinner & keyof IonSpinnerAttributes]?: IonSpinner[K] } & { [K in keyof IonSpinner & keyof IonSpinnerAttributes as `attr:${K}`]?: IonSpinnerAttributes[K] } & { [K in keyof IonSpinner & keyof IonSpinnerAttributes as `prop:${K}`]?: IonSpinner[K] };
-        "ion-split-pane": Omit<IonSplitPane, keyof IonSplitPaneAttributes> & { [K in keyof IonSplitPane & keyof IonSplitPaneAttributes]?: IonSplitPane[K] } & { [K in keyof IonSplitPane & keyof IonSplitPaneAttributes as `attr:${K}`]?: IonSplitPaneAttributes[K] } & { [K in keyof IonSplitPane & keyof IonSplitPaneAttributes as `prop:${K}`]?: IonSplitPane[K] };
-        "ion-tab": Omit<IonTab, keyof IonTabAttributes> & { [K in keyof IonTab & keyof IonTabAttributes]?: IonTab[K] } & { [K in keyof IonTab & keyof IonTabAttributes as `attr:${K}`]?: IonTabAttributes[K] } & { [K in keyof IonTab & keyof IonTabAttributes as `prop:${K}`]?: IonTab[K] } & OneOf<"tab", IonTab["tab"], IonTabAttributes["tab"]>;
-        "ion-tab-bar": Omit<IonTabBar, keyof IonTabBarAttributes> & { [K in keyof IonTabBar & keyof IonTabBarAttributes]?: IonTabBar[K] } & { [K in keyof IonTabBar & keyof IonTabBarAttributes as `attr:${K}`]?: IonTabBarAttributes[K] } & { [K in keyof IonTabBar & keyof IonTabBarAttributes as `prop:${K}`]?: IonTabBar[K] };
-        "ion-tab-button": Omit<IonTabButton, keyof IonTabButtonAttributes> & { [K in keyof IonTabButton & keyof IonTabButtonAttributes]?: IonTabButton[K] } & { [K in keyof IonTabButton & keyof IonTabButtonAttributes as `attr:${K}`]?: IonTabButtonAttributes[K] } & { [K in keyof IonTabButton & keyof IonTabButtonAttributes as `prop:${K}`]?: IonTabButton[K] };
-        "ion-tabs": Omit<IonTabs, keyof IonTabsAttributes> & { [K in keyof IonTabs & keyof IonTabsAttributes]?: IonTabs[K] } & { [K in keyof IonTabs & keyof IonTabsAttributes as `attr:${K}`]?: IonTabsAttributes[K] } & { [K in keyof IonTabs & keyof IonTabsAttributes as `prop:${K}`]?: IonTabs[K] };
-        "ion-text": Omit<IonText, keyof IonTextAttributes> & { [K in keyof IonText & keyof IonTextAttributes]?: IonText[K] } & { [K in keyof IonText & keyof IonTextAttributes as `attr:${K}`]?: IonTextAttributes[K] } & { [K in keyof IonText & keyof IonTextAttributes as `prop:${K}`]?: IonText[K] };
-        "ion-textarea": Omit<IonTextarea, keyof IonTextareaAttributes> & { [K in keyof IonTextarea & keyof IonTextareaAttributes]?: IonTextarea[K] } & { [K in keyof IonTextarea & keyof IonTextareaAttributes as `attr:${K}`]?: IonTextareaAttributes[K] } & { [K in keyof IonTextarea & keyof IonTextareaAttributes as `prop:${K}`]?: IonTextarea[K] };
+        "ion-segment-view": IonSegmentView;
+        "ion-select": IonSelect;
+        "ion-select-modal": IonSelectModal;
+        "ion-select-option": IonSelectOption;
+        "ion-select-popover": IonSelectPopover;
+        "ion-skeleton-text": IonSkeletonText;
+        "ion-spinner": IonSpinner;
+        "ion-split-pane": IonSplitPane;
+        "ion-tab": IonTab;
+        "ion-tab-bar": IonTabBar;
+        "ion-tab-button": IonTabButton;
+        "ion-tabs": IonTabs;
+        "ion-text": IonText;
+        "ion-textarea": IonTextarea;
         "ion-thumbnail": IonThumbnail;
-        "ion-title": Omit<IonTitle, keyof IonTitleAttributes> & { [K in keyof IonTitle & keyof IonTitleAttributes]?: IonTitle[K] } & { [K in keyof IonTitle & keyof IonTitleAttributes as `attr:${K}`]?: IonTitleAttributes[K] } & { [K in keyof IonTitle & keyof IonTitleAttributes as `prop:${K}`]?: IonTitle[K] };
-        "ion-toast": Omit<IonToast, keyof IonToastAttributes> & { [K in keyof IonToast & keyof IonToastAttributes]?: IonToast[K] } & { [K in keyof IonToast & keyof IonToastAttributes as `attr:${K}`]?: IonToastAttributes[K] } & { [K in keyof IonToast & keyof IonToastAttributes as `prop:${K}`]?: IonToast[K] } & OneOf<"overlayIndex", IonToast["overlayIndex"], IonToastAttributes["overlayIndex"]>;
-        "ion-toggle": Omit<IonToggle, keyof IonToggleAttributes> & { [K in keyof IonToggle & keyof IonToggleAttributes]?: IonToggle[K] } & { [K in keyof IonToggle & keyof IonToggleAttributes as `attr:${K}`]?: IonToggleAttributes[K] } & { [K in keyof IonToggle & keyof IonToggleAttributes as `prop:${K}`]?: IonToggle[K] };
-        "ion-toolbar": Omit<IonToolbar, keyof IonToolbarAttributes> & { [K in keyof IonToolbar & keyof IonToolbarAttributes]?: IonToolbar[K] } & { [K in keyof IonToolbar & keyof IonToolbarAttributes as `attr:${K}`]?: IonToolbarAttributes[K] } & { [K in keyof IonToolbar & keyof IonToolbarAttributes as `prop:${K}`]?: IonToolbar[K] };
+        "ion-title": IonTitle;
+        "ion-toast": IonToast;
+        "ion-toggle": IonToggle;
+        "ion-toolbar": IonToolbar;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "ion-accordion": LocalJSX.IntrinsicElements["ion-accordion"] & JSXBase.HTMLAttributes<HTMLIonAccordionElement>;
-            "ion-accordion-group": LocalJSX.IntrinsicElements["ion-accordion-group"] & JSXBase.HTMLAttributes<HTMLIonAccordionGroupElement>;
-            "ion-action-sheet": LocalJSX.IntrinsicElements["ion-action-sheet"] & JSXBase.HTMLAttributes<HTMLIonActionSheetElement>;
-            "ion-alert": LocalJSX.IntrinsicElements["ion-alert"] & JSXBase.HTMLAttributes<HTMLIonAlertElement>;
-            "ion-app": LocalJSX.IntrinsicElements["ion-app"] & JSXBase.HTMLAttributes<HTMLIonAppElement>;
-            "ion-avatar": LocalJSX.IntrinsicElements["ion-avatar"] & JSXBase.HTMLAttributes<HTMLIonAvatarElement>;
-            "ion-back-button": LocalJSX.IntrinsicElements["ion-back-button"] & JSXBase.HTMLAttributes<HTMLIonBackButtonElement>;
-            "ion-backdrop": LocalJSX.IntrinsicElements["ion-backdrop"] & JSXBase.HTMLAttributes<HTMLIonBackdropElement>;
-            "ion-badge": LocalJSX.IntrinsicElements["ion-badge"] & JSXBase.HTMLAttributes<HTMLIonBadgeElement>;
-            "ion-breadcrumb": LocalJSX.IntrinsicElements["ion-breadcrumb"] & JSXBase.HTMLAttributes<HTMLIonBreadcrumbElement>;
-            "ion-breadcrumbs": LocalJSX.IntrinsicElements["ion-breadcrumbs"] & JSXBase.HTMLAttributes<HTMLIonBreadcrumbsElement>;
-            "ion-button": LocalJSX.IntrinsicElements["ion-button"] & JSXBase.HTMLAttributes<HTMLIonButtonElement>;
-            "ion-buttons": LocalJSX.IntrinsicElements["ion-buttons"] & JSXBase.HTMLAttributes<HTMLIonButtonsElement>;
-            "ion-card": LocalJSX.IntrinsicElements["ion-card"] & JSXBase.HTMLAttributes<HTMLIonCardElement>;
-            "ion-card-content": LocalJSX.IntrinsicElements["ion-card-content"] & JSXBase.HTMLAttributes<HTMLIonCardContentElement>;
-            "ion-card-header": LocalJSX.IntrinsicElements["ion-card-header"] & JSXBase.HTMLAttributes<HTMLIonCardHeaderElement>;
-            "ion-card-subtitle": LocalJSX.IntrinsicElements["ion-card-subtitle"] & JSXBase.HTMLAttributes<HTMLIonCardSubtitleElement>;
-            "ion-card-title": LocalJSX.IntrinsicElements["ion-card-title"] & JSXBase.HTMLAttributes<HTMLIonCardTitleElement>;
-            "ion-checkbox": LocalJSX.IntrinsicElements["ion-checkbox"] & JSXBase.HTMLAttributes<HTMLIonCheckboxElement>;
-            "ion-chip": LocalJSX.IntrinsicElements["ion-chip"] & JSXBase.HTMLAttributes<HTMLIonChipElement>;
-            "ion-col": LocalJSX.IntrinsicElements["ion-col"] & JSXBase.HTMLAttributes<HTMLIonColElement>;
-            "ion-content": LocalJSX.IntrinsicElements["ion-content"] & JSXBase.HTMLAttributes<HTMLIonContentElement>;
-            "ion-datetime": LocalJSX.IntrinsicElements["ion-datetime"] & JSXBase.HTMLAttributes<HTMLIonDatetimeElement>;
-            "ion-datetime-button": LocalJSX.IntrinsicElements["ion-datetime-button"] & JSXBase.HTMLAttributes<HTMLIonDatetimeButtonElement>;
-            "ion-divider": LocalJSX.IntrinsicElements["ion-divider"] & JSXBase.HTMLAttributes<HTMLIonDividerElement>;
-            "ion-fab": LocalJSX.IntrinsicElements["ion-fab"] & JSXBase.HTMLAttributes<HTMLIonFabElement>;
-            "ion-fab-button": LocalJSX.IntrinsicElements["ion-fab-button"] & JSXBase.HTMLAttributes<HTMLIonFabButtonElement>;
-            "ion-fab-list": LocalJSX.IntrinsicElements["ion-fab-list"] & JSXBase.HTMLAttributes<HTMLIonFabListElement>;
-            "ion-footer": LocalJSX.IntrinsicElements["ion-footer"] & JSXBase.HTMLAttributes<HTMLIonFooterElement>;
-            "ion-grid": LocalJSX.IntrinsicElements["ion-grid"] & JSXBase.HTMLAttributes<HTMLIonGridElement>;
-            "ion-header": LocalJSX.IntrinsicElements["ion-header"] & JSXBase.HTMLAttributes<HTMLIonHeaderElement>;
-            "ion-img": LocalJSX.IntrinsicElements["ion-img"] & JSXBase.HTMLAttributes<HTMLIonImgElement>;
-            "ion-infinite-scroll": LocalJSX.IntrinsicElements["ion-infinite-scroll"] & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollElement>;
-            "ion-infinite-scroll-content": LocalJSX.IntrinsicElements["ion-infinite-scroll-content"] & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollContentElement>;
-            "ion-input": LocalJSX.IntrinsicElements["ion-input"] & JSXBase.HTMLAttributes<HTMLIonInputElement>;
-            "ion-input-otp": LocalJSX.IntrinsicElements["ion-input-otp"] & JSXBase.HTMLAttributes<HTMLIonInputOtpElement>;
-            "ion-input-password-toggle": LocalJSX.IntrinsicElements["ion-input-password-toggle"] & JSXBase.HTMLAttributes<HTMLIonInputPasswordToggleElement>;
-            "ion-item": LocalJSX.IntrinsicElements["ion-item"] & JSXBase.HTMLAttributes<HTMLIonItemElement>;
-            "ion-item-divider": LocalJSX.IntrinsicElements["ion-item-divider"] & JSXBase.HTMLAttributes<HTMLIonItemDividerElement>;
-            "ion-item-group": LocalJSX.IntrinsicElements["ion-item-group"] & JSXBase.HTMLAttributes<HTMLIonItemGroupElement>;
-            "ion-item-option": LocalJSX.IntrinsicElements["ion-item-option"] & JSXBase.HTMLAttributes<HTMLIonItemOptionElement>;
-            "ion-item-options": LocalJSX.IntrinsicElements["ion-item-options"] & JSXBase.HTMLAttributes<HTMLIonItemOptionsElement>;
-            "ion-item-sliding": LocalJSX.IntrinsicElements["ion-item-sliding"] & JSXBase.HTMLAttributes<HTMLIonItemSlidingElement>;
-            "ion-label": LocalJSX.IntrinsicElements["ion-label"] & JSXBase.HTMLAttributes<HTMLIonLabelElement>;
-            "ion-list": LocalJSX.IntrinsicElements["ion-list"] & JSXBase.HTMLAttributes<HTMLIonListElement>;
-            "ion-list-header": LocalJSX.IntrinsicElements["ion-list-header"] & JSXBase.HTMLAttributes<HTMLIonListHeaderElement>;
-            "ion-loading": LocalJSX.IntrinsicElements["ion-loading"] & JSXBase.HTMLAttributes<HTMLIonLoadingElement>;
-            "ion-menu": LocalJSX.IntrinsicElements["ion-menu"] & JSXBase.HTMLAttributes<HTMLIonMenuElement>;
-            "ion-menu-button": LocalJSX.IntrinsicElements["ion-menu-button"] & JSXBase.HTMLAttributes<HTMLIonMenuButtonElement>;
-            "ion-menu-toggle": LocalJSX.IntrinsicElements["ion-menu-toggle"] & JSXBase.HTMLAttributes<HTMLIonMenuToggleElement>;
-            "ion-modal": LocalJSX.IntrinsicElements["ion-modal"] & JSXBase.HTMLAttributes<HTMLIonModalElement>;
-            "ion-nav": LocalJSX.IntrinsicElements["ion-nav"] & JSXBase.HTMLAttributes<HTMLIonNavElement>;
-            "ion-nav-link": LocalJSX.IntrinsicElements["ion-nav-link"] & JSXBase.HTMLAttributes<HTMLIonNavLinkElement>;
-            "ion-note": LocalJSX.IntrinsicElements["ion-note"] & JSXBase.HTMLAttributes<HTMLIonNoteElement>;
-            "ion-picker": LocalJSX.IntrinsicElements["ion-picker"] & JSXBase.HTMLAttributes<HTMLIonPickerElement>;
-            "ion-picker-column": LocalJSX.IntrinsicElements["ion-picker-column"] & JSXBase.HTMLAttributes<HTMLIonPickerColumnElement>;
-            "ion-picker-column-option": LocalJSX.IntrinsicElements["ion-picker-column-option"] & JSXBase.HTMLAttributes<HTMLIonPickerColumnOptionElement>;
-            "ion-picker-legacy": LocalJSX.IntrinsicElements["ion-picker-legacy"] & JSXBase.HTMLAttributes<HTMLIonPickerLegacyElement>;
-            "ion-picker-legacy-column": LocalJSX.IntrinsicElements["ion-picker-legacy-column"] & JSXBase.HTMLAttributes<HTMLIonPickerLegacyColumnElement>;
-            "ion-popover": LocalJSX.IntrinsicElements["ion-popover"] & JSXBase.HTMLAttributes<HTMLIonPopoverElement>;
-            "ion-progress-bar": LocalJSX.IntrinsicElements["ion-progress-bar"] & JSXBase.HTMLAttributes<HTMLIonProgressBarElement>;
-            "ion-radio": LocalJSX.IntrinsicElements["ion-radio"] & JSXBase.HTMLAttributes<HTMLIonRadioElement>;
-            "ion-radio-group": LocalJSX.IntrinsicElements["ion-radio-group"] & JSXBase.HTMLAttributes<HTMLIonRadioGroupElement>;
-            "ion-range": LocalJSX.IntrinsicElements["ion-range"] & JSXBase.HTMLAttributes<HTMLIonRangeElement>;
-            "ion-refresher": LocalJSX.IntrinsicElements["ion-refresher"] & JSXBase.HTMLAttributes<HTMLIonRefresherElement>;
-            "ion-refresher-content": LocalJSX.IntrinsicElements["ion-refresher-content"] & JSXBase.HTMLAttributes<HTMLIonRefresherContentElement>;
-            "ion-reorder": LocalJSX.IntrinsicElements["ion-reorder"] & JSXBase.HTMLAttributes<HTMLIonReorderElement>;
-            "ion-reorder-group": LocalJSX.IntrinsicElements["ion-reorder-group"] & JSXBase.HTMLAttributes<HTMLIonReorderGroupElement>;
-            "ion-ripple-effect": LocalJSX.IntrinsicElements["ion-ripple-effect"] & JSXBase.HTMLAttributes<HTMLIonRippleEffectElement>;
-            "ion-route": LocalJSX.IntrinsicElements["ion-route"] & JSXBase.HTMLAttributes<HTMLIonRouteElement>;
-            "ion-route-redirect": LocalJSX.IntrinsicElements["ion-route-redirect"] & JSXBase.HTMLAttributes<HTMLIonRouteRedirectElement>;
-            "ion-router": LocalJSX.IntrinsicElements["ion-router"] & JSXBase.HTMLAttributes<HTMLIonRouterElement>;
-            "ion-router-link": LocalJSX.IntrinsicElements["ion-router-link"] & JSXBase.HTMLAttributes<HTMLIonRouterLinkElement>;
-            "ion-router-outlet": LocalJSX.IntrinsicElements["ion-router-outlet"] & JSXBase.HTMLAttributes<HTMLIonRouterOutletElement>;
-            "ion-row": LocalJSX.IntrinsicElements["ion-row"] & JSXBase.HTMLAttributes<HTMLIonRowElement>;
-            "ion-searchbar": LocalJSX.IntrinsicElements["ion-searchbar"] & JSXBase.HTMLAttributes<HTMLIonSearchbarElement>;
-            "ion-segment": LocalJSX.IntrinsicElements["ion-segment"] & JSXBase.HTMLAttributes<HTMLIonSegmentElement>;
-            "ion-segment-button": LocalJSX.IntrinsicElements["ion-segment-button"] & JSXBase.HTMLAttributes<HTMLIonSegmentButtonElement>;
-            "ion-segment-content": LocalJSX.IntrinsicElements["ion-segment-content"] & JSXBase.HTMLAttributes<HTMLIonSegmentContentElement>;
-            "ion-segment-view": LocalJSX.IntrinsicElements["ion-segment-view"] & JSXBase.HTMLAttributes<HTMLIonSegmentViewElement>;
-            "ion-select": LocalJSX.IntrinsicElements["ion-select"] & JSXBase.HTMLAttributes<HTMLIonSelectElement>;
-            "ion-select-modal": LocalJSX.IntrinsicElements["ion-select-modal"] & JSXBase.HTMLAttributes<HTMLIonSelectModalElement>;
-            "ion-select-option": LocalJSX.IntrinsicElements["ion-select-option"] & JSXBase.HTMLAttributes<HTMLIonSelectOptionElement>;
-            "ion-select-popover": LocalJSX.IntrinsicElements["ion-select-popover"] & JSXBase.HTMLAttributes<HTMLIonSelectPopoverElement>;
-            "ion-skeleton-text": LocalJSX.IntrinsicElements["ion-skeleton-text"] & JSXBase.HTMLAttributes<HTMLIonSkeletonTextElement>;
-            "ion-spinner": LocalJSX.IntrinsicElements["ion-spinner"] & JSXBase.HTMLAttributes<HTMLIonSpinnerElement>;
-            "ion-split-pane": LocalJSX.IntrinsicElements["ion-split-pane"] & JSXBase.HTMLAttributes<HTMLIonSplitPaneElement>;
-            "ion-tab": LocalJSX.IntrinsicElements["ion-tab"] & JSXBase.HTMLAttributes<HTMLIonTabElement>;
-            "ion-tab-bar": LocalJSX.IntrinsicElements["ion-tab-bar"] & JSXBase.HTMLAttributes<HTMLIonTabBarElement>;
-            "ion-tab-button": LocalJSX.IntrinsicElements["ion-tab-button"] & JSXBase.HTMLAttributes<HTMLIonTabButtonElement>;
-            "ion-tabs": LocalJSX.IntrinsicElements["ion-tabs"] & JSXBase.HTMLAttributes<HTMLIonTabsElement>;
-            "ion-text": LocalJSX.IntrinsicElements["ion-text"] & JSXBase.HTMLAttributes<HTMLIonTextElement>;
-            "ion-textarea": LocalJSX.IntrinsicElements["ion-textarea"] & JSXBase.HTMLAttributes<HTMLIonTextareaElement>;
-            "ion-thumbnail": LocalJSX.IntrinsicElements["ion-thumbnail"] & JSXBase.HTMLAttributes<HTMLIonThumbnailElement>;
-            "ion-title": LocalJSX.IntrinsicElements["ion-title"] & JSXBase.HTMLAttributes<HTMLIonTitleElement>;
-            "ion-toast": LocalJSX.IntrinsicElements["ion-toast"] & JSXBase.HTMLAttributes<HTMLIonToastElement>;
-            "ion-toggle": LocalJSX.IntrinsicElements["ion-toggle"] & JSXBase.HTMLAttributes<HTMLIonToggleElement>;
-            "ion-toolbar": LocalJSX.IntrinsicElements["ion-toolbar"] & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
+            "ion-accordion": LocalJSX.IonAccordion & JSXBase.HTMLAttributes<HTMLIonAccordionElement>;
+            "ion-accordion-group": LocalJSX.IonAccordionGroup & JSXBase.HTMLAttributes<HTMLIonAccordionGroupElement>;
+            "ion-action-sheet": LocalJSX.IonActionSheet & JSXBase.HTMLAttributes<HTMLIonActionSheetElement>;
+            "ion-alert": LocalJSX.IonAlert & JSXBase.HTMLAttributes<HTMLIonAlertElement>;
+            "ion-app": LocalJSX.IonApp & JSXBase.HTMLAttributes<HTMLIonAppElement>;
+            "ion-avatar": LocalJSX.IonAvatar & JSXBase.HTMLAttributes<HTMLIonAvatarElement>;
+            "ion-back-button": LocalJSX.IonBackButton & JSXBase.HTMLAttributes<HTMLIonBackButtonElement>;
+            "ion-backdrop": LocalJSX.IonBackdrop & JSXBase.HTMLAttributes<HTMLIonBackdropElement>;
+            "ion-badge": LocalJSX.IonBadge & JSXBase.HTMLAttributes<HTMLIonBadgeElement>;
+            "ion-breadcrumb": LocalJSX.IonBreadcrumb & JSXBase.HTMLAttributes<HTMLIonBreadcrumbElement>;
+            "ion-breadcrumbs": LocalJSX.IonBreadcrumbs & JSXBase.HTMLAttributes<HTMLIonBreadcrumbsElement>;
+            "ion-button": LocalJSX.IonButton & JSXBase.HTMLAttributes<HTMLIonButtonElement>;
+            "ion-buttons": LocalJSX.IonButtons & JSXBase.HTMLAttributes<HTMLIonButtonsElement>;
+            "ion-card": LocalJSX.IonCard & JSXBase.HTMLAttributes<HTMLIonCardElement>;
+            "ion-card-content": LocalJSX.IonCardContent & JSXBase.HTMLAttributes<HTMLIonCardContentElement>;
+            "ion-card-header": LocalJSX.IonCardHeader & JSXBase.HTMLAttributes<HTMLIonCardHeaderElement>;
+            "ion-card-subtitle": LocalJSX.IonCardSubtitle & JSXBase.HTMLAttributes<HTMLIonCardSubtitleElement>;
+            "ion-card-title": LocalJSX.IonCardTitle & JSXBase.HTMLAttributes<HTMLIonCardTitleElement>;
+            "ion-checkbox": LocalJSX.IonCheckbox & JSXBase.HTMLAttributes<HTMLIonCheckboxElement>;
+            "ion-chip": LocalJSX.IonChip & JSXBase.HTMLAttributes<HTMLIonChipElement>;
+            "ion-col": LocalJSX.IonCol & JSXBase.HTMLAttributes<HTMLIonColElement>;
+            "ion-content": LocalJSX.IonContent & JSXBase.HTMLAttributes<HTMLIonContentElement>;
+            "ion-datetime": LocalJSX.IonDatetime & JSXBase.HTMLAttributes<HTMLIonDatetimeElement>;
+            "ion-datetime-button": LocalJSX.IonDatetimeButton & JSXBase.HTMLAttributes<HTMLIonDatetimeButtonElement>;
+            "ion-divider": LocalJSX.IonDivider & JSXBase.HTMLAttributes<HTMLIonDividerElement>;
+            "ion-fab": LocalJSX.IonFab & JSXBase.HTMLAttributes<HTMLIonFabElement>;
+            "ion-fab-button": LocalJSX.IonFabButton & JSXBase.HTMLAttributes<HTMLIonFabButtonElement>;
+            "ion-fab-list": LocalJSX.IonFabList & JSXBase.HTMLAttributes<HTMLIonFabListElement>;
+            "ion-footer": LocalJSX.IonFooter & JSXBase.HTMLAttributes<HTMLIonFooterElement>;
+            "ion-grid": LocalJSX.IonGrid & JSXBase.HTMLAttributes<HTMLIonGridElement>;
+            "ion-header": LocalJSX.IonHeader & JSXBase.HTMLAttributes<HTMLIonHeaderElement>;
+            "ion-img": LocalJSX.IonImg & JSXBase.HTMLAttributes<HTMLIonImgElement>;
+            "ion-infinite-scroll": LocalJSX.IonInfiniteScroll & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollElement>;
+            "ion-infinite-scroll-content": LocalJSX.IonInfiniteScrollContent & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollContentElement>;
+            "ion-input": LocalJSX.IonInput & JSXBase.HTMLAttributes<HTMLIonInputElement>;
+            "ion-input-otp": LocalJSX.IonInputOtp & JSXBase.HTMLAttributes<HTMLIonInputOtpElement>;
+            "ion-input-password-toggle": LocalJSX.IonInputPasswordToggle & JSXBase.HTMLAttributes<HTMLIonInputPasswordToggleElement>;
+            "ion-item": LocalJSX.IonItem & JSXBase.HTMLAttributes<HTMLIonItemElement>;
+            "ion-item-divider": LocalJSX.IonItemDivider & JSXBase.HTMLAttributes<HTMLIonItemDividerElement>;
+            "ion-item-group": LocalJSX.IonItemGroup & JSXBase.HTMLAttributes<HTMLIonItemGroupElement>;
+            "ion-item-option": LocalJSX.IonItemOption & JSXBase.HTMLAttributes<HTMLIonItemOptionElement>;
+            "ion-item-options": LocalJSX.IonItemOptions & JSXBase.HTMLAttributes<HTMLIonItemOptionsElement>;
+            "ion-item-sliding": LocalJSX.IonItemSliding & JSXBase.HTMLAttributes<HTMLIonItemSlidingElement>;
+            "ion-label": LocalJSX.IonLabel & JSXBase.HTMLAttributes<HTMLIonLabelElement>;
+            "ion-list": LocalJSX.IonList & JSXBase.HTMLAttributes<HTMLIonListElement>;
+            "ion-list-header": LocalJSX.IonListHeader & JSXBase.HTMLAttributes<HTMLIonListHeaderElement>;
+            "ion-loading": LocalJSX.IonLoading & JSXBase.HTMLAttributes<HTMLIonLoadingElement>;
+            "ion-menu": LocalJSX.IonMenu & JSXBase.HTMLAttributes<HTMLIonMenuElement>;
+            "ion-menu-button": LocalJSX.IonMenuButton & JSXBase.HTMLAttributes<HTMLIonMenuButtonElement>;
+            "ion-menu-toggle": LocalJSX.IonMenuToggle & JSXBase.HTMLAttributes<HTMLIonMenuToggleElement>;
+            "ion-modal": LocalJSX.IonModal & JSXBase.HTMLAttributes<HTMLIonModalElement>;
+            "ion-nav": LocalJSX.IonNav & JSXBase.HTMLAttributes<HTMLIonNavElement>;
+            "ion-nav-link": LocalJSX.IonNavLink & JSXBase.HTMLAttributes<HTMLIonNavLinkElement>;
+            "ion-note": LocalJSX.IonNote & JSXBase.HTMLAttributes<HTMLIonNoteElement>;
+            "ion-picker": LocalJSX.IonPicker & JSXBase.HTMLAttributes<HTMLIonPickerElement>;
+            "ion-picker-column": LocalJSX.IonPickerColumn & JSXBase.HTMLAttributes<HTMLIonPickerColumnElement>;
+            "ion-picker-column-option": LocalJSX.IonPickerColumnOption & JSXBase.HTMLAttributes<HTMLIonPickerColumnOptionElement>;
+            "ion-picker-legacy": LocalJSX.IonPickerLegacy & JSXBase.HTMLAttributes<HTMLIonPickerLegacyElement>;
+            "ion-picker-legacy-column": LocalJSX.IonPickerLegacyColumn & JSXBase.HTMLAttributes<HTMLIonPickerLegacyColumnElement>;
+            "ion-popover": LocalJSX.IonPopover & JSXBase.HTMLAttributes<HTMLIonPopoverElement>;
+            "ion-progress-bar": LocalJSX.IonProgressBar & JSXBase.HTMLAttributes<HTMLIonProgressBarElement>;
+            "ion-radio": LocalJSX.IonRadio & JSXBase.HTMLAttributes<HTMLIonRadioElement>;
+            "ion-radio-group": LocalJSX.IonRadioGroup & JSXBase.HTMLAttributes<HTMLIonRadioGroupElement>;
+            "ion-range": LocalJSX.IonRange & JSXBase.HTMLAttributes<HTMLIonRangeElement>;
+            "ion-refresher": LocalJSX.IonRefresher & JSXBase.HTMLAttributes<HTMLIonRefresherElement>;
+            "ion-refresher-content": LocalJSX.IonRefresherContent & JSXBase.HTMLAttributes<HTMLIonRefresherContentElement>;
+            "ion-reorder": LocalJSX.IonReorder & JSXBase.HTMLAttributes<HTMLIonReorderElement>;
+            "ion-reorder-group": LocalJSX.IonReorderGroup & JSXBase.HTMLAttributes<HTMLIonReorderGroupElement>;
+            "ion-ripple-effect": LocalJSX.IonRippleEffect & JSXBase.HTMLAttributes<HTMLIonRippleEffectElement>;
+            "ion-route": LocalJSX.IonRoute & JSXBase.HTMLAttributes<HTMLIonRouteElement>;
+            "ion-route-redirect": LocalJSX.IonRouteRedirect & JSXBase.HTMLAttributes<HTMLIonRouteRedirectElement>;
+            "ion-router": LocalJSX.IonRouter & JSXBase.HTMLAttributes<HTMLIonRouterElement>;
+            "ion-router-link": LocalJSX.IonRouterLink & JSXBase.HTMLAttributes<HTMLIonRouterLinkElement>;
+            "ion-router-outlet": LocalJSX.IonRouterOutlet & JSXBase.HTMLAttributes<HTMLIonRouterOutletElement>;
+            "ion-row": LocalJSX.IonRow & JSXBase.HTMLAttributes<HTMLIonRowElement>;
+            "ion-searchbar": LocalJSX.IonSearchbar & JSXBase.HTMLAttributes<HTMLIonSearchbarElement>;
+            "ion-segment": LocalJSX.IonSegment & JSXBase.HTMLAttributes<HTMLIonSegmentElement>;
+            "ion-segment-button": LocalJSX.IonSegmentButton & JSXBase.HTMLAttributes<HTMLIonSegmentButtonElement>;
+            "ion-segment-content": LocalJSX.IonSegmentContent & JSXBase.HTMLAttributes<HTMLIonSegmentContentElement>;
+            "ion-segment-view": LocalJSX.IonSegmentView & JSXBase.HTMLAttributes<HTMLIonSegmentViewElement>;
+            "ion-select": LocalJSX.IonSelect & JSXBase.HTMLAttributes<HTMLIonSelectElement>;
+            "ion-select-modal": LocalJSX.IonSelectModal & JSXBase.HTMLAttributes<HTMLIonSelectModalElement>;
+            "ion-select-option": LocalJSX.IonSelectOption & JSXBase.HTMLAttributes<HTMLIonSelectOptionElement>;
+            "ion-select-popover": LocalJSX.IonSelectPopover & JSXBase.HTMLAttributes<HTMLIonSelectPopoverElement>;
+            "ion-skeleton-text": LocalJSX.IonSkeletonText & JSXBase.HTMLAttributes<HTMLIonSkeletonTextElement>;
+            "ion-spinner": LocalJSX.IonSpinner & JSXBase.HTMLAttributes<HTMLIonSpinnerElement>;
+            "ion-split-pane": LocalJSX.IonSplitPane & JSXBase.HTMLAttributes<HTMLIonSplitPaneElement>;
+            "ion-tab": LocalJSX.IonTab & JSXBase.HTMLAttributes<HTMLIonTabElement>;
+            "ion-tab-bar": LocalJSX.IonTabBar & JSXBase.HTMLAttributes<HTMLIonTabBarElement>;
+            "ion-tab-button": LocalJSX.IonTabButton & JSXBase.HTMLAttributes<HTMLIonTabButtonElement>;
+            "ion-tabs": LocalJSX.IonTabs & JSXBase.HTMLAttributes<HTMLIonTabsElement>;
+            "ion-text": LocalJSX.IonText & JSXBase.HTMLAttributes<HTMLIonTextElement>;
+            "ion-textarea": LocalJSX.IonTextarea & JSXBase.HTMLAttributes<HTMLIonTextareaElement>;
+            "ion-thumbnail": LocalJSX.IonThumbnail & JSXBase.HTMLAttributes<HTMLIonThumbnailElement>;
+            "ion-title": LocalJSX.IonTitle & JSXBase.HTMLAttributes<HTMLIonTitleElement>;
+            "ion-toast": LocalJSX.IonToast & JSXBase.HTMLAttributes<HTMLIonToastElement>;
+            "ion-toggle": LocalJSX.IonToggle & JSXBase.HTMLAttributes<HTMLIonToggleElement>;
+            "ion-toolbar": LocalJSX.IonToolbar & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
         }
     }
 }

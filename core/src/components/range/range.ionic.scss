@@ -15,10 +15,14 @@
   --bar-background-active: #{globals.ion-color(primary, base)};
   --bar-border-radius: #{globals.$ion-border-radius-400};
   --height: #{globals.$ion-scale-1100};
-
+  
   @include globals.typography(globals.$ion-body-md-regular);
-
+  
   z-index: globals.$ion-z-index-100;
+}
+
+:host(.ticks) {
+  --bar-border-radius: globals.$ion-border-radius-0;
 }
 
 :host(.range-item-start-adjustment) {
@@ -83,22 +87,21 @@
   background: var(--bar-background-active);
 
   &.has-ticks {
-    @include border-radius(0);
     @include margin(null, calc(-1 * globals.$ion-scale-100 * 0.5), null, calc(-1 * globals.$ion-scale-100 * 0.5));
   }
 }
 
 .range-tick {
   @include margin-horizontal(calc(globals.$ion-scale-100 * -0.5), null);
-  @include border-radius(globals.$ion-border-radius-0);
+  @include border-radius(globals.$ion-border-radius-400);
 
   position: absolute;
-  top: calc((var(--height) * 0.5) - (globals.$ion-scale-300 * 0.5));
+  top: calc((var(--height) * 0.5) - (globals.$ion-scale-400 * 0.5));
 
-  width: globals.$ion-scale-100;
-  height: globals.$ion-scale-300;
+  width: globals.$ion-scale-050;
+  height: globals.$ion-scale-400;
 
-  background: globals.$ion-primitives-neutral-100;
+  background: var(--bar-background);
   pointer-events: none;
 }
 
