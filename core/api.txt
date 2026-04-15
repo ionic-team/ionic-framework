@@ -2326,6 +2326,9 @@ ion-select,css-prop,--placeholder-opacity,md
 ion-select,css-prop,--ripple-color,ionic
 ion-select,css-prop,--ripple-color,ios
 ion-select,css-prop,--ripple-color,md
+ion-select,css-prop,--select-text-gap,ionic
+ion-select,css-prop,--select-text-gap,ios
+ion-select,css-prop,--select-text-gap,md
 ion-select,css-prop,--select-text-media-border-color,ionic
 ion-select,css-prop,--select-text-media-border-color,ios
 ion-select,css-prop,--select-text-media-border-color,md

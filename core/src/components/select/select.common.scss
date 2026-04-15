@@ -32,6 +32,7 @@
    * @prop --select-text-media-border-color: The border color of media (icons/images) in the select text.
    * @prop --select-text-media-border-radius: The border radius of media (icons/images) in the select text.
    * @prop --select-text-media-border-style: The border style of media (icons/images) in the select text.
+   * @prop --select-text-gap: The gap between elements in the select text.
    */
   --padding-top: 0px;
   --padding-end: 0px;
@@ -159,6 +160,15 @@ button {
   white-space: inherit;
 
   overflow: hidden;
+}
+
+/**
+ * If the select text contains rich content, we want to add some
+ * spacing between the elements without changing the display to
+ * prevent losing the ellipses behavior.
+ */
+.select-text > * + * {
+  margin-inline-start: var(--select-text-gap, 2px);
 }
 
 .select-text img,

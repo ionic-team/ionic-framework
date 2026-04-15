@@ -1098,6 +1098,56 @@ export class Select implements ComponentInterface {
   }
 
   /**
+   * Wraps text nodes in the select text with span elements
+   * so spacing can be added between elements without
+   * changing the display to prevent losing the ellipses
+   * behavior.
+   *
+   * Only wraps when the string contains HTML elements
+   * alongside text.
+   */
+  private wrapSelectTextNodes(html: string): string {
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+
+    const hasElements = Array.from(temp.childNodes).some((n) => n.nodeType === Node.ELEMENT_NODE);
+
+    // Return the plain text
+    if (!hasElements) {
+      return html;
+    }
+
+    Array.from(temp.childNodes).forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
+        const text = node.textContent;
+
+        /**
+         * Split comma separator from the text content
+         * e.g., ", Bacon" becomes ", " text node + <span>Bacon</span>.
+         */
+        const commaMatch = text.match(/^(,\s*)(.*)/);
+        if (commaMatch) {
+          const commaNode = document.createTextNode(commaMatch[1]);
+          const wrapper = document.createElement('span');
+
+          wrapper.textContent = commaMatch[2];
+          node.parentNode?.replaceChild(wrapper, node);
+          wrapper.parentNode?.insertBefore(commaNode, wrapper);
+
+          return;
+        }
+
+        const wrapper = document.createElement('span');
+
+        node.parentNode?.replaceChild(wrapper, node);
+        wrapper.appendChild(node);
+      }
+    });
+
+    return temp.innerHTML;
+  }
+
+  /**
    * Renders either the placeholder
    * or the selected values based on
    * the state of the select.
@@ -1122,7 +1172,8 @@ export class Select implements ComponentInterface {
     const textPart = addPlaceholderClass ? 'placeholder' : 'text';
 
     if (this.customHTMLEnabled) {
-      return <div aria-hidden="true" class={selectTextClasses} part={textPart} innerHTML={selectText}></div>;
+      const wrapped = this.wrapSelectTextNodes(selectText);
+      return <div aria-hidden="true" class={selectTextClasses} part={textPart} innerHTML={wrapped}></div>;
     }
 
     return (
