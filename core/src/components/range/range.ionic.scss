@@ -21,10 +21,6 @@
   z-index: globals.$ion-z-index-100;
 }
 
-:host(.ticks) {
-  --bar-border-radius: globals.$ion-border-radius-0;
-}
-
 :host(.range-item-start-adjustment) {
   @include padding(null, null, null, globals.$ion-space-600);
 }
@@ -79,15 +75,21 @@
   @include margin(null, null, calc(globals.$ion-space-200 + globals.$ion-font-size-300), null);
 }
 
-.range-bar.range-bar-active {
-  bottom: 0;
-
-  width: auto;
-
-  background: var(--bar-background-active);
-
+.range-bar {
   &.has-ticks {
-    @include margin(null, calc(-1 * globals.$ion-scale-100 * 0.5), null, calc(-1 * globals.$ion-scale-100 * 0.5));
+    @include border-radius(0);
+  }
+
+  &.range-bar-active {
+    bottom: 0;
+
+    width: auto;
+
+    background: var(--bar-background-active);
+
+    &.has-ticks {
+      @include margin(null, calc(-1 * globals.$ion-scale-100 * 0.5), null, calc(-1 * globals.$ion-scale-100 * 0.5));
+    }
   }
 }
 
