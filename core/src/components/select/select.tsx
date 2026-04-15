@@ -582,7 +582,7 @@ export class Select implements ComponentInterface {
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
       const isSelected = isOptionSelected(selectValue, value, this.compareWith);
-      const text = this.customHTMLEnabled ? getOptionContent(option) : option.textContent;
+      const text = this.customHTMLEnabled ? getOptionContent(option) : getDefaultSlotPlainText(option);
       const startContent = this.customHTMLEnabled
         ? (getOptionContent(option, 'start') as HTMLElement | null)
         : undefined;
@@ -630,7 +630,7 @@ export class Select implements ComponentInterface {
         .filter((cls) => cls !== 'hydrated')
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
-      const label = this.customHTMLEnabled ? getOptionContent(option) : option.textContent;
+      const label = this.customHTMLEnabled ? getOptionContent(option) : getDefaultSlotPlainText(option);
       const startContent = this.customHTMLEnabled
         ? (getOptionContent(option, 'start') as HTMLElement | null)
         : undefined;
@@ -661,7 +661,7 @@ export class Select implements ComponentInterface {
         .filter((cls) => cls !== 'hydrated')
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
-      const text = this.customHTMLEnabled ? getOptionContent(option) : option.textContent;
+      const text = this.customHTMLEnabled ? getOptionContent(option) : getDefaultSlotPlainText(option);
       const startContent = this.customHTMLEnabled
         ? (getOptionContent(option, 'start') as HTMLElement | null)
         : undefined;
@@ -1519,6 +1519,17 @@ const generateText = (
   }
 };
 
+/**
+ * Returns the display text for a given value from the list of options.
+ * When `useHTML` is true, returns sanitized HTML for the select text.
+ * When `useHTML` is false, returns plain text for aria-label and other
+ * text-only contexts.
+ *
+ * @param opts - The list of ion-select-option elements.
+ * @param value - The value to find the matching option for.
+ * @param compareWith - Custom comparison function or property name.
+ * @param useHTML - If true, returns HTML string. If false, returns plain text.
+ */
 const textForValue = (
   opts: HTMLIonSelectOptionElement[],
   value: any,
@@ -1530,11 +1541,43 @@ const textForValue = (
   });
   const customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
 
-  if (!selectOpt) return null;
+  if (!selectOpt) {
+    return null;
+  }
 
-  return customHTMLEnabled && useHTML
-    ? (getOptionContent(selectOpt, undefined, true) as string | null)
-    : selectOpt.textContent;
+  // Return sanitized HTML for the select text
+  if (customHTMLEnabled && useHTML) {
+    return getOptionContent(selectOpt, undefined, true) as string | null;
+  }
+
+  /**
+   * When custom HTML is enabled, extract only the default slot content.
+   * This ensures aria-label and other text-only contexts read only
+   * the relevant option text.
+   */
+  if (customHTMLEnabled) {
+    const content = getOptionContent(selectOpt);
+
+    if (typeof content === 'string') {
+      return content;
+    }
+
+    /**
+     * Elements were found in the default slot, extract and concatenate
+     * their text content while trimming whitespace.
+     */
+    if (content) {
+      const texts = Array.from(content.childNodes)
+        .map((n) => n.textContent?.trim())
+        .filter((t) => t);
+      return texts.join(' ') || null;
+    }
+
+    // Empty option
+    return null;
+  }
+
+  return getDefaultSlotPlainText(selectOpt);
 };
 
 /**
@@ -1579,11 +1622,8 @@ const getOptionContent = (
     nodes = Array.from(option.children).filter((el) => el.getAttribute('slot') === slotName);
   } else {
     // Default slot: get nodes without a slot attribute
-    nodes = Array.from(option.childNodes).filter((node) => {
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        return !(node as HTMLElement).hasAttribute('slot');
-      }
-
+    const defaultSlot = getOptionDefaultSlot(option) || [];
+    nodes = defaultSlot.filter((node) => {
       // Exclude whitespace-only text nodes to prevent empty container returns
       return node.textContent?.trim().length !== 0;
     });
@@ -1614,7 +1654,41 @@ const getOptionContent = (
     return sanitizeDOMString(container.innerHTML.trim()) || null;
   }
 
+  // Already sanitized through `renderOptionLabel`
   return container;
+};
+
+const getOptionDefaultSlot = (option: HTMLIonSelectOptionElement): Node[] | null => {
+  const defaultSlotNodes = Array.from(option.childNodes).filter((node) => {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      return !(node as HTMLElement).hasAttribute('slot');
+    }
+    return node.nodeType === Node.TEXT_NODE;
+  });
+
+  if (defaultSlotNodes.length === 0) {
+    return null;
+  }
+
+  return defaultSlotNodes;
+};
+
+/**
+ * Extracts plain text from only the default slot of an option,
+ * excluding content assigned to named slots (start/end).
+ */
+const getDefaultSlotPlainText = (option: HTMLIonSelectOptionElement): string => {
+  const texts = Array.from(option.childNodes)
+    .filter((node) => {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        return !(node as HTMLElement).hasAttribute('slot');
+      }
+      return node.nodeType === Node.TEXT_NODE;
+    })
+    .filter((node) => node.nodeType === Node.TEXT_NODE)
+    .map((n) => n.textContent?.trim())
+    .filter((t) => t);
+  return texts.join(' ');
 };
 
 let selectIds = 0;

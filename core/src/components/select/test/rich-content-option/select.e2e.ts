@@ -184,7 +184,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const firstOption = popover.locator('.select-option-label').first();
       const avatar = firstOption.locator('ion-avatar');
       const spanText = await firstOption.locator('.span-style').textContent();
-      const firstOptionText = 'Bird';
+      const firstOptionText = 'Full Content';
 
       await expect(firstOption).toContainText(firstOptionText);
       await expect(avatar).toBeVisible();
@@ -264,7 +264,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const firstOption = modal.locator('.select-option-label').first();
       const avatar = firstOption.locator('ion-avatar');
       const spanText = await firstOption.locator('.span-style').textContent();
-      const firstOptionText = 'Bird';
+      const firstOptionText = 'Full Content';
 
       await expect(firstOption).toContainText(firstOptionText);
       await expect(avatar).toBeVisible();
@@ -317,7 +317,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const nativeButton = select.locator('button');
       const ariaLabel = await nativeButton.getAttribute('aria-label');
 
-      expect(ariaLabel).toBe('Full Content');
+      expect(ariaLabel).toContain('Full Content This is a span element');
     });
   });
 });
@@ -368,6 +368,64 @@ configs({ modes: ['md'] }).forEach(({ title, config }) => {
         expect(startBox!.x).toBeLessThan(optionMidpointX);
         expect(endBox!.x).toBeGreaterThan(optionMidpointX);
       }
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across modes/directions
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('select: rich content options'), () => {
+    test('it should only render text nodes when `innerHTMLTemplatesEnabled` is disabled', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-select id="alert-select" label="Alert" placeholder="Select one" interface="alert">
+            <ion-select-option value="full" description="Choose me!">
+              <ion-badge slot="end">NEW</ion-badge>
+              <ion-avatar id="avatar" slot="start" size="large">
+                <img src="/src/components/avatar/test/avatar.svg" />
+              </ion-avatar>
+              Full Content
+              <span class="span-style">This is a span element</span>
+            </ion-select-option>
+          </ion-select>
+        `,
+        config
+      );
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
+
+      const select = page.locator('#alert-select');
+
+      await select.click();
+
+      await ionAlertDidPresent.next();
+
+      const alert = page.locator('ion-alert');
+      const firstOption = alert.locator('.alert-radio-label').first();
+      const startContainer = firstOption.locator('.select-option-start');
+      const endContainer = firstOption.locator('.select-option-end');
+      const span = firstOption.locator('.span-style');
+
+      await expect(startContainer).toHaveCount(0);
+      await expect(endContainer).toHaveCount(0);
+      await expect(span).toHaveCount(0);
+
+      // Click on the first option
+      await firstOption.click();
+
+      // Confirm the selection
+      const confirmButton = alert.locator('.alert-button:not(.alert-button-role-cancel)');
+      await confirmButton.click();
+
+      await ionAlertDidDismiss.next();
+
+      const selectText = select.locator('.select-text');
+      const selectTextSpan = selectText.locator('.span-style');
+
+      await expect(selectTextSpan).toHaveCount(0);
     });
   });
 });

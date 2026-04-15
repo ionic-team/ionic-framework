@@ -168,7 +168,7 @@ button {
  * prevent losing the ellipses behavior.
  */
 .select-text > * + * {
-  margin-inline-start: var(--select-text-gap, 2px);
+  margin-inline-start: var(--select-text-gap);
 }
 
 .select-text img,

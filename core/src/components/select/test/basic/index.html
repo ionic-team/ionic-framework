@@ -12,27 +12,6 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-
-    <script>
-      window.Ionic = {
-        config: {
-          innerHTMLTemplatesEnabled: true,
-        },
-      };
-    </script>
-    <style>
-      .native-img {
-        max-height: 20px;
-        width: auto;
-        object-fit: contain;
-      }
-
-      .span-style {
-        font-size: 12px;
-        color: var(--ion-color-primary);
-        padding-inline-start: 4px;
-      }
-    </style>
   </head>
 
   <body>
@@ -51,59 +30,31 @@
 
           <ion-item>
             <ion-select id="alert-select" label="Alert" placeholder="Select one" interface="alert">
-              <ion-select-option value="apples" description="Choose me!">
-                <ion-avatar id="avatar" slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                Apples
-                <span class="span-style">This is a span element</span>
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
+              <ion-select-option value="apples">Apples</ion-select-option>
               <ion-select-option value="oranges">Oranges</ion-select-option>
               <ion-select-option value="pears">Pears</ion-select-option>
             </ion-select>
           </ion-item>
 
           <ion-item>
-            <ion-select id="popover-select" label="Popover" placeholder="Select one" interface="popover">
-              <ion-select-option value="apples" description="Choose me!">
-                <ion-avatar id="avatar" slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                Apples
-                <span class="span-style">This is a span element</span>
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
+            <ion-select label="Popover" placeholder="Select one" interface="popover">
+              <ion-select-option value="apples">Apples</ion-select-option>
               <ion-select-option value="oranges">Oranges</ion-select-option>
               <ion-select-option value="pears">Pears</ion-select-option>
             </ion-select>
           </ion-item>
 
           <ion-item>
-            <ion-select id="action-sheet-select" label="Action Sheet" placeholder="Select one" interface="action-sheet">
-              <ion-select-option value="apples" description="Choose me!">
-                <ion-avatar id="avatar" slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                Apples
-                <span class="span-style">This is a span element</span>
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
+            <ion-select label="Action Sheet" placeholder="Select one" interface="action-sheet">
+              <ion-select-option value="apples">Apples</ion-select-option>
               <ion-select-option value="oranges">Oranges</ion-select-option>
               <ion-select-option value="pears">Pears</ion-select-option>
             </ion-select>
           </ion-item>
 
           <ion-item>
-            <ion-select id="modal-select" label="Modal" placeholder="Select one" interface="modal">
-              <ion-select-option value="apples" description="Choose me!">
-                <ion-avatar id="avatar" slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                Apples
-                <span class="span-style">This is a span element</span>
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
+            <ion-select label="Modal" placeholder="Select one" interface="modal">
+              <ion-select-option value="apples">Apples</ion-select-option>
               <ion-select-option value="oranges">Oranges</ion-select-option>
               <ion-select-option value="pears">Pears</ion-select-option>
             </ion-select>
@@ -279,15 +230,8 @@
           </ion-list-header>
 
           <ion-item>
-            <ion-select id="alert-select-multiple" label="Alert" multiple="true" interface="alert">
-              <ion-select-option value="pepperoni" description="Choose me!">
-                <ion-avatar id="avatar" slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                Pepperoni
-                <span class="span-style">This is a span element</span>
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
+            <ion-select label="Alert" multiple="true" interface="alert">
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
               <ion-select-option value="bacon">Bacon</ion-select-option>
               <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
               <ion-select-option value="mushrooms">Mushrooms</ion-select-option>
@@ -296,15 +240,8 @@
           </ion-item>
 
           <ion-item>
-            <ion-select id="popover-select-multiple" label="Popover" multiple="true" interface="popover">
-              <ion-select-option value="bird" description="Choose me!">
-                <ion-avatar id="avatar" slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                Bird
-                <span class="span-style">This is a span element</span>
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
+            <ion-select label="Popover" multiple="true" interface="popover">
+              <ion-select-option value="bird">Bird</ion-select-option>
               <ion-select-option value="cat">Cat</ion-select-option>
               <ion-select-option value="dog">Dog</ion-select-option>
               <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
@@ -312,15 +249,8 @@
           </ion-item>
 
           <ion-item>
-            <ion-select id="modal-select-multiple" label="Modal" multiple="true" interface="modal">
-              <ion-select-option value="bird" description="Choose me!">
-                <ion-avatar id="avatar" slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                Bird
-                <span class="span-style">This is a span element</span>
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
+            <ion-select label="Modal" multiple="true" interface="modal">
+              <ion-select-option value="bird">Bird</ion-select-option>
               <ion-select-option value="cat">Cat</ion-select-option>
               <ion-select-option value="dog">Dog</ion-select-option>
               <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
