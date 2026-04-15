@@ -1,5 +1,4 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@use "./tab-bar.ionic.vars" as vars;
 @use "./tab-bar.common";
 
 :host {
@@ -91,9 +90,9 @@
 
 @supports (backdrop-filter: blur(0)) {
   :host(.tab-bar-translucent) {
-    --background: #{vars.$tab-bar-ionic-translucent-background-color};
+    --background: rgba(255, 255, 255, 0.6);
 
-    backdrop-filter: var(--backdrop-filter, #{vars.$tab-bar-ionic-translucent-filter});
+    backdrop-filter: var(--tab-bar-backdrop-filter, blur(12px));
   }
 
   :host(.tab-bar-translucent) ::slotted(ion-tab-button.ion-focused) {
