@@ -5,7 +5,7 @@ import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
 import { printIonError, printIonWarning } from '@utils/logging';
 
 import { config } from '../global/config';
-import { getIonMode } from '../global/ionic-global';
+import { getIonMode, getIonTheme } from '../global/ionic-global';
 import type {
   ActionSheetOptions,
   AlertOptions,
@@ -610,6 +610,7 @@ export const present = async <OverlayPresentOptions>(
   name: keyof IonicConfig,
   iosEnterAnimation: AnimationBuilder,
   mdEnterAnimation: AnimationBuilder,
+  ionicEnterAnimation: AnimationBuilder,
   opts?: OverlayPresentOptions
 ) => {
   if (overlay.presented) {
@@ -664,11 +665,13 @@ export const present = async <OverlayPresentOptions>(
   }
   overlay.willPresentShorthand?.emit();
 
+  const theme = getIonTheme(overlay);
   const mode = getIonMode(overlay);
+
+  const selectedAnimation =
+    mode === 'ios' ? iosEnterAnimation : theme === 'ionic' ? ionicEnterAnimation : mdEnterAnimation;
   // get the user's animation fn if one was provided
-  const animationBuilder = overlay.enterAnimation
-    ? overlay.enterAnimation
-    : config.get(name, mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
+  const animationBuilder = overlay.enterAnimation ? overlay.enterAnimation : config.get(name, selectedAnimation);
 
   const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
   if (completed) {

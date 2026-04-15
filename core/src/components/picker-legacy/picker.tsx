@@ -21,6 +21,7 @@ import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
+import { ionicEnterAnimation } from './animations/ionic.enter';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import type { PickerButton, PickerColumn } from './picker-interface';
@@ -240,7 +241,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
     await this.delegateController.attachViewToDom();
 
-    await present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
+    await present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, ionicEnterAnimation, undefined);
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);

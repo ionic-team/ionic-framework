@@ -23,6 +23,7 @@ import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
 import type { ActionSheetButton } from './action-sheet-interface';
+import { ionicEnterAnimation } from './animations/ionic.enter';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
@@ -228,7 +229,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
     await this.delegateController.attachViewToDom();
 
-    await present(this, 'actionSheetEnter', iosEnterAnimation, mdEnterAnimation);
+    await present(this, 'actionSheetEnter', iosEnterAnimation, mdEnterAnimation, ionicEnterAnimation);
 
     unlock();
   }
