@@ -14,8 +14,18 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Version 9.x
 
+- [Browser and Platform Support](#version-9x-browser-platform-support)
 - [Components](#version-9x-components)
   - [Router Outlet](#version-9x-router-outlet)
+
+<h2 id="version-9x-browser-platform-support">Browser and Platform Support</h2>
+
+This section details the desktop browser, JavaScript framework, and mobile platform versions that are supported by Ionic 9.
+
+**Minimum JavaScript Framework Versions**
+| Framework | Supported Version     |
+| --------- | --------------------- |
+| React     | 18+                   |
 
 <h2 id="version-9x-components">Components</h2>
 
