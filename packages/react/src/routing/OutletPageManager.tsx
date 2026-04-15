@@ -46,6 +46,14 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
        */
       if (!this.outletIsReady) {
         componentOnReady(this.ionRouterOutlet, () => {
+          /**
+           * Guard against duplicate callbacks from React strict mode double-mount.
+           * Both componentDidMount calls pass the outer !outletIsReady check before
+           * either async callback fires. Without this inner guard, the second callback
+           * re-adds ion-page-invisible after the first callback's transition removed it,
+           * and registerIonPage returns early (same element), leaving the page invisible.
+           */
+          if (this.outletIsReady) return;
           this.outletIsReady = true;
 
           /**
