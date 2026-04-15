@@ -75,22 +75,20 @@
   @include margin(null, null, calc(globals.$ion-space-200 + globals.$ion-font-size-300), null);
 }
 
-.range-bar {
-  &.has-ticks {
-    @include border-radius(0);
-  }
+.range-bar.has-ticks {
+  @include border-radius(0);
+}
 
-  &.range-bar-active {
-    bottom: 0;
+.range-bar.range-bar-active.has-ticks {
+  @include margin(null, calc(-1 * globals.$ion-scale-100 * 0.5), null, calc(-1 * globals.$ion-scale-100 * 0.5));
+}
 
-    width: auto;
+.range-bar.range-bar-active {
+  bottom: 0;
 
-    background: var(--bar-background-active);
+  width: auto;
 
-    &.has-ticks {
-      @include margin(null, calc(-1 * globals.$ion-scale-100 * 0.5), null, calc(-1 * globals.$ion-scale-100 * 0.5));
-    }
-  }
+  background: var(--bar-background-active);
 }
 
 .range-tick {
