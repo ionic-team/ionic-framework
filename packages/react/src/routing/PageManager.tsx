@@ -24,12 +24,21 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
     // React refs must be stable (not created inline).
     // Wrap merged refs to add ion-page-invisible synchronously when element is created
     const baseMergedRefs = mergeRefs(this.ionPageElementRef, this.props.forwardedRef);
+    // Guard against React 19 strict mode double-mount re-adding ion-page-invisible.
+    // The ref fires again on remount after StackManager may have already removed it.
+    let hasAppliedInvisible = false;
     this.stableMergedRefs = (node: HTMLDivElement | null) => {
-      if (node && !node.classList.contains('ion-page-invisible') && !node.classList.contains('ion-page-hidden')) {
+      if (
+        node &&
+        !hasAppliedInvisible &&
+        !node.classList.contains('ion-page-invisible') &&
+        !node.classList.contains('ion-page-hidden')
+      ) {
         // Add ion-page-invisible synchronously before first paint (if in an outlet)
         // This prevents the flash that occurs when componentDidMount runs after paint
         if (this.context?.isInOutlet?.()) {
           node.classList.add('ion-page-invisible');
+          hasAppliedInvisible = true;
         }
       }
       baseMergedRefs(node);
