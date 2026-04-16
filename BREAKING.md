@@ -22,7 +22,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 <h4 id="version-9x-legacy-picker">Legacy Picker</h4>
 
-- `ion-picker-legacy` and `ion-picker-legacy-column` have been removed. The legacy picker component has been replaced with a inline picker component.
+- `ion-picker-legacy` and `ion-picker-legacy-column` have been removed. The legacy picker component has been replaced with an inline picker component.
    - Usages such as `ion-picker-legacy` or `IonPickerLegacy` should be changed to `ion-picker` and `IonPicker`, respectively.
 
 <h4 id="version-9x-router-outlet">Router Outlet</h4>
