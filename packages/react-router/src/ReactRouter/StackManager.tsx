@@ -267,6 +267,24 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     }
     this.wasInScope = false;
 
+    // For ionPage outlets whose parent outlet has swipe-to-go-back enabled,
+    // preserve child views so they remain visible during the swipe gesture.
+    // Without this, the deferred unmount removes child pages before the gesture
+    // starts, showing an empty shell when swiping back. Views are cleaned up
+    // when the parent outlet pops this view (componentWillUnmount -> clearOutlet).
+    //
+    // Lifecycle events are skipped in this branch because the view stays mounted
+    // and visible. Firing ionViewWillLeave/DidLeave here would be asymmetric with
+    // no matching ionViewWillEnter/DidEnter when the view comes back in scope.
+    const isIonPageOutlet = this.routerOutletElement?.classList.contains('ion-page');
+    if (isIonPageOutlet) {
+      const parentOutlet = this.routerOutletElement?.parentElement?.closest<HTMLIonRouterOutletElement>('ion-router-outlet');
+      if (parentOutlet?.swipeGesture === true) {
+        this.dismissPresentedOverlays();
+        return true;
+      }
+    }
+
     // Fire lifecycle events on any visible view before unmounting.
     // When navigating away from a tabbed section, the parent outlet fires
     // ionViewDidLeave on the tabs container, but the active tab child page
@@ -1142,16 +1160,63 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   }
 
   /**
+   * Dismisses every presented Ionic overlay in the document. Core moves overlays
+   * to ion-app when presented, so they are no longer descendants of this outlet
+   * and stay visible even after the outlet is hidden, blocking the entering view.
+   *
+   * Scope is document-wide because the original outlet-to-overlay DOM linkage is
+   * lost after presentation. Overlays without a trackable presenting element
+   * cannot be safely attributed to a specific outlet.
+   */
+  private dismissPresentedOverlays(): void {
+    type PresentedOverlay =
+      | HTMLIonModalElement
+      | HTMLIonPopoverElement
+      | HTMLIonActionSheetElement
+      | HTMLIonAlertElement
+      | HTMLIonLoadingElement;
+    // Matches the overlay set tracked by core's getPresentedOverlays (see
+    // core/src/utils/overlays.ts). An overlay is "presented" when it lacks the
+    // `overlay-hidden` class.
+    const overlaySelector = 'ion-modal, ion-popover, ion-action-sheet, ion-alert, ion-loading';
+    document.querySelectorAll<PresentedOverlay>(overlaySelector).forEach((overlay) => {
+      if (overlay.classList.contains('overlay-hidden') || typeof overlay.dismiss !== 'function') {
+        return;
+      }
+      overlay.dismiss().catch(() => {
+        /* Overlay may already be dismissing or its canDismiss guard may block it. */
+      });
+    });
+  }
+
+  /**
+   * Resolves the entering view for a swipe-back gesture.
+   *
+   * Prefers a view owned by this outlet. Falls back to searching all outlets only
+   * when the candidate's ion-page element is a descendant of this outlet. Without
+   * the containment guard, a nested child outlet can claim ownership of a sibling
+   * outlet's view, running the swipe gesture on the wrong router outlet.
+   */
+  private findEnteringViewForSwipe(swipeBackRouteInfo: RouteInfo): ViewItem | undefined {
+    const enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, this.id, false);
+    if (enteringViewItem) {
+      return enteringViewItem;
+    }
+    const candidate = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, undefined, false);
+    if (candidate?.ionPageElement && this.routerOutletElement?.contains(candidate.ionPageElement)) {
+      return candidate;
+    }
+    return undefined;
+  }
+
+  /**
    * Configures swipe-to-go-back gesture for the router outlet.
    */
   async setupRouterOutlet(routerOutlet: HTMLIonRouterOutletElement) {
     const canStart = () => {
       const { routeInfo } = this.props;
       const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
-      let enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, this.id, false);
-      if (!enteringViewItem) {
-        enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, undefined, false);
-      }
+      const enteringViewItem = this.findEnteringViewForSwipe(swipeBackRouteInfo);
 
       // View might have mount=false but ionPageElement still in DOM
       const ionPageInDocument = Boolean(
@@ -1175,11 +1240,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     const onStart = async () => {
       const { routeInfo } = this.props;
       const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
-      // First try to find the view in the current outlet, then search all outlets
-      let enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, this.id, false);
-      if (!enteringViewItem) {
-        enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, undefined, false);
-      }
+      const enteringViewItem = this.findEnteringViewForSwipe(swipeBackRouteInfo);
       const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
 
       // Ensure the entering view is mounted so React keeps rendering it during the gesture.
@@ -1206,11 +1267,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         // Swipe gesture was aborted - re-hide the page that was going to enter
         const { routeInfo } = this.props;
         const swipeBackRouteInfo = this.getSwipeBackRouteInfo();
-        // First try to find the view in the current outlet, then search all outlets
-        let enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, this.id, false);
-        if (!enteringViewItem) {
-          enteringViewItem = this.context.findViewItemByRouteInfo(swipeBackRouteInfo, undefined, false);
-        }
+        const enteringViewItem = this.findEnteringViewForSwipe(swipeBackRouteInfo);
         const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
 
         // Don't hide if entering and leaving are the same (parameterized route edge case)
