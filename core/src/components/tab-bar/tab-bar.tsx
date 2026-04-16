@@ -190,26 +190,15 @@ export class TabBar implements ComponentInterface {
   private async initScrollListener(contentEl: HTMLElement) {
     const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
 
-    const scrollThreshold = 10;
-
     this.contentScrollCallback = () => {
       readTask(() => {
         const scrollTop = scrollEl.scrollTop;
-        const isScrollingDown = scrollTop > this.lastScrollTop;
+        const shouldHide = this.checkScrollStatus(scrollTop);
 
-        if (isScrollingDown !== this.lastScrollTop > this.scrollDirectionChangeTop) {
-          this.scrollDirectionChangeTop = this.lastScrollTop;
-        }
-
-        const delta = Math.abs(scrollTop - this.scrollDirectionChangeTop);
-
-        if (delta >= scrollThreshold) {
-          const shouldHide = isScrollingDown && scrollTop > 0;
-          if (shouldHide !== this.scrollHidden) {
-            writeTask(() => {
-              this.scrollHidden = shouldHide;
-            });
-          }
+        if (shouldHide !== this.scrollHidden) {
+          writeTask(() => {
+            this.scrollHidden = shouldHide;
+          });
         }
 
         this.lastScrollTop = scrollTop;
@@ -224,6 +213,33 @@ export class TabBar implements ComponentInterface {
       this.scrollEl.removeEventListener('scroll', this.contentScrollCallback);
       this.contentScrollCallback = undefined;
     }
+  }
+
+  private checkScrollStatus(scrollTop: number): boolean {
+    // Always visible within the first 80px of scroll
+    const visibleZone = 80;
+    // Hides after 60px of continuous downward scrolling only, when scrolling up threashold should be 0px
+    const scrollThresholdHide = 60;
+
+    if (scrollTop <= visibleZone) {
+      return false;
+    }
+
+    const isScrollingDown = scrollTop > this.lastScrollTop;
+    const wasScrollingDown = this.lastScrollTop > this.scrollDirectionChangeTop;
+
+    if (isScrollingDown !== wasScrollingDown) {
+      this.scrollDirectionChangeTop = this.lastScrollTop;
+    }
+
+    const delta = Math.abs(scrollTop - this.scrollDirectionChangeTop);
+    const threshold = isScrollingDown ? scrollThresholdHide : 0;
+
+    if (delta < threshold) {
+      return this.scrollHidden;
+    }
+
+    return isScrollingDown;
   }
 
   private getShape(): string | undefined {

@@ -94,15 +94,13 @@
 // --------------------------------------------------
 
 :host(.tab-bar-hide-on-scroll) {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :host(.tab-bar-scroll-hidden) {
-  transform: translateY(calc(100% + var(--ion-safe-area-bottom, 0))) translateX(calc(-50%));
+  transform: translateY(calc(100% + var(--ion-safe-area-bottom, 0) + globals.$ion-space-1000)) translateX(calc(-50%));
 
-  transition: transform 0.3s cubic-bezier(0.3, 1, 0.1, 1), opacity 0.3s cubic-bezier(0.3, 1, 0.1, 1);
-
-  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.3, 1, 0.1, 1);
 }
 
 :host([slot="top"].tab-bar-scroll-hidden) {
