@@ -70,9 +70,14 @@
 
   position: absolute;
 
+  // stylelint-disable-next-line property-disallowed-list
+  left: 50%;
+
   align-self: center;
 
   width: fit-content;
+
+  transform: translateX(calc(-50%));
 
   contain: content;
 }
@@ -83,6 +88,25 @@
 
 :host([slot="bottom"].tab-bar-compact) {
   bottom: calc(globals.$ion-space-400 + var(--ion-safe-area-bottom, 0));
+}
+
+// Tab Bar Hide on Scroll
+// --------------------------------------------------
+
+:host(.tab-bar-hide-on-scroll) {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:host(.tab-bar-scroll-hidden) {
+  transform: translateY(calc(100% + var(--ion-safe-area-bottom, 0))) translateX(calc(-50%));
+
+  transition: transform 0.3s cubic-bezier(0.3, 1, 0.1, 1), opacity 0.3s cubic-bezier(0.3, 1, 0.1, 1);
+
+  opacity: 0;
+}
+
+:host([slot="top"].tab-bar-scroll-hidden) {
+  transform: translateY(-100%) translateX(calc(-50%));
 }
 
 // Tab Bar Translucent
