@@ -24,11 +24,12 @@ const IOS_MODE = 'ionic:mode=ios';
 test.describe('ionPage outlet swipe-to-go-back', () => {
   test('section-a content should be visible during swipe-back from section-b', async ({ page }) => {
     page.on('console', (msg) => {
-      const text = msg.text();
-      if (text.startsWith('[SwipeBack') || text.startsWith('[HideIonPageElement]')) {
-        // eslint-disable-next-line no-console
-        console.log('PAGE:', text);
-      }
+      // eslint-disable-next-line no-console
+      console.log('BROWSER[' + msg.type() + ']:', msg.text());
+    });
+    page.on('pageerror', (err) => {
+      // eslint-disable-next-line no-console
+      console.log('PAGEERROR:', err.message);
     });
 
     // Navigate to modal-aria-hidden test page (has sibling ionPage outlets)
@@ -40,6 +41,36 @@ test.describe('ionPage outlet swipe-to-go-back', () => {
     await page.locator('ion-modal').waitFor({ state: 'visible' });
     await page.locator('#navigateToB').click();
     await ionPageVisible(page, 'modal-page-b');
+
+    // Install a MutationObserver on section-a to catch anyone adding ion-page-hidden
+    await page.evaluate(() => {
+      const target = document.querySelector('#section-a');
+      if (!target) {
+        // eslint-disable-next-line no-console
+        console.log('[MO-install] #section-a not found!');
+        return;
+      }
+      const obs = new MutationObserver((mutations) => {
+        for (const m of mutations) {
+          if (m.type === 'attributes' && (m.attributeName === 'class' || m.attributeName === 'style' || m.attributeName === 'aria-hidden')) {
+            const el = m.target as HTMLElement;
+            // eslint-disable-next-line no-console
+            console.log('[MO-change]', JSON.stringify({
+              attr: m.attributeName,
+              oldValue: m.oldValue,
+              newClass: el.className,
+              newStyle: el.getAttribute('style'),
+              newAriaHidden: el.getAttribute('aria-hidden'),
+              stack: new Error().stack?.split('\n').slice(1, 8).map((s) => s.trim()),
+            }));
+          }
+        }
+      });
+      obs.observe(target, { attributes: true, attributeOldValue: true });
+      (window as any).__sectionAObserver = obs;
+      // eslint-disable-next-line no-console
+      console.log('[MO-install] observer attached to #section-a');
+    });
 
     // Pre-swipe: dump section-a state
     const preSwipe = await page.locator('#section-a').evaluate((el: HTMLElement) => ({
@@ -75,6 +106,10 @@ test.describe('ionPage outlet swipe-to-go-back', () => {
     }));
     // eslint-disable-next-line no-console
     console.log('POST_SWIPE section-a:', JSON.stringify(postSwipe));
+
+    // Also dump current URL to see if navigation fired
+    // eslint-disable-next-line no-console
+    console.log('POST_SWIPE url:', page.url());
 
     // Mid-swipe: section-a should be visible (not display:none) with its child content
     const sectionA = page.locator('#section-a');

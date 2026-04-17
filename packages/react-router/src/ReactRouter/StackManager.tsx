@@ -1117,6 +1117,19 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     let leavingViewItem = viewItems.leavingViewItem;
     let shouldUnmountLeavingViewItem = this.shouldUnmountLeavingView(routeInfo, enteringViewItem, leavingViewItem);
 
+    if (this.id === 'modal-aria-hidden-root' || this.id === 'section-a' || this.id === 'section-b') {
+      // eslint-disable-next-line no-console
+      console.log('[HPT:entry]', JSON.stringify({
+        outletId: this.id,
+        pathname: routeInfo.pathname,
+        routeAction: routeInfo.routeAction,
+        routeDirection: routeInfo.routeDirection,
+        enteringViewPath: enteringViewItem?.reactElement?.props?.path,
+        leavingViewPath: leavingViewItem?.reactElement?.props?.path,
+        shouldUnmountLeavingViewItem,
+      }));
+    }
+
     // Get parent path for nested outlets
     const parentPath = this.getParentPath();
 
@@ -1506,6 +1519,25 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     skipAnimation = false
   ) {
     const myGeneration = ++this.transitionGeneration;
+
+    if (this.id === 'modal-aria-hidden-root' || this.id === 'section-a' || this.id === 'section-b') {
+      // eslint-disable-next-line no-console
+      console.log('[TP:entry]', JSON.stringify({
+        outletId: this.id,
+        direction,
+        progressAnimation,
+        skipAnimation,
+        enteringId: enteringViewItem?.id,
+        enteringPath: enteringViewItem?.reactElement?.props?.path,
+        enteringPageElementId: enteringViewItem?.ionPageElement?.id,
+        leavingId: leavingViewItem?.id,
+        leavingPath: leavingViewItem?.reactElement?.props?.path,
+        leavingPageElementId: leavingViewItem?.ionPageElement?.id,
+        routeAction: routeInfo.routeAction,
+        routeDirection: routeInfo.routeDirection,
+        routePathname: routeInfo.pathname,
+      }));
+    }
 
     const runCommit = async (enteringEl: HTMLElement, leavingEl?: HTMLElement) => {
       const skipTransition = this.skipTransition;
