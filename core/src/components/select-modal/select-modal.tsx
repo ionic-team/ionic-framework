@@ -95,7 +95,7 @@ export class SelectModal implements ComponentInterface {
       md: closeSharp,
       ionic: xRegular,
     };
-    return icons[theme] ?? icons.md;
+    return icons[theme];
   }
 
   private getModalContextClasses() {
