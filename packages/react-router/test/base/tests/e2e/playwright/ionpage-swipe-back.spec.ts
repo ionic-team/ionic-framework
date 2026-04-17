@@ -23,14 +23,6 @@ const IOS_MODE = 'ionic:mode=ios';
  */
 test.describe('ionPage outlet swipe-to-go-back', () => {
   test('section-a content should be visible during swipe-back from section-b', async ({ page }) => {
-    page.on('console', (msg) => {
-      const text = msg.text();
-      if (text.startsWith('[SwipeBack') || text.startsWith('[HideIonPageElement]')) {
-        // eslint-disable-next-line no-console
-        console.log('PAGE:', text);
-      }
-    });
-
     // Navigate to modal-aria-hidden test page (has sibling ionPage outlets)
     await page.goto(`/modal-aria-hidden?${IOS_MODE}`);
     await ionPageVisible(page, 'modal-page-a');
@@ -41,40 +33,25 @@ test.describe('ionPage outlet swipe-to-go-back', () => {
     await page.locator('#navigateToB').click();
     await ionPageVisible(page, 'modal-page-b');
 
-    // Pre-swipe: dump section-a state
-    const preSwipe = await page.locator('#section-a').evaluate((el: HTMLElement) => ({
-      inlineDisplay: el.style.display,
-      hasHiddenClass: el.classList.contains('ion-page-hidden'),
-      ariaHidden: el.getAttribute('aria-hidden'),
-      classList: Array.from(el.classList),
-      computedDisplay: getComputedStyle(el).display,
-    }));
-    // eslint-disable-next-line no-console
-    console.log('PRE_SWIPE section-a:', JSON.stringify(preSwipe));
+    // Wait for the forward-transition to fully commit before starting the swipe.
+    // ionPageVisible resolves as soon as the entering page-b clears its hidden
+    // state, which can fire before the parent outlet's animation completes. On
+    // slower runners (CI), the parent animation was still in flight when the
+    // swipe mouse events were dispatched, so the swipe-back gesture never
+    // started and section-a was then hidden by the tail of the forward commit.
+    // Waiting for section-a to actually carry `ion-page-hidden` guarantees the
+    // forward transition is done and the gesture can take over cleanly.
+    await page.locator('#section-a.ion-page-hidden').waitFor({ state: 'attached' });
 
     // Start a swipe-back gesture and hold mid-way
     const outlet = page.locator('ion-router-outlet#modal-aria-hidden-root');
     const box = await outlet.boundingBox();
     if (!box) throw new Error('Root outlet not found');
-    // eslint-disable-next-line no-console
-    console.log('OUTLET_BOX:', JSON.stringify(box));
 
     await page.mouse.move(box.x, box.y + box.height / 2);
     await page.mouse.down();
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2, { steps: 10 });
     await page.waitForTimeout(300);
-
-    // Post-swipe: dump section-a state before the assertion
-    const postSwipe = await page.locator('#section-a').evaluate((el: HTMLElement) => ({
-      inlineDisplay: el.style.display,
-      hasHiddenClass: el.classList.contains('ion-page-hidden'),
-      ariaHidden: el.getAttribute('aria-hidden'),
-      classList: Array.from(el.classList),
-      computedDisplay: getComputedStyle(el).display,
-      outerBounds: el.getBoundingClientRect().toJSON(),
-    }));
-    // eslint-disable-next-line no-console
-    console.log('POST_SWIPE section-a:', JSON.stringify(postSwipe));
 
     // Mid-swipe: section-a should be visible (not display:none) with its child content
     const sectionA = page.locator('#section-a');
