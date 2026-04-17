@@ -160,10 +160,7 @@
     --ion-color#{$prefix}-base: var(--ion-color-#{$name}#{$prefix}, #{$base}) !important;
     --ion-color#{$prefix}-base-rgb: var(--ion-color-#{$name}#{$prefix}-rgb, #{$base-rgb}) !important;
     --ion-color#{$prefix}-contrast: var(--ion-color-#{$name}#{$prefix}-contrast, #{$contrast}) !important;
-    --ion-color#{$prefix}-contrast-rgb: var(
-      --ion-color-#{$name}#{$prefix}-contrast-rgb,
-      #{$contrast-rgb}
-    ) !important;
+    --ion-color#{$prefix}-contrast-rgb: var(--ion-color-#{$name}#{$prefix}-contrast-rgb, #{$contrast-rgb}) !important;
     --ion-color#{$prefix}-shade: var(--ion-color-#{$name}#{$prefix}-shade, #{$shade}) !important;
     --ion-color#{$prefix}-tint: var(--ion-color-#{$name}#{$prefix}-tint, #{$tint}) !important;
     // TODO(FW-6417): remove the fallback variable when the foreground variable is
