@@ -59,7 +59,7 @@ test.describe('Tabs', () => {
     await ionPageVisible(page, 'tab1child1');
 
     await ionGoBack(page, '/tabs/tab1');
-    await ionPageDoesNotExist(page, 'tab1child1');
+    await ionPageHidden(page, 'tab1child1');
     await ionPageVisible(page, 'tab1');
     await expect(page.locator('ion-tab-button.tab-selected')).toContainText('Tab1');
   });
@@ -102,7 +102,7 @@ test.describe('Tabs', () => {
     await ionPageVisible(page, 'tab1child1');
 
     await ionBackClick(page, 'tab1child1');
-    await ionPageDoesNotExist(page, 'tab1child1');
+    await ionPageHidden(page, 'tab1child1');
     await ionPageVisible(page, 'tab1');
 
     await expect(page).toHaveURL(/\/tabs\/tab1/);

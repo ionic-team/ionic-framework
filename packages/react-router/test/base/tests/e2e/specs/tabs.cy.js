@@ -49,7 +49,7 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab1child1');
 
     cy.ionBackClick('tab1child1');
-    cy.ionPageDoesNotExist('tab1child1');
+    cy.ionPageHidden('tab1child1');
     cy.ionPageVisible('tab1');
 
     cy.url().should('include', '/tabs/tab1');

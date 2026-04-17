@@ -646,7 +646,9 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
     // history entry, using replaceState would create a duplicate browser history
     // entry (the previous and current entries would both have the same URL).
     // Navigate back to the previous entry instead to avoid the duplicate.
-    // Use 'back' direction so the leaving view is unmounted (same as replace).
+    // Keep routeAction as 'replace' so StackManager correctly unmounts the
+    // leaving view through handleLeavingViewUnmount rather than treating it
+    // as a browser-back pop (which preserves views for back/forward history).
     if (routeAction === 'replace') {
       const prevEntry = locationHistory.current.previous();
       const currentEntry = locationHistory.current.current();
@@ -654,7 +656,7 @@ export const IonRouter = ({ children, registerHistoryListener }: PropsWithChildr
       if (prevEntry && currentEntry && prevEntry !== currentEntry && prevPath === path) {
         incomingRouteParams.current = {
           ...prevEntry,
-          routeAction: 'pop',
+          routeAction: 'replace',
           routeDirection: 'back',
           routeAnimation,
         };

@@ -46,7 +46,7 @@ test.describe('Param Back Navigation (#27900)', () => {
     // 5. Back → /user/alex (this is the step that broke in #27900)
     await ionGoBack(page, '/param-swipe-back/user/alex');
     await ionPageVisible(page, 'psb-user-alex');
-    await ionPageDoesNotExist(page, 'psb-middle');
+    await ionPageHidden(page, 'psb-middle');
   });
 
   test('Repro A: swipe back through param routes with non-param in between', async ({ page }) => {

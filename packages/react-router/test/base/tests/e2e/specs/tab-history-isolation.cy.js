@@ -51,7 +51,7 @@ describe('Tab History Isolation', () => {
     cy.ionPageVisible('tab-a-details');
 
     cy.ionBackClick('tab-a-details');
-    cy.ionPageDoesNotExist('tab-a-details');
+    cy.ionPageHidden('tab-a-details');
     cy.ionPageVisible('tab-a');
 
     cy.url().should('include', '/tab-history-isolation/a');
@@ -71,7 +71,7 @@ describe('Tab History Isolation', () => {
     cy.ionPageVisible('tab-b-details');
 
     cy.ionBackClick('tab-b-details');
-    cy.ionPageDoesNotExist('tab-b-details');
+    cy.ionPageHidden('tab-b-details');
     cy.ionPageVisible('tab-b');
 
     cy.url().should('include', '/tab-history-isolation/b');
@@ -104,7 +104,7 @@ describe('Tab History Isolation', () => {
     cy.ionPageVisible('tab-a-details');
 
     cy.ionBackClick('tab-a-details');
-    cy.ionPageDoesNotExist('tab-a-details');
+    cy.ionPageHidden('tab-a-details');
     cy.ionPageVisible('tab-a');
   });
 

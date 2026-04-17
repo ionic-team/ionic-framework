@@ -53,9 +53,40 @@ const hideIonPageElement = (element: HTMLElement | undefined): void => {
 const showIonPageElement = (element: HTMLElement | undefined): void => {
   if (element) {
     element.style.removeProperty('visibility');
+    // core transitions (md.transition.ts, ios.transition.ts) leave inline styles
+    // on the leaving page after animation: `display: none` plus the final
+    // keyframe values for `transform` and `opacity` (MD only). Preserved views
+    // must clear all of these on re-entry so they render in the correct
+    // position when the back direction entering animation is a no-op.
+    element.style.removeProperty('display');
+    element.style.removeProperty('transform');
+    element.style.removeProperty('opacity');
     element.classList.remove('ion-page-hidden');
     element.removeAttribute('aria-hidden');
   }
+};
+
+/**
+ * A leaf view is "preservable" on browser-back (pop) when its React state
+ * should survive a forward-pop round-trip. Non-parameterized leaf paths
+ * resolve to the same view item on re-entry, so keeping them mounted retains
+ * user-visible state (scroll, inputs, cleared lists, etc.).
+ *
+ * Excluded:
+ * - Parameterized routes (`/users/:id`): each param value gets a distinct
+ *   view item, so preserving them accumulates hidden views in the DOM.
+ * - Wildcard container routes (`/tabs/*`, `*`): wrap nested outlets and must
+ *   be destroyed so nested outlet state rebuilds cleanly on re-entry.
+ */
+const isViewItemPreservableOnPop = (viewItem: ViewItem | undefined): boolean => {
+  const path = viewItem?.reactElement?.props?.path as string | undefined;
+  if (!path) {
+    return false;
+  }
+  if (path === '*' || path.endsWith('/*')) {
+    return false;
+  }
+  return !path.includes(':');
 };
 
 export class StackManager extends React.PureComponent<StackManagerProps> {
@@ -535,10 +566,20 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, undefined, false, shouldSkipAnimation);
 
     if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
-      // For non-replace actions (back nav), set mount=false here to hide the view.
-      // For replace actions, handleLeavingViewUnmount sets mount=false only after
-      // its container-to-container guard passes, avoiding zombie state.
-      if (routeInfo.routeAction !== 'replace') {
+      // For replace actions, skip setting mount=false here. handleLeavingViewUnmount
+      // sets it only after its container-to-container guard passes, avoiding zombie state.
+      //
+      // For pop (browser back) on preservable routes (see isViewItemPreservableOnPop),
+      // keep the view alive (hidden by the transition) so its React state survives a
+      // forward-pop round-trip. ionViewDidLeave already fired via the transitionPage()
+      // call above. Swipe-to-go-back still destroys views through the skipTransition
+      // path earlier in this method, matching native gesture behavior.
+      //
+      // handleLeavingViewUnmount below is a no-op for non-replace actions (early return),
+      // so pop-preserved views pass through it untouched.
+      const shouldPreserveLeavingView =
+        routeInfo.routeAction === 'pop' && isViewItemPreservableOnPop(leavingViewItem);
+      if (routeInfo.routeAction !== 'replace' && !shouldPreserveLeavingView) {
         leavingViewItem.mount = false;
       }
       this.handleLeavingViewUnmount(routeInfo, enteringViewItem, leavingViewItem);
@@ -546,6 +587,45 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
     // Clean up orphaned sibling views after replace actions (redirects)
     this.cleanupOrphanedSiblingViews(routeInfo, enteringViewItem, leavingViewItem);
+
+    // On a fresh push, browser forward history is invalidated. Any views we
+    // previously preserved on pop (to support forward navigation) are now
+    // unreachable and should be unmounted so they don't accumulate in the DOM.
+    this.cleanupPreservedViewsOnPush(routeInfo, enteringViewItem, leavingViewItem);
+  }
+
+  /**
+   * Unmounts any previously-preserved leaf views in this outlet when a push
+   * action invalidates the forward history path. Runs only on `push` (not
+   * replace/pop) and skips the entering and leaving view items.
+   */
+  private cleanupPreservedViewsOnPush(
+    routeInfo: RouteInfo,
+    enteringViewItem: ViewItem,
+    leavingViewItem: ViewItem | undefined
+  ): void {
+    if (routeInfo.routeAction !== 'push') {
+      return;
+    }
+
+    const allViews = this.context.getViewItemsForOutlet(this.id);
+    for (const viewItem of allViews) {
+      if (viewItem === enteringViewItem || viewItem === leavingViewItem) {
+        continue;
+      }
+      if (!viewItem.mount) {
+        continue;
+      }
+      if (!isViewItemPreservableOnPop(viewItem)) {
+        continue;
+      }
+      viewItem.mount = false;
+      const viewToUnmount = viewItem;
+      setTimeout(() => {
+        this.context.unMountViewItem(viewToUnmount);
+        this.forceUpdate();
+      }, VIEW_UNMOUNT_DELAY_MS);
+    }
   }
 
   /**
@@ -779,11 +859,15 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
       // Don't unmount if entering and leaving are the same view item
       if (shouldUnmountLeavingViewItem && leavingViewItem && enteringViewItem !== leavingViewItem) {
-        if (routeInfo.routeAction !== 'replace') {
+        const shouldPreserveLeavingView =
+          routeInfo.routeAction === 'pop' && isViewItemPreservableOnPop(leavingViewItem);
+        if (routeInfo.routeAction !== 'replace' && !shouldPreserveLeavingView) {
           leavingViewItem.mount = false;
         }
         this.handleLeavingViewUnmount(routeInfo, enteringViewItem, leavingViewItem);
       }
+
+      this.cleanupPreservedViewsOnPush(routeInfo, enteringViewItem, leavingViewItem);
 
       this.forceUpdate();
       return;
@@ -816,11 +900,15 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         this.transitionPage(routeInfo, latestEnteringView, latestLeavingView ?? undefined, undefined, false, shouldSkipAnimation);
 
         if (shouldUnmountLeavingViewItem && latestLeavingView && latestEnteringView !== latestLeavingView) {
-          if (routeInfo.routeAction !== 'replace') {
+          const shouldPreserveLeavingView =
+            routeInfo.routeAction === 'pop' && isViewItemPreservableOnPop(latestLeavingView);
+          if (routeInfo.routeAction !== 'replace' && !shouldPreserveLeavingView) {
             latestLeavingView.mount = false;
           }
           this.handleLeavingViewUnmount(routeInfo, latestEnteringView, latestLeavingView);
         }
+
+        this.cleanupPreservedViewsOnPush(routeInfo, latestEnteringView, latestLeavingView ?? undefined);
 
         this.forceUpdate();
       } else {
@@ -1045,7 +1133,9 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       // No view or route found - likely leaving to another outlet
       if (leavingViewItem) {
         hideIonPageElement(leavingViewItem.ionPageElement);
-        if (shouldUnmountLeavingViewItem) {
+        const shouldPreserveLeavingView =
+          routeInfo.routeAction === 'pop' && isViewItemPreservableOnPop(leavingViewItem);
+        if (shouldUnmountLeavingViewItem && !shouldPreserveLeavingView) {
           leavingViewItem.mount = false;
         }
       }
