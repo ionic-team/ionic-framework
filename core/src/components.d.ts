@@ -28,6 +28,7 @@ import { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
 import { PickerColumnChangeEventDetail, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
 import { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
+import { IonProgressBarShape } from "./components/progress-bar/progress-bar.interfaces";
 import { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 import { RefresherEventDetail } from "./components/refresher/refresher-interface";
@@ -68,6 +69,7 @@ export { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
 export { PickerColumnChangeEventDetail, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
 export { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
+export { IonProgressBarShape } from "./components/progress-bar/progress-bar.interfaces";
 export { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 export { RefresherEventDetail } from "./components/refresher/refresher-interface";
@@ -2988,22 +2990,14 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of the component.
-         */
-        "mode"?: "ios" | "md";
-        /**
           * If true, reverse the progress bar direction.
           * @default false
          */
         "reversed": boolean;
         /**
-          * Set to `"round"` for a progress bar with rounded corners, or `"rectangular"` for a progress bar without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"round"` for a progress bar with rounded corners, or `"rectangular"` for a progress bar without rounded corners.  Defaults to `"round"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'round' | 'rectangular';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
+        "shape"?: IonProgressBarShape;
         /**
           * The state of the progress bar, based on if the time the process takes is known or not. Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
           * @default 'determinate'
@@ -8912,22 +8906,14 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of the component.
-         */
-        "mode"?: "ios" | "md";
-        /**
           * If true, reverse the progress bar direction.
           * @default false
          */
         "reversed"?: boolean;
         /**
-          * Set to `"round"` for a progress bar with rounded corners, or `"rectangular"` for a progress bar without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"round"` for a progress bar with rounded corners, or `"rectangular"` for a progress bar without rounded corners.  Defaults to `"round"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'round' | 'rectangular';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
+        "shape"?: IonProgressBarShape;
         /**
           * The state of the progress bar, based on if the time the process takes is known or not. Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
           * @default 'determinate'

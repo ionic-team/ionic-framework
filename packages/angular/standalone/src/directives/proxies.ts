@@ -1618,14 +1618,14 @@ Shorthand for ionPickerDidDismiss.
 
 @ProxyCmp({
   defineCustomElementFn: defineIonProgressBar,
-  inputs: ['buffer', 'color', 'mode', 'reversed', 'shape', 'theme', 'type', 'value']
+  inputs: ['buffer', 'color', 'reversed', 'shape', 'type', 'value']
 })
 @Component({
   selector: 'ion-progress-bar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['buffer', 'color', 'mode', 'reversed', 'shape', 'theme', 'type', 'value'],
+  inputs: ['buffer', 'color', 'reversed', 'shape', 'type', 'value'],
   standalone: true
 })
 export class IonProgressBar {

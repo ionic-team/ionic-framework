@@ -28,6 +28,10 @@ export const defaultTheme: DefaultTheme = {
         size: 'large',
       },
 
+      IonProgressBar: {
+        shape: 'round',
+      },
+
       IonSpinner: {
         size: 'xsmall',
       },
@@ -459,6 +463,84 @@ export const defaultTheme: DefaultTheme = {
 
         text: {
           overflow: 'initial',
+        },
+      },
+    },
+
+    IonProgressBar: {
+      height: 'var(--token-scale-100, var(--ion-scaling-100))',
+
+      indeterminate: {
+        progress: {
+          default: {
+            // TODO: Replace with ionColor() once that utility is merged
+            // ion-color(primary, base) -> ionColor('primary', 'base')
+            background: 'var(--ion-color-primary-bold)',
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base'),
+            },
+          },
+        },
+
+        buffer: {
+          bar: {
+            default: {
+              background: 'var(--token-bg-neutral-subtle-default, #eae9e9)',
+            },
+          },
+        },
+      },
+
+      determinate: {
+        progress: {
+          default: {
+            // TODO: Replace with ionColor() once that utility is merged
+            // ion-color(primary, base) -> ionColor('primary', 'base')
+            background: 'var(--ion-color-primary-bold)',
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base'),
+            },
+          },
+        },
+
+        buffer: {
+          bar: {
+            default: {
+              background: 'var(--token-bg-neutral-subtle-default, #eae9e9)',
+            },
+          },
+
+          circles: {
+            default: {
+              background: 'var(--token-bg-neutral-subtle-default, #eae9e9)',
+            },
+
+            semantic: {
+              default: {
+                background: currentColor('base', 0.3),
+              },
+            },
+          },
+        },
+      },
+
+      shape: {
+        round: {
+          border: {
+            radius: 'var(--token-round-xs, var(--ion-radii-xxxxl))',
+          },
+        },
+
+        rectangular: {
+          border: {
+            radius: 'var(--token-rectangular-xs, var(--ion-radii-xxxxs))',
+          },
         },
       },
     },

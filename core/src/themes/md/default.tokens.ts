@@ -594,6 +594,102 @@ export const defaultTheme: DefaultTheme = {
       },
     },
 
+    IonProgressBar: {
+      height: 'var(--ion-scaling-100)',
+
+      indeterminate: {
+        progress: {
+          default: {
+            // TODO: Replace with ionColor() once that utility is merged
+            // ion-color(primary, base) -> ionColor('primary', 'base')
+            background: 'var(--ion-color-primary-bold)',
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base'),
+            },
+          },
+        },
+
+        buffer: {
+          bar: {
+            default: {
+              // TODO: Replace rgba() with ionColor() once that utility is merged
+              // ion-color(primary, base, 0.3) -> ionColor('primary', 'base', { alpha: 0.3 }),
+              background: rgba('var(--ion-color-primary-bold-rgb)', 0.3),
+            },
+
+            semantic: {
+              default: {
+                background: currentColor('base', 0.3),
+              },
+            },
+          },
+        },
+      },
+
+      determinate: {
+        progress: {
+          default: {
+            // TODO: Replace with ionColor() once that utility is merged
+            // ion-color(primary, base) -> ionColor('primary', 'base')
+            background: 'var(--ion-color-primary-bold)',
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base'),
+            },
+          },
+        },
+
+        buffer: {
+          bar: {
+            default: {
+              // TODO: Replace rgba() with ionColor() once that utility is merged
+              // ion-color(primary, base, 0.3) -> ionColor('primary', 'base', { alpha: 0.3 }),
+              background: rgba('var(--ion-color-primary-bold-rgb)', 0.3),
+            },
+
+            semantic: {
+              default: {
+                background: currentColor('base', 0.3),
+              },
+            },
+          },
+
+          circles: {
+            default: {
+              // TODO: Replace rgba() with ionColor() once that utility is merged
+              // ion-color(primary, base, 0.3) -> ionColor('primary', 'base', { alpha: 0.3 })
+              background: rgba('var(--ion-color-primary-bold-rgb)', 0.3),
+            },
+
+            semantic: {
+              default: {
+                background: currentColor('base', 0.3),
+              },
+            },
+          },
+        },
+      },
+
+      shape: {
+        round: {
+          border: {
+            radius: 'var(--ion-radii-xxxxl)',
+          },
+        },
+
+        rectangular: {
+          border: {
+            radius: 'var(--ion-radii-xxxxs)',
+          },
+        },
+      },
+    },
+
     IonSpinner: {
       color: 'var(--ion-text-color, #000)',
 

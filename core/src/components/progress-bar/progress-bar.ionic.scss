@@ -1,12 +1,12 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@use "./progress-bar.common.scss";
+@use "./progress-bar.scss";
 
 // Ionic Progress bar
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ion-bg-neutral-subtle-default};
-  --progress-background: #{globals.ion-color(primary, base)};
+  --background: #{globals.$ion-bg-neutral-subtle-default}; // for determinate - buffer bar and circles
+  --progress-background: #{globals.ion-color(primary, base)}; // both determinate and indeterminate
 
   height: globals.$ion-scale-100;
 }
