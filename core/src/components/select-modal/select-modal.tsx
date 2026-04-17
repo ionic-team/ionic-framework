@@ -1,8 +1,10 @@
-import { getIonMode } from '@global/ionic-global';
+import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
+import { getIonMode, getIonTheme } from '@global/ionic-global';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, forceUpdate, h } from '@stencil/core';
 import { safeCall } from '@utils/overlays';
 import { getClassMap, hostContext } from '@utils/theme';
+import { closeOutline, closeSharp } from 'ionicons/icons';
 
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
@@ -27,6 +29,12 @@ export class SelectModal implements ComponentInterface {
    * The text to display on the cancel button.
    */
   @Prop() cancelText = 'Close';
+
+  /**
+   * If `true`, the cancel button will display a close icon instead of the `cancelText`.
+   * When `cancelIcon` is `true`, the `cancelText` property is ignored.
+   */
+  @Prop() cancelIcon = false;
 
   @Prop() multiple?: boolean;
 
@@ -77,6 +85,16 @@ export class SelectModal implements ComponentInterface {
     if (multiple && option) {
       option.checked = ev.detail.checked;
     }
+  }
+
+  private get cancelButtonIcon(): string {
+    const theme = getIonTheme(this);
+    const icons: Record<string, string> = {
+      ios: closeOutline,
+      md: closeSharp,
+      ionic: xRegular,
+    };
+    return icons[theme] ?? icons.md;
   }
 
   private getModalContextClasses() {
@@ -167,7 +185,16 @@ export class SelectModal implements ComponentInterface {
             {this.header !== undefined && <ion-title>{this.header}</ion-title>}
 
             <ion-buttons slot="end">
-              <ion-button onClick={() => this.closeModal()}>{this.cancelText}</ion-button>
+              <ion-button
+                aria-label={this.cancelIcon ? this.cancelText : undefined}
+                onClick={() => this.closeModal()}
+              >
+                {this.cancelIcon ? (
+                  <ion-icon aria-hidden="true" icon={this.cancelButtonIcon}></ion-icon>
+                ) : (
+                  this.cancelText
+                )}
+              </ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>

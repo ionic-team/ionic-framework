@@ -3685,6 +3685,11 @@ export namespace Components {
     }
     interface IonSelect {
         /**
+          * If `true`, the cancel button will display an icon instead of the `cancelText`. Only applies when `interface` is set to `"modal"`. Has no effect on `"action-sheet"`, `"alert"`, or `"popover"` interfaces. When `cancelIcon` is `true`, the `cancelText` property is ignored for display but is used as the accessible label for the icon button.
+          * @default false
+         */
+        "cancelIcon": boolean;
+        /**
           * The text to display on the cancel button.
           * @default 'Cancel'
          */
@@ -3800,6 +3805,11 @@ export namespace Components {
         "value"?: any | null;
     }
     interface IonSelectModal {
+        /**
+          * If `true`, the cancel button will display a close icon instead of the `cancelText`. When `cancelIcon` is `true`, the `cancelText` property is ignored.
+          * @default false
+         */
+        "cancelIcon": boolean;
         /**
           * The text to display on the cancel button.
           * @default 'Close'
@@ -9750,6 +9760,11 @@ declare namespace LocalJSX {
     }
     interface IonSelect {
         /**
+          * If `true`, the cancel button will display an icon instead of the `cancelText`. Only applies when `interface` is set to `"modal"`. Has no effect on `"action-sheet"`, `"alert"`, or `"popover"` interfaces. When `cancelIcon` is `true`, the `cancelText` property is ignored for display but is used as the accessible label for the icon button.
+          * @default false
+         */
+        "cancelIcon"?: boolean;
+        /**
           * The text to display on the cancel button.
           * @default 'Cancel'
          */
@@ -9884,6 +9899,11 @@ declare namespace LocalJSX {
         "value"?: any | null;
     }
     interface IonSelectModal {
+        /**
+          * If `true`, the cancel button will display a close icon instead of the `cancelText`. When `cancelIcon` is `true`, the `cancelText` property is ignored.
+          * @default false
+         */
+        "cancelIcon"?: boolean;
         /**
           * The text to display on the cancel button.
           * @default 'Close'
@@ -11237,6 +11257,7 @@ declare namespace LocalJSX {
     }
     interface IonSelectAttributes {
         "cancelText": string;
+        "cancelIcon": boolean;
         "color": Color;
         "compareWith": string | SelectCompareFn | null;
         "disabled": boolean;
@@ -11263,6 +11284,7 @@ declare namespace LocalJSX {
     interface IonSelectModalAttributes {
         "header": string;
         "cancelText": string;
+        "cancelIcon": boolean;
         "multiple": boolean;
     }
     interface IonSelectOptionAttributes {

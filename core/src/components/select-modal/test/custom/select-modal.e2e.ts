@@ -41,5 +41,65 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       // Verify the cancel button text has been updated
       await expect(cancelButton).toHaveText('Close me');
     });
+
+    test('should render an icon on the cancel button when cancelIcon is true', async () => {
+      await selectModalPage.setup(config, options, false);
+
+      const cancelButton = selectModalPage.selectModal.locator('ion-button');
+
+      // Verify no icon is shown by default
+      await expect(cancelButton.locator('ion-icon')).not.toBeAttached();
+
+      await selectModalPage.selectModal.evaluate((selectModal: HTMLIonSelectModalElement) => {
+        selectModal.cancelIcon = true;
+      });
+
+      // Verify the icon is now rendered
+      await expect(cancelButton.locator('ion-icon')).toBeAttached();
+    });
+
+    test('should use cancelText as aria-label on the cancel button when cancelIcon is true', async () => {
+      await selectModalPage.setup(config, options, false);
+
+      const cancelButton = selectModalPage.selectModal.locator('ion-button');
+
+      await selectModalPage.selectModal.evaluate((selectModal: HTMLIonSelectModalElement) => {
+        selectModal.cancelIcon = true;
+        selectModal.cancelText = 'Dismiss';
+      });
+
+      await expect(cancelButton).toHaveAttribute('aria-label', 'Dismiss');
+    });
+
+    test('should not set aria-label on the cancel button when cancelIcon is false', async () => {
+      await selectModalPage.setup(config, options, false);
+
+      const cancelButton = selectModalPage.selectModal.locator('ion-button');
+
+      await expect(cancelButton).not.toHaveAttribute('aria-label');
+    });
+  });
+});
+
+/**
+ * Visual regression tests for cancelIcon across all themes.
+ */
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('select-modal: cancel icon'), () => {
+    let selectModalPage: SelectModalPage;
+
+    test.beforeEach(async ({ page }) => {
+      selectModalPage = new SelectModalPage(page);
+    });
+
+    test('should not have visual regressions with cancelIcon', async () => {
+      await selectModalPage.setup(config, options, false);
+
+      await selectModalPage.selectModal.evaluate((selectModal: HTMLIonSelectModalElement) => {
+        selectModal.cancelIcon = true;
+      });
+
+      await selectModalPage.screenshot(screenshot, 'select-modal-cancel-icon-diff');
+    });
   });
 });
