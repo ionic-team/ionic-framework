@@ -182,7 +182,7 @@ jobs:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
     - name: Install Stencil React Output Target
       working-directory: ./packages/react
-      run: npm i @stencil/react-output-target/${{ inputs.npm_release_tag_react_output_target }}
+      run: npm i @stencil/react-output-target@${{ inputs.npm_release_tag_react_output_target }}
       shell: bash
     - uses: ./.github/workflows/actions/build-react
 
