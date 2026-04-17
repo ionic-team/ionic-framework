@@ -33,6 +33,10 @@ runs:
       run: npm run build -- --ci --debug --verbose
       working-directory: ./core
       shell: bash
+    - name: 🏗️ Lint
+      run: npm run lint
+      working-directory: ./packages/react
+      shell: bash
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-core
