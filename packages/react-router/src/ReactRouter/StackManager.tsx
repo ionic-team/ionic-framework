@@ -45,6 +45,13 @@ const isViewVisible = (el: HTMLElement) =>
 
 const hideIonPageElement = (element: HTMLElement | undefined): void => {
   if (element) {
+    if (element.id === 'section-a' || element.id === 'section-b') {
+      // eslint-disable-next-line no-console
+      console.log('[HideIonPageElement]', JSON.stringify({
+        id: element.id,
+        stack: new Error().stack?.split('\n').slice(1, 6).map((s) => s.trim()),
+      }));
+    }
     element.classList.add('ion-page-hidden');
     element.setAttribute('aria-hidden', 'true');
   }
@@ -63,6 +70,42 @@ const showIonPageElement = (element: HTMLElement | undefined): void => {
     element.style.removeProperty('opacity');
     element.classList.remove('ion-page-hidden');
     element.removeAttribute('aria-hidden');
+  }
+};
+
+/**
+ * Variant of `showIonPageElement` for the swipe-back gesture start. Clears
+ * `display: none` and the hidden class/attribute so the entering view is
+ * visible, but intentionally keeps any inline `transform` and `opacity` set
+ * by core's prior forward transition. The gesture's progress animation starts
+ * from that pose, so clearing them here would cause a visible jump before
+ * core's progress animation takes over.
+ */
+const revealIonPageForSwipeBack = (element: HTMLElement | undefined): void => {
+  if (element) {
+    const before = {
+      id: element.id,
+      inlineDisplay: element.style.display,
+      hasHiddenClass: element.classList.contains('ion-page-hidden'),
+      ariaHidden: element.getAttribute('aria-hidden'),
+      computedDisplay: getComputedStyle(element).display,
+    };
+    element.style.removeProperty('display');
+    element.classList.remove('ion-page-hidden');
+    element.removeAttribute('aria-hidden');
+    // eslint-disable-next-line no-console
+    console.log('[SwipeBackReveal]', JSON.stringify({
+      before,
+      after: {
+        inlineDisplay: element.style.display,
+        hasHiddenClass: element.classList.contains('ion-page-hidden'),
+        ariaHidden: element.getAttribute('aria-hidden'),
+        computedDisplay: getComputedStyle(element).display,
+      },
+    }));
+  } else {
+    // eslint-disable-next-line no-console
+    console.log('[SwipeBackReveal] element is undefined');
   }
 };
 
@@ -113,6 +156,15 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
    * duplicate transitions during rapid navigation (e.g., Navigate redirects)
    */
   private lastTransition?: { enteringId: string; leavingId?: string };
+  /**
+   * Views that have been explicitly kept alive by the pop-preserve logic
+   * (shouldPreserveLeavingView) so a future forward-pop can restore their React
+   * state. These are candidates for cleanup when a fresh push invalidates the
+   * forward-history path that made them reachable. Views mounted through
+   * normal forward-push (which keeps the leaving view alive by default) are
+   * NOT tracked here.
+   */
+  private preservedViewItems = new Set<ViewItem>();
   /** Tracks whether the component is mounted to guard async transition paths. */
   private _isMounted = false;
   /** In-flight requestAnimationFrame IDs from transitionPage, cancelled on unmount. */
@@ -505,6 +557,9 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     if (!enteringViewItem.mount) {
       enteringViewItem.mount = true;
     }
+    // A view that becomes the entering view is no longer a stale preserved view.
+    // It's back in the active navigation path, so drop it from the cleanup set.
+    this.preservedViewItems.delete(enteringViewItem);
 
     // Check visibility state BEFORE showing entering view
     const enteringWasVisible = enteringViewItem.ionPageElement && isViewVisible(enteringViewItem.ionPageElement);
@@ -581,6 +636,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         routeInfo.routeAction === 'pop' && isViewItemPreservableOnPop(leavingViewItem);
       if (routeInfo.routeAction !== 'replace' && !shouldPreserveLeavingView) {
         leavingViewItem.mount = false;
+      } else if (shouldPreserveLeavingView) {
+        this.preservedViewItems.add(leavingViewItem);
       }
       this.handleLeavingViewUnmount(routeInfo, enteringViewItem, leavingViewItem);
     }
@@ -595,9 +652,11 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
   }
 
   /**
-   * Unmounts any previously-preserved leaf views in this outlet when a push
-   * action invalidates the forward history path. Runs only on `push` (not
-   * replace/pop) and skips the entering and leaving view items.
+   * Unmounts views previously kept alive by the pop-preserve logic when a fresh
+   * push invalidates the forward-history path that made them reachable. Only
+   * iterates views explicitly tracked in `preservedViewItems` so that views
+   * naturally mounted through forward-push (the default leaving-view behavior)
+   * are left untouched.
    */
   private cleanupPreservedViewsOnPush(
     routeInfo: RouteInfo,
@@ -607,19 +666,21 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
     if (routeInfo.routeAction !== 'push') {
       return;
     }
+    if (this.preservedViewItems.size === 0) {
+      return;
+    }
 
-    const allViews = this.context.getViewItemsForOutlet(this.id);
-    for (const viewItem of allViews) {
+    for (const viewItem of Array.from(this.preservedViewItems)) {
       if (viewItem === enteringViewItem || viewItem === leavingViewItem) {
+        this.preservedViewItems.delete(viewItem);
         continue;
       }
       if (!viewItem.mount) {
-        continue;
-      }
-      if (!isViewItemPreservableOnPop(viewItem)) {
+        this.preservedViewItems.delete(viewItem);
         continue;
       }
       viewItem.mount = false;
+      this.preservedViewItems.delete(viewItem);
       const viewToUnmount = viewItem;
       setTimeout(() => {
         this.context.unMountViewItem(viewToUnmount);
@@ -863,6 +924,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
           routeInfo.routeAction === 'pop' && isViewItemPreservableOnPop(leavingViewItem);
         if (routeInfo.routeAction !== 'replace' && !shouldPreserveLeavingView) {
           leavingViewItem.mount = false;
+        } else if (shouldPreserveLeavingView) {
+          this.preservedViewItems.add(leavingViewItem);
         }
         this.handleLeavingViewUnmount(routeInfo, enteringViewItem, leavingViewItem);
       }
@@ -904,6 +967,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
             routeInfo.routeAction === 'pop' && isViewItemPreservableOnPop(latestLeavingView);
           if (routeInfo.routeAction !== 'replace' && !shouldPreserveLeavingView) {
             latestLeavingView.mount = false;
+          } else if (shouldPreserveLeavingView) {
+            this.preservedViewItems.add(latestLeavingView);
           }
           this.handleLeavingViewUnmount(routeInfo, latestEnteringView, latestLeavingView);
         }
@@ -1010,6 +1075,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       this.outOfScopeUnmountTimeout = undefined;
     }
     this.waitingForIonPage = false;
+    this.preservedViewItems.clear();
 
     // Hide all views in this outlet before clearing.
     // This is critical for nested outlets - when the parent component unmounts,
@@ -1137,6 +1203,8 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
           routeInfo.routeAction === 'pop' && isViewItemPreservableOnPop(leavingViewItem);
         if (shouldUnmountLeavingViewItem && !shouldPreserveLeavingView) {
           leavingViewItem.mount = false;
+        } else if (shouldUnmountLeavingViewItem && shouldPreserveLeavingView) {
+          this.preservedViewItems.add(leavingViewItem);
         }
       }
     }
@@ -1324,6 +1392,18 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         enteringViewItem.routeData.match.pattern.path !== routeInfo.pathname &&
         enteringViewItem.routeData.match.pathname !== routeInfo.pathname;
 
+      // eslint-disable-next-line no-console
+      console.log('[SwipeBackCanStart]', JSON.stringify({
+        outletId: this.id,
+        routePathname: routeInfo.pathname,
+        swipeBackPathname: swipeBackRouteInfo?.pathname,
+        enteringViewId: enteringViewItem?.id,
+        enteringViewPath: enteringViewItem?.reactElement?.props?.path,
+        enteringMount: enteringViewItem?.mount,
+        ionPageInDocument,
+        canStartSwipe,
+      }));
+
       return canStartSwipe;
     };
 
@@ -1333,6 +1413,18 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       const enteringViewItem = this.findEnteringViewForSwipe(swipeBackRouteInfo);
       const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
 
+      // eslint-disable-next-line no-console
+      console.log('[SwipeBackOnStart:entry]', JSON.stringify({
+        outletId: this.id,
+        routePathname: routeInfo.pathname,
+        swipeBackPathname: swipeBackRouteInfo?.pathname,
+        enteringViewId: enteringViewItem?.id,
+        enteringViewPath: enteringViewItem?.reactElement?.props?.path,
+        enteringMount: enteringViewItem?.mount,
+        hasEnteringIonPageElement: !!enteringViewItem?.ionPageElement,
+        leavingViewId: leavingViewItem?.id,
+      }));
+
       // Ensure the entering view is mounted so React keeps rendering it during the gesture.
       // This is important when the view was previously marked for unmount but its
       // ionPageElement is still in the DOM.
@@ -1340,10 +1432,25 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
         enteringViewItem.mount = true;
       }
 
+      // Reveal synchronously. `transitionPage` defers this behind async commit,
+      // but the gesture's first progress frame fires in the same tick as onStart,
+      // so an async reveal leaves the entering page hidden until the next frame.
+      revealIonPageForSwipeBack(enteringViewItem?.ionPageElement);
+
       // When the gesture starts, kick off a transition controlled via swipe gesture
       if (enteringViewItem && leavingViewItem) {
         await this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, 'back', true);
       }
+
+      // eslint-disable-next-line no-console
+      console.log('[SwipeBackOnStart:exit]', JSON.stringify({
+        outletId: this.id,
+        enteringFinalComputedDisplay: enteringViewItem?.ionPageElement
+          ? getComputedStyle(enteringViewItem.ionPageElement).display
+          : null,
+        enteringFinalInlineDisplay: enteringViewItem?.ionPageElement?.style.display ?? null,
+        enteringFinalHiddenClass: enteringViewItem?.ionPageElement?.classList.contains('ion-page-hidden') ?? null,
+      }));
 
       return Promise.resolve();
     };
