@@ -190,7 +190,7 @@ export class SelectModal implements ComponentInterface {
                 onClick={() => this.closeModal()}
               >
                 {this.cancelIcon ? (
-                  <ion-icon aria-hidden="true" icon={this.cancelButtonIcon}></ion-icon>
+                  <ion-icon aria-hidden="true" slot="icon-only" icon={this.cancelButtonIcon}></ion-icon>
                 ) : (
                   this.cancelText
                 )}
