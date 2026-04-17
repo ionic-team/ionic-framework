@@ -1,5 +1,5 @@
-import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import { getIonMode, getIonTheme } from '@global/ionic-global';
+import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, forceUpdate, h } from '@stencil/core';
 import { safeCall } from '@utils/overlays';
@@ -185,10 +185,7 @@ export class SelectModal implements ComponentInterface {
             {this.header !== undefined && <ion-title>{this.header}</ion-title>}
 
             <ion-buttons slot="end">
-              <ion-button
-                aria-label={this.cancelIcon ? this.cancelText : undefined}
-                onClick={() => this.closeModal()}
-              >
+              <ion-button aria-label={this.cancelIcon ? this.cancelText : undefined} onClick={() => this.closeModal()}>
                 {this.cancelIcon ? (
                   <ion-icon aria-hidden="true" slot="icon-only" icon={this.cancelButtonIcon}></ion-icon>
                 ) : (
