@@ -937,6 +937,7 @@ $ion-elevation-4: var(--token-elevation-4, 0px 3px 12px 0px rgba(0, 0, 0, 0.12),
 // Transition
 $ion-transition-curve-linear: var(--token-transition-curve-linear, linear);
 $ion-transition-curve-quick: var(--token-transition-curve-quick, cubic-bezier(0, 0, 0.2, 1));
+$ion-transition-curve-spring: var(--token-transition-curve-spring, cubic-bezier(0.16, 1, 0.3, 1));
 $ion-transition-curve-base: var(--token-transition-curve-base, cubic-bezier(0.4, 0, 1, 1));
 $ion-transition-curve-expressive: var(--token-transition-curve-expressive, cubic-bezier(0.4, 0, 0.2, 1));
 $ion-transition-curve-bounce: var(--token-transition-curve-bounce, cubic-bezier(0.47, 0, 0.23, 1.38));
@@ -945,6 +946,7 @@ $ion-transition-time-100: var(--token-transition-time-100, 100ms);
 $ion-transition-time-150: var(--token-transition-time-150, 150ms);
 $ion-transition-time-200: var(--token-transition-time-200, 200ms);
 $ion-transition-time-300: var(--token-transition-time-300, 300ms);
+$ion-transition-time-350: var(--token-transition-time-350, 350ms);
 $ion-transition-time-500: var(--token-transition-time-500, 500ms);
 $ion-transition-time-1000: var(--token-transition-time-1000, 1000ms);
 $ion-transition-time-1500: var(--token-transition-time-1500, 1500ms);
