@@ -19,7 +19,8 @@
       <ion-tabs>
         <div class="ion-page">
           <ion-content>
-            <div class="spacer">
+            <div class="spacer"></div>
+            <div class="info">
               <p>Scroll down to hide the tab bar, scroll up to show it.</p>
               <p><strong>Requirements:</strong></p>
               <ul>
@@ -64,7 +65,13 @@
         background: linear-gradient(to bottom, #e0f7fa, #80deea, #26c6da, #00acc1, #00838f);
       }
 
-      .spacer p {
+      .info {
+        position: fixed;
+        top: 30px;
+        left: 30px;
+      }
+
+      .info p {
         margin-bottom: 12px;
         font-size: 16px;
         color: #333;
