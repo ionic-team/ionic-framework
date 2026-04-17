@@ -3806,7 +3806,7 @@ export namespace Components {
     }
     interface IonSelectModal {
         /**
-          * If `true`, the cancel button will display a close icon instead of the `cancelText`. When `cancelIcon` is `true`, the `cancelText` property is ignored.
+          * If `true`, the cancel button will display a close icon instead of the `cancelText`. When `cancelIcon` is `true`, `cancelText` is not displayed visually but is still used as the accessible label (`aria-label`) for the button.
           * @default false
          */
         "cancelIcon": boolean;
@@ -9900,7 +9900,7 @@ declare namespace LocalJSX {
     }
     interface IonSelectModal {
         /**
-          * If `true`, the cancel button will display a close icon instead of the `cancelText`. When `cancelIcon` is `true`, the `cancelText` property is ignored.
+          * If `true`, the cancel button will display a close icon instead of the `cancelText`. When `cancelIcon` is `true`, `cancelText` is not displayed visually but is still used as the accessible label (`aria-label`) for the button.
           * @default false
          */
         "cancelIcon"?: boolean;
