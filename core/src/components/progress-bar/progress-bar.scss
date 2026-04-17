@@ -1,7 +1,7 @@
 @use "../../themes/mixins" as mixins;
 
 // Progress Bar
-// ------------------------------------------------------------------------
+// ---------------------------------------------
 
 :host {
   /**
@@ -49,7 +49,7 @@
 }
 
 // Determinate progress bar
-// --------------------------------------------------
+// ---------------------------------------------
 
 .progress,
 .progress-buffer-bar,
@@ -60,40 +60,150 @@
   transition: transform 150ms linear;
 }
 
-// Progress and background bar
-// --------------------------------------------------
+// Progress Bar: progress, buffer bar, and circles
+// ---------------------------------------------
 
 .progress,
 .progress-indeterminate {
   z-index: 2;
 }
 
-.progress {
-  background: var(--ion-progress-bar-determinate-progress-default-background);
-}
-
-.progress-indeterminate {
-  background: var(--ion-progress-bar-indeterminate-progress-default-background);
-}
-
 .progress-buffer-bar {
   z-index: 1;
-}
-
-:host(.progress-bar-determinate) .progress-buffer-bar {
-  background: var(--ion-progress-bar-determinate-buffer-bar-default-background);
-}
-
-:host(.progress-bar-indeterminate) .progress-buffer-bar {
-  background: var(--ion-progress-bar-indeterminate-buffer-bar-default-background);
 }
 
 .buffer-circles-container {
   overflow: hidden;
 }
 
+// Determinate
+.progress {
+  background: var(--ion-progress-bar-determinate-progress-default-background);
+}
+
+:host(.progress-bar-determinate) .progress-buffer-bar {
+  background: var(--ion-progress-bar-determinate-buffer-bar-default-background);
+}
+
+// Indeterminate
+.progress-indeterminate {
+  background: var(--ion-progress-bar-indeterminate-progress-default-background);
+}
+
+:host(.progress-bar-indeterminate) .progress-buffer-bar {
+  background: var(--ion-progress-bar-indeterminate-buffer-bar-default-background);
+}
+
+// Progress Bar: Buffer Circles
+// ---------------------------------------------
+
+.buffer-circles {
+  background-image: radial-gradient(
+    ellipse at center,
+    var(--ion-progress-bar-determinate-buffer-circles-default-background) 0%,
+    var(--ion-progress-bar-determinate-buffer-circles-default-background) 30%,
+    transparent 30%
+  );
+
+  /* stylelint-disable property-disallowed-list */
+  background-repeat: repeat-x;
+  background-position: 5px center;
+  background-size: 10px 10px;
+  /* stylelint-enable property-disallowed-list */
+
+  z-index: 0;
+  animation: buffering 450ms infinite linear;
+}
+
+// Progress Bar: Shape Variants
+// ---------------------------------------------
+
+:host(.progress-bar-shape-round) {
+  @include mixins.border-radius(var(--ion-progress-bar-shape-round-border-radius));
+}
+
+:host(.progress-bar-shape-rectangular) {
+  @include mixins.border-radius(var(--ion-progress-bar-shape-rectangular-border-radius));
+}
+
+// Progress Bar: Solid (buffer = 1)
+// ---------------------------------------------
+
+// Indeterminate
+:host(.progress-bar-solid.progress-bar-indeterminate) .progress-buffer-bar {
+  background: var(
+    --ion-progress-bar-indeterminate-buffer-bar-solid-default-background,
+    var(--ion-progress-bar-indeterminate-buffer-bar-default-background)
+  );
+}
+
+// Determinate
+:host(.progress-bar-solid.progress-bar-determinate) .progress-buffer-bar {
+  background: var(
+    --ion-progress-bar-determinate-buffer-bar-solid-default-background,
+    var(--ion-progress-bar-determinate-buffer-bar-default-background)
+  );
+}
+
+:host(.progress-bar-solid) .buffer-circles {
+  background-image: radial-gradient(
+    ellipse at center,
+    var(--ion-progress-bar-determinate-buffer-circles-solid-default-background) 0%,
+    var(--ion-progress-bar-determinate-buffer-circles-solid-default-background) 30%,
+    transparent 30%
+  );
+}
+
+// Progress Bar: Color
+// ---------------------------------------------
+
+// Indeterminate
+:host(.ion-color) .progress-indeterminate {
+  background: var(--ion-progress-bar-indeterminate-progress-semantic-default-background);
+}
+
+:host(.ion-color.progress-bar-indeterminate) .progress-buffer-bar {
+  background: var(--ion-progress-bar-indeterminate-buffer-bar-semantic-default-background);
+}
+
+// Determinate
+:host(.ion-color) .progress {
+  background: var(--ion-progress-bar-determinate-progress-semantic-default-background);
+}
+
+:host(.ion-color.progress-bar-determinate) .progress-buffer-bar {
+  background: var(--ion-progress-bar-determinate-buffer-bar-semantic-default-background);
+}
+
+:host(.ion-color) .buffer-circles {
+  background-image: radial-gradient(
+    ellipse at center,
+    var(--ion-progress-bar-determinate-buffer-circles-semantic-default-background) 0%,
+    var(--ion-progress-bar-determinate-buffer-circles-semantic-default-background) 30%,
+    transparent 30%
+  );
+}
+
+// Progress Bar: States
+// ---------------------------------------------
+
+// Reversed: if set to true, the animation will be reversed
+// and the bar will start at the top right
+:host(.progress-bar-reversed) {
+  transform: scaleX(-1);
+}
+
+// Paused
+:host(.progress-paused) {
+  .indeterminate-bar-secondary,
+  .indeterminate-bar-primary,
+  .buffer-circles {
+    animation-play-state: paused;
+  }
+}
+
 // Indeterminate Animation
-// --------------------------------------------------
+// ---------------------------------------------
 
 .indeterminate-bar-primary {
   /* stylelint-disable property-disallowed-list */
@@ -127,116 +237,8 @@
   }
 }
 
-// Progress Bar: Buffer Circles
-// ------------------------------------------------------------------------
-
-.buffer-circles {
-  background-image: radial-gradient(
-    ellipse at center,
-    var(--ion-progress-bar-determinate-buffer-circles-default-background) 0%,
-    var(--ion-progress-bar-determinate-buffer-circles-default-background) 30%,
-    transparent 30%
-  );
-
-  /* stylelint-disable property-disallowed-list */
-  background-repeat: repeat-x;
-  background-position: 5px center;
-  background-size: 10px 10px;
-  /* stylelint-enable property-disallowed-list */
-
-  z-index: 0;
-  animation: buffering 450ms infinite linear;
-}
-
-// Progress Bar: Shape Variants
-// -------------------------------------------------------------------------------
-
-:host(.progress-bar-shape-round) {
-  @include mixins.border-radius(var(--ion-progress-bar-shape-round-border-radius));
-}
-
-:host(.progress-bar-shape-rectangular) {
-  @include mixins.border-radius(var(--ion-progress-bar-shape-rectangular-border-radius));
-}
-
-// Progress Bar: Solid (buffer = 1)
-// -------------------------------------------------------------------------------
-
-:host(.progress-bar-solid.progress-bar-determinate) .progress-buffer-bar {
-  background: var(
-    --ion-progress-bar-determinate-buffer-bar-solid-default-background,
-    var(--ion-progress-bar-determinate-buffer-bar-default-background)
-  );
-}
-
-:host(.progress-bar-solid.progress-bar-indeterminate) .progress-buffer-bar {
-  background: var(
-    --ion-progress-bar-indeterminate-buffer-bar-solid-default-background,
-    var(--ion-progress-bar-indeterminate-buffer-bar-default-background)
-  );
-}
-
-:host(.progress-bar-solid) .buffer-circles {
-  background-image: radial-gradient(
-    ellipse at center,
-    var(--ion-progress-bar-determinate-buffer-circles-solid-default-background) 0%,
-    var(--ion-progress-bar-determinate-buffer-circles-solid-default-background) 30%,
-    transparent 30%
-  );
-}
-
-// Progress Bar: Color
-// ------------------------------------------------------------------------
-
-// Indeterminate
-:host(.ion-color) .progress-indeterminate {
-  background: var(--ion-progress-bar-indeterminate-progress-semantic-default-background);
-}
-
-// Determinate
-:host(.ion-color) .progress {
-  background: var(--ion-progress-bar-determinate-progress-semantic-default-background);
-}
-
-:host(.ion-color.progress-bar-determinate) .progress-buffer-bar {
-  background: var(--ion-progress-bar-determinate-buffer-bar-semantic-default-background);
-}
-
-:host(.ion-color.progress-bar-indeterminate) .progress-buffer-bar {
-  background: var(--ion-progress-bar-indeterminate-buffer-bar-semantic-default-background);
-}
-
-:host(.ion-color) .buffer-circles {
-  background-image: radial-gradient(
-    ellipse at center,
-    var(--ion-progress-bar-determinate-buffer-circles-semantic-default-background) 0%,
-    var(--ion-progress-bar-determinate-buffer-circles-semantic-default-background) 30%,
-    transparent 30%
-  );
-}
-
-// Progress Bar: Reversed
-// ------------------------------------------------------------------------
-// If reversed is set to true, the animation will be reversed
-// and the bar will start at the top right
-
-:host(.progress-bar-reversed) {
-  transform: scaleX(-1);
-}
-
-// Progress Bar: Paused
-// ------------------------------------------------------------------------
-
-:host(.progress-paused) {
-  .indeterminate-bar-secondary,
-  .indeterminate-bar-primary,
-  .buffer-circles {
-    animation-play-state: paused;
-  }
-}
-
 // Progress Bar: Animation Keyframes
-// ------------------------------------------------------------------------
+// ---------------------------------------------
 // Source: https://github.com/material-components/material-components-web/blob/master/packages/mdc-linear-progress/_keyframes.scss
 
 @keyframes primary-indeterminate-translate {
