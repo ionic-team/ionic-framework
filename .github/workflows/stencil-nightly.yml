@@ -9,11 +9,16 @@ on:
     - cron: '00 06 * * 1-5'
   workflow_dispatch:
     inputs:
-      npm_release_tag:
+      npm_release_tag_core:
         required: true
         type: string
-        description: What version should be pulled from NPM?
+        description: What stencil/core version should be pulled from NPM?
         default: nightly
+      npm_release_tag_react_output_target:
+        required: true
+        type: string
+        description: What stencil/react-output-target version should be pulled from NPM?
+        default: latest
 
 # When pushing a new commit we should
 # cancel the previous test run to not
@@ -29,7 +34,9 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: ./.github/workflows/actions/build-core-stencil-prerelease
         with:
-          stencil-version: ${{ inputs.npm_release_tag || 'nightly' }}
+          stencil-core-version: ${{ inputs.npm_release_tag_core || 'nightly' }}
+          stencil-react-output-target-version: ${{ inputs.npm_release_tag_react_output_target || 'latest' }}
+
 
   test-core-clean-build:
     needs: [build-core-with-stencil-nightly]
@@ -173,6 +180,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - name: Install Stencil React Output Target
+      working-directory: ./packages/react
+      run: npm i @stencil/react-output-target/${{ inputs.npm_release_tag_react_output_target }}
+      shell: bash
     - uses: ./.github/workflows/actions/build-react
 
   build-react-router:
