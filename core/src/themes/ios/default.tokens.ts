@@ -1,4 +1,4 @@
-import { rgba, currentColor, clamp, mix, dynamicFont } from '../../utils/theme';
+import { rgba, currentColor, ionColor, clamp, mix, dynamicFont } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
@@ -485,9 +485,7 @@ export const defaultTheme: DefaultTheme = {
       indeterminate: {
         progress: {
           default: {
-            // TODO: Replace with ionColor() once that utility is merged
-            // ion-color(primary, base) -> ionColor('primary', 'base')
-            background: 'var(--ion-color-primary-bold)',
+            background: ionColor('primary', 'base'),
           },
 
           semantic: {
@@ -500,9 +498,7 @@ export const defaultTheme: DefaultTheme = {
         buffer: {
           bar: {
             default: {
-              // TODO: Replace rgba() with ionColor() once that utility is merged
-              // ion-color(primary, base, 0.3) -> ionColor('primary', 'base', { alpha: 0.3 }),
-              background: rgba('var(--ion-color-primary-bold-rgb)', 0.3),
+              background: ionColor('primary', 'base', { alpha: 0.3 }),
             },
 
             solid: {
@@ -517,9 +513,7 @@ export const defaultTheme: DefaultTheme = {
       determinate: {
         progress: {
           default: {
-            // TODO: Replace with ionColor() once that utility is merged
-            // ion-color(primary, base) -> ionColor('primary', 'base')
-            background: 'var(--ion-color-primary-bold)',
+            background: ionColor('primary', 'base'),
           },
 
           semantic: {
@@ -532,9 +526,7 @@ export const defaultTheme: DefaultTheme = {
         buffer: {
           bar: {
             default: {
-              // TODO: Replace rgba() with ionColor() once that utility is merged
-              // ion-color(primary, base, 0.3) -> ionColor('primary', 'base', { alpha: 0.3 }),
-              background: rgba('var(--ion-color-primary-bold-rgb)', 0.3),
+              background: ionColor('primary', 'base', { alpha: 0.3 }),
             },
 
             solid: {
@@ -546,9 +538,7 @@ export const defaultTheme: DefaultTheme = {
 
           circles: {
             default: {
-              // TODO: Replace rgba() with ionColor() once that utility is merged
-              // ion-color(primary, base, 0.3) -> ionColor('primary', 'base', { alpha: 0.3 })
-              background: rgba('var(--ion-color-primary-bold-rgb)', 0.3),
+              background: ionColor('primary', 'base', { alpha: 0.3 }),
             },
 
             semantic: {

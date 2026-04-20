@@ -1,4 +1,4 @@
-import { currentColor, mix, dynamicFont } from '../../utils/theme';
+import { currentColor, ionColor, mix, dynamicFont } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
@@ -473,9 +473,7 @@ export const defaultTheme: DefaultTheme = {
       indeterminate: {
         progress: {
           default: {
-            // TODO: Replace with ionColor() once that utility is merged
-            // ion-color(primary, base) -> ionColor('primary', 'base')
-            background: 'var(--ion-color-primary-bold)',
+            background: ionColor('primary', 'base'),
           },
 
           semantic: {
@@ -497,9 +495,7 @@ export const defaultTheme: DefaultTheme = {
       determinate: {
         progress: {
           default: {
-            // TODO: Replace with ionColor() once that utility is merged
-            // ion-color(primary, base) -> ionColor('primary', 'base')
-            background: 'var(--ion-color-primary-bold)',
+            background: ionColor('primary', 'base'),
           },
 
           semantic: {
