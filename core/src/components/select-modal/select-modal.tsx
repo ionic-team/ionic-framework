@@ -10,7 +10,7 @@ import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
 
 import type { SelectModalOption } from './select-modal-interface';
-import { Theme } from 'src/interface';
+import { Theme } from '../../interface';
 
 @Component({
   tag: 'ion-select-modal',
