@@ -5,6 +5,7 @@ E2E tests verify Ionic components in a real browser. This is useful for testing 
 ## Table of Contents
 
 - [Installing Dependencies](#installing-dependencies)
+- [Git LFS Setup](#git-lfs-setup)
 - [Configuring Docker](#configuring-docker)
 - [Running Tests](#running-tests)
 - [Managing Screenshots](#managing-screenshots)
@@ -16,6 +17,39 @@ Follow these steps to install Playwright dependencies. These steps must also be 
 
 1. Install the Playwright dependency in the `core` directory: `npm ci`
 2. Download the correct browsers: `npx playwright install`
+
+## Git LFS Setup
+
+Ionic Framework uses [Git Large File Storage (LFS)](https://git-lfs.com/) to manage screenshot ground truth files. Git LFS must be installed before cloning the repository or pulling screenshot updates.
+
+### Installing Git LFS
+
+1. **macOS**: `brew install git-lfs`
+2. **Windows**: Git LFS is included with [Git for Windows](https://gitforwindows.org/). Verify with `git lfs version`.
+3. **Linux (Ubuntu/Debian)**: `sudo apt-get install git-lfs`
+
+After installing, run the one-time setup:
+
+```shell
+git lfs install
+```
+
+### Verifying LFS is Working
+
+After cloning the repository, verify that screenshot files are real images (not text pointer files):
+
+```shell
+file core/src/components/button/test/basic/button.e2e.ts-snapshots/button-diff-ios-ltr-Mobile-Chrome-linux.png
+```
+
+This should output `PNG image data...`. If it shows `ASCII text`, run:
+
+```shell
+git lfs pull
+```
+
+> [!NOTE]
+> If you cloned the repository before Git LFS was enabled, you may need to run `git lfs pull` once to download the actual screenshot files. After that, Git LFS will handle downloads automatically on future checkouts and pulls.
 
 ## Configuring Docker
 
@@ -229,6 +263,9 @@ test('example test', async ({ page }) => {
 If you are running a test that takes a screenshot, you must first generate the reference screenshot from your reference branch. This is known as generating a "ground truth screenshot". All other screenshots will be compared to this ground truth.
 
 ### Generating or Updating Ground Truths With Docker (Local Development)
+
+> [!NOTE]
+> Git LFS must be installed and initialized before generating or updating ground truths. See [Git LFS Setup](#git-lfs-setup).
 
 We recommend generating ground truths inside of [Docker](https://www.docker.com) using [Rancher Desktop](#installing-rancher-desktop). This allows anyone contributing to Ionic Framework to create or update ground truths in a consistent environment.
 
