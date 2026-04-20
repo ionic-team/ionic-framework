@@ -102,6 +102,15 @@ export class Select implements ComponentInterface {
   @Prop() cancelText = 'Cancel';
 
   /**
+   * If `true`, the cancel button will display an icon instead of the `cancelText`.
+   * Only applies when `interface` is set to `"modal"`. Has no effect on `"action-sheet"`,
+   * `"alert"`, or `"popover"` interfaces.
+   * When `cancelIcon` is `true`, the `cancelText` property is ignored for display
+   * but is used as the accessible label for the icon button.
+   */
+  @Prop() cancelIcon = false;
+
+  /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
@@ -815,6 +824,7 @@ export class Select implements ComponentInterface {
       componentProps: {
         header: interfaceOptions.header,
         cancelText: this.cancelText,
+        cancelIcon: this.cancelIcon,
         multiple,
         value,
         options: this.createOverlaySelectOptions(this.childOpts, value),

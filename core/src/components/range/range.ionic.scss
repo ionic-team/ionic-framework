@@ -75,30 +75,33 @@
   @include margin(null, null, calc(globals.$ion-space-200 + globals.$ion-font-size-300), null);
 }
 
+.range-bar.has-ticks {
+  @include border-radius(0);
+}
+
+.range-bar.range-bar-active.has-ticks {
+  @include margin(null, calc(-1 * globals.$ion-scale-100 * 0.5), null, calc(-1 * globals.$ion-scale-100 * 0.5));
+}
+
 .range-bar.range-bar-active {
   bottom: 0;
 
   width: auto;
 
   background: var(--bar-background-active);
-
-  &.has-ticks {
-    @include border-radius(0);
-    @include margin(null, calc(-1 * globals.$ion-scale-100 * 0.5), null, calc(-1 * globals.$ion-scale-100 * 0.5));
-  }
 }
 
 .range-tick {
   @include margin-horizontal(calc(globals.$ion-scale-100 * -0.5), null);
-  @include border-radius(globals.$ion-border-radius-0);
+  @include border-radius(globals.$ion-border-radius-400);
 
   position: absolute;
-  top: calc((var(--height) * 0.5) - (globals.$ion-scale-300 * 0.5));
+  top: calc((var(--height) * 0.5) - (globals.$ion-scale-400 * 0.5));
 
-  width: globals.$ion-scale-100;
-  height: globals.$ion-scale-300;
+  width: globals.$ion-scale-050;
+  height: globals.$ion-scale-400;
 
-  background: globals.$ion-primitives-neutral-100;
+  background: var(--bar-background);
   pointer-events: none;
 }
 

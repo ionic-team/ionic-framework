@@ -85,6 +85,21 @@
   bottom: calc(globals.$ion-space-400 + var(--ion-safe-area-bottom, 0));
 }
 
+// Tab Bar Translucent
+// --------------------------------------------------
+
+@supports (backdrop-filter: blur(0)) {
+  :host(.tab-bar-translucent) {
+    --background: rgba(255, 255, 255, 0.6);
+
+    backdrop-filter: var(--tab-bar-backdrop-filter, blur(12px));
+  }
+
+  :host(.tab-bar-translucent) ::slotted(ion-tab-button.ion-focused) {
+    --background: transparent;
+  }
+}
+
 // Tab Bar Shapes
 // --------------------------------------------------
 

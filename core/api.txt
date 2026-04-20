@@ -2247,6 +2247,7 @@ ion-segment-view,prop,swipeGesture,boolean,true,false,false
 ion-segment-view,event,ionSegmentViewScroll,SegmentViewScrollEvent,true
 
 ion-select,shadow
+ion-select,prop,cancelIcon,boolean,false,false,false
 ion-select,prop,cancelText,string,'Cancel',false,false
 ion-select,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-select,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
@@ -2339,6 +2340,7 @@ ion-select,part,text
 ion-select,part,wrapper
 
 ion-select-modal,scoped
+ion-select-modal,prop,cancelIcon,boolean,false,false,false
 ion-select-modal,prop,cancelText,string,'Close',false,false
 ion-select-modal,prop,header,string | undefined,undefined,false,false
 ion-select-modal,prop,multiple,boolean | undefined,undefined,false,false
