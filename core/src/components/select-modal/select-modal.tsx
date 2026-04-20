@@ -6,11 +6,11 @@ import { safeCall } from '@utils/overlays';
 import { getClassMap, hostContext } from '@utils/theme';
 import { closeOutline, closeSharp } from 'ionicons/icons';
 
+import type { Theme } from '../../interface';
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
 
 import type { SelectModalOption } from './select-modal-interface';
-import { Theme } from '../../interface';
 
 @Component({
   tag: 'ion-select-modal',
