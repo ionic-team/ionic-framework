@@ -10,6 +10,7 @@ import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
 
 import type { SelectModalOption } from './select-modal-interface';
+import { Theme } from 'src/interface';
 
 @Component({
   tag: 'ion-select-modal',
@@ -90,7 +91,7 @@ export class SelectModal implements ComponentInterface {
 
   private get cancelButtonIcon(): string {
     const theme = getIonTheme(this);
-    const icons: Record<string, string> = {
+    const icons: Record<Theme, string> = {
       ios: closeOutline,
       md: closeSharp,
       ionic: xRegular,
