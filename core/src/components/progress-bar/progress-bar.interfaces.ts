@@ -1,29 +1,33 @@
 export type IonProgressBarRecipe = {
   height?: string | number;
 
-  // Indeterminate type (animated, no specific value)
   indeterminate?: {
     progress?: {
       default?: {
         background?: string;
       };
+
+      /** Any of the semantic colors like primary, secondary, etc. */
       semantic?: {
-        // Default state of the semantic color (not hover, focus, activated, etc.)
         default?: {
           background?: string;
         };
       };
     };
+
     buffer?: {
       bar?: {
         default?: {
           background?: string;
         };
+
+        /** Any of the semantic colors like primary, secondary, etc. */
         semantic?: {
           default?: {
             background?: string;
           };
         };
+
         solid?: {
           default?: {
             background?: string;
@@ -33,50 +37,54 @@ export type IonProgressBarRecipe = {
     };
   };
 
-  // Determinate type (has a specific value, optional buffer)
-  // it has three parts:
-  // - progress: the progress bar which represents the current value
-  // - buffer-bar: the buffer bar which represents the buffer value
-  // - buffer-circles: the buffer circles which are displayed when there is a buffer value but no progress value (value = 0, buffer > 0), this is optional
   determinate?: {
     progress?: {
       default?: {
         background?: string;
       };
+
+      /** Any of the semantic colors like primary, secondary, etc. */
       semantic?: {
-        // Default state of the semantic color (not hover, focus, activated, etc.)
         default?: {
           background?: string;
         };
       };
     };
+
     buffer?: {
       bar?: {
         default?: {
           background?: string;
         };
+
+        /** Any of the semantic colors like primary, secondary, etc. */
         semantic?: {
           default?: {
             background?: string;
           };
         };
-        // When progress bar is solid (buffer = 1)
+
+        /* When progress bar is solid (buffer = 1) */
         solid?: {
           default?: {
             background?: string;
           };
         };
       };
+
       circles?: {
         default?: {
           background?: string;
         };
+
+        /** Any of the semantic colors like primary, secondary, etc. */
         semantic?: {
           default?: {
             background?: string;
           };
         };
-        // When progress bar is solid (buffer = 1)
+
+        /** When progress bar is solid (buffer = 1) */
         solid?: {
           default?: {
             background?: string;
@@ -86,18 +94,15 @@ export type IonProgressBarRecipe = {
     };
   };
 
-  // Shape variants
+  // Shapes
   shape?: {
-    round?: {
-      border?: {
-        radius?: string | number;
-      };
-    };
-    rectangular?: {
-      border?: {
-        radius?: string | number;
-      };
-    };
+    [K in IonProgressBarShape]?: IonProgressBarShapeDefinition;
+  };
+};
+
+type IonProgressBarShapeDefinition = {
+  border?: {
+    radius?: string | number;
   };
 };
 
