@@ -23,18 +23,34 @@
       </ion-header>
 
       <ion-content>
-        <ion-modal is-open="true">
-          <ion-select-modal multiple="false"></ion-select-modal>
+        <ion-list>
+          <ion-item>
+            <ion-label>Cancel Text (default)</ion-label>
+          </ion-item>
+        </ion-list>
+        <ion-modal id="modal-text" is-open="true">
+          <ion-select-modal id="select-modal-text" multiple="false"></ion-select-modal>
+        </ion-modal>
+
+        <ion-list>
+          <ion-item button onclick="document.getElementById('modal-icon').isOpen = true">
+            <ion-label>Cancel Icon</ion-label>
+          </ion-item>
+        </ion-list>
+        <ion-modal id="modal-icon">
+          <ion-select-modal id="select-modal-icon" multiple="false" cancel-icon="true"></ion-select-modal>
         </ion-modal>
       </ion-content>
     </ion-app>
 
     <script>
-      const selectModal = document.querySelector('ion-select-modal');
-      selectModal.options = [
+      const options = [
         { value: 'apple', text: 'Apple', disabled: false, checked: true },
         { value: 'banana', text: 'Banana', disabled: false, checked: false },
       ];
+
+      document.getElementById('select-modal-text').options = options;
+      document.getElementById('select-modal-icon').options = options;
     </script>
   </body>
 </html>
