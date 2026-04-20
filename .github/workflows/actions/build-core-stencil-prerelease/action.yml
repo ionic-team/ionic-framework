@@ -17,7 +17,7 @@ runs:
       with:
         node-version: 24.x
 
-    - name: 🕸️ Install Dependencies
+    - name: 🕸️ Install Core Dependencies
       run: npm ci
       working-directory: ./core
       shell: bash
@@ -33,7 +33,11 @@ runs:
       run: npm run build -- --ci --debug --verbose
       working-directory: ./core
       shell: bash
-    - name: 🏗️ Lint
+    - name: 🕸️ Install React Package Dependencies
+      run: npm ci
+      working-directory: ./packages/react
+      shell: bash
+    - name: 🏗️ Lint React Package
       run: npm run lint
       working-directory: ./packages/react
       shell: bash
