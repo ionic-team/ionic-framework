@@ -60,11 +60,12 @@ export class ProgressBar implements ComponentInterface {
   @Prop() shape?: IonProgressBarShape;
 
   /**
-   * Gets the progress bar shape. Uses the `shape` property if set, otherwise
-   * checks the theme config. Returns undefined if neither is set.
+   * Gets the progress bar shape. Uses the `shape` property if set,
+   * otherwise checks the theme config. Defaults to `round` if
+   * neither is set.
    */
-  get shapeValue(): IonProgressBarShape | undefined {
-    return this.shape ?? (config.getObjectValue('IonProgressBar.shape') as IonProgressBarShape | undefined);
+  get shapeValue(): IonProgressBarShape {
+    return this.shape ?? (config.getObjectValue('IonProgressBar.shape', 'round') as IonProgressBarShape);
   }
 
   render() {
@@ -80,7 +81,7 @@ export class ProgressBar implements ComponentInterface {
         aria-valuemin="0"
         aria-valuemax="1"
         class={createColorClasses(color, {
-          [`progress-bar-${type}`]: true,
+          [`progress-bar-type-${type}`]: true,
           'progress-paused': paused,
           'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed,
           'progress-bar-solid': progressSolid,

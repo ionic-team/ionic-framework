@@ -5,8 +5,28 @@
 
 :host {
   /**
-   * @prop --ion-progress-bar-determinate-buffer-bar-default-background: Background of the progress track, or the buffer bar if `buffer` is set
-   * @prop --ion-progress-bar-determinate-progress-default-background: Background of the progress bar representing the current value
+   * @prop --ion-progress-bar-height: Height of the progress bar
+   *
+   * @prop --ion-progress-bar-determinate-progress-default-background: Background of the filled progress indicator in a determinate progress bar
+   * @prop --ion-progress-bar-determinate-progress-semantic-default-background: Background of the filled progress indicator in a determinate progress bar when a semantic color is applied
+   *
+   * @prop --ion-progress-bar-determinate-buffer-bar-default-background: Background of the track representing the buffered amount in a determinate progress bar
+   * @prop --ion-progress-bar-determinate-buffer-bar-semantic-default-background: Background of the track representing the buffered amount in a determinate progress bar when a semantic color is applied
+   * @prop --ion-progress-bar-determinate-buffer-bar-solid-default-background: Background of the track representing the buffered amount in a determinate progress bar when it's fully buffered
+   *
+   * @prop --ion-progress-bar-determinate-buffer-circles-default-background: Background of the buffer circles in a determinate progress bar
+   * @prop --ion-progress-bar-determinate-buffer-circles-semantic-default-background: Background of the buffer circles in a determinate progress bar when a semantic color is applied
+   * @prop --ion-progress-bar-determinate-buffer-circles-solid-default-background: Background of the buffer circles in a determinate progress bar when it's fully buffered
+   *
+   * @prop --ion-progress-bar-indeterminate-progress-default-background: Background of the filled progress indicator in an indeterminate progress bar
+   * @prop --ion-progress-bar-indeterminate-progress-semantic-default-background: Background of the filled progress indicator in an indeterminate progress bar when a semantic color is applied
+   *
+   * @prop --ion-progress-bar-indeterminate-buffer-bar-default-background: Background of the track representing the buffered amount in an indeterminate progress bar
+   * @prop --ion-progress-bar-indeterminate-buffer-bar-semantic-default-background: Background of the track representing the buffered amount in an indeterminate progress bar when a semantic color is applied
+   * @prop --ion-progress-bar-indeterminate-buffer-bar-solid-default-background: Background of the track representing the buffered amount in an indeterminate progress bar when it's fully buffered
+   *
+   * @prop --ion-progress-bar-shape-round-border-radius: Border radius of the `round` progress bar shape
+   * @prop --ion-progress-bar-shape-rectangular-border-radius: Border radius of the `rectangular` progress bar shape
    */
 
   display: block;
@@ -78,7 +98,7 @@
   background: var(--ion-progress-bar-determinate-progress-default-background);
 }
 
-:host(.progress-bar-determinate) .progress-buffer-bar {
+:host(.progress-bar-type-determinate) .progress-buffer-bar {
   background: var(--ion-progress-bar-determinate-buffer-bar-default-background);
 }
 
@@ -105,7 +125,7 @@
   background: var(--ion-progress-bar-indeterminate-progress-default-background);
 }
 
-:host(.progress-bar-indeterminate) .progress-buffer-bar {
+:host(.progress-bar-type-indeterminate) .progress-buffer-bar {
   background: var(--ion-progress-bar-indeterminate-buffer-bar-default-background);
 }
 
@@ -128,7 +148,7 @@
   background: var(--ion-progress-bar-determinate-progress-semantic-default-background);
 }
 
-:host(.ion-color.progress-bar-determinate:not(.progress-bar-solid)) .progress-buffer-bar {
+:host(.ion-color.progress-bar-type-determinate:not(.progress-bar-solid)) .progress-buffer-bar {
   background: var(
     --ion-progress-bar-determinate-buffer-bar-semantic-default-background,
     var(--ion-progress-bar-determinate-buffer-bar-default-background)
@@ -149,7 +169,7 @@
   background: var(--ion-progress-bar-indeterminate-progress-semantic-default-background);
 }
 
-:host(.ion-color.progress-bar-indeterminate:not(.progress-bar-solid)) .progress-buffer-bar {
+:host(.ion-color.progress-bar-type-indeterminate:not(.progress-bar-solid)) .progress-buffer-bar {
   background: var(
     --ion-progress-bar-indeterminate-buffer-bar-semantic-default-background,
     var(--ion-progress-bar-indeterminate-buffer-bar-default-background)
@@ -179,7 +199,7 @@
 // --------------------------------------------------
 
 // Determinate
-:host(.progress-bar-solid.progress-bar-determinate) .progress-buffer-bar {
+:host(.progress-bar-solid.progress-bar-type-determinate) .progress-buffer-bar {
   background: var(
     --ion-progress-bar-determinate-buffer-bar-solid-default-background,
     var(--ion-progress-bar-determinate-buffer-bar-default-background)
@@ -196,7 +216,7 @@
 }
 
 // Indeterminate
-:host(.progress-bar-solid.progress-bar-indeterminate) .progress-buffer-bar {
+:host(.progress-bar-solid.progress-bar-type-indeterminate) .progress-buffer-bar {
   background: var(
     --ion-progress-bar-indeterminate-buffer-bar-solid-default-background,
     var(--ion-progress-bar-indeterminate-buffer-bar-default-background)

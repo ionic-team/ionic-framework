@@ -33,6 +33,10 @@ export const defaultTheme: DefaultTheme = {
         size: 'large',
       },
 
+      IonProgressBar: {
+        shape: 'rectangular',
+      },
+
       IonSpinner: {
         size: 'medium',
       },
