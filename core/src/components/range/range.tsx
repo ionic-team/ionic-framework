@@ -914,7 +914,14 @@ export class Range implements ComponentInterface {
         ))}
 
         <div class="range-bar-container">
-          <div class="range-bar" role="presentation" part="bar" />
+          <div
+            class={{
+              'range-bar': true,
+              'has-ticks': ticks.length > 0,
+            }}
+            role="presentation"
+            part="bar"
+          />
           <div
             class={{
               'range-bar': true,
