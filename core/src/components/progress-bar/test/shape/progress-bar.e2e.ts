@@ -1,7 +1,10 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
+/**
+ * This behavior does not vary across directions
+ */
+configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('progress-bar: shape'), () => {
     test('round - should not have visual regressions', async ({ page }) => {
       await page.setContent(
