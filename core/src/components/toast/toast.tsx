@@ -26,7 +26,6 @@ import type { AnimationBuilder, Color, CssClassMap, OverlayInterface, FrameworkD
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
-import { ionicEnterAnimation } from './animations/ionic.enter';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
@@ -389,7 +388,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
      */
     this.lastPresentedPosition = animationPosition;
 
-    await present<ToastPresentOptions>(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, ionicEnterAnimation, {
+    await present<ToastPresentOptions>(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, undefined, {
       position,
       top: animationPosition.top,
       bottom: animationPosition.bottom,

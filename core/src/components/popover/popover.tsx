@@ -22,7 +22,6 @@ import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
-import { ionicEnterAnimation } from './animations/ionic.enter';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
@@ -529,21 +528,14 @@ export class Popover implements ComponentInterface, PopoverInterface {
       await waitForMount();
     }
 
-    await present<PopoverPresentOptions>(
-      this,
-      'popoverEnter',
-      iosEnterAnimation,
-      mdEnterAnimation,
-      ionicEnterAnimation,
-      {
-        event: event || this.event,
-        size: this.size,
-        trigger: this.triggerEl,
-        reference: this.reference,
-        side: this.side,
-        align: this.alignment,
-      }
-    );
+    await present<PopoverPresentOptions>(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, undefined, {
+      event: event || this.event,
+      size: this.size,
+      trigger: this.triggerEl,
+      reference: this.reference,
+      side: this.side,
+      align: this.alignment,
+    });
 
     /**
      * If popover is nested and was

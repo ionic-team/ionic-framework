@@ -23,7 +23,6 @@ import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 import type { SpinnerTypes } from '../spinner/spinner-configs';
 
-import { ionicEnterAnimation } from './animations/ionic.enter';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
@@ -256,7 +255,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
     await this.delegateController.attachViewToDom();
 
-    await present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, ionicEnterAnimation);
+    await present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation);
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration + 10);

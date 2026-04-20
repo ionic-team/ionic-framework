@@ -28,7 +28,6 @@ import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
 import type { AlertButton, AlertInput } from './alert-interface';
-import { ionicEnterAnimation } from './animations/ionic.enter';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
@@ -416,7 +415,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
     await this.delegateController.attachViewToDom();
 
-    await present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation, ionicEnterAnimation).then(() => {
+    await present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation).then(() => {
       /**
        * Check if alert has only one button and no inputs.
        * If so, then focus on the button. Otherwise, focus the alert wrapper.

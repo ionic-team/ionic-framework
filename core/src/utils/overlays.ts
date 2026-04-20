@@ -610,7 +610,7 @@ export const present = async <OverlayPresentOptions>(
   name: keyof IonicConfig,
   iosEnterAnimation: AnimationBuilder,
   mdEnterAnimation: AnimationBuilder,
-  ionicEnterAnimation: AnimationBuilder,
+  ionicEnterAnimation?: AnimationBuilder,
   opts?: OverlayPresentOptions
 ) => {
   if (overlay.presented) {
@@ -669,7 +669,11 @@ export const present = async <OverlayPresentOptions>(
   const mode = getIonMode(overlay);
 
   const selectedAnimation =
-    mode === 'ios' ? iosEnterAnimation : theme === 'ionic' ? ionicEnterAnimation : mdEnterAnimation;
+    mode === 'ios'
+      ? iosEnterAnimation
+      : theme === 'ionic' && ionicEnterAnimation
+      ? ionicEnterAnimation
+      : mdEnterAnimation;
   // get the user's animation fn if one was provided
   const animationBuilder = overlay.enterAnimation ? overlay.enterAnimation : config.get(name, selectedAnimation);
 
