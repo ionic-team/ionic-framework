@@ -1936,7 +1936,21 @@ ion-progress-bar,prop,shape,"rectangular" | "round" | undefined,undefined,false,
 ion-progress-bar,prop,type,"determinate" | "indeterminate",'determinate',false,false
 ion-progress-bar,prop,value,number,0,false,false
 ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-bar-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-bar-semantic-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-bar-solid-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-circles-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-circles-semantic-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-circles-solid-default-background
 ion-progress-bar,css-prop,--ion-progress-bar-determinate-progress-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-determinate-progress-semantic-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-height
+ion-progress-bar,css-prop,--ion-progress-bar-indeterminate-buffer-bar-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-indeterminate-buffer-bar-semantic-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-indeterminate-buffer-bar-solid-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-indeterminate-progress-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-indeterminate-progress-semantic-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-shape-rectangular-border-radius
+ion-progress-bar,css-prop,--ion-progress-bar-shape-round-border-radius
 ion-progress-bar,part,progress
 ion-progress-bar,part,stream
 ion-progress-bar,part,track
