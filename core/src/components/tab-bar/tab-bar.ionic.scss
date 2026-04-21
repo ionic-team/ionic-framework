@@ -1,4 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "../../themes/mixins" as mixins;
 @use "./tab-bar.common";
 
 :host {
@@ -67,11 +68,9 @@
 /* Compact */
 :host(.tab-bar-compact) {
   @include globals.padding(globals.$ion-space-100, globals.$ion-space-400);
+  @include mixins.position-horizontal(50%, null);
 
   position: absolute;
-
-  // stylelint-disable-next-line property-disallowed-list
-  left: 50%;
 
   align-self: center;
 
