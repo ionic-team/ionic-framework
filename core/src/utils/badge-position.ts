@@ -40,13 +40,16 @@ interface BadgePositionConfig {
   relativeTo?: Element;
 
   /**
-   * If `true`, clamps the badge's vertical position so it does
-   * not extend past the top or bottom edge of `target`.
+   * If `true`, the target has a border radius and the badge is positioned
+   * at the 45 degree point on the corner arc.
+   * If `false` (default), the badge overlaps the target's inline-end edge
+   * by a fixed amount, with the top/bottom edge aligned to the target's
+   * top/bottom edge.
    *
-   * Useful when the badge is anchored to a sibling and nearby
-   * content (like a label) would otherwise be overlapped.
+   * Set to `true` for round targets like avatars and buttons.
+   * Omit (or `false`) for non-round targets like tab button icons.
    */
-  clamp?: boolean;
+  isTargetArched?: boolean;
 }
 
 /**
@@ -64,33 +67,34 @@ interface BadgeManager {
 }
 
 /**
- * Positions a badge at the 45 degrees point on a target element's
- * corner arc, placing the badge center on the curve defined
- * by the target's border radius.
+ * Positions a badge relative to a target element.
  *
- * The offset from the corner is calculated as:
+ * Two modes are selected via `isTargetArched`:
  *
- *   borderRadius * 0.2929 - badgeSize / 2
+ * - Arc-based (`isTargetArched: true`): Places the badge at the 45 degree point
+ *   on the target's corner arc using `borderRadius * 0.2929`. Used for round
+ *   targets like avatars and buttons.
  *
- * Where 0.2929 = 1 - cos(45 degrees). This naturally adapts to radius: circular, pill, rounded, or rectangular.
+ * - Fixed overlap (default): Positions the badge so it overlaps the
+ *   target's inline-end edge by `OVERLAP` pixels, with the top/bottom edge
+ *   aligned to the target's top/bottom edge. Used for non-round targets like
+ *   tab button icons.
  *
- * If `relativeTo` is provided, the position accounts for
- * the delta between the target and the badge's positioned
- * ancestor (e.g. `.button-inner` with `position: relative`).
- *
- * If `clamp` is true, the badge is constrained to the
- * target's edges so it doesn't overlap adjacent content.
+ * If `relativeTo` is provided, the position accounts for the delta between
+ * the target and the badge's positioned ancestor.
  *
  * @param config The configuration for badge positioning
  */
 export function positionBadge(config: BadgePositionConfig): void {
-  const { badge, target, clamp } = config;
+  const { badge, target } = config;
   const relativeTo = config.relativeTo ?? target;
   const host = (config.host ?? target) as HTMLElement;
   const rtl = isRTL(host);
+  const OVERLAP = 6;
 
   const targetRect = target.getBoundingClientRect();
   const relativeToRect = relativeTo.getBoundingClientRect();
+  const vertical = badge.getAttribute('vertical');
 
   // Delta from the relativeTo element's edges to the target's edges
   const deltaTop = targetRect.top - relativeToRect.top;
@@ -98,31 +102,36 @@ export function positionBadge(config: BadgePositionConfig): void {
   // Horizontal delta flips depending on direction
   const deltaInlineEnd = rtl ? targetRect.left - relativeToRect.left : relativeToRect.right - targetRect.right;
 
-  // Resolve border-radius of the target element
-  const computedStyles = getComputedStyle(target);
-  let borderRadius = parseFloat(computedStyles.borderTopRightRadius) || 0;
+  let inlineStart: number;
+  let top: number;
+  let bottom: number;
 
-  // Clamp to half the smallest dimension (matches browser behavior)
-  const maxRadius = Math.min(targetRect.width, targetRect.height) / 2;
-  borderRadius = Math.min(borderRadius, maxRadius);
+  if (config.isTargetArched) {
+    // Arc-based: badge center placed at the 45 degree point on
+    // the target's corner arc
+    const computedStyles = getComputedStyle(target);
+    let borderRadius = parseFloat(computedStyles.borderTopRightRadius) || 0;
+    const maxRadius = Math.min(targetRect.width, targetRect.height) / 2;
+    borderRadius = Math.min(borderRadius, maxRadius);
 
-  // 0.2929 = 1 - cos(45°)
-  const cornerOffset = borderRadius * 0.2929;
+    // 0.2929 = 1 - cos(45°)
+    const cornerOffset = borderRadius * 0.2929;
+    const badgeRect = badge.getBoundingClientRect();
 
-  const vertical = badge.getAttribute('vertical');
-  const badgeRect = badge.getBoundingClientRect();
+    inlineStart = relativeToRect.width - cornerOffset - deltaInlineEnd - OVERLAP / 2;
+    top = cornerOffset + deltaTop - badgeRect.height / 2;
+    bottom = cornerOffset + deltaBottom - badgeRect.height / 2;
+  } else {
+    // Fixed overlap: badge overlaps the target's inline-end edge
+    // by `OVERLAP` pixels
+    inlineStart = relativeToRect.width - deltaInlineEnd - OVERLAP;
+    top = deltaTop;
+    bottom = deltaBottom;
+  }
 
-  /**
-   * Uses `left` instead of `right` for horizontal positioning
-   * so wider badges (e.g. "999+") extend outward (to the right)
-   */
-  const inlineStart = relativeToRect.width - cornerOffset - deltaInlineEnd - badgeRect.height / 2;
-  const top = cornerOffset + deltaTop - badgeRect.height / 2;
-  const bottom = cornerOffset + deltaBottom - badgeRect.height / 2;
-
-  // Optionally clamp so the badge doesn't extend past the target's edges
-  const clampedTop = clamp ? Math.max(top, deltaTop) : top;
-  const clampedBottom = clamp ? Math.max(bottom, deltaBottom) : bottom;
+  // Clamp so the badge doesn't extend past the target's edges
+  const clampedTop = Math.max(top, deltaTop);
+  const clampedBottom = Math.max(bottom, deltaBottom);
 
   // Set horizontal position based on direction
   if (rtl) {

@@ -22,6 +22,7 @@ export class Avatar implements ComponentInterface {
 
   private badgeManager = createBadgeManager(this.el, () => ({
     target: this.el,
+    isTargetArched: true,
   }));
 
   /**

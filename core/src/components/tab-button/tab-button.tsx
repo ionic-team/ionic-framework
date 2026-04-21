@@ -39,9 +39,6 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     const hasIcon = this.hasIcon;
     const hasLabel = this.hasLabel;
 
-    // Clamp the badge if icon and label exists and layout is either `icon-top` or `icon-bottom` since the badge is positioned in the center of the button and could overlap with both the icon and label.
-    const clamp = hasIcon && hasLabel && (layout === 'icon-top' || layout === 'icon-bottom');
-
     const iconEl = hasIcon ? this.el.querySelector(':scope > ion-icon') : null;
     const labelEl = hasLabel ? this.el.querySelector('ion-label') : null;
 
@@ -67,7 +64,6 @@ export class TabButton implements ComponentInterface, AnchorInterface {
       host: this.el,
       target,
       relativeTo: this.el.shadowRoot!.querySelector('.button-inner')!,
-      clamp,
     };
   });
 

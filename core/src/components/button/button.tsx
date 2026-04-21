@@ -45,6 +45,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     host: this.el,
     target: this.el.shadowRoot!.querySelector('.button-native')!,
     relativeTo: this.el.shadowRoot!.querySelector('.button-inner')!,
+    isTargetArched: true,
   }));
 
   /**
