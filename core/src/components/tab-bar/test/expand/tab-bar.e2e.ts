@@ -52,7 +52,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
             .container {
               padding: 20px 10px;
               /* Size is needed because tab bar compact has position absolute and will not capture correctly. */
-              width: 225px;
+              width: 100%;
               height: 96px;
             }
           </style>

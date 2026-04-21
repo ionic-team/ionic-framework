@@ -3981,6 +3981,11 @@ export namespace Components {
          */
         "expand": 'compact' | 'full';
         /**
+          * If `true`, the tab bar will be hidden when the user scrolls down and shown when the user scrolls up. Only applies when the theme is `"ionic"` and `expand` is `"compact"`.
+          * @default false
+         */
+        "hideOnScroll": boolean;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -10078,6 +10083,11 @@ declare namespace LocalJSX {
          */
         "expand"?: 'compact' | 'full';
         /**
+          * If `true`, the tab bar will be hidden when the user scrolls down and shown when the user scrolls up. Only applies when the theme is `"ionic"` and `expand` is `"compact"`.
+          * @default false
+         */
+        "hideOnScroll"?: boolean;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -11320,6 +11330,7 @@ declare namespace LocalJSX {
     interface IonTabBarAttributes {
         "color": Color;
         "selectedTab": string;
+        "hideOnScroll": boolean;
         "translucent": boolean;
         "expand": 'compact' | 'full';
         "shape": 'soft' | 'round' | 'rectangular';
