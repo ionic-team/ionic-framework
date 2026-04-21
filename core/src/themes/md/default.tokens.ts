@@ -217,7 +217,7 @@ export const defaultTheme: DefaultTheme = {
             },
 
             padding: {
-              top: 'var(--ion-spacing-75)',
+              top: 'var(--ion-spacing-xxs)',
               end: 'var(--ion-spacing-xxs)',
               bottom: 'var(--ion-spacing-xxs)',
               start: 'var(--ion-spacing-xxs)',
@@ -257,7 +257,7 @@ export const defaultTheme: DefaultTheme = {
             },
 
             padding: {
-              top: 'var(--ion-spacing-75)',
+              top: 'var(--ion-spacing-xs)',
               end: 'var(--ion-spacing-xs)',
               bottom: 'var(--ion-spacing-xs)',
               start: 'var(--ion-spacing-xs)',
