@@ -22,6 +22,14 @@
         margin-left: 5px;
       }
 
+      h3 {
+        font-size: 11px;
+        font-weight: normal;
+        color: #9ba0a6;
+        margin-top: 6px;
+        margin-left: 5px;
+      }
+
       .button-group {
         border: 1px solid #e2e4e7;
         border-radius: 12px;
@@ -29,8 +37,13 @@
         padding: 8px;
       }
 
-      ion-button {
-        margin-inline-end: 40px;
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        padding-bottom: 10px;
+        row-gap: 5px;
+        column-gap: 30px;
       }
     </style>
   </head>
@@ -61,14 +74,20 @@
         group.classList.add('button-group');
 
         badgePositions.forEach((position) => {
-          const heading = document.createElement('h2');
-          heading.textContent = `button size: ${buttonSize} / badge position: ${position || 'none'}`;
-          group.appendChild(heading);
+          const positionHeading = document.createElement('h2');
+          positionHeading.textContent = `button size: ${buttonSize} / badge position: ${position || 'none'}`;
+          group.appendChild(positionHeading);
 
-          const row = document.createElement('div');
+          // Icon-only buttons
+          const iconHeading = document.createElement('h3');
+          iconHeading.textContent = 'Icon';
+          group.appendChild(iconHeading);
 
-          badgeSizes.forEach((badgeSize) => {
-            badgeContents.forEach((html) => {
+          badgeContents.forEach((html) => {
+            const iconRow = document.createElement('div');
+            iconRow.classList.add('row');
+
+            badgeSizes.forEach((badgeSize) => {
               const iconButton = document.createElement('ion-button');
               iconButton.setAttribute('size', buttonSize);
               iconButton.setAttribute('shape', 'round');
@@ -89,9 +108,22 @@
               badge.innerHTML = html;
 
               iconButton.appendChild(badge);
-              row.appendChild(iconButton);
+              iconRow.appendChild(iconButton);
+            });
 
-              // Standard button with badge
+            group.appendChild(iconRow);
+          });
+
+          // Text buttons
+          const textHeading = document.createElement('h3');
+          textHeading.textContent = 'Text';
+          group.appendChild(textHeading);
+
+          badgeContents.forEach((html) => {
+            const textRow = document.createElement('div');
+            textRow.classList.add('row');
+
+            badgeSizes.forEach((badgeSize) => {
               const textButton = document.createElement('ion-button');
               textButton.setAttribute('size', buttonSize);
               textButton.setAttribute('shape', 'round');
@@ -108,11 +140,11 @@
               standardBadge.innerHTML = html;
 
               textButton.appendChild(standardBadge);
-              row.appendChild(textButton);
+              textRow.appendChild(textButton);
             });
-          });
 
-          group.appendChild(row);
+            group.appendChild(textRow);
+          });
         });
 
         content.appendChild(group);
