@@ -9,21 +9,28 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
         const positions = ['top', 'bottom'];
         const contents = ['', '1', '999+', '<ion-icon icon="star"></ion-icon>'];
 
-        const buttons = positions
+        const iconButtons = positions
           .flatMap((position) =>
             badgeSizes.flatMap((badgeSize) =>
-              contents.flatMap((html) => [
-                // Icon-only button
-                `<ion-button size="${buttonSize}" shape="round">
+              contents.map(
+                (html) => `<ion-button size="${buttonSize}" shape="round">
                 <ion-icon slot="icon-only" name="add"></ion-icon>
                 <ion-badge hue="bold" shape="round" color="danger" size="${badgeSize}" vertical="${position}">${html}</ion-badge>
-              </ion-button>`,
-                // Text button
-                `<ion-button size="${buttonSize}" shape="round">
+              </ion-button>`
+              )
+            )
+          )
+          .join('\n');
+
+        const textButtons = positions
+          .flatMap((position) =>
+            badgeSizes.flatMap((badgeSize) =>
+              contents.map(
+                (html) => `<ion-button size="${buttonSize}" shape="round">
                 Button
                 <ion-badge hue="bold" shape="round" color="danger" size="${badgeSize}" vertical="${position}">${html}</ion-badge>
-              </ion-button>`,
-              ])
+              </ion-button>`
+              )
             )
           )
           .join('\n');
@@ -33,16 +40,17 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
             <style>
               /* Prevent badges from overlapping */
               ion-button {
-                margin-inline-end: 20px;
+                margin-inline-end: 40px;
               }
 
-              #container {
+              #container > div {
                 padding-bottom: 10px;
               }
             </style>
 
             <div id="container">
-              ${buttons}
+              <div>${iconButtons}</div>
+              <div>${textButtons}</div>
             </div>
           `,
           config
@@ -55,7 +63,7 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
          * unrendered areas to appear black in the screenshot.
          * Resizing to fit content.
          */
-        if (buttonSize === 'large') {
+        if (buttonSize === 'large' || buttonSize === 'medium') {
           const box = await container.boundingBox();
 
           await page.setViewportSize({ width: Math.ceil(box!.width) + 32, height: Math.ceil(box!.height) + 32 });
