@@ -12,7 +12,7 @@
   @include globals.generate-color-variables();
 
   @each $color-name, $value in globals.$ionic-colors {
-    .ion-color-#{$color-name} {
+    .ion-color-#{"" + $color-name} {
       @include globals.generate-color($color-name);
     }
   }
