@@ -595,7 +595,7 @@ export function rgba(colorRgb: string, alpha: number | string): string {
   return `rgba(${colorRgb}, ${alpha})`;
 }
 
-interface CurrentColorOptions {
+interface ColorOptions {
   alpha?: number | string | null;
   subtle?: boolean;
 }
@@ -609,7 +609,7 @@ interface CurrentColorOptions {
  * @param subtle If true, uses the '--ion-color-subtle-' prefix.
  * @returns A string containing the CSS value (e.g., 'var(--ion-color-primary)' or 'rgba(var(--ion-color-primary-rgb), 0.16)').
  */
-export function currentColor(variation: string, options: CurrentColorOptions = {}): string {
+export function currentColor(variation: string, options: ColorOptions = {}): string {
   const { alpha = null, subtle = false } = options;
 
   // 1. Determine the base CSS variable name
@@ -629,19 +629,13 @@ export function currentColor(variation: string, options: CurrentColorOptions = {
   return `rgba(var(${variable}-rgb), ${alpha})`;
 }
 
-interface IonColorOptions {
-  alpha?: number | string | null;
-  rgb?: boolean;
-  subtle?: boolean;
-}
-
-export function ionColor(name: string, variation: string, options: IonColorOptions = {}): string {
-  const { alpha = null, rgb = false, subtle = false } = options;
+export function ionColor(name: string, variation: string, options: ColorOptions = {}): string {
+  const { alpha = null, subtle = false } = options;
 
   // Build base variable name
   const base = subtle ? `--ion-color-${name}-subtle` : `--ion-color-${name}`;
   const variationSuffix = variation === 'base' ? '' : `-${variation}`;
-  let variable = `${base}${variationSuffix}`;
+  const variable = `${base}${variationSuffix}`;
 
   // Build the fallback variable name (only for bold colors)
   let fallbackVariable: string | null = null;
@@ -657,12 +651,6 @@ export function ionColor(name: string, variation: string, options: IonColorOptio
     const fallbackRgb = fallbackVariable ? `${fallbackVariable}-rgb` : null;
 
     return fallbackRgb ? `rgba(var(${rgbVar}, var(${fallbackRgb})), ${alpha})` : `rgba(var(${rgbVar}), ${alpha})`;
-  }
-
-  // Handle RGB variables
-  if (rgb) {
-    variable = `${variable}-rgb`;
-    fallbackVariable = fallbackVariable ? `${fallbackVariable}-rgb` : null;
   }
 
   return fallbackVariable ? `var(${variable}, var(${fallbackVariable}))` : `var(${variable})`;
