@@ -1,18 +1,14 @@
 import { h } from '@stencil/core';
 
+import type { RichContentOption as RichContentOpt } from '../components/select/select-interface';
+
 import { sanitizeDOMString } from './sanitization';
 
-interface RichContentOption {
+interface RichContentOption extends RichContentOpt {
   /** Unique identifier for stable virtual DOM keys across re-renders. */
   id: string;
   /** The main label for the option as a string or an HTMLElement. */
   label?: string | HTMLElement;
-  /** Content to display at the start of the option. */
-  startContent?: HTMLElement;
-  /** Content to display at the end of the option. */
-  endContent?: HTMLElement;
-  /** A description for the option. */
-  description?: string;
 }
 
 /**

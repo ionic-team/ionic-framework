@@ -30,7 +30,7 @@ export interface SelectOverlayOption extends Omit<SelectPopoverOption, 'text'>, 
   text?: string | HTMLElement;
 }
 
-interface RichContentOption {
+export interface RichContentOption {
   /** Content to display at the start of the option. */
   startContent?: HTMLElement;
   /** Content to display at the end of the option. */
