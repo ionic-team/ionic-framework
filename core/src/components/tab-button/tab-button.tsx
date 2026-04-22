@@ -59,11 +59,14 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     if (!target) {
       return undefined;
     }
+    const isLabelTarget = target === labelEl;
 
     return {
       host: this.el,
       target,
       relativeTo: this.el.shadowRoot!.querySelector('.button-inner')!,
+      anchorToEdge: !isLabelTarget,
+      clamp: !isLabelTarget && hasLabel,
     };
   });
 
