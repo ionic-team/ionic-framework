@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
+import { findIonContent, getScrollElement } from '@utils/content';
 import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createColorClasses } from '@utils/theme';
@@ -26,10 +27,16 @@ export class TabBar implements ComponentInterface {
   private keyboardCtrl: KeyboardController | null = null;
   private keyboardCtrlPromise: Promise<KeyboardController> | null = null;
   private didLoad = false;
+  private scrollEl?: HTMLElement;
+  private contentScrollCallback?: () => void;
+  private lastScrollTop = 0;
+  private scrollDirectionChangeTop = 0;
 
   @Element() el!: HTMLElement;
 
   @State() keyboardVisible = false;
+
+  @State() scrollHidden = false;
 
   /**
    * The color to use from your application's color palette.
@@ -56,6 +63,13 @@ export class TabBar implements ComponentInterface {
       });
     }
   }
+
+  /**
+   * If `true`, the tab bar will be hidden when the user scrolls down
+   * and shown when the user scrolls up.
+   * Only applies when the theme is `"ionic"` and `expand` is `"compact"`.
+   */
+  @Prop() hideOnScroll = false;
 
   /**
    * If `true`, the tab bar will be translucent.
@@ -108,6 +122,8 @@ export class TabBar implements ComponentInterface {
         tab: this.selectedTab,
       });
     }
+
+    this.setupHideOnScroll();
   }
 
   async connectedCallback() {
@@ -150,6 +166,80 @@ export class TabBar implements ComponentInterface {
       this.keyboardCtrl.destroy();
       this.keyboardCtrl = null;
     }
+
+    this.destroyHideOnScroll();
+  }
+
+  private setupHideOnScroll() {
+    const theme = getIonTheme(this);
+    if (theme !== 'ionic' || !this.hideOnScroll || this.expand !== 'compact') {
+      return;
+    }
+
+    const footerEl = this.el.closest('ion-footer');
+    const pageEl = footerEl?.closest('ion-page, .ion-page') ?? this.el.closest('ion-page, .ion-page');
+    const contentEl = pageEl ? findIonContent(pageEl) : null;
+
+    if (!contentEl) {
+      return;
+    }
+
+    this.initScrollListener(contentEl);
+  }
+
+  private async initScrollListener(contentEl: HTMLElement) {
+    const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
+
+    this.contentScrollCallback = () => {
+      readTask(() => {
+        const scrollTop = scrollEl.scrollTop;
+        const shouldHide = this.checkScrollStatus(scrollTop);
+
+        if (shouldHide !== this.scrollHidden) {
+          writeTask(() => {
+            this.scrollHidden = shouldHide;
+          });
+        }
+
+        this.lastScrollTop = scrollTop;
+      });
+    };
+
+    scrollEl.addEventListener('scroll', this.contentScrollCallback, { passive: true });
+  }
+
+  private destroyHideOnScroll() {
+    if (this.scrollEl && this.contentScrollCallback) {
+      this.scrollEl.removeEventListener('scroll', this.contentScrollCallback);
+      this.contentScrollCallback = undefined;
+    }
+  }
+
+  private checkScrollStatus(scrollTop: number): boolean {
+    // Always visible within the first 80px of scroll
+    const visibleZone = 80;
+    // Hides after 60px of continuous downward scrolling only, when scrolling up threashold should be 0px
+    const scrollThresholdHide = 60;
+
+    if (scrollTop <= visibleZone) {
+      return false;
+    }
+
+    const isScrollingDown = scrollTop > this.lastScrollTop;
+    const wasScrollingDown = this.lastScrollTop > this.scrollDirectionChangeTop;
+
+    if (isScrollingDown !== wasScrollingDown) {
+      this.scrollDirectionChangeTop = this.lastScrollTop;
+    }
+
+    const delta = Math.abs(scrollTop - this.scrollDirectionChangeTop);
+    const threshold = isScrollingDown ? scrollThresholdHide : 0;
+
+    if (delta < threshold) {
+      return this.scrollHidden;
+    }
+
+    return isScrollingDown;
   }
 
   private getShape(): string | undefined {
@@ -169,7 +259,7 @@ export class TabBar implements ComponentInterface {
   }
 
   render() {
-    const { color, translucent, keyboardVisible, expand } = this;
+    const { color, translucent, keyboardVisible, scrollHidden, expand, hideOnScroll } = this;
     const theme = getIonTheme(this);
     const shape = this.getShape();
     const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
@@ -182,6 +272,8 @@ export class TabBar implements ComponentInterface {
           [theme]: true,
           'tab-bar-translucent': translucent,
           'tab-bar-hidden': shouldHide,
+          'tab-bar-hide-on-scroll': hideOnScroll,
+          'tab-bar-scroll-hidden': scrollHidden,
           [`tab-bar-${expand}`]: true,
           [`tab-bar-${shape}`]: shape !== undefined,
         })}

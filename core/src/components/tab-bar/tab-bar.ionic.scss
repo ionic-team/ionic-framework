@@ -1,4 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "../../themes/mixins" as mixins;
 @use "./tab-bar.common";
 
 :host {
@@ -67,12 +68,15 @@
 /* Compact */
 :host(.tab-bar-compact) {
   @include globals.padding(globals.$ion-space-100, globals.$ion-space-400);
+  @include mixins.position-horizontal(50%, null);
 
   position: absolute;
 
   align-self: center;
 
   width: fit-content;
+
+  transform: translateX(calc(-50%));
 
   contain: content;
 }
@@ -83,6 +87,38 @@
 
 :host([slot="bottom"].tab-bar-compact) {
   bottom: calc(globals.$ion-space-400 + var(--ion-safe-area-bottom, 0));
+}
+
+// Tab Bar Hide on Scroll
+// --------------------------------------------------
+
+:host(.tab-bar-hide-on-scroll) {
+  transition: transform globals.$ion-transition-time-200 globals.$ion-transition-curve-spring;
+}
+
+:host(.tab-bar-scroll-hidden) {
+  transform: translateY(calc(100% + var(--ion-safe-area-bottom, 0) + globals.$ion-space-1000)) translateX(calc(-50%));
+
+  transition: transform globals.$ion-transition-time-350 globals.$ion-transition-curve-base;
+}
+
+:host([slot="top"].tab-bar-scroll-hidden) {
+  transform: translateY(-100%) translateX(calc(-50%));
+}
+
+// Tab Bar Translucent
+// --------------------------------------------------
+
+@supports (backdrop-filter: blur(0)) {
+  :host(.tab-bar-translucent) {
+    --background: rgba(255, 255, 255, 0.6);
+
+    backdrop-filter: var(--tab-bar-backdrop-filter, blur(12px));
+  }
+
+  :host(.tab-bar-translucent) ::slotted(ion-tab-button.ion-focused) {
+    --background: transparent;
+  }
 }
 
 // Tab Bar Shapes

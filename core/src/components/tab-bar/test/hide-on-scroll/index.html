@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" mode="ionic">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tab Bar - Hide on Scroll</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="../../../../../css/ionic.bundle.css" />
+    <link rel="stylesheet" href="../../../../../scripts/testing/styles.css" />
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-tabs>
+        <div class="ion-page">
+          <ion-content>
+            <div class="spacer"></div>
+            <div class="info">
+              <p>Scroll down to hide the tab bar, scroll up to show it.</p>
+              <p><strong>Requirements:</strong></p>
+              <ul>
+                <li>Theme must be set to <code>ionic</code></li>
+                <li><code>expand</code> must be set to <code>compact</code></li>
+                <li>A sibling <code>ion-content</code> must exist for scroll detection</li>
+              </ul>
+            </div>
+          </ion-content>
+
+          <ion-footer>
+            <ion-tab-bar slot="bottom" hide-on-scroll="true" selected-tab="1" expand="compact">
+              <ion-tab-button tab="1">
+                <ion-icon name="home-outline"></ion-icon>
+                <ion-label>Home</ion-label>
+              </ion-tab-button>
+
+              <ion-tab-button tab="2">
+                <ion-icon name="heart-outline"></ion-icon>
+                <ion-label>Favorites</ion-label>
+              </ion-tab-button>
+
+              <ion-tab-button tab="3">
+                <ion-icon name="search-outline"></ion-icon>
+                <ion-label>Search</ion-label>
+              </ion-tab-button>
+
+              <ion-tab-button tab="4">
+                <ion-icon name="settings-outline"></ion-icon>
+                <ion-label>Settings</ion-label>
+              </ion-tab-button>
+            </ion-tab-bar>
+          </ion-footer>
+        </div>
+      </ion-tabs>
+    </ion-app>
+
+    <style>
+      .spacer {
+        padding: 16px;
+        height: 2000px;
+        background: linear-gradient(to bottom, #e0f7fa, #80deea, #26c6da, #00acc1, #00838f);
+      }
+
+      .info {
+        position: fixed;
+        top: 30px;
+        left: 30px;
+      }
+
+      .info p {
+        margin-bottom: 12px;
+        font-size: 16px;
+        color: #333;
+      }
+    </style>
+  </body>
+</html>
