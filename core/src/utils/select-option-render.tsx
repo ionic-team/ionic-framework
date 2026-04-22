@@ -85,8 +85,6 @@ export const renderOptionLabel = (
 
   // Render simple string label if there is no rich content to display
   if (!hasRichContent && (typeof label === 'string' || !label)) {
-    // const Tag = useSpan ? 'span' : 'div';
-
     return (
       <Tag class={className} key={`${className}-${id}`}>
         {label}
