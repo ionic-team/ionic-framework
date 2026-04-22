@@ -1940,7 +1940,6 @@ ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-bar-semantic-def
 ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-bar-solid-default-background
 ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-circles-default-background
 ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-circles-semantic-default-background
-ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-circles-solid-default-background
 ion-progress-bar,css-prop,--ion-progress-bar-determinate-progress-default-background
 ion-progress-bar,css-prop,--ion-progress-bar-determinate-progress-semantic-default-background
 ion-progress-bar,css-prop,--ion-progress-bar-height
