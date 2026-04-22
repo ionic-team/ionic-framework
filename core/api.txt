@@ -1931,6 +1931,7 @@ ion-popover,part,content
 ion-progress-bar,shadow
 ion-progress-bar,prop,buffer,number,1,false,false
 ion-progress-bar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-progress-bar,prop,mode,"ios" | "md",undefined,false,false
 ion-progress-bar,prop,reversed,boolean,false,false,false
 ion-progress-bar,prop,shape,"rectangular" | "round" | undefined,undefined,false,false
 ion-progress-bar,prop,type,"determinate" | "indeterminate",'determinate',false,false

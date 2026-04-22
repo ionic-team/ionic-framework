@@ -2979,6 +2979,9 @@ export namespace Components {
          */
         "triggerAction": TriggerAction;
     }
+    /**
+     * *
+     */
     interface IonProgressBar {
         /**
           * If the buffer and value are smaller than 1, the buffer circles will show. The buffer should be between [0, 1].
@@ -2989,6 +2992,10 @@ export namespace Components {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
         /**
           * If true, reverse the progress bar direction.
           * @default false
@@ -5366,6 +5373,9 @@ declare global {
         prototype: HTMLIonPopoverElement;
         new (): HTMLIonPopoverElement;
     };
+    /**
+     * *
+     */
     interface HTMLIonProgressBarElement extends Components.IonProgressBar, HTMLStencilElement {
     }
     var HTMLIonProgressBarElement: {
@@ -8895,6 +8905,9 @@ declare namespace LocalJSX {
          */
         "triggerAction"?: TriggerAction;
     }
+    /**
+     * *
+     */
     interface IonProgressBar {
         /**
           * If the buffer and value are smaller than 1, the buffer circles will show. The buffer should be between [0, 1].
@@ -8905,6 +8918,10 @@ declare namespace LocalJSX {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
         /**
           * If true, reverse the progress bar direction.
           * @default false
@@ -10653,6 +10670,9 @@ declare module "@stencil/core" {
             "ion-picker-legacy": LocalJSX.IonPickerLegacy & JSXBase.HTMLAttributes<HTMLIonPickerLegacyElement>;
             "ion-picker-legacy-column": LocalJSX.IonPickerLegacyColumn & JSXBase.HTMLAttributes<HTMLIonPickerLegacyColumnElement>;
             "ion-popover": LocalJSX.IonPopover & JSXBase.HTMLAttributes<HTMLIonPopoverElement>;
+            /**
+             * *
+             */
             "ion-progress-bar": LocalJSX.IonProgressBar & JSXBase.HTMLAttributes<HTMLIonProgressBarElement>;
             "ion-radio": LocalJSX.IonRadio & JSXBase.HTMLAttributes<HTMLIonRadioElement>;
             "ion-radio-group": LocalJSX.IonRadioGroup & JSXBase.HTMLAttributes<HTMLIonRadioGroupElement>;
