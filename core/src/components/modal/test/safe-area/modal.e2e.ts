@@ -174,9 +174,7 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       expect(contentHeight).toBeCloseTo(viewportHeight, 0);
     });
 
-    test('fullscreen modal ion-content scroll padding should include safe-area-bottom', async ({
-      page,
-    }, testInfo) => {
+    test('fullscreen modal ion-content scroll padding should include safe-area-bottom', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/31015',
