@@ -47,7 +47,7 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
                 align-items: flex-start;
                 padding-bottom: 10px;
                 row-gap: 5px;
-                column-gap: 30px;
+                column-gap: 40px;
               }
             </style>
 
