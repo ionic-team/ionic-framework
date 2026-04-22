@@ -10,7 +10,7 @@ import type { IonProgressBarShape } from './progress-bar.interfaces';
 
 /**
  * * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * 
+ *
  * @part progress - The progress bar that shows the current value when `type` is `"determinate"` and slides back and forth when `type` is `"indeterminate"`.
  * @part stream - The animated circles that appear while buffering. This only shows when `buffer` is set and `type` is `"determinate"`.
  * @part track - The track bar behind the progress bar. If the `buffer` property is set and `type` is `"determinate"` the track will be the

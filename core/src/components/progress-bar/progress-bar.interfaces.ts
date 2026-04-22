@@ -103,4 +103,5 @@ export type IonProgressBarConfig = {
   shape?: IonProgressBarShape;
 };
 
-export type IonProgressBarShape = 'round' | 'rectangular';
+export const ION_PROGRESS_BAR_SHAPES = ['round', 'rectangular'] as const;
+export type IonProgressBarShape = (typeof ION_PROGRESS_BAR_SHAPES)[number];
