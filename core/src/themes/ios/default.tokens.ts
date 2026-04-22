@@ -25,7 +25,7 @@ export const defaultTheme: DefaultTheme = {
     components: {
       IonBadge: {
         hue: 'bold',
-        shape: 'soft',
+        shape: 'round',
         size: 'small',
       },
 
