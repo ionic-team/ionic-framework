@@ -144,14 +144,7 @@ export function positionBadge(config: BadgePositionConfig): void {
   const clampedTop = clamp ? Math.max(top, deltaTop) : top;
   const clampedBottom = clamp ? Math.max(bottom, deltaBottom) : bottom;
 
-  // Set horizontal position based on direction
-  if (rtl) {
-    badge.style.right = `${inlineStart}px`;
-    badge.style.left = '';
-  } else {
-    badge.style.left = `${inlineStart}px`;
-    badge.style.right = '';
-  }
+  badge.style.insetInlineStart = `${inlineStart}px`;
 
   if (vertical === 'top') {
     badge.style.top = `${clampedTop}px`;
