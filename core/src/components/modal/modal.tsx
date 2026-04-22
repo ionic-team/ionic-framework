@@ -35,6 +35,7 @@ import type {
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
+import { ionicEnterAnimation } from './animations/ionic.enter';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { portraitToLandscapeTransition, landscapeToPortraitTransition } from './animations/ios.transition';
@@ -677,7 +678,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       setCardStatusBarDark();
     }
 
-    await present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
+    await present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, ionicEnterAnimation, {
       presentingEl: presentingElement,
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,

@@ -53,7 +53,7 @@ export const createSheetGesture = (
   getCurrentBreakpoint: () => number,
   onDismiss: () => void,
   onBreakpointChange: (breakpoint: number) => void,
-  staticBackdropOpacity: boolean,
+  usePhysicsBasedGesture: boolean,
   onDragStart: () => void,
   onDragMove: (detail: ModalDragEventDetail) => void,
   onDragEnd: (detail: ModalDragEventDetail) => void
@@ -61,13 +61,13 @@ export const createSheetGesture = (
   // Defaults for the sheet swipe animation
   const defaultBackdrop = [
     { offset: 0, opacity: 'var(--backdrop-opacity)' },
-    { offset: 1, opacity: staticBackdropOpacity ? 'var(--backdrop-opacity)' : 0.01 },
+    { offset: 1, opacity: usePhysicsBasedGesture ? 'var(--backdrop-opacity)' : 0.01 },
   ];
 
   const customBackdrop = [
     { offset: 0, opacity: 'var(--backdrop-opacity)' },
-    { offset: 1 - backdropBreakpoint, opacity: staticBackdropOpacity ? 'var(--backdrop-opacity)' : 0 },
-    { offset: 1, opacity: staticBackdropOpacity ? 'var(--backdrop-opacity)' : 0 },
+    { offset: 1 - backdropBreakpoint, opacity: usePhysicsBasedGesture ? 'var(--backdrop-opacity)' : 0 },
+    { offset: 1, opacity: usePhysicsBasedGesture ? 'var(--backdrop-opacity)' : 0 },
   ];
 
   const SheetDefaults = {
@@ -430,7 +430,9 @@ export const createSheetGesture = (
     offset = clamp(0.0001, processedStep, maxStep);
     animation.progressStep(offset);
 
-    const snapBreakpoint = calculateSnapBreakpoint(detail.deltaY);
+    const snapBreakpoint = usePhysicsBasedGesture
+      ? calculateVelocitySnapBreakpoint(detail.deltaY, detail.velocityY, detail.currentY)
+      : calculatePositionSnapBreakpoint(detail.deltaY);
 
     const eventDetail: ModalDragEventDetail = {
       currentY: detail.currentY,
@@ -444,7 +446,9 @@ export const createSheetGesture = (
   };
 
   const onEnd = (detail: GestureDetail) => {
-    const snapBreakpoint = calculateSnapBreakpoint(detail.deltaY);
+    const snapBreakpoint = usePhysicsBasedGesture
+      ? calculateVelocitySnapBreakpoint(detail.deltaY, detail.velocityY, detail.currentY)
+      : calculatePositionSnapBreakpoint(detail.deltaY);
 
     const eventDetail: ModalDragEventDetail = {
       currentY: detail.currentY,
@@ -499,6 +503,15 @@ export const createSheetGesture = (
     const shouldPreventDismiss = canDismiss && breakpoint === 0;
     const snapToBreakpoint = shouldPreventDismiss ? currentBreakpoint : breakpoint;
 
+    /**
+     * Detect snap-back behavior: when the snap target is the same as the current breakpoint,
+     * the user released before crossing the threshold to a new breakpoint.
+     * Apply different timing and easing for snap-back vs. snap-to-new.
+     */
+    const isSnapBack = snapToBreakpoint === currentBreakpoint;
+    const duration = usePhysicsBasedGesture ? (isSnapBack ? 300 : 400) : 500;
+    const easing = isSnapBack ? 'cubic-bezier(0.34, 1.4, 0.64, 1)' : 'cubic-bezier(0.32, 0.68, 0, 1)';
+
     const shouldRemainOpen = snapToBreakpoint !== 0;
 
     currentBreakpoint = 0;
@@ -515,13 +528,13 @@ export const createSheetGesture = (
       backdropAnimation.keyframes([
         {
           offset: 0,
-          opacity: staticBackdropOpacity
+          opacity: usePhysicsBasedGesture
             ? 'var(--backdrop-opacity)'
             : `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(1 - breakpointOffset, backdropBreakpoint)})`,
         },
         {
           offset: 1,
-          opacity: staticBackdropOpacity
+          opacity: usePhysicsBasedGesture
             ? 'var(--backdrop-opacity)'
             : `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(snapToBreakpoint, backdropBreakpoint)})`,
         },
@@ -542,6 +555,13 @@ export const createSheetGesture = (
       }
 
       animation.progressStep(0);
+    }
+
+    /**
+     * Apply the appropriate easing curve for this snap behavior.
+     */
+    if (usePhysicsBasedGesture) {
+      animation.easing(easing);
     }
 
     /**
@@ -641,7 +661,7 @@ export const createSheetGesture = (
           },
           { oneTimeCallback: true }
         )
-        .progressEnd(1, 0, animated ? 500 : 0);
+        .progressEnd(1, 0, animated ? duration : 0);
     });
   };
 
@@ -653,7 +673,7 @@ export const createSheetGesture = (
    * @param deltaY The change in Y position since the gesture started.
    * @returns The snap breakpoint value.
    */
-  const calculateSnapBreakpoint = (deltaY: number): number => {
+  const calculatePositionSnapBreakpoint = (deltaY: number): number => {
     /**
      * Calculates the real-time vertical position of the modal.
      * We combine the wrapper's current bounding box position with the
@@ -674,6 +694,57 @@ export const createSheetGesture = (
     });
 
     return snapBreakpoint;
+  };
+
+  /**
+   * Calculates the snap breakpoint using velocity-based logic.
+   * This provides a more intuitive and responsive sheet behavior for the Ionic theme.
+   *
+   * Rules:
+   * 1. Fast downward flick (> 500 px/s) always dismisses, regardless of position
+   * 2. Fast upward flick (> 400 px/s) snaps to the next breakpoint above
+   * 3. If dragged 40% below current snap point without fast upward flick, dismisses
+   * 4. Otherwise, falls back to position-based snap (closest breakpoint)
+   *
+   * @param deltaY The change in Y position since gesture started
+   * @param velocityY The velocity in pixels per millisecond
+   * @param currentY The current Y position of the gesture
+   * @returns The snap breakpoint value
+   */
+  const calculateVelocitySnapBreakpoint = (deltaY: number, velocityY: number, currentY: number): number => {
+    // Convert velocity from px/ms to px/s for easier threshold comparison
+    const velocityYPerSecond = velocityY * 1000;
+
+    // Calculate current progress (0 = fully closed, 1 = fully expanded)
+    const currentProgress = calculateProgress(currentY);
+
+    // Rule 1: Fast downward flick always dismisses
+    if (velocityYPerSecond > 500) {
+      return minBreakpoint;
+    }
+
+    // Rule 2: Fast upward flick moves to next breakpoint above
+    if (velocityYPerSecond < -400) {
+      // Find next breakpoint above current position
+      const nextBreakpoint = breakpoints.find((bp) => bp > currentProgress);
+      // If no breakpoint above, stay at max breakpoint
+      return nextBreakpoint ?? maxBreakpoint;
+    }
+
+    // Rule 3: 40% dismissal rule (only if not flicking up and 0 breakpoint exists)
+    if (minBreakpoint === 0 && currentBreakpoint > 0) {
+      // Calculate how far we've moved below the current snap point
+      const distanceBelowSnap = currentBreakpoint - currentProgress;
+      const percentageBelowSnap = distanceBelowSnap / currentBreakpoint;
+
+      // If dragged more than 40% below and not flicking up, dismiss
+      if (percentageBelowSnap > 0.4 && velocityYPerSecond <= 400) {
+        return 0;
+      }
+    }
+
+    // Rule 4: Fallback to position-based snap (existing logic)
+    return calculatePositionSnapBreakpoint(deltaY);
   };
 
   /**
