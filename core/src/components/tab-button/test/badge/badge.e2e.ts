@@ -36,7 +36,10 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
                   })
                   .join('\n');
 
-                return `<ion-tab-bar>${tabs}</ion-tab-bar>`;
+                return `
+                  <h2>badge position: ${position} / icon layout: ${layout}</h2>
+                  <ion-tab-bar>${tabs}</ion-tab-bar>
+                `;
               })
             )
           )
@@ -44,6 +47,15 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
 
         await page.setContent(
           `
+            <style>
+              h2 {
+                font-size: 12px;
+                font-weight: normal;
+                color: #6f7378;
+                margin-top: 10px;
+                margin-left: 5px;
+              }
+            </style>
             <div id="container">
               ${tabBars}
             </div>
@@ -52,6 +64,14 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
         );
 
         const container = page.locator('#container');
+
+        /**
+         * Content overflows the default viewport, causing
+         * unrendered areas to appear black in the screenshot.
+         * Resizing to fit content.
+         */
+        const box = await container.boundingBox();
+        await page.setViewportSize({ width: Math.ceil(box!.width) + 32, height: Math.ceil(box!.height) + 32 });
 
         await expect(container).toHaveScreenshot(screenshot(`tab-button-badge-${badgeSize}`));
       });
