@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('tab-button: badge'), () => {
     const positions = ['top', 'bottom'];
-    const layouts = ['icon-top', 'icon-bottom'];
+    const layouts = ['icon-top', 'icon-bottom', 'icon-start', 'icon-end', 'icon-hide', 'label-hide'];
     const icons = ['star', 'globe', 'logo-facebook', 'chatbox'];
     const colors = ['danger', 'primary', 'warning', 'success'];
     const contents = ['', '1', '999+', '<ion-icon icon="star"></ion-icon>'];
@@ -18,31 +18,45 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
     ['small', 'medium', 'large'].forEach((badgeSize) => {
       test(`should not have visual regressions with ${badgeSize} badges`, async ({ page }) => {
         const tabBars = positions
-          .flatMap((position) =>
-            slotVariants.flatMap((variant) =>
-              layouts.map((layout) => {
-                const tabs = contents
-                  .map((html, i) => {
-                    const label = variant.hasLabel ? `<ion-label>Tab ${i + 1}</ion-label>` : '';
-                    const icon = variant.hasIcon ? `<ion-icon name="${icons[i]}"></ion-icon>` : '';
+          .map((position) => {
+            const variantGroups = slotVariants
+              .map((variant) => {
+                const layoutRows = layouts
+                  .map((layout) => {
+                    const tabs = contents
+                      .map((html, i) => {
+                        const label = variant.hasLabel ? `<ion-label>Tab ${i + 1}</ion-label>` : '';
+                        const icon = variant.hasIcon ? `<ion-icon name="${icons[i]}"></ion-icon>` : '';
+
+                        return `
+                          <ion-tab-button tab="tab-${position}-${variant.label}-${layout}-${i}" layout="${layout}">
+                            ${label}
+                            ${icon}
+                            <ion-badge hue="bold" shape="round" color="${colors[i]}" size="${badgeSize}" vertical="${position}">${html}</ion-badge>
+                          </ion-tab-button>
+                        `;
+                      })
+                      .join('\n');
 
                     return `
-                  <ion-tab-button tab="tab-${position}-${variant.label}-${layout}-${i}" layout="${layout}">
-                    ${label}
-                    ${icon}
-                    <ion-badge hue="bold" shape="round" color="${colors[i]}" size="${badgeSize}" vertical="${position}">${html}</ion-badge>
-                  </ion-tab-button>
-                `;
+                      <h4>${layout}</h4>
+                      <ion-tab-bar>${tabs}</ion-tab-bar>
+                    `;
                   })
                   .join('\n');
 
                 return `
-                  <h2>badge position: ${position} / icon layout: ${layout}</h2>
-                  <ion-tab-bar>${tabs}</ion-tab-bar>
+                  <h3>${variant.label}</h3>
+                  ${layoutRows}
                 `;
               })
-            )
-          )
+              .join('\n');
+
+            return `
+              <h2>badge position: ${position}</h2>
+              ${variantGroups}
+            `;
+          })
           .join('\n');
 
         await page.setContent(
@@ -50,10 +64,23 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
             <style>
               h2 {
                 font-size: 12px;
+                font-weight: 600;
+                color: #3c3f44;
+                margin: 14px 0 4px 0;
+              }
+
+              h3 {
+                font-size: 12px;
                 font-weight: normal;
                 color: #6f7378;
-                margin-top: 10px;
-                margin-left: 5px;
+                margin: 8px 0 2px 8px;
+              }
+
+              h4 {
+                font-size: 11px;
+                font-weight: normal;
+                color: #9ba0a6;
+                margin: 4px 0 2px 16px;
               }
             </style>
             <div id="container">
