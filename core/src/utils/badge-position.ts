@@ -14,14 +14,12 @@ interface BadgePositionConfig {
   host?: HTMLElement;
 
   /**
-   * The element the badge visually anchors to. Its border-radius
-   * defines the corner arc, and the badge center is placed at
-   * the 45 degrees point on that arc.
+   * The element the badge visually anchors to.
    *
    * Examples:
-   *   - Avatar: the host element
-   *   - Button: .button-native
-   *   - Tab button: the sibling ion-icon
+   *   - Avatar: the host element (avatar itself)
+   *   - Button: `.button-native` within the button
+   *   - Tab button: the `ion-icon` or `ion-label` within the tab button
    */
   target: Element;
 
