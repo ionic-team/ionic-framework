@@ -88,8 +88,11 @@ export type IonBadgeConfig = {
   shape?: IonBadgeShape;
 };
 
-export type IonBadgeHue = 'bold' | 'subtle';
-export type IonBadgeShape = 'crisp' | 'soft' | 'round' | 'rectangular';
+export const ION_BADGE_HUES = ['bold', 'subtle'] as const;
+export type IonBadgeHue = (typeof ION_BADGE_HUES)[number];
+export const ION_BADGE_SHAPES = ['crisp', 'soft', 'round', 'rectangular'] as const;
+export type IonBadgeShape = (typeof ION_BADGE_SHAPES)[number];
 export const ION_BADGE_SIZES = ['small', 'medium', 'large'] as const;
 export type IonBadgeSize = (typeof ION_BADGE_SIZES)[number];
-export type IonBadgeVerticalPosition = 'top' | 'bottom';
+export const ION_BADGE_VERTICAL_POSITIONS = ['top', 'bottom'] as const;
+export type IonBadgeVerticalPosition = (typeof ION_BADGE_VERTICAL_POSITIONS)[number];

@@ -1,12 +1,14 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+import { ION_BADGE_SHAPES } from '../../../badge/badge.interfaces';
+
 /**
  * This behavior does not vary across directions.
  */
 configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('badge: shape'), () => {
-    ['crisp', 'soft', 'round', 'rectangular'].forEach((shape) => {
+    ION_BADGE_SHAPES.forEach((shape) => {
       test(`should render ${shape} badges`, async ({ page }) => {
         // `large` size has been applied to all badges for better visibility
         await page.setContent(

@@ -1,12 +1,14 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+import { ION_BADGE_SIZES } from '../../../badge/badge.interfaces';
+
 /**
  * This behavior does not vary across directions.
  */
 configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('badge: size'), () => {
-    ['small', 'medium', 'large'].forEach((size) => {
+    ION_BADGE_SIZES.forEach((size) => {
       test(`should render ${size} badges`, async ({ page }) => {
         await page.setContent(
           `
