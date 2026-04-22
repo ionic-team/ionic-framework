@@ -83,13 +83,6 @@ export type IonProgressBarRecipe = {
             background?: string;
           };
         };
-
-        /** When progress bar is solid (buffer = 1) */
-        solid?: {
-          default?: {
-            background?: string;
-          };
-        };
       };
     };
   };

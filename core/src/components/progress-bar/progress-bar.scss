@@ -16,8 +16,6 @@
    *
    * @prop --ion-progress-bar-determinate-buffer-circles-default-background: Background of the buffer circles in a determinate progress bar
    * @prop --ion-progress-bar-determinate-buffer-circles-semantic-default-background: Background of the buffer circles in a determinate progress bar when a semantic color is applied
-   * @prop --ion-progress-bar-determinate-buffer-circles-solid-default-background: Background of the buffer circles in a determinate progress bar when it's fully buffered
-   *
    * @prop --ion-progress-bar-indeterminate-progress-default-background: Background of the filled progress indicator in an indeterminate progress bar
    * @prop --ion-progress-bar-indeterminate-progress-semantic-default-background: Background of the filled progress indicator in an indeterminate progress bar when a semantic color is applied
    *
@@ -203,15 +201,6 @@
   background: var(
     --ion-progress-bar-determinate-buffer-bar-solid-default-background,
     var(--ion-progress-bar-determinate-buffer-bar-default-background)
-  );
-}
-
-:host(.progress-bar-solid) .buffer-circles {
-  background-image: radial-gradient(
-    ellipse at center,
-    var(--ion-progress-bar-determinate-buffer-circles-solid-default-background) 0%,
-    var(--ion-progress-bar-determinate-buffer-circles-solid-default-background) 30%,
-    transparent 30%
   );
 }
 

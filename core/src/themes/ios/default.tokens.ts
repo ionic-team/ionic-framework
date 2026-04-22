@@ -546,12 +546,6 @@ export const defaultTheme: DefaultTheme = {
                 background: currentColor('base', 0.3),
               },
             },
-
-            solid: {
-              default: {
-                background: `var(--ion-background-color-step-100, ${mix(baseColors.black, baseColors.white, '90%')})`,
-              },
-            },
           },
         },
       },
