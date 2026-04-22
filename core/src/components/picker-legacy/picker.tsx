@@ -240,7 +240,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
     await this.delegateController.attachViewToDom();
 
-    await present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined, undefined);
+    await present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
