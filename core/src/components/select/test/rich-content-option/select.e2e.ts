@@ -383,7 +383,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           <ion-select id="alert-select" label="Alert" placeholder="Select one" interface="alert">
             <ion-select-option value="full" description="Choose me!">
               <ion-badge slot="end">NEW</ion-badge>
-              <ion-avatar id="avatar" slot="start" size="large">
+              <ion-avatar slot="start" size="large">
                 <img src="/src/components/avatar/test/avatar.svg" />
               </ion-avatar>
               Full Content
