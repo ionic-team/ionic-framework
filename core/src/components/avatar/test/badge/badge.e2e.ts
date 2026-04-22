@@ -1,17 +1,18 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+import { ION_BADGE_SIZES } from '../../../badge/badge.interfaces';
+
 configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('avatar: badge'), () => {
     ['xxsmall', 'xsmall', 'small', 'medium', 'large', 'xlarge'].forEach((avatarSize) => {
       test(`${avatarSize} - should not have visual regressions with badges`, async ({ page }) => {
-        const badgeSizes = ['small', 'medium', 'large'];
         const positions = ['top', 'bottom'];
         const contents = ['', '1', '999+', '<ion-icon icon="star"></ion-icon>'];
 
         const avatars = positions
           .flatMap((position) =>
-            badgeSizes.flatMap((badgeSize) =>
+            ION_BADGE_SIZES.flatMap((badgeSize) =>
               contents.map(
                 (html) => `
               <ion-avatar size="${avatarSize}">

@@ -90,5 +90,6 @@ export type IonBadgeConfig = {
 
 export type IonBadgeHue = 'bold' | 'subtle';
 export type IonBadgeShape = 'crisp' | 'soft' | 'round' | 'rectangular';
-export type IonBadgeSize = 'small' | 'medium' | 'large';
+export const ION_BADGE_SIZES = ['small', 'medium', 'large'] as const;
+export type IonBadgeSize = (typeof ION_BADGE_SIZES)[number];
 export type IonBadgeVerticalPosition = 'top' | 'bottom';

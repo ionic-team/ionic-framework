@@ -1,11 +1,12 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+import { ION_BADGE_SIZES } from '../../../badge/badge.interfaces';
+
 configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('button: badge'), () => {
     ['small', 'medium', 'large'].forEach((buttonSize) => {
       test(`${buttonSize} - should not have visual regressions with badges`, async ({ page }) => {
-        const badgeSizes = ['small', 'medium', 'large'];
         const positions = ['top', 'bottom'];
         const contents = ['', '1', '999+', '<ion-icon icon="star"></ion-icon>'];
 
@@ -13,14 +14,12 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
           .flatMap((position) =>
             contents.map(
               (html) =>
-                `<div class="row">${badgeSizes
-                  .map(
-                    (badgeSize) => `<ion-button size="${buttonSize}" shape="round">
+                `<div class="row">${ION_BADGE_SIZES.map(
+                  (badgeSize) => `<ion-button size="${buttonSize}" shape="round">
                   <ion-icon slot="icon-only" name="add"></ion-icon>
                   <ion-badge hue="bold" shape="round" color="danger" size="${badgeSize}" vertical="${position}">${html}</ion-badge>
                 </ion-button>`
-                  )
-                  .join('\n')}</div>`
+                ).join('\n')}</div>`
             )
           )
           .join('\n');
@@ -29,14 +28,12 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
           .flatMap((position) =>
             contents.map(
               (html) =>
-                `<div class="row">${badgeSizes
-                  .map(
-                    (badgeSize) => `<ion-button size="${buttonSize}" shape="round">
+                `<div class="row">${ION_BADGE_SIZES.map(
+                  (badgeSize) => `<ion-button size="${buttonSize}" shape="round">
                   Button
                   <ion-badge hue="bold" shape="round" color="danger" size="${badgeSize}" vertical="${position}">${html}</ion-badge>
                 </ion-button>`
-                  )
-                  .join('\n')}</div>`
+                ).join('\n')}</div>`
             )
           )
           .join('\n');
