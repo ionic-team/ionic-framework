@@ -50,6 +50,7 @@ import {
   applySafeAreaOverrides,
   clearSafeAreaOverrides,
   getRootSafeAreaTop,
+  hasCustomModalDimensions,
   type ModalSafeAreaContext,
 } from './safe-area-utils';
 import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
@@ -312,11 +313,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
         this.updateSafeAreaOverrides();
 
         // Re-evaluate fullscreen safe-area padding: clear first, then re-apply.
-        // Single findContentAndFooter() call avoids redundant DOM traversal.
         const { contentEl, hasFooter } = this.findContentAndFooter();
-        if (contentEl) {
-          contentEl.style.removeProperty('--ion-content-safe-area-padding-bottom');
-        }
+        this.clearContentSafeAreaPadding(contentEl);
         this.applyFullscreenSafeAreaTo(contentEl, hasFooter);
       }
     }, 50); // Debounce to avoid excessive calls during active resizing
@@ -1430,6 +1428,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * Creates the context object for safe-area utilities.
+   *
+   * `hasCustomDimensions` is only set by `setInitialSafeAreaOverrides()`
+   * because it is only read by `getInitialSafeAreaConfig()`. Other callers
+   * (resize handler, post-animation update, fullscreen-padding apply) would
+   * pay a `getComputedStyle()` cost for a value they never consult.
    */
   private getSafeAreaContext(): ModalSafeAreaContext {
     return {
@@ -1452,7 +1455,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * sheets to prevent header content from getting double-offset padding).
    */
   private setInitialSafeAreaOverrides(): void {
-    const context = this.getSafeAreaContext();
+    const context: ModalSafeAreaContext = {
+      ...this.getSafeAreaContext(),
+      hasCustomDimensions: hasCustomModalDimensions(this.el),
+    };
     const safeAreaConfig = getInitialSafeAreaConfig(context);
     applySafeAreaOverrides(this.el, safeAreaConfig);
 
@@ -1526,14 +1532,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
-   * Clears --ion-content-safe-area-padding-bottom from ion-content inside
-   * this modal.
+   * Removes the internal --ion-content-safe-area-padding-bottom property
+   * from an already-located ion-content. Callers do their own
+   * findContentAndFooter() so they can also read hasFooter if needed.
    */
-  private clearContentSafeAreaPadding(): void {
-    const { contentEl } = this.findContentAndFooter();
-    if (contentEl) {
-      contentEl.style.removeProperty('--ion-content-safe-area-padding-bottom');
-    }
+  private clearContentSafeAreaPadding(contentEl: HTMLElement | null): void {
+    if (!contentEl) return;
+    contentEl.style.removeProperty('--ion-content-safe-area-padding-bottom');
   }
 
   /**
@@ -1553,7 +1558,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     for (const child of Array.from(this.el.children)) {
       if (child.tagName === 'ION-CONTENT') contentEl = child as HTMLElement;
       if (child.tagName === 'ION-FOOTER') hasFooter = true;
-      // Only search grandchildren for content if we haven't found one yet
       for (const grandchild of Array.from(child.children)) {
         if (grandchild.tagName === 'ION-CONTENT' && !contentEl) contentEl = grandchild as HTMLElement;
         if (grandchild.tagName === 'ION-FOOTER') hasFooter = true;
@@ -1571,14 +1575,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // Remove internal sheet offset property
     this.el.style.removeProperty('--ion-modal-offset-top');
 
-    // Remove legacy wrapper styles (kept for safety in case they were
-    // set before a live update applied this fix)
-    if (this.wrapperEl) {
-      this.wrapperEl.style.removeProperty('height');
-      this.wrapperEl.style.removeProperty('padding-bottom');
-    }
-
-    this.clearContentSafeAreaPadding();
+    const { contentEl } = this.findContentAndFooter();
+    this.clearContentSafeAreaPadding(contentEl);
   }
 
   render() {

@@ -28,8 +28,6 @@
   --keyboard-offset: 0px;
   --offset-top: 0px;
   --offset-bottom: 0px;
-  // Internal: set by modal applyFullscreenSafeArea() for modals without footer. Not a public API.
-  --ion-content-safe-area-padding-bottom: 0px;
   --overflow: auto;
 
   display: block;
@@ -64,6 +62,12 @@
   background: var(--background);
 }
 
+/**
+ * --ion-content-safe-area-padding-bottom is an internal property set by
+ * modal.tsx for fullscreen modals without an ion-footer. This decouples
+ * safe-area-bottom scroll padding from --padding-bottom (which is a
+ * public property consumers may override).
+ */
 .inner-scroll {
   @include position(calc(var(--offset-top) * -1), 0px,calc(var(--offset-bottom) * -1), 0px);
   @include padding(calc(var(--padding-top) + var(--offset-top)), var(--padding-end), calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom) + var(--ion-content-safe-area-padding-bottom, 0px)), var(--padding-start));

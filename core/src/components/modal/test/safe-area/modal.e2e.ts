@@ -322,6 +322,35 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       expect(safeAreaBottom).toBe('0px');
     });
 
+    test('centered dialog with custom dimensions on phone should zero safe-area from initial prediction', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/31015',
+      });
+
+      // Stay on phone viewport. This is the path where the centered-dialog
+      // media query does NOT match but the modal still doesn't touch screen
+      // edges because cssClass sets --width/--height. Without the initial
+      // prediction catching this, safe-area flashes inherited values and
+      // then snaps to 0px after animation.
+      const ionModalWillPresent = await page.spyOnEvent('ionModalWillPresent');
+      await page.click('#centered-dialog');
+      await ionModalWillPresent.next();
+
+      // Read inline style IMMEDIATELY after will-present fires, before the
+      // animation finishes. This captures the initial prediction value.
+      const modal = page.locator('ion-modal');
+      const initial = await modal.evaluate((el: HTMLIonModalElement) => ({
+        top: el.style.getPropertyValue('--ion-safe-area-top'),
+        bottom: el.style.getPropertyValue('--ion-safe-area-bottom'),
+      }));
+
+      expect(initial.top).toBe('0px');
+      expect(initial.bottom).toBe('0px');
+    });
+
     test('safe-area overrides should be cleared on dismiss', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
