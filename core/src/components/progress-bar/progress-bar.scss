@@ -71,6 +71,10 @@
   overflow: hidden;
 }
 
+.buffer-circles-container-hidden {
+  display: none;
+}
+
 // Extend a bit to overflow. The size of animated distance.
 .buffer-circles {
   /* stylelint-disable property-disallowed-list */
