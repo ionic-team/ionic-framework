@@ -318,7 +318,6 @@ ion-badge,prop,hue,"bold" | "subtle" | undefined,undefined,false,false
 ion-badge,prop,mode,"ios" | "md",undefined,false,false
 ion-badge,prop,shape,"crisp" | "rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-badge,prop,size,"large" | "medium" | "small" | undefined,undefined,false,false
-ion-badge,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-badge,prop,vertical,"bottom" | "top" | undefined,undefined,false,false
 ion-badge,css-prop,--ion-badge-font-family - the font family of the badge text Bold
 ion-badge,css-prop,--ion-badge-hue-bold-default-background - Background color of the `bold` hue in default state
