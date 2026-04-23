@@ -57,10 +57,6 @@ export {
   ModalDragEventDetail,
   ModalOptions,
   NavCustomEvent,
-  PickerOptions,
-  PickerButton,
-  PickerColumn,
-  PickerColumnOption,
   PopoverOptions,
   RadioGroupCustomEvent,
   RadioGroupChangeEventDetail,
@@ -106,7 +102,6 @@ export * from './routing-proxies';
 export { IonAlert } from './IonAlert';
 export { IonLoading } from './IonLoading';
 export * from './IonToast';
-export { IonPickerLegacy } from './IonPickerLegacy';
 
 // createOverlayComponent
 export * from './IonActionSheet';
@@ -141,7 +136,6 @@ export { useIonAlert, UseIonAlertResult } from '../hooks/useIonAlert';
 export { useIonToast, UseIonToastResult } from '../hooks/useIonToast';
 export { useIonModal, UseIonModalResult } from '../hooks/useIonModal';
 export { useIonPopover, UseIonPopoverResult } from '../hooks/useIonPopover';
-export { useIonPicker, UseIonPickerResult } from '../hooks/useIonPicker';
 export { useIonLoading, UseIonLoadingResult } from '../hooks/useIonLoading';
 
 export const setupIonicReact = (config: IonicConfig = {}) => {

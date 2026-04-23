@@ -28,7 +28,6 @@ export function hydrateIonicComponents(doc: any, appId: any) {
         'ion-alert',
         'ion-loading',
         'ion-modal',
-        'ion-picker-legacy',
         'ion-popover',
         'ion-toast',
         'ion-toast',
@@ -43,9 +42,6 @@ export function hydrateIonicComponents(doc: any, appId: any) {
         // tabs
         'ion-tabs',
         'ion-tab',
-
-        // auxiliar
-        'ion-picker-legacy-column',
       ],
     }).then((hydrateResults) => {
       hydrateResults.diagnostics.forEach((d) => {

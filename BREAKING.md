@@ -16,6 +16,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - [Browser and Platform Support](#version-9x-browser-platform-support)
 - [Components](#version-9x-components)
+  - [Legacy Picker](#version-9x-legacy-picker)
   - [Router Outlet](#version-9x-router-outlet)
 
 <h2 id="version-9x-browser-platform-support">Browser and Platform Support</h2>
@@ -28,6 +29,13 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | React     | 18+                   |
 
 <h2 id="version-9x-components">Components</h2>
+
+<h4 id="version-9x-legacy-picker">Legacy Picker</h4>
+
+- `ion-picker-legacy` and `ion-picker-legacy-column` have been removed. The legacy picker component has been replaced with an inline picker component.
+   - Usages such as `ion-picker-legacy` or `IonPickerLegacy` should be changed to `ion-picker` and `IonPicker`, respectively.
+- Remove any usages of `pickerController`. If using React, remove any usages of the `useIonPicker` hook. These controller-based APIs have been removed. Use the inline picker component instead.
+- Remove any usages of the `PickerOptions`, `PickerButton`, `PickerColumn`, and `PickerColumnOption` type exports. These types were associated with the legacy picker and have been removed.
 
 <h4 id="version-9x-router-outlet">Router Outlet</h4>
 

@@ -7,14 +7,12 @@ import {
   alarm,
   alertCircle,
   logoGoogle,
-  logoIonic,
   newspaper,
   star,
 } from 'ionicons/icons';
 import AlertHook from './AlertHook';
 import LoadingHook from './LoadingHook';
 import ModalHook from './ModalHook';
-import PickerHook from './PickerHook';
 import PopoverHook from './PopoverHook';
 import ToastHook from './ToastHook';
 
@@ -29,7 +27,6 @@ const OverlayHooks: React.FC<OverlayHooksProps> = () => {
         <Route path="/overlay-hooks/alert" component={AlertHook} />
         <Route path="/overlay-hooks/loading" component={LoadingHook} />
         <Route path="/overlay-hooks/modal" component={ModalHook} />
-        <Route path="/overlay-hooks/picker" component={PickerHook} />
         <Route path="/overlay-hooks/popover" component={PopoverHook} />
         <Route path="/overlay-hooks/toast" component={ToastHook} />
       </IonRouterOutlet>
@@ -49,10 +46,6 @@ const OverlayHooks: React.FC<OverlayHooksProps> = () => {
         <IonTabButton tab="modal" href="/overlay-hooks/modal">
           <IonIcon icon={star} />
           <IonLabel>Modal</IonLabel>
-        </IonTabButton>
-        <IonTabButton tab="picker" href="/overlay-hooks/picker">
-          <IonIcon icon={logoIonic} />
-          <IonLabel>Picker</IonLabel>
         </IonTabButton>
         <IonTabButton tab="popover" href="/overlay-hooks/popover">
           <IonIcon icon={logoGoogle} />

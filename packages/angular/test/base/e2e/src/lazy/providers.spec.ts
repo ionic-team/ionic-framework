@@ -53,10 +53,4 @@ test.describe('Providers', () => {
 
     await expect(page.locator('ion-loading')).toBeVisible();
   });
-
-  test('should open a picker', async ({ page }) => {
-    await page.locator('button#open-picker').click();
-
-    await expect(page.locator('ion-picker-legacy')).toBeVisible();
-  });
 });

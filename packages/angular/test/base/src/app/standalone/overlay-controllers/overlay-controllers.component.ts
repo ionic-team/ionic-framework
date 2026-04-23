@@ -3,7 +3,6 @@ import {
   AlertController,
   LoadingController,
   ModalController,
-  PickerController,
   PopoverController,
 } from '@ionic/angular/standalone';
 
@@ -17,7 +16,6 @@ export class OverlayControllersComponent {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
-    private pickerCtrl: PickerController,
     private popoverCtrl: PopoverController
   ) {}
 
@@ -50,20 +48,6 @@ export class OverlayControllersComponent {
     });
 
     await modal.present();
-  }
-
-  async openPicker() {
-    const picker = await this.pickerCtrl.create({
-      columns: [],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-        },
-      ],
-    });
-
-    await picker.present();
   }
 
   async openPopover(ev: MouseEvent) {

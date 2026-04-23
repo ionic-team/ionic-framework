@@ -6,7 +6,6 @@ import {
   ActionSheetController,
   PopoverController,
   ToastController,
-  PickerController,
   MenuController,
   LoadingController,
   NavController,
@@ -37,7 +36,6 @@ export class ProvidersComponent {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private menuCtrl: MenuController,
-    private pickerCtrl: PickerController,
     modalCtrl: ModalController,
     platform: Platform,
     popoverCtrl: PopoverController,
@@ -53,7 +51,6 @@ export class ProvidersComponent {
       alertCtrl &&
       loadingCtrl &&
       menuCtrl &&
-      pickerCtrl &&
       modalCtrl &&
       platform &&
       popoverCtrl &&
@@ -137,19 +134,5 @@ export class ProvidersComponent {
     });
 
     await loading.present();
-  }
-
-  async openPicker() {
-    const picker = await this.pickerCtrl.create({
-      columns: [],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-        },
-      ],
-    });
-
-    await picker.present();
   }
 }

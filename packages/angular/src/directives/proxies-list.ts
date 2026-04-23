@@ -56,7 +56,6 @@ export const DIRECTIVES = [
   d.IonPicker,
   d.IonPickerColumn,
   d.IonPickerColumnOption,
-  d.IonPickerLegacy,
   d.IonProgressBar,
   d.IonRadio,
   d.IonRadioGroup,

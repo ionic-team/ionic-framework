@@ -55,7 +55,6 @@ import { defineCustomElement as defineIonNote } from '@ionic/core/components/ion
 import { defineCustomElement as defineIonPicker } from '@ionic/core/components/ion-picker.js';
 import { defineCustomElement as defineIonPickerColumn } from '@ionic/core/components/ion-picker-column.js';
 import { defineCustomElement as defineIonPickerColumnOption } from '@ionic/core/components/ion-picker-column-option.js';
-import { defineCustomElement as defineIonPickerLegacy } from '@ionic/core/components/ion-picker-legacy.js';
 import { defineCustomElement as defineIonProgressBar } from '@ionic/core/components/ion-progress-bar.js';
 import { defineCustomElement as defineIonRadio } from '@ionic/core/components/ion-radio.js';
 import { defineCustomElement as defineIonRefresher } from '@ionic/core/components/ion-refresher.js';
@@ -1521,71 +1520,6 @@ export class IonPickerColumnOption {
 
 
 export declare interface IonPickerColumnOption extends Components.IonPickerColumnOption {}
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineIonPickerLegacy,
-  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
-  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'getColumn']
-})
-@Component({
-  selector: 'ion-picker-legacy',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
-  standalone: true
-})
-export class IonPickerLegacy {
-  protected el: HTMLIonPickerLegacyElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionPickerDidPresent', 'ionPickerWillPresent', 'ionPickerWillDismiss', 'ionPickerDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss']);
-  }
-}
-
-
-import type { OverlayEventDetail as IIonPickerLegacyOverlayEventDetail } from '@ionic/core/components';
-
-export declare interface IonPickerLegacy extends Components.IonPickerLegacy {
-  /**
-   * Emitted after the picker has presented.
-   */
-  ionPickerDidPresent: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted before the picker has presented.
-   */
-  ionPickerWillPresent: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted before the picker has dismissed.
-   */
-  ionPickerWillDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
-  /**
-   * Emitted after the picker has dismissed.
-   */
-  ionPickerDidDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
-  /**
-   * Emitted after the picker has presented.
-Shorthand for ionPickerWillDismiss.
-   */
-  didPresent: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted before the picker has presented.
-Shorthand for ionPickerWillPresent.
-   */
-  willPresent: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted before the picker has dismissed.
-Shorthand for ionPickerWillDismiss.
-   */
-  willDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
-  /**
-   * Emitted after the picker has dismissed.
-Shorthand for ionPickerDidDismiss.
-   */
-  didDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
-}
 
 
 @ProxyCmp({

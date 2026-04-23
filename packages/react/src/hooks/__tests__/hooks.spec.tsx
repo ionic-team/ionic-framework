@@ -23,8 +23,6 @@ import { useIonLoading } from '../useIonLoading';
 import type { UseIonLoadingResult } from '../useIonLoading';
 import { useIonModal } from '../useIonModal';
 import type { UseIonModalResult } from '../useIonModal';
-import { useIonPicker } from '../useIonPicker';
-import type { UseIonPickerResult } from '../useIonPicker';
 import { useIonPopover } from '../useIonPopover';
 import type { UseIonPopoverResult } from '../useIonPopover';
 import { useIonToast } from '../useIonToast';
@@ -98,19 +96,6 @@ describe('useIonModal', () => {
 
     const [[firstPresent, firstDismiss], [secondPresent, secondDismiss]] =
       result.all as UseIonModalResult[];
-    expect(firstPresent).toBe(secondPresent);
-    expect(firstDismiss).toBe(secondDismiss);
-  });
-});
-
-describe('useIonPicker', () => {
-  it('should be memorised', () => {
-    const { result, rerender } = renderHook(() => useIonPicker());
-
-    rerender();
-
-    const [[firstPresent, firstDismiss], [secondPresent, secondDismiss]] =
-      result.all as UseIonPickerResult[];
     expect(firstPresent).toBe(secondPresent);
     expect(firstDismiss).toBe(secondDismiss);
   });
