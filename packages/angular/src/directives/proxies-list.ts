@@ -30,6 +30,7 @@ export const DIRECTIVES = [
   d.IonFabButton,
   d.IonFabList,
   d.IonFooter,
+  d.IonGallery,
   d.IonGrid,
   d.IonHeader,
   d.IonIcon,

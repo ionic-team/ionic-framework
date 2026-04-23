@@ -1,0 +1,56 @@
+:host {
+  /**
+   * @prop --ion-gallery-columns: Number of columns in the gallery
+   * @prop --ion-gallery-gap: Space between gallery items
+   */
+  display: grid;
+  grid-template-columns: repeat(var(--ion-gallery-columns, 2), minmax(0, 1fr));
+}
+
+// Layout: Uniform
+// --------------------------------------------------
+
+:host(.gallery-layout-uniform) {
+  gap: var(--ion-gallery-gap, 16px);
+}
+
+// Target all slotted elements in the uniform layout. This ensures that nested
+// images also have an aspect ratio of 1/1.
+:host(.gallery-layout-uniform) ::slotted(*) {
+  aspect-ratio: 1/1;
+}
+
+// Layout: Masonry
+// --------------------------------------------------
+
+:host(.gallery-layout-masonry) {
+  align-items: start;
+
+  column-gap: var(--ion-gallery-gap, 16px);
+  row-gap: 0;
+
+  grid-auto-rows: 2px;
+}
+
+:host(.gallery-layout-masonry) ::slotted(*) {
+  display: block;
+
+  // Clear min-height so items size to their content
+  min-height: unset;
+
+  margin-bottom: var(--ion-gallery-gap, 16px);
+}
+
+// Slotted elements
+// --------------------------------------------------
+
+::slotted(*) {
+  width: 100%;
+}
+
+::slotted(img) {
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+}

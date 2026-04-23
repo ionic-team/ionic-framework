@@ -897,6 +897,15 @@ ion-footer,prop,mode,"ios" | "md",undefined,false,false
 ion-footer,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-footer,prop,translucent,boolean,false,false,false
 
+ion-gallery,shadow
+ion-gallery,prop,columns,GalleryBreakpointColumns | number | string,DEFAULT_COLUMNS,false,false
+ion-gallery,prop,layout,"masonry" | "uniform",'uniform',false,true
+ion-gallery,prop,mode,"ios" | "md",undefined,false,false
+ion-gallery,prop,order,"best-fit" | "sequential",'sequential',false,true
+ion-gallery,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-gallery,css-prop,--ion-gallery-columns
+ion-gallery,css-prop,--ion-gallery-gap
+
 ion-grid,shadow
 ion-grid,prop,fixed,boolean,false,false,false
 ion-grid,prop,mode,"ios" | "md",undefined,false,false

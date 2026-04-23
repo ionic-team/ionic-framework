@@ -825,6 +825,28 @@ export declare interface IonFooter extends Components.IonFooter {}
 
 
 @ProxyCmp({
+  inputs: ['columns', 'layout', 'mode', 'order', 'theme']
+})
+@Component({
+  selector: 'ion-gallery',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['columns', 'layout', 'mode', 'order', 'theme'],
+})
+export class IonGallery {
+  protected el: HTMLIonGalleryElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonGallery extends Components.IonGallery {}
+
+
+@ProxyCmp({
   inputs: ['fixed', 'mode', 'theme']
 })
 @Component({
