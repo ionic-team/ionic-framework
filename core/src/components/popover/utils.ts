@@ -48,6 +48,33 @@ export interface SafeAreaInsets {
 }
 
 /**
+ * `zoom` is non-standard CSS, but it is commonly used in web apps.
+ * When applied to the `html` element, `getBoundingClientRect()`
+ * and mouse event coordinates are scaled while `innerWidth/innerHeight`
+ * remain in the unscaled coordinate space.
+ *
+ * To avoid overlays being positioned/sized incorrectly, we normalize
+ * DOMRect/event values to the same coordinate space as `innerWidth`.
+ */
+export const getDocumentZoom = (doc: Document): number => {
+  const win = doc.defaultView;
+  if (!win) {
+    return 1;
+  }
+
+  const computedZoom = parseFloat((win.getComputedStyle(doc.documentElement) as any).zoom);
+  if (Number.isFinite(computedZoom) && computedZoom > 0) {
+    return computedZoom;
+  }
+
+  const rectWidth = doc.documentElement.getBoundingClientRect().width;
+  const innerWidth = win.innerWidth;
+  const zoom = rectWidth > 0 && innerWidth > 0 ? rectWidth / innerWidth : 1;
+
+  return Number.isFinite(zoom) && zoom > 0 ? zoom : 1;
+};
+
+/**
  * Shared per-frame cache for safe-area insets. Avoids creating a temporary
  * DOM element and forcing a synchronous reflow on every call within the same
  * frame (e.g., multiple popovers presenting simultaneously). Invalidated
@@ -110,13 +137,13 @@ export const getSafeAreaInsets = (doc: Document): SafeAreaInsets => {
  * arrow on `ios` mode. If arrow is disabled
  * returns (0, 0).
  */
-export const getArrowDimensions = (arrowEl: HTMLElement | null) => {
+export const getArrowDimensions = (arrowEl: HTMLElement | null, zoom = 1) => {
   if (!arrowEl) {
     return { arrowWidth: 0, arrowHeight: 0 };
   }
   const { width, height } = arrowEl.getBoundingClientRect();
 
-  return { arrowWidth: width, arrowHeight: height };
+  return { arrowWidth: width / zoom, arrowHeight: height / zoom };
 };
 
 /**
@@ -124,14 +151,14 @@ export const getArrowDimensions = (arrowEl: HTMLElement | null) => {
  * that takes into account whether or not the width
  * should match the trigger width.
  */
-export const getPopoverDimensions = (size: PopoverSize, contentEl: HTMLElement, triggerEl?: HTMLElement) => {
+export const getPopoverDimensions = (size: PopoverSize, contentEl: HTMLElement, triggerEl?: HTMLElement, zoom = 1) => {
   const contentDimentions = contentEl.getBoundingClientRect();
-  const contentHeight = contentDimentions.height;
-  let contentWidth = contentDimentions.width;
+  const contentHeight = contentDimentions.height / zoom;
+  let contentWidth = contentDimentions.width / zoom;
 
   if (size === 'cover' && triggerEl) {
     const triggerDimensions = triggerEl.getBoundingClientRect();
-    contentWidth = triggerDimensions.width;
+    contentWidth = triggerDimensions.width / zoom;
   }
 
   return {
@@ -526,7 +553,8 @@ export const getPopoverPosition = (
   align: PositionAlign,
   defaultPosition: PopoverPosition,
   triggerEl?: HTMLElement,
-  event?: MouseEvent | CustomEvent
+  event?: MouseEvent | CustomEvent,
+  zoom = 1
 ): PopoverPosition => {
   let referenceCoordinates = {
     top: 0,
@@ -549,10 +577,10 @@ export const getPopoverPosition = (
       const mouseEv = event as MouseEvent;
 
       referenceCoordinates = {
-        top: mouseEv.clientY,
-        left: mouseEv.clientX,
-        width: 1,
-        height: 1,
+        top: mouseEv.clientY / zoom,
+        left: mouseEv.clientX / zoom,
+        width: 1 / zoom,
+        height: 1 / zoom,
       };
 
       break;
@@ -585,10 +613,10 @@ export const getPopoverPosition = (
       }
       const triggerBoundingBox = actualTriggerEl.getBoundingClientRect();
       referenceCoordinates = {
-        top: triggerBoundingBox.top,
-        left: triggerBoundingBox.left,
-        width: triggerBoundingBox.width,
-        height: triggerBoundingBox.height,
+        top: triggerBoundingBox.top / zoom,
+        left: triggerBoundingBox.left / zoom,
+        width: triggerBoundingBox.width / zoom,
+        height: triggerBoundingBox.height / zoom,
       };
 
       break;
