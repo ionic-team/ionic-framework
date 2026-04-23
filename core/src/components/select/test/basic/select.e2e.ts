@@ -601,6 +601,324 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(ionChange).toHaveReceivedEventTimes(1);
     });
 
+    test('should fire ionChange exactly once when confirming a popover value with Space', async ({
+      page,
+      skip,
+    }, testInfo) => {
+      // TODO (ROU-5437)
+      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30561',
+      });
+
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-select aria-label="Fruit" interface="popover">
+            <ion-select-option value="apple">Apple</ion-select-option>
+            <ion-select-option value="banana">Banana</ion-select-option>
+          </ion-select>
+        </ion-app>
+      `,
+        config
+      );
+
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+      const ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
+      const select = page.locator('ion-select') as E2ELocator;
+      const ionChange = await select.spyOnEvent('ionChange');
+
+      await select.click();
+      await ionPopoverDidPresent.next();
+
+      const popover = page.locator('ion-popover');
+      const secondRadio = popover.locator('ion-radio').nth(1);
+
+      await secondRadio.focus();
+      await page.keyboard.press('Space');
+
+      await ionChange.next();
+      await ionPopoverDidDismiss.next();
+
+      expect(ionChange).toHaveReceivedEventDetail({ value: 'banana' });
+      expect(ionChange).toHaveReceivedEventTimes(1);
+      await expect(popover).not.toBeVisible();
+    });
+
+    test('should not fire ionChange when confirming the already-selected popover option with Enter', async ({
+      page,
+      skip,
+    }, testInfo) => {
+      // TODO (ROU-5437)
+      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/26789',
+      });
+
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-select aria-label="Fruit" interface="popover" value="apple">
+            <ion-select-option value="apple">Apple</ion-select-option>
+            <ion-select-option value="banana">Banana</ion-select-option>
+          </ion-select>
+        </ion-app>
+      `,
+        config
+      );
+
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+      const ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
+      const select = page.locator('ion-select') as E2ELocator;
+      const ionChange = await select.spyOnEvent('ionChange');
+
+      await select.click();
+      await ionPopoverDidPresent.next();
+
+      const popover = page.locator('ion-popover');
+      const selectedRadio = popover.locator('ion-radio').nth(0);
+
+      await selectedRadio.focus();
+      await page.keyboard.press('Enter');
+
+      await ionPopoverDidDismiss.next();
+
+      expect(ionChange).toHaveReceivedEventTimes(0);
+      await expect(popover).not.toBeVisible();
+      await expect(select).toHaveJSProperty('value', 'apple');
+    });
+
+    test('should not fire ionChange when confirming the already-selected popover option with Space', async ({
+      page,
+      skip,
+    }, testInfo) => {
+      // TODO (ROU-5437)
+      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/26789',
+      });
+
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-select aria-label="Fruit" interface="popover" value="apple">
+            <ion-select-option value="apple">Apple</ion-select-option>
+            <ion-select-option value="banana">Banana</ion-select-option>
+          </ion-select>
+        </ion-app>
+      `,
+        config
+      );
+
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+      const ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
+      const select = page.locator('ion-select') as E2ELocator;
+      const ionChange = await select.spyOnEvent('ionChange');
+
+      await select.click();
+      await ionPopoverDidPresent.next();
+
+      const popover = page.locator('ion-popover');
+      const selectedRadio = popover.locator('ion-radio').nth(0);
+
+      await selectedRadio.focus();
+      await page.keyboard.press('Space');
+
+      await ionPopoverDidDismiss.next();
+
+      expect(ionChange).toHaveReceivedEventTimes(0);
+      await expect(popover).not.toBeVisible();
+      await expect(select).toHaveJSProperty('value', 'apple');
+    });
+
+    test('should fire ionChange exactly once when confirming a modal value with Enter', async ({
+      page,
+      skip,
+    }, testInfo) => {
+      // TODO (ROU-5437)
+      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30561',
+      });
+
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-select aria-label="Fruit" interface="modal">
+            <ion-select-option value="apple">Apple</ion-select-option>
+            <ion-select-option value="banana">Banana</ion-select-option>
+          </ion-select>
+        </ion-app>
+      `,
+        config
+      );
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+      const select = page.locator('ion-select') as E2ELocator;
+      const ionChange = await select.spyOnEvent('ionChange');
+
+      await select.click();
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+      const secondRadio = modal.locator('ion-radio').nth(1);
+
+      await secondRadio.focus();
+      await page.keyboard.press('Enter');
+
+      await ionChange.next();
+      await ionModalDidDismiss.next();
+
+      expect(ionChange).toHaveReceivedEventDetail({ value: 'banana' });
+      expect(ionChange).toHaveReceivedEventTimes(1);
+      await expect(modal).not.toBeVisible();
+    });
+
+    test('should fire ionChange exactly once when confirming a modal value with Space', async ({
+      page,
+      skip,
+    }, testInfo) => {
+      // TODO (ROU-5437)
+      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30561',
+      });
+
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-select aria-label="Fruit" interface="modal">
+            <ion-select-option value="apple">Apple</ion-select-option>
+            <ion-select-option value="banana">Banana</ion-select-option>
+          </ion-select>
+        </ion-app>
+      `,
+        config
+      );
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+      const select = page.locator('ion-select') as E2ELocator;
+      const ionChange = await select.spyOnEvent('ionChange');
+
+      await select.click();
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+      const secondRadio = modal.locator('ion-radio').nth(1);
+
+      await secondRadio.focus();
+      await page.keyboard.press('Space');
+
+      await ionChange.next();
+      await ionModalDidDismiss.next();
+
+      expect(ionChange).toHaveReceivedEventDetail({ value: 'banana' });
+      expect(ionChange).toHaveReceivedEventTimes(1);
+      await expect(modal).not.toBeVisible();
+    });
+
+    test('should not fire ionChange when confirming the already-selected modal option with Enter', async ({
+      page,
+      skip,
+    }, testInfo) => {
+      // TODO (ROU-5437)
+      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/26789',
+      });
+
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-select aria-label="Fruit" interface="modal" value="apple">
+            <ion-select-option value="apple">Apple</ion-select-option>
+            <ion-select-option value="banana">Banana</ion-select-option>
+          </ion-select>
+        </ion-app>
+      `,
+        config
+      );
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+      const select = page.locator('ion-select') as E2ELocator;
+      const ionChange = await select.spyOnEvent('ionChange');
+
+      await select.click();
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+      const selectedRadio = modal.locator('ion-radio').nth(0);
+
+      await selectedRadio.focus();
+      await page.keyboard.press('Enter');
+
+      await ionModalDidDismiss.next();
+
+      expect(ionChange).toHaveReceivedEventTimes(0);
+      await expect(modal).not.toBeVisible();
+      await expect(select).toHaveJSProperty('value', 'apple');
+    });
+
+    test('should not fire ionChange when confirming the already-selected modal option with Space', async ({
+      page,
+      skip,
+    }, testInfo) => {
+      // TODO (ROU-5437)
+      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/26789',
+      });
+
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-select aria-label="Fruit" interface="modal" value="apple">
+            <ion-select-option value="apple">Apple</ion-select-option>
+            <ion-select-option value="banana">Banana</ion-select-option>
+          </ion-select>
+        </ion-app>
+      `,
+        config
+      );
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+      const select = page.locator('ion-select') as E2ELocator;
+      const ionChange = await select.spyOnEvent('ionChange');
+
+      await select.click();
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+      const selectedRadio = modal.locator('ion-radio').nth(0);
+
+      await selectedRadio.focus();
+      await page.keyboard.press('Space');
+
+      await ionModalDidDismiss.next();
+
+      expect(ionChange).toHaveReceivedEventTimes(0);
+      await expect(modal).not.toBeVisible();
+      await expect(select).toHaveJSProperty('value', 'apple');
+    });
+
     test('should fire ionChange when confirming multiple values from a popover', async ({ page }) => {
       await page.setContent(
         `
