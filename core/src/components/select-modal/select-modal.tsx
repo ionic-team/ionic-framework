@@ -21,6 +21,11 @@ import type { SelectModalOption } from './select-modal-interface';
 export class SelectModal implements ComponentInterface {
   @Element() el!: HTMLIonSelectModalElement;
 
+  // Tracks the option that received Enter-keydown so keyup only
+  // dismisses when the press started on the same option. Prevents
+  // Enter on the triggering ion-select from auto-dismissing.
+  private pendingEnterTarget: HTMLElement | null = null;
+
   @Prop() header?: string;
 
   /**
@@ -99,14 +104,21 @@ export class SelectModal implements ComponentInterface {
               justify="start"
               labelPlacement="end"
               onClick={() => this.closeModal()}
+              onKeyDown={(ev) => {
+                if (ev.key === 'Enter' && !ev.repeat) {
+                  this.pendingEnterTarget = ev.currentTarget as HTMLElement;
+                }
+              }}
               onKeyUp={(ev) => {
                 if (ev.key === ' ') {
-                  /**
-                   * Selecting a radio option with keyboard navigation,
-                   * either through the Enter or Space keys, should
-                   * dismiss the modal.
-                   */
+                  // Space selects and dismisses in one press.
                   this.closeModal();
+                } else if (ev.key === 'Enter') {
+                  const shouldClose = this.pendingEnterTarget === ev.currentTarget;
+                  this.pendingEnterTarget = null;
+                  if (shouldClose) {
+                    this.closeModal();
+                  }
                 }
               }}
             >
