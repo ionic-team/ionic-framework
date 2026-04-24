@@ -39,7 +39,7 @@ export const renderIcon = (
   svgIcon: string,
   props: {
     part?: string;
-    class?: string;
+    class?: Record<string, boolean>;
     flipRtl?: boolean;
     lazy?: boolean;
   } = {}
@@ -51,7 +51,7 @@ export const renderIcon = (
       <i
         style={{ fontFamily: 'Phosphor', fontStyle: 'normal' }}
         class={{
-          ...(cls ? { [cls]: true } : {}),
+          ...(cls || {}),
           'flip-rtl': flipRtl,
         }}
         part={part}
