@@ -84,10 +84,10 @@ export class ProgressBar implements ComponentInterface {
         aria-valuemax="1"
         class={createColorClasses(color, {
           [`progress-bar-type-${type}`]: true,
+          [`progress-bar-shape-${shape}`]: true,
           'progress-paused': paused,
           'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed,
           'progress-bar-solid': progressSolid,
-          [`progress-bar-shape-${shape}`]: shape !== undefined,
         })}
       >
         {type === 'indeterminate' ? renderIndeterminate() : renderProgress(value, buffer)}
