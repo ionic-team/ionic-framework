@@ -30,6 +30,10 @@ export const defaultTheme: DefaultTheme = {
         size: 'large',
       },
 
+      IonContent: {
+        transitionShadow: true,
+      },
+
       IonSpinner: {
         size: 'medium',
       },
@@ -399,6 +403,28 @@ export const defaultTheme: DefaultTheme = {
             start: 'var(--ion-spacing-sm)',
           },
         },
+      },
+    },
+
+    IonContent: {
+      background: baseColors.backgroundColor,
+      color: baseColors.textColor,
+      overflow: 'auto',
+
+      padding: {
+        bottom: 'var(--ion-spacing-0)',
+        end: 'var(--ion-spacing-0)',
+        start: 'var(--ion-spacing-0)',
+        top: 'var(--ion-spacing-0)',
+      },
+
+      transition: {
+        cover: {
+          background: baseColors.black,
+          opacity: '0.1',
+        },
+
+        shadow: `inset -9px 0 9px 0 ${rgba('0, 0, 100', 0.03)}`,
       },
     },
 

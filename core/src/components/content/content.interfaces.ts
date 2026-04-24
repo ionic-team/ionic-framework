@@ -1,4 +1,26 @@
 import type { GestureDetail } from '../../interface';
+import type { IonPadding } from '../../themes/themes.interfaces';
+
+export interface IonContentRecipe {
+  background?: string;
+  color?: string;
+  overflow?: string;
+
+  padding?: IonPadding;
+
+  transition?: {
+    cover?: {
+      background?: string;
+      opacity?: string;
+    };
+
+    shadow?: string;
+  };
+}
+
+export interface IonContentConfig {
+  transitionShadow?: boolean;
+}
 
 export interface ScrollBaseDetail {
   isScrolling: boolean;

@@ -1,4 +1,4 @@
-import { currentColor, mix, dynamicFont } from '../../utils/theme';
+import { rgba, currentColor, mix, dynamicFont } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
@@ -26,6 +26,10 @@ export const defaultTheme: DefaultTheme = {
         hue: 'subtle',
         shape: 'round',
         size: 'large',
+      },
+
+      IonContent: {
+        transitionShadow: false,
       },
 
       IonSpinner: {
@@ -265,6 +269,28 @@ export const defaultTheme: DefaultTheme = {
         font: {
           size: 'var(--ion-scaling-xxxs)',
         },
+      },
+    },
+
+    IonContent: {
+      background: baseColors.backgroundColor,
+      color: baseColors.textColor,
+      overflow: 'auto',
+
+      padding: {
+        bottom: 'var(--ion-spacing-0)',
+        end: 'var(--ion-spacing-0)',
+        start: 'var(--ion-spacing-0)',
+        top: 'var(--ion-spacing-0)',
+      },
+
+      transition: {
+        cover: {
+          background: baseColors.black,
+          opacity: '0.1',
+        },
+
+        shadow: `inset -9px 0 9px 0 ${rgba('0, 0, 100', 0.03)}`,
       },
     },
 

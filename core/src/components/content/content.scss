@@ -5,30 +5,25 @@
 
 :host {
   /**
-   * @prop --background: Background of the content
+   * @prop --ion-content-background: Background of the content
    *
-   * @prop --color: Color of the content
+   * @prop --ion-content-color: Color of the content
    *
-   * @prop --padding-top: Top padding of the content
-   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the content
-   * @prop --padding-bottom: Bottom padding of the content
-   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the content
+   * @prop --ion-content-overflow: Overflow behavior of the scrollable area
    *
-   * @prop --keyboard-offset: Keyboard offset of the content
+   * @prop --ion-content-padding-top: Top padding of the content
+   * @prop --ion-content-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the content
+   * @prop --ion-content-padding-bottom: Bottom padding of the content
+   * @prop --ion-content-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the content
    *
-   * @prop --offset-top: Offset top of the content
-   * @prop --offset-bottom: Offset bottom of the content
+   * @prop --ion-content-transition-cover-background: Background color of the navigation transition cover overlay
+   * @prop --ion-content-transition-cover-opacity: Opacity of the navigation transition cover overlay
+   *
+   * @prop --ion-content-transition-shadow: Box shadow of the navigation transition shadow
    */
-  --background: #{$background-color};
-  --color: #{$text-color};
-  --padding-top: 0px;
-  --padding-bottom: 0px;
-  --padding-start: 0px;
-  --padding-end: 0px;
   --keyboard-offset: 0px;
   --offset-top: 0px;
   --offset-bottom: 0px;
-  --overflow: auto;
 
   display: block;
   position: relative;
@@ -59,21 +54,21 @@
 
   position: absolute;
 
-  background: var(--background);
+  background: var(--ion-content-background);
 }
 
 .inner-scroll {
   @include position(calc(var(--offset-top) * -1), 0px, calc(var(--offset-bottom) * -1), 0px);
   @include padding(
-    calc(var(--padding-top) + var(--offset-top)),
-    var(--padding-end),
-    calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom)),
-    var(--padding-start)
+    calc(var(--ion-content-padding-top) + var(--offset-top)),
+    var(--ion-content-padding-end),
+    calc(var(--ion-content-padding-bottom) + var(--keyboard-offset) + var(--offset-bottom)),
+    var(--ion-content-padding-start)
   );
 
   position: absolute;
 
-  color: var(--color);
+  color: var(--ion-content-color);
 
   box-sizing: border-box;
 
@@ -115,12 +110,12 @@
 }
 
 .scroll-y {
-  overflow-y: var(--overflow);
+  overflow-y: var(--ion-content-overflow);
   overscroll-behavior-y: contain;
 }
 
 .scroll-x {
-  overflow-x: var(--overflow);
+  overflow-x: var(--ion-content-overflow);
   overscroll-behavior-x: contain;
 }
 
@@ -210,9 +205,9 @@
   width: 100%;
   height: 100%;
 
-  background: black;
+  background: var(--ion-content-transition-cover-background);
 
-  opacity: 0.1;
+  opacity: var(--ion-content-transition-cover-opacity);
 }
 
 .transition-shadow {
@@ -222,7 +217,7 @@
   width: 100%;
   height: 100%;
 
-  box-shadow: inset -9px 0 9px 0 rgba(0, 0, 100, 0.03);
+  box-shadow: var(--ion-content-transition-shadow);
 }
 
 :host(.content-ltr) .transition-shadow {

@@ -2,6 +2,8 @@ import type { IonicConfig } from '../themes/themes.interfaces';
 
 // TODO(FW-2832): types
 
+type ObjectConfigValue = string | boolean;
+
 export class Config {
   private m = new Map<keyof IonicConfig, any>();
 
@@ -21,7 +23,7 @@ export class Config {
    * @param fallback Default value if the key is not found
    * @returns The value found at the nested key or the fallback
    */
-  getObjectValue(key: string, fallback?: string): string | undefined {
+  getObjectValue(key: string, fallback?: ObjectConfigValue): ObjectConfigValue | undefined {
     const [firstKey, ...remainingKeys] = key.split('.');
 
     let root: any;

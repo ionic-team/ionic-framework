@@ -10,7 +10,7 @@ import { config } from '../../global/config';
 import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { Color, Mode } from '../../interface';
 
-import type { ScrollBaseDetail, ScrollDetail } from './content-interface';
+import type { ScrollBaseDetail, ScrollDetail } from './content.interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -457,7 +457,7 @@ export class Content implements ComponentInterface {
     const theme = getIonTheme(this);
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll(mode);
-    const transitionShadow = theme === 'ios';
+    const transitionShadow = config.getObjectValue('IonContent.transitionShadow', false) as boolean;
 
     this.resize();
 

@@ -758,15 +758,16 @@ ion-content,method,scrollToTop,scrollToTop(duration?: number) => Promise<void>
 ion-content,event,ionScroll,ScrollDetail,true
 ion-content,event,ionScrollEnd,ScrollBaseDetail,true
 ion-content,event,ionScrollStart,ScrollBaseDetail,true
-ion-content,css-prop,--background
-ion-content,css-prop,--color
-ion-content,css-prop,--keyboard-offset
-ion-content,css-prop,--offset-bottom
-ion-content,css-prop,--offset-top
-ion-content,css-prop,--padding-bottom
-ion-content,css-prop,--padding-end
-ion-content,css-prop,--padding-start
-ion-content,css-prop,--padding-top
+ion-content,css-prop,--ion-content-background
+ion-content,css-prop,--ion-content-color
+ion-content,css-prop,--ion-content-overflow
+ion-content,css-prop,--ion-content-padding-bottom
+ion-content,css-prop,--ion-content-padding-end
+ion-content,css-prop,--ion-content-padding-start
+ion-content,css-prop,--ion-content-padding-top
+ion-content,css-prop,--ion-content-transition-cover-background
+ion-content,css-prop,--ion-content-transition-cover-opacity
+ion-content,css-prop,--ion-content-transition-shadow
 ion-content,part,background
 ion-content,part,scroll
 
