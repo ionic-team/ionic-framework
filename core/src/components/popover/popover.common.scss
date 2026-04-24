@@ -128,3 +128,10 @@
     --offset-x: 5px;
   }
 }
+
+// Select Popover
+// --------------------------------------------------
+
+:host(.select-popover-rich-content) {
+  --width: max-content;
+}

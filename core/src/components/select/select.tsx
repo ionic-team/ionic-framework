@@ -731,6 +731,9 @@ export class Select implements ComponentInterface {
       };
     }
 
+    const options = this.createOverlaySelectOptions(this.childOpts, value);
+    const hasRichContent = options.some((opt) => opt.startContent || opt.endContent || opt.description);
+
     const popoverOpts: PopoverOptions = {
       theme,
       event,
@@ -740,14 +743,14 @@ export class Select implements ComponentInterface {
       ...interfaceOptions,
 
       component: 'ion-select-popover',
-      cssClass: ['select-popover', interfaceOptions.cssClass],
+      cssClass: ['select-popover', hasRichContent && 'select-popover-rich-content', interfaceOptions.cssClass],
       componentProps: {
         header: interfaceOptions.header,
         subHeader: interfaceOptions.subHeader,
         message: interfaceOptions.message,
         multiple,
         value,
-        options: this.createOverlaySelectOptions(this.childOpts, value),
+        options,
       },
     };
 
