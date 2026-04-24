@@ -45,6 +45,7 @@ export const renderIcon = (
   } = {}
 ) => {
   const { part, class: cls, flipRtl = false, lazy = false } = props;
+  console.log('renderIcon theme:', theme);
 
   if (ionicIconClass !== null && theme === 'ionic') {
     return (
