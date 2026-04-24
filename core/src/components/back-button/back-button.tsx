@@ -4,6 +4,7 @@ import { Component, Element, Host, Prop, h } from '@stencil/core';
 import type { ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
+import { renderIcon } from '@utils/icon';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { arrowBackSharp, chevronBack } from 'ionicons/icons';
 
@@ -163,14 +164,13 @@ export class BackButton implements ComponentInterface, ButtonInterface {
       >
         <button type={type} disabled={disabled} class="button-native" part="native" aria-label={ariaLabel}>
           <span class="button-inner">
-            {backButtonIcon && (
-              <ion-icon
-                part="icon"
-                icon={backButtonIcon}
-                aria-hidden="true"
-                lazy={false}
-                flip-rtl={icon === undefined}
-              ></ion-icon>
+            {backButtonIcon && renderIcon(
+              theme,
+              // Pass null when the developer has provided a custom icon so the
+              // font is bypassed and their SVG is always used.
+              icon === undefined ? 'ph-caret-left' : null,
+              backButtonIcon,
+              { part: 'icon', flipRtl: icon === undefined, lazy: false }
             )}
             {backButtonText && (
               <span part="text" aria-hidden="true" class="button-text">

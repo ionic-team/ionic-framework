@@ -35,6 +35,7 @@
   ],
   "dependencies": {
     "@phosphor-icons/core": "^2.1.1",
+    "@phosphor-icons/web": "^2.1.2",
     "@stencil/core": "4.43.0",
     "ionicons": "^8.0.13",
     "tslib": "^2.1.0"
