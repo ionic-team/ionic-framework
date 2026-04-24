@@ -122,7 +122,7 @@ const renderProgress = (value: number, buffer: number) => {
      * When finalBuffer === 1, we use display: none
      * instead of removing the element to avoid flickering.
      */
-    // TODO(FW-6697): remove `ion-hide` class in favor of `progress-buffer-circles-hidden`
+    // TODO(FW-6697): remove `ion-hide` class in favor of `buffer-circles-container-hidden`
     <div
       class={{
         'buffer-circles-container': true,
