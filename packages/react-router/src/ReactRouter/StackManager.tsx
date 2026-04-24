@@ -683,6 +683,10 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       this.preservedViewItems.delete(viewItem);
       const viewToUnmount = viewItem;
       setTimeout(() => {
+        // Skip if a follow-up transition re-entered the view (mount flipped back to true).
+        if (viewToUnmount.mount) {
+          return;
+        }
         this.context.unMountViewItem(viewToUnmount);
         this.forceUpdate();
       }, VIEW_UNMOUNT_DELAY_MS);
@@ -702,6 +706,10 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
       leavingViewItem.mount = false;
       const viewToUnmount = leavingViewItem;
       setTimeout(() => {
+        // Skip if a follow-up transition re-entered the view (mount flipped back to true).
+        if (viewToUnmount.mount) {
+          return;
+        }
         this.context.unMountViewItem(viewToUnmount);
         this.forceUpdate();
       }, VIEW_UNMOUNT_DELAY_MS);
@@ -728,6 +736,10 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
     const viewToUnmount = leavingViewItem;
     setTimeout(() => {
+      // Skip if a follow-up transition re-entered the view (mount flipped back to true).
+      if (viewToUnmount.mount) {
+        return;
+      }
       this.context.unMountViewItem(viewToUnmount);
       this.forceUpdate();
     }, VIEW_UNMOUNT_DELAY_MS);
@@ -833,6 +845,10 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
         const viewToRemove = viewItem;
         setTimeout(() => {
+          // Skip if a follow-up transition re-entered the view (mount flipped back to true).
+          if (viewToRemove.mount) {
+            return;
+          }
           this.context.unMountViewItem(viewToRemove);
           this.forceUpdate();
         }, VIEW_UNMOUNT_DELAY_MS);

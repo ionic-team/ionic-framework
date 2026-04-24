@@ -151,6 +151,44 @@ test.describe('Replace History Entries', () => {
   });
 
   /**
+   * Regression test: revisiting a Navigate-replace redirect route after the pop-preserve
+   * path kept the target view alive must not unmount that view mid-transition.
+   *
+   * Flow: home -> /replace-action (redirects to page1) -> page2 -> page3 -> back -> back (home) -> revisit /replace-action
+   *
+   * Without the re-entry guard on the delayed unmount, page1 is removed from the DOM
+   * after the second redirect completes, leaving a blank outlet.
+   */
+  test('revisiting a navigate-replace redirect after back should keep target page mounted', async ({ page }) => {
+    await page.goto(withTestingMode('/'));
+    await ionPageVisible(page, 'home');
+
+    await ionNav(page, 'ion-item', 'Replace Action');
+    await ionPageVisible(page, 'page1');
+
+    await page.locator('#go-to-page2').click();
+    await ionPageVisible(page, 'page2');
+
+    await page.locator('#go-to-page3').click();
+    await ionPageVisible(page, 'page3');
+
+    await ionBackClick(page, 'page3');
+    await ionPageVisible(page, 'page1');
+
+    await ionBackClick(page, 'page1');
+    await ionPageVisible(page, 'home');
+
+    // Revisit the replace-action route. page1 was kept alive by pop-preserve and must
+    // survive the push-cleanup path once the Navigate replace re-enters it.
+    await ionNav(page, 'ion-item', 'Replace Action');
+    await ionPageVisible(page, 'page1');
+
+    // Wait past the 250ms unmount delay and assert page1 is still present.
+    await page.waitForTimeout(500);
+    await ionPageVisible(page, 'page1');
+  });
+
+  /**
    * Tests replace with animations enabled (no ionic:_testing=true).
    * Animation timing can affect how history entries are processed.
    */
