@@ -1671,6 +1671,14 @@ const getOptionContent = (
   return container;
 };
 
+/**
+ * Returns the child nodes that belong to the default slot of an
+ * option element, excluding any nodes that are assigned to named
+ * slots.
+ *
+ * @param option - The `ion-select-option` element to extract default-slot nodes from.
+ * @returns An array of default slot nodes, or `null` if none are found.
+ */
 const getOptionDefaultSlot = (option: HTMLIonSelectOptionElement): Node[] | null => {
   const defaultSlotNodes = Array.from(option.childNodes).filter((node) => {
     if (node.nodeType === Node.ELEMENT_NODE) {
