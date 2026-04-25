@@ -31,6 +31,12 @@ ion-label {
   align-items: center;
 }
 
+.select-option-label-text {
+  display: flex;
+
+  flex-wrap: wrap;
+}
+
 .select-option-description {
   display: block;
 }
