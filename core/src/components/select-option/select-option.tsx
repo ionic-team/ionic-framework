@@ -6,6 +6,10 @@ import { getIonTheme } from '../../global/ionic-global';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ *
+ * @slot - Content is placed between the named slots if provided without a slot.
+ * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
+ * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
  */
 @Component({
   tag: 'ion-select-option',
@@ -42,11 +46,7 @@ export class SelectOption implements ComponentInterface {
         }}
         role="option"
         id={this.inputId}
-      >
-        <slot name="start"></slot>
-        <slot></slot>
-        <slot name="end"></slot>
-      </Host>
+      ></Host>
     );
   }
 }
