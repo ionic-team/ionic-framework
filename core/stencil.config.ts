@@ -26,9 +26,6 @@ const getAngularOutputTargets = () => {
 
     // tabs
     'ion-tabs',
-
-    // auxiliar
-    'ion-picker-legacy-column',
   ]
   return [
     angularOutputTarget({
@@ -86,7 +83,7 @@ export const config: Config = {
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title', 'ion-card-subtitle'] },
     { components: ['ion-checkbox'] },
     { components: ['ion-chip'] },
-    { components: ['ion-datetime', 'ion-picker-legacy', 'ion-picker-legacy-column'] },
+    { components: ['ion-datetime'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
     { components: ['ion-infinite-scroll', 'ion-infinite-scroll-content'] },
@@ -125,11 +122,7 @@ export const config: Config = {
   ],
   outputTargets: [
     reactOutputTarget({
-      componentCorePackage,
-      includeImportCustomElements: true,
-      includePolyfills: false,
-      includeDefineCustomElements: false,
-      proxiesFile: '../packages/react/src/components/proxies.ts',
+      outDir: '../packages/react/src/components',
       excludeComponents: [
         // Routing
         'ion-router',
@@ -153,7 +146,6 @@ export const config: Config = {
         'ion-alert',
         'ion-loading',
         'ion-modal',
-        'ion-picker-legacy',
         'ion-popover',
         'ion-toast',
 
@@ -184,7 +176,6 @@ export const config: Config = {
         'ion-alert',
         'ion-loading',
         'ion-modal',
-        'ion-picker-legacy',
         'ion-popover',
         'ion-toast',
 

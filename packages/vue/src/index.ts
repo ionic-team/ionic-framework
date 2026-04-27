@@ -30,7 +30,6 @@ export {
   alertController,
   actionSheetController,
   loadingController,
-  pickerController,
   toastController,
 } from "./controllers";
 
@@ -94,10 +93,6 @@ export {
   ModalDragEventDetail,
   ModalOptions,
   NavCustomEvent,
-  PickerOptions,
-  PickerButton,
-  PickerColumn,
-  PickerColumnOption,
   Platforms,
   PlatformConfig,
   PopoverOptions,

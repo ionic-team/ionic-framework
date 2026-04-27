@@ -10,6 +10,7 @@ import { StackContext } from './StackContext';
 interface OutletPageManagerProps {
   className?: string;
   forwardedRef?: React.ForwardedRef<HTMLIonRouterOutletElement>;
+  children: React.ReactNode;
   routeInfo?: RouteInfo;
   StackManager: any; // TODO(FW-2959): type
   id?: string;

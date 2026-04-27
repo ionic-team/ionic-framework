@@ -12,7 +12,6 @@ export { GestureController } from './providers/gesture-controller';
 export { LoadingController } from './providers/loading-controller';
 export { MenuController } from './providers/menu-controller';
 export { ModalController } from './providers/modal-controller';
-export { PickerController } from './providers/picker-controller';
 export { PopoverController } from './providers/popover-controller';
 export { ToastController } from './providers/toast-controller';
 export {
@@ -99,10 +98,6 @@ export {
   MenuCustomEvent,
   ModalDragEventDetail,
   NavCustomEvent,
-  PickerOptions,
-  PickerButton,
-  PickerColumn,
-  PickerColumnOption,
   PlatformConfig,
   RadioGroupCustomEvent,
   RadioGroupChangeEventDetail,

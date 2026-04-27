@@ -80,6 +80,7 @@ export const createReactComponent = <
         ...propsToPass,
         ref: mergeRefs(forwardedRef, this.setComponentElRef),
         style,
+        children
       };
 
       /**

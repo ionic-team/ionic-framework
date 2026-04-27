@@ -24,6 +24,7 @@ interface InternalProps extends IonTabBarProps {
   onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
   routeInfo: RouteInfo;
   tabsContext?: IonTabsContextState;
+  children?: React.ReactNode;
 }
 
 interface TabUrls {
