@@ -56,6 +56,11 @@ export const createRoutingComponent = <PropType, ElementType>(tagName: string, c
     private handleClick = (e: React.MouseEvent<PropType>) => {
       const { routerLink, routerDirection, routerOptions, routerAnimation } = this.props;
       if (routerLink !== undefined) {
+        // Allow modifier key clicks (ctrl/cmd/shift) to open the link in a new tab/window
+        // without triggering SPA navigation on the current page.
+        if (e.metaKey || e.ctrlKey || e.shiftKey) {
+          return;
+        }
         e.preventDefault();
         this.context.navigate(routerLink, routerDirection, undefined, routerAnimation, routerOptions);
       }

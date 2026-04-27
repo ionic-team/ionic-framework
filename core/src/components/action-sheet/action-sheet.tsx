@@ -6,6 +6,7 @@ import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import {
   BACKDROP,
+  cleanupRootFocusTrapAccessibility,
   createDelegateController,
   createTriggerController,
   dismiss,
@@ -460,6 +461,11 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
       this.gesture = undefined;
     }
     this.triggerController.removeClickListener();
+
+    // Clean up aria-hidden if removed without dismiss() being called
+    if (this.presented) {
+      cleanupRootFocusTrapAccessibility();
+    }
   }
 
   componentWillLoad() {

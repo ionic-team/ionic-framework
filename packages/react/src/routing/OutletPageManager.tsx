@@ -13,6 +13,7 @@ interface OutletPageManagerProps {
   children: React.ReactNode;
   routeInfo?: RouteInfo;
   StackManager: any; // TODO(FW-2959): type
+  id?: string;
 }
 
 export class OutletPageManager extends React.Component<OutletPageManagerProps> {
@@ -46,8 +47,31 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
        */
       if (!this.outletIsReady) {
         componentOnReady(this.ionRouterOutlet, () => {
+          /**
+           * Guard against duplicate callbacks from React strict mode double-mount.
+           * Both componentDidMount calls pass the outer !outletIsReady check before
+           * either async callback fires. Without this inner guard, the second callback
+           * re-adds ion-page-invisible after the first callback's transition removed it,
+           * and registerIonPage returns early (same element), leaving the page invisible.
+           */
+          if (this.outletIsReady) return;
           this.outletIsReady = true;
-          this.context.registerIonPage(this.ionRouterOutlet!, this.props.routeInfo!);
+
+          /**
+           * Add ion-page + ion-page-invisible AFTER Stencil hydration but
+           * BEFORE registerIonPage. Stencil hydration overwrites className,
+           * so classes added in a React ref callback get wiped. Adding them
+           * here -- after hydration -- ensures they persist until the parent
+           * outlet's forward animation removes ion-page-invisible, preventing
+           * a flash where the outlet is briefly visible at full opacity.
+           */
+          const el = this.ionRouterOutlet!;
+          if (!el.classList.contains('ion-page-invisible') && !el.classList.contains('ion-page-hidden')) {
+            el.classList.add('ion-page');
+            el.classList.add('ion-page-invisible');
+          }
+
+          this.context.registerIonPage(el, this.props.routeInfo!);
         });
       }
 
@@ -84,14 +108,15 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
   }
 
   render() {
-    const { StackManager, children, routeInfo, ...props } = this.props;
+    const { StackManager, children, routeInfo, id, ...props } = this.props;
     return (
       <IonLifeCycleContext.Consumer>
         {(context) => {
           this.ionLifeCycleContext = context;
           return (
-            <StackManager routeInfo={routeInfo}>
+            <StackManager id={id} routeInfo={routeInfo}>
               <IonRouterOutletInner
+                id={id}
                 setRef={(val: HTMLIonRouterOutletElement) => (this.ionRouterOutlet = val)}
                 {...props}
               >

@@ -29,7 +29,11 @@ runs:
       shell: bash
       working-directory: ./packages/react-router/test
     - name: 🕸️ Install Dependencies
-      run: npm install
+      run: npm install --legacy-peer-deps
+      shell: bash
+      working-directory: ./packages/react-router/test/build/${{ inputs.app }}
+    - name: 📦 Install Playwright Browsers
+      run: npx playwright install chromium
       shell: bash
       working-directory: ./packages/react-router/test/build/${{ inputs.app }}
     - name: 🔄 Sync Built Changes
@@ -40,7 +44,13 @@ runs:
       run: npm run build
       shell: bash
       working-directory: ./packages/react-router/test/build/${{ inputs.app }}
-    - name: 🧪 Run Tests
+    - name: 🧪 Run Cypress Tests
       run: npm run e2e
+      shell: bash
+      working-directory: ./packages/react-router/test/build/${{ inputs.app }}
+    - name: 🎭 Run Playwright Tests
+      run: npx playwright test --retries=2
+      env:
+        CI: true
       shell: bash
       working-directory: ./packages/react-router/test/build/${{ inputs.app }}
