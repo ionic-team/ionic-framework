@@ -1521,6 +1521,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * when no footer is present, so ion-content's .inner-scroll includes
    * safe-area-bottom in its scroll padding. This keeps the modal background
    * edge-to-edge while ensuring content scrolls clear of the system nav bar.
+   *
+   * --ion-content-safe-area-padding-bottom is an internal CSS property used
+   * only by this code path. It is not part of ion-content's public API and
+   * should not be set by consumers. The default of 0px makes it a no-op
+   * when unset, which is the expected state for ion-content used outside of
+   * a fullscreen modal without a footer.
    */
   private applyFullscreenSafeAreaTo(contentEl: HTMLElement | null, hasFooter: boolean): void {
     // Only apply for standard Ionic layouts (has ion-content but no
