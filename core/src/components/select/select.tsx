@@ -743,7 +743,11 @@ export class Select implements ComponentInterface {
       ...interfaceOptions,
 
       component: 'ion-select-popover',
-      cssClass: ['select-popover', hasRichContent && 'select-popover-rich-content', interfaceOptions.cssClass],
+      cssClass: [
+        'select-popover',
+        hasRichContent ? 'select-popover-rich-content' : undefined,
+        interfaceOptions.cssClass,
+      ],
       componentProps: {
         header: interfaceOptions.header,
         subHeader: interfaceOptions.subHeader,
