@@ -99,10 +99,3 @@
   background: globals.current-color(base);
   color: globals.current-color(contrast);
 }
-
-// Item Expandable Animation
-// --------------------------------------------------
-
-:host(.item-option-expandable) {
-  transition-timing-function: globals.$ion-transition-curve-expressive;
-}

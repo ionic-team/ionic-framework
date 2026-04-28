@@ -11,6 +11,19 @@ import type { Side } from '../menu/menu-interface';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
+const IONIC_SNAP_OPEN_RATIO = 0.4;
+const IONIC_EXPAND_TRIGGER = 80;
+const IONIC_VELOCITY_THRESHOLD = 0.4;
+const IONIC_ACTION_BASE_WIDTH = 64;
+const IONIC_OPEN_TRANSITION = '250ms cubic-bezier(0.25, 1, 0.5, 1)';
+const IONIC_SNAPBACK_TRANSITION = '300ms cubic-bezier(0.34, 1.4, 0.64, 1)';
+const IONIC_CONFIRM_EASE_IN = '150ms ease-in';
+const IONIC_CONFIRM_SNAPBACK = '480ms cubic-bezier(0.34, 1.4, 0.64, 1)';
+const IONIC_CONFIRM_PAUSE = 900;
+const IONIC_EXPAND_RESISTANCE_FACTOR = 0.95;
+
+/** Expandable, non-disabled option (matches item-option expandable class). */
+const EXPANDABLE_OPTION_SELECTOR = 'ion-item-option.item-option-expandable:not(.item-option-disabled)';
 
 const enum ItemSide {
   None = 0,
@@ -38,7 +51,11 @@ let openSlidingItem: HTMLIonItemSlidingElement | undefined;
  */
 @Component({
   tag: 'ion-item-sliding',
-  styleUrl: 'item-sliding.scss',
+  styleUrls: {
+    ios: 'item-sliding.scss',
+    md: 'item-sliding.scss',
+    ionic: 'item-sliding.scss',
+  },
 })
 export class ItemSliding implements ComponentInterface {
   private item: HTMLIonItemElement | null = null;
@@ -56,6 +73,12 @@ export class ItemSliding implements ComponentInterface {
   private contentEl: HTMLElement | null = null;
   private initialContentScrollY = true;
   private mutationObserver?: MutationObserver;
+  private leftExpandableBaseWidth = IONIC_ACTION_BASE_WIDTH;
+  private rightExpandableBaseWidth = IONIC_ACTION_BASE_WIDTH;
+
+  private isIonicTheme(): boolean {
+    return getIonTheme(this) === 'ionic';
+  }
 
   @Element() el!: HTMLIonItemSlidingElement;
 
@@ -79,7 +102,6 @@ export class ItemSliding implements ComponentInterface {
 
   async connectedCallback() {
     const { el } = this;
-
     this.item = el.querySelector('ion-item');
     this.contentEl = findClosestIonContent(el);
 
@@ -332,8 +354,8 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
-   * Animate the item through a full swipe sequence: off-screen → trigger action → return.
-   * This is used when an expandable option is swiped beyond the threshold.
+   * Native (ios/md) full swipe: off-screen → fire swipe → return.
+   * Ionic theme uses `animateIonicFullSwipe` instead (see `onEndIonic`).
    */
   private async animateFullSwipe(direction: 'start' | 'end') {
     const abortController = new AbortController();
@@ -382,6 +404,157 @@ export class ItemSliding implements ComponentInterface {
         this.item.style.transition = '';
         this.item.style.transform = '';
       }
+      this.openAmount = 0;
+      this.state = SlidingState.Disabled;
+
+      if (openSlidingItem === this.el) {
+        openSlidingItem = undefined;
+      }
+
+      if (this.gesture) {
+        this.gesture.enable(!this.disabled);
+      }
+    }
+  }
+
+  private queryExpandableOption(options?: HTMLIonItemOptionsElement): HTMLIonItemOptionElement | undefined {
+    return options?.querySelector<HTMLIonItemOptionElement>(EXPANDABLE_OPTION_SELECTOR) ?? undefined;
+  }
+
+  private getExpandableOption(direction: 'start' | 'end'): HTMLIonItemOptionElement | undefined {
+    return this.queryExpandableOption(direction === 'end' ? this.rightOptions : this.leftOptions);
+  }
+
+  private getOpenDirectionFromAmount(openAmount: number): 'start' | 'end' | undefined {
+    if (openAmount > 0) {
+      return 'end';
+    }
+    if (openAmount < 0) {
+      return 'start';
+    }
+    return undefined;
+  }
+
+  private getOptionsWidthForDirection(direction: 'start' | 'end'): number {
+    return direction === 'end' ? this.optsWidthRightSide : this.optsWidthLeftSide;
+  }
+
+  private getExpandableBaseWidth(direction: 'start' | 'end'): number {
+    return direction === 'end' ? this.rightExpandableBaseWidth : this.leftExpandableBaseWidth;
+  }
+
+  private setIonicExpandableWidth(direction: 'start' | 'end', width: number, animate: boolean, easing?: string) {
+    const expandableOption = this.getExpandableOption(direction);
+    if (!expandableOption) {
+      return;
+    }
+
+    const style = expandableOption.style;
+    style.transition = animate ? `width ${easing ?? IONIC_OPEN_TRANSITION}` : 'none';
+    const baseWidth = this.getExpandableBaseWidth(direction);
+    style.width = `${Math.max(baseWidth, width)}px`;
+  }
+
+  private resetIonicExpandableOptions() {
+    [this.leftOptions, this.rightOptions].forEach((options) => {
+      const expandableOption = this.queryExpandableOption(options);
+      if (!expandableOption) {
+        return;
+      }
+      expandableOption.style.transition = '';
+      expandableOption.style.width = '';
+    });
+  }
+
+  private updateIonicExpandableFromOpenAmount(openAmount: number, isFinal: boolean, previousOpenAmount: number) {
+    if ((this.state & SlidingState.AnimatingFullSwipe) !== 0) {
+      return;
+    }
+
+    const direction = this.getOpenDirectionFromAmount(openAmount);
+    if (direction === undefined) {
+      const previousDirection = this.getOpenDirectionFromAmount(previousOpenAmount);
+      if (previousDirection === undefined) {
+        this.resetIonicExpandableOptions();
+        return;
+      }
+
+      this.setIonicExpandableWidth(
+        previousDirection,
+        this.getExpandableBaseWidth(previousDirection),
+        isFinal,
+        IONIC_SNAPBACK_TRANSITION
+      );
+      return;
+    }
+
+    const baseWidth = this.getExpandableBaseWidth(direction);
+    const optionsWidth = this.getOptionsWidthForDirection(direction);
+    const extraWidth = Math.max(0, Math.abs(openAmount) - optionsWidth);
+    const resistedExtraWidth = isFinal ? extraWidth : extraWidth * IONIC_EXPAND_RESISTANCE_FACTOR;
+    const targetWidth = baseWidth + resistedExtraWidth;
+    const easing = openAmount === 0 ? IONIC_SNAPBACK_TRANSITION : IONIC_OPEN_TRANSITION;
+
+    this.setIonicExpandableWidth(direction, targetWidth, isFinal, easing);
+  }
+
+  private async animateIonicFullSwipe(direction: 'start' | 'end') {
+    const abortController = new AbortController();
+    this.animationAbortController = abortController;
+    const { signal } = abortController;
+    const expandableOption = this.getExpandableOption(direction);
+    const options = direction === 'end' ? this.rightOptions : this.leftOptions;
+
+    if (this.gesture) {
+      this.gesture.enable(false);
+    }
+
+    try {
+      this.state =
+        direction === 'end'
+          ? SlidingState.End | SlidingState.AnimatingFullSwipe
+          : SlidingState.Start | SlidingState.AnimatingFullSwipe;
+
+      if (!this.item) {
+        return;
+      }
+
+      const itemWidth = this.el.offsetWidth || window.innerWidth;
+      const baseWidth = this.getExpandableBaseWidth(direction);
+      const expandableTargetWidth = Math.max(baseWidth, itemWidth - 16);
+      const offScreenPosition = direction === 'end' ? itemWidth : -itemWidth;
+
+      if (expandableOption) {
+        expandableOption.style.transition = `width ${IONIC_CONFIRM_EASE_IN}`;
+        expandableOption.style.width = `${expandableTargetWidth}px`;
+        
+      }
+
+      this.item.style.transition = `transform ${IONIC_CONFIRM_EASE_IN}`;
+      this.item.style.transform = `translate3d(${-offScreenPosition}px, 0, 0)`;
+      await this.delay(150, signal);
+
+      options?.fireSwipeEvent();
+      await this.delay(IONIC_CONFIRM_PAUSE, signal);
+
+      if (expandableOption) {
+        expandableOption.style.transition = `width ${IONIC_CONFIRM_SNAPBACK}`;
+        expandableOption.style.width = `${baseWidth}px`;
+      }
+
+      this.item.style.transition = `transform ${IONIC_CONFIRM_SNAPBACK}`;
+      this.item.style.transform = 'translate3d(0, 0, 0)';
+      await this.delay(480, signal);
+    } catch {
+      // Animation was aborted. finally handles cleanup.
+    } finally {
+      this.animationAbortController = undefined;
+
+      if (this.item) {
+        this.item.style.transition = '';
+        this.item.style.transform = '';
+      }
+      this.resetIonicExpandableOptions();
       this.openAmount = 0;
       this.state = SlidingState.Disabled;
 
@@ -512,11 +685,22 @@ export class ItemSliding implements ComponentInterface {
   }
 
   private onEnd(gesture: GestureDetail) {
+    this.restoreContentScrollAfterSlide();
+    if (this.isIonicTheme()) {
+      this.onEndIonic(gesture);
+    } else {
+      this.onEndNative(gesture);
+    }
+  }
+
+  private restoreContentScrollAfterSlide() {
     const { contentEl, initialContentScrollY } = this;
     if (contentEl) {
       resetContentScrollY(contentEl, initialContentScrollY);
     }
+  }
 
+  private onEndNative(gesture: GestureDetail) {
     // Check for full swipe conditions with expandable options
     const rawSwipeDistance = Math.abs(gesture.deltaX);
     const direction = gesture.deltaX < 0 ? 'end' : 'start';
@@ -561,11 +745,65 @@ export class ItemSliding implements ComponentInterface {
     }
   }
 
+  private onEndIonic(gesture: GestureDetail) {
+    const velocity = gesture.velocityX;
+    const velocityX = velocity * 1000;
+    const activeDirection = this.getOpenDirectionFromAmount(this.openAmount);
+    if (activeDirection === undefined) {
+      this.setOpenAmount(0, true);
+      return;
+    }
+
+    const optionsWidth = this.getOptionsWidthForDirection(activeDirection);
+    const extraWidth = Math.max(0, Math.abs(this.openAmount) - optionsWidth);
+    const hasExpandable = this.hasExpandableOptions(activeDirection === 'end' ? this.rightOptions : this.leftOptions);
+    const wasRevealed = Math.abs(this.initialOpenAmount) >= optionsWidth;
+
+    if (
+      hasExpandable &&
+      (extraWidth >= IONIC_EXPAND_TRIGGER || (wasRevealed && velocityX < Math.abs(IONIC_VELOCITY_THRESHOLD * 1000)))
+    ) {
+      this.animateIonicFullSwipe(activeDirection).catch(() => {
+        if (this.gesture) {
+          this.gesture.enable(!this.disabled);
+        }
+      });
+      return;
+    }
+
+    const closeDirection =
+      activeDirection === 'end'
+        ? velocityX > IONIC_VELOCITY_THRESHOLD * 1000
+        : velocityX < -IONIC_VELOCITY_THRESHOLD * 1000;
+    if (closeDirection) {
+      this.setOpenAmount(0, true);
+      return;
+    }
+
+    const openThreshold = optionsWidth * IONIC_SNAP_OPEN_RATIO;
+    const shouldSnapOpen = Math.abs(this.openAmount) > openThreshold;
+    const restingPoint = shouldSnapOpen
+      ? activeDirection === 'end'
+        ? this.optsWidthRightSide
+        : -this.optsWidthLeftSide
+      : 0;
+
+    this.setOpenAmount(restingPoint, true);
+  }
+
   private calculateOptsWidth() {
     this.optsWidthRightSide = 0;
     if (this.rightOptions) {
       this.rightOptions.style.display = 'flex';
       this.optsWidthRightSide = this.rightOptions.offsetWidth;
+      const rightExpandable = this.queryExpandableOption(this.rightOptions);
+      if (rightExpandable) {
+        rightExpandable.style.width = '';
+        this.rightExpandableBaseWidth = Math.max(
+          IONIC_ACTION_BASE_WIDTH,
+          rightExpandable.getBoundingClientRect().width
+        );
+      }
       this.rightOptions.style.display = '';
     }
 
@@ -573,6 +811,11 @@ export class ItemSliding implements ComponentInterface {
     if (this.leftOptions) {
       this.leftOptions.style.display = 'flex';
       this.optsWidthLeftSide = this.leftOptions.offsetWidth;
+      const leftExpandable = this.queryExpandableOption(this.leftOptions);
+      if (leftExpandable) {
+        leftExpandable.style.width = '';
+        this.leftExpandableBaseWidth = Math.max(IONIC_ACTION_BASE_WIDTH, leftExpandable.getBoundingClientRect().width);
+      }
       this.leftOptions.style.display = '';
     }
 
@@ -591,22 +834,23 @@ export class ItemSliding implements ComponentInterface {
     const { el } = this;
 
     const style = this.item.style;
+    const previousOpenAmount = this.openAmount;
     this.openAmount = openAmount;
+
+    if (this.isIonicTheme()) {
+      this.updateIonicExpandableFromOpenAmount(openAmount, isFinal, previousOpenAmount);
+    }
 
     if (isFinal) {
       style.transition = '';
     }
 
     if (openAmount > 0) {
-      this.state =
-        openAmount >= this.optsWidthRightSide + SWIPE_MARGIN
-          ? SlidingState.End | SlidingState.SwipeEnd
-          : SlidingState.End;
+      const fullSwipe = !this.isIonicTheme() && openAmount >= this.optsWidthRightSide + SWIPE_MARGIN;
+      this.state = fullSwipe ? SlidingState.End | SlidingState.SwipeEnd : SlidingState.End;
     } else if (openAmount < 0) {
-      this.state =
-        openAmount <= -this.optsWidthLeftSide - SWIPE_MARGIN
-          ? SlidingState.Start | SlidingState.SwipeStart
-          : SlidingState.Start;
+      const fullSwipe = !this.isIonicTheme() && openAmount <= -this.optsWidthLeftSide - SWIPE_MARGIN;
+      this.state = fullSwipe ? SlidingState.Start | SlidingState.SwipeStart : SlidingState.Start;
     } else {
       /**
        * The sliding options should not be
