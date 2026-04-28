@@ -32,6 +32,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         const dragByX = config.direction === 'rtl' ? -DRAG_DISTANCE_SINGLE_OPTION : DRAG_DISTANCE_SINGLE_OPTION;
 
         await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, DRAG_STEPS_UNDER_FULL_SWIPE);
+        await page.waitForChanges();
 
         await expect(item).toHaveScreenshot(screenshot('item-sliding-start'));
       });
@@ -50,6 +51,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         const dragByX = config.direction === 'rtl' ? DRAG_DISTANCE_MULTIPLE_OPTIONS : -DRAG_DISTANCE_MULTIPLE_OPTIONS;
 
         await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, DRAG_STEPS_UNDER_FULL_SWIPE);
+        await page.waitForChanges();
 
         await expect(item).toHaveScreenshot(screenshot('item-sliding-end'));
       });
