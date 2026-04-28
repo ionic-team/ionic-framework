@@ -7,12 +7,13 @@ import { configs, test, dragElementBy } from '@utils/test/playwright';
  */
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: shapes'), () => {
-    test('should not have visual regressions when not expanded', async ({ page }) => {
+    test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/item-sliding/test/shapes`, config);
+    });
 
-      const itemIDs = ['round', 'soft', 'rectangular'];
-      for (const itemID of itemIDs) {
-        const item = page.locator(`#${itemID}`);
+    ['round', 'soft', 'rectangular'].forEach((shape) => {
+      test(`${shape} - should not have visual regressions when not expanded`, async ({ page }) => {
+        const item = page.locator(`#${shape}`);
 
         /**
          * Negative dragByX value to drag element from the right to the left
@@ -20,11 +21,11 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
          */
         const dragByX = -150;
 
-        await dragElementBy(item, page, dragByX);
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, undefined, 15);
         await page.waitForChanges();
 
-        await expect(item).toHaveScreenshot(screenshot(`item-sliding-${itemID}`));
-      }
+        await expect(item).toHaveScreenshot(screenshot(`item-sliding-${shape}`));
+      });
     });
   });
 });

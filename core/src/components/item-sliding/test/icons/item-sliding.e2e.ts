@@ -25,7 +25,7 @@ configs({ modes: ['ionic-md', 'ios', 'md'] }).forEach(({ title, screenshot, conf
          */
         const dragByX = config.direction === 'rtl' ? 150 : -150;
 
-        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 20);
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, undefined, 15);
         await page.waitForChanges();
 
         // Convert camelCase ids to kebab-case for screenshot file names

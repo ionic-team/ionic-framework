@@ -132,7 +132,6 @@ const moveElement = async (page: E2EPage, startX: number, startY: number, dragBy
   const endX = startX + dragByX;
   const endY = startY + dragByY;
 
-  // Drag the element.
   for (let i = 1; i <= steps; i++) {
     const middleX = startX + (endX - startX) * (i / steps);
     const middleY = startY + (endY - startY) * (i / steps);
@@ -141,8 +140,6 @@ const moveElement = async (page: E2EPage, startX: number, startY: number, dragBy
 
     // Safari needs to wait for a repaint to occur before moving the mouse again.
     if (browser === 'webkit' && i % 2 === 0) {
-      // Repainting every 2 steps is enough to keep the drag gesture smooth.
-      // Anything past 4 steps will cause the drag gesture to be flaky.
       await page.evaluate(() => new Promise(requestAnimationFrame));
     }
   }

@@ -2,13 +2,20 @@ import { expect } from '@playwright/test';
 import { configs, dragElementBy, test } from '@utils/test/playwright';
 
 /**
+ * Drag distances that reveal options without crossing the full swipe threshold
+ * (optsWidth + SWIPE_MARGIN). A narrower options panel requires a shorter drag.
+ */
+const DRAG_DISTANCE_ONE_OPTION = 100;
+const DRAG_DISTANCE_TWO_OPTIONS = 150;
+
+/**
  * item-sliding doesn't have mode-specific styling,
  * but the child components, item-options and item-option, do.
  *
  * It is important to test all modes to ensure that the
  * child components are being rendered correctly.
  */
-configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
+configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: basic'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/item-sliding/test/basic`, config);
@@ -23,10 +30,9 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
          * Positive dragByX value to drag element from the left to the right
          * to reveal the options on the left side.
          */
-        const dragByX = config.direction === 'rtl' ? -100 : 100;
+        const dragByX = config.direction === 'rtl' ? -DRAG_DISTANCE_ONE_OPTION : DRAG_DISTANCE_ONE_OPTION;
 
-        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 20);
-        await page.waitForChanges();
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, undefined, 15);
 
         await expect(item).toHaveScreenshot(screenshot('item-sliding-start'));
       });
@@ -42,9 +48,9 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
          * Positive dragByX value to drag element from the left to the right
          * to reveal the options on the left side.
          */
-        const dragByX = config.direction === 'rtl' ? 150 : -150;
+        const dragByX = config.direction === 'rtl' ? DRAG_DISTANCE_TWO_OPTIONS : -DRAG_DISTANCE_TWO_OPTIONS;
 
-        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 20);
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, undefined, 15);
 
         await expect(item).toHaveScreenshot(screenshot('item-sliding-end'));
       });
@@ -61,7 +67,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.goto(`/src/components/item-sliding/test/basic`, config);
       const item = page.locator('#item2');
 
-      await dragElementBy(item, page, -150, 0, undefined, undefined, true, 20);
+      await dragElementBy(item, page, -DRAG_DISTANCE_TWO_OPTIONS, 0, undefined, undefined, undefined, 15);
       await page.waitForChanges();
 
       // item-sliding doesn't have an easy way to tell whether it's fully open so just screenshot it
@@ -105,7 +111,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
  * make sure the safe area padding is applied only to that side
  * regardless of direction
  */
-configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
+configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: basic'), () => {
     test.describe('safe area left', () => {
       test('should have padding on the left only', async ({ page }) => {
@@ -140,8 +146,8 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         const direction = config.direction;
         const item = page.locator('ion-item-sliding');
 
-        const dragByX = direction == 'rtl' ? -150 : 150;
-        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 20);
+        const dragByX = direction == 'rtl' ? -DRAG_DISTANCE_TWO_OPTIONS : DRAG_DISTANCE_TWO_OPTIONS;
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, undefined, 15);
         await page.waitForChanges();
 
         await expect(item).toHaveScreenshot(screenshot(`item-sliding-safe-area-left`));
@@ -181,8 +187,8 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         const direction = config.direction;
         const item = page.locator('ion-item-sliding');
 
-        const dragByX = direction == 'rtl' ? 150 : -150;
-        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 20);
+        const dragByX = direction == 'rtl' ? DRAG_DISTANCE_TWO_OPTIONS : -DRAG_DISTANCE_TWO_OPTIONS;
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, undefined, 15);
         await page.waitForChanges();
 
         await expect(item).toHaveScreenshot(screenshot(`item-sliding-safe-area-right`));
