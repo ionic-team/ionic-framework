@@ -1,12 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, dragElementBy, test } from '@utils/test/playwright';
 
-/**
- * Drag distances that reveal options without crossing the full swipe threshold
- * (optsWidth + SWIPE_MARGIN). A narrower options panel requires a shorter drag.
- */
-const DRAG_DISTANCE_SINGLE_OPTION = 100;
-const DRAG_DISTANCE_MULTIPLE_OPTIONS = 150;
+import { DRAG_DISTANCE_SINGLE_OPTION, DRAG_DISTANCE_MULTIPLE_OPTIONS } from '../test.utils';
 
 /**
  * item-sliding doesn't have mode-specific styling,
