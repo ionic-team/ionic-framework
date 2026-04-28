@@ -2,6 +2,12 @@ import { expect } from '@playwright/test';
 import { configs, test, dragElementBy } from '@utils/test/playwright';
 
 /**
+ * Drag distances that reveal options without crossing the full swipe threshold
+ * (optsWidth + SWIPE_MARGIN). A narrower options panel requires a shorter drag.
+ */
+const DRAG_DISTANCE_TWO_OPTIONS = 150;
+
+/**
  * The shapes on the `item-option` do not vary by direction
  * when they are not being dragged.
  */
@@ -19,7 +25,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
          * Negative dragByX value to drag element from the right to the left
          * to reveal the options on the right side.
          */
-        const dragByX = -150;
+        const dragByX = -DRAG_DISTANCE_TWO_OPTIONS;
 
         await dragElementBy(item, page, dragByX, 0, undefined, undefined, undefined, 15);
         await page.waitForChanges();

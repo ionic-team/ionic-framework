@@ -1,5 +1,12 @@
 import { expect } from '@playwright/test';
 import { configs, test, dragElementBy } from '@utils/test/playwright';
+
+/**
+ * Drag distances that reveal options without crossing the full swipe threshold
+ * (optsWidth + SWIPE_MARGIN). A narrower options panel requires a shorter drag.
+ */
+const DRAG_DISTANCE_TWO_OPTIONS = 150;
+
 /**
  * This behavior does not vary across modes/directions
  */
@@ -15,7 +22,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
 
-      await dragElementBy(itemSlidingEl, page, -150, 0, undefined, undefined, false);
+      await dragElementBy(itemSlidingEl, page, -DRAG_DISTANCE_TWO_OPTIONS, 0, undefined, undefined, false);
 
       /**
        * Do not use scrollToBottom() or other scrolling methods
