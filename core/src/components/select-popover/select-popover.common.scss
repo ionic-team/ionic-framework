@@ -1,5 +1,8 @@
 @import "../../themes/native/native.globals";
 
+// Select Popover
+// --------------------------------------------------
+
 :host ion-list {
   @include margin(0);
 }
@@ -17,4 +20,23 @@ ion-label {
  */
 :host {
   overflow-y: auto;
+}
+
+// Select Popover: Select Option
+// --------------------------------------------------
+
+.select-option-label {
+  display: flex;
+
+  align-items: center;
+}
+
+.select-option-label-text {
+  display: flex;
+
+  flex-wrap: wrap;
+}
+
+.select-option-description {
+  display: block;
 }

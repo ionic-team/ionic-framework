@@ -1,0 +1,19 @@
+@use "../../themes/native/native.theme.default" as native;
+@use "../../themes/mixins" as mixins;
+@use "../../themes/functions.font" as font;
+@use "./action-sheet.common";
+
+// Action Sheet: Native
+// --------------------------------------------------
+
+.action-sheet-button-label {
+  gap: 12px;
+}
+
+.select-option-description {
+  @include mixins.padding(5px, 0, 0, 0);
+
+  color: native.$text-color-step-300;
+
+  font-size: font.dynamic-font(12px);
+}
