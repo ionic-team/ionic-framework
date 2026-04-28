@@ -160,7 +160,7 @@ const moveElement = async (page: E2EPage, startX: number, startY: number, dragBy
      */
     if (browser === 'webkit' && i % 2 === 0) {
       /**
-       * Repaintng every 2 steps is enough to keep the drag gesture smooth.
+       * Repainting every 2 steps is enough to keep the drag gesture smooth.
        * Repainting on every step makes the test slow, and repainting every
        * 4+ steps means Safari does not see enough frames to track the gesture
        * reliably.
