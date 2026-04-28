@@ -10,6 +10,18 @@ import type { ElementHandle, Locator } from '@playwright/test';
 
 import type { E2EPage } from './';
 
+/**
+ * Drags an element by the given number of pixels on the X and Y axes.
+ *
+ * @param el The element to drag.
+ * @param page The E2E Page object.
+ * @param dragByX The number of pixels to drag on the X axis. Negative values drag left, positive values drag right.
+ * @param dragByY The number of pixels to drag on the Y axis. Negative values drag up, positive values drag down.
+ * @param startXCoord The X coordinate to start the drag from. Defaults to the center of the element.
+ * @param startYCoord The Y coordinate to start the drag from. Defaults to the center of the element.
+ * @param releaseDrag Whether to release the drag at the end of the gesture. Defaults to `true`.
+ * @param steps The number of steps to divide the drag into. More steps reduce velocity; fewer steps increase it. Use this to control whether velocity-based thresholds (e.g. full-swipe) are triggered, particularly in Safari where gesture velocity is calculated relative to animation frames. Defaults to `10`.
+ */
 export const dragElementBy = async (
   el: Locator | ElementHandle<SVGElement | HTMLElement>,
   page: E2EPage,
@@ -46,10 +58,11 @@ export const dragElementBy = async (
 
 /**
  * Drags an element by the given amount of pixels on the Y axis.
+ *
  * @param el The element to drag.
  * @param page The E2E Page object.
- * @param dragByY The amount of pixels to drag the element by.
- * @param startYCoord The Y coordinate to start the drag gesture at. Defaults to the center of the element.
+ * @param dragByY The number of pixels to drag on the Y axis.
+ * @param startYCoord The Y coordinate to start the drag from. Defaults to the center of the element.
  */
 export const dragElementByYAxis = async (
   el: Locator | ElementHandle<SVGElement | HTMLElement>,
