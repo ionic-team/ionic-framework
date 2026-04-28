@@ -5,7 +5,7 @@ import { configs, test, dragElementBy } from '@utils/test/playwright';
  * Drag distances that reveal options without crossing the full swipe threshold
  * (optsWidth + SWIPE_MARGIN). A narrower options panel requires a shorter drag.
  */
-const DRAG_DISTANCE_TWO_OPTIONS = 150;
+const DRAG_DISTANCE_MULTIPLE_OPTIONS = 150;
 
 /**
  * This behavior does not vary across modes
@@ -22,7 +22,7 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
          * Negative dragByX value to drag element from the right to the left
          * to reveal the options on the right side.
          */
-        const dragByX = -DRAG_DISTANCE_TWO_OPTIONS;
+        const dragByX = -DRAG_DISTANCE_MULTIPLE_OPTIONS;
 
         await dragElementBy(item, page, dragByX);
         await page.waitForChanges();
