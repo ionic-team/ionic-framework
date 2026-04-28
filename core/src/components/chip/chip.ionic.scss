@@ -68,7 +68,8 @@
 
   font-size: globals.$ion-font-size-300;
 
-  ::slotted(ion-icon) {
+  ::slotted(ion-icon),
+  ::slotted(i.ph) {
     font-size: globals.$ion-font-size-300;
   }
 }
@@ -78,7 +79,8 @@
 
   font-size: globals.$ion-font-size-350;
 
-  ::slotted(ion-icon) {
+  ::slotted(ion-icon),
+  ::slotted(i.ph) {
     font-size: globals.$ion-font-size-400;
   }
 }

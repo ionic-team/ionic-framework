@@ -49,7 +49,8 @@ slot[name="end"]::slotted(*) {
   @include globals.margin(null, null, null, #{globals.$ion-space-400});
 }
 
-::slotted(ion-icon:not(.item-detail-icon)) {
+::slotted(ion-icon:not(.item-detail-icon)),
+::slotted(i.ph) {
   color: globals.$ion-primitives-neutral-1000;
 
   font-size: globals.$ion-scale-1000;

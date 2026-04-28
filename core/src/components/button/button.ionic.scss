@@ -146,6 +146,12 @@
     width: globals.$ion-scale-500;
     height: globals.$ion-scale-500;
   }
+
+  ::slotted(i.ph[slot="start"]),
+  ::slotted(i.ph[slot="end"]),
+  ::slotted(i.ph[slot="icon-only"]) {
+    font-size: globals.$ion-scale-500;
+  }
 }
 
 :host(.button-large) {
@@ -154,6 +160,12 @@
   ::slotted(ion-icon[slot="icon-only"]) {
     width: globals.$ion-scale-600;
     height: globals.$ion-scale-600;
+  }
+
+  ::slotted(i.ph[slot="start"]),
+  ::slotted(i.ph[slot="end"]),
+  ::slotted(i.ph[slot="icon-only"]) {
+    font-size: globals.$ion-scale-600;
   }
 }
 

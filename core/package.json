@@ -80,7 +80,8 @@
   },
   "scripts": {
     "build": "npm run clean && npm run build.css && stencil build --es5 --docs-json dist/docs.json",
-    "build.css": "npm run css.sass && npm run css.minify",
+    "build.css": "npm run css.sass && npm run copy.fonts && npm run css.minify",
+    "copy.fonts": "node scripts/copy-fonts.mjs",
     "build.debug": "npm run clean && stencil build --debug",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
     "build.tokens": "npx build.tokens --dest src/foundations/ --root=false --scss=true --scss-file=ionic.vars.scss --scss-prefix=ion --utilities=false && npm run prettier.tokens",

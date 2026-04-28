@@ -42,6 +42,12 @@
   height: globals.$ion-scale-500;
 }
 
+::slotted(i.ph) {
+  @include globals.margin(0);
+
+  font-size: globals.$ion-scale-500;
+}
+
 // Item Option Shapes
 // --------------------------------------------------
 
