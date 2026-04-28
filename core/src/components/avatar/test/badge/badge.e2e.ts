@@ -26,10 +26,9 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
           `
             <style>
               #container {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 40px;
-                padding: 16px;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
               }
             </style>
 
@@ -41,14 +40,6 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
         );
 
         const container = page.locator('#container');
-
-        /**
-         * Avatars with badges overflow the default viewport, causing
-         * unrendered areas to appear black in the screenshot.
-         * Resizing to fit content.
-         */
-        const box = await container.boundingBox();
-        await page.setViewportSize({ width: Math.ceil(box!.width) + 40, height: Math.ceil(box!.height) + 32 });
 
         await expect(container).toHaveScreenshot(screenshot(`avatar-${avatarSize}-badge`));
       });
