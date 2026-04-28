@@ -18,6 +18,14 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
 
+      /**
+       * No need to increase steps to prevent the full swipe threshold
+       * from being crossed because:
+       * - we are not testing swipe behavior here
+       * - increasing steps is only in Webkit since it accumulates velocity
+       * faster than other browsers, and this test is skipped in Webkit, so
+       * the default step count is safe to use
+       */
       await dragElementBy(itemSlidingEl, page, -DRAG_DISTANCE_MULTIPLE_OPTIONS, 0, undefined, undefined, false);
 
       /**

@@ -20,6 +20,11 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
          */
         const dragByX = -DRAG_DISTANCE_MULTIPLE_OPTIONS;
 
+        /**
+         * No need to increase steps to prevent the full swipe threshold from
+         * being crossed because the option is disabled, so the option will
+         * never expand fully regardless of drag speed.
+         */
         await dragElementBy(item, page, dragByX);
         await page.waitForChanges();
 

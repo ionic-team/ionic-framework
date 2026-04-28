@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test, dragElementBy } from '@utils/test/playwright';
 
-import { DRAG_DISTANCE_MULTIPLE_OPTIONS } from '../test.utils';
+import { DRAG_DISTANCE_MULTIPLE_OPTIONS, DRAG_STEPS_UNDER_FULL_SWIPE } from '../test.utils';
 
 /**
  * item-sliding doesn't have mode-specific styling,
@@ -28,7 +28,7 @@ configs({ modes: ['ionic-md', 'ios', 'md'] }).forEach(({ title, screenshot, conf
          */
         const dragByX = config.direction === 'rtl' ? DRAG_DISTANCE_MULTIPLE_OPTIONS : -DRAG_DISTANCE_MULTIPLE_OPTIONS;
 
-        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 15);
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, DRAG_STEPS_UNDER_FULL_SWIPE);
         await page.waitForChanges();
 
         // Convert camelCase ids to kebab-case for screenshot file names

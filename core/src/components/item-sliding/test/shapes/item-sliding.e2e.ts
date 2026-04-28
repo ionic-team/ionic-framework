@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test, dragElementBy } from '@utils/test/playwright';
 
-import { DRAG_DISTANCE_MULTIPLE_OPTIONS } from '../test.utils';
+import { DRAG_DISTANCE_MULTIPLE_OPTIONS, DRAG_STEPS_UNDER_FULL_SWIPE } from '../test.utils';
 
 /**
  * The shapes on the `item-option` do not vary by direction
@@ -23,7 +23,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
          */
         const dragByX = -DRAG_DISTANCE_MULTIPLE_OPTIONS;
 
-        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 15);
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, DRAG_STEPS_UNDER_FULL_SWIPE);
         await page.waitForChanges();
 
         await expect(item).toHaveScreenshot(screenshot(`item-sliding-${shape}`));
