@@ -468,7 +468,7 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonProgressBar: {
-      height: 'var(--token-scale-100, var(--ion-scaling-100))',
+      height: 'var(--ion-scaling-100)',
 
       indeterminate: {
         progress: {
@@ -486,7 +486,7 @@ export const defaultTheme: DefaultTheme = {
         buffer: {
           bar: {
             default: {
-              background: 'var(--token-bg-neutral-subtle-default, #eae9e9)',
+              background: '#eae9e9',
             },
           },
         },
@@ -508,13 +508,13 @@ export const defaultTheme: DefaultTheme = {
         buffer: {
           bar: {
             default: {
-              background: 'var(--token-bg-neutral-subtle-default, #eae9e9)',
+              background: '#eae9e9',
             },
           },
 
           circles: {
             default: {
-              background: 'var(--token-bg-neutral-subtle-default, #eae9e9)',
+              background: '#eae9e9',
             },
 
             semantic: {
@@ -529,13 +529,13 @@ export const defaultTheme: DefaultTheme = {
       shape: {
         round: {
           border: {
-            radius: 'var(--token-round-xs, var(--ion-radii-xxxxl))',
+            radius: 'var(--ion-radii-xxxxl)',
           },
         },
 
         rectangular: {
           border: {
-            radius: 'var(--token-rectangular-xs, var(--ion-radii-xxxxs))',
+            radius: 'var(--ion-radii-xxxxs)',
           },
         },
       },
