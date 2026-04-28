@@ -1,4 +1,4 @@
-import { rgba, currentColor, mix, dynamicFont } from '../../utils/theme';
+import { rgba, currentColor, ionColor, mix, dynamicFont } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
@@ -31,6 +31,10 @@ export const defaultTheme: DefaultTheme = {
         hue: 'bold',
         shape: 'soft',
         size: 'large',
+      },
+
+      IonProgressBar: {
+        shape: 'rectangular',
       },
 
       IonSpinner: {
@@ -590,6 +594,92 @@ export const defaultTheme: DefaultTheme = {
 
         text: {
           overflow: 'initial',
+        },
+      },
+    },
+
+    IonProgressBar: {
+      height: 'var(--ion-scaling-100)',
+
+      indeterminate: {
+        progress: {
+          default: {
+            background: ionColor('primary', 'base'),
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base'),
+            },
+          },
+        },
+
+        buffer: {
+          bar: {
+            default: {
+              background: ionColor('primary', 'base', { alpha: 0.3 }),
+            },
+
+            semantic: {
+              default: {
+                background: currentColor('base', 0.3),
+              },
+            },
+          },
+        },
+      },
+
+      determinate: {
+        progress: {
+          default: {
+            background: ionColor('primary', 'base'),
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base'),
+            },
+          },
+        },
+
+        buffer: {
+          bar: {
+            default: {
+              background: ionColor('primary', 'base', { alpha: 0.3 }),
+            },
+
+            semantic: {
+              default: {
+                background: currentColor('base', 0.3),
+              },
+            },
+          },
+
+          circles: {
+            default: {
+              background: ionColor('primary', 'base', { alpha: 0.3 }),
+            },
+
+            semantic: {
+              default: {
+                background: currentColor('base', 0.3),
+              },
+            },
+          },
+        },
+      },
+
+      shape: {
+        round: {
+          border: {
+            radius: 'var(--ion-radii-xxxxl)',
+          },
+        },
+
+        rectangular: {
+          border: {
+            radius: 'var(--ion-radii-xxxxs)',
+          },
         },
       },
     },

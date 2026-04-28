@@ -4,12 +4,12 @@ import { clamp } from '@utils/helpers';
 import { createColorClasses } from '@utils/theme';
 
 import { config } from '../../global/config';
-import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
+
+import type { IonProgressBarShape } from './progress-bar.interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @part progress - The progress bar that shows the current value when `type` is `"determinate"` and slides back and forth when `type` is `"indeterminate"`.
  * @part stream - The animated circles that appear while buffering. This only shows when `buffer` is set and `type` is `"determinate"`.
@@ -18,11 +18,7 @@ import type { Color } from '../../interface';
  */
 @Component({
   tag: 'ion-progress-bar',
-  styleUrls: {
-    ios: 'progress-bar.ios.scss',
-    md: 'progress-bar.md.scss',
-    ionic: 'progress-bar.ionic.scss',
-  },
+  styleUrl: 'progress-bar.scss',
   shadow: true,
 })
 export class ProgressBar implements ComponentInterface {
@@ -61,31 +57,23 @@ export class ProgressBar implements ComponentInterface {
    * Set to `"round"` for a progress bar with rounded corners, or `"rectangular"`
    * for a progress bar without rounded corners.
    *
-   * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+   * Defaults to `"round"` if both the shape property and theme config are unset.
    */
-  @Prop() shape?: 'round' | 'rectangular';
+  @Prop() shape?: IonProgressBarShape;
 
-  private getShape(): string | undefined {
-    const theme = getIonTheme(this);
-    const { shape } = this;
-
-    // TODO(ROU-11638): Remove theme check when shapes are defined for all themes.
-    if (theme !== 'ionic') {
-      return undefined;
-    }
-
-    if (shape === undefined) {
-      return 'round';
-    }
-
-    return shape;
+  /**
+   * Gets the progress bar shape. Uses the `shape` property if set,
+   * otherwise checks the theme config. Defaults to `round` if
+   * neither is set.
+   */
+  get shapeValue(): IonProgressBarShape {
+    return this.shape ?? (config.getObjectValue('IonProgressBar.shape', 'round') as IonProgressBarShape);
   }
 
   render() {
     const { color, type, reversed, value, buffer } = this;
     const paused = config.getBoolean('_testing');
-    const theme = getIonTheme(this);
-    const shape = this.getShape();
+    const shape = this.shapeValue;
     // If the progress is displayed as a solid bar.
     const progressSolid = buffer === 1;
     return (
@@ -95,12 +83,11 @@ export class ProgressBar implements ComponentInterface {
         aria-valuemin="0"
         aria-valuemax="1"
         class={createColorClasses(color, {
-          [theme]: true,
-          [`progress-bar-${type}`]: true,
+          [`progress-bar-type-${type}`]: true,
+          [`progress-bar-shape-${shape}`]: true,
           'progress-paused': paused,
           'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed,
           'progress-bar-solid': progressSolid,
-          [`progress-bar-shape-${shape}`]: shape !== undefined,
         })}
       >
         {type === 'indeterminate' ? renderIndeterminate() : renderProgress(value, buffer)}
@@ -135,9 +122,13 @@ const renderProgress = (value: number, buffer: number) => {
      * When finalBuffer === 1, we use display: none
      * instead of removing the element to avoid flickering.
      */
-    // TODO(FW-6697): change `ion-hide` class to `ion-display-none` or another class
+    // TODO(FW-6697): remove `ion-hide` class in favor of `buffer-circles-container-hidden`
     <div
-      class={{ 'buffer-circles-container': true, 'ion-hide': finalBuffer === 1 }}
+      class={{
+        'buffer-circles-container': true,
+        'buffer-circles-container-hidden': finalBuffer === 1,
+        'ion-hide': finalBuffer === 1,
+      }}
       style={{ transform: `translateX(${finalBuffer * 100}%)` }}
     >
       <div class="buffer-circles-container" style={{ transform: `translateX(-${finalBuffer * 100}%)` }}>

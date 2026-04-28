@@ -622,6 +622,45 @@ export function currentColor(variation: string, alpha: number | string | null = 
   }
 }
 
+interface IonColorOptions {
+  alpha?: number | string | null;
+  rgb?: boolean;
+  subtle?: boolean;
+}
+
+export function ionColor(name: string, variation: string, options: IonColorOptions = {}): string {
+  const { alpha = null, rgb = false, subtle = false } = options;
+
+  // Build base variable name
+  const base = subtle ? `--ion-color-${name}-subtle` : `--ion-color-${name}`;
+  const variationSuffix = variation === 'base' ? '' : `-${variation}`;
+  let variable = `${base}${variationSuffix}`;
+
+  // Build the fallback variable name (only for bold colors)
+  let fallbackVariable: string | null = null;
+
+  if (!subtle) {
+    const fallbackBase = `--ion-color-${name}-bold`;
+    fallbackVariable = `${fallbackBase}${variationSuffix}`;
+  }
+
+  // Handle alpha transparency
+  if (alpha !== null) {
+    const rgbVar = `${variable}-rgb`;
+    const fallbackRgb = fallbackVariable ? `${fallbackVariable}-rgb` : null;
+
+    return fallbackRgb ? `rgba(var(${rgbVar}, var(${fallbackRgb})), ${alpha})` : `rgba(var(${rgbVar}), ${alpha})`;
+  }
+
+  // Handle RGB variables
+  if (rgb) {
+    variable = `${variable}-rgb`;
+    fallbackVariable = fallbackVariable ? `${fallbackVariable}-rgb` : null;
+  }
+
+  return fallbackVariable ? `var(${variable}, var(${fallbackVariable}))` : `var(${variable})`;
+}
+
 /**
  * Mimics the CSS `clamp` function logic.
  *
