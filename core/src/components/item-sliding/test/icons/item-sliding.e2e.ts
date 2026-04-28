@@ -10,12 +10,13 @@ import { configs, test, dragElementBy } from '@utils/test/playwright';
  */
 configs({ modes: ['ionic-md', 'ios', 'md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: icons'), () => {
-    test('should not have visual regressions', async ({ page }) => {
+    test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/item-sliding/test/icons`, config);
+    });
 
-      const itemIDs = ['iconsOnly', 'iconsStart', 'iconsEnd', 'iconsTop', 'iconsBottom'];
-      for (const itemID of itemIDs) {
-        const item = page.locator(`#${itemID}`);
+    ['iconsOnly', 'iconsStart', 'iconsEnd', 'iconsTop', 'iconsBottom'].forEach((position) => {
+      test(`${position} - should not have visual regressions`, async ({ page }) => {
+        const item = page.locator(`#${position}`);
 
         /**
          * Negative dragByX value to drag element from the right to the left
@@ -29,9 +30,9 @@ configs({ modes: ['ionic-md', 'ios', 'md'] }).forEach(({ title, screenshot, conf
         await page.waitForChanges();
 
         // Convert camelCase ids to kebab-case for screenshot file names
-        const itemIDKebab = itemID.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-        await expect(item).toHaveScreenshot(screenshot(`item-sliding-${itemIDKebab}`));
-      }
+        const positionKebab = position.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+        await expect(item).toHaveScreenshot(screenshot(`item-sliding-${positionKebab}`));
+      });
     });
   });
 });
