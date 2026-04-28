@@ -62,14 +62,5 @@ export const renderIcon = (
     );
   }
 
-  return (
-    <ion-icon
-      icon={svgIcon}
-      part={part}
-      class={cls}
-      aria-hidden="true"
-      lazy={lazy}
-      flip-rtl={flipRtl}
-    />
-  );
+  return <ion-icon icon={svgIcon} part={part} class={cls} aria-hidden="true" lazy={lazy} flip-rtl={flipRtl} />;
 };

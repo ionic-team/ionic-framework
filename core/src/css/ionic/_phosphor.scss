@@ -11,8 +11,7 @@
 // (see scripts/copy-fonts.mjs). Paths here are relative to css/ionic/.
 @font-face {
   font-family: "Phosphor";
-  src: url("../fonts/Phosphor.woff2") format("woff2"),
-    url("../fonts/Phosphor.woff") format("woff");
+  src: url("../fonts/Phosphor.woff2") format("woff2"), url("../fonts/Phosphor.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: block;
