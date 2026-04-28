@@ -139,10 +139,19 @@ const moveElement = async (page: E2EPage, startX: number, startY: number, dragBy
 
     await page.mouse.move(middleX, middleY);
 
-    // Safari needs to wait for a repaint to occur before moving the mouse again.
+    /**
+     * In Safari, gesture velocity is calculated relative to animation frames.
+     * Without waiting for a repaint, consecutive `mouse.move` events arrive
+     * with ~0ms time delta and velocity never accumulates, causing gesture
+     * detection to fail.
+     */
     if (browser === 'webkit' && i % 2 === 0) {
-      // Repainting every 2 steps is enough to keep the drag gesture smooth.
-      // Anything past 4 steps will cause the drag gesture to be flaky.
+      /**
+       * Repaintng every 2 steps is enough to keep the drag gesture smooth.
+       * Repainting on every step makes the test slow, and repainting every
+       * 4+ steps means Safari does not see enough frames to track the gesture
+       * reliably.
+       */
       await page.evaluate(() => new Promise(requestAnimationFrame));
     }
   }
