@@ -322,7 +322,9 @@ describe('gallery: properties', () => {
         sharedGallery.layout = 'masonry';
         (sharedGallery as any).masonryRaf = 77;
 
-        const cancelAnimationFrameSpy = jest.spyOn(globalThis, 'cancelAnimationFrame').mockImplementation(() => undefined);
+        const cancelAnimationFrameSpy = jest
+          .spyOn(globalThis, 'cancelAnimationFrame')
+          .mockImplementation(() => undefined);
         const requestAnimationFrameSpy = jest.spyOn(globalThis, 'requestAnimationFrame').mockImplementation(() => 123);
 
         (sharedGallery as any).scheduleMasonryResize();

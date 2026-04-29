@@ -187,7 +187,9 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
               });
             }, appendedItems);
 
-            await expect(gallery).toHaveScreenshot(screenshot(`gallery-${layout}${orderSuffix}-divs-dynamically-appended`));
+            await expect(gallery).toHaveScreenshot(
+              screenshot(`gallery-${layout}${orderSuffix}-divs-dynamically-appended`)
+            );
           });
         }
       });
