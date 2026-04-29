@@ -4,6 +4,8 @@ import { printIonWarning } from '@utils/logging';
 
 import { getIonTheme } from '../../global/ionic-global';
 
+import type { GalleryBreakpointColumns, GalleryColumns } from './gallery-interface';
+
 // TODO(FW-7285): Replace with global breakpoints
 const BREAKPOINTS = {
   xs: 0,
@@ -24,15 +26,6 @@ const DEFAULT_COLUMNS = {
 };
 
 type GalleryBreakpoint = keyof typeof BREAKPOINTS;
-interface GalleryBreakpointColumns {
-  xs?: string | number;
-  sm?: string | number;
-  md?: string | number;
-  lg?: string | number;
-  xl?: string | number;
-  xxl?: string | number;
-}
-type GalleryColumnsValue = GalleryBreakpointColumns | string | number;
 const BREAKPOINT_ORDER: GalleryBreakpoint[] = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
 
 /**
@@ -78,7 +71,7 @@ export class Gallery implements ComponentInterface {
    * The number of columns to display. Can be set as a number or an object of
    * breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).
    */
-  @Prop() columns: GalleryColumnsValue = DEFAULT_COLUMNS;
+  @Prop() columns: GalleryColumns = DEFAULT_COLUMNS;
 
   @Watch('layout')
   @Watch('order')
@@ -175,7 +168,7 @@ export class Gallery implements ComponentInterface {
   /**
    * Check if the value is a breakpoint columns object.
    */
-  private isBreakpointColumns(value: GalleryColumnsValue): value is GalleryBreakpointColumns {
+  private isBreakpointColumns(value: GalleryColumns): value is GalleryBreakpointColumns {
     return typeof value === 'object' && value !== null && !Array.isArray(value);
   }
 
@@ -219,7 +212,7 @@ export class Gallery implements ComponentInterface {
    * Warn about an invalid columns value when it is set to a non-positive
    * integer or a breakpoint map object with invalid values.
    */
-  private warnInvalidColumns(columns: GalleryColumnsValue) {
+  private warnInvalidColumns(columns: GalleryColumns) {
     printIonWarning(
       `[ion-gallery] - Invalid "columns" value (${JSON.stringify(
         columns
