@@ -19,8 +19,37 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
       test(`should not have visual regressions with ${badgeSize} badges`, async ({ page }) => {
         const tabBars = positions
           .map((position) => {
+            const combinedLayouts: Record<string, string[]> = {
+              'icon-only': layouts.filter((l) => l !== 'icon-hide'),
+              'label-only': layouts.filter((l) => l !== 'label-hide'),
+            };
+
             const variantGroups = slotVariants
               .map((variant) => {
+                if (variant.label === 'icon-only' || variant.label === 'label-only') {
+                  const tabs = combinedLayouts[variant.label]
+                    .map((layout, i) => {
+                      const label = variant.hasLabel ? `<ion-label>Tab ${i + 1}</ion-label>` : '';
+                      const icon = variant.hasIcon ? `<ion-icon name="${icons[i % icons.length]}"></ion-icon>` : '';
+
+                      return `
+                          <ion-tab-button tab="tab-${position}-${variant.label}-${layout}" layout="${layout}">
+                            ${label}
+                            ${icon}
+                            <ion-badge hue="bold" shape="round" color="${
+                              colors[i % colors.length]
+                            }" size="${badgeSize}" vertical="${position}">${contents[i % contents.length]}</ion-badge>
+                          </ion-tab-button>
+                        `;
+                    })
+                    .join('\n');
+
+                  return `
+                  <h3>${variant.label}</h3>
+                  <ion-tab-bar>${tabs}</ion-tab-bar>
+                `;
+                }
+
                 const layoutRows = layouts
                   .map((layout) => {
                     const tabs = contents
