@@ -1,0 +1,11 @@
+@use "./item-sliding.common";
+@import "../../themes/native/native.globals";
+
+.item-sliding-active-slide .item {
+  position: relative;
+
+  opacity: 1;
+  z-index: $z-index-item-options + 1;
+  pointer-events: none;
+  will-change: transform;
+}

@@ -99,3 +99,7 @@
   background: globals.current-color(base);
   color: globals.current-color(contrast);
 }
+
+:host(.item-option-expand-threshold) {
+  filter: brightness(0.92);
+}
