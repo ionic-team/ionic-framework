@@ -11,18 +11,14 @@
    * Bold
    * @prop --ion-badge-hue-bold-default-background - Background color of the `bold` hue in default state
    * @prop --ion-badge-hue-bold-default-color - Text color of the `bold` hue in default state
-   * @prop --ion-badge-hue-bold-default-border-radius - Border radius of the `bold` hue in default state
    * @prop --ion-badge-hue-bold-semantic-default-background - Background color of the `bold` hue when a semantic color is applied
    * @prop --ion-badge-hue-bold-semantic-default-color - Text color of the `bold` hue when a semantic color is applied
-   * @prop --ion-badge-hue-bold-semantic-default-border-radius - Border radius of the `bold` hue when a semantic color is applied
    *
    * Subtle
    * @prop --ion-badge-hue-subtle-default-background - Background color of the `subtle` hue in default state
    * @prop --ion-badge-hue-subtle-default-color - Text color of the `subtle` hue in default state
-   * @prop --ion-badge-hue-subtle-default-border-radius - Border radius of the `subtle` hue in default state
    * @prop --ion-badge-hue-subtle-semantic-default-background - Background color of the `subtle` hue when a semantic color is applied
    * @prop --ion-badge-hue-subtle-semantic-default-color - Text color of the `subtle` hue when a semantic color is applied
-   * @prop --ion-badge-hue-subtle-semantic-default-border-radius - Border radius of the `subtle` hue when a semantic color is applied
    *
    * Shapes
    * @prop --ion-badge-shape-crisp-border-radius - Border radius of the `crisp` shape
@@ -174,6 +170,7 @@
   font-size: var(--ion-badge-size-small-content-font-size);
   font-weight: var(--ion-badge-size-small-content-font-weight);
 
+  letter-spacing: var(--ion-badge-size-small-content-letter-spacing);
   line-height: var(--ion-badge-size-small-content-line-height);
 }
 
@@ -198,6 +195,7 @@
   font-size: var(--ion-badge-size-medium-content-font-size);
   font-weight: var(--ion-badge-size-medium-content-font-weight);
 
+  letter-spacing: var(--ion-badge-size-medium-content-letter-spacing);
   line-height: var(--ion-badge-size-medium-content-line-height);
 }
 
@@ -222,6 +220,7 @@
   font-size: var(--ion-badge-size-large-content-font-size);
   font-weight: var(--ion-badge-size-large-content-font-weight);
 
+  letter-spacing: var(--ion-badge-size-large-content-letter-spacing);
   line-height: var(--ion-badge-size-large-content-line-height);
 }
 

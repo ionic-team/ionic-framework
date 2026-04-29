@@ -32,9 +32,6 @@ export type IonBadgeRecipe = {
 type IonBadgeColorDefinition = {
   background?: string;
   color?: string;
-  border?: {
-    radius?: string;
-  };
 };
 
 type IonBadgeStateDefinition = {
