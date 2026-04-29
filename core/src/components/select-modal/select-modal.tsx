@@ -1,11 +1,16 @@
-import { getIonMode } from '@global/ionic-global';
+import { getIonMode, getIonTheme } from '@global/ionic-global';
+import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, forceUpdate, h } from '@stencil/core';
 import { safeCall } from '@utils/overlays';
+import { renderOptionLabel } from '@utils/select-option-render';
 import { getClassMap, hostContext } from '@utils/theme';
+import { closeOutline, closeSharp } from 'ionicons/icons';
 
+import type { Theme } from '../../interface';
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
+import type { SelectOverlayOption } from '../select/select-interface';
 
 import type { SelectModalOption } from './select-modal-interface';
 
@@ -21,12 +26,24 @@ import type { SelectModalOption } from './select-modal-interface';
 export class SelectModal implements ComponentInterface {
   @Element() el!: HTMLIonSelectModalElement;
 
+  // Tracks the option that received Enter-keydown so keyup only
+  // dismisses when the press started on the same option. Prevents
+  // Enter on the triggering ion-select from auto-dismissing.
+  private pendingEnterTarget: HTMLElement | null = null;
+
   @Prop() header?: string;
 
   /**
    * The text to display on the cancel button.
    */
   @Prop() cancelText = 'Close';
+
+  /**
+   * If `true`, the cancel button will display a close icon instead of the `cancelText`.
+   * When `cancelIcon` is `true`, `cancelText` is not displayed visually but is still used
+   * as the accessible label (`aria-label`) for the button.
+   */
+  @Prop() cancelIcon = false;
 
   @Prop() multiple?: boolean;
 
@@ -79,6 +96,16 @@ export class SelectModal implements ComponentInterface {
     }
   }
 
+  private get cancelButtonIcon(): string {
+    const theme = getIonTheme(this);
+    const icons: Record<Theme, string> = {
+      ios: closeOutline,
+      md: closeSharp,
+      ionic: xRegular,
+    };
+    return icons[theme];
+  }
+
   private getModalContextClasses() {
     const el = this.el;
     return {
@@ -92,66 +119,107 @@ export class SelectModal implements ComponentInterface {
 
     return (
       <ion-radio-group value={checked} onIonChange={(ev) => this.callOptionHandler(ev)}>
-        {this.options.map((option) => (
-          <ion-item
-            lines="none"
-            class={{
-              // TODO FW-4784
-              'item-radio-checked': option.value === checked,
-              ...getClassMap(option.cssClass),
-            }}
-          >
-            <ion-radio
-              value={option.value}
-              disabled={option.disabled}
-              justify="start"
-              labelPlacement="end"
-              onClick={() => this.closeModal()}
-              onKeyUp={(ev) => {
-                if (ev.key === ' ') {
-                  /**
-                   * Selecting a radio option with keyboard navigation,
-                   * either through the Enter or Space keys, should
-                   * dismiss the modal.
-                   */
-                  this.closeModal();
-                }
+        {this.options.map((option, index) => {
+          /**
+           * Cast to `SelectOverlayOption` to access rich content
+           * fields (`startContent`, `endContent`, `description`)
+           * that are passed through from `ion-select` but not
+           * part of the public `SelectModalOption` interface.
+           */
+          const richOption = option as SelectOverlayOption;
+          const optionLabelOptions = {
+            id: `modal-option-${index}`,
+            label: richOption.text,
+            startContent: richOption.startContent,
+            endContent: richOption.endContent,
+            description: richOption.description,
+          };
+
+          return (
+            <ion-item
+              lines="none"
+              class={{
+                // TODO FW-4784
+                'item-radio-checked': option.value === checked,
+                ...getClassMap(option.cssClass),
               }}
             >
-              {option.text}
-            </ion-radio>
-          </ion-item>
-        ))}
+              <ion-radio
+                value={option.value}
+                disabled={option.disabled}
+                justify="start"
+                labelPlacement="end"
+                onClick={() => this.closeModal()}
+                onKeyDown={(ev) => {
+                  if (ev.key === 'Enter' && !ev.repeat) {
+                    this.pendingEnterTarget = ev.currentTarget as HTMLElement;
+                  }
+                }}
+                onKeyUp={(ev) => {
+                  if (ev.key === ' ') {
+                    // Space selects and dismisses in one press.
+                    this.closeModal();
+                  } else if (ev.key === 'Enter') {
+                    const shouldClose = this.pendingEnterTarget === ev.currentTarget;
+                    this.pendingEnterTarget = null;
+                    if (shouldClose) {
+                      this.closeModal();
+                    }
+                  }
+                }}
+              >
+                {renderOptionLabel(optionLabelOptions, 'select-option-label')}
+              </ion-radio>
+            </ion-item>
+          );
+        })}
       </ion-radio-group>
     );
   }
 
   private renderCheckboxOptions() {
-    return this.options.map((option) => (
-      <ion-item
-        class={{
-          // TODO FW-4784
-          'item-checkbox-checked': option.checked,
-          ...getClassMap(option.cssClass),
-        }}
-      >
-        <ion-checkbox
-          value={option.value}
-          disabled={option.disabled}
-          checked={option.checked}
-          justify="start"
-          labelPlacement="end"
-          onIonChange={(ev) => {
-            this.setChecked(ev);
-            this.callOptionHandler(ev);
+    return this.options.map((option, index) => {
+      /**
+       * Cast to `SelectOverlayOption` to access rich content
+       * fields (`startContent`, `endContent`, `description`)
+       * that are passed through from `ion-select` but not
+       * part of the public `SelectModalOption` interface.
+       */
+      const richOption = option as SelectOverlayOption;
+      const optionLabelOptions = {
+        id: `modal-option-${index}`,
+        label: richOption.text,
+        startContent: richOption.startContent,
+        endContent: richOption.endContent,
+        description: richOption.description,
+      };
+
+      return (
+        <ion-item
+          class={{
             // TODO FW-4784
-            forceUpdate(this);
+            'item-checkbox-checked': option.checked,
+            ...getClassMap(option.cssClass),
           }}
         >
-          {option.text}
-        </ion-checkbox>
-      </ion-item>
-    ));
+          <ion-checkbox
+            value={option.value}
+            disabled={option.disabled}
+            checked={option.checked}
+            justify="start"
+            labelPlacement="end"
+            onIonChange={(ev) => {
+              this.setChecked(ev);
+              this.callOptionHandler(ev);
+              // TODO FW-4784
+              forceUpdate(this);
+            }}
+          >
+            {renderOptionLabel(optionLabelOptions, 'select-option-label')}
+          </ion-checkbox>
+        </ion-item>
+      );
+    });
   }
 
   render() {
@@ -167,7 +235,13 @@ export class SelectModal implements ComponentInterface {
             {this.header !== undefined && <ion-title>{this.header}</ion-title>}
 
             <ion-buttons slot="end">
-              <ion-button onClick={() => this.closeModal()}>{this.cancelText}</ion-button>
+              <ion-button aria-label={this.cancelIcon ? this.cancelText : undefined} onClick={() => this.closeModal()}>
+                {this.cancelIcon ? (
+                  <ion-icon aria-hidden="true" slot="icon-only" icon={this.cancelButtonIcon}></ion-icon>
+                ) : (
+                  this.cancelText
+                )}
+              </ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>

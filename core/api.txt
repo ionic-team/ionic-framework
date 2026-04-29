@@ -2255,6 +2255,7 @@ ion-segment-view,prop,swipeGesture,boolean,true,false,false
 ion-segment-view,event,ionSegmentViewScroll,SegmentViewScrollEvent,true
 
 ion-select,shadow
+ion-select,prop,cancelIcon,boolean,false,false,false
 ion-select,prop,cancelText,string,'Cancel',false,false
 ion-select,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-select,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
@@ -2334,6 +2335,27 @@ ion-select,css-prop,--placeholder-opacity,md
 ion-select,css-prop,--ripple-color,ionic
 ion-select,css-prop,--ripple-color,ios
 ion-select,css-prop,--ripple-color,md
+ion-select,css-prop,--select-text-gap,ionic
+ion-select,css-prop,--select-text-gap,ios
+ion-select,css-prop,--select-text-gap,md
+ion-select,css-prop,--select-text-media-border-color,ionic
+ion-select,css-prop,--select-text-media-border-color,ios
+ion-select,css-prop,--select-text-media-border-color,md
+ion-select,css-prop,--select-text-media-border-radius,ionic
+ion-select,css-prop,--select-text-media-border-radius,ios
+ion-select,css-prop,--select-text-media-border-radius,md
+ion-select,css-prop,--select-text-media-border-style,ionic
+ion-select,css-prop,--select-text-media-border-style,ios
+ion-select,css-prop,--select-text-media-border-style,md
+ion-select,css-prop,--select-text-media-border-width,ionic
+ion-select,css-prop,--select-text-media-border-width,ios
+ion-select,css-prop,--select-text-media-border-width,md
+ion-select,css-prop,--select-text-media-height,ionic
+ion-select,css-prop,--select-text-media-height,ios
+ion-select,css-prop,--select-text-media-height,md
+ion-select,css-prop,--select-text-media-width,ionic
+ion-select,css-prop,--select-text-media-width,ios
+ion-select,css-prop,--select-text-media-width,md
 ion-select,part,bottom
 ion-select,part,container
 ion-select,part,error-text
@@ -2347,12 +2369,14 @@ ion-select,part,text
 ion-select,part,wrapper
 
 ion-select-modal,scoped
+ion-select-modal,prop,cancelIcon,boolean,false,false,false
 ion-select-modal,prop,cancelText,string,'Close',false,false
 ion-select-modal,prop,header,string | undefined,undefined,false,false
 ion-select-modal,prop,multiple,boolean | undefined,undefined,false,false
 ion-select-modal,prop,options,SelectModalOption[],[],false,false
 
 ion-select-option,shadow
+ion-select-option,prop,description,string | undefined,undefined,false,false
 ion-select-option,prop,disabled,boolean,false,false,false
 ion-select-option,prop,mode,"ios" | "md",undefined,false,false
 ion-select-option,prop,theme,"ios" | "md" | "ionic",undefined,false,false
@@ -2408,6 +2432,7 @@ ion-tab,method,setActive,setActive() => Promise<void>
 ion-tab-bar,shadow
 ion-tab-bar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-tab-bar,prop,expand,"compact" | "full",'full',false,false
+ion-tab-bar,prop,hideOnScroll,boolean,false,false,false
 ion-tab-bar,prop,mode,"ios" | "md",undefined,false,false
 ion-tab-bar,prop,selectedTab,string | undefined,undefined,false,false
 ion-tab-bar,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false

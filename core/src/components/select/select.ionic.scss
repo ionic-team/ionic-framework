@@ -20,6 +20,7 @@
   --highlight-color-focused: #{globals.$ion-border-focus-default};
   --highlight-color-valid: #{globals.$ion-semantics-success-900};
   --highlight-color-invalid: #{globals.$ion-semantics-danger-800};
+  --select-text-gap: #{globals.$ion-space-300};
 
   min-height: globals.$ion-scale-1100;
 }

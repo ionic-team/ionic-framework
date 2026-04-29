@@ -2204,7 +2204,7 @@ export declare interface IonSegmentView extends Components.IonSegmentView {
 
 
 @ProxyCmp({
-  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'errorText', 'expandedIcon', 'fill', 'helperText', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'required', 'selectedText', 'shape', 'size', 'theme', 'toggleIcon', 'value'],
+  inputs: ['cancelIcon', 'cancelText', 'color', 'compareWith', 'disabled', 'errorText', 'expandedIcon', 'fill', 'helperText', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'required', 'selectedText', 'shape', 'size', 'theme', 'toggleIcon', 'value'],
   methods: ['open']
 })
 @Component({
@@ -2212,7 +2212,7 @@ export declare interface IonSegmentView extends Components.IonSegmentView {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'errorText', 'expandedIcon', 'fill', 'helperText', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'required', 'selectedText', 'shape', 'size', 'theme', 'toggleIcon', 'value'],
+  inputs: ['cancelIcon', 'cancelText', 'color', 'compareWith', 'disabled', 'errorText', 'expandedIcon', 'fill', 'helperText', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'required', 'selectedText', 'shape', 'size', 'theme', 'toggleIcon', 'value'],
 })
 export class IonSelect {
   protected el: HTMLIonSelectElement;
@@ -2253,14 +2253,14 @@ This event will not emit when programmatically setting the `value` property.
 
 
 @ProxyCmp({
-  inputs: ['cancelText', 'header', 'multiple', 'options']
+  inputs: ['cancelIcon', 'cancelText', 'header', 'multiple', 'options']
 })
 @Component({
   selector: 'ion-select-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['cancelText', 'header', 'multiple', 'options'],
+  inputs: ['cancelIcon', 'cancelText', 'header', 'multiple', 'options'],
 })
 export class IonSelectModal {
   protected el: HTMLIonSelectModalElement;
@@ -2275,14 +2275,14 @@ export declare interface IonSelectModal extends Components.IonSelectModal {}
 
 
 @ProxyCmp({
-  inputs: ['disabled', 'mode', 'theme', 'value']
+  inputs: ['description', 'disabled', 'mode', 'theme', 'value']
 })
 @Component({
   selector: 'ion-select-option',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'mode', 'theme', 'value'],
+  inputs: ['description', 'disabled', 'mode', 'theme', 'value'],
 })
 export class IonSelectOption {
   protected el: HTMLIonSelectOptionElement;
@@ -2392,14 +2392,14 @@ export declare interface IonTab extends Components.IonTab {}
 
 
 @ProxyCmp({
-  inputs: ['color', 'expand', 'mode', 'selectedTab', 'shape', 'theme', 'translucent']
+  inputs: ['color', 'expand', 'hideOnScroll', 'mode', 'selectedTab', 'shape', 'theme', 'translucent']
 })
 @Component({
   selector: 'ion-tab-bar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'expand', 'mode', 'selectedTab', 'shape', 'theme', 'translucent'],
+  inputs: ['color', 'expand', 'hideOnScroll', 'mode', 'selectedTab', 'shape', 'theme', 'translucent'],
 })
 export class IonTabBar {
   protected el: HTMLIonTabBarElement;

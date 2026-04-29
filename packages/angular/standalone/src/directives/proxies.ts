@@ -1987,14 +1987,14 @@ export declare interface IonSegmentView extends Components.IonSegmentView {
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSelectModal,
-  inputs: ['cancelText', 'header', 'multiple', 'options']
+  inputs: ['cancelIcon', 'cancelText', 'header', 'multiple', 'options']
 })
 @Component({
   selector: 'ion-select-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['cancelText', 'header', 'multiple', 'options'],
+  inputs: ['cancelIcon', 'cancelText', 'header', 'multiple', 'options'],
   standalone: true
 })
 export class IonSelectModal {
@@ -2011,14 +2011,14 @@ export declare interface IonSelectModal extends Components.IonSelectModal {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSelectOption,
-  inputs: ['disabled', 'mode', 'theme', 'value']
+  inputs: ['description', 'disabled', 'mode', 'theme', 'value']
 })
 @Component({
   selector: 'ion-select-option',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'mode', 'theme', 'value'],
+  inputs: ['description', 'disabled', 'mode', 'theme', 'value'],
   standalone: true
 })
 export class IonSelectOption {
@@ -2138,14 +2138,14 @@ export declare interface IonTab extends Components.IonTab {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonTabBar,
-  inputs: ['color', 'expand', 'mode', 'selectedTab', 'shape', 'theme', 'translucent']
+  inputs: ['color', 'expand', 'hideOnScroll', 'mode', 'selectedTab', 'shape', 'theme', 'translucent']
 })
 @Component({
   selector: 'ion-tab-bar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'expand', 'mode', 'selectedTab', 'shape', 'theme', 'translucent'],
+  inputs: ['color', 'expand', 'hideOnScroll', 'mode', 'selectedTab', 'shape', 'theme', 'translucent'],
   standalone: true
 })
 export class IonTabBar {

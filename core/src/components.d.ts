@@ -3712,6 +3712,11 @@ export namespace Components {
     }
     interface IonSelect {
         /**
+          * If `true`, the cancel button will display an icon instead of the `cancelText`. Only applies when `interface` is set to `"modal"`. Has no effect on `"action-sheet"`, `"alert"`, or `"popover"` interfaces. When `cancelIcon` is `true`, the `cancelText` property is ignored for display but is used as the accessible label for the icon button.
+          * @default false
+         */
+        "cancelIcon": boolean;
+        /**
           * The text to display on the cancel button.
           * @default 'Cancel'
          */
@@ -3828,6 +3833,11 @@ export namespace Components {
     }
     interface IonSelectModal {
         /**
+          * If `true`, the cancel button will display a close icon instead of the `cancelText`. When `cancelIcon` is `true`, `cancelText` is not displayed visually but is still used as the accessible label (`aria-label`) for the button.
+          * @default false
+         */
+        "cancelIcon": boolean;
+        /**
           * The text to display on the cancel button.
           * @default 'Close'
          */
@@ -3840,6 +3850,10 @@ export namespace Components {
         "options": SelectModalOption[];
     }
     interface IonSelectOption {
+        /**
+          * Text that is placed underneath the option text to provide additional details about the option.
+         */
+        "description"?: string;
         /**
           * If `true`, the user cannot interact with the select option. This property does not apply when `interface="action-sheet"` as `ion-action-sheet` does not allow for disabled buttons.
           * @default false
@@ -3997,6 +4011,11 @@ export namespace Components {
           * @default 'full'
          */
         "expand": 'compact' | 'full';
+        /**
+          * If `true`, the tab bar will be hidden when the user scrolls down and shown when the user scrolls up. Only applies when the theme is `"ionic"` and `expand` is `"compact"`.
+          * @default false
+         */
+        "hideOnScroll": boolean;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -9809,6 +9828,11 @@ declare namespace LocalJSX {
     }
     interface IonSelect {
         /**
+          * If `true`, the cancel button will display an icon instead of the `cancelText`. Only applies when `interface` is set to `"modal"`. Has no effect on `"action-sheet"`, `"alert"`, or `"popover"` interfaces. When `cancelIcon` is `true`, the `cancelText` property is ignored for display but is used as the accessible label for the icon button.
+          * @default false
+         */
+        "cancelIcon"?: boolean;
+        /**
           * The text to display on the cancel button.
           * @default 'Cancel'
          */
@@ -9944,6 +9968,11 @@ declare namespace LocalJSX {
     }
     interface IonSelectModal {
         /**
+          * If `true`, the cancel button will display a close icon instead of the `cancelText`. When `cancelIcon` is `true`, `cancelText` is not displayed visually but is still used as the accessible label (`aria-label`) for the button.
+          * @default false
+         */
+        "cancelIcon"?: boolean;
+        /**
           * The text to display on the cancel button.
           * @default 'Close'
          */
@@ -9956,6 +9985,10 @@ declare namespace LocalJSX {
         "options"?: SelectModalOption[];
     }
     interface IonSelectOption {
+        /**
+          * Text that is placed underneath the option text to provide additional details about the option.
+         */
+        "description"?: string;
         /**
           * If `true`, the user cannot interact with the select option. This property does not apply when `interface="action-sheet"` as `ion-action-sheet` does not allow for disabled buttons.
           * @default false
@@ -10116,6 +10149,11 @@ declare namespace LocalJSX {
           * @default 'full'
          */
         "expand"?: 'compact' | 'full';
+        /**
+          * If `true`, the tab bar will be hidden when the user scrolls down and shown when the user scrolls up. Only applies when the theme is `"ionic"` and `expand` is `"compact"`.
+          * @default false
+         */
+        "hideOnScroll"?: boolean;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -11301,6 +11339,7 @@ declare namespace LocalJSX {
     }
     interface IonSelectAttributes {
         "cancelText": string;
+        "cancelIcon": boolean;
         "color": Color;
         "compareWith": string | SelectCompareFn | null;
         "disabled": boolean;
@@ -11327,11 +11366,13 @@ declare namespace LocalJSX {
     interface IonSelectModalAttributes {
         "header": string;
         "cancelText": string;
+        "cancelIcon": boolean;
         "multiple": boolean;
     }
     interface IonSelectOptionAttributes {
         "disabled": boolean;
         "value": string;
+        "description": string;
     }
     interface IonSelectPopoverAttributes {
         "header": string;
@@ -11362,6 +11403,7 @@ declare namespace LocalJSX {
     interface IonTabBarAttributes {
         "color": Color;
         "selectedTab": string;
+        "hideOnScroll": boolean;
         "translucent": boolean;
         "expand": 'compact' | 'full';
         "shape": 'soft' | 'round' | 'rectangular';

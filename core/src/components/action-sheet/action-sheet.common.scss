@@ -233,3 +233,20 @@
     }
   }
 }
+
+// Action Sheet: Select Option
+// --------------------------------------------------
+
+.action-sheet-button-label {
+  display: flex;
+
+  align-items: center;
+}
+
+.select-option-content {
+  flex: 1;
+}
+
+.select-option-description {
+  display: block;
+}
