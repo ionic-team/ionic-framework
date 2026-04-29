@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.5](https://github.com/ionic-team/ionic-framework/compare/v8.8.4...v8.8.5) (2026-04-29)
+
+
+### Bug Fixes
+
+* **modal:** remove safe-area gap and flash in fullscreen modals ([#31092](https://github.com/ionic-team/ionic-framework/issues/31092)) ([f3cd39b](https://github.com/ionic-team/ionic-framework/commit/f3cd39b7fb291286374285c4a326ec6b9a8ea237)), closes [#31015](https://github.com/ionic-team/ionic-framework/issues/31015)
+* **select:** select focused option on Enter in popover and modal interfaces ([#31093](https://github.com/ionic-team/ionic-framework/issues/31093)) ([fd79771](https://github.com/ionic-team/ionic-framework/commit/fd79771e5be77c9f38379a3a7b9ab44bb11ff325)), closes [#30561](https://github.com/ionic-team/ionic-framework/issues/30561)
+
+
+
+
+
 ## [8.8.4](https://github.com/ionic-team/ionic-framework/compare/v8.8.3...v8.8.4) (2026-04-15)
 
 
