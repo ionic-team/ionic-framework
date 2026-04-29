@@ -42,6 +42,32 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await radioFixture.expectChecked(false);
     });
 
+    test('Enter outside a select interface should not change the value', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30561',
+      });
+
+      await page.setContent(
+        `
+        <ion-radio-group value="one">
+          <ion-item>
+            <ion-radio id="one" value="one">One</ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-radio id="two" value="two">Two</ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      `,
+        config
+      );
+
+      await radioFixture.checkRadio('keyboard', 'ion-radio#two', 'Enter');
+
+      const group = page.locator('ion-radio-group');
+      await expect(group).toHaveJSProperty('value', 'one');
+    });
+
     test('click should not deselect without allowEmptySelection', async ({ page }) => {
       await page.setContent(
         `

@@ -23,6 +23,11 @@ export interface ModalSafeAreaContext {
   presentingElement?: HTMLElement;
   breakpoints?: number[];
   currentBreakpoint?: number;
+  /**
+   * Only consulted by `getInitialSafeAreaConfig()`. Callers that only use the
+   * context for non-initial paths can omit this. See `hasCustomModalDimensions()`.
+   */
+  hasCustomDimensions?: boolean;
 }
 
 /**
@@ -37,6 +42,13 @@ export interface ModalSafeAreaContext {
 const MODAL_INSET_MIN_WIDTH = 768;
 const MODAL_INSET_MIN_HEIGHT = 600;
 const EDGE_THRESHOLD = 5;
+
+/**
+ * CSS values for `--width` / `--height` that are treated as fullscreen
+ * (modal touches the corresponding screen edges). Empty string means the
+ * property was not overridden. See `hasCustomModalDimensions()`.
+ */
+const FULLSCREEN_SIZE_VALUES = new Set(['', '100%', '100vw', '100vh', '100dvw', '100dvh', '100svw', '100svh']);
 
 /**
  * Cache for resolved root safe-area-top value, invalidated once per frame.
@@ -93,6 +105,23 @@ export const getRootSafeAreaTop = (): number => {
 };
 
 /**
+ * True when the modal host declares BOTH a non-fullscreen `--width` AND a
+ * non-fullscreen `--height` (i.e. a centered-dialog-like modal that doesn't
+ * touch any screen edge).
+ *
+ * The conservative "both axes" check avoids mis-zeroing safe-area for
+ * partial-custom modals where the modal still touches top/bottom edges
+ * (e.g. only `--width` overridden). Partial cases fall through to the
+ * existing position-based post-animation correction.
+ */
+export const hasCustomModalDimensions = (hostEl: HTMLElement): boolean => {
+  const styles = getComputedStyle(hostEl);
+  const width = styles.getPropertyValue('--width').trim();
+  const height = styles.getPropertyValue('--height').trim();
+  return !FULLSCREEN_SIZE_VALUES.has(width) && !FULLSCREEN_SIZE_VALUES.has(height);
+};
+
+/**
  * Returns the initial safe-area configuration based on modal type.
  * This is called before animation starts and uses configuration-based prediction.
  *
@@ -129,8 +158,11 @@ export const getInitialSafeAreaConfig = (context: ModalSafeAreaContext): SafeAre
 
   // On viewports that meet the centered dialog media query breakpoints,
   // regular modals render as centered dialogs (not fullscreen), so they
-  // don't touch any screen edges and don't need safe-area insets.
-  if (isCenteredDialogViewport()) {
+  // don't touch any screen edges and don't need safe-area insets. Also
+  // applies to phone viewports when the modal declares custom --width and
+  // --height; these don't touch screen edges either, so the initial
+  // prediction must be zero to avoid a post-animation correction flash.
+  if (isCenteredDialogViewport() || context.hasCustomDimensions) {
     return {
       top: '0px',
       bottom: '0px',
