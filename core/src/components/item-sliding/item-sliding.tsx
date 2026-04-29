@@ -13,8 +13,8 @@ const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
 const IONIC_ELASTIC_FACTOR = 0.15;
 const IONIC_SNAP_OPEN_RATIO = 0.4;
-const IONIC_EXPAND_TRIGGER = 80;
-const IONIC_VELOCITY_THRESHOLD = 0.4;
+const IONIC_EXPAND_TRIGGER = 40;
+const IONIC_VELOCITY_THRESHOLD = 400;
 const IONIC_ACTION_BASE_WIDTH = 64;
 const IONIC_CONFIRM_PAUSE = 300;
 const FULL_SWIPE_TRANSITION_MS = 250;
@@ -806,14 +806,12 @@ export class ItemSliding implements ComponentInterface {
 
 
     const closeDirection =
-      activeDirection === 'end'
-        ? velocityX > IONIC_VELOCITY_THRESHOLD * 1000
-        : velocityX < -IONIC_VELOCITY_THRESHOLD * 1000;
+      activeDirection === 'end' ? velocityX > IONIC_VELOCITY_THRESHOLD : velocityX < -IONIC_VELOCITY_THRESHOLD;
 
     if (
       !closeDirection &&
       hasExpandable &&
-      (extraWidth >= IONIC_EXPAND_TRIGGER || (extraWidth > 0 && (wasRevealed && velocityX < Math.abs(IONIC_VELOCITY_THRESHOLD * 1000))))
+      (extraWidth >= IONIC_EXPAND_TRIGGER || (extraWidth > 0  && (wasRevealed && Math.abs(velocityX) > IONIC_VELOCITY_THRESHOLD)))
     ) {
       this.animateIonicFullSwipe(activeDirection).catch(() => {
         if (this.gesture) {
