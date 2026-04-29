@@ -112,6 +112,7 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
                 margin: 4px 0 2px 16px;
               }
             </style>
+
             <div id="container">
               ${tabBars}
             </div>
