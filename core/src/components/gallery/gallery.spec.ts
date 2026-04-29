@@ -294,5 +294,120 @@ describe('gallery: properties', () => {
         expect((sharedGallery as any).getColumnsForWidth(width)).toBe(expectedColumns);
       });
     });
+
+    describe('gallery layout', () => {
+      it('should update responsive columns and schedule masonry resize when layout changes', () => {
+        const updateResponsiveColumnsSpy = jest.spyOn(sharedGallery as any, 'updateResponsiveColumns');
+        const scheduleMasonryResizeSpy = jest.spyOn(sharedGallery as any, 'scheduleMasonryResize');
+
+        (sharedGallery as any).layoutChanged();
+
+        expect(updateResponsiveColumnsSpy).toHaveBeenCalledWith(true);
+        expect(scheduleMasonryResizeSpy).toHaveBeenCalled();
+      });
+
+      it('should clear masonry styles and not queue animation frame when layout is not masonry', () => {
+        sharedGallery.layout = 'uniform';
+
+        const clearMasonryStylesSpy = jest.spyOn(sharedGallery as any, 'clearMasonryStyles');
+        const requestAnimationFrameSpy = jest.spyOn(globalThis, 'requestAnimationFrame');
+
+        (sharedGallery as any).scheduleMasonryResize();
+
+        expect(clearMasonryStylesSpy).toHaveBeenCalled();
+        expect(requestAnimationFrameSpy).not.toHaveBeenCalled();
+      });
+
+      it('should cancel pending animation frame and queue a new one when layout is masonry', () => {
+        sharedGallery.layout = 'masonry';
+        (sharedGallery as any).masonryRaf = 77;
+
+        const cancelAnimationFrameSpy = jest.spyOn(globalThis, 'cancelAnimationFrame').mockImplementation(() => undefined);
+        const requestAnimationFrameSpy = jest.spyOn(globalThis, 'requestAnimationFrame').mockImplementation(() => 123);
+
+        (sharedGallery as any).scheduleMasonryResize();
+
+        expect(cancelAnimationFrameSpy).toHaveBeenCalledWith(77);
+        expect(requestAnimationFrameSpy).toHaveBeenCalled();
+        expect((sharedGallery as any).masonryRaf).toBe(123);
+
+        cancelAnimationFrameSpy.mockRestore();
+        requestAnimationFrameSpy.mockRestore();
+      });
+
+      it('should not schedule masonry resize on child load when layout is not masonry', () => {
+        sharedGallery.layout = 'uniform';
+
+        const scheduleMasonryResizeSpy = jest.spyOn(sharedGallery as any, 'scheduleMasonryResize');
+
+        (sharedGallery as any).onChildLoad(new Event('load'));
+
+        expect(scheduleMasonryResizeSpy).not.toHaveBeenCalled();
+      });
+
+      it('should schedule masonry resize on child load when target is inside gallery and layout is masonry', () => {
+        sharedGallery.layout = 'masonry';
+        const galleryEl = document.createElement('ion-gallery');
+        const child = document.createElement('div');
+        galleryEl.appendChild(child);
+        Object.defineProperty(sharedGallery, 'el', {
+          value: galleryEl,
+          configurable: true,
+        });
+
+        const scheduleMasonryResizeSpy = jest.spyOn(sharedGallery as any, 'scheduleMasonryResize');
+        const event = new Event('load');
+        Object.defineProperty(event, 'target', { value: child });
+
+        (sharedGallery as any).onChildLoad(event);
+
+        expect(scheduleMasonryResizeSpy).toHaveBeenCalled();
+      });
+
+      it('should not schedule masonry resize on child load when target is outside gallery', () => {
+        sharedGallery.layout = 'masonry';
+        const galleryEl = document.createElement('ion-gallery');
+        const outsideChild = document.createElement('div');
+        Object.defineProperty(sharedGallery, 'el', {
+          value: galleryEl,
+          configurable: true,
+        });
+
+        const scheduleMasonryResizeSpy = jest.spyOn(sharedGallery as any, 'scheduleMasonryResize');
+        const event = new Event('load');
+        Object.defineProperty(event, 'target', { value: outsideChild });
+
+        (sharedGallery as any).onChildLoad(event);
+
+        expect(scheduleMasonryResizeSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('gallery order', () => {
+      it('should place items sequentially when order is set to sequential', () => {
+        sharedGallery.order = 'sequential';
+
+        expect((sharedGallery as any).getColumnIndex(0, [0, 0, 0], 3)).toBe(0);
+        expect((sharedGallery as any).getColumnIndex(1, [1, 0, 0], 3)).toBe(1);
+        expect((sharedGallery as any).getColumnIndex(2, [1, 1, 0], 3)).toBe(2);
+        expect((sharedGallery as any).getColumnIndex(3, [1, 1, 1], 3)).toBe(0);
+        expect((sharedGallery as any).getColumnIndex(4, [2, 1, 1], 3)).toBe(1);
+      });
+
+      it('should place items in the shortest column when order is set to best-fit', () => {
+        sharedGallery.order = 'best-fit';
+
+        expect((sharedGallery as any).getColumnIndex(5, [4, 2, 6], 3)).toBe(1);
+        expect((sharedGallery as any).getColumnIndex(2, [3, 5, 1], 3)).toBe(2);
+        expect((sharedGallery as any).getColumnIndex(9, [2, 3, 4], 3)).toBe(0);
+      });
+
+      it('should prefer the first shortest column when best-fit columns are tied', () => {
+        sharedGallery.order = 'best-fit';
+
+        expect((sharedGallery as any).getColumnIndex(7, [2, 2, 5], 3)).toBe(0);
+        expect((sharedGallery as any).getColumnIndex(1, [3, 1, 1], 3)).toBe(1);
+      });
+    });
   });
 });
