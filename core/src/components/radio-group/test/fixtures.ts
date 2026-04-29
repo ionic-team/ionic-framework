@@ -11,13 +11,13 @@ export class RadioFixture {
     this.page = page;
   }
 
-  async checkRadio(method: 'keyboard' | 'mouse', selector = 'ion-radio') {
+  async checkRadio(method: 'keyboard' | 'mouse', selector = 'ion-radio', key: 'Space' | 'Enter' = 'Space') {
     const { page } = this;
     const radio = (this.radio = page.locator(selector));
 
     if (method === 'keyboard') {
       await radio.focus();
-      await page.keyboard.press('Space');
+      await page.keyboard.press(key);
     } else {
       await radio.click();
     }
