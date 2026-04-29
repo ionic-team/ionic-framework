@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.5](https://github.com/ionic-team/ionic-framework/compare/v8.8.4...v8.8.5) (2026-04-29)
+
+
+### Bug Fixes
+
+* **modal:** remove safe-area gap and flash in fullscreen modals ([#31092](https://github.com/ionic-team/ionic-framework/issues/31092)) ([f3cd39b](https://github.com/ionic-team/ionic-framework/commit/f3cd39b7fb291286374285c4a326ec6b9a8ea237)), closes [#31015](https://github.com/ionic-team/ionic-framework/issues/31015)
+* **select:** select focused option on Enter in popover and modal interfaces ([#31093](https://github.com/ionic-team/ionic-framework/issues/31093)) ([fd79771](https://github.com/ionic-team/ionic-framework/commit/fd79771e5be77c9f38379a3a7b9ab44bb11ff325)), closes [#30561](https://github.com/ionic-team/ionic-framework/issues/30561)
+
+
+
+
+
+## [8.8.4](https://github.com/ionic-team/ionic-framework/compare/v8.8.3...v8.8.4) (2026-04-15)
+
+
+### Bug Fixes
+
+* **checkbox:** show labels after page navigation ([#31062](https://github.com/ionic-team/ionic-framework/issues/31062)) ([f4ac445](https://github.com/ionic-team/ionic-framework/commit/f4ac4459f8317bd5eeff7d4809f9cb0991c8efd9)), closes [#31052](https://github.com/ionic-team/ionic-framework/issues/31052)
+* **datetime:** multiple month selected and flakiness display ([#31053](https://github.com/ionic-team/ionic-framework/issues/31053)) ([308aef5](https://github.com/ionic-team/ionic-framework/commit/308aef569d8c6ebc3ad2186bca6969da8e4b2a8d))
+* **tab-button:** update dark palette focused background color ([#31050](https://github.com/ionic-team/ionic-framework/issues/31050)) ([dec46b5](https://github.com/ionic-team/ionic-framework/commit/dec46b5d317080dd5d97dc056f0d8e6d4c8c45ac))
+
+
+
+
+
 ## [8.8.3](https://github.com/ionic-team/ionic-framework/compare/v8.8.2...v8.8.3) (2026-04-01)
 
 

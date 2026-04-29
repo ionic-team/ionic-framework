@@ -247,3 +247,21 @@ textarea.alert-input {
   min-height: $alert-input-min-height;
   resize: none;
 }
+
+// Alert Button: Select Option
+// --------------------------------------------------
+
+.alert-radio-label,
+.alert-checkbox-label {
+  display: flex;
+
+  align-items: center;
+}
+
+.select-option-content {
+  flex: 1;
+}
+
+.select-option-description {
+  display: block;
+}
