@@ -903,7 +903,6 @@ ion-gallery,prop,layout,"masonry" | "uniform",'uniform',false,true
 ion-gallery,prop,mode,"ios" | "md",undefined,false,false
 ion-gallery,prop,order,"best-fit" | "sequential",'sequential',false,true
 ion-gallery,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-gallery,css-prop,--ion-gallery-columns
 ion-gallery,css-prop,--ion-gallery-gap
 
 ion-grid,shadow

@@ -273,7 +273,7 @@ export class Gallery implements ComponentInterface {
     this.lastWidth = width;
 
     const columns = this.getColumnsForWidth(width);
-    this.el.style.setProperty('--ion-gallery-columns', `${columns}`);
+    this.el.style.setProperty('--internal-gallery-columns', `${columns}`);
   }
 
   /**
@@ -380,9 +380,9 @@ export class Gallery implements ComponentInterface {
     const styles = getComputedStyle(this.el);
     const rowHeight = parseFloat(styles.getPropertyValue('grid-auto-rows')) || 0;
     const rowGap = parseFloat(styles.getPropertyValue('row-gap')) || parseFloat(styles.getPropertyValue('gap')) || 0;
-    const columnsStr = styles.getPropertyValue('--ion-gallery-columns');
+    const columnsStr = styles.getPropertyValue('--internal-gallery-columns');
     // Fallback to 2 columns for masonry calculations when the resolved
-    // --ion-gallery-columns CSS value is missing or unparsable.
+    // --internal-gallery-columns CSS value is missing or unparsable.
     const columns = parseInt(columnsStr, 10) || 2;
     const items = this.getItems();
 

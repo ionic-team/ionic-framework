@@ -1,10 +1,9 @@
 :host {
   /**
-   * @prop --ion-gallery-columns: Number of columns in the gallery
    * @prop --ion-gallery-gap: Space between gallery items
    */
   display: grid;
-  grid-template-columns: repeat(var(--ion-gallery-columns, 2), minmax(0, 1fr));
+  grid-template-columns: repeat(var(--internal-gallery-columns, 2), minmax(0, 1fr));
 }
 
 // Layout: Uniform
