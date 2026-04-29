@@ -16,11 +16,8 @@ const IONIC_SNAP_OPEN_RATIO = 0.4;
 const IONIC_EXPAND_TRIGGER = 80;
 const IONIC_VELOCITY_THRESHOLD = 0.4;
 const IONIC_ACTION_BASE_WIDTH = 64;
-const IONIC_OPEN_TRANSITION = '250ms cubic-bezier(0.25, 1, 0.5, 1)';
-const IONIC_SNAPBACK_TRANSITION = '300ms cubic-bezier(0.34, 1.4, 0.64, 1)';
-const IONIC_CONFIRM_EASE_IN = '150ms ease-in';
-const IONIC_CONFIRM_SNAPBACK = '480ms cubic-bezier(0.34, 1.4, 0.64, 1)';
 const IONIC_CONFIRM_PAUSE = 300;
+const FULL_SWIPE_TRANSITION_MS = 250;
 const IONIC_EXPAND_RESISTANCE_FACTOR = 0.95;
 
 /** Expandable, non-disabled option (matches item-option expandable class). */
@@ -331,7 +328,7 @@ export class ItemSliding implements ComponentInterface {
         return resolve();
       }
 
-      this.item.style.transition = `transform ${duration}ms ease-out`;
+      this.el.classList.add('item-sliding-full-swipe-transition');
       this.item.style.transform = `translate3d(${-position}px, 0, 0)`;
 
       const id = setTimeout(resolve, duration);
@@ -384,7 +381,7 @@ export class ItemSliding implements ComponentInterface {
 
       // Animate off-screen while maintaining the expanded state
       const offScreenDistance = direction === 'end' ? window.innerWidth : -window.innerWidth;
-      await this.animateToPosition(offScreenDistance, 250, signal);
+      await this.animateToPosition(offScreenDistance, FULL_SWIPE_TRANSITION_MS, signal);
 
       // Trigger action
       if (options) {
@@ -395,15 +392,15 @@ export class ItemSliding implements ComponentInterface {
       await this.delay(300, signal);
 
       // Return to closed state
-      await this.animateToPosition(0, 250, signal);
+      await this.animateToPosition(0, FULL_SWIPE_TRANSITION_MS, signal);
     } catch {
       // Animation was aborted (e.g. component disconnected). finally handles cleanup.
     } finally {
       this.animationAbortController = undefined;
 
       // Reset state
+      this.el.classList.remove('item-sliding-full-swipe-transition');
       if (this.item) {
-        this.item.style.transition = '';
         this.item.style.transform = '';
       }
       this.openAmount = 0;
@@ -445,14 +442,20 @@ export class ItemSliding implements ComponentInterface {
     return direction === 'end' ? this.rightExpandableBaseWidth : this.leftExpandableBaseWidth;
   }
 
-  private setIonicExpandableWidth(direction: 'start' | 'end', width: number, animate: boolean, easing?: string) {
+  private setIonicExpandableWidth(direction: 'start' | 'end', width: number, opening: boolean) {
     const expandableOption = this.getExpandableOption(direction);
     if (!expandableOption) {
       return;
     }
 
     const style = expandableOption.style;
-    style.transition = animate ? `width ${easing ?? IONIC_OPEN_TRANSITION}` : 'none';
+    if (opening) {
+      expandableOption.classList.remove('item-sliding-expandable-snapback');
+      expandableOption.classList.add('item-sliding-expandable-open');
+    } else {
+      expandableOption.classList.remove('item-sliding-expandable-open');
+      expandableOption.classList.add('item-sliding-expandable-snapback');
+    }
     const baseWidth = this.getExpandableBaseWidth(direction);
     style.width = `${Math.max(baseWidth, width)}px`;
   }
@@ -469,8 +472,13 @@ export class ItemSliding implements ComponentInterface {
       if (!expandableOption) {
         return;
       }
-      expandableOption.style.transition = '';
       expandableOption.style.width = '';
+      expandableOption.classList.remove(
+        'item-sliding-expandable-open',
+        'item-sliding-expandable-snapback',
+        'item-sliding-expandable-width-in',
+        'item-sliding-expandable-width-back'
+      );
     });
   }
 
@@ -489,13 +497,12 @@ export class ItemSliding implements ComponentInterface {
 
       this.queryExpandableOption(previousDirection === 'end' ? this.rightOptions : this.leftOptions)?.classList.remove(
         ITEM_OPTION_EXPAND_THRESHOLD_CLASS
-      );  
+      );
 
       this.setIonicExpandableWidth(
         previousDirection,
         this.getExpandableBaseWidth(previousDirection),
-        isFinal,
-        IONIC_SNAPBACK_TRANSITION
+        false
       );
       return;
     }
@@ -505,7 +512,6 @@ export class ItemSliding implements ComponentInterface {
     const extraWidth = Math.max(0, Math.abs(openAmount) - optionsWidth);
     const resistedExtraWidth = isFinal ? extraWidth : extraWidth * IONIC_EXPAND_RESISTANCE_FACTOR;
     const targetWidth = baseWidth + resistedExtraWidth;
-    const easing = openAmount === 0 ? IONIC_SNAPBACK_TRANSITION : IONIC_OPEN_TRANSITION;
 
     const expandableOption = this.getExpandableOption(direction);
     if (expandableOption) {
@@ -516,7 +522,7 @@ export class ItemSliding implements ComponentInterface {
       }
     }
 
-    this.setIonicExpandableWidth(direction, targetWidth, isFinal, easing);
+    this.setIonicExpandableWidth(direction, targetWidth, true);
   }
 
   private async animateIonicFullSwipe(direction: 'start' | 'end') {
@@ -546,12 +552,13 @@ export class ItemSliding implements ComponentInterface {
       const offScreenPosition = direction === 'end' ? itemWidth : -itemWidth;
 
       if (expandableOption) {
-        expandableOption.style.transition = `width ${IONIC_CONFIRM_EASE_IN}`;
+        expandableOption.classList.remove('item-sliding-expandable-width-back');
+        expandableOption.classList.add('item-sliding-expandable-width-in');
         expandableOption.style.width = `${expandableTargetWidth}px`;
-        
       }
 
-      this.item.style.transition = `transform ${IONIC_CONFIRM_EASE_IN}`;
+      this.el.classList.remove('item-sliding-ionic-confirm-item-back');
+      this.el.classList.add('item-sliding-ionic-confirm-item-in');
       this.item.style.transform = `translate3d(${-offScreenPosition}px, 0, 0)`;
       await this.delay(150, signal);
 
@@ -559,11 +566,13 @@ export class ItemSliding implements ComponentInterface {
       await this.delay(IONIC_CONFIRM_PAUSE, signal);
 
       if (expandableOption) {
-        expandableOption.style.transition = `width ${IONIC_CONFIRM_SNAPBACK}`;
+        expandableOption.classList.remove('item-sliding-expandable-width-in');
+        expandableOption.classList.add('item-sliding-expandable-width-back');
         expandableOption.style.width = `${baseWidth}px`;
       }
 
-      this.item.style.transition = `transform ${IONIC_CONFIRM_SNAPBACK}`;
+      this.el.classList.remove('item-sliding-ionic-confirm-item-in');
+      this.el.classList.add('item-sliding-ionic-confirm-item-back');
       this.item.style.transform = 'translate3d(0, 0, 0)';
       await this.delay(480, signal);
     } catch {
@@ -571,8 +580,8 @@ export class ItemSliding implements ComponentInterface {
     } finally {
       this.animationAbortController = undefined;
 
+      this.el.classList.remove('item-sliding-ionic-confirm-item-in', 'item-sliding-ionic-confirm-item-back');
       if (this.item) {
-        this.item.style.transition = '';
         this.item.style.transform = '';
       }
       this.resetIonicExpandableOptions();
@@ -667,7 +676,11 @@ export class ItemSliding implements ComponentInterface {
     }
     this.initialOpenAmount = this.openAmount;
     if (this.item) {
-      this.item.style.transition = 'none';
+      if (this.isIonicTheme()) {
+        this.el.classList.remove('item-sliding-transition-open', 'item-sliding-transition-snapback');
+      } else {
+        this.el.classList.add('item-sliding-dragging');
+      }
     }
   }
 
@@ -716,6 +729,7 @@ export class ItemSliding implements ComponentInterface {
   }
 
   private onEnd(gesture: GestureDetail) {
+    this.el.classList.remove('item-sliding-dragging');
     this.restoreContentScrollAfterSlide();
     if (this.isIonicTheme()) {
       this.onEndIonic(gesture);
@@ -809,7 +823,6 @@ export class ItemSliding implements ComponentInterface {
       return;
     }
 
-    
     if (closeDirection) {
       this.setOpenAmount(0, true);
       return;
@@ -877,9 +890,11 @@ export class ItemSliding implements ComponentInterface {
 
     if (this.isIonicTheme() && isFinal) {
       const closing = Math.abs(openAmount) < Math.abs(previousOpenAmount);
-      style.transition = `transform ${closing ? IONIC_SNAPBACK_TRANSITION : IONIC_OPEN_TRANSITION}`;
-    } else if (isFinal) {
-      style.transition = '';
+      if (closing) {
+        this.el.classList.add('item-sliding-transition-snapback');
+      } else {
+        this.el.classList.add('item-sliding-transition-open');
+      }
     }
   
     if (openAmount > 0) {
