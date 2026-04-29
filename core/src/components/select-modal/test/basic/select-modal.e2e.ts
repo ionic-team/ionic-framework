@@ -64,6 +64,35 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await expect(selectModalPage.modal).not.toBeVisible();
       });
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      test('pressing Enter on an unselected option should dismiss the modal', async ({ page: _page }, testInfo) => {
+        testInfo.annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/30561',
+        });
+
+        await selectModalPage.setup(config, options, false);
+
+        await selectModalPage.pressEnterOnOption('apple');
+        await selectModalPage.ionModalDidDismiss.next();
+        await expect(selectModalPage.modal).not.toBeVisible();
+      });
+
+      test('pressing Enter on a selected option should dismiss the modal', async ({ browserName }, testInfo) => {
+        testInfo.annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/30561',
+        });
+
+        test.skip(browserName === 'firefox', 'Same behavior as ROU-5437');
+
+        await selectModalPage.setup(config, checkedOptions, false);
+
+        await selectModalPage.pressEnterOnOption('apple');
+        await selectModalPage.ionModalDidDismiss.next();
+        await expect(selectModalPage.modal).not.toBeVisible();
+      });
+
       test('clicking the close button should dismiss the modal', async () => {
         await selectModalPage.setup(config, options, false);
 
