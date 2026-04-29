@@ -244,31 +244,31 @@ export const defaultTheme: DefaultTheme = {
         large: {
           content: {
             letterSpacing: '0%',
-            height: 'var(--ion-scaling-xs)',
+            height: 'var(--ion-scaling-md)',
 
             min: {
-              width: 'var(--ion-scaling-xs)',
+              width: 'var(--ion-scaling-md)',
             },
 
             padding: {
               top: 'var(--ion-spacing-0)',
-              end: 'var(--ion-spacing-xxs)',
+              end: 'var(--ion-spacing-xs)',
               bottom: 'var(--ion-spacing-0)',
-              start: 'var(--ion-spacing-xxs)',
+              start: 'var(--ion-spacing-xs)',
             },
 
             font: {
-              size: 'var(--ion-font-size-sm)',
+              size: 'var(--ion-font-size-md)',
               weight: 'var(--ion-font-weight-medium)',
             },
 
             line: {
-              height: 'var(--ion-scaling-xs)',
+              height: 'var(--ion-scaling-sm)',
             },
 
             icon: {
-              width: 'var(--ion-scaling-xxxs)',
-              height: 'var(--ion-scaling-xxxs)',
+              width: 'var(--ion-scaling-xxs)',
+              height: 'var(--ion-scaling-xxs)',
             },
           },
 

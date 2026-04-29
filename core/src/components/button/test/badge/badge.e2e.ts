@@ -9,40 +9,45 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
       test(`${buttonSize} - should not have visual regressions with badges`, async ({ page }) => {
         const contents = ['', '1', '999+', '<ion-icon icon="star"></ion-icon>'];
 
-        const iconButtons = ION_BADGE_VERTICAL_POSITIONS.flatMap((position) =>
-          contents.map(
-            (html) =>
-              `<div class="row">${ION_BADGE_SIZES.map(
-                (badgeSize) => `<ion-button size="${buttonSize}" shape="round">
+        const iconButtons = ION_BADGE_VERTICAL_POSITIONS.map(
+          (position) =>
+            `<div class="row">${contents
+              .flatMap((html) =>
+                ION_BADGE_SIZES.map(
+                  (badgeSize) => `<ion-button size="${buttonSize}" shape="round">
                   <ion-icon slot="icon-only" name="add"></ion-icon>
                   <ion-badge hue="bold" shape="round" color="danger" size="${badgeSize}" vertical="${position}">${html}</ion-badge>
                 </ion-button>`
-              ).join('\n')}</div>`
-          )
+                )
+              )
+              .join('\n')}</div>`
         ).join('\n');
 
-        const textButtons = ION_BADGE_VERTICAL_POSITIONS.flatMap((position) =>
-          contents.map(
-            (html) =>
-              `<div class="row">${ION_BADGE_SIZES.map(
-                (badgeSize) => `<ion-button size="${buttonSize}" shape="round">
+        const textButtons = ION_BADGE_VERTICAL_POSITIONS.map(
+          (position) =>
+            `<div class="row">${contents
+              .flatMap((html) =>
+                ION_BADGE_SIZES.map(
+                  (badgeSize) => `<ion-button size="${buttonSize}" shape="round">
                   Button
                   <ion-badge hue="bold" shape="round" color="danger" size="${badgeSize}" vertical="${position}">${html}</ion-badge>
                 </ion-button>`
-              ).join('\n')}</div>`
-          )
+                )
+              )
+              .join('\n')}</div>`
         ).join('\n');
 
         await page.setContent(
           `
             <style>
               .row {
-                display: flex;
-                flex-wrap: wrap;
-                align-items: flex-start;
+                display: grid;
+                grid-template-columns: repeat(3, auto);
+                justify-items: start;
+                align-items: start;
                 padding-bottom: 10px;
                 row-gap: 5px;
-                column-gap: 40px;
+                column-gap: 30px;
               }
             </style>
 

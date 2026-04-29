@@ -38,9 +38,10 @@
       }
 
       .row {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-start;
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        justify-items: start;
+        align-items: start;
         padding-bottom: 10px;
         row-gap: 5px;
         column-gap: 30px;
@@ -56,12 +57,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content id="content">
-        <ion-button size="medium" shape="round">
-          <ion-icon slot="icon-only" name="add"></ion-icon>
-          hi
-        </ion-button>
-      </ion-content>
+      <ion-content id="content"></ion-content>
     </ion-app>
 
     <script>
@@ -88,10 +84,10 @@
           iconHeading.textContent = 'Icon';
           group.appendChild(iconHeading);
 
-          badgeContents.forEach((html) => {
-            const iconRow = document.createElement('div');
-            iconRow.classList.add('row');
+          const iconRow = document.createElement('div');
+          iconRow.classList.add('row');
 
+          badgeContents.forEach((html) => {
             badgeSizes.forEach((badgeSize) => {
               const iconButton = document.createElement('ion-button');
               iconButton.setAttribute('size', buttonSize);
@@ -115,19 +111,19 @@
               iconButton.appendChild(badge);
               iconRow.appendChild(iconButton);
             });
-
-            group.appendChild(iconRow);
           });
+
+          group.appendChild(iconRow);
 
           // Text buttons
           const textHeading = document.createElement('h3');
           textHeading.textContent = 'Text';
           group.appendChild(textHeading);
 
-          badgeContents.forEach((html) => {
-            const textRow = document.createElement('div');
-            textRow.classList.add('row');
+          const textRow = document.createElement('div');
+          textRow.classList.add('row');
 
+          badgeContents.forEach((html) => {
             badgeSizes.forEach((badgeSize) => {
               const textButton = document.createElement('ion-button');
               textButton.setAttribute('size', buttonSize);
@@ -147,9 +143,9 @@
               textButton.appendChild(standardBadge);
               textRow.appendChild(textButton);
             });
-
-            group.appendChild(textRow);
           });
+
+          group.appendChild(textRow);
         });
 
         content.appendChild(group);
