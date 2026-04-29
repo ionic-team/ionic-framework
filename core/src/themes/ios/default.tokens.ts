@@ -169,46 +169,6 @@ export const defaultTheme: DefaultTheme = {
         small: {
           content: {
             min: {
-              height: 'var(--ion-scaling-400)',
-              width: 'var(--ion-scaling-400)',
-            },
-
-            padding: {
-              top: 'var(--ion-spacing-xxxs)',
-              end: 'var(--ion-spacing-xxxs)',
-              bottom: 'var(--ion-spacing-xxxs)',
-              start: 'var(--ion-spacing-xxxs)',
-            },
-
-            font: {
-              size: dynamicFont(global.root, 12),
-              weight: 'var(--ion-font-weight-bold)',
-            },
-
-            line: {
-              height: '1',
-            },
-          },
-
-          dot: {
-            height: 'var(--ion-scaling-150)',
-
-            min: {
-              width: 'var(--ion-scaling-150)',
-            },
-
-            padding: {
-              top: 'var(--ion-spacing-xxxs)',
-              end: 'var(--ion-spacing-xxxs)',
-              bottom: 'var(--ion-spacing-xxxs)',
-              start: 'var(--ion-spacing-xxxs)',
-            },
-          },
-        },
-
-        medium: {
-          content: {
-            min: {
               height: 'var(--ion-scaling-450)',
               width: 'var(--ion-scaling-450)',
             },
@@ -221,43 +181,16 @@ export const defaultTheme: DefaultTheme = {
             },
 
             font: {
-              /**
-               * "-apple-system-body" on iOS never goes smaller than
-               * 14px according to https://developer.apple.com/design/human-interface-guidelines/typography#Specifications.
-               * However, we still keep the max() usage here for consistency
-               * with other components and in case "-apple-system-body" does
-               * go smaller than 14px in the future.
-               */
-              size: dynamicFontMin(global.root, 1, 13),
-              weight: 'var(--ion-font-weight-bold)',
-            },
-
-            line: {
-              height: '1',
+              size: dynamicFont(global.root, 12),
+              weight: 'var(--ion-font-weight-medium)',
             },
           },
 
           dot: {
-            height: 'var(--ion-scaling-250)',
+            height: 'var(--ion-scaling-450)',
 
             min: {
-              width: 'var(--ion-scaling-250)',
-            },
-
-            padding: {
-              top: 'var(--ion-spacing-75)',
-              end: 'var(--ion-spacing-75)',
-              bottom: 'var(--ion-spacing-75)',
-              start: 'var(--ion-spacing-75)',
-            },
-          },
-        },
-
-        large: {
-          content: {
-            min: {
-              height: 'var(--ion-scaling-xxs)',
-              width: 'var(--ion-scaling-xxs)',
+              width: 'var(--ion-scaling-450)',
             },
 
             padding: {
@@ -266,29 +199,77 @@ export const defaultTheme: DefaultTheme = {
               bottom: 'var(--ion-spacing-xxxs)',
               start: 'var(--ion-spacing-xxs)',
             },
+          },
+        },
 
-            font: {
-              size: dynamicFontMin(global.root, 1, 15),
-              weight: 'var(--ion-font-weight-bold)',
+        medium: {
+          content: {
+            min: {
+              height: 'var(--ion-scaling-xxs)',
+              width: 'var(--ion-scaling-xxs)',
             },
 
-            line: {
-              height: '1',
+            padding: {
+              top: 'var(--ion-spacing-xxxs)',
+              end: 'var(--ion-spacing-xs)',
+              bottom: 'var(--ion-spacing-xxxs)',
+              start: 'var(--ion-spacing-xs)',
+            },
+
+            font: {
+              size: dynamicFontMin(global.root, 1, 14),
+              weight: 'var(--ion-font-weight-medium)',
             },
           },
 
           dot: {
-            height: 'var(--ion-scaling-350)',
+            height: 'var(--ion-scaling-xxs)',
 
             min: {
-              width: 'var(--ion-scaling-350)',
+              width: 'var(--ion-scaling-xxs)',
             },
 
             padding: {
-              top: 'var(--ion-spacing-xxs)',
-              end: 'var(--ion-spacing-xxs)',
-              bottom: 'var(--ion-spacing-xxs)',
-              start: 'var(--ion-spacing-xxs)',
+              top: 'var(--ion-spacing-xxxs)',
+              end: 'var(--ion-spacing-xs)',
+              bottom: 'var(--ion-spacing-xxxs)',
+              start: 'var(--ion-spacing-xs)',
+            },
+          },
+        },
+
+        large: {
+          content: {
+            min: {
+              height: 'var(--ion-scaling-xs)',
+              width: 'var(--ion-scaling-xs)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-75)',
+              end: 'var(--ion-spacing-sm)',
+              bottom: 'var(--ion-spacing-75)',
+              start: 'var(--ion-spacing-sm)',
+            },
+
+            font: {
+              size: dynamicFontMin(global.root, 1, 16),
+              weight: 'var(--ion-font-weight-medium)',
+            },
+          },
+
+          dot: {
+            height: 'var(--ion-scaling-xs)',
+
+            min: {
+              width: 'var(--ion-scaling-xs)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-75)',
+              end: 'var(--ion-spacing-sm)',
+              bottom: 'var(--ion-spacing-75)',
+              start: 'var(--ion-spacing-sm)',
             },
           },
         },
