@@ -321,17 +321,13 @@ ion-badge,prop,size,"large" | "medium" | "small" | undefined,undefined,false,fal
 ion-badge,prop,vertical,"bottom" | "top" | undefined,undefined,false,false
 ion-badge,css-prop,--ion-badge-font-family - the font family of the badge text Bold
 ion-badge,css-prop,--ion-badge-hue-bold-default-background - Background color of the `bold` hue in default state
-ion-badge,css-prop,--ion-badge-hue-bold-default-border-radius - Border radius of the `bold` hue in default state
 ion-badge,css-prop,--ion-badge-hue-bold-default-color - Text color of the `bold` hue in default state
 ion-badge,css-prop,--ion-badge-hue-bold-semantic-default-background - Background color of the `bold` hue when a semantic color is applied
-ion-badge,css-prop,--ion-badge-hue-bold-semantic-default-border-radius - Border radius of the `bold` hue when a semantic color is applied Subtle
-ion-badge,css-prop,--ion-badge-hue-bold-semantic-default-color - Text color of the `bold` hue when a semantic color is applied
+ion-badge,css-prop,--ion-badge-hue-bold-semantic-default-color - Text color of the `bold` hue when a semantic color is applied Subtle
 ion-badge,css-prop,--ion-badge-hue-subtle-default-background - Background color of the `subtle` hue in default state
-ion-badge,css-prop,--ion-badge-hue-subtle-default-border-radius - Border radius of the `subtle` hue in default state
 ion-badge,css-prop,--ion-badge-hue-subtle-default-color - Text color of the `subtle` hue in default state
 ion-badge,css-prop,--ion-badge-hue-subtle-semantic-default-background - Background color of the `subtle` hue when a semantic color is applied
-ion-badge,css-prop,--ion-badge-hue-subtle-semantic-default-border-radius - Border radius of the `subtle` hue when a semantic color is applied Shapes
-ion-badge,css-prop,--ion-badge-hue-subtle-semantic-default-color - Text color of the `subtle` hue when a semantic color is applied
+ion-badge,css-prop,--ion-badge-hue-subtle-semantic-default-color - Text color of the `subtle` hue when a semantic color is applied Shapes
 ion-badge,css-prop,--ion-badge-shape-crisp-border-radius - Border radius of the `crisp` shape
 ion-badge,css-prop,--ion-badge-shape-rectangular-border-radius - Border radius of the `rectangular` shape Sizes
 ion-badge,css-prop,--ion-badge-shape-round-border-radius - Border radius of the `round` shape
