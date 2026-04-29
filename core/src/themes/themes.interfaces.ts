@@ -1,6 +1,7 @@
 import type { IonBadgeConfig, IonBadgeRecipe } from '../components/badge/badge.interfaces';
 import type { IonChipConfig, IonChipRecipe } from '../components/chip/chip.interfaces';
 import type { IonItemDividerRecipe } from '../components/item-divider/item-divider.interfaces';
+import type { IonProgressBarConfig, IonProgressBarRecipe } from '../components/progress-bar/progress-bar.interfaces';
 import type { IonSpinnerConfig, IonSpinnerRecipe } from '../components/spinner/spinner.interfaces';
 import type { IonicConfig as IonicGlobalConfig } from '../utils/config';
 
@@ -245,6 +246,7 @@ export type IonicConfig = IonicGlobalConfig & {
   components?: {
     IonBadge?: IonBadgeConfig;
     IonChip?: IonChipConfig;
+    IonProgressBar?: IonProgressBarConfig;
     IonSpinner?: IonSpinnerConfig;
   };
 };
@@ -286,6 +288,7 @@ type Components = {
   IonBadge?: IonBadgeRecipe;
   IonChip?: IonChipRecipe;
   IonItemDivider?: IonItemDividerRecipe;
+  IonProgressBar?: IonProgressBarRecipe;
   IonSpinner?: IonSpinnerRecipe;
 
   IonCard?: any;

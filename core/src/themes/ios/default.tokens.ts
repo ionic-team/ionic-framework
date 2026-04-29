@@ -36,6 +36,10 @@ export const defaultTheme: DefaultTheme = {
         size: 'large',
       },
 
+      IonProgressBar: {
+        shape: 'round',
+      },
+
       IonSpinner: {
         size: 'medium',
       },
@@ -651,6 +655,92 @@ export const defaultTheme: DefaultTheme = {
         trailing: {
           margin: {
             bottom: 'var(--ion-spacing-0)',
+          },
+        },
+      },
+    },
+
+    IonProgressBar: {
+      height: 'var(--ion-scaling-100)',
+
+      indeterminate: {
+        progress: {
+          default: {
+            background: ionColor('primary', 'base'),
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base'),
+            },
+          },
+        },
+
+        buffer: {
+          bar: {
+            default: {
+              background: ionColor('primary', 'base', { alpha: 0.3 }),
+            },
+
+            solid: {
+              default: {
+                background: `var(--ion-background-color-step-100, ${mix(baseColors.black, baseColors.white, '90%')})`,
+              },
+            },
+          },
+        },
+      },
+
+      determinate: {
+        progress: {
+          default: {
+            background: ionColor('primary', 'base'),
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base'),
+            },
+          },
+        },
+
+        buffer: {
+          bar: {
+            default: {
+              background: ionColor('primary', 'base', { alpha: 0.3 }),
+            },
+
+            solid: {
+              default: {
+                background: `var(--ion-background-color-step-100, ${mix(baseColors.black, baseColors.white, '90%')})`,
+              },
+            },
+          },
+
+          circles: {
+            default: {
+              background: ionColor('primary', 'base', { alpha: 0.3 }),
+            },
+
+            semantic: {
+              default: {
+                background: currentColor('base', { alpha: 0.3 }),
+              },
+            },
+          },
+        },
+      },
+
+      shape: {
+        round: {
+          border: {
+            radius: 'var(--ion-radii-xxxxl)',
+          },
+        },
+
+        rectangular: {
+          border: {
+            radius: 'var(--ion-radii-xxxxs)',
           },
         },
       },

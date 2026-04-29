@@ -39,6 +39,10 @@ export const defaultTheme: DefaultTheme = {
         size: 'large',
       },
 
+      IonProgressBar: {
+        shape: 'rectangular',
+      },
+
       IonSpinner: {
         size: 'medium',
       },
@@ -789,6 +793,92 @@ export const defaultTheme: DefaultTheme = {
 
         text: {
           overflow: 'initial',
+        },
+      },
+    },
+
+    IonProgressBar: {
+      height: 'var(--ion-scaling-100)',
+
+      indeterminate: {
+        progress: {
+          default: {
+            background: ionColor('primary', 'base'),
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base'),
+            },
+          },
+        },
+
+        buffer: {
+          bar: {
+            default: {
+              background: ionColor('primary', 'base', { alpha: 0.3 }),
+            },
+
+            semantic: {
+              default: {
+                background: currentColor('base', { alpha: 0.3 }),
+              },
+            },
+          },
+        },
+      },
+
+      determinate: {
+        progress: {
+          default: {
+            background: ionColor('primary', 'base'),
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base'),
+            },
+          },
+        },
+
+        buffer: {
+          bar: {
+            default: {
+              background: ionColor('primary', 'base', { alpha: 0.3 }),
+            },
+
+            semantic: {
+              default: {
+                background: currentColor('base', { alpha: 0.3 }),
+              },
+            },
+          },
+
+          circles: {
+            default: {
+              background: ionColor('primary', 'base', { alpha: 0.3 }),
+            },
+
+            semantic: {
+              default: {
+                background: currentColor('base', { alpha: 0.3 }),
+              },
+            },
+          },
+        },
+      },
+
+      shape: {
+        round: {
+          border: {
+            radius: 'var(--ion-radii-xxxxl)',
+          },
+        },
+
+        rectangular: {
+          border: {
+            radius: 'var(--ion-radii-xxxxs)',
+          },
         },
       },
     },
