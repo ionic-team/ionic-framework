@@ -1,6 +1,8 @@
 import { expect } from '@playwright/test';
 import { configs, test, dragElementBy } from '@utils/test/playwright';
 
+import { DRAG_DISTANCE_MULTIPLE_OPTIONS, DRAG_STEPS_UNDER_FULL_SWIPE } from '../test.utils';
+
 /**
  * item-sliding doesn't have mode-specific styling,
  * but the child components, item-options and item-option, do.
@@ -10,12 +12,13 @@ import { configs, test, dragElementBy } from '@utils/test/playwright';
  */
 configs({ modes: ['ionic-md', 'ios', 'md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: icons'), () => {
-    test('should not have visual regressions', async ({ page }) => {
+    test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/item-sliding/test/icons`, config);
+    });
 
-      const itemIDs = ['iconsOnly', 'iconsStart', 'iconsEnd', 'iconsTop', 'iconsBottom'];
-      for (const itemID of itemIDs) {
-        const item = page.locator(`#${itemID}`);
+    ['iconsOnly', 'iconsStart', 'iconsEnd', 'iconsTop', 'iconsBottom'].forEach((position) => {
+      test(`${position} - should not have visual regressions`, async ({ page }) => {
+        const item = page.locator(`#${position}`);
 
         /**
          * Negative dragByX value to drag element from the right to the left
@@ -23,15 +26,15 @@ configs({ modes: ['ionic-md', 'ios', 'md'] }).forEach(({ title, screenshot, conf
          * Positive dragByX value to drag element from the left to the right
          * to reveal the options on the left side.
          */
-        const dragByX = config.direction === 'rtl' ? 150 : -150;
+        const dragByX = config.direction === 'rtl' ? DRAG_DISTANCE_MULTIPLE_OPTIONS : -DRAG_DISTANCE_MULTIPLE_OPTIONS;
 
-        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 20);
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, DRAG_STEPS_UNDER_FULL_SWIPE);
         await page.waitForChanges();
 
         // Convert camelCase ids to kebab-case for screenshot file names
-        const itemIDKebab = itemID.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-        await expect(item).toHaveScreenshot(screenshot(`item-sliding-${itemIDKebab}`));
-      }
+        const positionKebab = position.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+        await expect(item).toHaveScreenshot(screenshot(`item-sliding-${positionKebab}`));
+      });
     });
   });
 });
