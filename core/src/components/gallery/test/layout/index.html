@@ -182,14 +182,13 @@
         return word.charAt(0).toUpperCase() + word.slice(1);
       };
 
-      const createImageItem = (src, labelText, height) => {
+      const createImageItem = (src, labelText) => {
         const imageItemEl = document.createElement('figure');
         imageItemEl.className = 'gallery-image-item';
 
         const imageEl = document.createElement('img');
         imageEl.src = src;
         imageEl.alt = labelText;
-        imageEl.style.height = `${height}px`;
 
         const imageLabelEl = document.createElement('span');
         imageLabelEl.className = 'gallery-image-label';
@@ -217,8 +216,7 @@
             const labelText = numberToWords(nextItemNumber);
             const imageItemEl = createImageItem(
               `https://picsum.photos/id/${photoId}/164/${alternatingImgHeight}`,
-              labelText,
-              alternatingImgHeight
+              labelText
             );
             galleryEl.append(imageItemEl);
             return;
@@ -269,18 +267,25 @@
         margin: 0 auto;
       }
 
-      .same-height-gallery img {
-        height: 164px;
-      }
-
       ion-gallery img,
       ion-gallery div {
         border-radius: 16px;
       }
 
+      .same-height-gallery img {
+        height: 164px;
+      }
+
+      ion-gallery .gallery-image-item img {
+        display: block;
+
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+
       ion-gallery .gallery-image-item {
         position: relative;
-        margin: 0;
       }
 
       ion-gallery .gallery-image-label {

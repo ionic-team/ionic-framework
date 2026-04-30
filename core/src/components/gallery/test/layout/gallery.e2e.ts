@@ -191,6 +191,115 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
               screenshot(`gallery-${layout}${orderSuffix}-divs-dynamically-appended`)
             );
           });
+
+          test(`should properly display dynamically appended images with ${order} order`, async ({ page }) => {
+            await page.setContent(
+              `
+                <style>
+                  ${sharedStyles}
+                </style>
+
+                <ion-gallery layout="${layout}"${orderAttribute}>
+                  <img src="/src/components/gallery/test/assets/01.png" alt="One"/>
+                  <img src="/src/components/gallery/test/assets/02.png" alt="Two"/>
+                  <img src="/src/components/gallery/test/assets/03.png" alt="Three"/>
+                  <img src="/src/components/gallery/test/assets/04.png" alt="Four"/>
+                  <img src="/src/components/gallery/test/assets/05.png" alt="Five"/>
+                  <img src="/src/components/gallery/test/assets/06.png" alt="Six"/>
+                </ion-gallery>
+              `,
+              config
+            );
+
+            const gallery = page.locator('ion-gallery');
+            const appendedItems = [7, 8, 9, 10, 11, 12].map((n) => ({
+              itemLabel: numberToWords(n),
+              itemSrc: `/src/components/gallery/test/assets/${n.toString().padStart(2, '0')}.png`,
+            }));
+
+            await gallery.evaluate((galleryEl, items) => {
+              items.forEach(({ itemLabel, itemSrc }) => {
+                const imageEl = document.createElement('img');
+                imageEl.src = itemSrc;
+                imageEl.alt = itemLabel;
+
+                galleryEl.append(imageEl);
+              });
+            }, appendedItems);
+
+            await expect(gallery).toHaveScreenshot(
+              screenshot(`gallery-${layout}${orderSuffix}-images-dynamically-appended`)
+            );
+          });
+
+          test(`should properly display dynamically appended figure-wrapped images with ${order} order`, async ({
+            page,
+          }) => {
+            await page.setContent(
+              `
+                <style>
+                  ${sharedStyles}
+
+                  /**
+                   * Redefine the ::slotted(img) styles from gallery.scss
+                   * because the nested img does not receive slotted styles.
+                   */
+                  ion-gallery figure img {
+                    display: block;
+                    width: 100%;
+                    object-fit: cover;
+                    object-position: center;
+                  }
+                </style>
+
+                <ion-gallery layout="${layout}"${orderAttribute}>
+                  <figure>
+                    <img src="/src/components/gallery/test/assets/01.png" alt="One"/>
+                  </figure>
+                  <figure>
+                    <img src="/src/components/gallery/test/assets/02.png" alt="Two"/>
+                  </figure>
+                  <figure>
+                    <img src="/src/components/gallery/test/assets/03.png" alt="Three"/>
+                  </figure>
+                  <figure>
+                    <img src="/src/components/gallery/test/assets/04.png" alt="Four"/>
+                  </figure>
+                  <figure>
+                    <img src="/src/components/gallery/test/assets/05.png" alt="Five"/>
+                  </figure>
+                  <figure>
+                    <img src="/src/components/gallery/test/assets/06.png" alt="Six"/>
+                  </figure>
+                </ion-gallery>
+              `,
+              config
+            );
+
+            const gallery = page.locator('ion-gallery');
+            const appendedItems = [7, 8, 9, 10, 11, 12].map((n) => ({
+              itemLabel: numberToWords(n),
+              itemSrc: `/src/components/gallery/test/assets/${n.toString().padStart(2, '0')}.png`,
+            }));
+
+            await gallery.evaluate((galleryEl, items) => {
+              items.forEach(({ itemLabel, itemSrc }) => {
+                const figureEl = document.createElement('figure');
+                figureEl.className = 'gallery-image-item';
+
+                const imageEl = document.createElement('img');
+                imageEl.src = itemSrc;
+                imageEl.alt = itemLabel;
+
+                figureEl.append(imageEl);
+                galleryEl.append(figureEl);
+              });
+            }, appendedItems);
+
+            await expect(gallery).toHaveScreenshot(
+              screenshot(`gallery-${layout}${orderSuffix}-figures-images-dynamically-appended`)
+            );
+          });
         }
       });
     });
