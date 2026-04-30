@@ -353,6 +353,43 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
  * This behavior does not differ across
  * modes/directions.
  */
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime: month picker selection'), () => {
+    test('datetime: month picker selection', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime value="2022-05-03"></ion-datetime>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      const nextMonthButton = page.locator('ion-datetime .calendar-next-prev ion-button').nth(1);
+      const monthYearButton = page.locator('ion-datetime .calendar-month-year');
+
+      await expect(monthYearButton).toHaveText(/May 2022/);
+
+      await nextMonthButton.click();
+      await expect(monthYearButton).toHaveText(/June 2022/);
+
+      await nextMonthButton.click();
+      await expect(monthYearButton).toHaveText(/July 2022/);
+
+      await monthYearButton.click();
+      await page.waitForChanges();
+
+      const selectedMonthOptions = page.locator('.month-column ion-picker-column-option.option-active');
+      await expect(selectedMonthOptions).toHaveCount(1);
+    });
+  });
+});
+
+/**
+ * This behavior does not differ across
+ * modes/directions.
+ */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: visibility'), () => {
     // TODO FW-6015 re-enable on webkit when bug is fixed
@@ -403,7 +440,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: IO fallback'), () => {
-    test('should become ready even if IntersectionObserver never reports visible', async ({ page }, testInfo) => {
+    test('should become ready even if IntersectionObserver never reports visible', async ({ page, skip }, testInfo) => {
+      // TODO(FW-7284): Re-enable on WebKit after determining why it fails
+      skip.browser('webkit', 'Wheel is not available in WebKit');
+
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30706',

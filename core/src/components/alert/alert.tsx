@@ -7,9 +7,10 @@ import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import {
+  BACKDROP,
+  cleanupRootFocusTrapAccessibility,
   createDelegateController,
   createTriggerController,
-  BACKDROP,
   dismiss,
   eventMethod,
   isCancel,
@@ -367,6 +368,11 @@ export class Alert implements ComponentInterface, OverlayInterface {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
+    }
+
+    // Clean up aria-hidden if removed without dismiss() being called
+    if (this.presented) {
+      cleanupRootFocusTrapAccessibility();
     }
   }
 

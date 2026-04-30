@@ -140,9 +140,75 @@ describe('Routing Tests', () => {
     cy.ionPageVisible('tab3-page');
   });
 
+  it('Tab 3 > Other Page, tab page should not flash blank during transition', () => {
+    // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/25477
+    // Tests that navigating from a tab page to a non-tab page does not cause
+    // the tab page content to vanish before the transition animation completes.
+    // Bug: handleOutOfScopeOutlet immediately applied ion-page-hidden (display: none)
+    // to tab views, causing the leaving page to flash blank during the forward transition.
+    cy.visit(`http://localhost:${port}/routing/tabs/tab3?ionic:mode=ios`);
+    cy.ionPageVisible('tab3-page');
+
+    // Set up a MutationObserver BEFORE navigating to detect if ion-page-hidden
+    // (display: none) is ever applied to the tab page during the transition.
+    cy.window().then((win) => {
+      const tabPage = win.document.querySelector('[data-pageid="tab3-page"]');
+      win.__ionPageHiddenApplied = false;
+      const observer = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          if (mutation.target.classList && mutation.target.classList.contains('ion-page-hidden')) {
+            win.__ionPageHiddenApplied = true;
+          }
+        }
+      });
+      observer.observe(tabPage, { attributes: true, attributeFilter: ['class'] });
+      win.__tabPageObserver = observer;
+    });
+
+    // Navigate to non-tab page
+    cy.contains('ion-button', 'Go to Other Page').click();
+    cy.ionPageVisible('other-page');
+
+    // Verify ion-page-hidden was never applied during the transition
+    cy.window().then((win) => {
+      win.__tabPageObserver.disconnect();
+      expect(win.__ionPageHiddenApplied).to.be.false;
+    });
+  });
+
+  it('Home > Other Page, tab page should not flash blank during transition', () => {
+    // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/25477
+    // Same test as above but from the Home tab using routerLink navigation
+    cy.visit(`http://localhost:${port}/routing/tabs/home?ionic:mode=ios`);
+    cy.ionPageVisible('home-page');
+
+    cy.window().then((win) => {
+      const tabPage = win.document.querySelector('[data-pageid="home-page"]');
+      win.__ionPageHiddenApplied = false;
+      const observer = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          if (mutation.target.classList && mutation.target.classList.contains('ion-page-hidden')) {
+            win.__ionPageHiddenApplied = true;
+          }
+        }
+      });
+      observer.observe(tabPage, { attributes: true, attributeFilter: ['class'] });
+      win.__tabPageObserver = observer;
+    });
+
+    cy.contains('ion-item', 'Other Page').click();
+    cy.ionPageVisible('other-page');
+
+    cy.window().then((win) => {
+      win.__tabPageObserver.disconnect();
+      expect(win.__ionPageHiddenApplied).to.be.false;
+    });
+  });
+
   it('/ > Menu > Favorites > Menu > Tabs, should be back on Home', () => {
     // Tests transferring from one outlet to another and back again via menu
     cy.visit(`http://localhost:${port}/routing`);
+    cy.ionPageVisible('home-page');
     cy.ionMenuClick();
     cy.ionMenuNav('Favorites');
     cy.ionPageVisible('favorites-page');
@@ -201,6 +267,36 @@ describe('Routing Tests', () => {
     cy.ionPageVisible('home-details-page-1');
     cy.ionBackClick('home-details-page-1');
     cy.ionPageVisible('home-page');
+  });
+
+  it('/ > Details 1 > Details 2 > Details 3 > Browser Back > Browser Forward, should be back on Details 3', () => {
+    // Tests browser forward button within a tab's own navigation stack
+    cy.visit(`http://localhost:${port}/routing/`);
+    cy.ionNav('ion-item', 'Details 1');
+    cy.ionPageVisible('home-details-page-1');
+    cy.ionNav('ion-button', 'Go to Details 2');
+    cy.ionPageVisible('home-details-page-2');
+    cy.ionNav('ion-button', 'Go to Details 3');
+    cy.ionPageVisible('home-details-page-3');
+    cy.go('back');
+    cy.ionPageVisible('home-details-page-2');
+    cy.go('forward');
+    cy.wait(500);
+    cy.ionPageVisible('home-details-page-3');
+  });
+
+  it('/ > Details 1 > Settings Details 1 > Browser Back > Browser Forward, should show Settings Details 1', () => {
+    // Tests browser forward button across tabs (cross-tab forward)
+    cy.visit(`http://localhost:${port}/routing/`);
+    cy.ionNav('ion-item', 'Details 1');
+    cy.ionPageVisible('home-details-page-1');
+    cy.ionNav('ion-button', 'Go to Settings Details 1');
+    cy.ionPageVisible('settings-details-page-1');
+    cy.go('back');
+    cy.ionPageVisible('home-details-page-1');
+    cy.go('forward');
+    cy.wait(500);
+    cy.ionPageVisible('settings-details-page-1');
   });
 
   it('when props get passed into a route render, the component should update', () => {
@@ -267,7 +363,7 @@ describe('Routing Tests', () => {
     cy.ionPageVisible('home-details-page-2');
   });
 
-  it('/routing/tabs/home Menu > Favorites > Menu > Home with redirect, Home page should be visible, and Favorites should be hidden', () => {
+  it('/routing/tabs/home Menu > Favorites > Menu > Home with redirect, Home page should be visible, and Favorites should be destroyed', () => {
     cy.visit(`http://localhost:${port}/routing/tabs/home`);
     cy.ionMenuClick();
     cy.ionMenuNav('Favorites');
@@ -278,7 +374,7 @@ describe('Routing Tests', () => {
     cy.ionPageDoesNotExist('favorites-page');
   });
 
-  it('/routing/tabs/home Menu > Favorites > Menu > Home with router, Home page should be visible, and Favorites should be hidden', () => {
+  it('/routing/tabs/home Menu > Favorites > Menu > Home with router, Home page should be visible, and Favorites should be destroyed', () => {
     cy.visit(`http://localhost:${port}/routing/tabs/home`);
     cy.ionMenuClick();
     cy.ionMenuNav('Favorites');
@@ -286,7 +382,7 @@ describe('Routing Tests', () => {
     cy.ionMenuClick();
     cy.ionMenuNav('Home with router');
     cy.ionPageVisible('home-page');
-    cy.ionPageHidden('favorites-page');
+    cy.ionPageDoesNotExist('favorites-page');
   });
 
   it('should show back button when going back to a pushed page', () => {
@@ -342,6 +438,16 @@ describe('Routing Tests', () => {
     cy.ionPageVisible('home-details-page-1');
 
     cy.get('div.ion-page[data-pageid=home-details-page-1] [data-testid="details-input"]').should('have.value', '1');
+  });
+
+  it('should complete chained Navigate redirects from root to /routing/tabs/home', () => {
+    // Tests that chained Navigate redirects work correctly:
+    // / > click Routing link > /routing (Navigate to tabs) > /routing/tabs (Navigate to home) > /routing/tabs/home
+    // This was a bug where the second Navigate would be unmounted before it could trigger
+    cy.visit(`http://localhost:${port}/`);
+    cy.ionNav('ion-item', 'Routing');
+    cy.ionPageVisible('home-page');
+    cy.url().should('include', '/routing/tabs/home');
   });
 
   /*

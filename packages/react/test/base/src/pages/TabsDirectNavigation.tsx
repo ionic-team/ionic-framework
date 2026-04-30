@@ -1,7 +1,7 @@
 import { IonContent, IonHeader, IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToolbar } from '@ionic/react';
 import { homeOutline, radioOutline, libraryOutline, searchOutline } from 'ionicons/icons';
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Navigate } from 'react-router';
 
 const HomePage: React.FC = () => (
   <IonPage>
@@ -59,11 +59,11 @@ const TabsDirectNavigation: React.FC = () => {
   return (
     <IonTabs data-testid="tabs-direct-navigation">
       <IonRouterOutlet>
-        <Redirect exact path="/tabs-direct-navigation" to="/tabs-direct-navigation/home" />
-        <Route path="/tabs-direct-navigation/home" render={() => <HomePage />} exact={true} />
-        <Route path="/tabs-direct-navigation/radio" render={() => <RadioPage />} exact={true} />
-        <Route path="/tabs-direct-navigation/library" render={() => <LibraryPage />} exact={true} />
-        <Route path="/tabs-direct-navigation/search" render={() => <SearchPage />} exact={true} />
+        <Route index element={<Navigate to="/tabs-direct-navigation/home" replace />} />
+        <Route path="home" element={<HomePage />} />
+        <Route path="radio" element={<RadioPage />} />
+        <Route path="library" element={<LibraryPage />} />
+        <Route path="search" element={<SearchPage />} />
       </IonRouterOutlet>
 
       <IonTabBar slot="bottom" data-testid="tab-bar">

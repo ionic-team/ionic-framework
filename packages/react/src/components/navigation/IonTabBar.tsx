@@ -51,7 +51,9 @@ const matchesTab = (pathname: string, href: string | undefined): boolean => {
     return false;
   }
 
-  const normalizedHref = href.endsWith('/') && href !== '/' ? href.slice(0, -1) : href;
+  // Strip query string before comparing — href may contain search params (e.g., "/tabs/home?foo=bar")
+  const hrefPathname = href.split('?')[0];
+  const normalizedHref = hrefPathname.endsWith('/') && hrefPathname !== '/' ? hrefPathname.slice(0, -1) : hrefPathname;
   return pathname === normalizedHref || pathname.startsWith(normalizedHref + '/');
 };
 
@@ -165,7 +167,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
       const prevRouteOptions = state.tabs[prevActiveTab].currentRouteOptions;
       if (
         activeTab !== prevActiveTab ||
-        prevHref !== props.routeInfo?.pathname ||
+        prevHref !== (props.routeInfo?.pathname || '') + (props.routeInfo?.search || '') ||
         prevRouteOptions !== props.routeInfo?.routeOptions
       ) {
         tabs[activeTab] = {
@@ -248,7 +250,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
       if (child != null && child.props && (child.type === IonTabButton || (child as any).type.isTabButton)) {
         const href =
           child.props.tab === activeTab
-            ? this.props.routeInfo?.pathname
+            ? (this.props.routeInfo?.pathname || '') + (this.props.routeInfo?.search || '')
             : this.state.tabs[child.props.tab!].currentHref;
         const routeOptions =
           child.props.tab === activeTab

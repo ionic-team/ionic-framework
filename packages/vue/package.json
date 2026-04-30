@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "8.8.3",
+  "version": "8.8.5",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "eslint": "eslint src",

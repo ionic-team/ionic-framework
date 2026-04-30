@@ -91,7 +91,18 @@ export class LocationHistory {
   private _replace(routeInfo: RouteInfo) {
     const routeInfos = this._getRouteInfosByKey(routeInfo.tab);
     routeInfos && routeInfos.pop();
-    this.locationHistory.pop();
+
+    // Get the current route that's being replaced
+    const currentRoute = this.locationHistory[this.locationHistory.length - 1];
+
+    // Only pop from global history if we're replacing in the same outlet context.
+    // Don't pop if we're entering a nested outlet (current route has no tab, new route has a tab)
+    const isEnteringNestedOutlet = currentRoute && !currentRoute.tab && !!routeInfo.tab;
+
+    if (!isEnteringNestedOutlet) {
+      this.locationHistory.pop();
+    }
+
     this._add(routeInfo);
   }
 
@@ -124,6 +135,21 @@ export class LocationHistory {
     const routeInfos = this._getRouteInfosByKey(tab);
     if (routeInfos) {
       return routeInfos[routeInfos.length - 1];
+    }
+    return undefined;
+  }
+
+  /**
+   * Returns the most recent RouteInfo in global history (excluding the current
+   * entry) whose pathname matches the given value. Unlike findLastLocation,
+   * this search is tab-agnostic. Used by the multi-step back detection.
+   */
+  findLastLocationByPathname(pathname: string) {
+    for (let i = this.locationHistory.length - 2; i >= 0; i--) {
+      const ri = this.locationHistory[i];
+      if (ri && ri.pathname === pathname) {
+        return ri;
+      }
     }
     return undefined;
   }
@@ -163,5 +189,17 @@ export class LocationHistory {
 
   canGoBack() {
     return this.locationHistory.length > 1;
+  }
+
+  findTabForPathname(pathname: string): string | undefined {
+    for (const tab of Object.keys(this.tabHistory)) {
+      const routeInfos = this.tabHistory[tab];
+      for (let i = routeInfos.length - 1; i >= 0; i--) {
+        if (routeInfos[i].pathname === pathname) {
+          return tab;
+        }
+      }
+    }
+    return undefined;
   }
 }
