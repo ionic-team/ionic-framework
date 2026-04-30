@@ -1,4 +1,5 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/mixins" as mixins;
+@use "../../themes/functions.color" as color;
 
 // Content
 // --------------------------------------------------
@@ -9,21 +10,18 @@
    *
    * @prop --ion-content-color: Color of the content
    *
+   * @prop --ion-content-font-family: Font family of the content
+   *
    * @prop --ion-content-overflow: Overflow behavior of the scrollable area
    *
    * @prop --ion-content-padding-top: Top padding of the content
    * @prop --ion-content-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the content
    * @prop --ion-content-padding-bottom: Bottom padding of the content
    * @prop --ion-content-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the content
-   *
-   * @prop --ion-content-transition-cover-background: Background color of the navigation transition cover overlay
-   * @prop --ion-content-transition-cover-opacity: Opacity of the navigation transition cover overlay
-   *
-   * @prop --ion-content-transition-shadow: Box shadow of the navigation transition shadow
    */
-  --keyboard-offset: 0px;
-  --offset-top: 0px;
-  --offset-bottom: 0px;
+  --internal-keyboard-offset: 0px;
+  --internal-offset-top: 0px;
+  --internal-offset-bottom: 0px;
 
   display: block;
   position: relative;
@@ -39,30 +37,20 @@
   padding: 0 !important;
   /* stylelint-enable */
 
-  font-family: $font-family-base;
+  font-family: var(--ion-content-font-family);
 
   contain: size style;
 }
 
-:host(.ion-color) .inner-scroll {
-  background: current-color(base);
-  color: current-color(contrast);
-}
-
-#background-content {
-  @include position(calc(var(--offset-top) * -1), 0px, calc(var(--offset-bottom) * -1), 0px);
-
-  position: absolute;
-
-  background: var(--ion-content-background);
-}
+// Content Inner Scroll
+// ---------------------------------------------
 
 .inner-scroll {
-  @include position(calc(var(--offset-top) * -1), 0px, calc(var(--offset-bottom) * -1), 0px);
-  @include padding(
-    calc(var(--ion-content-padding-top) + var(--offset-top)),
+  @include mixins.position(calc(var(--internal-offset-top) * -1), 0px, calc(var(--internal-offset-bottom) * -1), 0px);
+  @include mixins.padding(
+    calc(var(--ion-content-padding-top) + var(--internal-offset-top)),
     var(--ion-content-padding-end),
-    calc(var(--ion-content-padding-bottom) + var(--keyboard-offset) + var(--offset-bottom)),
+    calc(var(--ion-content-padding-bottom) + var(--internal-keyboard-offset) + var(--internal-offset-bottom)),
     var(--ion-content-padding-start)
   );
 
@@ -83,6 +71,14 @@
    */
   touch-action: pan-x pan-y pinch-zoom;
 }
+
+:host(.ion-color) .inner-scroll {
+  background: color.current-color(base);
+  color: color.current-color(contrast);
+}
+
+// Content Scroll
+// ---------------------------------------------
 
 .scroll-y,
 .scroll-x {
@@ -119,6 +115,20 @@
   overscroll-behavior-x: contain;
 }
 
+// Content Background
+// ---------------------------------------------
+
+#background-content {
+  @include mixins.position(calc(var(--internal-offset-top) * -1), 0px, calc(var(--internal-offset-bottom) * -1), 0px);
+
+  position: absolute;
+
+  background: var(--ion-content-background);
+}
+
+// Content Overscroll
+// ---------------------------------------------
+
 .overscroll::before,
 .overscroll::after {
   position: absolute;
@@ -137,6 +147,9 @@
   top: -1px;
 }
 
+// Content Sizing
+// ---------------------------------------------
+
 :host(.content-sizing) {
   display: flex;
 
@@ -154,6 +167,7 @@
 
   contain: none;
 }
+
 :host(.content-sizing) .inner-scroll {
   position: relative;
 
@@ -167,9 +181,33 @@
   top: 0;
   bottom: 0;
 
-  margin-top: calc(var(--offset-top) * -1);
-  margin-bottom: calc(var(--offset-bottom) * -1);
+  margin-top: calc(var(--internal-offset-top) * -1);
+  margin-bottom: calc(var(--internal-offset-bottom) * -1);
 }
+
+// Content Slotted Elements
+// ---------------------------------------------
+
+// Elements with the "fixed" slot
+::slotted([slot="fixed"]) {
+  position: absolute;
+
+  /**
+   * When presenting ion-content inside of an ion-modal, the .inner-scroll
+   * element is composited. In WebKit, the fixed content is not composited
+   * causing it to appear under the main scrollable content as a result.
+   * The fixed content is correctly composited in other browsers. Adding
+   * the translateZ forces the fixed content to be composited so it correctly
+   * shows on top of the scrollable content. Setting a negative z-index will
+   * still allow the fixed content to appear under the scroll content if specified.
+   */
+  transform: translateZ(0);
+}
+
+// Content: iOS Mode Transition
+// The transition shadow effect is only animated by the iOS transition
+// builder, so these styles are only rendered in iOS mode.
+// ---------------------------------------------
 
 .transition-effect {
   display: none;
@@ -205,9 +243,9 @@
   width: 100%;
   height: 100%;
 
-  background: var(--ion-content-transition-cover-background);
+  background: black;
 
-  opacity: var(--ion-content-transition-cover-opacity);
+  opacity: 0.1;
 }
 
 .transition-shadow {
@@ -217,7 +255,7 @@
   width: 100%;
   height: 100%;
 
-  box-shadow: var(--ion-content-transition-shadow);
+  box-shadow: inset -9px 0 9px 0 rgba(0, 0, 100, 0.03);
 }
 
 :host(.content-ltr) .transition-shadow {
@@ -232,22 +270,4 @@
   /* stylelint-enable property-disallowed-list */
 
   transform: scaleX(-1);
-}
-
-// Content: Fixed
-// --------------------------------------------------
-
-::slotted([slot="fixed"]) {
-  position: absolute;
-
-  /**
-   * When presenting ion-content inside of an ion-modal, the .inner-scroll
-   * element is composited. In WebKit, the fixed content is not composited
-   * causing it to appear under the main scrollable content as a result.
-   * The fixed content is correctly composited in other browsers. Adding
-   * the translateZ forces the fixed content to be composited so it correctly
-   * shows on top of the scrollable content. Setting a negative z-index will
-   * still allow the fixed content to appear under the scroll content if specified.
-   */
-  transform: translateZ(0);
 }

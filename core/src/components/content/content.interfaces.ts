@@ -4,6 +4,11 @@ import type { IonPadding } from '../../themes/themes.interfaces';
 export interface IonContentRecipe {
   background?: string;
   color?: string;
+
+  font?: {
+    family?: string;
+  };
+
   overflow?: string;
 
   padding?: IonPadding;
@@ -18,9 +23,7 @@ export interface IonContentRecipe {
   };
 }
 
-export interface IonContentConfig {
-  transitionShadow?: boolean;
-}
+export interface IonContentConfig {}
 
 export interface ScrollBaseDetail {
   isScrolling: boolean;

@@ -1118,10 +1118,6 @@ export namespace Components {
           * @default true
          */
         "scrollY": boolean;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonDatetime {
         /**
@@ -7060,10 +7056,6 @@ declare namespace LocalJSX {
           * @default true
          */
         "scrollY"?: boolean;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonDatetime {
         /**

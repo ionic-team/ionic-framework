@@ -26,10 +26,10 @@ export const setScrollPadding = (contentEl: HTMLElement, paddingAmount: number, 
   }
 
   if (paddingAmount > 0) {
-    contentEl.style.setProperty('--keyboard-offset', `${paddingAmount}px`);
+    contentEl.style.setProperty('--internal-keyboard-offset', `${paddingAmount}px`);
   } else {
     (contentEl as any)[PADDING_TIMER_KEY] = setTimeout(() => {
-      contentEl.style.setProperty('--keyboard-offset', '0px');
+      contentEl.style.setProperty('--internal-keyboard-offset', '0px');
       if (clearCallback) {
         clearCallback();
       }

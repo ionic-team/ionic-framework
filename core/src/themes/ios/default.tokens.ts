@@ -30,10 +30,6 @@ export const defaultTheme: DefaultTheme = {
         size: 'large',
       },
 
-      IonContent: {
-        transitionShadow: true,
-      },
-
       IonSpinner: {
         size: 'medium',
       },
@@ -409,6 +405,11 @@ export const defaultTheme: DefaultTheme = {
     IonContent: {
       background: baseColors.backgroundColor,
       color: baseColors.textColor,
+
+      font: {
+        family: 'var(--ion-font-family, inherit)',
+      },
+
       overflow: 'auto',
 
       padding: {

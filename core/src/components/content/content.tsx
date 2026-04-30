@@ -7,14 +7,13 @@ import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
 import { config } from '../../global/config';
-import { getIonMode, getIonTheme } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { Color, Mode } from '../../interface';
 
 import type { ScrollBaseDetail, ScrollDetail } from './content.interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - Content is placed in the scrollable area if provided without a slot.
  * @slot fixed - Should be used for fixed content that should not scroll.
@@ -245,7 +244,7 @@ export class Content implements ComponentInterface {
      * The `hydrateDocument` function in `@stencil/core` will render the `ion-content`, but
      * `forceUpdate` will trigger another render, locking up the server.
      *
-     * TODO: Remove if STENCIL-834 determines Stencil will account for this.
+     * TODO(STENCIL-834): Remove if Stencil will account for this.
      */
     if (Build.isBrowser) {
       if (this.fullscreen) {
@@ -349,7 +348,7 @@ export class Content implements ComponentInterface {
   @Method()
   async scrollToBottom(duration = 0): Promise<void> {
     const scrollEl = await this.getScrollElement();
-    const y = scrollEl!.scrollHeight - scrollEl!.clientHeight;
+    const y = scrollEl.scrollHeight - scrollEl.clientHeight;
     return this.scrollToPoint(undefined, y, duration);
   }
 
@@ -454,10 +453,13 @@ export class Content implements ComponentInterface {
   render() {
     const { fixedSlotPlacement, inheritedAttributes, isMainContent, scrollX, scrollY, el } = this;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
-    const theme = getIonTheme(this);
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll(mode);
-    const transitionShadow = config.getObjectValue('IonContent.transitionShadow', false) as boolean;
+    /**
+     * The transition shadow effect is only animated by the iOS transition
+     * builder, so these elements are only rendered in iOS mode.
+     */
+    const transitionShadow = mode === 'ios';
 
     this.resize();
 
@@ -465,14 +467,13 @@ export class Content implements ComponentInterface {
       <Host
         role={isMainContent ? 'main' : undefined}
         class={createColorClasses(this.color, {
-          [theme]: true,
           'content-sizing': hostContext('ion-popover', this.el),
-          overscroll: forceOverscroll,
           [`content-${rtl}`]: true,
+          overscroll: forceOverscroll,
         })}
         style={{
-          '--offset-top': `${this.cTop}px`,
-          '--offset-bottom': `${this.cBottom}px`,
+          '--internal-offset-top': `${this.cTop}px`,
+          '--internal-offset-bottom': `${this.cBottom}px`,
         }}
         {...inheritedAttributes}
       >
