@@ -1,3 +1,8 @@
+@import "../../themes/native/native.globals";
+
+// Gallery
+// --------------------------------------------------
+
 :host {
   /**
    * @prop --ion-gallery-gap: Space between gallery items
@@ -43,7 +48,11 @@
 // Slotted elements
 // --------------------------------------------------
 
+// Reset the default margin for slotted elements so wrapper elements
+// (such as <figure>) align properly with other gallery items.
 ::slotted(*) {
+  @include margin(0);
+
   width: 100%;
 }
 
