@@ -27,10 +27,10 @@ import { BACKDROP_NO_SCROLL } from './gesture/gesture-controller';
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
 import {
   addEventListener,
-  componentOnReady,
   focusVisibleElement,
   getElementRoot,
   removeEventListener,
+  waitForComponent,
 } from './helpers';
 
 let lastOverlayIndex = 0;
@@ -126,7 +126,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
   // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
   if (typeof window !== 'undefined' && typeof window.customElements !== 'undefined') {
     return window.customElements.whenDefined(tagName).then(() => {
-      const element = document.createElement(tagName) as HTMLIonOverlayElement;
+      const element = document.createElement(tagName) as T;
       element.classList.add('overlay-hidden');
 
       /**
@@ -138,7 +138,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
       // append the overlay element to the document body
       getAppRoot(document).appendChild(element);
 
-      return new Promise((resolve) => componentOnReady(element, resolve));
+      return waitForComponent(element);
     });
   }
   return Promise.resolve() as any;

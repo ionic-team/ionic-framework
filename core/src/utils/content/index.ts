@@ -1,4 +1,4 @@
-import { componentOnReady } from '../helpers';
+import { waitForComponent } from '../helpers';
 import { printRequiredElementError } from '../logging';
 
 const ION_CONTENT_TAG_NAME = 'ION-CONTENT';
@@ -27,7 +27,7 @@ export const isIonContent = (el: Element) => el.tagName === ION_CONTENT_TAG_NAME
  */
 export const getScrollElement = async (el: Element) => {
   if (isIonContent(el)) {
-    await new Promise((resolve) => componentOnReady(el, resolve));
+    await waitForComponent(el);
     return (el as HTMLIonContentElement).getScrollElement();
   }
 

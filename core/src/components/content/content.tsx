@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
-import { componentOnReady, hasLazyBuild, inheritAriaAttributes } from '@utils/helpers';
+import { hasLazyBuild, inheritAriaAttributes, waitForComponent } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { isPlatform } from '@utils/platform';
 import { isRTL } from '@utils/rtl';
@@ -312,10 +312,9 @@ export class Content implements ComponentInterface {
      * scrollEl won't be defined yet with the custom elements build, so wait for it to load in.
      */
     if (!this.scrollEl) {
-      await new Promise((resolve) => componentOnReady(this.el, resolve));
+      await waitForComponent(this.el);
     }
-
-    return Promise.resolve(this.scrollEl!);
+    return this.scrollEl!;
   }
 
   /**
@@ -325,9 +324,9 @@ export class Content implements ComponentInterface {
   @Method()
   async getBackgroundElement(): Promise<HTMLElement> {
     if (!this.backgroundContentEl) {
-      await new Promise((resolve) => componentOnReady(this.el, resolve));
+      await waitForComponent(this.el);
     }
-    return Promise.resolve(this.backgroundContentEl!);
+    return this.backgroundContentEl!;
   }
 
   /**
