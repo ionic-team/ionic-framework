@@ -812,7 +812,8 @@ export class ItemSliding implements ComponentInterface {
 
     if (
       hasExpandable &&
-      (extraWidth >= IONIC_EXPAND_TRIGGER || Math.abs(velocityX) > IONIC_FULL_SWIPE_VELOCITY_THRESHOLD)
+      (extraWidth >= IONIC_EXPAND_TRIGGER ||
+        (extraWidth > 0 && Math.abs(velocityX) > IONIC_FULL_SWIPE_VELOCITY_THRESHOLD))
     ) {
       this.animateIonicFullSwipe(activeDirection).catch(() => {
         if (this.gesture) {
