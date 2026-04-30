@@ -51,6 +51,7 @@ import {
   applySafeAreaOverrides,
   clearSafeAreaOverrides,
   getRootSafeAreaTop,
+  hasCustomModalDimensions,
   type ModalSafeAreaContext,
 } from './safe-area-utils';
 import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
@@ -312,12 +313,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
       if (!context.isSheetModal && !context.isCardModal) {
         this.updateSafeAreaOverrides();
 
-        // Re-evaluate fullscreen safe-area padding: clear first, then re-apply
-        if (this.wrapperEl) {
-          this.wrapperEl.style.removeProperty('height');
-          this.wrapperEl.style.removeProperty('padding-bottom');
-        }
-        this.applyFullscreenSafeArea();
+        // Re-evaluate fullscreen safe-area padding: clear first, then re-apply.
+        const { contentEl, hasFooter } = this.findContentAndFooter();
+        this.clearContentSafeAreaPadding(contentEl);
+        this.applyFullscreenSafeAreaTo(contentEl, hasFooter);
       }
     }, 50); // Debounce to avoid excessive calls during active resizing
   }
@@ -1435,6 +1434,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * Creates the context object for safe-area utilities.
+   *
+   * `hasCustomDimensions` is only set by `setInitialSafeAreaOverrides()`
+   * because it is only read by `getInitialSafeAreaConfig()`. Other callers
+   * (resize handler, post-animation update, fullscreen-padding apply) would
+   * pay a `getComputedStyle()` cost for a value they never consult.
    */
   private getSafeAreaContext(): ModalSafeAreaContext {
     return {
@@ -1457,7 +1461,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * sheets to prevent header content from getting double-offset padding).
    */
   private setInitialSafeAreaOverrides(): void {
-    const context = this.getSafeAreaContext();
+    const context: ModalSafeAreaContext = {
+      ...this.getSafeAreaContext(),
+      hasCustomDimensions: hasCustomModalDimensions(this.el),
+    };
     const safeAreaConfig = getInitialSafeAreaConfig(context);
     applySafeAreaOverrides(this.el, safeAreaConfig);
 
@@ -1502,48 +1509,77 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
-   * Applies padding-bottom to fullscreen modal wrapper to prevent
-   * content from overlapping system navigation bar.
+   * Applies safe-area-bottom scroll padding to ion-content inside
+   * fullscreen modals that have no ion-footer. This prevents content
+   * from being hidden behind the system navigation bar while keeping
+   * the modal background edge-to-edge (no visible gap).
    */
   private applyFullscreenSafeArea(): void {
-    const { wrapperEl, el } = this;
-    if (!wrapperEl) return;
-
     const context = this.getSafeAreaContext();
     if (context.isSheetModal || context.isCardModal) return;
 
-    // Check for standard Ionic layout children (ion-content, ion-footer),
-    // searching one level deep for wrapped components (e.g.,
-    // <app-footer><ion-footer>...</ion-footer></app-footer>).
-    // Note: uses a manual loop instead of querySelector(':scope > ...') because
-    // Stencil's mock-doc (used in spec tests) does not support :scope.
-    let hasContent = false;
-    let hasFooter = false;
-    for (const child of Array.from(el.children)) {
-      if (child.tagName === 'ION-CONTENT') hasContent = true;
-      if (child.tagName === 'ION-FOOTER') hasFooter = true;
-      for (const grandchild of Array.from(child.children)) {
-        if (grandchild.tagName === 'ION-CONTENT') hasContent = true;
-        if (grandchild.tagName === 'ION-FOOTER') hasFooter = true;
-      }
-    }
-
-    // Only apply wrapper padding for standard Ionic layouts (has ion-content
-    // but no ion-footer). Custom modals with raw HTML are fully
-    // developer-controlled and should not be modified.
-    if (!hasContent || hasFooter) return;
-
-    // Reduce wrapper height by safe-area and add equivalent padding so the
-    // total visual size stays the same but the flex content area shrinks.
-    // Using height + padding instead of box-sizing: border-box avoids
-    // breaking custom modals that set --border-width (border-box would
-    // include the border inside the height, changing the layout).
-    wrapperEl.style.setProperty('height', 'calc(var(--height) - var(--ion-safe-area-bottom, 0px))');
-    wrapperEl.style.setProperty('padding-bottom', 'var(--ion-safe-area-bottom, 0px)');
+    const { contentEl, hasFooter } = this.findContentAndFooter();
+    this.applyFullscreenSafeAreaTo(contentEl, hasFooter);
   }
 
   /**
-   * Clears all safe-area overrides and padding from wrapper.
+   * Sets --ion-content-safe-area-padding-bottom on the given ion-content
+   * when no footer is present, so ion-content's .inner-scroll includes
+   * safe-area-bottom in its scroll padding. This keeps the modal background
+   * edge-to-edge while ensuring content scrolls clear of the system nav bar.
+   *
+   * --ion-content-safe-area-padding-bottom is an internal CSS property used
+   * only by this code path. It is not part of ion-content's public API and
+   * should not be set by consumers. The default of 0px makes it a no-op
+   * when unset, which is the expected state for ion-content used outside of
+   * a fullscreen modal without a footer.
+   */
+  private applyFullscreenSafeAreaTo(contentEl: HTMLElement | null, hasFooter: boolean): void {
+    // Only apply for standard Ionic layouts (has ion-content but no
+    // ion-footer). When a footer is present it handles its own safe-area
+    // padding. Custom modals with raw HTML are developer-controlled.
+    if (!contentEl || hasFooter) return;
+
+    contentEl.style.setProperty('--ion-content-safe-area-padding-bottom', 'var(--ion-safe-area-bottom, 0px)');
+  }
+
+  /**
+   * Removes the internal --ion-content-safe-area-padding-bottom property
+   * from an already-located ion-content. Callers do their own
+   * findContentAndFooter() so they can also read hasFooter if needed.
+   */
+  private clearContentSafeAreaPadding(contentEl: HTMLElement | null): void {
+    if (!contentEl) return;
+    contentEl.style.removeProperty('--ion-content-safe-area-padding-bottom');
+  }
+
+  /**
+   * Finds ion-content and ion-footer among direct children and one level of
+   * grandchildren (for wrapped components like <app-footer><ion-footer>).
+   *
+   * Intentionally does NOT use findIonContent() or querySelector() because
+   * those search the full subtree and would match ion-content inside nested
+   * routes/pages. We only want direct slot children (+ one wrapper level).
+   *
+   * Uses a manual loop instead of querySelector(':scope > ...') because
+   * Stencil's mock-doc (used in spec tests) does not support :scope.
+   */
+  private findContentAndFooter(): { contentEl: HTMLElement | null; hasFooter: boolean } {
+    let contentEl: HTMLElement | null = null;
+    let hasFooter = false;
+    for (const child of Array.from(this.el.children)) {
+      if (child.tagName === 'ION-CONTENT') contentEl = child as HTMLElement;
+      if (child.tagName === 'ION-FOOTER') hasFooter = true;
+      for (const grandchild of Array.from(child.children)) {
+        if (grandchild.tagName === 'ION-CONTENT' && !contentEl) contentEl = grandchild as HTMLElement;
+        if (grandchild.tagName === 'ION-FOOTER') hasFooter = true;
+      }
+    }
+    return { contentEl, hasFooter };
+  }
+
+  /**
+   * Clears all safe-area overrides and padding.
    */
   private cleanupSafeAreaOverrides(): void {
     clearSafeAreaOverrides(this.el);
@@ -1551,10 +1587,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // Remove internal sheet offset property
     this.el.style.removeProperty('--ion-modal-offset-top');
 
-    if (this.wrapperEl) {
-      this.wrapperEl.style.removeProperty('height');
-      this.wrapperEl.style.removeProperty('padding-bottom');
-    }
+    const { contentEl } = this.findContentAndFooter();
+    this.clearContentSafeAreaPadding(contentEl);
   }
 
   render() {
