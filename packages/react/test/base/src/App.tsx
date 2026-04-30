@@ -44,7 +44,8 @@ setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
-    <IonReactRouter>
+    {/* Vercel previews serve this app under /react/, so derive basename from Vite's base URL */}
+    <IonReactRouter basename={import.meta.env?.BASE_URL?.replace(/\/$/, '') || undefined}>
       <IonRouterOutlet>
         <Route path="/" element={<Main />} />
         <Route path="/overlay-hooks/*" element={<OverlayHooks />} />
