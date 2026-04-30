@@ -76,7 +76,8 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <ModeSwitcher />
-      <IonReactRouter>
+      {/* Vercel previews serve this app under /react-router/, so derive basename from Vite's base URL */}
+      <IonReactRouter basename={import.meta.env?.BASE_URL?.replace(/\/$/, '') || undefined}>
         <IonRouterOutlet>
           <Route path="/" element={<Main />} />
           <Route path="/routing/*" element={<Routing />} />
