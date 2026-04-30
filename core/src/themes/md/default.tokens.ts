@@ -195,7 +195,7 @@ export const defaultTheme: DefaultTheme = {
             },
 
             line: {
-              height: 'var(--ion-scaling-xxxs)',
+              height: 'var(--ion-line-height-xxs)',
             },
           },
 
@@ -237,7 +237,7 @@ export const defaultTheme: DefaultTheme = {
             },
 
             line: {
-              height: 'var(--ion-scaling-xxs)',
+              height: 'var(--ion-line-height-xxs)',
             },
           },
 
@@ -279,7 +279,7 @@ export const defaultTheme: DefaultTheme = {
             },
 
             line: {
-              height: 'var(--ion-scaling-xs)',
+              height: 'var(--ion-line-height-xxs)',
             },
           },
 
