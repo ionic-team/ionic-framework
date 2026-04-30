@@ -10,17 +10,7 @@ export interface IonContentRecipe {
   };
 
   overflow?: string;
-
   padding?: IonPadding;
-
-  transition?: {
-    cover?: {
-      background?: string;
-      opacity?: string;
-    };
-
-    shadow?: string;
-  };
 }
 
 export interface IonContentConfig {}

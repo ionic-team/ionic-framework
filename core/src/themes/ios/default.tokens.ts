@@ -418,15 +418,6 @@ export const defaultTheme: DefaultTheme = {
         start: 'var(--ion-spacing-0)',
         top: 'var(--ion-spacing-0)',
       },
-
-      transition: {
-        cover: {
-          background: baseColors.black,
-          opacity: '0.1',
-        },
-
-        shadow: `inset -9px 0 9px 0 ${rgba('0, 0, 100', 0.03)}`,
-      },
     },
 
     IonItemDivider: {
