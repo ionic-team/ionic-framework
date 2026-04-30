@@ -186,17 +186,17 @@ export const config: Config = {
         {
           elements: ['ion-checkbox', 'ion-toggle'],
           targetAttr: 'checked',
-          event: 'ion-change'
+          event: 'ionChange'
         },
         {
           elements: ['ion-datetime', 'ion-radio-group', 'ion-radio', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-accordion-group'],
           targetAttr: 'value',
-          event: 'ion-change',
+          event: 'ionChange',
         },
         {
           elements: ['ion-input', 'ion-input-otp', 'ion-searchbar', 'ion-textarea', 'ion-range'],
           targetAttr: 'value',
-          event: 'ion-input',
+          event: 'ionInput',
         }
       ],
     }),

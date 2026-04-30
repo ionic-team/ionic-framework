@@ -68,8 +68,13 @@
     "vue-router": "^4.0.16"
   },
   "dependencies": {
+<<<<<<< Updated upstream
     "@ionic/core": "^8.8.3",
     "@stencil/vue-output-target": "0.10.7",
+=======
+    "@ionic/core": "^8.8.4",
+    "@stencil/vue-output-target": "0.13.1",
+>>>>>>> Stashed changes
     "ionicons": "^8.0.13"
   },
   "vetur": {

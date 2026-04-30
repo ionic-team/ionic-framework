@@ -85,6 +85,7 @@ import { defineCustomElement as defineIonToggle } from '@ionic/core/components/i
 import { defineCustomElement as defineIonToolbar } from '@ionic/core/components/ion-toolbar.js';
 
 
+
 export const IonAccordion: StencilVueComponent<JSX.IonAccordion> = /*@__PURE__*/ defineContainer<JSX.IonAccordion>('ion-accordion', defineIonAccordion, [
   'value',
   'disabled',
@@ -107,7 +108,7 @@ export const IonAccordionGroup: StencilVueComponent<JSX.IonAccordionGroup, JSX.I
   'ionChange',
   'ionValueChange'
 ],
-'value', 'ion-change');
+'value', 'ionChange', undefined);
 
 
 export const IonAvatar: StencilVueComponent<JSX.IonAvatar> = /*@__PURE__*/ defineContainer<JSX.IonAvatar>('ion-avatar', defineIonAvatar);
@@ -247,7 +248,7 @@ export const IonCheckbox: StencilVueComponent<JSX.IonCheckbox, JSX.IonCheckbox["
   'ionFocus',
   'ionBlur'
 ],
-'checked', 'ion-change');
+'checked', 'ionChange', undefined);
 
 
 export const IonChip: StencilVueComponent<JSX.IonChip> = /*@__PURE__*/ defineContainer<JSX.IonChip>('ion-chip', defineIonChip, [
@@ -351,7 +352,7 @@ export const IonDatetime: StencilVueComponent<JSX.IonDatetime, JSX.IonDatetime["
   'ionStyle',
   'ionRender'
 ],
-'value', 'ion-change');
+'value', 'ionChange', undefined);
 
 
 export const IonDatetimeButton: StencilVueComponent<JSX.IonDatetimeButton> = /*@__PURE__*/ defineContainer<JSX.IonDatetimeButton>('ion-datetime-button', defineIonDatetimeButton, [
@@ -489,7 +490,7 @@ export const IonInput: StencilVueComponent<JSX.IonInput, JSX.IonInput["value"]> 
   'ionBlur',
   'ionFocus'
 ],
-'value', 'ion-input');
+'value', 'ionInput', undefined);
 
 
 export const IonInputOtp: StencilVueComponent<JSX.IonInputOtp, JSX.IonInputOtp["value"]> = /*@__PURE__*/ defineContainer<JSX.IonInputOtp, JSX.IonInputOtp["value"]>('ion-input-otp', defineIonInputOtp, [
@@ -518,7 +519,7 @@ export const IonInputOtp: StencilVueComponent<JSX.IonInputOtp, JSX.IonInputOtp["
   'ionBlur',
   'ionFocus'
 ],
-'value', 'ion-input');
+'value', 'ionInput', undefined);
 
 
 export const IonInputPasswordToggle: StencilVueComponent<JSX.IonInputPasswordToggle> = /*@__PURE__*/ defineContainer<JSX.IonInputPasswordToggle>('ion-input-password-toggle', defineIonInputPasswordToggle, [
@@ -721,7 +722,7 @@ export const IonRadio: StencilVueComponent<JSX.IonRadio, JSX.IonRadio["value"]> 
   'ionFocus',
   'ionBlur'
 ],
-'value', 'ion-change');
+'value', 'ionChange', undefined);
 
 
 export const IonRadioGroup: StencilVueComponent<JSX.IonRadioGroup, JSX.IonRadioGroup["value"]> = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup, JSX.IonRadioGroup["value"]>('ion-radio-group', defineIonRadioGroup, [
@@ -737,7 +738,7 @@ export const IonRadioGroup: StencilVueComponent<JSX.IonRadioGroup, JSX.IonRadioG
   'ionChange',
   'ionValueChange'
 ],
-'value', 'ion-change');
+'value', 'ionChange', undefined);
 
 
 export const IonRange: StencilVueComponent<JSX.IonRange, JSX.IonRange["value"]> = /*@__PURE__*/ defineContainer<JSX.IonRange, JSX.IonRange["value"]>('ion-range', defineIonRange, [
@@ -771,7 +772,7 @@ export const IonRange: StencilVueComponent<JSX.IonRange, JSX.IonRange["value"]> 
   'ionKnobMoveStart',
   'ionKnobMoveEnd'
 ],
-'value', 'ion-input');
+'value', 'ionInput', undefined);
 
 
 export const IonRefresher: StencilVueComponent<JSX.IonRefresher> = /*@__PURE__*/ defineContainer<JSX.IonRefresher>('ion-refresher', defineIonRefresher, [
@@ -867,7 +868,7 @@ export const IonSearchbar: StencilVueComponent<JSX.IonSearchbar, JSX.IonSearchba
   'ionFocus',
   'ionStyle'
 ],
-'value', 'ion-input');
+'value', 'ionInput', undefined);
 
 
 export const IonSegment: StencilVueComponent<JSX.IonSegment, JSX.IonSegment["value"]> = /*@__PURE__*/ defineContainer<JSX.IonSegment, JSX.IonSegment["value"]>('ion-segment', defineIonSegment, [
@@ -885,7 +886,7 @@ export const IonSegment: StencilVueComponent<JSX.IonSegment, JSX.IonSegment["val
   'ionSelect',
   'ionStyle'
 ],
-'value', 'ion-change');
+'value', 'ionChange', undefined);
 
 
 export const IonSegmentButton: StencilVueComponent<JSX.IonSegmentButton, JSX.IonSegmentButton["value"]> = /*@__PURE__*/ defineContainer<JSX.IonSegmentButton, JSX.IonSegmentButton["value"]>('ion-segment-button', defineIonSegmentButton, [
@@ -895,7 +896,7 @@ export const IonSegmentButton: StencilVueComponent<JSX.IonSegmentButton, JSX.Ion
   'type',
   'value'
 ], [],
-'value', 'ion-change');
+'value', 'ionChange', undefined);
 
 
 export const IonSegmentContent: StencilVueComponent<JSX.IonSegmentContent> = /*@__PURE__*/ defineContainer<JSX.IonSegmentContent>('ion-segment-content', defineIonSegmentContent);
@@ -947,7 +948,7 @@ export const IonSelect: StencilVueComponent<JSX.IonSelect, JSX.IonSelect["value"
   'ionBlur',
   'ionStyle'
 ],
-'value', 'ion-change');
+'value', 'ionChange', undefined);
 
 
 export const IonSelectModal: StencilVueComponent<JSX.IonSelectModal> = /*@__PURE__*/ defineContainer<JSX.IonSelectModal>('ion-select-modal', defineIonSelectModal, [
@@ -1042,7 +1043,7 @@ export const IonTextarea: StencilVueComponent<JSX.IonTextarea, JSX.IonTextarea["
   'ionBlur',
   'ionFocus'
 ],
-'value', 'ion-input');
+'value', 'ionInput', undefined);
 
 
 export const IonThumbnail: StencilVueComponent<JSX.IonThumbnail> = /*@__PURE__*/ defineContainer<JSX.IonThumbnail>('ion-thumbnail', defineIonThumbnail);
@@ -1078,10 +1079,11 @@ export const IonToggle: StencilVueComponent<JSX.IonToggle, JSX.IonToggle["checke
   'ionFocus',
   'ionBlur'
 ],
-'checked', 'ion-change');
+'checked', 'ionChange', undefined);
 
 
 export const IonToolbar: StencilVueComponent<JSX.IonToolbar> = /*@__PURE__*/ defineContainer<JSX.IonToolbar>('ion-toolbar', defineIonToolbar, [
   'color'
 ]);
+
 
