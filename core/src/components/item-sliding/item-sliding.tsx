@@ -14,7 +14,8 @@ const ELASTIC_FACTOR = 0.55;
 const IONIC_ELASTIC_FACTOR = 0.15;
 const IONIC_SNAP_OPEN_RATIO = 0.4;
 const IONIC_EXPAND_TRIGGER = 40;
-const IONIC_VELOCITY_THRESHOLD = 400;
+const IONIC_FULL_SWIPE_VELOCITY_THRESHOLD = 400;
+const IONIC_OPEN_VELOCITY_THRESHOLD = 200;
 const IONIC_ACTION_BASE_WIDTH = 64;
 const IONIC_CONFIRM_PAUSE = 300;
 const FULL_SWIPE_TRANSITION_MS = 250;
@@ -499,11 +500,7 @@ export class ItemSliding implements ComponentInterface {
         ITEM_OPTION_EXPAND_THRESHOLD_CLASS
       );
 
-      this.setIonicExpandableWidth(
-        previousDirection,
-        this.getExpandableBaseWidth(previousDirection),
-        false
-      );
+      this.setIonicExpandableWidth(previousDirection, this.getExpandableBaseWidth(previousDirection), false);
       return;
     }
 
@@ -802,16 +799,20 @@ export class ItemSliding implements ComponentInterface {
     const optionsWidth = this.getOptionsWidthForDirection(activeDirection);
     const extraWidth = Math.max(0, Math.abs(this.openAmount) - optionsWidth);
     const hasExpandable = this.hasExpandableOptions(activeDirection === 'end' ? this.rightOptions : this.leftOptions);
-    const wasRevealed = Math.abs(this.initialOpenAmount) >= optionsWidth;
-
 
     const closeDirection =
-      activeDirection === 'end' ? velocityX > IONIC_VELOCITY_THRESHOLD : velocityX < -IONIC_VELOCITY_THRESHOLD;
+      activeDirection === 'end'
+        ? velocityX > IONIC_FULL_SWIPE_VELOCITY_THRESHOLD
+        : velocityX < -IONIC_FULL_SWIPE_VELOCITY_THRESHOLD;
+
+    if (closeDirection) {
+      this.setOpenAmount(0, true);
+      return;
+    }
 
     if (
-      !closeDirection &&
       hasExpandable &&
-      (extraWidth >= IONIC_EXPAND_TRIGGER || (extraWidth > 0  && (wasRevealed && Math.abs(velocityX) > IONIC_VELOCITY_THRESHOLD)))
+      (extraWidth >= IONIC_EXPAND_TRIGGER || Math.abs(velocityX) > IONIC_FULL_SWIPE_VELOCITY_THRESHOLD)
     ) {
       this.animateIonicFullSwipe(activeDirection).catch(() => {
         if (this.gesture) {
@@ -821,18 +822,15 @@ export class ItemSliding implements ComponentInterface {
       return;
     }
 
-    if (closeDirection) {
-      this.setOpenAmount(0, true);
-      return;
-    }
+    const flickOpen =
+      activeDirection === 'end'
+        ? velocityX < -IONIC_OPEN_VELOCITY_THRESHOLD
+        : velocityX > IONIC_OPEN_VELOCITY_THRESHOLD;
 
+    const fullOpen = activeDirection === 'end' ? this.optsWidthRightSide : -this.optsWidthLeftSide;
     const openThreshold = optionsWidth * IONIC_SNAP_OPEN_RATIO;
-    const shouldSnapOpen = Math.abs(this.openAmount) > openThreshold;
-    const restingPoint = shouldSnapOpen
-      ? activeDirection === 'end'
-        ? this.optsWidthRightSide
-        : -this.optsWidthLeftSide
-      : 0;
+    const shouldSnapOpen = flickOpen || Math.abs(this.openAmount) > openThreshold;
+    const restingPoint = shouldSnapOpen ? fullOpen : 0;
 
     this.setOpenAmount(restingPoint, true);
   }
@@ -876,12 +874,12 @@ export class ItemSliding implements ComponentInterface {
     if (!this.item) {
       return;
     }
-  
+
     const { el } = this;
     const style = this.item.style;
     const previousOpenAmount = this.openAmount;
     this.openAmount = openAmount;
-  
+
     if (this.isIonicTheme()) {
       this.updateIonicExpandableFromOpenAmount(openAmount, isFinal, previousOpenAmount);
     }
@@ -894,7 +892,7 @@ export class ItemSliding implements ComponentInterface {
         this.el.classList.add('item-sliding-transition-open');
       }
     }
-  
+
     if (openAmount > 0) {
       const fullSwipe = !this.isIonicTheme() && openAmount >= this.optsWidthRightSide + SWIPE_MARGIN;
       this.state = fullSwipe ? SlidingState.End | SlidingState.SwipeEnd : SlidingState.End;
@@ -914,12 +912,12 @@ export class ItemSliding implements ComponentInterface {
         }
         el.classList.remove('item-sliding-closing');
       }, 600);
-  
+
       openSlidingItem = undefined;
       style.transform = '';
       return;
     }
-  
+
     style.transform = `translate3d(${-openAmount}px,0,0)`;
     this.ionDrag.emit({
       amount: openAmount,

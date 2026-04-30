@@ -2,8 +2,6 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @import "../../themes/native/native.globals";
 
-
-
 // Transition utility classes
 .item-sliding-transition-open .item {
   transition: transform 250ms cubic-bezier(0.25, 1, 0.5, 1);
