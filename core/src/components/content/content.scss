@@ -82,8 +82,6 @@
 
 .scroll-y,
 .scroll-x {
-  -webkit-overflow-scrolling: touch;
-
   /**
    * This adds `.inner-scroll` as part of the
    * stacking context in WebKit. Without it,
