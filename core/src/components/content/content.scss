@@ -208,6 +208,8 @@
 // ---------------------------------------------
 
 .transition-effect {
+  @include mixins.position-horizontal(-100%);
+
   display: none;
   position: absolute;
 
@@ -217,18 +219,6 @@
   opacity: 0;
 
   pointer-events: none;
-}
-
-:host(.content-ltr) .transition-effect {
-  /* stylelint-disable property-disallowed-list */
-  left: -100%;
-  /* stylelint-enable property-disallowed-list */
-}
-
-:host(.content-rtl) .transition-effect {
-  /* stylelint-disable property-disallowed-list */
-  right: -100%;
-  /* stylelint-enable property-disallowed-list */
 }
 
 .transition-cover {
@@ -247,6 +237,8 @@
 }
 
 .transition-shadow {
+  @include mixins.position-horizontal(null, 0);
+
   display: block;
   position: absolute;
 
@@ -256,16 +248,6 @@
   box-shadow: inset -9px 0 9px 0 rgba(0, 0, 100, 0.03);
 }
 
-:host(.content-ltr) .transition-shadow {
-  /* stylelint-disable property-disallowed-list */
-  right: 0;
-  /* stylelint-enable property-disallowed-list */
-}
-
 :host(.content-rtl) .transition-shadow {
-  /* stylelint-disable property-disallowed-list */
-  left: 0;
-  /* stylelint-enable property-disallowed-list */
-
   transform: scaleX(-1);
 }
