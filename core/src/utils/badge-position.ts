@@ -186,6 +186,14 @@ export function createBadgeObserver(config: BadgePositionConfig): BadgeObserver 
     observer.observe(relativeTo);
   }
 
+  /**
+   * The badge itself must also be observed. Arc-based positioning uses
+   * `badgeRect.height / 2` for both top and bottom offsets, so if the
+   * badge resizes after initial layout (e.g. count changes from "9" to
+   * "99+") the position would be stale by half the height delta.
+   */
+  observer.observe(config.badge);
+
   return {
     disconnect: () => observer.disconnect(),
   };
