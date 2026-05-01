@@ -29,7 +29,9 @@ const pwd = resolve('./');
  * --init is recommended to avoid zombie processes: https://playwright.dev/docs/ci#docker
  * --mount allow us to mount the local Ionic project inside of the Docker container so devs do not need to re-build the project in Docker.
  */
-const args = ['run', '--rm', '--init', `-e DISPLAY=${display}`, `-v ${displayVolume}`, '--ipc=host', `--mount=type=bind,source=${pwd},target=/ionic`, 'ionic-playwright', 'npm run test.e2e --', ...process.argv.slice(2)];
+// Re-quote args with spaces since the shell strips quotes before node receives them (e.g. --project='Mobile Safari').
+const extraArgs = process.argv.slice(2).map(arg => (arg.includes(' ') ? `"${arg.replace(/"/g, '\\"')}"` : arg));
+const args = ['run', '--rm', '--init', `-e DISPLAY=${display}`, `-v ${displayVolume}`, '--ipc=host', `--mount=type=bind,source=${pwd},target=/ionic`, 'ionic-playwright', 'npm run test.e2e --', ...extraArgs];
 
 // Set the CI env variable so Playwright uses the CI config
 if (process.env.CI) {
