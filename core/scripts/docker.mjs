@@ -1,7 +1,7 @@
+import chalk from 'chalk';
 import { execa } from 'execa';
 import * as fs from 'fs';
 import { resolve } from 'path';
-import chalk from 'chalk';
 
 const removeNewline = (string) => {
   return string.replace(/(\r\n|\n|\r)/gm, "");
@@ -29,13 +29,12 @@ const pwd = resolve('./');
  * --init is recommended to avoid zombie processes: https://playwright.dev/docs/ci#docker
  * --mount allow us to mount the local Ionic project inside of the Docker container so devs do not need to re-build the project in Docker.
  */
-// Re-quote args with spaces since the shell strips quotes before node receives them (e.g. --project='Mobile Safari').
-const extraArgs = process.argv.slice(2).map(arg => (arg.includes(' ') ? `"${arg.replace(/"/g, '\\"')}"` : arg));
-const args = ['run', '--rm', '--init', `-e DISPLAY=${display}`, `-v ${displayVolume}`, '--ipc=host', `--mount=type=bind,source=${pwd},target=/ionic`, 'ionic-playwright', 'npm run test.e2e --', ...extraArgs];
+const extraArgs = process.argv.slice(2);
+const args = ['run', '--rm', '--init', '-e', `DISPLAY=${display}`, '-v', displayVolume, '--ipc=host', `--mount=type=bind,source=${pwd},target=/ionic`, 'ionic-playwright', 'npm', 'run', 'test.e2e', '--', ...extraArgs];
 
 // Set the CI env variable so Playwright uses the CI config
 if (process.env.CI) {
-  args.splice(1, 0, '-e CI=true');
+  args.splice(1, 0, '-e', 'CI=true');
 /**
  * Otherwise, we should let the session be interactive locally. This will
  * not work on CI which is why we do not apply it there.
@@ -55,7 +54,7 @@ if (requestHeaded && !hasHeadedConfigFiles) {
   console.warn(chalk.yellow.bold('\n⚠️ You are running tests in headed mode, but one or more of your headed config files was not found.\nPlease ensure that both docker-display.txt and docker-display-volume.txt have been created in the correct location.\n'));
 }
 
-const res = await execa('docker', args, { shell: true, stdio: 'inherit' });
+const res = await execa('docker', args, { stdio: 'inherit' });
 
 // If underlying scripts failed this whole process should fail too
 process.exit(res.exitCode);
