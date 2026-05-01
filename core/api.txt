@@ -319,76 +319,76 @@ ion-badge,prop,mode,"ios" | "md",undefined,false,false
 ion-badge,prop,shape,"crisp" | "rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-badge,prop,size,"large" | "medium" | "small" | undefined,undefined,false,false
 ion-badge,prop,vertical,"bottom" | "top" | undefined,undefined,false,false
-ion-badge,css-prop,--ion-badge-font-family - the font family of the badge text Bold
-ion-badge,css-prop,--ion-badge-hue-bold-default-background - Background color of the `bold` hue in default state
-ion-badge,css-prop,--ion-badge-hue-bold-default-color - Text color of the `bold` hue in default state
-ion-badge,css-prop,--ion-badge-hue-bold-semantic-default-background - Background color of the `bold` hue when a semantic color is applied
-ion-badge,css-prop,--ion-badge-hue-bold-semantic-default-color - Text color of the `bold` hue when a semantic color is applied Subtle
-ion-badge,css-prop,--ion-badge-hue-subtle-default-background - Background color of the `subtle` hue in default state
-ion-badge,css-prop,--ion-badge-hue-subtle-default-color - Text color of the `subtle` hue in default state
-ion-badge,css-prop,--ion-badge-hue-subtle-semantic-default-background - Background color of the `subtle` hue when a semantic color is applied
-ion-badge,css-prop,--ion-badge-hue-subtle-semantic-default-color - Text color of the `subtle` hue when a semantic color is applied Shapes
-ion-badge,css-prop,--ion-badge-shape-crisp-border-radius - Border radius of the `crisp` shape
-ion-badge,css-prop,--ion-badge-shape-rectangular-border-radius - Border radius of the `rectangular` shape Sizes
-ion-badge,css-prop,--ion-badge-shape-round-border-radius - Border radius of the `round` shape
-ion-badge,css-prop,--ion-badge-shape-soft-border-radius - Border radius of the `soft` shape
-ion-badge,css-prop,--ion-badge-size-large-content-font-size - Font size of the `large` size when badge has content
-ion-badge,css-prop,--ion-badge-size-large-content-font-weight - Font weight of the `large` size when badge has content
-ion-badge,css-prop,--ion-badge-size-large-content-height - Height of the `large` size when badge has content
-ion-badge,css-prop,--ion-badge-size-large-content-icon-height - Height of the slotted `ion-icon` of the `large` size Sizes
-ion-badge,css-prop,--ion-badge-size-large-content-icon-width - Width of the slotted `ion-icon` of the `large` size
-ion-badge,css-prop,--ion-badge-size-large-content-letter-spacing - Letter spacing of the `large` size when badge has content
-ion-badge,css-prop,--ion-badge-size-large-content-line-height - Line height of the `large` size when badge has content
-ion-badge,css-prop,--ion-badge-size-large-content-min-height - Minimum height of the `large` size when badge has content
-ion-badge,css-prop,--ion-badge-size-large-content-min-width - Minimum width of the `large` size when badge has content
-ion-badge,css-prop,--ion-badge-size-large-content-padding-bottom - Bottom padding of the `large` size when badge has content
-ion-badge,css-prop,--ion-badge-size-large-content-padding-end - Right padding if direction is left-to-right, left padding if direction is right-to-left of the `large` size when badge has content
-ion-badge,css-prop,--ion-badge-size-large-content-padding-start - Left padding if direction is left-to-right, right padding if direction is right-to-left of the `large` size when badge has content
-ion-badge,css-prop,--ion-badge-size-large-content-padding-top - Top padding of the `large` size when badge has content
-ion-badge,css-prop,--ion-badge-size-large-dot-height - Height of the `large` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-large-dot-min-width - Minimum width of the `large` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-large-dot-padding-bottom - Bottom padding of the `large` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-large-dot-padding-end - Right padding if direction is left-to-right, left padding if direction is right-to-left of the `large` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-large-dot-padding-start - Left padding if direction is left-to-right, right padding if direction is right-to-left of the `large` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-large-dot-padding-top - Top padding of the `large` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-medium-content-font-size - Font size of the `medium` size when badge has content
-ion-badge,css-prop,--ion-badge-size-medium-content-font-weight - Font weight of the `medium` size when badge has content
-ion-badge,css-prop,--ion-badge-size-medium-content-height - Height of the `medium` size when badge has content
-ion-badge,css-prop,--ion-badge-size-medium-content-icon-height - Height of the slotted `ion-icon` of the `medium` size
-ion-badge,css-prop,--ion-badge-size-medium-content-icon-width - Width of the slotted `ion-icon` of the `medium` size
-ion-badge,css-prop,--ion-badge-size-medium-content-letter-spacing - Letter spacing of the `medium` size when badge has content
-ion-badge,css-prop,--ion-badge-size-medium-content-line-height - Line height of the `medium` size when badge has content
-ion-badge,css-prop,--ion-badge-size-medium-content-min-height - Minimum height of the `medium` size when badge has content
-ion-badge,css-prop,--ion-badge-size-medium-content-min-width - Minimum width of the `medium` size when badge has content
-ion-badge,css-prop,--ion-badge-size-medium-content-padding-bottom - Bottom padding of the `medium` size when badge has content
-ion-badge,css-prop,--ion-badge-size-medium-content-padding-end - Right padding if direction is left-to-right, left padding if direction is right-to-left of the `medium` size when badge has content
-ion-badge,css-prop,--ion-badge-size-medium-content-padding-start - Left padding if direction is left-to-right, right padding if direction is right-to-left of the `medium` size when badge has content
-ion-badge,css-prop,--ion-badge-size-medium-content-padding-top - Top padding of the `medium` size when badge has content
-ion-badge,css-prop,--ion-badge-size-medium-dot-height - Height of the `medium` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-medium-dot-min-width - Minimum width of the `medium` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-medium-dot-padding-bottom - Bottom padding of the `medium` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-medium-dot-padding-end - Right padding if direction is left-to-right, left padding if direction is right-to-left of the `medium` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-medium-dot-padding-start - Left padding if direction is left-to-right, right padding if direction is right-to-left of the `medium` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-medium-dot-padding-top - Top padding of the `medium` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-small-content-font-size - Font size of the `small` size when badge has content
-ion-badge,css-prop,--ion-badge-size-small-content-font-weight - Font weight of the `small` size when badge has content
-ion-badge,css-prop,--ion-badge-size-small-content-height - Height of the `small` size when badge has content
-ion-badge,css-prop,--ion-badge-size-small-content-icon-height - Height of the slotted `ion-icon` of the `small` size
-ion-badge,css-prop,--ion-badge-size-small-content-icon-width - Width of the slotted `ion-icon` of the `small` size
-ion-badge,css-prop,--ion-badge-size-small-content-letter-spacing - Letter spacing of the `small` size when badge has content
-ion-badge,css-prop,--ion-badge-size-small-content-line-height - Line height of the `small` size when badge has content
-ion-badge,css-prop,--ion-badge-size-small-content-min-height - Minimum height of the `small` size when badge has content
-ion-badge,css-prop,--ion-badge-size-small-content-min-width - Minimum width of the `small` size when badge has content
-ion-badge,css-prop,--ion-badge-size-small-content-padding-bottom - Bottom padding of the `small` size when badge has content
-ion-badge,css-prop,--ion-badge-size-small-content-padding-end - Right padding if direction is left-to-right, left padding if direction is right-to-left of the `small` size when badge has content
-ion-badge,css-prop,--ion-badge-size-small-content-padding-start - Left padding if direction is left-to-right, right padding if direction is right-to-left of the `small` size when badge has content
-ion-badge,css-prop,--ion-badge-size-small-content-padding-top - Top padding of the `small` size when badge has content
-ion-badge,css-prop,--ion-badge-size-small-dot-height - Height of the `small` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-small-dot-min-width - Minimum width of the `small` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-small-dot-padding-bottom - Bottom padding of the `small` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-small-dot-padding-end - Right padding if direction is left-to-right, left padding if direction is right-to-left of the `small` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-small-dot-padding-start - Left padding if direction is left-to-right, right padding if direction is right-to-left of the `small` size when badge is empty
-ion-badge,css-prop,--ion-badge-size-small-dot-padding-top - Top padding of the `small` size when badge is empty
+ion-badge,css-prop,--ion-badge-font-family
+ion-badge,css-prop,--ion-badge-hue-bold-default-background
+ion-badge,css-prop,--ion-badge-hue-bold-default-color
+ion-badge,css-prop,--ion-badge-hue-bold-semantic-default-background
+ion-badge,css-prop,--ion-badge-hue-bold-semantic-default-color
+ion-badge,css-prop,--ion-badge-hue-subtle-default-background
+ion-badge,css-prop,--ion-badge-hue-subtle-default-color
+ion-badge,css-prop,--ion-badge-hue-subtle-semantic-default-background
+ion-badge,css-prop,--ion-badge-hue-subtle-semantic-default-color
+ion-badge,css-prop,--ion-badge-shape-crisp-border-radius
+ion-badge,css-prop,--ion-badge-shape-rectangular-border-radius
+ion-badge,css-prop,--ion-badge-shape-round-border-radius
+ion-badge,css-prop,--ion-badge-shape-soft-border-radius
+ion-badge,css-prop,--ion-badge-size-large-content-font-size
+ion-badge,css-prop,--ion-badge-size-large-content-font-weight
+ion-badge,css-prop,--ion-badge-size-large-content-height
+ion-badge,css-prop,--ion-badge-size-large-content-icon-height
+ion-badge,css-prop,--ion-badge-size-large-content-icon-width
+ion-badge,css-prop,--ion-badge-size-large-content-letter-spacing
+ion-badge,css-prop,--ion-badge-size-large-content-line-height
+ion-badge,css-prop,--ion-badge-size-large-content-min-height
+ion-badge,css-prop,--ion-badge-size-large-content-min-width
+ion-badge,css-prop,--ion-badge-size-large-content-padding-bottom
+ion-badge,css-prop,--ion-badge-size-large-content-padding-end
+ion-badge,css-prop,--ion-badge-size-large-content-padding-start
+ion-badge,css-prop,--ion-badge-size-large-content-padding-top
+ion-badge,css-prop,--ion-badge-size-large-dot-height
+ion-badge,css-prop,--ion-badge-size-large-dot-min-width
+ion-badge,css-prop,--ion-badge-size-large-dot-padding-bottom
+ion-badge,css-prop,--ion-badge-size-large-dot-padding-end
+ion-badge,css-prop,--ion-badge-size-large-dot-padding-start
+ion-badge,css-prop,--ion-badge-size-large-dot-padding-top
+ion-badge,css-prop,--ion-badge-size-medium-content-font-size
+ion-badge,css-prop,--ion-badge-size-medium-content-font-weight
+ion-badge,css-prop,--ion-badge-size-medium-content-height
+ion-badge,css-prop,--ion-badge-size-medium-content-icon-height
+ion-badge,css-prop,--ion-badge-size-medium-content-icon-width
+ion-badge,css-prop,--ion-badge-size-medium-content-letter-spacing
+ion-badge,css-prop,--ion-badge-size-medium-content-line-height
+ion-badge,css-prop,--ion-badge-size-medium-content-min-height
+ion-badge,css-prop,--ion-badge-size-medium-content-min-width
+ion-badge,css-prop,--ion-badge-size-medium-content-padding-bottom
+ion-badge,css-prop,--ion-badge-size-medium-content-padding-end
+ion-badge,css-prop,--ion-badge-size-medium-content-padding-start
+ion-badge,css-prop,--ion-badge-size-medium-content-padding-top
+ion-badge,css-prop,--ion-badge-size-medium-dot-height
+ion-badge,css-prop,--ion-badge-size-medium-dot-min-width
+ion-badge,css-prop,--ion-badge-size-medium-dot-padding-bottom
+ion-badge,css-prop,--ion-badge-size-medium-dot-padding-end
+ion-badge,css-prop,--ion-badge-size-medium-dot-padding-start
+ion-badge,css-prop,--ion-badge-size-medium-dot-padding-top
+ion-badge,css-prop,--ion-badge-size-small-content-font-size
+ion-badge,css-prop,--ion-badge-size-small-content-font-weight
+ion-badge,css-prop,--ion-badge-size-small-content-height
+ion-badge,css-prop,--ion-badge-size-small-content-icon-height
+ion-badge,css-prop,--ion-badge-size-small-content-icon-width
+ion-badge,css-prop,--ion-badge-size-small-content-letter-spacing
+ion-badge,css-prop,--ion-badge-size-small-content-line-height
+ion-badge,css-prop,--ion-badge-size-small-content-min-height
+ion-badge,css-prop,--ion-badge-size-small-content-min-width
+ion-badge,css-prop,--ion-badge-size-small-content-padding-bottom
+ion-badge,css-prop,--ion-badge-size-small-content-padding-end
+ion-badge,css-prop,--ion-badge-size-small-content-padding-start
+ion-badge,css-prop,--ion-badge-size-small-content-padding-top
+ion-badge,css-prop,--ion-badge-size-small-dot-height
+ion-badge,css-prop,--ion-badge-size-small-dot-min-width
+ion-badge,css-prop,--ion-badge-size-small-dot-padding-bottom
+ion-badge,css-prop,--ion-badge-size-small-dot-padding-end
+ion-badge,css-prop,--ion-badge-size-small-dot-padding-start
+ion-badge,css-prop,--ion-badge-size-small-dot-padding-top
 
 ion-breadcrumb,shadow
 ion-breadcrumb,prop,active,boolean,false,false,false
