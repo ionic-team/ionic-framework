@@ -128,7 +128,7 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
          * Resizing to fit content.
          */
         const box = await container.boundingBox();
-        await page.setViewportSize({ width: Math.ceil(box!.width) + 32, height: Math.ceil(box!.height) + 32 });
+        await page.setViewportSize({ width: Math.ceil(box!.width) + 90, height: Math.ceil(box!.height) + 32 });
 
         await expect(container).toHaveScreenshot(screenshot(`tab-button-badge-${badgeSize}`));
       });
