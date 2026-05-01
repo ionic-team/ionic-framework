@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Prop, h } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Prop, Watch, h } from '@stencil/core';
 import { createBadgeManager } from '@utils/badge-position';
 import type { AnchorInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
@@ -153,6 +153,11 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     if (this.layout === undefined) {
       this.layout = config.get('tabButtonLayout', 'icon-top');
     }
+  }
+
+  @Watch('layout')
+  onLayoutChanged() {
+    this.badgeManager.init();
   }
 
   connectedCallback() {
