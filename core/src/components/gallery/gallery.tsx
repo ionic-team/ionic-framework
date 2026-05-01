@@ -284,6 +284,7 @@ export class Gallery implements ComponentInterface {
     itemEl.style.gridRowStart = '';
     itemEl.style.gridRowEnd = '';
     itemEl.style.gridColumn = '';
+    itemEl.style.marginBottom = '';
   }
 
   /**
@@ -341,8 +342,10 @@ export class Gallery implements ComponentInterface {
    */
   private layoutMasonry(items: HTMLElement[], rowHeight: number, rowGap: number, columns: number) {
     const columnHeights = new Array<number>(columns).fill(0);
+    const lastItemsByColumn = new Array<HTMLElement | undefined>(columns).fill(undefined);
 
     items.forEach((itemEl, i) => {
+      itemEl.style.marginBottom = '';
       const span = this.calculateRowSpan(itemEl, rowHeight, rowGap);
       if (span === undefined) {
         this.clearItemStyles(itemEl);
@@ -356,6 +359,24 @@ export class Gallery implements ComponentInterface {
       itemEl.style.gridRowStart = `${start}`;
       itemEl.style.gridRowEnd = `span ${span}`;
       columnHeights[columnIndex] = start + span - 1;
+      lastItemsByColumn[columnIndex] = itemEl;
+    });
+
+    // Remove trailing space from the final item in each column while preserving
+    // spacing between all non-final items.
+    lastItemsByColumn.forEach((itemEl) => {
+      if (itemEl === undefined) {
+        return;
+      }
+
+      itemEl.style.marginBottom = '0px';
+      const spanWithoutTrailingGap = this.calculateRowSpan(itemEl, rowHeight, rowGap);
+      if (spanWithoutTrailingGap === undefined) {
+        this.clearItemStyles(itemEl);
+        return;
+      }
+
+      itemEl.style.gridRowEnd = `span ${spanWithoutTrailingGap}`;
     });
   }
 
