@@ -3,7 +3,7 @@ import { configs, test } from '@utils/test/playwright';
 
 import { ION_BADGE_SIZES, ION_BADGE_VERTICAL_POSITIONS } from '../../../badge/badge.interfaces';
 
-configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
+configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('avatar: badge'), () => {
     ['xxsmall', 'xsmall', 'small', 'medium', 'large', 'xlarge'].forEach((avatarSize) => {
       test(`${avatarSize} - should not have visual regressions with badges`, async ({ page }) => {

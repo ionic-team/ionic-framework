@@ -9,7 +9,12 @@ interface BadgePositionConfig {
   /**
    * The host element. Used to determine text direction (RTL/LTR).
    *
-   * If omitted, `target` is used for direction detection.
+   * If omitted and `target` is inside a shadow root, the shadow
+   * root's host is used automatically. If `target` is in the
+   * light DOM, `target` itself is used.
+   *
+   * Required only when the shadow host cannot be inferred from
+   * `target` (e.g. the host is a grandparent of the shadow root).
    */
   host?: HTMLElement;
 
@@ -94,7 +99,9 @@ interface BadgeManager {
 export function positionBadge(config: BadgePositionConfig): void {
   const { badge, target, clamp = true } = config;
   const relativeTo = config.relativeTo ?? target;
-  const host = (config.host ?? target) as HTMLElement;
+  const rootNode = target.getRootNode();
+  const host =
+    config.host ?? (rootNode instanceof ShadowRoot ? (rootNode.host as HTMLElement) : (target as HTMLElement));
   const rtl = isRTL(host);
   const OVERLAP = 6;
 

@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
+configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('tab-button: badge'), () => {
     const positions = ['top', 'bottom'];
     const layouts = ['icon-top', 'icon-bottom', 'icon-start', 'icon-end', 'icon-hide', 'label-hide'];
