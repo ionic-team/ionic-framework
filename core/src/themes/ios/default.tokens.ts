@@ -188,6 +188,10 @@ export const defaultTheme: DefaultTheme = {
               size: dynamicFont(global.root, 12),
               weight: 'var(--ion-font-weight-medium)',
             },
+
+            line: {
+              height: 'var(--ion-line-height-xxs)',
+            },
           },
 
           dot: {
@@ -224,6 +228,10 @@ export const defaultTheme: DefaultTheme = {
               size: dynamicFontMin(global.root, 1, 14),
               weight: 'var(--ion-font-weight-medium)',
             },
+
+            line: {
+              height: 'var(--ion-line-height-xxs)',
+            },
           },
 
           dot: {
@@ -259,6 +267,10 @@ export const defaultTheme: DefaultTheme = {
             font: {
               size: dynamicFontMin(global.root, 1, 16),
               weight: 'var(--ion-font-weight-medium)',
+            },
+
+            line: {
+              height: 'var(--ion-line-height-xxs)',
             },
           },
 
