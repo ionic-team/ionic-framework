@@ -29,6 +29,7 @@ import type {
   shadow: true,
 })
 export class TabButton implements ComponentInterface, AnchorInterface {
+  private hasLoaded = false;
   private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLElement;
@@ -154,7 +155,14 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     }
   }
 
+  connectedCallback() {
+    if (this.hasLoaded) {
+      this.badgeManager.init();
+    }
+  }
+
   componentDidLoad() {
+    this.hasLoaded = true;
     this.badgeManager.init();
   }
 

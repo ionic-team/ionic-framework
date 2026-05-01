@@ -20,6 +20,8 @@ import { getIonTheme } from '../../global/ionic-global';
 export class Avatar implements ComponentInterface {
   @Element() el!: HTMLElement;
 
+  private hasLoaded = false;
+
   private badgeManager = createBadgeManager(this.el, () => ({
     target: this.el,
   }));
@@ -50,7 +52,14 @@ export class Avatar implements ComponentInterface {
    */
   @Prop() disabled = false;
 
+  connectedCallback() {
+    if (this.hasLoaded) {
+      this.badgeManager.init();
+    }
+  }
+
   componentDidLoad() {
+    this.hasLoaded = true;
     this.badgeManager.init();
   }
 

@@ -32,6 +32,7 @@ import type { RouterDirection } from '../router/utils/interface';
   shadow: true,
 })
 export class Button implements ComponentInterface, AnchorInterface, ButtonInterface {
+  private hasLoaded = false;
   private inItem = false;
   private inListHeader = false;
   private inToolbar = false;
@@ -229,7 +230,14 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
+  connectedCallback() {
+    if (this.hasLoaded) {
+      this.badgeManager.init();
+    }
+  }
+
   componentDidLoad() {
+    this.hasLoaded = true;
     this.badgeManager.init();
   }
 
