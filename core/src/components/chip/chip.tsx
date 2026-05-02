@@ -67,7 +67,8 @@ export class Chip implements ComponentInterface {
 
   // TODO(FW-6266): Determine if `medium` size is needed.
   /**
-   * Set to `"small"` for a chip with less height and padding.
+   * Set to `"small"` for a chip with less height and padding,
+   * or `"large"` for a chip with more height and padding.
    *
    * Defaults to `"large"` if both the size property and theme config are unset.
    */

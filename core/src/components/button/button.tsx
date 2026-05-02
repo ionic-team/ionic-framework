@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, State, forceUpdate, h } from '@stencil/core';
+import { createBadgeManager } from '@utils/badge-position';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, hasShadowDom, openURL } from '@utils/helpers';
@@ -31,6 +32,7 @@ import type { RouterDirection } from '../router/utils/interface';
   shadow: true,
 })
 export class Button implements ComponentInterface, AnchorInterface, ButtonInterface {
+  private hasLoaded = false;
   private inItem = false;
   private inListHeader = false;
   private inToolbar = false;
@@ -39,6 +41,12 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLElement;
+
+  private badgeManager = createBadgeManager(this.el, () => ({
+    host: this.el,
+    target: this.el.shadowRoot!.querySelector('.button-native')!,
+    relativeTo: this.el.shadowRoot!.querySelector('.button-inner')!,
+  }));
 
   /**
    * If `true`, the button only has an icon.
@@ -222,6 +230,21 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
+  connectedCallback() {
+    if (this.hasLoaded) {
+      this.badgeManager.init();
+    }
+  }
+
+  componentDidLoad() {
+    this.hasLoaded = true;
+    this.badgeManager.init();
+  }
+
+  disconnectedCallback() {
+    this.badgeManager.destroy();
+  }
+
   private get hasIconOnly() {
     return !!this.el.querySelector('[slot="icon-only"]');
   }
@@ -356,7 +379,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.ionBlur.emit();
   };
 
-  private slotChanged = () => {
+  private iconOnlySlotChanged = () => {
     /**
      * Ensures that the 'has-icon-only' class is properly added
      * or removed from `ion-button` when manipulating the
@@ -366,6 +389,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
      * or added when `ion-button` component first renders.
      */
     this.isCircle = this.hasIconOnly;
+  };
+
+  private onSlotChanged = () => {
+    this.badgeManager.onSlotChanged();
   };
 
   render() {
@@ -446,9 +473,9 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           {...inheritedAttributes}
         >
           <span class="button-inner">
-            <slot name="icon-only" onSlotchange={this.slotChanged}></slot>
+            <slot name="icon-only" onSlotchange={this.iconOnlySlotChanged}></slot>
             <slot name="start"></slot>
-            <slot></slot>
+            <slot onSlotchange={this.onSlotChanged}></slot>
             <slot name="end"></slot>
           </span>
           {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}

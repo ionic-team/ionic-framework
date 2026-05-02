@@ -1,4 +1,4 @@
-import type { IonPadding, IonMargin } from '../../themes/themes.interfaces.js';
+import type { IonPadding, IonMargin } from '../../themes/themes.interfaces';
 
 export type IonChipRecipe = {
   letterSpacing?: string | number;

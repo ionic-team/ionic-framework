@@ -1,5 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
+import { createBadgeManager } from '@utils/badge-position';
 
 import { getIonTheme } from '../../global/ionic-global';
 
@@ -18,6 +19,12 @@ import { getIonTheme } from '../../global/ionic-global';
 })
 export class Avatar implements ComponentInterface {
   @Element() el!: HTMLElement;
+
+  private hasLoaded = false;
+
+  private badgeManager = createBadgeManager(this.el, () => ({
+    target: this.el,
+  }));
 
   /**
    * Set to `"xxsmall"` for the smallest size.
@@ -45,6 +52,21 @@ export class Avatar implements ComponentInterface {
    */
   @Prop() disabled = false;
 
+  connectedCallback() {
+    if (this.hasLoaded) {
+      this.badgeManager.init();
+    }
+  }
+
+  componentDidLoad() {
+    this.hasLoaded = true;
+    this.badgeManager.init();
+  }
+
+  disconnectedCallback() {
+    this.badgeManager.destroy();
+  }
+
   get hasImage() {
     return !!this.el.querySelector('ion-img') || !!this.el.querySelector('img');
   }
@@ -53,14 +75,12 @@ export class Avatar implements ComponentInterface {
     return !!this.el.querySelector('ion-icon');
   }
 
-  private getSize(): string | undefined {
-    const theme = getIonTheme(this);
-    const { size } = this;
+  private onSlotChanged = () => {
+    this.badgeManager.onSlotChanged();
+  };
 
-    // TODO(ROU-10752): Remove theme check when sizes are defined for all themes.
-    if (theme !== 'ionic') {
-      return undefined;
-    }
+  private getSize(): string | undefined {
+    const { size } = this;
 
     if (size === undefined) {
       return 'medium';
@@ -102,7 +122,7 @@ export class Avatar implements ComponentInterface {
           [`avatar-disabled`]: disabled,
         }}
       >
-        <slot></slot>
+        <slot onSlotchange={this.onSlotChanged}></slot>
       </Host>
     );
   }

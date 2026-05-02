@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Prop, h } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Prop, Watch, h } from '@stencil/core';
+import { createBadgeManager } from '@utils/badge-position';
 import type { AnchorInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAttributes } from '@utils/helpers';
@@ -28,9 +29,47 @@ import type {
   shadow: true,
 })
 export class TabButton implements ComponentInterface, AnchorInterface {
+  private hasLoaded = false;
   private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLElement;
+
+  private badgeManager = createBadgeManager(this.el, () => {
+    const layout = this.layout || config.get('tabButtonLayout', 'icon-top');
+
+    const hasIcon = this.hasIcon;
+    const hasLabel = this.hasLabel;
+
+    const iconEl = hasIcon ? this.el.querySelector(':scope > ion-icon') : null;
+    const labelEl = hasLabel ? this.el.querySelector('ion-label') : null;
+
+    let target: Element | null = null;
+
+    if (layout === 'icon-hide') {
+      target = labelEl;
+    } else if (layout === 'label-hide') {
+      target = iconEl;
+    } else if (layout === 'icon-start') {
+      // Badge anchors to the trailing element
+      target = labelEl || iconEl;
+    } else {
+      // icon-top, icon-bottom, icon-end: badge anchors to the icon
+      target = iconEl || labelEl;
+    }
+
+    if (!target) {
+      return undefined;
+    }
+    const isLabelTarget = target === labelEl;
+
+    return {
+      host: this.el,
+      target,
+      relativeTo: this.el.shadowRoot!.querySelector('.button-inner')!,
+      anchorToEdge: !isLabelTarget,
+      clamp: !isLabelTarget && hasLabel,
+    };
+  });
 
   /**
    * If `true`, the user cannot interact with the tab button.
@@ -116,6 +155,26 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     }
   }
 
+  @Watch('layout')
+  onLayoutChanged() {
+    this.badgeManager.init();
+  }
+
+  connectedCallback() {
+    if (this.hasLoaded) {
+      this.badgeManager.init();
+    }
+  }
+
+  componentDidLoad() {
+    this.hasLoaded = true;
+    this.badgeManager.init();
+  }
+
+  disconnectedCallback() {
+    this.badgeManager.destroy();
+  }
+
   private getShape(): string | undefined {
     const theme = getIonTheme(this);
     const { shape } = this;
@@ -150,7 +209,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   }
 
   private get hasIcon() {
-    return !!this.el.querySelector('ion-icon');
+    return !!this.el.querySelector(':scope > ion-icon');
   }
 
   private onKeyUp = (ev: KeyboardEvent) => {
@@ -171,6 +230,10 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     }
     return mode === 'md';
   }
+
+  private onSlotChanged = () => {
+    this.badgeManager.onSlotChanged();
+  };
 
   render() {
     const { disabled, hasIcon, hasLabel, href, rel, target, layout, selected, tab, inheritedAttributes } = this;
@@ -215,7 +278,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
           {...inheritedAttributes}
         >
           <span class="button-inner">
-            <slot></slot>
+            <slot onSlotchange={this.onSlotChanged}></slot>
           </span>
           {theme === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
         </a>
