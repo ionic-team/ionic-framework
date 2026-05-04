@@ -47,6 +47,8 @@ export class SegmentView implements ComponentInterface {
   handleScroll(ev: Event) {
     const { scrollLeft, scrollWidth, clientWidth } = ev.target as HTMLElement;
     const max = scrollWidth - clientWidth;
+    // When only one content item is present max is 0 — skip to avoid NaN/Infinity scrollRatio.
+    if (max <= 0) return;
     const scrollRatio = (isRTL(this.el) ? -1 : 1) * (scrollLeft / max);
 
     this.ionSegmentViewScroll.emit({
