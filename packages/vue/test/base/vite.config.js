@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import { configDefaults } from 'vitest/config';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
 
@@ -11,13 +12,15 @@ export default defineConfig({
     },
   },
   test: {
-    environment: 'jsdom'
+    environment: 'jsdom',
+    // Vitest runs alongside Playwright in this app; exclude Playwright's
+    // tests/e2e/playwright/ tree so Vitest doesn't try to run @playwright/test
+    // specs (which would fail because they expect Playwright's runtime).
+    exclude: [...configDefaults.exclude, '**/tests/e2e/playwright/**']
   },
-  // Server applies to "vite" command
   server: {
     port: 8080
   },
-  // Preview applies to "vite preview" command
   preview: {
     port: 8080
   },
