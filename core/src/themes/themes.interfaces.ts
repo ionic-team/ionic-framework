@@ -1,5 +1,5 @@
 import type { IonChipConfig, IonChipRecipe } from '../components/chip/chip.interfaces';
-import type { IonContentConfig, IonContentRecipe } from '../components/content/content.interfaces';
+import type { IonContentRecipe } from '../components/content/content.interfaces';
 import type { IonItemDividerRecipe } from '../components/item-divider/item-divider.interfaces';
 import type { IonSpinnerConfig, IonSpinnerRecipe } from '../components/spinner/spinner.interfaces';
 import type { IonicConfig as IonicGlobalConfig } from '../utils/config';
@@ -244,7 +244,6 @@ export type BaseTheme = {
 export type IonicConfig = IonicGlobalConfig & {
   components?: {
     IonChip?: IonChipConfig;
-    IonContent?: IonContentConfig;
     IonSpinner?: IonSpinnerConfig;
   };
 };

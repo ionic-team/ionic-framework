@@ -13,8 +13,6 @@ export interface IonContentRecipe {
   padding?: IonPadding;
 }
 
-export interface IonContentConfig {}
-
 export interface ScrollBaseDetail {
   isScrolling: boolean;
 }
