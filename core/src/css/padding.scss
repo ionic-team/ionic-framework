@@ -1,6 +1,12 @@
 @import "../themes/native/native.globals";
 @import "../themes/mixins";
 
+// Padded Components
+// --------------------------------------------------
+// These are components that be used to modify their
+// padding attributes.
+$padded-components: (ion-content);
+
 // Element Space
 // --------------------------------------------------
 // Creates padding and margin attributes to be used on
@@ -18,6 +24,13 @@ $margin: var(--ion-margin, 16px);
   --padding-top: 0;
   --padding-bottom: 0;
 
+  @each $component in $padded-components {
+    --ion-#{$component}-padding-start: 0;
+    --ion-#{$component}-padding-end: 0;
+    --ion-#{$component}-padding-top: 0;
+    --ion-#{$component}-padding-bottom: 0;
+  }
+
   @include padding(0);
 }
 
@@ -27,11 +40,22 @@ $margin: var(--ion-margin, 16px);
   --padding-top: #{$padding};
   --padding-bottom: #{$padding};
 
+  @each $component in $padded-components {
+    --ion-#{$component}-padding-start: #{$padding};
+    --ion-#{$component}-padding-end: #{$padding};
+    --ion-#{$component}-padding-top: #{$padding};
+    --ion-#{$component}-padding-bottom: #{$padding};
+  }
+
   @include padding($padding);
 }
 
 .ion-padding-top {
   --padding-top: #{$padding};
+
+  @each $component in $padded-components {
+    --ion-#{$component}-padding-top: #{$padding};
+  }
 
   @include padding($padding, null, null, null);
 }
@@ -39,17 +63,29 @@ $margin: var(--ion-margin, 16px);
 .ion-padding-start {
   --padding-start: #{$padding};
 
+  @each $component in $padded-components {
+    --ion-#{$component}-padding-start: #{$padding};
+  }
+
   @include padding-horizontal($padding, null);
 }
 
 .ion-padding-end {
   --padding-end: #{$padding};
 
+  @each $component in $padded-components {
+    --ion-#{$component}-padding-end: #{$padding};
+  }
+
   @include padding-horizontal(null, $padding);
 }
 
 .ion-padding-bottom {
   --padding-bottom: #{$padding};
+
+  @each $component in $padded-components {
+    --ion-#{$component}-padding-bottom: #{$padding};
+  }
 
   @include padding(null, null, $padding, null);
 }
@@ -58,12 +94,22 @@ $margin: var(--ion-margin, 16px);
   --padding-top: #{$padding};
   --padding-bottom: #{$padding};
 
+  @each $component in $padded-components {
+    --ion-#{$component}-padding-top: #{$padding};
+    --ion-#{$component}-padding-bottom: #{$padding};
+  }
+
   @include padding($padding, null, $padding, null);
 }
 
 .ion-padding-horizontal {
   --padding-start: #{$padding};
   --padding-end: #{$padding};
+
+  @each $component in $padded-components {
+    --ion-#{$component}-padding-start: #{$padding};
+    --ion-#{$component}-padding-end: #{$padding};
+  }
 
   @include padding-horizontal($padding);
 }

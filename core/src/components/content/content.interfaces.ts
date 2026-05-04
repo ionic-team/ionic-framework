@@ -1,18 +1,6 @@
 import type { GestureDetail } from '../../interface';
 import type { IonPadding } from '../../themes/themes.interfaces';
 
-export interface IonContentRecipe {
-  background?: string;
-  color?: string;
-
-  font?: {
-    family?: string;
-  };
-
-  overflow?: string;
-  padding?: IonPadding;
-}
-
 export interface ScrollBaseDetail {
   isScrolling: boolean;
 }
@@ -31,4 +19,16 @@ export interface ScrollBaseCustomEvent extends CustomEvent {
 
 export interface ScrollCustomEvent extends ScrollBaseCustomEvent {
   detail: ScrollDetail;
+}
+
+export interface IonContentRecipe {
+  background?: string;
+  color?: string;
+
+  font?: {
+    family?: string;
+  };
+
+  overflow?: string;
+  padding?: IonPadding;
 }
