@@ -1,0 +1,358 @@
+@use "../../themes/mixins" as mixins;
+
+// Progress Bar: Common Styles
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --ion-progress-bar-height: Height of the progress bar
+   *
+   * @prop --ion-progress-bar-determinate-progress-default-background: Background of the filled progress indicator in a determinate progress bar
+   * @prop --ion-progress-bar-determinate-progress-semantic-default-background: Background of the filled progress indicator in a determinate progress bar when a semantic color is applied
+   *
+   * @prop --ion-progress-bar-determinate-buffer-bar-default-background: Background of the track representing the buffered amount in a determinate progress bar
+   * @prop --ion-progress-bar-determinate-buffer-bar-semantic-default-background: Background of the track representing the buffered amount in a determinate progress bar when a semantic color is applied
+   * @prop --ion-progress-bar-determinate-buffer-bar-solid-default-background: Background of the track representing the buffered amount in a determinate progress bar when it's fully buffered
+   *
+   * @prop --ion-progress-bar-determinate-buffer-circles-default-background: Background of the buffer circles in a determinate progress bar
+   * @prop --ion-progress-bar-determinate-buffer-circles-semantic-default-background: Background of the buffer circles in a determinate progress bar when a semantic color is applied
+   * @prop --ion-progress-bar-indeterminate-progress-default-background: Background of the filled progress indicator in an indeterminate progress bar
+   * @prop --ion-progress-bar-indeterminate-progress-semantic-default-background: Background of the filled progress indicator in an indeterminate progress bar when a semantic color is applied
+   *
+   * @prop --ion-progress-bar-indeterminate-buffer-bar-default-background: Background of the track representing the buffered amount in an indeterminate progress bar
+   * @prop --ion-progress-bar-indeterminate-buffer-bar-semantic-default-background: Background of the track representing the buffered amount in an indeterminate progress bar when a semantic color is applied
+   * @prop --ion-progress-bar-indeterminate-buffer-bar-solid-default-background: Background of the track representing the buffered amount in an indeterminate progress bar when it's fully buffered
+   *
+   * @prop --ion-progress-bar-shape-round-border-radius: Border radius of the `round` progress bar shape
+   * @prop --ion-progress-bar-shape-rectangular-border-radius: Border radius of the `rectangular` progress bar shape
+   */
+
+  display: block;
+
+  position: relative;
+
+  width: 100%;
+  height: var(--ion-progress-bar-height);
+
+  contain: strict;
+
+  direction: ltr;
+  overflow: hidden;
+}
+
+.progress,
+.progress-indeterminate,
+.indeterminate-bar-primary,
+.indeterminate-bar-secondary,
+.progress-buffer-bar {
+  @include mixins.position(0, 0, 0, 0);
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+}
+
+.progress,
+.progress-indeterminate {
+  z-index: 2;
+}
+
+.progress-buffer-bar {
+  z-index: 1;
+}
+
+.buffer-circles-container,
+.buffer-circles {
+  @include mixins.position(0, 0, 0, 0);
+  position: absolute;
+}
+
+.buffer-circles-container {
+  overflow: hidden;
+}
+
+.buffer-circles-container-hidden {
+  display: none;
+}
+
+// Extend a bit to overflow. The size of animated distance.
+.buffer-circles {
+  /* stylelint-disable property-disallowed-list */
+  right: -10px;
+  left: -10px;
+  /* stylelint-enable property-disallowed-list */
+}
+
+// Progress Bar Types
+// --------------------------------------------------
+
+// Determinate
+.progress,
+.progress-buffer-bar,
+.buffer-circles-container {
+  /* stylelint-disable-next-line property-disallowed-list */
+  transform-origin: left top;
+
+  transition: transform 150ms linear;
+}
+
+.progress {
+  background: var(--ion-progress-bar-determinate-progress-default-background);
+}
+
+:host(.progress-bar-type-determinate) .progress-buffer-bar {
+  background: var(--ion-progress-bar-determinate-buffer-bar-default-background);
+}
+
+.buffer-circles {
+  background-image: radial-gradient(
+    ellipse at center,
+    var(--ion-progress-bar-determinate-buffer-circles-default-background) 0%,
+    var(--ion-progress-bar-determinate-buffer-circles-default-background) 30%,
+    transparent 30%
+  );
+
+  /* stylelint-disable property-disallowed-list */
+  background-repeat: repeat-x;
+  background-position: 5px center;
+  background-size: 10px 10px;
+  /* stylelint-enable property-disallowed-list */
+
+  z-index: 0;
+  animation: buffering 450ms infinite linear;
+}
+
+// Indeterminate
+.progress-indeterminate {
+  background: var(--ion-progress-bar-indeterminate-progress-default-background);
+}
+
+:host(.progress-bar-type-indeterminate) .progress-buffer-bar {
+  background: var(--ion-progress-bar-indeterminate-buffer-bar-default-background);
+}
+
+// Progress Bar Shapes
+// --------------------------------------------------
+
+:host(.progress-bar-shape-round) {
+  @include mixins.border-radius(var(--ion-progress-bar-shape-round-border-radius));
+}
+
+:host(.progress-bar-shape-rectangular) {
+  @include mixins.border-radius(var(--ion-progress-bar-shape-rectangular-border-radius));
+}
+
+// Progress Bar Semantic Colors
+// --------------------------------------------------
+
+// Determinate
+:host(.ion-color) .progress {
+  background: var(--ion-progress-bar-determinate-progress-semantic-default-background);
+}
+
+:host(.ion-color.progress-bar-type-determinate:not(.progress-bar-solid)) .progress-buffer-bar {
+  background: var(
+    --ion-progress-bar-determinate-buffer-bar-semantic-default-background,
+    var(--ion-progress-bar-determinate-buffer-bar-default-background)
+  );
+}
+
+:host(.ion-color) .buffer-circles {
+  background-image: radial-gradient(
+    ellipse at center,
+    var(--ion-progress-bar-determinate-buffer-circles-semantic-default-background) 0%,
+    var(--ion-progress-bar-determinate-buffer-circles-semantic-default-background) 30%,
+    transparent 30%
+  );
+}
+
+// Indeterminate
+:host(.ion-color) .progress-indeterminate {
+  background: var(--ion-progress-bar-indeterminate-progress-semantic-default-background);
+}
+
+:host(.ion-color.progress-bar-type-indeterminate:not(.progress-bar-solid)) .progress-buffer-bar {
+  background: var(
+    --ion-progress-bar-indeterminate-buffer-bar-semantic-default-background,
+    var(--ion-progress-bar-indeterminate-buffer-bar-default-background)
+  );
+}
+
+// Progress Bar States
+// --------------------------------------------------
+
+// Reversed
+// If set to true, the animation will be reversed
+// and the bar will start at the top right
+:host(.progress-bar-reversed) {
+  transform: scaleX(-1);
+}
+
+// Paused
+:host(.progress-paused) {
+  .indeterminate-bar-secondary,
+  .indeterminate-bar-primary,
+  .buffer-circles {
+    animation-play-state: paused;
+  }
+}
+
+// Progress Bar Solid State (buffer = 1)
+// --------------------------------------------------
+
+// Determinate
+:host(.progress-bar-solid.progress-bar-type-determinate) .progress-buffer-bar {
+  background: var(
+    --ion-progress-bar-determinate-buffer-bar-solid-default-background,
+    var(--ion-progress-bar-determinate-buffer-bar-default-background)
+  );
+}
+
+// Indeterminate
+:host(.progress-bar-solid.progress-bar-type-indeterminate) .progress-buffer-bar {
+  background: var(
+    --ion-progress-bar-indeterminate-buffer-bar-solid-default-background,
+    var(--ion-progress-bar-indeterminate-buffer-bar-default-background)
+  );
+}
+
+// Progress Bar Animation
+// --------------------------------------------------
+
+// Indeterminate
+.indeterminate-bar-primary {
+  /* stylelint-disable property-disallowed-list */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: -145.166611%;
+  /* stylelint-enable property-disallowed-list */
+
+  animation: primary-indeterminate-translate 2s infinite linear;
+
+  .progress-indeterminate {
+    animation: primary-indeterminate-scale 2s infinite linear;
+    animation-play-state: inherit;
+  }
+}
+
+.indeterminate-bar-secondary {
+  /* stylelint-disable property-disallowed-list */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: -54.888891%;
+  /* stylelint-enable property-disallowed-list */
+
+  animation: secondary-indeterminate-translate 2s infinite linear;
+
+  .progress-indeterminate {
+    animation: secondary-indeterminate-scale 2s infinite linear;
+    animation-play-state: inherit;
+  }
+}
+
+// Progress Bar Animation Keyframes
+// --------------------------------------------------
+
+// Source: https://github.com/material-components/material-components-web/blob/6ceadb81df508ac08ab007c52c4d3dc1d811cc15/packages/mdc-linear-progress/_linear-progress.scss#L323-L357
+@keyframes primary-indeterminate-translate {
+  0% {
+    transform: translateX(0);
+  }
+
+  20% {
+    animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
+
+    transform: translateX(0);
+  }
+
+  59.15% {
+    animation-timing-function: cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);
+
+    transform: translateX(83.67142%);
+  }
+
+  100% {
+    transform: translateX(200.611057%);
+  }
+}
+
+// Source: https://github.com/material-components/material-components-web/blob/6ceadb81df508ac08ab007c52c4d3dc1d811cc15/packages/mdc-linear-progress/_linear-progress.scss#L359-L379
+@keyframes primary-indeterminate-scale {
+  0% {
+    transform: scaleX(0.08);
+  }
+
+  36.65% {
+    animation-timing-function: cubic-bezier(0.334731, 0.12482, 0.785844, 1);
+
+    transform: scaleX(0.08);
+  }
+
+  69.15% {
+    animation-timing-function: cubic-bezier(0.06, 0.11, 0.6, 1);
+
+    transform: scaleX(0.661479);
+  }
+
+  100% {
+    transform: scaleX(0.08);
+  }
+}
+
+// Source: https://github.com/material-components/material-components-web/blob/6ceadb81df508ac08ab007c52c4d3dc1d811cc15/packages/mdc-linear-progress/_linear-progress.scss#L381-L414
+@keyframes secondary-indeterminate-translate {
+  0% {
+    animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
+
+    transform: translateX(0);
+  }
+
+  25% {
+    animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
+
+    transform: translateX(37.651913%);
+  }
+
+  48.35% {
+    animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
+
+    transform: translateX(84.386165%);
+  }
+
+  100% {
+    transform: translateX(160.277782%);
+  }
+}
+
+// Source: https://github.com/material-components/material-components-web/blob/6ceadb81df508ac08ab007c52c4d3dc1d811cc15/packages/mdc-linear-progress/_linear-progress.scss#L416-L452
+@keyframes secondary-indeterminate-scale {
+  0% {
+    animation-timing-function: cubic-bezier(0.205028, 0.057051, 0.57661, 0.453971);
+
+    transform: scaleX(0.08);
+  }
+
+  19.15% {
+    animation-timing-function: cubic-bezier(0.152313, 0.196432, 0.648374, 1.004315);
+
+    transform: scaleX(0.457104);
+  }
+
+  44.15% {
+    animation-timing-function: cubic-bezier(0.257759, -0.003163, 0.211762, 1.38179);
+
+    transform: scaleX(0.72796);
+  }
+
+  100% {
+    transform: scaleX(0.08);
+  }
+}
+
+@keyframes buffering {
+  to {
+    transform: translateX(-10px);
+  }
+}

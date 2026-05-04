@@ -1,0 +1,289 @@
+@use "../../themes/mixins" as mixins;
+@use "../../themes/functions.color" as colors;
+
+// Badge: Common Styles
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --ion-badge-font-family: the font family of the badge text
+   *
+   * Bold
+   * @prop --ion-badge-hue-bold-default-background: Background color of the `bold` hue in default state
+   * @prop --ion-badge-hue-bold-default-color: Text color of the `bold` hue in default state
+   * @prop --ion-badge-hue-bold-semantic-default-background: Background color of the `bold` hue when a semantic color is applied
+   * @prop --ion-badge-hue-bold-semantic-default-color: Text color of the `bold` hue when a semantic color is applied
+   *
+   * Subtle
+   * @prop --ion-badge-hue-subtle-default-background: Background color of the `subtle` hue in default state
+   * @prop --ion-badge-hue-subtle-default-color: Text color of the `subtle` hue in default state
+   * @prop --ion-badge-hue-subtle-semantic-default-background: Background color of the `subtle` hue when a semantic color is applied
+   * @prop --ion-badge-hue-subtle-semantic-default-color: Text color of the `subtle` hue when a semantic color is applied
+   *
+   * Shapes
+   * @prop --ion-badge-shape-crisp-border-radius: Border radius of the `crisp` shape
+   * @prop --ion-badge-shape-soft-border-radius: Border radius of the `soft` shape
+   * @prop --ion-badge-shape-round-border-radius: Border radius of the `round` shape
+   * @prop --ion-badge-shape-rectangular-border-radius: Border radius of the `rectangular` shape
+   *
+   * Sizes: Content (with text or an icon)
+   * @prop --ion-badge-size-small-content-height: Height of the `small` size when badge has content
+   * @prop --ion-badge-size-small-content-min-height: Minimum height of the `small` size when badge has content
+   * @prop --ion-badge-size-small-content-min-width: Minimum width of the `small` size when badge has content
+   * @prop --ion-badge-size-small-content-padding-top: Top padding of the `small` size when badge has content
+   * @prop --ion-badge-size-small-content-padding-end: Right padding if direction is left-to-right, left padding if direction is right-to-left of the `small` size when badge has content
+   * @prop --ion-badge-size-small-content-padding-bottom: Bottom padding of the `small` size when badge has content
+   * @prop --ion-badge-size-small-content-padding-start: Left padding if direction is left-to-right, right padding if direction is right-to-left of the `small` size when badge has content
+   * @prop --ion-badge-size-small-content-letter-spacing: Letter spacing of the `small` size when badge has content
+   * @prop --ion-badge-size-small-content-font-size: Font size of the `small` size when badge has content
+   * @prop --ion-badge-size-small-content-font-weight: Font weight of the `small` size when badge has content
+   * @prop --ion-badge-size-small-content-line-height: Line height of the `small` size when badge has content
+   * @prop --ion-badge-size-small-content-icon-width: Width of the slotted `ion-icon` of the `small` size
+   * @prop --ion-badge-size-small-content-icon-height: Height of the slotted `ion-icon` of the `small` size
+   * @prop --ion-badge-size-medium-content-height: Height of the `medium` size when badge has content
+   * @prop --ion-badge-size-medium-content-min-height: Minimum height of the `medium` size when badge has content
+   * @prop --ion-badge-size-medium-content-min-width: Minimum width of the `medium` size when badge has content
+   * @prop --ion-badge-size-medium-content-padding-top: Top padding of the `medium` size when badge has content
+   * @prop --ion-badge-size-medium-content-padding-end: Right padding if direction is left-to-right, left padding if direction is right-to-left of the `medium` size when badge has content
+   * @prop --ion-badge-size-medium-content-padding-bottom: Bottom padding of the `medium` size when badge has content
+   * @prop --ion-badge-size-medium-content-padding-start: Left padding if direction is left-to-right, right padding if direction is right-to-left of the `medium` size when badge has content
+   * @prop --ion-badge-size-medium-content-letter-spacing: Letter spacing of the `medium` size when badge has content
+   * @prop --ion-badge-size-medium-content-font-size: Font size of the `medium` size when badge has content
+   * @prop --ion-badge-size-medium-content-font-weight: Font weight of the `medium` size when badge has content
+   * @prop --ion-badge-size-medium-content-line-height: Line height of the `medium` size when badge has content
+   * @prop --ion-badge-size-medium-content-icon-width: Width of the slotted `ion-icon` of the `medium` size
+   * @prop --ion-badge-size-medium-content-icon-height: Height of the slotted `ion-icon` of the `medium` size
+   * @prop --ion-badge-size-large-content-height: Height of the `large` size when badge has content
+   * @prop --ion-badge-size-large-content-min-height: Minimum height of the `large` size when badge has content
+   * @prop --ion-badge-size-large-content-min-width: Minimum width of the `large` size when badge has content
+   * @prop --ion-badge-size-large-content-padding-top: Top padding of the `large` size when badge has content
+   * @prop --ion-badge-size-large-content-padding-end: Right padding if direction is left-to-right, left padding if direction is right-to-left of the `large` size when badge has content
+   * @prop --ion-badge-size-large-content-padding-bottom: Bottom padding of the `large` size when badge has content
+   * @prop --ion-badge-size-large-content-padding-start: Left padding if direction is left-to-right, right padding if direction is right-to-left of the `large` size when badge has content
+   * @prop --ion-badge-size-large-content-letter-spacing: Letter spacing of the `large` size when badge has content
+   * @prop --ion-badge-size-large-content-font-size: Font size of the `large` size when badge has content
+   * @prop --ion-badge-size-large-content-font-weight: Font weight of the `large` size when badge has content
+   * @prop --ion-badge-size-large-content-line-height: Line height of the `large` size when badge has content
+   * @prop --ion-badge-size-large-content-icon-width: Width of the slotted `ion-icon` of the `large` size
+   * @prop --ion-badge-size-large-content-icon-height: Height of the slotted `ion-icon` of the `large` size
+   *
+   * Sizes: Dot (empty with no text or icon)
+   * @prop --ion-badge-size-small-dot-height: Height of the `small` size when badge is empty
+   * @prop --ion-badge-size-small-dot-min-width: Minimum width of the `small` size when badge is empty
+   * @prop --ion-badge-size-small-dot-padding-top: Top padding of the `small` size when badge is empty
+   * @prop --ion-badge-size-small-dot-padding-end: Right padding if direction is left-to-right, left padding if direction is right-to-left of the `small` size when badge is empty
+   * @prop --ion-badge-size-small-dot-padding-bottom: Bottom padding of the `small` size when badge is empty
+   * @prop --ion-badge-size-small-dot-padding-start: Left padding if direction is left-to-right, right padding if direction is right-to-left of the `small` size when badge is empty
+   * @prop --ion-badge-size-medium-dot-height: Height of the `medium` size when badge is empty
+   * @prop --ion-badge-size-medium-dot-min-width: Minimum width of the `medium` size when badge is empty
+   * @prop --ion-badge-size-medium-dot-padding-top: Top padding of the `medium` size when badge is empty
+   * @prop --ion-badge-size-medium-dot-padding-end: Right padding if direction is left-to-right, left padding if direction is right-to-left of the `medium` size when badge is empty
+   * @prop --ion-badge-size-medium-dot-padding-bottom: Bottom padding of the `medium` size when badge is empty
+   * @prop --ion-badge-size-medium-dot-padding-start: Left padding if direction is left-to-right, right padding if direction is right-to-left of the `medium` size when badge is empty
+   * @prop --ion-badge-size-large-dot-height: Height of the `large` size when badge is empty
+   * @prop --ion-badge-size-large-dot-min-width: Minimum width of the `large` size when badge is empty
+   * @prop --ion-badge-size-large-dot-padding-top: Top padding of the `large` size when badge is empty
+   * @prop --ion-badge-size-large-dot-padding-end: Right padding if direction is left-to-right, left padding if direction is right-to-left of the `large` size when badge is empty
+   * @prop --ion-badge-size-large-dot-padding-bottom: Bottom padding of the `large` size when badge is empty
+   * @prop --ion-badge-size-large-dot-padding-start: Left padding if direction is left-to-right, right padding if direction is right-to-left of the `large` size when badge is empty
+   */
+  @include mixins.font-smoothing();
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-family: var(--ion-badge-font-family, inherit);
+
+  white-space: nowrap;
+
+  contain: content;
+  vertical-align: baseline;
+
+  box-sizing: border-box;
+}
+
+// Badge: Bold
+// ---------------------------------------------
+
+// Default
+:host(.badge-hue-bold) {
+  background: var(--ion-badge-hue-bold-default-background);
+  color: var(--ion-badge-hue-bold-default-color);
+}
+
+// Colors
+:host(.badge-hue-bold.ion-color) {
+  background: var(--ion-badge-hue-bold-semantic-default-background);
+  color: var(--ion-badge-hue-bold-semantic-default-color);
+}
+
+// Badge: Subtle
+// ---------------------------------------------
+
+// Default
+:host(.badge-hue-subtle) {
+  background: var(--ion-badge-hue-subtle-default-background);
+  color: var(--ion-badge-hue-subtle-default-color);
+}
+
+// Colors
+:host(.badge-hue-subtle.ion-color) {
+  background: var(--ion-badge-hue-subtle-semantic-default-background);
+  color: var(--ion-badge-hue-subtle-semantic-default-color);
+}
+
+// Badge Shapes
+// ---------------------------------------------
+
+:host(.badge-shape-crisp) {
+  @include mixins.border-radius(var(--ion-badge-shape-crisp-border-radius));
+}
+
+:host(.badge-shape-soft) {
+  @include mixins.border-radius(var(--ion-badge-shape-soft-border-radius));
+}
+
+:host(.badge-shape-round) {
+  @include mixins.border-radius(var(--ion-badge-shape-round-border-radius));
+}
+
+:host(.badge-shape-rectangular) {
+  @include mixins.border-radius(var(--ion-badge-shape-rectangular-border-radius));
+}
+
+// Badge Sizes: Content (with text or an icon)
+// ---------------------------------------------
+
+// Small
+:host(.badge-size-small) {
+  @include mixins.padding(
+    var(--ion-badge-size-small-content-padding-top),
+    var(--ion-badge-size-small-content-padding-end),
+    var(--ion-badge-size-small-content-padding-bottom),
+    var(--ion-badge-size-small-content-padding-start)
+  );
+
+  min-width: var(--ion-badge-size-small-content-min-width);
+  height: var(--ion-badge-size-small-content-height);
+  min-height: var(--ion-badge-size-small-content-min-height);
+
+  font-size: var(--ion-badge-size-small-content-font-size);
+  font-weight: var(--ion-badge-size-small-content-font-weight);
+
+  letter-spacing: var(--ion-badge-size-small-content-letter-spacing);
+  line-height: var(--ion-badge-size-small-content-line-height);
+}
+
+:host(.badge-size-small) ::slotted(ion-icon) {
+  width: var(--ion-badge-size-small-content-icon-width, revert-layer);
+  height: var(--ion-badge-size-small-content-icon-height, revert-layer);
+}
+
+// Medium
+:host(.badge-size-medium) {
+  @include mixins.padding(
+    var(--ion-badge-size-medium-content-padding-top),
+    var(--ion-badge-size-medium-content-padding-end),
+    var(--ion-badge-size-medium-content-padding-bottom),
+    var(--ion-badge-size-medium-content-padding-start)
+  );
+
+  min-width: var(--ion-badge-size-medium-content-min-width);
+  height: var(--ion-badge-size-medium-content-height);
+  min-height: var(--ion-badge-size-medium-content-min-height);
+
+  font-size: var(--ion-badge-size-medium-content-font-size);
+  font-weight: var(--ion-badge-size-medium-content-font-weight);
+
+  letter-spacing: var(--ion-badge-size-medium-content-letter-spacing);
+  line-height: var(--ion-badge-size-medium-content-line-height);
+}
+
+:host(.badge-size-medium) ::slotted(ion-icon) {
+  width: var(--ion-badge-size-medium-content-icon-width, revert-layer);
+  height: var(--ion-badge-size-medium-content-icon-height, revert-layer);
+}
+
+// Large
+:host(.badge-size-large) {
+  @include mixins.padding(
+    var(--ion-badge-size-large-content-padding-top),
+    var(--ion-badge-size-large-content-padding-end),
+    var(--ion-badge-size-large-content-padding-bottom),
+    var(--ion-badge-size-large-content-padding-start)
+  );
+
+  min-width: var(--ion-badge-size-large-content-min-width);
+  height: var(--ion-badge-size-large-content-height);
+  min-height: var(--ion-badge-size-large-content-min-height);
+
+  font-size: var(--ion-badge-size-large-content-font-size);
+  font-weight: var(--ion-badge-size-large-content-font-weight);
+
+  letter-spacing: var(--ion-badge-size-large-content-letter-spacing);
+  line-height: var(--ion-badge-size-large-content-line-height);
+}
+
+:host(.badge-size-large) ::slotted(ion-icon) {
+  width: var(--ion-badge-size-large-content-icon-width, revert-layer);
+  height: var(--ion-badge-size-large-content-icon-height, revert-layer);
+}
+
+// Badge Sizes: Dot (empty with no text or icon)
+// ---------------------------------------------
+
+// Small
+:host(.badge-size-small:empty) {
+  @include mixins.padding(
+    var(--ion-badge-size-small-dot-padding-top),
+    var(--ion-badge-size-small-dot-padding-end),
+    var(--ion-badge-size-small-dot-padding-bottom),
+    var(--ion-badge-size-small-dot-padding-start)
+  );
+
+  min-width: var(--ion-badge-size-small-dot-min-width);
+  height: var(--ion-badge-size-small-dot-height);
+
+  min-height: unset;
+}
+
+// Medium
+:host(.badge-size-medium:empty) {
+  @include mixins.padding(
+    var(--ion-badge-size-medium-dot-padding-top),
+    var(--ion-badge-size-medium-dot-padding-end),
+    var(--ion-badge-size-medium-dot-padding-bottom),
+    var(--ion-badge-size-medium-dot-padding-start)
+  );
+
+  min-width: var(--ion-badge-size-medium-dot-min-width);
+  height: var(--ion-badge-size-medium-dot-height);
+
+  min-height: unset;
+}
+
+// Large
+:host(.badge-size-large:empty) {
+  @include mixins.padding(
+    var(--ion-badge-size-large-dot-padding-top),
+    var(--ion-badge-size-large-dot-padding-end),
+    var(--ion-badge-size-large-dot-padding-bottom),
+    var(--ion-badge-size-large-dot-padding-start)
+  );
+
+  min-width: var(--ion-badge-size-large-dot-min-width);
+  height: var(--ion-badge-size-large-dot-height);
+
+  min-height: unset;
+}
+
+// Anchored Badge (positioned at a specific corner of its parent element)
+// ---------------------------------------------
+
+:host([vertical]) {
+  position: absolute;
+
+  z-index: 1;
+}

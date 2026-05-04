@@ -11,22 +11,3 @@
   width: $avatar-md-width;
   height: $avatar-md-height;
 }
-
-// Avatar Empty Badge (hint)
-// --------------------------------------------------
-
-::slotted(ion-badge.badge-vertical-top:empty) {
-  @include globals.transform(translate(-50%, 50%));
-}
-
-::slotted(ion-badge.badge-vertical-bottom:empty) {
-  @include globals.transform(translateX(-100%));
-}
-
-:host ::slotted(ion-badge.badge-vertical-top:not(:empty)) {
-  @include globals.transform(translate(0, 100%));
-}
-
-:host ::slotted(ion-badge.badge-vertical-bottom:not(:empty)) {
-  @include globals.transform(translate(0, -100%));
-}

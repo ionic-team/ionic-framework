@@ -135,17 +135,6 @@
   white-space: normal;
 }
 
-// Tab Button: Badge
-// --------------------------------------------------
-
-::slotted(ion-badge) {
-  box-sizing: border-box;
-
-  position: absolute;
-
-  z-index: 1;
-}
-
 // Tab Button: Layout
 // --------------------------------------------------
 

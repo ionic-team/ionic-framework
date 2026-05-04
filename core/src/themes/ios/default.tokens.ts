@@ -1,4 +1,4 @@
-import { rgba, currentColor, clamp, mix, dynamicFont } from '../../utils/theme';
+import { rgba, currentColor, clamp, mix, dynamicFont, dynamicFontMin, ionColor } from '../../utils/theme';
 import { defaultTheme as baseDefaultTheme } from '../base/default.tokens';
 import { colors as baseColors } from '../base/shared.tokens';
 import type { DefaultTheme } from '../themes.interfaces';
@@ -23,11 +23,21 @@ export const defaultTheme: DefaultTheme = {
 
   config: {
     components: {
+      IonBadge: {
+        hue: 'bold',
+        shape: 'round',
+        size: 'small',
+      },
+
       IonChip: {
         fill: 'solid',
         hue: 'bold',
         shape: 'soft',
         size: 'large',
+      },
+
+      IonProgressBar: {
+        shape: 'round',
       },
 
       IonSpinner: {
@@ -95,6 +105,193 @@ export const defaultTheme: DefaultTheme = {
   },
 
   components: {
+    IonBadge: {
+      font: {
+        family: 'var(--ion-font-family)',
+      },
+
+      // Hues
+      hue: {
+        bold: {
+          default: {
+            background: ionColor('primary', 'base'),
+            color: ionColor('primary', 'contrast'),
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base'),
+              color: currentColor('contrast'),
+            },
+          },
+        },
+
+        subtle: {
+          default: {
+            background: ionColor('primary', 'base', { subtle: true }),
+            color: ionColor('primary', 'contrast', { subtle: true }),
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base', { subtle: true }),
+              color: currentColor('contrast', { subtle: true }),
+            },
+          },
+        },
+      },
+
+      // Shapes
+      shape: {
+        crisp: {
+          border: {
+            radius: 'var(--ion-radii-xxs)',
+          },
+        },
+
+        soft: {
+          border: {
+            radius: 'var(--ion-radii-md)',
+          },
+        },
+
+        round: {
+          border: {
+            radius: 'var(--ion-radii-xxxxl)',
+          },
+        },
+
+        rectangular: {
+          border: {
+            radius: 'var(--ion-radii-xxxxs)',
+          },
+        },
+      },
+
+      // Sizes
+      size: {
+        small: {
+          content: {
+            min: {
+              height: 'var(--ion-scaling-450)',
+              width: 'var(--ion-scaling-450)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-xxxs)',
+              end: 'var(--ion-spacing-xxs)',
+              bottom: 'var(--ion-spacing-xxxs)',
+              start: 'var(--ion-spacing-xxs)',
+            },
+
+            font: {
+              size: dynamicFont(global.root, 12),
+              weight: 'var(--ion-font-weight-medium)',
+            },
+
+            line: {
+              height: 'var(--ion-line-height-xxs)',
+            },
+          },
+
+          dot: {
+            height: 'var(--ion-scaling-450)',
+
+            min: {
+              width: 'var(--ion-scaling-450)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-xxxs)',
+              end: 'var(--ion-spacing-xxs)',
+              bottom: 'var(--ion-spacing-xxxs)',
+              start: 'var(--ion-spacing-xxs)',
+            },
+          },
+        },
+
+        medium: {
+          content: {
+            min: {
+              height: 'var(--ion-scaling-xxs)',
+              width: 'var(--ion-scaling-xxs)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-xxxs)',
+              end: 'var(--ion-spacing-xs)',
+              bottom: 'var(--ion-spacing-xxxs)',
+              start: 'var(--ion-spacing-xs)',
+            },
+
+            font: {
+              size: dynamicFontMin(global.root, 1, 14),
+              weight: 'var(--ion-font-weight-medium)',
+            },
+
+            line: {
+              height: 'var(--ion-line-height-xxs)',
+            },
+          },
+
+          dot: {
+            height: 'var(--ion-scaling-xxs)',
+
+            min: {
+              width: 'var(--ion-scaling-xxs)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-xxxs)',
+              end: 'var(--ion-spacing-xs)',
+              bottom: 'var(--ion-spacing-xxxs)',
+              start: 'var(--ion-spacing-xs)',
+            },
+          },
+        },
+
+        large: {
+          content: {
+            min: {
+              height: 'var(--ion-scaling-xs)',
+              width: 'var(--ion-scaling-xs)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-75)',
+              end: 'var(--ion-spacing-sm)',
+              bottom: 'var(--ion-spacing-75)',
+              start: 'var(--ion-spacing-sm)',
+            },
+
+            font: {
+              size: dynamicFontMin(global.root, 1, 16),
+              weight: 'var(--ion-font-weight-medium)',
+            },
+
+            line: {
+              height: 'var(--ion-line-height-xxs)',
+            },
+          },
+
+          dot: {
+            height: 'var(--ion-scaling-xs)',
+
+            min: {
+              width: 'var(--ion-scaling-xs)',
+            },
+
+            padding: {
+              top: 'var(--ion-spacing-75)',
+              end: 'var(--ion-spacing-sm)',
+              bottom: 'var(--ion-spacing-75)',
+              start: 'var(--ion-spacing-sm)',
+            },
+          },
+        },
+      },
+    },
+
     IonChip: {
       margin: {
         top: 'var(--ion-spacing-xxs)',
@@ -186,20 +383,20 @@ export const defaultTheme: DefaultTheme = {
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
-                background: currentColor('base', 0.08),
+                background: currentColor('base', { alpha: 0.08 }),
                 color: currentColor('shade'),
               },
 
               hover: {
-                background: currentColor('base', 0.12),
+                background: currentColor('base', { alpha: 0.12 }),
               },
 
               focus: {
-                background: currentColor('base', 0.12),
+                background: currentColor('base', { alpha: 0.12 }),
               },
 
               activated: {
-                background: currentColor('base', 0.16),
+                background: currentColor('base', { alpha: 0.16 }),
               },
             },
           },
@@ -236,22 +433,22 @@ export const defaultTheme: DefaultTheme = {
                 color: currentColor('shade'),
 
                 border: {
-                  color: currentColor('base', 0.32),
+                  color: currentColor('base', { alpha: 0.32 }),
                   style: 'solid',
                   width: 'var(--ion-border-width-xxs)',
                 },
               },
 
               hover: {
-                background: currentColor('base', 0.12),
+                background: currentColor('base', { alpha: 0.12 }),
               },
 
               focus: {
-                background: currentColor('base', 0.12),
+                background: currentColor('base', { alpha: 0.12 }),
               },
 
               activated: {
-                background: currentColor('base', 0.16),
+                background: currentColor('base', { alpha: 0.16 }),
               },
             },
           },
@@ -280,20 +477,20 @@ export const defaultTheme: DefaultTheme = {
             // Any of the semantic colors like primary, secondary, etc.
             semantic: {
               default: {
-                background: currentColor('base', null, true),
-                color: currentColor('contrast', null, true),
+                background: currentColor('base', { subtle: true }),
+                color: currentColor('contrast', { subtle: true }),
               },
 
               hover: {
-                background: currentColor('base', 0.6, true),
+                background: currentColor('base', { alpha: 0.6, subtle: true }),
               },
 
               focus: {
-                background: currentColor('base', 0.6, true),
+                background: currentColor('base', { alpha: 0.6, subtle: true }),
               },
 
               activated: {
-                background: currentColor('base', 0.8, true),
+                background: currentColor('base', { alpha: 0.8, subtle: true }),
               },
             },
           },
@@ -327,25 +524,25 @@ export const defaultTheme: DefaultTheme = {
             semantic: {
               default: {
                 background: 'transparent',
-                color: currentColor('contrast', null, true),
+                color: currentColor('contrast', { subtle: true }),
 
                 border: {
-                  color: currentColor('base', 0.12),
+                  color: currentColor('base', { alpha: 0.12 }),
                   style: 'solid',
                   width: 'var(--ion-border-width-xxs)',
                 },
               },
 
               hover: {
-                background: currentColor('base', 0.6, true),
+                background: currentColor('base', { alpha: 0.6, subtle: true }),
               },
 
               focus: {
-                background: currentColor('base', 0.6, true),
+                background: currentColor('base', { alpha: 0.6, subtle: true }),
               },
 
               activated: {
-                background: currentColor('base', 0.8, true),
+                background: currentColor('base', { alpha: 0.8, subtle: true }),
               },
             },
           },
@@ -488,6 +685,92 @@ export const defaultTheme: DefaultTheme = {
         trailing: {
           margin: {
             bottom: 'var(--ion-spacing-0)',
+          },
+        },
+      },
+    },
+
+    IonProgressBar: {
+      height: 'var(--ion-scaling-100)',
+
+      indeterminate: {
+        progress: {
+          default: {
+            background: ionColor('primary', 'base'),
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base'),
+            },
+          },
+        },
+
+        buffer: {
+          bar: {
+            default: {
+              background: ionColor('primary', 'base', { alpha: 0.3 }),
+            },
+
+            solid: {
+              default: {
+                background: `var(--ion-background-color-step-100, ${mix(baseColors.black, baseColors.white, '90%')})`,
+              },
+            },
+          },
+        },
+      },
+
+      determinate: {
+        progress: {
+          default: {
+            background: ionColor('primary', 'base'),
+          },
+
+          semantic: {
+            default: {
+              background: currentColor('base'),
+            },
+          },
+        },
+
+        buffer: {
+          bar: {
+            default: {
+              background: ionColor('primary', 'base', { alpha: 0.3 }),
+            },
+
+            solid: {
+              default: {
+                background: `var(--ion-background-color-step-100, ${mix(baseColors.black, baseColors.white, '90%')})`,
+              },
+            },
+          },
+
+          circles: {
+            default: {
+              background: ionColor('primary', 'base', { alpha: 0.3 }),
+            },
+
+            semantic: {
+              default: {
+                background: currentColor('base', { alpha: 0.3 }),
+              },
+            },
+          },
+        },
+      },
+
+      shape: {
+        round: {
+          border: {
+            radius: 'var(--ion-radii-xxxxl)',
+          },
+        },
+
+        rectangular: {
+          border: {
+            radius: 'var(--ion-radii-xxxxs)',
           },
         },
       },

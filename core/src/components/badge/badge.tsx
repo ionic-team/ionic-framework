@@ -1,21 +1,18 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
-import { createColorClasses, hostContext } from '@utils/theme';
+import { createColorClasses } from '@utils/theme';
 
-import { getIonTheme } from '../../global/ionic-global';
+import { config } from '../../global/config';
 import type { Color } from '../../interface';
+
+import type { IonBadgeHue, IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from './badge.interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-badge',
-  styleUrls: {
-    ios: 'badge.ios.scss',
-    md: 'badge.md.scss',
-    ionic: 'badge.ionic.scss',
-  },
+  styleUrl: 'badge.scss',
   shadow: true,
 })
 export class Badge implements ComponentInterface {
@@ -32,108 +29,77 @@ export class Badge implements ComponentInterface {
    * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for
    * a badge with muted, subtle colors.
    *
-   * Only applies to the `ionic` theme.
+   * Defaults to `"bold"` if both the hue property and theme config are unset.
    */
-  @Prop() hue?: 'bold' | 'subtle';
+  @Prop() hue?: IonBadgeHue;
 
   /**
-   * Set to `"rectangular"` for non-rounded corners.
-   * Set to `"soft"` for slightly rounded corners.
-   * Set to `"round"` for fully rounded corners.
+   * Set to `"crisp"` for a badge with even slightly rounded corners,
+   * `"soft"` for a badge with slightly rounded corners,
+   * `"round"` for a badge with fully rounded corners,
+   * or `"rectangular"` for a badge without rounded corners.
    *
-   * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+   * Defaults to `"soft"` if both the shape property and theme config are unset.
    */
-  @Prop() shape?: 'soft' | 'round | rectangular';
+  @Prop() shape?: IonBadgeShape;
 
   /**
-   * Set to `"small"` for a small badge.
-   * Set to `"medium"` for a medium badge.
-   * Set to `"large"` for a large badge, when it is empty (no text or icon).
+   * Set to `"small"` for a smaller size.
+   * Set to `"medium"` for a medium size.
+   * Set to `"large"` for a larger size.
    *
-   * Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
+   * Defaults to `"small"` if both the size property and theme config are unset.
    */
-  @Prop() size?: 'small' | 'medium' | 'large';
+  @Prop() size?: IonBadgeSize;
 
   /**
    * Set to `"top"` to position the badge on top right absolute position of the parent element.
    * Set to `"bottom"` to position the badge on bottom right absolute position of the parent element.
    */
-  @Prop() vertical?: 'top' | 'bottom';
+  @Prop() vertical?: IonBadgeVerticalPosition;
 
-  private getShape(): string | undefined {
-    const theme = getIonTheme(this);
-    const { shape } = this;
-
-    // TODO(ROU-10777): Remove theme check when shapes are defined for all themes.
-    if (theme !== 'ionic') {
-      return undefined;
-    }
-
-    if (shape === undefined) {
-      return 'round';
-    }
+  /**
+   * Gets the badge shape. Uses the `shape` property if set, otherwise
+   * checks the theme config and falls back to 'soft' if neither is provided.
+   */
+  get shapeValue(): IonBadgeShape {
+    const shapeConfig = config.getObjectValue('IonBadge.shape', 'soft') as IonBadgeShape;
+    const shape = this.shape || shapeConfig;
 
     return shape;
   }
 
-  private getSize(): string | undefined {
-    const theme = getIonTheme(this);
-    const { size } = this;
-
-    // TODO(FW-6355): Remove theme check when sizes are defined for all themes.
-    if (theme !== 'ionic') {
-      return undefined;
-    }
-
-    if (size === undefined) {
-      return 'small';
-    }
+  /**
+   * Gets the badge size. Uses the `size` property if set, otherwise
+   * checks the theme config and falls back to 'small' if neither is provided.
+   */
+  get sizeValue(): IonBadgeSize {
+    const sizeConfig = config.getObjectValue('IonBadge.size', 'small') as IonBadgeSize;
+    const size = this.size || sizeConfig;
 
     return size;
   }
 
-  // The 'subtle' hue is the default for badges containing text or icons
-  // The 'bold' hue is used when inside of an avatar, button, tab button,
-  // or when the badge is empty (no text or icon).
-  private getHue(): string | undefined {
-    const { hue } = this;
+  /**
+   * Gets the badge hue. Uses the `hue` property if set, otherwise
+   * checks the theme config and falls back to 'bold' if neither is provided.
+   */
+  get hueValue(): IonBadgeHue {
+    const hueConfig = config.getObjectValue('IonBadge.hue', 'bold') as IonBadgeHue;
+    const hue = this.hue || hueConfig;
 
-    if (hue !== undefined) {
-      return hue;
-    }
-
-    const inAvatar = hostContext('ion-avatar', this.el);
-    const inButton = hostContext('ion-button', this.el);
-    const inTabButton = hostContext('ion-tab-button', this.el);
-    const hasContent = this.el.textContent?.trim() !== '' || this.el.querySelector('ion-icon') !== null;
-
-    // Return 'bold' if the badge is inside an avatar, button, tab button,
-    // or has no content
-    if (inAvatar || inButton || inTabButton || !hasContent) {
-      return 'bold';
-    }
-
-    // Return 'subtle' if the badge contains visible text or an icon
-    return 'subtle';
+    return hue;
   }
 
   render() {
-    const hue = this.getHue();
-    const shape = this.getShape();
-    const size = this.getSize();
-    const theme = getIonTheme(this);
+    const { hueValue, shapeValue, sizeValue, color } = this;
 
     return (
       <Host
-        class={createColorClasses(this.color, {
-          [theme]: true,
-          [`badge-${hue}`]: hue !== undefined,
-          [`badge-${shape}`]: shape !== undefined,
-          [`badge-${size}`]: size !== undefined,
-          [`badge-vertical-${this.vertical}`]: this.vertical !== undefined,
-          'in-button': hostContext('ion-button', this.el),
-          'in-tab-button': hostContext('ion-tab-button', this.el),
-          'long-badge': (this.el.textContent?.trim().length ?? 0) > 2,
+        class={createColorClasses(color, {
+          [`badge-hue-${hueValue}`]: true,
+          [`badge-shape-${shapeValue}`]: true,
+          [`badge-size-${sizeValue}`]: true,
         })}
       >
         <slot></slot>

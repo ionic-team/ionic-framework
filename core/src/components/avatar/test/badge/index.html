@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Avatar - Badge</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      .row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+        color: #6f7378;
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      .avatar-group {
+        border: 1px solid #e2e4e7;
+        border-radius: 12px;
+        margin: 16px;
+        padding: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Avatar - Badge</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content"></ion-content>
+    </ion-app>
+
+    <script>
+      const avatarSizes = ['xxsmall', 'xsmall', 'small', 'medium', 'large', 'xlarge'];
+      const badgeSizes = ['small', 'medium', 'large'];
+      const badgePositions = ['top', 'bottom', ''];
+      const imgSrc = '/src/components/avatar/test/avatar.svg';
+
+      const badgeContents = ['', '1', '999+', '<ion-icon icon="star"></ion-icon>'];
+
+      const content = document.getElementById('content');
+
+      avatarSizes.forEach((avatarSize) => {
+        const group = document.createElement('div');
+        group.id = `avatar-${avatarSize}`;
+        group.classList.add('avatar-group');
+
+        badgePositions.forEach((badgePosition) => {
+          const heading = document.createElement('h2');
+          heading.textContent = `avatar size: ${avatarSize} / badge position: ${badgePosition || 'none'}`;
+          group.appendChild(heading);
+
+          const row = document.createElement('div');
+          row.className = 'row';
+
+          badgeSizes.forEach((badgeSize) => {
+            badgeContents.forEach((html) => {
+              const avatar = document.createElement('ion-avatar');
+              avatar.setAttribute('size', avatarSize);
+
+              const img = document.createElement('img');
+              img.setAttribute('src', imgSrc);
+              avatar.appendChild(img);
+
+              const badge = document.createElement('ion-badge');
+              badge.setAttribute('hue', 'bold');
+              badge.setAttribute('color', 'danger');
+              badge.setAttribute('shape', 'round');
+              badge.setAttribute('size', badgeSize);
+              if (badgePosition) {
+                badge.setAttribute('vertical', badgePosition);
+              }
+              badge.innerHTML = html;
+
+              avatar.appendChild(badge);
+              row.appendChild(avatar);
+            });
+          });
+
+          group.appendChild(row);
+        });
+
+        content.appendChild(group);
+      });
+    </script>
+  </body>
+</html>

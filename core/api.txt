@@ -316,28 +316,79 @@ ion-badge,shadow
 ion-badge,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-badge,prop,hue,"bold" | "subtle" | undefined,undefined,false,false
 ion-badge,prop,mode,"ios" | "md",undefined,false,false
-ion-badge,prop,shape,"round | rectangular" | "soft" | undefined,undefined,false,false
+ion-badge,prop,shape,"crisp" | "rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-badge,prop,size,"large" | "medium" | "small" | undefined,undefined,false,false
-ion-badge,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-badge,prop,vertical,"bottom" | "top" | undefined,undefined,false,false
-ion-badge,css-prop,--background,ionic
-ion-badge,css-prop,--background,ios
-ion-badge,css-prop,--background,md
-ion-badge,css-prop,--color,ionic
-ion-badge,css-prop,--color,ios
-ion-badge,css-prop,--color,md
-ion-badge,css-prop,--padding-bottom,ionic
-ion-badge,css-prop,--padding-bottom,ios
-ion-badge,css-prop,--padding-bottom,md
-ion-badge,css-prop,--padding-end,ionic
-ion-badge,css-prop,--padding-end,ios
-ion-badge,css-prop,--padding-end,md
-ion-badge,css-prop,--padding-start,ionic
-ion-badge,css-prop,--padding-start,ios
-ion-badge,css-prop,--padding-start,md
-ion-badge,css-prop,--padding-top,ionic
-ion-badge,css-prop,--padding-top,ios
-ion-badge,css-prop,--padding-top,md
+ion-badge,css-prop,--ion-badge-font-family
+ion-badge,css-prop,--ion-badge-hue-bold-default-background
+ion-badge,css-prop,--ion-badge-hue-bold-default-color
+ion-badge,css-prop,--ion-badge-hue-bold-semantic-default-background
+ion-badge,css-prop,--ion-badge-hue-bold-semantic-default-color
+ion-badge,css-prop,--ion-badge-hue-subtle-default-background
+ion-badge,css-prop,--ion-badge-hue-subtle-default-color
+ion-badge,css-prop,--ion-badge-hue-subtle-semantic-default-background
+ion-badge,css-prop,--ion-badge-hue-subtle-semantic-default-color
+ion-badge,css-prop,--ion-badge-shape-crisp-border-radius
+ion-badge,css-prop,--ion-badge-shape-rectangular-border-radius
+ion-badge,css-prop,--ion-badge-shape-round-border-radius
+ion-badge,css-prop,--ion-badge-shape-soft-border-radius
+ion-badge,css-prop,--ion-badge-size-large-content-font-size
+ion-badge,css-prop,--ion-badge-size-large-content-font-weight
+ion-badge,css-prop,--ion-badge-size-large-content-height
+ion-badge,css-prop,--ion-badge-size-large-content-icon-height
+ion-badge,css-prop,--ion-badge-size-large-content-icon-width
+ion-badge,css-prop,--ion-badge-size-large-content-letter-spacing
+ion-badge,css-prop,--ion-badge-size-large-content-line-height
+ion-badge,css-prop,--ion-badge-size-large-content-min-height
+ion-badge,css-prop,--ion-badge-size-large-content-min-width
+ion-badge,css-prop,--ion-badge-size-large-content-padding-bottom
+ion-badge,css-prop,--ion-badge-size-large-content-padding-end
+ion-badge,css-prop,--ion-badge-size-large-content-padding-start
+ion-badge,css-prop,--ion-badge-size-large-content-padding-top
+ion-badge,css-prop,--ion-badge-size-large-dot-height
+ion-badge,css-prop,--ion-badge-size-large-dot-min-width
+ion-badge,css-prop,--ion-badge-size-large-dot-padding-bottom
+ion-badge,css-prop,--ion-badge-size-large-dot-padding-end
+ion-badge,css-prop,--ion-badge-size-large-dot-padding-start
+ion-badge,css-prop,--ion-badge-size-large-dot-padding-top
+ion-badge,css-prop,--ion-badge-size-medium-content-font-size
+ion-badge,css-prop,--ion-badge-size-medium-content-font-weight
+ion-badge,css-prop,--ion-badge-size-medium-content-height
+ion-badge,css-prop,--ion-badge-size-medium-content-icon-height
+ion-badge,css-prop,--ion-badge-size-medium-content-icon-width
+ion-badge,css-prop,--ion-badge-size-medium-content-letter-spacing
+ion-badge,css-prop,--ion-badge-size-medium-content-line-height
+ion-badge,css-prop,--ion-badge-size-medium-content-min-height
+ion-badge,css-prop,--ion-badge-size-medium-content-min-width
+ion-badge,css-prop,--ion-badge-size-medium-content-padding-bottom
+ion-badge,css-prop,--ion-badge-size-medium-content-padding-end
+ion-badge,css-prop,--ion-badge-size-medium-content-padding-start
+ion-badge,css-prop,--ion-badge-size-medium-content-padding-top
+ion-badge,css-prop,--ion-badge-size-medium-dot-height
+ion-badge,css-prop,--ion-badge-size-medium-dot-min-width
+ion-badge,css-prop,--ion-badge-size-medium-dot-padding-bottom
+ion-badge,css-prop,--ion-badge-size-medium-dot-padding-end
+ion-badge,css-prop,--ion-badge-size-medium-dot-padding-start
+ion-badge,css-prop,--ion-badge-size-medium-dot-padding-top
+ion-badge,css-prop,--ion-badge-size-small-content-font-size
+ion-badge,css-prop,--ion-badge-size-small-content-font-weight
+ion-badge,css-prop,--ion-badge-size-small-content-height
+ion-badge,css-prop,--ion-badge-size-small-content-icon-height
+ion-badge,css-prop,--ion-badge-size-small-content-icon-width
+ion-badge,css-prop,--ion-badge-size-small-content-letter-spacing
+ion-badge,css-prop,--ion-badge-size-small-content-line-height
+ion-badge,css-prop,--ion-badge-size-small-content-min-height
+ion-badge,css-prop,--ion-badge-size-small-content-min-width
+ion-badge,css-prop,--ion-badge-size-small-content-padding-bottom
+ion-badge,css-prop,--ion-badge-size-small-content-padding-end
+ion-badge,css-prop,--ion-badge-size-small-content-padding-start
+ion-badge,css-prop,--ion-badge-size-small-content-padding-top
+ion-badge,css-prop,--ion-badge-size-small-dot-height
+ion-badge,css-prop,--ion-badge-size-small-dot-min-width
+ion-badge,css-prop,--ion-badge-size-small-dot-padding-bottom
+ion-badge,css-prop,--ion-badge-size-small-dot-padding-end
+ion-badge,css-prop,--ion-badge-size-small-dot-padding-start
+ion-badge,css-prop,--ion-badge-size-small-dot-padding-top
 
 ion-breadcrumb,shadow
 ion-breadcrumb,prop,active,boolean,false,false,false
@@ -1932,13 +1983,23 @@ ion-progress-bar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" |
 ion-progress-bar,prop,mode,"ios" | "md",undefined,false,false
 ion-progress-bar,prop,reversed,boolean,false,false,false
 ion-progress-bar,prop,shape,"rectangular" | "round" | undefined,undefined,false,false
-ion-progress-bar,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-progress-bar,prop,type,"determinate" | "indeterminate",'determinate',false,false
 ion-progress-bar,prop,value,number,0,false,false
-ion-progress-bar,css-prop,--background,ios
-ion-progress-bar,css-prop,--background,md
-ion-progress-bar,css-prop,--progress-background,ios
-ion-progress-bar,css-prop,--progress-background,md
+ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-bar-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-bar-semantic-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-bar-solid-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-circles-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-determinate-buffer-circles-semantic-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-determinate-progress-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-determinate-progress-semantic-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-height
+ion-progress-bar,css-prop,--ion-progress-bar-indeterminate-buffer-bar-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-indeterminate-buffer-bar-semantic-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-indeterminate-buffer-bar-solid-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-indeterminate-progress-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-indeterminate-progress-semantic-default-background
+ion-progress-bar,css-prop,--ion-progress-bar-shape-rectangular-border-radius
+ion-progress-bar,css-prop,--ion-progress-bar-shape-round-border-radius
 ion-progress-bar,part,progress
 ion-progress-bar,part,stream
 ion-progress-bar,part,track

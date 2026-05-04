@@ -11,6 +11,7 @@ import { ActionSheetButton } from "./components/action-sheet/action-sheet-interf
 import { OverlayEventDetail } from "./utils/overlays-interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { AlertButton, AlertInput } from "./components/alert/alert-interface";
+import { IonBadgeHue, IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
 import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
@@ -28,6 +29,7 @@ import { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
 import { PickerColumnChangeEventDetail, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
 import { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
+import { IonProgressBarShape } from "./components/progress-bar/progress-bar.interfaces";
 import { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 import { RefresherEventDetail } from "./components/refresher/refresher-interface";
@@ -51,6 +53,7 @@ export { ActionSheetButton } from "./components/action-sheet/action-sheet-interf
 export { OverlayEventDetail } from "./utils/overlays-interface";
 export { IonicSafeString } from "./utils/sanitization";
 export { AlertButton, AlertInput } from "./components/alert/alert-interface";
+export { IonBadgeHue, IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
 export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
@@ -68,6 +71,7 @@ export { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
 export { PickerColumnChangeEventDetail, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
 export { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
+export { IonProgressBarShape } from "./components/progress-bar/progress-bar.interfaces";
 export { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 export { RefresherEventDetail } from "./components/refresher/refresher-interface";
@@ -469,29 +473,25 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Only applies to the `ionic` theme.
+          * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
          */
-        "hue"?: 'bold' | 'subtle';
+        "hue"?: IonBadgeHue;
         /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
-          * Set to `"rectangular"` for non-rounded corners. Set to `"soft"` for slightly rounded corners. Set to `"round"` for fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"crisp"` for a badge with even slightly rounded corners, `"soft"` for a badge with slightly rounded corners, `"round"` for a badge with fully rounded corners, or `"rectangular"` for a badge without rounded corners.  Defaults to `"soft"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'soft' | 'round | rectangular';
+        "shape"?: IonBadgeShape;
         /**
-          * Set to `"small"` for a small badge. Set to `"medium"` for a medium badge. Set to `"large"` for a large badge, when it is empty (no text or icon).  Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a larger size.  Defaults to `"small"` if both the size property and theme config are unset.
          */
-        "size"?: 'small' | 'medium' | 'large';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
+        "size"?: IonBadgeSize;
         /**
           * Set to `"top"` to position the badge on top right absolute position of the parent element. Set to `"bottom"` to position the badge on bottom right absolute position of the parent element.
          */
-        "vertical"?: 'top' | 'bottom';
+        "vertical"?: IonBadgeVerticalPosition;
     }
     interface IonBreadcrumb {
         /**
@@ -898,7 +898,7 @@ export namespace Components {
          */
         "shape"?: IonChipShape;
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` if both the size property and theme config are unset.
+          * Set to `"small"` for a chip with less height and padding, or `"large"` for a chip with more height and padding.  Defaults to `"large"` if both the size property and theme config are unset.
          */
         "size"?: IonChipSize;
     }
@@ -2993,13 +2993,9 @@ export namespace Components {
          */
         "reversed": boolean;
         /**
-          * Set to `"round"` for a progress bar with rounded corners, or `"rectangular"` for a progress bar without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"round"` for a progress bar with rounded corners, or `"rectangular"` for a progress bar without rounded corners.  Defaults to `"round"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'round' | 'rectangular';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
+        "shape"?: IonProgressBarShape;
         /**
           * The state of the progress bar, based on if the time the process takes is known or not. Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
           * @default 'determinate'
@@ -6396,29 +6392,25 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Only applies to the `ionic` theme.
+          * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
          */
-        "hue"?: 'bold' | 'subtle';
+        "hue"?: IonBadgeHue;
         /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
-          * Set to `"rectangular"` for non-rounded corners. Set to `"soft"` for slightly rounded corners. Set to `"round"` for fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"crisp"` for a badge with even slightly rounded corners, `"soft"` for a badge with slightly rounded corners, `"round"` for a badge with fully rounded corners, or `"rectangular"` for a badge without rounded corners.  Defaults to `"soft"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'soft' | 'round | rectangular';
+        "shape"?: IonBadgeShape;
         /**
-          * Set to `"small"` for a small badge. Set to `"medium"` for a medium badge. Set to `"large"` for a large badge, when it is empty (no text or icon).  Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"small"` for a smaller size. Set to `"medium"` for a medium size. Set to `"large"` for a larger size.  Defaults to `"small"` if both the size property and theme config are unset.
          */
-        "size"?: 'small' | 'medium' | 'large';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
+        "size"?: IonBadgeSize;
         /**
           * Set to `"top"` to position the badge on top right absolute position of the parent element. Set to `"bottom"` to position the badge on bottom right absolute position of the parent element.
          */
-        "vertical"?: 'top' | 'bottom';
+        "vertical"?: IonBadgeVerticalPosition;
     }
     interface IonBreadcrumb {
         /**
@@ -6860,7 +6852,7 @@ declare namespace LocalJSX {
          */
         "shape"?: IonChipShape;
         /**
-          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` if both the size property and theme config are unset.
+          * Set to `"small"` for a chip with less height and padding, or `"large"` for a chip with more height and padding.  Defaults to `"large"` if both the size property and theme config are unset.
          */
         "size"?: IonChipSize;
     }
@@ -8913,13 +8905,9 @@ declare namespace LocalJSX {
          */
         "reversed"?: boolean;
         /**
-          * Set to `"round"` for a progress bar with rounded corners, or `"rectangular"` for a progress bar without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"round"` for a progress bar with rounded corners, or `"rectangular"` for a progress bar without rounded corners.  Defaults to `"round"` if both the shape property and theme config are unset.
          */
-        "shape"?: 'round' | 'rectangular';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
+        "shape"?: IonProgressBarShape;
         /**
           * The state of the progress bar, based on if the time the process takes is known or not. Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
           * @default 'determinate'

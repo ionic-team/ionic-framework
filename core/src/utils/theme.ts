@@ -595,6 +595,11 @@ export function rgba(colorRgb: string, alpha: number | string): string {
   return `rgba(${colorRgb}, ${alpha})`;
 }
 
+interface ColorOptions {
+  alpha?: number | string | null;
+  subtle?: boolean;
+}
+
 /**
  * Mimics the Ionic Framework `current-color` function logic to construct CSS color values.
  *
@@ -604,7 +609,9 @@ export function rgba(colorRgb: string, alpha: number | string): string {
  * @param subtle If true, uses the '--ion-color-subtle-' prefix.
  * @returns A string containing the CSS value (e.g., 'var(--ion-color-primary)' or 'rgba(var(--ion-color-primary-rgb), 0.16)').
  */
-export function currentColor(variation: string, alpha: number | string | null = null, subtle: boolean = false): string {
+export function currentColor(variation: string, options: ColorOptions = {}): string {
+  const { alpha = null, subtle = false } = options;
+
   // 1. Determine the base CSS variable name
   const variable = subtle ? `--ion-color-subtle-${variation}` : `--ion-color-${variation}`;
 
@@ -612,14 +619,41 @@ export function currentColor(variation: string, alpha: number | string | null = 
   if (alpha === null) {
     // Corresponds to: @return var(#{$variable});
     return `var(${variable})`;
-  } else {
-    // 3. Handle the case where alpha is provided
-    // Corresponds to: @return rgba(var(#{$variable}-rgb), #{$alpha});
-
-    // NOTE: The resulting string uses the CSS variable for the RGB components
-    // (e.g., '255, 0, 0') and the provided alpha.
-    return `rgba(var(${variable}-rgb), ${alpha})`;
   }
+
+  // 3. Handle the case where alpha is provided
+  // Corresponds to: @return rgba(var(#{$variable}-rgb), #{$alpha});
+
+  // NOTE: The resulting string uses the CSS variable for the RGB components
+  // (e.g., '255, 0, 0') and the provided alpha.
+  return `rgba(var(${variable}-rgb), ${alpha})`;
+}
+
+export function ionColor(name: string, variation: string, options: ColorOptions = {}): string {
+  const { alpha = null, subtle = false } = options;
+
+  // Build base variable name
+  const base = subtle ? `--ion-color-${name}-subtle` : `--ion-color-${name}`;
+  const variationSuffix = variation === 'base' ? '' : `-${variation}`;
+  const variable = `${base}${variationSuffix}`;
+
+  // Build the fallback variable name (only for bold colors)
+  let fallbackVariable: string | null = null;
+
+  if (!subtle) {
+    const fallbackBase = `--ion-color-${name}-bold`;
+    fallbackVariable = `${fallbackBase}${variationSuffix}`;
+  }
+
+  // Handle alpha transparency
+  if (alpha !== null) {
+    const rgbVar = `${variable}-rgb`;
+    const fallbackRgb = fallbackVariable ? `${fallbackVariable}-rgb` : null;
+
+    return fallbackRgb ? `rgba(var(${rgbVar}, var(${fallbackRgb})), ${alpha})` : `rgba(var(${rgbVar}), ${alpha})`;
+  }
+
+  return fallbackVariable ? `var(${variable}, var(${fallbackVariable}))` : `var(${variable})`;
 }
 
 /**
@@ -629,7 +663,7 @@ export function currentColor(variation: string, alpha: number | string | null = 
  * @param min The minimum value
  * @param val The preferred value
  * @param max The maximum value
- * @returns
+ * @returns A string containing the CSS clamp() function call (e.g., 'clamp(1rem, 2vw, 3rem)').
  */
 export function clamp(min: number | string, val: number | string, max: number | string): string {
   return `clamp(${min}, ${val}, ${max})`;
@@ -666,6 +700,7 @@ const baselineUnit = 'rem';
  * - `dynamicFont('16px', 20, 'em')` returns `'1.25em'`
  *
  * @internal
+ * @param configRootFontSize - The root font size from the theme config.
  * @param size - The numeric pixel value.
  * @param unit - The CSS unit string.
  * @returns The calculated CSS value string.
@@ -687,4 +722,31 @@ export const dynamicFont = (
   }
 
   return `${size / baselinePixelSize}${unit}`;
+};
+
+/**
+ * Converts a pixel value to a dynamic unit (defaulting to rem)
+ * but imposes a minimum font size using CSS max().
+ *
+ * Examples based on a root font size of 16px:
+ * - `dynamicFontMin('16px', 0.8, 11)` returns `'max(8.8px, 0.6875rem)'`
+ * - A minimum of 80% of 11px = 8.8px, but the rem value scales with root font size
+ *
+ * @internal
+ * @param configRootFontSize - The root font size from the theme config.
+ * @param minScale - The minimum scale of the font (e.g. 0.8 for 80%).
+ * @param size - The numeric pixel value.
+ * @param unit - The CSS unit string.
+ * @returns A string containing the CSS max() function with the minimum pixel value and the dynamic font value (e.g., 'max(8.8px, 0.6875rem)').
+ */
+export const dynamicFontMin = (
+  configRootFontSize: string | number,
+  minScale: number,
+  size: number,
+  unit: string | undefined = baselineUnit
+): string => {
+  const baseScale = dynamicFont(configRootFontSize, size, unit);
+  const minSize = size * minScale;
+
+  return `max(${minSize}px, ${baseScale})`;
 };

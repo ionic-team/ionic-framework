@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tab Button - Badge</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+        color: #6f7378;
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      .badge-group {
+        border: 1px solid #e2e4e7;
+        border-radius: 12px;
+        margin: 16px;
+        padding: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Tab Button - Badge</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content"></ion-content>
+    </ion-app>
+
+    <script>
+      const iconLayouts = ['icon-top', 'icon-bottom'];
+      const badgePositions = ['top', 'bottom', ''];
+      const badgeSizes = ['small', 'medium', 'large'];
+
+      // What each tab button contains (besides the badge)
+      const slotVariants = [
+        { label: 'icon + label', hasIcon: true, hasLabel: true },
+        { label: 'icon only', hasIcon: true, hasLabel: false },
+        { label: 'label only', hasIcon: false, hasLabel: true },
+        { label: 'no icon or label', hasIcon: false, hasLabel: false },
+      ];
+
+      // Badge content variations
+      const badgeContents = ['', '1', '999+', '<ion-icon icon="star"></ion-icon>'];
+
+      const icons = ['star', 'globe', 'logo-facebook', 'chatbox'];
+      const colors = ['danger', 'primary', 'warning', 'success'];
+
+      const content = document.getElementById('content');
+
+      badgePositions.forEach((position) => {
+        badgeSizes.forEach((badgeSize) => {
+          const group = document.createElement('div');
+          group.id = `badge-${badgeSize}`;
+          group.classList.add('badge-group');
+
+          slotVariants.forEach((variant) => {
+            iconLayouts.forEach((layout) => {
+              // Only one layout needed when there's no icon
+              if (!variant.hasIcon && layout === 'icon-bottom') {
+                return;
+              }
+
+              const heading = document.createElement('h2');
+              heading.textContent = `badge position: ${position || 'none'} / badge size: ${badgeSize} / ${
+                variant.label
+              } / icon layout: ${layout}`;
+              group.appendChild(heading);
+
+              const row = document.createElement('div');
+
+              const tabBar = document.createElement('ion-tab-bar');
+
+              badgeContents.forEach((html, i) => {
+                const tabButton = document.createElement('ion-tab-button');
+                tabButton.setAttribute('tab', `tab-${position}-${badgeSize}-${variant.label}-${layout}-${i}`);
+                tabButton.setAttribute('layout', layout);
+
+                if (variant.hasLabel) {
+                  const label = document.createElement('ion-label');
+                  label.textContent = `Tab ${i + 1}`;
+                  tabButton.appendChild(label);
+                }
+
+                if (variant.hasIcon) {
+                  const icon = document.createElement('ion-icon');
+                  icon.setAttribute('name', icons[i % icons.length]);
+                  tabButton.appendChild(icon);
+                }
+
+                const badge = document.createElement('ion-badge');
+                badge.setAttribute('hue', 'bold');
+                badge.setAttribute('shape', 'round');
+                badge.setAttribute('size', badgeSize);
+                if (position) {
+                  badge.setAttribute('vertical', position);
+                }
+                badge.setAttribute('color', colors[i % colors.length]);
+                badge.innerHTML = html;
+
+                tabButton.appendChild(badge);
+                tabBar.appendChild(tabButton);
+              });
+
+              row.appendChild(tabBar);
+              group.appendChild(row);
+            });
+          });
+
+          content.appendChild(group);
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -24,7 +24,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
           <ion-tab-button tab="2">
             <ion-label>Favorites</ion-label>
-            <ion-badge>23</ion-badge>
+            <ion-badge size="small" shape="round" vertical="top">23</ion-badge>
           </ion-tab-button>
 
           <ion-tab-button tab="3">
@@ -58,7 +58,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
             <ion-tab-button tab="2">
               <ion-label>Favorites</ion-label>
-              <ion-badge>23</ion-badge>
+              <ion-badge size="small" shape="round" vertical="top">23</ion-badge>
             </ion-tab-button>
 
             <ion-tab-button tab="3">
