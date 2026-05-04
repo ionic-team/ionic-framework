@@ -65,9 +65,9 @@ html.ionic .modal-footer-moving ion-toolbar {
 * within a modal.
 */
 html.ionic ion-modal.modal-sheet ion-content {
-  --padding-start: #{globals.$ion-space-400};
-  --padding-end: #{globals.$ion-space-400};
-  --padding-bottom: #{globals.$ion-space-400};
+  --ion-content-padding-start: #{globals.$ion-space-400};
+  --ion-content-padding-end: #{globals.$ion-space-400};
+  --ion-content-padding-bottom: #{globals.$ion-space-400};
 }
 
 /**

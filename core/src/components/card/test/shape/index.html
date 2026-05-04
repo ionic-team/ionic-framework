@@ -9,16 +9,33 @@
     />
     <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script>
+      // Need to be called before loading Ionic else
+      // the scripts.js logic runs too early.
+      window.Ionic = {
+        config: {
+          customTheme: {
+            components: {
+              IonContent: {
+                background: '#dde2ef',
+                padding: {
+                  start: '16px',
+                  end: '16px',
+                  top: '16px',
+                  bottom: '16px',
+                },
+              },
+            },
+          },
+        },
+      };
+    </script>
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
 
     <!-- Styles only for testing purposes to identify the card shape -->
     <style>
-      ion-content {
-        --background: #dde2ef;
-      }
-
       .container {
         padding: 8px;
       }
@@ -33,7 +50,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content class="ion-padding ion-text-center" id="content" no-bounce>
+      <ion-content class="ion-text-center" id="content" no-bounce>
         <h1>Default</h1>
         <div id="default" class="container">
           <ion-card>

@@ -7,6 +7,21 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
     />
+    <script>
+      // Need to be called before loading Ionic else
+      // the scripts.js logic runs too early.
+      window.Ionic = {
+        config: {
+          customTheme: {
+            components: {
+              IonContent: {
+                background: 'linear-gradient(to right, orange, yellow, green, cyan, blue, violet)',
+              },
+            },
+          },
+        },
+      };
+    </script>
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
@@ -191,10 +206,6 @@
     <!-- Default -->
 
     <style>
-      ion-content {
-        --background: linear-gradient(to right, orange, yellow, green, cyan, blue, violet);
-      }
-
       ion-tab-bar {
         margin-bottom: 5px;
       }
