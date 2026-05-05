@@ -135,6 +135,12 @@ export class Datetime implements ComponentInterface {
   private todayParts!: DatetimeParts;
   private defaultParts!: DatetimeParts;
   private loadTimeout: ReturnType<typeof setTimeout> | undefined;
+  /**
+   * Set true only by `visibleCallback`. Lets `hiddenCallback` ignore the
+   * synthetic "not intersecting" entry IntersectionObserver fires on
+   * `observe()` when the host mounts offscreen.
+   */
+  private hasBeenIntersecting = false;
 
   private prevPresentation: string | null = null;
 
@@ -1097,6 +1103,7 @@ export class Datetime implements ComponentInterface {
       this.clearFocusVisible = undefined;
     }
     this.loadTimeoutCleanup();
+    this.hasBeenIntersecting = false;
   }
 
   /**
@@ -1140,8 +1147,23 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
+    this.markReady();
+  };
+
+  private markReady = () => {
+    if (this.el.classList.contains('datetime-ready')) {
+      return;
+    }
     this.initializeListeners();
 
+    /**
+     * TODO FW-2793: Datetime needs a frame to ensure that it
+     * can properly scroll contents into view. As a result
+     * we hide the scrollable content until after that frame
+     * so users do not see the content quickly shifting. The downside
+     * is that the content will pop into view a frame after. Maybe there
+     * is a better way to handle this?
+     */
     writeTask(() => {
       this.el.classList.add('datetime-ready');
     });
@@ -1170,19 +1192,8 @@ export class Datetime implements ComponentInterface {
         return;
       }
 
-      this.initializeListeners();
-
-      /**
-       * TODO FW-2793: Datetime needs a frame to ensure that it
-       * can properly scroll contents into view. As a result
-       * we hide the scrollable content until after that frame
-       * so users do not see the content quickly shifting. The downside
-       * is that the content will pop into view a frame after. Maybe there
-       * is a better way to handle this?
-       */
-      writeTask(() => {
-        this.el.classList.add('datetime-ready');
-      });
+      this.hasBeenIntersecting = true;
+      this.markReady();
     };
     const visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01, root: el });
 
@@ -1221,6 +1232,12 @@ export class Datetime implements ComponentInterface {
       if (ev.isIntersecting) {
         return;
       }
+
+      // Ignore the initial "not intersecting" entry IntersectionObserver fires on observe().
+      if (!this.hasBeenIntersecting) {
+        return;
+      }
+      this.hasBeenIntersecting = false;
 
       this.destroyInteractionListeners();
 
