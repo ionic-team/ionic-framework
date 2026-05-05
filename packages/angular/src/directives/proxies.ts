@@ -2253,14 +2253,14 @@ export declare interface IonSelectModal extends Components.IonSelectModal {}
 
 
 @ProxyCmp({
-  inputs: ['disabled', 'mode', 'theme', 'value']
+  inputs: ['description', 'disabled', 'mode', 'theme', 'value']
 })
 @Component({
   selector: 'ion-select-option',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'mode', 'theme', 'value'],
+  inputs: ['description', 'disabled', 'mode', 'theme', 'value'],
 })
 export class IonSelectOption {
   protected el: HTMLIonSelectOptionElement;

@@ -3824,6 +3824,10 @@ export namespace Components {
     }
     interface IonSelectOption {
         /**
+          * Text that is placed underneath the option text to provide additional details about the option.
+         */
+        "description"?: string;
+        /**
           * If `true`, the user cannot interact with the select option. This property does not apply when `interface="action-sheet"` as `ion-action-sheet` does not allow for disabled buttons.
           * @default false
          */
@@ -9923,6 +9927,10 @@ declare namespace LocalJSX {
     }
     interface IonSelectOption {
         /**
+          * Text that is placed underneath the option text to provide additional details about the option.
+         */
+        "description"?: string;
+        /**
           * If `true`, the user cannot interact with the select option. This property does not apply when `interface="action-sheet"` as `ion-action-sheet` does not allow for disabled buttons.
           * @default false
          */
@@ -11300,6 +11308,7 @@ declare namespace LocalJSX {
     interface IonSelectOptionAttributes {
         "disabled": boolean;
         "value": string;
+        "description": string;
     }
     interface IonSelectPopoverAttributes {
         "header": string;

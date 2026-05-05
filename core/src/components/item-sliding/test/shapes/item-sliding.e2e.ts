@@ -1,30 +1,33 @@
 import { expect } from '@playwright/test';
 import { configs, test, dragElementBy } from '@utils/test/playwright';
 
+import { DRAG_DISTANCE_MULTIPLE_OPTIONS, DRAG_STEPS_UNDER_FULL_SWIPE } from '../test.utils';
+
 /**
  * The shapes on the `item-option` do not vary by direction
  * when they are not being dragged.
  */
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: shapes'), () => {
-    test('should not have visual regressions when not expanded', async ({ page }) => {
+    test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/item-sliding/test/shapes`, config);
+    });
 
-      const itemIDs = ['round', 'soft', 'rectangular'];
-      for (const itemID of itemIDs) {
-        const item = page.locator(`#${itemID}`);
+    ['round', 'soft', 'rectangular'].forEach((shape) => {
+      test(`${shape} - should not have visual regressions when not expanded`, async ({ page }) => {
+        const item = page.locator(`#${shape}`);
 
         /**
          * Negative dragByX value to drag element from the right to the left
          * to reveal the options on the right side.
          */
-        const dragByX = -150;
+        const dragByX = -DRAG_DISTANCE_MULTIPLE_OPTIONS;
 
-        await dragElementBy(item, page, dragByX);
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, DRAG_STEPS_UNDER_FULL_SWIPE);
         await page.waitForChanges();
 
-        await expect(item).toHaveScreenshot(screenshot(`item-sliding-${itemID}`));
-      }
+        await expect(item).toHaveScreenshot(screenshot(`item-sliding-${shape}`));
+      });
     });
   });
 });

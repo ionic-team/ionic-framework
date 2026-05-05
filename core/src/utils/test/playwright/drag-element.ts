@@ -10,6 +10,18 @@ import type { ElementHandle, Locator } from '@playwright/test';
 
 import type { E2EPage } from './';
 
+/**
+ * Drags an element by the given number of pixels on the X and Y axes.
+ *
+ * @param el The element to drag.
+ * @param page The E2E Page object.
+ * @param dragByX The number of pixels to drag on the X axis. Negative values drag left, positive values drag right.
+ * @param dragByY The number of pixels to drag on the Y axis. Negative values drag up, positive values drag down.
+ * @param startXCoord The X coordinate to start the drag from. Defaults to the center of the element.
+ * @param startYCoord The Y coordinate to start the drag from. Defaults to the center of the element.
+ * @param releaseDrag Whether to release the drag at the end of the gesture. Defaults to `true`.
+ * @param steps The number of steps to divide the drag into. More steps reduce velocity; fewer steps increase it. Use this to control whether velocity-based thresholds (e.g. full-swipe) are triggered, particularly in Safari where gesture velocity is calculated relative to animation frames. Defaults to `10`.
+ */
 export const dragElementBy = async (
   el: Locator | ElementHandle<SVGElement | HTMLElement>,
   page: E2EPage,
@@ -46,10 +58,11 @@ export const dragElementBy = async (
 
 /**
  * Drags an element by the given amount of pixels on the Y axis.
+ *
  * @param el The element to drag.
  * @param page The E2E Page object.
- * @param dragByY The amount of pixels to drag the element by.
- * @param startYCoord The Y coordinate to start the drag gesture at. Defaults to the center of the element.
+ * @param dragByY The number of pixels to drag on the Y axis.
+ * @param startYCoord The Y coordinate to start the drag from. Defaults to the center of the element.
  */
 export const dragElementByYAxis = async (
   el: Locator | ElementHandle<SVGElement | HTMLElement>,
@@ -139,10 +152,21 @@ const moveElement = async (page: E2EPage, startX: number, startY: number, dragBy
 
     await page.mouse.move(middleX, middleY);
 
-    // Safari needs to wait for a repaint to occur before moving the mouse again.
+    /**
+     * In Safari, gesture velocity is calculated relative to animation
+     * frames, causing velocity to accumulate faster than in other
+     * browsers. Without waiting for a repaint, consecutive `mouse.move`
+     * events arrive with ~0ms time delta and velocity never accumulates,
+     * causing gesture
+     * detection to fail.
+     */
     if (browser === 'webkit' && i % 2 === 0) {
-      // Repainting every 2 steps is enough to keep the drag gesture smooth.
-      // Anything past 4 steps will cause the drag gesture to be flaky.
+      /**
+       * Repainting every 2 steps is enough to keep the drag gesture
+       * smooth. Repainting on every step makes the test slow, and
+       * repainting every 4+ steps means Safari does not see enough
+       * frames to track the gesture reliably.
+       */
       await page.evaluate(() => new Promise(requestAnimationFrame));
     }
   }

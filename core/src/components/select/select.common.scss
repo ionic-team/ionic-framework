@@ -25,6 +25,14 @@
    * @prop --border-width: Width of the select border
    *
    * @prop --ripple-color: The color of the ripple effect on MD mode.
+   *
+   * @prop --select-text-media-width: The width of media (icons/images) in the select text.
+   * @prop --select-text-media-height: The height of media (icons/images) in the select text.
+   * @prop --select-text-media-border-width: The border width of media (icons/images) in the select text.
+   * @prop --select-text-media-border-color: The border color of media (icons/images) in the select text.
+   * @prop --select-text-media-border-radius: The border radius of media (icons/images) in the select text.
+   * @prop --select-text-media-border-style: The border style of media (icons/images) in the select text.
+   * @prop --select-text-gap: The gap between elements in the select text.
    */
   --padding-top: 0px;
   --padding-end: 0px;
@@ -36,6 +44,8 @@
   --highlight-color-focused: #{ion-color(primary, base)};
   --highlight-color-valid: #{ion-color(success, base)};
   --highlight-color-invalid: #{ion-color(danger, base)};
+  --select-text-media-height: 1.5em;
+  --select-text-media-width: 1.5em;
 
   /**
    * This is a private API that is used to switch
@@ -150,6 +160,30 @@ button {
   white-space: inherit;
 
   overflow: hidden;
+}
+
+/**
+ * If the select text contains rich content, we want to add some
+ * spacing between the elements without changing the display to
+ * prevent losing the ellipses behavior.
+ */
+.select-text > * + * {
+  margin-inline-start: var(--select-text-gap);
+}
+
+.select-text img,
+.select-text ion-img,
+.select-text ion-icon,
+.select-text ion-thumbnail,
+.select-text ion-avatar {
+  @include mixins.border-radius(var(--select-text-media-border-radius));
+
+  width: var(--select-text-media-width);
+  height: var(--select-text-media-height);
+
+  border-width: var(--select-text-media-border-width);
+  border-style: var(--select-text-media-border-style);
+  border-color: var(--select-text-media-border-color);
 }
 
 // Select Wrapper

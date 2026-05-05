@@ -1,6 +1,12 @@
 import { expect } from '@playwright/test';
 import { configs, dragElementBy, test } from '@utils/test/playwright';
 
+import {
+  DRAG_DISTANCE_SINGLE_OPTION,
+  DRAG_DISTANCE_MULTIPLE_OPTIONS,
+  DRAG_STEPS_UNDER_FULL_SWIPE,
+} from '../test.utils';
+
 /**
  * item-sliding doesn't have mode-specific styling,
  * but the child components, item-options and item-option, do.
@@ -23,9 +29,9 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
          * Positive dragByX value to drag element from the left to the right
          * to reveal the options on the left side.
          */
-        const dragByX = config.direction === 'rtl' ? -100 : 100;
+        const dragByX = config.direction === 'rtl' ? -DRAG_DISTANCE_SINGLE_OPTION : DRAG_DISTANCE_SINGLE_OPTION;
 
-        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 20);
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, DRAG_STEPS_UNDER_FULL_SWIPE);
         await page.waitForChanges();
 
         await expect(item).toHaveScreenshot(screenshot('item-sliding-start'));
@@ -42,9 +48,10 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
          * Positive dragByX value to drag element from the left to the right
          * to reveal the options on the left side.
          */
-        const dragByX = config.direction === 'rtl' ? 150 : -150;
+        const dragByX = config.direction === 'rtl' ? DRAG_DISTANCE_MULTIPLE_OPTIONS : -DRAG_DISTANCE_MULTIPLE_OPTIONS;
 
-        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 20);
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, DRAG_STEPS_UNDER_FULL_SWIPE);
+        await page.waitForChanges();
 
         await expect(item).toHaveScreenshot(screenshot('item-sliding-end'));
       });
@@ -61,7 +68,16 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.goto(`/src/components/item-sliding/test/basic`, config);
       const item = page.locator('#item2');
 
-      await dragElementBy(item, page, -150, 0, undefined, undefined, true, 20);
+      await dragElementBy(
+        item,
+        page,
+        -DRAG_DISTANCE_MULTIPLE_OPTIONS,
+        0,
+        undefined,
+        undefined,
+        true,
+        DRAG_STEPS_UNDER_FULL_SWIPE
+      );
       await page.waitForChanges();
 
       // item-sliding doesn't have an easy way to tell whether it's fully open so just screenshot it
@@ -140,8 +156,8 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         const direction = config.direction;
         const item = page.locator('ion-item-sliding');
 
-        const dragByX = direction == 'rtl' ? -150 : 150;
-        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 20);
+        const dragByX = direction == 'rtl' ? -DRAG_DISTANCE_MULTIPLE_OPTIONS : DRAG_DISTANCE_MULTIPLE_OPTIONS;
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, DRAG_STEPS_UNDER_FULL_SWIPE);
         await page.waitForChanges();
 
         await expect(item).toHaveScreenshot(screenshot(`item-sliding-safe-area-left`));
@@ -181,8 +197,8 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         const direction = config.direction;
         const item = page.locator('ion-item-sliding');
 
-        const dragByX = direction == 'rtl' ? 150 : -150;
-        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, 20);
+        const dragByX = direction == 'rtl' ? DRAG_DISTANCE_MULTIPLE_OPTIONS : -DRAG_DISTANCE_MULTIPLE_OPTIONS;
+        await dragElementBy(item, page, dragByX, 0, undefined, undefined, true, DRAG_STEPS_UNDER_FULL_SWIPE);
         await page.waitForChanges();
 
         await expect(item).toHaveScreenshot(screenshot(`item-sliding-safe-area-right`));
