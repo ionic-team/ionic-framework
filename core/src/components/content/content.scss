@@ -37,7 +37,7 @@
   padding: 0 !important;
   /* stylelint-enable */
 
-  font-family: var(--ion-content-font-family);
+  font-family: var(--ion-content-font-family, initial);
 
   contain: size style;
 }
@@ -48,15 +48,15 @@
 .inner-scroll {
   @include mixins.position(calc(var(--internal-offset-top) * -1), 0px, calc(var(--internal-offset-bottom) * -1), 0px);
   @include mixins.padding(
-    calc(var(--ion-content-padding-top) + var(--internal-offset-top)),
-    var(--ion-content-padding-end),
-    calc(var(--ion-content-padding-bottom) + var(--internal-keyboard-offset) + var(--internal-offset-bottom)),
-    var(--ion-content-padding-start)
+    calc(var(--ion-content-padding-top, 0px) + var(--internal-offset-top)),
+    var(--ion-content-padding-end, 0px),
+    calc(var(--ion-content-padding-bottom, 0px) + var(--internal-keyboard-offset) + var(--internal-offset-bottom)),
+    var(--ion-content-padding-start, 0px)
   );
 
   position: absolute;
 
-  color: var(--ion-content-color);
+  color: var(--ion-content-color, initial);
 
   box-sizing: border-box;
 
@@ -104,12 +104,12 @@
 }
 
 .scroll-y {
-  overflow-y: var(--ion-content-overflow);
+  overflow-y: var(--ion-content-overflow, visible);
   overscroll-behavior-y: contain;
 }
 
 .scroll-x {
-  overflow-x: var(--ion-content-overflow);
+  overflow-x: var(--ion-content-overflow, visible);
   overscroll-behavior-x: contain;
 }
 
@@ -121,7 +121,7 @@
 
   position: absolute;
 
-  background: var(--ion-content-background);
+  background: var(--ion-content-background, initial);
 }
 
 // Content Overscroll
