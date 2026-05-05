@@ -2547,7 +2547,6 @@ ion-tab,shadow
 ion-tab,prop,component,Function | HTMLElement | null | string | undefined,undefined,false,false
 ion-tab,prop,mode,"ios" | "md",undefined,false,false
 ion-tab,prop,tab,string,undefined,true,false
-ion-tab,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-tab,method,setActive,setActive() => Promise<void>
 
 ion-tab-bar,shadow
