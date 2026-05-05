@@ -64,8 +64,8 @@
     "rimraf": "^3.0.2",
     "rollup": "^4.2.0",
     "typescript": "^5.7.3",
-    "vue": "3.4.38",
-    "vue-router": "^4.0.16"
+    "vue": "^3.5.0",
+    "vue-router": "^5.0.6"
   },
   "dependencies": {
     "@ionic/core": "^8.8.5",

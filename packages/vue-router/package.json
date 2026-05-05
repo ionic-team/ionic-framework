@@ -62,8 +62,8 @@
     "rollup": "^4.2.0",
     "ts-jest": "^28.0.5",
     "typescript": "^5.7.3",
-    "vue": "^3.2.37",
-    "vue-router": "^4.0.16"
+    "vue": "^3.5.0",
+    "vue-router": "^5.0.6"
   },
   "jest": {
     "transform": {
