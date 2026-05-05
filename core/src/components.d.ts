@@ -3928,10 +3928,6 @@ export namespace Components {
           * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
          */
         "tab": string;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTabBar {
         /**
@@ -9941,10 +9937,6 @@ declare namespace LocalJSX {
           * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
          */
         "tab": string;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTabBar {
         /**
