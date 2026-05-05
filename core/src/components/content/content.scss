@@ -46,12 +46,17 @@
 // ---------------------------------------------
 
 .inner-scroll {
+  $padding-top: var(--padding-top, var(--ion-content-padding-top, 0px));
+  $padding-end: var(--padding-end, var(--ion-content-padding-end, 0px));
+  $padding-bottom: var(--padding-bottom, var(--ion-content-padding-bottom, 0px));
+  $padding-start: var(--padding-start, var(--ion-content-padding-start, 0px));
+
   @include mixins.position(calc(var(--internal-offset-top) * -1), 0px, calc(var(--internal-offset-bottom) * -1), 0px);
   @include mixins.padding(
-    calc(var(--ion-content-padding-top, 0px) + var(--internal-offset-top)),
-    var(--ion-content-padding-end, 0px),
-    calc(var(--ion-content-padding-bottom, 0px) + var(--internal-keyboard-offset) + var(--internal-offset-bottom)),
-    var(--ion-content-padding-start, 0px)
+    calc(#{$padding-top} + var(--internal-offset-top)),
+    $padding-end,
+    calc(#{$padding-bottom} + var(--internal-keyboard-offset) + var(--internal-offset-bottom)),
+    $padding-start
   );
 
   position: absolute;
