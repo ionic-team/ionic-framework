@@ -564,10 +564,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
           id={buttonId}
           class={{
             ...buttonClass(b),
-            // Only override `action-sheet-selected` when this button participates
-            // in the radio group. For non-radio buttons we let `buttonClass(b)`
-            // own the class so the public `role: 'selected'` API keeps working
-            // (regression from #30769 / issue #31090).
             ...(isRadio && { 'action-sheet-selected': isActiveRadio }),
           }}
           onClick={() => {

@@ -60,11 +60,9 @@ describe('action sheet: disabled buttons', () => {
   });
 });
 
-describe('action sheet: role="selected"', () => {
-  // Regression test for https://github.com/ionic-team/ionic-framework/issues/31090
-  // Buttons with `role: "selected"` must render the `action-sheet-selected`
-  // class so that userland CSS targeting the active option keeps working.
-  it('should add the action-sheet-selected class to a button with role="selected"', async () => {
+describe('action sheet: selected role', () => {
+  // https://github.com/ionic-team/ionic-framework/issues/31090
+  it('should add the `action-sheet-selected` class to a button with `role="selected"`', async () => {
     const page = await newSpecPage({
       components: [ActionSheet],
       template: () => (
