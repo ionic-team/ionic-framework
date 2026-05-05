@@ -1,10 +1,9 @@
 @use "./item-sliding.common";
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "../../themes/native/native.globals";
 
 // Transition utility classes
 .item-sliding-transition-open .item {
-  transition: transform 250ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform globals.$ion-transition-time-250 globals.$ion-transition-curve-smooth;
 }
 
 .item-sliding-transition-snapback .item {
@@ -32,7 +31,7 @@ ion-item-option.item-sliding-expandable-width-back {
   position: relative;
 
   opacity: 1;
-  z-index: $z-index-item-options + 1;
+  z-index: globals.$ion-z-index-100;
   pointer-events: none;
   will-change: transform;
 }

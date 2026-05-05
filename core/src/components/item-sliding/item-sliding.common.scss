@@ -23,11 +23,6 @@ ion-item-sliding .item {
   transition: none;
 }
 
-// Native full-swipe animation (250ms ease-out; replaces inline styles on `ion-item`)
-.item-sliding-active-slide.item-sliding-full-swipe-transition .item {
-  transition: transform 250ms ease-out;
-}
-
 .item-sliding-closing ion-item-options {
   pointer-events: none;
 }
