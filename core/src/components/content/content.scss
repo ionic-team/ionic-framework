@@ -37,7 +37,7 @@
   padding: 0 !important;
   /* stylelint-enable */
 
-  font-family: var(--ion-content-font-family, initial);
+  font-family: var(--ion-content-font-family);
 
   contain: size style;
 }
@@ -56,7 +56,7 @@
 
   position: absolute;
 
-  color: var(--ion-content-color, initial);
+  color: var(--ion-content-color);
 
   box-sizing: border-box;
 
@@ -104,12 +104,12 @@
 }
 
 .scroll-y {
-  overflow-y: var(--ion-content-overflow, visible);
+  overflow-y: var(--ion-content-overflow);
   overscroll-behavior-y: contain;
 }
 
 .scroll-x {
-  overflow-x: var(--ion-content-overflow, visible);
+  overflow-x: var(--ion-content-overflow);
   overscroll-behavior-x: contain;
 }
 
@@ -121,7 +121,7 @@
 
   position: absolute;
 
-  background: var(--ion-content-background, initial);
+  background: var(--ion-content-background);
 }
 
 // Content Overscroll
