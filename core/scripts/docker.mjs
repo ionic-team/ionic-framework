@@ -30,7 +30,7 @@ const pwd = resolve('./');
  * --mount allow us to mount the local Ionic project inside of the Docker container so devs do not need to re-build the project in Docker.
  */
 const extraArgs = process.argv.slice(2);
-const args = ['run', '--rm', '--init', '-e', `DISPLAY=${display}`, '-v', displayVolume, '--ipc=host', `--mount=type=bind,source=${pwd},target=/ionic`, 'ionic-playwright', 'npm', 'run', 'test.e2e', '--', ...extraArgs];
+const args = ['run', '--rm', '--init', '-e', `DISPLAY=${display}`, ...(displayVolume ? ['-v', displayVolume] : []), '--ipc=host', `--mount=type=bind,source=${pwd},target=/ionic`, 'ionic-playwright', 'npm', 'run', 'test.e2e', '--', ...extraArgs];
 
 // Set the CI env variable so Playwright uses the CI config
 if (process.env.CI) {
