@@ -4,6 +4,7 @@ import { printIonWarning } from '@utils/logging';
 
 import { getIonTheme } from '../../global/ionic-global';
 
+import { DEFAULT_COLUMNS } from './gallery-constants';
 import type { GalleryBreakpointColumns, GalleryColumns } from './gallery-interface';
 
 // TODO(FW-7285): Replace with global breakpoints
@@ -14,15 +15,6 @@ const BREAKPOINTS = {
   lg: 992,
   xl: 1200,
   xxl: 1400,
-};
-
-const DEFAULT_COLUMNS = {
-  xs: 2,
-  sm: 3,
-  md: 4,
-  lg: 6,
-  xl: 8,
-  xxl: 10,
 };
 
 type GalleryBreakpoint = keyof typeof BREAKPOINTS;

@@ -1,41 +1,30 @@
 import * as logging from '@utils/logging';
 
 import { Gallery } from './gallery';
+import { DEFAULT_COLUMNS } from './gallery-constants';
 
 let sharedGallery: Gallery;
-
-// This should match the default columns defined by the gallery component.
-// It is hardcoded here instead of grabbing the value from the gallery so
-// that changing it there without updating it here will break the tests.
-const DEFAULT_COLUMNS_BY_BREAKPOINT = {
-  xs: 2,
-  sm: 3,
-  md: 4,
-  lg: 6,
-  xl: 8,
-  xxl: 10,
-};
 
 // The expected columns for each breakpoint when the columns property is
 // not set or is set to an invalid value.
 const DEFAULT_COLUMNS_BREAKPOINTS = [
   // xs
-  { width: 0, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['xs'] },
-  { width: 575, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['xs'] },
+  { width: 0, expectedColumns: DEFAULT_COLUMNS['xs'] },
+  { width: 575, expectedColumns: DEFAULT_COLUMNS['xs'] },
   // sm
-  { width: 576, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['sm'] },
-  { width: 767, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['sm'] },
+  { width: 576, expectedColumns: DEFAULT_COLUMNS['sm'] },
+  { width: 767, expectedColumns: DEFAULT_COLUMNS['sm'] },
   // md
-  { width: 768, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['md'] },
-  { width: 991, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['md'] },
+  { width: 768, expectedColumns: DEFAULT_COLUMNS['md'] },
+  { width: 991, expectedColumns: DEFAULT_COLUMNS['md'] },
   // lg
-  { width: 992, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['lg'] },
-  { width: 1199, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['lg'] },
+  { width: 992, expectedColumns: DEFAULT_COLUMNS['lg'] },
+  { width: 1199, expectedColumns: DEFAULT_COLUMNS['lg'] },
   // xl
-  { width: 1200, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['xl'] },
-  { width: 1399, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['xl'] },
+  { width: 1200, expectedColumns: DEFAULT_COLUMNS['xl'] },
+  { width: 1399, expectedColumns: DEFAULT_COLUMNS['xl'] },
   // xxl
-  { width: 1400, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['xxl'] },
+  { width: 1400, expectedColumns: DEFAULT_COLUMNS['xxl'] },
 ];
 
 describe('gallery: properties', () => {
@@ -123,22 +112,22 @@ describe('gallery: properties', () => {
     it('should properly set columns for the md breakpoint but fallback to the default columns for all others when the columns property is set to an object with one valid breakpoint and the rest invalid', () => {
       const breakpoints = [
         // xs
-        { width: 0, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['xs'] },
-        { width: 575, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['xs'] },
+        { width: 0, expectedColumns: DEFAULT_COLUMNS['xs'] },
+        { width: 575, expectedColumns: DEFAULT_COLUMNS['xs'] },
         // sm
-        { width: 576, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['sm'] },
-        { width: 767, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['sm'] },
+        { width: 576, expectedColumns: DEFAULT_COLUMNS['sm'] },
+        { width: 767, expectedColumns: DEFAULT_COLUMNS['sm'] },
         // md
         { width: 768, expectedColumns: 5 },
         { width: 991, expectedColumns: 5 },
         // lg
-        { width: 992, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['lg'] },
-        { width: 1199, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['lg'] },
+        { width: 992, expectedColumns: DEFAULT_COLUMNS['lg'] },
+        { width: 1199, expectedColumns: DEFAULT_COLUMNS['lg'] },
         // xl
-        { width: 1200, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['xl'] },
-        { width: 1399, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['xl'] },
+        { width: 1200, expectedColumns: DEFAULT_COLUMNS['xl'] },
+        { width: 1399, expectedColumns: DEFAULT_COLUMNS['xl'] },
         // xxl
-        { width: 1400, expectedColumns: DEFAULT_COLUMNS_BY_BREAKPOINT['xxl'] },
+        { width: 1400, expectedColumns: DEFAULT_COLUMNS['xxl'] },
       ];
 
       const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
