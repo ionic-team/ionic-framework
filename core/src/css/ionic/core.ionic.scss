@@ -254,13 +254,8 @@ ion-card-header.ion-color .ion-inherit-color {
  * The code below accounts for both ion-content and then custom
  * scroll containers within ion-content (such as virtual scroll)
  */
-/**
- * NOTE: This rule will not be updated as part of individual component migrations.
- * core.ionic.scss is slated for deletion and will be fully replaced by core.scss.
- * All remaining styles here will be consolidated into core.scss at that time.
- */
-.menu-content-open ion-content {
-  --overflow: hidden;
+.menu-content-open ion-content::part(scroll) {
+  overflow: hidden;
 }
 
 .menu-content-open .ion-content-scroll-host {
