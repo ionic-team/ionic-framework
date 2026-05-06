@@ -62,6 +62,12 @@ generate_dir_index() {
   # Skip if an index.html already exists (it's an actual test page)
   [ -f "${dir}/index.html" ] && return
 
+  # Absolute hrefs based on url_path. Vercel does not redirect to add trailing
+  # slashes, so a relative href like "basic/" from a URL without a trailing
+  # slash resolves against the parent directory and breaks navigation.
+  local parent_path="${url_path%/}"
+  parent_path="${parent_path%/*}/"
+
   local entries=""
   for child in "${dir}"/*/; do
     [ -d "${child}" ] || continue
@@ -70,7 +76,7 @@ generate_dir_index() {
     case "${name}" in *-snapshots|.*) continue ;; esac
     # Only include if there's at least one index.html somewhere underneath
     find "${child}" -name "index.html" -print -quit | grep -q . || continue
-    entries="${entries}<a href=\"${name}/\">${name}/</a>\n"
+    entries="${entries}<a href=\"${url_path}${name}/\">${name}/</a>\n"
   done
 
   [ -z "${entries}" ] && return
@@ -92,7 +98,7 @@ generate_dir_index() {
 </head>
 <body>
   <h1>Index of ${url_path}</h1>
-  <a class="up" href="../">../</a>
+  <a class="up" href="${parent_path}">../</a>
 $(echo -e "${entries}")
 </body>
 </html>
