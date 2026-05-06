@@ -1,6 +1,9 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+/**
+ * This behavior does not vary across modes/directions
+ */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('tabs: basic'), () => {
     test('should show correct tab when clicking the tab button', async ({ page }) => {

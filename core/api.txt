@@ -2617,7 +2617,6 @@ ion-tab-button,part,native
 
 ion-tabs,shadow
 ion-tabs,prop,mode,"ios" | "md",undefined,false,false
-ion-tabs,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-tabs,method,getSelected,getSelected() => Promise<string | undefined>
 ion-tabs,method,getTab,getTab(tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>
 ion-tabs,method,select,select(tab: string | HTMLIonTabElement) => Promise<boolean>

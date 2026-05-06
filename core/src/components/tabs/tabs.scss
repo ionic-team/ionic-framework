@@ -1,7 +1,7 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/mixins" as mixins;
 
 :host {
-  @include position(0, 0, 0, 0);
+  @include mixins.position(0, 0, 0, 0);
 
   display: flex;
   position: absolute;
@@ -12,7 +12,7 @@
   height: 100%;
 
   contain: layout size style;
-  z-index: $z-index-page-container;
+  z-index: 0;
 }
 
 .tabs-inner {
