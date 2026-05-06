@@ -65,9 +65,9 @@ html.ionic .modal-footer-moving ion-toolbar {
 * within a modal.
 */
 html.ionic ion-modal.modal-sheet ion-content {
-  --padding-start: #{globals.$ion-space-400};
-  --padding-end: #{globals.$ion-space-400};
-  --padding-bottom: #{globals.$ion-space-400};
+  --ion-content-padding-start: #{globals.$ion-space-400};
+  --ion-content-padding-end: #{globals.$ion-space-400};
+  --ion-content-padding-bottom: #{globals.$ion-space-400};
 }
 
 /**
@@ -255,7 +255,7 @@ ion-card-header.ion-color .ion-inherit-color {
  * scroll containers within ion-content (such as virtual scroll)
  */
 .menu-content-open ion-content {
-  --overflow: hidden;
+  --ion-content-overflow: hidden;
 }
 
 .menu-content-open .ion-content-scroll-host {

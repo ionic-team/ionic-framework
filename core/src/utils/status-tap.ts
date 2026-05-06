@@ -1,7 +1,7 @@
 import { readTask, writeTask } from '@stencil/core';
 
 import { findClosestIonContent, scrollToTop } from './content';
-import { componentOnReady } from './helpers';
+import { waitForComponent } from './helpers';
 
 export const startStatusTap = () => {
   const win = window;
@@ -15,7 +15,7 @@ export const startStatusTap = () => {
       }
       const contentEl = findClosestIonContent(el);
       if (contentEl) {
-        new Promise((resolve) => componentOnReady(contentEl, resolve)).then(() => {
+        waitForComponent(contentEl).then(() => {
           writeTask(async () => {
             /**
              * If scrolling and user taps status bar,

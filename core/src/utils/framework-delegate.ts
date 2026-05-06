@@ -1,7 +1,7 @@
 import { config } from '../global/config';
 import type { ComponentRef, FrameworkDelegate } from '../interface';
 
-import { componentOnReady } from './helpers';
+import { waitForComponent } from './helpers';
 
 // TODO(FW-2832): types
 
@@ -31,7 +31,7 @@ export const attachComponent = async (
 
   container.appendChild(el);
 
-  await new Promise((resolve) => componentOnReady(el, resolve));
+  await waitForComponent(el);
 
   return el;
 };
@@ -91,7 +91,7 @@ export const CoreDelegate = () => {
 
       ChildComponent = el;
 
-      await new Promise((resolve) => componentOnReady(el, resolve));
+      await waitForComponent(el);
     } else if (
       BaseComponent.children.length > 0 &&
       (BaseComponent.tagName === 'ION-MODAL' || BaseComponent.tagName === 'ION-POPOVER')

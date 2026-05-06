@@ -1,5 +1,6 @@
 import type { IonBadgeConfig, IonBadgeRecipe } from '../components/badge/badge.interfaces';
 import type { IonChipConfig, IonChipRecipe } from '../components/chip/chip.interfaces';
+import type { IonContentRecipe } from '../components/content/content.interfaces';
 import type { IonItemDividerRecipe } from '../components/item-divider/item-divider.interfaces';
 import type { IonProgressBarConfig, IonProgressBarRecipe } from '../components/progress-bar/progress-bar.interfaces';
 import type { IonSpinnerConfig, IonSpinnerRecipe } from '../components/spinner/spinner.interfaces';
@@ -287,6 +288,7 @@ type Components = {
   IonAvatar?: any;
   IonBadge?: IonBadgeRecipe;
   IonChip?: IonChipRecipe;
+  IonContent?: IonContentRecipe;
   IonItemDivider?: IonItemDividerRecipe;
   IonProgressBar?: IonProgressBarRecipe;
   IonSpinner?: IonSpinnerRecipe;

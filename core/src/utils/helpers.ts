@@ -84,6 +84,15 @@ export const componentOnReady = (el: any, callback: any) => {
 };
 
 /**
+ * Promise-based wrapper around componentOnReady. Use when you need to await
+ * component readiness before accessing internal refs (e.g. in early lifecycle
+ * hooks like Vue onMounted with the custom elements build).
+ */
+export const waitForComponent = <T extends Element>(el: T): Promise<T> => {
+  return new Promise<T>((resolve) => componentOnReady(el, () => resolve(el)));
+};
+
+/**
  * This functions checks if a Stencil component is using
  * the lazy loaded build of Stencil. Returns `true` if
  * the component is lazy loaded. Returns `false` otherwise.

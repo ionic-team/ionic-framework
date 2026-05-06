@@ -604,7 +604,7 @@ export class Refresher implements ComponentInterface {
      * element to ensure that the refresher is shown.
      */
     if (this.contentFullscreen && this.backgroundContentEl) {
-      this.backgroundContentEl.style.setProperty('--offset-top', '0px');
+      this.backgroundContentEl.style.setProperty('--internal-offset-top', '0px');
     }
   }
 
@@ -783,7 +783,7 @@ export class Refresher implements ComponentInterface {
        * does not change when refreshing is complete.
        */
       if (this.contentFullscreen && this.backgroundContentEl) {
-        this.backgroundContentEl?.style.removeProperty('--offset-top');
+        this.backgroundContentEl?.style.removeProperty('--internal-offset-top');
       }
     }, 600);
 

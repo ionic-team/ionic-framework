@@ -1,34 +1,34 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/mixins" as mixins;
+@use "../../themes/functions.color" as color;
 
 // Content
 // --------------------------------------------------
 
 :host {
   /**
-   * @prop --background: Background of the content
+   * @prop --ion-content-background: Background of the content
    *
-   * @prop --color: Color of the content
+   * @prop --ion-content-color: Color of the content
    *
-   * @prop --padding-top: Top padding of the content
-   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the content
-   * @prop --padding-bottom: Bottom padding of the content
-   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the content
+   * @prop --ion-content-font-family: Font family of the content
    *
-   * @prop --keyboard-offset: Keyboard offset of the content
+   * @prop --ion-content-overflow: Overflow behavior of the scrollable area
    *
-   * @prop --offset-top: Offset top of the content
-   * @prop --offset-bottom: Offset bottom of the content
+   * @prop --ion-content-padding-top: Top padding of the content
+   * @prop --ion-content-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the content
+   * @prop --ion-content-padding-bottom: Bottom padding of the content
+   * @prop --ion-content-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the content
    */
-  --background: #{$background-color};
-  --color: #{$text-color};
-  --padding-top: 0px;
-  --padding-bottom: 0px;
-  --padding-start: 0px;
-  --padding-end: 0px;
-  --keyboard-offset: 0px;
-  --offset-top: 0px;
-  --offset-bottom: 0px;
-  --overflow: auto;
+  /**
+   * TODO(FW-6698): Remove this comment in v10.
+   * Renamed from the following CSS variables (previously documented @props) to
+   * the --internal-* namespace. These are managed by `ion-content` itself for 
+   * keyboard avoidance and header/footer offsets, and are no longer part of the 
+   * public API.
+   */
+  --internal-keyboard-offset: 0px;
+  --internal-offset-top: 0px;
+  --internal-offset-bottom: 0px;
 
   display: block;
   position: relative;
@@ -44,36 +44,36 @@
   padding: 0 !important;
   /* stylelint-enable */
 
-  font-family: $font-family-base;
+  font-family: var(--ion-content-font-family, inherit);
 
   contain: size style;
 }
 
-:host(.ion-color) .inner-scroll {
-  background: current-color(base);
-  color: current-color(contrast);
-}
-
-#background-content {
-  @include position(calc(var(--offset-top) * -1), 0px, calc(var(--offset-bottom) * -1), 0px);
-
-  position: absolute;
-
-  background: var(--background);
-}
+// Content Inner Scroll
+// ---------------------------------------------
 
 .inner-scroll {
-  @include position(calc(var(--offset-top) * -1), 0px, calc(var(--offset-bottom) * -1), 0px);
-  @include padding(
-    calc(var(--padding-top) + var(--offset-top)),
-    var(--padding-end),
-    calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom)),
-    var(--padding-start)
+  /**
+   * `.ion-padding` utility classes set `--padding-*` directly on the host,
+   * so we must read `--padding-*` first and only fall back to the 
+   * `--ion-content-padding-*` token.
+   */
+  $padding-top: var(--padding-top, var(--ion-content-padding-top, 0px));
+  $padding-end: var(--padding-end, var(--ion-content-padding-end, 0px));
+  $padding-bottom: var(--padding-bottom, var(--ion-content-padding-bottom, 0px));
+  $padding-start: var(--padding-start, var(--ion-content-padding-start, 0px));
+
+  @include mixins.position(calc(var(--internal-offset-top) * -1), 0px, calc(var(--internal-offset-bottom) * -1), 0px);
+  @include mixins.padding(
+    calc(#{$padding-top} + var(--internal-offset-top)),
+    $padding-end,
+    calc(#{$padding-bottom} + var(--internal-keyboard-offset) + var(--internal-offset-bottom)),
+    $padding-start
   );
 
   position: absolute;
 
-  color: var(--color);
+  color: var(--ion-content-color);
 
   box-sizing: border-box;
 
@@ -89,10 +89,16 @@
   touch-action: pan-x pan-y pinch-zoom;
 }
 
+:host(.ion-color) .inner-scroll {
+  background: color.current-color(base);
+  color: color.current-color(contrast);
+}
+
+// Content Scroll
+// ---------------------------------------------
+
 .scroll-y,
 .scroll-x {
-  -webkit-overflow-scrolling: touch;
-
   /**
    * This adds `.inner-scroll` as part of the
    * stacking context in WebKit. Without it,
@@ -115,14 +121,28 @@
 }
 
 .scroll-y {
-  overflow-y: var(--overflow);
+  overflow-y: var(--ion-content-overflow);
   overscroll-behavior-y: contain;
 }
 
 .scroll-x {
-  overflow-x: var(--overflow);
+  overflow-x: var(--ion-content-overflow);
   overscroll-behavior-x: contain;
 }
+
+// Content Background
+// ---------------------------------------------
+
+#background-content {
+  @include mixins.position(calc(var(--internal-offset-top) * -1), 0px, calc(var(--internal-offset-bottom) * -1), 0px);
+
+  position: absolute;
+
+  background: var(--ion-content-background);
+}
+
+// Content Overscroll
+// ---------------------------------------------
 
 .overscroll::before,
 .overscroll::after {
@@ -142,6 +162,9 @@
   top: -1px;
 }
 
+// Content Sizing
+// ---------------------------------------------
+
 :host(.content-sizing) {
   display: flex;
 
@@ -159,6 +182,7 @@
 
   contain: none;
 }
+
 :host(.content-sizing) .inner-scroll {
   position: relative;
 
@@ -172,11 +196,37 @@
   top: 0;
   bottom: 0;
 
-  margin-top: calc(var(--offset-top) * -1);
-  margin-bottom: calc(var(--offset-bottom) * -1);
+  margin-top: calc(var(--internal-offset-top) * -1);
+  margin-bottom: calc(var(--internal-offset-bottom) * -1);
 }
 
+// Content Slotted Elements
+// ---------------------------------------------
+
+// Elements with the "fixed" slot
+::slotted([slot="fixed"]) {
+  position: absolute;
+
+  /**
+   * When presenting ion-content inside of an ion-modal, the .inner-scroll
+   * element is composited. In WebKit, the fixed content is not composited
+   * causing it to appear under the main scrollable content as a result.
+   * The fixed content is correctly composited in other browsers. Adding
+   * the translateZ forces the fixed content to be composited so it correctly
+   * shows on top of the scrollable content. Setting a negative z-index will
+   * still allow the fixed content to appear under the scroll content if specified.
+   */
+  transform: translateZ(0);
+}
+
+// Content: iOS Mode Transition
+// The transition shadow effect is only animated by the iOS transition
+// builder, so these styles are only rendered in iOS mode.
+// ---------------------------------------------
+
 .transition-effect {
+  @include mixins.position-horizontal(-100%);
+
   display: none;
   position: absolute;
 
@@ -186,18 +236,6 @@
   opacity: 0;
 
   pointer-events: none;
-}
-
-:host(.content-ltr) .transition-effect {
-  /* stylelint-disable property-disallowed-list */
-  left: -100%;
-  /* stylelint-enable property-disallowed-list */
-}
-
-:host(.content-rtl) .transition-effect {
-  /* stylelint-disable property-disallowed-list */
-  right: -100%;
-  /* stylelint-enable property-disallowed-list */
 }
 
 .transition-cover {
@@ -216,6 +254,8 @@
 }
 
 .transition-shadow {
+  @include mixins.position-horizontal(null, 0);
+
   display: block;
   position: absolute;
 
@@ -225,34 +265,6 @@
   box-shadow: inset -9px 0 9px 0 rgba(0, 0, 100, 0.03);
 }
 
-:host(.content-ltr) .transition-shadow {
-  /* stylelint-disable property-disallowed-list */
-  right: 0;
-  /* stylelint-enable property-disallowed-list */
-}
-
 :host(.content-rtl) .transition-shadow {
-  /* stylelint-disable property-disallowed-list */
-  left: 0;
-  /* stylelint-enable property-disallowed-list */
-
   transform: scaleX(-1);
-}
-
-// Content: Fixed
-// --------------------------------------------------
-
-::slotted([slot="fixed"]) {
-  position: absolute;
-
-  /**
-   * When presenting ion-content inside of an ion-modal, the .inner-scroll
-   * element is composited. In WebKit, the fixed content is not composited
-   * causing it to appear under the main scrollable content as a result.
-   * The fixed content is correctly composited in other browsers. Adding
-   * the translateZ forces the fixed content to be composited so it correctly
-   * shows on top of the scrollable content. Setting a negative z-index will
-   * still allow the fixed content to appear under the scroll content if specified.
-   */
-  transform: translateZ(0);
 }

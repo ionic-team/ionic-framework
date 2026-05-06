@@ -17,7 +17,7 @@ import {
 import type { NotchController } from '@utils/forms';
 import { createNotchController, checkInvalidState } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
+import { inheritAriaAttributes, debounceEvent, inheritAttributes, waitForComponent } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
@@ -537,7 +537,7 @@ export class Input implements ComponentInterface {
      * nativeInput won't be defined yet with the custom elements build, so wait for it to load in.
      */
     if (!this.nativeInput) {
-      await new Promise((resolve) => componentOnReady(this.el, resolve));
+      await waitForComponent(this.el);
     }
     return Promise.resolve(this.nativeInput!);
   }

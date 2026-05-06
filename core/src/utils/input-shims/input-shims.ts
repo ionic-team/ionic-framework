@@ -2,7 +2,7 @@ import { doc } from '@utils/browser';
 
 import type { Config } from '../../interface';
 import { findClosestIonContent } from '../content';
-import { componentOnReady } from '../helpers';
+import { waitForComponent } from '../helpers';
 import { Keyboard } from '../native/keyboard';
 
 import { enableHideCaretOnScroll } from './hacks/hide-caret';
@@ -59,7 +59,7 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
   const keyboardResizeMode = await Keyboard.getResizeMode();
 
   const registerInput = async (componentEl: HTMLElement) => {
-    await new Promise((resolve) => componentOnReady(componentEl, resolve));
+    await waitForComponent(componentEl);
 
     const inputRoot = componentEl.shadowRoot || componentEl;
     const inputEl = inputRoot.querySelector('input') || inputRoot.querySelector('textarea');
