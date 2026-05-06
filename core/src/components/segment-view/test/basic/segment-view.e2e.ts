@@ -145,17 +145,7 @@ configs({ modes: ['md'] }).forEach(({ title, config }) => {
         config
       );
 
-      const scrollRatios: number[] = [];
-
-      await page.exposeFunction('recordScrollRatio', (ratio: number) => {
-        scrollRatios.push(ratio);
-      });
-
-      await page.evaluate(() => {
-        document.querySelector('ion-segment-view')!.addEventListener('ionSegmentViewScroll', (ev: any) => {
-          (window as any).recordScrollRatio(ev.detail.scrollRatio);
-        });
-      });
+      const ionSegmentViewScroll = await page.spyOnEvent('ionSegmentViewScroll');
 
       // Programmatically dispatch a scroll event on the segment-view host element
       // to simulate what the browser fires when scrollLeft changes.
@@ -163,13 +153,10 @@ configs({ modes: ['md'] }).forEach(({ title, config }) => {
         el.dispatchEvent(new Event('scroll', { bubbles: true }));
       });
 
-      await page.waitForTimeout(50);
+      await page.waitForChanges();
 
-      // ionSegmentViewScroll should not have fired at all (max === 0 guard),
-      // but if it did fire for any reason the scrollRatio must be finite.
-      for (const ratio of scrollRatios) {
-        expect(isFinite(ratio)).toBe(true);
-      }
+      // The max === 0 guard should prevent ionSegmentViewScroll from firing entirely.
+      expect(ionSegmentViewScroll).not.toHaveReceivedEvent();
     });
 
     test('should set correct segment button as checked and show correct content when programmatically setting the segment value', async ({
