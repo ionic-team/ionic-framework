@@ -169,5 +169,38 @@ configs({ modes: ['md'] }).forEach(({ title, config }) => {
       const segmentContent = page.locator('ion-segment-content[id="top"]');
       await expect(segmentContent).toBeInViewport();
     });
+    test('should not select a disabled first segment button when dragging segment-view from last content', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+        <ion-segment id="disabledFirstSegment" scrollable="true" value="third">
+          <ion-segment-button value="first" disabled>
+            <ion-label>First</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="second-content" value="second">
+            <ion-label>Second</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="third-content" value="third">
+            <ion-label>Third</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view id="disabledFirstSegmentView">
+          <ion-segment-content id="second-content">Second Content</ion-segment-content>
+          <ion-segment-content id="third-content">Third Content</ion-segment-content>
+        </ion-segment-view>
+      `,
+        config
+      );
+      await page.waitForChanges();
+
+      await page.locator('ion-segment-view').evaluate((el: HTMLElement) => {
+        const max = el.scrollWidth - el.clientWidth;
+        el.scrollLeft = max;
+      });
+      await page.waitForChanges();
+
+      await expect(page.locator('ion-segment-button[value="first"]')).not.toHaveClass(/segment-button-checked/);
+    });
   });
 });
