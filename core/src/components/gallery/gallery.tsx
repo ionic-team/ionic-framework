@@ -140,8 +140,9 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Normalize a columns value to a positive integer.
-   * Returns undefined when the input cannot be interpreted as a finite number.
+   * Normalize a single column value (`columns` as a number, or one entry from
+   * a `columns` breakpoint map) to a positive integer. Returns `undefined` when
+   * the input cannot be interpreted as a finite number.
    */
   private sanitizeColumns(columns: number | string | undefined) {
     if (columns === undefined) {
