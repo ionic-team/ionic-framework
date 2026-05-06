@@ -46,6 +46,11 @@
 // ---------------------------------------------
 
 .inner-scroll {
+  /**
+   * `.ion-padding` utility classes set `--padding-*` directly on the host,
+   * so we must read `--padding-*` first and only fall back to the 
+   * `--ion-content-padding-*` token.
+   */
   $padding-top: var(--padding-top, var(--ion-content-padding-top, 0px));
   $padding-end: var(--padding-end, var(--ion-content-padding-end, 0px));
   $padding-bottom: var(--padding-bottom, var(--ion-content-padding-bottom, 0px));
