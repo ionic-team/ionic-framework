@@ -79,6 +79,22 @@
           <ion-segment-content id="top">Top</ion-segment-content>
         </ion-segment-view>
 
+        <ion-segment id="disabledFirstSegment" value="third">
+          <ion-segment-button value="first" disabled>
+            <ion-label>First</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="second-content" value="second">
+            <ion-label>Second</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="third-content" value="third">
+            <ion-label>Third</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view id="disabledFirstSegmentView">
+          <ion-segment-content id="second-content">Second Content</ion-segment-content>
+          <ion-segment-content id="third-content">Third Content</ion-segment-content>
+        </ion-segment-view>
+
         <ion-segment value="peach" scrollable>
           <ion-segment-button content-id="orange" value="orange">
             <ion-label>Orange</ion-label>
