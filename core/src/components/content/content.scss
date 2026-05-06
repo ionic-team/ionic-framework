@@ -44,7 +44,7 @@
   padding: 0 !important;
   /* stylelint-enable */
 
-  font-family: var(--ion-content-font-family);
+  font-family: var(--ion-content-font-family, inherit);
 
   contain: size style;
 }

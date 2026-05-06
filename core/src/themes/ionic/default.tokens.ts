@@ -466,7 +466,7 @@ export const defaultTheme: DefaultTheme = {
       color: baseColors.textColor,
 
       font: {
-        family: 'var(--ion-font-family, inherit)',
+        family: 'var(--ion-font-family)',
       },
 
       overflow: 'auto',
