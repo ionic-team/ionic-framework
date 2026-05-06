@@ -8,27 +8,22 @@ cd "$SCRIPT_DIR"
 # ---------------------------------------------------------------------------
 # Test runner for the Vue Router upgrade work (FW-7121).
 #
-# The Vue Router package itself only has Jest unit tests in
-# packages/vue-router/__tests__/ (which we are migrating to Playwright). The
-# end-to-end tests for vue-router live in the @ionic/vue test app at
+# The end-to-end tests for vue-router live in the @ionic/vue test app at
 # packages/vue/test/, which exercises the full router/integration via
 # Playwright (preferred), Cypress (legacy), and Vitest (unit).
 #
 # This script orchestrates all suites:
 #   1. Build core, @ionic/vue, @ionic/vue-router
-#   2. Run @ionic/vue-router Jest unit tests (locationHistory, viewStacks)
-#      [legacy, being migrated to Playwright]
-#   3. Build the Vue test app (default: vue3) and sync local packages
-#   4. Run Vitest unit tests (router-outlet, routing, lifecycle, tabs, ...)
-#   5. Start the Vite dev server on :8080
-#   6. Run Cypress e2e tests
-#   7. Run Playwright e2e tests
+#   2. Build the Vue test app (default: vue3) and sync local packages
+#   3. Run Vitest unit tests (router-outlet, routing, lifecycle, tabs, ...)
+#   4. Start the Vite dev server on :8080
+#   5. Run Cypress e2e tests
+#   6. Run Playwright e2e tests
 #
 # Flags:
 #   --skip-build         Skip core/vue/vue-router/test-app builds
 #                        (reuse existing build artifacts)
 #   --cypress-only       Skip everything except Cypress
-#   --jest-only          Skip everything except @ionic/vue-router Jest
 #   --vitest-only        Skip everything except Vitest unit tests
 #   --playwright-only    Skip everything except Playwright (still builds + serves)
 #   --spec <pattern>     Filter Cypress tests by file path pattern
@@ -41,7 +36,6 @@ cd "$SCRIPT_DIR"
 # ---------------------------------------------------------------------------
 SKIP_BUILD=0
 CYPRESS_ONLY=0
-JEST_ONLY=0
 VITEST_ONLY=0
 PLAYWRIGHT_ONLY=0
 SERVE_ONLY=0
@@ -57,10 +51,6 @@ while [[ $# -gt 0 ]]; do
       ;;
     --cypress-only)
       CYPRESS_ONLY=1
-      shift
-      ;;
-    --jest-only)
-      JEST_ONLY=1
       shift
       ;;
     --vitest-only)
@@ -101,7 +91,7 @@ while [[ $# -gt 0 ]]; do
       ;;
     *)
       echo "Unknown flag: $1"
-      echo "Usage: $0 [--skip-build] [--cypress-only|--jest-only|--vitest-only|--playwright-only] [--serve] [--spec <pattern>] [--pw-spec <pattern>] [--app <name>]"
+      echo "Usage: $0 [--skip-build] [--cypress-only|--vitest-only|--playwright-only] [--serve] [--spec <pattern>] [--pw-spec <pattern>] [--app <name>]"
       exit 1
       ;;
   esac
@@ -130,24 +120,6 @@ if [ "$SKIP_BUILD" = "0" ]; then
   cd "$VUE_ROUTER_DIR"
   npm ci
   npm run build
-fi
-
-# ---------------------------------------------------------------------------
-# Run @ionic/vue-router Jest unit tests (locationHistory, viewStacks).
-# These run against the source directly and don't need the test app.
-# ---------------------------------------------------------------------------
-if [ "$VITEST_ONLY" = "0" ] && [ "$CYPRESS_ONLY" = "0" ] && [ "$PLAYWRIGHT_ONLY" = "0" ] && [ "$SERVE_ONLY" = "0" ]; then
-  echo "Running @ionic/vue-router Jest unit tests..."
-  cd "$VUE_ROUTER_DIR"
-  npm run test.spec || JEST_FAILED=1
-fi
-
-if [ "$JEST_ONLY" = "1" ]; then
-  if [ "${JEST_FAILED:-0}" = "1" ]; then
-    echo "Jest unit tests failed."
-    exit 1
-  fi
-  exit 0
 fi
 
 # ---------------------------------------------------------------------------
@@ -264,9 +236,8 @@ if [ "$CYPRESS_ONLY" = "0" ]; then
   fi
 fi
 
-if [ "${JEST_FAILED:-0}" = "1" ] || [ "${VITEST_FAILED:-0}" = "1" ] || [ "${CYPRESS_FAILED:-0}" = "1" ] || [ "${PLAYWRIGHT_FAILED:-0}" = "1" ]; then
+if [ "${VITEST_FAILED:-0}" = "1" ] || [ "${CYPRESS_FAILED:-0}" = "1" ] || [ "${PLAYWRIGHT_FAILED:-0}" = "1" ]; then
   echo "One or more test suites failed."
-  echo "  Jest:       ${JEST_FAILED:-0}"
   echo "  Vitest:     ${VITEST_FAILED:-0}"
   echo "  Cypress:    ${CYPRESS_FAILED:-0}"
   echo "  Playwright: ${PLAYWRIGHT_FAILED:-0}"
