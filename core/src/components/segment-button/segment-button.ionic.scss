@@ -63,6 +63,10 @@
   height: globals.$ion-scale-600;
 }
 
+::slotted(i.ph) {
+  font-size: globals.$ion-scale-600;
+}
+
 // Segment Button: Checked
 // All slot content should have the checked color even when it's not label or icon
 // --------------------------------------------------

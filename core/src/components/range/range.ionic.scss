@@ -34,7 +34,8 @@
   background: globals.current-color(base);
 }
 
-::slotted(ion-icon[slot]) {
+::slotted(ion-icon[slot]),
+::slotted(i.ph[slot]) {
   font-size: globals.$ion-font-size-600;
 }
 

@@ -1,0 +1,18 @@
+// Phosphor icon font declaration for the ionic theme.
+//
+// @font-face is a global browser resource — once declared here (in the ionic
+// bundle loaded at document level), the "Phosphor" font family is available
+// everywhere, including inside shadow DOM components.
+//
+// Glyph rendering is handled via String.fromCodePoint() in renderIcon (see
+// src/utils/icon.tsx), so no class selectors are needed here.
+//
+// Font files are copied from @phosphor-icons/web into css/fonts/ during build
+// (see scripts/copy-fonts.mjs). Paths here are relative to css/ionic/.
+@font-face {
+  font-family: "Phosphor";
+  src: url("../fonts/Phosphor.woff2") format("woff2"), url("../fonts/Phosphor.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}

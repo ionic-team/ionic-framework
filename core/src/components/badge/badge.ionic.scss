@@ -85,6 +85,10 @@
   height: globals.$ion-scale-300;
 }
 
+:host(.badge-small) ::slotted(i.ph) {
+  font-size: globals.$ion-scale-300;
+}
+
 /* Medium Badge */
 /* Large size defaults to the medium size to avoid styles breakage */
 :host(.badge-medium),
@@ -102,6 +106,11 @@
 :host(.badge-large) ::slotted(ion-icon) {
   width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
+}
+
+:host(.badge-medium) ::slotted(i.ph),
+:host(.badge-large) ::slotted(i.ph) {
+  font-size: globals.$ion-scale-400;
 }
 
 // Badge (hint)
@@ -172,5 +181,9 @@
   ::slotted(ion-icon) {
     width: globals.$ion-scale-300;
     height: globals.$ion-scale-300;
+  }
+
+  ::slotted(i.ph) {
+    font-size: globals.$ion-scale-300;
   }
 }
