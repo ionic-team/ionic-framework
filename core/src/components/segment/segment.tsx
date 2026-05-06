@@ -388,7 +388,7 @@ export class Segment implements ComponentInterface {
 
     const dispatchedFrom = ev.target as HTMLElement;
     const segmentViewEl = this.segmentViewEl as EventTarget;
-    
+
     const segmentEl = this.el;
 
     // Only update the indicator if the event was dispatched from the correct segment view
