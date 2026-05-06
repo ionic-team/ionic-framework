@@ -7,7 +7,6 @@ import type { TabButtonClickEventDetail } from '../tab-bar/tab-bar-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot top - Content is placed at the top of the screen.
@@ -82,7 +81,7 @@ export class Tabs implements NavOutlet {
       return;
     }
 
-    const tab = this.selectedTab ? this.selectedTab.tab : undefined;
+    const tab = this.selectedTab?.tab;
 
     // If tabs has no selected tab but tab-bar already has a selected-tab set,
     // don't overwrite it. This handles cases where tab-bar is used without ion-tab elements.
@@ -130,7 +129,7 @@ export class Tabs implements NavOutlet {
    */
   @Method()
   getSelected(): Promise<string | undefined> {
-    return Promise.resolve(this.selectedTab ? this.selectedTab.tab : undefined);
+    return Promise.resolve(this.selectedTab?.tab);
   }
 
   /** @internal */
@@ -158,7 +157,7 @@ export class Tabs implements NavOutlet {
 
   private setActive(selectedTab: HTMLIonTabElement): Promise<void> {
     if (this.transitioning) {
-      return Promise.reject('transitioning already happening');
+      return Promise.reject(new Error('transitioning already happening'));
     }
 
     this.transitioning = true;
@@ -190,10 +189,7 @@ export class Tabs implements NavOutlet {
 
   private notifyRouter() {
     if (this.useRouter) {
-      const router = document.querySelector('ion-router');
-      if (router) {
-        return router.navChanged('forward');
-      }
+      return this.router?.navChanged('forward');
     }
     return Promise.resolve(false);
   }
@@ -207,13 +203,14 @@ export class Tabs implements NavOutlet {
     return Array.from(this.el.querySelectorAll('ion-tab'));
   }
 
+  private get router() {
+    return document.querySelector('ion-router');
+  }
+
   private onTabClicked = (ev: CustomEvent<TabButtonClickEventDetail>) => {
     const { href, tab } = ev.detail;
     if (this.useRouter && href !== undefined) {
-      const router = document.querySelector('ion-router');
-      if (router) {
-        router.push(href);
-      }
+      this.router?.push(href);
     } else {
       this.select(tab);
     }
@@ -236,7 +233,7 @@ const getTab = (tabs: HTMLIonTabElement[], tab: string | HTMLIonTabElement): HTM
   const tabEl = typeof tab === 'string' ? tabs.find((t) => t.tab === tab) : tab;
 
   if (!tabEl) {
-    printIonError(`[ion-tabs] - Tab with id: "${tabEl}" does not exist`);
+    printIonError(`[ion-tabs] - Tab with id: "${tab}" does not exist`);
   }
   return tabEl;
 };

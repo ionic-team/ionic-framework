@@ -33,7 +33,7 @@ export {
 export { SearchbarCustomEvent } from './components/searchbar/searchbar-interface';
 export { SegmentCustomEvent } from './components/segment/segment-interface';
 export { SelectCustomEvent, SelectCompareFn } from './components/select/select-interface';
-export { TabsCustomEvent } from './components/tabs/tabs-interface';
+export { TabsCustomEvent } from './components/tabs/tabs.interfaces';
 export { TextareaCustomEvent } from './components/textarea/textarea-interface';
 export { ToastOptions } from './components/toast/toast-interface';
 export { ToggleCustomEvent } from './components/toggle/toggle-interface';
