@@ -247,8 +247,8 @@ ion-card-header.ion-color .ion-inherit-color {
  * The code below accounts for both ion-content and then custom
  * scroll containers within ion-content (such as virtual scroll)
  */
-.menu-content-open ion-content::part(scroll) {
-  overflow: hidden;
+.menu-content-open ion-content {
+  --ion-content-overflow: hidden;
 }
 
 .menu-content-open .ion-content-scroll-host {
