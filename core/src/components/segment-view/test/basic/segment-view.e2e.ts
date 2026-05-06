@@ -128,6 +128,50 @@ configs({ modes: ['md'] }).forEach(({ title, config }) => {
       await expect(segmentButton).toHaveClass(/segment-button-checked/);
     });
 
+    test('should not emit ionSegmentViewScroll with NaN or Infinity scrollRatio when only one content item is present', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+        <ion-segment value="only">
+          <ion-segment-button content-id="only" value="only">
+            <ion-label>Only</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view>
+          <ion-segment-content id="only">Only</ion-segment-content>
+        </ion-segment-view>
+      `,
+        config
+      );
+
+      const scrollRatios: number[] = [];
+
+      await page.exposeFunction('recordScrollRatio', (ratio: number) => {
+        scrollRatios.push(ratio);
+      });
+
+      await page.evaluate(() => {
+        document.querySelector('ion-segment-view')!.addEventListener('ionSegmentViewScroll', (ev: any) => {
+          (window as any).recordScrollRatio(ev.detail.scrollRatio);
+        });
+      });
+
+      // Programmatically dispatch a scroll event on the segment-view host element
+      // to simulate what the browser fires when scrollLeft changes.
+      await page.locator('ion-segment-view').evaluate((el: HTMLElement) => {
+        el.dispatchEvent(new Event('scroll', { bubbles: true }));
+      });
+
+      await page.waitForTimeout(50);
+
+      // ionSegmentViewScroll should not have fired at all (max === 0 guard),
+      // but if it did fire for any reason the scrollRatio must be finite.
+      for (const ratio of scrollRatios) {
+        expect(isFinite(ratio)).toBe(true);
+      }
+    });
+
     test('should set correct segment button as checked and show correct content when programmatically setting the segment value', async ({
       page,
     }) => {
