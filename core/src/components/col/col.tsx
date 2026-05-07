@@ -5,6 +5,7 @@ import { matchBreakpoint } from '@utils/media';
 
 import { getIonTheme } from '../../global/ionic-global';
 
+// TODO(FW-7285): Replace with global breakpoints
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gallery - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Gallery - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <ion-gallery>
+          <img src="/src/components/gallery/test/assets/01.png" alt="One" />
+          <img src="/src/components/gallery/test/assets/02.png" alt="Two" />
+          <img src="/src/components/gallery/test/assets/03.png" alt="Three" />
+          <img src="/src/components/gallery/test/assets/04.png" alt="Four" />
+          <img src="/src/components/gallery/test/assets/05.png" alt="Five" />
+          <img src="/src/components/gallery/test/assets/06.png" alt="Six" />
+          <img src="/src/components/gallery/test/assets/07.png" alt="Seven" />
+          <img src="/src/components/gallery/test/assets/08.png" alt="Eight" />
+          <img src="/src/components/gallery/test/assets/09.png" alt="Nine" />
+          <img src="/src/components/gallery/test/assets/10.png" alt="Ten" />
+          <img src="/src/components/gallery/test/assets/11.png" alt="Eleven" />
+          <img src="/src/components/gallery/test/assets/12.png" alt="Twelve" />
+        </ion-gallery>
+
+        <ion-gallery>
+          <div>One</div>
+          <div>Two</div>
+          <div>Three</div>
+          <div>Four</div>
+          <div>Five</div>
+          <div>Six</div>
+          <div>Seven</div>
+          <div>Eight</div>
+          <div>Nine</div>
+          <div>Ten</div>
+          <div>Eleven</div>
+          <div>Twelve</div>
+        </ion-gallery>
+      </ion-content>
+    </ion-app>
+
+    <style>
+      ion-gallery {
+        margin-bottom: 16px;
+      }
+
+      ion-gallery img,
+      ion-gallery div {
+        border-radius: 16px;
+      }
+
+      ion-gallery div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+      }
+
+      ion-gallery div:nth-child(1) {
+        background: #ff6b6b;
+      }
+
+      ion-gallery div:nth-child(2) {
+        background: #4ecdc4;
+      }
+
+      ion-gallery div:nth-child(3) {
+        background: #ffe66d;
+        color: #333;
+      }
+
+      ion-gallery div:nth-child(4) {
+        background: #5f27cd;
+      }
+
+      ion-gallery div:nth-child(5) {
+        background: #7f8c8d;
+      }
+
+      ion-gallery div:nth-child(6) {
+        background: #ff9f43;
+      }
+
+      ion-gallery div:nth-child(7) {
+        background: #ff3f34;
+      }
+
+      ion-gallery div:nth-child(8) {
+        background: #2ecc71;
+      }
+
+      ion-gallery div:nth-child(9) {
+        background: #34495e;
+      }
+
+      ion-gallery div:nth-child(10) {
+        background: #1abc9c;
+      }
+
+      ion-gallery div:nth-child(11) {
+        background: #e67e22;
+      }
+
+      ion-gallery div:nth-child(12) {
+        background: #9b59b6;
+      }
+    </style>
+  </body>
+</html>

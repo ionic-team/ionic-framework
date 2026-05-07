@@ -32,6 +32,7 @@ import { defineCustomElement as defineIonFab } from '@ionic/core/components/ion-
 import { defineCustomElement as defineIonFabButton } from '@ionic/core/components/ion-fab-button.js';
 import { defineCustomElement as defineIonFabList } from '@ionic/core/components/ion-fab-list.js';
 import { defineCustomElement as defineIonFooter } from '@ionic/core/components/ion-footer.js';
+import { defineCustomElement as defineIonGallery } from '@ionic/core/components/ion-gallery.js';
 import { defineCustomElement as defineIonGrid } from '@ionic/core/components/ion-grid.js';
 import { defineCustomElement as defineIonHeader } from '@ionic/core/components/ion-header.js';
 import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-img.js';
@@ -862,6 +863,30 @@ export class IonFooter {
 
 
 export declare interface IonFooter extends Components.IonFooter {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonGallery,
+  inputs: ['columns', 'layout', 'mode', 'order', 'theme']
+})
+@Component({
+  selector: 'ion-gallery',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['columns', 'layout', 'mode', 'order', 'theme'],
+  standalone: true
+})
+export class IonGallery {
+  protected el: HTMLIonGalleryElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonGallery extends Components.IonGallery {}
 
 
 @ProxyCmp({

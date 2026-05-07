@@ -16,6 +16,7 @@ import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/bre
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { GalleryColumns } from "./components/gallery/gallery-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
@@ -54,6 +55,7 @@ export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/bre
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { GalleryColumns } from "./components/gallery/gallery-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
@@ -1468,6 +1470,31 @@ export namespace Components {
           * @default false
          */
         "translucent": boolean;
+    }
+    interface IonGallery {
+        /**
+          * The number of columns to display. Can be set as a number or an object of breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).
+          * @default DEFAULT_COLUMNS
+         */
+        "columns": GalleryColumns;
+        /**
+          * The visual layout of the gallery. When `uniform`, rows take up the height of the tallest item and are spaced evenly across the gallery. Additionally, items will have an aspect ratio of 1/1, forcing them to be square unless a height is explicitly set. When `masonry`, items will be positioned under each other with only the specified gap between them.
+          * @default 'uniform'
+         */
+        "layout": 'uniform' | 'masonry';
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * The order in which items are positioned. Only applies when layout is `masonry`. When `sequential`, items are positioned in the order they are placed in the DOM. When `best-fit`, items are positioned under the column with the most available space.
+          * @default 'sequential'
+         */
+        "order": 'sequential' | 'best-fit';
+        /**
+          * The theme determines the visual appearance of the component.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonGrid {
         /**
@@ -5009,6 +5036,12 @@ declare global {
         prototype: HTMLIonFooterElement;
         new (): HTMLIonFooterElement;
     };
+    interface HTMLIonGalleryElement extends Components.IonGallery, HTMLStencilElement {
+    }
+    var HTMLIonGalleryElement: {
+        prototype: HTMLIonGalleryElement;
+        new (): HTMLIonGalleryElement;
+    };
     interface HTMLIonGridElement extends Components.IonGrid, HTMLStencilElement {
     }
     var HTMLIonGridElement: {
@@ -5966,6 +5999,7 @@ declare global {
         "ion-fab-button": HTMLIonFabButtonElement;
         "ion-fab-list": HTMLIonFabListElement;
         "ion-footer": HTMLIonFooterElement;
+        "ion-gallery": HTMLIonGalleryElement;
         "ion-grid": HTMLIonGridElement;
         "ion-header": HTMLIonHeaderElement;
         "ion-img": HTMLIonImgElement;
@@ -7480,6 +7514,31 @@ declare namespace LocalJSX {
           * @default false
          */
         "translucent"?: boolean;
+    }
+    interface IonGallery {
+        /**
+          * The number of columns to display. Can be set as a number or an object of breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).
+          * @default DEFAULT_COLUMNS
+         */
+        "columns"?: GalleryColumns;
+        /**
+          * The visual layout of the gallery. When `uniform`, rows take up the height of the tallest item and are spaced evenly across the gallery. Additionally, items will have an aspect ratio of 1/1, forcing them to be square unless a height is explicitly set. When `masonry`, items will be positioned under each other with only the specified gap between them.
+          * @default 'uniform'
+         */
+        "layout"?: 'uniform' | 'masonry';
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * The order in which items are positioned. Only applies when layout is `masonry`. When `sequential`, items are positioned in the order they are placed in the DOM. When `best-fit`, items are positioned under the column with the most available space.
+          * @default 'sequential'
+         */
+        "order"?: 'sequential' | 'best-fit';
+        /**
+          * The theme determines the visual appearance of the component.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonGrid {
         /**
@@ -10900,6 +10959,11 @@ declare namespace LocalJSX {
         "collapse": 'fade';
         "translucent": boolean;
     }
+    interface IonGalleryAttributes {
+        "layout": 'uniform' | 'masonry';
+        "order": 'sequential' | 'best-fit';
+        "columns": string;
+    }
     interface IonGridAttributes {
         "fixed": boolean;
     }
@@ -11465,6 +11529,7 @@ declare namespace LocalJSX {
         "ion-fab-button": Omit<IonFabButton, keyof IonFabButtonAttributes> & { [K in keyof IonFabButton & keyof IonFabButtonAttributes]?: IonFabButton[K] } & { [K in keyof IonFabButton & keyof IonFabButtonAttributes as `attr:${K}`]?: IonFabButtonAttributes[K] } & { [K in keyof IonFabButton & keyof IonFabButtonAttributes as `prop:${K}`]?: IonFabButton[K] };
         "ion-fab-list": Omit<IonFabList, keyof IonFabListAttributes> & { [K in keyof IonFabList & keyof IonFabListAttributes]?: IonFabList[K] } & { [K in keyof IonFabList & keyof IonFabListAttributes as `attr:${K}`]?: IonFabListAttributes[K] } & { [K in keyof IonFabList & keyof IonFabListAttributes as `prop:${K}`]?: IonFabList[K] };
         "ion-footer": Omit<IonFooter, keyof IonFooterAttributes> & { [K in keyof IonFooter & keyof IonFooterAttributes]?: IonFooter[K] } & { [K in keyof IonFooter & keyof IonFooterAttributes as `attr:${K}`]?: IonFooterAttributes[K] } & { [K in keyof IonFooter & keyof IonFooterAttributes as `prop:${K}`]?: IonFooter[K] };
+        "ion-gallery": Omit<IonGallery, keyof IonGalleryAttributes> & { [K in keyof IonGallery & keyof IonGalleryAttributes]?: IonGallery[K] } & { [K in keyof IonGallery & keyof IonGalleryAttributes as `attr:${K}`]?: IonGalleryAttributes[K] } & { [K in keyof IonGallery & keyof IonGalleryAttributes as `prop:${K}`]?: IonGallery[K] };
         "ion-grid": Omit<IonGrid, keyof IonGridAttributes> & { [K in keyof IonGrid & keyof IonGridAttributes]?: IonGrid[K] } & { [K in keyof IonGrid & keyof IonGridAttributes as `attr:${K}`]?: IonGridAttributes[K] } & { [K in keyof IonGrid & keyof IonGridAttributes as `prop:${K}`]?: IonGrid[K] };
         "ion-header": Omit<IonHeader, keyof IonHeaderAttributes> & { [K in keyof IonHeader & keyof IonHeaderAttributes]?: IonHeader[K] } & { [K in keyof IonHeader & keyof IonHeaderAttributes as `attr:${K}`]?: IonHeaderAttributes[K] } & { [K in keyof IonHeader & keyof IonHeaderAttributes as `prop:${K}`]?: IonHeader[K] };
         "ion-img": Omit<IonImg, keyof IonImgAttributes> & { [K in keyof IonImg & keyof IonImgAttributes]?: IonImg[K] } & { [K in keyof IonImg & keyof IonImgAttributes as `attr:${K}`]?: IonImgAttributes[K] } & { [K in keyof IonImg & keyof IonImgAttributes as `prop:${K}`]?: IonImg[K] };
@@ -11569,6 +11634,7 @@ declare module "@stencil/core" {
             "ion-fab-button": LocalJSX.IntrinsicElements["ion-fab-button"] & JSXBase.HTMLAttributes<HTMLIonFabButtonElement>;
             "ion-fab-list": LocalJSX.IntrinsicElements["ion-fab-list"] & JSXBase.HTMLAttributes<HTMLIonFabListElement>;
             "ion-footer": LocalJSX.IntrinsicElements["ion-footer"] & JSXBase.HTMLAttributes<HTMLIonFooterElement>;
+            "ion-gallery": LocalJSX.IntrinsicElements["ion-gallery"] & JSXBase.HTMLAttributes<HTMLIonGalleryElement>;
             "ion-grid": LocalJSX.IntrinsicElements["ion-grid"] & JSXBase.HTMLAttributes<HTMLIonGridElement>;
             "ion-header": LocalJSX.IntrinsicElements["ion-header"] & JSXBase.HTMLAttributes<HTMLIonHeaderElement>;
             "ion-img": LocalJSX.IntrinsicElements["ion-img"] & JSXBase.HTMLAttributes<HTMLIonImgElement>;

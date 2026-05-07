@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gallery - Layout</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Gallery - Layout</ion-title>
+          <ion-buttons slot="end">
+            <ion-button fill="outline" size="small" onclick="addGalleryItem()">Add Item</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-segment id="layoutSegment" value="uniform">
+            <ion-segment-button value="uniform">Uniform</ion-segment-button>
+            <ion-segment-button value="masonry-best-fit">Masonry - Best Fit</ion-segment-button>
+            <ion-segment-button value="masonry-sequential">Masonry - Sequential</ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <section>
+          <h1 id="layoutTitle">Uniform</h1>
+          <div class="grid">
+            <div class="grid-item">
+              <h2>Divs</h2>
+              <ion-gallery data-demo-gallery>
+                <div>One</div>
+                <div>Two</div>
+                <div>Three</div>
+                <div>Four</div>
+                <div>Five</div>
+                <div>Six</div>
+                <div>Seven</div>
+                <div>Eight</div>
+                <div>Nine</div>
+                <div>Ten</div>
+                <div>Eleven</div>
+                <div>Twelve</div>
+              </ion-gallery>
+            </div>
+            <div class="grid-item">
+              <h2>Images</h2>
+              <ion-gallery data-demo-gallery>
+                <img src="/src/components/gallery/test/assets/01.png" alt="One" />
+                <img src="/src/components/gallery/test/assets/02.png" alt="Two" />
+                <img src="/src/components/gallery/test/assets/03.png" alt="Three" />
+                <img src="/src/components/gallery/test/assets/04.png" alt="Four" />
+                <img src="/src/components/gallery/test/assets/05.png" alt="Five" />
+                <img src="/src/components/gallery/test/assets/06.png" alt="Six" />
+                <img src="/src/components/gallery/test/assets/07.png" alt="Seven" />
+                <img src="/src/components/gallery/test/assets/08.png" alt="Eight" />
+                <img src="/src/components/gallery/test/assets/09.png" alt="Nine" />
+                <img src="/src/components/gallery/test/assets/10.png" alt="Ten" />
+                <img src="/src/components/gallery/test/assets/11.png" alt="Eleven" />
+                <img src="/src/components/gallery/test/assets/12.png" alt="Twelve" />
+              </ion-gallery>
+            </div>
+            <div class="grid-item">
+              <h2>Same Height Images</h2>
+              <ion-gallery data-demo-gallery class="same-height-gallery">
+                <img src="/src/components/gallery/test/assets/01.png" alt="One" />
+                <img src="/src/components/gallery/test/assets/02.png" alt="Two" />
+                <img src="/src/components/gallery/test/assets/03.png" alt="Three" />
+                <img src="/src/components/gallery/test/assets/04.png" alt="Four" />
+                <img src="/src/components/gallery/test/assets/05.png" alt="Five" />
+                <img src="/src/components/gallery/test/assets/06.png" alt="Six" />
+                <img src="/src/components/gallery/test/assets/07.png" alt="Seven" />
+                <img src="/src/components/gallery/test/assets/08.png" alt="Eight" />
+                <img src="/src/components/gallery/test/assets/09.png" alt="Nine" />
+                <img src="/src/components/gallery/test/assets/10.png" alt="Ten" />
+                <img src="/src/components/gallery/test/assets/11.png" alt="Eleven" />
+                <img src="/src/components/gallery/test/assets/12.png" alt="Twelve" />
+              </ion-gallery>
+            </div>
+          </div>
+        </section>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const segmentEl = document.querySelector('#layoutSegment');
+      const titleEl = document.querySelector('#layoutTitle');
+      const galleries = Array.from(document.querySelectorAll('ion-gallery'));
+      let nextItemNumber = 13;
+      let addClickCount = 0;
+
+      const titleByLayout = {
+        uniform: 'Uniform',
+        'masonry-sequential': 'Masonry - Sequential',
+        'masonry-best-fit': 'Masonry - Best Fit',
+      };
+
+      const normalizeLayout = (value) => {
+        if (value === 'masonry-sequential' || value === 'masonry-best-fit' || value === 'uniform') {
+          return value;
+        }
+        return 'uniform';
+      };
+
+      const applyLayoutProps = (value) => {
+        const selectedLayout = normalizeLayout(value);
+
+        if (titleEl) {
+          titleEl.textContent = titleByLayout[selectedLayout];
+        }
+
+        galleries.forEach((galleryEl) => {
+          if (selectedLayout === 'uniform') {
+            galleryEl.setAttribute('layout', 'uniform');
+            galleryEl.removeAttribute('order');
+            return;
+          }
+
+          galleryEl.setAttribute('layout', 'masonry');
+          if (selectedLayout === 'masonry-best-fit') {
+            galleryEl.setAttribute('order', 'best-fit');
+          } else {
+            galleryEl.removeAttribute('order');
+          }
+        });
+      };
+
+      const getRandomColor = () => {
+        const hue = Math.floor(Math.random() * 360);
+        const saturation = 65 + Math.floor(Math.random() * 20);
+        const lightness = 30 + Math.floor(Math.random() * 15);
+        return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+      };
+
+      const numberToWords = (value) => {
+        const ones = [
+          'zero',
+          'one',
+          'two',
+          'three',
+          'four',
+          'five',
+          'six',
+          'seven',
+          'eight',
+          'nine',
+          'ten',
+          'eleven',
+          'twelve',
+          'thirteen',
+          'fourteen',
+          'fifteen',
+          'sixteen',
+          'seventeen',
+          'eighteen',
+          'nineteen',
+        ];
+        const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+        if (!Number.isInteger(value) || value < 0 || value >= 100) {
+          return `${value}`;
+        }
+
+        let word = '';
+        if (value < 20) {
+          word = ones[value];
+        } else {
+          const tensValue = Math.floor(value / 10);
+          const onesValue = value % 10;
+          word = onesValue === 0 ? tens[tensValue] : `${tens[tensValue]}-${ones[onesValue]}`;
+        }
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      };
+
+      const createImageItem = (src, labelText) => {
+        const imageItemEl = document.createElement('figure');
+        imageItemEl.className = 'gallery-image-item';
+
+        const imageEl = document.createElement('img');
+        imageEl.src = src;
+        imageEl.alt = labelText;
+
+        const imageLabelEl = document.createElement('span');
+        imageLabelEl.className = 'gallery-image-label';
+        imageLabelEl.textContent = labelText;
+
+        imageItemEl.append(imageEl, imageLabelEl);
+        return imageItemEl;
+      };
+
+      // Dynamically add gallery items to all galleries
+      function addGalleryItem() {
+        const divHeights = [30, 50, 80, 90, 100, 110, 130, 150, 175];
+        const randomDivHeight = divHeights[Math.floor(Math.random() * divHeights.length)];
+
+        // The image height pattern should follow: 264, 264, 164, 164, ...
+        // However, the last image has a height of 264 so we need to add
+        // only one 264 height image and then alternate them in twos
+        const alternatingImgHeight = addClickCount === 0 ? 264 : [164, 164, 264, 264][(addClickCount - 1) % 4];
+
+        galleries.forEach((galleryEl) => {
+          const isImageGallery = galleryEl.querySelector('img') !== null;
+
+          if (isImageGallery) {
+            const photoId = 100 + ((nextItemNumber - 1) % 100);
+            const labelText = numberToWords(nextItemNumber);
+            const imageItemEl = createImageItem(
+              `https://picsum.photos/id/${photoId}/164/${alternatingImgHeight}`,
+              labelText
+            );
+            galleryEl.append(imageItemEl);
+            return;
+          }
+
+          const divEl = document.createElement('div');
+          const randomColor = getRandomColor();
+          divEl.textContent = numberToWords(nextItemNumber);
+          divEl.style.height = `${randomDivHeight}px`;
+          divEl.style.background = randomColor;
+          galleryEl.append(divEl);
+        });
+
+        nextItemNumber++;
+        addClickCount++;
+      }
+
+      if (segmentEl) {
+        const initialLayout = segmentEl.value || segmentEl.getAttribute('value') || 'uniform';
+        segmentEl.value = initialLayout;
+        applyLayoutProps(initialLayout);
+
+        segmentEl.addEventListener('ionChange', (ev) => {
+          applyLayoutProps(ev.detail.value);
+        });
+      }
+    </script>
+
+    <style>
+      :root {
+        --gallery-width: 343px;
+      }
+
+      section {
+        text-align: center;
+      }
+
+      .grid {
+        display: grid;
+
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--gallery-width)), 1fr));
+        gap: 16px;
+      }
+
+      ion-gallery {
+        max-width: var(--gallery-width);
+
+        margin: 0 auto;
+      }
+
+      ion-gallery img,
+      ion-gallery div {
+        border-radius: 16px;
+      }
+
+      .same-height-gallery img {
+        height: 164px;
+      }
+
+      ion-gallery .gallery-image-item img {
+        display: block;
+
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      ion-gallery .gallery-image-item {
+        position: relative;
+      }
+
+      ion-gallery .gallery-image-label {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 14px;
+        font-family: Roboto, sans-serif;
+        text-shadow: 0 1px 3px #000;
+        pointer-events: none;
+      }
+
+      ion-gallery div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+      }
+
+      ion-gallery div:nth-child(1) {
+        background: #ff6b6b;
+        height: 175px;
+      }
+
+      ion-gallery div:nth-child(2) {
+        background: #4ecdc4;
+        height: 30px;
+      }
+
+      ion-gallery div:nth-child(3) {
+        background: #ffe66d;
+        color: #333;
+        height: 90px;
+      }
+
+      ion-gallery div:nth-child(4) {
+        background: #5f27cd;
+        height: 50px;
+      }
+
+      ion-gallery div:nth-child(5) {
+        background: #7f8c8d;
+        height: 110px;
+      }
+
+      ion-gallery div:nth-child(6) {
+        background: #ff9f43;
+        height: 175px;
+      }
+
+      ion-gallery div:nth-child(7) {
+        background: #ff3f34;
+        height: 130px;
+      }
+
+      ion-gallery div:nth-child(8) {
+        background: #2ecc71;
+        height: 80px;
+      }
+
+      ion-gallery div:nth-child(9) {
+        background: #34495e;
+        height: 110px;
+      }
+
+      ion-gallery div:nth-child(10) {
+        background: #1abc9c;
+        height: 90px;
+      }
+
+      ion-gallery div:nth-child(11) {
+        background: #e67e22;
+        height: 100px;
+      }
+
+      ion-gallery div:nth-child(12) {
+        background: #9b59b6;
+        height: 150px;
+      }
+    </style>
+  </body>
+</html>
