@@ -384,13 +384,18 @@ export class Gallery implements ComponentInterface {
       return;
     }
 
+    const width = this.el.getBoundingClientRect().width;
+    const columns = this.getColumnsForWidth(width);
+
+    // Skip masonry placement when width/columns does not resolve
+    // to a valid breakpoint column count.
+    if (columns === undefined) {
+      return;
+    }
+
     const styles = getComputedStyle(this.el);
     const rowHeight = parseFloat(styles.getPropertyValue('grid-auto-rows')) || 0;
     const rowGap = parseFloat(styles.getPropertyValue('row-gap')) || parseFloat(styles.getPropertyValue('gap')) || 0;
-    const columnsStr = styles.getPropertyValue('--internal-gallery-columns');
-    // Fallback to 2 columns for masonry calculations when the resolved
-    // --internal-gallery-columns CSS value is missing or unparsable.
-    const columns = parseInt(columnsStr, 10) || 2;
     const items = this.getItems();
 
     this.layoutMasonry(items, rowHeight, rowGap, columns);
