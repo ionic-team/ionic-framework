@@ -1,4 +1,4 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/native/native.globals" as globals;
 
 // Gallery
 // --------------------------------------------------
@@ -51,7 +51,7 @@
 // Reset the default margin for slotted elements so wrapper elements
 // (such as <figure>) align properly with other gallery items.
 ::slotted(*) {
-  @include margin(0);
+  @include globals.margin(0);
 
   width: 100%;
 }
