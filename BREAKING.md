@@ -18,6 +18,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Components](#version-9x-components)
   - [Legacy Picker](#version-9x-legacy-picker)
   - [Router Outlet](#version-9x-router-outlet)
+  - [Select](#version-9x-select)
 - [Framework Specific](#version-9x-framework-specific)
   - [React](#version-9x-react)
 
@@ -70,6 +71,12 @@ To disable the gesture on a specific outlet, set `swipeGesture` to `false`:
 ```
 
 The `swipeBackEnabled` config option is still respected as the initial default and does not need to change for apps that set it once at startup.
+
+<h4 id="version-9x-select">Select</h4>
+
+The `ionChange` event on `ion-select` now only fires when the selected value actually changes. Previously, the `alert` and `action-sheet` interfaces emitted `ionChange` every time the overlay was confirmed, even when the user chose the option that was already selected. This aligns the `alert` and `action-sheet` interfaces with the existing behavior of the `popover` and `modal` interfaces, and with the documented contract of `ionChange`.
+
+Apps that relied on `ionChange` firing on every confirmation (for example, to detect overlay dismissal without a value change) should listen for `ionDismiss` instead, or use the `didDismiss` event on the underlying alert or action sheet.
 
 <h2 id="version-9x-framework-specific">Framework Specific</h2>
 
