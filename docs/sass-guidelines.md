@@ -1,5 +1,6 @@
 # Sass Guidelines
 
+<sub><b>TABLE OF CONTENTS</b></sub>
 - [Definitions](#definitions)
 - [Scope](#scope)
 - [Historical Usage](#historical-usage)

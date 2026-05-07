@@ -13,7 +13,7 @@ import { focusVisibleElement } from '@utils/helpers';
  * valid usage for the disabled property on ion-button.
  */
 export const focusableQueryString =
-  '[tabindex]:not([tabindex^="-"]):not([hidden]):not([disabled]), input:not([type=hidden]):not([tabindex^="-"]):not([hidden]):not([disabled]), textarea:not([tabindex^="-"]):not([hidden]):not([disabled]), button:not([tabindex^="-"]):not([hidden]):not([disabled]), select:not([tabindex^="-"]):not([hidden]):not([disabled]), ion-checkbox:not([tabindex^="-"]):not([hidden]):not([disabled]), ion-radio:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable[disabled="false"]:not([tabindex^="-"]):not([hidden])';
+  '[tabindex]:not([tabindex^="-"]):not([hidden]):not([disabled]), input:not([type=hidden]):not([tabindex^="-"]):not([hidden]):not([disabled]), textarea:not([tabindex^="-"]):not([hidden]):not([disabled]), button:not([tabindex^="-"]):not([hidden]):not([disabled]), select:not([tabindex^="-"]):not([hidden]):not([disabled]), ion-checkbox:not([tabindex^="-"]):not([hidden]):not([disabled]), ion-radio:not([tabindex^="-"]):not([hidden]):not([disabled]), ion-textarea:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable[disabled="false"]:not([tabindex^="-"]):not([hidden])';
 
 /**
  * Focuses the first descendant in a context
@@ -74,7 +74,18 @@ const focusElementInContext = <T extends HTMLElement>(
   const shadowRoot = hostToFocus?.shadowRoot;
   if (shadowRoot) {
     // If there are no inner focusable elements, just focus the host element.
-    elementToFocus = shadowRoot.querySelector<HTMLElement>(focusableQueryString) || hostToFocus;
+    const innerFocusable = shadowRoot.querySelector<HTMLElement>(focusableQueryString);
+
+    // If the host has a setFocus() method, use it to delegate focus properly.
+    // This is needed for shadow DOM components like ion-textarea that override
+    // focus() to delegate to their inner native elements.
+    const hasSetFocus = typeof (hostToFocus as any).setFocus === 'function';
+    if (innerFocusable && hasSetFocus) {
+      // Keep the host element so we can call setFocus() on it
+      elementToFocus = hostToFocus;
+    } else {
+      elementToFocus = innerFocusable || hostToFocus;
+    }
   }
 
   if (elementToFocus) {

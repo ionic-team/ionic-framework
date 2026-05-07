@@ -82,12 +82,12 @@
 // Textarea Within An Item
 // --------------------------------------------------
 
-:host-context(ion-item) {
+:host(.in-item) {
   align-self: baseline;
 }
 
-:host-context(ion-item)[slot="start"],
-:host-context(ion-item)[slot="end"] {
+:host(.in-item[slot="start"]),
+:host(.in-item[slot="end"]) {
   width: auto;
 }
 
@@ -174,9 +174,13 @@
 // otherwise the .input-cover will not be rendered at all
 // The input cover is not clickable when the input is disabled
 .cloned-input {
-  @include position(0, null, 0, 0);
-
   position: absolute;
+  top: 0;
+  bottom: 0;
+
+  // Reset height since absolute positioning with top/bottom handles sizing
+  height: auto;
+  max-height: none;
 
   pointer-events: none;
 }
@@ -311,6 +315,8 @@
 
   width: 100%;
   min-height: inherit;
+
+  box-sizing: border-box;
 }
 
 // Textarea Highlight
@@ -432,6 +438,10 @@
   overflow: hidden;
 }
 
+.textarea-outline {
+  box-sizing: border-box;
+}
+
 /**
  * If no label text is placed into the slot
  * then the element should be hidden otherwise
@@ -498,17 +508,6 @@
    * autofill background too.
    */
   z-index: 2;
-}
-
-/**
- * Ensures the textarea does not
- * overlap the label.
- */
-:host(.textarea-label-placement-stacked) textarea,
-:host(.textarea-label-placement-floating) textarea,
-:host(.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after,
-:host(.textarea-label-placement-floating[auto-grow]) .native-wrapper::after {
-  @include margin(8px, 0px, 0px, 0px);
 }
 
 /**
