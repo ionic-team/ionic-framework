@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.6](https://github.com/ionic-team/ionic-framework/compare/v8.8.5...v8.8.6) (2026-05-06)
+
+
+### Bug Fixes
+
+* **action-sheet:** restore action-sheet-selected class on non-radio buttons ([#31109](https://github.com/ionic-team/ionic-framework/issues/31109)) ([c18502f](https://github.com/ionic-team/ionic-framework/commit/c18502f3efdec5440a11289235a93c62ce27ab89)), closes [#31090](https://github.com/ionic-team/ionic-framework/issues/31090)
+* **datetime:** prevent hidden-state observer from tearing down ready class on initial entry ([#31108](https://github.com/ionic-team/ionic-framework/issues/31108)) ([30b479a](https://github.com/ionic-team/ionic-framework/commit/30b479a53acbc16961002df256bec358dc11e7fa))
+* **segment:** segment drag would set disabled segment button checked ([#31112](https://github.com/ionic-team/ionic-framework/issues/31112)) ([44be424](https://github.com/ionic-team/ionic-framework/commit/44be424221bee11ffbe91c4b1fa0a4d56fe1ecac))
+
+
+
+
+
 ## [8.8.5](https://github.com/ionic-team/ionic-framework/compare/v8.8.4...v8.8.5) (2026-04-29)
 
 

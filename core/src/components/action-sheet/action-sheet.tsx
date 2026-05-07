@@ -570,7 +570,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
           id={buttonId}
           class={{
             ...buttonClass(b),
-            'action-sheet-selected': isActiveRadio,
+            ...(isRadio && { 'action-sheet-selected': isActiveRadio }),
           }}
           onClick={() => {
             if (isRadio) {
