@@ -6,7 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
 # ---------------------------------------------------------------------------
-# Test runner for the Vue Router upgrade work (FW-7121).
+# Test runner for @ionic/vue-router.
 #
 # The end-to-end tests for vue-router live in the @ionic/vue test app at
 # packages/vue/test/, which exercises the full router/integration via
