@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('input: scroll assist click events'), () => {
-    test.beforeEach(({}, testInfo) => {
+    test.beforeEach((_, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30412',
