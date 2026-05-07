@@ -27,7 +27,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
               <ion-item-option expandable="true">Delete</ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
-         `,
+        `,
         config
       );
 
@@ -52,7 +52,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
               <ion-item-option expandable="true">Archive</ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
-         `,
+        `,
         config
       );
 
@@ -77,7 +77,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
               <ion-item-option expandable="true">Delete</ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
-         `,
+        `,
         config
       );
 
@@ -132,7 +132,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr', 'rtl'] }).forEac
                 <ion-item-option>Edit</ion-item-option>
               </ion-item-options>
             </ion-item-sliding>
-           `,
+          `,
         config
       );
 
@@ -166,7 +166,7 @@ configs({ modes: ['md'], directions: ['ltr', 'rtl'] }).forEach(({ title, config 
               <ion-item-option expandable="true">Delete</ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
-         `,
+        `,
         config
       );
 
