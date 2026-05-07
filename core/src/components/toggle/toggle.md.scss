@@ -17,6 +17,9 @@
   --handle-max-height: #{$toggle-md-handle-max-height};
   --handle-spacing: 0;
   --handle-transition: #{$toggle-md-transition};
+  --on-off-label-icon-size: 13px;
+
+
 }
 
 // Toggle Native Wrapper
@@ -61,11 +64,9 @@
 }
 
 .toggle-inner .toggle-switch-icon {
-  @include padding(1px);
-
-  width: 100%;
-  height: 100%;
-}
+@include padding(1px);
+width: var(--on-off-label-icon-size);
+height: var(--on-off-label-icon-size);}
 
 // Material Design Toggle: Disabled
 // ----------------------------------------------------------
