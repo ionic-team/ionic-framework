@@ -4,13 +4,6 @@ import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('input: scroll assist click events'), () => {
-    test.beforeEach((_, testInfo) => {
-      testInfo.annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/30412',
-      });
-    });
-
     const setup = async (page: E2EPage) => {
       const longText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '.repeat(40);
       await page.setContent(
@@ -50,7 +43,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         () => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))
       );
 
-    test('clicking ion-item padding when scroll is needed should fire one click event', async ({ page }) => {
+    test('clicking ion-item padding when scroll is needed should fire one click event', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30412',
+      });
       await setup(page);
       await positionTargetForScrollAssist(page);
 
@@ -65,7 +62,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(onClick).toHaveReceivedEventTimes(1);
     });
 
-    test('clicking ion-input directly when scroll is needed should fire one click event', async ({ page }) => {
+    test('clicking ion-input directly when scroll is needed should fire one click event', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30412',
+      });
       await setup(page);
       await positionTargetForScrollAssist(page);
 
@@ -77,7 +80,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(onClick).toHaveReceivedEventTimes(1);
     });
 
-    test('programmatic setFocus when scroll is needed should not fire a click event', async ({ page }) => {
+    test('programmatic setFocus when scroll is needed should not fire a click event', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30412',
+      });
       await setup(page);
       await positionTargetForScrollAssist(page);
 
@@ -91,7 +98,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(onClick).toHaveReceivedEventTimes(0);
     });
 
-    test('keyboard focus into input when scroll is needed should not fire a click event', async ({ page }) => {
+    test('keyboard focus into input when scroll is needed should not fire a click event', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30412',
+      });
       await setup(page);
       await positionTargetForScrollAssist(page);
 
