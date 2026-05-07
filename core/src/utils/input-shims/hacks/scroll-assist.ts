@@ -2,7 +2,6 @@ import type { KeyboardResizeOptions } from '@capacitor/keyboard';
 import { win } from '@utils/browser';
 
 import { getScrollElement, scrollByPoint } from '../../content';
-import { raf } from '../../helpers';
 import { KeyboardResize } from '../../native/keyboard';
 
 import { relocateInput, SCROLL_AMOUNT_PADDING } from './common';
@@ -252,13 +251,6 @@ const jsSetFocus = async (
   // at this point the native text input still does not have focus
   relocateInput(componentEl, inputEl, true, scrollData.inputSafeY, disableClonedInput);
   setManualFocus(inputEl);
-
-  /**
-   * Relocating/Focusing input causes the
-   * click event to be cancelled, so
-   * manually fire one here.
-   */
-  raf(() => componentEl.click());
 
   /**
    * If enabled, we can add scroll padding to
