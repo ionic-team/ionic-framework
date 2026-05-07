@@ -128,6 +128,37 @@ configs({ modes: ['md'] }).forEach(({ title, config }) => {
       await expect(segmentButton).toHaveClass(/segment-button-checked/);
     });
 
+    test('should not emit ionSegmentViewScroll with NaN or Infinity scrollRatio when only one content item is present', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+        <ion-segment value="only">
+          <ion-segment-button content-id="only" value="only">
+            <ion-label>Only</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view>
+          <ion-segment-content id="only">Only</ion-segment-content>
+        </ion-segment-view>
+      `,
+        config
+      );
+
+      const ionSegmentViewScroll = await page.spyOnEvent('ionSegmentViewScroll');
+
+      // Programmatically dispatch a scroll event on the segment-view host element
+      // to simulate what the browser fires when scrollLeft changes.
+      await page.locator('ion-segment-view').evaluate((el: HTMLElement) => {
+        el.dispatchEvent(new Event('scroll', { bubbles: true }));
+      });
+
+      await page.waitForChanges();
+
+      // The max === 0 guard should prevent ionSegmentViewScroll from firing entirely.
+      expect(ionSegmentViewScroll).not.toHaveReceivedEvent();
+    });
+
     test('should set correct segment button as checked and show correct content when programmatically setting the segment value', async ({
       page,
     }) => {
