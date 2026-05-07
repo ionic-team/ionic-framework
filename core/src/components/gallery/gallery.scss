@@ -18,8 +18,9 @@
   gap: var(--ion-gallery-gap, 16px);
 }
 
-// Target all slotted elements in the uniform layout. This ensures that nested
-// images also have an aspect ratio of 1/1.
+// Target all slotted elements in the uniform layout. This ensures that divs
+// and images have an aspect ratio of 1/1. Nested images must inherit the
+// aspect ratio of their parent.
 :host(.gallery-layout-uniform) ::slotted(*) {
   aspect-ratio: 1/1;
 }

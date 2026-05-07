@@ -279,6 +279,12 @@
       ion-gallery .gallery-image-item img {
         display: block;
 
+        /**
+         * Aspect ratio is set on the figure when using nested images
+         * so we need to inherit it from the figure.
+         */
+        aspect-ratio: inherit;
+
         width: 100%;
         object-fit: cover;
         object-position: center;
