@@ -47,6 +47,14 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
 
           const gallery = page.locator('ion-gallery');
 
+          /**
+           * The gallery overflows the default viewport, causing
+           * unrendered areas to appear transparent in the screenshot.
+           * Resizing the viewport to fit the content.
+           */
+          const box = await gallery.boundingBox();
+          await page.setViewportSize({ width: Math.ceil(box!.width), height: Math.ceil(box!.height) });
+
           await expect(gallery).toHaveScreenshot(screenshot(`gallery-${layout}${orderSuffix}-divs-same-height`));
         });
 
@@ -78,6 +86,14 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
           );
 
           const gallery = page.locator('ion-gallery');
+
+          /**
+           * The gallery overflows the default viewport, causing
+           * unrendered areas to appear transparent in the screenshot.
+           * Resizing the viewport to fit the content.
+           */
+          const box = await gallery.boundingBox();
+          await page.setViewportSize({ width: Math.ceil(box!.width), height: Math.ceil(box!.height) });
 
           await expect(gallery).toHaveScreenshot(screenshot(`gallery-${layout}${orderSuffix}-divs-variable-height`));
         });
@@ -115,6 +131,14 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
 
           const gallery = page.locator('ion-gallery');
 
+          /**
+           * The gallery overflows the default viewport, causing
+           * unrendered areas to appear transparent in the screenshot.
+           * Resizing the viewport to fit the content.
+           */
+          const box = await gallery.boundingBox();
+          await page.setViewportSize({ width: Math.ceil(box!.width), height: Math.ceil(box!.height) });
+
           await expect(gallery).toHaveScreenshot(screenshot(`gallery-${layout}${orderSuffix}-images-same-height`));
         });
 
@@ -146,6 +170,14 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
           );
 
           const gallery = page.locator('ion-gallery');
+
+          /**
+           * The gallery overflows the default viewport, causing
+           * unrendered areas to appear transparent in the screenshot.
+           * Resizing the viewport to fit the content.
+           */
+          const box = await gallery.boundingBox();
+          await page.setViewportSize({ width: Math.ceil(box!.width), height: Math.ceil(box!.height) });
 
           await expect(gallery).toHaveScreenshot(screenshot(`gallery-${layout}${orderSuffix}-images-variable-height`));
         });
@@ -187,6 +219,14 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
               });
             }, appendedItems);
 
+            /**
+             * The gallery overflows the default viewport, causing
+             * unrendered areas to appear transparent in the screenshot.
+             * Resizing the viewport to fit the content.
+             */
+            const box = await gallery.boundingBox();
+            await page.setViewportSize({ width: Math.ceil(box!.width), height: Math.ceil(box!.height) });
+
             await expect(gallery).toHaveScreenshot(
               screenshot(`gallery-${layout}${orderSuffix}-divs-dynamically-appended`)
             );
@@ -226,6 +266,14 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
                 galleryEl.append(imageEl);
               });
             }, appendedItems);
+
+            /**
+             * The gallery overflows the default viewport, causing
+             * unrendered areas to appear transparent in the screenshot.
+             * Resizing the viewport to fit the content.
+             */
+            const box = await gallery.boundingBox();
+            await page.setViewportSize({ width: Math.ceil(box!.width), height: Math.ceil(box!.height) });
 
             await expect(gallery).toHaveScreenshot(
               screenshot(`gallery-${layout}${orderSuffix}-images-dynamically-appended`)
@@ -295,6 +343,14 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
                 galleryEl.append(figureEl);
               });
             }, appendedItems);
+
+            /**
+             * The gallery overflows the default viewport, causing
+             * unrendered areas to appear transparent in the screenshot.
+             * Resizing the viewport to fit the content.
+             */
+            const box = await gallery.boundingBox();
+            await page.setViewportSize({ width: Math.ceil(box!.width), height: Math.ceil(box!.height) });
 
             await expect(gallery).toHaveScreenshot(
               screenshot(`gallery-${layout}${orderSuffix}-figures-images-dynamically-appended`)
