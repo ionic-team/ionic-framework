@@ -402,6 +402,10 @@ export class Segment implements ComponentInterface {
 
       const nextIndex = Math.round(scrollRatio * (buttons.length - 1));
 
+      if (buttons[nextIndex]?.disabled) {
+        return;
+      }
+
       if (this.lastNextIndex === undefined || this.lastNextIndex !== nextIndex) {
         this.lastNextIndex = nextIndex;
         this.triggerScrollOnValueChange = false;
