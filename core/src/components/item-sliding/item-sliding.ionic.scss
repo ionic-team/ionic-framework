@@ -11,11 +11,11 @@
 }
 
 // Ionic full-swipe confirm sequence (replaces inline `transition` on item / expandable width)
-.item-sliding-ionic-confirm-item-in .item {
+.item-sliding-confirm-item-in .item {
   transition: transform globals.$ion-transition-time-150 globals.$ion-transition-curve-base;
 }
 
-.item-sliding-ionic-confirm-item-back .item {
+.item-sliding-confirm-item-back .item {
   transition: transform globals.$ion-transition-time-500 globals.$ion-transition-curve-bounce;
 }
 

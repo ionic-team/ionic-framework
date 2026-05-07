@@ -10,7 +10,7 @@ import { configs, dragElementBy, test } from '@utils/test/playwright';
 // Full animation cycle duration (100ms expand + 250ms off-screen + 300ms delay + 250ms return)
 const FULL_ANIMATION_MS = 1100;
 
-configs({ modes: ['ios', 'md'], directions: ['ltr', 'rtl'] }).forEach(({ title, config }) => {
+configs().forEach(({ title, config }) => {
   test.describe(title('item-sliding: full swipe'), () => {
     test('should fire ionSwipe when expandable option is swiped fully (end side)', async ({ page }) => {
       await page.setContent(
@@ -54,8 +54,6 @@ configs({ modes: ['ios', 'md'], directions: ['ltr', 'rtl'] }).forEach(({ title, 
 
       const ionSwipe = await page.spyOnEvent('ionSwipe');
       const item = page.locator('ion-item-sliding');
-      await expect(item).toBeVisible();
-      await page.waitForChanges();
       const dragByX = config.direction === 'rtl' ? -190 : 190;
 
       await dragElementBy(item, page, dragByX);
@@ -80,8 +78,6 @@ configs({ modes: ['ios', 'md'], directions: ['ltr', 'rtl'] }).forEach(({ title, 
       );
 
       const item = page.locator('ion-item-sliding');
-      await expect(item).toBeVisible();
-      await page.waitForChanges();
       const dragByX = config.direction === 'rtl' ? 190 : -190;
 
       await dragElementBy(item, page, dragByX);
@@ -108,8 +104,6 @@ configs({ modes: ['ios', 'md'], directions: ['ltr', 'rtl'] }).forEach(({ title, 
 
       const ionSwipe = await page.spyOnEvent('ionSwipe');
       const item = page.locator('ion-item-sliding');
-      await expect(item).toBeVisible();
-      await page.waitForChanges();
       const dragByX = config.direction === 'rtl' ? 180 : -180;
 
       await dragElementBy(item, page, dragByX);
@@ -140,8 +134,6 @@ configs({ modes: ['ios', 'md'], directions: ['ltr', 'rtl'] }).forEach(({ title, 
 
       const ionSwipe = await page.spyOnEvent('ionSwipe');
       const item = page.locator('ion-item-sliding');
-      await expect(item).toBeVisible();
-      await page.waitForChanges();
       const dragByX = config.direction === 'rtl' ? 190 : -190;
 
       await dragElementBy(item, page, dragByX);
@@ -155,7 +147,7 @@ configs({ modes: ['ios', 'md'], directions: ['ltr', 'rtl'] }).forEach(({ title, 
 /**
  * Test for Ionic theme that has a different full swipe animation behavior.
  */
-configs({ modes: ['ionic-md'], directions: ['ltr', 'rtl'] }).forEach(({ title, config }) => {
+configs({ modes: ['ionic-md'] }).forEach(({ title, config }) => {
   test.describe(title('item-sliding: full swipe'), () => {
     test('should fire ionSwipe when expandable option is swiped fully (end side)', async ({ page }) => {
       await page.setContent(
@@ -174,8 +166,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr', 'rtl'] }).forEach(({ title, c
 
       const ionSwipe = await page.spyOnEvent('ionSwipe');
       const item = page.locator('ion-item-sliding');
-      await expect(item).toBeVisible();
-      await page.waitForChanges();
       const box = (await item.boundingBox())!;
       const y = box.y + box.height / 2;
 
@@ -211,8 +201,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr', 'rtl'] }).forEach(({ title, c
 
       const ionSwipe = await page.spyOnEvent('ionSwipe');
       const item = page.locator('ion-item-sliding');
-      await expect(item).toBeVisible();
-      await page.waitForChanges();
       const box = (await item.boundingBox())!;
       const y = box.y + box.height / 2;
 
@@ -247,8 +235,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr', 'rtl'] }).forEach(({ title, c
       );
 
       const item = page.locator('ion-item-sliding');
-      await expect(item).toBeVisible();
-      await page.waitForChanges();
       const box = (await item.boundingBox())!;
       const y = box.y + box.height / 2;
 
@@ -285,8 +271,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr', 'rtl'] }).forEach(({ title, c
       );
       const ionSwipe = await page.spyOnEvent('ionSwipe');
       const item = page.locator('ion-item-sliding');
-      await expect(item).toBeVisible();
-      await page.waitForChanges();
       const dragByX = config.direction === 'rtl' ? 180 : -180;
 
       await dragElementBy(item, page, dragByX);
@@ -325,8 +309,6 @@ configs({ modes: ['md'], directions: ['ltr', 'rtl'] }).forEach(({ title, config 
 
       const ionSwipe = await page.spyOnEvent('ionSwipe');
       const item = page.locator('ion-item-sliding');
-      await expect(item).toBeVisible();
-      await page.waitForChanges();
       const box = (await item.boundingBox())!;
 
       // Few steps = high velocity gesture

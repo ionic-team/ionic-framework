@@ -52,8 +52,8 @@ let openSlidingItem: HTMLIonItemSlidingElement | undefined;
 @Component({
   tag: 'ion-item-sliding',
   styleUrls: {
-    ios: 'item-sliding.ios.scss',
-    md: 'item-sliding.md.scss',
+    ios: 'item-sliding.native.scss',
+    md: 'item-sliding.native.scss',
     ionic: 'item-sliding.ionic.scss',
   },
 })
@@ -418,7 +418,23 @@ export class ItemSliding implements ComponentInterface {
   }
 
   private queryExpandableOption(options?: HTMLIonItemOptionsElement): HTMLIonItemOptionElement | undefined {
-    return options?.querySelector<HTMLIonItemOptionElement>(EXPANDABLE_OPTION_SELECTOR) ?? undefined;
+    if (!options) {
+      return undefined;
+    }
+    const expandableOptions = Array.from(
+      options.querySelectorAll<HTMLIonItemOptionElement>(EXPANDABLE_OPTION_SELECTOR)
+    );
+    if (expandableOptions.length === 0) {
+      return undefined;
+    }
+    if (expandableOptions.length === 1) {
+      return expandableOptions[0];
+    }
+    const isRTL = document.dir === 'rtl';
+    const isEndSide = options.classList.contains('item-options-end');
+    // Match native edge behavior for multi-expandable configs
+    const pickLast = (isEndSide && !isRTL) || (!isEndSide && isRTL);
+    return pickLast ? expandableOptions[expandableOptions.length - 1] : expandableOptions[0];
   }
 
   private getExpandableOption(direction: 'start' | 'end'): HTMLIonItemOptionElement | undefined {
@@ -443,21 +459,15 @@ export class ItemSliding implements ComponentInterface {
     return direction === 'end' ? this.rightExpandableBaseWidth : this.leftExpandableBaseWidth;
   }
 
-  private setIonicExpandableWidth(direction: 'start' | 'end', width: number, opening: boolean) {
+  private setIonicExpandableWidth(direction: 'start' | 'end', width: number) {
     const expandableOption = this.getExpandableOption(direction);
     if (!expandableOption) {
       return;
     }
 
     const style = expandableOption.style;
-    if (opening) {
-      expandableOption.classList.remove('item-sliding-expandable-snapback');
-      expandableOption.classList.add('item-sliding-expandable-open');
-    } else {
-      expandableOption.classList.remove('item-sliding-expandable-open');
-      expandableOption.classList.add('item-sliding-expandable-snapback');
-    }
     const baseWidth = this.getExpandableBaseWidth(direction);
+
     style.width = `${Math.max(baseWidth, width)}px`;
   }
 
@@ -500,7 +510,7 @@ export class ItemSliding implements ComponentInterface {
         ITEM_OPTION_EXPAND_THRESHOLD_CLASS
       );
 
-      this.setIonicExpandableWidth(previousDirection, this.getExpandableBaseWidth(previousDirection), false);
+      this.setIonicExpandableWidth(previousDirection, this.getExpandableBaseWidth(previousDirection));
       return;
     }
 
@@ -519,7 +529,7 @@ export class ItemSliding implements ComponentInterface {
       }
     }
 
-    this.setIonicExpandableWidth(direction, targetWidth, true);
+    this.setIonicExpandableWidth(direction, targetWidth);
   }
 
   private async animateIonicFullSwipe(direction: 'start' | 'end') {
@@ -554,8 +564,8 @@ export class ItemSliding implements ComponentInterface {
         expandableOption.style.width = `${expandableTargetWidth}px`;
       }
 
-      this.el.classList.remove('item-sliding-ionic-confirm-item-back');
-      this.el.classList.add('item-sliding-ionic-confirm-item-in');
+      this.el.classList.remove('item-sliding-confirm-item-back');
+      this.el.classList.add('item-sliding-confirm-item-in');
       this.item.style.transform = `translate3d(${-offScreenPosition}px, 0, 0)`;
       await this.delay(150, signal);
 
@@ -568,16 +578,16 @@ export class ItemSliding implements ComponentInterface {
         expandableOption.style.width = `${baseWidth}px`;
       }
 
-      this.el.classList.remove('item-sliding-ionic-confirm-item-in');
-      this.el.classList.add('item-sliding-ionic-confirm-item-back');
+      this.el.classList.remove('item-sliding-confirm-item-in');
+      this.el.classList.add('item-sliding-confirm-item-back');
       this.item.style.transform = 'translate3d(0, 0, 0)';
-      await this.delay(480, signal);
+      await this.delay(500, signal);
     } catch {
       // Animation was aborted. finally handles cleanup.
     } finally {
       this.animationAbortController = undefined;
 
-      this.el.classList.remove('item-sliding-ionic-confirm-item-in', 'item-sliding-ionic-confirm-item-back');
+      this.el.classList.remove('item-sliding-confirm-item-in', 'item-sliding-confirm-item-back');
       if (this.item) {
         this.item.style.transform = '';
       }

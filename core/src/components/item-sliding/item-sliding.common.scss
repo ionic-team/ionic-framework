@@ -18,11 +18,6 @@ ion-item-sliding .item {
   user-select: none;
 }
 
-// During drag on native (ios/md), disable transition — matches former inline `transition: none`
-.item-sliding-active-slide.item-sliding-dragging .item {
-  transition: none;
-}
-
 .item-sliding-closing ion-item-options {
   pointer-events: none;
 }

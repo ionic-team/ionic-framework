@@ -16,3 +16,8 @@
 .item-sliding-active-slide.item-sliding-full-swipe-transition .item {
   transition: transform 250ms ease-out;
 }
+
+// During drag on native (ios/md), disable transition — matches former inline `transition: none`
+.item-sliding-active-slide.item-sliding-dragging .item {
+  transition: none;
+}
