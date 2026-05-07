@@ -12,15 +12,12 @@ import {
 } from './utils/test-utils';
 
 /**
- * Ports the unit tests in packages/vue-router/__tests__/locationHistory.spec.ts
- * to user-observable Playwright scenarios. Each describe block corresponds to
- * one Jest case so the mapping is auditable when removing the Jest suite.
+ * User-observable scenarios for vue-router locationHistory behavior.
  *
  * Animations are disabled via ionic:_testing=true so the tests are deterministic.
  */
 
 test.describe('Location History', () => {
-  // Maps to: 'should correctly add an item to location history'
   // Pushing the first entry must leave canGoBack=false (no back button).
   test('first navigation has no back button', async ({ page }) => {
     await page.goto(withTestingMode('/'));
@@ -30,7 +27,6 @@ test.describe('Location History', () => {
     await expect(backBtn).toBeHidden();
   });
 
-  // Maps to: 'should correctly replace an item to location history'
   // After replace, the previous entry is gone, so pressing back from the
   // replacement should NOT return to it.
   test('replace removes the previous entry from history', async ({ page }) => {
@@ -43,7 +39,6 @@ test.describe('Location History', () => {
     await ionPageDoesNotExist(page, 'navigation');
   });
 
-  // Maps to: 'should correctly pop an item from location history'
   // After popping (back button), the previous page is restored as current
   // and the popped page is removed from history.
   test('pop restores the previous page and removes the popped one', async ({ page }) => {
@@ -56,7 +51,6 @@ test.describe('Location History', () => {
     await ionPageDoesNotExist(page, 'routing');
   });
 
-  // Maps to: 'should correctly wipe location history when routerDirection is root'
   // Navigate root replaces the entire stack: observably, the new page becomes
   // the only entry. After root-navigating to home (which has a back-button
   // with no default-href), the back button is hidden because canGoBack=false.
@@ -78,7 +72,6 @@ test.describe('Location History', () => {
     await expect(backBtn).toBeHidden();
   });
 
-  // Maps to: 'should correctly update a route'
   // The tab field on a RouteInfo is updated when the route entry already
   // exists. Observable via switching tabs and back: selected tab must update.
   test('tab info updates when revisiting a tab entry', async ({ page }) => {
@@ -95,9 +88,8 @@ test.describe('Location History', () => {
     await expect(page.locator('ion-tab-button#tab-button-tab1')).toHaveClass(/tab-selected/);
   });
 
-  // Maps to: 'should correctly get the first route for a tab'
   // Re-clicking the active tab returns to the tab root, regardless of how
-  // deep we navigated within it. Exercises getFirstRouteInfoForTab().
+  // deep we navigated within it.
   test('clicking active tab returns to that tab root', async ({ page }) => {
     await page.goto(withTestingMode('/tabs/tab1'));
     await ionPageVisible(page, 'tab1');
@@ -113,9 +105,8 @@ test.describe('Location History', () => {
     await ionPageDoesNotExist(page, 'tab1childtwo');
   });
 
-  // Maps to: 'should correctly get the current route for a tab'
   // Switching to another tab and back should restore the deepest page in
-  // the original tab. Exercises getCurrentRouteInfoForTab().
+  // the original tab.
   test('switching tabs and back restores deepest page in source tab', async ({ page }) => {
     await page.goto(withTestingMode('/tabs/tab1'));
     await ionPageVisible(page, 'tab1');
@@ -131,7 +122,6 @@ test.describe('Location History', () => {
     await ionPageVisible(page, 'tab1childone');
   });
 
-  // Maps to: 'should correctly get last route'
   // After a sequence of pushes the topmost page is the last one pushed.
   test('latest navigation is the visible page', async ({ page }) => {
     await page.goto(withTestingMode('/'));
@@ -142,7 +132,6 @@ test.describe('Location History', () => {
     await ionPageHidden(page, 'routing');
   });
 
-  // Maps to: 'should correctly determine if we can go back'
   // canGoBack drives ion-back-button visibility. Push to a non-root page
   // and the back button must appear; on root it must not.
   test('back button visibility tracks canGoBack', async ({ page }) => {
@@ -156,10 +145,8 @@ test.describe('Location History', () => {
     await expect(routingBack).toBeVisible();
   });
 
-  // Maps to: 'should correctly find the last location'
-  // findLastLocation walks the history backwards using pushedByRoute. Going
-  // back through a deep stack must land on the correct sequence of pages
-  // even when intermediate pages share routes/parameterized paths.
+  // Going back through a deep stack must land on the correct sequence of
+  // pages even when intermediate pages share routes/parameterized paths.
   test('back through deep stack restores intermediate pages in order', async ({ page }) => {
     await page.goto(withTestingMode('/'));
     await ionPageVisible(page, 'home');

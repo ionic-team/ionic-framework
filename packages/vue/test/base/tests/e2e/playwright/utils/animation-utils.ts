@@ -67,13 +67,14 @@ export async function didChildReceiveInvisibleClass(
     }
     const obs = new MutationObserver((mutations) => {
       for (const m of mutations) {
+        if ((window as any).__ionSawInvisible) return;
         if (
           m.type === 'attributes' &&
           (m.target as HTMLElement).classList?.contains('ion-page-invisible')
         ) {
           (window as any).__ionSawInvisible = true;
         }
-        if (m.type === 'childList') {
+        if (!(window as any).__ionSawInvisible && m.type === 'childList') {
           m.addedNodes.forEach((n) => {
             if ((n as HTMLElement).classList?.contains('ion-page-invisible')) {
               (window as any).__ionSawInvisible = true;
@@ -110,7 +111,9 @@ export async function didChildReceiveInvisibleClass(
 export async function waitForAnimationsComplete(page: Page, selector: string): Promise<void> {
   await page.evaluate(async (sel: string) => {
     const el = document.querySelector(sel);
-    if (!el) return;
+    if (!el) {
+      throw new Error(`waitForAnimationsComplete: no element matched ${sel}`);
+    }
     const anims = document.getAnimations().filter((a) => {
       const target = (a.effect as KeyframeEffect)?.target as Node | null;
       return !!target && (target === el || el.contains(target));

@@ -97,6 +97,11 @@ export async function tabClick(page: Page, tabId: string): Promise<void> {
  *
  * Mirrors the Cypress ionSwipeToGoBack command. Uses mouse events because
  * Playwright's touch APIs don't reliably trigger Ionic's gesture detection.
+ *
+ * Chromium-only. If WebKit is ever added to the Playwright config, the gesture
+ * will need a requestAnimationFrame between mouse moves the way
+ * core/src/utils/test/playwright/drag-element.ts does, otherwise WebKit
+ * coalesces the moves and the gesture detector misses the swipe.
  */
 export async function ionSwipeToGoBack(
   page: Page,
