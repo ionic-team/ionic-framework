@@ -100,9 +100,6 @@
   color: globals.current-color(contrast);
 }
 
-// Item Expandable Animation
-// --------------------------------------------------
-
-:host(.item-option-expandable) {
-  transition-timing-function: globals.$ion-transition-curve-expressive;
+:host(.item-option-expand-threshold) {
+  filter: brightness(0.92);
 }

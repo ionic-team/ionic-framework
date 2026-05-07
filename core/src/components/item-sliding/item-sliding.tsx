@@ -11,6 +11,19 @@ import type { Side } from '../menu/menu-interface';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
+const IONIC_ELASTIC_FACTOR = 0.15;
+const IONIC_SNAP_OPEN_RATIO = 0.4;
+const IONIC_EXPAND_TRIGGER = 40;
+const IONIC_FULL_SWIPE_VELOCITY_THRESHOLD = 400;
+const IONIC_OPEN_VELOCITY_THRESHOLD = 200;
+const IONIC_ACTION_BASE_WIDTH = 64;
+const IONIC_CONFIRM_PAUSE = 300;
+const FULL_SWIPE_TRANSITION_MS = 250;
+const IONIC_EXPAND_RESISTANCE_FACTOR = 0.95;
+
+/** Expandable, non-disabled option (matches item-option expandable class). */
+const EXPANDABLE_OPTION_SELECTOR = 'ion-item-option.item-option-expandable:not(.item-option-disabled)';
+const ITEM_OPTION_EXPAND_THRESHOLD_CLASS = 'item-option-expand-threshold';
 
 const enum ItemSide {
   None = 0,
@@ -38,7 +51,11 @@ let openSlidingItem: HTMLIonItemSlidingElement | undefined;
  */
 @Component({
   tag: 'ion-item-sliding',
-  styleUrl: 'item-sliding.scss',
+  styleUrls: {
+    ios: 'item-sliding.native.scss',
+    md: 'item-sliding.native.scss',
+    ionic: 'item-sliding.ionic.scss',
+  },
 })
 export class ItemSliding implements ComponentInterface {
   private item: HTMLIonItemElement | null = null;
@@ -56,6 +73,12 @@ export class ItemSliding implements ComponentInterface {
   private contentEl: HTMLElement | null = null;
   private initialContentScrollY = true;
   private mutationObserver?: MutationObserver;
+  private leftExpandableBaseWidth = IONIC_ACTION_BASE_WIDTH;
+  private rightExpandableBaseWidth = IONIC_ACTION_BASE_WIDTH;
+
+  private isIonicTheme(): boolean {
+    return getIonTheme(this) === 'ionic';
+  }
 
   @Element() el!: HTMLIonItemSlidingElement;
 
@@ -79,7 +102,6 @@ export class ItemSliding implements ComponentInterface {
 
   async connectedCallback() {
     const { el } = this;
-
     this.item = el.querySelector('ion-item');
     this.contentEl = findClosestIonContent(el);
 
@@ -307,7 +329,7 @@ export class ItemSliding implements ComponentInterface {
         return resolve();
       }
 
-      this.item.style.transition = `transform ${duration}ms ease-out`;
+      this.el.classList.add('item-sliding-full-swipe-transition');
       this.item.style.transform = `translate3d(${-position}px, 0, 0)`;
 
       const id = setTimeout(resolve, duration);
@@ -332,8 +354,8 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
-   * Animate the item through a full swipe sequence: off-screen → trigger action → return.
-   * This is used when an expandable option is swiped beyond the threshold.
+   * Native (ios/md) full swipe: off-screen → fire swipe → return.
+   * Ionic theme uses `animateIonicFullSwipe` instead (see `onEndIonic`).
    */
   private async animateFullSwipe(direction: 'start' | 'end') {
     const abortController = new AbortController();
@@ -360,7 +382,7 @@ export class ItemSliding implements ComponentInterface {
 
       // Animate off-screen while maintaining the expanded state
       const offScreenDistance = direction === 'end' ? window.innerWidth : -window.innerWidth;
-      await this.animateToPosition(offScreenDistance, 250, signal);
+      await this.animateToPosition(offScreenDistance, FULL_SWIPE_TRANSITION_MS, signal);
 
       // Trigger action
       if (options) {
@@ -371,17 +393,205 @@ export class ItemSliding implements ComponentInterface {
       await this.delay(300, signal);
 
       // Return to closed state
-      await this.animateToPosition(0, 250, signal);
+      await this.animateToPosition(0, FULL_SWIPE_TRANSITION_MS, signal);
     } catch {
       // Animation was aborted (e.g. component disconnected). finally handles cleanup.
     } finally {
       this.animationAbortController = undefined;
 
       // Reset state
+      this.el.classList.remove('item-sliding-full-swipe-transition');
       if (this.item) {
-        this.item.style.transition = '';
         this.item.style.transform = '';
       }
+      this.openAmount = 0;
+      this.state = SlidingState.Disabled;
+
+      if (openSlidingItem === this.el) {
+        openSlidingItem = undefined;
+      }
+
+      if (this.gesture) {
+        this.gesture.enable(!this.disabled);
+      }
+    }
+  }
+
+  private queryExpandableOption(options?: HTMLIonItemOptionsElement): HTMLIonItemOptionElement | undefined {
+    if (!options) {
+      return undefined;
+    }
+    const expandableOptions = Array.from(
+      options.querySelectorAll<HTMLIonItemOptionElement>(EXPANDABLE_OPTION_SELECTOR)
+    );
+    if (expandableOptions.length === 0) {
+      return undefined;
+    }
+    if (expandableOptions.length === 1) {
+      return expandableOptions[0];
+    }
+    const isRTL = document.dir === 'rtl';
+    const isEndSide = options.classList.contains('item-options-end');
+    // Match native edge behavior for multi-expandable configs
+    const pickLast = (isEndSide && !isRTL) || (!isEndSide && isRTL);
+    return pickLast ? expandableOptions[expandableOptions.length - 1] : expandableOptions[0];
+  }
+
+  private getExpandableOption(direction: 'start' | 'end'): HTMLIonItemOptionElement | undefined {
+    return this.queryExpandableOption(direction === 'end' ? this.rightOptions : this.leftOptions);
+  }
+
+  private getOpenDirectionFromAmount(openAmount: number): 'start' | 'end' | undefined {
+    if (openAmount > 0) {
+      return 'end';
+    }
+    if (openAmount < 0) {
+      return 'start';
+    }
+    return undefined;
+  }
+
+  private getOptionsWidthForDirection(direction: 'start' | 'end'): number {
+    return direction === 'end' ? this.optsWidthRightSide : this.optsWidthLeftSide;
+  }
+
+  private getExpandableBaseWidth(direction: 'start' | 'end'): number {
+    return direction === 'end' ? this.rightExpandableBaseWidth : this.leftExpandableBaseWidth;
+  }
+
+  private setIonicExpandableWidth(direction: 'start' | 'end', width: number) {
+    const expandableOption = this.getExpandableOption(direction);
+    if (!expandableOption) {
+      return;
+    }
+
+    const style = expandableOption.style;
+    const baseWidth = this.getExpandableBaseWidth(direction);
+
+    style.width = `${Math.max(baseWidth, width)}px`;
+  }
+
+  private resetIonicExpandableOptions() {
+    [this.leftOptions, this.rightOptions].forEach((options) => {
+      if (!options) {
+        return;
+      }
+      options.querySelectorAll(EXPANDABLE_OPTION_SELECTOR).forEach((node) => {
+        node.classList.remove(ITEM_OPTION_EXPAND_THRESHOLD_CLASS);
+      });
+      const expandableOption = this.queryExpandableOption(options);
+      if (!expandableOption) {
+        return;
+      }
+      expandableOption.style.width = '';
+      expandableOption.classList.remove(
+        'item-sliding-expandable-open',
+        'item-sliding-expandable-snapback',
+        'item-sliding-expandable-width-in',
+        'item-sliding-expandable-width-back'
+      );
+    });
+  }
+
+  private updateIonicExpandableFromOpenAmount(openAmount: number, isFinal: boolean, previousOpenAmount: number) {
+    if ((this.state & SlidingState.AnimatingFullSwipe) !== 0) {
+      return;
+    }
+
+    const direction = this.getOpenDirectionFromAmount(openAmount);
+    if (direction === undefined) {
+      const previousDirection = this.getOpenDirectionFromAmount(previousOpenAmount);
+      if (previousDirection === undefined) {
+        this.resetIonicExpandableOptions();
+        return;
+      }
+
+      this.queryExpandableOption(previousDirection === 'end' ? this.rightOptions : this.leftOptions)?.classList.remove(
+        ITEM_OPTION_EXPAND_THRESHOLD_CLASS
+      );
+
+      this.setIonicExpandableWidth(previousDirection, this.getExpandableBaseWidth(previousDirection));
+      return;
+    }
+
+    const baseWidth = this.getExpandableBaseWidth(direction);
+    const optionsWidth = this.getOptionsWidthForDirection(direction);
+    const extraWidth = Math.max(0, Math.abs(openAmount) - optionsWidth);
+    const resistedExtraWidth = isFinal ? extraWidth : extraWidth * IONIC_EXPAND_RESISTANCE_FACTOR;
+    const targetWidth = baseWidth + resistedExtraWidth;
+
+    const expandableOption = this.getExpandableOption(direction);
+    if (expandableOption) {
+      if (!isFinal && extraWidth >= IONIC_EXPAND_TRIGGER) {
+        expandableOption.classList.add(ITEM_OPTION_EXPAND_THRESHOLD_CLASS);
+      } else {
+        expandableOption.classList.remove(ITEM_OPTION_EXPAND_THRESHOLD_CLASS);
+      }
+    }
+
+    this.setIonicExpandableWidth(direction, targetWidth);
+  }
+
+  private async animateIonicFullSwipe(direction: 'start' | 'end') {
+    const abortController = new AbortController();
+    this.animationAbortController = abortController;
+    const { signal } = abortController;
+    const expandableOption = this.getExpandableOption(direction);
+    const options = direction === 'end' ? this.rightOptions : this.leftOptions;
+
+    if (this.gesture) {
+      this.gesture.enable(false);
+    }
+
+    try {
+      this.state =
+        direction === 'end'
+          ? SlidingState.End | SlidingState.AnimatingFullSwipe
+          : SlidingState.Start | SlidingState.AnimatingFullSwipe;
+
+      if (!this.item) {
+        return;
+      }
+
+      const itemWidth = this.el.offsetWidth || window.innerWidth;
+      const baseWidth = this.getExpandableBaseWidth(direction);
+      const expandableTargetWidth = Math.max(baseWidth, itemWidth - 16);
+      const offScreenPosition = direction === 'end' ? itemWidth : -itemWidth;
+
+      if (expandableOption) {
+        expandableOption.classList.remove('item-sliding-expandable-width-back');
+        expandableOption.classList.add('item-sliding-expandable-width-in');
+        expandableOption.style.width = `${expandableTargetWidth}px`;
+      }
+
+      this.el.classList.remove('item-sliding-confirm-item-back');
+      this.el.classList.add('item-sliding-confirm-item-in');
+      this.item.style.transform = `translate3d(${-offScreenPosition}px, 0, 0)`;
+      await this.delay(150, signal);
+
+      options?.fireSwipeEvent();
+      await this.delay(IONIC_CONFIRM_PAUSE, signal);
+
+      if (expandableOption) {
+        expandableOption.classList.remove('item-sliding-expandable-width-in');
+        expandableOption.classList.add('item-sliding-expandable-width-back');
+        expandableOption.style.width = `${baseWidth}px`;
+      }
+
+      this.el.classList.remove('item-sliding-confirm-item-in');
+      this.el.classList.add('item-sliding-confirm-item-back');
+      this.item.style.transform = 'translate3d(0, 0, 0)';
+      await this.delay(500, signal);
+    } catch {
+      // Animation was aborted. finally handles cleanup.
+    } finally {
+      this.animationAbortController = undefined;
+
+      this.el.classList.remove('item-sliding-confirm-item-in', 'item-sliding-confirm-item-back');
+      if (this.item) {
+        this.item.style.transform = '';
+      }
+      this.resetIonicExpandableOptions();
       this.openAmount = 0;
       this.state = SlidingState.Disabled;
 
@@ -473,7 +683,11 @@ export class ItemSliding implements ComponentInterface {
     }
     this.initialOpenAmount = this.openAmount;
     if (this.item) {
-      this.item.style.transition = 'none';
+      if (this.isIonicTheme()) {
+        this.el.classList.remove('item-sliding-transition-open', 'item-sliding-transition-snapback');
+      } else {
+        this.el.classList.add('item-sliding-dragging');
+      }
     }
   }
 
@@ -499,24 +713,46 @@ export class ItemSliding implements ComponentInterface {
         break;
     }
 
-    let optsWidth;
-    if (openAmount > this.optsWidthRightSide) {
-      optsWidth = this.optsWidthRightSide;
-      openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
-    } else if (openAmount < -this.optsWidthLeftSide) {
-      optsWidth = -this.optsWidthLeftSide;
-      openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
+    if (this.isIonicTheme()) {
+      if (openAmount > this.optsWidthRightSide) {
+        const overDrag = openAmount - this.optsWidthRightSide;
+        openAmount = this.optsWidthRightSide + overDrag * IONIC_ELASTIC_FACTOR;
+      } else if (openAmount < -this.optsWidthLeftSide) {
+        const overDrag = openAmount + this.optsWidthLeftSide;
+        openAmount = -this.optsWidthLeftSide + overDrag * IONIC_ELASTIC_FACTOR;
+      }
+    } else {
+      let optsWidth: number;
+      if (openAmount > this.optsWidthRightSide) {
+        optsWidth = this.optsWidthRightSide;
+        openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
+      } else if (openAmount < -this.optsWidthLeftSide) {
+        optsWidth = -this.optsWidthLeftSide;
+        openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
+      }
     }
 
     this.setOpenAmount(openAmount, false);
   }
 
   private onEnd(gesture: GestureDetail) {
+    this.el.classList.remove('item-sliding-dragging');
+    this.restoreContentScrollAfterSlide();
+    if (this.isIonicTheme()) {
+      this.onEndIonic(gesture);
+    } else {
+      this.onEndNative(gesture);
+    }
+  }
+
+  private restoreContentScrollAfterSlide() {
     const { contentEl, initialContentScrollY } = this;
     if (contentEl) {
       resetContentScrollY(contentEl, initialContentScrollY);
     }
+  }
 
+  private onEndNative(gesture: GestureDetail) {
     // Check for full swipe conditions with expandable options
     const rawSwipeDistance = Math.abs(gesture.deltaX);
     const direction = gesture.deltaX < 0 ? 'end' : 'start';
@@ -561,11 +797,68 @@ export class ItemSliding implements ComponentInterface {
     }
   }
 
+  private onEndIonic(gesture: GestureDetail) {
+    const velocity = gesture.velocityX;
+    const velocityX = velocity * 1000;
+    const activeDirection = this.getOpenDirectionFromAmount(this.openAmount);
+    if (activeDirection === undefined) {
+      this.setOpenAmount(0, true);
+      return;
+    }
+
+    const optionsWidth = this.getOptionsWidthForDirection(activeDirection);
+    const extraWidth = Math.max(0, Math.abs(this.openAmount) - optionsWidth);
+    const hasExpandable = this.hasExpandableOptions(activeDirection === 'end' ? this.rightOptions : this.leftOptions);
+
+    const closeDirection =
+      activeDirection === 'end'
+        ? velocityX > IONIC_FULL_SWIPE_VELOCITY_THRESHOLD
+        : velocityX < -IONIC_FULL_SWIPE_VELOCITY_THRESHOLD;
+
+    if (closeDirection) {
+      this.setOpenAmount(0, true);
+      return;
+    }
+
+    if (
+      hasExpandable &&
+      (extraWidth >= IONIC_EXPAND_TRIGGER ||
+        (extraWidth > 0 && Math.abs(velocityX) > IONIC_FULL_SWIPE_VELOCITY_THRESHOLD))
+    ) {
+      this.animateIonicFullSwipe(activeDirection).catch(() => {
+        if (this.gesture) {
+          this.gesture.enable(!this.disabled);
+        }
+      });
+      return;
+    }
+
+    const flickOpen =
+      activeDirection === 'end'
+        ? velocityX < -IONIC_OPEN_VELOCITY_THRESHOLD
+        : velocityX > IONIC_OPEN_VELOCITY_THRESHOLD;
+
+    const fullOpen = activeDirection === 'end' ? this.optsWidthRightSide : -this.optsWidthLeftSide;
+    const openThreshold = optionsWidth * IONIC_SNAP_OPEN_RATIO;
+    const shouldSnapOpen = flickOpen || Math.abs(this.openAmount) > openThreshold;
+    const restingPoint = shouldSnapOpen ? fullOpen : 0;
+
+    this.setOpenAmount(restingPoint, true);
+  }
+
   private calculateOptsWidth() {
     this.optsWidthRightSide = 0;
     if (this.rightOptions) {
       this.rightOptions.style.display = 'flex';
       this.optsWidthRightSide = this.rightOptions.offsetWidth;
+      const rightExpandable = this.queryExpandableOption(this.rightOptions);
+      if (rightExpandable) {
+        rightExpandable.style.width = '';
+        this.rightExpandableBaseWidth = Math.max(
+          IONIC_ACTION_BASE_WIDTH,
+          rightExpandable.getBoundingClientRect().width
+        );
+      }
       this.rightOptions.style.display = '';
     }
 
@@ -573,6 +866,11 @@ export class ItemSliding implements ComponentInterface {
     if (this.leftOptions) {
       this.leftOptions.style.display = 'flex';
       this.optsWidthLeftSide = this.leftOptions.offsetWidth;
+      const leftExpandable = this.queryExpandableOption(this.leftOptions);
+      if (leftExpandable) {
+        leftExpandable.style.width = '';
+        this.leftExpandableBaseWidth = Math.max(IONIC_ACTION_BASE_WIDTH, leftExpandable.getBoundingClientRect().width);
+      }
       this.leftOptions.style.display = '';
     }
 
@@ -589,38 +887,31 @@ export class ItemSliding implements ComponentInterface {
     }
 
     const { el } = this;
-
     const style = this.item.style;
+    const previousOpenAmount = this.openAmount;
     this.openAmount = openAmount;
 
-    if (isFinal) {
-      style.transition = '';
+    if (this.isIonicTheme()) {
+      this.updateIonicExpandableFromOpenAmount(openAmount, isFinal, previousOpenAmount);
+    }
+
+    if (this.isIonicTheme() && isFinal) {
+      const closing = Math.abs(openAmount) < Math.abs(previousOpenAmount);
+      if (closing) {
+        this.el.classList.add('item-sliding-transition-snapback');
+      } else {
+        this.el.classList.add('item-sliding-transition-open');
+      }
     }
 
     if (openAmount > 0) {
-      this.state =
-        openAmount >= this.optsWidthRightSide + SWIPE_MARGIN
-          ? SlidingState.End | SlidingState.SwipeEnd
-          : SlidingState.End;
+      const fullSwipe = !this.isIonicTheme() && openAmount >= this.optsWidthRightSide + SWIPE_MARGIN;
+      this.state = fullSwipe ? SlidingState.End | SlidingState.SwipeEnd : SlidingState.End;
     } else if (openAmount < 0) {
-      this.state =
-        openAmount <= -this.optsWidthLeftSide - SWIPE_MARGIN
-          ? SlidingState.Start | SlidingState.SwipeStart
-          : SlidingState.Start;
+      const fullSwipe = !this.isIonicTheme() && openAmount <= -this.optsWidthLeftSide - SWIPE_MARGIN;
+      this.state = fullSwipe ? SlidingState.Start | SlidingState.SwipeStart : SlidingState.Start;
     } else {
-      /**
-       * The sliding options should not be
-       * clickable while the item is closing.
-       */
       el.classList.add('item-sliding-closing');
-
-      /**
-       * Item sliding cannot be interrupted
-       * while closing the item. If it did,
-       * it would allow the item to get into an
-       * inconsistent state where multiple
-       * items are then open at the same time.
-       */
       if (this.gesture) {
         this.gesture.enable(false);
       }
@@ -637,6 +928,7 @@ export class ItemSliding implements ComponentInterface {
       style.transform = '';
       return;
     }
+
     style.transform = `translate3d(${-openAmount}px,0,0)`;
     this.ionDrag.emit({
       amount: openAmount,
