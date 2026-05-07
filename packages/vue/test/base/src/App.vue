@@ -1,17 +1,20 @@
 <template>
   <ion-app>
     <ion-router-outlet />
+    <mode-switcher />
   </ion-app>
 </template>
 
 <script lang="ts">
 import { IonApp, IonRouterOutlet, useIonRouter } from '@ionic/vue';
 import { defineComponent } from 'vue';
+import ModeSwitcher from './components/ModeSwitcher.vue';
 
 export default defineComponent({
   components: {
     IonApp,
-    IonRouterOutlet
+    IonRouterOutlet,
+    ModeSwitcher
   },
   setup() {
     (window as any).debugIonRouter = useIonRouter();
