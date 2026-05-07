@@ -3,14 +3,14 @@
 # Vercel preview build script
 #
 # Builds core component tests (same as before) plus framework test apps
-# (Angular, React, React Router, Vue) so they're all accessible from a single
-# preview URL.
+# (Angular, React, React Router, Vue + Vue Router) so they're all accessible
+# from a single preview URL.
 #
 # Core tests:             /src/components/{name}/test/{scenario}
 # Angular test app:       /angular/
 # React test app:         /react/
 # React Router test app:  /react-router/
-# Vue test app:           /vue/
+# Vue + Vue Router app:   /vue/
 #
 set -e
 
@@ -253,8 +253,9 @@ build_vue_test() {
   ./build.sh "${APP}"
   cd "build/${APP}"
   npm install
+  # sync packs the PR's local @ionic/vue and @ionic/vue-router and installs them
   npm run sync
-  # Vue Router already reads import.meta.env.BASE_URL which Vite sets from --base
+  # Vue Router reads import.meta.env.BASE_URL which Vite sets from --base
   npx vite build --base /vue/
 
   mkdir -p "${OUTPUT_DIR}/vue"
@@ -376,8 +377,8 @@ cat > "${OUTPUT_DIR}/index.html" << 'LANDING_EOF'
         <p>@ionic/react-router routing, tabs, swipe-to-go-back, overlays</p>
       </a>
       <a class="card" href="/vue/">
-        <h2>Vue</h2>
-        <p>@ionic/vue overlays, router, tabs, lifecycle</p>
+        <h2>Vue + Vue Router</h2>
+        <p>@ionic/vue and @ionic/vue-router from this PR: overlays, lifecycle, routing, tabs, nested outlets, swipe-to-go-back</p>
       </a>
     </div>
   </div>

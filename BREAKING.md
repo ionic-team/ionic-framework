@@ -20,6 +20,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Router Outlet](#version-9x-router-outlet)
 - [Framework Specific](#version-9x-framework-specific)
   - [React](#version-9x-react)
+  - [Vue](#version-9x-vue)
 
 <h2 id="version-9x-browser-platform-support">Browser and Platform Support</h2>
 
@@ -251,3 +252,53 @@ The `IonRoute` component follows the same API changes as React Router's `<Route>
 ```
 
 For more information on migrating from React Router v5 to v6, refer to the [React Router v6 Upgrade Guide](https://reactrouter.com/6.28.0/upgrading/v5).
+
+<h4 id="version-9x-vue">Vue</h4>
+
+The `@ionic/vue-router` package now requires Vue Router v5. Vue Router v4 is no longer supported. Vue Router v5 also raises its peer requirement on Vue itself, so the minimum supported Vue version moves to `3.5.0`.
+
+**Minimum Version Requirements**
+| Package    | Supported Version |
+| ---------- | ----------------- |
+| vue-router | 5.0.0+            |
+| vue        | 3.5.0+            |
+
+**Migration**
+
+Vue Router 5 is a transition release that ships no runtime breaking changes for Vue Router 4 consumers, so no application code changes are required for routes, navigation guards, or the `IonRouterOutlet`. Bump the dep ranges in your app's `package.json`:
+
+```diff
+  "dependencies": {
+-   "vue": "^3.4.0",
+-   "vue-router": "^4.0.0"
++   "vue": "^3.5.0",
++   "vue-router": "^5.0.0"
+  }
+```
+
+**Deprecation Warning for `next()` in Navigation Guards**
+
+Vue Router 5 prints a deprecation warning when `next()` is called inside `beforeRouteLeave`, `beforeRouteEnter`, `beforeRouteUpdate`, or `router.beforeEach`. The callback form still works, but Vue Router 6 will remove it. Migrate to the return-value pattern:
+
+```diff
+  // Composition API
+  onBeforeRouteLeave((to, from) => {
+-   if (!confirm('Leave?')) return next(false);
+-   next();
++   if (!confirm('Leave?')) return false;
++   return true;
+  });
+```
+
+```diff
+  // Options API
+  beforeRouteLeave(to, from, next) {
+-   if (!confirm('Leave?')) return next(false);
+-   next();
++ beforeRouteLeave(to, from) {
++   if (!confirm('Leave?')) return false;
++   return true;
+  }
+```
+
+For more information on Vue Router 5, refer to the [Vue Router v4-to-v5 migration guide](https://router.vuejs.org/guide/migration/v4-to-v5.html).
