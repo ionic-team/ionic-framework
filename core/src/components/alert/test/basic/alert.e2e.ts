@@ -103,7 +103,8 @@ configs().forEach(({ config, screenshot, title }) => {
 
 /**
  * The right-border-between-buttons styling only exists in iOS mode (see
- * alert.ios.scss). MD mode has no border to clear, so this is iOS/LTR-only.
+ * alert.ios.scss). MD mode has no border to clear, so this is iOS only.
+ * This behavior does not vary across directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
   test.describe(title('alert: button group wrap'), () => {
