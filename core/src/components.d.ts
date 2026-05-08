@@ -10677,10 +10677,10 @@ declare namespace LocalJSX {
     }
     interface IonBadgeAttributes {
         "color": Color;
-        "hue": 'bold' | 'subtle';
-        "shape": 'soft' | 'round | rectangular';
-        "size": 'small' | 'medium' | 'large';
-        "vertical": 'top' | 'bottom';
+        "hue": IonBadgeHue;
+        "shape": IonBadgeShape;
+        "size": IonBadgeSize;
+        "vertical": IonBadgeVerticalPosition;
     }
     interface IonBreadcrumbAttributes {
         "collapsed": boolean;
@@ -10763,10 +10763,11 @@ declare namespace LocalJSX {
     interface IonChipAttributes {
         "color": Color;
         "outline": boolean;
+        "fill": IonChipFill;
         "disabled": boolean;
-        "hue": 'bold' | 'subtle';
-        "shape": 'soft' | 'round' | 'rectangular';
-        "size": 'small' | 'large';
+        "hue": IonChipHue;
+        "shape": IonChipShape;
+        "size": IonChipSize;
     }
     interface IonColAttributes {
         "offset": string;
@@ -11125,7 +11126,7 @@ declare namespace LocalJSX {
         "value": number;
         "buffer": number;
         "color": Color;
-        "shape": 'round' | 'rectangular';
+        "shape": IonProgressBarShape;
     }
     interface IonRadioAttributes {
         "color": Color;
@@ -11300,7 +11301,7 @@ declare namespace LocalJSX {
         "duration": number;
         "name": SpinnerTypes;
         "paused": boolean;
-        "size": 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+        "size": SpinnerSize;
     }
     interface IonSplitPaneAttributes {
         "contentId": string;
