@@ -41,7 +41,7 @@
         <ion-item router-link="/nested" id="nested">
           <ion-label>Nested Router Outlet</ion-label>
         </ion-item>
-        <ion-item router-link="/swipe-gesture-disabled" id="swipe-gesture-disabled">
+        <ion-item router-link="/swipe-gesture-disabled" router-direction="root" id="swipe-gesture-disabled">
           <ion-label>Swipe Gesture Disabled</ion-label>
         </ion-item>
         <ion-item router-link="/tabs" id="tabs">
