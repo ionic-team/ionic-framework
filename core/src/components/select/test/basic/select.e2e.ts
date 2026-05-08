@@ -981,6 +981,113 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(ionChange).toHaveReceivedEventTimes(1);
     });
 
+    test('should not fire ionChange when confirming the already-selected alert option', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/26789',
+      });
+
+      await page.setContent(
+        `
+        <ion-select aria-label="Fruit" interface="alert" value="apple">
+          <ion-select-option value="apple">Apple</ion-select-option>
+          <ion-select-option value="banana">Banana</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
+      const select = page.locator('ion-select') as E2ELocator;
+      const ionChange = await select.spyOnEvent('ionChange');
+
+      await select.click();
+      await ionAlertDidPresent.next();
+
+      const alert = page.locator('ion-alert');
+      const confirmButton = alert.locator('.alert-button:not(.alert-button-role-cancel)');
+
+      await confirmButton.click();
+      await ionAlertDidDismiss.next();
+
+      expect(ionChange).toHaveReceivedEventTimes(0);
+      await expect(select).toHaveJSProperty('value', 'apple');
+    });
+
+    test('should not fire ionChange when confirming the already-selected alert options (multiple)', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/26789',
+      });
+
+      await page.setContent(
+        `
+        <ion-select aria-label="Fruit" interface="alert" multiple="true">
+          <ion-select-option value="apple">Apple</ion-select-option>
+          <ion-select-option value="banana">Banana</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+
+      const select = page.locator('ion-select') as E2ELocator;
+      await select.evaluate((el: HTMLIonSelectElement) => (el.value = ['apple', 'banana']));
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
+      const ionChange = await select.spyOnEvent('ionChange');
+
+      await select.click();
+      await ionAlertDidPresent.next();
+
+      const alert = page.locator('ion-alert');
+      const confirmButton = alert.locator('.alert-button:not(.alert-button-role-cancel)');
+
+      await confirmButton.click();
+      await ionAlertDidDismiss.next();
+
+      expect(ionChange).toHaveReceivedEventTimes(0);
+    });
+
+    test('should not fire ionChange when tapping the already-selected action-sheet option', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/26789',
+      });
+
+      await page.setContent(
+        `
+        <ion-select aria-label="Fruit" interface="action-sheet" value="apple">
+          <ion-select-option value="apple">Apple</ion-select-option>
+          <ion-select-option value="banana">Banana</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+      const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
+      const select = page.locator('ion-select') as E2ELocator;
+      const ionChange = await select.spyOnEvent('ionChange');
+
+      await select.click();
+      await ionActionSheetDidPresent.next();
+
+      const actionSheet = page.locator('ion-action-sheet');
+      const selectedButton = actionSheet.locator('.action-sheet-button[aria-checked="true"]');
+
+      await selectedButton.click();
+      await ionActionSheetDidDismiss.next();
+
+      expect(ionChange).toHaveReceivedEventTimes(0);
+      await expect(select).toHaveJSProperty('value', 'apple');
+    });
+
     test('should not fire when programmatically setting a valid value', async ({ page }) => {
       await page.setContent(
         `

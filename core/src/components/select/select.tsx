@@ -282,8 +282,41 @@ export class Select implements ComponentInterface {
   }
 
   private setValue(value?: any | null) {
+    if (this.isValueEqual(this.value, value)) {
+      return;
+    }
     this.value = value;
     this.ionChange.emit({ value });
+  }
+
+  private isValueEqual(currentValue: any, newValue: any): boolean {
+    if (this.multiple) {
+      const currentArr = Array.isArray(currentValue) ? currentValue : [];
+      const newArr = Array.isArray(newValue) ? newValue : [];
+      if (currentArr.length !== newArr.length) {
+        return false;
+      }
+      // Multiset compare: each new value must match a distinct current value.
+      // A plain `every(isOptionSelected)` would accept ['a','a'] as equal to
+      // ['a','b'] when both 'a' and 'b' map to options whose values overlap.
+      const remaining = currentArr.slice();
+      return newArr.every((val: any) => {
+        const idx = remaining.findIndex((c: any) => compareOptions(c, val, this.compareWith));
+        if (idx === -1) {
+          return false;
+        }
+        remaining.splice(idx, 1);
+        return true;
+      });
+    }
+
+    if (currentValue == null && newValue == null) {
+      return true;
+    }
+    if (currentValue == null || newValue == null) {
+      return false;
+    }
+    return compareOptions(currentValue, newValue, this.compareWith);
   }
 
   async connectedCallback() {
