@@ -173,13 +173,10 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, config }) => {
       const peek = config.direction === 'rtl' ? 120 : -120;
       await dragElementBy(item, page, peek);
 
-      // 2) Fast flick in the same direction as “full swipe”
+      // 2) Fast flick in the same direction as “full swipe” (low steps = high velocity)
       const startX = config.direction === 'rtl' ? box.x + 40 : box.x + box.width - 40;
-      const endX = config.direction === 'rtl' ? box.x + box.width - 40 : box.x + 40;
-      await page.mouse.move(startX, y);
-      await page.mouse.down();
-      await page.mouse.move(endX, y, { steps: 2 }); // try 1–3; lower = faster
-      await page.mouse.up();
+      const flickBy = config.direction === 'rtl' ? box.width - 80 : -(box.width - 80);
+      await dragElementBy(item, page, flickBy, 0, startX, y, true, 2);
       await ionSwipe.next();
       expect(ionSwipe).toHaveReceivedEventTimes(1);
     });
@@ -208,13 +205,10 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, config }) => {
       const peek = config.direction === 'rtl' ? -120 : 120;
       await dragElementBy(item, page, peek);
 
-      // 2) Fast flick in the same direction as “full swipe”
+      // 2) Fast flick in the same direction as “full swipe” (low steps = high velocity)
       const startX = config.direction === 'rtl' ? box.x + box.width - 40 : box.x + 40;
-      const endX = config.direction === 'rtl' ? box.x + 40 : box.x + box.width - 40;
-      await page.mouse.move(startX, y);
-      await page.mouse.down();
-      await page.mouse.move(endX, y, { steps: 2 });
-      await page.mouse.up();
+      const flickBy = config.direction === 'rtl' ? -(box.width - 80) : box.width - 80;
+      await dragElementBy(item, page, flickBy, 0, startX, y, true, 2);
       await ionSwipe.next();
       expect(ionSwipe).toHaveReceivedEventTimes(1);
     });
@@ -242,13 +236,10 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, config }) => {
       const peek = config.direction === 'rtl' ? -120 : 120;
       await dragElementBy(item, page, peek);
 
-      // 2) Fast flick in the same direction as “full swipe”
+      // 2) Fast flick in the same direction as “full swipe” (low steps = high velocity)
       const startX = config.direction === 'rtl' ? box.x + box.width - 40 : box.x + 40;
-      const endX = config.direction === 'rtl' ? box.x + 40 : box.x + box.width - 40;
-      await page.mouse.move(startX, y);
-      await page.mouse.down();
-      await page.mouse.move(endX, y, { steps: 2 });
-      await page.mouse.up();
+      const flickBy = config.direction === 'rtl' ? -(box.width - 80) : box.width - 80;
+      await dragElementBy(item, page, flickBy, 0, startX, y, true, 2);
       await page.waitForTimeout(FULL_ANIMATION_MS);
 
       const openAmount = await item.evaluate((el: HTMLIonItemSlidingElement) => el.getOpenAmount());
@@ -313,13 +304,10 @@ configs({ modes: ['md'], directions: ['ltr', 'rtl'] }).forEach(({ title, config 
 
       // Few steps = high velocity gesture
       const startX = config.direction === 'rtl' ? box.x + 30 : box.x + box.width - 10;
-      const endX = config.direction === 'rtl' ? box.x + box.width - 10 : box.x + 30;
       const startY = box.y + box.height / 2;
+      const dragByX = config.direction === 'rtl' ? box.width - 40 : -(box.width - 40);
 
-      await page.mouse.move(startX, startY);
-      await page.mouse.down();
-      await page.mouse.move(endX, startY, { steps: 3 });
-      await page.mouse.up();
+      await dragElementBy(item, page, dragByX, 0, startX, startY, true, 3);
       await ionSwipe.next();
 
       expect(ionSwipe).toHaveReceivedEventTimes(1);
