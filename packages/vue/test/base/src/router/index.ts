@@ -165,6 +165,28 @@ const routes: Array<RouteRecordRaw> = [
     path: '/tabs-basic',
     component: () => import('@/views/TabsBasic.vue')
   },
+  {
+    path: '/tabs-similar-prefixes/',
+    component: () => import('@/views/tabs-similar-prefixes/TabsSimilarPrefixes.vue'),
+    children: [
+      {
+        path: '',
+        redirect: '/tabs-similar-prefixes/home'
+      },
+      {
+        path: 'home',
+        component: () => import('@/views/tabs-similar-prefixes/Home.vue'),
+      },
+      {
+        path: 'home2',
+        component: () => import('@/views/tabs-similar-prefixes/Home2.vue'),
+      },
+      {
+        path: 'home3',
+        component: () => import('@/views/tabs-similar-prefixes/Home3.vue'),
+      }
+    ]
+  },
 ]
 
 const router = createRouter({

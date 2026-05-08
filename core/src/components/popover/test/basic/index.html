@@ -76,6 +76,20 @@
         >
           Popover With Textarea
         </button>
+        <button
+          id="popover-with-input"
+          class="expand"
+          onclick="presentPopover({ component: 'input-page', event: event, htmlAttributes: { 'data-testid': 'popover-with-input'} })"
+        >
+          Popover With Input
+        </button>
+        <button
+          id="popover-with-buttons"
+          class="expand"
+          onclick="presentPopover({ component: 'buttons-page', event: event, htmlAttributes: { 'data-testid': 'popover-with-buttons'} })"
+        >
+          Popover With Buttons
+        </button>
       </ion-content>
 
       <style>
@@ -225,6 +239,38 @@
         }
 
         customElements.define('textarea-page', TextAreaPage);
+
+        class InputPage extends HTMLElement {
+          constructor() {
+            super();
+          }
+
+          connectedCallback() {
+            this.innerHTML = `
+          <ion-content>
+            <ion-input aria-label="input" value="the cursor in this <ion-input> must be able to be moved with the arrow keys and home and end keys"></ion-input>
+            <input value="the cursor in this <input> must be able to be moved with the arrow keys and home and end keys"></input>
+          </ion-content>
+        `;
+          }
+        }
+        customElements.define('input-page', InputPage);
+
+        class ButtonsPage extends HTMLElement {
+          constructor() {
+            super();
+          }
+
+          connectedCallback() {
+            this.innerHTML = `
+          <ion-content>
+            <ion-button>Button 1</ion-button>
+            <ion-button>Button 2</ion-button>
+          </ion-content>
+        `;
+          }
+        }
+        customElements.define('buttons-page', ButtonsPage);
       </script>
     </ion-app>
   </body>

@@ -53,7 +53,7 @@ import { configureDismissInteraction, configureKeyboardInteraction, configureTri
   styleUrls: {
     ios: 'popover.ios.scss',
     md: 'popover.md.scss',
-    ionic: 'popover.md.scss',
+    ionic: 'popover.ionic.scss',
   },
   shadow: true,
 })
@@ -528,7 +528,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
       await waitForMount();
     }
 
-    await present<PopoverPresentOptions>(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
+    await present<PopoverPresentOptions>(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, undefined, {
       event: event || this.event,
       size: this.size,
       trigger: this.triggerEl,

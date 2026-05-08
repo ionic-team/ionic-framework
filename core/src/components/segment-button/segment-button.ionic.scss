@@ -10,7 +10,7 @@
    */
   --background: none;
   --background-checked: var(--background);
-  --color: #{globals.$ion-primitives-neutral-1000};
+  --color: #{globals.$ion-primitives-neutral-1200};
   --color-checked: #{globals.$ion-semantics-primary-base};
   --color-disabled: #{globals.$ion-primitives-neutral-500};
   --border-width: #{globals.$ion-border-size-025};
@@ -44,13 +44,15 @@
   gap: globals.$ion-space-100;
 }
 
+::slotted(*) {
+  color: var(--color);
+}
+
 // Segment Button Label
 // --------------------------------------------------
 
 ::slotted(ion-label) {
   @include globals.typography(globals.$ion-body-action-sm);
-
-  color: var(--color);
 }
 
 // Segment Button Icon
@@ -59,23 +61,21 @@
 ::slotted(ion-icon) {
   width: globals.$ion-scale-600;
   height: globals.$ion-scale-600;
-
-  color: var(--color);
 }
 
 // Segment Button: Checked
+// All slot content should have the checked color even when it's not label or icon
 // --------------------------------------------------
 
-:host(.segment-button-checked) ::slotted(ion-label),
-:host(.segment-button-checked) ::slotted(ion-icon) {
+:host(.segment-button-checked) ::slotted(*) {
   color: var(--color-checked);
 }
 
 // Segment Button: Disabled
+// All slot content should have the disabled color even when it's not label or icon
 // --------------------------------------------------
 
-:host(.segment-button-disabled) ::slotted(ion-label),
-:host(.segment-button-disabled) ::slotted(ion-icon) {
+:host(.segment-button-disabled) ::slotted(*) {
   color: var(--color-disabled);
 }
 

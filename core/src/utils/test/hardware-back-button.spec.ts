@@ -54,6 +54,47 @@ describe('Hardware Back Button', () => {
     dispatchBackButtonEvent();
     expect(cbSpyTwo).toHaveBeenCalled();
   });
+
+  it('should fall back to history.back() when no handlers are registered', () => {
+    const historyBackSpy = jest.fn();
+    const originalBack = win?.history?.back;
+    if (win?.history) {
+      win.history.back = historyBackSpy;
+    }
+
+    // Don't register any ionBackButton handlers
+    dispatchBackButtonEvent();
+
+    expect(historyBackSpy).toHaveBeenCalled();
+
+    // Restore original
+    if (win?.history && originalBack) {
+      win.history.back = originalBack;
+    }
+  });
+
+  it('should not call history.back() when a handler is registered', () => {
+    const historyBackSpy = jest.fn();
+    const originalBack = win?.history?.back;
+    if (win?.history) {
+      win.history.back = historyBackSpy;
+    }
+
+    const cbSpy = jest.fn();
+    document.addEventListener('ionBackButton', (ev) => {
+      (ev as BackButtonEvent).detail.register(0, cbSpy);
+    });
+
+    dispatchBackButtonEvent();
+
+    expect(cbSpy).toHaveBeenCalled();
+    expect(historyBackSpy).not.toHaveBeenCalled();
+
+    // Restore original
+    if (win?.history && originalBack) {
+      win.history.back = originalBack;
+    }
+  });
 });
 
 describe('Experimental Close Watcher', () => {

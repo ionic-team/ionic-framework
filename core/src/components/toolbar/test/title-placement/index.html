@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toolbar - Title Placement</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header id="default-placement">
+        <ion-toolbar>
+          <ion-title>Default Placement</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button>
+              <ion-icon slot="icon-only" name="menu"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Default Placement</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-title>Default Placement</ion-title>
+          <ion-buttons slot="primary">
+            <ion-button>
+              <ion-icon slot="icon-only" name="search"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-header>
+        <ion-toolbar title-placement="start">
+          <ion-title>Start Placement</ion-title>
+        </ion-toolbar>
+        <ion-toolbar title-placement="start">
+          <ion-buttons slot="start">
+            <ion-button>
+              <ion-icon slot="icon-only" name="menu"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Start Placement</ion-title>
+        </ion-toolbar>
+        <ion-toolbar title-placement="start">
+          <ion-title>Start Placement</ion-title>
+          <ion-buttons slot="primary">
+            <ion-button>
+              <ion-icon slot="icon-only" name="search"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-header>
+        <ion-toolbar title-placement="center">
+          <ion-title>Center Placement</ion-title>
+        </ion-toolbar>
+        <ion-toolbar title-placement="center">
+          <ion-buttons slot="start">
+            <ion-button>
+              <ion-icon slot="icon-only" name="menu"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Center Placement</ion-title>
+        </ion-toolbar>
+        <ion-toolbar title-placement="center">
+          <ion-title>Center Placement</ion-title>
+          <ion-buttons slot="primary">
+            <ion-button>
+              <ion-icon slot="icon-only" name="search"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-header>
+        <ion-toolbar title-placement="end">
+          <ion-title>End Placement</ion-title>
+        </ion-toolbar>
+        <ion-toolbar title-placement="end">
+          <ion-buttons slot="start">
+            <ion-button>
+              <ion-icon slot="icon-only" name="menu"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>End Placement</ion-title>
+        </ion-toolbar>
+        <ion-toolbar title-placement="end">
+          <ion-title>End Placement</ion-title>
+          <ion-buttons slot="primary">
+            <ion-button>
+              <ion-icon slot="icon-only" name="search"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-footer>
+        <ion-button onclick="toggleTitlePlacement('start')">Start</ion-button>
+        <ion-button onclick="toggleTitlePlacement('center')">Center</ion-button>
+        <ion-button onclick="toggleTitlePlacement('end')">End</ion-button>
+      </ion-footer>
+    </ion-app>
+
+    <script>
+      const defaultPlacementToolbars = document.querySelectorAll('#default-placement ion-toolbar');
+
+      function toggleTitlePlacement(placement) {
+        defaultPlacementToolbars.forEach((toolbar) => {
+          toolbar.titlePlacement = placement;
+        });
+      }
+    </script>
+
+    <style>
+      ion-footer {
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+
+        gap: 10px;
+        padding: 8px;
+      }
+    </style>
+  </body>
+</html>
