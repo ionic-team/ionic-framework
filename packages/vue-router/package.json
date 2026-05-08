@@ -3,7 +3,6 @@
   "version": "8.8.6",
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
-    "test.spec": "jest",
     "eslint": "eslint src",
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
@@ -50,32 +49,15 @@
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@rollup/plugin-typescript": "^11.1.5",
-    "@types/jest": "^28.1.1",
     "@types/node": "^14.10.1",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "eslint": "^7.32.0",
-    "jest": "^28.1.1",
-    "jest-environment-jsdom": "^28.1.1",
     "prettier": "^2.8.3",
     "rimraf": "^3.0.2",
     "rollup": "^4.2.0",
-    "ts-jest": "^28.0.5",
-    "typescript": "^4.7.3",
-    "vue": "^3.2.37",
-    "vue-router": "^4.0.16"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.(js|ts|tsx)$": "<rootDir>/test/jest.preprocessor.js"
-    },
-    "testRegex": "(\\.(test|spec))\\.(ts?|tsx?|jsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json",
-      "jsx"
-    ]
+    "typescript": "^5.7.3",
+    "vue": "^3.5.0",
+    "vue-router": "^5.0.6"
   }
 }

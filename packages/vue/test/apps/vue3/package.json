@@ -12,6 +12,9 @@
     "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore --fix src",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
     "cypress.open": "cypress open",
+    "playwright": "node_modules/.bin/playwright test",
+    "playwright.open": "node_modules/.bin/playwright test --ui",
+    "playwright.headed": "node_modules/.bin/playwright test --headed",
     "start": "npm run dev",
     "sync": "sh ./scripts/sync.sh"
   },
@@ -19,10 +22,11 @@
     "@ionic/vue": "^6.0.12",
     "@ionic/vue-router": "^6.0.12",
     "ionicons": "^8.0.13",
-    "vue": "^3.4.30",
-    "vue-router": "^4.2.5"
+    "vue": "^3.5.0",
+    "vue-router": "^5.0.6"
   },
   "devDependencies": {
+    "@playwright/test": "^1.48.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vitejs/plugin-vue": "^3.1.0",
