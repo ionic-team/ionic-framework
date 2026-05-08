@@ -436,7 +436,8 @@ export const IonFooter: StencilVueComponent<JSX.IonFooter> = /*@__PURE__*/ defin
 export const IonGallery: StencilVueComponent<JSX.IonGallery> = /*@__PURE__*/ defineContainer<JSX.IonGallery>('ion-gallery', defineIonGallery, [
   'layout',
   'order',
-  'columns'
+  'columns',
+  'gap'
 ]);
 
 

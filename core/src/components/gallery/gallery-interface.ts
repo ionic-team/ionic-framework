@@ -1,10 +1,11 @@
-export interface GalleryBreakpointColumns {
-  xs?: string | number;
-  sm?: string | number;
-  md?: string | number;
-  lg?: string | number;
-  xl?: string | number;
-  xxl?: string | number;
+export interface GalleryBreakpoints<T = string | number> {
+  xs?: T;
+  sm?: T;
+  md?: T;
+  lg?: T;
+  xl?: T;
+  xxl?: T;
 }
 
-export type GalleryColumns = GalleryBreakpointColumns | string | number;
+export type GalleryColumns = GalleryBreakpoints | string | number;
+export type GalleryGap = GalleryBreakpoints | string | number;

@@ -4,9 +4,6 @@
 // --------------------------------------------------
 
 :host {
-  /**
-   * @prop --ion-gallery-gap: Space between gallery items
-   */
   display: grid;
   grid-template-columns: repeat(var(--internal-gallery-columns, 2), minmax(0, 1fr));
 }
@@ -15,7 +12,7 @@
 // --------------------------------------------------
 
 :host(.gallery-layout-uniform) {
-  gap: var(--ion-gallery-gap, 16px);
+  gap: var(--internal-gallery-gap, 16px);
 }
 
 // Target all slotted elements in the uniform layout. This ensures that divs
@@ -31,7 +28,7 @@
 :host(.gallery-layout-masonry) {
   align-items: start;
 
-  column-gap: var(--ion-gallery-gap, 16px);
+  column-gap: var(--internal-gallery-gap, 16px);
   row-gap: 0;
 
   grid-auto-rows: 2px;
@@ -43,7 +40,7 @@
   // Clear min-height so items size to their content
   min-height: unset;
 
-  margin-bottom: var(--ion-gallery-gap, 16px);
+  margin-bottom: var(--internal-gallery-gap, 16px);
 }
 
 // Slotted elements

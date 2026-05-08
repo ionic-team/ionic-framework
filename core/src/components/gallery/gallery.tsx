@@ -4,8 +4,8 @@ import { printIonWarning } from '@utils/logging';
 
 import { getIonTheme } from '../../global/ionic-global';
 
-import { DEFAULT_COLUMNS } from './gallery-constants';
-import type { GalleryBreakpointColumns, GalleryColumns } from './gallery-interface';
+import { DEFAULT_COLUMNS, DEFAULT_GAP } from './gallery-constants';
+import type { GalleryBreakpoints, GalleryColumns, GalleryGap } from './gallery-interface';
 
 // TODO(FW-7285): Replace with global breakpoints
 const BREAKPOINTS = {
@@ -38,9 +38,10 @@ export class Gallery implements ComponentInterface {
   private resizeObserver?: ResizeObserver;
   private lastWidth?: number;
 
-  // Keep track of whether we've warned about invalid columns to avoid
-  // duplicate warnings on screen resize.
+  // Keep track of whether we've warned about invalid columns and invalid
+  // gap properties to avoid duplicate warnings on screen resize.
   private hasWarnedInvalidColumns = false;
+  private hasWarnedInvalidGap = false;
 
   /**
    * The visual layout of the gallery. When `uniform`, rows take up the height
@@ -65,18 +66,26 @@ export class Gallery implements ComponentInterface {
    */
   @Prop() columns: GalleryColumns = DEFAULT_COLUMNS;
 
+  /**
+   * The space between gallery items. Accepts CSS lengths like `16px`, `1rem`,
+   * or numbers (treated as pixel values). Can also be set as a breakpoint map
+   * (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`).
+   */
+  @Prop() gap: GalleryGap = DEFAULT_GAP;
+
+  @Watch('columns')
+  @Watch('gap')
   @Watch('layout')
   @Watch('order')
-  @Watch('columns')
-  protected layoutChanged() {
-    this.updateResponsiveColumns(true);
+  protected propertiesChanged() {
+    this.updateResponsiveStyles(true);
     this.scheduleMasonryResize();
   }
 
   componentDidLoad() {
-    this.updateResponsiveColumns(true);
+    this.updateResponsiveStyles(true);
     this.resizeObserver = new ResizeObserver(() => {
-      this.updateResponsiveColumns();
+      this.updateResponsiveStyles();
       this.scheduleMasonryResize();
     });
     this.resizeObserver.observe(this.el);
@@ -140,11 +149,11 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Normalize a single column value (`columns` as a number, or one entry from
+   * Normalize a single column value (`columns` as a number, string, or one entry from
    * a `columns` breakpoint map) to a positive integer. Returns `undefined` when
    * the input cannot be interpreted as a finite number.
    */
-  private sanitizeColumns(columns: number | string | undefined) {
+  private sanitizeColumns(columns: number | string | undefined): number | undefined {
     if (columns === undefined) {
       return undefined;
     }
@@ -159,20 +168,49 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Check if the value is a breakpoint columns object.
+   * Normalize a single gap value (`gap` as a number, string, or one entry from
+   * a `gap` breakpoint map) to a CSS length string. Returns `undefined` when
+   * the input cannot be interpreted as a valid CSS length.
    */
-  private isBreakpointColumns(value: GalleryColumns): value is GalleryBreakpointColumns {
+  private sanitizeGap(gap: number | string | undefined): string | undefined {
+    if (gap === undefined) {
+      return undefined;
+    }
+
+    const normalizedGap = typeof gap === 'string' ? gap.trim() : gap;
+    if (normalizedGap === '' || typeof normalizedGap === 'object') {
+      return undefined;
+    }
+
+    const numericGap = Number(normalizedGap);
+    if (Number.isFinite(numericGap)) {
+      return numericGap < 0 ? undefined : `${numericGap}px`;
+    }
+
+    if (typeof normalizedGap !== 'string') {
+      return undefined;
+    }
+
+    return normalizedGap;
+  }
+
+  /**
+   * Check if the value is a breakpoint map object.
+   */
+  private isBreakpointMap(value: unknown): value is GalleryBreakpoints {
     return typeof value === 'object' && value !== null && !Array.isArray(value);
   }
 
   /**
-   * Check if the breakpoint columns object has any invalid values.
-   * Returns true if any value is undefined or not a positive integer.
+   * Check if the breakpoint map has any invalid values for the provided sanitizer.
    */
-  private hasInvalidBreakpointColumns(breakpointColumns: GalleryBreakpointColumns) {
+  private hasInvalidBreakpointMap(
+    breakpointMap: GalleryBreakpoints,
+    sanitizeValue: (value: string | number | undefined) => unknown
+  ) {
     for (const breakpoint of BREAKPOINT_ORDER) {
-      const value = breakpointColumns[breakpoint];
-      if (value !== undefined && this.sanitizeColumns(value) === undefined) {
+      const value = breakpointMap[breakpoint];
+      if (value !== undefined && sanitizeValue(value) === undefined) {
         return true;
       }
     }
@@ -181,24 +219,56 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
+   * Resolve a responsive value from a breakpoint map.
+   * Uses a breakpoint-specific default when custom values are missing/invalid.
+   */
+  private resolveFromBreakpoints<T>(
+    width: number,
+    breakpointMap: GalleryBreakpoints,
+    sanitizeProvided: (value: string | number | undefined) => T | undefined,
+    getSanitizedDefault: (breakpoint: GalleryBreakpoint) => T | undefined
+  ) {
+    let resolvedValue: T | undefined;
+
+    for (const bp of BREAKPOINT_ORDER) {
+      const providedValue = breakpointMap[bp];
+      const sanitizedProvided = sanitizeProvided(providedValue);
+      const sanitizedDefault = getSanitizedDefault(bp);
+      const resolved =
+        providedValue === undefined || sanitizedProvided === undefined ? sanitizedDefault : sanitizedProvided;
+
+      if (resolved !== undefined && width >= BREAKPOINTS[bp]) {
+        resolvedValue = resolved;
+      }
+    }
+
+    return resolvedValue;
+  }
+
+  /**
    * Get the columns from a responsive breakpoint map.
    * Returns the columns for the last matching breakpoint.
    */
-  private getColumnsFromBreakpointColumns(width: number, breakpointColumns: GalleryBreakpointColumns) {
-    let columns: number | undefined;
-    for (const bp of BREAKPOINT_ORDER) {
-      const customValue = breakpointColumns[bp];
-      const parsedCustom = this.sanitizeColumns(customValue);
-      const parsedDefault = this.sanitizeColumns(DEFAULT_COLUMNS[bp]);
+  private getColumnsFromBreakpointMap(width: number, breakpointMap: GalleryBreakpoints) {
+    return this.resolveFromBreakpoints(
+      width,
+      breakpointMap,
+      (value) => this.sanitizeColumns(value),
+      (bp) => this.sanitizeColumns(DEFAULT_COLUMNS[bp])
+    );
+  }
 
-      // Use valid custom values when present; otherwise fall back to defaults per breakpoint.
-      const resolved = customValue === undefined || parsedCustom === undefined ? parsedDefault : parsedCustom;
-
-      if (resolved !== undefined && width >= BREAKPOINTS[bp]) {
-        columns = resolved;
-      }
-    }
-    return columns;
+  /**
+   * Get the gap from a responsive breakpoint map.
+   * Returns the gap for the last matching breakpoint.
+   */
+  private getGapFromBreakpointMap(width: number, breakpointMap: GalleryBreakpoints) {
+    return this.resolveFromBreakpoints(
+      width,
+      breakpointMap,
+      (value) => this.sanitizeGap(value),
+      () => this.sanitizeGap(DEFAULT_GAP)
+    );
   }
 
   /**
@@ -216,16 +286,31 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
+   * Warn about an invalid gap value when it is set to a negative number
+   * or a breakpoint map object with invalid values.
+   */
+  private warnInvalidGap(gap: GalleryGap) {
+    printIonWarning(
+      `[ion-gallery] - Invalid "gap" value (${JSON.stringify(
+        gap
+      )}). Expected a non-negative number, CSS length string, or breakpoint map object (e.g. { xs: 8, md: "1rem" }).`,
+      this.el
+    );
+    this.hasWarnedInvalidGap = true;
+  }
+
+  /**
    * Resolve the active columns value for the current width. Falls back to
    * the default responsive columns when the provided prop is invalid.
    */
   private getColumnsForWidth(width: number) {
     const { columns, hasWarnedInvalidColumns } = this;
-    const isBreakpointColumns = this.isBreakpointColumns(columns);
-    const hasInvalidBreakpointColumns = isBreakpointColumns && this.hasInvalidBreakpointColumns(columns);
+    const isBreakpointColumns = this.isBreakpointMap(columns);
+    const hasInvalidBreakpointColumns =
+      isBreakpointColumns && this.hasInvalidBreakpointMap(columns, (value) => this.sanitizeColumns(value));
 
     const sanitizedColumns = isBreakpointColumns
-      ? this.getColumnsFromBreakpointColumns(width, columns)
+      ? this.getColumnsFromBreakpointMap(width, columns)
       : this.sanitizeColumns(columns);
 
     if (
@@ -239,14 +324,39 @@ export class Gallery implements ComponentInterface {
       return sanitizedColumns;
     }
 
-    return this.getColumnsFromBreakpointColumns(width, DEFAULT_COLUMNS);
+    return this.getColumnsFromBreakpointMap(width, DEFAULT_COLUMNS);
   }
 
   /**
-   * Update the responsive columns for the gallery.
-   * This is used to update the columns when the component width changes.
+   * Resolve the active gap value for the current width.
    */
-  private updateResponsiveColumns(force = false) {
+  private getGapForWidth(width: number) {
+    const { gap, hasWarnedInvalidGap } = this;
+    const providedGap = gap ?? DEFAULT_GAP;
+
+    const isBreakpointGap = this.isBreakpointMap(providedGap);
+    const hasInvalidBreakpointGap =
+      isBreakpointGap && this.hasInvalidBreakpointMap(providedGap, (value) => this.sanitizeGap(value));
+    const sanitizedGap = isBreakpointGap
+      ? this.getGapFromBreakpointMap(width, providedGap)
+      : this.sanitizeGap(providedGap);
+
+    if (!hasWarnedInvalidGap && (hasInvalidBreakpointGap || (!isBreakpointGap && sanitizedGap === undefined))) {
+      this.warnInvalidGap(providedGap);
+    }
+
+    if (sanitizedGap !== undefined) {
+      return sanitizedGap;
+    }
+
+    return this.sanitizeGap(DEFAULT_GAP);
+  }
+
+  /**
+   * Update the responsive styles for the gallery. This is used to update
+   * the columns and gap when the component width changes.
+   */
+  private updateResponsiveStyles(force = false) {
     const width = this.el.getBoundingClientRect().width;
 
     // Only update the columns if the component width has changed by more than
@@ -260,6 +370,9 @@ export class Gallery implements ComponentInterface {
 
     const columns = this.getColumnsForWidth(width);
     this.el.style.setProperty('--internal-gallery-columns', `${columns}`);
+
+    const gap = this.getGapForWidth(width);
+    this.el.style.setProperty('--internal-gallery-gap', `${gap}`);
   }
 
   /**
