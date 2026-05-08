@@ -14,6 +14,34 @@ The React test app supports syncing your locally built changes for validation.
 
 From here you can either build the application or start a local dev server. When re-syncing changes, you will need to wipe the build cache in `node_modules/.cache` and restart the dev server/re-build.
 
+## Running the Test Suites
+
+`packages/react-router/scripts/test_runner.sh` orchestrates the React Router test suites end to end: it builds `@ionic/core`, `@ionic/react`, and `@ionic/react-router`, builds the test app, syncs local packages, starts the dev server, and runs Cypress and Playwright in sequence.
+
+```shell
+# Full run (build + Cypress + Playwright)
+sh packages/react-router/scripts/test_runner.sh
+
+# Reuse the existing build/<app> directory and run only Playwright
+sh packages/react-router/scripts/test_runner.sh --skip-build --playwright-only
+
+# Filter Playwright to a single spec
+sh packages/react-router/scripts/test_runner.sh --playwright-only --spec swipe
+
+# Build/sync and serve the app for manual testing (no specs run)
+sh packages/react-router/scripts/test_runner.sh --serve
+```
+
+Useful flags:
+
+| Flag | Effect |
+|------|--------|
+| `--skip-build` | Reuse existing `packages/react-router/test/build/<app>/` instead of rebuilding |
+| `--playwright-only` | Run only the Playwright e2e suite |
+| `--spec <pattern>` | Filter Playwright specs by file path |
+| `--app <name>` | Pick a different app variant from `packages/react-router/test/apps/` (default: `reactrouter6-react18`) |
+| `--serve` | Start the dev server only and open the browser |
+
 ## Test App Build Structure
 
 Unlike other test applications, these test apps are broken up into multiple directories. These directories are then combined to create a single application. This allows us to share common application code, tests, etc so that each app is being tested the same way. Below details the different pieces that help create a single test application.

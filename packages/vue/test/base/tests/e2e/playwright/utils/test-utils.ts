@@ -4,15 +4,6 @@ function pageSelector(pageId: string): string {
   return `.ion-page[data-pageid="${pageId}"]`;
 }
 
-/**
- * Appends ionic:_testing=true to a URL to disable Ionic animations.
- * Animation-specific tests should NOT use this; they need real animations.
- */
-export function withTestingMode(path: string): string {
-  const separator = path.includes('?') ? '&' : '?';
-  return `${path}${separator}ionic:_testing=true`;
-}
-
 export async function ionPageVisible(page: Page, pageId: string): Promise<void> {
   const locator = page.locator(pageSelector(pageId));
   await expect(locator).toHaveCount(1);

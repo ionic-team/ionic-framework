@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test } from './utils/test-base';
 import {
   ionPageVisible,
   ionPageHidden,
@@ -6,18 +6,17 @@ import {
   ionBackClick,
   routerPush,
   routerReplace,
-  withTestingMode,
 } from './utils/test-utils';
 
 /**
  * Nested outlets exercise viewStacks indexing by outletId across inner
- * and outer stacks. Animations are disabled via withTestingMode for
- * deterministic assertions.
+ * and outer stacks. Animations are disabled by default via the test-base
+ * fixture so the tests are deterministic.
  */
 
 test.describe('Nested outlets', () => {
   test('navigates within the inner outlet without affecting the outer', async ({ page }) => {
-    await page.goto(withTestingMode('/nested'));
+    await page.goto('/nested');
     await ionPageVisible(page, 'nestedchild');
 
     await page.locator('#nested-child-two').click();
@@ -26,7 +25,7 @@ test.describe('Nested outlets', () => {
   });
 
   test('back button in inner outlet returns to the previous inner page', async ({ page }) => {
-    await page.goto(withTestingMode('/nested'));
+    await page.goto('/nested');
     await ionPageVisible(page, 'nestedchild');
 
     await page.locator('#nested-child-two').click();
@@ -37,7 +36,7 @@ test.describe('Nested outlets', () => {
   });
 
   test('navigating across nested outlet contexts and back restores the outer', async ({ page }) => {
-    await page.goto(withTestingMode('/nested'));
+    await page.goto('/nested');
     await ionPageVisible(page, 'nestedchild');
 
     // Navigate from inner outlet into a tabs context (a different outlet).
@@ -53,7 +52,7 @@ test.describe('Nested outlets', () => {
   });
 
   test('replacing an inner-outlet route preserves the outer back path', async ({ page }) => {
-    await page.goto(withTestingMode('/'));
+    await page.goto('/');
     await ionPageVisible(page, 'home');
 
     await routerPush(page, '/nested');

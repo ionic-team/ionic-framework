@@ -1,11 +1,11 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from './utils/test-base';
+import type { Page } from '@playwright/test';
 import {
   ionPageVisible,
   ionPageDoesNotExist,
   routerGo,
   routerPush,
   routerReplace,
-  withTestingMode,
 } from './utils/test-utils';
 
 /**
@@ -37,7 +37,7 @@ test.describe('history.state.replaced flag', () => {
   // detail, which is a vue-router implementation choice the wrapper does
   // not depend on.
   test('replaced flag tracks router.replace and clears on push', async ({ page }) => {
-    await page.goto(withTestingMode('/'));
+    await page.goto('/');
     await ionPageVisible(page, 'home');
 
     // Push first to establish a clean baseline (replaced=false).
@@ -61,7 +61,7 @@ test.describe('history.state.replaced flag', () => {
   // Sequence: /home -> push /a -> replace /b -> replace /c. Going back
   // from /c returns directly to /home, not /b.
   test('successive replaces do not accumulate history entries', async ({ page }) => {
-    await page.goto(withTestingMode('/'));
+    await page.goto('/');
     await ionPageVisible(page, 'home');
 
     await routerPush(page, '/navigation');
@@ -87,7 +87,7 @@ test.describe('history.state.replaced flag', () => {
   // push A -> replace B -> push C. Going back from C lands on B, and A
   // (replaced away) is no longer reachable.
   test('push after replace truncates the location history', async ({ page }) => {
-    await page.goto(withTestingMode('/'));
+    await page.goto('/');
     await ionPageVisible(page, 'home');
 
     await routerPush(page, '/navigation');

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, withAnimations } from './utils/test-base';
 import { ionPageVisible, ionPageHidden, routerPush, ionBackClick, ionSwipeToGoBack } from './utils/test-utils';
 import {
   captureClassChanges,
@@ -10,10 +10,11 @@ import {
 /**
  * Animation correctness tests for the @ionic/vue-router transition pipeline.
  *
- * These tests intentionally do NOT pass ionic:_testing=true; animations must
- * actually run for the assertions to be meaningful. iOS mode is forced because
- * its forward push is the most visible animation and the one that historically
- * regressed (e.g. ion-page-hidden flashing the leaving page).
+ * These tests opt out of the test-base default via `withAnimations()` because
+ * animations must actually run for the assertions to be meaningful. iOS mode
+ * is forced because its forward push is the most visible animation and the
+ * one that historically regressed (e.g. ion-page-hidden flashing the leaving
+ * page).
  */
 
 test.describe('Vue Router Animations', () => {
@@ -22,7 +23,7 @@ test.describe('Vue Router Animations', () => {
   // applies display:none, so it must never appear on the leaving page while
   // the entering animation is running.
   test('forward push: leaving page never receives ion-page-hidden mid-transition', async ({ page }) => {
-    await page.goto('/?ionic:mode=ios');
+    await page.goto(withAnimations('/?ionic:mode=ios'));
     await ionPageVisible(page, 'home');
 
     const classHistory = await captureClassChanges(
@@ -46,7 +47,7 @@ test.describe('Vue Router Animations', () => {
   // becoming visible so the animation has a starting state. If this stops
   // happening, the new page would pop in instantly without the iOS slide.
   test('forward push: entering page goes through ion-page-invisible', async ({ page }) => {
-    await page.goto('/?ionic:mode=ios');
+    await page.goto(withAnimations('/?ionic:mode=ios'));
     await ionPageVisible(page, 'home');
 
     const sawInvisible = await didChildReceiveInvisibleClass(
@@ -71,7 +72,7 @@ test.describe('Vue Router Animations', () => {
   // jump. didChildReceiveInvisibleClass works in both directions because the
   // entering page has to start invisible to give the animation a starting state.
   test('back nav triggers a real animation', async ({ page }) => {
-    await page.goto('/?ionic:mode=ios');
+    await page.goto(withAnimations('/?ionic:mode=ios'));
     await routerPush(page, '/routing');
     await ionPageVisible(page, 'routing');
 
@@ -95,7 +96,7 @@ test.describe('Vue Router Animations', () => {
   // smoke test that the gesture doesn't break the outlet.
   test('swipe-to-go-back: gesture does not corrupt the view stack on partial swipe', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 568 });
-    await page.goto('/?ionic:mode=ios');
+    await page.goto(withAnimations('/?ionic:mode=ios'));
     await ionPageVisible(page, 'home');
 
     await page.locator('ion-item#routing').click({ force: true });

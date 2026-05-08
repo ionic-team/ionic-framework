@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './utils/test-base';
 import {
   ionPageVisible,
   ionPageHidden,
@@ -7,7 +7,6 @@ import {
   routerPush,
   routerGo,
   tabClick,
-  withTestingMode,
 } from './utils/test-utils';
 
 /**
@@ -15,14 +14,15 @@ import {
  * is not directly observable, but its outcomes are: which pages are mounted,
  * visible, hidden, or removed at any given moment.
  *
- * Animations are disabled via ionic:_testing=true so the tests are deterministic.
+ * Animations are disabled by default via the test-base fixture so the tests
+ * are deterministic.
  */
 
 test.describe('View Stacks', () => {
   // After navigating to a route, the page is rendered with data-pageid and
   // not marked invisible.
   test('navigated page is mounted, registered, and visible', async ({ page }) => {
-    await page.goto(withTestingMode('/'));
+    await page.goto('/');
     await ionPageVisible(page, 'home');
 
     await routerPush(page, '/routing');
@@ -33,7 +33,7 @@ test.describe('View Stacks', () => {
   // The previous page becomes hidden and the new page becomes visible after
   // a push, so the outlet must be selecting the right page per route.
   test('correct view item is selected per route', async ({ page }) => {
-    await page.goto(withTestingMode('/'));
+    await page.goto('/');
     await ionPageVisible(page, 'home');
 
     await routerPush(page, '/routing');
@@ -48,7 +48,7 @@ test.describe('View Stacks', () => {
   // When navigating from page A to page B, A becomes hidden (not removed)
   // so back nav can restore it without re-mounting.
   test('leaving view is hidden, not destroyed, on forward push', async ({ page }) => {
-    await page.goto(withTestingMode('/'));
+    await page.goto('/');
     await routerPush(page, '/routing');
     await ionPageVisible(page, 'routing');
 
@@ -63,7 +63,7 @@ test.describe('View Stacks', () => {
   // Pages popped past are removed from the DOM; pages still in the stack
   // remain mounted (hidden).
   test('only mounted view items are present in the DOM', async ({ page }) => {
-    await page.goto(withTestingMode('/'));
+    await page.goto('/');
     await routerPush(page, '/routing');
     await ionPageVisible(page, 'routing');
     await routerPush(page, '/inputs');
@@ -83,7 +83,7 @@ test.describe('View Stacks', () => {
   // Leaving the tabs section and re-entering creates a fresh stack, so old
   // tab pages are gone.
   test('leaving a tabs context clears its view stack', async ({ page }) => {
-    await page.goto(withTestingMode('/tabs/tab1'));
+    await page.goto('/tabs/tab1');
     await ionPageVisible(page, 'tab1');
 
     await tabClick(page, 'tab2');
@@ -103,7 +103,7 @@ test.describe('View Stacks', () => {
   // Pages skipped over by a multi-step backward navigation (e.g.,
   // router.go(-2)) must not remain in the DOM.
   test('router.go(-N) unmounts skipped views', async ({ page }) => {
-    await page.goto(withTestingMode('/'));
+    await page.goto('/');
     await routerPush(page, '/routing');
     await ionPageVisible(page, 'routing');
 
@@ -119,7 +119,7 @@ test.describe('View Stacks', () => {
   // After going back N steps and forward N steps, the intermediate pages
   // exist again so we can step back through them.
   test('router.go(+N) remounts intermediary views', async ({ page }) => {
-    await page.goto(withTestingMode('/'));
+    await page.goto('/');
     await routerPush(page, '/routing');
     await ionPageVisible(page, 'routing');
     await routerPush(page, '/routing/abc');
