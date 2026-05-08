@@ -16,7 +16,7 @@ From here you can either build the application or start a local dev server. When
 
 ## Running the Test Suites
 
-`packages/vue-router/scripts/test_runner.sh` orchestrates the Vue + Vue Router test suites end to end: it builds `@ionic/core`, `@ionic/vue`, and `@ionic/vue-router`, builds the test app, syncs local packages, runs Vitest unit tests in jsdom, then starts the Vite dev server and runs Cypress and Playwright e2e suites against it.
+`packages/vue-router/scripts/test_runner.sh` orchestrates the Vue + Vue Router test suites end to end: it builds `@ionic/core`, `@ionic/vue`, and `@ionic/vue-router`, builds the test app, syncs local packages, runs Vitest unit tests in jsdom, then starts the Vite dev server and runs Cypress and Playwright e2e suites against it. By default it uses the `vue3` app, which targets the latest supported Vue version.
 
 ```shell
 # Full run (build + Vitest + Cypress + Playwright)
@@ -42,7 +42,7 @@ Useful flags:
 | `--playwright-only` | Run only the Playwright e2e suite |
 | `--spec <pattern>` | Filter Cypress specs by file path |
 | `--pw-spec <pattern>` | Filter Playwright specs by file path |
-| `--app <name>` | Pick a different app variant from `packages/vue/test/apps/` (default: `vue3`) |
+| `--app <name>` | Pick a different app variant from `packages/vue/test/apps/` (default: `vue3`, the latest supported Vue version) |
 | `--serve` | Start the dev server only and open the browser |
 
 ## Test App Build Structure

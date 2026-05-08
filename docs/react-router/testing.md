@@ -16,7 +16,7 @@ From here you can either build the application or start a local dev server. When
 
 ## Running the Test Suites
 
-`packages/react-router/scripts/test_runner.sh` orchestrates the React Router test suites end to end: it builds `@ionic/core`, `@ionic/react`, and `@ionic/react-router`, builds the test app, syncs local packages, starts the dev server, and runs Cypress and Playwright in sequence.
+`packages/react-router/scripts/test_runner.sh` orchestrates the React Router test suites end to end: it builds `@ionic/core`, `@ionic/react`, and `@ionic/react-router`, builds the test app, syncs local packages, starts the dev server, and runs Cypress and Playwright in sequence. By default it uses the `reactrouter6-react18` app; pass `--app reactrouter6-react19` to test against the latest supported React version.
 
 ```shell
 # Full run (build + Cypress + Playwright)
@@ -39,7 +39,7 @@ Useful flags:
 | `--skip-build` | Reuse existing `packages/react-router/test/build/<app>/` instead of rebuilding |
 | `--playwright-only` | Run only the Playwright e2e suite |
 | `--spec <pattern>` | Filter Playwright specs by file path |
-| `--app <name>` | Pick a different app variant from `packages/react-router/test/apps/` (default: `reactrouter6-react18`) |
+| `--app <name>` | Pick a different app variant from `packages/react-router/test/apps/` (default: `reactrouter6-react18`; use `reactrouter6-react19` for the latest supported React version) |
 | `--serve` | Start the dev server only and open the browser |
 
 ## Test App Build Structure
