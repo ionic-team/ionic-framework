@@ -8,12 +8,24 @@ export const IonBackButton = /*@__PURE__*/ defineComponent(
     // TODO(FW-2969): type
     const ionRouter: any = inject("navManager");
 
-    const onClick = () => {
+    const onClick = (ev: Event) => {
       /**
        * When using ion-back-button outside of
        * a routing context, ionRouter is undefined.
        */
       if (ionRouter === undefined) {
+        return;
+      }
+
+      /**
+       * If ion-back-button is being used inside
+       * of ion-nav (e.g. in a modal) then we should
+       * not interact with the router. The core
+       * ion-back-button component will handle the
+       * nav.pop() in that case.
+       */
+      const target = ev.target as HTMLElement | null;
+      if (target && target.closest("ion-nav") !== null) {
         return;
       }
 
