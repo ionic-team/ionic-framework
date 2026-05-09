@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Method, Prop, Watch, forceUpdate, h } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import type { Gesture } from '@utils/gesture';
 import { createButtonActiveGesture } from '@utils/gesture/button-active';
@@ -56,7 +56,11 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private processedInputs: AlertInput[] = [];
   private processedButtons: AlertButton[] = [];
   private wrapperEl?: HTMLElement;
+  private buttonGroupEl?: HTMLElement;
+  private buttonGroupResizeObserver?: ResizeObserver;
   private gesture?: Gesture;
+
+  @State() private isButtonGroupWrapped = false;
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -301,6 +305,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
     this.processedButtons = buttons.map((btn) => {
       return typeof btn === 'string' ? { text: btn, role: btn.toLowerCase() === 'cancel' ? 'cancel' : undefined } : btn;
     });
+    /**
+     * Reset wrap state so the new button set can be re-evaluated. Without this,
+     * a previously-latched vertical layout would persist even if the new buttons
+     * fit horizontally.
+     */
+    this.isButtonGroupWrapped = false;
+    this.checkButtonGroupWrap();
   }
 
   @Watch('inputs')
@@ -351,6 +362,12 @@ export class Alert implements ComponentInterface, OverlayInterface {
   connectedCallback() {
     prepareOverlay(this.el);
     this.triggerChanged();
+    /**
+     * If the alert was previously connected and is being reattached, the
+     * ResizeObserver was disconnected. componentDidLoad only fires once per
+     * instance, so re-establish the observer here on reconnect.
+     */
+    this.setupButtonGroupResizeObserver();
   }
 
   componentWillLoad() {
@@ -368,6 +385,9 @@ export class Alert implements ComponentInterface, OverlayInterface {
       this.gesture.destroy();
       this.gesture = undefined;
     }
+
+    this.buttonGroupResizeObserver?.disconnect();
+    this.buttonGroupResizeObserver = undefined;
   }
 
   componentDidLoad() {
@@ -383,6 +403,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
       );
       this.gesture.enable(true);
     }
+
+    this.setupButtonGroupResizeObserver();
 
     /**
      * If alert was rendered with isOpen="true"
@@ -706,15 +728,60 @@ export class Alert implements ComponentInterface, OverlayInterface {
     }
   };
 
+  private setupButtonGroupResizeObserver() {
+    /**
+     * Re-evaluate vertical layout when the button group resizes so a 2-button
+     * group with long text wraps cleanly instead of leaving a stray right-edge
+     * border on the first button.
+     */
+    if (!this.buttonGroupEl || typeof ResizeObserver === 'undefined') {
+      return;
+    }
+    this.buttonGroupResizeObserver?.disconnect();
+    this.buttonGroupResizeObserver = new ResizeObserver(() => this.checkButtonGroupWrap());
+    this.buttonGroupResizeObserver.observe(this.buttonGroupEl);
+    this.checkButtonGroupWrap();
+  }
+
+  private checkButtonGroupWrap() {
+    /**
+     * Defer the layout read out of the ResizeObserver callback so we don't
+     * force synchronous layout and avoid "ResizeObserver loop" warnings when
+     * applying the vertical-layout class itself triggers another resize.
+     */
+    raf(() => {
+      /**
+       * Bail if the alert was disconnected after this raf was queued.
+       * `buttonGroupEl` persists across disconnect so the observer can be
+       * re-attached on reconnect; the observer reference is the disconnect
+       * sentinel.
+       */
+      if (!this.buttonGroupResizeObserver) {
+        return;
+      }
+      const groupEl = this.buttonGroupEl;
+      if (!groupEl) {
+        return;
+      }
+      const buttons = Array.from(groupEl.querySelectorAll<HTMLElement>('.alert-button'));
+      if (buttons.length < 2) {
+        this.isButtonGroupWrapped = false;
+        return;
+      }
+      const firstTop = buttons[0].offsetTop;
+      this.isButtonGroupWrapped = buttons.some((btn) => btn.offsetTop !== firstTop);
+    });
+  }
+
   private renderAlertButtons() {
     const buttons = this.processedButtons;
     const mode = getIonMode(this);
     const alertButtonGroupClass = {
       'alert-button-group': true,
-      'alert-button-group-vertical': buttons.length > 2,
+      'alert-button-group-vertical': buttons.length > 2 || this.isButtonGroupWrapped,
     };
     return (
-      <div class={alertButtonGroupClass}>
+      <div class={alertButtonGroupClass} ref={(el) => (this.buttonGroupEl = el)}>
         {buttons.map((button) => (
           <button
             {...button.htmlAttributes}
