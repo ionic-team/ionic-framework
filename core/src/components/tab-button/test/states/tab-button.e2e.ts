@@ -97,6 +97,7 @@ configs({ palettes: ['dark'], directions: ['ltr'] }).forEach(({ title, screensho
         );
 
         const tabBar = page.locator('ion-tab-bar');
+        // TODO(FW-6907): Update this once `--ion-tab-bar-background` is added to the dark palette
         await expect(tabBar).toHaveScreenshot(screenshot('tab-button-focus'));
       });
     });
