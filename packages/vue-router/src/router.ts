@@ -183,7 +183,32 @@ export const createIonRouter = (
            * is not good because we would have two /tabs/tab1/child1 entries
            * separated by a /tabs/tab1/child2 entry.
            */
-          router.go(prevInfo.position - routeInfo.position);
+          const positionDelta = prevInfo.position! - routeInfo.position!;
+          if (positionDelta < 0) {
+            router.go(positionDelta);
+          } else if (prevInfo.pathname) {
+            /**
+             * prevInfo's history position was wiped when the user went
+             * back then pushed a new route (FW-6472), so router.go can't
+             * reach it. Replace falls through to afterEach with the
+             * pop/back `incomingRouteParams` set above, which preserves
+             * the back animation and consumes the params so they don't
+             * leak into the next navigation. We replace even when
+             * `positionDelta === 0` for the same consumption reason.
+             */
+            router.replace({
+              path: prevInfo.pathname,
+              query: parseQuery(prevInfo.search),
+            });
+          } else {
+            /**
+             * prevInfo has no pathname (synthesized root entry). Route
+             * to `defaultHref` so the pop/back `incomingRouteParams`
+             * set above gets consumed instead of leaking into the next
+             * navigation.
+             */
+            handleNavigate(defaultHref, "pop", "back", routerAnimation);
+          }
         }
       } else {
         handleNavigate(defaultHref, "pop", "back", routerAnimation);
