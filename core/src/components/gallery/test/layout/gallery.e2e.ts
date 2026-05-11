@@ -268,6 +268,12 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
             }, appendedItems);
 
             /**
+             * Wait for the images to load and be visible before
+             * resizing the viewport.
+             */
+            await page.waitForChanges();
+
+            /**
              * The gallery overflows the default viewport, causing
              * unrendered areas to appear transparent in the screenshot.
              * Resizing the viewport to fit the content.
