@@ -64,6 +64,7 @@ export class Tab implements ComponentInterface {
     }
   }
 
+  // TODO(FW-7296): Failed first attach locks the tab forever — needs async/await + retry on rejection.
   private prepareLazyLoaded(): Promise<HTMLElement | undefined> {
     if (!this.loaded && this.component != null) {
       this.loaded = true;

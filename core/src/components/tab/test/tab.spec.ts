@@ -25,7 +25,8 @@ describe('ion-tab: lazy loading', () => {
     expect(attachViewToDom).toHaveBeenCalledTimes(1);
   });
 
-  it('should not retry attach after a failed first attempt', async () => {
+  // TODO(FW-7296): Flip to assert retry once the failed-attach lockout is fixed
+  it('documents current behavior: a failed first attach is not retried', async () => {
     const page = await newSpecPage({
       components: [Tab],
       html: '<ion-tab tab="home" component="ion-content"></ion-tab>',
@@ -35,8 +36,6 @@ describe('ion-tab: lazy loading', () => {
     const attachViewToDom = jest.fn().mockRejectedValue(new Error('attach failed'));
     tabEl.delegate = mockDelegate(attachViewToDom);
 
-    // First call rejects because the delegate throws. The loaded flag is already
-    // set to true before the attempt, so the failure is permanent.
     await expect(tabEl.setActive()).rejects.toThrow('attach failed');
     await tabEl.setActive();
 
