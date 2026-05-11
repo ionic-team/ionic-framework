@@ -169,6 +169,8 @@
             Half Sheet w/ Footer
           </button>
 
+          <button id="drag-events" onclick="dragEvents()">Drag Events</button>
+
           <div class="grid">
             <div class="grid-item red"></div>
             <div class="grid-item green"></div>
@@ -315,6 +317,27 @@
 
         await modalElement.onDidDismiss();
         modalElement.remove();
+      }
+
+      function dragEvents() {
+        const modal = createModal({
+          initialBreakpoint: 0.5,
+          breakpoints: [0, 0.25, 0.5, 0.75, 1],
+        });
+
+        modal.addEventListener('ionDragStart', (event) => {
+          console.log('Drag started');
+        });
+
+        modal.addEventListener('ionDragMove', (event) => {
+          console.log('Drag moved', event.detail);
+        });
+
+        modal.addEventListener('ionDragEnd', (event) => {
+          console.log('Drag ended', event.detail);
+        });
+
+        modal.present();
       }
     </script>
   </body>

@@ -15,6 +15,11 @@ import { ValueAccessorTestComponent } from "../value-accessor-test/value-accesso
   ]
 })
 export class CheckboxComponent {
+  dynamicLabel = '';
+
+  ngAfterViewInit(): void {
+    this.dynamicLabel = 'Dynamic Checkbox Label';
+  }
 
   form = this.fb.group({
     checkbox: [false, Validators.required],

@@ -6,6 +6,10 @@ import { getIonTheme } from '../../global/ionic-global';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ *
+ * @slot - Content is placed between the named slots if provided without a slot.
+ * @slot start - Content is placed to the left of the select option text in LTR, and to the right in RTL.
+ * @slot end - Content is placed to the right of the select option text in LTR, and to the left in RTL.
  */
 @Component({
   tag: 'ion-select-option',
@@ -27,8 +31,14 @@ export class SelectOption implements ComponentInterface {
    */
   @Prop() value?: any | null;
 
+  /**
+   * Text that is placed underneath the option text to provide additional details about the option.
+   */
+  @Prop() description?: string;
+
   render() {
     const theme = getIonTheme(this);
+
     return (
       <Host
         class={{

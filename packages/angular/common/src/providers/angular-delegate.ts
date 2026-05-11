@@ -36,7 +36,8 @@ export class AngularDelegate {
   create(
     environmentInjector: EnvironmentInjector,
     injector: Injector,
-    elementReferenceKey?: string
+    elementReferenceKey?: string,
+    customInjector?: Injector
   ): AngularFrameworkDelegate {
     return new AngularFrameworkDelegate(
       environmentInjector,
@@ -44,7 +45,8 @@ export class AngularDelegate {
       this.applicationRef,
       this.zone,
       elementReferenceKey,
-      this.config.useSetInputAPI ?? false
+      this.config.useSetInputAPI ?? false,
+      customInjector
     );
   }
 }
@@ -59,7 +61,8 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
     private applicationRef: ApplicationRef,
     private zone: NgZone,
     private elementReferenceKey?: string,
-    private enableSignalsSupport?: boolean
+    private enableSignalsSupport?: boolean,
+    private customInjector?: Injector
   ) {}
 
   attachViewToDom(container: any, component: any, params?: any, cssClasses?: string[]): Promise<any> {
@@ -93,7 +96,8 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
           componentProps,
           cssClasses,
           this.elementReferenceKey,
-          this.enableSignalsSupport
+          this.enableSignalsSupport,
+          this.customInjector
         );
         resolve(el);
       });
@@ -131,7 +135,8 @@ export const attachView = (
   params: any,
   cssClasses: string[] | undefined,
   elementReferenceKey: string | undefined,
-  enableSignalsSupport: boolean | undefined
+  enableSignalsSupport: boolean | undefined,
+  customInjector?: Injector
 ): any => {
   /**
    * Wraps the injector with a custom injector that
@@ -158,7 +163,7 @@ export const attachView = (
 
   const childInjector = Injector.create({
     providers,
-    parent: injector,
+    parent: customInjector ?? injector,
   });
 
   const componentRef = createComponent<any>(component, {

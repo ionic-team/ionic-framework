@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm install",
+  "buildCommand": "bash scripts/vercel-build.sh",
+  "outputDirectory": "../_vercel_output",
+  "rewrites": [
+    { "source": "/angular/:path*", "destination": "/angular/index.html" },
+    { "source": "/react/:path*", "destination": "/react/index.html" },
+    { "source": "/vue/:path*", "destination": "/vue/index.html" }
+  ]
+}
