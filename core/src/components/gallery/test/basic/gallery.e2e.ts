@@ -43,6 +43,14 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
 
         const gallery = page.locator('ion-gallery');
 
+        /**
+         * The gallery overflows the default viewport, causing
+         * unrendered areas to appear transparent in the screenshot.
+         * Resizing the viewport to fit the content.
+         */
+        const box = await gallery.boundingBox();
+        await page.setViewportSize({ width: Math.ceil(box!.width), height: Math.ceil(box!.height) });
+
         await expect(gallery).toHaveScreenshot(screenshot(`gallery-basic-${breakpoint.name}-breakpoint`));
       });
 
