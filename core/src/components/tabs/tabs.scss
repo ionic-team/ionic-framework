@@ -1,3 +1,4 @@
+@use "../../themes/common.globals" as globals;
 @use "../../themes/mixins" as mixins;
 
 :host {
@@ -12,7 +13,7 @@
   height: 100%;
 
   contain: layout size style;
-  z-index: 0;
+  z-index: globals.$z-index-page-container;
 }
 
 .tabs-inner {
