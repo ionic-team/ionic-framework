@@ -1492,10 +1492,9 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The order in which items are positioned. Only applies when layout is `masonry`. When `sequential`, items are positioned in the order they are placed in the DOM. When `best-fit`, items are positioned under the column with the most available space.
-          * @default 'sequential'
+          * The order in which items are positioned. Only applies when layout is `masonry`. When `sequential`, items are positioned in the order they are placed in the DOM. When `best-fit`, items are positioned under the column with the most available space. Defaults to `sequential` when layout is `masonry` and `order` is not explicitly set.
          */
-        "order": 'sequential' | 'best-fit';
+        "order"?: 'sequential' | 'best-fit';
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -7541,8 +7540,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The order in which items are positioned. Only applies when layout is `masonry`. When `sequential`, items are positioned in the order they are placed in the DOM. When `best-fit`, items are positioned under the column with the most available space.
-          * @default 'sequential'
+          * The order in which items are positioned. Only applies when layout is `masonry`. When `sequential`, items are positioned in the order they are placed in the DOM. When `best-fit`, items are positioned under the column with the most available space. Defaults to `sequential` when layout is `masonry` and `order` is not explicitly set.
          */
         "order"?: 'sequential' | 'best-fit';
         /**

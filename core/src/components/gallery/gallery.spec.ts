@@ -1,3 +1,4 @@
+import { newSpecPage } from '@stencil/core/testing';
 import * as logging from '@utils/logging';
 
 import { Gallery } from './gallery';
@@ -36,6 +37,9 @@ describe('gallery', () => {
       value: el,
       configurable: true,
     });
+  });
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
   describe('gallery: columns', () => {
     describe('sanitizeColumns()', () => {
@@ -608,8 +612,67 @@ describe('gallery', () => {
   });
 
   describe('gallery: order', () => {
+    describe('warnUnusedOrder()', () => {
+      it('should not warn when both layout and order are not explicitly set', () => {
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        (sharedGallery as any).warnUnusedOrder();
+
+        expect(warningSpy).not.toHaveBeenCalled();
+        warningSpy.mockRestore();
+      });
+
+      it('should not warn when order is not explicitly set and layout is set to uniform', () => {
+        sharedGallery.layout = 'uniform';
+
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        (sharedGallery as any).warnUnusedOrder();
+
+        expect(warningSpy).not.toHaveBeenCalled();
+        warningSpy.mockRestore();
+      });
+
+      it('should not warn when order is explicitly set and layout is masonry', () => {
+        sharedGallery.layout = 'masonry';
+        sharedGallery.order = 'sequential';
+
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        (sharedGallery as any).warnUnusedOrder();
+
+        expect(warningSpy).not.toHaveBeenCalled();
+        warningSpy.mockRestore();
+      });
+
+      it('should warn when order is explicitly set and layout is uniform', () => {
+        sharedGallery.layout = 'uniform';
+        sharedGallery.order = 'sequential';
+
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        (sharedGallery as any).warnUnusedOrder();
+
+        expect(warningSpy).toHaveBeenCalledTimes(1);
+        warningSpy.mockRestore();
+      });
+
+      it('should warn when order is non-default and layout is uniform', () => {
+        sharedGallery.layout = 'uniform';
+        sharedGallery.order = 'best-fit';
+
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        (sharedGallery as any).warnUnusedOrder();
+
+        expect(warningSpy).toHaveBeenCalledTimes(1);
+        warningSpy.mockRestore();
+      });
+    });
+
     describe('getColumnIndex()', () => {
       it('should place items sequentially when order is set to sequential', () => {
+        sharedGallery.layout = 'masonry';
         sharedGallery.order = 'sequential';
 
         expect((sharedGallery as any).getColumnIndex(0, [0, 0, 0], 3)).toBe(0);
@@ -620,6 +683,7 @@ describe('gallery', () => {
       });
 
       it('should place items in the shortest column when order is set to best-fit', () => {
+        sharedGallery.layout = 'masonry';
         sharedGallery.order = 'best-fit';
 
         expect((sharedGallery as any).getColumnIndex(5, [4, 2, 6], 3)).toBe(1);
@@ -628,11 +692,81 @@ describe('gallery', () => {
       });
 
       it('should prefer the first shortest column when best-fit columns are tied', () => {
+        sharedGallery.layout = 'masonry';
         sharedGallery.order = 'best-fit';
 
         expect((sharedGallery as any).getColumnIndex(7, [2, 2, 5], 3)).toBe(0);
         expect((sharedGallery as any).getColumnIndex(1, [3, 1, 1], 3)).toBe(1);
       });
     });
+  });
+});
+
+describe('gallery: classes', () => {
+  let originalResizeObserver: typeof globalThis.ResizeObserver | undefined;
+
+  beforeEach(() => {
+    originalResizeObserver = globalThis.ResizeObserver;
+    (globalThis as any).ResizeObserver = class {
+      observe() {}
+      disconnect() {}
+    };
+  });
+
+  afterEach(() => {
+    (globalThis as any).ResizeObserver = originalResizeObserver;
+  });
+
+  it('should apply default layout class when layout is not explicitly set', async () => {
+    const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+    const page = await newSpecPage({
+      components: [Gallery],
+      html: `<ion-gallery></ion-gallery>`,
+    });
+    const gallery = page.root as HTMLElement;
+
+    expect(gallery.classList.contains('gallery-layout-uniform')).toBe(true);
+    expect(gallery.classList.contains('gallery-layout-masonry')).toBe(false);
+    expect(gallery.classList.contains('gallery-order-sequential')).toBe(false);
+    expect(gallery.classList.contains('gallery-order-best-fit')).toBe(false);
+    warningSpy.mockRestore();
+  });
+
+  it('should apply layout class without order class for uniform layout', async () => {
+    const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+    const page = await newSpecPage({
+      components: [Gallery],
+      html: `<ion-gallery layout="uniform" order="best-fit"></ion-gallery>`,
+    });
+    const gallery = page.root as HTMLElement;
+
+    expect(gallery.classList.contains('gallery-layout-uniform')).toBe(true);
+    expect(gallery.classList.contains('gallery-order-sequential')).toBe(false);
+    expect(gallery.classList.contains('gallery-order-best-fit')).toBe(false);
+    warningSpy.mockRestore();
+  });
+
+  it('should apply sequential order class for masonry layout by default', async () => {
+    const page = await newSpecPage({
+      components: [Gallery],
+      html: `<ion-gallery layout="masonry"></ion-gallery>`,
+    });
+    const gallery = page.root as HTMLElement;
+
+    expect(gallery.classList.contains('gallery-layout-masonry')).toBe(true);
+    expect(gallery.classList.contains('gallery-order-sequential')).toBe(true);
+    expect(gallery.classList.contains('gallery-order-best-fit')).toBe(false);
+  });
+
+  it('should apply best-fit order class for masonry layout when set', async () => {
+    const page = await newSpecPage({
+      components: [Gallery],
+      html: `<ion-gallery layout="masonry" order="best-fit"></ion-gallery>`,
+    });
+    const gallery = page.root as HTMLElement;
+
+    expect(gallery.classList.contains('gallery-layout-masonry')).toBe(true);
+    expect(gallery.classList.contains('gallery-order-best-fit')).toBe(true);
+    expect(gallery.classList.contains('gallery-order-sequential')).toBe(false);
   });
 });

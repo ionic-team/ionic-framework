@@ -1,5 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, Watch, h } from '@stencil/core';
+import { raf } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -38,10 +39,11 @@ export class Gallery implements ComponentInterface {
   private resizeObserver?: ResizeObserver;
   private lastWidth?: number;
 
-  // Keep track of whether we've warned about invalid columns and invalid
-  // gap properties to avoid duplicate warnings on screen resize.
+  // Keep track of whether we've warned about invalid columns, invalid gap,
+  // and unused order properties to avoid duplicate warnings on screen resize.
   private hasWarnedInvalidColumns = false;
   private hasWarnedInvalidGap = false;
+  private hasWarnedUnusedOrder = false;
 
   /**
    * The visual layout of the gallery. When `uniform`, rows take up the height
@@ -50,15 +52,16 @@ export class Gallery implements ComponentInterface {
    * height is explicitly set. When `masonry`, items will be positioned under each
    * other with only the specified gap between them.
    */
-  @Prop({ reflect: true }) layout: 'uniform' | 'masonry' = 'uniform';
+  @Prop() layout: 'uniform' | 'masonry' = 'uniform';
 
   /**
    * The order in which items are positioned. Only applies when layout is
    * `masonry`. When `sequential`, items are positioned in the order they are
    * placed in the DOM. When `best-fit`, items are positioned under the column
-   * with the most available space.
+   * with the most available space. Defaults to `sequential` when layout is
+   * `masonry` and `order` is not explicitly set.
    */
-  @Prop({ reflect: true }) order: 'sequential' | 'best-fit' = 'sequential';
+  @Prop() order?: 'sequential' | 'best-fit';
 
   /**
    * The number of columns to display. Can be set as a number or an object of
@@ -80,6 +83,13 @@ export class Gallery implements ComponentInterface {
   protected propertiesChanged() {
     this.updateResponsiveStyles(true);
     this.scheduleMasonryResize();
+
+    // Wait until the next animation frame to warn about unused order
+    // to avoid erroneous warnings when the layout and order are updated
+    // in the same frame.
+    raf(() => {
+      this.warnUnusedOrder();
+    });
   }
 
   componentDidLoad() {
@@ -91,6 +101,8 @@ export class Gallery implements ComponentInterface {
     this.resizeObserver.observe(this.el);
 
     this.scheduleMasonryResize();
+
+    this.warnUnusedOrder();
   }
 
   disconnectedCallback() {
@@ -276,6 +288,10 @@ export class Gallery implements ComponentInterface {
    * integer or a breakpoint map object with invalid values.
    */
   private warnInvalidColumns(columns: GalleryColumns) {
+    if (this.hasWarnedInvalidColumns) {
+      return;
+    }
+
     printIonWarning(
       `[ion-gallery] - Invalid "columns" value (${JSON.stringify(
         columns
@@ -290,6 +306,10 @@ export class Gallery implements ComponentInterface {
    * or a breakpoint map object with invalid values.
    */
   private warnInvalidGap(gap: GalleryGap) {
+    if (this.hasWarnedInvalidGap) {
+      return;
+    }
+
     printIonWarning(
       `[ion-gallery] - Invalid "gap" value (${JSON.stringify(
         gap
@@ -300,11 +320,29 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
+   * Warn when `order` is explicitly set while layout is `uniform`.
+   */
+  private warnUnusedOrder() {
+    const { layout } = this;
+    const order = this.order == null ? undefined : this.order;
+
+    if (this.hasWarnedUnusedOrder || layout !== 'uniform' || order === undefined) {
+      return;
+    }
+
+    printIonWarning(
+      `[ion-gallery] - "order" has no effect when "layout" is "uniform". Set "layout" to "masonry" for "order" to apply.`,
+      this.el
+    );
+    this.hasWarnedUnusedOrder = true;
+  }
+
+  /**
    * Resolve the active columns value for the current width. Falls back to
    * the default responsive columns when the provided prop is invalid.
    */
   private getColumnsForWidth(width: number) {
-    const { columns, hasWarnedInvalidColumns } = this;
+    const { columns } = this;
     const isBreakpointColumns = this.isBreakpointMap(columns);
     const hasInvalidBreakpointColumns =
       isBreakpointColumns && this.hasInvalidBreakpointMap(columns, (value) => this.sanitizeColumns(value));
@@ -313,10 +351,7 @@ export class Gallery implements ComponentInterface {
       ? this.getColumnsFromBreakpointMap(width, columns)
       : this.sanitizeColumns(columns);
 
-    if (
-      !hasWarnedInvalidColumns &&
-      (hasInvalidBreakpointColumns || (!isBreakpointColumns && sanitizedColumns === undefined))
-    ) {
+    if (hasInvalidBreakpointColumns || (!isBreakpointColumns && sanitizedColumns === undefined)) {
       this.warnInvalidColumns(columns);
     }
 
@@ -331,7 +366,7 @@ export class Gallery implements ComponentInterface {
    * Resolve the active gap value for the current width.
    */
   private getGapForWidth(width: number) {
-    const { gap, hasWarnedInvalidGap } = this;
+    const { gap } = this;
     const providedGap = gap ?? DEFAULT_GAP;
 
     const isBreakpointGap = this.isBreakpointMap(providedGap);
@@ -341,7 +376,7 @@ export class Gallery implements ComponentInterface {
       ? this.getGapFromBreakpointMap(width, providedGap)
       : this.sanitizeGap(providedGap);
 
-    if (!hasWarnedInvalidGap && (hasInvalidBreakpointGap || (!isBreakpointGap && sanitizedGap === undefined))) {
+    if (hasInvalidBreakpointGap || (!isBreakpointGap && sanitizedGap === undefined)) {
       this.warnInvalidGap(providedGap);
     }
 
@@ -428,7 +463,7 @@ export class Gallery implements ComponentInterface {
    * natural DOM order.
    */
   private getColumnIndex(index: number, columnHeights: number[], columns: number) {
-    const { order } = this;
+    const order = this.getOrder();
 
     if (order === 'best-fit') {
       let columnIndex = 0;
@@ -514,8 +549,29 @@ export class Gallery implements ComponentInterface {
     this.layoutMasonry(items, rowHeight, rowGap, columns);
   };
 
+  /**
+   * Resolved order for layout and CSS. Order should be `undefined` for
+   * the uniform layout. When order is not set, it should be `"sequential"`
+   * for the masonry layout.
+   */
+  private getOrder(): 'sequential' | 'best-fit' | undefined {
+    const { layout } = this;
+    const order = this.order == null ? undefined : this.order;
+
+    if (layout === 'uniform') {
+      return undefined;
+    }
+
+    if (layout === 'masonry' && order === undefined) {
+      return 'sequential';
+    }
+
+    return order;
+  }
+
   render() {
-    const { layout, order } = this;
+    const { layout } = this;
+    const order = this.getOrder();
     const theme = getIonTheme(this);
 
     return (
@@ -523,7 +579,7 @@ export class Gallery implements ComponentInterface {
         class={{
           [theme]: true,
           [`gallery-layout-${layout}`]: true,
-          [`gallery-order-${order}`]: layout === 'masonry',
+          [`gallery-order-${order}`]: layout === 'masonry' && order !== undefined,
         }}
       >
         <slot onSlotchange={this.onSlotChange} />
