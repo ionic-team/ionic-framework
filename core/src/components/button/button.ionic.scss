@@ -19,7 +19,7 @@
     position: absolute;
 
     height: 100%;
-    min-height: globals.$ion-scale-1200;
+    min-height: inherit;
 
     transform: translateY(-50%);
 
@@ -294,4 +294,13 @@
 :host(.button-has-badge) {
   --padding-top: #{globals.$ion-space-0};
   --padding-bottom: #{globals.$ion-space-0};
+}
+
+// Button in Datetime
+// --------------------------------------------------
+
+:host(.in-datetime) {
+  @include globals.typography(globals.$ion-body-action-md);
+
+  min-height: globals.$ion-space-1200;
 }

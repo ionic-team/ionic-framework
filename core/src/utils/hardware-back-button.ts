@@ -1,5 +1,5 @@
-import { win } from '@utils/browser';
 import type { CloseWatcher } from '@utils/browser';
+import { win } from '@utils/browser';
 import { printIonError } from '@utils/logging';
 
 import { config } from '../global/config';
@@ -68,6 +68,21 @@ export const startHardwareBackButton = () => {
       },
     });
     doc.dispatchEvent(ev);
+
+    /**
+     * If no handlers have been registered, fall back to the default
+     * behavior of navigating back in history. This ensures the hardware
+     * back button works even when no router or custom handler is present.
+     */
+    if (handlers.length === 0) {
+      handlers.push({
+        priority: FALLBACK_BACK_BUTTON_PRIORITY,
+        handler: () => {
+          win?.history.back();
+        },
+        id: index++,
+      });
+    }
 
     const executeAction = async (handlerRegister: HandlerRegister | undefined) => {
       try {
@@ -138,3 +153,4 @@ export const startHardwareBackButton = () => {
 
 export const OVERLAY_BACK_BUTTON_PRIORITY = 100;
 export const MENU_BACK_BUTTON_PRIORITY = 99; // 1 less than overlay priority since menu is displayed behind overlays
+const FALLBACK_BACK_BUTTON_PRIORITY = -1; // Fallback when no other handlers are registered

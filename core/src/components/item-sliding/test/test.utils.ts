@@ -2,6 +2,21 @@ import { expect } from '@playwright/test';
 import type { E2EPage, ScreenshotFn } from '@utils/test/playwright';
 
 /**
+ * Drag distances that reveal options without crossing the full swipe
+ * threshold (`optsWidth` + `SWIPE_MARGIN`). A narrower options panel
+ * requires a shorter drag.
+ */
+export const DRAG_DISTANCE_SINGLE_OPTION = 100;
+export const DRAG_DISTANCE_MULTIPLE_OPTIONS = 150;
+
+/**
+ * The number of drag steps used when revealing options. A higher step
+ * count slows the drag velocity, keeping it below the full swipe
+ * threshold in WebKit. See `dragElementBy` for more details.
+ */
+export const DRAG_STEPS_UNDER_FULL_SWIPE = 15;
+
+/**
  * Warning: This function will fail when in RTL mode.
  * TODO(FW-3711): Remove the `directions` config when this issue preventing
  * tests from passing in RTL mode is resolved.

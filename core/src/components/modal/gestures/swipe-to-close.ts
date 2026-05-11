@@ -4,7 +4,7 @@ import { createGesture } from '@utils/gesture';
 import { clamp, getElementRoot } from '@utils/helpers';
 import { OVERLAY_GESTURE_PRIORITY } from '@utils/overlays';
 
-import type { Animation } from '../../../interface';
+import type { Animation, ModalDragEventDetail } from '../../../interface';
 import type { GestureDetail } from '../../../utils/gesture';
 import type { Style as StatusBarStyle } from '../../../utils/native/status-bar';
 import { setCardStatusBarDark, setCardStatusBarDefault } from '../utils';
@@ -20,7 +20,10 @@ export const createSwipeToCloseGesture = (
   el: HTMLIonModalElement,
   animation: Animation,
   statusBarStyle: StatusBarStyle,
-  onDismiss: () => void
+  onDismiss: () => void,
+  onDragStart: () => void,
+  onDragMove: (detail: ModalDragEventDetail) => void,
+  onDragEnd: (detail: ModalDragEventDetail) => void
 ) => {
   /**
    * The step value at which a card modal
@@ -142,6 +145,8 @@ export const createSwipeToCloseGesture = (
     }
 
     animation.progressStart(true, isOpen ? 1 : 0);
+
+    onDragStart();
   };
 
   const onMove = (detail: GestureDetail) => {
@@ -220,6 +225,15 @@ export const createSwipeToCloseGesture = (
     }
 
     lastStep = clampedStep;
+
+    const eventDetail: ModalDragEventDetail = {
+      currentY: detail.currentY,
+      deltaY: detail.deltaY,
+      velocityY: detail.velocityY,
+      progress: calculateProgress(el, detail.deltaY),
+    };
+
+    onDragMove(eventDetail);
   };
 
   const onEnd = (detail: GestureDetail) => {
@@ -288,6 +302,15 @@ export const createSwipeToCloseGesture = (
     } else if (shouldComplete) {
       onDismiss();
     }
+
+    const eventDetail: ModalDragEventDetail = {
+      currentY: detail.currentY,
+      deltaY: detail.deltaY,
+      velocityY: detail.velocityY,
+      progress: calculateProgress(el, detail.deltaY),
+    };
+
+    onDragEnd(eventDetail);
   };
 
   const gesture = createGesture({
@@ -306,4 +329,44 @@ export const createSwipeToCloseGesture = (
 
 const computeDuration = (remaining: number, velocity: number) => {
   return clamp(400, remaining / Math.abs(velocity * 1.1), 500);
+};
+
+/**
+ * Calculates the progress of the swipe gesture.
+ *
+ * The progress is a value between 0 and 1 that represents how far
+ * the swipe has progressed towards closing the modal.
+ *
+ * A value closer to 1 means the modal is closer to being opened,
+ * while a value closer to 0 means the modal is closer to being closed.
+ *
+ * @param el The modal
+ * @param deltaY The change in Y position (positive when dragging down, negative when dragging up)
+ * @returns The progress of the swipe gesture
+ */
+const calculateProgress = (el: HTMLIonModalElement, deltaY: number): number => {
+  const windowHeight = window.innerHeight;
+  // Position when fully open
+  const modalTop = el.getBoundingClientRect().top;
+  /**
+   * The distance between the top of the modal and the bottom of the screen
+   * is the total distance the modal needs to travel to be fully closed.
+   */
+  const totalDistance = windowHeight - modalTop;
+  /**
+   * The pull percentage is how far the user has swiped compared to the total
+   * distance needed to close the modal.
+   */
+  const pullPercentage = deltaY / totalDistance;
+  /**
+   * The progress is the inverse of the pull percentage because
+   * when the user starts swiping up, the progress should be close to 1,
+   * and when the user has swiped all the way down, the progress should be
+   * close to 0.
+   */
+  const progress = 1 - pullPercentage;
+  // Round to the nearest thousandth to avoid returning very small decimal
+  const roundedProgress = Math.round(progress * 1000) / 1000;
+
+  return Math.max(0, Math.min(1, roundedProgress));
 };

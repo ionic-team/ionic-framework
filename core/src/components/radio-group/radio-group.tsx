@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 import { checkInvalidState } from '@utils/forms';
-import { renderHiddenInput } from '@utils/helpers';
+import { debounce, renderHiddenInput } from '@utils/helpers';
 import { hostContext } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -109,6 +109,15 @@ export class RadioGroup implements ComponentInterface {
      */
     this.valueChanged(this.value);
   }
+
+  /** @internal - Recompute which radio has tabindex 0. Call when radios are added/removed. */
+  @Method()
+  async updateRadiosTabindex() {
+    this.scheduleTabindexUpdate();
+  }
+
+  /** Ensures that the tabindex update is debounced and only called once. */
+  private scheduleTabindexUpdate = debounce(() => this.setRadioTabindex(this.value), 0);
 
   private setRadioTabindex = (value: any | undefined) => {
     const radios = this.getRadios();
@@ -299,6 +308,19 @@ export class RadioGroup implements ComponentInterface {
 
         // Prevent browsers from jumping
         // to the bottom of the screen
+        ev.preventDefault();
+      }
+
+      // Inside a select interface, Enter commits the focused radio
+      // value (matching native <select>). The !ev.repeat guard stops
+      // a held Enter on the triggering ion-select from re-committing
+      // once focus lands in the opened popover/modal.
+      if (ev.key === 'Enter' && inSelectInterface && !ev.repeat) {
+        const previousValue = this.value;
+        this.value = current.value;
+        if (previousValue !== this.value) {
+          this.emitValueChange(ev);
+        }
         ev.preventDefault();
       }
     }

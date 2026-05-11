@@ -55,7 +55,11 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
       const datetime = page.locator('#display');
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-show-adjacent-days-display`));
     });
+  });
+});
 
+configs({ directions: ['ltr', 'rtl'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime: show adjacent days'), () => {
     test('should return the same date format on current month days and on adjacent days', async ({ page }) => {
       await page.setContent(
         `
@@ -123,6 +127,52 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
       await ionChange.next();
       await expect(ionChange).toHaveReceivedEventDetail({
         value: '2022-11-22T16:22:00',
+      });
+    });
+
+    test('should navigate to previous month via swipe and then select adjacent day from prior month', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+        <ion-datetime show-adjacent-days="true" value="2026-02-14T16:22:00.000Z" presentation="date"></ion-datetime>
+      `,
+        config
+      );
+
+      // Wait for the datetime to be ready.
+      await page.locator('.datetime-ready').waitFor();
+      const ionChange = await page.spyOnEvent('ionChange');
+      const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
+      const calendarBody = page.locator('ion-datetime .calendar-body');
+
+      // Wait for the month to be visible.
+      await expect(calendarMonthYear).toHaveText('February 2026');
+
+      // Scroll to the previous month.
+      await calendarBody.evaluate((el: HTMLElement) => {
+        const rtl = document.documentElement.dir === 'rtl';
+        el.scrollLeft += rtl ? el.clientWidth * 2 : -el.clientWidth * 2;
+      });
+
+      // Wait for the month to change.
+      await page.waitForChanges();
+      await expect(calendarMonthYear).toHaveText('January 2026');
+
+      // Select the adjacent day from the prior month.
+      const dec31Adjacent = page.locator(
+        '.calendar-day-adjacent-day[data-month="12"][data-year="2025"][data-day="31"]'
+      );
+      await dec31Adjacent.click();
+
+      // Wait for the month to change.
+      await page.waitForChanges();
+
+      // Wait for the month to be visible.
+      await expect(calendarMonthYear).toHaveText('December 2025');
+      await ionChange.next();
+      await expect(ionChange).toHaveReceivedEventDetail({
+        value: '2025-12-31T16:22:00',
       });
     });
   });
