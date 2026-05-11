@@ -139,6 +139,12 @@
 // The input cover is not clickable when the input is disabled
 .cloned-input {
   position: absolute;
+  top: 0;
+  bottom: 0;
+
+  // Reset height since absolute positioning with top/bottom handles sizing
+  height: auto;
+  max-height: none;
 
   pointer-events: none;
 }

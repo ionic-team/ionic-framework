@@ -17,14 +17,14 @@ export { CounterFormatter } from './components/item/item-interface';
 export { ItemSlidingCustomEvent } from './components/item-sliding/item-sliding-interface';
 export { LoadingOptions } from './components/loading/loading-interface';
 export { MenuCustomEvent, MenuI, MenuControllerI } from './components/menu/menu-interface';
-export { ModalOptions, ModalCustomEvent } from './components/modal/modal-interface';
+export { ModalOptions, ModalCustomEvent, ModalDragEventDetail } from './components/modal/modal-interface';
 export { NavDirection, NavCustomEvent } from './components/nav/nav-interface';
 export { PickerOptions, PickerColumnOption } from './components/picker-legacy/picker-interface';
 export { PopoverOptions } from './components/popover/popover-interface';
 export { RadioGroupCustomEvent } from './components/radio-group/radio-group-interface';
 export { RangeCustomEvent, PinFormatter } from './components/range/range-interface';
 export { RouterCustomEvent } from './components/router/utils/interface';
-export { RefresherCustomEvent } from './components/refresher/refresher-interface';
+export { RefresherCustomEvent, RefresherPullEndCustomEvent } from './components/refresher/refresher-interface';
 export {
   ItemReorderCustomEvent,
   ReorderEndCustomEvent,

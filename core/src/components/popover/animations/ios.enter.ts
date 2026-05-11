@@ -7,10 +7,21 @@ import {
   getArrowDimensions,
   getPopoverDimensions,
   getPopoverPosition,
+  getSafeAreaInsets,
   shouldShowArrow,
 } from '../utils';
 
 const POPOVER_IOS_BODY_PADDING = 5;
+
+/**
+ * Minimum edge margin for iOS popovers ensures visual spacing from screen
+ * edges on devices without safe areas (e.g., older iPhones without notches).
+ * Previously this was a hardcoded `safeAreaMargin = 25` that served dual
+ * purpose: safe-area avoidance AND visual spacing. Now that actual safe-area
+ * insets are read dynamically, this floor preserves the visual spacing when
+ * safe-area values are 0.
+ */
+const POPOVER_IOS_MIN_EDGE_MARGIN = 25;
 
 /**
  * iOS Popover Enter Animation
@@ -53,7 +64,16 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
   );
 
   const padding = size === 'cover' ? 0 : POPOVER_IOS_BODY_PADDING;
-  const margin = size === 'cover' ? 0 : 25;
+  const rawSafeArea = getSafeAreaInsets(doc as Document);
+  const safeArea =
+    size === 'cover'
+      ? { top: 0, bottom: 0, left: 0, right: 0 }
+      : {
+          top: Math.max(rawSafeArea.top, POPOVER_IOS_MIN_EDGE_MARGIN),
+          bottom: Math.max(rawSafeArea.bottom, POPOVER_IOS_MIN_EDGE_MARGIN),
+          left: Math.max(rawSafeArea.left, POPOVER_IOS_MIN_EDGE_MARGIN),
+          right: Math.max(rawSafeArea.right, POPOVER_IOS_MIN_EDGE_MARGIN),
+        };
 
   const {
     originX,
@@ -63,9 +83,12 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
     bottom,
     checkSafeAreaLeft,
     checkSafeAreaRight,
+    checkSafeAreaTop,
+    checkSafeAreaBottom,
     arrowTop,
     arrowLeft,
     addPopoverBottomClass,
+    hideArrow,
   } = calculateWindowAdjustment(
     side,
     results.top,
@@ -75,7 +98,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
     bodyHeight,
     contentWidth,
     contentHeight,
-    margin,
+    safeArea,
     results.originX,
     results.originY,
     results.referenceCoordinates,
@@ -119,11 +142,15 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
       }
 
       if (bottom !== undefined) {
-        contentEl.style.setProperty('bottom', `${bottom}px`);
+        let bottomValue = `${bottom}px`;
+        if (checkSafeAreaBottom) {
+          bottomValue = `${bottom}px + var(--ion-safe-area-bottom, 0px)`;
+        }
+        contentEl.style.setProperty('bottom', `calc(${bottomValue})`);
       }
 
-      const safeAreaLeft = ' + var(--ion-safe-area-left, 0)';
-      const safeAreaRight = ' - var(--ion-safe-area-right, 0)';
+      const safeAreaLeft = ' + var(--ion-safe-area-left, 0px)';
+      const safeAreaRight = ' - var(--ion-safe-area-right, 0px)';
 
       let leftValue = `${left}px`;
 
@@ -134,13 +161,18 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
         leftValue = `${left}px${safeAreaRight}`;
       }
 
-      contentEl.style.setProperty('top', `calc(${top}px + var(--offset-y, 0))`);
+      let topValue = `${top}px`;
+      if (checkSafeAreaTop) {
+        topValue = `${top}px + var(--ion-safe-area-top, 0px)`;
+      }
+
+      contentEl.style.setProperty('top', `calc(${topValue} + var(--offset-y, 0))`);
       contentEl.style.setProperty('left', `calc(${leftValue} + var(--offset-x, 0))`);
       contentEl.style.setProperty('transform-origin', `${originY} ${originX}`);
 
       if (arrowEl !== null) {
         const didAdjustBounds = results.top !== top || results.left !== left;
-        const showArrow = shouldShowArrow(side, didAdjustBounds, ev, trigger);
+        const showArrow = !hideArrow && shouldShowArrow(side, didAdjustBounds, ev, trigger);
 
         if (showArrow) {
           arrowEl.style.setProperty('top', `calc(${arrowTop}px + var(--offset-y, 0))`);

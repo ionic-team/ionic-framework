@@ -1,0 +1,42 @@
+@import "../../themes/native/native.globals";
+
+// Select Popover
+// --------------------------------------------------
+
+:host ion-list {
+  @include margin(0);
+}
+
+ion-list-header,
+ion-label {
+  @include margin(0);
+}
+
+/**
+ * The main content inside of a popover has overflow: hidden
+ * so that a descendant ion-content can be scrolled.
+ * However, select-popover does not use ion-content so we need
+ * to explicitly make this container scrollable.
+ */
+:host {
+  overflow-y: auto;
+}
+
+// Select Popover: Select Option
+// --------------------------------------------------
+
+.select-option-label {
+  display: flex;
+
+  align-items: center;
+}
+
+.select-option-label-text {
+  display: flex;
+
+  flex-wrap: wrap;
+}
+
+.select-option-description {
+  display: block;
+}

@@ -66,6 +66,35 @@ const Inputs: React.FC<InputsProps> = () => {
   const [segment, setSegment] = useState('dogs');
   const [select, setSelect] = useState('apples');
 
+  // States
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isReadonly, setIsReadonly] = useState(false);
+
+  const [touched, setTouched] = useState({
+    input: false,
+    textarea: false,
+  });
+
+  const getValidationClasses = (fieldName: keyof typeof touched, value: string | number | null | undefined) => {
+    const isTouched = touched[fieldName];
+
+    const isEmpty = value === '' || value === null || value === undefined;
+    const isValid = !isEmpty;
+
+    // Always return validation classes
+    // ion-touched is only added on blur
+    const classes: string[] = [];
+    if (isTouched) {
+      classes.push('ion-touched');
+    }
+    if (isValid) {
+      classes.push('ion-valid');
+    } else {
+      classes.push('ion-invalid');
+    }
+    return classes.join(' ');
+  };
+
   const reset = () => {
     setCheckbox(false);
     setToggle(false);
@@ -78,6 +107,10 @@ const Inputs: React.FC<InputsProps> = () => {
     setRadio('red');
     setSegment('dogs');
     setSelect('apples');
+    setTouched({
+      input: false,
+      textarea: false,
+    });
   };
 
   const set = () => {
@@ -92,6 +125,14 @@ const Inputs: React.FC<InputsProps> = () => {
     setRadio('blue');
     setSegment('cats');
     setSelect('bananas');
+  };
+
+  const toggleDisable = () => {
+    setIsDisabled(!isDisabled);
+  };
+
+  const toggleReadonly = () => {
+    setIsReadonly(!isReadonly);
   };
 
   return (
@@ -109,6 +150,7 @@ const Inputs: React.FC<InputsProps> = () => {
             onIonChange={(e: IonSegmentCustomEvent<SegmentChangeEventDetail>) => {
               if (typeof e.detail.value === 'string') setSegment(e.detail.value);
             }}
+            disabled={isDisabled}
           >
             <IonSegmentButton value="dogs">
               <IonLabel>Dogs</IonLabel>
@@ -122,6 +164,7 @@ const Inputs: React.FC<InputsProps> = () => {
           <IonSearchbar
             value={searchbar}
             onIonInput={(e: IonSearchbarCustomEvent<SearchbarInputEventDetail>) => setSearchbar(e.detail.value!)}
+            disabled={isDisabled}
           ></IonSearchbar>
         </IonToolbar>
       </IonHeader>
@@ -133,96 +176,116 @@ const Inputs: React.FC<InputsProps> = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonItem>
-          <IonCheckbox
-            checked={checkbox}
-            onIonChange={(e: IonCheckboxCustomEvent<CheckboxChangeEventDetail>) => setCheckbox(e.detail.checked)}
-          >
-            Checkbox
-          </IonCheckbox>
-        </IonItem>
-
-        <IonItem>
-          <IonToggle
-            checked={toggle}
-            onIonChange={(e: IonToggleCustomEvent<ToggleChangeEventDetail>) => setToggle(e.detail.checked)}
-          >
-            Toggle
-          </IonToggle>
-        </IonItem>
-
-        <IonItem>
-          <IonInput
-            value={input}
-            onIonInput={(e: IonInputCustomEvent<InputInputEventDetail>) => setInput(e.detail.value!)}
-            label="Input"
-          ></IonInput>
-        </IonItem>
-
-        <IonItem>
-          <IonInputOtp
-            value={inputOtp}
-            onIonInput={(e: IonInputOtpCustomEvent<InputOtpInputEventDetail>) => setInputOtp(e.detail.value ?? '')}
-          ></IonInputOtp>
-        </IonItem>
-
-        <IonItem>
-          <IonRange
-            label="Range"
-            dualKnobs={true}
-            min={0}
-            max={100}
-            value={range}
-            onIonChange={(e: IonRangeCustomEvent<RangeChangeEventDetail>) => setRange(e.detail.value as { lower: number; upper: number })}
-          ></IonRange>
-        </IonItem>
-
-        <IonItem>
-          <IonTextarea
-            value={textarea}
-            onIonInput={(e: IonTextareaCustomEvent<TextareaInputEventDetail>) => setTextarea(e.detail.value!)}
-            label="Textarea"
-          ></IonTextarea>
-        </IonItem>
-
-        <IonItem>
-          <IonLabel>Datetime</IonLabel>
-          <IonDatetime
-            value={datetime}
-            onIonChange={(e: IonDatetimeCustomEvent<DatetimeChangeEventDetail>) => {
-              const value = e.detail.value;
-              if (typeof value === 'string') {
-                setDatetime(value);
-              }
-            }}
-          ></IonDatetime>
-        </IonItem>
-
-        <IonRadioGroup
-          value={radio}
-          onIonChange={(e: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>) => setRadio(e.detail.value)}
-        >
+        <form>
           <IonItem>
-            <IonRadio value="red">Red</IonRadio>
+            <IonCheckbox
+              checked={checkbox}
+              onIonChange={(e: IonCheckboxCustomEvent<CheckboxChangeEventDetail>) => setCheckbox(e.detail.checked)}
+              disabled={isDisabled}
+            >
+              Checkbox
+            </IonCheckbox>
           </IonItem>
-          <IonItem>
-            <IonRadio value="green">Green</IonRadio>
-          </IonItem>
-          <IonItem>
-            <IonRadio value="blue">Blue</IonRadio>
-          </IonItem>
-        </IonRadioGroup>
 
-        <IonItem>
-          <IonSelect
-            value={select}
-            onIonChange={(e: IonSelectCustomEvent<SelectChangeEventDetail<any>>) => setSelect(e.detail.value)}
-            label="Select"
+          <IonItem>
+            <IonToggle
+              checked={toggle}
+              onIonChange={(e: IonToggleCustomEvent<ToggleChangeEventDetail>) => setToggle(e.detail.checked)}
+              disabled={isDisabled}
+            >
+              Toggle
+            </IonToggle>
+          </IonItem>
+
+          <IonItem>
+            <IonInput
+              value={input}
+              onIonInput={(e: IonInputCustomEvent<InputInputEventDetail>) => setInput(e.detail.value!)}
+              onIonBlur={() => setTouched(prev => ({ ...prev, input: true }))}
+              className={getValidationClasses('input', input)}
+              label="Input"
+              disabled={isDisabled}
+              readonly={isReadonly}
+              required
+            ></IonInput>
+          </IonItem>
+
+          <IonItem>
+            <IonInputOtp
+              value={inputOtp}
+              onIonInput={(e: IonInputOtpCustomEvent<InputOtpInputEventDetail>) => setInputOtp(e.detail.value ?? '')}
+              disabled={isDisabled}
+              readonly={isReadonly}
+            ></IonInputOtp>
+          </IonItem>
+
+          <IonItem>
+            <IonRange
+              label="Range"
+              dualKnobs={true}
+              min={0}
+              max={100}
+              value={range}
+              onIonChange={(e: IonRangeCustomEvent<RangeChangeEventDetail>) => setRange(e.detail.value as { lower: number; upper: number })}
+              disabled={isDisabled}
+            ></IonRange>
+          </IonItem>
+
+          <IonItem>
+            <IonTextarea
+              value={textarea}
+              onIonInput={(e: IonTextareaCustomEvent<TextareaInputEventDetail>) => setTextarea(e.detail.value!)}
+              onIonBlur={() => setTouched(prev => ({ ...prev, textarea: true }))}
+              className={getValidationClasses('textarea', textarea)}
+              label="Textarea"
+              disabled={isDisabled}
+              readonly={isReadonly}
+              required
+            ></IonTextarea>
+          </IonItem>
+
+          <IonItem>
+            <IonLabel>Datetime</IonLabel>
+            <IonDatetime
+              value={datetime}
+              onIonChange={(e: IonDatetimeCustomEvent<DatetimeChangeEventDetail>) => {
+                const value = e.detail.value;
+                if (typeof value === 'string') {
+                  setDatetime(value);
+                }
+              }}
+              disabled={isDisabled}
+              readonly={isReadonly}
+            ></IonDatetime>
+          </IonItem>
+
+          <IonRadioGroup
+            value={radio}
+            onIonChange={(e: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>) => setRadio(e.detail.value)}
           >
-            <IonSelectOption value="apples">Apples</IonSelectOption>
-            <IonSelectOption value="bananas">Bananas</IonSelectOption>
-          </IonSelect>
-        </IonItem>
+            <IonItem>
+              <IonRadio value="red" disabled={isDisabled}>Red</IonRadio>
+            </IonItem>
+            <IonItem>
+              <IonRadio value="green" disabled={isDisabled}>Green</IonRadio>
+            </IonItem>
+            <IonItem>
+              <IonRadio value="blue" disabled={isDisabled}>Blue</IonRadio>
+            </IonItem>
+          </IonRadioGroup>
+
+          <IonItem>
+            <IonSelect
+              value={select}
+              onIonChange={(e: IonSelectCustomEvent<SelectChangeEventDetail<any>>) => setSelect(e.detail.value)}
+              label="Select"
+              disabled={isDisabled}
+            >
+              <IonSelectOption value="apples">Apples</IonSelectOption>
+              <IonSelectOption value="bananas">Bananas</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+        </form>
 
         <div className="ion-padding">
           Checkbox: {checkbox.toString()}<br />
@@ -241,6 +304,8 @@ const Inputs: React.FC<InputsProps> = () => {
 
           <IonButton expand="block" onClick={reset} id="reset">Reset Values</IonButton>
           <IonButton expand="block" onClick={set} id="set">Set Values</IonButton>
+          <IonButton expand="block" onClick={toggleDisable} id="disable">Toggle Disabled</IonButton>
+          <IonButton expand="block" onClick={toggleReadonly} id="readonly">Toggle Readonly</IonButton>
         </div>
       </IonContent>
     </IonPage>
