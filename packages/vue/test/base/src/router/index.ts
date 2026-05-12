@@ -141,6 +141,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/tabs/Tab2.vue')
       },
       {
+        path: 'tab2/:id',
+        component: () => import('@/views/tabs/Tab2Parameter.vue'),
+        props: true
+      },
+      {
         path: 'tab3',
         beforeEnter: (to, from, next) => {
           next({ path: '/tabs/tab1' });
