@@ -308,6 +308,72 @@ describe('gallery', () => {
   });
 
   describe('gallery: gap', () => {
+    describe('sanitizeGap()', () => {
+      it('should return undefined for invalid values', () => {
+        const invalidValues = [undefined, NaN, Infinity, '-1', 'px.5', 'vw10', 'invalid', '', '   ', -1];
+        invalidValues.forEach((value) => {
+          expect((sharedGallery as any).sanitizeGap(value)).toBeUndefined();
+        });
+      });
+
+      // The gap property only accepts a single value
+      it('should return undefined for space-separated values', () => {
+        expect((sharedGallery as any).sanitizeGap('10px 20px')).toBeUndefined();
+        expect((sharedGallery as any).sanitizeGap('10px 20px 30px')).toBeUndefined();
+        expect((sharedGallery as any).sanitizeGap('10px 20px 30px 40px')).toBeUndefined();
+      });
+
+      // The gap property does not support CSS keyword values
+      it('should return undefined for global CSS keywords', () => {
+        expect((sharedGallery as any).sanitizeGap('inherit')).toBeUndefined();
+        expect((sharedGallery as any).sanitizeGap('initial')).toBeUndefined();
+        expect((sharedGallery as any).sanitizeGap('revert')).toBeUndefined();
+        expect((sharedGallery as any).sanitizeGap('revert-layer')).toBeUndefined();
+        expect((sharedGallery as any).sanitizeGap('unset')).toBeUndefined();
+        expect((sharedGallery as any).sanitizeGap('normal')).toBeUndefined();
+        expect((sharedGallery as any).sanitizeGap('auto')).toBeUndefined();
+      });
+
+      it('should return the string for CSS math functions', () => {
+        expect((sharedGallery as any).sanitizeGap('calc(10% + 20px)')).toBe('calc(10% + 20px)');
+        expect((sharedGallery as any).sanitizeGap('min(10px, 20%)')).toBe('min(10px, 20%)');
+        expect((sharedGallery as any).sanitizeGap('max(10px, 20%)')).toBe('max(10px, 20%)');
+        expect((sharedGallery as any).sanitizeGap('clamp(10px, 20%, 30px)')).toBe('clamp(10px, 20%, 30px)');
+      });
+
+      it('should return the px value for positive integers', () => {
+        expect((sharedGallery as any).sanitizeGap(0)).toBe('0px');
+        expect((sharedGallery as any).sanitizeGap('0')).toBe('0px');
+
+        expect((sharedGallery as any).sanitizeGap(1)).toBe('1px');
+        expect((sharedGallery as any).sanitizeGap('1')).toBe('1px');
+
+        expect((sharedGallery as any).sanitizeGap(10)).toBe('10px');
+        expect((sharedGallery as any).sanitizeGap('10')).toBe('10px');
+      });
+
+      it('should return the px value for fractional integers', () => {
+        expect((sharedGallery as any).sanitizeGap(0.5)).toBe('0.5px');
+        expect((sharedGallery as any).sanitizeGap('0.5')).toBe('0.5px');
+
+        expect((sharedGallery as any).sanitizeGap(1.5)).toBe('1.5px');
+        expect((sharedGallery as any).sanitizeGap('1.5')).toBe('1.5px');
+
+        expect((sharedGallery as any).sanitizeGap(10.55)).toBe('10.55px');
+        expect((sharedGallery as any).sanitizeGap('10.55')).toBe('10.55px');
+      });
+
+      it('should return the string for CSS length strings', () => {
+        expect((sharedGallery as any).sanitizeGap('16px')).toBe('16px');
+        expect((sharedGallery as any).sanitizeGap('1rem')).toBe('1rem');
+        expect((sharedGallery as any).sanitizeGap('24px')).toBe('24px');
+        expect((sharedGallery as any).sanitizeGap('5vh')).toBe('5vh');
+        expect((sharedGallery as any).sanitizeGap('2vw')).toBe('2vw');
+        expect((sharedGallery as any).sanitizeGap('12.5%')).toBe('12.5%');
+        expect((sharedGallery as any).sanitizeGap('3cqw')).toBe('3cqw');
+      });
+    });
+
     describe('getGapForWidth()', () => {
       it('should resolve to the default gap for each breakpoint', () => {
         const breakpoints = DEFAULT_BREAKPOINTS;
