@@ -408,6 +408,25 @@ export const createIonRouter = (
             routeInfo.tab
           );
           routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
+        } else if (
+          routeInfo.routerAction === "push" &&
+          routeInfo.routerDirection === "none" &&
+          routeInfo.tab === leavingLocationInfo.tab
+        ) {
+          /**
+           * Same-tab push with direction "none" still needs pushedByRoute so
+           * ion-back-button uses history instead of falling back to defaultHref.
+           * Cross-tab pushes hit the branch above.
+           *
+           * Skip when the candidate equals the current pathname (e.g. /a?x=1 ->
+           * /a?x=2) to avoid a self-loop on back. Same guard as the replace
+           * branch below.
+           */
+          const candidate = leavingLocationInfo.pathname;
+          routeInfo.pushedByRoute =
+            candidate !== "" && candidate !== routeInfo.pathname
+              ? candidate
+              : undefined;
         } else if (routeInfo.routerAction === "replace") {
           /**
            * When replacing a route, we want to make sure we select the current route
