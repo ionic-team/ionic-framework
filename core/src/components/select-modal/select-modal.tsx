@@ -127,6 +127,7 @@ export class SelectModal implements ComponentInterface {
            * part of the public `SelectModalOption` interface.
            */
           const richOption = option as SelectOverlayOption;
+          const hasRichContent = !!richOption.startContent || !!richOption.endContent || !!richOption.description;
           const optionLabelOptions = {
             id: `modal-option-${index}`,
             label: richOption.text,
@@ -145,6 +146,9 @@ export class SelectModal implements ComponentInterface {
               }}
             >
               <ion-radio
+                class={{
+                  'select-option-has-rich-content': hasRichContent,
+                }}
                 value={option.value}
                 disabled={option.disabled}
                 justify="start"
@@ -186,6 +190,7 @@ export class SelectModal implements ComponentInterface {
        * part of the public `SelectModalOption` interface.
        */
       const richOption = option as SelectOverlayOption;
+      const hasRichContent = !!richOption.startContent || !!richOption.endContent || !!richOption.description;
       const optionLabelOptions = {
         id: `modal-option-${index}`,
         label: richOption.text,
@@ -203,6 +208,9 @@ export class SelectModal implements ComponentInterface {
           }}
         >
           <ion-checkbox
+            class={{
+              'select-option-has-rich-content': hasRichContent,
+            }}
             value={option.value}
             disabled={option.disabled}
             checked={option.checked}

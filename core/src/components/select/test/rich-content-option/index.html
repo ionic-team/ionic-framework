@@ -54,6 +54,65 @@
           </ion-list-header>
 
           <ion-item>
+            <ion-select id="action-sheet-select" label="Action Sheet" placeholder="Select one" interface="action-sheet">
+              <ion-select-option value="full" description="Choose me!">
+                <ion-badge slot="end">NEW</ion-badge>
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Full Content
+                <span class="span-style">This is a span element</span>
+              </ion-select-option>
+              <ion-select-option value="slots">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Slots
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="start-slot">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Start Slot
+              </ion-select-option>
+              <ion-select-option value="end-slot">
+                End Slot
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="description" description="Choose me!"> Description </ion-select-option>
+              <ion-select-option value="inner">
+                Inner Content
+                <ion-badge>NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-text" description="Choose me!">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <span class="span-style no-text-span-style">This is a span element</span>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-inner">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option
+                value="long"
+                description="This is a long description that demonstrates how rich content options handle text overflow"
+              >
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                This is a very long option label that demonstrates how the start and end slots stay at their intrinsic
+                widths while the content area absorbs the remaining row width
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
             <ion-select id="alert-select" label="Alert" placeholder="Select one" interface="alert">
               <ion-select-option value="full" description="Choose me!">
                 <ion-badge slot="end">NEW</ion-badge>
@@ -96,6 +155,76 @@
                 <ion-avatar slot="start" size="large">
                   <img src="/src/components/avatar/test/avatar.svg" />
                 </ion-avatar>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option
+                value="long"
+                description="This is a long description that demonstrates how rich content options handle text overflow"
+              >
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                This is a very long option label that demonstrates how the start and end slots stay at their intrinsic
+                widths while the content area absorbs the remaining row width
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select id="modal-select" label="Modal" placeholder="Select one" interface="modal">
+              <ion-select-option value="full" description="Choose me!">
+                <ion-badge slot="end">NEW</ion-badge>
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Full Content
+                <span class="span-style">This is a span element</span>
+              </ion-select-option>
+              <ion-select-option value="slots">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Slots
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="start-slot">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Start Slot
+              </ion-select-option>
+              <ion-select-option value="end-slot">
+                End Slot
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="description" description="Choose me!"> Description </ion-select-option>
+              <ion-select-option value="inner">
+                Inner Content
+                <ion-badge>NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-text" description="Choose me!">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <span class="span-style no-text-span-style">This is a span element</span>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-inner">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option
+                value="long"
+                description="This is a long description that demonstrates how rich content options handle text overflow"
+              >
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                This is a very long option label that demonstrates how the start and end slots stay at their intrinsic
+                widths while the content area absorbs the remaining row width
                 <ion-badge slot="end">NEW</ion-badge>
               </ion-select-option>
             </ion-select>
@@ -146,100 +275,15 @@
                 </ion-avatar>
                 <ion-badge slot="end">NEW</ion-badge>
               </ion-select-option>
-            </ion-select>
-          </ion-item>
-
-          <ion-item>
-            <ion-select id="action-sheet-select" label="Action Sheet" placeholder="Select one" interface="action-sheet">
-              <ion-select-option value="full" description="Choose me!">
-                <ion-badge slot="end">NEW</ion-badge>
+              <ion-select-option
+                value="long"
+                description="This is a long description that demonstrates how rich content options handle text overflow"
+              >
                 <ion-avatar slot="start" size="large">
                   <img src="/src/components/avatar/test/avatar.svg" />
                 </ion-avatar>
-                Full Content
-                <span class="span-style">This is a span element</span>
-              </ion-select-option>
-              <ion-select-option value="slots">
-                <ion-avatar slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                Slots
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
-              <ion-select-option value="start-slot">
-                <ion-avatar slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                Start Slot
-              </ion-select-option>
-              <ion-select-option value="end-slot">
-                End Slot
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
-              <ion-select-option value="description" description="Choose me!"> Description </ion-select-option>
-              <ion-select-option value="inner">
-                Inner Content
-                <ion-badge>NEW</ion-badge>
-              </ion-select-option>
-              <ion-select-option value="no-text" description="Choose me!">
-                <ion-avatar slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                <span class="span-style no-text-span-style">This is a span element</span>
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
-              <ion-select-option value="no-inner">
-                <ion-avatar slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
-
-          <ion-item>
-            <ion-select id="modal-select" label="Modal" placeholder="Select one" interface="modal">
-              <ion-select-option value="full" description="Choose me!">
-                <ion-badge slot="end">NEW</ion-badge>
-                <ion-avatar slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                Full Content
-                <span class="span-style">This is a span element</span>
-              </ion-select-option>
-              <ion-select-option value="slots">
-                <ion-avatar slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                Slots
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
-              <ion-select-option value="start-slot">
-                <ion-avatar slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                Start Slot
-              </ion-select-option>
-              <ion-select-option value="end-slot">
-                End Slot
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
-              <ion-select-option value="description" description="Choose me!"> Description </ion-select-option>
-              <ion-select-option value="inner">
-                Inner Content
-                <ion-badge>NEW</ion-badge>
-              </ion-select-option>
-              <ion-select-option value="no-text" description="Choose me!">
-                <ion-avatar slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                <span class="span-style no-text-span-style">This is a span element</span>
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
-              <ion-select-option value="no-inner">
-                <ion-avatar slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
+                This is a very long option label that demonstrates how the start and end slots stay at their intrinsic
+                widths while the content area absorbs the remaining row width
                 <ion-badge slot="end">NEW</ion-badge>
               </ion-select-option>
             </ion-select>
@@ -296,52 +340,15 @@
                 </ion-avatar>
                 <ion-badge slot="end">NEW</ion-badge>
               </ion-select-option>
-            </ion-select>
-          </ion-item>
-
-          <ion-item>
-            <ion-select id="popover-select-multiple" label="Popover" multiple="true" interface="popover">
-              <ion-select-option value="full" description="Choose me!">
-                <ion-badge slot="end">NEW</ion-badge>
+              <ion-select-option
+                value="long"
+                description="This is a long description that demonstrates how rich content options handle text overflow"
+              >
                 <ion-avatar slot="start" size="large">
                   <img src="/src/components/avatar/test/avatar.svg" />
                 </ion-avatar>
-                Full Content
-                <span class="span-style">This is a span element</span>
-              </ion-select-option>
-              <ion-select-option value="slots">
-                <ion-avatar slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                Slots
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
-              <ion-select-option value="start-slot">
-                <ion-avatar slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                Start Slot
-              </ion-select-option>
-              <ion-select-option value="end-slot">
-                End Slot
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
-              <ion-select-option value="description" description="Choose me!"> Description </ion-select-option>
-              <ion-select-option value="inner">
-                Inner Content
-                <ion-badge>NEW</ion-badge>
-              </ion-select-option>
-              <ion-select-option value="no-text" description="Choose me!">
-                <ion-avatar slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
-                <span class="span-style no-text-span-style">This is a span element</span>
-                <ion-badge slot="end">NEW</ion-badge>
-              </ion-select-option>
-              <ion-select-option value="no-inner">
-                <ion-avatar slot="start" size="large">
-                  <img src="/src/components/avatar/test/avatar.svg" />
-                </ion-avatar>
+                This is a very long option label that demonstrates how the start and end slots stay at their intrinsic
+                widths while the content area absorbs the remaining row width
                 <ion-badge slot="end">NEW</ion-badge>
               </ion-select-option>
             </ion-select>
@@ -390,6 +397,76 @@
                 <ion-avatar slot="start" size="large">
                   <img src="/src/components/avatar/test/avatar.svg" />
                 </ion-avatar>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option
+                value="long"
+                description="This is a long description that demonstrates how rich content options handle text overflow"
+              >
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                This is a very long option label that demonstrates how the start and end slots stay at their intrinsic
+                widths while the content area absorbs the remaining row width
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select id="popover-select-multiple" label="Popover" multiple="true" interface="popover">
+              <ion-select-option value="full" description="Choose me!">
+                <ion-badge slot="end">NEW</ion-badge>
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Full Content
+                <span class="span-style">This is a span element</span>
+              </ion-select-option>
+              <ion-select-option value="slots">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Slots
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="start-slot">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Start Slot
+              </ion-select-option>
+              <ion-select-option value="end-slot">
+                End Slot
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="description" description="Choose me!"> Description </ion-select-option>
+              <ion-select-option value="inner">
+                Inner Content
+                <ion-badge>NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-text" description="Choose me!">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <span class="span-style no-text-span-style">This is a span element</span>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-inner">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option
+                value="long"
+                description="This is a long description that demonstrates how rich content options handle text overflow"
+              >
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                This is a very long option label that demonstrates how the start and end slots stay at their intrinsic
+                widths while the content area absorbs the remaining row width
                 <ion-badge slot="end">NEW</ion-badge>
               </ion-select-option>
             </ion-select>

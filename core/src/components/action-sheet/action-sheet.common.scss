@@ -243,8 +243,16 @@
   align-items: center;
 }
 
+.action-sheet-button-label-has-rich-content,
 .select-option-content {
   flex: 1;
+}
+
+.select-option-start,
+.select-option-end {
+  display: flex;
+
+  align-items: center;
 }
 
 .select-option-description {

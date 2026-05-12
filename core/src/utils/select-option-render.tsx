@@ -109,7 +109,7 @@ export const renderOptionLabel = (
 
   // Render label with rich content (start, end, description)
   return (
-    <Tag class={className} key={`${className}-${id}`}>
+    <Tag class={`${className} ${className}-has-rich-content`} key={`${className}-${id}`}>
       {startContent && renderClonedContent(id, startContent, 'select-option-start', useSpan)}
       <Tag class="select-option-content" key={`${className}-content-${id}`}>
         {labelEl}

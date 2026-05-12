@@ -37,6 +37,26 @@ ion-label {
   flex-wrap: wrap;
 }
 
+ion-radio.select-option-has-rich-content::part(label),
+ion-checkbox.select-option-has-rich-content::part(label),
+.select-option-content {
+  flex: 1;
+
+  /**
+   * Let rich content wrap instead of inheriting the label part's
+   * single-line truncation, so arbitrary slotted elements render
+   * without clipping.
+   */
+  white-space: normal;
+}
+
+.select-option-start,
+.select-option-end {
+  display: flex;
+
+  align-items: center;
+}
+
 .select-option-description {
   display: block;
 }

@@ -13,6 +13,11 @@
   gap: globals.$ion-space-300;
 }
 
+.select-option-start,
+.select-option-end {
+  gap: globals.$ion-space-200;
+}
+
 .select-option-description {
   @include globals.typography(globals.$ion-body-md-regular);
   @include globals.padding(0);

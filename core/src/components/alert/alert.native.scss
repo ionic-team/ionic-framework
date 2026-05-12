@@ -11,6 +11,11 @@
   gap: 12px;
 }
 
+.select-option-start,
+.select-option-end {
+  gap: 8px;
+}
+
 .select-option-description {
   @include mixins.padding(5px, 0, 0, 0);
 

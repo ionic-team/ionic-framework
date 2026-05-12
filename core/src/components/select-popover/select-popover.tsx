@@ -135,6 +135,7 @@ export class SelectPopover implements ComponentInterface {
        * part of the public `SelectPopoverOption` interface.
        */
       const richOption = option as SelectOverlayOption;
+      const hasRichContent = !!richOption.startContent || !!richOption.endContent || !!richOption.description;
       const optionLabelOptions = {
         id: `popover-option-${index}`,
         label: richOption.text,
@@ -152,6 +153,9 @@ export class SelectPopover implements ComponentInterface {
           }}
         >
           <ion-checkbox
+            class={{
+              'select-option-has-rich-content': hasRichContent,
+            }}
             value={option.value}
             disabled={option.disabled}
             checked={option.checked}
@@ -184,6 +188,7 @@ export class SelectPopover implements ComponentInterface {
            * part of the public `SelectPopoverOption` interface.
            */
           const richOption = option as SelectOverlayOption;
+          const hasRichContent = !!richOption.startContent || !!richOption.endContent || !!richOption.description;
           const optionLabelOptions = {
             id: `popover-option-${index}`,
             label: richOption.text,
@@ -201,6 +206,9 @@ export class SelectPopover implements ComponentInterface {
               }}
             >
               <ion-radio
+                class={{
+                  'select-option-has-rich-content': hasRichContent,
+                }}
                 value={option.value}
                 disabled={option.disabled}
                 onClick={() => this.dismissParentPopover()}

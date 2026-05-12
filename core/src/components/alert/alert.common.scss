@@ -262,6 +262,13 @@ textarea.alert-input {
   flex: 1;
 }
 
+.select-option-start,
+.select-option-end {
+  display: flex;
+
+  align-items: center;
+}
+
 .select-option-description {
   display: block;
 }

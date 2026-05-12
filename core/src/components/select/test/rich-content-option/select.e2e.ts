@@ -1,6 +1,54 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+configs().forEach(({ title, screenshot, config }) => {
+  test.describe(title('select: rich content options (visual checks)'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/select/test/rich-content-option', config);
+    });
+
+    test('should not have visual regressions for the alert interface', async ({ page }) => {
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('#alert-select').click();
+      await ionAlertDidPresent.next();
+
+      const alert = page.locator('ion-alert');
+      await expect(alert).toHaveScreenshot(screenshot(`select-rich-content-alert`));
+    });
+
+    test('should not have visual regressions for the action sheet interface', async ({ page }) => {
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+
+      await page.locator('#action-sheet-select').click();
+      await ionActionSheetDidPresent.next();
+
+      const actionSheet = page.locator('ion-action-sheet');
+      await expect(actionSheet).toHaveScreenshot(screenshot(`select-rich-content-action-sheet`));
+    });
+
+    test('should not have visual regressions for the popover interface', async ({ page }) => {
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+      await page.locator('#popover-select').click();
+      await ionPopoverDidPresent.next();
+
+      const popover = page.locator('ion-popover');
+      await expect(popover).toHaveScreenshot(screenshot(`select-rich-content-popover`));
+    });
+
+    test('should not have visual regressions for the modal interface', async ({ page }) => {
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.locator('#modal-select').click();
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+      await expect(modal).toHaveScreenshot(screenshot(`select-rich-content-modal`));
+    });
+  });
+});
+
 /**
  * This behavior does not vary across modes/directions
  */
