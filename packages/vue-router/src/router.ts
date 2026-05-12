@@ -189,7 +189,7 @@ export const createIonRouter = (
           } else if (prevInfo.pathname) {
             /**
              * prevInfo's history position was wiped when the user went
-             * back then pushed a new route (FW-6472), so router.go can't
+             * back then pushed a new route, so router.go can't
              * reach it. Replace falls through to afterEach with the
              * pop/back `incomingRouteParams` set above, which preserves
              * the back animation and consumes the params so they don't

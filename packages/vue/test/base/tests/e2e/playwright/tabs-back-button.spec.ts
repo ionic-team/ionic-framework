@@ -2,12 +2,12 @@ import { test, expect } from './utils/test-base';
 import { ionBackClick, ionPageVisible, ionPageHidden, ionPageDoesNotExist, tabClick } from './utils/test-utils';
 
 /**
- * Regression coverage for FW-6472. When the user has child pages open in
+ * When the user has child pages open in
  * two tabs and switches between them, the back button on the active tab's
  * child must pop within that tab's stack, not jump to the other tab.
  */
 test.describe('Tabs: back button after switching between tabs with child pages', () => {
-  test('back button on tab2 child still returns to tab2 root after multiple tab switches (FW-6472 scenario A)', async ({ page }) => {
+  test('back button on tab2 child still returns to tab2 root after multiple tab switches', async ({ page }) => {
     await page.goto('/tabs');
     await ionPageVisible(page, 'tab1');
 
@@ -36,7 +36,7 @@ test.describe('Tabs: back button after switching between tabs with child pages',
     await ionPageDoesNotExist(page, 'tab2childone');
   });
 
-  // Scenario B: go back on tab1's child first, then re-enter tab2. Back on
+  // Go back on tab1's child first, then re-enter tab2. Back on
   // tab2's child must still land on /tabs/tab2 after that sequence.
   test('back button on tab2 child works after going back in tab1 then re-entering tab2 (FW-6472 scenario B)', async ({ page }) => {
     await page.goto('/tabs');
