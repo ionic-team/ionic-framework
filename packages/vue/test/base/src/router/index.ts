@@ -50,6 +50,18 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/DefaultHref.vue')
   },
   {
+    path: '/direction-none-back/a',
+    component: () => import('@/views/DirectionNoneBackA.vue')
+  },
+  {
+    path: '/direction-none-back/b',
+    component: () => import('@/views/DirectionNoneBackB.vue')
+  },
+  {
+    path: '/direction-none-back/fallback',
+    component: () => import('@/views/DirectionNoneBackFallback.vue')
+  },
+  {
     path: '/routing',
     component: () => import('@/views/Routing.vue')
   },
@@ -139,6 +151,11 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'tab2',
         component: () => import('@/views/tabs/Tab2.vue')
+      },
+      {
+        path: 'tab2/:id',
+        component: () => import('@/views/tabs/Tab2Parameter.vue'),
+        props: true
       },
       {
         path: 'tab3',

@@ -183,7 +183,32 @@ export const createIonRouter = (
            * is not good because we would have two /tabs/tab1/child1 entries
            * separated by a /tabs/tab1/child2 entry.
            */
-          router.go(prevInfo.position - routeInfo.position);
+          const positionDelta = prevInfo.position! - routeInfo.position!;
+          if (positionDelta < 0) {
+            router.go(positionDelta);
+          } else if (prevInfo.pathname) {
+            /**
+             * prevInfo's history position was wiped when the user went
+             * back then pushed a new route, so router.go can't
+             * reach it. Replace falls through to afterEach with the
+             * pop/back `incomingRouteParams` set above, which preserves
+             * the back animation and consumes the params so they don't
+             * leak into the next navigation. We replace even when
+             * `positionDelta === 0` for the same consumption reason.
+             */
+            router.replace({
+              path: prevInfo.pathname,
+              query: parseQuery(prevInfo.search),
+            });
+          } else {
+            /**
+             * prevInfo has no pathname (synthesized root entry). Route
+             * to `defaultHref` so the pop/back `incomingRouteParams`
+             * set above gets consumed instead of leaking into the next
+             * navigation.
+             */
+            handleNavigate(defaultHref, "pop", "back", routerAnimation);
+          }
         }
       } else {
         handleNavigate(defaultHref, "pop", "back", routerAnimation);
@@ -407,6 +432,25 @@ export const createIonRouter = (
             routeInfo.tab
           );
           routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
+        } else if (
+          routeInfo.routerAction === "push" &&
+          routeInfo.routerDirection === "none" &&
+          routeInfo.tab === leavingLocationInfo.tab
+        ) {
+          /**
+           * Same-tab push with direction "none" still needs pushedByRoute so
+           * ion-back-button uses history instead of falling back to defaultHref.
+           * Cross-tab pushes hit the branch above.
+           *
+           * Skip when the candidate equals the current pathname (e.g. /a?x=1 ->
+           * /a?x=2) to avoid a self-loop on back. Same guard as the replace
+           * branch below.
+           */
+          const candidate = leavingLocationInfo.pathname;
+          routeInfo.pushedByRoute =
+            candidate !== "" && candidate !== routeInfo.pathname
+              ? candidate
+              : undefined;
         } else if (routeInfo.routerAction === "replace") {
           /**
            * When replacing a route, we want to make sure we select the current route
