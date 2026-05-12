@@ -1,7 +1,6 @@
 /**
- * Validation for CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage)
- * types like `<length>` (`<number>` + unit identifier) or `<percentage>` (`<number>%`).
- * Also supports simple `calc` / `min` / `max` / `clamp(...)` forms.
+ * Helpers for validating user-supplied CSS values using regular expressions, without
+ * relying on browser CSS APIs.
  */
 
 // Matches `<length>` (`<number>` + unit identifier) or `<percentage>` (`<number>%`).
@@ -13,7 +12,7 @@ const MATH_FUNCTION_PATTERN = /^(calc|min|max|clamp)\s*\(.+\)$/i;
 /**
  * Returns whether `value` matches the [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage)
  * syntax. Accepts `<length>` (`<number>` + unit identifier) or `<percentage>` (`<number>%`).
- * Also supports simple `calc` / `min` / `max` / `clamp(...)` forms.
+ * Also supports simple `calc` / `min` / `max` / `clamp(...)` functions.
  *
  * @param value String value to validate.
  */
