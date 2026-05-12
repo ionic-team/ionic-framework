@@ -50,6 +50,18 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/DefaultHref.vue')
   },
   {
+    path: '/direction-none-back/a',
+    component: () => import('@/views/DirectionNoneBackA.vue')
+  },
+  {
+    path: '/direction-none-back/b',
+    component: () => import('@/views/DirectionNoneBackB.vue')
+  },
+  {
+    path: '/direction-none-back/fallback',
+    component: () => import('@/views/DirectionNoneBackFallback.vue')
+  },
+  {
     path: '/routing',
     component: () => import('@/views/Routing.vue')
   },
