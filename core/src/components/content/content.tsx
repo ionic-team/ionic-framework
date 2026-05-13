@@ -36,6 +36,7 @@ export class Content implements ComponentInterface {
   private backgroundContentEl?: HTMLElement;
   private isMainContent = true;
   private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+  private observerResizeTimeout: ReturnType<typeof setTimeout> | null = null;
   private inheritedAttributes: Attributes = {};
 
   private tabsElement: HTMLElement | null = null;
@@ -446,10 +447,14 @@ export class Content implements ComponentInterface {
     }
 
     if ('ResizeObserver' in window) {
-      let timeout: any;
       this.resizeObserver = new ResizeObserver(() => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => this.resize(), 100);
+        if (this.observerResizeTimeout !== null) {
+          clearTimeout(this.observerResizeTimeout);
+        }
+        this.observerResizeTimeout = setTimeout(() => {
+          this.observerResizeTimeout = null;
+          this.resize();
+        }, 100);
       });
     }
 
@@ -486,6 +491,10 @@ export class Content implements ComponentInterface {
   }
 
   private disconnectObservers() {
+    if (this.observerResizeTimeout !== null) {
+      clearTimeout(this.observerResizeTimeout);
+      this.observerResizeTimeout = null;
+    }
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();
       this.mutationObserver = null;
@@ -503,17 +512,10 @@ export class Content implements ComponentInterface {
 
     this.resizeObserver.disconnect();
 
-    const headers = this.el.parentElement.querySelectorAll('ion-header');
-    const footers = this.el.parentElement.querySelectorAll('ion-footer');
+    const targets = this.el.parentElement.querySelectorAll(':scope > ion-header, :scope > ion-footer');
 
     const observer = this.resizeObserver;
-
-    if (observer === null || observer === undefined) {
-      return;
-    }
-
-    headers.forEach((header) => observer.observe(header));
-    footers.forEach((footer) => observer.observe(footer));
+    targets.forEach((target) => observer.observe(target));
   }
 
   private onScrollStart() {
