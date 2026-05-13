@@ -196,10 +196,7 @@ export const IonTabBar = defineComponent({
          * Also runs on initial setup so a deep-loaded tab child
          * records its real pathname instead of `originalHref`.
          */
-        if (
-          activeTab !== prevActiveTab ||
-          prevHref !== currentRoute.pathname
-        ) {
+        if (activeTab !== prevActiveTab || prevHref !== currentRoute.pathname) {
           /**
            * By default the search is `undefined` in Ionic Vue,
            * but Vue Router can set the search to the empty string.
