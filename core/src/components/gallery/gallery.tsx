@@ -23,6 +23,12 @@ type GalleryBreakpoint = keyof typeof BREAKPOINTS;
 const BREAKPOINT_ORDER: GalleryBreakpoint[] = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
 
 /**
+ * Direct slotted children that support CSS grid placement and inline `style`.
+ * This is a union of `HTMLElement` and `SVGElement` to support both HTML and SVG elements.
+ */
+type GalleryItemElement = HTMLElement | SVGElement;
+
+/**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
@@ -130,8 +136,8 @@ export class Gallery implements ComponentInterface {
       return;
     }
 
-    const target = ev.target as HTMLElement | null;
-    if (target !== null && this.el.contains(target)) {
+    const target = ev.target;
+    if (target instanceof Node && this.el.contains(target)) {
       this.scheduleMasonryResize();
     }
   }
@@ -416,17 +422,20 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Return all directly slotted HTMLElement children of the gallery.
+   * Return all directly slotted children of the gallery that can be grid items
+   * with inline placement styles (HTML elements and SVG elements).
    */
-  private getItems() {
-    return Array.from(this.el.children).filter((child): child is HTMLElement => child instanceof HTMLElement);
+  private getItems(): GalleryItemElement[] {
+    return Array.from(this.el.children).filter(
+      (child): child is GalleryItemElement => typeof (child as any).style?.setProperty === 'function'
+    );
   }
 
   /**
    * Clear the item styles for the given item element.
    * This is used to switch between uniform and masonry layouts.
    */
-  private clearItemStyles(itemEl: HTMLElement) {
+  private clearItemStyles(itemEl: GalleryItemElement) {
     itemEl.style.gridRowStart = '';
     itemEl.style.gridRowEnd = '';
     itemEl.style.gridColumn = '';
@@ -444,7 +453,7 @@ export class Gallery implements ComponentInterface {
    * Convert a rendered item height to the number of grid rows it should span.
    * Returns undefined for images that are not fully loaded yet.
    */
-  private calculateRowSpan(itemEl: HTMLElement, rowHeight: number, rowGap: number) {
+  private calculateRowSpan(itemEl: GalleryItemElement, rowHeight: number, rowGap: number) {
     if (itemEl instanceof HTMLImageElement && (!itemEl.complete || itemEl.naturalHeight === 0)) {
       return undefined;
     }
@@ -486,9 +495,9 @@ export class Gallery implements ComponentInterface {
   /**
    * Apply masonry placement by assigning each item a column and row span.
    */
-  private layoutMasonry(items: HTMLElement[], rowHeight: number, rowGap: number, columns: number) {
+  private layoutMasonry(items: GalleryItemElement[], rowHeight: number, rowGap: number, columns: number) {
     const columnHeights = new Array<number>(columns).fill(0);
-    const lastItemsByColumn = new Array<HTMLElement | undefined>(columns).fill(undefined);
+    const lastItemsByColumn = new Array<GalleryItemElement | undefined>(columns).fill(undefined);
 
     items.forEach((itemEl, i) => {
       itemEl.style.marginBottom = '';

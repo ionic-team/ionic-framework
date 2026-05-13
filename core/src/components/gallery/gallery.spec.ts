@@ -556,6 +556,57 @@ describe('gallery', () => {
   });
 
   describe('gallery: layout', () => {
+    describe('getItems()', () => {
+      it('should include direct child SVG elements with HTML elements', () => {
+        const div = document.createElement('div');
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        el.appendChild(div);
+        el.appendChild(svg);
+
+        const items = (sharedGallery as any).getItems();
+
+        expect(items).toEqual([div, svg]);
+        expect(items[1].namespaceURI).toBe('http://www.w3.org/2000/svg');
+      });
+
+      it('should exclude direct children without a usable CSSStyleDeclaration (no setProperty)', () => {
+        const included = document.createElement('div');
+        const excluded = document.createElement('div');
+        Object.defineProperty(excluded, 'style', {
+          configurable: true,
+          enumerable: true,
+          get() {
+            return { cssText: '' } as unknown as CSSStyleDeclaration;
+          },
+        });
+        el.appendChild(included);
+        el.appendChild(excluded);
+
+        const items = (sharedGallery as any).getItems();
+
+        expect(items).toEqual([included]);
+      });
+
+      it('should apply masonry grid placement styles to slotted SVG elements', () => {
+        const div = document.createElement('div');
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        el.appendChild(div);
+        el.appendChild(svg);
+
+        const items = (sharedGallery as any).getItems();
+
+        jest.spyOn(div, 'getBoundingClientRect').mockReturnValue({ height: 20 } as DOMRect);
+        jest.spyOn(svg, 'getBoundingClientRect').mockReturnValue({ height: 30 } as DOMRect);
+
+        (sharedGallery as any).layoutMasonry(items, 10, 0, 2);
+
+        expect(div.style.gridColumn).toBe('1');
+        expect(svg.style.gridColumn).toBe('2');
+        expect(svg.style.gridRowStart).not.toBe('');
+        expect(svg.style.gridRowEnd).not.toBe('');
+      });
+    });
+
     describe('propertiesChanged()', () => {
       it('should update responsive styles and schedule masonry resize when layout changes', () => {
         const updateResponsiveStylesSpy = jest.spyOn(sharedGallery as any, 'updateResponsiveStyles');
