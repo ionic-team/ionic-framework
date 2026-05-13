@@ -315,8 +315,8 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Warn about an invalid columns value when it is set to a non-positive
-   * integer, an empty breakpoint map, a map with no supported breakpoint keys,
+   * Warn about an invalid columns value when it is set to a negative number,
+   * an empty breakpoint map, a map with no supported breakpoint keys,
    * or a map with invalid breakpoint values.
    */
   private warnInvalidColumns(columns: GalleryColumns) {
