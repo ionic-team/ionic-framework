@@ -140,6 +140,39 @@ describe('gallery', () => {
         warningSpy.mockRestore();
       });
 
+      it('should warn and fallback when columns is an empty breakpoint map object', () => {
+        const breakpoints = DEFAULT_BREAKPOINTS;
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        sharedGallery.columns = {} as any;
+
+        breakpoints.forEach(({ width, expectedColumns }) => {
+          expect((sharedGallery as any).getColumnsForWidth(width)).toBe(expectedColumns);
+        });
+
+        expect(warningSpy).toHaveBeenCalledWith(
+          expect.stringContaining('[ion-gallery] - Invalid "columns" value ({})'),
+          el
+        );
+
+        warningSpy.mockRestore();
+      });
+
+      it('should warn and fallback when columns breakpoint map has only unrecognized keys', () => {
+        const breakpoints = DEFAULT_BREAKPOINTS;
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        sharedGallery.columns = { colums: 4, sm_typo: 3 } as any;
+
+        breakpoints.forEach(({ width, expectedColumns }) => {
+          expect((sharedGallery as any).getColumnsForWidth(width)).toBe(expectedColumns);
+        });
+
+        expect(warningSpy).toHaveBeenCalledWith(expect.stringContaining('[ion-gallery] - Invalid "columns" value'), el);
+
+        warningSpy.mockRestore();
+      });
+
       it('should properly set columns for the md breakpoint but fallback to the default columns for all others when the columns property is set to an object with one valid breakpoint and the rest invalid', () => {
         const breakpoints = [
           // xs
@@ -424,6 +457,39 @@ describe('gallery', () => {
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
         sharedGallery.gap = { xs: '', sm: -3 };
+
+        breakpoints.forEach(({ width, expectedGap }) => {
+          expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
+        });
+
+        expect(warningSpy).toHaveBeenCalledWith(expect.stringContaining('[ion-gallery] - Invalid "gap" value'), el);
+
+        warningSpy.mockRestore();
+      });
+
+      it('should warn and fallback when gap is an empty breakpoint map object', () => {
+        const breakpoints = DEFAULT_BREAKPOINTS;
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        sharedGallery.gap = {} as any;
+
+        breakpoints.forEach(({ width, expectedGap }) => {
+          expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
+        });
+
+        expect(warningSpy).toHaveBeenCalledWith(
+          expect.stringContaining('[ion-gallery] - Invalid "gap" value ({})'),
+          el
+        );
+
+        warningSpy.mockRestore();
+      });
+
+      it('should warn and fallback when gap breakpoint map has only unrecognized keys', () => {
+        const breakpoints = DEFAULT_BREAKPOINTS;
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        sharedGallery.gap = { gapp: '8px', sm_typo: '1rem' } as any;
 
         breakpoints.forEach(({ width, expectedGap }) => {
           expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);

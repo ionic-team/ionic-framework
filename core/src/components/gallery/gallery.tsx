@@ -225,20 +225,28 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Check if the breakpoint map has any invalid values for the provided sanitizer.
+   * Check if the breakpoint map has any invalid values for the provided
+   * sanitizer. A breakpoint map is invalid when there are no valid breakpoint
+   * keys set (e.g. `{}` or `{ colums: 3 }`), or when a value under a
+   * breakpoint key fails the sanitizer (e.g. `{ xs: -3 }`, `{ sm: 'foo' }`).
    */
   private hasInvalidBreakpointMap(
     breakpointMap: GalleryBreakpoints,
     sanitizeValue: (value: string | number | undefined) => unknown
   ) {
+    let hasBreakpointEntry = false;
+
     for (const breakpoint of BREAKPOINT_ORDER) {
       const value = breakpointMap[breakpoint];
-      if (value !== undefined && sanitizeValue(value) === undefined) {
-        return true;
+      if (value !== undefined) {
+        hasBreakpointEntry = true;
+        if (sanitizeValue(value) === undefined) {
+          return true;
+        }
       }
     }
 
-    return false;
+    return !hasBreakpointEntry;
   }
 
   /**
@@ -296,7 +304,8 @@ export class Gallery implements ComponentInterface {
 
   /**
    * Warn about an invalid columns value when it is set to a non-positive
-   * integer or a breakpoint map object with invalid values.
+   * integer, an empty breakpoint map, a map with no supported breakpoint keys,
+   * or a map with invalid breakpoint values.
    */
   private warnInvalidColumns(columns: GalleryColumns) {
     if (this.hasWarnedInvalidColumns) {
@@ -313,8 +322,9 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Warn about an invalid gap value when it is set to a negative number
-   * or a breakpoint map object with invalid values.
+   * Warn about an invalid gap value when it is set to a negative number,
+   * an empty breakpoint map, a map with no supported breakpoint keys,
+   * or a map with invalid breakpoint values.
    */
   private warnInvalidGap(gap: GalleryGap) {
     if (this.hasWarnedInvalidGap) {
