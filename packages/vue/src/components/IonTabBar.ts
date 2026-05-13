@@ -182,18 +182,23 @@ export const IonTabBar = defineComponent({
         }
       });
 
-      if (activeTab && prevActiveTab) {
-        const prevHref = this.$data.tabState.tabs[prevActiveTab].currentHref;
+      if (activeTab && currentRoute?.pathname) {
+        const prevHref = prevActiveTab
+          ? this.$data.tabState.tabs[prevActiveTab].currentHref
+          : undefined;
         /**
          * If the tabs change or the url changes,
          * update the currentHref for the active tab.
-         * Ex: url changes from /tabs/tab1 --> /tabs/tab1/child
+         * Ex: url changes from /tabs/tab1 to /tabs/tab1/child.
          * If we went to tab2 then back to tab1, we should
          * land on /tabs/tab1/child instead of /tabs/tab1.
+         *
+         * Also runs on initial setup so a deep-loaded tab child
+         * records its real pathname instead of `originalHref`.
          */
         if (
           activeTab !== prevActiveTab ||
-          prevHref !== currentRoute?.pathname
+          prevHref !== currentRoute.pathname
         ) {
           /**
            * By default the search is `undefined` in Ionic Vue,
@@ -201,10 +206,10 @@ export const IonTabBar = defineComponent({
            * We check for truthy here because empty string is falsy
            * and currentRoute.search cannot ever be a boolean.
            */
-          const search = currentRoute?.search ? `?${currentRoute.search}` : "";
+          const search = currentRoute.search ? `?${currentRoute.search}` : "";
           tabs[activeTab] = {
             ...tabs[activeTab],
-            currentHref: currentRoute?.pathname + search,
+            currentHref: currentRoute.pathname + search,
           };
         }
 
@@ -213,7 +218,8 @@ export const IonTabBar = defineComponent({
          * set the previous tab back to its original href.
          */
         if (
-          currentRoute?.routerAction === "pop" &&
+          prevActiveTab &&
+          currentRoute.routerAction === "pop" &&
           activeTab !== prevActiveTab
         ) {
           tabs[prevActiveTab] = {
