@@ -88,6 +88,7 @@ export const config: Config = {
     { components: ['ion-chip'] },
     { components: ['ion-datetime', 'ion-picker-legacy', 'ion-picker-legacy-column'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
+    { components: ['ion-gallery'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
     { components: ['ion-infinite-scroll', 'ion-infinite-scroll-content'] },
     { components: ['ion-input'] },
