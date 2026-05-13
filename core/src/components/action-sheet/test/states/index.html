@@ -40,13 +40,9 @@
       window.addEventListener('ionActionSheetDidDismiss', function (e) {
         console.log('didDismiss', e);
       });
-      async function openActionSheet(opts) {
-        const actionSheet = await actionSheetController.create(opts);
-        await actionSheet.present();
-      }
 
       async function presentBasic() {
-        await openActionSheet({
+        const actionSheet = await actionSheetController.create({
           header: 'Albums',
           subHeader: 'This is a sub header inside of an action sheet',
           buttons: [
@@ -76,6 +72,25 @@
             },
           ],
         });
+
+        await actionSheet.present();
+
+        // Swap the first button's label to "Hovered" while it's hovered so
+        // the state is obvious.
+        const defaultButton = actionSheet.querySelector('button.action-sheet-button');
+        const label = defaultButton?.querySelector('.action-sheet-button-label');
+
+        if (label) {
+          const original = label.textContent;
+
+          defaultButton.addEventListener('mouseenter', () => {
+            label.textContent = 'Hovered';
+          });
+
+          defaultButton.addEventListener('mouseleave', () => {
+            label.textContent = original;
+          });
+        }
       }
     </script>
   </body>
