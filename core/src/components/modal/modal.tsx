@@ -1517,12 +1517,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   /**
-   * Sets --ion-content-safe-area-padding-bottom on the given ion-content
+   * Sets --internal-content-safe-area-padding-bottom on the given ion-content
    * when no footer is present, so ion-content's .inner-scroll includes
    * safe-area-bottom in its scroll padding. This keeps the modal background
    * edge-to-edge while ensuring content scrolls clear of the system nav bar.
    *
-   * --ion-content-safe-area-padding-bottom is an internal CSS property used
+   * --internal-content-safe-area-padding-bottom is an internal CSS property used
    * only by this code path. It is not part of ion-content's public API and
    * should not be set by consumers. The default of 0px makes it a no-op
    * when unset, which is the expected state for ion-content used outside of
@@ -1534,17 +1534,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // padding. Custom modals with raw HTML are developer-controlled.
     if (!contentEl || hasFooter) return;
 
-    contentEl.style.setProperty('--ion-content-safe-area-padding-bottom', 'var(--ion-safe-area-bottom, 0px)');
+    contentEl.style.setProperty('--internal-content-safe-area-padding-bottom', 'var(--ion-safe-area-bottom, 0px)');
   }
 
   /**
-   * Removes the internal --ion-content-safe-area-padding-bottom property
+   * Removes the internal --internal-content-safe-area-padding-bottom property
    * from an already-located ion-content. Callers do their own
    * findContentAndFooter() so they can also read hasFooter if needed.
    */
   private clearContentSafeAreaPadding(contentEl: HTMLElement | null): void {
     if (!contentEl) return;
-    contentEl.style.removeProperty('--ion-content-safe-area-padding-bottom');
+    contentEl.style.removeProperty('--internal-content-safe-area-padding-bottom');
   }
 
   /**
