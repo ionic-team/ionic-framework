@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.7](https://github.com/ionic-team/ionic-framework/compare/v8.8.6...v8.8.7) (2026-05-13)
+
+
+### Bug Fixes
+
+* **alert:** switch to vertical layout when two buttons wrap ([#31130](https://github.com/ionic-team/ionic-framework/issues/31130)) ([07675f9](https://github.com/ionic-team/ionic-framework/commit/07675f9ed976867827301808dc7d9e857f8a33ae))
+* **input:** scroll assist no longer fires duplicate click events ([#31124](https://github.com/ionic-team/ionic-framework/issues/31124)) ([4670996](https://github.com/ionic-team/ionic-framework/commit/4670996a41e406cc831f0982923d3bde7572eb88)), closes [#30412](https://github.com/ionic-team/ionic-framework/issues/30412)
+
+
+
+
+
 ## [8.8.6](https://github.com/ionic-team/ionic-framework/compare/v8.8.5...v8.8.6) (2026-05-06)
 
 
