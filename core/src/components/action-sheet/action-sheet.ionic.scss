@@ -20,6 +20,12 @@
   --button-color: #{globals.$ion-text-default};
   --button-color-disabled: #{globals.$ion-text-disabled};
   --color: #{globals.$ion-text-default};
+
+  z-index: 1001;
+}
+
+.action-sheet-wrapper {
+  z-index: 10;
 }
 
 // Action Sheet Wrapper
