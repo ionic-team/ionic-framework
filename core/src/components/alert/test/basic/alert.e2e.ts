@@ -56,7 +56,7 @@ configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
   });
 });
 
-configs().forEach(({ config, screenshot, title }) => {
+configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('should not have visual regressions'), () => {
     let alertFixture!: AlertFixture;
 
