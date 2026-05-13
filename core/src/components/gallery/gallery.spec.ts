@@ -1,4 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
+import * as helpers from '@utils/helpers';
 import * as logging from '@utils/logging';
 
 import { Gallery } from './gallery';
@@ -42,6 +43,21 @@ describe('gallery', () => {
     jest.restoreAllMocks();
   });
   describe('gallery: columns', () => {
+    describe('onColumnsOrGapChanged()', () => {
+      it('should call syncResponsiveLayout when columns or gap change', () => {
+        const syncResponsiveLayoutSpy = jest.spyOn(sharedGallery as any, 'syncResponsiveLayout');
+        const warnUnusedOrderSpy = jest.spyOn(sharedGallery as any, 'warnUnusedOrder');
+
+        (sharedGallery as any).onColumnsOrGapChanged();
+
+        expect(syncResponsiveLayoutSpy).toHaveBeenCalledTimes(1);
+        expect(warnUnusedOrderSpy).not.toHaveBeenCalled();
+
+        syncResponsiveLayoutSpy.mockRestore();
+        warnUnusedOrderSpy.mockRestore();
+      });
+    });
+
     describe('sanitizeColumns()', () => {
       it('should return undefined for invalid values', () => {
         const invalidValues = [undefined, NaN, Infinity, '0', '-1', '0.5', 'invalid', '', '   ', 0, -1, 0.5];
@@ -673,15 +689,24 @@ describe('gallery', () => {
       });
     });
 
-    describe('propertiesChanged()', () => {
-      it('should update responsive styles and schedule masonry resize when layout changes', () => {
-        const updateResponsiveStylesSpy = jest.spyOn(sharedGallery as any, 'updateResponsiveStyles');
-        const scheduleMasonryResizeSpy = jest.spyOn(sharedGallery as any, 'scheduleMasonryResize');
+    describe('onLayoutOrOrderChanged()', () => {
+      it('should call syncResponsiveLayout and warnUnusedOrder when layout or order change', () => {
+        const syncResponsiveLayoutSpy = jest.spyOn(sharedGallery as any, 'syncResponsiveLayout');
+        const warnUnusedOrderSpy = jest.spyOn(sharedGallery as any, 'warnUnusedOrder');
+        const rafSpy = jest.spyOn(helpers, 'raf').mockImplementation((cb) => {
+          cb(0);
+          return 0;
+        });
 
-        (sharedGallery as any).propertiesChanged();
+        (sharedGallery as any).onLayoutOrOrderChanged();
 
-        expect(updateResponsiveStylesSpy).toHaveBeenCalledWith(true);
-        expect(scheduleMasonryResizeSpy).toHaveBeenCalled();
+        expect(syncResponsiveLayoutSpy).toHaveBeenCalledTimes(1);
+        expect(rafSpy).toHaveBeenCalledTimes(1);
+        expect(warnUnusedOrderSpy).toHaveBeenCalledTimes(1);
+
+        syncResponsiveLayoutSpy.mockRestore();
+        warnUnusedOrderSpy.mockRestore();
+        rafSpy.mockRestore();
       });
     });
 

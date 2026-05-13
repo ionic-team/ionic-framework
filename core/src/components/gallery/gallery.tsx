@@ -87,11 +87,14 @@ export class Gallery implements ComponentInterface {
 
   @Watch('columns')
   @Watch('gap')
+  protected onColumnsOrGapChanged() {
+    this.syncResponsiveLayout();
+  }
+
   @Watch('layout')
   @Watch('order')
-  protected propertiesChanged() {
-    this.updateResponsiveStyles(true);
-    this.scheduleMasonryResize();
+  protected onLayoutOrOrderChanged() {
+    this.syncResponsiveLayout();
 
     // Wait until the next animation frame to warn about unused order
     // to avoid erroneous warnings when the layout and order are updated
@@ -151,6 +154,15 @@ export class Gallery implements ComponentInterface {
   private onSlotChange = () => {
     this.scheduleMasonryResize();
   };
+
+  /**
+   * Recompute the gallery column and gap variables and masonry placement when
+   * columns, gap, layout, or order change.
+   */
+  private syncResponsiveLayout() {
+    this.updateResponsiveStyles(true);
+    this.scheduleMasonryResize();
+  }
 
   /**
    * Batch masonry measurements to a single animation frame.
