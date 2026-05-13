@@ -1,6 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "../../themes/mixins" as mixins;
-@use "../../themes/functions.font" as fontMixins;
 @use "./action-sheet.common";
 
 // Ionic Action Sheet
@@ -10,16 +9,16 @@
   --background: #{globals.$ion-bg-surface-default};
   --backdrop-opacity: 0.7;
   --button-background: transparent;
-  --button-background-selected: currentColor;
-  --button-background-selected-opacity: 0;
-  --button-background-activated: transparent;
-  --button-background-activated-opacity: 0;
-  --button-background-hover: currentColor;
-  --button-background-hover-opacity: 0.04;
-  --button-background-focused: currentColor;
-  --button-background-focused-opacity: 0.12;
+  --button-background-selected: #{globals.$ion-bg-neutral-subtlest-default};
+  --button-background-selected-opacity: 1;
+  --button-background-activated: #{globals.$ion-bg-neutral-subtlest-press};
+  --button-background-activated-opacity: 1;
+  --button-background-hover: #{globals.$ion-bg-neutral-subtlest-press};
+  --button-background-hover-opacity: 1;
+  --button-background-focused: #{globals.$ion-bg-neutral-subtlest-press};
+  --button-background-focused-opacity: 0.7;
   --button-color: #{globals.$ion-text-default};
-  --button-color-disabled: var(--button-color);
+  --button-color-disabled: #{globals.$ion-text-disabled};
   --color: #{globals.$ion-text-default};
 }
 
@@ -31,7 +30,7 @@
 }
 
 .action-sheet-title {
-  @include mixins.padding(globals.$ion-scale-400);
+  @include mixins.padding(globals.$ion-space-400);
   @include globals.typography(globals.$ion-heading-h6-medium);
 
   color: var(--color);
@@ -40,18 +39,20 @@
 }
 
 .action-sheet-sub-title {
-  @include globals.typography(globals.$ion-body-lg-regular);
+  @include globals.typography(globals.$ion-body-md-regular);
+
+  color: globals.$ion-text-subtlest;
 }
 
 // Action Sheet Group
 // -----------------------------------------
 
 .action-sheet-group:first-child {
-  @include mixins.padding(globals.$ion-scale-400, null, null, null);
+  @include mixins.padding(globals.$ion-space-400, null, null, null);
 }
 
 .action-sheet-group:last-child {
-  @include mixins.padding(null, null, globals.$ion-scale-400, null);
+  @include mixins.padding(null, null, globals.$ion-space-400, null);
 }
 
 // Action Sheet Buttons
@@ -59,10 +60,10 @@
 
 .action-sheet-button {
   @include mixins.padding(
-    globals.$ion-scale-300,
-    globals.$ion-scale-400,
-    globals.$ion-scale-300,
-    globals.$ion-scale-400
+    globals.$ion-space-300,
+    globals.$ion-space-400,
+    globals.$ion-space-300,
+    globals.$ion-space-400
   );
   @include globals.typography(globals.$ion-body-md-regular);
 
@@ -77,7 +78,7 @@
 }
 
 .action-sheet-icon {
-  @include mixins.margin(globals.$ion-scale-0, globals.$ion-scale-600, globals.$ion-scale-0, globals.$ion-scale-0);
+  @include mixins.margin(globals.$ion-space-0, globals.$ion-space-600, globals.$ion-space-0, globals.$ion-space-0);
   @include globals.typography(globals.$ion-body-md-regular);
 
   color: var(--color, globals.$ion-text-default);
@@ -105,7 +106,7 @@
 
 .select-option-description {
   @include globals.typography(globals.$ion-body-md-regular);
-  @include globals.padding(0);
+  @include globals.padding(globals.$ion-space-0);
 
   color: globals.$ion-text-subtle;
 }

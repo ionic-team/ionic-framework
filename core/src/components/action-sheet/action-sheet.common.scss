@@ -109,6 +109,10 @@
   opacity: 0.4;
 }
 
+.action-sheet-button:disabled ion-icon {
+  color: currentColor;
+}
+
 .action-sheet-button-inner {
   display: flex;
 

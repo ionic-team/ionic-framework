@@ -46,6 +46,8 @@
       .my-color-class {
         --background: #292929;
         --button-background-selected: #222222;
+        --button-background-activated: #393838;
+        --button-background-activated-opacity: 1;
 
         --color: #dfdfdf;
         --button-color: #dfdfdf;
@@ -115,6 +117,11 @@
               handler: () => {
                 console.log('Favorite clicked');
               },
+            },
+            {
+              text: 'Disabled',
+              icon: 'ban',
+              disabled: true,
             },
             {
               text: 'Cancel',
