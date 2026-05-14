@@ -22,7 +22,11 @@
 }
 
 .alert-button.ion-focused {
-  @include globals.focused-state(globals.$ion-border-size-050, globals.$ion-border-style-solid, globals.$ion-border-focus-default);
+  @include globals.focused-state(
+    globals.$ion-border-size-050,
+    globals.$ion-border-style-solid,
+    globals.$ion-border-focus-default
+  );
 }
 
 .alert-tappable.ion-focused {
