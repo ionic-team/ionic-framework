@@ -40,7 +40,7 @@
 }
 
 .alert-tappable.ion-activated,
-.alert-tappable:hover,
+.alert-tappable:not(:disabled):hover,
 .alert-tappable[aria-checked="true"] {
   background: globals.$ion-semantics-primary-100;
 }
