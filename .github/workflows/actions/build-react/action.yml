@@ -31,16 +31,14 @@ runs:
       run: npm run test.spec
       shell: bash
       working-directory: ./packages/react
-    - name: Clean core package.json
-      run: git checkout ./package.json
-      shell: bash
-      working-directory: ./core
-    - name: 🔍 Check Diff
-      run: git diff --exit-code
-      shell: bash
-      working-directory: ./packages/react
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-react
         output: packages/react/ReactBuild.zip
-        paths: packages/react/dist packages/react/css
+        paths: packages/react/dist packages/react/css packages/react/package.json
+    - name: Clean package.json updates
+      run: git checkout ./core/package.json ./packages/react/package.json
+      shell: bash
+    - name: 🔍 Check Diff
+      run: git diff --exit-code
+      shell: bash

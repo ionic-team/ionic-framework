@@ -27,14 +27,12 @@ runs:
       run: npm run build
       shell: bash
       working-directory: ./packages/vue
-    - name: Clean core package.json
-      run: git checkout ./package.json
+    - name: Clean package.json updates
+      run: git checkout ./core/package.json ./packages/react/package.json
       shell: bash
-      working-directory: ./core
     - name: 🔍 Check Diff
       run: git diff --exit-code
       shell: bash
-      working-directory: ./packages/vue
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-vue
