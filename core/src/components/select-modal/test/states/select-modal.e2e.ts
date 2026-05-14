@@ -36,17 +36,18 @@ configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ co
       const selectModal = modal.locator('ion-select-modal');
       await expect(selectModal).toBeVisible();
 
-      // Park the cursor outside the modal so the next hover() guarantees a
-      // mouseenter transition. After clicking the trigger button, the cursor
-      // sits at the button's screen coordinates — which may coincide with the
-      // Default row once the modal opens, depending on mode/viewport. Without
-      // a transition, mouseenter doesn't fire and the JS-driven label swap
-      // never runs.
+      /**
+       * After clicking the trigger button, the cursor sits at the
+       * button's screen coordinates — which may coincide with the
+       * "Default" row once the modal opens, depending on mode/viewport.
+       * Without a transition, `mouseenter` doesn't fire and the JS-driven
+       * label swap never runs, causing inconsistent hover states in the
+       * screenshots.
+       */
       await page.mouse.move(0, 0);
+
       const defaultRow = selectModal.locator('ion-item').first();
       await defaultRow.hover();
-
-      await page.waitForChanges();
 
       await expect(selectModal).toHaveScreenshot(screenshot('select-modal-radio-states'));
     });
@@ -60,17 +61,18 @@ configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ co
       const selectModal = modal.locator('ion-select-modal');
       await expect(selectModal).toBeVisible();
 
-      // Park the cursor outside the modal so the next hover() guarantees a
-      // mouseenter transition. After clicking the trigger button, the cursor
-      // sits at the button's screen coordinates — which may coincide with the
-      // Default row once the modal opens, depending on mode/viewport. Without
-      // a transition, mouseenter doesn't fire and the JS-driven label swap
-      // never runs.
+      /**
+       * After clicking the trigger button, the cursor sits at the
+       * button's screen coordinates — which may coincide with the
+       * "Default" row once the modal opens, depending on mode/viewport.
+       * Without a transition, `mouseenter` doesn't fire and the JS-driven
+       * label swap never runs, causing inconsistent hover states in the
+       * screenshots.
+       */
       await page.mouse.move(0, 0);
+
       const defaultRow = selectModal.locator('ion-item').first();
       await defaultRow.hover();
-
-      await page.waitForChanges();
 
       await expect(selectModal).toHaveScreenshot(screenshot('select-modal-checkbox-states'));
     });

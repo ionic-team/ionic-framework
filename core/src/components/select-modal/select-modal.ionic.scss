@@ -12,7 +12,7 @@
 // ----------------------------------------------------------------
 
 ion-item {
-  --border-width: 0;
+  --border-width: #{globals.$ion-border-size-0};
   --background-focused: transparent;
   --background-focused-opacity: 1;
   --background-hover: #{globals.$ion-semantics-primary-100};
@@ -48,7 +48,7 @@ ion-list ion-radio::part(container) {
 }
 
 ion-list ion-radio::part(label) {
-  @include globals.margin(0);
+  @include globals.margin(globals.$ion-space-0);
 }
 
 // Radio and Checkbox: Label
@@ -83,11 +83,6 @@ ion-content {
   --padding-end: #{globals.$ion-space-400} !important;
   /* stylelint-disable-next-line declaration-no-important */
   --padding-bottom: #{globals.$ion-space-1200} !important;
-
-  // Set the background to the focused element within a radio group only when there is a checked radio
-  &:has(.radio-checked) .ion-focused:not(.item-radio-checked) {
-    --background-focused-opacity: 1;
-  }
 }
 
 // Select Modal: Select Option
