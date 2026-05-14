@@ -34,8 +34,6 @@ configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ co
       const defaultButton = page.locator('ion-action-sheet button.action-sheet-button').first();
       await defaultButton.hover();
 
-      await page.waitForChanges();
-
       await actionSheetFixture.screenshot('states');
     });
   });
