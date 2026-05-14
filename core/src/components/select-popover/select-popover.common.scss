@@ -1,15 +1,15 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/mixins" as mixins;
 
 // Select Popover
 // --------------------------------------------------
 
 :host ion-list {
-  @include margin(0);
+  @include mixins.margin(0);
 }
 
 ion-list-header,
 ion-label {
-  @include margin(0);
+  @include mixins.margin(0);
 }
 
 /**

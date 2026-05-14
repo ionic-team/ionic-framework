@@ -1,9 +1,52 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "../../themes/mixins" as mixins;
 @use "./select-popover.common";
-@use "./select-popover.md" as select-popover-md;
 
 // Ionic Select Popover
 // --------------------------------------------------
+
+ion-item {
+  --border-width: #{globals.$ion-border-size-0};
+  --background-focused: transparent;
+  --background-focused-opacity: 1;
+  --background-hover: #{globals.$ion-semantics-primary-100};
+  --background-hover-opacity: 1;
+  --background-activated: #{globals.$ion-semantics-primary-100};
+  --background-activated-opacity: 1;
+}
+
+ion-item.ion-focused.item-checkbox-checked,
+ion-item.ion-focused.item-radio-checked {
+  --background-focused: #{globals.$ion-semantics-primary-100};
+  --background-focused-opacity: 1;
+}
+
+// Radio
+// ----------------------------------------------------------------
+
+ion-list ion-radio::part(container) {
+  display: none;
+}
+
+ion-list ion-radio::part(label) {
+  @include mixins.margin(globals.$ion-space-0);
+}
+
+// Radio and Checkbox: Label
+// ----------------------------------------------------------------
+
+ion-list ion-radio::part(label),
+ion-list ion-checkbox::part(label) {
+  @include globals.typography(globals.$ion-body-lg-medium);
+}
+
+// Radio and Checkbox: Checked
+// ----------------------------------------------------------------
+
+.item-radio-checked,
+.item-checkbox-checked {
+  --background: #{globals.$ion-semantics-primary-100};
+}
 
 // Select Popover: Select Option
 // --------------------------------------------------
@@ -19,7 +62,7 @@
 
 .select-option-description {
   @include globals.typography(globals.$ion-body-md-regular);
-  @include globals.padding(0);
+  @include globals.padding(globals.$ion-space-0);
 
   color: globals.$ion-text-subtle;
 

@@ -82,7 +82,11 @@ export class SelectPopover implements ComponentInterface {
    * Dismisses the host popover that the `ion-select-popover`
    * is rendered within.
    */
-  private dismissParentPopover() {
+  private dismissParentPopover(isOptionDisabled = false) {
+    if (isOptionDisabled) {
+      return;
+    }
+
     const popover = this.el.closest('ion-popover');
     if (popover) {
       popover.dismiss();
@@ -146,6 +150,8 @@ export class SelectPopover implements ComponentInterface {
 
       return (
         <ion-item
+          // TODO FW-4784
+          disabled={option.disabled}
           class={{
             // TODO FW-4784
             'item-checkbox-checked': option.checked,
@@ -199,6 +205,8 @@ export class SelectPopover implements ComponentInterface {
 
           return (
             <ion-item
+              // TODO FW-4784
+              disabled={option.disabled}
               class={{
                 // TODO FW-4784
                 'item-radio-checked': option.value === checked,
@@ -211,7 +219,7 @@ export class SelectPopover implements ComponentInterface {
                 }}
                 value={option.value}
                 disabled={option.disabled}
-                onClick={() => this.dismissParentPopover()}
+                onClick={() => this.dismissParentPopover(option.disabled)}
                 onKeyDown={(ev) => {
                   if (ev.key === 'Enter' && !ev.repeat) {
                     this.pendingEnterTarget = ev.currentTarget as HTMLElement;
@@ -220,12 +228,12 @@ export class SelectPopover implements ComponentInterface {
                 onKeyUp={(ev) => {
                   if (ev.key === ' ') {
                     // Space selects and dismisses in one press.
-                    this.dismissParentPopover();
+                    this.dismissParentPopover(option.disabled);
                   } else if (ev.key === 'Enter') {
                     const shouldDismiss = this.pendingEnterTarget === ev.currentTarget;
                     this.pendingEnterTarget = null;
                     if (shouldDismiss) {
-                      this.dismissParentPopover();
+                      this.dismissParentPopover(option.disabled);
                     }
                   }
                 }}
