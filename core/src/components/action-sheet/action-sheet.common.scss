@@ -209,7 +209,7 @@
 // Action Sheet: Focused
 // --------------------------------------------------
 
-.action-sheet-button.ion-focused {
+.action-sheet-button.ion-focused:not(.ion-activated):not(.action-sheet-selected) {
   color: var(--button-color-focused);
 
   &::after {

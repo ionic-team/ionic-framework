@@ -30,7 +30,19 @@
 }
 
 .alert-tappable.ion-focused {
-  background: globals.$ion-bg-neutral-subtlest-press;
+  @include globals.focused-state(
+    globals.$ion-border-size-050,
+    globals.$ion-border-style-solid,
+    globals.$ion-border-focus-default
+  );
+
+  outline-offset: calc(globals.$ion-border-size-050 * -1);
+}
+
+.alert-tappable.ion-activated,
+.alert-tappable:hover,
+.alert-tappable[aria-checked="true"] {
+  background: globals.$ion-semantics-primary-100;
 }
 
 // Ionic Alert Header

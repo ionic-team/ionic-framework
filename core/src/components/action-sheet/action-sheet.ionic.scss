@@ -9,14 +9,12 @@
   --background: #{globals.$ion-bg-surface-default};
   --backdrop-opacity: 0.7;
   --button-background: transparent;
-  --button-background-selected: #{globals.$ion-bg-neutral-subtlest-default};
+  --button-background-selected: #{globals.$ion-semantics-primary-100};
   --button-background-selected-opacity: 1;
-  --button-background-activated: #{globals.$ion-bg-neutral-subtlest-press};
+  --button-background-activated: #{globals.$ion-semantics-primary-100};
   --button-background-activated-opacity: 1;
-  --button-background-hover: #{globals.$ion-bg-neutral-subtlest-press};
+  --button-background-hover: #{globals.$ion-semantics-primary-100};
   --button-background-hover-opacity: 1;
-  --button-background-focused: #{globals.$ion-bg-neutral-subtlest-press};
-  --button-background-focused-opacity: 1;
   --button-color: #{globals.$ion-text-default};
   --button-color-disabled: #{globals.$ion-text-disabled};
   --color: #{globals.$ion-text-default};
@@ -26,6 +24,16 @@
 
 .action-sheet-wrapper {
   z-index: 10;
+}
+
+.action-sheet-button.ion-focused::after {
+  @include globals.focused-state(
+    globals.$ion-border-size-050,
+    globals.$ion-border-style-solid,
+    globals.$ion-border-focus-default
+  );
+
+  outline-offset: calc(globals.$ion-border-size-050 * -1);
 }
 
 // Action Sheet Wrapper

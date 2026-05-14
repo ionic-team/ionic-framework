@@ -596,7 +596,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
                 'alert-tappable': true,
                 'alert-checkbox': true,
                 'alert-checkbox-button': true,
-                'ion-focusable': true,
+                'ion-focusable': !i.disabled,
+                'ion-activatable': !i.disabled,
                 'alert-checkbox-button-disabled': i.disabled || false,
               }}
             >
@@ -658,7 +659,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
                 'alert-radio-button': true,
                 'alert-tappable': true,
                 'alert-radio': true,
-                'ion-focusable': true,
+                'ion-focusable': !i.disabled,
+                'ion-activatable': !i.disabled,
                 'alert-radio-button-disabled': i.disabled || false,
               }}
               role="radio"
