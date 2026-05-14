@@ -13,9 +13,9 @@
 
 ion-item {
   --border-width: 0;
-  --background-focused: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-focused: transparent;
   --background-focused-opacity: 1;
-  --background-hover: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-hover: #{globals.$ion-semantics-primary-100};
   --background-hover-opacity: 1;
   --background-activated: #{globals.$ion-semantics-primary-100};
   --background-activated-opacity: 1;
@@ -25,6 +25,12 @@ ion-item {
 ion-item.ion-focused::part(native)::after {
   // Your styles for the ::after pseudo element when ion-item is focused
   border: none;
+}
+
+ion-item.ion-focused.item-checkbox-checked,
+ion-item.ion-focused.item-radio-checked {
+  --background-focused: #{globals.$ion-semantics-primary-100};
+  --background-focused-opacity: 1;
 }
 
 // Toolbar
