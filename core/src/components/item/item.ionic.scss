@@ -6,7 +6,7 @@
 
 :host {
   --background: #{globals.$ion-bg-surface-default};
-  --background-activated: #{globals.$ion-bg-select-default};
+  --background-activated: #{globals.$ion-bg-neutral-subtlest-default};
   --border-color: #{globals.$ion-primitives-neutral-300};
   --border-style: #{globals.$ion-border-style-solid};
   --border-width: #{0 0 globals.$ion-border-size-025 0};
@@ -110,15 +110,4 @@ slot[name="end"]::slotted(*) {
 :host(.item-lines-full),
 :host(.item-lines-none) {
   --inner-border-width: #{globals.$ion-border-size-0};
-}
-
-// Item in Select Modal
-// --------------------------------------------------
-:host(.in-select-modal) {
-  --background-focused: #{globals.$ion-bg-neutral-subtlest-press};
-  --background-focused-opacity: 0;
-}
-
-:host(.in-select-modal.ion-focused) .item-native {
-  --border-radius: #{globals.$ion-border-radius-400};
 }

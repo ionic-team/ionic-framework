@@ -13,6 +13,13 @@
 
 ion-item {
   --border-width: 0;
+  --background-focused: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-focused-opacity: 1;
+  --background-hover: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-hover-opacity: 1;
+  --background-activated: #{globals.$ion-semantics-primary-100};
+  --background-activated-opacity: 1;
+  --border-radius: #{globals.$ion-border-radius-400};
 }
 
 ion-item.ion-focused::part(native)::after {
@@ -52,7 +59,6 @@ ion-list ion-checkbox::part(label) {
 .item-radio-checked,
 .item-checkbox-checked {
   --background: #{globals.$ion-semantics-primary-100};
-  --border-radius: #{globals.$ion-border-radius-400};
 }
 
 // Content
