@@ -9,12 +9,24 @@
   --background: #{globals.$ion-bg-surface-default};
   --max-width: #{globals.$ion-scale-7400};
   --backdrop-opacity: 0.7;
+
+  z-index: 1001;
 }
 
 .alert-wrapper {
   @include globals.border-radius(globals.$ion-border-radius-200);
 
   box-shadow: globals.$ion-elevation-4;
+
+  z-index: 10;
+}
+
+.alert-button.ion-focused {
+  @include globals.focused-state(globals.$ion-border-size-050, globals.$ion-border-style-solid, globals.$ion-border-focus-default);
+}
+
+.alert-tappable.ion-focused {
+  background: globals.$ion-bg-neutral-subtlest-press;
 }
 
 // Ionic Alert Header
