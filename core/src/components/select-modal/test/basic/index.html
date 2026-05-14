@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Select - Modal</title>
+    <title>Select Modal - Basic</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -24,11 +24,11 @@
 
       <ion-content>
         <ion-list>
-          <ion-item>
+          <ion-item button onclick="document.getElementById('modal-text').isOpen = true">
             <ion-label>Cancel Text (default)</ion-label>
           </ion-item>
         </ion-list>
-        <ion-modal id="modal-text" is-open="true">
+        <ion-modal id="modal-text">
           <ion-select-modal id="select-modal-text" multiple="false"></ion-select-modal>
         </ion-modal>
 

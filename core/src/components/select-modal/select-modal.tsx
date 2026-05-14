@@ -49,7 +49,11 @@ export class SelectModal implements ComponentInterface {
 
   @Prop() options: SelectModalOption[] = [];
 
-  private closeModal() {
+  private closeModal(isOptionDisabled = false) {
+    if (isOptionDisabled) {
+      return;
+    }
+
     const modal = this.el.closest('ion-modal');
 
     if (modal) {
@@ -139,6 +143,8 @@ export class SelectModal implements ComponentInterface {
           return (
             <ion-item
               lines="none"
+              // TODO FW-4784
+              disabled={option.disabled}
               class={{
                 // TODO FW-4784
                 'item-radio-checked': option.value === checked,
@@ -153,7 +159,7 @@ export class SelectModal implements ComponentInterface {
                 disabled={option.disabled}
                 justify="start"
                 labelPlacement="end"
-                onClick={() => this.closeModal()}
+                onClick={() => this.closeModal(option.disabled)}
                 onKeyDown={(ev) => {
                   if (ev.key === 'Enter' && !ev.repeat) {
                     this.pendingEnterTarget = ev.currentTarget as HTMLElement;
@@ -162,12 +168,12 @@ export class SelectModal implements ComponentInterface {
                 onKeyUp={(ev) => {
                   if (ev.key === ' ') {
                     // Space selects and dismisses in one press.
-                    this.closeModal();
+                    this.closeModal(option.disabled);
                   } else if (ev.key === 'Enter') {
                     const shouldClose = this.pendingEnterTarget === ev.currentTarget;
                     this.pendingEnterTarget = null;
                     if (shouldClose) {
-                      this.closeModal();
+                      this.closeModal(option.disabled);
                     }
                   }
                 }}
@@ -201,6 +207,8 @@ export class SelectModal implements ComponentInterface {
 
       return (
         <ion-item
+          // TODO FW-4784
+          disabled={option.disabled}
           class={{
             // TODO FW-4784
             'item-checkbox-checked': option.checked,
