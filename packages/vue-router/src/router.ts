@@ -351,6 +351,30 @@ export const createIonRouter = (
               routeInfo,
               delta
             );
+            if (
+              prevRouteInfo &&
+              prevRouteInfo.pathname &&
+              prevRouteInfo.pathname !== location.path &&
+              (routeInfo.tab || prevRouteInfo.tab)
+            ) {
+              /**
+               * Browser POP destination differs from the within-tab back
+               * target (e.g. user is on a re-activated tab child and the
+               * browser's linear predecessor is in a different tab). Sync
+               * URL with the displayed page via router.replace so the back
+               * stack stays consistent with what the user sees, matching
+               * handleNavigateBack's non-linear path.
+               */
+              handleNavigate(
+                prevRouteInfo.pathname +
+                  (prevRouteInfo.search ? "?" + prevRouteInfo.search : ""),
+                "pop",
+                "back",
+                undefined,
+                prevRouteInfo.tab
+              );
+              return;
+            }
             incomingRouteParams = {
               ...prevRouteInfo,
               routerAction: "pop",
@@ -459,10 +483,15 @@ export const createIonRouter = (
           routeInfo.lastPathname =
             currentRouteInfo?.pathname || routeInfo.lastPathname;
           routeInfo.pushedByRoute = pushedByRoute;
+          /**
+           * Prefer the direction/animation the caller specified on
+           * the navigate call; fall back to the leaving route's
+           * values only when none was provided.
+           */
           routeInfo.routerDirection =
-            currentRouteInfo?.routerDirection || routeInfo.routerDirection;
+            routeInfo.routerDirection || currentRouteInfo?.routerDirection;
           routeInfo.routerAnimation =
-            currentRouteInfo?.routerAnimation || routeInfo.routerAnimation;
+            routeInfo.routerAnimation || currentRouteInfo?.routerAnimation;
           routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
         }
       }
@@ -555,7 +584,7 @@ export const createIonRouter = (
     router.push(routerLink);
   };
 
-  const resetTab = (tab: string) => {
+  const resetTab = (tab: string, originalHref?: string) => {
     /**
      * Resetting the tab should go back
      * to the initial view in the tab stack.
@@ -570,7 +599,29 @@ export const createIonRouter = (
      */
     const routeInfo = locationHistory.getFirstRouteInfoForTab(tab);
     if (routeInfo) {
-      router.go(routeInfo.position - currentHistoryPosition);
+      const delta = routeInfo.position - currentHistoryPosition;
+      if (delta !== 0) {
+        router.go(delta);
+        return;
+      }
+      /**
+       * The first history entry for this tab is the current entry,
+       * so there's nothing earlier to traverse back to. Happens
+       * after a deep load onto a tab child or an external navigation
+       * that reset the SPA history. Replace with `originalHref` so
+       * no stale child entry stays in browser history.
+       */
+      if (originalHref && routeInfo.pathname !== originalHref) {
+        handleNavigate(originalHref, "pop", "back", undefined, tab);
+      }
+      return;
+    }
+    /**
+     * No routeInfo for this tab yet. Replace the current entry
+     * with `originalHref` so the tab has a root to reset to.
+     */
+    if (originalHref) {
+      handleNavigate(originalHref, "pop", "back", undefined, tab);
     }
   };
 

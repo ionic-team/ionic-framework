@@ -1,8 +1,12 @@
 name: 'Build Ionic Core with Stencil Prerelease'
 description: 'Build Ionic Core with a Prerelease Build of Stencil'
 inputs:
-  stencil-version:
+  stencil-core-version:
     description: 'The NPM tag of @stencil/core to install.'
+    type: string
+    required: true
+  stencil-react-output-target-version:
+    description: 'The NPM tag of @stencil/react-output-target to install.'
     type: string
     required: true
 runs:
@@ -13,20 +17,32 @@ runs:
       with:
         node-version: 24.x
 
-    - name: 🕸️ Install Dependencies
+    - name: 🕸️ Install Core Dependencies
       run: npm ci
       working-directory: ./core
       shell: bash
-    - name: 📦 Install Stencil ${{ inputs.stencil-version }}
+    - name: 📦 Install Stencil Core ${{ inputs.stencil-core-version }}
       working-directory: ./core
-      run: npm i @stencil/core@${{ inputs.stencil-version }}
+      run: npm i @stencil/core@${{ inputs.stencil-core-version }}
+      shell: bash
+    - name: 📦 Install Stencil React Output Target ${{ inputs.stencil-react-output-target-version }}
+      working-directory: ./core
+      run: npm i @stencil/react-output-target@${{ inputs.stencil-react-output-target-version }}
       shell: bash
     - name: 🏗️ Build Core
       run: npm run build -- --ci --debug --verbose
       working-directory: ./core
       shell: bash
+    - name: 🕸️ Install React Package Dependencies
+      run: npm ci
+      working-directory: ./packages/react
+      shell: bash
+    - name: 🏗️ Lint React Package
+      run: npm run lint
+      working-directory: ./packages/react
+      shell: bash
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-core
         output: core/CoreBuild.zip
-        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts core/package.json
+        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts core/package.json packages/react/src/components/components.ts
