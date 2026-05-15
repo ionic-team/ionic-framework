@@ -24,6 +24,10 @@
         <ion-label>Go to Child Page</ion-label>
       </ion-item>
 
+      <ion-item router-link="/routing/guards" id="guards">
+        <ion-label>Go to Route Guards Page</ion-label>
+      </ion-item>
+
       <ion-item router-link="/routing/abc" id="parameter-abc">
         <ion-label>Go to Parameter Page ABC</ion-label>
       </ion-item>
