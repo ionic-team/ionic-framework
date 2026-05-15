@@ -59,12 +59,14 @@ export async function routerGo(page: Page, n: number): Promise<void> {
 export async function ionRouterNavigate(
   page: Page,
   path: string,
-  direction: 'root' | 'forward' | 'back' | 'none' = 'forward'
+  direction: 'root' | 'forward' | 'back' | 'none' = 'forward',
+  action?: 'push' | 'replace'
 ): Promise<void> {
   await waitForDebugIonRouter(page);
   await page.evaluate(
-    ({ p, d }: { p: string; d: string }) => (window as any).debugIonRouter.navigate(p, d),
-    { p: path, d: direction }
+    ({ p, d, a }: { p: string; d: string; a?: string }) =>
+      (window as any).debugIonRouter.navigate(p, d, a),
+    { p: path, d: direction, a: action }
   );
 }
 

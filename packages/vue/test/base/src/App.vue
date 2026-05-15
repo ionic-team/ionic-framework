@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { IonApp, IonRouterOutlet, useIonRouter } from '@ionic/vue';
-import { defineComponent } from 'vue';
+import { defineComponent, inject } from 'vue';
 import ModeSwitcher from './components/ModeSwitcher.vue';
 
 export default defineComponent({
@@ -18,6 +18,7 @@ export default defineComponent({
   },
   setup() {
     (window as any).debugIonRouter = useIonRouter();
+    (window as any).debugIonNavManager = inject('navManager');
   }
 });
 </script>

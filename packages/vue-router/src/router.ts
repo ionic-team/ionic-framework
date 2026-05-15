@@ -459,10 +459,15 @@ export const createIonRouter = (
           routeInfo.lastPathname =
             currentRouteInfo?.pathname || routeInfo.lastPathname;
           routeInfo.pushedByRoute = pushedByRoute;
+          /**
+           * Prefer the direction/animation the caller specified on
+           * the navigate call; fall back to the leaving route's
+           * values only when none was provided.
+           */
           routeInfo.routerDirection =
-            currentRouteInfo?.routerDirection || routeInfo.routerDirection;
+            routeInfo.routerDirection || currentRouteInfo?.routerDirection;
           routeInfo.routerAnimation =
-            currentRouteInfo?.routerAnimation || routeInfo.routerAnimation;
+            routeInfo.routerAnimation || currentRouteInfo?.routerAnimation;
           routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
         }
       }
