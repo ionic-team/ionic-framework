@@ -351,6 +351,30 @@ export const createIonRouter = (
               routeInfo,
               delta
             );
+            if (
+              prevRouteInfo &&
+              prevRouteInfo.pathname &&
+              prevRouteInfo.pathname !== location.path &&
+              (routeInfo.tab || prevRouteInfo.tab)
+            ) {
+              /**
+               * Browser POP destination differs from the within-tab back
+               * target (e.g. user is on a re-activated tab child and the
+               * browser's linear predecessor is in a different tab). Sync
+               * URL with the displayed page via router.replace so the back
+               * stack stays consistent with what the user sees, matching
+               * handleNavigateBack's non-linear path.
+               */
+              handleNavigate(
+                prevRouteInfo.pathname +
+                  (prevRouteInfo.search ? "?" + prevRouteInfo.search : ""),
+                "pop",
+                "back",
+                undefined,
+                prevRouteInfo.tab
+              );
+              return;
+            }
             incomingRouteParams = {
               ...prevRouteInfo,
               routerAction: "pop",
