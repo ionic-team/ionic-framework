@@ -352,11 +352,24 @@
   background-color: $alert-ios-button-background-color-activated;
 }
 
-// iOS Action Sheet Button: Destructive
+// iOS Alert Button: Destructive
 // ---------------------------------------------------
 
 .alert-button-role-destructive,
 .alert-button-role-destructive.ion-activated,
 .alert-button-role-destructive.ion-focused {
   color: $alert-ios-button-destructive-text-color;
+}
+
+// Alert: Select Option
+// --------------------------------------------------
+
+/**
+ * Cap slotted children so they can't stretch the option
+ * row out of proportion, keeping rows visually uniform
+ * regardless of the content.
+ */
+.select-option-start > *,
+.select-option-end > * {
+  max-height: $alert-ios-select-option-slot-size;
 }

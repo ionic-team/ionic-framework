@@ -316,3 +316,6 @@ $alert-ios-translucent-filter: saturate(180%) blur(20px);
 
 /// @prop - Height of the tappable inputs in the checkbox alert
 $alert-ios-tappable-height: $item-ios-min-height;
+
+/// @prop - Maximum size of slotted children rendered in a select option's start/end slot
+$alert-ios-select-option-slot-size: dynamic-font-max(24px, 2);

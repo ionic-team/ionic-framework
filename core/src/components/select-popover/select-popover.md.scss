@@ -27,3 +27,16 @@ ion-item {
   --background-hover: #{$item-md-color};
   --color: #{ion-color(primary, base)};
 }
+
+// Select Popover: Select Option
+// --------------------------------------------------
+
+/**
+ * Cap slotted children so they can't stretch the option
+ * row out of proportion, keeping rows visually uniform
+ * regardless of the content.
+ */
+.select-option-start > *,
+.select-option-end > * {
+  max-height: 24px;
+}

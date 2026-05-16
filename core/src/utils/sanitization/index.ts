@@ -1,8 +1,22 @@
 import { printIonError } from '@utils/logging';
 
 /**
- * Does a simple sanitization of all elements
- * in an untrusted string
+ * Sanitize an untrusted HTML string.
+ *
+ * Parses the string into a detached DOM, removes blocked tags, strips
+ * attributes outside the strict `allowedAttributes` list, and scrubs
+ * `javascript:` URLs. Returns the sanitized HTML string.
+ *
+ * Use this when you have an HTML string from an unknown source and need
+ * to render it via `innerHTML`. Prefer `sanitizeDOMTree` when the source
+ * is author-controlled DOM that must keep its component attributes
+ * (`size`, `color`, `shape`, etc.).
+ *
+ * @param untrustedString - The HTML string to sanitize. Pass an
+ * `IonicSafeString` to bypass sanitization, or `undefined` to short-circuit.
+ * @returns The sanitized HTML string, or `undefined` if the input was
+ * `undefined`. Returns `''` if sanitization fails or the input contains
+ * an inline `onload=` handler.
  */
 export const sanitizeDOMString = (untrustedString: IonicSafeString | string | undefined): string | undefined => {
   try {
@@ -89,12 +103,42 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
 };
 
 /**
+ * Sanitize an entire author-controlled DOM tree in place.
+ *
+ * Removes blocked tags (`script`, `iframe`, etc.) from the subtree and
+ * then sanitizes attributes on every remaining element. Author-written
+ * attributes like `size`, `color`, and `shape` are preserved; event
+ * handlers (`on*`) and `javascript:` URLs are stripped.
+ *
+ * Use this when you have a DOM tree that the developer authored (e.g.
+ * cloned slot content from a component) and you need to render it
+ * elsewhere safely.
+ *
+ * @param root - The root element whose subtree will be sanitized in
+ * place. No-op when the sanitizer is disabled via `Ionic.config`.
+ */
+export const sanitizeDOMTree = (root: HTMLElement) => {
+  if (!isSanitizerEnabled()) {
+    return;
+  }
+
+  blockedTags.forEach((tag) => {
+    const matches = root.querySelectorAll(tag);
+    for (let i = matches.length - 1; i >= 0; i--) {
+      matches[i].remove();
+    }
+  });
+
+  sanitizeElement(root, true);
+};
+
+/**
  * Clean up current element based on allowed attributes
  * and then recursively dig down into any child elements to
  * clean those up as well
  */
 // TODO(FW-2832): type (using Element triggers other type errors as well)
-const sanitizeElement = (element: any) => {
+const sanitizeElement = (element: any, allowSafeAuthorAttributes = false) => {
   // IE uses childNodes, so ignore nodes that are not elements
   if (element.nodeType && element.nodeType !== 1) {
     return;
@@ -114,9 +158,17 @@ const sanitizeElement = (element: any) => {
   for (let i = element.attributes.length - 1; i >= 0; i--) {
     const attribute = element.attributes.item(i);
     const attributeName = attribute.name;
+    const lowerName = attributeName.toLowerCase();
 
     // remove non-allowed attribs
-    if (!allowedAttributes.includes(attributeName.toLowerCase())) {
+    if (!allowSafeAuthorAttributes && !allowedAttributes.includes(lowerName)) {
+      element.removeAttribute(attributeName);
+      continue;
+    }
+
+    // strip event-handler attributes (already removed by the allowlist
+    // when !allowSafeAuthorAttributes; this guards the permissive path)
+    if (lowerName.startsWith('on')) {
       element.removeAttribute(attributeName);
       continue;
     }
@@ -132,10 +184,14 @@ const sanitizeElement = (element: any) => {
      */
     const propertyValue = element[attributeName];
 
+    // Only call .toLowerCase() when propertyValue is a string. Some DOM
+    // properties (e.g. `disabled`) are booleans and would throw.
     /* eslint-disable */
     if (
       (attributeValue != null && attributeValue.toLowerCase().includes('javascript:')) ||
-      (propertyValue != null && propertyValue.toLowerCase().includes('javascript:'))
+      (propertyValue != null &&
+        typeof propertyValue === 'string' &&
+        propertyValue.toLowerCase().includes('javascript:'))
     ) {
       element.removeAttribute(attributeName);
     }
@@ -149,7 +205,7 @@ const sanitizeElement = (element: any) => {
 
   /* eslint-disable-next-line */
   for (let i = 0; i < childElements.length; i++) {
-    sanitizeElement(childElements[i]);
+    sanitizeElement(childElements[i], allowSafeAuthorAttributes);
   }
 };
 

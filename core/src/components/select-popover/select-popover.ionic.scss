@@ -60,9 +60,19 @@ ion-list ion-checkbox::part(label) {
   gap: globals.$ion-space-200;
 }
 
+/**
+ * Cap slotted children so they can't stretch the option
+ * row out of proportion, keeping rows visually uniform
+ * regardless of the content.
+ */
+.select-option-start > *,
+.select-option-end > * {
+  max-height: globals.$ion-scale-1200;
+}
+
 .select-option-description {
   @include globals.typography(globals.$ion-body-md-regular);
-  @include globals.padding(globals.$ion-space-0);
+  @include mixins.padding(globals.$ion-space-0);
 
   color: globals.$ion-text-subtle;
 

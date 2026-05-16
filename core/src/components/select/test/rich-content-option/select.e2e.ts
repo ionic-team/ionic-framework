@@ -1,20 +1,13 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('select: rich content options (visual checks)'), () => {
+/**
+ * This behavior does not vary across directions
+ */
+configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('select: rich content options'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/select/test/rich-content-option', config);
-    });
-
-    test('should not have visual regressions for the alert interface', async ({ page }) => {
-      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
-
-      await page.locator('#alert-select').click();
-      await ionAlertDidPresent.next();
-
-      const alert = page.locator('ion-alert');
-      await expect(alert).toHaveScreenshot(screenshot(`select-rich-content-alert`));
     });
 
     test('should not have visual regressions for the action sheet interface', async ({ page }) => {
@@ -23,18 +16,20 @@ configs().forEach(({ title, screenshot, config }) => {
       await page.locator('#action-sheet-select').click();
       await ionActionSheetDidPresent.next();
 
-      const actionSheet = page.locator('ion-action-sheet');
-      await expect(actionSheet).toHaveScreenshot(screenshot(`select-rich-content-action-sheet`));
+      const firstOption = page.locator('ion-action-sheet .action-sheet-button-label').first();
+
+      await expect(firstOption).toHaveScreenshot(screenshot(`select-rich-content-action-sheet`));
     });
 
-    test('should not have visual regressions for the popover interface', async ({ page }) => {
-      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+    test('should not have visual regressions for the alert interface', async ({ page }) => {
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
 
-      await page.locator('#popover-select').click();
-      await ionPopoverDidPresent.next();
+      await page.locator('#alert-select').click();
+      await ionAlertDidPresent.next();
 
-      const popover = page.locator('ion-popover');
-      await expect(popover).toHaveScreenshot(screenshot(`select-rich-content-popover`));
+      const firstOption = page.locator('ion-alert .alert-radio-label').first();
+
+      await expect(firstOption).toHaveScreenshot(screenshot(`select-rich-content-alert`));
     });
 
     test('should not have visual regressions for the modal interface', async ({ page }) => {
@@ -43,8 +38,20 @@ configs().forEach(({ title, screenshot, config }) => {
       await page.locator('#modal-select').click();
       await ionModalDidPresent.next();
 
-      const modal = page.locator('ion-modal');
-      await expect(modal).toHaveScreenshot(screenshot(`select-rich-content-modal`));
+      const firstOption = page.locator('ion-modal .select-option-label').first();
+
+      await expect(firstOption).toHaveScreenshot(screenshot(`select-rich-content-modal`));
+    });
+
+    test('should not have visual regressions for the popover interface', async ({ page }) => {
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+      await page.locator('#popover-select').click();
+      await ionPopoverDidPresent.next();
+
+      const firstOption = page.locator('ion-popover .select-option-label').first();
+
+      await expect(firstOption).toHaveScreenshot(screenshot(`select-rich-content-popover`));
     });
   });
 });
@@ -53,9 +60,47 @@ configs().forEach(({ title, screenshot, config }) => {
  * This behavior does not vary across modes/directions
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('select: rich content options'), () => {
+  test.describe(title('select: rich content option functionality'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/select/test/rich-content-option', config);
+    });
+
+    test('it should render for action sheet interface', async ({ page }) => {
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+      const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
+
+      const select = page.locator('#action-sheet-select');
+
+      await select.click();
+
+      await ionActionSheetDidPresent.next();
+
+      const actionSheet = page.locator('ion-action-sheet');
+      const firstOption = actionSheet.locator('.action-sheet-button-label').first();
+      const avatar = firstOption.locator('ion-avatar');
+      const spanText = await firstOption.locator('.span-style').textContent();
+      const firstOptionText = 'Full Content';
+
+      await expect(firstOption).toContainText(firstOptionText);
+      await expect(avatar).toBeVisible();
+
+      // Click on the first option
+      await firstOption.click();
+
+      await ionActionSheetDidDismiss.next();
+
+      // Verify that the select text includes the option text
+      const selectText = await select.locator('.select-text').textContent();
+
+      expect(selectText).toContain(firstOptionText);
+      expect(selectText).toContain(spanText);
+
+      // Verify that the select text does not include the avatar and badge
+      const selectTextAvatar = select.locator('.select-text ion-avatar');
+      const selectTextBadge = select.locator('.select-text ion-badge');
+
+      await expect(selectTextAvatar).toHaveCount(0);
+      await expect(selectTextBadge).toHaveCount(0);
     });
 
     test('it should render for alert interface and single selection', async ({ page }) => {
@@ -142,18 +187,18 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(selectTextBadge).toHaveCount(0);
     });
 
-    test('it should render for action sheet interface', async ({ page }) => {
-      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
-      const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
+    test('it should render for modal interface and single selection', async ({ page }) => {
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
 
-      const select = page.locator('#action-sheet-select');
+      const select = page.locator('#modal-select');
 
       await select.click();
 
-      await ionActionSheetDidPresent.next();
+      await ionModalDidPresent.next();
 
-      const actionSheet = page.locator('ion-action-sheet');
-      const firstOption = actionSheet.locator('.action-sheet-button-label').first();
+      const modal = page.locator('ion-modal');
+      const firstOption = modal.locator('.select-option-label').first();
       const avatar = firstOption.locator('ion-avatar');
       const spanText = await firstOption.locator('.span-style').textContent();
       const firstOptionText = 'Full Content';
@@ -164,7 +209,49 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       // Click on the first option
       await firstOption.click();
 
-      await ionActionSheetDidDismiss.next();
+      await ionModalDidDismiss.next();
+
+      // Verify that the select text includes the option text
+      const selectText = await select.locator('.select-text').textContent();
+
+      expect(selectText).toContain(firstOptionText);
+      expect(selectText).toContain(spanText);
+
+      // Verify that the select text does not include the avatar and badge
+      const selectTextAvatar = select.locator('.select-text ion-avatar');
+      const selectTextBadge = select.locator('.select-text ion-badge');
+
+      await expect(selectTextAvatar).toHaveCount(0);
+      await expect(selectTextBadge).toHaveCount(0);
+    });
+
+    test('it should render for modal interface and multiple selection', async ({ page }) => {
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      const select = page.locator('#modal-select-multiple');
+
+      await select.click();
+
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+      const firstOption = modal.locator('.select-option-label').first();
+      const avatar = firstOption.locator('ion-avatar');
+      const spanText = await firstOption.locator('.span-style').textContent();
+      const firstOptionText = 'Full Content';
+
+      await expect(firstOption).toContainText(firstOptionText);
+      await expect(avatar).toBeVisible();
+
+      // Click on the first option
+      await firstOption.click();
+
+      // Confirm the selection
+      const cancelButton = modal.getByRole('button', { name: 'Cancel' });
+
+      await cancelButton.click();
+      await ionModalDidDismiss.next();
 
       // Verify that the select text includes the option text
       const selectText = await select.locator('.select-text').textContent();
@@ -245,86 +332,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await backdrop.click({ position: { x: 10, y: 10 } });
 
       await ionPopoverDidDismiss.next();
-
-      // Verify that the select text includes the option text
-      const selectText = await select.locator('.select-text').textContent();
-
-      expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
-
-      // Verify that the select text does not include the avatar and badge
-      const selectTextAvatar = select.locator('.select-text ion-avatar');
-      const selectTextBadge = select.locator('.select-text ion-badge');
-
-      await expect(selectTextAvatar).toHaveCount(0);
-      await expect(selectTextBadge).toHaveCount(0);
-    });
-
-    test('it should render for modal interface and single selection', async ({ page }) => {
-      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
-
-      const select = page.locator('#modal-select');
-
-      await select.click();
-
-      await ionModalDidPresent.next();
-
-      const modal = page.locator('ion-modal');
-      const firstOption = modal.locator('.select-option-label').first();
-      const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
-      const firstOptionText = 'Full Content';
-
-      await expect(firstOption).toContainText(firstOptionText);
-      await expect(avatar).toBeVisible();
-
-      // Click on the first option
-      await firstOption.click();
-
-      await ionModalDidDismiss.next();
-
-      // Verify that the select text includes the option text
-      const selectText = await select.locator('.select-text').textContent();
-
-      expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
-
-      // Verify that the select text does not include the avatar and badge
-      const selectTextAvatar = select.locator('.select-text ion-avatar');
-      const selectTextBadge = select.locator('.select-text ion-badge');
-
-      await expect(selectTextAvatar).toHaveCount(0);
-      await expect(selectTextBadge).toHaveCount(0);
-    });
-
-    test('it should render for modal interface and multiple selection', async ({ page }) => {
-      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
-
-      const select = page.locator('#modal-select-multiple');
-
-      await select.click();
-
-      await ionModalDidPresent.next();
-
-      const modal = page.locator('ion-modal');
-      const firstOption = modal.locator('.select-option-label').first();
-      const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
-      const firstOptionText = 'Full Content';
-
-      await expect(firstOption).toContainText(firstOptionText);
-      await expect(avatar).toBeVisible();
-
-      // Click on the first option
-      await firstOption.click();
-
-      // Confirm the selection
-      const cancelButton = modal.getByRole('button', { name: 'Cancel' });
-
-      await cancelButton.click();
-      await ionModalDidDismiss.next();
 
       // Verify that the select text includes the option text
       const selectText = await select.locator('.select-text').textContent();

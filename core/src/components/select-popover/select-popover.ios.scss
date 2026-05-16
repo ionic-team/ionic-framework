@@ -1,2 +1,15 @@
 @import "./select-popover.native";
 @import "./select-popover.ios.vars";
+
+// Select Popover: Select Option
+// --------------------------------------------------
+
+/**
+ * Cap slotted children so they can't stretch the option
+ * row out of proportion, keeping rows visually uniform
+ * regardless of the content.
+ */
+.select-option-start > *,
+.select-option-end > * {
+  max-height: $select-popover-ios-select-option-slot-size;
+}

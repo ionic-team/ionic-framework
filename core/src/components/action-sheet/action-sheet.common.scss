@@ -255,6 +255,16 @@
   align-items: center;
 }
 
+/**
+ * Cap slotted children so they can't stretch the option
+ * row out of proportion, keeping rows visually uniform
+ * regardless of the content.
+ */
+.select-option-start > *,
+.select-option-end > * {
+  max-width: fit-content;
+}
+
 .select-option-description {
   display: block;
 }

@@ -3,3 +3,6 @@
 
 // iOS Select Popover
 // --------------------------------------------------
+
+/// @prop - Maximum size of slotted children rendered in a select option's start/end slot
+$select-popover-ios-select-option-slot-size: dynamic-font-max(24px, 2);
