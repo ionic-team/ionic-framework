@@ -7,7 +7,6 @@ import type { ComponentRef, FrameworkDelegate } from '../../interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-tab',
@@ -65,6 +64,7 @@ export class Tab implements ComponentInterface {
     }
   }
 
+  // TODO(FW-7296): Failed first attach locks the tab forever — needs async/await + retry on rejection.
   private prepareLazyLoaded(): Promise<HTMLElement | undefined> {
     if (!this.loaded && this.component != null) {
       this.loaded = true;

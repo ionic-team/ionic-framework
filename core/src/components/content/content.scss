@@ -67,7 +67,9 @@
   @include mixins.padding(
     calc(#{$padding-top} + var(--internal-offset-top)),
     $padding-end,
-    calc(#{$padding-bottom} + var(--internal-keyboard-offset) + var(--internal-offset-bottom)),
+    calc(
+      #{$padding-bottom} + var(--internal-keyboard-offset) + var(--internal-offset-bottom) + var(--ion-content-safe-area-padding-bottom, 0px)
+    ),
     $padding-start
   );
 

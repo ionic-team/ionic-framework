@@ -48,3 +48,12 @@
 ::slotted(ion-icon[slot="end"]) {
   @include globals.margin(0, -0.2em, 0, 0.3em);
 }
+
+// Button in Datetime
+// --------------------------------------------------
+
+:host(.in-datetime) {
+  @include globals.margin(0px, 2px, 0px, 2px);
+
+  min-height: 32px;
+}

@@ -5,7 +5,7 @@ import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
 import { printIonError, printIonWarning } from '@utils/logging';
 
 import { config } from '../global/config';
-import { getIonMode } from '../global/ionic-global';
+import { getIonMode, getIonTheme } from '../global/ionic-global';
 import type {
   ActionSheetOptions,
   AlertOptions,
@@ -384,6 +384,96 @@ const connectListeners = (doc: Document) => {
       true
     );
 
+    // Listen for keydown events to intercept Tab navigation.
+    // This is needed for Safari and Firefox which may skip focusable
+    // elements or allow focus to escape the overlay.
+    // It also ensures proper focus delegation for shadow DOM elements
+    // like ion-textarea.
+    doc.addEventListener(
+      'keydown',
+      (ev: KeyboardEvent) => {
+        if (ev.key !== 'Tab' && ev.key !== 'Alt+Tab') return;
+
+        const lastOverlay = getPresentedOverlay(
+          doc,
+          'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker-legacy,ion-popover'
+        );
+
+        if (!lastOverlay || lastOverlay.classList.contains(FOCUS_TRAP_DISABLE_CLASS)) return;
+
+        const activeElement = doc.activeElement as HTMLElement | null;
+
+        if (activeElement === lastOverlay) {
+          ev.preventDefault();
+          focusFirstDescendant(lastOverlay);
+          return;
+        }
+
+        // Check if activeElement is inside the overlay (including shadow DOM)
+        const isInsideOverlay = activeElement
+          ? lastOverlay.contains(activeElement) ||
+            (activeElement.getRootNode() instanceof ShadowRoot &&
+              lastOverlay.contains((activeElement.getRootNode() as ShadowRoot).host as HTMLElement)) ||
+            (lastOverlay.shadowRoot?.contains(activeElement) ?? false)
+          : false;
+
+        if (!isInsideOverlay) return;
+
+        // Get all focusable elements from both light and shadow DOM
+        const allFocusable = [
+          ...lastOverlay.querySelectorAll<HTMLElement>(focusableQueryString),
+          ...(lastOverlay.shadowRoot?.querySelectorAll<HTMLElement>(focusableQueryString) || []),
+        ];
+
+        if (allFocusable.length === 0) {
+          ev.preventDefault();
+          return;
+        }
+
+        // Find current element's index (accounting for shadow DOM)
+        const currentIndex = activeElement
+          ? allFocusable.findIndex((el) => {
+              if (el === activeElement) return true;
+              if (el.shadowRoot?.contains(activeElement)) return true;
+              const rootNode = activeElement.getRootNode();
+              return rootNode instanceof ShadowRoot && rootNode.host === el;
+            })
+          : -1;
+
+        ev.preventDefault();
+
+        // Helper to focus an element, handling shadow DOM properly
+        const focusElement = (element: HTMLElement) => {
+          const shadowRoot = element.shadowRoot;
+          if (shadowRoot) {
+            const innerFocusable = shadowRoot.querySelector<HTMLElement>(focusableQueryString);
+            if (innerFocusable && typeof (element as any).setFocus !== 'function') {
+              focusVisibleElement(innerFocusable);
+              return;
+            }
+          }
+          focusVisibleElement(element);
+        };
+
+        if (ev.shiftKey) {
+          // Shift+Tab: previous element, wrap to last if at first
+          if (currentIndex <= 0) {
+            focusLastDescendant(lastOverlay);
+          } else {
+            focusElement(allFocusable[currentIndex - 1]);
+          }
+        } else {
+          // Tab: next element, wrap to first if at last
+          if (currentIndex < 0 || currentIndex >= allFocusable.length - 1) {
+            focusFirstDescendant(lastOverlay);
+          } else {
+            focusElement(allFocusable[currentIndex + 1]);
+          }
+        }
+      },
+      true
+    );
+
     // handle back-button click
     doc.addEventListener('ionBackButton', (ev) => {
       const lastOverlay = getPresentedOverlay(doc);
@@ -473,7 +563,9 @@ export const getPresentedOverlay = (
   id?: string
 ): HTMLIonOverlayElement | undefined => {
   const overlays = getPresentedOverlays(doc, overlayTag);
-  return id === undefined ? overlays[overlays.length - 1] : overlays.find((o) => o.id === id);
+  // If no id is provided, return the last presented overlay
+  // Otherwise, return the last overlay with the given id
+  return (id === undefined ? overlays : overlays.filter((o: HTMLIonOverlayElement) => o.id === id)).slice(-1)[0];
 };
 
 /**
@@ -518,6 +610,7 @@ export const present = async <OverlayPresentOptions>(
   name: keyof IonicConfig,
   iosEnterAnimation: AnimationBuilder,
   mdEnterAnimation: AnimationBuilder,
+  ionicEnterAnimation?: AnimationBuilder,
   opts?: OverlayPresentOptions
 ) => {
   if (overlay.presented) {
@@ -572,11 +665,17 @@ export const present = async <OverlayPresentOptions>(
   }
   overlay.willPresentShorthand?.emit();
 
+  const theme = getIonTheme(overlay);
   const mode = getIonMode(overlay);
+
+  const selectedAnimation =
+    mode === 'ios'
+      ? iosEnterAnimation
+      : theme === 'ionic' && ionicEnterAnimation
+      ? ionicEnterAnimation
+      : mdEnterAnimation;
   // get the user's animation fn if one was provided
-  const animationBuilder = overlay.enterAnimation
-    ? overlay.enterAnimation
-    : config.get(name, mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
+  const animationBuilder = overlay.enterAnimation ? overlay.enterAnimation : config.get(name, selectedAnimation);
 
   const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
   if (completed) {

@@ -56,6 +56,17 @@
         window.dispatchEvent(new CustomEvent('ionRefreshComplete'));
       });
 
+      // Event listeners for new ionPullStart and ionPullEnd events
+      refresher.addEventListener('ionPullStart', function () {
+        console.log('ionPullStart fired');
+        window.dispatchEvent(new CustomEvent('ionPullStartFired'));
+      });
+
+      refresher.addEventListener('ionPullEnd', function (event) {
+        console.log('ionPullEnd fired', event.detail);
+        window.dispatchEvent(new CustomEvent('ionPullEndFired', { detail: event.detail }));
+      });
+
       function render() {
         let html = '';
         for (let item of items) {

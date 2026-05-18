@@ -7,7 +7,7 @@ import {
   NgZone,
   TemplateRef,
 } from '@angular/core';
-import type { Components, ModalBreakpointChangeEventDetail } from '@ionic/core/components';
+import type { Components, ModalBreakpointChangeEventDetail, ModalDragEventDetail } from '@ionic/core/components';
 
 import { ProxyCmp, proxyOutputs } from '../utils/proxy';
 
@@ -32,6 +32,18 @@ export declare interface IonModal extends Components.IonModal {
    * Emitted after the modal breakpoint has changed.
    */
   ionBreakpointDidChange: EventEmitter<CustomEvent<ModalBreakpointChangeEventDetail>>;
+  /**
+   * Emitted when the sheet or card modal has started being dragged.
+   */
+  ionDragStart: EventEmitter<void>;
+  /**
+   * Emitted while the sheet or card modal is being dragged.
+   */
+  ionDragMove: EventEmitter<CustomEvent<ModalDragEventDetail>>;
+  /**
+   * Emitted when the sheet or card modal has finished being dragged.
+   */
+  ionDragEnd: EventEmitter<CustomEvent<ModalDragEventDetail>>;
   /**
    * Emitted after the modal has presented. Shorthand for ionModalDidPresent.
    */
@@ -130,6 +142,9 @@ export class IonModal {
       'willPresent',
       'willDismiss',
       'didDismiss',
+      'ionDragStart',
+      'ionDragMove',
+      'ionDragEnd',
     ]);
   }
 }

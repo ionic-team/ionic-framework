@@ -16,6 +16,11 @@ export class InputsComponent {
   select? = 'nes';
   changes = 0;
   range? = 50;
+  textarea? = 'some text';
+
+  // States
+  isDisabled = false;
+  isReadonly = false;
 
   setValues() {
     console.log('set values');
@@ -27,6 +32,7 @@ export class InputsComponent {
     this.toggle = true;
     this.select = 'nes';
     this.range = 50;
+    this.textarea = 'some text';
   }
 
   resetValues() {
@@ -39,6 +45,17 @@ export class InputsComponent {
     this.toggle = false;
     this.select = undefined;
     this.range = undefined;
+    this.textarea = undefined;
+  }
+
+  toggleDisable() {
+    console.log(`toggle disable to ${!this.isDisabled}`);
+    this.isDisabled = !this.isDisabled;
+  }
+
+  toggleReadonly() {
+    console.log(`toggle readonly to ${!this.isReadonly}`);
+    this.isReadonly = !this.isReadonly;
   }
 
   counter() {

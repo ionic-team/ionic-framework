@@ -1,6 +1,9 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+/**
+ * This behavior does not vary across modes/directions
+ */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('tabs: placement'), () => {
     test.beforeEach(async ({ page }) => {

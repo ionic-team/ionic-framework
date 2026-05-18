@@ -20,9 +20,13 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Card](#version-9x-card)
   - [Chip](#version-9x-chip)
   - [Content](#version-9x-content)
+  - [Datetime](#version-9x-datetime)
   - [Grid](#version-9x-grid)
+  - [Input Otp](#version-9x-input-otp)
   - [Item Divider](#version-9x-item-divider)
+  - [Radio Group](#version-9x-radio-group)
   - [Spinner](#version-9x-spinner)
+  - [Textarea](#version-9x-textarea)
 
 <h2 id="version-9x-global-styles">Global Styles</h2>
 
@@ -38,7 +42,35 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 <h4 id="version-9x-card">Card</h4>
 
-- The `border-radius` of the `ios` and `md` card now defaults to `14px` and `12px` instead of `8px` and `4px`, respectively, in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"`, or override the `--border-radius` CSS variable to specify a different value.
+- **ion-card**: The `border-radius` of the `ios` and `md` card now defaults to `14px` and `12px` instead of `8px` and `4px`, respectively, in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"`, or override the `--border-radius` CSS variable to specify a different value.
+
+- **ion-card-content**: The `ion-card-content` component has been updated to Shadow DOM. With this update, all card-related components now use Shadow DOM for style encapsulation. The default styles for heading elements inside `ion-card-content` have been removed. If you need custom styling for headings, you can add your own CSS targeting these elements. For example:
+
+  ```css
+  ion-card-content h1 {
+    margin-top: 0;
+    margin-bottom: 2px;
+
+    font-size: 1.5rem;
+  }
+
+  ion-card-content h2 {
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+    font-size: 1rem;
+  }
+
+  ion-card-content h3,
+  ion-card-content h4,
+  ion-card-content h5,
+  ion-card-content h6 {
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+    font-size: 0.875rem;
+  }
+  ```
 
 <h4 id="version-9x-chip">Chip</h4>
 
@@ -98,19 +130,18 @@ These are managed by `ion-content` itself (keyboard avoidance and header/footer 
 
 Remove any instances that target the theme classes: `ion-content.md`, `ion-content.ios`.
 
+<h4 id="version-9x-datetime">Datetime</h4>
+
+- The `ion-buttons` component has been removed from the internal implementation of `ion-datetime` and is no longer required when passing custom buttons to the `slot="buttons"`. When providing custom buttons, use a `div` element instead of `ion-buttons`. While existing code using `ion-buttons` may continue to work visually, future updates to the `ion-buttons` component may cause any styles you rely on to break.
+
 <h4 id="version-9x-grid">Grid</h4>
 
 - The properties `pull` and `push` have been deprecated and no longer work. A similar look can be achieved with the newly added property `order`.
 
-<h4 id="version-9x-radio-group">Radio Group</h4>
-
-- Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).<br/>
-If you were targeting the internals of `ion-radio-group` in your CSS, you will need to target the `supporting-text`, `helper-text` or `error-text` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.<br/>
-Additionally, the `radio-group-wrapper` div element has been removed, causing slotted elements to be direct children of the `ion-radio-group`.
-
 <h5>Example 1: Swap two columns</h5>
 
 **Version up to 8.x**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -120,7 +151,9 @@ Additionally, the `radio-group-wrapper` div element has been removed, causing sl
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -132,9 +165,11 @@ Additionally, the `radio-group-wrapper` div element has been removed, causing sl
 ```
 
 <h5>Example 2: Reorder columns with specific sizes</h5>
+
 To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `size="3" pull="9"`:
 
 **Version up to 8.x**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -143,7 +178,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -152,7 +189,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 <h5>Example 3: Push</h5>
+
 ```html
 <ion-grid>
   <ion-row>
@@ -165,7 +204,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -180,6 +221,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 ```
 
 <h5>Example 4: Push and Pull</h5>
+
 ```html
 <ion-grid>
   <ion-row>
@@ -192,7 +234,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
 **Version 9.x+**
+
 ```html
 <ion-grid>
   <ion-row>
@@ -205,6 +249,12 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
+<h4 id="version-9x-input-otp">Input Otp</h4>
+
+Converted `ion-input-otp` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+If you were targeting the internals of `ion-input-otp` in your CSS, you will need to target the `group`, `container`, `native`, `separator` or `description` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
 
 <h4 id="version-9x-item-divider">Item Divider</h4>
 
@@ -221,6 +271,14 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
    - `--inner-padding-start` is replaced by `IonItemDivider.inner.padding.start` for global styles and `--ion-item-divider-inner-padding-start` for component-specific overrides.
 - Specific theme classes (e.g., `ion-item-divider.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
 
+<h4 id="version-9x-radio-group">Radio Group</h4>
+
+Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+If you were targeting the internals of `ion-radio-group` in your CSS, you will need to target the `supporting-text`, `helper-text` or `error-text` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+
+Additionally, the `radio-group-wrapper` div element has been removed, causing slotted elements to be direct children of the `ion-radio-group`.
+
 <h4 id="version-9x-spinner">Spinner</h4>
 
 - Component CSS variables have been removed. The component now utilizes the centralized Ionic Theming system. Global updates should be managed via the theme tokens file, while component-specific overrides are handled through localized CSS variables.
@@ -229,3 +287,9 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 - CSS classes now include the property name to improve clarity.
   - `.spinner-[spinner-name]` → `.spinner-name-[spinner-name]`
 - Specific theme classes (e.g., `ion-spinner.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
+
+<h4 id="version-9x-textarea">Textarea</h4>
+
+Converted `ion-textarea` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+If you were targeting the internals of `ion-textarea` in your CSS, you will need to target the `wrapper`, `container`, `label`, `native`, `supporting-text`, `helper-text`, `error-text`, `counter`, or `bottom` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
