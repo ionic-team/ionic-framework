@@ -121,12 +121,12 @@
 }
 
 .scroll-y {
-  overflow-y: var(--ion-content-overflow);
+  overflow-y: var(--ion-content-overflow, auto);
   overscroll-behavior-y: contain;
 }
 
 .scroll-x {
-  overflow-x: var(--ion-content-overflow);
+  overflow-x: var(--ion-content-overflow, auto);
   overscroll-behavior-x: contain;
 }
 
