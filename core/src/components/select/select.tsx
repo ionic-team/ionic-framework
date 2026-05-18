@@ -6,6 +6,7 @@ import type { NotchController } from '@utils/forms';
 import { compareOptions, createNotchController, isOptionSelected, checkInvalidState } from '@utils/forms';
 import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
+import { renderIcon } from '@utils/icon';
 import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
 import type { OverlaySelect } from '@utils/overlays-interface';
@@ -1205,14 +1206,14 @@ export class Select implements ComponentInterface {
    * next to the select text.
    */
   private renderSelectIcon() {
+    const theme = getIonTheme(this);
     const { isExpanded, selectExpandedIcon, selectCollapsedIcon } = this;
-    let icon = selectCollapsedIcon;
+    const icon = isExpanded ? selectExpandedIcon : selectCollapsedIcon;
 
-    if (isExpanded) {
-      icon = selectExpandedIcon;
-    }
+    // Use the font glyph for the default ionic icon; null forces SVG for custom icons.
+    const ionicIconClass = icon === caretDownRegular ? 'ph-caret-down' : null;
 
-    return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={icon}></ion-icon>;
+    return renderIcon(theme, ionicIconClass, icon, { class: { 'select-icon': true }, part: 'icon' });
   }
 
   private get ariaLabel() {

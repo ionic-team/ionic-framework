@@ -144,9 +144,17 @@
   height: globals.$ion-scale-300;
 }
 
+:host(.avatar-xxsmall) ::slotted(i.ph) {
+  font-size: globals.$ion-scale-300;
+}
+
 :host(.avatar-xsmall) ::slotted(ion-icon) {
   width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
+}
+
+:host(.avatar-xsmall) ::slotted(i.ph) {
+  font-size: globals.$ion-scale-400;
 }
 
 :host(.avatar-small) ::slotted(ion-icon) {
@@ -154,9 +162,17 @@
   height: globals.$ion-scale-500;
 }
 
+:host(.avatar-small) ::slotted(i.ph) {
+  font-size: globals.$ion-scale-500;
+}
+
 :host(.avatar-medium) ::slotted(ion-icon) {
   width: globals.$ion-scale-600;
   height: globals.$ion-scale-600;
+}
+
+:host(.avatar-medium) ::slotted(i.ph) {
+  font-size: globals.$ion-scale-600;
 }
 
 :host(.avatar-large) ::slotted(ion-icon) {
@@ -164,9 +180,17 @@
   height: globals.$ion-scale-700;
 }
 
+:host(.avatar-large) ::slotted(i.ph) {
+  font-size: globals.$ion-scale-700;
+}
+
 :host(.avatar-xlarge) ::slotted(ion-icon) {
   width: globals.$ion-scale-800;
   height: globals.$ion-scale-800;
+}
+
+:host(.avatar-xlarge) ::slotted(i.ph) {
+  font-size: globals.$ion-scale-800;
 }
 
 // Avatar Badge Empty (hint)

@@ -115,6 +115,10 @@
 .toggle-inner .toggle-switch-icon {
   width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
+
+  font-size: globals.$ion-scale-400;
+
+  line-height: 1;
 }
 
 // Toggle Label Placement - Start/Default
