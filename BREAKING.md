@@ -53,43 +53,50 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 <h4 id="version-9x-content">Content</h4>
 
-- **CSS Variable Replacements**:    `--background` and `--color` have been **removed**. Use the new token structure:
-```
---background -> IonContent.background
---color -> IonContent.color
-```
+The following breaking changes apply to `ion-content`:
 
-`--padding-*` is still supported. `.ion-padding`, `.ion-padding-*` classes in `css/padding.scss` set `--padding-*` directly on the host. `ion-content` continues to honor those values (falling back to the new token when unset). Existing usage of the utility classes and direct `--padding-*` overrides will keep working.
+1. `--background` and `--color` CSS variables have been replaced.
+2. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional).
+3. `--keyboard-offset`, `--offset-top`, and `--offset-bottom` have been renamed to the `--internal-*` namespace with no replacement.
+4. Theme classes (`ion-content.md`, `ion-content.ios`) are no longer supported.
 
-New code is encouraged to use the token-based API instead:
-```
---padding-top -> IonContent.padding.top
---padding-end -> IonContent.padding.end
---padding-bottom -> IonContent.padding.bottom
---padding-start -> IonContent.padding.start
-```
-_Note: `core/api.txt` only lists the new `--ion-content-padding-*` variables. The `--padding-*` overrides remain functional but are no longer part of the documented public API._
+<h5>Removed CSS variables</h5>
 
-If per-component customization is needed, the CSS variables can be used directly.
-```
---background -> --ion-content-background
---color -> --ion-content-color
---padding-top -> --ion-content-padding-top
---padding-end -> --ion-content-padding-end
---padding-bottom -> --ion-content-padding-bottom
---padding-start -> --ion-content-padding-start
-```
+`--background` and `--color` have been removed. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
-- **Internal-only variables (no replacement)**: The following CSS variables were previously documented `@prop`s on `ion-content` and have been renamed to the `--internal-*` namespace, removing them from the public API:
-```
---keyboard-offset -> --internal-keyboard-offset
---offset-top      -> --internal-offset-top
---offset-bottom   -> --internal-offset-bottom
-```
+| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--background` | `IonContent.background` | `--ion-content-background` |
+| `--color` | `IonContent.color` | `--ion-content-color` |
 
-These are managed by `ion-content` itself (keyboard avoidance and header/footer offsets) and were never intended for consumer override. There is no replacement - any code that was setting them directly should be removed.
+<h5>Padding variables</h5>
 
-- **Theme classes**: Remove any instances that target the theme classes: `ion-content.md`, `ion-content.ios`.
+New code should use the token-based API:
+
+| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--padding-top` | `IonContent.padding.top` | `--ion-content-padding-top` |
+| `--padding-end` | `IonContent.padding.end` | `--ion-content-padding-end` |
+| `--padding-bottom` | `IonContent.padding.bottom` | `--ion-content-padding-bottom` |
+| `--padding-start` | `IonContent.padding.start` | `--ion-content-padding-start` |
+
+> **Note:** The `--padding-*` overrides and `.ion-padding`, `.ion-padding-*` utility classes in `css/padding.scss` continue to work — `ion-content` honors them as a fallback when the new token is unset. They are no longer part of the documented public API (only `--ion-content-padding-*` is listed in `core/api.txt`), but existing usage will not break.
+
+<h5>Internal-only variables</h5>
+
+The following CSS variables were previously documented `@prop`s on `ion-content` and have been renamed to the `--internal-*` namespace, removing them from the public API:
+
+| Old (8.x) | New |
+|---|---|
+| `--keyboard-offset` | `--internal-keyboard-offset` |
+| `--offset-top` | `--internal-offset-top` |
+| `--offset-bottom` | `--internal-offset-bottom` |
+
+These are managed by `ion-content` itself (keyboard avoidance and header/footer offsets) and were never intended for consumer override. There is no replacement — any code that was setting them directly should be removed.
+
+<h5>Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-content.md`, `ion-content.ios`.
 
 <h4 id="version-9x-grid">Grid</h4>
 
