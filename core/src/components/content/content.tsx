@@ -36,7 +36,7 @@ export class Content implements ComponentInterface {
   private backgroundContentEl?: HTMLElement;
   private isMainContent = true;
   private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
-  private observerResizeTimeout: ReturnType<typeof setTimeout> | null = null;
+  private observerResizeRaf: ReturnType<typeof requestAnimationFrame> | null = null;
   private inheritedAttributes: Attributes = {};
 
   private tabsElement: HTMLElement | null = null;
@@ -448,13 +448,14 @@ export class Content implements ComponentInterface {
 
     if ('ResizeObserver' in window) {
       this.resizeObserver = new ResizeObserver(() => {
-        if (this.observerResizeTimeout !== null) {
-          clearTimeout(this.observerResizeTimeout);
+        if (this.observerResizeRaf !== null) {
+          cancelAnimationFrame(this.observerResizeRaf);
         }
-        this.observerResizeTimeout = setTimeout(() => {
-          this.observerResizeTimeout = null;
+
+        this.observerResizeRaf = requestAnimationFrame(() => {
+          this.observerResizeRaf = null;
           this.resize();
-        }, 100);
+        });
       });
     }
 
@@ -491,9 +492,9 @@ export class Content implements ComponentInterface {
   }
 
   private disconnectObservers() {
-    if (this.observerResizeTimeout !== null) {
-      clearTimeout(this.observerResizeTimeout);
-      this.observerResizeTimeout = null;
+    if (this.observerResizeRaf !== null) {
+      cancelAnimationFrame(this.observerResizeRaf);
+      this.observerResizeRaf = null;
     }
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();
