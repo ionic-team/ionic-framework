@@ -1,3 +1,4 @@
+@use "../../themes/common.globals" as globals;
 @import "../../themes/native/native.globals";
 
 :host {
@@ -6,5 +7,5 @@
   position: absolute;
 
   contain: layout size style;
-  z-index: $z-index-page-container;
+  z-index: globals.$z-index-page-container;
 }

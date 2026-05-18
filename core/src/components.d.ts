@@ -4069,10 +4069,6 @@ export namespace Components {
         "select": (tab: string | HTMLIonTabElement) => Promise<boolean>;
         "setRouteId": (id: string) => Promise<RouteWrite>;
         /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
-        /**
           * @default false
          */
         "useRouter": boolean;
@@ -10156,10 +10152,6 @@ declare namespace LocalJSX {
           * Emitted when the navigation is about to transition to a new component.
          */
         "onIonTabsWillChange"?: (event: IonTabsCustomEvent<{ tab: string }>) => void;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
         /**
           * @default false
          */

@@ -1,4 +1,5 @@
 @use "sass:map";
+@use "../themes/common.globals" as globals;
 @import "../themes/native/native.globals";
 @import "../components/menu/menu.ios.vars";
 @import "../components/menu/menu.md.vars";
@@ -123,7 +124,7 @@ html.ios ion-modal.modal-card .ion-page {
   justify-content: space-between;
 
   contain: layout size style;
-  z-index: $z-index-page-container;
+  z-index: globals.$z-index-page-container;
 }
 
 /**
