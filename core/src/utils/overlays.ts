@@ -30,7 +30,7 @@ import {
   focusVisibleElement,
   getElementRoot,
   removeEventListener,
-  waitForComponent,
+  waitForComponentReady,
 } from './helpers';
 
 let lastOverlayIndex = 0;
@@ -138,7 +138,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
       // append the overlay element to the document body
       getAppRoot(document).appendChild(element);
 
-      return waitForComponent(element);
+      return waitForComponentReady(element);
     });
   }
   return Promise.resolve() as any;

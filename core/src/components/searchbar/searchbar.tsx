@@ -3,7 +3,7 @@ import magnifyingGlassRegular from '@phosphor-icons/core/assets/regular/magnifyi
 import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
-import { debounceEvent, raf, waitForComponent, inheritAttributes } from '@utils/helpers';
+import { debounceEvent, raf, waitForComponentReady, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -349,7 +349,7 @@ export class Searchbar implements ComponentInterface {
      * nativeInput won't be defined yet with the custom elements build, so wait for it to load in.
      */
     if (!this.nativeInput) {
-      await waitForComponent(this.el);
+      await waitForComponentReady(this.el);
     }
     return Promise.resolve(this.nativeInput!);
   }

@@ -1,4 +1,4 @@
-import { waitForComponent } from '@utils/helpers';
+import { waitForComponentReady } from '@utils/helpers';
 import { printIonError } from '@utils/logging';
 
 import type { AnimationBuilder } from '../../../interface';
@@ -30,7 +30,7 @@ export const writeNavState = async (
     if (index >= chain.length || !outlet) {
       return changed;
     }
-    await waitForComponent(outlet);
+    await waitForComponentReady(outlet);
 
     const route = chain[index];
     const result = await outlet.setRouteId(route.id, route.params, direction, animation);

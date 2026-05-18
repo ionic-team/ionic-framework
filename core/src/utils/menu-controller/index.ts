@@ -5,7 +5,7 @@ import { printIonWarning } from '@utils/logging';
 
 import type { MenuI, MenuControllerI } from '../../components/menu/menu-interface';
 import type { AnimationBuilder } from '../../interface';
-import { waitForComponent } from '../helpers';
+import { waitForComponentReady } from '../helpers';
 
 import { menuOverlayAnimation } from './animations/overlay';
 import { menuPushAnimation } from './animations/push';
@@ -218,7 +218,7 @@ const createMenuController = (): MenuControllerI => {
   };
 
   const waitUntilReady = () => {
-    return Promise.all(Array.from(document.querySelectorAll('ion-menu')).map((menu) => waitForComponent(menu)));
+    return Promise.all(Array.from(document.querySelectorAll('ion-menu')).map((menu) => waitForComponentReady(menu)));
   };
 
   registerAnimation('reveal', menuRevealAnimation);
