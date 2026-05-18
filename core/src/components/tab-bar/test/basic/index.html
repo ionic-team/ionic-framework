@@ -7,6 +7,21 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
     />
+    <script>
+      // Need to be called before loading Ionic else
+      // the scripts.js logic runs too early.
+      window.Ionic = {
+        config: {
+          customTheme: {
+            components: {
+              IonContent: {
+                background: '#f6f6f6',
+              },
+            },
+          },
+        },
+      };
+    </script>
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
@@ -247,10 +262,6 @@
     </ion-app>
 
     <style>
-      ion-content {
-        --background: #f6f6f6;
-      }
-
       ion-tab-bar {
         margin-bottom: 10px;
       }

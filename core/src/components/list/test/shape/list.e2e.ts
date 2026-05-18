@@ -9,7 +9,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
           `
           <style>
             ion-content {
-              --background: #e5e5e5;
+              --ion-content-background: #e5e5e5;
             }
           </style>
 
@@ -45,7 +45,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
           `
           <style>
             ion-content {
-              --background: #e5e5e5;
+              --ion-content-background: #e5e5e5;
             }
           </style>
 
@@ -86,7 +86,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
           `
           <style>
             ion-content {
-              --background: #e5e5e5;
+              --ion-content-background: #e5e5e5;
             }
           </style>
 
@@ -122,7 +122,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
           `
           <style>
             ion-content {
-              --background: #e5e5e5;
+              --ion-content-background: #e5e5e5;
             }
           </style>
 
@@ -163,7 +163,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
           `
           <style>
             ion-content {
-              --background: #e5e5e5;
+              --ion-content-background: #e5e5e5;
             }
           </style>
 
@@ -199,7 +199,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
           `
           <style>
             ion-content {
-              --background: #e5e5e5;
+              --ion-content-background: #e5e5e5;
             }
           </style>
 

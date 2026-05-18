@@ -800,7 +800,6 @@ ion-content,prop,mode,"ios" | "md",undefined,false,false
 ion-content,prop,scrollEvents,boolean,false,false,false
 ion-content,prop,scrollX,boolean,false,false,false
 ion-content,prop,scrollY,boolean,true,false,false
-ion-content,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-content,method,getScrollElement,getScrollElement() => Promise<HTMLElement>
 ion-content,method,scrollByPoint,scrollByPoint(x: number, y: number, duration: number) => Promise<void>
 ion-content,method,scrollToBottom,scrollToBottom(duration?: number) => Promise<void>
@@ -809,15 +808,14 @@ ion-content,method,scrollToTop,scrollToTop(duration?: number) => Promise<void>
 ion-content,event,ionScroll,ScrollDetail,true
 ion-content,event,ionScrollEnd,ScrollBaseDetail,true
 ion-content,event,ionScrollStart,ScrollBaseDetail,true
-ion-content,css-prop,--background
-ion-content,css-prop,--color
-ion-content,css-prop,--keyboard-offset
-ion-content,css-prop,--offset-bottom
-ion-content,css-prop,--offset-top
-ion-content,css-prop,--padding-bottom
-ion-content,css-prop,--padding-end
-ion-content,css-prop,--padding-start
-ion-content,css-prop,--padding-top
+ion-content,css-prop,--ion-content-background
+ion-content,css-prop,--ion-content-color
+ion-content,css-prop,--ion-content-font-family
+ion-content,css-prop,--ion-content-overflow
+ion-content,css-prop,--ion-content-padding-bottom
+ion-content,css-prop,--ion-content-padding-end
+ion-content,css-prop,--ion-content-padding-start
+ion-content,css-prop,--ion-content-padding-top
 ion-content,part,background
 ion-content,part,scroll
 

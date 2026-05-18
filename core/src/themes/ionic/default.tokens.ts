@@ -461,6 +461,24 @@ export const defaultTheme: DefaultTheme = {
       },
     },
 
+    IonContent: {
+      background: baseColors.backgroundColor,
+      color: baseColors.textColor,
+
+      font: {
+        family: 'var(--ion-font-family)',
+      },
+
+      overflow: 'auto',
+
+      padding: {
+        bottom: 'var(--ion-spacing-0)',
+        end: 'var(--ion-spacing-0)',
+        start: 'var(--ion-spacing-0)',
+        top: 'var(--ion-spacing-0)',
+      },
+    },
+
     IonItemDivider: {
       background: baseColors.backgroundColor,
       color: `var(--ion-text-color-step-600, ${mix(baseColors.white, baseColors.black, '40%')})`,
