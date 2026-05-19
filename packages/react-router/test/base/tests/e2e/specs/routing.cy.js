@@ -344,6 +344,25 @@ describe('Routing Tests', () => {
     cy.get('div.ion-page[data-pageid=home-details-page-1] [data-testid="details-input"]').should('have.value', '1');
   });
 
+  it('Details 1 with Query Params > pop a same-URL history entry, should stay on details 1', () => {
+    // Regression: popstate over a same-URL entry on a search-bearing route used to trigger a false POP transition.
+    cy.visit(`http://localhost:${port}/routing`);
+    cy.ionNav('ion-item', 'Details 1 with Query Params');
+    cy.ionPageVisible('home-details-page-1');
+    cy.location('search').should('eq', '?hello=there');
+
+    cy.window().then((win) => {
+      win.history.pushState({ marker: true }, '', win.location.href);
+    });
+
+    cy.go('back');
+
+    // No teleport: still on details 1, URL unchanged.
+    cy.ionPageVisible('home-details-page-1');
+    cy.location('pathname').should('eq', '/routing/tabs/home/details/1');
+    cy.location('search').should('eq', '?hello=there');
+  });
+
   /*
     Tests to add:
     Test that lifecycle events fire

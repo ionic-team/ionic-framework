@@ -107,7 +107,8 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     }
 
     const leavingUrl = leavingLocationInfo.pathname + leavingLocationInfo.search;
-    if (leavingUrl !== location.pathname) {
+    const currentUrl = location.pathname + (location.search || '');
+    if (leavingUrl !== currentUrl) {
       if (!this.incomingRouteParams) {
         if (action === 'REPLACE') {
           this.incomingRouteParams = {
