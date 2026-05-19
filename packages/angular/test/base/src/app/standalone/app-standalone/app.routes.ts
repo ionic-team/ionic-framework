@@ -55,6 +55,15 @@ export const routes: Routes = [
         ]
       },
       { path: 'tabs-basic', loadComponent: () => import('../tabs-basic/tabs-basic.component').then(c => c.TabsBasicComponent) },
+      { path: 'tabs-search-params', redirectTo: '/standalone/tabs-search-params/tab1?foo=bar', pathMatch: 'full' },
+      {
+        path: 'tabs-search-params',
+        loadComponent: () => import('../tabs-search-params/tabs-search-params.component').then(c => c.TabsSearchParamsComponent),
+        children: [
+          { path: 'tab1', loadComponent: () => import('../tabs-search-params/tab1.component').then(c => c.TabsSearchParamsTab1Component) },
+          { path: 'tab2', loadComponent: () => import('../tabs-search-params/tab2.component').then(c => c.TabsSearchParamsTab2Component) }
+        ]
+      },
       {
         path: 'validation',
         children: [
