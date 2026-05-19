@@ -252,6 +252,7 @@ export const IonCheckbox: StencilVueComponent<JSX.IonCheckbox, JSX.IonCheckbox["
   'required',
   'shape',
   'size',
+  'presentational',
   'ionChange',
   'ionFocus',
   'ionBlur'
@@ -750,6 +751,7 @@ export const IonRadio: StencilVueComponent<JSX.IonRadio, JSX.IonRadio["value"]> 
   'labelPlacement',
   'justify',
   'alignment',
+  'presentational',
   'ionFocus',
   'ionBlur'
 ], [
@@ -766,6 +768,7 @@ export const IonRadioGroup: StencilVueComponent<JSX.IonRadioGroup, JSX.IonRadioG
   'value',
   'helperText',
   'errorText',
+  'presentational',
   'ionChange',
   'ionValueChange'
 ], [

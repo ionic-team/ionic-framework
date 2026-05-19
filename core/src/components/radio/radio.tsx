@@ -105,6 +105,20 @@ export class Radio implements ComponentInterface {
   @Prop() alignment?: 'start' | 'center';
 
   /**
+   * If `true`, the radio renders only its visual presentation.
+   * The host carries no role, no focus management, and no click
+   * handling. State still flows from the surrounding
+   * ion-radio-group's `value` via the normal comparison path.
+   * Also inherited automatically when the parent ion-radio-group
+   * has `presentational` set to `true`. This is a mount-time
+   * switch; runtime changes to the group's value are not
+   * reactive on this prop.
+   *
+   * @internal
+   */
+  @Prop() presentational = false;
+
+  /**
    * Emitted when the radio button has focus.
    */
   @Event() ionFocus!: EventEmitter<void>;
@@ -172,10 +186,14 @@ export class Radio implements ComponentInterface {
     }
   };
 
+  private get isPresentational(): boolean {
+    return this.presentational || this.radioGroup?.presentational === true;
+  }
+
   private onClick = () => {
     const { radioGroup, checked, disabled } = this;
 
-    if (disabled) {
+    if (disabled || this.isPresentational) {
       return;
     }
 
@@ -218,14 +236,28 @@ export class Radio implements ComponentInterface {
 
   render() {
     const { checked, disabled, color, el, justify, labelPlacement, hasLabel, buttonTabindex, alignment } = this;
+    const presentational = this.isPresentational;
     const theme = getIonTheme(this);
     const inItem = hostContext('ion-item', el);
 
+    const interactiveProps = presentational
+      ? // Explicit tabindex="-1" excludes the host from focus-management
+        // utilities (e.g. focusableQueryString) so Tab navigation lands on
+        // the parent's focusable wrapper instead of this presentational host.
+        { tabindex: -1 }
+      : {
+          onFocus: this.onFocus,
+          onBlur: this.onBlur,
+          onClick: this.onClick,
+          role: 'radio',
+          'aria-checked': checked ? 'true' : 'false',
+          'aria-disabled': disabled ? 'true' : null,
+          tabindex: buttonTabindex,
+        };
+
     return (
       <Host
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
-        onClick={this.onClick}
+        {...interactiveProps}
         class={createColorClasses(color, {
           [theme]: true,
           'in-item': inItem,
@@ -235,13 +267,10 @@ export class Radio implements ComponentInterface {
           [`radio-alignment-${alignment}`]: alignment !== undefined,
           [`radio-label-placement-${labelPlacement}`]: true,
           // Focus and active styling should not apply when the radio is in an item
-          'ion-activatable': !inItem,
-          'ion-focusable': !inItem,
+          // or rendered in presentational mode (parent owns interaction).
+          'ion-activatable': !inItem && !presentational,
+          'ion-focusable': !inItem && !presentational,
         })}
-        role="radio"
-        aria-checked={checked ? 'true' : 'false'}
-        aria-disabled={disabled ? 'true' : null}
-        tabindex={buttonTabindex}
       >
         <label class="radio-wrapper">
           <div

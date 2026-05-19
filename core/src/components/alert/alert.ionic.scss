@@ -158,130 +158,27 @@
 // Ionic Alert Radio
 // --------------------------------------------------
 
-.alert-radio-label {
+.alert-tappable {
   @include globals.typography(globals.$ion-body-md-regular);
-  @include mixins.padding(
-    globals.$ion-space-300,
-    globals.$ion-space-700,
-    globals.$ion-space-300,
-    globals.$ion-scale-1400
-  );
-
-  flex: 1;
 
   color: globals.$ion-text-default;
 }
 
-// Ionic Alert Radio Outer Circle: Unchecked
-// ---------------------------------------------------
-
-.alert-radio-icon {
-  @include globals.position(globals.$ion-space-0, null, null, globals.$ion-space-700);
-  @include globals.border-radius(globals.$ion-border-radius-full);
-
-  display: flex;
-  position: relative;
-
-  align-items: center;
-  justify-content: center;
-
-  width: globals.$ion-scale-600;
-  height: globals.$ion-scale-600;
-
-  border-width: globals.$ion-border-size-025;
-  border-style: globals.$ion-border-style-solid;
-  border-color: globals.$ion-border-input-default;
-
-  background-color: globals.$ion-bg-input-default;
-
-  box-sizing: border-box;
-}
-
-// Ionic Alert Radio Inner Dot
-// ---------------------------------------------------
-
-.alert-radio-inner {
-  @include globals.border-radius(50%);
-
-  width: calc(32% + globals.$ion-border-size-025);
-  height: calc(32% + globals.$ion-border-size-025);
-
-  background-color: globals.$ion-bg-surface-inverse;
-
-  box-sizing: border-box;
-}
-
-// Ionic Alert Radio Outer Circle: Checked
-// ---------------------------------------------------
-
-[aria-checked="true"] .alert-radio-icon {
-  border-color: globals.$ion-bg-primary-base-default;
-
-  background-color: globals.$ion-bg-primary-base-default;
-}
-
-// Ionic Alert Checkbox Label
-// --------------------------------------------------
-
-.alert-checkbox-label {
-  @include globals.typography(globals.$ion-body-md-regular);
+.alert-radio {
   @include mixins.padding(
     globals.$ion-space-300,
     globals.$ion-space-700,
     globals.$ion-space-300,
-    globals.$ion-scale-1400
+    globals.$ion-space-700
   );
-
-  flex: 1;
-
-  // Required for the checkbox icon to stay on the screen without
-  // being squished when the font size scales up.
-  width: calc(100% - globals.$ion-scale-1400);
-
-  color: globals.$ion-text-default;
 }
 
-// Ionic Alert Checkbox Outline: Unchecked
-// --------------------------------------------------
-
-.alert-checkbox-icon {
-  @include globals.position(globals.$ion-space-0, null, null, globals.$ion-space-700);
-  @include globals.border-radius(globals.$ion-border-radius-100);
-
-  display: flex;
-  position: relative;
-
-  align-items: center;
-  justify-content: center;
-
-  width: globals.$ion-scale-600;
-  height: globals.$ion-scale-600;
-
-  border-width: globals.$ion-border-size-025;
-  border-style: globals.$ion-border-style-solid;
-  border-color: globals.$ion-primitives-neutral-800;
-
-  background-color: globals.$ion-bg-input-default;
-
-  box-sizing: border-box;
+.alert-checkbox {
+  @include mixins.padding(globals.$ion-space-0, globals.$ion-space-700, globals.$ion-space-0, globals.$ion-space-700);
 }
 
-.alert-checkbox-inner {
-  width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
-}
-
-.alert-checkbox-inner path {
-  fill: globals.$ion-bg-surface-default;
-}
-
-// Ionic Alert Checkbox Checkmark: Checked
-// --------------------------------------------------
-
-[aria-checked="true"] .alert-checkbox-icon {
-  border-color: globals.$ion-semantics-primary-base;
-
-  background-color: globals.$ion-bg-primary-base-default;
+.alert-control {
+  min-height: auto;
 }
 
 // Ionic Alert Button

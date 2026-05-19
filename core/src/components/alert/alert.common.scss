@@ -114,6 +114,36 @@
    * intrinsic size which allows the long word to wrap to the next line.
    */
   overflow-wrap: anywhere;
+
+  display: flex;
+
+  align-items: center;
+}
+
+/**
+ * ion-radio and ion-checkbox default label wrappers apply `white-space: nowrap`
+ * + `overflow: hidden` for ellipsis behavior in their standalone form.
+ * Inside an alert the option label needs to wrap so it doesn't
+ * stretch the auto-sized alert beyond its intended width.
+ */
+ion-radio::part(label),
+ion-checkbox::part(label) {
+  /**
+   * The label wrapper should grow to fill
+   * the available row so the inner rich
+   * content has space to stretch.
+   */
+  flex: 1;
+
+  white-space: normal;
+
+  overflow: visible;
+}
+
+// ion-radio/ion-checkbox default to content-sized in .alert-tappable's flex row; fill the full button width.
+.alert-radio-button > ion-radio,
+.alert-checkbox-button > ion-checkbox {
+  flex: 1;
 }
 
 /**
@@ -193,8 +223,8 @@
 // Alert Button: Disabled
 // --------------------------------------------------
 .alert-input-disabled,
-.alert-checkbox-button-disabled .alert-button-inner,
-.alert-radio-button-disabled .alert-button-inner {
+.alert-checkbox-button-disabled .alert-control,
+.alert-radio-button-disabled .alert-control {
   cursor: default;
   opacity: 0.5;
   pointer-events: none;
@@ -229,12 +259,6 @@
   outline: none;
 }
 
-.alert-radio-icon,
-.alert-checkbox-icon,
-.alert-checkbox-inner {
-  box-sizing: border-box;
-}
-
 textarea.alert-input {
   min-height: 37px;
   resize: none;
@@ -242,13 +266,6 @@ textarea.alert-input {
 
 // Alert Button: Select Option
 // --------------------------------------------------
-
-.alert-radio-label,
-.alert-checkbox-label {
-  display: flex;
-
-  align-items: center;
-}
 
 .select-option-content {
   flex: 1;

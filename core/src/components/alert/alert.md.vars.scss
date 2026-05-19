@@ -187,57 +187,6 @@ $alert-md-list-border-top: 1px solid $alert-md-input-border-color;
 /// @prop - Border bottom of the alert list
 $alert-md-list-border-bottom: $alert-md-list-border-top;
 
-/// @prop - Top of the alert radio
-$alert-md-radio-top: 0;
-
-/// @prop - Left of the alert radio
-$alert-md-radio-left: 26px;
-
-/// @prop - Width of the alert radio
-$alert-md-radio-width: 20px;
-
-/// @prop - Height of the alert radio
-$alert-md-radio-height: $alert-md-radio-width;
-
-/// @prop - Border width of the alert radio
-$alert-md-radio-border-width: 2px;
-
-/// @prop - Border style of the alert radio
-$alert-md-radio-border-style: solid;
-
-/// @prop - Border radius of the alert radio
-$alert-md-radio-border-radius: 50%;
-
-/// @prop - Border color of the alert radio when off
-$alert-md-radio-border-color-off: $background-color-step-550;
-
-/// @prop - Border color of the alert radio when on
-$alert-md-radio-border-color-on: $alert-md-button-text-color;
-
-/// @prop - Width of the icon in the alert radio
-$alert-md-radio-icon-width: $alert-md-radio-width * 0.5;
-
-/// @prop - Height of the icon in the alert radio
-$alert-md-radio-icon-height: $alert-md-radio-icon-width;
-
-/// @prop - Top of the icon in the alert radio
-$alert-md-radio-icon-top: ($alert-md-radio-width - $alert-md-radio-icon-width - $alert-md-radio-border-width * 2) * 0.5;
-
-/// @prop - Start of the icon in the radio alert
-$alert-md-radio-icon-start: $alert-md-radio-icon-top;
-
-/// @prop - Border radius of the icon in the alert radio
-$alert-md-radio-icon-border-radius: $alert-md-radio-border-radius;
-
-/// @prop - Transform of the icon in the alert radio when off
-$alert-md-radio-icon-transform-off: scale3d(0, 0, 0);
-
-/// @prop - Transform of the icon in the alert radio when on
-$alert-md-radio-icon-transform-on: scale3d(1, 1, 1);
-
-/// @prop - Transition of the icon in the alert radio
-$alert-md-radio-icon-transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
-
 /// @prop - Padding top on the label for the radio alert
 $alert-md-radio-label-padding-top: 13px;
 
@@ -248,7 +197,7 @@ $alert-md-radio-label-padding-end: 26px;
 $alert-md-radio-label-padding-bottom: $alert-md-radio-label-padding-top;
 
 /// @prop - Padding start on the label for the radio alert
-$alert-md-radio-label-padding-start: $alert-md-radio-label-padding-end + 26px;
+$alert-md-radio-label-padding-start: $alert-md-radio-label-padding-end;
 
 /// @prop - Font size of the label for the radio alert
 $alert-md-radio-label-font-size: dynamic-font(16px);
@@ -256,71 +205,17 @@ $alert-md-radio-label-font-size: dynamic-font(16px);
 /// @prop - Text color of the label for the radio alert
 $alert-md-radio-label-text-color: $text-color-step-150;
 
-/// @prop - Text color of the label for the checked radio alert
-$alert-md-radio-label-text-color-checked: $alert-md-radio-label-text-color;
-
-/// @prop - Top of the checkbox in the alert
-$alert-md-checkbox-top: 0;
-
-/// @prop - Left of the checkbox in the alert
-$alert-md-checkbox-left: 26px;
-
-/// @prop - Width of the checkbox in the alert
-$alert-md-checkbox-width: 16px;
-
-/// @prop - Height of the checkbox in the alert
-$alert-md-checkbox-height: 16px;
-
-/// @prop - Border width of the checkbox in the alert
-$alert-md-checkbox-border-width: 2px;
-
-/// @prop - Border style of the checkbox in the alert
-$alert-md-checkbox-border-style: solid;
-
-/// @prop - Border radius of the checkbox in the alert
-$alert-md-checkbox-border-radius: 2px;
-
-/// @prop - Border color of the checkbox in the alert when off
-$alert-md-checkbox-border-color-off: $background-color-step-550;
-
-/// @prop - Border color of the checkbox in the alert when on
-$alert-md-checkbox-border-color-on: $alert-md-button-text-color;
-
-/// @prop - Top of the icon in the checkbox alert
-$alert-md-checkbox-icon-top: 0;
-
-/// @prop - Start of the icon in the checkbox alert
-$alert-md-checkbox-icon-start: 3px;
-
-/// @prop - Width of the icon in the checkbox alert
-$alert-md-checkbox-icon-width: 6px;
-
-/// @prop - Height of the icon in the checkbox alert
-$alert-md-checkbox-icon-height: 10px;
-
-/// @prop - Border width of the icon in the checkbox alert
-$alert-md-checkbox-icon-border-width: 2px;
-
-/// @prop - Border style of the icon in the checkbox alert
-$alert-md-checkbox-icon-border-style: solid;
-
-/// @prop - Border color of the icon in the checkbox alert
-$alert-md-checkbox-icon-border-color: ion-color(primary, contrast);
-
-/// @prop - Transform of the icon in the checkbox alert
-$alert-md-checkbox-icon-transform: rotate(45deg);
-
 /// @prop - Padding top of the label for the checkbox in the alert
 $alert-md-checkbox-label-padding-top: 13px;
 
 /// @prop - Padding end of the label for the checkbox in the alert
-$alert-md-checkbox-label-padding-end: $alert-md-checkbox-left;
+$alert-md-checkbox-label-padding-end: 26px;
 
 /// @prop - Padding bottom of the label for the checkbox in the alert
 $alert-md-checkbox-label-padding-bottom: $alert-md-checkbox-label-padding-top;
 
 /// @prop - Padding start of the label for the checkbox in the alert
-$alert-md-checkbox-label-padding-start: $alert-md-checkbox-label-padding-end + 27px;
+$alert-md-checkbox-label-padding-start: $alert-md-checkbox-label-padding-end;
 
 /// @prop - Text color of the label for the checkbox in the alert
 $alert-md-checkbox-label-text-color: $text-color-step-150;
