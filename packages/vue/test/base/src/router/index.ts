@@ -70,6 +70,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/RoutingChild.vue')
   },
   {
+    path: '/routing/guards',
+    component: () => import('@/views/RoutingGuards.vue')
+  },
+  {
     path: '/routing/:id',
     component: () => import('@/views/RoutingParameter.vue'),
     props: true

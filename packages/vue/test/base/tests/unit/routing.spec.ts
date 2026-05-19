@@ -464,6 +464,50 @@ describe('Routing', () => {
     expect(beforeRouteEnterSpy).toHaveBeenCalledTimes(2);
   });
 
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/25013
+  it('should run beforeRouteEnter next() callback with the component instance', async () => {
+    const enterCallbackSpy = vi.fn();
+    const Page = {
+      data() {
+        return { member: 0 };
+      },
+      beforeRouteEnter(_to: any, _from: any, next: (cb: (vm: any) => void) => void) {
+        next((vm: any) => {
+          enterCallbackSpy(vm);
+          vm.member = 5;
+        });
+      },
+      name: 'PageWithEnterCb',
+      components: { IonPage },
+      template: `<ion-page><span data-test="member">{{ member }}</span></ion-page>`
+    };
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: { template: '<ion-page></ion-page>', components: { IonPage } } },
+        { path: '/page', component: Page },
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/page');
+    await waitForRouter();
+
+    expect(enterCallbackSpy).toHaveBeenCalledTimes(1);
+    const instance = enterCallbackSpy.mock.calls[0][0];
+    expect(instance).toBeDefined();
+    expect(instance.member).toBe(5);
+    expect(wrapper.find('[data-test="member"]').text()).toBe('5');
+  });
+
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24109
   it('canGoBack() should return the correct value', async () => {
     const Page = {
