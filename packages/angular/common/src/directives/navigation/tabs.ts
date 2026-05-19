@@ -10,7 +10,6 @@ import {
   AfterViewInit,
   QueryList,
 } from '@angular/core';
-
 import type { Params } from '@angular/router';
 
 import { NavController } from '../../providers/nav-controller';
