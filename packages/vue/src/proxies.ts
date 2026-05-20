@@ -1066,6 +1066,8 @@ export const IonToggle: StencilVueComponent<JSX.IonToggle, JSX.IonToggle["checke
   'helperText',
   'value',
   'enableOnOffLabels',
+  'checkedIcon',
+  'uncheckedIcon',
   'labelPlacement',
   'justify',
   'alignment',

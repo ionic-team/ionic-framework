@@ -1,4 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
+import { checkmarkOutline, ellipseOutline, removeOutline } from 'ionicons/icons';
 
 import { config } from '../../../global/config';
 import { Toggle } from '../toggle';
@@ -38,6 +39,58 @@ describe('toggle', () => {
       const t = await newToggle();
       t.enableOnOffLabels = true;
       expect(t.enableOnOffLabels).toBe(true);
+    });
+  });
+
+  describe('checkedIcon and uncheckedIcon', () => {
+    it('should set custom checked icon on the instance, overriding config', async () => {
+      const t = await newToggle();
+      t.checkedIcon = 'custom-checked-icon-instance';
+      config.reset({
+        toggleCheckedIcon: 'custom-checked-icon-config',
+      });
+
+      expect((t as any).getSwitchLabelIcon('md', true)).toBe('custom-checked-icon-instance');
+    });
+
+    it('should set custom unchecked icon on the instance, overriding config', async () => {
+      const t = await newToggle();
+      t.uncheckedIcon = 'custom-unchecked-icon-instance';
+      config.reset({
+        toggleUncheckedIcon: 'custom-unchecked-icon-config',
+      });
+
+      expect((t as any).getSwitchLabelIcon('md', false)).toBe('custom-unchecked-icon-instance');
+    });
+
+    it('should set custom checked icon in the config', async () => {
+      const t = await newToggle();
+      config.reset({
+        toggleCheckedIcon: 'custom-checked-icon-config',
+      });
+
+      expect((t as any).getSwitchLabelIcon('md', true)).toBe('custom-checked-icon-config');
+    });
+
+    it('should set custom unchecked icon in the config', async () => {
+      const t = await newToggle();
+      config.reset({
+        toggleUncheckedIcon: 'custom-unchecked-icon-config',
+      });
+
+      expect((t as any).getSwitchLabelIcon('md', false)).toBe('custom-unchecked-icon-config');
+    });
+
+    it('should use default icons in md mode', async () => {
+      const t = await newToggle();
+      expect((t as any).getSwitchLabelIcon('md', true)).toBe(checkmarkOutline);
+      expect((t as any).getSwitchLabelIcon('md', false)).toBe(removeOutline);
+    });
+
+    it('should use default icons in ios mode', async () => {
+      const t = await newToggle();
+      expect((t as any).getSwitchLabelIcon('ios', true)).toBe(removeOutline);
+      expect((t as any).getSwitchLabelIcon('ios', false)).toBe(ellipseOutline);
     });
   });
 
