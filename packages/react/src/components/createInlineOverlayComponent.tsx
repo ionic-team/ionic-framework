@@ -1,5 +1,7 @@
 import type { HTMLIonOverlayElement, OverlayEventDetail } from '@ionic/core/components';
+import { componentOnReady } from '@ionic/core/components';
 import React, { createElement } from 'react';
+import { createPortal } from 'react-dom';
 
 import {
   attachProps,
@@ -16,6 +18,15 @@ import { detachProps } from './utils/detachProps';
 type InlineOverlayState = {
   isOpen: boolean;
 };
+
+/**
+ * Set to `true` when rendering inside another inline overlay. Nested
+ * overlays render at their JSX position (no portal) so that core's
+ * `el.closest('ion-popover')`-style nesting detection keeps working,
+ * and the outer overlay's portal already gives the subtree the correct
+ * React event-delegation root.
+ */
+const NestedOverlayContext = React.createContext(false);
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.ForwardedRef<ElementType>;
@@ -36,12 +47,18 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     defineCustomElement();
   }
   const displayName = dashToPascalCase(tagName);
-  const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>, InlineOverlayState> {
+
+  type InternalProps = IonicReactInternalProps<PropType> & { isNested?: boolean };
+
+  const ReactComponent = class extends React.Component<InternalProps, InlineOverlayState> {
     ref: React.RefObject<HTMLIonOverlayElement>;
     wrapperRef: React.RefObject<HTMLElement>;
+    markerRef: React.RefObject<HTMLTemplateElement>;
     stableMergedRefs: React.RefCallback<HTMLElement>;
+    portalTarget: HTMLElement | null;
+    isUnmounted = false;
 
-    constructor(props: IonicReactInternalProps<PropType>) {
+    constructor(props: InternalProps) {
       super(props);
       // Create a local ref to to attach props to the wrapped element.
       this.ref = React.createRef();
@@ -51,17 +68,51 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       this.state = { isOpen: false };
       // Create a local ref to the inner child element.
       this.wrapperRef = React.createRef();
+      // Marker stays at the JSX location so we can recover the immediate
+      // JSX parent after the overlay has been portaled to ion-app.
+      this.markerRef = React.createRef();
+      /**
+       * Resolve the portal target to the same container CoreDelegate
+       * teleports overlays into. Portaling here keeps the overlay inside
+       * React's tree so React's synthetic events still dispatch to its
+       * children, even after CoreDelegate moves the DOM node out of the
+       * declared JSX parent.
+       */
+      this.portalTarget = typeof document !== 'undefined' ? document.querySelector('ion-app') || document.body : null;
     }
 
     componentDidMount() {
+      // Reset for React 18 StrictMode: the dev-mode unmount/remount cycle
+      // re-uses this instance and leaves the flag set from the prior
+      // componentWillUnmount.
+      this.isUnmounted = false;
+
       this.componentDidUpdate(this.props);
 
       this.ref.current?.addEventListener('ionMount', this.handleIonMount);
       this.ref.current?.addEventListener('willPresent', this.handleWillPresent);
       this.ref.current?.addEventListener('didDismiss', this.handleDidDismiss);
+
+      /**
+       * The overlay is portaled to `portalTarget`, so Stencil caches that
+       * container as `cachedOriginalParent`. Modal features (sheet
+       * child-route passthrough, parent-removal auto-dismiss) walk up
+       * from `cachedOriginalParent` to find the enclosing `.ion-page`,
+       * so we redirect it at the marker's JSX parent.
+       */
+      const overlay = this.ref.current;
+      if (overlay) {
+        componentOnReady(overlay as HTMLElement, () => {
+          if (this.isUnmounted) return;
+          const markerParent = this.markerRef.current?.parentElement ?? null;
+          if (markerParent && markerParent !== this.portalTarget) {
+            (overlay as any).cachedOriginalParent = markerParent;
+          }
+        });
+      }
     }
 
-    componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
+    componentDidUpdate(prevProps: InternalProps) {
       const node = this.ref.current! as HTMLElement;
       /**
        * onDidDismiss and onWillPresent have manual implementations that
@@ -69,11 +120,12 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * so they don't get attached twice and called twice.
        */
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { onDidDismiss, onWillPresent, ...cProps } = this.props;
+      const { onDidDismiss, onWillPresent, isNested, ...cProps } = this.props;
       attachProps(node, cProps, prevProps);
     }
 
     componentWillUnmount() {
+      this.isUnmounted = true;
       const node = this.ref.current;
       /**
        * If the overlay is being unmounted, but is still
@@ -97,14 +149,28 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
          * avoid memory leaks.
          */
         node.removeEventListener('didDismiss', this.handleDidDismiss);
-        node.remove();
+        if (this.props.isNested) {
+          /**
+           * Nested overlays render inline (no portal). CoreDelegate may
+           * have moved the node out of its React parent, so React's
+           * unmount won't reach it. Remove it directly.
+           */
+          node.remove();
+        } else if (node.isConnected && this.portalTarget && node.parentNode !== this.portalTarget) {
+          /**
+           * Portaled path: move the overlay back into `portalTarget` so
+           * React's portal removeChild can find it. CoreDelegate (or user
+           * code in onWillPresent) may have moved it elsewhere while open.
+           */
+          this.portalTarget.appendChild(node);
+        }
         detachProps(node, this.props);
       }
     }
 
     render() {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
+      const { children, forwardedRef, style, className, ref, isNested, ...cProps } = this.props;
 
       const propsToPass = Object.keys(cProps).reduce((acc, name) => {
         if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
@@ -136,17 +202,16 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
         return DELEGATE_HOST;
       };
 
-      return createElement(
-        'template',
-        {},
+      const overlayElement = createElement(
+        tagName,
+        newProps,
+        // Children, not the overlay host, observe `isNested = true`.
         createElement(
-          tagName,
-          newProps,
+          NestedOverlayContext.Provider,
+          { value: true },
           /**
-           * We only want the inner component
-           * to be mounted if the overlay is open,
-           * so conditionally render the component
-           * based on the isOpen state.
+           * We only want the inner component to be mounted if the overlay
+           * is open, so conditionally render based on `isOpen` state.
            */
           this.state.isOpen || this.props.keepContentsMounted
             ? createElement(
@@ -160,6 +225,21 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
             : null
         )
       );
+
+      // Top-level overlays portal into `portalTarget` with a marker
+      // `<template>` at the JSX location to recover the immediate JSX
+      // parent after CoreDelegate teleports. Nested overlays and SSR
+      // fall back to a `<template>` wrapper.
+      if (!isNested && this.portalTarget) {
+        return createElement(
+          React.Fragment,
+          null,
+          createElement('template', { ref: this.markerRef }),
+          createPortal(overlayElement, this.portalTarget)
+        );
+      }
+
+      return createElement('template', {}, overlayElement);
     }
 
     static get displayName() {
@@ -206,7 +286,15 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       this.props.onDidDismiss && this.props.onDidDismiss(evt);
     };
   };
-  return createForwardRef<PropType, ElementType>(ReactComponent, displayName);
+
+  // Forward the nesting context as a prop to avoid contextType on the class.
+  const ReactComponentWithNesting: React.FC<IonicReactInternalProps<PropType>> = (props) =>
+    createElement(NestedOverlayContext.Consumer, null, (isNested: boolean) =>
+      createElement(ReactComponent, { ...(props as InternalProps), isNested })
+    );
+  ReactComponentWithNesting.displayName = displayName;
+
+  return createForwardRef<PropType, ElementType>(ReactComponentWithNesting, displayName);
 };
 
 const DELEGATE_HOST = 'ion-delegate-host';
