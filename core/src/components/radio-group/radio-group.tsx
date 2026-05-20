@@ -75,18 +75,6 @@ export class RadioGroup implements ComponentInterface {
    */
   @Prop() errorText?: string;
 
-  /**
-   * If `true`, the radio group and its child radios skip all
-   * interactive concerns (focus management, click/keydown
-   * handling, tabindex updates). State derivation via `value`
-   * still flows normally. The parent is responsible for
-   * interaction. This is a mount-time switch; runtime changes
-   * are not propagated to existing radios.
-   *
-   * @internal
-   */
-  @Prop() presentational = false;
-
   @Watch('value')
   valueChanged(value: any | undefined) {
     this.setRadioTabindex(value);
@@ -132,9 +120,6 @@ export class RadioGroup implements ComponentInterface {
   private scheduleTabindexUpdate = debounce(() => this.setRadioTabindex(this.value), 0);
 
   private setRadioTabindex = (value: any | undefined) => {
-    if (this.presentational) {
-      return;
-    }
     const radios = this.getRadios();
 
     // Get the first radio that is not disabled and the checked one
@@ -234,9 +219,6 @@ export class RadioGroup implements ComponentInterface {
   }
 
   private onClick = (ev: Event) => {
-    if (this.presentational) {
-      return;
-    }
     ev.preventDefault();
 
     /**
@@ -269,9 +251,6 @@ export class RadioGroup implements ComponentInterface {
 
   @Listen('keydown', { target: 'document' })
   onKeydown(ev: KeyboardEvent) {
-    if (this.presentational) {
-      return;
-    }
     // We don't want the value to automatically change/emit when the radio group is part of a select interface
     // as this will cause the interface to close when navigating through the radio group options
     const inSelectInterface = !!this.el.closest('ion-select-popover') || !!this.el.closest('ion-select-modal');
@@ -350,12 +329,6 @@ export class RadioGroup implements ComponentInterface {
   /** @internal */
   @Method()
   async setFocus() {
-    if (this.presentational) {
-      // Parent owns the focusable role="radio" wrappers; focus the first tabbable one.
-      const focusable = this.el.querySelector<HTMLElement>('[role="radio"]:not([tabindex^="-"]):not([disabled])');
-      focusable?.focus();
-      return;
-    }
     const radioToFocus = this.getRadios().find((r) => r.tabIndex !== -1);
     radioToFocus?.setFocus();
   }

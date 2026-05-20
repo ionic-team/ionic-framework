@@ -135,16 +135,6 @@ export class Checkbox implements ComponentInterface {
   @Prop() size?: 'small';
 
   /**
-   * If `true`, the checkbox renders only its visual presentation.
-   * The host carries no role, no focus management, and no click
-   * handling, and the inner native input is not rendered. The
-   * parent is responsible for interaction and form participation.
-   *
-   * @internal
-   */
-  @Prop() presentational = false;
-
-  /**
    * Track validation state for proper aria-live announcements.
    */
   @State() isInvalid = false;
@@ -357,7 +347,6 @@ export class Checkbox implements ComponentInterface {
       name,
       value,
       alignment,
-      presentational,
       required,
       shape,
       size,
@@ -365,44 +354,33 @@ export class Checkbox implements ComponentInterface {
     const theme = getIonTheme(this);
     const path = getSVGPath(theme, indeterminate);
 
-    if (!presentational) {
-      renderHiddenInput(true, el, name, checked ? value : '', disabled);
-    }
-
-    const interactiveProps = presentational
-      ? // Explicit tabindex="-1" excludes the host from focus-management
-        // utilities (e.g. focusableQueryString) so Tab navigation lands on
-        // the parent's focusable wrapper instead of this presentational host.
-        { tabindex: -1 }
-      : {
-          role: 'checkbox',
-          'aria-checked': indeterminate ? 'mixed' : `${checked}`,
-          'aria-describedby': this.hintTextId,
-          'aria-invalid': this.isInvalid ? 'true' : undefined,
-          'aria-labelledby': this.hasLabelContent ? this.inputLabelId : null,
-          'aria-label': inheritedAttributes['aria-label'] || null,
-          'aria-disabled': disabled ? 'true' : null,
-          'aria-required': required ? 'true' : undefined,
-          tabindex: disabled ? undefined : 0,
-          onKeyDown: this.onKeyDown,
-          onFocus: this.onFocus,
-          onBlur: this.onBlur,
-          onClick: this.onClick,
-        };
+    renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
     // The host element must have a checkbox role to ensure proper VoiceOver
     // support in Safari for accessibility.
     return (
       <Host
-        {...interactiveProps}
+        role="checkbox"
+        aria-checked={indeterminate ? 'mixed' : `${checked}`}
+        aria-describedby={this.hintTextId}
+        aria-invalid={this.isInvalid ? 'true' : undefined}
+        aria-labelledby={this.hasLabelContent ? this.inputLabelId : null}
+        aria-label={inheritedAttributes['aria-label'] || null}
+        aria-disabled={disabled ? 'true' : null}
+        aria-required={required ? 'true' : undefined}
+        tabindex={disabled ? undefined : 0}
+        onKeyDown={this.onKeyDown}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        onClick={this.onClick}
         class={createColorClasses(color, {
           [theme]: true,
           'in-item': hostContext('ion-item', el),
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
-          'ion-focusable': !presentational,
+          'ion-focusable': true,
           'checkbox-indeterminate': indeterminate,
-          interactive: !presentational,
+          interactive: true,
           [`checkbox-justify-${justify}`]: justify !== undefined,
           [`checkbox-alignment-${alignment}`]: alignment !== undefined,
           [`checkbox-label-placement-${labelPlacement}`]: true,
@@ -410,22 +388,20 @@ export class Checkbox implements ComponentInterface {
           [`checkbox-shape-${shape}`]: true,
         })}
       >
-        <label class="checkbox-wrapper" htmlFor={presentational ? undefined : inputId}>
+        <label class="checkbox-wrapper" htmlFor={inputId}>
           {/*
             The native control must be rendered
             before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
           */}
-          {!presentational && (
-            <input
-              type="checkbox"
-              checked={checked ? true : undefined}
-              disabled={disabled}
-              id={inputId}
-              onChange={this.toggleChecked}
-              required={required}
-              {...inheritedAttributes}
-            />
-          )}
+          <input
+            type="checkbox"
+            checked={checked ? true : undefined}
+            disabled={disabled}
+            id={inputId}
+            onChange={this.toggleChecked}
+            required={required}
+            {...inheritedAttributes}
+          />
           <div
             class={{
               'label-text-wrapper': true,
@@ -433,7 +409,7 @@ export class Checkbox implements ComponentInterface {
             }}
             part="label"
             id={this.inputLabelId}
-            onClick={presentational ? undefined : this.onDivLabelClick}
+            onClick={this.onDivLabelClick}
           >
             <slot></slot>
             {this.renderHintText()}

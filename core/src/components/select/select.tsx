@@ -483,7 +483,7 @@ export class Select implements ComponentInterface {
            */
           firstEnabledOption.setFocus();
 
-          focusVisibleElement(firstEnabledOption.closest<HTMLElement>('ion-item, .select-interface-option')!);
+          focusVisibleElement(firstEnabledOption.closest('ion-item')!);
         }
       }
     };

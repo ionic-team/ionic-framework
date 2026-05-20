@@ -558,6 +558,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   private renderCheckbox() {
     const inputs = this.processedInputs;
+    const theme = getIonTheme(this);
 
     if (inputs.length === 0) {
       return null;
@@ -568,10 +569,9 @@ export class Alert implements ComponentInterface, OverlayInterface {
         {inputs.map((i) => {
           /**
            * Cast to `SelectAlertInput` to access rich content
-           * fields (`startContent`, `endContent`, `description`,
-           * `labelPlacement`) that are passed through from
-           * `ion-select` but not part of the public `AlertInput`
-           * interface.
+           * fields (`startContent`, `endContent`, `description`)
+           * that are passed through from `ion-select` but not
+           * part of the public `AlertInput` interface.
            */
           const richInput = i as SelectAlertInput;
           const optionLabelOptions = {
@@ -581,8 +581,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
             endContent: richInput.endContent,
             description: richInput.description,
           };
-
-          const labelPlacement = richInput.labelPlacement ?? 'end';
 
           return (
             <button
@@ -603,16 +601,19 @@ export class Alert implements ComponentInterface, OverlayInterface {
                 'alert-checkbox-button-disabled': i.disabled || false,
               }}
             >
-              <ion-checkbox
-                presentational
-                checked={i.checked}
-                value={i.value}
-                disabled={i.disabled}
-                labelPlacement={labelPlacement}
-                class="alert-control"
-              >
+              <div class="alert-button-inner">
+                <div class="alert-checkbox-icon">
+                  {theme === 'ionic' ? (
+                    <svg class="alert-checkbox-inner" viewBox="0 0 256 256" aria-hidden="true">
+                      <path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z" />
+                    </svg>
+                  ) : (
+                    <div class="alert-checkbox-inner"></div>
+                  )}
+                </div>
                 {renderOptionLabel(optionLabelOptions, 'alert-checkbox-label')}
-              </ion-checkbox>
+              </div>
+              {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
             </button>
           );
         })}
@@ -621,29 +622,20 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   private renderRadio() {
-    const theme = getIonTheme(this);
     const inputs = this.processedInputs;
 
     if (inputs.length === 0) {
       return null;
     }
 
-    const selectedValue = inputs.find((i) => i.checked)?.value;
-
     return (
-      <ion-radio-group
-        presentational
-        value={selectedValue}
-        class="alert-radio-group"
-        aria-activedescendant={this.activeId}
-      >
+      <div class="alert-radio-group" role="radiogroup" aria-activedescendant={this.activeId}>
         {inputs.map((i) => {
           /**
            * Cast to `SelectAlertInput` to access rich content
-           * fields (`startContent`, `endContent`, `description`,
-           * `labelPlacement`) that are passed through from
-           * `ion-select` but not part of the public `AlertInput`
-           * interface.
+           * fields (`startContent`, `endContent`, `description`)
+           * that are passed through from `ion-select` but not
+           * part of the public `AlertInput` interface.
            */
           const richInput = i as SelectAlertInput;
           const optionLabelOptions = {
@@ -653,11 +645,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
             endContent: richInput.endContent,
             description: richInput.description,
           };
-
-          let labelPlacement = richInput.labelPlacement ?? 'start';
-          if (theme === 'md') {
-            labelPlacement = 'end';
-          }
 
           return (
             <button
@@ -678,19 +665,16 @@ export class Alert implements ComponentInterface, OverlayInterface {
               }}
               role="radio"
             >
-              <ion-radio
-                presentational
-                value={i.value}
-                disabled={i.disabled}
-                labelPlacement={labelPlacement}
-                class="alert-control"
-              >
+              <div class="alert-button-inner">
+                <div class="alert-radio-icon">
+                  <div class="alert-radio-inner"></div>
+                </div>
                 {renderOptionLabel(optionLabelOptions, 'alert-radio-label')}
-              </ion-radio>
+              </div>
             </button>
           );
         })}
-      </ion-radio-group>
+      </div>
     );
   }
 

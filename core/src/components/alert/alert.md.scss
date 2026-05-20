@@ -156,7 +156,7 @@
 // Material Design Alert Radio
 // --------------------------------------------------
 
-.alert-radio {
+.alert-radio-label {
   @include padding(
     $alert-md-radio-label-padding-top,
     $alert-md-radio-label-padding-end,
@@ -164,12 +164,69 @@
     $alert-md-radio-label-padding-start
   );
 
+  flex: 1;
+
   color: $alert-md-radio-label-text-color;
 
   font-size: $alert-md-radio-label-font-size;
 }
 
-.alert-checkbox {
+// Material Design Alert Radio Unchecked Circle
+// ---------------------------------------------------
+
+.alert-radio-icon {
+  @include position($alert-md-radio-top, null, null, $alert-md-radio-left);
+  @include border-radius($alert-md-radio-border-radius);
+
+  display: block;
+  position: relative;
+
+  width: $alert-md-radio-width;
+  height: $alert-md-radio-height;
+
+  border-width: $alert-md-radio-border-width;
+  border-style: $alert-md-radio-border-style;
+  border-color: $alert-md-radio-border-color-off;
+}
+
+// Material Design Alert Radio Checked Dot
+// ---------------------------------------------------
+
+.alert-radio-inner {
+  @include position($alert-md-radio-icon-top, null, null, $alert-md-radio-icon-start);
+  @include border-radius($alert-md-radio-icon-border-radius);
+
+  position: absolute;
+
+  width: $alert-md-radio-icon-width;
+  height: $alert-md-radio-icon-height;
+
+  transform: $alert-md-radio-icon-transform-off;
+
+  transition: $alert-md-radio-icon-transition;
+
+  background-color: $alert-md-radio-border-color-on;
+}
+
+// Material Design Alert Radio Checked
+// ---------------------------------------------------
+
+[aria-checked="true"] .alert-radio-label {
+  color: $alert-md-radio-label-text-color-checked;
+}
+
+[aria-checked="true"] .alert-radio-icon {
+  border-color: $alert-md-radio-border-color-on;
+}
+
+[aria-checked="true"] .alert-radio-inner {
+  transform: $alert-md-radio-icon-transform-on;
+}
+
+// Material Design Alert Checkbox Label
+// --------------------------------------------------
+
+.alert-checkbox-label {
   @include padding(
     $alert-md-checkbox-label-padding-top,
     $alert-md-checkbox-label-padding-end,
@@ -177,13 +234,60 @@
     $alert-md-checkbox-label-padding-start
   );
 
+  flex: 1;
+
+  // Required for the checkbox icon to stay on the screen without
+  // being squished when the font size scales up.
+  width: calc(100% - $alert-md-checkbox-label-padding-start);
+
   color: $alert-md-checkbox-label-text-color;
 
   font-size: $alert-md-checkbox-label-font-size;
 }
 
-.alert-control {
-  min-height: auto;
+// Material Design Alert Checkbox Outline: Unchecked
+// --------------------------------------------------
+
+.alert-checkbox-icon {
+  @include position($alert-md-checkbox-top, null, null, $alert-md-checkbox-left);
+  @include border-radius($alert-md-checkbox-border-radius);
+
+  position: relative;
+
+  width: $alert-md-checkbox-width;
+  height: $alert-md-checkbox-height;
+
+  border-width: $alert-md-checkbox-border-width;
+  border-style: $alert-md-checkbox-border-style;
+  border-color: $alert-md-checkbox-border-color-off;
+
+  contain: strict;
+}
+
+// Material Design Alert Checkbox Checkmark: Checked
+// --------------------------------------------------
+
+[aria-checked="true"] .alert-checkbox-icon {
+  border-color: $alert-md-checkbox-border-color-on;
+
+  background-color: $alert-md-checkbox-border-color-on;
+}
+
+[aria-checked="true"] .alert-checkbox-inner {
+  @include position($alert-md-checkbox-icon-top, null, null, $alert-md-checkbox-icon-start);
+
+  position: absolute;
+
+  width: $alert-md-checkbox-icon-width;
+  height: $alert-md-checkbox-icon-height;
+
+  transform: $alert-md-checkbox-icon-transform;
+
+  border-width: $alert-md-checkbox-icon-border-width;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-style: $alert-md-checkbox-icon-border-style;
+  border-color: $alert-md-checkbox-icon-border-color;
 }
 
 // Material Design Alert Button

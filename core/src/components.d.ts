@@ -837,11 +837,6 @@ export namespace Components {
          */
         "name": string;
         /**
-          * If `true`, the checkbox renders only its visual presentation. The host carries no role, no focus management, and no click handling, and the inner native input is not rendered. The parent is responsible for interaction and form participation.
-          * @default false
-         */
-        "presentational": boolean;
-        /**
           * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
           * @default false
          */
@@ -3060,11 +3055,6 @@ export namespace Components {
           * @default this.inputId
          */
         "name": string;
-        /**
-          * If `true`, the radio renders only its visual presentation. The host carries no role, no focus management, and no click handling. State still flows from the surrounding ion-radio-group's `value` via the normal comparison path. Also inherited automatically when the parent ion-radio-group has `presentational` set to `true`. This is a mount-time switch; runtime changes to the group's value are not reactive on this prop.
-          * @default false
-         */
-        "presentational": boolean;
         "setButtonTabindex": (value: number) => Promise<void>;
         "setFocus": (ev?: globalThis.Event) => Promise<void>;
         /**
@@ -3103,11 +3093,6 @@ export namespace Components {
           * @default this.inputId
          */
         "name": string;
-        /**
-          * If `true`, the radio group and its child radios skip all interactive concerns (focus management, click/keydown handling, tabindex updates). State derivation via `value` still flows normally. The parent is responsible for interaction. This is a mount-time switch; runtime changes are not propagated to existing radios.
-          * @default false
-         */
-        "presentational": boolean;
         "setFocus": () => Promise<void>;
         /**
           * The theme determines the visual appearance of the component.
@@ -6876,11 +6861,6 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonCheckboxCustomEvent<void>) => void;
         /**
-          * If `true`, the checkbox renders only its visual presentation. The host carries no role, no focus management, and no click handling, and the inner native input is not rendered. The parent is responsible for interaction and form participation.
-          * @default false
-         */
-        "presentational"?: boolean;
-        /**
           * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
           * @default false
          */
@@ -9085,11 +9065,6 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonRadioCustomEvent<void>) => void;
         /**
-          * If `true`, the radio renders only its visual presentation. The host carries no role, no focus management, and no click handling. State still flows from the surrounding ion-radio-group's `value` via the normal comparison path. Also inherited automatically when the parent ion-radio-group has `presentational` set to `true`. This is a mount-time switch; runtime changes to the group's value are not reactive on this prop.
-          * @default false
-         */
-        "presentational"?: boolean;
-        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -9133,11 +9108,6 @@ declare namespace LocalJSX {
           * Emitted when the `value` property has changed. This is used to ensure that `ion-radio` can respond to any value property changes from the group.
          */
         "onIonValueChange"?: (event: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>) => void;
-        /**
-          * If `true`, the radio group and its child radios skip all interactive concerns (focus management, click/keydown handling, tabindex updates). State derivation via `value` still flows normally. The parent is responsible for interaction. This is a mount-time switch; runtime changes are not propagated to existing radios.
-          * @default false
-         */
-        "presentational"?: boolean;
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -10813,7 +10783,6 @@ declare namespace LocalJSX {
         "required": boolean;
         "shape": 'soft' | 'rectangular';
         "size": 'small';
-        "presentational": boolean;
     }
     interface IonChipAttributes {
         "color": Color;
@@ -11190,7 +11159,6 @@ declare namespace LocalJSX {
         "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
         "justify": 'start' | 'end' | 'space-between';
         "alignment": 'start' | 'center';
-        "presentational": boolean;
     }
     interface IonRadioGroupAttributes {
         "allowEmptySelection": boolean;
@@ -11199,7 +11167,6 @@ declare namespace LocalJSX {
         "value": string;
         "helperText": string;
         "errorText": string;
-        "presentational": boolean;
     }
     interface IonRangeAttributes {
         "color": Color;

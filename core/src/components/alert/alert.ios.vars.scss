@@ -192,10 +192,10 @@ $alert-ios-button-main-font-weight: bold;
 $alert-ios-list-border-top: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
 
 /// @prop - Padding top on the label for the radio alert
-$alert-ios-radio-label-padding-top: 0px;
+$alert-ios-radio-label-padding-top: 13px;
 
 /// @prop - Padding end on the label for the radio alert
-$alert-ios-radio-label-padding-end: 13px;
+$alert-ios-radio-label-padding-end: $alert-ios-radio-label-padding-top;
 
 /// @prop - Padding bottom on the label for the radio alert
 $alert-ios-radio-label-padding-bottom: $alert-ios-radio-label-padding-top;
@@ -205,6 +205,36 @@ $alert-ios-radio-label-padding-start: $alert-ios-radio-label-padding-end;
 
 /// @prop - Text color of the label for the radio alert
 $alert-ios-radio-label-text-color: $text-color;
+
+/// @prop - Text color of the label for the checked radio alert
+$alert-ios-radio-label-text-color-checked: $alert-ios-button-text-color;
+
+/// @prop - Min width of the radio alert
+$alert-ios-radio-min-width: 30px;
+
+/// @prop - Top of the icon in the radio alert
+$alert-ios-radio-icon-top: -7px;
+
+/// @prop - Start of the icon in the radio alert
+$alert-ios-radio-icon-start: 7px;
+
+/// @prop - Width of the icon in the radio alert
+$alert-ios-radio-icon-width: 6px;
+
+/// @prop - Height of the icon in the radio alert
+$alert-ios-radio-icon-height: 12px;
+
+/// @prop - Border width of the icon in the radio alert
+$alert-ios-radio-icon-border-width: 2px;
+
+/// @prop - Border style of the icon in the radio alert
+$alert-ios-radio-icon-border-style: solid;
+
+/// @prop - Border color of the icon in the radio alert
+$alert-ios-radio-icon-border-color: $alert-ios-button-text-color;
+
+/// @prop - Transform of the icon in the radio alert
+$alert-ios-radio-icon-transform: rotate(45deg);
 
 /// @prop - Padding top of the label for the checkbox in the alert
 $alert-ios-checkbox-label-padding-top: 13px;
@@ -220,6 +250,66 @@ $alert-ios-checkbox-label-padding-start: $alert-ios-checkbox-label-padding-end;
 
 /// @prop - Text color of the label for the checkbox in the alert
 $alert-ios-checkbox-label-text-color: $text-color;
+
+/// @prop - Margin top of the checkbox in the alert
+$alert-ios-checkbox-margin-top: 10px;
+
+/// @prop - Margin end of the checkbox in the alert
+$alert-ios-checkbox-margin-end: 6px;
+
+/// @prop - Margin bottom of the checkbox in the alert
+$alert-ios-checkbox-margin-bottom: 10px;
+
+/// @prop - Margin start of the checkbox in the alert
+$alert-ios-checkbox-margin-start: 16px;
+
+/// @prop - Size of the checkbox in the alert
+$alert-ios-checkbox-size: dynamic-font-max(22px, 2.538);
+
+/// @prop - Border width of the checkbox in the alert
+$alert-ios-checkbox-border-width: dynamic-font(2px);
+
+/// @prop - Border style of the checkbox in the alert
+$alert-ios-checkbox-border-style: solid;
+
+/// @prop - Border radius of the checkbox in the alert
+$alert-ios-checkbox-border-radius: 50%;
+
+/// @prop - Border color of the checkbox in the alert when off
+$alert-ios-checkbox-border-color-off: $item-ios-border-color;
+
+/// @prop - Border color of the checkbox in the alert when on
+$alert-ios-checkbox-border-color-on: ion-color(primary, base);
+
+/// @prop - Background color of the checkbox in the alert when off
+$alert-ios-checkbox-background-color-off: $item-ios-background;
+
+/// @prop - Background color of the checkbox in the alert when on
+$alert-ios-checkbox-background-color-on: ion-color(primary, base);
+
+/// @prop - Top of the icon in the checkbox alert
+$alert-ios-checkbox-icon-top: calc($alert-ios-checkbox-size / 8);
+
+/// @prop - Start of the icon in the checkbox alert
+$alert-ios-checkbox-icon-start: calc($alert-ios-checkbox-size / 3);
+
+/// @prop - Width of the icon in the checkbox alert
+$alert-ios-checkbox-icon-width: calc($alert-ios-checkbox-size / 6 + 1px);
+
+/// @prop - Height of the icon in the checkbox alert
+$alert-ios-checkbox-icon-height: calc($alert-ios-checkbox-size * 0.5);
+
+/// @prop - Border width of the icon in the checkbox alert
+$alert-ios-checkbox-icon-border-width: $alert-ios-checkbox-border-width;
+
+/// @prop - Border style of the icon in the checkbox alert
+$alert-ios-checkbox-icon-border-style: $alert-ios-checkbox-border-style;
+
+/// @prop - Border color of the icon in the checkbox alert
+$alert-ios-checkbox-icon-border-color: $background-color;
+
+/// @prop - Transform of the icon in the checkbox alert
+$alert-ios-checkbox-icon-transform: rotate(45deg);
 
 /// @prop - Filter of the translucent alert
 $alert-ios-translucent-filter: saturate(180%) blur(20px);

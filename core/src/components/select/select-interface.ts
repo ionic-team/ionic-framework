@@ -23,19 +23,6 @@ export interface SelectActionSheetButton extends Omit<ActionSheetButton, 'text'>
 export interface SelectAlertInput extends Omit<AlertInput, 'label'>, RichContentOption {
   /** The main label for the option as a string or an HTMLElement. */
   label?: string | HTMLElement;
-  /**
-   * Where to place the label relative to the radio/checkbox indicator.
-   * Mirrors ion-radio/ion-checkbox's `labelPlacement` so alert options
-   * render with the same layout as their standalone counterparts.
-   */
-  labelPlacement?: 'start' | 'end' | 'fixed' | 'stacked';
-  /**
-   * How to pack the label and indicator within a line.
-   * Mirrors ion-radio/ion-checkbox's `justify`. Defaults to
-   * `'space-between'` in the alert interface so option rows
-   * fill the available width.
-   */
-  justify?: 'start' | 'end' | 'space-between';
 }
 
 export interface SelectOverlayOption extends Omit<SelectPopoverOption, 'text'>, RichContentOption {

@@ -60,11 +60,11 @@ To ensure proper documentation of variables for customizing Ionic Framework, Sas
 ```scss
 // alert.ios.scss
 
-/// @prop - Text color of the destructive alert button
-$alert-ios-button-destructive-text-color:      ion-color(danger, base) !default;
+/// @prop - Text color of the label for the checked radio alert
+$alert-ios-radio-label-text-color-checked:      $alert-ios-button-text-color !default;
 
-.alert-ios .alert-button-role-destructive {
-  color: $alert-ios-button-destructive-text-color;
+.alert-ios [aria-checked="true"] .alert-radio-label {
+  color: $alert-ios-radio-label-text-color-checked;
 }
 ```
 
