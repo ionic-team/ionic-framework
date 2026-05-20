@@ -61,7 +61,9 @@ export const routes: Routes = [
         loadComponent: () => import('../tabs-search-params/tabs-search-params.component').then(c => c.TabsSearchParamsComponent),
         children: [
           { path: 'tab1', loadComponent: () => import('../tabs-search-params/tab1.component').then(c => c.TabsSearchParamsTab1Component) },
-          { path: 'tab2', loadComponent: () => import('../tabs-search-params/tab2.component').then(c => c.TabsSearchParamsTab2Component) }
+          { path: 'tab2', loadComponent: () => import('../tabs-search-params/tab2.component').then(c => c.TabsSearchParamsTab2Component) },
+          { path: 'tab3', loadComponent: () => import('../tabs-search-params/tab3.component').then(c => c.TabsSearchParamsTab3Component) },
+          { path: 'tab4', loadComponent: () => import('../tabs-search-params/tab4.component').then(c => c.TabsSearchParamsTab4Component) }
         ]
       },
       {

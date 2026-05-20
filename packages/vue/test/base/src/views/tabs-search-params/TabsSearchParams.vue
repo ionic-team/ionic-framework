@@ -20,6 +20,22 @@
             <ion-icon :icon="square" />
             <ion-label>Tab 2</ion-label>
           </ion-tab-button>
+          <ion-tab-button
+            tab="tab3"
+            href="/tabs-search-params/tab3?x=1&y=2#section"
+            data-testid="tab3"
+          >
+            <ion-icon :icon="triangle" />
+            <ion-label>Tab 3</ion-label>
+          </ion-tab-button>
+          <ion-tab-button
+            tab="tab4"
+            href="/tabs-search-params/tab4?q=hello%20world"
+            data-testid="tab4"
+          >
+            <ion-icon :icon="square" />
+            <ion-label>Tab 4</ion-label>
+          </ion-tab-button>
         </ion-tab-bar>
       </ion-tabs>
     </ion-content>

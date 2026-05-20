@@ -56,4 +56,33 @@ test.describe('Tabs: query params on tab button href', () => {
     expect(new URL(page.url()).search).toBe('?foo=bar');
     await expect(page.locator('[data-testid="tab1-foo"]')).toHaveText('bar');
   });
+
+  test('should preserve multiple query params and fragment from tab button href', async ({ page }) => {
+    await page.goto('/standalone/tabs-search-params/tab1?foo=bar');
+    await expect(page.locator('app-tabs-search-params-tab1')).toBeVisible();
+
+    await page.locator('ion-tab-button[data-testid="tab3"]').click();
+    await expect(page.locator('app-tabs-search-params-tab3')).toBeVisible();
+
+    const url = new URL(page.url());
+    expect(url.pathname).toBe('/standalone/tabs-search-params/tab3');
+    expect(url.search).toBe('?x=1&y=2');
+    expect(url.hash).toBe('#section');
+    await expect(page.locator('[data-testid="tab3-x"]')).toHaveText('1');
+    await expect(page.locator('[data-testid="tab3-y"]')).toHaveText('2');
+    await expect(page.locator('[data-testid="tab3-fragment"]')).toHaveText('section');
+  });
+
+  test('should preserve URL-encoded query params from tab button href', async ({ page }) => {
+    await page.goto('/standalone/tabs-search-params/tab1?foo=bar');
+    await expect(page.locator('app-tabs-search-params-tab1')).toBeVisible();
+
+    await page.locator('ion-tab-button[data-testid="tab4"]').click();
+    await expect(page.locator('app-tabs-search-params-tab4')).toBeVisible();
+
+    const url = new URL(page.url());
+    expect(url.pathname).toBe('/standalone/tabs-search-params/tab4');
+    expect(url.searchParams.get('q')).toBe('hello world');
+    await expect(page.locator('[data-testid="tab4-q"]')).toHaveText('hello world');
+  });
 });

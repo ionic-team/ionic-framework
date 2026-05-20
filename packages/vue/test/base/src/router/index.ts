@@ -180,6 +180,14 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'tab2',
         component: () => import('@/views/tabs-search-params/Tab2.vue')
+      },
+      {
+        path: 'tab3',
+        component: () => import('@/views/tabs-search-params/Tab3.vue')
+      },
+      {
+        path: 'tab4',
+        component: () => import('@/views/tabs-search-params/Tab4.vue')
       }
     ]
   },
