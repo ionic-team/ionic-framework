@@ -26,6 +26,7 @@ import { defineCustomElement as defineIonDivider } from '@ionic/core/components/
 import { defineCustomElement as defineIonFab } from '@ionic/core/components/ion-fab.js';
 import { defineCustomElement as defineIonFabList } from '@ionic/core/components/ion-fab-list.js';
 import { defineCustomElement as defineIonFooter } from '@ionic/core/components/ion-footer.js';
+import { defineCustomElement as defineIonGallery } from '@ionic/core/components/ion-gallery.js';
 import { defineCustomElement as defineIonGrid } from '@ionic/core/components/ion-grid.js';
 import { defineCustomElement as defineIonHeader } from '@ionic/core/components/ion-header.js';
 import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-img.js';
@@ -100,6 +101,7 @@ export const IonDivider = /*@__PURE__*/createReactComponent<JSX.IonDivider, HTML
 export const IonFab = /*@__PURE__*/createReactComponent<JSX.IonFab, HTMLIonFabElement>('ion-fab', undefined, undefined, defineIonFab);
 export const IonFabList = /*@__PURE__*/createReactComponent<JSX.IonFabList, HTMLIonFabListElement>('ion-fab-list', undefined, undefined, defineIonFabList);
 export const IonFooter = /*@__PURE__*/createReactComponent<JSX.IonFooter, HTMLIonFooterElement>('ion-footer', undefined, undefined, defineIonFooter);
+export const IonGallery = /*@__PURE__*/createReactComponent<JSX.IonGallery, HTMLIonGalleryElement>('ion-gallery', undefined, undefined, defineIonGallery);
 export const IonGrid = /*@__PURE__*/createReactComponent<JSX.IonGrid, HTMLIonGridElement>('ion-grid', undefined, undefined, defineIonGrid);
 export const IonHeader = /*@__PURE__*/createReactComponent<JSX.IonHeader, HTMLIonHeaderElement>('ion-header', undefined, undefined, defineIonHeader);
 export const IonImg = /*@__PURE__*/createReactComponent<JSX.IonImg, HTMLIonImgElement>('ion-img', undefined, undefined, defineIonImg);

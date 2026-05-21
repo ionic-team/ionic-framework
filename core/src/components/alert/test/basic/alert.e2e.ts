@@ -101,6 +101,29 @@ configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, tit
   });
 });
 
+/**
+ * The right-border-between-buttons styling only exists in iOS mode (see
+ * alert.ios.scss). MD mode has no border to clear, so this is iOS only.
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('alert: button group wrap'), () => {
+    test('two buttons that wrap should switch to vertical layout', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'FW-7244',
+      });
+
+      await page.goto('/src/components/alert/test/basic', config);
+      const alertFixture = new AlertFixture(page);
+      await alertFixture.open('#confirmLongText');
+
+      const buttonGroup = page.locator('ion-alert .alert-button-group');
+      await expect(buttonGroup).toHaveClass(/alert-button-group-vertical/);
+    });
+  });
+});
+
 configs({ palettes: ['light', 'dark'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('should not have visual regressions'), () => {
     test('more than two buttons', async ({ page }) => {
