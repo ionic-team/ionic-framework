@@ -209,13 +209,19 @@
 // Action Sheet: Focused
 // --------------------------------------------------
 
-.action-sheet-button.ion-focused:not(.ion-activated):not(.action-sheet-selected) {
+.action-sheet-button.ion-focused:not(.ion-activated) {
   color: var(--button-color-focused);
 
   &::after {
     background: var(--button-background-focused);
 
     opacity: var(--button-background-focused-opacity);
+  }
+
+  &.action-sheet-selected::after {
+    background: var(--button-background-focused, var(--button-background-selected));
+
+    opacity: var(--button-background-focused-opacity, var(--button-background-selected-opacity));
   }
 }
 

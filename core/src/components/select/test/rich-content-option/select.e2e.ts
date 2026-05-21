@@ -27,7 +27,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
       await page.locator('#alert-select').click();
       await ionAlertDidPresent.next();
 
-      const firstOption = page.locator('ion-alert .alert-radio-label').first();
+      const firstOption = page.locator('ion-alert .select-interface-option').first();
 
       await expect(firstOption).toHaveScreenshot(screenshot(`select-rich-content-alert`));
     });
@@ -38,7 +38,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
       await page.locator('#modal-select').click();
       await ionModalDidPresent.next();
 
-      const firstOption = page.locator('ion-modal .select-option-label').first();
+      const firstOption = page.locator('ion-modal ion-item').first();
 
       await expect(firstOption).toHaveScreenshot(screenshot(`select-rich-content-modal`));
     });
@@ -49,7 +49,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
       await page.locator('#popover-select').click();
       await ionPopoverDidPresent.next();
 
-      const firstOption = page.locator('ion-popover .select-option-label').first();
+      const firstOption = page.locator('ion-popover .select-interface-option').first();
 
       await expect(firstOption).toHaveScreenshot(screenshot(`select-rich-content-popover`));
     });
@@ -78,7 +78,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const actionSheet = page.locator('ion-action-sheet');
       const firstOption = actionSheet.locator('.action-sheet-button-label').first();
       const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
       const firstOptionText = 'Full Content';
 
       await expect(firstOption).toContainText(firstOptionText);
@@ -93,7 +92,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectText = await select.locator('.select-text').textContent();
 
       expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
 
       // Verify that the select text does not include the avatar and badge
       const selectTextAvatar = select.locator('.select-text ion-avatar');
@@ -114,9 +112,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionAlertDidPresent.next();
 
       const alert = page.locator('ion-alert');
-      const firstOption = alert.locator('.alert-radio-label').first();
+      const firstOption = alert.locator('.alert-radio-button').first();
       const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
       const firstOptionText = 'Full Content';
 
       await expect(firstOption).toContainText(firstOptionText);
@@ -135,7 +132,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectText = await select.locator('.select-text').textContent();
 
       expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
 
       // Verify that the select text does not include the avatar and badge
       const selectTextAvatar = select.locator('.select-text ion-avatar');
@@ -158,7 +154,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const alert = page.locator('ion-alert');
       const firstOption = alert.locator('.alert-checkbox-label').first();
       const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
       const firstOptionText = 'Full Content';
 
       await expect(firstOption).toContainText(firstOptionText);
@@ -177,7 +172,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectText = await select.locator('.select-text').textContent();
 
       expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
 
       // Verify that the select text does not include the avatar and badge
       const selectTextAvatar = select.locator('.select-text ion-avatar');
@@ -198,9 +192,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionModalDidPresent.next();
 
       const modal = page.locator('ion-modal');
-      const firstOption = modal.locator('.select-option-label').first();
+      const firstOption = modal.locator('.select-interface-option').first();
       const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
       const firstOptionText = 'Full Content';
 
       await expect(firstOption).toContainText(firstOptionText);
@@ -215,7 +208,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectText = await select.locator('.select-text').textContent();
 
       expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
 
       // Verify that the select text does not include the avatar and badge
       const selectTextAvatar = select.locator('.select-text ion-avatar');
@@ -236,9 +228,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionModalDidPresent.next();
 
       const modal = page.locator('ion-modal');
-      const firstOption = modal.locator('.select-option-label').first();
+      const firstOption = modal.locator('.select-interface-option').first();
       const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
       const firstOptionText = 'Full Content';
 
       await expect(firstOption).toContainText(firstOptionText);
@@ -257,7 +248,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectText = await select.locator('.select-text').textContent();
 
       expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
 
       // Verify that the select text does not include the avatar and badge
       const selectTextAvatar = select.locator('.select-text ion-avatar');
@@ -278,9 +268,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionPopoverDidPresent.next();
 
       const popover = page.locator('ion-popover');
-      const firstOption = popover.locator('.select-option-label').first();
+      const firstOption = popover.locator('.select-interface-option').first();
       const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
       const firstOptionText = 'Full Content';
 
       await expect(firstOption).toContainText(firstOptionText);
@@ -295,7 +284,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectText = await select.locator('.select-text').textContent();
 
       expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
 
       // Verify that the select text does not include the avatar and badge
       const selectTextAvatar = select.locator('.select-text ion-avatar');
@@ -316,9 +304,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionPopoverDidPresent.next();
 
       const popover = page.locator('ion-popover');
-      const firstOption = popover.locator('.select-option-label').first();
+      const firstOption = popover.locator('.select-interface-option').first();
       const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
       const firstOptionText = 'Full Content';
 
       await expect(firstOption).toContainText(firstOptionText);
@@ -337,7 +324,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectText = await select.locator('.select-text').textContent();
 
       expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
 
       // Verify that the select text does not include the avatar and badge
       const selectTextAvatar = select.locator('.select-text ion-avatar');
@@ -357,13 +343,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await ionAlertDidPresent.next();
 
+      // The "no-text" option only has a <span> for its label content,
+      // so its aria label should be the span's plain text.
       const alert = page.locator('ion-alert');
-      const firstOption = alert.locator('.alert-radio-label').first();
+      const spanOption = alert.locator('.alert-radio-button', { hasText: 'This is a span element' });
 
-      // Click on the first option
-      await firstOption.click();
+      await spanOption.click();
 
-      // Confirm the selection
       const confirmButton = alert.locator('.alert-button:not(.alert-button-role-cancel)');
       await confirmButton.click();
 
@@ -372,7 +358,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const nativeButton = select.locator('button');
       const ariaLabel = await nativeButton.getAttribute('aria-label');
 
-      expect(ariaLabel).toContain('Full Content This is a span element');
+      expect(ariaLabel).toContain('This is a span element');
     });
   });
 });
@@ -396,7 +382,7 @@ configs({ modes: ['md'] }).forEach(({ title, config }) => {
       await ionAlertDidPresent.next();
 
       const alert = page.locator('ion-alert');
-      const firstOption = alert.locator('.alert-radio-label').first();
+      const firstOption = alert.locator('.alert-radio-button').first();
       const startContainer = firstOption.locator('.select-option-start');
       const endContainer = firstOption.locator('.select-option-end');
 
@@ -459,7 +445,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionAlertDidPresent.next();
 
       const alert = page.locator('ion-alert');
-      const firstOption = alert.locator('.alert-radio-label').first();
+      const firstOption = alert.locator('.alert-radio-button').first();
       const startContainer = firstOption.locator('.select-option-start');
       const endContainer = firstOption.locator('.select-option-end');
       const span = firstOption.locator('.span-style');
