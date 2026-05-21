@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gallery - Nested</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Gallery - Nested</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-segment id="layoutSegment" value="uniform">
+            <ion-segment-button value="uniform">Uniform</ion-segment-button>
+            <ion-segment-button value="masonry-best-fit">Masonry - Best Fit</ion-segment-button>
+            <ion-segment-button value="masonry-sequential">Masonry - Sequential</ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <section>
+          <h1 id="layoutTitle">Uniform</h1>
+          <div class="grid">
+            <div class="grid-item">
+              <h2>Divs</h2>
+              <ion-gallery>
+                <div class="gallery-wrapper">
+                  <ion-gallery-item><div>One</div></ion-gallery-item>
+                  <ion-gallery-item><div>Two</div></ion-gallery-item>
+                  <ion-gallery-item><div>Three</div></ion-gallery-item>
+                  <ion-gallery-item><div>Four</div></ion-gallery-item>
+                  <ion-gallery-item><div>Five</div></ion-gallery-item>
+                  <ion-gallery-item><div>Six</div></ion-gallery-item>
+                  <ion-gallery-item><div>Seven</div></ion-gallery-item>
+                  <ion-gallery-item><div>Eight</div></ion-gallery-item>
+                  <ion-gallery-item><div>Nine</div></ion-gallery-item>
+                  <ion-gallery-item><div>Ten</div></ion-gallery-item>
+                  <ion-gallery-item><div>Eleven</div></ion-gallery-item>
+                  <ion-gallery-item><div>Twelve</div></ion-gallery-item>
+                </div>
+              </ion-gallery>
+            </div>
+            <div class="grid-item">
+              <h2>Images</h2>
+              <ion-gallery>
+                <div class="gallery-wrapper">
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/01.png" alt="One"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/02.png" alt="Two"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/03.png" alt="Three"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/04.png" alt="Four"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/05.png" alt="Five"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/06.png" alt="Six"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/07.png" alt="Seven"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/08.png" alt="Eight"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/09.png" alt="Nine"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/10.png" alt="Ten"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/11.png" alt="Eleven"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/12.png" alt="Twelve"
+                  /></ion-gallery-item>
+                </div>
+              </ion-gallery>
+            </div>
+            <div class="grid-item">
+              <h2>Same Height Images</h2>
+              <ion-gallery class="same-height-gallery">
+                <div class="gallery-wrapper">
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/01.png" alt="One"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/02.png" alt="Two"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/03.png" alt="Three"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/04.png" alt="Four"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/05.png" alt="Five"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/06.png" alt="Six"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/07.png" alt="Seven"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/08.png" alt="Eight"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/09.png" alt="Nine"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/10.png" alt="Ten"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/11.png" alt="Eleven"
+                  /></ion-gallery-item>
+                  <ion-gallery-item
+                    ><img src="/src/components/gallery/test/assets/12.png" alt="Twelve"
+                  /></ion-gallery-item>
+                </div>
+              </ion-gallery>
+            </div>
+          </div>
+        </section>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const segmentEl = document.querySelector('#layoutSegment');
+      const titleEl = document.querySelector('#layoutTitle');
+      const galleries = Array.from(document.querySelectorAll('ion-gallery'));
+
+      const titleByLayout = {
+        uniform: 'Uniform',
+        'masonry-sequential': 'Masonry - Sequential',
+        'masonry-best-fit': 'Masonry - Best Fit',
+      };
+
+      const normalizeLayout = (value) => {
+        if (value === 'masonry-sequential' || value === 'masonry-best-fit' || value === 'uniform') {
+          return value;
+        }
+        return 'uniform';
+      };
+
+      const applyLayoutProps = (value) => {
+        const selectedLayout = normalizeLayout(value);
+
+        if (titleEl) {
+          titleEl.textContent = titleByLayout[selectedLayout];
+        }
+
+        galleries.forEach((galleryEl) => {
+          if (selectedLayout === 'uniform') {
+            galleryEl.setAttribute('layout', 'uniform');
+            galleryEl.removeAttribute('order');
+            return;
+          }
+
+          galleryEl.setAttribute('layout', 'masonry');
+          if (selectedLayout === 'masonry-best-fit') {
+            galleryEl.setAttribute('order', 'best-fit');
+          } else {
+            galleryEl.removeAttribute('order');
+          }
+        });
+      };
+
+      if (segmentEl) {
+        const initialLayout = segmentEl.value || segmentEl.getAttribute('value') || 'uniform';
+        segmentEl.value = initialLayout;
+        applyLayoutProps(initialLayout);
+
+        segmentEl.addEventListener('ionChange', (ev) => {
+          applyLayoutProps(ev.detail.value);
+        });
+      }
+    </script>
+
+    <style>
+      :root {
+        --gallery-width: 343px;
+      }
+
+      section {
+        text-align: center;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--gallery-width)), 1fr));
+        gap: 16px;
+      }
+
+      ion-gallery {
+        max-width: var(--gallery-width);
+        margin: 0 auto;
+      }
+
+      ion-gallery img,
+      ion-gallery .gallery-wrapper > ion-gallery-item > div {
+        border-radius: 16px;
+      }
+
+      .same-height-gallery img {
+        height: 164px;
+      }
+
+      ion-gallery .gallery-wrapper > ion-gallery-item > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+      }
+
+      ion-gallery .gallery-wrapper > ion-gallery-item:nth-child(1) > div {
+        background: #ff6b6b;
+        height: 175px;
+      }
+
+      ion-gallery .gallery-wrapper > ion-gallery-item:nth-child(2) > div {
+        background: #4ecdc4;
+        height: 30px;
+      }
+
+      ion-gallery .gallery-wrapper > ion-gallery-item:nth-child(3) > div {
+        background: #ffe66d;
+        color: #333;
+        height: 90px;
+      }
+
+      ion-gallery .gallery-wrapper > ion-gallery-item:nth-child(4) > div {
+        background: #5f27cd;
+        height: 50px;
+      }
+
+      ion-gallery .gallery-wrapper > ion-gallery-item:nth-child(5) > div {
+        background: #7f8c8d;
+        height: 110px;
+      }
+
+      ion-gallery .gallery-wrapper > ion-gallery-item:nth-child(6) > div {
+        background: #ff9f43;
+        height: 175px;
+      }
+
+      ion-gallery .gallery-wrapper > ion-gallery-item:nth-child(7) > div {
+        background: #ff3f34;
+        height: 130px;
+      }
+
+      ion-gallery .gallery-wrapper > ion-gallery-item:nth-child(8) > div {
+        background: #2ecc71;
+        height: 80px;
+      }
+
+      ion-gallery .gallery-wrapper > ion-gallery-item:nth-child(9) > div {
+        background: #34495e;
+        height: 110px;
+      }
+
+      ion-gallery .gallery-wrapper > ion-gallery-item:nth-child(10) > div {
+        background: #1abc9c;
+        height: 90px;
+      }
+
+      ion-gallery .gallery-wrapper > ion-gallery-item:nth-child(11) > div {
+        background: #e67e22;
+        height: 100px;
+      }
+
+      ion-gallery .gallery-wrapper > ion-gallery-item:nth-child(12) > div {
+        background: #9b59b6;
+        height: 150px;
+      }
+    </style>
+  </body>
+</html>

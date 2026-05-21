@@ -24,18 +24,18 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
         await page.setContent(
           `
             <ion-gallery>
-              <img src="/src/components/gallery/test/assets/01.png" alt="One" />
-              <img src="/src/components/gallery/test/assets/02.png" alt="Two" />
-              <img src="/src/components/gallery/test/assets/03.png" alt="Three" />
-              <img src="/src/components/gallery/test/assets/04.png" alt="Four" />
-              <img src="/src/components/gallery/test/assets/05.png" alt="Five" />
-              <img src="/src/components/gallery/test/assets/06.png" alt="Six" />
-              <img src="/src/components/gallery/test/assets/07.png" alt="Seven" />
-              <img src="/src/components/gallery/test/assets/08.png" alt="Eight" />
-              <img src="/src/components/gallery/test/assets/09.png" alt="Nine" />
-              <img src="/src/components/gallery/test/assets/10.png" alt="Ten" />
-              <img src="/src/components/gallery/test/assets/11.png" alt="Eleven" />
-              <img src="/src/components/gallery/test/assets/12.png" alt="Twelve" />
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/01.png" alt="One" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/02.png" alt="Two" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/03.png" alt="Three" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/04.png" alt="Four" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/05.png" alt="Five" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/06.png" alt="Six" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/07.png" alt="Seven" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/08.png" alt="Eight" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/09.png" alt="Nine" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/10.png" alt="Ten" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/11.png" alt="Eleven" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/12.png" alt="Twelve" /></ion-gallery-item>
             </ion-gallery>
           `,
           config
@@ -62,18 +62,18 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
         await page.setContent(
           `
             <ion-gallery columns="2">
-              <img src="/src/components/gallery/test/assets/01.png" alt="One" />
-              <img src="/src/components/gallery/test/assets/02.png" alt="Two" />
-              <img src="/src/components/gallery/test/assets/03.png" alt="Three" />
-              <img src="/src/components/gallery/test/assets/04.png" alt="Four" />
-              <img src="/src/components/gallery/test/assets/05.png" alt="Five" />
-              <img src="/src/components/gallery/test/assets/06.png" alt="Six" />
-              <img src="/src/components/gallery/test/assets/07.png" alt="Seven" />
-              <img src="/src/components/gallery/test/assets/08.png" alt="Eight" />
-              <img src="/src/components/gallery/test/assets/09.png" alt="Nine" />
-              <img src="/src/components/gallery/test/assets/10.png" alt="Ten" />
-              <img src="/src/components/gallery/test/assets/11.png" alt="Eleven" />
-              <img src="/src/components/gallery/test/assets/12.png" alt="Twelve" />
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/01.png" alt="One" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/02.png" alt="Two" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/03.png" alt="Three" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/04.png" alt="Four" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/05.png" alt="Five" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/06.png" alt="Six" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/07.png" alt="Seven" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/08.png" alt="Eight" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/09.png" alt="Nine" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/10.png" alt="Ten" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/11.png" alt="Eleven" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/12.png" alt="Twelve" /></ion-gallery-item>
             </ion-gallery>
           `,
           config
@@ -96,18 +96,18 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
         await page.setContent(
           `
             <ion-gallery style="--internal-gallery-columns: 2;">
-              <img src="/src/components/gallery/test/assets/01.png" alt="One" />
-              <img src="/src/components/gallery/test/assets/02.png" alt="Two" />
-              <img src="/src/components/gallery/test/assets/03.png" alt="Three" />
-              <img src="/src/components/gallery/test/assets/04.png" alt="Four" />
-              <img src="/src/components/gallery/test/assets/05.png" alt="Five" />
-              <img src="/src/components/gallery/test/assets/06.png" alt="Six" />
-              <img src="/src/components/gallery/test/assets/07.png" alt="Seven" />
-              <img src="/src/components/gallery/test/assets/08.png" alt="Eight" />
-              <img src="/src/components/gallery/test/assets/09.png" alt="Nine" />
-              <img src="/src/components/gallery/test/assets/10.png" alt="Ten" />
-              <img src="/src/components/gallery/test/assets/11.png" alt="Eleven" />
-              <img src="/src/components/gallery/test/assets/12.png" alt="Twelve" />
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/01.png" alt="One" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/02.png" alt="Two" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/03.png" alt="Three" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/04.png" alt="Four" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/05.png" alt="Five" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/06.png" alt="Six" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/07.png" alt="Seven" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/08.png" alt="Eight" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/09.png" alt="Nine" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/10.png" alt="Ten" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/11.png" alt="Eleven" /></ion-gallery-item>
+              <ion-gallery-item><img src="/src/components/gallery/test/assets/12.png" alt="Twelve" /></ion-gallery-item>
             </ion-gallery>
           `,
           config
