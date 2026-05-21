@@ -182,6 +182,44 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
           await expect(gallery).toHaveScreenshot(screenshot(`gallery-${layout}${orderSuffix}-images-variable-height`));
         });
 
+        test(`should properly display nested gallery with ${layout} layout${
+          layout === 'masonry' ? ` and ${order} order` : ''
+        }`, async ({ page }) => {
+          await page.setContent(
+            `
+              <ion-gallery layout="${layout}"${orderAttribute}>
+                <div data-gallery-group>
+                  <img src="/src/components/gallery/test/assets/01.png" alt="One" />
+                  <img src="/src/components/gallery/test/assets/02.png" alt="Two" />
+                  <img src="/src/components/gallery/test/assets/03.png" alt="Three" />
+                  <img src="/src/components/gallery/test/assets/04.png" alt="Four" />
+                  <img src="/src/components/gallery/test/assets/05.png" alt="Five" />
+                  <img src="/src/components/gallery/test/assets/06.png" alt="Six" />
+                  <img src="/src/components/gallery/test/assets/07.png" alt="Seven" />
+                  <img src="/src/components/gallery/test/assets/08.png" alt="Eight" />
+                  <img src="/src/components/gallery/test/assets/09.png" alt="Nine" />
+                  <img src="/src/components/gallery/test/assets/10.png" alt="Ten" />
+                  <img src="/src/components/gallery/test/assets/11.png" alt="Eleven" />
+                  <img src="/src/components/gallery/test/assets/12.png" alt="Twelve" />
+                </div>
+              </ion-gallery>
+            `,
+            config
+          );
+
+          const gallery = page.locator('ion-gallery');
+
+          /**
+           * The gallery overflows the default viewport, causing
+           * unrendered areas to appear transparent in the screenshot.
+           * Resizing the viewport to fit the content.
+           */
+          const box = await gallery.boundingBox();
+          await page.setViewportSize({ width: Math.ceil(box!.width), height: Math.ceil(box!.height) });
+
+          await expect(gallery).toHaveScreenshot(screenshot(`gallery-${layout}${orderSuffix}-nested`));
+        });
+
         if (layout === 'masonry') {
           test(`should properly display dynamically appended divs with ${order} order`, async ({ page }) => {
             await page.setContent(
