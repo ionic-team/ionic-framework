@@ -647,6 +647,8 @@ export class Select implements ComponentInterface {
         startContent,
         endContent,
         description: option.description,
+        labelPlacement: option.labelPlacement,
+        justify: option.justify,
       };
     });
 
@@ -679,6 +681,8 @@ export class Select implements ComponentInterface {
         startContent,
         endContent,
         description: option.description,
+        labelPlacement: option.labelPlacement,
+        justify: option.justify,
       };
     });
 

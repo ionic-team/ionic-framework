@@ -167,16 +167,27 @@
     globals.$ion-scale-1400
   );
 
-  flex: 1;
+  // Required for the radio icon to stay on the screen without
+  // being squished when the font size scales up.
+  max-width: calc(100% - globals.$ion-space-700);
 
   color: globals.$ion-text-default;
+}
+
+.radio-label-placement-start .alert-radio-label {
+  /**
+   * The label's inline padding clears space for the icon on the
+   * icon's side. When the label is placed at the start, the icon
+   * is at the end, so swap the inline paddings to mirror that geometry.
+   */
+  @include mixins.padding-horizontal(globals.$ion-space-700, globals.$ion-scale-1400);
 }
 
 // Ionic Alert Radio Outer Circle: Unchecked
 // ---------------------------------------------------
 
 .alert-radio-icon {
-  @include globals.position(globals.$ion-space-0, null, null, globals.$ion-space-700);
+  @include globals.position(globals.$ion-space-0, null, null, null);
   @include globals.border-radius(globals.$ion-border-radius-full);
 
   display: flex;
@@ -195,6 +206,16 @@
   background-color: globals.$ion-bg-input-default;
 
   box-sizing: border-box;
+}
+
+// The icon's inline offset gives it a gap from whichever edge the icon
+// sits on, which depends on label placement
+.radio-label-placement-start .alert-radio-icon {
+  @include globals.position-horizontal(null, globals.$ion-space-700);
+}
+
+.radio-label-placement-end .alert-radio-icon {
+  @include globals.position-horizontal(globals.$ion-space-700, null);
 }
 
 // Ionic Alert Radio Inner Dot
@@ -232,20 +253,27 @@
     globals.$ion-scale-1400
   );
 
-  flex: 1;
-
   // Required for the checkbox icon to stay on the screen without
   // being squished when the font size scales up.
-  width: calc(100% - globals.$ion-scale-1400);
+  max-width: calc(100% - globals.$ion-space-700);
 
   color: globals.$ion-text-default;
+}
+
+.checkbox-label-placement-start .alert-checkbox-label {
+  /**
+   * The label's inline padding clears space for the icon on the
+   * icon's side. When the label is placed at the start, the icon
+   * is at the end, so swap the inline paddings to mirror that geometry.
+   */
+  @include mixins.padding-horizontal(globals.$ion-space-700, globals.$ion-scale-1400);
 }
 
 // Ionic Alert Checkbox Outline: Unchecked
 // --------------------------------------------------
 
 .alert-checkbox-icon {
-  @include globals.position(globals.$ion-space-0, null, null, globals.$ion-space-700);
+  @include globals.position(globals.$ion-space-0, null, null, null);
   @include globals.border-radius(globals.$ion-border-radius-100);
 
   display: flex;
@@ -264,6 +292,16 @@
   background-color: globals.$ion-bg-input-default;
 
   box-sizing: border-box;
+}
+
+// The icon's inline offset gives it a gap from whichever edge the icon
+// sits on, which depends on label placement
+.checkbox-label-placement-end .alert-checkbox-icon {
+  @include globals.position-horizontal(globals.$ion-space-700, null);
+}
+
+.checkbox-label-placement-start .alert-checkbox-icon {
+  @include globals.position-horizontal(null, globals.$ion-space-700);
 }
 
 .alert-checkbox-inner {
@@ -315,7 +353,7 @@
   overflow: hidden;
 }
 
-.alert-button-inner {
+.alert-button .alert-button-inner {
   justify-content: flex-end;
 }
 

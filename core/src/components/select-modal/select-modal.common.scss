@@ -8,7 +8,20 @@
 // Select Modal: Select Option
 // --------------------------------------------------
 
-.select-option-label {
+/**
+ * Non-rich labels are plain text and should ellipsize when they
+ * overflow the row. Rich-content labels switch to flex so the
+ * start / content / end pieces can lay out side-by-side and wrap.
+ */
+.select-option-label:not(.select-option-label-has-rich-content) {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+.select-option-label-has-rich-content {
   display: flex;
 
   align-items: center;

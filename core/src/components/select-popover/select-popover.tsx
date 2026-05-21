@@ -1,5 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
+import { getOverlayLabelJustify, getOverlayLabelPlacement } from '@utils/overlay-control-label';
 import { safeCall } from '@utils/overlays';
 import { renderOptionLabel } from '@utils/select-option-render';
 import { getClassMap } from '@utils/theme';
@@ -131,6 +132,7 @@ export class SelectPopover implements ComponentInterface {
   }
 
   renderCheckboxOptions(options: SelectPopoverOption[]) {
+    const theme = getIonTheme(this);
     return options.map((option, index) => {
       /**
        * Cast to `SelectOverlayOption` to access rich content
@@ -147,6 +149,8 @@ export class SelectPopover implements ComponentInterface {
         endContent: richOption.endContent,
         description: richOption.description,
       };
+      const defaultLabelPlacement = getOverlayLabelPlacement(theme, 'checkbox');
+      const defaultJustify = getOverlayLabelJustify(theme, 'checkbox');
 
       return (
         <ion-item
@@ -165,8 +169,8 @@ export class SelectPopover implements ComponentInterface {
             value={option.value}
             disabled={option.disabled}
             checked={option.checked}
-            justify="start"
-            labelPlacement="end"
+            justify={richOption.justify ?? defaultJustify}
+            labelPlacement={richOption.labelPlacement ?? defaultLabelPlacement}
             onIonChange={(ev) => {
               this.setChecked(ev);
               this.callOptionHandler(ev);
@@ -182,6 +186,7 @@ export class SelectPopover implements ComponentInterface {
   }
 
   renderRadioOptions(options: SelectPopoverOption[]) {
+    const theme = getIonTheme(this);
     const checked = options.filter((o) => o.checked).map((o) => o.value)[0];
 
     return (
@@ -219,6 +224,8 @@ export class SelectPopover implements ComponentInterface {
                 }}
                 value={option.value}
                 disabled={option.disabled}
+                justify={richOption.justify ?? getOverlayLabelJustify(theme, 'radio')}
+                labelPlacement={richOption.labelPlacement ?? getOverlayLabelPlacement(theme, 'radio')}
                 onClick={() => this.dismissParentPopover(option.disabled)}
                 onKeyDown={(ev) => {
                   if (ev.key === 'Enter' && !ev.repeat) {

@@ -35,3 +35,7 @@ ion-radio::after {
 .select-option-end > * {
   max-height: dynamic-font-max(24px, 2);
 }
+
+.select-option-has-rich-content {
+  @include padding-horizontal(null, $item-ios-padding-end);
+}

@@ -154,6 +154,10 @@ class AlertFixture {
     this.alert = this.page.locator('ion-alert');
     await expect(this.alert).toBeVisible();
 
+    // Move mouse to the top-left corner of the page to avoid hover
+    // styles on buttons when taking screenshots
+    await this.page.mouse.move(0, 0);
+
     return this.alert;
   }
 
