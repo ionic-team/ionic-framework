@@ -42,6 +42,7 @@ type GalleryItemElement = HTMLElement | SVGElement;
 export class Gallery implements ComponentInterface {
   @Element() el!: HTMLIonGalleryElement;
 
+  private itemWrapperSelector = '[data-gallery-group]';
   private masonryRaf?: number;
   private resizeObserver?: ResizeObserver;
   private lastWidth?: number;
@@ -443,14 +444,36 @@ export class Gallery implements ComponentInterface {
     this.el.style.setProperty('--internal-gallery-gap', `${gap}`);
   }
 
+  private isGalleryItemElement(element: Element): element is GalleryItemElement {
+    return typeof (element as any).style?.setProperty === 'function';
+  }
+
   /**
-   * Return all directly slotted children of the gallery that can be grid items
-   * with inline placement styles (HTML elements and SVG elements).
+   * Return all gallery items that can be grid items with inline placement styles.
+   * Direct children marked with `data-gallery-group` are ignored and replaced
+   * with their element children.
    */
   private getItems(): GalleryItemElement[] {
-    return Array.from(this.el.children).filter(
-      (child): child is GalleryItemElement => typeof (child as any).style?.setProperty === 'function'
+    const items = Array.from(this.el.children).filter((child): child is GalleryItemElement =>
+      this.isGalleryItemElement(child)
     );
+
+    const flattenedItems: GalleryItemElement[] = [];
+
+    items.forEach((itemEl) => {
+      if (!itemEl.matches(this.itemWrapperSelector)) {
+        flattenedItems.push(itemEl);
+        return;
+      }
+
+      itemEl.style.display = 'contents';
+      const wrappedItems = Array.from(itemEl.children).filter((child): child is GalleryItemElement =>
+        this.isGalleryItemElement(child)
+      );
+      flattenedItems.push(...wrappedItems);
+    });
+
+    return flattenedItems;
   }
 
   /**
@@ -517,12 +540,21 @@ export class Gallery implements ComponentInterface {
   /**
    * Apply masonry placement by assigning each item a column and row span.
    */
-  private layoutMasonry(items: GalleryItemElement[], rowHeight: number, rowGap: number, columns: number) {
+  private layoutMasonry(
+    items: GalleryItemElement[],
+    rowHeight: number,
+    rowGap: number,
+    itemGap: number,
+    columns: number
+  ) {
     const columnHeights = new Array<number>(columns).fill(0);
     const lastItemsByColumn = new Array<GalleryItemElement | undefined>(columns).fill(undefined);
 
     items.forEach((itemEl, i) => {
       itemEl.style.marginBottom = '';
+      if (itemEl.parentElement !== this.el) {
+        itemEl.style.marginBottom = `${itemGap}px`;
+      }
       const span = this.calculateRowSpan(itemEl, rowHeight, rowGap);
       if (span === undefined) {
         this.clearItemStyles(itemEl);
@@ -580,9 +612,10 @@ export class Gallery implements ComponentInterface {
     const styles = getComputedStyle(this.el);
     const rowHeight = parseFloat(styles.getPropertyValue('grid-auto-rows')) || 0;
     const rowGap = parseFloat(styles.getPropertyValue('row-gap')) || parseFloat(styles.getPropertyValue('gap')) || 0;
+    const itemGap = parseFloat(styles.getPropertyValue('column-gap')) || parseFloat(styles.getPropertyValue('gap')) || 0;
     const items = this.getItems();
 
-    this.layoutMasonry(items, rowHeight, rowGap, columns);
+    this.layoutMasonry(items, rowHeight, rowGap, itemGap, columns);
   };
 
   /**
