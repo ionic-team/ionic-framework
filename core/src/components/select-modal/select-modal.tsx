@@ -2,6 +2,7 @@ import { getIonMode, getIonTheme } from '@global/ionic-global';
 import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, forceUpdate, h } from '@stencil/core';
+import { getOverlayLabelJustify, getOverlayLabelPlacement } from '@utils/overlay-control-label';
 import { safeCall } from '@utils/overlays';
 import { renderOptionLabel } from '@utils/select-option-render';
 import { getClassMap, hostContext } from '@utils/theme';
@@ -49,7 +50,11 @@ export class SelectModal implements ComponentInterface {
 
   @Prop() options: SelectModalOption[] = [];
 
-  private closeModal() {
+  private closeModal(isOptionDisabled = false) {
+    if (isOptionDisabled) {
+      return;
+    }
+
     const modal = this.el.closest('ion-modal');
 
     if (modal) {
@@ -115,6 +120,7 @@ export class SelectModal implements ComponentInterface {
   }
 
   private renderRadioOptions() {
+    const theme = getIonTheme(this);
     const checked = this.options.filter((o) => o.checked).map((o) => o.value)[0];
 
     return (
@@ -127,6 +133,7 @@ export class SelectModal implements ComponentInterface {
            * part of the public `SelectModalOption` interface.
            */
           const richOption = option as SelectOverlayOption;
+          const hasRichContent = !!richOption.startContent || !!richOption.endContent || !!richOption.description;
           const optionLabelOptions = {
             id: `modal-option-${index}`,
             label: richOption.text,
@@ -134,10 +141,14 @@ export class SelectModal implements ComponentInterface {
             endContent: richOption.endContent,
             description: richOption.description,
           };
+          const defaultLabelPlacement = getOverlayLabelPlacement(theme, 'radio', 'modal');
+          const defaultJustify = getOverlayLabelJustify(theme, 'radio', 'modal');
 
           return (
             <ion-item
               lines="none"
+              // TODO FW-4784
+              disabled={option.disabled}
               class={{
                 // TODO FW-4784
                 'item-radio-checked': option.value === checked,
@@ -145,11 +156,14 @@ export class SelectModal implements ComponentInterface {
               }}
             >
               <ion-radio
+                class={{
+                  'select-option-has-rich-content': hasRichContent,
+                }}
                 value={option.value}
                 disabled={option.disabled}
-                justify="start"
-                labelPlacement="end"
-                onClick={() => this.closeModal()}
+                justify={richOption.justify ?? defaultJustify}
+                labelPlacement={richOption.labelPlacement ?? defaultLabelPlacement}
+                onClick={() => this.closeModal(option.disabled)}
                 onKeyDown={(ev) => {
                   if (ev.key === 'Enter' && !ev.repeat) {
                     this.pendingEnterTarget = ev.currentTarget as HTMLElement;
@@ -158,12 +172,12 @@ export class SelectModal implements ComponentInterface {
                 onKeyUp={(ev) => {
                   if (ev.key === ' ') {
                     // Space selects and dismisses in one press.
-                    this.closeModal();
+                    this.closeModal(option.disabled);
                   } else if (ev.key === 'Enter') {
                     const shouldClose = this.pendingEnterTarget === ev.currentTarget;
                     this.pendingEnterTarget = null;
                     if (shouldClose) {
-                      this.closeModal();
+                      this.closeModal(option.disabled);
                     }
                   }
                 }}
@@ -178,6 +192,7 @@ export class SelectModal implements ComponentInterface {
   }
 
   private renderCheckboxOptions() {
+    const theme = getIonTheme(this);
     return this.options.map((option, index) => {
       /**
        * Cast to `SelectOverlayOption` to access rich content
@@ -186,6 +201,7 @@ export class SelectModal implements ComponentInterface {
        * part of the public `SelectModalOption` interface.
        */
       const richOption = option as SelectOverlayOption;
+      const hasRichContent = !!richOption.startContent || !!richOption.endContent || !!richOption.description;
       const optionLabelOptions = {
         id: `modal-option-${index}`,
         label: richOption.text,
@@ -193,9 +209,13 @@ export class SelectModal implements ComponentInterface {
         endContent: richOption.endContent,
         description: richOption.description,
       };
+      const defaultLabelPlacement = getOverlayLabelPlacement(theme, 'checkbox', 'modal');
+      const defaultJustify = getOverlayLabelJustify(theme, 'checkbox', 'modal');
 
       return (
         <ion-item
+          // TODO FW-4784
+          disabled={option.disabled}
           class={{
             // TODO FW-4784
             'item-checkbox-checked': option.checked,
@@ -203,11 +223,14 @@ export class SelectModal implements ComponentInterface {
           }}
         >
           <ion-checkbox
+            class={{
+              'select-option-has-rich-content': hasRichContent,
+            }}
             value={option.value}
             disabled={option.disabled}
             checked={option.checked}
-            justify="start"
-            labelPlacement="end"
+            justify={richOption.justify ?? defaultJustify}
+            labelPlacement={richOption.labelPlacement ?? defaultLabelPlacement}
             onIonChange={(ev) => {
               this.setChecked(ev);
               this.callOptionHandler(ev);

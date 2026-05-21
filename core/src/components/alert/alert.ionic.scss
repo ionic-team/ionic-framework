@@ -1,9 +1,372 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "../../themes/mixins" as mixins;
 @use "./alert.common";
-@use "./alert.md" as alert-md;
 
 // Ionic Alert
 // --------------------------------------------------
+
+:host {
+  --background: #{globals.$ion-bg-surface-default};
+  --max-width: #{globals.$ion-scale-7400};
+  --backdrop-opacity: 0.7;
+
+  z-index: 1001;
+}
+
+.alert-wrapper {
+  @include globals.border-radius(globals.$ion-border-radius-200);
+
+  box-shadow: globals.$ion-elevation-4;
+
+  z-index: 10;
+}
+
+.alert-button.ion-focused {
+  @include globals.focused-state(
+    globals.$ion-border-size-050,
+    globals.$ion-border-style-solid,
+    globals.$ion-border-focus-default
+  );
+}
+
+.alert-tappable.ion-focused {
+  @include globals.focused-state(
+    globals.$ion-border-size-050,
+    globals.$ion-border-style-solid,
+    globals.$ion-border-focus-default
+  );
+
+  outline-offset: calc(globals.$ion-border-size-050 * -1);
+}
+
+.alert-tappable.ion-activated,
+.alert-tappable:not(:disabled):hover,
+.alert-tappable[aria-checked="true"] {
+  background: globals.$ion-semantics-primary-100;
+}
+
+// Ionic Alert Header
+// --------------------------------------------------
+
+.alert-head {
+  @include mixins.padding(globals.$ion-space-400);
+
+  text-align: start;
+}
+
+.alert-title {
+  @include globals.typography(globals.$ion-heading-h6-medium);
+
+  color: globals.$ion-text-default;
+}
+
+.alert-sub-title {
+  @include globals.typography(globals.$ion-body-md-regular);
+
+  color: globals.$ion-text-subtlest;
+}
+
+// Ionic Alert Message
+// --------------------------------------------------
+
+.alert-message,
+.alert-input-group {
+  @include globals.typography(globals.$ion-body-md-regular);
+  @include mixins.padding(globals.$ion-space-400);
+
+  color: globals.$ion-text-default;
+}
+
+/**
+ * Ionic Alerts on tablets can expand vertically up to
+ * a total maximum height. We only want to set a max-height
+ * on mobile phones.
+ */
+@include globals.mobile-viewport() {
+  .alert-message {
+    max-height: globals.$ion-scale-6200;
+  }
+}
+
+.alert-message:empty {
+  @include mixins.padding(globals.$ion-space-0);
+}
+
+.alert-head + .alert-message {
+  padding-top: globals.$ion-space-0;
+}
+
+// Ionic Alert Input
+// --------------------------------------------------
+
+.alert-input {
+  @include mixins.margin(globals.$ion-space-150, 0);
+
+  border-bottom: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-border-input-default;
+
+  color: globals.$ion-text-default;
+
+  &::placeholder {
+    color: globals.$ion-text-subtlest;
+
+    font-family: inherit;
+    font-weight: inherit;
+  }
+
+  &::-ms-clear {
+    display: none;
+  }
+}
+
+.alert-input:focus {
+  @include mixins.margin(null, null, globals.$ion-scale-100, null);
+
+  border-bottom: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-focus-default;
+}
+
+// Ionic Alert Radio/Checkbox Group
+// --------------------------------------------------
+
+.alert-radio-group,
+.alert-checkbox-group {
+  position: relative;
+
+  border-top: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-border-default;
+  border-bottom: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-border-default;
+
+  overflow: auto;
+}
+
+/**
+ * Ionic Alerts on tablets can expand vertically up to
+ * a total maximum height. We only want to set a max-height
+ * on mobile phones.
+ */
+@include globals.mobile-viewport() {
+  .alert-radio-group,
+  .alert-checkbox-group {
+    max-height: globals.$ion-scale-6200;
+  }
+}
+
+.alert-tappable {
+  position: relative;
+
+  min-height: globals.$ion-scale-1200;
+}
+
+// Ionic Alert Radio
+// --------------------------------------------------
+
+.alert-radio-label {
+  @include globals.typography(globals.$ion-body-md-regular);
+  @include mixins.padding(
+    globals.$ion-space-300,
+    globals.$ion-space-700,
+    globals.$ion-space-300,
+    globals.$ion-scale-1400
+  );
+
+  // Required for the radio icon to stay on the screen without
+  // being squished when the font size scales up.
+  max-width: calc(100% - globals.$ion-space-700);
+
+  color: globals.$ion-text-default;
+}
+
+.radio-label-placement-start .alert-radio-label {
+  /**
+   * The label's inline padding clears space for the icon on the
+   * icon's side. When the label is placed at the start, the icon
+   * is at the end, so swap the inline paddings to mirror that geometry.
+   */
+  @include mixins.padding-horizontal(globals.$ion-space-700, globals.$ion-scale-1400);
+}
+
+// Ionic Alert Radio Outer Circle: Unchecked
+// ---------------------------------------------------
+
+.alert-radio-icon {
+  @include globals.position(globals.$ion-space-0, null, null, null);
+  @include globals.border-radius(globals.$ion-border-radius-full);
+
+  display: flex;
+  position: relative;
+
+  align-items: center;
+  justify-content: center;
+
+  width: globals.$ion-scale-600;
+  height: globals.$ion-scale-600;
+
+  border-width: globals.$ion-border-size-025;
+  border-style: globals.$ion-border-style-solid;
+  border-color: globals.$ion-border-input-default;
+
+  background-color: globals.$ion-bg-input-default;
+
+  box-sizing: border-box;
+}
+
+// The icon's inline offset gives it a gap from whichever edge the icon
+// sits on, which depends on label placement
+.radio-label-placement-start .alert-radio-icon {
+  @include globals.position-horizontal(null, globals.$ion-space-700);
+}
+
+.radio-label-placement-end .alert-radio-icon {
+  @include globals.position-horizontal(globals.$ion-space-700, null);
+}
+
+// Ionic Alert Radio Inner Dot
+// ---------------------------------------------------
+
+.alert-radio-inner {
+  @include globals.border-radius(50%);
+
+  width: calc(32% + globals.$ion-border-size-025);
+  height: calc(32% + globals.$ion-border-size-025);
+
+  background-color: globals.$ion-bg-surface-inverse;
+
+  box-sizing: border-box;
+}
+
+// Ionic Alert Radio Outer Circle: Checked
+// ---------------------------------------------------
+
+[aria-checked="true"] .alert-radio-icon {
+  border-color: globals.$ion-bg-primary-base-default;
+
+  background-color: globals.$ion-bg-primary-base-default;
+}
+
+// Ionic Alert Checkbox Label
+// --------------------------------------------------
+
+.alert-checkbox-label {
+  @include globals.typography(globals.$ion-body-md-regular);
+  @include mixins.padding(
+    globals.$ion-space-300,
+    globals.$ion-space-700,
+    globals.$ion-space-300,
+    globals.$ion-scale-1400
+  );
+
+  // Required for the checkbox icon to stay on the screen without
+  // being squished when the font size scales up.
+  max-width: calc(100% - globals.$ion-space-700);
+
+  color: globals.$ion-text-default;
+}
+
+.checkbox-label-placement-start .alert-checkbox-label {
+  /**
+   * The label's inline padding clears space for the icon on the
+   * icon's side. When the label is placed at the start, the icon
+   * is at the end, so swap the inline paddings to mirror that geometry.
+   */
+  @include mixins.padding-horizontal(globals.$ion-space-700, globals.$ion-scale-1400);
+}
+
+// Ionic Alert Checkbox Outline: Unchecked
+// --------------------------------------------------
+
+.alert-checkbox-icon {
+  @include globals.position(globals.$ion-space-0, null, null, null);
+  @include globals.border-radius(globals.$ion-border-radius-100);
+
+  display: flex;
+  position: relative;
+
+  align-items: center;
+  justify-content: center;
+
+  width: globals.$ion-scale-600;
+  height: globals.$ion-scale-600;
+
+  border-width: globals.$ion-border-size-025;
+  border-style: globals.$ion-border-style-solid;
+  border-color: globals.$ion-primitives-neutral-800;
+
+  background-color: globals.$ion-bg-input-default;
+
+  box-sizing: border-box;
+}
+
+// The icon's inline offset gives it a gap from whichever edge the icon
+// sits on, which depends on label placement
+.checkbox-label-placement-end .alert-checkbox-icon {
+  @include globals.position-horizontal(globals.$ion-space-700, null);
+}
+
+.checkbox-label-placement-start .alert-checkbox-icon {
+  @include globals.position-horizontal(null, globals.$ion-space-700);
+}
+
+.alert-checkbox-inner {
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
+}
+
+.alert-checkbox-inner path {
+  fill: globals.$ion-bg-surface-default;
+}
+
+// Ionic Alert Checkbox Checkmark: Checked
+// --------------------------------------------------
+
+[aria-checked="true"] .alert-checkbox-icon {
+  border-color: globals.$ion-semantics-primary-base;
+
+  background-color: globals.$ion-bg-primary-base-default;
+}
+
+// Ionic Alert Button
+// --------------------------------------------------
+
+.alert-button-group {
+  @include mixins.padding(8px);
+
+  box-sizing: border-box;
+
+  flex-wrap: wrap-reverse;
+  justify-content: flex-end;
+}
+
+.alert-button {
+  @include globals.border-radius(globals.$ion-border-size-050);
+  @include mixins.margin(globals.$ion-space-0, globals.$ion-space-200, globals.$ion-space-0, globals.$ion-space-0);
+  @include mixins.padding(globals.$ion-space-250);
+
+  // necessary for ripple to work properly
+  position: relative;
+
+  background-color: transparent;
+  color: globals.ion-color(primary, base);
+
+  font-weight: globals.$ion-font-weight-medium;
+
+  text-align: end;
+  text-transform: uppercase;
+
+  overflow: hidden;
+}
+
+.alert-button .alert-button-inner {
+  justify-content: flex-end;
+}
+
+/**
+ * Ionic alerts should scale up to 560px x 560px
+ * on tablet dimensions.
+ */
+@include globals.tablet-viewport() {
+  :host {
+    --max-width: #{min(calc(100vw - 96px), 560px)};
+    --max-height: #{min(calc(100vh - 96px), 560px)};
+  }
+}
 
 // Alert: Select Option
 // --------------------------------------------------
@@ -13,9 +376,24 @@
   gap: globals.$ion-space-300;
 }
 
+.select-option-start,
+.select-option-end {
+  gap: globals.$ion-space-200;
+}
+
+/**
+ * Cap slotted children so they can't stretch the option
+ * row out of proportion, keeping rows visually uniform
+ * regardless of the content.
+ */
+.select-option-start > *,
+.select-option-end > * {
+  max-height: globals.$ion-scale-1200;
+}
+
 .select-option-description {
   @include globals.typography(globals.$ion-body-md-regular);
-  @include globals.padding(0);
+  @include mixins.padding(globals.$ion-space-0);
 
   color: globals.$ion-text-subtle;
 

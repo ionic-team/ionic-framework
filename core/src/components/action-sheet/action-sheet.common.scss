@@ -1,4 +1,4 @@
-@import "./action-sheet.vars";
+@use "../../themes/mixins" as mixins;
 
 // Action Sheet
 // --------------------------------------------------
@@ -41,25 +41,22 @@
   --button-color-hover: var(--button-color);
   --button-color-selected: var(--button-color);
   --min-width: auto;
-  --width: #{$action-sheet-width};
-  --max-width: #{$action-sheet-max-width};
+  --width: 100%;
+  --max-width: 500px;
   --min-height: auto;
   --height: auto;
   --max-height: calc(100% - (var(--ion-safe-area-top) + var(--ion-safe-area-bottom)));
 
-  @include font-smoothing();
-  @include position(0, 0, 0, 0);
+  @include mixins.font-smoothing();
+  @include mixins.position(0, 0, 0, 0);
 
   display: block;
   position: fixed;
 
   outline: none;
 
-  font-family: $font-family-base;
-
   touch-action: none;
   user-select: none;
-  z-index: $z-index-overlay;
 }
 
 :host(.overlay-hidden) {
@@ -67,8 +64,8 @@
 }
 
 .action-sheet-wrapper {
-  @include position(null, 0, 0, 0);
-  @include transform(translate3d(0, 100%, 0));
+  @include mixins.position(null, 0, 0, 0);
+  @include mixins.transform(translate3d(0, 100%, 0));
 
   display: block;
   position: absolute;
@@ -81,7 +78,6 @@
   min-height: var(--min-height);
   max-height: var(--max-height);
 
-  z-index: $z-index-overlay-wrapper;
   pointer-events: none;
 }
 
@@ -107,6 +103,10 @@
   color: var(--button-color-disabled);
 
   opacity: 0.4;
+}
+
+.action-sheet-button:disabled ion-icon {
+  color: currentColor;
 }
 
 .action-sheet-button-inner {
@@ -177,7 +177,7 @@
 // --------------------------------------------------
 
 .action-sheet-button::after {
-  @include button-state();
+  @include mixins.button-state();
 }
 
 // Action Sheet: Selected
@@ -209,13 +209,19 @@
 // Action Sheet: Focused
 // --------------------------------------------------
 
-.action-sheet-button.ion-focused {
+.action-sheet-button.ion-focused:not(.ion-activated) {
   color: var(--button-color-focused);
 
   &::after {
     background: var(--button-background-focused);
 
     opacity: var(--button-background-focused-opacity);
+  }
+
+  &.action-sheet-selected::after {
+    background: var(--button-background-focused, var(--button-background-selected));
+
+    opacity: var(--button-background-focused-opacity, var(--button-background-selected-opacity));
   }
 }
 
@@ -243,8 +249,26 @@
   align-items: center;
 }
 
+.action-sheet-button-label-has-rich-content,
 .select-option-content {
   flex: 1;
+}
+
+.select-option-start,
+.select-option-end {
+  display: flex;
+
+  align-items: center;
+}
+
+/**
+ * Cap slotted children so they can't stretch the option
+ * row out of proportion, keeping rows visually uniform
+ * regardless of the content.
+ */
+.select-option-start > *,
+.select-option-end > * {
+  max-width: fit-content;
 }
 
 .select-option-description {

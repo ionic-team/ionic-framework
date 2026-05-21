@@ -1,4 +1,4 @@
-@use "../../themes/native/native.theme.default" as native;
+@use "../../themes/native/native.globals" as native;
 @use "../../themes/mixins" as mixins;
 @use "../../themes/functions.font" as font;
 @use "./action-sheet.common";
@@ -6,8 +6,26 @@
 // Action Sheet: Native
 // --------------------------------------------------
 
+:host {
+  font-family: native.$font-family-base;
+
+  z-index: native.$z-index-overlay;
+}
+
+.action-sheet-wrapper {
+  z-index: native.$z-index-overlay-wrapper;
+}
+
+// Action Sheet: Select Option
+// --------------------------------------------------
+
 .action-sheet-button-label {
   gap: 12px;
+}
+
+.select-option-start,
+.select-option-end {
+  gap: 8px;
 }
 
 .select-option-description {

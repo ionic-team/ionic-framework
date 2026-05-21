@@ -2,12 +2,103 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * This behavior does not vary across modes/directions
+ * This behavior does not vary across directions
  */
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('select: rich content options'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/select/test/rich-content-option', config);
+    });
+
+    test('should not have visual regressions for the action sheet interface', async ({ page }) => {
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+
+      await page.locator('#action-sheet-select').click();
+      await ionActionSheetDidPresent.next();
+
+      const firstOption = page.locator('ion-action-sheet .action-sheet-button-label').first();
+
+      await expect(firstOption).toHaveScreenshot(screenshot(`select-rich-content-action-sheet`));
+    });
+
+    test('should not have visual regressions for the alert interface', async ({ page }) => {
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await page.locator('#alert-select').click();
+      await ionAlertDidPresent.next();
+
+      const firstOption = page.locator('ion-alert .select-interface-option').first();
+
+      await expect(firstOption).toHaveScreenshot(screenshot(`select-rich-content-alert`));
+    });
+
+    test('should not have visual regressions for the modal interface', async ({ page }) => {
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.locator('#modal-select').click();
+      await ionModalDidPresent.next();
+
+      const firstOption = page.locator('ion-modal ion-item').first();
+
+      await expect(firstOption).toHaveScreenshot(screenshot(`select-rich-content-modal`));
+    });
+
+    test('should not have visual regressions for the popover interface', async ({ page }) => {
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+      await page.locator('#popover-select').click();
+      await ionPopoverDidPresent.next();
+
+      const firstOption = page.locator('ion-popover .select-interface-option').first();
+
+      await expect(firstOption).toHaveScreenshot(screenshot(`select-rich-content-popover`));
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across modes/directions
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('select: rich content option functionality'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/select/test/rich-content-option', config);
+    });
+
+    test('it should render for action sheet interface', async ({ page }) => {
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+      const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
+
+      const select = page.locator('#action-sheet-select');
+
+      await select.click();
+
+      await ionActionSheetDidPresent.next();
+
+      const actionSheet = page.locator('ion-action-sheet');
+      const firstOption = actionSheet.locator('.action-sheet-button-label').first();
+      const avatar = firstOption.locator('ion-avatar');
+      const firstOptionText = 'Full Content';
+
+      await expect(firstOption).toContainText(firstOptionText);
+      await expect(avatar).toBeVisible();
+
+      // Click on the first option
+      await firstOption.click();
+
+      await ionActionSheetDidDismiss.next();
+
+      // Verify that the select text includes the option text
+      const selectText = await select.locator('.select-text').textContent();
+
+      expect(selectText).toContain(firstOptionText);
+
+      // Verify that the select text does not include the avatar and badge
+      const selectTextAvatar = select.locator('.select-text ion-avatar');
+      const selectTextBadge = select.locator('.select-text ion-badge');
+
+      await expect(selectTextAvatar).toHaveCount(0);
+      await expect(selectTextBadge).toHaveCount(0);
     });
 
     test('it should render for alert interface and single selection', async ({ page }) => {
@@ -21,9 +112,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionAlertDidPresent.next();
 
       const alert = page.locator('ion-alert');
-      const firstOption = alert.locator('.alert-radio-label').first();
+      const firstOption = alert.locator('.alert-radio-button').first();
       const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
       const firstOptionText = 'Full Content';
 
       await expect(firstOption).toContainText(firstOptionText);
@@ -42,7 +132,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectText = await select.locator('.select-text').textContent();
 
       expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
 
       // Verify that the select text does not include the avatar and badge
       const selectTextAvatar = select.locator('.select-text ion-avatar');
@@ -65,7 +154,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const alert = page.locator('ion-alert');
       const firstOption = alert.locator('.alert-checkbox-label').first();
       const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
       const firstOptionText = 'Full Content';
 
       await expect(firstOption).toContainText(firstOptionText);
@@ -84,125 +172,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectText = await select.locator('.select-text').textContent();
 
       expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
-
-      // Verify that the select text does not include the avatar and badge
-      const selectTextAvatar = select.locator('.select-text ion-avatar');
-      const selectTextBadge = select.locator('.select-text ion-badge');
-
-      await expect(selectTextAvatar).toHaveCount(0);
-      await expect(selectTextBadge).toHaveCount(0);
-    });
-
-    test('it should render for action sheet interface', async ({ page }) => {
-      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
-      const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
-
-      const select = page.locator('#action-sheet-select');
-
-      await select.click();
-
-      await ionActionSheetDidPresent.next();
-
-      const actionSheet = page.locator('ion-action-sheet');
-      const firstOption = actionSheet.locator('.action-sheet-button-label').first();
-      const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
-      const firstOptionText = 'Full Content';
-
-      await expect(firstOption).toContainText(firstOptionText);
-      await expect(avatar).toBeVisible();
-
-      // Click on the first option
-      await firstOption.click();
-
-      await ionActionSheetDidDismiss.next();
-
-      // Verify that the select text includes the option text
-      const selectText = await select.locator('.select-text').textContent();
-
-      expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
-
-      // Verify that the select text does not include the avatar and badge
-      const selectTextAvatar = select.locator('.select-text ion-avatar');
-      const selectTextBadge = select.locator('.select-text ion-badge');
-
-      await expect(selectTextAvatar).toHaveCount(0);
-      await expect(selectTextBadge).toHaveCount(0);
-    });
-
-    test('it should render for popover interface and single selection', async ({ page }) => {
-      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
-      const ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
-
-      const select = page.locator('#popover-select');
-
-      await select.click();
-
-      await ionPopoverDidPresent.next();
-
-      const popover = page.locator('ion-popover');
-      const firstOption = popover.locator('.select-option-label').first();
-      const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
-      const firstOptionText = 'Full Content';
-
-      await expect(firstOption).toContainText(firstOptionText);
-      await expect(avatar).toBeVisible();
-
-      // Click on the first option
-      await firstOption.click();
-
-      await ionPopoverDidDismiss.next();
-
-      // Verify that the select text includes the option text
-      const selectText = await select.locator('.select-text').textContent();
-
-      expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
-
-      // Verify that the select text does not include the avatar and badge
-      const selectTextAvatar = select.locator('.select-text ion-avatar');
-      const selectTextBadge = select.locator('.select-text ion-badge');
-
-      await expect(selectTextAvatar).toHaveCount(0);
-      await expect(selectTextBadge).toHaveCount(0);
-    });
-
-    test('it should render for popover interface and multiple selection', async ({ page }) => {
-      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
-      const ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
-
-      const select = page.locator('#popover-select-multiple');
-
-      await select.click();
-
-      await ionPopoverDidPresent.next();
-
-      const popover = page.locator('ion-popover');
-      const firstOption = popover.locator('.select-option-label').first();
-      const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
-      const firstOptionText = 'Full Content';
-
-      await expect(firstOption).toContainText(firstOptionText);
-      await expect(avatar).toBeVisible();
-
-      // Click on the first option
-      await firstOption.click();
-
-      // Confirm the selection
-      const backdrop = page.locator('ion-backdrop');
-      await backdrop.click({ position: { x: 10, y: 10 } });
-
-      await ionPopoverDidDismiss.next();
-
-      // Verify that the select text includes the option text
-      const selectText = await select.locator('.select-text').textContent();
-
-      expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
 
       // Verify that the select text does not include the avatar and badge
       const selectTextAvatar = select.locator('.select-text ion-avatar');
@@ -223,9 +192,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionModalDidPresent.next();
 
       const modal = page.locator('ion-modal');
-      const firstOption = modal.locator('.select-option-label').first();
+      const firstOption = modal.locator('.select-interface-option').first();
       const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
       const firstOptionText = 'Full Content';
 
       await expect(firstOption).toContainText(firstOptionText);
@@ -240,7 +208,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectText = await select.locator('.select-text').textContent();
 
       expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
 
       // Verify that the select text does not include the avatar and badge
       const selectTextAvatar = select.locator('.select-text ion-avatar');
@@ -261,9 +228,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionModalDidPresent.next();
 
       const modal = page.locator('ion-modal');
-      const firstOption = modal.locator('.select-option-label').first();
+      const firstOption = modal.locator('.select-interface-option').first();
       const avatar = firstOption.locator('ion-avatar');
-      const spanText = await firstOption.locator('.span-style').textContent();
       const firstOptionText = 'Full Content';
 
       await expect(firstOption).toContainText(firstOptionText);
@@ -282,7 +248,82 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectText = await select.locator('.select-text').textContent();
 
       expect(selectText).toContain(firstOptionText);
-      expect(selectText).toContain(spanText);
+
+      // Verify that the select text does not include the avatar and badge
+      const selectTextAvatar = select.locator('.select-text ion-avatar');
+      const selectTextBadge = select.locator('.select-text ion-badge');
+
+      await expect(selectTextAvatar).toHaveCount(0);
+      await expect(selectTextBadge).toHaveCount(0);
+    });
+
+    test('it should render for popover interface and single selection', async ({ page }) => {
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+      const ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
+
+      const select = page.locator('#popover-select');
+
+      await select.click();
+
+      await ionPopoverDidPresent.next();
+
+      const popover = page.locator('ion-popover');
+      const firstOption = popover.locator('.select-interface-option').first();
+      const avatar = firstOption.locator('ion-avatar');
+      const firstOptionText = 'Full Content';
+
+      await expect(firstOption).toContainText(firstOptionText);
+      await expect(avatar).toBeVisible();
+
+      // Click on the first option
+      await firstOption.click();
+
+      await ionPopoverDidDismiss.next();
+
+      // Verify that the select text includes the option text
+      const selectText = await select.locator('.select-text').textContent();
+
+      expect(selectText).toContain(firstOptionText);
+
+      // Verify that the select text does not include the avatar and badge
+      const selectTextAvatar = select.locator('.select-text ion-avatar');
+      const selectTextBadge = select.locator('.select-text ion-badge');
+
+      await expect(selectTextAvatar).toHaveCount(0);
+      await expect(selectTextBadge).toHaveCount(0);
+    });
+
+    test('it should render for popover interface and multiple selection', async ({ page }) => {
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+      const ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
+
+      const select = page.locator('#popover-select-multiple');
+
+      await select.click();
+
+      await ionPopoverDidPresent.next();
+
+      const popover = page.locator('ion-popover');
+      const firstOption = popover.locator('.select-interface-option').first();
+      const avatar = firstOption.locator('ion-avatar');
+      const firstOptionText = 'Full Content';
+
+      await expect(firstOption).toContainText(firstOptionText);
+      await expect(avatar).toBeVisible();
+
+      // Click on the first option
+      await firstOption.click();
+
+      // Confirm the selection
+      const backdrop = page.locator('ion-backdrop');
+      await backdrop.click({ position: { x: 10, y: 10 } });
+
+      await ionPopoverDidDismiss.next();
+
+      // Verify that the select text includes the option text
+      const selectText = await select.locator('.select-text').textContent();
+
+      expect(selectText).toContain(firstOptionText);
 
       // Verify that the select text does not include the avatar and badge
       const selectTextAvatar = select.locator('.select-text ion-avatar');
@@ -302,13 +343,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await ionAlertDidPresent.next();
 
+      // The "no-text" option only has a <span> for its label content,
+      // so its aria label should be the span's plain text.
       const alert = page.locator('ion-alert');
-      const firstOption = alert.locator('.alert-radio-label').first();
+      const spanOption = alert.locator('.alert-radio-button', { hasText: 'This is a span element' });
 
-      // Click on the first option
-      await firstOption.click();
+      await spanOption.click();
 
-      // Confirm the selection
       const confirmButton = alert.locator('.alert-button:not(.alert-button-role-cancel)');
       await confirmButton.click();
 
@@ -317,7 +358,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const nativeButton = select.locator('button');
       const ariaLabel = await nativeButton.getAttribute('aria-label');
 
-      expect(ariaLabel).toContain('Full Content This is a span element');
+      expect(ariaLabel).toContain('This is a span element');
     });
   });
 });
@@ -341,7 +382,7 @@ configs({ modes: ['md'] }).forEach(({ title, config }) => {
       await ionAlertDidPresent.next();
 
       const alert = page.locator('ion-alert');
-      const firstOption = alert.locator('.alert-radio-label').first();
+      const firstOption = alert.locator('.alert-radio-button').first();
       const startContainer = firstOption.locator('.select-option-start');
       const endContainer = firstOption.locator('.select-option-end');
 
@@ -404,7 +445,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionAlertDidPresent.next();
 
       const alert = page.locator('ion-alert');
-      const firstOption = alert.locator('.alert-radio-label').first();
+      const firstOption = alert.locator('.alert-radio-button').first();
       const startContainer = firstOption.locator('.select-option-start');
       const endContainer = firstOption.locator('.select-option-end');
       const span = firstOption.locator('.span-style');

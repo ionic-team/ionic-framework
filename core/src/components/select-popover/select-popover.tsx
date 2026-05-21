@@ -1,5 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
+import { getOverlayLabelJustify, getOverlayLabelPlacement } from '@utils/overlay-control-label';
 import { safeCall } from '@utils/overlays';
 import { renderOptionLabel } from '@utils/select-option-render';
 import { getClassMap } from '@utils/theme';
@@ -82,7 +83,11 @@ export class SelectPopover implements ComponentInterface {
    * Dismisses the host popover that the `ion-select-popover`
    * is rendered within.
    */
-  private dismissParentPopover() {
+  private dismissParentPopover(isOptionDisabled = false) {
+    if (isOptionDisabled) {
+      return;
+    }
+
     const popover = this.el.closest('ion-popover');
     if (popover) {
       popover.dismiss();
@@ -127,6 +132,7 @@ export class SelectPopover implements ComponentInterface {
   }
 
   renderCheckboxOptions(options: SelectPopoverOption[]) {
+    const theme = getIonTheme(this);
     return options.map((option, index) => {
       /**
        * Cast to `SelectOverlayOption` to access rich content
@@ -135,6 +141,7 @@ export class SelectPopover implements ComponentInterface {
        * part of the public `SelectPopoverOption` interface.
        */
       const richOption = option as SelectOverlayOption;
+      const hasRichContent = !!richOption.startContent || !!richOption.endContent || !!richOption.description;
       const optionLabelOptions = {
         id: `popover-option-${index}`,
         label: richOption.text,
@@ -142,9 +149,13 @@ export class SelectPopover implements ComponentInterface {
         endContent: richOption.endContent,
         description: richOption.description,
       };
+      const defaultLabelPlacement = getOverlayLabelPlacement(theme, 'checkbox');
+      const defaultJustify = getOverlayLabelJustify(theme, 'checkbox');
 
       return (
         <ion-item
+          // TODO FW-4784
+          disabled={option.disabled}
           class={{
             // TODO FW-4784
             'item-checkbox-checked': option.checked,
@@ -152,11 +163,14 @@ export class SelectPopover implements ComponentInterface {
           }}
         >
           <ion-checkbox
+            class={{
+              'select-option-has-rich-content': hasRichContent,
+            }}
             value={option.value}
             disabled={option.disabled}
             checked={option.checked}
-            justify="start"
-            labelPlacement="end"
+            justify={richOption.justify ?? defaultJustify}
+            labelPlacement={richOption.labelPlacement ?? defaultLabelPlacement}
             onIonChange={(ev) => {
               this.setChecked(ev);
               this.callOptionHandler(ev);
@@ -172,6 +186,7 @@ export class SelectPopover implements ComponentInterface {
   }
 
   renderRadioOptions(options: SelectPopoverOption[]) {
+    const theme = getIonTheme(this);
     const checked = options.filter((o) => o.checked).map((o) => o.value)[0];
 
     return (
@@ -184,6 +199,7 @@ export class SelectPopover implements ComponentInterface {
            * part of the public `SelectPopoverOption` interface.
            */
           const richOption = option as SelectOverlayOption;
+          const hasRichContent = !!richOption.startContent || !!richOption.endContent || !!richOption.description;
           const optionLabelOptions = {
             id: `popover-option-${index}`,
             label: richOption.text,
@@ -194,6 +210,8 @@ export class SelectPopover implements ComponentInterface {
 
           return (
             <ion-item
+              // TODO FW-4784
+              disabled={option.disabled}
               class={{
                 // TODO FW-4784
                 'item-radio-checked': option.value === checked,
@@ -201,9 +219,14 @@ export class SelectPopover implements ComponentInterface {
               }}
             >
               <ion-radio
+                class={{
+                  'select-option-has-rich-content': hasRichContent,
+                }}
                 value={option.value}
                 disabled={option.disabled}
-                onClick={() => this.dismissParentPopover()}
+                justify={richOption.justify ?? getOverlayLabelJustify(theme, 'radio')}
+                labelPlacement={richOption.labelPlacement ?? getOverlayLabelPlacement(theme, 'radio')}
+                onClick={() => this.dismissParentPopover(option.disabled)}
                 onKeyDown={(ev) => {
                   if (ev.key === 'Enter' && !ev.repeat) {
                     this.pendingEnterTarget = ev.currentTarget as HTMLElement;
@@ -212,12 +235,12 @@ export class SelectPopover implements ComponentInterface {
                 onKeyUp={(ev) => {
                   if (ev.key === ' ') {
                     // Space selects and dismisses in one press.
-                    this.dismissParentPopover();
+                    this.dismissParentPopover(option.disabled);
                   } else if (ev.key === 'Enter') {
                     const shouldDismiss = this.pendingEnterTarget === ev.currentTarget;
                     this.pendingEnterTarget = null;
                     if (shouldDismiss) {
-                      this.dismissParentPopover();
+                      this.dismissParentPopover(option.disabled);
                     }
                   }
                 }}

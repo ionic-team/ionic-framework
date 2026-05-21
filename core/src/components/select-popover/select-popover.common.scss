@@ -1,15 +1,15 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/mixins" as mixins;
 
 // Select Popover
 // --------------------------------------------------
 
 :host ion-list {
-  @include margin(0);
+  @include mixins.margin(0);
 }
 
 ion-list-header,
 ion-label {
-  @include margin(0);
+  @include mixins.margin(0);
 }
 
 /**
@@ -25,7 +25,20 @@ ion-label {
 // Select Popover: Select Option
 // --------------------------------------------------
 
-.select-option-label {
+/**
+ * Non-rich labels are plain text and should ellipsize when they
+ * overflow the row. Rich-content labels switch to flex so the
+ * start / content / end pieces can lay out side-by-side and wrap.
+ */
+.select-option-label:not(.select-option-label-has-rich-content) {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+.select-option-label-has-rich-content {
   display: flex;
 
   align-items: center;
@@ -35,6 +48,36 @@ ion-label {
   display: flex;
 
   flex-wrap: wrap;
+}
+
+ion-radio.select-option-has-rich-content::part(label),
+ion-checkbox.select-option-has-rich-content::part(label),
+.select-option-content {
+  flex: 1;
+
+  /**
+   * Let rich content wrap instead of inheriting the label part's
+   * single-line truncation, so arbitrary slotted elements render
+   * without clipping.
+   */
+  white-space: normal;
+}
+
+.select-option-start,
+.select-option-end {
+  display: flex;
+
+  align-items: center;
+}
+
+/**
+ * Cap slotted children so they can't stretch the option
+ * row out of proportion, keeping rows visually uniform
+ * regardless of the content.
+ */
+.select-option-start > *,
+.select-option-end > * {
+  max-width: fit-content;
 }
 
 .select-option-description {

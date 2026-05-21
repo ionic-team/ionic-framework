@@ -6,8 +6,16 @@
 // Select Popover: Native
 // --------------------------------------------------
 
+// Select Popover: Select Option
+// --------------------------------------------------
+
 .select-option-label {
   gap: 12px;
+}
+
+.select-option-start,
+.select-option-end {
+  gap: 8px;
 }
 
 .select-option-description {
