@@ -312,10 +312,12 @@ textarea.alert-input {
 /**
  * Cap slotted children so they can't stretch the option
  * row out of proportion, keeping rows visually uniform
- * regardless of the content.
+ * regardless of the content. ion-icon is excluded because
+ * its `contain: strict` makes intrinsic sizes resolve to 0,
+ * which would collapse the icon to zero width.
  */
-.select-option-start > *,
-.select-option-end > * {
+.select-option-start > *:not(ion-icon),
+.select-option-end > *:not(ion-icon) {
   max-width: fit-content;
 }
 
