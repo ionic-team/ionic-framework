@@ -34,8 +34,16 @@ const matchesTab = (pathname: string, href: string | undefined): boolean => {
     return false;
   }
 
+  /**
+   * Compare pathnames only; an href like "/tabs/home?foo=bar#section" must
+   * still match a pathname of "/tabs/home". Strip the fragment first so a
+   * "#frag" containing "?" cannot leak into the pathname.
+   */
+  const hrefPathname = href.split("#")[0].split("?")[0];
   const normalizedHref =
-    href.endsWith("/") && href !== "/" ? href.slice(0, -1) : href;
+    hrefPathname.endsWith("/") && hrefPathname !== "/"
+      ? hrefPathname.slice(0, -1)
+      : hrefPathname;
   return (
     pathname === normalizedHref || pathname.startsWith(normalizedHref + "/")
   );

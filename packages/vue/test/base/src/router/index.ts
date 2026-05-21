@@ -201,6 +201,32 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/TabsBasic.vue')
   },
   {
+    path: '/tabs-search-params/',
+    component: () => import('@/views/tabs-search-params/TabsSearchParams.vue'),
+    children: [
+      {
+        path: '',
+        redirect: '/tabs-search-params/tab1?foo=bar'
+      },
+      {
+        path: 'tab1',
+        component: () => import('@/views/tabs-search-params/Tab1.vue')
+      },
+      {
+        path: 'tab2',
+        component: () => import('@/views/tabs-search-params/Tab2.vue')
+      },
+      {
+        path: 'tab3',
+        component: () => import('@/views/tabs-search-params/Tab3.vue')
+      },
+      {
+        path: 'tab4',
+        component: () => import('@/views/tabs-search-params/Tab4.vue')
+      }
+    ]
+  },
+  {
     path: '/tabs-similar-prefixes/',
     component: () => import('@/views/tabs-similar-prefixes/TabsSimilarPrefixes.vue'),
     children: [

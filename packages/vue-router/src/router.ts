@@ -629,7 +629,18 @@ export const createIonRouter = (
     if (!path) return;
 
     const routeInfo = locationHistory.getCurrentRouteInfoForTab(tab);
-    const [pathname] = path.split("?");
+    /**
+     * Strip the fragment before parsing the query so that a `#frag` on the
+     * href cannot leak into the last query value or corrupt the pathname.
+     */
+    const hashIndex = path.indexOf("#");
+    const beforeHash = hashIndex >= 0 ? path.slice(0, hashIndex) : path;
+    const hrefHash =
+      hashIndex >= 0 && hashIndex < path.length - 1
+        ? path.slice(hashIndex)
+        : "";
+    const [pathname, search] = beforeHash.split("?");
+    const hrefSearch = search ? `?${search}` : "";
 
     if (routeInfo) {
       incomingRouteParams = {
@@ -645,17 +656,29 @@ export const createIonRouter = (
        * for the route info to be incorrect
        * as the tab you want is not the
        * tab you are on.
+       *
+       * If the incoming href carries its own query string, prefer that over
+       * the previously-saved search so query params on the tab button href
+       * are honored when re-selecting the tab.
        */
+      const effectiveSearch = hrefSearch || routeInfo.search;
+      const push = {
+        query: parseQuery(effectiveSearch),
+        ...(hrefHash ? { hash: hrefHash } : {}),
+      };
       if (routeInfo.pathname === pathname) {
-        router.push({
-          path: routeInfo.pathname,
-          query: parseQuery(routeInfo.search),
-        });
+        router.push({ path: routeInfo.pathname, ...push });
       } else {
-        router.push({ path: pathname, query: parseQuery(routeInfo.search) });
+        router.push({ path: pathname, ...push });
       }
     } else {
-      handleNavigate(pathname, "push", "none", undefined, tab);
+      handleNavigate(
+        pathname + hrefSearch + hrefHash,
+        "push",
+        "none",
+        undefined,
+        tab
+      );
     }
   };
 
