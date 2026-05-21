@@ -22,6 +22,8 @@ const BREAKPOINTS = {
 type GalleryBreakpoint = keyof typeof BREAKPOINTS;
 const BREAKPOINT_ORDER: GalleryBreakpoint[] = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
 
+const GALLERY_ITEM_SELECTOR = 'ion-gallery-item';
+
 /**
  * Direct slotted children that support CSS grid placement and inline `style`.
  * This is a union of `HTMLElement` and `SVGElement` to support both HTML and SVG elements.
@@ -42,7 +44,6 @@ type GalleryItemElement = HTMLElement | SVGElement;
 export class Gallery implements ComponentInterface {
   @Element() el!: HTMLIonGalleryElement;
 
-  private itemWrapperSelector = '[data-gallery-group]';
   private masonryRaf?: number;
   private resizeObserver?: ResizeObserver;
   private lastWidth?: number;
@@ -52,6 +53,7 @@ export class Gallery implements ComponentInterface {
   private hasWarnedInvalidColumns = false;
   private hasWarnedInvalidGap = false;
   private hasWarnedUnusedOrder = false;
+  private hasWarnedInvalidItems = false;
 
   /**
    * The visual layout of the gallery. When `uniform`, rows take up the height
@@ -372,6 +374,21 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
+   * Warn when gallery content is missing required `ion-gallery-item` components.
+   */
+  private warnInvalidItems() {
+    if (this.hasWarnedInvalidItems) {
+      return;
+    }
+
+    printIonWarning(
+      '[ion-gallery] - Gallery items must be wrapped in "ion-gallery-item" components. Non-item direct children are ignored unless they contain nested "ion-gallery-item" elements.',
+      this.el
+    );
+    this.hasWarnedInvalidItems = true;
+  }
+
+  /**
    * Resolve the active columns value for the current width. Falls back to
    * the default responsive columns when the provided prop is invalid.
    */
@@ -450,27 +467,49 @@ export class Gallery implements ComponentInterface {
 
   /**
    * Return all gallery items that can be grid items with inline placement styles.
-   * Direct children marked with `data-gallery-group` are ignored and replaced
-   * with their element children.
+   * Direct children that are not `ion-gallery-item` are treated as wrapper
+   * containers and flattened to nested `ion-gallery-item` children. Direct
+   * children without nested `ion-gallery-item` components are ignored.
    */
   private getItems(): GalleryItemElement[] {
-    const items = Array.from(this.el.children).filter((child): child is GalleryItemElement =>
+    const directChildren = Array.from(this.el.children).filter((child): child is GalleryItemElement =>
       this.isGalleryItemElement(child)
     );
 
     const flattenedItems: GalleryItemElement[] = [];
 
-    items.forEach((itemEl) => {
-      if (!itemEl.matches(this.itemWrapperSelector)) {
-        flattenedItems.push(itemEl);
+    // Expand an <ion-gallery-item> component into the actual gallery items
+    // that should be used for grid placement.
+    const pushWrappedItems = (galleryItemEl: GalleryItemElement) => {
+      const galleryItems = Array.from(galleryItemEl.children).filter((child): child is GalleryItemElement =>
+        this.isGalleryItemElement(child)
+      );
+      flattenedItems.push(...galleryItems);
+    };
+
+    directChildren.forEach((directChildEl) => {
+      // Standard path: <ion-gallery-item> is a direct child of <ion-gallery>.
+      if (directChildEl.matches(GALLERY_ITEM_SELECTOR)) {
+        pushWrappedItems(directChildEl);
         return;
       }
 
-      itemEl.style.display = 'contents';
-      const wrappedItems = Array.from(itemEl.children).filter((child): child is GalleryItemElement =>
-        this.isGalleryItemElement(child)
-      );
-      flattenedItems.push(...wrappedItems);
+      // Compatibility path: a non-gallery-item direct child (e.g. wrapper <div>)
+      // may contain nested <ion-gallery-item> components.
+      const nestedGalleryItems = Array.from(
+        directChildEl.querySelectorAll(GALLERY_ITEM_SELECTOR) as NodeListOf<Element>
+      ).filter((child): child is GalleryItemElement => this.isGalleryItemElement(child));
+
+      // Invalid children path: no <ion-gallery-item> components found.
+      if (nestedGalleryItems.length === 0) {
+        this.warnInvalidItems();
+        return;
+      }
+
+      // Flatten gallery-item containers so nested <ion-gallery-item> children can
+      // become the effective gallery items.
+      directChildEl.style.display = 'contents';
+      nestedGalleryItems.forEach((nestedGalleryItem) => pushWrappedItems(nestedGalleryItem));
     });
 
     return flattenedItems;
@@ -612,7 +651,8 @@ export class Gallery implements ComponentInterface {
     const styles = getComputedStyle(this.el);
     const rowHeight = parseFloat(styles.getPropertyValue('grid-auto-rows')) || 0;
     const rowGap = parseFloat(styles.getPropertyValue('row-gap')) || parseFloat(styles.getPropertyValue('gap')) || 0;
-    const itemGap = parseFloat(styles.getPropertyValue('column-gap')) || parseFloat(styles.getPropertyValue('gap')) || 0;
+    const itemGap =
+      parseFloat(styles.getPropertyValue('column-gap')) || parseFloat(styles.getPropertyValue('gap')) || 0;
     const items = this.getItems();
 
     this.layoutMasonry(items, rowHeight, rowGap, itemGap, columns);

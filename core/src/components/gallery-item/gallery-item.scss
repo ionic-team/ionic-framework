@@ -1,0 +1,46 @@
+@use "../../themes/native/native.globals" as globals;
+
+// Gallery Item
+// --------------------------------------------------
+
+:host {
+  display: contents;
+}
+
+// Layout: Uniform
+// --------------------------------------------------
+
+// Target all slotted elements in the uniform layout. This ensures that divs
+// and images have an aspect ratio of 1/1. Nested images must inherit the
+// aspect ratio of their parent.
+:host(.in-gallery-layout-uniform) ::slotted(*) {
+  aspect-ratio: 1 / 1;
+}
+
+// Layout: Masonry
+// --------------------------------------------------
+
+:host(.in-gallery-layout-masonry) {
+  // Clear min-height so items size to their content
+  min-height: unset;
+
+  margin-bottom: var(--internal-gallery-gap, 16px);
+}
+
+// Slotted elements
+// --------------------------------------------------
+
+// Reset the default margin for slotted elements so wrapper elements
+// (such as <figure>) align properly with other gallery items.
+::slotted(*) {
+  @include globals.margin(0);
+
+  width: 100%;
+}
+
+::slotted(img) {
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+}

@@ -1500,6 +1500,16 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
     }
+    interface IonGalleryItem {
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * The theme determines the visual appearance of the component.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+    }
     interface IonGrid {
         /**
           * If `true`, the grid will have a fixed width based on the screen size.
@@ -5046,6 +5056,12 @@ declare global {
         prototype: HTMLIonGalleryElement;
         new (): HTMLIonGalleryElement;
     };
+    interface HTMLIonGalleryItemElement extends Components.IonGalleryItem, HTMLStencilElement {
+    }
+    var HTMLIonGalleryItemElement: {
+        prototype: HTMLIonGalleryItemElement;
+        new (): HTMLIonGalleryItemElement;
+    };
     interface HTMLIonGridElement extends Components.IonGrid, HTMLStencilElement {
     }
     var HTMLIonGridElement: {
@@ -6004,6 +6020,7 @@ declare global {
         "ion-fab-list": HTMLIonFabListElement;
         "ion-footer": HTMLIonFooterElement;
         "ion-gallery": HTMLIonGalleryElement;
+        "ion-gallery-item": HTMLIonGalleryItemElement;
         "ion-grid": HTMLIonGridElement;
         "ion-header": HTMLIonHeaderElement;
         "ion-img": HTMLIonImgElement;
@@ -7543,6 +7560,16 @@ declare namespace LocalJSX {
           * The order in which items are positioned. Only applies when layout is `masonry`. When `sequential`, items are positioned in the order they are placed in the DOM. When `best-fit`, items are positioned under the column with the most available space. Defaults to `sequential` when layout is `masonry` and `order` is not explicitly set.
          */
         "order"?: 'sequential' | 'best-fit';
+        /**
+          * The theme determines the visual appearance of the component.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+    }
+    interface IonGalleryItem {
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -11539,6 +11566,7 @@ declare namespace LocalJSX {
         "ion-fab-list": Omit<IonFabList, keyof IonFabListAttributes> & { [K in keyof IonFabList & keyof IonFabListAttributes]?: IonFabList[K] } & { [K in keyof IonFabList & keyof IonFabListAttributes as `attr:${K}`]?: IonFabListAttributes[K] } & { [K in keyof IonFabList & keyof IonFabListAttributes as `prop:${K}`]?: IonFabList[K] };
         "ion-footer": Omit<IonFooter, keyof IonFooterAttributes> & { [K in keyof IonFooter & keyof IonFooterAttributes]?: IonFooter[K] } & { [K in keyof IonFooter & keyof IonFooterAttributes as `attr:${K}`]?: IonFooterAttributes[K] } & { [K in keyof IonFooter & keyof IonFooterAttributes as `prop:${K}`]?: IonFooter[K] };
         "ion-gallery": Omit<IonGallery, keyof IonGalleryAttributes> & { [K in keyof IonGallery & keyof IonGalleryAttributes]?: IonGallery[K] } & { [K in keyof IonGallery & keyof IonGalleryAttributes as `attr:${K}`]?: IonGalleryAttributes[K] } & { [K in keyof IonGallery & keyof IonGalleryAttributes as `prop:${K}`]?: IonGallery[K] };
+        "ion-gallery-item": IonGalleryItem;
         "ion-grid": Omit<IonGrid, keyof IonGridAttributes> & { [K in keyof IonGrid & keyof IonGridAttributes]?: IonGrid[K] } & { [K in keyof IonGrid & keyof IonGridAttributes as `attr:${K}`]?: IonGridAttributes[K] } & { [K in keyof IonGrid & keyof IonGridAttributes as `prop:${K}`]?: IonGrid[K] };
         "ion-header": Omit<IonHeader, keyof IonHeaderAttributes> & { [K in keyof IonHeader & keyof IonHeaderAttributes]?: IonHeader[K] } & { [K in keyof IonHeader & keyof IonHeaderAttributes as `attr:${K}`]?: IonHeaderAttributes[K] } & { [K in keyof IonHeader & keyof IonHeaderAttributes as `prop:${K}`]?: IonHeader[K] };
         "ion-img": Omit<IonImg, keyof IonImgAttributes> & { [K in keyof IonImg & keyof IonImgAttributes]?: IonImg[K] } & { [K in keyof IonImg & keyof IonImgAttributes as `attr:${K}`]?: IonImgAttributes[K] } & { [K in keyof IonImg & keyof IonImgAttributes as `prop:${K}`]?: IonImg[K] };
@@ -11644,6 +11672,7 @@ declare module "@stencil/core" {
             "ion-fab-list": LocalJSX.IntrinsicElements["ion-fab-list"] & JSXBase.HTMLAttributes<HTMLIonFabListElement>;
             "ion-footer": LocalJSX.IntrinsicElements["ion-footer"] & JSXBase.HTMLAttributes<HTMLIonFooterElement>;
             "ion-gallery": LocalJSX.IntrinsicElements["ion-gallery"] & JSXBase.HTMLAttributes<HTMLIonGalleryElement>;
+            "ion-gallery-item": LocalJSX.IntrinsicElements["ion-gallery-item"] & JSXBase.HTMLAttributes<HTMLIonGalleryItemElement>;
             "ion-grid": LocalJSX.IntrinsicElements["ion-grid"] & JSXBase.HTMLAttributes<HTMLIonGridElement>;
             "ion-header": LocalJSX.IntrinsicElements["ion-header"] & JSXBase.HTMLAttributes<HTMLIonHeaderElement>;
             "ion-img": LocalJSX.IntrinsicElements["ion-img"] & JSXBase.HTMLAttributes<HTMLIonImgElement>;
