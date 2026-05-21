@@ -69,7 +69,7 @@
     var(--padding-end),
     calc(
       var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom) +
-        var(--ion-content-safe-area-padding-bottom, 0px)
+        var(--internal-content-safe-area-padding-bottom, 0px)
     ),
     var(--padding-start)
   );
