@@ -110,9 +110,7 @@ const sortSheetModalFocusables = (overlay: HTMLElement, elements: HTMLElement[])
 
   const cancelControl = elements.find(
     (el) =>
-      overlay.contains(el) &&
-      el.tagName === 'ION-BUTTON' &&
-      el.closest('ion-header ion-buttons[slot="end"]') !== null
+      overlay.contains(el) && el.tagName === 'ION-BUTTON' && el.closest('ion-header ion-buttons[slot="end"]') !== null
   );
 
   const handleControl = elements.find((el) => el.classList.contains('modal-handle'));
@@ -152,10 +150,7 @@ const sortSheetModalFocusables = (overlay: HTMLElement, elements: HTMLElement[])
  * option is tabbable (`tabIndex="0"`) while the others are `-1`.
  * This returns the index of that current tabbable option.
  */
-const getTabbableOptionControlIndex = (
-  elements: HTMLElement[],
-  overlay: HTMLElement
-): number => {
+const getTabbableOptionControlIndex = (elements: HTMLElement[], overlay: HTMLElement): number => {
   return elements.findIndex((el) => {
     return overlay.contains(el) && isSelectModalOptionControl(el) && el.tabIndex >= 0;
   });
@@ -659,8 +654,7 @@ const connectListeners = (doc: Document) => {
         const nextEl = allFocusable[nextIndex];
 
         const overlayTrap = lastOverlay as OverlayWithSheetModalTrapState;
-        const tabbableOptionIndex =
-          isSheetModal ? getTabbableOptionControlIndex(allFocusable, lastOverlay) : -1;
+        const tabbableOptionIndex = isSheetModal ? getTabbableOptionControlIndex(allFocusable, lastOverlay) : -1;
 
         /**
          * The trap list only includes one tabbable option host
