@@ -98,8 +98,8 @@ The following breaking changes apply to `ion-content`:
 
 | Old (8.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
-| `--background` | `IonContent.background` | `--ion-content-background` |
-| `--color` | `IonContent.color` | `--ion-content-color` |
+| `--background` | `IonContent.background` | `--ion-content-default-background` |
+| `--color` | `IonContent.color` | `--ion-content-default-color` |
 
 <h5>Padding variables</h5>
 
