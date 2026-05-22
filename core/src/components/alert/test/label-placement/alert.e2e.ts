@@ -70,6 +70,9 @@ class AlertFixture {
     this.alert = this.page.locator('ion-alert');
     await expect(this.alert).toBeVisible();
 
+    // Move mouse to away from the alert so hover styles don't interfere with screenshots
+    await this.page.mouse.move(0, 0);
+
     return this.alert;
   }
 

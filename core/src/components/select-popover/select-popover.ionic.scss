@@ -9,15 +9,15 @@ ion-item {
   --border-width: #{globals.$ion-border-size-0};
   --background-focused: transparent;
   --background-focused-opacity: 1;
-  --background-hover: #{globals.$ion-semantics-primary-100};
+  --background-hover: #{globals.$ion-bg-neutral-subtlest-press};
   --background-hover-opacity: 1;
-  --background-activated: #{globals.$ion-semantics-primary-100};
+  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
   --background-activated-opacity: 1;
 }
 
 ion-item.ion-focused.item-checkbox-checked,
 ion-item.ion-focused.item-radio-checked {
-  --background-focused: #{globals.$ion-semantics-primary-100};
+  --background-focused: #{globals.$ion-bg-primary-subtle-default};
   --background-focused-opacity: 1;
 }
 
@@ -45,7 +45,7 @@ ion-list ion-checkbox::part(label) {
 
 .item-radio-checked,
 .item-checkbox-checked {
-  --background: #{globals.$ion-semantics-primary-100};
+  --background: #{globals.$ion-bg-primary-subtle-default};
 }
 
 // Select Popover: Select Option

@@ -40,9 +40,12 @@
 }
 
 .alert-tappable.ion-activated,
-.alert-tappable:not(:disabled):hover,
+.alert-tappable:not(:disabled):hover {
+  background: globals.$ion-bg-neutral-subtlest-press;
+}
+
 .alert-tappable[aria-checked="true"] {
-  background: globals.$ion-semantics-primary-100;
+  background: globals.$ion-bg-primary-subtle-default;
 }
 
 // Ionic Alert Header
