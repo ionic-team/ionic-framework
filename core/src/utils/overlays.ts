@@ -44,8 +44,126 @@ type OverlayWithFocusTrapProps = HTMLIonOverlayElement & {
   backdropBreakpoint?: number;
 };
 
+const OVERLAY_FOCUS_TRAP_SELECTOR = 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker-legacy,ion-popover';
+const ION_SELECT_MODAL_SELECTOR = 'ion-select-modal';
+
 /**
- * Determines if the overlay's backdrop is always blocking (no background interaction).
+ * This is used to restore focus to the correct option when the user presses
+ * Shift+Tab after moving focus to the sheet handle.
+ */
+type OverlayWithSheetModalTrapState = HTMLIonOverlayElement & {
+  trapLastSheetOptionControl?: HTMLElement;
+};
+
+const isSelectModalOptionControl = (el: HTMLElement) => el.tagName === 'ION-RADIO' || el.tagName === 'ION-CHECKBOX';
+
+/**
+ * Returns the currently focused element for keyboard focus checks.
+ *
+ * Starts from `document.activeElement` (non-shadow / light DOM focus).
+ * If focus is inside one or more open shadow roots
+ * (e.g. native control inside `ion-radio`), walks through nested
+ * `shadowRoot.activeElement` values until the innermost focused node is reached.
+ */
+const getActiveElement = (ownerDoc: Document): HTMLElement | null => {
+  let active = ownerDoc.activeElement as HTMLElement | null;
+  if (!active) {
+    return null;
+  }
+  while (active.shadowRoot?.activeElement) {
+    active = active.shadowRoot.activeElement as HTMLElement;
+  }
+  return active;
+};
+
+/**
+ * Walks from a focused node (possibly deep inside shadow roots)
+ * up to the nearest `ion-radio` / `ion-checkbox` host.
+ */
+const getOptionControlHost = (active: HTMLElement | null): HTMLElement | null => {
+  let n: HTMLElement | null = active;
+  while (n) {
+    if (isSelectModalOptionControl(n)) {
+      return n;
+    }
+    const root = n.getRootNode();
+    if (root instanceof ShadowRoot && root.host instanceof HTMLElement) {
+      n = root.host;
+    } else {
+      return null;
+    }
+  }
+  return null;
+};
+
+/**
+ * Sheet modals can have visual order that differs from DOM order.
+ * Without sorting, Tab can skip the handle after option traversal.
+ *
+ * Order: option controls (radio/checkbox) → sheet handle → end-slot
+ * header button. Any other focusables are appended after.
+ */
+const sortSheetModalFocusables = (overlay: HTMLElement, elements: HTMLElement[]): HTMLElement[] => {
+  const optionControls = elements.filter((el) => {
+    return overlay.contains(el) && isSelectModalOptionControl(el) && el.tabIndex >= 0;
+  });
+
+  const cancelControl = elements.find(
+    (el) =>
+      overlay.contains(el) &&
+      el.tagName === 'ION-BUTTON' &&
+      el.closest('ion-header ion-buttons[slot="end"]') !== null
+  );
+
+  const handleControl = elements.find((el) => el.classList.contains('modal-handle'));
+
+  const sortByGeometry = (els: HTMLElement[]) =>
+    [...els].sort((a, b) => {
+      const ra = a.getBoundingClientRect();
+      const rb = b.getBoundingClientRect();
+      const topDiff = ra.top - rb.top;
+      if (Math.abs(topDiff) > 1) {
+        return topDiff;
+      }
+      return ra.left - rb.left;
+    });
+
+  const ordered: HTMLElement[] = [];
+  ordered.push(...sortByGeometry(optionControls));
+  if (handleControl) {
+    ordered.push(handleControl);
+  }
+  if (cancelControl) {
+    ordered.push(cancelControl);
+  }
+
+  const used = new Set(ordered);
+  for (const el of elements) {
+    if (!used.has(el)) {
+      ordered.push(el);
+    }
+  }
+
+  return ordered;
+};
+
+/**
+ * Option controls in groups use a tabindex pattern where only one
+ * option is tabbable (`tabIndex="0"`) while the others are `-1`.
+ * This returns the index of that current tabbable option.
+ */
+const getTabbableOptionControlIndex = (
+  elements: HTMLElement[],
+  overlay: HTMLElement
+): number => {
+  return elements.findIndex((el) => {
+    return overlay.contains(el) && isSelectModalOptionControl(el) && el.tabIndex >= 0;
+  });
+};
+
+/**
+ * Determines if the overlay's backdrop is always blocking
+ * (no background interaction).
  * Returns false if showBackdrop=false or backdropBreakpoint > 0.
  */
 const isBackdropAlwaysBlocking = (el: OverlayWithFocusTrapProps): boolean => {
@@ -184,10 +302,7 @@ const focusElementInOverlay = (hostToFocus: HTMLElement | null | undefined, over
  * Should NOT include: Toast
  */
 const trapKeyboardFocus = (ev: Event, doc: Document) => {
-  const lastOverlay = getPresentedOverlay(
-    doc,
-    'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker-legacy,ion-popover'
-  );
+  const lastOverlay = getPresentedOverlay(doc, OVERLAY_FOCUS_TRAP_SELECTOR);
   const target = ev.target as HTMLElement | null;
 
   /**
@@ -384,6 +499,35 @@ const connectListeners = (doc: Document) => {
       true
     );
 
+    /**
+     * Remember which option control last received focus
+     * (arrows, click, or Tab). This pattern keeps `tabIndex=0` on the
+     * checked/first radio, so the Tab trap uses this when wrapping back
+     * into the list or focusing the option-group slot.
+     */
+    doc.addEventListener(
+      'focusin',
+      (ev: FocusEvent) => {
+        const lastOverlay = getPresentedOverlay(doc, OVERLAY_FOCUS_TRAP_SELECTOR);
+        if (!lastOverlay || lastOverlay.classList.contains(FOCUS_TRAP_DISABLE_CLASS)) {
+          return;
+        }
+        const isSheetModal = lastOverlay.classList.contains('modal-sheet');
+        if (!isSheetModal) {
+          return;
+        }
+        const target = ev.target;
+        if (!(target instanceof HTMLElement)) {
+          return;
+        }
+        const optionHost = getOptionControlHost(target);
+        if (optionHost && lastOverlay.contains(optionHost)) {
+          (lastOverlay as OverlayWithSheetModalTrapState).trapLastSheetOptionControl = optionHost;
+        }
+      },
+      true
+    );
+
     // Listen for keydown events to intercept Tab navigation.
     // This is needed for Safari and Firefox which may skip focusable
     // elements or allow focus to escape the overlay.
@@ -394,15 +538,11 @@ const connectListeners = (doc: Document) => {
       (ev: KeyboardEvent) => {
         if (ev.key !== 'Tab' && ev.key !== 'Alt+Tab') return;
 
-        const lastOverlay = getPresentedOverlay(
-          doc,
-          'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker-legacy,ion-popover'
-        );
+        const lastOverlay = getPresentedOverlay(doc, OVERLAY_FOCUS_TRAP_SELECTOR);
 
         if (!lastOverlay || lastOverlay.classList.contains(FOCUS_TRAP_DISABLE_CLASS)) return;
 
-        const activeElement = doc.activeElement as HTMLElement | null;
-
+        const activeElement = getActiveElement(doc);
         if (activeElement === lastOverlay) {
           ev.preventDefault();
           focusFirstDescendant(lastOverlay);
@@ -420,10 +560,29 @@ const connectListeners = (doc: Document) => {
         if (!isInsideOverlay) return;
 
         // Get all focusable elements from both light and shadow DOM
-        const allFocusable = [
+        let allFocusable = [
           ...lastOverlay.querySelectorAll<HTMLElement>(focusableQueryString),
           ...(lastOverlay.shadowRoot?.querySelectorAll<HTMLElement>(focusableQueryString) || []),
         ];
+
+        const selectModalEl = lastOverlay.querySelector(ION_SELECT_MODAL_SELECTOR);
+        const isSheetModal = lastOverlay.classList.contains('modal-sheet');
+
+        /**
+         * Some sheet modal content, including ion-select-modal,
+         * renders option containers as `ion-item.select-interface-option`.
+         * These can match focusable selectors in some builds but
+         * are not intended tab stops. Keep only true interactive
+         * controls so Tab can move from options to header
+         * controls/handle.
+         */
+        if (selectModalEl) {
+          allFocusable = allFocusable.filter((el) => !el.matches('ion-item.select-interface-option'));
+        }
+
+        if (isSheetModal) {
+          allFocusable = sortSheetModalFocusables(lastOverlay, allFocusable);
+        }
 
         if (allFocusable.length === 0) {
           ev.preventDefault();
@@ -431,7 +590,7 @@ const connectListeners = (doc: Document) => {
         }
 
         // Find current element's index (accounting for shadow DOM)
-        const currentIndex = activeElement
+        let currentIndex = activeElement
           ? allFocusable.findIndex((el) => {
               if (el === activeElement) return true;
               if (el.shadowRoot?.contains(activeElement)) return true;
@@ -439,6 +598,31 @@ const connectListeners = (doc: Document) => {
               return rootNode instanceof ShadowRoot && rootNode.host === el;
             })
           : -1;
+
+        /**
+         * Radio/checkbox groups can move focus onto an option with
+         * `tabIndex=-1`, while another option still has `tabIndex=0`
+         * in the list. `findIndex` then yields -1 and Tab incorrectly
+         * wraps to `allFocusable[0]`.
+         * Treat focus on any option control inside the sheet modal
+         * as the same trap slot as the listed tabbable option
+         * (`tabIndex >= 0`) so Tab goes handle → Cancel, not back
+         * to the first radio.
+         */
+        if (currentIndex < 0 && isSheetModal && activeElement) {
+          const optionHost = getOptionControlHost(activeElement);
+          if (optionHost && lastOverlay.contains(optionHost)) {
+            const directIndex = allFocusable.indexOf(optionHost);
+            if (directIndex >= 0) {
+              currentIndex = directIndex;
+            } else {
+              const tabbableOptionIndex = getTabbableOptionControlIndex(allFocusable, lastOverlay);
+              if (tabbableOptionIndex >= 0) {
+                currentIndex = tabbableOptionIndex;
+              }
+            }
+          }
+        }
 
         ev.preventDefault();
 
@@ -455,21 +639,45 @@ const connectListeners = (doc: Document) => {
           focusVisibleElement(element);
         };
 
+        let nextIndex: number;
         if (ev.shiftKey) {
           // Shift+Tab: previous element, wrap to last if at first
           if (currentIndex <= 0) {
-            focusLastDescendant(lastOverlay);
+            nextIndex = allFocusable.length - 1;
           } else {
-            focusElement(allFocusable[currentIndex - 1]);
+            nextIndex = currentIndex - 1;
           }
         } else {
           // Tab: next element, wrap to first if at last
           if (currentIndex < 0 || currentIndex >= allFocusable.length - 1) {
-            focusFirstDescendant(lastOverlay);
+            nextIndex = 0;
           } else {
-            focusElement(allFocusable[currentIndex + 1]);
+            nextIndex = currentIndex + 1;
           }
         }
+
+        const nextEl = allFocusable[nextIndex];
+
+        const overlayTrap = lastOverlay as OverlayWithSheetModalTrapState;
+        const tabbableOptionIndex =
+          isSheetModal ? getTabbableOptionControlIndex(allFocusable, lastOverlay) : -1;
+
+        /**
+         * The trap list only includes one tabbable option host
+         * (`tabIndex >= 0`), usually the checked/first radio.
+         * `focusin` tracks the real last-focused option; use it
+         * whenever Tab would focus that slot (wrap from Cancel,
+         * Shift+Tab from handle, etc.).
+         */
+        let focusTarget = nextEl;
+        if (isSheetModal && tabbableOptionIndex >= 0 && nextIndex === tabbableOptionIndex) {
+          const saved = overlayTrap.trapLastSheetOptionControl;
+          if (saved?.isConnected && lastOverlay.contains(saved) && saved !== nextEl) {
+            focusTarget = saved;
+          }
+        }
+
+        focusElement(focusTarget);
       },
       true
     );

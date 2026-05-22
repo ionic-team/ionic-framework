@@ -419,6 +419,89 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
         const modal = page.locator('ion-modal');
         await expect(modal).toHaveScreenshot(screenshot(`select-basic-modal-scroll-to-selected`));
       });
+
+      test('it should support keyboard focus cycling between list, handle, and cancel', async ({ page, pageUtils }) => {
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        await page.click('#customModalSelect');
+        await ionModalDidPresent.next();
+
+        const modal = page.locator('ion-modal');
+        const firstOption = modal.locator('.select-interface-option:first-of-type ion-radio');
+        const secondOption = modal.locator('.select-interface-option:nth-of-type(2) ion-radio');
+        const handle = modal.locator('.modal-handle');
+        const cancelButton = modal.getByRole('button', { name: 'Cancel' });
+
+        await expect(firstOption).toBeFocused();
+
+        // After moving focus with arrow keys, Tab should still visit the handle
+        // before the cancel button
+        await pageUtils.pressKeys('ArrowDown');
+        await expect(secondOption).toBeFocused();
+        await page.waitForChanges();
+        await pageUtils.pressKeys('Tab');
+        await expect(handle).toBeFocused();
+        await pageUtils.pressKeys('Shift+Tab');
+        await expect(secondOption).toBeFocused();
+
+        await pageUtils.pressKeys('ArrowUp');
+        await expect(firstOption).toBeFocused();
+
+        // Forward cycle: list option -> handle -> cancel -> list option
+        await pageUtils.pressKeys('Tab');
+        await expect(handle).toBeFocused();
+
+        await pageUtils.pressKeys('Tab');
+        await expect(cancelButton).toBeFocused();
+
+        await pageUtils.pressKeys('Tab');
+        await expect(firstOption).toBeFocused();
+
+        // Reverse cycle: list option -> cancel -> handle -> list option
+        await pageUtils.pressKeys('Shift+Tab');
+        await expect(cancelButton).toBeFocused();
+
+        await pageUtils.pressKeys('Shift+Tab');
+        await expect(handle).toBeFocused();
+
+        await pageUtils.pressKeys('Shift+Tab');
+        await expect(firstOption).toBeFocused();
+      });
+
+      test('it should tab through cancel using the last arrow-highlighted option', async ({ page, pageUtils }) => {
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        await page.click('#customModalSelect');
+        await ionModalDidPresent.next();
+
+        const modal = page.locator('ion-modal');
+        const thirdOption = modal.locator('.select-interface-option:nth-of-type(3) ion-radio');
+        const handle = modal.locator('.modal-handle');
+        const cancelButton = modal.getByRole('button', { name: 'Cancel' });
+
+        await pageUtils.pressKeys('ArrowDown');
+        await pageUtils.pressKeys('ArrowDown');
+        await expect(thirdOption).toBeFocused();
+        await page.waitForChanges();
+
+        await pageUtils.pressKeys('Tab');
+        await expect(handle).toBeFocused();
+
+        await pageUtils.pressKeys('Tab');
+        await expect(cancelButton).toBeFocused();
+
+        await pageUtils.pressKeys('Tab');
+        await expect(thirdOption).toBeFocused();
+
+        await pageUtils.pressKeys('Shift+Tab');
+        await expect(cancelButton).toBeFocused();
+
+        await pageUtils.pressKeys('Shift+Tab');
+        await expect(handle).toBeFocused();
+
+        await pageUtils.pressKeys('Shift+Tab');
+        await expect(thirdOption).toBeFocused();
+      });
     });
   });
 });

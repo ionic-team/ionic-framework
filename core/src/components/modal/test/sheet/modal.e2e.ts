@@ -391,6 +391,75 @@ configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, 
 
       await expect(dragHandle).toBeFocused();
     });
+
+    test('it should preserve the last arrow-focused radio when tabbing', async ({ page, pageUtils }) => {
+      await page.goto('/src/components/modal/test/sheet', config);
+
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-button id="open-modal">Open</ion-button>
+          <ion-modal trigger="open-modal">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>Options</ion-title>
+                <ion-buttons slot="end">
+                  <ion-button id="cancel-button">Cancel</ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content>
+              <ion-list>
+                <ion-radio-group value="one">
+                  <ion-item>
+                    <ion-radio value="one">One</ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-radio value="two">Two</ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-radio value="three">Three</ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
+            </ion-content>
+          </ion-modal>
+        </ion-app>
+        <script>
+          const modal = document.querySelector('ion-modal');
+          const cancelButton = document.querySelector('#cancel-button');
+
+          modal.breakpoints = [0, 0.5, 1];
+          modal.initialBreakpoint = 0.5;
+          modal.handleBehavior = 'cycle';
+
+          cancelButton.addEventListener('click', () => {
+            modal.dismiss();
+          });
+        </script>
+      `,
+        config
+      );
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#open-modal');
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+      const firstRadio = modal.locator('ion-radio').nth(0);
+      const secondRadio = modal.locator('ion-radio').nth(1);
+      const handle = modal.locator('.modal-handle');
+
+      await firstRadio.focus();
+      await expect(firstRadio).toBeFocused();
+
+      await pageUtils.pressKeys('ArrowDown');
+      await expect(secondRadio).toBeFocused();
+
+      await pageUtils.pressKeys('Tab');
+      await expect(handle).toBeFocused();
+    });
   });
 
   test.describe(title('sheet modal: drag events'), () => {
