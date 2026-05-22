@@ -112,7 +112,8 @@ New code should use the token-based API:
 | `--padding-bottom` | `IonContent.padding.bottom` | `--ion-content-padding-bottom` |
 | `--padding-start` | `IonContent.padding.start` | `--ion-content-padding-start` |
 
-> **Note:** The `--padding-*` overrides and `.ion-padding`, `.ion-padding-*` utility classes in `css/padding.scss` continue to work — `ion-content` honors them as a fallback when the new token is unset. They are no longer part of the documented public API (only `--ion-content-padding-*` is listed in `core/api.txt`), but existing usage will not break.
+> [!NOTE]
+> The `--padding-*` overrides and `.ion-padding`, `.ion-padding-*` utility classes in `css/padding.scss` continue to work — `ion-content` honors them as a fallback when the new token is unset. They are no longer part of the documented public API (only `--ion-content-padding-*` is listed in `core/api.txt`), but existing usage will not break.
 
 <h5>Internal-only variables</h5>
 
