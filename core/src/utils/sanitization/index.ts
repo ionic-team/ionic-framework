@@ -9,7 +9,7 @@ import { printIonError } from '@utils/logging';
  *
  * Use this when you have an HTML string from an unknown source and need
  * to render it via `innerHTML`. Prefer `sanitizeDOMTree` when the source
- * is author-controlled DOM that must keep its component attributes
+ * is a trusted DOM tree that must keep its component attributes
  * (`size`, `color`, `shape`, etc.).
  *
  * @param untrustedString - The HTML string to sanitize. Pass an
@@ -103,14 +103,14 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
 };
 
 /**
- * Sanitize an entire author-controlled DOM tree in place.
+ * Sanitize an entire trusted DOM tree in place.
  *
  * Removes blocked tags (`script`, `iframe`, etc.) from the subtree and
- * then sanitizes attributes on every remaining element. Author-written
+ * then sanitizes attributes on every remaining element. Component
  * attributes like `size`, `color`, and `shape` are preserved; event
  * handlers (`on*`) and `javascript:` URLs are stripped.
  *
- * Use this when you have a DOM tree that the developer authored (e.g.
+ * Use this when you have a DOM tree the developer controls (e.g.
  * cloned slot content from a component) and you need to render it
  * elsewhere safely.
  *
@@ -138,7 +138,7 @@ export const sanitizeDOMTree = (root: HTMLElement) => {
  * clean those up as well
  */
 // TODO(FW-2832): type (using Element triggers other type errors as well)
-const sanitizeElement = (element: any, allowSafeAuthorAttributes = false) => {
+const sanitizeElement = (element: any, allowSafeAttributes = false) => {
   // IE uses childNodes, so ignore nodes that are not elements
   if (element.nodeType && element.nodeType !== 1) {
     return;
@@ -161,13 +161,13 @@ const sanitizeElement = (element: any, allowSafeAuthorAttributes = false) => {
     const lowerName = attributeName.toLowerCase();
 
     // remove non-allowed attribs
-    if (!allowSafeAuthorAttributes && !allowedAttributes.includes(lowerName)) {
+    if (!allowSafeAttributes && !allowedAttributes.includes(lowerName)) {
       element.removeAttribute(attributeName);
       continue;
     }
 
     // strip event-handler attributes (already removed by the allowlist
-    // when !allowSafeAuthorAttributes; this guards the permissive path)
+    // when !allowSafeAttributes; this guards the permissive path)
     if (lowerName.startsWith('on')) {
       element.removeAttribute(attributeName);
       continue;
@@ -205,7 +205,7 @@ const sanitizeElement = (element: any, allowSafeAuthorAttributes = false) => {
 
   /* eslint-disable-next-line */
   for (let i = 0; i < childElements.length; i++) {
-    sanitizeElement(childElements[i], allowSafeAuthorAttributes);
+    sanitizeElement(childElements[i], allowSafeAttributes);
   }
 };
 
@@ -231,8 +231,57 @@ const isSanitizerEnabled = (): boolean => {
   return true;
 };
 
+/**
+ * Mirror known custom-element DOM properties onto attributes so they
+ * survive `cloneNode`. Call this on a DOM subtree before cloning it for
+ * rendering elsewhere (e.g. cloning slotted option content into an
+ * overlay).
+ *
+ * Only sets the attribute when the property holds a non-empty string
+ * and the attribute isn't already present, so existing attributes
+ * take precedence.
+ *
+ * @param root - The root element whose subtree (and itself) will be
+ * inspected.
+ */
+export const reflectPropertiesToAttributes = (root: Element): void => {
+  const candidates: Element[] = [];
+  if (root.tagName in elementPropsToReflect) {
+    candidates.push(root);
+  }
+  for (const tagName of Object.keys(elementPropsToReflect)) {
+    candidates.push(...Array.from(root.querySelectorAll(tagName.toLowerCase())));
+  }
+
+  for (const el of candidates) {
+    if (!(el.tagName in elementPropsToReflect)) {
+      continue;
+    }
+    const props = elementPropsToReflect[el.tagName];
+    for (const prop of props) {
+      const value = (el as unknown as Record<string, unknown>)[prop];
+      if (typeof value === 'string' && value.length > 0 && !el.hasAttribute(prop)) {
+        el.setAttribute(prop, value);
+      }
+    }
+  }
+};
+
 const allowedAttributes = ['class', 'id', 'href', 'src', 'name', 'slot'];
 const blockedTags = ['script', 'style', 'iframe', 'meta', 'link', 'object', 'embed'];
+/**
+ * Properties on custom elements that frameworks (Vue, Angular) often
+ * set as DOM properties rather than attributes. `cloneNode` only copies
+ * attributes, so these values are lost when slotted content is cloned
+ * into an overlay. For each known custom element, we mirror the listed
+ * properties onto attributes so the cloned copy still has the data it
+ * needs to render.
+ *
+ * Keyed by uppercased tagName so the lookup matches `Element.tagName`.
+ */
+const elementPropsToReflect: Record<string, string[]> = {
+  'ION-ICON': ['icon', 'name', 'src', 'ios', 'md'],
+};
 
 export class IonicSafeString {
   constructor(public value: string) {}

@@ -10,7 +10,7 @@ import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
 import type { OverlaySelect } from '@utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
-import { sanitizeDOMTree } from '@utils/sanitization';
+import { reflectPropertiesToAttributes, sanitizeDOMTree } from '@utils/sanitization';
 import { createColorClasses, hostContext } from '@utils/theme';
 import { watchForOptions } from '@utils/watch-options';
 import { caretDownSharp, chevronExpand } from 'ionicons/icons';
@@ -1654,6 +1654,18 @@ const getOptionContent = (
     return nodes.map((n) => n.textContent?.trim()).join(' ') || null;
   }
 
+  /**
+   * Mirror known custom-element properties (e.g. ion-icon's `icon`)
+   * onto attributes before cloning. Frameworks like Vue set these as
+   * DOM properties, which `cloneNode` doesn't copy, so without this
+   * step the cloned overlay copy renders without the prop's value.
+   */
+  nodes.forEach((n) => {
+    if (n.nodeType === Node.ELEMENT_NODE) {
+      reflectPropertiesToAttributes(n as Element);
+    }
+  });
+
   // Clone each node into a temporary container
   const container = document.createElement('div');
   nodes.forEach((n) => {
@@ -1666,9 +1678,11 @@ const getOptionContent = (
     container.appendChild(clone);
   });
 
-  // Sanitize the cloned DOM in place. Author-written attributes (size,
-  // color, shape, etc.) are preserved; event handlers, javascript: URLs,
-  // and blocked tags are stripped.
+  /**
+   * Sanitize the cloned DOM in place. Trusted attributes (size, color,
+   * shape, etc.) are preserved; event handlers, javascript: URLs, and
+   * blocked tags are stripped.
+   */
   sanitizeDOMTree(container);
 
   if (useHTML) {
