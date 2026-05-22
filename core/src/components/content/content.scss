@@ -6,12 +6,11 @@
 
 :host {
   /**
-   * @prop --ion-content-background: Background of the content
-   *
-   * @prop --ion-content-color: Color of the content
-   *
+   * @prop --ion-content-default-background: Background of the content
+   * @prop --ion-content-default-color: Color of the content
+   * @prop --ion-content-semantic-default-background: Background of the content when a semantic color is applied
+   * @prop --ion-content-semantic-default-color: Color of the content when a semantic color is applied
    * @prop --ion-content-font-family: Font family of the content
-   *
    * @prop --ion-content-overflow: Overflow behavior of the scrollable area
    *
    * @prop --ion-content-padding-top: Top padding of the content
@@ -75,7 +74,7 @@
 
   position: absolute;
 
-  color: var(--ion-content-color);
+  color: var(--ion-content-default-color);
 
   box-sizing: border-box;
 
@@ -92,8 +91,8 @@
 }
 
 :host(.ion-color) .inner-scroll {
-  background: color.current-color(base);
-  color: color.current-color(contrast);
+  background: var(--ion-content-semantic-default-background);
+  color: var(--ion-content-semantic-default-color);
 }
 
 // Content Scroll
@@ -140,7 +139,7 @@
 
   position: absolute;
 
-  background: var(--ion-content-background);
+  background: var(--ion-content-default-background);
 }
 
 // Content Overscroll

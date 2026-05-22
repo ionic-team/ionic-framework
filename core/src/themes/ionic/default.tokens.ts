@@ -462,8 +462,17 @@ export const defaultTheme: DefaultTheme = {
     },
 
     IonContent: {
-      background: baseColors.backgroundColor,
-      color: baseColors.textColor,
+      default: {
+        background: baseColors.backgroundColor,
+        color: baseColors.textColor,
+      },
+
+      semantic: {
+        default: {
+          background: currentColor('base'),
+          color: currentColor('contrast'),
+        },
+      },
 
       font: {
         family: 'var(--ion-font-family)',
