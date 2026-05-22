@@ -44,7 +44,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
         `
         <style>
           ion-content {
-            --ion-content-background: linear-gradient(to right, orange, yellow, green, cyan, blue, violet);
+            --ion-content-default-background: linear-gradient(to right, orange, yellow, green, cyan, blue, violet);
           }
         </style>
         <ion-tabs>
