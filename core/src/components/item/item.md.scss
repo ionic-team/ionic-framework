@@ -172,7 +172,8 @@
 // --------------------------------------------------
 
 ::slotted(ion-thumbnail) {
-  --size: #{$item-md-thumbnail-size};
+  --ion-thumbnail-width: #{$item-md-thumbnail-width};
+  --ion-thumbnail-height: #{$item-md-thumbnail-height};
 }
 
 // Material Design Item Avatar/Thumbnail

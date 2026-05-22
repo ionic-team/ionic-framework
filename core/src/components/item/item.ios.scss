@@ -161,7 +161,8 @@
 // --------------------------------------------------
 
 ::slotted(ion-thumbnail) {
-  --size: #{$item-ios-thumbnail-size};
+  --ion-thumbnail-width: #{$item-ios-thumbnail-width};
+  --ion-thumbnail-height: #{$item-ios-thumbnail-height};
 }
 
 // iOS Item Avatar/Thumbnail

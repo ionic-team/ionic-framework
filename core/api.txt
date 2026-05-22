@@ -2806,9 +2806,9 @@ ion-textarea,part,wrapper
 
 ion-thumbnail,shadow
 ion-thumbnail,prop,mode,"ios" | "md",undefined,false,false
-ion-thumbnail,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-thumbnail,css-prop,--border-radius
-ion-thumbnail,css-prop,--size
+ion-thumbnail,css-prop,--ion-thumbnail-border-radius
+ion-thumbnail,css-prop,--ion-thumbnail-height
+ion-thumbnail,css-prop,--ion-thumbnail-width
 
 ion-title,shadow
 ion-title,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
