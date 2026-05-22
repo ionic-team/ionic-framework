@@ -36,29 +36,29 @@
     "sync": "sh ./scripts/sync.sh"
   },
   "peerDependencies": {
-    "@angular/core": ">=16.0.0",
-    "@angular/platform-server": ">=16.0.0",
+    "@angular/core": ">=18.0.0",
+    "@angular/platform-server": ">=18.0.0",
     "rxjs": ">=7.5.0",
     "zone.js": ">=0.13.0"
   },
   "devDependencies": {
-    "@angular-eslint/eslint-plugin": "^16.0.0",
-    "@angular/animations": "^16.0.0",
-    "@angular/common": "^16.0.0",
-    "@angular/compiler": "^16.0.0",
-    "@angular/compiler-cli": "^16.0.0",
-    "@angular/core": "^16.0.0",
-    "@angular/platform-browser": "^16.0.0",
-    "@angular/platform-browser-dynamic": "^16.0.0",
-    "@angular/platform-server": "^16.0.0",
+    "@angular-eslint/eslint-plugin": "^21.0.0",
+    "@angular/animations": "^21.0.0",
+    "@angular/common": "^21.0.0",
+    "@angular/compiler": "^21.0.0",
+    "@angular/compiler-cli": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/platform-browser": "^21.0.0",
+    "@angular/platform-browser-dynamic": "^21.0.0",
+    "@angular/platform-server": "^21.0.0",
     "@ionic/eslint-config": "^0.4.0",
     "@ionic/prettier-config": "^2.0.0",
     "@types/node": "^20.14.9",
     "eslint": "^8.57.0",
-    "ng-packagr": "^16.0.0",
+    "ng-packagr": "^21.0.0",
     "prettier": "^2.4.1",
     "rxjs": "^7.8.0",
-    "typescript": "~4.9.3"
+    "typescript": "~5.9.0"
   },
   "prettier": "@ionic/prettier-config",
   "dependencies": {

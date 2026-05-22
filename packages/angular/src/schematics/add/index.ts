@@ -93,6 +93,27 @@ function addProvideIonicAngular(projectName: string, projectSourceRoot: Path): R
   };
 }
 
+/**
+ * Adds `provideZoneChangeDetection()` to the project's app config. Angular 21
+ * defaults `bootstrapApplication` to a zoneless `NoopNgZone`, which breaks
+ * change detection for async Ionic lifecycle events. Adding the provider is a
+ * no-op on Angular 18-20 (zone-based was the default there) and required on 21+.
+ * @param projectName The name of the project.
+ * @param projectSourceRoot The source root path of the project.
+ */
+function addProvideZoneChangeDetection(projectName: string, projectSourceRoot: Path): Rule {
+  return (host: Tree) => {
+    const appConfig = `${projectSourceRoot}/app/app.config.ts`;
+    if (host.exists(appConfig)) {
+      return addRootProvider(
+        projectName,
+        ({ code, external }) => code`${external('provideZoneChangeDetection', '@angular/core')}()`
+      );
+    }
+    return host;
+  };
+}
+
 function addIonicStyles(projectName: string, projectSourceRoot: Path): Rule {
   return (host: Tree) => {
     const ionicStyles = [
@@ -219,6 +240,7 @@ export default function ngAdd(options: IonAddOptions): Rule {
       addIonicAngularToolkitToAngularJson(),
       addIonicAngularModuleToAppModule(sourcePath),
       addProvideIonicAngular(options.project, sourcePath),
+      addProvideZoneChangeDetection(options.project, sourcePath),
       addIonicBuilder(options.project),
       addIonicStyles(options.project, sourcePath),
       addIonicons(options.project, sourcePath),

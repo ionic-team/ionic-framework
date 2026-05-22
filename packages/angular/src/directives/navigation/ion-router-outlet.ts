@@ -13,6 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { IonRouterOutlet as IonRouterOutletBase } from '@ionic/angular/common';
 
 @Component({
+  standalone: false,
   selector: 'ion-router-outlet',
   template: '<ng-container #outletContent><ng-content></ng-content></ng-container>',
 })

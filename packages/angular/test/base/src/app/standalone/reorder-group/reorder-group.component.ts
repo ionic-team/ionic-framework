@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { IonItem, IonLabel, IonReorder, IonReorderGroup } from '@ionic/angular/standalone';
-import { ReorderEndCustomEvent } from "@ionic/angular";
+import type { ReorderEndEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-reorder-group',
@@ -24,7 +24,7 @@ import { ReorderEndCustomEvent } from "@ionic/angular";
   imports: [IonItem, IonLabel, IonReorder, IonReorderGroup]
 })
 export class ReorderGroupComponent {
-  onReorderEnd(event: ReorderEndCustomEvent) {
+  onReorderEnd(event: CustomEvent<ReorderEndEventDetail>) {
     if (event.detail.from !== event.detail.to) {
       console.log('ionReorderEnd: Dragged from index', event.detail.from, 'to', event.detail.to);
     } else {

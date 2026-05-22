@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonRefresher, IonRefresherContent, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-import { RefresherCustomEvent, RefresherPullEndCustomEvent } from "@ionic/angular";
+import type { RefresherEventDetail, RefresherPullEndEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-refresher',
@@ -57,12 +57,12 @@ export class RefresherComponent {
     this.pullStartCount++;
   }
 
-  onRefresh(event: RefresherCustomEvent) {
+  onRefresh(event: CustomEvent<RefresherEventDetail>) {
     this.refreshCount++;
-    event.target.complete();
+    (event.target as HTMLIonRefresherElement | null)?.complete();
   }
 
-  onPullEnd(event: RefresherPullEndCustomEvent) {
+  onPullEnd(event: CustomEvent<RefresherPullEndEventDetail>) {
     this.pullEndCount++;
     this.pullEndReason = event.detail.reason;
   }

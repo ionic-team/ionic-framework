@@ -11,11 +11,13 @@ import {
  * animation so that the routing integration will transition correctly.
  */
 @Directive({
+  standalone: false,
   selector: ':not(a):not(area)[routerLink]',
 })
 export class RouterLinkDelegateDirective extends RouterLinkDelegateBase {}
 
 @Directive({
+  standalone: false,
   selector: 'a[routerLink],area[routerLink]',
 })
 export class RouterLinkWithHrefDelegateDirective extends RouterLinkHrefDelegateBase {}

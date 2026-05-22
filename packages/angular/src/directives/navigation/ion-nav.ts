@@ -10,6 +10,7 @@ import {
 import { IonNav as IonNavBase, AngularDelegate } from '@ionic/angular/common';
 
 @Component({
+  standalone: false,
   selector: 'ion-nav',
   template: '<ng-content></ng-content>',
   changeDetection: ChangeDetectionStrategy.OnPush,
