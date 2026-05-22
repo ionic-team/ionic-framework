@@ -2489,14 +2489,14 @@ the user clears the textarea by performing a keydown event.
 
 
 @ProxyCmp({
-  inputs: ['mode', 'theme']
+  inputs: ['mode']
 })
 @Component({
   selector: 'ion-thumbnail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode', 'theme'],
+  inputs: ['mode'],
 })
 export class IonThumbnail {
   protected el: HTMLIonThumbnailElement;

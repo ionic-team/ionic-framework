@@ -2185,14 +2185,14 @@ export declare interface IonText extends Components.IonText {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonThumbnail,
-  inputs: ['mode', 'theme']
+  inputs: ['mode']
 })
 @Component({
   selector: 'ion-thumbnail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode', 'theme'],
+  inputs: ['mode'],
   standalone: true
 })
 export class IonThumbnail {
