@@ -22,8 +22,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       await page.setContent(
         `
+          <style>
+            ion-thumbnail {
+              --ion-item-thumbnail-width: 20px;
+              --ion-item-thumbnail-height: 20px;
+            }
+          </style>
+
           <ion-item>
-            <ion-thumbnail style="--ion-thumbnail-width: 20px; --ion-thumbnail-height: 20px">
+            <ion-thumbnail>
               <img src="/src/components/thumbnail/test/thumbnail.svg" />
             </ion-thumbnail>
           </ion-item>
@@ -38,8 +45,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
     test('size should be customizable in <ion-item-divider>', async ({ page }) => {
       await page.setContent(
         `
+          <style>
+            ion-item-divider {
+              --ion-item-divider-thumbnail-width: 20px;
+              --ion-item-divider-thumbnail-height: 20px;
+            }
+          </style>
+
           <ion-item-divider>
-            <ion-thumbnail style="--ion-thumbnail-width: 20px; --ion-thumbnail-height: 20px">
+            <ion-thumbnail>
               <img src="/src/components/thumbnail/test/thumbnail.svg" />
             </ion-thumbnail>
           </ion-item-divider>
