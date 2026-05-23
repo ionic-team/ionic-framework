@@ -1060,7 +1060,6 @@ ion-img,shadow
 ion-img,prop,alt,string | undefined,undefined,false,false
 ion-img,prop,mode,"ios" | "md",undefined,false,false
 ion-img,prop,src,string | undefined,undefined,false,false
-ion-img,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-img,event,ionError,void,true
 ion-img,event,ionImgDidLoad,void,true
 ion-img,event,ionImgWillLoad,void,true

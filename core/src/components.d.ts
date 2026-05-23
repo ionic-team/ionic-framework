@@ -1525,10 +1525,6 @@ export namespace Components {
           * The image URL. This attribute is mandatory for the `<img>` element.
          */
         "src"?: string;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonInfiniteScroll {
         /**
@@ -7525,10 +7521,6 @@ declare namespace LocalJSX {
           * The image URL. This attribute is mandatory for the `<img>` element.
          */
         "src"?: string;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonInfiniteScroll {
         /**
