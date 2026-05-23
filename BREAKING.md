@@ -21,6 +21,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Chip](#version-9x-chip)
   - [Datetime](#version-9x-datetime)
   - [Grid](#version-9x-grid)
+  - [Image](#version-9x-image)
   - [Input Otp](#version-9x-input-otp)
   - [Item Divider](#version-9x-item-divider)
   - [Radio Group](#version-9x-radio-group)
@@ -201,6 +202,16 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
+<h4 id="version-9x-image">Image</h4>
+
+The following breaking changes apply to `ion-img`:
+
+1. Theme classes (`ion-img.md`, `ion-img.ios`) are no longer supported.
+
+<h5>Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-img.md`, `ion-img.ios`.
 
 <h4 id="version-9x-input-otp">Input Otp</h4>
 
