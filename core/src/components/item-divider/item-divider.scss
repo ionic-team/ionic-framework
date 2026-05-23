@@ -308,15 +308,15 @@
 
 // Thumbnail
 ::slotted(ion-thumbnail) {
-  --ion-thumbnail-width: var(--ion-item-divider-thumbnail-width);
-  --ion-thumbnail-height: var(--ion-item-divider-thumbnail-height);
-
   @include mixins.margin(
     var(--ion-item-divider-thumbnail-margin-top),
     var(--ion-item-divider-thumbnail-margin-end),
     var(--ion-item-divider-thumbnail-margin-bottom),
     var(--ion-item-divider-thumbnail-margin-start)
   );
+
+  width: var(--ion-item-divider-thumbnail-width, revert-layer);
+  height: var(--ion-item-divider-thumbnail-height, revert-layer);
 }
 
 ::slotted(ion-thumbnail[slot="start"]) {

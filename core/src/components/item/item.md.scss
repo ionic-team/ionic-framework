@@ -172,8 +172,9 @@
 // --------------------------------------------------
 
 ::slotted(ion-thumbnail) {
-  --ion-thumbnail-width: #{$item-md-thumbnail-width};
-  --ion-thumbnail-height: #{$item-md-thumbnail-height};
+  // TODO(FW-6847): switch to the --ion-item-thumbnail-width/height pattern used in item-divider.scss
+  width: $item-md-thumbnail-width;
+  height: $item-md-thumbnail-height;
 }
 
 // Material Design Item Avatar/Thumbnail

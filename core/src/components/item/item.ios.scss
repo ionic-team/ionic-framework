@@ -161,8 +161,9 @@
 // --------------------------------------------------
 
 ::slotted(ion-thumbnail) {
-  --ion-thumbnail-width: #{$item-ios-thumbnail-width};
-  --ion-thumbnail-height: #{$item-ios-thumbnail-height};
+  // TODO(FW-6847): switch to the --ion-item-thumbnail-width/height pattern used in item-divider.scss
+  width: $item-ios-thumbnail-width;
+  height: $item-ios-thumbnail-height;
 }
 
 // iOS Item Avatar/Thumbnail
