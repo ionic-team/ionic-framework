@@ -167,7 +167,7 @@ class ScrollAssistFixture {
 
     await this.focusInput(interactiveSelector, inputSelector);
 
-    await expect(content).not.toHaveCSS('--keyboard-offset', '0px');
+    await expect(content).not.toHaveCSS('--internal-keyboard-offset', '0px');
   }
 
   async expectNotToHaveScrollPadding(interactiveSelector: string, inputSelector: string) {
@@ -175,6 +175,6 @@ class ScrollAssistFixture {
 
     await this.focusInput(interactiveSelector, inputSelector);
 
-    await expect(content).toHaveCSS('--keyboard-offset', '0px');
+    await expect(content).toHaveCSS('--internal-keyboard-offset', '0px');
   }
 }

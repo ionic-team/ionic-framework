@@ -19,6 +19,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Button](#version-9x-button)
   - [Card](#version-9x-card)
   - [Chip](#version-9x-chip)
+  - [Content](#version-9x-content)
   - [Datetime](#version-9x-datetime)
   - [Grid](#version-9x-grid)
   - [Input Otp](#version-9x-input-otp)
@@ -81,6 +82,54 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - The `outline` property has been deprecated. To achieve an outlined chip, set the `fill` property to `"outline"`. The class `.chip-outline` has also been updated to `.chip-fill-outline` for clarity.
 - Specific theme classes (e.g., `ion-chip.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
 - The `border-radius` of the `ios` and `md` chip now defaults to `10px` and `8px`, respectively, instead of `16px` in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"round"`, or override the `IonChip.shape.round.border.radius` to specify a different value for global styles and `--ion-chip-shape-round-border-radius` for component-specific styles.
+
+<h4 id="version-9x-content">Content</h4>
+
+The following breaking changes apply to `ion-content`:
+
+1. `--background` and `--color` CSS variables have been replaced.
+2. `--padding-*` CSS variables are no longer part of the documented public API (but remain functional).
+3. `--keyboard-offset`, `--offset-top`, and `--offset-bottom` have been renamed to the `--internal-*` namespace with no replacement.
+4. Theme classes (`ion-content.md`, `ion-content.ios`) are no longer supported.
+
+<h5>Removed CSS variables</h5>
+
+`--background` and `--color` have been removed. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--background` | `IonContent.background` | `--ion-content-default-background` |
+| `--color` | `IonContent.color` | `--ion-content-default-color` |
+
+<h5>Padding variables</h5>
+
+New code should use the token-based API:
+
+| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--padding-top` | `IonContent.padding.top` | `--ion-content-padding-top` |
+| `--padding-end` | `IonContent.padding.end` | `--ion-content-padding-end` |
+| `--padding-bottom` | `IonContent.padding.bottom` | `--ion-content-padding-bottom` |
+| `--padding-start` | `IonContent.padding.start` | `--ion-content-padding-start` |
+
+> [!NOTE]
+> The `--padding-*` overrides and `.ion-padding`, `.ion-padding-*` utility classes in `css/padding.scss` continue to work — `ion-content` honors them as a fallback when the new token is unset. They are no longer part of the documented public API (only `--ion-content-padding-*` is listed in `core/api.txt`), but existing usage will not break.
+
+<h5>Internal-only variables</h5>
+
+The following CSS variables were previously documented `@prop`s on `ion-content` and have been renamed to the `--internal-*` namespace, removing them from the public API:
+
+| Old (8.x) | New |
+|---|---|
+| `--keyboard-offset` | `--internal-keyboard-offset` |
+| `--offset-top` | `--internal-offset-top` |
+| `--offset-bottom` | `--internal-offset-bottom` |
+
+These are managed by `ion-content` itself (keyboard avoidance and header/footer offsets) and were never intended for consumer override. There is no replacement — any code that was setting them directly should be removed.
+
+<h5>Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-content.md`, `ion-content.ios`.
 
 <h4 id="version-9x-datetime">Datetime</h4>
 
