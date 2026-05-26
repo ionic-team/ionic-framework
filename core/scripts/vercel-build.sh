@@ -48,6 +48,7 @@ echo "Copying core output..."
 cp -r "${CORE_DIR}/src" "${OUTPUT_DIR}/src"
 cp -r "${CORE_DIR}/dist" "${OUTPUT_DIR}/dist"
 cp -r "${CORE_DIR}/css" "${OUTPUT_DIR}/css"
+cp -r "${CORE_DIR}/themes" "${OUTPUT_DIR}/themes"
 mkdir -p "${OUTPUT_DIR}/scripts"
 cp -r "${CORE_DIR}/scripts/testing" "${OUTPUT_DIR}/scripts/testing"
 
