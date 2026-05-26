@@ -1042,7 +1042,8 @@ export const IonTab: StencilVueComponent<JSX.IonTab> = /*@__PURE__*/ defineConta
 
 
 export const IonText: StencilVueComponent<JSX.IonText> = /*@__PURE__*/ defineContainer<JSX.IonText>('ion-text', defineIonText, [
-  'color'
+  'color',
+  'hue'
 ]);
 
 

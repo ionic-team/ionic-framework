@@ -44,6 +44,7 @@ import { SelectModalOption } from "./components/select-modal/select-modal-interf
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { SpinnerSize } from "./components/spinner/spinner.interfaces";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
+import { IonTextHue } from "./components/text/text.interfaces";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 import { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
@@ -86,6 +87,7 @@ export { SelectModalOption } from "./components/select-modal/select-modal-interf
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { SpinnerSize } from "./components/spinner/spinner.interfaces";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
+export { IonTextHue } from "./components/text/text.interfaces";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 export { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
@@ -4075,13 +4077,13 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * Set to `"bold"` for a text with vibrant, bold colors or to `"subtle"` for a text with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
+         */
+        "hue"?: IonTextHue;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTextarea {
         /**
@@ -10155,13 +10157,13 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
+          * Set to `"bold"` for a text with vibrant, bold colors or to `"subtle"` for a text with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
+         */
+        "hue"?: IonTextHue;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTextarea {
         /**
@@ -11313,6 +11315,7 @@ declare namespace LocalJSX {
     }
     interface IonTextAttributes {
         "color": Color;
+        "hue": IonTextHue;
     }
     interface IonTextareaAttributes {
         "color": Color;

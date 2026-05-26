@@ -2161,14 +2161,14 @@ export declare interface IonTabButton extends Components.IonTabButton {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonText,
-  inputs: ['color', 'mode', 'theme']
+  inputs: ['color', 'hue', 'mode']
 })
 @Component({
   selector: 'ion-text',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'theme'],
+  inputs: ['color', 'hue', 'mode'],
   standalone: true
 })
 export class IonText {

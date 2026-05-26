@@ -2,12 +2,13 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonTheme } from '../../global/ionic-global';
+import { config } from '../../global/config';
 import type { Color } from '../../interface';
+
+import type { IonTextHue } from './text.interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-text',
@@ -22,12 +23,30 @@ export class Text implements ComponentInterface {
    */
   @Prop({ reflect: true }) color?: Color;
 
+  /**
+   * Set to `"bold"` for a text with vibrant, bold colors or to `"subtle"` for
+   * a text with muted, subtle colors.
+   *
+   * Defaults to `"bold"` if both the hue property and theme config are unset.
+   */
+  @Prop() hue?: IonTextHue;
+
+  /**
+   * Gets the text hue. Uses the `hue` property if set, otherwise
+   * checks the theme config and falls back to 'bold' if neither is provided.
+   */
+  get hueValue(): IonTextHue {
+    const hueConfig = config.getObjectValue('IonText.hue', 'bold') as IonTextHue;
+
+    return this.hue || hueConfig;
+  }
+
   render() {
-    const theme = getIonTheme(this);
+    const { hueValue } = this;
     return (
       <Host
         class={createColorClasses(this.color, {
-          [theme]: true,
+          [`text-hue-${hueValue}`]: true,
         })}
       >
         <slot></slot>
