@@ -13,8 +13,8 @@
 
   display: block;
 
-  width: var(--ion-thumbnail-width);
-  height: var(--ion-thumbnail-height);
+  width: var(--ion-thumbnail-width, 48px);
+  height: var(--ion-thumbnail-height, 48px);
 }
 
 ::slotted(ion-img),
