@@ -42,7 +42,11 @@ export class MenuToggle implements ComponentInterface {
   @Listen('ionMenuChange', { target: 'body' })
   @Listen('ionSplitPaneVisible', { target: 'body' })
   async visibilityChanged() {
-    this.visible = await updateVisibility(this.menu);
+    try {
+      this.visible = await updateVisibility(this.menu);
+    } catch {
+      this.visible = false;
+    }
   }
 
   private onClick = () => {
