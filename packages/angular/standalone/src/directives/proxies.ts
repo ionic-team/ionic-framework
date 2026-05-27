@@ -1398,14 +1398,14 @@ export declare interface IonMenuButton extends Components.IonMenuButton {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonMenuToggle,
-  inputs: ['autoHide', 'menu', 'mode', 'theme']
+  inputs: ['autoHide', 'menu', 'mode']
 })
 @Component({
   selector: 'ion-menu-toggle',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['autoHide', 'menu', 'mode', 'theme'],
+  inputs: ['autoHide', 'menu', 'mode'],
   standalone: true
 })
 export class IonMenuToggle {
