@@ -24,6 +24,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Grid](#version-9x-grid)
   - [Input Otp](#version-9x-input-otp)
   - [Item Divider](#version-9x-item-divider)
+  - [Menu Toggle](#version-9x-menu-toggle)
   - [Radio Group](#version-9x-radio-group)
   - [Spinner](#version-9x-spinner)
   - [Textarea](#version-9x-textarea)
@@ -271,6 +272,16 @@ If you were targeting the internals of `ion-input-otp` in your CSS, you will nee
    - `--inner-padding-bottom` is replaced by `IonItemDivider.inner.padding.bottom` for global styles and `--ion-item-divider-inner-padding-bottom` for component-specific overrides.
    - `--inner-padding-start` is replaced by `IonItemDivider.inner.padding.start` for global styles and `--ion-item-divider-inner-padding-start` for component-specific overrides.
 - Specific theme classes (e.g., `ion-item-divider.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
+
+<h4 id="version-9x-menu-toggle">Menu Toggle</h4>
+
+The following breaking changes apply to `ion-menu-toggle`:
+
+1. Theme classes (`ion-menu-toggle.md`, `ion-menu-toggle.ios`) are no longer supported.
+
+<h5>Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-menu-toggle.md`, `ion-menu-toggle.ios`.
 
 <h4 id="version-9x-radio-group">Radio Group</h4>
 
