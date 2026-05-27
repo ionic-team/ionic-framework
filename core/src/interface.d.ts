@@ -7,7 +7,7 @@ export { AccordionGroupCustomEvent } from './components/accordion-group/accordio
 export { AlertOptions } from './components/alert/alert-interface';
 export { ActionSheetOptions } from './components/action-sheet/action-sheet-interface';
 export { BreadcrumbCustomEvent } from './components/breadcrumb/breadcrumb-interface';
-export { ScrollBaseCustomEvent, ScrollCallback, ScrollCustomEvent } from './components/content/content-interface';
+export { ScrollBaseCustomEvent, ScrollCallback, ScrollCustomEvent } from './components/content/content.interfaces';
 export { CheckboxCustomEvent } from './components/checkbox/checkbox-interface';
 export { DatetimeCustomEvent, DatetimeHighlightStyle } from './components/datetime/datetime-interface';
 export { InfiniteScrollCustomEvent } from './components/infinite-scroll/infinite-scroll-interface';
