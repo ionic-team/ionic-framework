@@ -23,7 +23,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       await page.setContent(
         `
           <style>
-            ion-thumbnail {
+            ion-item {
               --ion-item-thumbnail-width: 20px;
               --ion-item-thumbnail-height: 20px;
             }

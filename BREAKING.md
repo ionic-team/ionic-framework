@@ -268,6 +268,17 @@ The following breaking changes apply to `ion-thumbnail`:
 > [!NOTE]
 > Code that previously set `--size: 48px` on `ion-thumbnail` must now set both `--ion-thumbnail-width: 48px` and `--ion-thumbnail-height: 48px`.
 
+<h5>Slotted inside `ion-item` or `ion-item-divider`</h5>
+
+When `ion-thumbnail` is slotted inside a parent component, the parent owns the sizing.
+
+Use the **parent's** thumbnail tokens instead:
+
+| Context | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| Inside `ion-item` | `IonItem.thumbnail.width` / `IonItem.thumbnail.height` | `--ion-item-thumbnail-width` / `--ion-item-thumbnail-height` |
+| Inside `ion-item-divider` | `IonItemDivider.thumbnail.width` / `IonItemDivider.thumbnail.height` | `--ion-item-divider-thumbnail-width` / `--ion-item-divider-thumbnail-height` |
+
 <h5>Theme classes</h5>
 
 Remove any instances that target the theme classes: `ion-thumbnail.md`, `ion-thumbnail.ios`.
