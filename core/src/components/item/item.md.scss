@@ -172,7 +172,7 @@
 // --------------------------------------------------
 
 ::slotted(ion-thumbnail) {
-  // TODO(FW-6847): replace $item-md-thumbnail-* to revert-layer pattern used in item-divider.scss. Assuming the --ion-item-thumbnail-width/height tokens will be used in the migration, else update them.
+  // TODO(FW-6847): adopt the revert-layer pattern from item-divider.scss
   width: var(--ion-item-thumbnail-width, $item-md-thumbnail-width);
   height: var(--ion-item-thumbnail-height, $item-md-thumbnail-height);
 }
