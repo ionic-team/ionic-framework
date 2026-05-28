@@ -1,1 +1,2 @@
-core/src/components/**/*/*.png
+# Exclude visual-regression snapshot artifacts only
+core/src/**/*-snapshots/*.png
