@@ -105,18 +105,18 @@
         </ion-grid>
 
         <h2 class="ion-padding-start">Custom Column Padding By Breakpoint</h2>
-        <ion-grid class="custom-column-padding">
+        <ion-grid>
           <ion-row>
-            <ion-col>
+            <ion-col class="custom-column-padding">
               <div>ion-col</div>
             </ion-col>
-            <ion-col>
+            <ion-col class="custom-column-padding">
               <div>ion-col</div>
             </ion-col>
-            <ion-col>
+            <ion-col class="custom-column-padding">
               <div>ion-col</div>
             </ion-col>
-            <ion-col>
+            <ion-col class="custom-column-padding">
               <div>ion-col</div>
             </ion-col>
           </ion-row>
@@ -136,19 +136,57 @@
         }
 
         .custom-grid-padding {
-          --ion-grid-padding-xs: 0;
-          --ion-grid-padding-sm: 10px;
-          --ion-grid-padding-md: 20px;
-          --ion-grid-padding-lg: 30px;
-          --ion-grid-padding-xl: 40px;
+          --ion-grid-breakpoint-xs-padding-top: 0;
+          --ion-grid-breakpoint-xs-padding-end: 0;
+          --ion-grid-breakpoint-xs-padding-bottom: 0;
+          --ion-grid-breakpoint-xs-padding-start: 0;
+
+          --ion-grid-breakpoint-sm-padding-top: 10px;
+          --ion-grid-breakpoint-sm-padding-end: 10px;
+          --ion-grid-breakpoint-sm-padding-bottom: 10px;
+          --ion-grid-breakpoint-sm-padding-start: 10px;
+
+          --ion-grid-breakpoint-md-padding-top: 20px;
+          --ion-grid-breakpoint-md-padding-end: 20px;
+          --ion-grid-breakpoint-md-padding-bottom: 20px;
+          --ion-grid-breakpoint-md-padding-start: 20px;
+
+          --ion-grid-breakpoint-lg-padding-top: 30px;
+          --ion-grid-breakpoint-lg-padding-end: 30px;
+          --ion-grid-breakpoint-lg-padding-bottom: 30px;
+          --ion-grid-breakpoint-lg-padding-start: 30px;
+
+          --ion-grid-breakpoint-xl-padding-top: 40px;
+          --ion-grid-breakpoint-xl-padding-end: 40px;
+          --ion-grid-breakpoint-xl-padding-bottom: 40px;
+          --ion-grid-breakpoint-xl-padding-start: 40px;
         }
 
         .custom-column-padding {
-          --ion-grid-column-padding-xs: 2px;
-          --ion-grid-column-padding-sm: 5px;
-          --ion-grid-column-padding-md: 10px;
-          --ion-grid-column-padding-lg: 15px;
-          --ion-grid-column-padding-xl: 25px;
+          --ion-col-breakpoint-xs-padding-top: 2px;
+          --ion-col-breakpoint-xs-padding-end: 2px;
+          --ion-col-breakpoint-xs-padding-bottom: 2px;
+          --ion-col-breakpoint-xs-padding-start: 2px;
+
+          --ion-col-breakpoint-sm-padding-top: 5px;
+          --ion-col-breakpoint-sm-padding-end: 5px;
+          --ion-col-breakpoint-sm-padding-bottom: 5px;
+          --ion-col-breakpoint-sm-padding-start: 5px;
+
+          --ion-col-breakpoint-md-padding-top: 10px;
+          --ion-col-breakpoint-md-padding-end: 10px;
+          --ion-col-breakpoint-md-padding-bottom: 10px;
+          --ion-col-breakpoint-md-padding-start: 10px;
+
+          --ion-col-breakpoint-lg-padding-top: 15px;
+          --ion-col-breakpoint-lg-padding-end: 15px;
+          --ion-col-breakpoint-lg-padding-bottom: 15px;
+          --ion-col-breakpoint-lg-padding-start: 15px;
+
+          --ion-col-breakpoint-xl-padding-top: 25px;
+          --ion-col-breakpoint-xl-padding-end: 25px;
+          --ion-col-breakpoint-xl-padding-bottom: 25px;
+          --ion-col-breakpoint-xl-padding-start: 25px;
         }
 
         ion-col {

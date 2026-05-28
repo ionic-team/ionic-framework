@@ -1,30 +1,52 @@
-@import "./grid.vars";
+@use "../../themes/mixins" as mixins;
+@use "./grid.mixins" as grid;
+@use "./grid.vars" as vars;
 
 // Grid
 // --------------------------------------------------
 
 :host {
   /**
-   * @prop --ion-grid-padding: Padding for the Grid
-   * @prop --ion-grid-padding-xs: Padding for the Grid on xs screens
-   * @prop --ion-grid-padding-sm: Padding for the Grid on sm screens
-   * @prop --ion-grid-padding-md: Padding for the Grid on md screens
-   * @prop --ion-grid-padding-lg: Padding for the Grid on lg screens
-   * @prop --ion-grid-padding-xl: Padding for the Grid on xl screens
+   * @prop --ion-grid-columns: The number of total columns in the grid
    *
-   * @prop --ion-grid-width: Width of the fixed Grid
-   * @prop --ion-grid-width-xs: Width of the fixed Grid on xs screens
-   * @prop --ion-grid-width-sm: Width of the fixed Grid on sm screens
-   * @prop --ion-grid-width-md: Width of the fixed Grid on md screens
-   * @prop --ion-grid-width-lg: Width of the fixed Grid on lg screens
-   * @prop --ion-grid-width-xl: Width of the fixed Grid on xl screens
+   * @prop --ion-grid-breakpoint-xs-padding-top: Top padding on xs screens
+   * @prop --ion-grid-breakpoint-xs-padding-end: End padding on xs screens
+   * @prop --ion-grid-breakpoint-xs-padding-bottom: Bottom padding on xs screens
+   * @prop --ion-grid-breakpoint-xs-padding-start: Start padding on xs screens
+   *
+   * @prop --ion-grid-breakpoint-sm-padding-top: Top padding on sm screens
+   * @prop --ion-grid-breakpoint-sm-padding-end: End padding on sm screens
+   * @prop --ion-grid-breakpoint-sm-padding-bottom: Bottom padding on sm screens
+   * @prop --ion-grid-breakpoint-sm-padding-start: Start padding on sm screens
+   *
+   * @prop --ion-grid-breakpoint-md-padding-top: Top padding on md screens
+   * @prop --ion-grid-breakpoint-md-padding-end: End padding on md screens
+   * @prop --ion-grid-breakpoint-md-padding-bottom: Bottom padding on md screens
+   * @prop --ion-grid-breakpoint-md-padding-start: Start padding on md screens
+   *
+   * @prop --ion-grid-breakpoint-lg-padding-top: Top padding on lg screens
+   * @prop --ion-grid-breakpoint-lg-padding-end: End padding on lg screens
+   * @prop --ion-grid-breakpoint-lg-padding-bottom: Bottom padding on lg screens
+   * @prop --ion-grid-breakpoint-lg-padding-start: Start padding on lg screens
+   *
+   * @prop --ion-grid-breakpoint-xl-padding-top: Top padding on xl screens
+   * @prop --ion-grid-breakpoint-xl-padding-end: End padding on xl screens
+   * @prop --ion-grid-breakpoint-xl-padding-bottom: Bottom padding on xl screens
+   * @prop --ion-grid-breakpoint-xl-padding-start: Start padding on xl screens
+   *
+   * @prop --ion-grid-breakpoint-xs-width: Width of the fixed Grid on xs screens
+   * @prop --ion-grid-breakpoint-sm-width: Width of the fixed Grid on sm screens
+   * @prop --ion-grid-breakpoint-md-width: Width of the fixed Grid on md screens
+   * @prop --ion-grid-breakpoint-lg-width: Width of the fixed Grid on lg screens
+   * @prop --ion-grid-breakpoint-xl-width: Width of the fixed Grid on xl screens
    */
 
-  @include make-breakpoint-padding($grid-paddings);
-  @include margin-horizontal(auto);
+  @include grid.make-breakpoint-padding(vars.$grid-paddings);
 
   display: block;
 
+  // No-op when the parent isn't a flex container; lets the grid expand to
+  // fill when it's nested inside a flex layout.
   flex: 1;
 }
 
@@ -32,18 +54,6 @@
 // --------------------------------------------------
 
 :host(.grid-fixed) {
-  @include make-grid-widths();
-}
-
-// Grid Padding
-// --------------------------------------------------
-
-// Remove the padding from grid and all immediate children columns
-:host(.ion-no-padding) {
-  --ion-grid-column-padding: 0;
-  --ion-grid-column-padding-xs: 0;
-  --ion-grid-column-padding-sm: 0;
-  --ion-grid-column-padding-md: 0;
-  --ion-grid-column-padding-lg: 0;
-  --ion-grid-column-padding-xl: 0;
+  @include mixins.margin-horizontal(auto);
+  @include grid.make-grid-widths(vars.$grid-widths);
 }

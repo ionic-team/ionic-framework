@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * ion-grid does not have different styling per-mode
+ * This behavior does not vary across modes.
  */
 configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('grid: sizes'), () => {
@@ -11,7 +11,9 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      await expect(page).toHaveScreenshot(screenshot(`grid-sizes`));
+      const content = page.locator('ion-content');
+
+      await expect(content).toHaveScreenshot(screenshot(`grid-sizes`));
     });
   });
 });

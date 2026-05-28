@@ -781,15 +781,26 @@ ion-col,prop,sizeMd,string | undefined,undefined,false,false
 ion-col,prop,sizeSm,string | undefined,undefined,false,false
 ion-col,prop,sizeXl,string | undefined,undefined,false,false
 ion-col,prop,sizeXs,string | undefined,undefined,false,false
-ion-col,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-col,css-prop,--col-unit-size
-ion-col,css-prop,--ion-grid-column-padding
-ion-col,css-prop,--ion-grid-column-padding-lg
-ion-col,css-prop,--ion-grid-column-padding-md
-ion-col,css-prop,--ion-grid-column-padding-sm
-ion-col,css-prop,--ion-grid-column-padding-xl
-ion-col,css-prop,--ion-grid-column-padding-xs
-ion-col,css-prop,--ion-grid-columns
+ion-col,css-prop,--ion-col-breakpoint-lg-padding-bottom
+ion-col,css-prop,--ion-col-breakpoint-lg-padding-end
+ion-col,css-prop,--ion-col-breakpoint-lg-padding-start
+ion-col,css-prop,--ion-col-breakpoint-lg-padding-top
+ion-col,css-prop,--ion-col-breakpoint-md-padding-bottom
+ion-col,css-prop,--ion-col-breakpoint-md-padding-end
+ion-col,css-prop,--ion-col-breakpoint-md-padding-start
+ion-col,css-prop,--ion-col-breakpoint-md-padding-top
+ion-col,css-prop,--ion-col-breakpoint-sm-padding-bottom
+ion-col,css-prop,--ion-col-breakpoint-sm-padding-end
+ion-col,css-prop,--ion-col-breakpoint-sm-padding-start
+ion-col,css-prop,--ion-col-breakpoint-sm-padding-top
+ion-col,css-prop,--ion-col-breakpoint-xl-padding-bottom
+ion-col,css-prop,--ion-col-breakpoint-xl-padding-end
+ion-col,css-prop,--ion-col-breakpoint-xl-padding-start
+ion-col,css-prop,--ion-col-breakpoint-xl-padding-top
+ion-col,css-prop,--ion-col-breakpoint-xs-padding-bottom
+ion-col,css-prop,--ion-col-breakpoint-xs-padding-end
+ion-col,css-prop,--ion-col-breakpoint-xs-padding-start
+ion-col,css-prop,--ion-col-breakpoint-xs-padding-top
 
 ion-content,shadow
 ion-content,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
@@ -1035,19 +1046,32 @@ ion-footer,prop,translucent,boolean,false,false,false
 ion-grid,shadow
 ion-grid,prop,fixed,boolean,false,false,false
 ion-grid,prop,mode,"ios" | "md",undefined,false,false
-ion-grid,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-grid,css-prop,--ion-grid-padding
-ion-grid,css-prop,--ion-grid-padding-lg
-ion-grid,css-prop,--ion-grid-padding-md
-ion-grid,css-prop,--ion-grid-padding-sm
-ion-grid,css-prop,--ion-grid-padding-xl
-ion-grid,css-prop,--ion-grid-padding-xs
-ion-grid,css-prop,--ion-grid-width
-ion-grid,css-prop,--ion-grid-width-lg
-ion-grid,css-prop,--ion-grid-width-md
-ion-grid,css-prop,--ion-grid-width-sm
-ion-grid,css-prop,--ion-grid-width-xl
-ion-grid,css-prop,--ion-grid-width-xs
+ion-grid,css-prop,--ion-grid-breakpoint-lg-padding-bottom
+ion-grid,css-prop,--ion-grid-breakpoint-lg-padding-end
+ion-grid,css-prop,--ion-grid-breakpoint-lg-padding-start
+ion-grid,css-prop,--ion-grid-breakpoint-lg-padding-top
+ion-grid,css-prop,--ion-grid-breakpoint-lg-width
+ion-grid,css-prop,--ion-grid-breakpoint-md-padding-bottom
+ion-grid,css-prop,--ion-grid-breakpoint-md-padding-end
+ion-grid,css-prop,--ion-grid-breakpoint-md-padding-start
+ion-grid,css-prop,--ion-grid-breakpoint-md-padding-top
+ion-grid,css-prop,--ion-grid-breakpoint-md-width
+ion-grid,css-prop,--ion-grid-breakpoint-sm-padding-bottom
+ion-grid,css-prop,--ion-grid-breakpoint-sm-padding-end
+ion-grid,css-prop,--ion-grid-breakpoint-sm-padding-start
+ion-grid,css-prop,--ion-grid-breakpoint-sm-padding-top
+ion-grid,css-prop,--ion-grid-breakpoint-sm-width
+ion-grid,css-prop,--ion-grid-breakpoint-xl-padding-bottom
+ion-grid,css-prop,--ion-grid-breakpoint-xl-padding-end
+ion-grid,css-prop,--ion-grid-breakpoint-xl-padding-start
+ion-grid,css-prop,--ion-grid-breakpoint-xl-padding-top
+ion-grid,css-prop,--ion-grid-breakpoint-xl-width
+ion-grid,css-prop,--ion-grid-breakpoint-xs-padding-bottom
+ion-grid,css-prop,--ion-grid-breakpoint-xs-padding-end
+ion-grid,css-prop,--ion-grid-breakpoint-xs-padding-start
+ion-grid,css-prop,--ion-grid-breakpoint-xs-padding-top
+ion-grid,css-prop,--ion-grid-breakpoint-xs-width
+ion-grid,css-prop,--ion-grid-columns
 
 ion-header,none
 ion-header,prop,collapse,"condense" | "fade" | undefined,undefined,false,false
@@ -2249,8 +2273,7 @@ ion-router-outlet,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-row,shadow
 ion-row,prop,mode,"ios" | "md",undefined,false,false
-ion-row,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-row,css-prop,--ion-grid-gap
+ion-row,css-prop,--ion-row-gap
 
 ion-searchbar,scoped
 ion-searchbar,prop,animated,boolean,false,false,false

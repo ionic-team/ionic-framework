@@ -22,65 +22,67 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content id="content" class="grid-demo">
-        <h2 class="ion-padding-start">Offset</h2>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="auto" offset="1">
-              <div>ion-col offset 1</div>
-            </ion-col>
-            <ion-col size="auto" offset="0">
-              <div>ion-col offset 0</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+      <ion-content class="grid-demo">
+        <div id="grids">
+          <h2 class="ion-padding-start">Offset</h2>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="auto" offset="1">
+                <div>ion-col offset 1</div>
+              </ion-col>
+              <ion-col size="auto" offset="0">
+                <div>ion-col offset 0</div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
 
-        <h2 class="ion-padding-start">Order</h2>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="9" order="2">
-              <div>ion-col order 2</div>
-            </ion-col>
-            <ion-col size="3" order="1">
-              <div>ion-col order 1</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+          <h2 class="ion-padding-start">Order</h2>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="9" order="2">
+                <div>ion-col order 2</div>
+              </ion-col>
+              <ion-col size="3" order="1">
+                <div>ion-col order 1</div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
 
-        <ion-grid>
-          <ion-row>
-            <ion-col size="3" size-md="6" order="2" order-md="1">
-              <div>ion-col size="3" size-md="6" order="2" order-md="1"</div>
-            </ion-col>
-            <ion-col size="9" size-md="6" order="1" order-md="2">
-              <div>ion-col size="9" size-md="6" order="1" order-md="2"</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="3" size-md="6" order="2" order-md="1">
+                <div>ion-col size="3" size-md="6" order="2" order-md="1"</div>
+              </ion-col>
+              <ion-col size="9" size-md="6" order="1" order-md="2">
+                <div>ion-col size="9" size-md="6" order="1" order-md="2"</div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
 
-        <h2 class="ion-padding-start">Offset</h2>
-        <ion-grid>
-          <ion-row>
-            <ion-col offset="5">
-              <div>ion-col offset=5</div>
-            </ion-col>
-            <ion-col offset="2">
-              <div>ion-col offset="2"</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+          <h2 class="ion-padding-start">Offset</h2>
+          <ion-grid>
+            <ion-row>
+              <ion-col offset="5">
+                <div>ion-col offset=5</div>
+              </ion-col>
+              <ion-col offset="2">
+                <div>ion-col offset="2"</div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
 
-        <h2 class="ion-padding-start">Dynamic Offset</h2>
-        <ion-grid>
-          <ion-row>
-            <ion-col id="dynamicOffsetCol" offset="2" offset-md="5">
-              <div>ion-col offset="2" offset-md="5"</div>
-            </ion-col>
-            <ion-col offset="2" offset-md="5">
-              <div>ion-col offset="2" offset-md="5"</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+          <h2 class="ion-padding-start">Dynamic Offset</h2>
+          <ion-grid>
+            <ion-row>
+              <ion-col id="dynamicOffsetCol" offset="2" offset-md="5">
+                <div>ion-col offset="2" offset-md="5"</div>
+              </ion-col>
+              <ion-col offset="2" offset-md="5">
+                <div>ion-col offset="2" offset-md="5"</div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
 
         <button onclick="updateOffset()">Update Offset</button>
       </ion-content>

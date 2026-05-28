@@ -572,14 +572,14 @@ export declare interface IonChip extends Components.IonChip {}
 
 
 @ProxyCmp({
-  inputs: ['mode', 'offset', 'offsetLg', 'offsetMd', 'offsetSm', 'offsetXl', 'offsetXs', 'order', 'orderLg', 'orderMd', 'orderSm', 'orderXl', 'orderXs', 'pull', 'pullLg', 'pullMd', 'pullSm', 'pullXl', 'pullXs', 'push', 'pushLg', 'pushMd', 'pushSm', 'pushXl', 'pushXs', 'size', 'sizeLg', 'sizeMd', 'sizeSm', 'sizeXl', 'sizeXs', 'theme']
+  inputs: ['mode', 'offset', 'offsetLg', 'offsetMd', 'offsetSm', 'offsetXl', 'offsetXs', 'order', 'orderLg', 'orderMd', 'orderSm', 'orderXl', 'orderXs', 'pull', 'pullLg', 'pullMd', 'pullSm', 'pullXl', 'pullXs', 'push', 'pushLg', 'pushMd', 'pushSm', 'pushXl', 'pushXs', 'size', 'sizeLg', 'sizeMd', 'sizeSm', 'sizeXl', 'sizeXs']
 })
 @Component({
   selector: 'ion-col',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode', 'offset', 'offsetLg', 'offsetMd', 'offsetSm', 'offsetXl', 'offsetXs', 'order', 'orderLg', 'orderMd', 'orderSm', 'orderXl', 'orderXs', 'pull', 'pullLg', 'pullMd', 'pullSm', 'pullXl', 'pullXs', 'push', 'pushLg', 'pushMd', 'pushSm', 'pushXl', 'pushXs', 'size', 'sizeLg', 'sizeMd', 'sizeSm', 'sizeXl', 'sizeXs', 'theme'],
+  inputs: ['mode', 'offset', 'offsetLg', 'offsetMd', 'offsetSm', 'offsetXl', 'offsetXs', 'order', 'orderLg', 'orderMd', 'orderSm', 'orderXl', 'orderXs', 'pull', 'pullLg', 'pullMd', 'pullSm', 'pullXl', 'pullXs', 'push', 'pushLg', 'pushMd', 'pushSm', 'pushXl', 'pushXs', 'size', 'sizeLg', 'sizeMd', 'sizeSm', 'sizeXl', 'sizeXs'],
 })
 export class IonCol {
   protected el: HTMLIonColElement;
@@ -825,14 +825,14 @@ export declare interface IonFooter extends Components.IonFooter {}
 
 
 @ProxyCmp({
-  inputs: ['fixed', 'mode', 'theme']
+  inputs: ['fixed', 'mode']
 })
 @Component({
   selector: 'ion-grid',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['fixed', 'mode', 'theme'],
+  inputs: ['fixed', 'mode'],
 })
 export class IonGrid {
   protected el: HTMLIonGridElement;
@@ -1994,14 +1994,14 @@ export declare interface IonRippleEffect extends Components.IonRippleEffect {}
 
 
 @ProxyCmp({
-  inputs: ['mode', 'theme']
+  inputs: ['mode']
 })
 @Component({
   selector: 'ion-row',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode', 'theme'],
+  inputs: ['mode'],
 })
 export class IonRow {
   protected el: HTMLIonRowElement;

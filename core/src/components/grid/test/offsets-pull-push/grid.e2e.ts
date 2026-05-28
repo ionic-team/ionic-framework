@@ -1,3 +1,4 @@
+// TODO(FW-7557): Remove this in a major release.
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
