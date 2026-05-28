@@ -26,7 +26,7 @@
     "vue-router": "^5.0.6"
   },
   "devDependencies": {
-    "@playwright/test": "^1.48.0",
+    "@playwright/test": "^1.60.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vitejs/plugin-vue": "^3.1.0",
