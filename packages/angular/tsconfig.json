@@ -19,7 +19,6 @@
     "lib": ["dom", "es2017"],
     "module": "es2022",
     "moduleResolution": "bundler",
-    "skipLibCheck": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,

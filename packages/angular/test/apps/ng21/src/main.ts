@@ -12,10 +12,13 @@ const isLazy = window.location.href.includes('lazy');
 
 if (isLazy) {
   document.addEventListener('DOMContentLoaded', () => {
+    // Angular 21 defaults bootstrapModule to zoneless change detection, which
+    // breaks Ionic's NgZone-based async lifecycle. AppModule.providers is too
+    // late to opt back in; the override has to go on bootstrapModule's options.
     platformBrowserDynamic()
     .bootstrapModule(AppModule, {
       applicationProviders: [provideZoneChangeDetection()],
-    } as any)
+    })
     .catch(err => console.error(err));
   });
 } else {
