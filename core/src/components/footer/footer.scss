@@ -1,4 +1,4 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/native/native.globals" as globals;
 
 // Footer
 // --------------------------------------------------
@@ -11,9 +11,28 @@ ion-footer {
 
   width: 100%;
 
-  z-index: $z-index-toolbar;
+  z-index: globals.$z-index-toolbar;
 }
 
 ion-footer.footer-toolbar-padding ion-toolbar:last-of-type {
   padding-bottom: var(--ion-safe-area-bottom, 0);
+}
+
+// Footer Hide on Scroll
+// --------------------------------------------------
+// Added by `ion-toolbar` when `hideOnScroll` is enabled. Overlays `ion-content`.
+
+ion-footer.ion-footer-hide-on-scroll {
+  @include globals.position(null, 0, 0, 0);
+  position: absolute;
+
+  transition: transform var(--token-transition-time-200, 200ms)
+    var(--token-transition-curve-spring, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+ion-footer.ion-footer-hide-on-scroll.footer-scroll-hidden {
+  transform: translateY(calc(100% + var(--ion-safe-area-bottom, 0)));
+
+  transition: transform var(--token-transition-time-350, 350ms)
+    var(--token-transition-curve-base, cubic-bezier(0.4, 0, 1, 1));
 }

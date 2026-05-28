@@ -97,3 +97,28 @@
 
   position: absolute;
 }
+
+// Toolbar: Hide on Scroll
+// --------------------------------------------------
+// Variant A: top (default, inside ion-header)
+//
+// Visible (default + scroll up): single 300ms transition with curve.quick.
+// Hidden  (scroll down): 200ms slide + 300ms fade, both with curve.base.
+
+:host(.toolbar-hide-on-scroll) {
+  transition: transform var(--token-transition-time-300, 300ms)
+      var(--token-transition-curve-quick, cubic-bezier(0, 0, 0.2, 1)),
+    opacity var(--token-transition-time-300, 300ms) var(--token-transition-curve-quick, cubic-bezier(0, 0, 0.2, 1));
+}
+
+:host(.toolbar-hide-on-scroll.toolbar-scroll-hidden) {
+  transition: opacity var(--token-transition-time-300, 300ms)
+    var(--token-transition-curve-base, cubic-bezier(0.4, 0, 1, 1));
+
+  opacity: 0;
+}
+
+// Variant B: bottom (inside ion-footer)
+//
+// The parent ion-footer handles the slide transform. Nothing to do here.
+// --------------------------------------------------

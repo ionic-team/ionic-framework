@@ -45,6 +45,9 @@ export class Header implements ComponentInterface {
    * Only applies when the theme is `"ios"`.
    *
    * Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+   *
+   * When any child `ion-toolbar` has `hideOnScroll` set to `true`, the collapse
+   * behavior is skipped and `hideOnScroll` takes precedence.
    */
   @Prop() collapse?: 'condense' | 'fade';
 
@@ -80,10 +83,20 @@ export class Header implements ComponentInterface {
     this.destroyCollapsibleHeader();
   }
 
+  private hasHideOnScrollToolbar(): boolean {
+    return Array.from(this.el.querySelectorAll('ion-toolbar')).some((toolbar) => toolbar.hideOnScroll);
+  }
+
   private async checkCollapsibleHeader() {
     const theme = getIonTheme(this);
 
     if (theme !== 'ios') {
+      return;
+    }
+
+    // Destroy the collapsible header when `hideOnScroll` is present.
+    if (this.hasHideOnScrollToolbar()) {
+      this.destroyCollapsibleHeader();
       return;
     }
 

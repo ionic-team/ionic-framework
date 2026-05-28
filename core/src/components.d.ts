@@ -1517,7 +1517,7 @@ export namespace Components {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)  When any child `ion-toolbar` has `hideOnScroll` set to `true`, the collapse behavior is skipped and `hideOnScroll` takes precedence.
          */
         "collapse"?: 'condense' | 'fade';
         /**
@@ -4505,6 +4505,11 @@ export namespace Components {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        /**
+          * If `true`, the toolbar will be hidden when the user scrolls down and shown when the user scrolls up.  Applies when the toolbar is inside an `ion-header` or `ion-footer` and a sibling `ion-content` exists on the same page. The header slides up and fades; the footer slides down. `ion-content` scroll insets are coordinated per edge so top and bottom toolbars can hide independently.  When the theme is `"ios"`, this takes precedence over `ion-header[collapse="condense" | "fade"]` if both are set on the same header.
+          * @default false
+         */
+        "hideOnScroll": boolean;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -7565,7 +7570,7 @@ declare namespace LocalJSX {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)  When any child `ion-toolbar` has `hideOnScroll` set to `true`, the collapse behavior is skipped and `hideOnScroll` takes precedence.
          */
         "collapse"?: 'condense' | 'fade';
         /**
@@ -10692,6 +10697,11 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
+          * If `true`, the toolbar will be hidden when the user scrolls down and shown when the user scrolls up.  Applies when the toolbar is inside an `ion-header` or `ion-footer` and a sibling `ion-content` exists on the same page. The header slides up and fades; the footer slides down. `ion-content` scroll insets are coordinated per edge so top and bottom toolbars can hide independently.  When the theme is `"ios"`, this takes precedence over `ion-header[collapse="condense" | "fade"]` if both are set on the same header.
+          * @default false
+         */
+        "hideOnScroll"?: boolean;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -11506,6 +11516,7 @@ declare namespace LocalJSX {
     interface IonToolbarAttributes {
         "color": Color;
         "titlePlacement": 'start' | 'center' | 'end';
+        "hideOnScroll": boolean;
     }
 
     interface IntrinsicElements {

@@ -1,3 +1,5 @@
+@use "../../themes/native/native.globals" as globals;
+
 // Header
 // --------------------------------------------------
 
@@ -12,4 +14,25 @@ ion-header {
 
 ion-header ion-toolbar:first-of-type {
   padding-top: var(--ion-safe-area-top, 0);
+}
+
+// Header Hide on Scroll
+// --------------------------------------------------
+// Added by `ion-toolbar` when `hideOnScroll` is enabled. Overlays `ion-content`.
+
+ion-header.ion-header-hide-on-scroll {
+  @include globals.position(0, 0, null, 0);
+  position: absolute;
+
+  transition: transform var(--token-transition-time-300, 300ms)
+    var(--token-transition-curve-quick, cubic-bezier(0, 0, 0.2, 1));
+
+  z-index: 10;
+}
+
+ion-header.ion-header-hide-on-scroll.header-scroll-hidden {
+  transform: translateY(calc(-100% - var(--ion-safe-area-top, 0)));
+
+  transition: transform var(--token-transition-time-200, 200ms)
+    var(--token-transition-curve-base, cubic-bezier(0.4, 0, 1, 1));
 }

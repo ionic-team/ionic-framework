@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" mode="ionic">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toolbar - Hide on Scroll</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet" href="../../../../../css/ionic.bundle.css" />
+    <link rel="stylesheet" href="../../../../../scripts/testing/styles.css" />
+  </head>
+
+  <body>
+    <template id="header-template">
+      <ion-header id="test-header">
+        <ion-toolbar hide-on-scroll="true">
+          <ion-title>IonToolbar inside IonHeader</ion-title>
+        </ion-toolbar>
+      </ion-header>
+    </template>
+
+    <template id="footer-template">
+      <ion-footer id="test-footer">
+        <ion-toolbar hide-on-scroll="true">
+          <ion-title>IonToolbar inside IonFooter</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+    </template>
+
+    <ion-app>
+      <div class="ion-page">
+        <ion-content>
+          <div class="spacer">
+            <div class="info">
+              <p>Scroll down to hide the toolbars, scroll up to show them.</p>
+              <p><strong>Requirements:</strong></p>
+              <ul>
+                <li><code>hide-on-scroll</code> must be set on <code>ion-toolbar</code></li>
+                <li>Toolbar must be inside an <code>ion-header</code> or <code>ion-footer</code></li>
+                <li>A sibling <code>ion-content</code> must exist for scroll detection</li>
+              </ul>
+            </div>
+            <div class="toolbar-layout">
+              <ion-toggle id="toggle-header" justify="space-between" checked>Header toolbar</ion-toggle>
+              <ion-toggle id="toggle-footer" justify="space-between" checked>Footer toolbar</ion-toggle>
+              <p class="toolbar-layout-hint" id="layout-hint">Header and footer toolbars</p>
+            </div>
+          </div>
+        </ion-content>
+      </div>
+    </ion-app>
+
+    <style>
+      .spacer {
+        position: relative;
+        padding: 16px;
+        height: 2000px;
+        background: linear-gradient(to bottom, #e0f7fa, #80deea, #26c6da, #00acc1, #00838f);
+      }
+
+      .info {
+        max-width: 90%;
+      }
+
+      .info p {
+        margin: 0;
+        margin-bottom: 12px;
+        font-size: 16px;
+        color: #333;
+      }
+
+      .toolbar-layout {
+        margin-top: 32px;
+        max-width: 320px;
+        padding: 16px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      .toolbar-layout ion-toggle {
+        display: block;
+      }
+
+      .toolbar-layout-hint {
+        margin: 4px 0 0;
+        font-size: 14px;
+        color: #555;
+      }
+    </style>
+
+    <script>
+      customElements.whenDefined('ion-toggle').then(() => {
+        const page = document.querySelector('.ion-page');
+        const content = page.querySelector('ion-content');
+        const headerTemplate = document.getElementById('header-template');
+        const footerTemplate = document.getElementById('footer-template');
+        const toggleHeader = document.getElementById('toggle-header');
+        const toggleFooter = document.getElementById('toggle-footer');
+        const layoutHint = document.getElementById('layout-hint');
+
+        const updateLayoutHint = (showHeader, showFooter) => {
+          if (showHeader && showFooter) {
+            layoutHint.textContent = 'Header and footer toolbars';
+          } else if (showHeader) {
+            layoutHint.textContent = 'Header toolbar only';
+          } else if (showFooter) {
+            layoutHint.textContent = 'Footer toolbar only';
+          } else {
+            layoutHint.textContent = 'No toolbars';
+          }
+        };
+
+        const mountHeader = () => {
+          if (document.getElementById('test-header')) {
+            return;
+          }
+
+          const header = headerTemplate.content.firstElementChild.cloneNode(true);
+          page.insertBefore(header, content);
+        };
+
+        const unmountHeader = () => {
+          document.getElementById('test-header')?.remove();
+        };
+
+        const mountFooter = () => {
+          if (document.getElementById('test-footer')) {
+            return;
+          }
+
+          const footer = footerTemplate.content.firstElementChild.cloneNode(true);
+          page.appendChild(footer);
+        };
+
+        const unmountFooter = () => {
+          document.getElementById('test-footer')?.remove();
+        };
+
+        const updateLayout = () => {
+          const showHeader = toggleHeader.checked;
+          const showFooter = toggleFooter.checked;
+
+          if (showHeader) {
+            mountHeader();
+          } else {
+            unmountHeader();
+          }
+
+          if (showFooter) {
+            mountFooter();
+          } else {
+            unmountFooter();
+          }
+
+          updateLayoutHint(showHeader, showFooter);
+        };
+
+        toggleHeader.addEventListener('ionChange', updateLayout);
+        toggleFooter.addEventListener('ionChange', updateLayout);
+
+        updateLayout();
+      });
+    </script>
+  </body>
+</html>

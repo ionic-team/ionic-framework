@@ -1,4 +1,4 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/native/native.globals" as globals;
 
 // Content
 // --------------------------------------------------
@@ -19,8 +19,8 @@
    * @prop --offset-top: Offset top of the content
    * @prop --offset-bottom: Offset bottom of the content
    */
-  --background: #{$background-color};
-  --color: #{$text-color};
+  --background: #{globals.$background-color};
+  --color: #{globals.$text-color};
   --padding-top: 0px;
   --padding-bottom: 0px;
   --padding-start: 0px;
@@ -44,7 +44,7 @@
   padding: 0 !important;
   /* stylelint-enable */
 
-  font-family: $font-family-base;
+  font-family: globals.$font-family-base;
 
   contain: size style;
 }
@@ -55,7 +55,7 @@
 }
 
 #background-content {
-  @include position(calc(var(--offset-top) * -1), 0px, calc(var(--offset-bottom) * -1), 0px);
+  @include globals.position(calc(var(--offset-top) * -1), 0px, calc(var(--offset-bottom) * -1), 0px);
 
   position: absolute;
 
@@ -63,8 +63,8 @@
 }
 
 .inner-scroll {
-  @include position(calc(var(--offset-top) * -1), 0px, calc(var(--offset-bottom) * -1), 0px);
-  @include padding(
+  @include globals.position(calc(var(--offset-top) * -1), 0px, calc(var(--offset-bottom) * -1), 0px);
+  @include globals.padding(
     calc(var(--padding-top) + var(--offset-top)),
     var(--padding-end),
     calc(
@@ -143,6 +143,79 @@
 
 .overscroll::after {
   top: -1px;
+}
+
+// Toolbar hide on scroll — ion-content coordination
+// --------------------------------------------------
+// Applied when `ion-toolbar` sets `hideOnScroll` on a page with sibling
+// `ion-content`. Header/footer overlay the viewport; scroll insets use
+// `--toolbar-hide-offset-*` (measured by ion-toolbar) and animatable
+// `--toolbar-hide-inset-*` so padding eases without layout jumps. Top and
+// bottom edges are independent (separate classes and CSS variables).
+
+@property --toolbar-hide-inset-top {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --toolbar-hide-inset-bottom {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+:host(.content-toolbar-hide-offset-top),
+:host(.content-toolbar-hide-offset-bottom) {
+  #background-content,
+  .inner-scroll {
+    @include globals.position(0, 0, 0, 0);
+  }
+}
+
+// Top inset (header toolbar)
+:host(.content-toolbar-hide-offset-top) {
+  --toolbar-hide-inset-top: var(--toolbar-hide-offset-top, 0px);
+
+  transition: --toolbar-hide-inset-top var(--token-transition-time-300, 300ms)
+    var(--token-transition-curve-quick, cubic-bezier(0, 0, 0.2, 1));
+}
+
+:host(.content-toolbar-hide-offset-top.content-header-scroll-hidden) {
+  --toolbar-hide-inset-top: 0px;
+
+  transition: --toolbar-hide-inset-top var(--token-transition-time-200, 200ms)
+    var(--token-transition-curve-base, cubic-bezier(0.4, 0, 1, 1));
+}
+
+:host(.content-toolbar-hide-offset-top) .inner-scroll {
+  padding-top: calc(var(--padding-top) + var(--toolbar-hide-inset-top, 0px));
+}
+
+:host(.content-toolbar-hide-offset-top) #background-content {
+  padding-top: var(--toolbar-hide-inset-top, 0px);
+}
+
+// Bottom inset (footer toolbar)
+:host(.content-toolbar-hide-offset-bottom) {
+  --toolbar-hide-inset-bottom: var(--toolbar-hide-offset-bottom, 0px);
+
+  transition: --toolbar-hide-inset-bottom var(--token-transition-time-200, 200ms)
+    var(--token-transition-curve-spring, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+:host(.content-toolbar-hide-offset-bottom.content-footer-scroll-hidden) {
+  --toolbar-hide-inset-bottom: 0px;
+
+  transition: --toolbar-hide-inset-bottom var(--token-transition-time-350, 350ms)
+    var(--token-transition-curve-base, cubic-bezier(0.4, 0, 1, 1));
+}
+
+:host(.content-toolbar-hide-offset-bottom) .inner-scroll {
+  padding-bottom: calc(
+    var(--padding-bottom) + var(--keyboard-offset) + var(--toolbar-hide-inset-bottom, 0px) +
+      var(--internal-content-safe-area-padding-bottom, 0px)
+  );
 }
 
 :host(.content-sizing) {
