@@ -33,7 +33,7 @@ runs:
       shell: bash
       working-directory: ./packages/angular/test/build/${{ inputs.app }}
     - name: 📦 Install Playwright Browsers
-      run: npx playwright install
+      run: npx playwright install chromium
       shell: bash
       working-directory: ./packages/angular/test/build/${{ inputs.app }}
     - name: 🔄 Sync Built Changes
