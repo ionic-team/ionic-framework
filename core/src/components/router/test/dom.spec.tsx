@@ -25,6 +25,14 @@ describe('scrollToFragment', () => {
     expect(await scrollToFragment('target')).toBe(true);
   });
 
+  it('should not match similarly named fragments', async () => {
+    // The lookup uses an exact `#id` selector, so partial/substring matches
+    // must not resolve. Regression guard for any future refactor that swaps
+    // the selector for fuzzy matching.
+    expect(await scrollToFragment('target2')).toBe(false);
+    expect(await scrollToFragment('targe')).toBe(false);
+  });
+
   it('should return false when shouldContinue is false from the start', async () => {
     // The target exists in the DOM, so the only reason this can return false
     // is the cancellation predicate firing inside findFragmentTarget.
