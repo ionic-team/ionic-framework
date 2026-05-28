@@ -118,7 +118,7 @@ export class Toolbar implements ComponentInterface {
 
   /**
    * If `true`, the toolbar will be hidden when the user scrolls down
-   * and shown when the user scrolls up
+   * and shown when the user scrolls up.
    *
    * Applies when the toolbar is inside an `ion-header` or `ion-footer`
    * and a sibling `ion-content` exists on the same page. The header
