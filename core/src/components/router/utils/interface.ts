@@ -57,6 +57,8 @@ export interface ParsedRoute {
   segments: string[];
   /** Unparsed query string. */
   queryString?: string;
+  /** URL fragment (the part after `#`), without the leading `#`. */
+  fragment?: string;
 }
 
 export type RouterDirection = 'forward' | 'back' | 'root';

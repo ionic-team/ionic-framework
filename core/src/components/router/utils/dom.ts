@@ -1,4 +1,5 @@
-import { componentOnReady } from '@utils/helpers';
+import { findClosestIonContent, getScrollElement, isIonContent } from '@utils/content';
+import { componentOnReady, raf } from '@utils/helpers';
 import { printIonError } from '@utils/logging';
 
 import type { AnimationBuilder } from '../../../interface';
@@ -79,6 +80,126 @@ export const readNavState = async (root: HTMLElement | undefined) => {
     }
   }
   return { ids, outlet };
+};
+
+/** Max animation frames `scrollToFragment` polls while waiting for the target to mount. */
+const FRAGMENT_POLL_FRAMES = 30;
+
+/** Duration (ms) of the smooth-scroll animation that lands on the fragment target. */
+const FRAGMENT_SCROLL_DURATION = 300;
+
+const nextFrame = () => new Promise<void>((resolve) => raf(() => resolve()));
+
+/**
+ * Returns true when `el` lives inside an active `.ion-page`. `ion-page-hidden`
+ * marks nav back-stack entries; `tab-hidden` marks inactive `ion-tab` elements.
+ * Either class on the page's ancestor chain disqualifies it. When no `.ion-page`
+ * exists in the document at all (non-router pages), the candidate is accepted
+ * so plain anchors still work.
+ */
+const isInActivePage = (el: HTMLElement): boolean => {
+  const page = el.closest<HTMLElement>('.ion-page');
+  if (page === null) {
+    return document.querySelector('.ion-page') === null;
+  }
+  return page.closest('.ion-page-hidden, .tab-hidden') === null;
+};
+
+/**
+ * Polls across animation frames for an element matching `fragment` that lives
+ * in the active page. Scoping by "last `.ion-page:not(.ion-page-hidden)`" is
+ * unreliable: inactive `ion-tab` siblings carry `.ion-page` (gated by
+ * `.tab-hidden`, not `.ion-page-hidden`) and can be ordered after the leaf.
+ * Instead, locate candidates globally and walk them from last to first,
+ * accepting the deepest one whose `.ion-page` ancestor is not hidden. The
+ * last-to-first order preserves leaf-most preference for nested outlets.
+ */
+const findFragmentTarget = async (fragment: string, shouldContinue: () => boolean): Promise<HTMLElement | null> => {
+  // CSS.escape is unavailable on very old WebViews; the fallback path uses
+  // `getElementById` and drops the legacy `<a name>` branch.
+  const canEscape = typeof CSS !== 'undefined' && typeof CSS.escape === 'function';
+  const escaped = canEscape ? CSS.escape(fragment) : null;
+
+  for (let i = 0; i < FRAGMENT_POLL_FRAMES; i++) {
+    if (!shouldContinue()) return null;
+
+    let candidates: HTMLElement[] = [];
+    if (escaped !== null) {
+      try {
+        candidates = [...document.querySelectorAll<HTMLElement>(`#${escaped}, a[name="${escaped}"]`)];
+      } catch {
+        candidates = [...document.querySelectorAll<HTMLElement>(`#${escaped}`)];
+      }
+    } else {
+      const byId = document.getElementById(fragment);
+      if (byId !== null) candidates = [byId];
+    }
+
+    for (let j = candidates.length - 1; j >= 0; j--) {
+      if (isInActivePage(candidates[j])) {
+        return candidates[j];
+      }
+    }
+    await nextFrame();
+  }
+
+  return null;
+};
+
+/**
+ * Scrolls to the element whose id matches `fragment`, falling back to a legacy
+ * `<a name="...">` target. When the target lives inside an `ion-content`, the
+ * scroll uses its smooth-animated scroll API; otherwise it falls back to
+ * `Element.scrollIntoView`.
+ *
+ * `shouldContinue` lets callers cancel in-flight scrolls when a newer
+ * navigation supersedes this one. It is checked between async steps.
+ */
+export const scrollToFragment = async (
+  fragment: string | undefined,
+  shouldContinue: () => boolean = () => true
+): Promise<boolean> => {
+  if (fragment == null || fragment === '') {
+    return false;
+  }
+
+  // URL fragments are percent-encoded but element ids are not; decode for
+  // matching per the HTML spec's indicated-element resolution.
+  let decoded: string;
+  try {
+    decoded = decodeURIComponent(fragment);
+  } catch {
+    decoded = fragment;
+  }
+
+  const target = await findFragmentTarget(decoded, shouldContinue);
+  if (!target || !shouldContinue()) {
+    return false;
+  }
+
+  // Best-effort scroll: swallow exceptions if the page tears down mid-animation.
+  try {
+    const contentHost = findClosestIonContent(target);
+    if (contentHost && isIonContent(contentHost)) {
+      const content = contentHost as HTMLIonContentElement;
+      const scrollEl = await getScrollElement(content);
+      // Yield one frame so the newly mounted target's layout is stable
+      // before we measure its rect.
+      await nextFrame();
+      if (!shouldContinue()) return false;
+      const targetRect = target.getBoundingClientRect();
+      const scrollRect = scrollEl.getBoundingClientRect();
+      const top = targetRect.top - scrollRect.top + scrollEl.scrollTop;
+      // Preserve scrollLeft so RTL and horizontally-scrolling pages aren't reset.
+      await content.scrollToPoint(scrollEl.scrollLeft, top, FRAGMENT_SCROLL_DURATION);
+    } else {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+    return true;
+  } catch (e) {
+    printIonError('[ion-router] - Exception in scrollToFragment:', e);
+    return false;
+  }
 };
 
 export const waitUntilNavNode = (): Promise<void> => {
