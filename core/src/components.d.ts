@@ -11,12 +11,12 @@ import { ActionSheetButton } from "./components/action-sheet/action-sheet-interf
 import { OverlayEventDetail } from "./utils/overlays-interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { AlertButton, AlertInput } from "./components/alert/alert-interface";
-import { IonBadgeHue, IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
+import { Hue } from "./themes/themes.interfaces";
+import { IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
 import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
-import { Hue } from "./themes/themes.interfaces";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interfaces";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
@@ -54,12 +54,12 @@ export { ActionSheetButton } from "./components/action-sheet/action-sheet-interf
 export { OverlayEventDetail } from "./utils/overlays-interface";
 export { IonicSafeString } from "./utils/sanitization";
 export { AlertButton, AlertInput } from "./components/alert/alert-interface";
-export { IonBadgeHue, IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
+export { Hue } from "./themes/themes.interfaces";
+export { IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
 export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
-export { Hue } from "./themes/themes.interfaces";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interfaces";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
@@ -477,7 +477,7 @@ export namespace Components {
         /**
           * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
          */
-        "hue"?: IonBadgeHue;
+        "hue"?: Hue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -6437,7 +6437,7 @@ declare namespace LocalJSX {
         /**
           * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
          */
-        "hue"?: IonBadgeHue;
+        "hue"?: Hue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -10655,7 +10655,7 @@ declare namespace LocalJSX {
     }
     interface IonBadgeAttributes {
         "color": Color;
-        "hue": IonBadgeHue;
+        "hue": Hue;
         "shape": IonBadgeShape;
         "size": IonBadgeSize;
         "vertical": IonBadgeVerticalPosition;
