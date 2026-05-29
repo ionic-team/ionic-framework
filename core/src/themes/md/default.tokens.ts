@@ -1007,5 +1007,14 @@ export const defaultTheme: DefaultTheme = {
         },
       },
     },
+
+    IonThumbnail: {
+      height: 'var(--ion-scaling-xxxl)',
+      width: 'var(--ion-scaling-xxxl)',
+
+      border: {
+        radius: 'var(--ion-radii-xxxxs)',
+      },
+    },
   },
 };

@@ -854,5 +854,14 @@ export const defaultTheme: DefaultTheme = {
         },
       },
     },
+
+    IonThumbnail: {
+      height: 'var(--ion-scaling-xl)',
+      width: 'var(--ion-scaling-xl)',
+
+      border: {
+        radius: 'var(--ion-radii-xxxxs)',
+      },
+    },
   },
 };

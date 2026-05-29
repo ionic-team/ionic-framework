@@ -5,6 +5,7 @@ import type { IonItemDividerRecipe } from '../components/item-divider/item-divid
 import type { IonProgressBarConfig, IonProgressBarRecipe } from '../components/progress-bar/progress-bar.interfaces';
 import type { IonSpinnerConfig, IonSpinnerRecipe } from '../components/spinner/spinner.interfaces';
 import type { IonTextConfig, IonTextRecipe } from '../components/text/text.interfaces';
+import type { IonThumbnailRecipe } from '../components/thumbnail/thumbnail.interfaces';
 import type { IonicConfig as IonicGlobalConfig } from '../utils/config';
 
 // Platform-specific theme
@@ -295,6 +296,7 @@ type Components = {
   IonProgressBar?: IonProgressBarRecipe;
   IonSpinner?: IonSpinnerRecipe;
   IonText?: IonTextRecipe;
+  IonThumbnail?: IonThumbnailRecipe;
 
   IonCard?: any;
   IonItem?: any;
