@@ -16,7 +16,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
       await page.locator('#action-sheet-select').click();
       await ionActionSheetDidPresent.next();
 
-      const firstOption = page.locator('ion-action-sheet .action-sheet-button-label').first();
+      const firstOption = page.locator('ion-action-sheet .select-interface-option').first();
 
       await expect(firstOption).toHaveScreenshot(screenshot(`select-rich-content-action-sheet`));
     });
@@ -38,7 +38,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
       await page.locator('#modal-select').click();
       await ionModalDidPresent.next();
 
-      const firstOption = page.locator('ion-modal ion-item').first();
+      const firstOption = page.locator('ion-modal .select-interface-option').first();
 
       await expect(firstOption).toHaveScreenshot(screenshot(`select-rich-content-modal`));
     });
@@ -76,7 +76,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionActionSheetDidPresent.next();
 
       const actionSheet = page.locator('ion-action-sheet');
-      const firstOption = actionSheet.locator('.action-sheet-button-label').first();
+      const firstOption = actionSheet.locator('.select-interface-option').first();
       const avatar = firstOption.locator('ion-avatar');
       const firstOptionText = 'Full Content';
 
@@ -112,7 +112,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionAlertDidPresent.next();
 
       const alert = page.locator('ion-alert');
-      const firstOption = alert.locator('.alert-radio-button').first();
+      const firstOption = alert.locator('.select-interface-option').first();
       const avatar = firstOption.locator('ion-avatar');
       const firstOptionText = 'Full Content';
 
@@ -152,7 +152,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await ionAlertDidPresent.next();
 
       const alert = page.locator('ion-alert');
-      const firstOption = alert.locator('.alert-checkbox-label').first();
+      const firstOption = alert.locator('.select-interface-option').first();
       const avatar = firstOption.locator('ion-avatar');
       const firstOptionText = 'Full Content';
 
