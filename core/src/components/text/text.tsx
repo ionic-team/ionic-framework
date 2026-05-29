@@ -4,8 +4,7 @@ import { createColorClasses } from '@utils/theme';
 
 import { config } from '../../global/config';
 import type { Color } from '../../interface';
-
-import type { IonTextHue } from './text.interfaces';
+import type { Hue } from '../../themes/themes.interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -29,14 +28,14 @@ export class Text implements ComponentInterface {
    *
    * Defaults to `"bold"` if both the hue property and theme config are unset.
    */
-  @Prop() hue?: IonTextHue;
+  @Prop() hue?: Hue;
 
   /**
    * Gets the text hue. Uses the `hue` property if set, otherwise
    * checks the theme config and falls back to 'bold' if neither is provided.
    */
-  get hueValue(): IonTextHue {
-    const hueConfig = config.getObjectValue('IonText.hue', 'bold') as IonTextHue;
+  get hueValue(): Hue {
+    const hueConfig = config.getObjectValue('IonText.hue', 'bold') as Hue;
 
     return this.hue || hueConfig;
   }

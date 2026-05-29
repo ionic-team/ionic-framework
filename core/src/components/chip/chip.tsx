@@ -5,8 +5,9 @@ import { createColorClasses } from '@utils/theme';
 
 import { config } from '../../global/config';
 import type { Color } from '../../interface';
+import type { Hue } from '../../themes/themes.interfaces';
 
-import type { IonChipFill, IonChipHue, IonChipSize, IonChipShape } from './chip.interfaces';
+import type { IonChipFill, IonChipSize, IonChipShape } from './chip.interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -54,7 +55,7 @@ export class Chip implements ComponentInterface {
    *
    * Defaults to `"subtle"` if both the hue property and theme config are unset.
    */
-  @Prop() hue?: IonChipHue;
+  @Prop() hue?: Hue;
 
   /**
    * Set to `"soft"` for a chip with slightly rounded corners,
@@ -98,8 +99,8 @@ export class Chip implements ComponentInterface {
    * Gets the chip hue. Uses the `hue` property if set, otherwise
    * checks the theme config. Defaults to `subtle` if neither is set.
    */
-  get hueValue(): IonChipHue {
-    const hueConfig = config.getObjectValue('IonChip.hue', 'subtle') as IonChipHue;
+  get hueValue(): Hue {
+    const hueConfig = config.getObjectValue('IonChip.hue', 'subtle') as Hue;
     const hue = this.hue || hueConfig;
 
     return hue;

@@ -1,6 +1,8 @@
+import type { Hue } from '../../themes/themes.interfaces';
+
 export type IonTextRecipe = {
   hue?: {
-    [K in IonTextHue]?: {
+    [K in Hue]?: {
       /** Any of the semantic colors like primary, secondary, etc. */
       semantic?: {
         default?: {
@@ -12,7 +14,7 @@ export type IonTextRecipe = {
 };
 
 export type IonTextConfig = {
-  hue?: IonTextHue;
+  hue?: Hue;
 };
 
-export type IonTextHue = 'bold' | 'subtle';
+export type IonTextHue = Hue;

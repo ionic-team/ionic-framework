@@ -15,7 +15,8 @@ import { IonBadgeHue, IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } fr
 import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
-import { IonChipFill, IonChipHue, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
+import { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
+import { Hue } from "./themes/themes.interfaces";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interfaces";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
@@ -44,7 +45,6 @@ import { SelectModalOption } from "./components/select-modal/select-modal-interf
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { SpinnerSize } from "./components/spinner/spinner.interfaces";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
-import { IonTextHue } from "./components/text/text.interfaces";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 import { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
@@ -58,7 +58,8 @@ export { IonBadgeHue, IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } fr
 export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
-export { IonChipFill, IonChipHue, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
+export { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
+export { Hue } from "./themes/themes.interfaces";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interfaces";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
@@ -87,7 +88,6 @@ export { SelectModalOption } from "./components/select-modal/select-modal-interf
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { SpinnerSize } from "./components/spinner/spinner.interfaces";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
-export { IonTextHue } from "./components/text/text.interfaces";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 export { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
@@ -884,7 +884,7 @@ export namespace Components {
         /**
           * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if both the hue property and theme config are unset.
          */
-        "hue"?: IonChipHue;
+        "hue"?: Hue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -4079,7 +4079,7 @@ export namespace Components {
         /**
           * Set to `"bold"` for a text with vibrant, bold colors or to `"subtle"` for a text with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
          */
-        "hue"?: IonTextHue;
+        "hue"?: Hue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -6879,7 +6879,7 @@ declare namespace LocalJSX {
         /**
           * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if both the hue property and theme config are unset.
          */
-        "hue"?: IonChipHue;
+        "hue"?: Hue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -10159,7 +10159,7 @@ declare namespace LocalJSX {
         /**
           * Set to `"bold"` for a text with vibrant, bold colors or to `"subtle"` for a text with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
          */
-        "hue"?: IonTextHue;
+        "hue"?: Hue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -10743,7 +10743,7 @@ declare namespace LocalJSX {
         "outline": boolean;
         "fill": IonChipFill;
         "disabled": boolean;
-        "hue": IonChipHue;
+        "hue": Hue;
         "shape": IonChipShape;
         "size": IonChipSize;
     }
@@ -11315,7 +11315,7 @@ declare namespace LocalJSX {
     }
     interface IonTextAttributes {
         "color": Color;
-        "hue": IonTextHue;
+        "hue": Hue;
     }
     interface IonTextareaAttributes {
         "color": Color;

@@ -321,3 +321,5 @@ export type NumberStringKeys = {
   // Enforce keys are strings of numbers (like 50, '50', etc.)
   [K in number as `${K}`]?: string;
 };
+
+export type Hue = 'bold' | 'subtle';
