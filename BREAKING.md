@@ -304,9 +304,9 @@ The following breaking changes apply to `ion-thumbnail`:
 2. `--border-radius` has been replaced.
 3. Theme classes (`ion-thumbnail.md`, `ion-thumbnail.ios`) are no longer supported.
 
-<h5>Removed CSS variables</h5>
+<h5>Replaced CSS variables</h5>
 
-`--size` and `--border-radius` have been removed. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+`--size` and `--border-radius` have been replaced. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
 | Old (8.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
