@@ -132,11 +132,11 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, config 
       expect(wrapperPaddingBottom).toBe('');
       expect(wrapperHeight).toBe('');
 
-      // ion-content should have --ion-content-safe-area-padding-bottom set so its
+      // ion-content should have --internal-content-safe-area-padding-bottom set so its
       // .inner-scroll element includes safe-area in its bottom padding.
       const content = modal.locator('ion-content');
       const safeAreaPadding = await content.evaluate((el: HTMLElement) => {
-        return el.style.getPropertyValue('--ion-content-safe-area-padding-bottom');
+        return el.style.getPropertyValue('--internal-content-safe-area-padding-bottom');
       });
       expect(safeAreaPadding).toBe('var(--ion-safe-area-bottom, 0px)');
     });
