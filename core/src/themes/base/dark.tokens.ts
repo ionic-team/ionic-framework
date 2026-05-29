@@ -13,6 +13,7 @@ const colors = {
   dark: '#f4f5f8',
 };
 
+// TODO(FW-7558): Finalize color palette and update these color values as needed
 export const darkTheme: DarkTheme = {
   enabled: 'never',
   color: {
