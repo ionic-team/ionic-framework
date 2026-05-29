@@ -38,14 +38,7 @@
       "import": "./components/index.js",
       "default": "./components/index.js"
     },
-    "./components/*.js": {
-      "types": "./components/*.d.ts",
-      "default": "./components/*.js"
-    },
-    "./components/*": {
-      "types": "./components/*.d.ts",
-      "default": "./components/*.js"
-    },
+    "./components/*": "./components/*",
     "./loader": {
       "types": "./loader/index.d.ts",
       "import": "./loader/index.js",
