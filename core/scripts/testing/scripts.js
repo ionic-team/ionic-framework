@@ -24,7 +24,7 @@ const DEFAULT_THEME = 'md';
 const DEFAULT_PALETTE = 'light';
 
 (function() {
-  
+
   /**
    * The `rtl` param is used to set the directionality of the 
    * document. This can be `true` or `false`.
@@ -128,6 +128,27 @@ const DEFAULT_PALETTE = 'light';
     );
   }
 
+  /**
+   * Deep merges two objects, with source properties overriding target properties
+   * @param target The target object to merge into
+   * @param source The source object to merge from
+   * @returns The merged object
+   */
+  // TODO(FW-6750): Remove this once the theme tokens can be imported directly into the test pages
+  const deepMerge = (target, source) => {
+    const result = { ...target };
+  
+    for (const key in source) {
+      if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        result[key] = deepMerge(result[key] ?? {}, source[key]);
+      } else {
+        result[key] = source[key];
+      }
+    }
+    return result;
+  };
+
+  // TODO(FW-6750): Determine if this function can be removed once the theme tokens can be imported directly into the test pages
   async function loadThemeTokens(themeName, paletteName) {
     try {
       // Store existing theme set from the app initialization
@@ -138,14 +159,7 @@ const DEFAULT_PALETTE = 'light';
 
       // Merge with existing theme to preserve any customizations
       if (customTheme) {
-        theme = {
-          ...theme,
-          ...customTheme,
-          palette: {
-            ...theme.palette,
-            ...customTheme.palette,
-          },
-        };
+        theme = deepMerge(theme, customTheme);
       }
 
       // If a specific palette is requested, modify the palette structure

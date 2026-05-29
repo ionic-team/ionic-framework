@@ -66,11 +66,11 @@ ion-content {
    * padding of the modal sheet in the core.
    */
   /* stylelint-disable-next-line declaration-no-important */
-  --padding-start: #{globals.$ion-space-400} !important;
+  --ion-content-padding-start: #{globals.$ion-space-400} !important;
   /* stylelint-disable-next-line declaration-no-important */
-  --padding-end: #{globals.$ion-space-400} !important;
+  --ion-content-padding-end: #{globals.$ion-space-400} !important;
   /* stylelint-disable-next-line declaration-no-important */
-  --padding-bottom: #{globals.$ion-space-1200} !important;
+  --ion-content-padding-bottom: #{globals.$ion-space-1200} !important;
 
   // Set the background to the focused element within a radio group only when there is a checked radio
   &:has(.radio-checked) .ion-focused:not(.item-radio-checked) {
