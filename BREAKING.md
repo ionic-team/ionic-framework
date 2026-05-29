@@ -27,6 +27,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Radio Group](#version-9x-radio-group)
   - [Spinner](#version-9x-spinner)
   - [Textarea](#version-9x-textarea)
+  - [Thumbnail](#version-9x-thumbnail)
 
 <h2 id="version-9x-global-styles">Global Styles</h2>
 
@@ -294,3 +295,39 @@ Additionally, the `radio-group-wrapper` div element has been removed, causing sl
 Converted `ion-textarea` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
 If you were targeting the internals of `ion-textarea` in your CSS, you will need to target the `wrapper`, `container`, `label`, `native`, `supporting-text`, `helper-text`, `error-text`, `counter`, or `bottom` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+
+<h4 id="version-9x-thumbnail">Thumbnail</h4>
+
+The following breaking changes apply to `ion-thumbnail`:
+
+1. `--size` has been split into separate `--ion-thumbnail-width` and `--ion-thumbnail-height` CSS variables. <sup>[1](#version-9x-thumbnail-replaced-css-variables)</sup>
+2. `--border-radius` has been replaced. <sup>[1](#version-9x-thumbnail-replaced-css-variables)</sup>
+3. Theme classes (`ion-thumbnail.md`, `ion-thumbnail.ios`) are no longer supported. <sup>[2](#version-9x-thumbnail-theme-classes)</sup>
+
+<h5 id="version-9x-thumbnail-replaced-css-variables">Replaced CSS variables</h5>
+
+`--size` and `--border-radius` have been replaced. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--size` | `IonThumbnail.width` | `--ion-thumbnail-width` |
+| `--size` | `IonThumbnail.height` | `--ion-thumbnail-height` |
+| `--border-radius` | `IonThumbnail.border.radius` | `--ion-thumbnail-border-radius` |
+
+> [!NOTE]
+> Code that previously set `--size: 48px` on `ion-thumbnail` must now set both `--ion-thumbnail-width: 48px` and `--ion-thumbnail-height: 48px`.
+
+<h5 id="version-9x-thumbnail-slotted">Slotted inside `ion-item` or `ion-item-divider`</h5>
+
+When `ion-thumbnail` is slotted inside a parent component, the parent owns the sizing.
+
+Use the **parent's** thumbnail tokens instead:
+
+| Context | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| Inside `ion-item` | `IonItem.thumbnail.width` / `IonItem.thumbnail.height` | `--ion-item-thumbnail-width` / `--ion-item-thumbnail-height` |
+| Inside `ion-item-divider` | `IonItemDivider.thumbnail.width` / `IonItemDivider.thumbnail.height` | `--ion-item-divider-thumbnail-width` / `--ion-item-divider-thumbnail-height` |
+
+<h5>Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-thumbnail.md`, `ion-thumbnail.ios`.

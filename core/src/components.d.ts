@@ -4266,10 +4266,6 @@ export namespace Components {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTitle {
         /**
@@ -10394,10 +10390,6 @@ declare namespace LocalJSX {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTitle {
         /**
