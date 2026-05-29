@@ -300,11 +300,11 @@ If you were targeting the internals of `ion-textarea` in your CSS, you will need
 
 The following breaking changes apply to `ion-thumbnail`:
 
-1. `--size` has been split into separate `--ion-thumbnail-width` and `--ion-thumbnail-height` CSS variables.
-2. `--border-radius` has been replaced.
-3. Theme classes (`ion-thumbnail.md`, `ion-thumbnail.ios`) are no longer supported.
+1. `--size` has been split into separate `--ion-thumbnail-width` and `--ion-thumbnail-height` CSS variables. <sup>[1](#version-9x-thumbnail-replaced-css-variables)</sup>
+2. `--border-radius` has been replaced. <sup>[1](#version-9x-thumbnail-replaced-css-variables)</sup>
+3. Theme classes (`ion-thumbnail.md`, `ion-thumbnail.ios`) are no longer supported. <sup>[2](#version-9x-thumbnail-theme-classes)</sup>
 
-<h5>Replaced CSS variables</h5>
+<h5 id="version-9x-thumbnail-replaced-css-variables">Replaced CSS variables</h5>
 
 `--size` and `--border-radius` have been replaced. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
@@ -317,7 +317,7 @@ The following breaking changes apply to `ion-thumbnail`:
 > [!NOTE]
 > Code that previously set `--size: 48px` on `ion-thumbnail` must now set both `--ion-thumbnail-width: 48px` and `--ion-thumbnail-height: 48px`.
 
-<h5>Slotted inside `ion-item` or `ion-item-divider`</h5>
+<h5 id="version-9x-thumbnail-slotted">Slotted inside `ion-item` or `ion-item-divider`</h5>
 
 When `ion-thumbnail` is slotted inside a parent component, the parent owns the sizing.
 
