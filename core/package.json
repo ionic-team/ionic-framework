@@ -26,6 +26,45 @@
   "collection:main": "dist/collection/index.js",
   "collection": "dist/collection/collection-manifest.json",
   "types": "dist/types/interface.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/interface.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs.js",
+      "default": "./dist/index.js"
+    },
+    "./components": {
+      "types": "./components/custom-elements.d.ts",
+      "import": "./components/index.js",
+      "default": "./components/index.js"
+    },
+    "./components/*.js": {
+      "types": "./components/*.d.ts",
+      "default": "./components/*.js"
+    },
+    "./components/*": {
+      "types": "./components/*.d.ts",
+      "default": "./components/*.js"
+    },
+    "./loader": {
+      "types": "./loader/index.d.ts",
+      "import": "./loader/index.js",
+      "require": "./loader/index.cjs.js",
+      "default": "./loader/index.js"
+    },
+    "./loader/*": "./loader/*",
+    "./hydrate": {
+      "types": "./hydrate/index.d.ts",
+      "import": "./hydrate/index.mjs",
+      "require": "./hydrate/index.js",
+      "default": "./hydrate/index.js"
+    },
+    "./hydrate/*": "./hydrate/*",
+    "./css/*.css": "./css/*.css",
+    "./css/*": "./css/*",
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
   "files": [
     "components/",
     "css/",
