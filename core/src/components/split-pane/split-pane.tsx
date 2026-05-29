@@ -8,6 +8,7 @@ import { getIonTheme } from '../../global/ionic-global';
 
 const SPLIT_PANE_MAIN = 'split-pane-main';
 const SPLIT_PANE_SIDE = 'split-pane-side';
+// TODO(FW-7285): Replace with global breakpoints
 const QUERY: { [key: string]: string } = {
   xs: '(min-width: 0px)',
   sm: '(min-width: 576px)',

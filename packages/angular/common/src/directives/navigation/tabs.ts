@@ -10,10 +10,53 @@ import {
   AfterViewInit,
   QueryList,
 } from '@angular/core';
+import type { Params } from '@angular/router';
 
 import { NavController } from '../../providers/nav-controller';
 
 import { StackDidChangeEvent, StackWillChangeEvent } from './stack-utils';
+
+/**
+ * Extracts `queryParams` and `fragment` from a tab button's href for use
+ * as Angular `NavigationExtras`. Returns `undefined` when neither is present.
+ */
+const parseHrefExtras = (href: string | undefined): { queryParams?: Params; fragment?: string } | undefined => {
+  if (!href) {
+    return undefined;
+  }
+
+  const hashIndex = href.indexOf('#');
+  // Treat a bare `#` (no fragment text) as no fragment.
+  const fragment = hashIndex >= 0 && hashIndex < href.length - 1 ? href.slice(hashIndex + 1) : undefined;
+  const beforeHash = hashIndex >= 0 ? href.slice(0, hashIndex) : href;
+
+  const queryIndex = beforeHash.indexOf('?');
+  const search = queryIndex >= 0 ? beforeHash.slice(queryIndex + 1) : '';
+
+  let queryParams: Params | undefined;
+  if (search) {
+    const params = new URLSearchParams(search);
+    queryParams = {};
+    for (const key of new Set(params.keys())) {
+      const all = params.getAll(key);
+      queryParams[key] = all.length > 1 ? all : all[0];
+    }
+  }
+
+  if (!queryParams && fragment === undefined) {
+    return undefined;
+  }
+
+  /**
+   * Build the result with only the populated keys so that a spread of the
+   * returned object does not overwrite saved `queryParams`/`fragment` with
+   * `undefined` (which `Object.assign`/spread would copy as a real key).
+   */
+  const extras: { queryParams?: Params; fragment?: string } = {};
+  if (queryParams) extras.queryParams = queryParams;
+  if (fragment !== undefined) extras.fragment = fragment;
+  return extras;
+};
 
 @Directive({
   selector: 'ion-tabs',
@@ -103,23 +146,26 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
    *
    *   a. Get the saved root view from the router outlet. If the saved root view
    *      matches the tabRootUrl, set the route view to this view including the
-   *      navigation extras.
-   *   b. If the saved root view from the router outlet does
-   *      not match, navigate to the tabRootUrl. No navigation extras are
-   *      included.
+   *      navigation extras. Any `queryParams` or `fragment` declared on the tab
+   *      button's `href` are also forwarded.
+   *   b. If the saved root view from the router outlet does not match, navigate
+   *      to the tabRootUrl, forwarding any `queryParams`/`fragment` declared on
+   *      the tab button's `href`.
    *
    * 2. If the current tab tab is not currently selected, get the last route
    *    view from the router outlet.
    *
    *   a. If the last route view exists, navigate to that view including any
-   *      navigation extras
-   *   b. If the last route view doesn't exist, then navigate
-   *      to the default tabRootUrl
+   *      navigation extras.
+   *   b. If the last route view doesn't exist, then navigate to the default
+   *      tabRootUrl, forwarding any `queryParams`/`fragment` declared on the
+   *      tab button's `href`.
    */
   @HostListener('ionTabButtonClick', ['$event'])
   select(tabOrEvent: string | CustomEvent): Promise<boolean> | undefined {
     const isTabString = typeof tabOrEvent === 'string';
     const tab = isTabString ? tabOrEvent : (tabOrEvent as CustomEvent).detail.tab;
+    const href: string | undefined = isTabString ? undefined : (tabOrEvent as CustomEvent).detail.href;
 
     /**
      * If the tabs are not using the router, then
@@ -135,6 +181,12 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
 
     const alreadySelected = this.outlet.getActiveStackId() === tab;
     const tabRootUrl = `${this.outlet.tabsPrefix}/${tab}`;
+
+    /**
+     * The href pathname is ignored here; tab routing is driven by `tabsPrefix/tab`.
+     * Only the query and fragment are forwarded as navigation extras.
+     */
+    const hrefExtras = parseHrefExtras(href);
 
     /**
      * If this is a nested tab, prevent the event
@@ -159,6 +211,7 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
       const navigationExtras = rootView && tabRootUrl === rootView.url && rootView.savedExtras;
       return this.navCtrl.navigateRoot(tabRootUrl, {
         ...navigationExtras,
+        ...hrefExtras,
         animated: true,
         animationDirection: 'back',
       });
@@ -166,10 +219,11 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
       const lastRoute = this.outlet.getLastRouteView(tab);
       /**
        * If there is a lastRoute, goto that, otherwise goto the fallback url of the
-       * selected tab
+       * selected tab. When falling back to the tab root, honor query params and
+       * fragment declared on the tab button's href.
        */
       const url = lastRoute?.url || tabRootUrl;
-      const navigationExtras = lastRoute?.savedExtras;
+      const navigationExtras = lastRoute?.savedExtras ?? (url === tabRootUrl ? hrefExtras : undefined);
 
       return this.navCtrl.navigateRoot(url, {
         ...navigationExtras,

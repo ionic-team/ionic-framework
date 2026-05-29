@@ -36,6 +36,9 @@
         <button class="expand" id="noMessage" onclick="presentAlertNoMessage()">Alert No Message</button>
         <button class="expand" id="asyncHandler" onclick="presentAlertAsyncHandler()">Alert Async Handler</button>
         <button class="expand" id="confirm" onclick="presentAlertConfirm()">Confirm</button>
+        <button class="expand" id="confirmLongText" onclick="presentAlertConfirmLongText()">
+          Confirm (long button text)
+        </button>
         <button class="expand" id="prompt" onclick="presentAlertPrompt()">Prompt</button>
         <button class="expand" id="radio" onclick="presentAlertRadio()">Radio</button>
         <button class="expand" id="checkbox" onclick="presentAlertCheckbox()">Checkbox</button>
@@ -130,6 +133,20 @@
               handler: () => {
                 console.log('Confirm Okay');
               },
+            },
+          ],
+        });
+      }
+
+      function presentAlertConfirmLongText() {
+        openAlert({
+          header: 'Alert!',
+          buttons: [
+            {
+              text: 'Action Action Action Action',
+            },
+            {
+              text: 'Action',
             },
           ],
         });
