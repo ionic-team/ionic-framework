@@ -8,7 +8,7 @@ import { configs, test } from '@utils/test/playwright';
  * does not. The overlay rendering is already tested in the respective
  * test files.
  */
-configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
   test.describe(title('select: basic'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/select/test/basic', config);
