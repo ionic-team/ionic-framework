@@ -15,7 +15,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
               status: 200,
               contentType: 'image/png',
               body: Buffer.from(
-                'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIwAAAABJRU5ErkJggg==',
+                'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
                 'base64'
               ),
             });
