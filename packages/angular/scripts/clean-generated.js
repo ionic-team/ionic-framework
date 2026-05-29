@@ -14,4 +14,9 @@ async function getCodegenedFilesToDelete() {
   return Promise.all([...factoryMatches, ...summaryMatches].map((filePath) => fs.remove(filePath)));
 }
 
-Promise.all([getCodegenedFilesToDelete(), fs.remove(distGeneratedNodeModules)]);
+(async () => {
+  await Promise.all([getCodegenedFilesToDelete(), fs.remove(distGeneratedNodeModules)]);
+})().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
