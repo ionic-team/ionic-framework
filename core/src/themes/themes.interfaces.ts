@@ -322,4 +322,5 @@ export type NumberStringKeys = {
   [K in number as `${K}`]?: string;
 };
 
-export type Hue = 'bold' | 'subtle';
+export const HUES = ['bold', 'subtle'] as const;
+export type Hue = (typeof HUES)[number];

@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-import { ION_BADGE_HUES } from '../../../badge/badge.interfaces';
+import { HUES } from '../../../../themes/themes.interfaces';
 
 /**
  * This behavior does not vary across modes/directions.
@@ -10,7 +10,7 @@ import { ION_BADGE_HUES } from '../../../badge/badge.interfaces';
  */
 configs({ directions: ['ltr'], modes: ['md', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('badge: hue'), () => {
-    ION_BADGE_HUES.forEach((hue) => {
+    HUES.forEach((hue) => {
       test(`should render ${hue} badges`, async ({ page }) => {
         await page.setContent(
           `
