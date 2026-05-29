@@ -4,7 +4,7 @@ import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, 
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import type { NotchController } from '@utils/forms';
 import { compareOptions, createNotchController, isOptionSelected, checkInvalidState } from '@utils/forms';
-import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
+import { suppressFocusVisible, renderHiddenInput, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
@@ -436,55 +436,63 @@ export class Select implements ComponentInterface {
     // Add logic to scroll selected item into view before presenting
     const scrollSelectedIntoView = () => {
       const indexOfSelected = this.childOpts.findIndex((o) => o.value === this.value);
+
+      /**
+       * Determine which option to focus when the overlay opens: the selected
+       * option if the select has a value, otherwise the first enabled option.
+       */
+      let optionToFocus: HTMLElement | null = null;
+
       if (indexOfSelected > -1) {
         const selectedItem = overlay.querySelector<HTMLElement>(
           `.select-interface-option:nth-of-type(${indexOfSelected + 1})`
         );
 
+        /**
+         * If the option contains an `ion-radio` or `ion-checkbox`, focus
+         * that instead of the option element itself. This ensures that
+         * screen readers will announce the role and state of the element
+         * (e.g. "radio button, checked") rather than only the option text.
+         * Alert and action sheet options are plain buttons, so fall back to
+         * focusing the option element itself in those cases.
+         */
         if (selectedItem) {
-          /**
-           * Browsers such as Firefox do not
-           * correctly delegate focus when manually
-           * focusing an element with delegatesFocus.
-           * We work around this by manually focusing
-           * the interactive element.
-           * ion-radio and ion-checkbox are the only
-           * elements that ion-select-popover uses, so
-           * we only need to worry about those two components
-           * when focusing.
-           */
-          const interactiveEl = selectedItem.querySelector<HTMLElement>('ion-radio, ion-checkbox') as
-            | HTMLIonRadioElement
-            | HTMLIonCheckboxElement
-            | null;
+          const interactiveEl = selectedItem.querySelector<HTMLElement>('ion-radio, ion-checkbox');
           if (interactiveEl) {
             selectedItem.scrollIntoView({ block: 'nearest' });
-            // Needs to be called before `focusVisibleElement` to prevent issue with focus event bubbling
-            // and removing `ion-focused` style
-            interactiveEl.setFocus();
           }
-
-          focusVisibleElement(selectedItem);
+          optionToFocus = interactiveEl ?? selectedItem;
         }
       } else {
         /**
          * If no value is set then focus the first enabled option.
          */
-        const firstEnabledOption = overlay.querySelector<HTMLElement>(
+        optionToFocus = overlay.querySelector<HTMLElement>(
           'ion-radio:not(.radio-disabled), ion-checkbox:not(.checkbox-disabled)'
-        ) as HTMLIonRadioElement | HTMLIonCheckboxElement | null;
+        );
+      }
 
-        if (firstEnabledOption) {
-          /**
-           * Focus the option for the same reason as we do above.
-           *
-           * Needs to be called before `focusVisibleElement` to prevent issue with focus event bubbling
-           * and removing `ion-focused` style
-           */
-          firstEnabledOption.setFocus();
-
-          focusVisibleElement(firstEnabledOption.closest('ion-item')!);
+      if (optionToFocus) {
+        /**
+         * ion-radio and ion-checkbox expose `setFocus`, which correctly
+         * delegates focus to their inner focusable element. This is needed
+         * because browsers such as Firefox do not delegate focus correctly
+         * when focusing an element with delegatesFocus. Other options are
+         * plain buttons that can be focused directly.
+         */
+        if (optionToFocus.matches('ion-radio, ion-checkbox')) {
+          (optionToFocus as HTMLIonRadioElement | HTMLIonCheckboxElement).setFocus();
+        } else {
+          optionToFocus.focus();
         }
+
+        /**
+         * While the focus should be on the option so assistive technologies
+         * announce it, we do not want to show the focus ring when the overlay
+         * opens. The ring should only appear once the user navigates the
+         * overlay with the keyboard, which the focus-visible utility handles.
+         */
+        suppressFocusVisible();
       }
     };
 
