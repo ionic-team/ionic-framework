@@ -47,7 +47,7 @@
     "@angular/cli": "^21.0.0",
     "@angular/compiler-cli": "^21.0.0",
     "@angular/language-service": "^21.0.0",
-    "@playwright/test": "^1.54.2",
+    "@playwright/test": "^1.60.0",
     "@types/express": "^4.17.21",
     "@types/node": "^22.9.3",
     "@types/ws": "8.5.3",

@@ -55,7 +55,7 @@
     ]
   },
   "devDependencies": {
-    "@playwright/test": "^1.40.0",
+    "@playwright/test": "^1.60.0",
     "@testing-library/dom": "^10.0.0",
     "@vitejs/plugin-react": "^4.0.0",
     "concurrently": "^6.3.0",
