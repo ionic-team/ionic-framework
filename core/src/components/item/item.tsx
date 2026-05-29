@@ -259,7 +259,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   private isFocusable(): boolean {
     const focusableChild = this.el.querySelector('.ion-focusable');
-    return this.canActivate() || focusableChild !== null;
+    // An item is focusable when it can receive keyboard focus: when it is
+    // clickable (has a `button` or `href`), when it has a single input cover
+    // (e.g. a radio or checkbox), or when it contains a focusable child.
+    // Focusable items get the `ion-focusable` class so the `ion-focused`
+    // class is applied while tabbing through them.
+    return this.isClickable() || this.hasCover() || focusableChild !== null;
   }
 
   private hasStartEl() {

@@ -114,10 +114,6 @@ slot[name="end"]::slotted(*) {
 
 // Item in Select Modal
 // --------------------------------------------------
-:host(.in-select-modal) {
-  --background-focused: #{globals.$ion-bg-neutral-subtlest-press};
-  --background-focused-opacity: 0;
-}
 
 :host(.in-select-modal.ion-focused) .item-native {
   --border-radius: #{globals.$ion-border-radius-400};

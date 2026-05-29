@@ -15,11 +15,6 @@ ion-item {
   --border-width: 0;
 }
 
-ion-item.ion-focused::part(native)::after {
-  // Your styles for the ::after pseudo element when ion-item is focused
-  border: none;
-}
-
 // Toolbar
 // ----------------------------------------------------------------
 
