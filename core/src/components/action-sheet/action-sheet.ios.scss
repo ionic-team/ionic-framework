@@ -219,6 +219,10 @@
 // Action Sheet: Select Option
 // --------------------------------------------------
 
+.action-sheet-button-label-text {
+  justify-content: center;
+}
+
 /**
  * Cap slotted children so they can't stretch the option
  * row out of proportion, keeping rows visually uniform

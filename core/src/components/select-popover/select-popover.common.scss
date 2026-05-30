@@ -1,4 +1,5 @@
 @use "../../themes/mixins" as mixins;
+@use "../select-option/select-option.interface";
 
 // Select Popover
 // --------------------------------------------------
@@ -42,12 +43,6 @@ ion-label {
   display: flex;
 
   align-items: center;
-}
-
-.select-option-label-text {
-  display: flex;
-
-  flex-wrap: wrap;
 }
 
 ion-radio.select-option-has-rich-content::part(label),
