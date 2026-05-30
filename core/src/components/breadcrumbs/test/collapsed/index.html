@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Breadcrumbs - Collapsed</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Breadcrumbs - Collapsed</ion-title>
+          <ion-buttons slot="end">
+            <ion-button id="expandToggleButton" onClick="toggleBreadcrumbCollapse()"> Expand All </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-breadcrumbs max-items="4" class="expandOnClick">
+            <ion-breadcrumb href="#"> Home </ion-breadcrumb>
+            <ion-breadcrumb href="#electronics"> Electronics </ion-breadcrumb>
+            <ion-breadcrumb href="#photography"> Photography </ion-breadcrumb>
+            <ion-breadcrumb href="#cameras"> Cameras </ion-breadcrumb>
+            <ion-breadcrumb href="#film"> Film </ion-breadcrumb>
+            <ion-breadcrumb> 35 mm </ion-breadcrumb>
+          </ion-breadcrumbs>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <h1>Max Items: 4</h1>
+
+        <ion-breadcrumbs max-items="4" class="expandOnClick">
+          <ion-breadcrumb href="#"> Home </ion-breadcrumb>
+          <ion-breadcrumb href="#electronics"> Electronics </ion-breadcrumb>
+          <ion-breadcrumb href="#photography"> Photography </ion-breadcrumb>
+          <ion-breadcrumb href="#cameras"> Cameras </ion-breadcrumb>
+          <ion-breadcrumb href="#film"> Film </ion-breadcrumb>
+          <ion-breadcrumb> 35 mm </ion-breadcrumb>
+        </ion-breadcrumbs>
+
+        <hr />
+
+        <h1>Max Items: 4; ItemsBeforeCollapse: 0</h1>
+
+        <ion-breadcrumbs max-items="4" items-before-collapse="0" class="expandOnClick">
+          <ion-breadcrumb href="#"> Home </ion-breadcrumb>
+          <ion-breadcrumb href="#electronics"> Electronics </ion-breadcrumb>
+          <ion-breadcrumb href="#photography"> Photography </ion-breadcrumb>
+          <ion-breadcrumb href="#cameras"> Cameras </ion-breadcrumb>
+          <ion-breadcrumb href="#film"> Film </ion-breadcrumb>
+          <ion-breadcrumb> 35 mm </ion-breadcrumb>
+        </ion-breadcrumbs>
+
+        <hr />
+
+        <h1>Max Items: 4; ItemsBeforeCollapse: 2</h1>
+
+        <ion-breadcrumbs max-items="4" items-before-collapse="2" class="expandOnClick">
+          <ion-breadcrumb href="#"> Home </ion-breadcrumb>
+          <ion-breadcrumb href="#electronics"> Electronics </ion-breadcrumb>
+          <ion-breadcrumb href="#photography"> Photography </ion-breadcrumb>
+          <ion-breadcrumb href="#cameras"> Cameras </ion-breadcrumb>
+          <ion-breadcrumb href="#film"> Film </ion-breadcrumb>
+          <ion-breadcrumb> 35 mm </ion-breadcrumb>
+        </ion-breadcrumbs>
+
+        <hr />
+
+        <h1>Max Items: 4; ItemsAfterCollapse: 0</h1>
+
+        <ion-breadcrumbs max-items="4" items-after-collapse="0" class="expandOnClick">
+          <ion-breadcrumb href="#"> Home </ion-breadcrumb>
+          <ion-breadcrumb href="#electronics"> Electronics </ion-breadcrumb>
+          <ion-breadcrumb href="#photography"> Photography </ion-breadcrumb>
+          <ion-breadcrumb href="#cameras"> Cameras </ion-breadcrumb>
+          <ion-breadcrumb href="#film"> Film </ion-breadcrumb>
+          <ion-breadcrumb> 35 mm </ion-breadcrumb>
+        </ion-breadcrumbs>
+
+        <hr />
+
+        <h1>Max Items: 4; ItemsAfterCollapse: 3</h1>
+
+        <ion-breadcrumbs max-items="4" items-after-collapse="3" class="expandOnClick">
+          <ion-breadcrumb href="#"> Home </ion-breadcrumb>
+          <ion-breadcrumb href="#electronics"> Electronics </ion-breadcrumb>
+          <ion-breadcrumb href="#photography"> Photography </ion-breadcrumb>
+          <ion-breadcrumb href="#cameras"> Cameras </ion-breadcrumb>
+          <ion-breadcrumb href="#film"> Film </ion-breadcrumb>
+          <ion-breadcrumb> 35 mm </ion-breadcrumb>
+        </ion-breadcrumbs>
+
+        <hr />
+
+        <h1>Max Items: 4; ItemsBeforeCollapse: 2; ItemsAfterCollapse: 2</h1>
+
+        <ion-breadcrumbs max-items="4" items-before-collapse="2" items-after-collapse="2" class="expandOnClick">
+          <ion-breadcrumb href="#"> Home </ion-breadcrumb>
+          <ion-breadcrumb href="#electronics"> Electronics </ion-breadcrumb>
+          <ion-breadcrumb href="#photography"> Photography </ion-breadcrumb>
+          <ion-breadcrumb href="#cameras"> Cameras </ion-breadcrumb>
+          <ion-breadcrumb href="#film"> Film </ion-breadcrumb>
+          <ion-breadcrumb> 35 mm </ion-breadcrumb>
+        </ion-breadcrumbs>
+
+        <hr />
+
+        <h1>Max Items: 4; ItemsBeforeCollapse: 0; ItemsAfterCollapse: 4</h1>
+
+        <ion-breadcrumbs max-items="4" items-before-collapse="0" items-after-collapse="4" class="expandOnClick">
+          <ion-breadcrumb href="#"> Home </ion-breadcrumb>
+          <ion-breadcrumb href="#electronics"> Electronics </ion-breadcrumb>
+          <ion-breadcrumb href="#photography"> Photography </ion-breadcrumb>
+          <ion-breadcrumb href="#cameras"> Cameras </ion-breadcrumb>
+          <ion-breadcrumb href="#film"> Film </ion-breadcrumb>
+          <ion-breadcrumb> 35 mm </ion-breadcrumb>
+        </ion-breadcrumbs>
+
+        <hr />
+
+        <h1>Breadcrumbs: collapsed / popover on click</h1>
+
+        <ion-breadcrumbs id="popoverOnClick" max-items="4" items-before-collapse="0" items-after-collapse="3">
+          <ion-breadcrumb href="#">Home</ion-breadcrumb>
+          <ion-breadcrumb href="#electronics">Electronics</ion-breadcrumb>
+          <ion-breadcrumb href="#photography">Photography</ion-breadcrumb>
+          <ion-breadcrumb href="#cameras">Cameras</ion-breadcrumb>
+          <ion-breadcrumb href="#film">Film</ion-breadcrumb>
+          <ion-breadcrumb>35 mm</ion-breadcrumb>
+        </ion-breadcrumbs>
+
+        <hr />
+      </ion-content>
+    </ion-app>
+
+    <script>
+      let collapsed = true;
+      const expandToggleButton = document.querySelector('#expandToggleButton');
+
+      const expandOnClickBreadcrumbs = document.querySelectorAll('.expandOnClick');
+
+      for (const breadcrumbs of expandOnClickBreadcrumbs) {
+        breadcrumbs.addEventListener('ionCollapsedClick', () => expandBreadcrumbs(breadcrumbs));
+      }
+
+      function expandBreadcrumbs(breadcrumbs) {
+        breadcrumbs.maxItems = undefined;
+      }
+
+      function expandAllBreadcrumbs() {
+        for (const breadcrumbs of expandOnClickBreadcrumbs) {
+          breadcrumbs.maxItems = undefined;
+        }
+      }
+
+      function collapseAllBreadcrumbs() {
+        for (const breadcrumbs of expandOnClickBreadcrumbs) {
+          breadcrumbs.maxItems = 4;
+        }
+      }
+
+      function toggleBreadcrumbCollapse() {
+        if (collapsed) {
+          expandAllBreadcrumbs();
+          expandToggleButton.innerHTML = 'Collapse All';
+          collapsed = false;
+        } else {
+          collapseAllBreadcrumbs();
+          expandToggleButton.innerHTML = 'Expand All';
+          collapsed = true;
+        }
+      }
+
+      // Popover on click breadcrumbs
+      const popoverOnClick = document.querySelector('#popoverOnClick');
+      popoverOnClick.addEventListener('ionCollapsedClick', (ev) => presentPopover(ev));
+
+      class ListPopover extends HTMLElement {
+        constructor() {
+          super();
+        }
+
+        connectedCallback() {
+          let template = '';
+
+          this.collapsedBreadcrumbs.forEach((breadcrumb) => {
+            template += `
+            <ion-item href="${breadcrumb.href}">
+              <ion-label>${breadcrumb.textContent}</ion-label>
+            </ion-item>
+          `;
+          });
+
+          this.innerHTML = `
+          <ion-content>
+            <ion-list>
+              ${template}
+            </ion-list>
+          </ion-content>
+        `;
+        }
+      }
+
+      customElements.define('list-popover', ListPopover);
+
+      async function presentPopover(ev) {
+        console.log('present ev', ev);
+        const popover = Object.assign(document.createElement('ion-popover'), {
+          component: 'list-popover',
+          componentProps: ev.detail,
+          event: ev,
+        });
+        document.body.appendChild(popover);
+
+        await popover.present();
+      }
+    </script>
+
+    <style>
+      h1 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #a1a7b0;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      hr {
+        background: #eff1f3;
+
+        margin-top: 18px;
+        margin-bottom: 25px;
+      }
+
+      ion-content ion-breadcrumbs {
+        padding: 3px 5px;
+      }
+    </style>
+  </body>
+</html>

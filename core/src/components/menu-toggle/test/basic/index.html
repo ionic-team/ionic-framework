@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Menu Toggle - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-menu side="start" content-id="main" menu-id="start-menu">
+        <ion-header>
+          <ion-toolbar color="secondary">
+            <ion-title>Start Menu</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">Start menu content</ion-content>
+
+        <ion-footer>
+          <ion-toolbar color="secondary">
+            <ion-title>Footer</ion-title>
+          </ion-toolbar>
+        </ion-footer>
+      </ion-menu>
+
+      <ion-menu side="end" content-id="main" menu-id="end-menu">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>End Menu</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">End menu content</ion-content>
+      </ion-menu>
+
+      <div class="ion-page" id="main">
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-menu-toggle>
+                <ion-button>
+                  <ion-icon slot="icon-only" name="menu"></ion-icon>
+                </ion-button>
+              </ion-menu-toggle>
+            </ion-buttons>
+            <ion-title>Menu Toggle - Basic</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <div>
+            <button onclick="openDefault()">Menu Button Will Open Default</button>
+          </div>
+          <div>
+            <button onclick="openStart()">Menu Button Will Open start</button>
+          </div>
+          <div>
+            <button onclick="openEnd()">Menu Button Will Open end</button>
+          </div>
+        </ion-content>
+      </div>
+    </ion-app>
+    <ion-menu-controller></ion-menu-controller>
+
+    <script>
+      function openDefault() {
+        const menuButton = document.querySelector('ion-menu-toggle');
+        menuButton.menu = null;
+      }
+
+      function openStart() {
+        const menuButton = document.querySelector('ion-menu-toggle');
+        menuButton.menu = 'start';
+      }
+
+      function openEnd() {
+        const menuButton = document.querySelector('ion-menu-toggle');
+        menuButton.menu = 'end';
+      }
+    </script>
+    <style></style>
+  </body>
+</html>

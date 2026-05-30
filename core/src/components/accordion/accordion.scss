@@ -1,0 +1,91 @@
+@import "./accordion.vars.scss";
+
+// Accordion
+// --------------------------------------------------
+
+:host {
+  display: block;
+
+  position: relative;
+
+  width: 100%;
+
+  background-color: $accordion-background-color;
+
+  overflow: hidden;
+
+  /**
+   * This is required to force WebKit
+   * to create a new stacking context
+   * otherwise the border radius is
+   * temporarily lost when hovering over
+   * the ion-item or expanding/collapsing
+   * the accordion.
+   */
+  z-index: 0;
+}
+
+:host(.accordion-expanding) ::slotted(ion-item[slot="header"]),
+:host(.accordion-expanded) ::slotted(ion-item[slot="header"]) {
+  --border-width: 0px;
+}
+
+:host(.accordion-animated) {
+  transition: all $accordion-transition-duration $accordion-transition-easing;
+}
+
+:host(.accordion-animated) #content {
+  transition: max-height $accordion-transition-duration $accordion-transition-easing;
+}
+
+#content {
+  overflow: hidden;
+
+  will-change: max-height;
+}
+
+:host(.accordion-collapsing) #content {
+  /* stylelint-disable-next-line declaration-no-important */
+  max-height: 0 !important;
+}
+
+:host(.accordion-collapsed) #content {
+  display: none;
+}
+
+:host(.accordion-expanding) #content {
+  max-height: 0;
+}
+
+/**
+ * Prevent margins of content-wrapper
+ * from collapsing, breaking the animation.
+ */
+:host(.accordion-expanding) #content-wrapper {
+  overflow: auto;
+}
+
+:host(.accordion-disabled) #header,
+:host(.accordion-readonly) #header,
+:host(.accordion-disabled) #content,
+:host(.accordion-readonly) #content {
+  pointer-events: none;
+}
+
+/**
+ * We do not set the opacity on the
+ * host otherwise you would see the
+ * box-shadow behind it.
+ */
+:host(.accordion-disabled) #header,
+:host(.accordion-disabled) #content {
+  opacity: $accordion-disabled-opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host,
+  #content {
+    /* stylelint-disable declaration-no-important */
+    transition: none !important;
+  }
+}

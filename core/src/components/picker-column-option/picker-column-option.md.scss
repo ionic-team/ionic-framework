@@ -1,0 +1,5 @@
+@import "./picker-column-option";
+
+:host(.option-active) {
+  color: current-color(base);
+}

@@ -1,0 +1,296 @@
+@import "./button";
+@import "./button.ios.vars";
+@import "../toolbar/toolbar.ios.vars";
+
+
+// iOS Button
+// --------------------------------------------------
+
+:host {
+  --border-radius: #{$button-ios-border-radius};
+  --padding-top: #{$button-ios-padding-top};
+  --padding-bottom: #{$button-ios-padding-bottom};
+  --padding-start: #{$button-ios-padding-start};
+  --padding-end: #{$button-ios-padding-end};
+  --transition: background-color, opacity 100ms linear;
+
+  @include margin($button-ios-margin-top, $button-ios-margin-end, $button-ios-margin-bottom, $button-ios-margin-start);
+
+  min-height: #{$button-ios-min-height};
+
+  font-size: #{$button-ios-font-size};
+  font-weight: #{$button-ios-font-weight};
+
+  letter-spacing: #{$button-ios-letter-spacing};
+}
+
+
+// iOS Solid Button
+// --------------------------------------------------
+
+:host(.button-solid) {
+  --background-activated: #{ion-color(primary, shade)};
+  --background-focused: #{ion-color(primary, shade)};
+  --background-hover: #{ion-color(primary, tint)};
+  --background-activated-opacity: 1;
+  --background-focused-opacity: 1;
+  --background-hover-opacity: 1;
+}
+
+
+// iOS Outline Button
+// --------------------------------------------------
+
+:host(.button-outline) {
+  --border-radius: #{$button-ios-outline-border-radius};
+  --border-width: #{$button-ios-outline-border-width};
+  --border-style: #{$button-ios-outline-border-style};
+  --background-activated: #{ion-color(primary, base)};
+  --background-focused: #{ion-color(primary, base)};
+  --background-hover: transparent;
+  --background-focused-opacity: .1;
+  --color-activated: #{ion-color(primary, contrast)};
+}
+
+
+// iOS Clear Button
+// --------------------------------------------------
+
+:host(.button-clear) {
+  --background-activated: transparent;
+  --background-activated-opacity: 0;
+  --background-focused: #{ion-color(primary, base)};
+  --background-hover: transparent;
+  --background-focused-opacity: .1;
+
+  font-size: #{$button-ios-clear-font-size};
+  font-weight: #{$button-ios-clear-font-weight};
+}
+
+
+// iOS Toolbar Buttons
+// --------------------------------------------------
+
+/**
+ * The default buttons in a toolbar
+ * have a different font size/weight
+ * than buttons outside of a toolbar on iOS.
+ * However, we still want the "size"/"strong"
+ * properties to be usable in a toolbar, so we add
+ * the .in-buttons selector such that we
+ * can add the different font size/weight in a toolbar
+ * but still let "size"/"strong" override it.
+ */
+ :host(.in-buttons) {
+   font-size: #{$toolbar-ios-button-font-size};
+   font-weight: 400;
+ }
+
+
+// iOS Button Sizes
+// --------------------------------------------------
+
+:host(.button-large) {
+  --border-radius: #{$button-ios-large-border-radius};
+  --padding-top: #{$button-ios-large-padding-top};
+  --padding-start: #{$button-ios-large-padding-start};
+  --padding-end: #{$button-ios-large-padding-end};
+  --padding-bottom: #{$button-ios-large-padding-bottom};
+
+  min-height: #{$button-ios-large-min-height};
+
+  font-size: #{$button-ios-large-font-size};
+}
+
+:host(.button-small) {
+  --border-radius: #{$button-ios-small-border-radius};
+  --padding-top: #{$button-ios-small-padding-top};
+  --padding-start: #{$button-ios-small-padding-start};
+  --padding-end: #{$button-ios-small-padding-end};
+  --padding-bottom: #{$button-ios-small-padding-bottom};
+
+  min-height: #{$button-ios-small-min-height};
+
+  font-size: #{$button-ios-small-font-size};
+}
+
+
+// iOS Round Button
+// --------------------------------------------------
+
+:host(.button-round) {
+  --border-radius: #{$button-ios-round-border-radius};
+  --padding-top: #{$button-ios-round-padding-top};
+  --padding-start: #{$button-ios-round-padding-start};
+  --padding-end: #{$button-ios-round-padding-end};
+  --padding-bottom: #{$button-ios-round-padding-bottom};
+}
+
+// iOS Strong Button
+// --------------------------------------------------
+
+:host(.button-strong) {
+  font-weight: #{$button-ios-strong-font-weight};
+}
+
+// iOS Icon Only Button
+// --------------------------------------------------
+
+:host(.button-has-icon-only) {
+  --padding-top: 0;
+  --padding-bottom: var(--padding-top);
+  --padding-end: var(--padding-top);
+  --padding-start: var(--padding-end);
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-width: clamp(30px, 2.125em, 60px);
+
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-height: clamp(30px, 2.125em, 60px);
+}
+
+::slotted(ion-icon[slot="icon-only"]) {
+  /**
+    * The values were provided through a native iOS app.
+    * min font size: 15px, default font size: 18px, max font size: 43px
+    *
+    * Since the `ion-button` uses `rem` for the font size, we can't
+    * just pass the desired icon font size in `em` to the `
+    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * to account for the ion-button` font size.
+    *
+    * For example, if the default font size of `ion-button` is 16px
+    * (derived from rem), then the base size can use the default font
+    * size of the icon.
+    */
+  font-size: dynamic-font-clamp(0.84, 18px, 2.39, 1em);
+}
+
+:host(.button-small.button-has-icon-only) {
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-width: clamp(23px, 2.16em, 54px);
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-height: clamp(23px, 2.16em, 54px);
+}
+
+:host(.button-small) ::slotted(ion-icon[slot="icon-only"]) {
+  /**
+    * The values were provided through a native iOS app.
+    * min font size: 12px, default font size: 17px, max font size: 40px
+    *
+    * Since the `ion-button` uses `rem` for the font size, we can't
+    * just pass the desired icon font size in `em` to the `
+    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * to account for the ion-button` font size.
+    *
+    * For example, if the default font size of `ion-button` is 13px
+    * (derived from rem) and the default font size of the icon is
+    * 17px, then the base size would need to be increased.
+    */
+  font-size: dynamic-font-clamp(0.58, 20.93px, 1.92, 1em);
+}
+
+:host(.button-large.button-has-icon-only) {
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-width: clamp(46px, 2.5em, 78px);
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-height: clamp(46px, 2.5em, 78px);
+}
+
+:host(.button-large) ::slotted(ion-icon[slot="icon-only"]) {
+  /**
+    * The values were provided through a native iOS app.
+    * min font size: 15px, default font size: 18px, max font size: 43px
+    *
+    * Since the `ion-button` uses `rem` for the font size, we can't
+    * just pass the desired icon font size in `em` to the `
+    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * to account for the ion-button` font size.
+    *
+    * For example, if the default font size of `ion-button` is 20px
+    * (derived from rem) and the default font size of the icon is
+    * 18px, then the base size would need to be decreased.
+    */
+  font-size: dynamic-font-clamp(1.05, 14.4px, 2.99, 1em);
+}
+
+// iOS Button Focused
+// --------------------------------------------------
+
+:host(.button-outline.ion-focused.ion-color) .button-native,
+:host(.button-clear.ion-focused.ion-color) .button-native {
+  color: current-color(base);
+
+  &::after {
+    background: current-color(base);
+  }
+}
+
+:host(.button-solid.ion-color.ion-focused) .button-native::after {
+  background: #{current-color(shade)};
+}
+
+
+// iOS Button Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  // Clear and outline buttons use opacity so set
+  // background to transparent, but this shouldn't
+  // apply on top of activated
+  :host(.button-clear:not(.ion-activated):hover),
+  :host(.button-outline:not(.ion-activated):hover) {
+    opacity: #{$button-ios-clear-opacity-hover};
+  }
+
+  :host(.button-clear.ion-color:hover) .button-native,
+  :host(.button-outline.ion-color:hover) .button-native {
+    color: #{current-color(base)};
+
+    &::after {
+      background: transparent;
+    }
+  }
+
+  // Solid buttons use the tint background
+  :host(.button-solid.ion-color:hover) .button-native::after {
+    background: #{current-color(tint)};
+  }
+
+  // Solid buttons inside of a toolbar should use a tint of the current
+  // background so use white to tint it, but this should not apply
+  // when activated
+  :host(:hover.button-solid.in-toolbar:not(.ion-color):not(.in-toolbar-color):not(.ion-activated)) .button-native::after {
+    background: #fff;
+
+    opacity: 0.10;
+  }
+}
+
+
+// iOS Button Activated
+// --------------------------------------------------
+
+:host(.button-clear.ion-activated) {
+  opacity: #{$button-ios-clear-opacity-activated};
+}
+
+:host(.button-outline.ion-activated.ion-color) .button-native {
+  color: current-color(contrast);
+
+  &::after {
+    background: current-color(base);
+  }
+}
+
+:host(.button-solid.ion-color.ion-activated) .button-native::after {
+  background: #{current-color(shade)};
+}
+
+
+// Activated Button in Toolbar
+// --------------------------------------------------
+
+:host(.button-outline.ion-activated.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
+  background: var(--ion-toolbar-color, var(--color));
+  color: #{var(--ion-toolbar-background, var(--background), ion-color(primary, contrast))};
+}

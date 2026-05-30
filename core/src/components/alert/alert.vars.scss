@@ -1,0 +1,19 @@
+@import "../../themes/ionic.globals";
+
+// Alert
+// --------------------------------------------------
+
+/// @prop - Minimum width of the alert
+$alert-min-width:                 250px;
+
+/// @prop - Maximum height of the alert
+$alert-max-height:                90%;
+
+/// @prop - Line height of the alert button
+$alert-button-line-height:        dynamic-font(20px);
+
+/// @prop - Font size of the alert button
+$alert-button-font-size:          dynamic-font(14px);
+
+/// @prop - Minimum height of a textarea in the alert
+$alert-input-min-height:          37px;

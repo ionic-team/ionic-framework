@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - Card</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      #content {
+        position: relative;
+
+        display: block;
+        flex: 1;
+
+        height: 100%;
+        overflow-y: auto;
+
+        contain: size style;
+      }
+    </style>
+  </head>
+  <script type="module">
+    import { modalController } from '../../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+  </script>
+
+  <body>
+    <ion-app>
+      <div class="ion-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Card</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <button class="expand" id="card" onclick="presentModal(document.querySelectorAll('.ion-page')[1])">
+            Card Modal
+          </button>
+        </ion-content>
+      </div>
+    </ion-app>
+
+    <script>
+      async function createModal(presentingEl, opts) {
+        // create component to open
+        const element = document.createElement('div');
+        element.innerHTML = `
+      <ion-header id="modal-header">
+        <ion-toolbar>
+          <ion-title>Modal</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content scroll-y="false">
+        <div id="content" class="ion-padding ion-content-scroll-host">
+          Hello World!
+          <button id="add">Add Modal</button>
+          <button id="dismiss">Dismiss Modal</button>
+
+          <br />
+
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae lobortis felis, eu sodales enim. Nam
+            risus nibh, placerat at rutrum ac, vehicula vel velit. Lorem ipsum dolor sit amet, consectetur adipiscing
+            elit. Vestibulum quis elementum ligula, ac aliquet nulla. Mauris non placerat mauris. Aenean dignissim lacinia
+            porttitor. Praesent fringilla at est et ullamcorper. In ac ante ac massa porta venenatis ut id nibh. Fusce
+            felis neque, aliquet in velit vitae, venenatis euismod libero. Donec vulputate, urna sed sagittis tempor, mi
+            arcu tristique lacus, eget fringilla urna sem eget felis. Fusce dignissim lacus a scelerisque vehicula. Nulla
+            nec enim nunc. Quisque nec dui eu nibh pulvinar bibendum quis ut nunc. Duis ex odio, sollicitudin ac mollis
+            nec, fringilla non lacus. Maecenas sed tincidunt urna. Nunc feugiat maximus venenatis. Donec porttitor, felis
+            eget porttitor tempor, quam nulla dapibus nisl, sit amet posuere sapien sapien malesuada tortor. Pellentesque
+            habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque luctus, sapien nec
+            tincidunt efficitur, nibh turpis faucibus felis, in sodales massa augue nec erat. Morbi sollicitudin nisi ex,
+            et gravida nisi euismod eu. Suspendisse hendrerit dapibus orci, non viverra neque vestibulum id. Quisque vitae
+            interdum ligula, quis consectetur nibh. Phasellus in mi at erat ultrices semper. Fusce sollicitudin at dolor
+            ac lobortis. Morbi sit amet sem quis nulla pellentesque imperdiet. Nullam eu sem a enim maximus eleifend non
+            vulputate leo. Proin quis congue lacus. Pellentesque placerat, quam at tempus pulvinar, nisl ligula tempor
+            risus, quis pretium arcu odio et nulla. Nullam mollis consequat pharetra. Phasellus dictum velit sed purus
+            mattis maximus. In molestie eget massa ut dignissim. In a interdum elit. In finibus nibh a mauris lobortis
+            aliquet. Proin rutrum varius consequat. In mollis dapibus nisl, eu finibus urna viverra ac. Quisque
+            scelerisque nisl eu suscipit consectetur.
+          </p>
+        </div>
+      </ion-content>
+
+      <ion-footer>
+        <ion-toolbar>
+          <ion-title>Footer</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+      `;
+
+        // listen for close event
+        const button = element.querySelector('#dismiss');
+        button.addEventListener('click', () => {
+          modalController.dismiss();
+        });
+
+        const create = element.querySelector('#add');
+        create.addEventListener('click', async () => {
+          const topModal = await modalController.getTop();
+
+          presentModal(topModal, opts);
+        });
+
+        // present the modal
+        const modalElement = await modalController.create({
+          presentingElement: presentingEl,
+          component: element,
+          ...opts,
+        });
+        return modalElement;
+      }
+
+      async function presentModal(presentingEl, opts) {
+        const modal = await createModal(presentingEl, opts);
+        await modal.present();
+      }
+    </script>
+  </body>
+</html>

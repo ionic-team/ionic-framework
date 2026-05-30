@@ -1,0 +1,30 @@
+// Segment Content
+// --------------------------------------------------
+
+:host {
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+
+  flex-shrink: 0;
+
+  width: 100%;
+
+  // Workaround for a Safari/WebKit bug where flexbox children with dynamic
+  // height (e.g., height: fit-content) are not included in the scrollable area
+  // when using horizontal scrolling. This is needed to make the segment view
+  // scroll to the correct content.
+  min-height: 1px;
+
+  overflow-y: scroll;
+
+  /* Hide scrollbar in Firefox */
+  scrollbar-width: none;
+
+  /* Hide scrollbar in IE and Edge */
+  -ms-overflow-style: none;
+
+  /* Hide scrollbar in webkit */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -1,0 +1,161 @@
+@import "./select";
+@import "./select.md.vars";
+@import "./select.md.solid.scss";
+@import "./select.md.outline.scss";
+
+// Material Design Select
+// --------------------------------------------------
+
+:host {
+  --border-width: 1px;
+  --border-color: #{$item-md-border-color};
+  --highlight-height: 2px;
+}
+
+// Select Label
+// ----------------------------------------------------------------
+
+/**
+ * When the select is focused the label should
+ * take on the highlight color. This should
+ * only apply to floating or stacked labels.
+ */
+:host(.select-label-placement-floating.select-expanded) .label-text-wrapper,
+:host(.select-label-placement-floating.has-focus) .label-text-wrapper,
+:host(.select-label-placement-stacked.select-expanded) .label-text-wrapper,
+:host(.select-label-placement-stacked.has-focus) .label-text-wrapper {
+  color: var(--highlight-color);
+}
+
+:host(.has-focus.select-label-placement-floating.ion-valid) .label-text-wrapper,
+:host(.select-label-placement-floating.ion-touched.ion-invalid) .label-text-wrapper,
+:host(.has-focus.select-label-placement-stacked.ion-valid) .label-text-wrapper,
+:host(.select-label-placement-stacked.ion-touched.ion-invalid) .label-text-wrapper {
+  color: var(--highlight-color);
+}
+
+// Select Highlight
+// ----------------------------------------------------------------
+
+.select-highlight {
+  @include position(null, null, -1px, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: var(--highlight-height);
+
+  transform: scale(0);
+
+  transition: transform 200ms;
+
+  background: var(--highlight-color);
+}
+
+:host(.select-expanded) .select-highlight,
+:host(.has-focus) .select-highlight {
+  transform: scale(1);
+}
+
+/**
+ * Adjust the highlight up by 1px
+ * so it is not cut off by the
+ * the item's line (if one is present).
+ */
+:host(.in-item) .select-highlight {
+  @include position(null, null, 0, 0);
+}
+
+// Select Icon
+// ----------------------------------------------------------------
+
+.select-icon {
+  width: $select-md-icon-size;
+
+  transition: transform .15s cubic-bezier(.4, 0, .2, 1);
+
+  color: #{$select-md-icon-color};
+}
+
+/**
+ * This rotates the chevron icon
+ * when the select is activated.
+ * This should only happen on MD.
+ */
+:host(.select-expanded:not(.has-expanded-icon)) .select-icon {
+  @include transform(rotate(180deg));
+}
+
+/**
+ * When the select has no fill and
+ * in an item, then the icon should
+ * be the same color as the text color.
+ */
+:host(.in-item.select-expanded) .select-wrapper .select-icon,
+:host(.in-item.has-focus) .select-wrapper .select-icon,
+:host(.in-item.has-focus.ion-valid) .select-wrapper .select-icon,
+:host(.in-item.ion-touched.ion-invalid) .select-wrapper .select-icon {
+  color: #{$select-md-icon-color};
+}
+
+/**
+ * When the select is focused the icon should
+ * take on the highlight color.
+ * The icon should also take on the highlight
+ * color if there is a validation state.
+ */
+:host(.select-expanded) .select-wrapper .select-icon,
+:host(.has-focus.ion-valid) .select-wrapper .select-icon,
+:host(.ion-touched.ion-invalid) .select-wrapper .select-icon,
+:host(.has-focus) .select-wrapper .select-icon {
+  color: var(--highlight-color);
+}
+
+// Select Shape Rounded
+// ----------------------------------------------------------------
+
+:host(.select-shape-round) {
+  --border-radius: 16px;
+}
+
+// Select Inner Wrapper
+// ----------------------------------------------------------------
+
+:host(.select-label-placement-stacked) .select-wrapper-inner,
+:host(.select-label-placement-floating) .select-wrapper-inner {
+  width: calc(100% - $select-md-icon-size - $select-icon-margin-start);
+}
+
+// Select: Disabled
+// ----------------------------------------------------------------
+// The select and label should use the
+// same opacity and match the other form
+// controls
+
+:host(.select-disabled) {
+  opacity: $select-md-disabled-opacity;
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+/**
+ * Slotted buttons have a lot of default padding that can
+ * cause them to look misaligned from other pieces such
+ * as the control's label, especially when using a clear
+ * fill. We also make them circular to ensure that non-
+ * clear buttons and the focus/hover state on clear ones
+ * don't look too crowded.
+ */
+::slotted(ion-button[slot="start"].button-has-icon-only),
+::slotted(ion-button[slot="end"].button-has-icon-only) {
+  --border-radius: 50%;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+
+  aspect-ratio: 1;
+
+  min-height: 40px;
+}

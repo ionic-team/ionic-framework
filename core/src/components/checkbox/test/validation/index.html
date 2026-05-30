@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Checkbox - Validation</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-row-gap: 30px;
+        grid-column-gap: 30px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: var(--ion-color-step-600);
+
+        margin-top: 10px;
+        margin-bottom: 5px;
+      }
+
+      .validation-info {
+        margin: 20px;
+        padding: 10px;
+        background: var(--ion-color-light);
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Checkbox - Validation Test</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <div class="validation-info">
+          <h2>Screen Reader Testing Instructions:</h2>
+          <ol>
+            <li>Enable your screen reader (VoiceOver, NVDA, JAWS, etc.)</li>
+            <li>Tab through the form fields</li>
+            <li>When you tab away from an empty required field, the error should be announced immediately</li>
+            <li>The error text should be announced BEFORE the next field is announced</li>
+            <li>Test in Chrome, Safari, and Firefox to verify consistent behavior</li>
+          </ol>
+        </div>
+
+        <div class="grid">
+          <div>
+            <h2>Required Field</h2>
+            <ion-checkbox
+              id="terms-checkbox"
+              helper-text="You must agree to continue"
+              error-text="Please accept the terms and conditions"
+              required
+              >I agree to the terms and conditions</ion-checkbox
+            >
+          </div>
+
+          <div>
+            <h2>Optional Field (No Validation)</h2>
+            <ion-checkbox id="optional-checkbox" helper-text="You can skip this field">Optional Checkbox</ion-checkbox>
+          </div>
+        </div>
+
+        <div class="ion-padding">
+          <ion-button id="submit-btn" expand="block" disabled>Submit Form</ion-button>
+          <ion-button id="reset-btn" expand="block" fill="outline">Reset Form</ion-button>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      // Simple validation logic
+      const checkboxes = document.querySelectorAll('ion-checkbox');
+      const submitBtn = document.getElementById('submit-btn');
+      const resetBtn = document.getElementById('reset-btn');
+
+      // Track which fields have been touched
+      const touchedFields = new Set();
+
+      // Validation functions
+      const validators = {
+        'terms-checkbox': (checked) => {
+          return checked === true;
+        },
+        'optional-checkbox': () => true, // Always valid
+      };
+
+      function validateField(checkbox) {
+        const checkboxId = checkbox.id;
+        const checked = checkbox.checked;
+        const isValid = validators[checkboxId] ? validators[checkboxId](checked) : true;
+
+        // Only show validation state if field has been touched
+        if (touchedFields.has(checkboxId)) {
+          if (isValid) {
+            checkbox.classList.remove('ion-invalid');
+            checkbox.classList.add('ion-valid');
+          } else {
+            checkbox.classList.remove('ion-valid');
+            checkbox.classList.add('ion-invalid');
+          }
+          checkbox.classList.add('ion-touched');
+        }
+
+        return isValid;
+      }
+
+      function validateForm() {
+        let allValid = true;
+        checkboxes.forEach((checkbox) => {
+          if (checkbox.id !== 'optional-checkbox') {
+            const isValid = validateField(checkbox);
+            if (!isValid) {
+              allValid = false;
+            }
+          }
+        });
+        submitBtn.disabled = !allValid;
+        return allValid;
+      }
+
+      // Add event listeners
+      checkboxes.forEach((checkbox) => {
+        // Mark as touched on blur
+        checkbox.addEventListener('ionBlur', (e) => {
+          console.log('Blur event on:', checkbox.id);
+          touchedFields.add(checkbox.id);
+          validateField(checkbox);
+          validateForm();
+
+          const isInvalid = checkbox.classList.contains('ion-invalid');
+          if (isInvalid) {
+            console.log('Field marked invalid:', checkbox.innerText, checkbox.errorText);
+          }
+        });
+
+        // Validate on change
+        checkbox.addEventListener('ionChange', (e) => {
+          console.log('Change event on:', checkbox.id);
+          if (touchedFields.has(checkbox.id)) {
+            validateField(checkbox);
+            validateForm();
+          }
+        });
+      });
+
+      // Reset button
+      resetBtn.addEventListener('click', () => {
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = false;
+          checkbox.classList.remove('ion-valid', 'ion-invalid', 'ion-touched');
+        });
+        touchedFields.clear();
+        submitBtn.disabled = true;
+      });
+
+      // Submit button
+      submitBtn.addEventListener('click', () => {
+        if (validateForm()) {
+          alert('Form submitted successfully!');
+        }
+      });
+
+      // Initial setup
+      validateForm();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<div>
+  <h1>IonSegment Value Accessors</h1>
+  <p>
+    This test checks the form integrations with ion-segment to make sure values are correctly assigned to the form
+    group.
+  </p>
+
+  <app-value-accessor-test [formGroup]="form">
+    <ion-segment formControlName="segment">
+      <ion-segment-button value="Paid">
+        <ion-label>Paid</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Free">
+        <ion-label>Free</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </app-value-accessor-test>
+</div>

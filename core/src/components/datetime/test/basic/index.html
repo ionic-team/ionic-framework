@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Basic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../css/palettes/dark.class.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+
+      .options-popover {
+        --width: 300px;
+      }
+
+      ion-modal.ios,
+      ion-popover.datetime-popover.ios {
+        --width: 350px;
+        --height: 420px;
+      }
+
+      ion-modal.md,
+      ion-popover.datetime-popover.md {
+        --width: 350px;
+      }
+
+      ion-datetime {
+        width: 350px;
+      }
+    </style>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Basic</ion-title>
+          <ion-buttons slot="end">
+            <ion-button id="popover-trigger">Options</ion-button>
+          </ion-buttons>
+          <ion-popover class="options-popover" trigger="popover-trigger">
+            <ion-list lines="none">
+              <ion-item>
+                <ion-checkbox>Dark Mode</ion-checkbox>
+              </ion-item>
+              <ion-item detail="true" href="?ionic:mode=ios">
+                <ion-label>iOS Mode</ion-label>
+              </ion-item>
+              <ion-item detail="true" href="?ionic:mode=md">
+                <ion-label>MD Mode</ion-label>
+              </ion-item>
+
+              <ion-item>
+                <ion-toggle id="titleToggle">Show Default Title</ion-toggle>
+              </ion-item>
+
+              <ion-item>
+                <ion-toggle id="buttonsToggle">Show Default Buttons</ion-toggle>
+              </ion-item>
+
+              <ion-item>
+                <ion-input label="Locale" placeholder="default" id="locale"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-select label="Color" id="color" value="primary">
+                  <ion-select-option value="primary">Primary</ion-select-option>
+                  <ion-select-option value="secondary">Secondary</ion-select-option>
+                  <ion-select-option value="tertiary">Tertiary</ion-select-option>
+                  <ion-select-option value="success">Success</ion-select-option>
+                  <ion-select-option value="warning">Warning</ion-select-option>
+                  <ion-select-option value="danger">Danger</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+          </ion-popover>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Inline</h2>
+            <ion-datetime value="2020-03-14T14:23:00.000Z" id="inline-datetime"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Inline - No Default Value</h2>
+            <ion-datetime id="inline-datetime-no-value"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Popover</h2>
+            <button onclick="presentPopover(defaultPopover, event)">Present Popover</button>
+            <ion-popover class="datetime-popover" id="default-popover">
+              <ion-datetime></ion-datetime>
+            </ion-popover>
+          </div>
+
+          <div class="grid-item">
+            <h2>Modal</h2>
+            <button onclick="presentModal()">Present Modal</button>
+          </div>
+
+          <div class="grid-item">
+            <h2>Inline - Custom</h2>
+            <ion-datetime show-default-buttons="true" color="danger" id="custom-datetime" show-clear-button="true">
+              <span slot="title">Select Date</span>
+            </ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Popover - Custom</h2>
+            <button id="open-popover">Present Popover</button>
+            <ion-popover class="datetime-popover" trigger="open-popover" id="custom-popover">
+              <ion-datetime>
+                <span slot="title">My Custom Title</span>
+                <ion-buttons slot="buttons">
+                  <ion-button color="danger">Destroy</ion-button>
+                  <ion-button color="primary">Confirm</ion-button>
+                </ion-buttons>
+              </ion-datetime>
+            </ion-popover>
+          </div>
+
+          <div class="grid-item">
+            <h2>Modal - Custom</h2>
+            <button id="open-modal">Present Modal</button>
+            <ion-modal trigger="open-modal" id="modal">
+              <ion-datetime>
+                <span slot="title">My Custom Title</span>
+                <ion-buttons slot="buttons">
+                  <ion-button color="danger">Destroy</ion-button>
+                  <ion-button color="primary">Confirm</ion-button>
+                </ion-buttons>
+              </ion-datetime>
+            </ion-modal>
+          </div>
+
+          <div class="grid-item">
+            <h2>formatOptions</h2>
+            <ion-datetime value="2020-03-14T14:23:00.000Z" id="format-options-datetime">
+              <span slot="title">Select Date</span>
+            </ion-datetime>
+          </div>
+        </div>
+      </ion-content>
+      <script>
+        const datetimes = document.querySelectorAll('ion-datetime');
+        const color = document.querySelector('#color');
+        const locale = document.querySelector('#locale');
+        const datetime = document.querySelector('ion-datetime');
+        const buttons = document.querySelectorAll('ion-button');
+        const titleToggle = document.querySelector('#titleToggle');
+        const buttonsToggle = document.querySelector('#buttonsToggle');
+
+        locale.addEventListener('ionBlur', (ev) => {
+          const value = ev.target.value;
+          datetimes.forEach((datetime) => {
+            datetime.locale = !!value ? value : 'default';
+          });
+        });
+
+        const darkModeCheckbox = document.querySelector('ion-checkbox');
+        darkModeCheckbox.addEventListener('ionChange', (ev) => {
+          document.documentElement.classList.toggle('ion-palette-dark');
+        });
+
+        color.addEventListener('ionChange', (ev) => {
+          datetime.color = ev.target.value;
+          buttons.forEach((button) => {
+            button.color = ev.target.value;
+          });
+        });
+
+        titleToggle.addEventListener('ionChange', (ev) => {
+          datetimes.forEach((datetime) => {
+            datetime.showDefaultTitle = ev.detail.checked;
+          });
+        });
+        buttonsToggle.addEventListener('ionChange', (ev) => {
+          datetimes.forEach((datetime) => {
+            datetime.showDefaultButtons = ev.detail.checked;
+          });
+        });
+
+        datetimes.forEach((datetime) => {
+          datetime.addEventListener('ionFocus', () => {
+            console.log('Listen ionFocus: fired');
+          });
+
+          datetime.addEventListener('ionBlur', () => {
+            console.log('Listen ionBlur: fired');
+          });
+        });
+
+        const defaultPopover = document.querySelector('ion-popover#default-popover');
+        const customPopover = document.querySelector('ion-popover#custom-popover');
+        const presentPopover = (popover, ev) => {
+          popover.event = ev;
+          popover.showBackdrop = false;
+          popover.isOpen = true;
+
+          const dismiss = () => {
+            popover.isOpen = false;
+            popover.event = undefined;
+
+            popover.removeEventListener('didDismiss', dismiss);
+          };
+
+          popover.addEventListener('didDismiss', dismiss);
+        };
+
+        const presentModal = async () => {
+          const modal = await createModal();
+
+          await modal.present();
+        };
+
+        const createModal = () => {
+          // create component to open
+          const element = document.createElement('div');
+          element.innerHTML = `
+            <ion-datetime show-default-buttons="true" color="danger">
+              <span slot="title">Select Date</span>
+            </ion-datetime>
+          `;
+
+          // present the modal
+          const modalElement = Object.assign(document.createElement('ion-modal'), {
+            component: element,
+          });
+
+          const app = document.querySelector('ion-app');
+          app.appendChild(modalElement);
+          return modalElement;
+        };
+
+        const formatOptions = document.querySelector('#format-options-datetime');
+        formatOptions.formatOptions = {
+          time: { hour: '2-digit', minute: '2-digit' },
+          date: { day: '2-digit', month: 'long', era: 'short' },
+        };
+      </script>
+    </ion-app>
+  </body>
+</html>

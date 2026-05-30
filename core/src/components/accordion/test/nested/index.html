@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Accordion - Nested</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Accordion - Nested</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content fullscreen="true" color="light">
+        <ion-header collapse="condense">
+          <ion-toolbar color="light">
+            <ion-title size="large">Accordion - Basic</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <div class="grid ion-padding">
+          <div class="grid-item">
+            <h2>Nested</h2>
+            <ion-accordion-group id="enabled" expand="inset" value="attractions">
+              <ion-accordion value="attractions">
+                <ion-item color="primary" slot="header" button detail="false">
+                  <ion-icon slot="start" ios="film-outline" md="film"></ion-icon>
+                  <ion-label> Attractions</ion-label>
+                </ion-item>
+
+                <ion-accordion-group slot="content" value="second">
+                  <ion-accordion value="first">
+                    <ion-item color="primary" slot="header" button detail="false">
+                      <ion-label>First Item</ion-label>
+                    </ion-item>
+                    <div slot="content">First item content!</div>
+                  </ion-accordion>
+                  <ion-accordion value="second">
+                    <ion-item color="warning" slot="header" button detail="false">
+                      <ion-label>Second Item</ion-label>
+                    </ion-item>
+                    <div slot="content">Second item content!</div>
+                  </ion-accordion>
+                  <ion-accordion value="third">
+                    <ion-item color="tertiary" slot="header" button detail="false">
+                      <ion-label>Third Item</ion-label>
+                    </ion-item>
+                    <div slot="content">Third item content!</div>
+                  </ion-accordion>
+                </ion-accordion-group>
+              </ion-accordion>
+            </ion-accordion-group>
+          </div>
+          <div class="grid-item">
+            <h2>Nested Disabled</h2>
+            <ion-accordion-group id="nested-disabled" expand="inset" value="attractions">
+              <ion-accordion value="attractions">
+                <ion-item color="primary" slot="header" button detail="false">
+                  <ion-icon slot="start" ios="film-outline" md="film"></ion-icon>
+                  <ion-label> Attractions</ion-label>
+                </ion-item>
+
+                <ion-accordion-group slot="content" value="second" disabled="true">
+                  <ion-accordion value="first">
+                    <ion-item color="primary" slot="header" button detail="false">
+                      <ion-label>First Item</ion-label>
+                    </ion-item>
+                    <div slot="content">First item content!</div>
+                  </ion-accordion>
+                  <ion-accordion value="second">
+                    <ion-item color="warning" slot="header" button detail="false">
+                      <ion-label>Second Item</ion-label>
+                    </ion-item>
+                    <div slot="content">Second item content!</div>
+                  </ion-accordion>
+                  <ion-accordion value="third">
+                    <ion-item color="tertiary" slot="header" button detail="false">
+                      <ion-label>Third Item</ion-label>
+                    </ion-item>
+                    <div slot="content">Third item content!</div>
+                  </ion-accordion>
+                </ion-accordion-group>
+              </ion-accordion>
+            </ion-accordion-group>
+          </div>
+          <div class="grid-item">
+            <h2>Nested Parent Disabled</h2>
+            <ion-accordion-group id="parent-disabled" expand="inset" value="attractions" disabled="true">
+              <ion-accordion value="attractions">
+                <ion-item color="primary" slot="header" button detail="false">
+                  <ion-icon slot="start" ios="film-outline" md="film"></ion-icon>
+                  <ion-label> Attractions</ion-label>
+                </ion-item>
+
+                <ion-accordion-group slot="content" value="second">
+                  <ion-accordion value="first">
+                    <ion-item color="primary" slot="header" button detail="false">
+                      <ion-label>First Item</ion-label>
+                    </ion-item>
+                    <div slot="content">First item content!</div>
+                  </ion-accordion>
+                  <ion-accordion value="second">
+                    <ion-item color="warning" slot="header" button detail="false">
+                      <ion-label>Second Item</ion-label>
+                    </ion-item>
+                    <div slot="content">Second item content!</div>
+                  </ion-accordion>
+                  <ion-accordion value="third">
+                    <ion-item color="tertiary" slot="header" button detail="false">
+                      <ion-label>Third Item</ion-label>
+                    </ion-item>
+                    <div slot="content">Third item content!</div>
+                  </ion-accordion>
+                </ion-accordion-group>
+              </ion-accordion>
+            </ion-accordion-group>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

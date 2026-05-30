@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Focus Manager</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <script>
+      class PageRoot extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <h1>Root</h1>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <ion-nav-link router-direction="forward" component="page-one">
+              <button class="page-one">Go to Page One</button>
+            </ion-nav-link>
+            <ion-nav-link router-direction="forward" component="page-two">
+              <button class="page-two">Go to Page Two</button>
+            </ion-nav-link>
+            <ion-nav-link router-direction="forward" component="page-three">
+              <button class="page-three">Go to Page Three</button>
+            </ion-nav-link>
+          </ion-content>
+        `;
+        }
+      }
+      class PageOne extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-back-button></ion-back-button>
+              </ion-buttons>
+              <h1>Page One</h1>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            Content
+          </ion-content>
+        `;
+        }
+      }
+      class PageTwo extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <main class="ion-padding">
+            Content
+          </main>
+        `;
+        }
+      }
+      class PageThree extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <!-- Back button is hidden when not in an ion-header, so default-href makes it visible -->
+                <ion-back-button default-href="/"></ion-back-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </header>
+          <ion-content class="ion-padding">
+            Content
+          </ion-content>
+        `;
+        }
+      }
+      customElements.define('page-root', PageRoot);
+      customElements.define('page-one', PageOne);
+      customElements.define('page-two', PageTwo);
+      customElements.define('page-three', PageThree);
+
+      window.Ionic = {
+        config: {
+          focusManagerPriority: ['heading', 'banner', 'content'],
+        },
+      };
+    </script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-router>
+        <ion-route url="/" component="page-root"></ion-route>
+        <ion-route url="/page-one" component="page-one"></ion-route>
+        <ion-route url="/page-two" component="page-two"></ion-route>
+        <ion-route url="/page-three" component="page-three"></ion-route>
+      </ion-router>
+      <ion-nav></ion-nav>
+    </ion-app>
+  </body>
+</html>

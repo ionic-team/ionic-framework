@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Input - Bottom Content</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+      }
+
+      ion-input.custom-error-color {
+        --highlight-color-invalid: purple;
+      }
+    </style>
+  </head>
+
+  <body onLoad="onLoad()">
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Input - Bottom Content</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Hint</h2>
+            <ion-input label="Label"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Hint: Stacked</h2>
+            <ion-input label="Label" label-placement="stacked"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Helper Text</h2>
+            <ion-input label="Label" helper-text="Helper text"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Helper Text: Stacked</h2>
+            <ion-input label="Label" label-placement="stacked" helper-text="Helper text"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text</h2>
+            <ion-input class="ion-touched ion-invalid" label="Label" error-text="Error text"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text: Stacked</h2>
+            <ion-input
+              class="ion-touched ion-invalid"
+              label="Label"
+              label-placement="stacked"
+              error-text="Error text"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text: Custom Color</h2>
+            <ion-input
+              class="ion-touched ion-invalid custom-error-color"
+              label="Label"
+              error-text="Error text"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Helper Text: Wrapping</h2>
+            <ion-input
+              label="Label"
+              helper-text="Helper text helper text helper text helper text helper text helper text helper text helper text helper text"
+            >
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Counter</h2>
+            <ion-input label="Label" counter="true" maxlength="100"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Counter: Custom</h2>
+            <ion-input id="custom-counter" label="Label" counter="true" maxlength="100"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Counter: with Helper</h2>
+            <ion-input label="Label" counter="true" maxlength="100" helper-text="Helper text"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Counter: with Error</h2>
+            <ion-input
+              class="ion-touched ion-invalid"
+              label="Label"
+              counter="true"
+              maxlength="100"
+              error-text="Error text"
+            ></ion-input>
+          </div>
+        </div>
+
+        <button class="expand" onclick="toggleFill()">Toggle Fill</button>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      // Hide the toggle fill button on ios mode since it's not supported
+      function onLoad() {
+        const toggleFillButton = document.querySelector('button');
+
+        if (Ionic.mode === 'ios' && toggleFillButton) {
+          toggleFillButton.style.display = 'none';
+        }
+      }
+
+      const customCounterInput = document.querySelector('ion-input#custom-counter');
+      customCounterInput.counterFormatter = (inputLength, maxLength) => {
+        const length = maxLength - inputLength;
+        return `${maxLength - inputLength} characters left`;
+      };
+
+      const inputs = document.querySelectorAll('ion-input');
+
+      function toggleFill() {
+        inputs.forEach((input) => {
+          switch (input.fill) {
+            case 'outline':
+              input.fill = 'solid';
+              break;
+            case 'solid':
+              input.fill = undefined;
+              break;
+            default:
+              input.fill = 'outline';
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

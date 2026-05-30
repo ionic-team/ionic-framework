@@ -1,0 +1,33 @@
+@import "./checkbox";
+@import "./checkbox.ios.vars";
+
+// iOS Checkbox
+// --------------------------------------------------
+
+:host {
+  // Border
+  --border-radius: #{$checkbox-ios-icon-border-radius};
+  --border-width: #{$checkbox-ios-icon-border-width};
+  --border-style: #{$checkbox-ios-icon-border-style};
+  --border-color: #{$checkbox-ios-icon-border-color-off};
+
+  // Background
+  --checkbox-background: #{$checkbox-ios-background-color-off};
+
+  // Size
+  --size: #{$checkbox-ios-icon-size};
+
+  // Checkmark width
+  --checkmark-width: #{$checkbox-ios-icon-checkmark-width};
+}
+
+
+// iOS Checkbox: Disabled
+// -----------------------------------------
+// The checkbox and label should use the
+// same opacity and match the other form
+// controls
+
+:host(.checkbox-disabled) {
+  opacity: $checkbox-ios-disabled-opacity;
+}

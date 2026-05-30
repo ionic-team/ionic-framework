@@ -1,0 +1,101 @@
+@import "./picker.vars";
+
+// Picker
+// --------------------------------------------------
+
+:host {
+  /**
+  * @prop --highlight-background: Background of the picker highlight for the selected item
+  * @prop --highlight-border-radius: Border radius of the picker highlight for the selected item
+  *
+  * @prop --fade-background-rgb: Background of the gradient covering non-selected items in rgb format
+  */
+
+  display: flex;
+
+  position: relative;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 200px;
+
+  /**
+   * Picker columns should display
+   * in the order in which developers
+   * added them and should ignore
+   * LTR vs RTL directions.
+   */
+  direction: ltr;
+
+  /**
+   * This is required otherwise the
+   * highlight will appear behind
+   * the picker when used inline.
+   */
+  z-index: 0;
+}
+
+:host .picker-before,
+:host .picker-after {
+  position: absolute;
+
+  width: 100%;
+
+  /**
+   * The transform and z-index
+   * are needed for WebKit otherwise
+   * the fade will appear underneath the picker.
+   */
+  transform: translateZ(0);
+
+  z-index: 1;
+
+  pointer-events: none;
+}
+
+:host .picker-before {
+  @include position(0, null, null, 0);
+
+  height: 83px;
+}
+
+:host .picker-after {
+  @include position(116px, null, null, 0);
+
+  height: 84px;
+}
+
+:host .picker-highlight {
+  @include border-radius(var(--highlight-border-radius, 8px));
+  @include position(50%, 0, 0, 0);
+  @include margin(0, auto, 0, auto);
+
+  position: absolute;
+
+  width: calc(100% - 16px);
+  height: 34px;
+
+  transform: translateY(-50%);
+
+  background: var(--highlight-background);
+
+  z-index: -1;
+}
+
+:host input {
+  @include visually-hidden();
+}
+
+:host ::slotted(ion-picker-column:first-of-type) {
+  text-align: start;
+}
+
+:host ::slotted(ion-picker-column:last-of-type) {
+  text-align: end;
+}
+
+:host ::slotted(ion-picker-column:only-child) {
+  text-align: center;
+}

@@ -1,0 +1,89 @@
+@import "./modal";
+@import "./modal.ios.vars";
+
+// iOS Modals
+// --------------------------------------------------
+
+:host {
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.4);
+}
+
+:host(.modal-card),
+:host(.modal-sheet) {
+  --border-radius: #{$modal-ios-border-radius};
+}
+
+@media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+  :host {
+    --border-radius: #{$modal-ios-border-radius};
+  }
+}
+
+.modal-wrapper {
+  // hidden by default to prevent flickers, the animation will show it
+  @include transform(translate3d(0, 100%, 0));
+}
+
+// iOS Card Modal
+// --------------------------------------------------
+
+@include mobile-viewport() {
+  @supports (width: max(0px, 1px)) {
+    :host(.modal-card) {
+      --height: calc(100% - max(30px, var(--ion-safe-area-top)) - 10px);
+    }
+  }
+
+  @supports not (width: max(0px, 1px)) {
+    :host(.modal-card) {
+      --height: calc(100% - 40px);
+    }
+  }
+
+  :host(.modal-card) .modal-wrapper {
+    @include border-radius(var(--border-radius), var(--border-radius), 0, 0);
+  }
+
+  :host(.modal-card) {
+    --backdrop-opacity: 0;
+    --width: 100%;
+
+    align-items: flex-end;
+  }
+
+  :host(.modal-card) .modal-shadow {
+    display: none;
+  }
+
+  :host(.modal-card) ion-backdrop {
+    pointer-events: none;
+  }
+}
+
+@include tablet-viewport() {
+  :host(.modal-card) {
+    --width: calc(100% - 120px);
+    --height: calc(100% - (120px + var(--ion-safe-area-top) + var(--ion-safe-area-bottom)));
+    --max-width: 720px;
+    --max-height: 1000px;
+    --backdrop-opacity: 0;
+    --box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.1);
+
+    transition: all 0.5s ease-in-out;
+  }
+
+  :host(.modal-card) .modal-wrapper {
+    box-shadow: none;
+  }
+
+  :host(.modal-card) .modal-shadow {
+    box-shadow: var(--box-shadow);
+  }
+}
+
+// iOS Sheet Modal
+// --------------------------------------------------
+
+:host(.modal-sheet) .modal-wrapper {
+  @include border-radius(var(--border-radius), var(--border-radius), 0, 0);
+}

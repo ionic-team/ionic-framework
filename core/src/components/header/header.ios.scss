@@ -1,0 +1,171 @@
+@import "./header";
+@import "./header.ios.vars";
+
+// iOS Header
+// --------------------------------------------------
+
+.header-ios ion-toolbar:last-of-type {
+  --border-width: 0 0 #{$hairlines-width};
+}
+
+@supports (backdrop-filter: blur(0)) {
+  .header-background {
+    @include position(0, 0, 0, 0);
+
+    position: absolute;
+
+    backdrop-filter: $header-ios-translucent-filter;
+  }
+  .header-translucent-ios ion-toolbar {
+    --opacity: .8;
+  }
+
+  /**
+   * Disable the saturation otherwise it distorts the content
+   * background color when large header is not collapsed
+   */
+  .header-collapse-condense-inactive .header-background {
+    backdrop-filter: blur($header-ios-blur);
+  }
+}
+
+.header-ios.ion-no-border ion-toolbar:last-of-type {
+  --border-width: 0;
+}
+
+// iOS Header - Collapse Fade
+// --------------------------------------------------
+.header-collapse-fade ion-toolbar {
+  --opacity-scale: inherit;
+}
+
+/**
+ * Override styles applied during the page transition to prevent
+ * header flickering.
+ */
+.header-collapse-fade.header-transitioning ion-toolbar {
+  --background: transparent;
+  --border-style: none;
+}
+
+// iOS Header - Collapse Condense
+// --------------------------------------------------
+.header-collapse-condense {
+  z-index: 9;
+}
+
+.header-collapse-condense ion-toolbar {
+  position: sticky;
+  top: 0;
+}
+
+.header-collapse-condense ion-toolbar:first-of-type {
+  /**
+   * The toolbar that contains the collapsible
+   * large title should not have safe area padding applied.
+   */
+  padding-top: 0px;
+
+  z-index: 1;
+}
+
+/**
+ * Large title toolbar should just use the content background
+ * since it needs to blend in with the header above it.
+ */
+.header-collapse-condense ion-toolbar {
+  z-index: 0;
+}
+
+.header-collapse-condense ion-toolbar:last-of-type {
+  --border-width: 0px;
+}
+
+.header-collapse-condense ion-toolbar ion-searchbar {
+  padding-top: 0px;
+  padding-bottom: 13px;
+}
+
+
+.header-collapse-main {
+  --opacity-scale: 1;
+}
+
+.header-collapse-main ion-toolbar {
+  --opacity-scale: inherit;
+}
+
+.header-collapse-main ion-toolbar.in-toolbar ion-title,
+.header-collapse-main ion-toolbar.in-toolbar ion-buttons {
+  transition: all 0.2s ease-in-out;
+}
+
+/**
+ * Large title toolbar should just use the content background
+ * since it needs to blend in with the header above it.
+ */
+.header-collapse-condense ion-toolbar,
+/**
+ * Override styles applied during the page transition to prevent
+ * header flickering.
+ */
+.header-collapse-condense-inactive.header-transitioning:not(.header-collapse-condense) ion-toolbar {
+  --background: var(--ion-background-color, #fff);
+}
+
+/**
+ * Override styles applied during the page transition to prevent
+ * header flickering.
+ */
+.header-collapse-condense-inactive.header-transitioning:not(.header-collapse-condense) ion-toolbar {
+  --border-style: none;
+  --opacity-scale: 1;
+}
+
+.header-collapse-condense-inactive:not(.header-collapse-condense) ion-toolbar.in-toolbar ion-title,
+.header-collapse-condense-inactive:not(.header-collapse-condense) ion-toolbar.in-toolbar ion-buttons.buttons-collapse {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/**
+ * There is a bug in Safari where changing
+ * the opacity of an element in a scrollable container
+ * while rubber-banding causes the scroll position
+ * to jump to the top
+ */
+.header-collapse-condense-inactive.header-collapse-condense ion-toolbar.in-toolbar ion-title,
+.header-collapse-condense-inactive.header-collapse-condense ion-toolbar.in-toolbar ion-buttons.buttons-collapse {
+  visibility: hidden;
+}
+
+/**
+ * The main header is only hidden once the collapsible large
+ * title is configured. As a result, if the main header loads
+ * before the collapsible large title is configured then the
+ * main header will be visible briefly before being hidden
+ * by the collapsible large title.
+ *
+ * The following selector ensures that any main header
+ * on a page with a collapsible large title is hidden
+ * before the collapsible large title is configured.
+ * Once the collapsible large title is configured the main
+ * header will have the ".header-collapse-main" class, and
+ * this selector will no longer apply.
+ *
+ * The :has(...) part of the selector ensures a couple things:
+ * 1. This will only apply within a page view since the content
+ * must be a subsequent-sibling of the header (~ ion-content).
+ * 2. This will only apply when that content has a collapse header (ion-header[collapse="condense"])
+ *
+ * We use opacity: 0 to avoid a layout shift.
+ * We target both the attribute and the class in the event that the attribute
+ * is not reflected on the host in some frameworks.
+ *
+ * Both headers should be scoped to iOS mode otherwise an MD app that uses an
+ * iOS header may cause other MD headers to be unexpectedly hidden.
+ */
+ion-header.header-ios:not(.header-collapse-main):has(~ ion-content ion-header.header-ios[collapse="condense"],
+~ ion-content ion-header.header-ios.header-collapse-condense) {
+  opacity: 0;
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - Custom Dialog</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      ion-modal {
+        --width: fit-content;
+        --min-width: 250px;
+        --height: fit-content;
+        --border-radius: 6px;
+        --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+      }
+
+      h1 {
+        margin: 20px 20px 10px 20px;
+      }
+
+      ion-icon {
+        margin-right: 6px;
+
+        width: 48px;
+        height: 48px;
+
+        padding: 4px 0;
+
+        color: #aaaaaa;
+      }
+
+      .wrapper {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <div class="ion-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Modal - Custom Dialog</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <button id="custom-modal">Open Custom Dialog</button>
+          <ion-modal trigger="custom-modal">
+            <div class="wrapper">
+              <h1>Dialog header</h1>
+
+              <ion-list lines="none">
+                <ion-item button="true" detail="false">
+                  <ion-icon name="person-circle"></ion-icon>
+                  <ion-label>Item 1</ion-label>
+                </ion-item>
+                <ion-item button="true" detail="false">
+                  <ion-icon name="person-circle"></ion-icon>
+                  <ion-label>Item 2</ion-label>
+                </ion-item>
+                <ion-item button="true" detail="false">
+                  <ion-icon name="person-circle"></ion-icon>
+                  <ion-label>Item 3</ion-label>
+                </ion-item>
+              </ion-list>
+            </div>
+          </ion-modal>
+        </ion-content>
+      </div>
+    </ion-app>
+  </body>
+</html>

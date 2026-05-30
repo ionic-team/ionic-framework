@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Reorder - Data</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Reorder - Data</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content">
+        <ion-list>
+          <ion-reorder-group disabled="false">
+            <!-- items will be inserted here -->
+          </ion-reorder-group>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      let items = [];
+      for (var i = 0; i < 30; i++) {
+        items.push(i + 1);
+      }
+      const reorderGroup = document.querySelector('ion-reorder-group');
+      reorderItems(items);
+
+      reorderGroup.addEventListener('ionReorderEnd', ({ detail }) => {
+        // Before complete is called with the items they will remain in the
+        // order before the drag
+        console.log('Before complete', items);
+
+        // Finish the reorder and position the item in the DOM based on
+        // where the gesture ended. Update the items variable to the
+        // new order of items
+        items = detail.complete(items);
+
+        // Reorder the items in the DOM
+        reorderItems(items);
+
+        // After complete is called the items will be in the new order
+        console.log('After complete', items);
+      });
+
+      function reorderItems(items) {
+        reorderGroup.replaceChildren();
+
+        let reordered = '';
+
+        for (let i = 0; i < items.length; i++) {
+          reordered += `
+            <ion-item>
+              <ion-label>
+                Item ${items[i]}
+              </ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+            </ion-item>
+          `;
+        }
+
+        reorderGroup.innerHTML = reordered;
+      }
+    </script>
+  </body>
+</html>

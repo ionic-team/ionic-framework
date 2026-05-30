@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Content - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header id="header">
+        <ion-toolbar style="display: none" id="toolbar2">
+          <ion-title>Hidden Toolbar</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-title>Content - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <div style="display: flex; flex: 1">
+        <ion-content class="ion-padding" style="text-align: center; flex: 2" id="content">
+          <ion-content id="content-part">
+            <f style="height: 50%"></f>
+            <p>
+              <button onclick="toggleDisplay('header')">Toggle header</button>
+              <button onclick="toggleDisplay('footer')">Toggle footer</button>
+              <button onclick="toggleDisplay('toolbar2')">Toggle 2nd toolbar</button>
+            </p>
+            <p>
+              <button onclick="toggleDisplay('content2')">Toggle bottom content</button>
+              <button onclick="toggleDisplay('content3')">Toggle right content</button>
+            </p>
+            <p>
+              <button onclick="myanimation()">Animate</button>
+            </p>
+            <f></f>
+            <f></f>
+            <f></f>
+          </ion-content>
+        </ion-content>
+        <ion-content class="ion-padding" style="display: none" id="content3">
+          <f></f>
+          <f></f>
+          <f></f>
+          <f></f>
+          <f></f>
+          <f></f>
+        </ion-content>
+      </div>
+
+      <ion-content class="ion-padding" style="display: none" id="content2">
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+      </ion-content>
+
+      <ion-footer id="footer">
+        <ion-toolbar>
+          <ion-title>Footer</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+
+      <script>
+        const content = document.getElementById('content');
+
+        function toggleDisplay(id) {
+          const el = document.getElementById(id);
+          el.style.display = !el.style.display ? 'none' : null;
+        }
+        function myanimation() {
+          const content = document.getElementById('content');
+          const header = document.getElementById('header');
+          const footer = document.getElementById('footer');
+          content.classList.add('animation');
+          header.classList.add('animation');
+          footer.classList.add('animation');
+        }
+      </script>
+      <style>
+        ion-header.animation,
+        ion-footer.animation,
+        ion-content.animation {
+          animation: ani1 5s infinite;
+        }
+
+        @keyframes ani1 {
+          0% {
+            transform: translateX(0);
+          }
+          25% {
+            transform: translateX(-100%);
+          }
+          50% {
+            transform: translateX(0);
+          }
+          75% {
+            transform: translateX(100%);
+          }
+          100% {
+            transform: translateX(0%);
+          }
+        }
+
+        ion-content.animation {
+          animation-delay: 500ms;
+        }
+
+        ion-footer.animation {
+          animation-delay: 1000ms;
+        }
+
+        .toolbar-background {
+          background: #f8f8f8b8;
+        }
+
+        f {
+          display: block;
+          margin: 15px auto;
+          max-width: 150px;
+          height: 150px;
+          background: blue;
+        }
+
+        f:last-of-type {
+          background: yellow;
+        }
+
+        ion-content#content-part::part(background) {
+          background: #eee;
+        }
+      </style>
+    </ion-app>
+  </body>
+</html>

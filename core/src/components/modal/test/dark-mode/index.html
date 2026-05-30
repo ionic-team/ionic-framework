@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - Dark Mode</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../css/palettes/dark.always.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      :root {
+        --ion-safe-area-top: 20px;
+        --ion-safe-area-bottom: 20px;
+        --ion-safe-area-right: 20px;
+        --ion-safe-area-left: 20px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+
+      h2 {
+        font-size: 16px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <div class="ion-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Modal - Dark Mode</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <div class="grid">
+            <div class="grid-item">
+              <h2>Outside "ion-content"</h2>
+              <button id="basic-modal">Present modal</button>
+              <ion-modal trigger="basic-modal">
+                <h1>Content of doom</h1>
+                <div>Here's some more content</div>
+                <button class="dismiss">Dismiss Modal</button>
+              </ion-modal>
+            </div>
+          </div>
+        </ion-content>
+      </div>
+    </ion-app>
+
+    <script>
+      window.addEventListener('ionModalDidDismiss', function (e) {
+        console.log('DidDismiss', e);
+      });
+      window.addEventListener('ionModalWillDismiss', function (e) {
+        console.log('WillDismiss', e);
+      });
+    </script>
+  </body>
+</html>

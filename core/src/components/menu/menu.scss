@@ -1,0 +1,257 @@
+@import "./menu.vars";
+
+// Menu
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the menu
+   *
+   * @prop --min-width: Minimum width of the menu
+   * @prop --width: Width of the menu
+   * @prop --max-width: Maximum width of the menu
+   *
+   * @prop --min-height: Minimum height of the menu
+   * @prop --height: Height of the menu
+   * @prop --max-height: Maximum height of the menu
+   */
+  --width: #{$menu-width};
+  --min-width: auto;
+  --max-width: auto;
+  --height: 100%;
+  --min-height: auto;
+  --max-height: auto;
+  --background: #{$background-color};
+
+  @include position(0, 0, 0, 0);
+
+  display: none;
+  position: absolute;
+
+  contain: strict;
+}
+
+:host(.show-menu) {
+  display: block;
+}
+
+
+.menu-inner {
+  @include transform(translateX(-9999px));
+
+  display: flex;
+  position: absolute;
+
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
+
+  background: var(--background);
+
+  contain: strict;
+}
+
+:host(.menu-side-start) .menu-inner {
+  /**
+    * Menu does not cover the whole screen so we need to set the safe area for the
+    * side that touches the screen edge only. Since safe area is not logical, it
+    * needs to be applied to the correct side depending on the language direction.
+    * Otherwise, the content will have less space on both sides.
+    *
+    * LTR:
+    * The left side of the menu touches the screen edge. The safe area padding has
+    * already been set in the core styles, so there's no need to set it again.
+    * The right side of the menu is not touching the screen edge. Padding is not
+    * applied to the right side of the menu. A value of 0 is set.
+    */
+  --ion-safe-area-right: 0px;
+
+  @include position(0, auto, 0, 0);
+
+  @include rtl() {
+    /**
+      * Menu does not cover the whole screen so we need to set the safe area for the
+      * side that touches the screen edge only. Since safe area is not logical, it
+      * needs to be applied to the correct side depending on the language direction.
+      * Otherwise, the content will have less space on both sides.
+      *
+      * RTL:
+      * The right side of the menu touches the screen edge.
+      * The right side needs to revert back to the default value that was set in the core styles, so we unset it here.
+      * This would keep the variable consistent with the core styles.
+      * Additionally, it would continue to allow users to override the variable if they choose to.
+      * The left side of the menu is not touching the screen edge. Padding is not
+      * applied to the left side of the menu. A value of 0 is set.
+      */
+    --ion-safe-area-right: unset;
+    --ion-safe-area-left: 0px;
+  }
+}
+
+:host(.menu-side-end) .menu-inner {
+  /**
+    * Menu does not cover the whole screen so we need to set the safe area for the
+    * side that touches the screen edge only. Since safe area is not logical, it
+    * needs to be applied to the correct side depending on the language direction.
+    * Otherwise, the content will have less space on both sides.
+    *
+    * LTR:
+    * The right side of the menu touches the screen edge. The safe area padding has
+    * already been set in the core styles, so there's no need to set it again.
+    * The left side of the menu is not touching the screen edge. Padding is not
+    * applied to the left side of the menu. A value of 0 is set.
+    */
+  --ion-safe-area-left: 0px;
+
+  @include position(0, 0, 0, auto);
+
+  @include rtl() {
+    /**
+      * Menu does not cover the whole screen so we need to set the safe area for the
+      * side that touches the screen edge only. Since safe area is not logical, it
+      * needs to be applied to the correct side depending on the language direction.
+      * Otherwise, the content will have less space on both sides.
+      *
+      * RTL:
+      * The left side of the menu touches the screen edge.
+      * The left side needs to revert back to the default value that was set in the core styles, so we unset it here.
+      * This would keep the variable consistent with the core styles.
+      * Additionally, it would continue to allow users to override the variable if they choose to.
+      * The right side of the menu is not touching the screen edge. Padding is not
+      * applied to the right side of the menu. A value of 0 is set.
+      */
+    --ion-safe-area-left: unset;
+    --ion-safe-area-right: 0px;
+  }
+}
+
+ion-backdrop {
+  display: none;
+
+  opacity: .01;
+  z-index: -1;
+}
+
+@media (max-width: 340px) {
+  .menu-inner {
+    --width: #{$menu-small-width};
+  }
+}
+
+
+// Menu Reveal
+// --------------------------------------------------
+// The content slides over to reveal the menu underneath.
+// The menu itself, which is under the content, does not move.
+
+:host(.menu-type-reveal) {
+  z-index: 0;
+}
+
+:host(.menu-type-reveal.show-menu) .menu-inner {
+  @include transform(translate3d(0, 0, 0));
+}
+
+
+// Menu Overlay
+// --------------------------------------------------
+// The menu slides over the content. The content
+// itself, which is under the menu, does not move.
+
+:host(.menu-type-overlay) {
+  z-index: $z-index-menu-overlay;
+}
+
+:host(.menu-type-overlay) .show-backdrop {
+  display: block;
+
+  cursor: pointer;
+}
+
+
+// Menu Split Pane
+// --------------------------------------------------
+
+/**
+ * The split pane styles for menu are defined
+ * in the menu stylesheets instead in the split pane
+ * stylesheets with ::slotted to allow for menus
+ * to be wrapped in custom components.
+ * If we used ::slotted to target the menu
+ * then menus wrapped in components would never
+ * receive these styles because they are not
+ * children of the split pane.
+ */
+
+/**
+ * Do not pass CSS Variables down on larger
+ * screens as we want them to affect the outer
+ * `ion-menu` rather than the inner content
+ */
+:host(.menu-pane-visible) {
+  flex: 0 1 auto;
+
+  width: var(--side-width, var(--width));
+  min-width: var(--side-min-width, var(--min-width));
+  max-width: var(--side-max-width, var(--max-width));
+}
+
+:host(.menu-pane-visible.split-pane-side) {
+  @include position(0, 0, 0, 0);
+
+  position: relative;
+
+  box-shadow: none;
+  z-index: 0;
+}
+
+:host(.menu-pane-visible.split-pane-side.menu-enabled) {
+  display: flex;
+
+  flex-shrink: 0;
+}
+
+:host(.menu-pane-visible.split-pane-side) {
+  order: -1;
+}
+
+:host(.menu-pane-visible.split-pane-side[side=end]) {
+  order: 1;
+}
+
+:host(.menu-pane-visible) .menu-inner {
+  @include position-horizontal(0, 0);
+
+  width: auto;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+:host(.menu-pane-visible) ion-backdrop {
+  /* stylelint-disable-next-line declaration-no-important */
+  display: hidden !important;
+}
+
+:host(.menu-pane-visible.split-pane-side) {
+  @include border(0, var(--border), 0, 0);
+
+  min-width: var(--side-min-width);
+  max-width: var(--side-max-width);
+}
+
+:host(.menu-pane-visible.split-pane-side[side=end]) {
+  @include border(0, 0, 0, var(--border));
+
+  min-width: var(--side-min-width);
+  max-width: var(--side-max-width);
+}
+

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Item - Inputs</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Item inputs</ion-title>
+          <ion-buttons slot="end">
+            <ion-button id="popover-trigger">Options</ion-button>
+          </ion-buttons>
+          <ion-popover id="optionsPopover" trigger="popover-trigger">
+            <ion-list lines="none">
+              <ion-item id="btnDisabled" button="true" onclick="toggleDisabled()">
+                <ion-label>Toggle Disabled State</ion-label>
+              </ion-item>
+              <ion-item id="btnSomeValue" button="true" onclick="setSomeValue()">
+                <ion-label>Set initial values</ion-label>
+              </ion-item>
+              <ion-item id="btnEmptyValue" button="true" onclick="setEmptyValue()">
+                <ion-label>Set empty values</ion-label>
+              </ion-item>
+              <ion-item id="btnNullValue" button="true" onclick="setNullValue()">
+                <ion-label>Set "null" values</ion-label>
+              </ion-item>
+              <ion-item id="btnUndefinedValue" button="true" onclick="setUndefinedValue()">
+                <ion-label>Set "undefined" values</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-popover>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding-vertical">
+        <form onsubmit="return onSubmit(event)">
+          <ion-list>
+            <ion-item>
+              <ion-input label="Input" name="input" id="input" placeholder="Input"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-textarea label="Textarea" name="textarea" id="textarea" placeholder="Textarea"></ion-textarea>
+            </ion-item>
+
+            <ion-item>
+              <ion-toggle name="toggle" id="toggle">Toggle</ion-toggle>
+            </ion-item>
+
+            <ion-item>
+              <ion-checkbox name="checkbox" id="checkbox">Checkbox</ion-checkbox>
+            </ion-item>
+
+            <ion-item>
+              <ion-select label="Select" name="select" id="select" placeholder="Select">
+                <ion-select-option value="1">1</ion-select-option>
+                <ion-select-option value="2">2</ion-select-option>
+                <ion-select-option value="3">3</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-datetime name="datetime" id="datetime" value="2022-04-01T10:00"></ion-datetime>
+            </ion-item>
+
+            <ion-item>
+              <ion-range label="Range" name="range" id="range" value="10"></ion-range>
+            </ion-item>
+          </ion-list>
+
+          <button id="submit" type="submit" class="expand">Submit</button>
+          <p id="form-result"></p>
+        </form>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const formControlIds = ['input', 'textarea', 'checkbox', 'toggle', 'select', 'datetime', 'range'];
+      let isDisabled = false;
+
+      const inputs = document.querySelectorAll('ion-input, ion-textarea');
+
+      function toggleDisabled() {
+        isDisabled = !isDisabled;
+        Object.values(getFormControls()).forEach((el) => (el.disabled = isDisabled));
+      }
+
+      function setSomeValue() {
+        const { datetime, select, toggle, input, textarea, checkbox, range } = getFormControls();
+        input.value = textarea.value = 'Some value';
+        toggle.checked = checkbox.checked = true;
+        datetime.value = '2022-04-01T10:00';
+        range.value = 20;
+        select.value = '2';
+      }
+
+      function setEmptyValue() {
+        const { datetime, select, toggle, input, textarea, checkbox, range } = getFormControls();
+        input.value = textarea.value = '';
+        toggle.checked = checkbox.checked = false;
+        datetime.value = '';
+        range.value = 0;
+        select.value = '';
+      }
+
+      function setNullValue() {
+        Object.values(getFormControls()).forEach((el) => (el.value = null));
+        const { toggle, checkbox } = getFormControls();
+        toggle.checked = checkbox.checked = false;
+      }
+
+      function setUndefinedValue() {
+        Object.values(getFormControls()).forEach((el) => (el.value = undefined));
+        const { toggle, checkbox } = getFormControls();
+        toggle.checked = checkbox.checked = false;
+      }
+
+      function getFormControls() {
+        return formControlIds.reduce((acc, id) => {
+          acc[id] = document.querySelector(`#${id}`);
+          return acc;
+        }, {});
+      }
+
+      function onSubmit(ev) {
+        const data = new FormData(ev.target);
+        const json = {};
+        data.forEach((value, key) => {
+          json[key] = value;
+        });
+        document.getElementById('form-result').textContent = JSON.stringify(json);
+        window.dispatchEvent(new CustomEvent('formData', { detail: json }));
+        return false;
+      }
+    </script>
+  </body>
+</html>

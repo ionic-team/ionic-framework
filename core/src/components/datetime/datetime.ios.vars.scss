@@ -1,0 +1,17 @@
+// iOS Datetime
+// --------------------------------------------------
+
+/// @prop - Border color for dividers between header and footer
+$datetime-ios-border-color:         0.55px solid $background-color-step-200;
+
+/// @prop - Padding for content
+$datetime-ios-padding:              16px;
+
+/// @prop - The font size at which layouts may change to accommodate Dynamic Type
+$datetime-dynamic-font-breakpoint: 24px;
+
+/// @prop - Width of the calendar day
+$datetime-ios-day-width: 40px;
+
+/// @prop - Height of the calendar day
+$datetime-ios-day-height: $datetime-ios-day-width;

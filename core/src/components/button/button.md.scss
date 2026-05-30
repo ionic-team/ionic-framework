@@ -1,0 +1,249 @@
+@import "./button";
+@import "./button.md.vars";
+
+// Material Design Button
+// --------------------------------------------------
+
+:host {
+  --border-radius: #{$button-md-border-radius};
+  --padding-top: #{$button-md-padding-top};
+  --padding-bottom: #{$button-md-padding-bottom};
+  --padding-start: #{$button-md-padding-start};
+  --padding-end: #{$button-md-padding-end};
+  --transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
+                background-color 15ms linear,
+                color 15ms linear;
+
+  @include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
+
+  min-height: #{$button-md-min-height};
+
+  font-size: #{$button-md-font-size};
+  font-weight: #{$button-md-font-weight};
+
+  letter-spacing: #{$button-md-letter-spacing};
+
+  text-transform: #{$button-md-text-transform};
+}
+
+// Material Design Solid Button
+// --------------------------------------------------
+
+:host(.button-solid) {
+  --background-activated: transparent;
+  --background-hover: #{ion-color(primary, contrast)};
+  --background-focused: #{ion-color(primary, contrast)};
+  --background-activated-opacity: 0;
+  --background-focused-opacity: .24;
+  --background-hover-opacity: .08;
+  --box-shadow: #{$button-md-box-shadow};
+}
+
+:host(.button-solid.ion-activated) {
+  --box-shadow: #{$button-md-box-shadow-activated};
+}
+
+// Material Design Outline Button
+// --------------------------------------------------
+
+:host(.button-outline) {
+  --border-width: 2px;
+  --border-style: solid;
+  --box-shadow: none;
+  --background-activated: transparent;
+  --background-focused: #{ion-color(primary, base)};
+  --background-hover: #{ion-color(primary, base)};
+  --background-activated-opacity: 0;
+  --background-focused-opacity: .12;
+  --background-hover-opacity: .04;
+}
+
+:host(.button-outline.ion-activated.ion-color) .button-native {
+  background: transparent;
+}
+
+
+// Material Design Clear Button
+// --------------------------------------------------
+
+:host(.button-clear) {
+  --background-activated: transparent;
+  --background-focused: #{ion-color(primary, base)};
+  --background-hover: #{ion-color(primary, base)};
+  --background-activated-opacity: 0;
+  --background-focused-opacity: .12;
+  --background-hover-opacity: .04;
+}
+
+
+// Material Design Round Button
+// --------------------------------------------------
+
+:host(.button-round) {
+  --border-radius: #{$button-md-round-border-radius};
+  --padding-top: #{$button-md-round-padding-top};
+  --padding-start: #{$button-md-round-padding-start};
+  --padding-end: #{$button-md-round-padding-end};
+  --padding-bottom: #{$button-md-round-padding-bottom};
+}
+
+
+// Material Design Button Sizes
+// --------------------------------------------------
+
+:host(.button-large) {
+  --padding-top: #{$button-md-large-padding-top};
+  --padding-start: #{$button-md-large-padding-start};
+  --padding-end: #{$button-md-large-padding-end};
+  --padding-bottom: #{$button-md-large-padding-bottom};
+
+  min-height: #{$button-md-large-min-height};
+
+  font-size: #{$button-md-large-font-size};
+}
+
+:host(.button-small) {
+  --padding-top: #{$button-md-small-padding-top};
+  --padding-start: #{$button-md-small-padding-start};
+  --padding-end: #{$button-md-small-padding-end};
+  --padding-bottom: #{$button-md-small-padding-bottom};
+
+  min-height: #{$button-md-small-min-height};
+
+  font-size: #{$button-md-small-font-size};
+}
+
+// MD strong Button
+// --------------------------------------------------
+
+:host(.button-strong) {
+  font-weight: #{$button-md-strong-font-weight};
+}
+
+// MD Icon Only Button
+//
+// MD does not specify a small size, these
+// styles are based on the iOS small size.
+//
+// MD does not specify a large size, these
+// styles are based on the iOS large size.
+// --------------------------------------------------
+
+:host(.button-has-icon-only) {
+  --padding-top: 0;
+  --padding-bottom: var(--padding-top);
+  --padding-end: var(--padding-top);
+  --padding-start: var(--padding-end);
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-width: clamp(30px, 2.86em, 60px);
+
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-height: clamp(30px, 2.86em, 60px);
+}
+
+::slotted(ion-icon[slot="icon-only"]) {
+  /**
+    * The values were provided through MD design,
+    * large and small are based on the iOS sizes.
+    * min font size: 15px, default font size: 22.4px, max font size: 43px
+    *
+    * Since the `ion-button` uses `rem` for the font size, we can't
+    * just pass the desired icon font size in `em` to the `
+    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * to account for the ion-button` font size.
+    *
+    * For example, if the default font size of `ion-button` is 14px
+    * (derived from rem) and the default font size of the icon is
+    * 22.4px, then the base size would need to be increased.
+    */
+  font-size: dynamic-font-clamp(0.59, 25.6px, 1.68, 1em);
+}
+
+:host(.button-small.button-has-icon-only) {
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-width: clamp(23px, 2.16em, 54px);
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-height: clamp(23px, 2.16em, 54px);
+}
+
+:host(.button-small) ::slotted(ion-icon[slot="icon-only"]) {
+  /**
+    * The values were provided through MD design,
+    * large and small are based on the iOS sizes.
+    * min font size: 12px, default font size: 16px, max font size: 40px
+    *
+    * Since the `ion-button` uses `rem` for the font size, we can't
+    * just pass the desired icon font size in `em` to the `
+    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * to account for the ion-button` font size.
+    *
+    * For example, if the default font size of `ion-button` is 13px
+    * (derived from rem) and the default font size of the icon is
+    * 16px, then the base size would need to be increased.
+    */
+  font-size: dynamic-font-clamp(0.66, 19.7px, 2.05, 1em);
+}
+
+:host(.button-large.button-has-icon-only) {
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-width: clamp(46px, 2.5em, 78px);
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-height: clamp(46px, 2.5em, 78px);
+}
+
+:host(.button-large) ::slotted(ion-icon[slot="icon-only"]) {
+  /**
+    * The values were provided through MD design,
+    * large and small are based on the iOS sizes.
+    * min font size: 15px, default font size: 28px, max font size: 43px
+    *
+    * Since the `ion-button` uses `rem` for the font size, we can't
+    * just pass the desired icon font size in `em` to the `
+    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * to account for the ion-button` font size.
+    *
+    * For example, if the default font size of `ion-button` is 20px
+    * (derived from rem) and the default font size of the icon is
+    * 28px, then the base size would need to be increased.
+    */
+    font-size: dynamic-font-clamp(0.67, 22.4px, 1.92, 1em);
+}
+
+// Material Design Button: Hover
+// --------------------------------------------------
+
+/**
+ * Only allow overriding of opacity here
+ * as developers should not be overriding
+ * colors when using the color prop.
+ */
+
+:host(.button-solid.ion-color.ion-focused) .button-native::after {
+  background: #{current-color(contrast)};
+}
+
+:host(.button-clear.ion-color.ion-focused) .button-native::after,
+:host(.button-outline.ion-color.ion-focused) .button-native::after {
+  background: #{current-color(base)};
+}
+
+
+@media (any-hover: hover) {
+  :host(.button-solid.ion-color:hover) .button-native::after {
+    background: #{current-color(contrast)};
+  }
+
+  :host(.button-clear.ion-color:hover) .button-native::after,
+  :host(.button-outline.ion-color:hover) .button-native::after {
+    background: #{current-color(base)};
+  }
+}
+
+
+// Activated Button in Toolbar
+// --------------------------------------------------
+
+:host(.button-outline.ion-activated.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
+  background: var(--ion-toolbar-background, var(--color));
+  color: #{var(--ion-toolbar-color, var(--background), ion-color(primary, contrast))};
+}

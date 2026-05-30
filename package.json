@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "description": "Ionic mono-repo root package.json, used mainly to execute build scripts. This package is not published to npm.",
+  "devDependencies": {
+    "lerna": "^5.5.2",
+    "semver": "^5.5.0"
+  },
+  "engines": {
+    "node": ">= 16"
+  }
+}

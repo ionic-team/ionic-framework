@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toast - a11y</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+  <script type="module">
+    import { toastController } from '../../../../../dist/ionic/index.esm.js';
+    window.toastController = toastController;
+  </script>
+
+  <body>
+    <ion-app>
+      <main>
+        <h1 style="background-color: white">Toast - a11y</h1>
+
+        <button id="inline-toast-trigger">Present Inline Toast</button>
+        <ion-toast
+          id="inline-toast"
+          trigger="inline-toast-trigger"
+          icon="person"
+          header="Inline Toast Header"
+          message="Inline Toast Message"
+        ></ion-toast>
+
+        <button
+          id="controller-toast-trigger"
+          onclick="presentToast({ icon: 'person', header: 'Controller Toast Header', message: 'Controller Toast Message', buttons: ['Ok'] })"
+        >
+          Present Controller Toast
+        </button>
+
+        <button id="aria-label-toast-trigger">Present Aria Label Toast</button>
+        <ion-toast
+          id="aria-label-toast"
+          trigger="aria-label-toast-trigger"
+          header="Aria Label Toast Header"
+          message="Aria Label Toast Message"
+        ></ion-toast>
+
+        <button onclick="updateContent()">Update Inner Content</button>
+      </main>
+    </ion-app>
+    <script>
+      const inlineToast = document.querySelector('#inline-toast');
+      inlineToast.buttons = ['Ok'];
+
+      const ariaLabelToast = document.querySelector('#aria-label-toast');
+      ariaLabelToast.buttons = [
+        {
+          icon: 'close',
+          htmlAttributes: {
+            'aria-label': 'close button',
+            'aria-labelledby': 'close-label',
+          },
+        },
+      ];
+
+      const presentToast = async (opts) => {
+        const toast = await toastController.create(opts);
+
+        await toast.present();
+      };
+
+      const updateContent = () => {
+        const toasts = document.querySelectorAll('ion-toast');
+        /**
+         * Note: Multiple updates to the props
+         * may cause screen readers like NVDA to announce
+         * the entire content multiple times.
+         */
+        toasts.forEach((toast) => {
+          toast.header = 'Updated Header';
+          toast.message = 'Updated Message';
+        });
+      };
+    </script>
+  </body>
+</html>

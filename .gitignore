@@ -1,0 +1,96 @@
+*~
+*.sw[mnpcod]
+*.log
+*.lock
+*.tmp
+*.tmp.*
+log.txt
+*.sublime-project
+*.sublime-workspace
+*.tgz
+
+.idea/
+.vscode/
+.sass-cache/
+.versions/
+coverage/
+collection/
+dist/
+dist-transpiled/
+node_modules/
+tmp/
+temp/
+core/theme-builder/
+core/test-components/
+core/css/
+$RECYCLE.BIN/
+
+.DS_Store
+Thumbs.db
+UserInterfaceState.xcuserstate
+.env
+
+.package.tmp.json
+
+src/themes/version.scss
+scripts/e2e/webpackEntryPoints.json
+scripts/build/e2e-generated-tsconfig.json
+*.css.ts
+
+stats.json
+
+# demo stuff
+demos/node_modules
+demos/polyfills
+demos/css
+demos/fonts
+demos/src/**/*.js
+demos/src/**/*.map
+demos/src/**/*.ngfactory.ts
+demos/src/**/*.d.ts
+demos/src/**/*.metadata.json
+demos/src/**/*.css.shim.ts
+prerender.html
+prerender-domino.html
+prerender-hydrated.html
+prerender-static.html
+
+# stencil
+packages/react/css/
+packages/vue/css/
+core/components/
+core/css/
+core/hydrate/
+core/loader/
+core/www/
+.stencil/
+
+# playwright
+core/test-results/
+core/playwright-report/
+
+# ground truths generated outside of docker should not be committed to the repo
+core/**/*-snapshots/*
+
+# new ground truths should only be generated inside of docker which will result in -linux.png screenshots
+!core/**/*-snapshots/*-linux.png
+
+# these files are going to be different per-developer environment so do not add them to the repo
+core/docker-display.txt
+core/docker-display-volume.txt
+
+# angular
+packages/angular/css/
+packages/angular/test/build/
+.angular/
+
+# vue
+packages/vue/test/build/
+
+# react
+packages/react/test/build/
+
+# react router
+packages/react-router/test/build/
+
+.npmrc

@@ -1,0 +1,81 @@
+{
+  "name": "@ionic/vue-router",
+  "version": "8.8.8",
+  "description": "Vue Router integration for @ionic/vue",
+  "scripts": {
+    "test.spec": "jest",
+    "eslint": "eslint src",
+    "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
+    "lint": "npm run eslint && npm run prettier -- --write --cache",
+    "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
+    "bundle": "rollup --config rollup.config.mjs",
+    "build": "npm run clean && npm run bundle",
+    "build.watch": "npm run bundle -- --watch",
+    "clean": "rimraf dist",
+    "sync": "sh ./scripts/sync.sh"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionic-team/ionic-framework.git"
+  },
+  "keywords": [
+    "ionic",
+    "framework",
+    "vue",
+    "mobile",
+    "app",
+    "hybrid",
+    "webapp",
+    "cordova",
+    "progressive",
+    "web",
+    "app",
+    "pwa"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ionic-team/ionic-framework/issues"
+  },
+  "homepage": "https://github.com/ionic-team/ionic-framework#readme",
+  "dependencies": {
+    "@ionic/vue": "^8.8.8"
+  },
+  "devDependencies": {
+    "@ionic/eslint-config": "^0.3.0",
+    "@ionic/prettier-config": "^2.0.0",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/jest": "^28.1.1",
+    "@types/node": "^14.10.1",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
+    "eslint": "^7.32.0",
+    "jest": "^28.1.1",
+    "jest-environment-jsdom": "^28.1.1",
+    "prettier": "^2.8.3",
+    "rimraf": "^3.0.2",
+    "rollup": "^4.2.0",
+    "ts-jest": "^28.0.5",
+    "typescript": "^4.7.3",
+    "vue": "^3.2.37",
+    "vue-router": "^4.0.16"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(js|ts|tsx)$": "<rootDir>/test/jest.preprocessor.js"
+    },
+    "testRegex": "(\\.(test|spec))\\.(ts?|tsx?|jsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json",
+      "jsx"
+    ]
+  }
+}

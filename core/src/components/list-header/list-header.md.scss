@@ -1,0 +1,40 @@
+@import "./list-header";
+@import "./list-header.md.vars";
+
+// Material Design List Header
+// --------------------------------------------------
+
+:host {
+  --background: transparent;
+  --color: #{$list-header-md-color};
+  --border-color: #{$item-md-border-bottom-color};
+
+  /* stylelint-disable */
+  @include ltr() {
+    padding-right: var(--ion-safe-area-right);
+    padding-left: calc(var(--ion-safe-area-left, 0px) + #{$list-header-md-padding-start});
+  }
+
+  @include rtl() {
+    padding-right: calc(var(--ion-safe-area-right, 0px) + #{$list-header-md-padding-start});
+    padding-left: var(--ion-safe-area-left);
+  }
+  /* stylelint-enable */
+
+  min-height: $list-header-md-min-height;
+
+  font-size: $list-header-md-font-size;
+}
+
+// List Header Lines
+// --------------------------------------------------
+
+// Full lines - apply the border to the list header
+// Inset lines - apply the border to the list header inner
+:host(.list-header-lines-full) {
+  --border-width: #{0 0 $item-md-border-bottom-width 0};
+}
+
+:host(.list-header-lines-inset) {
+  --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
+}

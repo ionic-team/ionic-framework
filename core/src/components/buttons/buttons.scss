@@ -1,0 +1,21 @@
+@import "../../themes/ionic.globals";
+
+:host {
+  display: flex;
+
+  align-items: center;
+
+  transform: translateZ(0);
+
+  z-index: $z-index-toolbar-buttons;
+}
+
+// Toolbar Buttons
+// --------------------------------------------------
+
+::slotted(*) ion-button {
+  --padding-top: 0;
+  --padding-bottom: 0;
+
+  @include margin(0);
+}

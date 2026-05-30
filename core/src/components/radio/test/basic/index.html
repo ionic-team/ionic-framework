@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Radio - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      ion-radio {
+        margin-bottom: 8px;
+      }
+
+      hr {
+        background: #ddd;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Radio - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <div id="radios">
+          <ion-radio-group> <ion-radio value="radio" label-placement="end">Unchecked</ion-radio> </ion-radio-group
+          ><br />
+          <ion-radio-group value="radio">
+            <ion-radio value="radio" label-placement="end">Checked</ion-radio> </ion-radio-group
+          ><br />
+          <ion-radio-group>
+            <ion-radio value="radio" label-placement="end" disabled>Disabled</ion-radio> </ion-radio-group
+          ><br />
+          <ion-radio-group value="radio">
+            <ion-radio value="radio" label-placement="end" disabled>Disabled, Checked</ion-radio> </ion-radio-group
+          ><br />
+
+          <hr />
+
+          <ion-radio-group value="radio"> <ion-radio value="radio">Default width</ion-radio> </ion-radio-group><br />
+
+          <ion-radio-group value="radio">
+            <ion-radio value="radio" style="width: 200px">Specified width </ion-radio> </ion-radio-group
+          ><br />
+
+          <ion-radio-group value="radio">
+            <ion-radio value="radio" style="width: 100%">Full-width </ion-radio>
+          </ion-radio-group>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

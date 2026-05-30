@@ -1,0 +1,130 @@
+@import "./popover.vars";
+
+// Popover
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the popover
+   * @prop --box-shadow: Box shadow of the popover
+   *
+   * @prop --min-width: Minimum width of the popover
+   * @prop --width: Width of the popover
+   * @prop --max-width: Maximum width of the popover
+   *
+   * @prop --min-height: Minimum height of the popover
+   * @prop --height: Height of the popover
+   * @prop --max-height: Maximum height of the popover
+   *
+   * @prop --backdrop-opacity: Opacity of the backdrop
+   *
+   * @prop --offset-x: The amount to move the popover by on the x-axis
+   * @prop --offset-y: The amount to move the popover by on the y-axis
+   */
+  --background: #{$popover-background-color};
+  --min-width: 0;
+  --min-height: 0;
+  --max-width: auto;
+  --height: auto;
+  --offset-x: 0px;
+  --offset-y: 0px;
+
+  @include position(0, 0, 0, 0);
+
+  display: flex;
+  position: fixed;
+
+  align-items: center;
+  justify-content: center;
+
+  outline: none;
+
+  color: $popover-text-color;
+
+  z-index: $z-index-overlay;
+}
+
+/**
+ * With nested popovers, only the popover that
+ * was first presented has a popover. This is the
+ * parent popover and allows us to easily
+ * track all nested popovers from a single backdrop.
+ * As a result, nested popovers do not have backdrops
+ * and their container should not be clickable.
+ * This ensures that users can click the parent backdrop
+ * while still interacting with the nested popover inner
+ * content.
+ */
+:host(.popover-nested) {
+  pointer-events: none;
+}
+
+:host(.popover-nested) .popover-wrapper {
+  pointer-events: auto;
+}
+
+:host(.overlay-hidden) {
+  display: none;
+}
+
+.popover-wrapper {
+  z-index: $z-index-overlay-wrapper;
+}
+
+.popover-content {
+  display: flex;
+  position: absolute;
+
+  flex-direction: column;
+
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
+
+  background: var(--background);
+
+  box-shadow: var(--box-shadow);
+
+  overflow: auto;
+  z-index: $z-index-overlay-wrapper;
+}
+
+::slotted(.popover-viewport) {
+  --ion-safe-area-top: 0px;
+  --ion-safe-area-right: 0px;
+  --ion-safe-area-bottom: 0px;
+  --ion-safe-area-left: 0px;
+  display: flex;
+
+  flex-direction: column;
+}
+
+// Nested Popovers
+// --------------------------------------------------
+:host(.popover-nested.popover-side-left) {
+  --offset-x: 5px;
+}
+
+:host(.popover-nested.popover-side-right) {
+  --offset-x: -5px;
+}
+
+:host(.popover-nested.popover-side-start) {
+  --offset-x: 5px;
+
+  @include rtl() {
+    --offset-x: -5px;
+  }
+}
+
+:host(.popover-nested.popover-side-end) {
+  --offset-x: -5px;
+
+  @include rtl() {
+    --offset-x: 5px;
+  }
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - Card</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      #content {
+        position: relative;
+
+        display: block;
+        flex: 1;
+
+        height: 100%;
+        overflow-y: auto;
+
+        contain: size style;
+      }
+    </style>
+  </head>
+  <script type="module">
+    import { modalController } from '../../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+  </script>
+
+  <body>
+    <ion-app>
+      <div class="ion-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Card</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <button class="expand" id="card" onclick="presentModal(document.querySelectorAll('.ion-page')[1])">
+            Card Modal
+          </button>
+        </ion-content>
+      </div>
+    </ion-app>
+
+    <script>
+      async function createModal(presentingEl, opts) {
+        // create component to open
+        const element = document.createElement('div');
+        element.innerHTML = `
+      <ion-header id="modal-header">
+        <ion-toolbar>
+          <ion-title>Modal</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-refresher slot="fixed">
+          <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
+        Hello World!
+        <button id="add">Add Modal</button>
+        <button id="dismiss">Dismiss Modal</button>
+      </ion-content>
+
+      <ion-footer>
+        <ion-toolbar>
+          <ion-title>Footer</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+      `;
+
+        // listen for close event
+        const button = element.querySelector('#dismiss');
+        button.addEventListener('click', () => {
+          modalController.dismiss();
+        });
+
+        const create = element.querySelector('#add');
+        create.addEventListener('click', async () => {
+          const topModal = await modalController.getTop();
+
+          presentModal(topModal, opts);
+        });
+
+        // present the modal
+        const modalElement = await modalController.create({
+          presentingElement: presentingEl,
+          component: element,
+          ...opts,
+        });
+        return modalElement;
+      }
+
+      async function presentModal(presentingEl, opts) {
+        const modal = await createModal(presentingEl, opts);
+        await modal.present();
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Test App - Angular {{ angularVersion.major }} - Lazy
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item routerLink="/lazy/alerts" [routerAnimation]="routerAnimation">
+      <ion-label>
+        Alerts Test
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/lazy/inputs">
+      <ion-label>
+        Inputs Test
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/lazy/form">
+      <ion-label>
+        Form Test
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/lazy/template-form">
+      <ion-label>
+        Template-Driven Form Test
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/lazy/modals">
+      <ion-label>
+        Modals Test
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/lazy/modal-sheet-inline">
+      <ion-label>
+        Modal Sheet Inline Test
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/lazy/modal-dynamic-wrapper">
+      <ion-label>
+        Modal Dynamic Wrapper Test
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/lazy/router-link">
+      <ion-label>
+        Router link Test
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/lazy/tabs">
+      <ion-label>
+        Tabs Test
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/lazy/tabs-basic">
+      <ion-label>
+        Basic Tabs Test
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/lazy/nested-outlet/page">
+      <ion-label>
+        Nested ion-router-outlet
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/lazy/view-child">
+      <ion-label>
+        ViewChild()
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/lazy/providers">
+      <ion-label>
+        Providers
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/lazy/accordions">
+      <ion-label>
+        Accordions Test
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/lazy/popover-inline">
+      <ion-label>
+        Popovers
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,453 @@
+@use "sass:map";
+@import "../themes/ionic.globals";
+@import "../components/menu/menu.ios.vars";
+@import "../components/menu/menu.md.vars";
+@import "../components/modal/modal.vars";
+
+:root {
+  /**
+   * Loop through each color object from the
+   * `ionic.theme.default.scss` file
+   * and generate CSS Variables for each color.
+   */
+  @each $color-name, $value in $colors {
+    --ion-color-#{$color-name}: #{map.get($value, base)};
+    --ion-color-#{$color-name}-rgb: #{color-to-rgb-list(map.get($value, base))};
+    --ion-color-#{$color-name}-contrast: #{map.get($value, contrast)};
+    --ion-color-#{$color-name}-contrast-rgb: #{color-to-rgb-list(map.get($value, contrast))};
+    --ion-color-#{$color-name}-shade: #{map.get($value, shade)};
+    --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
+  }
+}
+
+// Ionic Font Family
+// --------------------------------------------------
+
+html.ios {
+  --ion-default-font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif;
+}
+html.md {
+  --ion-default-font: "Roboto", "Helvetica Neue", sans-serif;
+}
+
+html {
+  --ion-dynamic-font: -apple-system-body;
+  --ion-font-family: var(--ion-default-font);
+}
+
+body {
+  background: var(--ion-background-color);
+  color: var(--ion-text-color);
+}
+
+body.backdrop-no-scroll {
+  overflow: hidden;
+}
+
+// Modal - Card Style
+// --------------------------------------------------
+/**
+ * Card style modal needs additional padding on the
+ * top of the header. We accomplish this by targeting
+ * the first toolbar in the header.
+ * Footer also needs this. We do not adjust the bottom
+ * padding though because of the safe area.
+ */
+html.ios ion-modal.modal-card ion-header ion-toolbar:first-of-type,
+html.ios ion-modal.modal-sheet ion-header ion-toolbar:first-of-type,
+html.ios ion-modal ion-footer ion-toolbar:first-of-type,
+html.ios ion-footer.modal-footer-moving ion-toolbar:first-of-type {
+  padding-top: $modal-sheet-padding-top;
+}
+
+/**
+* Card style modal needs additional padding on the
+* bottom of the header. We accomplish this by targeting
+* the last toolbar in the header.
+*/
+html.ios ion-modal.modal-card ion-header ion-toolbar:last-of-type,
+html.ios ion-modal.modal-sheet ion-header ion-toolbar:last-of-type {
+  padding-bottom: $modal-sheet-padding-bottom;
+}
+
+/**
+* Add padding on the left and right
+* of toolbars while accounting for
+* safe area values when in landscape.
+*/
+html.ios ion-modal ion-toolbar,
+html.ios .modal-footer-moving ion-toolbar {
+  padding-right: calc(var(--ion-safe-area-right) + 8px);
+  padding-left: calc(var(--ion-safe-area-left) + 8px);
+}
+
+/**
+ * Card style modal on iPadOS
+ * should only have backdrop on first instance.
+ */
+@media screen and (min-width: 768px) {
+  html.ios ion-modal.modal-card:first-of-type {
+    --backdrop-opacity: 0.18;
+  }
+}
+
+/**
+ * Subsequent modals should not have a backdrop/box shadow
+ * as it will cause the screen to appear to get progressively
+ * darker. With Ionic 6, declarative modals made it
+ * possible to have multiple non-presented modals in the DOM,
+ * so we could no longer rely on ion-modal:first-of-type.
+ * Here we disable the opacity/box-shadow for every modal
+ * that comes after the first presented modal.
+ *
+ * Note: ion-modal:not(.overlay-hidden):first-of-type
+ * does not match the first modal to not have
+ * the .overlay-hidden class, it will match the
+ * first modal in general only if it does not
+ * have the .overlay-hidden class.
+ * The :nth-child() pseudo-class has support
+ * for selectors which would help us here. At the
+ * time of writing it does not have great cross browser
+ * support.
+ *
+ * Note 2: This should only apply to non-card and
+ * non-sheet modals. Card and sheet modals have their
+ * own criteria for displaying backdrops/box shadows.
+ *
+ * Do not use :not(.overlay-hidden) in place of
+ * .show-modal because that triggers a memory
+ * leak in Blink: https://bugs.chromium.org/p/chromium/issues/detail?id=1418768
+ */
+ion-modal.modal-default.show-modal ~ ion-modal.modal-default {
+  --backdrop-opacity: 0;
+  --box-shadow: none;
+}
+
+/**
+ * This works around a bug in WebKit where the
+ * content will overflow outside of the bottom border
+ * radius when re-painting. As long as a single
+ * border radius value is set on .ion-page, this
+ * issue does not happen. We set the top left radius
+ * here because the top left corner will always have a
+ * radius no matter the platform.
+ * This behavior only applies to card modals.
+ */
+html.ios ion-modal.modal-card .ion-page {
+  border-top-left-radius: var(--border-radius);
+}
+
+// Ionic Colors
+// --------------------------------------------------
+// Generates the color classes and variables based on the
+// colors map
+
+@mixin generate-color($color-name) {
+  $value: map-get($colors, $color-name);
+
+  $base: map-get($value, base);
+  $contrast: map-get($value, contrast);
+  $shade: map-get($value, shade);
+  $tint: map-get($value, tint);
+
+  --ion-color-base: var(--ion-color-#{$color-name}, #{$base}) !important;
+  --ion-color-base-rgb: var(--ion-color-#{$color-name}-rgb, #{color-to-rgb-list($base)}) !important;
+  --ion-color-contrast: var(--ion-color-#{$color-name}-contrast, #{$contrast}) !important;
+  --ion-color-contrast-rgb: var(--ion-color-#{$color-name}-contrast-rgb, #{color-to-rgb-list($contrast)}) !important;
+  --ion-color-shade: var(--ion-color-#{$color-name}-shade, #{$shade}) !important;
+  --ion-color-tint: var(--ion-color-#{$color-name}-tint, #{$tint}) !important;
+}
+
+@each $color-name, $value in $colors {
+  .ion-color-#{$color-name} {
+    @include generate-color($color-name);
+  }
+}
+
+
+// Page Container Structure
+// --------------------------------------------------
+
+.ion-page {
+  @include position(0, 0, 0, 0);
+
+  display: flex;
+  position: absolute;
+
+  flex-direction: column;
+  justify-content: space-between;
+
+  contain: layout size style;
+  z-index: $z-index-page-container;
+}
+
+/**
+ * Allows pointer events to pass through child route page wrappers
+ * when they only contain a sheet modal that permits background interaction.
+ * https://github.com/ionic-team/ionic-framework/issues/30700
+ */
+.ion-page.ion-page-overlay-passthrough {
+  pointer-events: none;
+}
+
+/**
+ * When making custom dialogs, using
+ * ion-content is not required. As a result,
+ * some developers may wish to have dialogs
+ * that are automatically sized by the browser.
+ * These changes allow certain dimension values
+ * such as fit-content to work correctly.
+ */
+ion-modal > .ion-page {
+  position: relative;
+
+  contain: layout style;
+
+  height: 100%;
+}
+
+.split-pane-visible > .ion-page.split-pane-main {
+  position: relative;
+}
+
+ion-route,
+ion-route-redirect,
+ion-router,
+ion-select-option,
+ion-nav-controller,
+ion-menu-controller,
+ion-action-sheet-controller,
+ion-alert-controller,
+ion-loading-controller,
+ion-modal-controller,
+ion-picker-controller,
+ion-popover-controller,
+ion-toast-controller,
+.ion-page-hidden {
+  /* stylelint-disable-next-line declaration-no-important */
+  display: none !important;
+}
+
+.ion-page-invisible {
+  opacity: 0;
+}
+
+.can-go-back > ion-header ion-back-button {
+  display: block;
+}
+
+
+// Ionic Safe Margins
+// --------------------------------------------------
+
+html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
+  --ion-statusbar-padding: 20px;
+}
+
+@supports (padding-top: 20px) {
+  html {
+    --ion-safe-area-top: var(--ion-statusbar-padding);
+  }
+}
+
+@supports (padding-top: env(safe-area-inset-top)) {
+  html {
+    // `--safe-area-inset-*` are set by Capacitor
+    // @see https://capacitorjs.com/docs/apis/system-bars#android-note
+    --ion-safe-area-top: var(--safe-area-inset-top, env(safe-area-inset-top));
+    --ion-safe-area-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
+    --ion-safe-area-left: var(--safe-area-inset-left, env(safe-area-inset-left));
+    --ion-safe-area-right: var(--safe-area-inset-right, env(safe-area-inset-right));
+  }
+}
+
+
+// Global Card Styles
+// --------------------------------------------------
+
+ion-card.ion-color .ion-inherit-color,
+ion-card-header.ion-color .ion-inherit-color {
+  color: inherit;
+}
+
+
+// Menu Styles
+// --------------------------------------------------
+
+.menu-content {
+  @include transform(translate3d(0, 0, 0));
+}
+
+.menu-content-open {
+  cursor: pointer;
+  touch-action: manipulation;
+
+  /**
+   * The containing element itself should be clickable but
+   * everything inside of it should not clickable when menu is open
+   *
+   * Setting pointer-events after scrolling has already started
+   * will not cancel scrolling which is why we also set
+   * overflow-y below.
+   */
+  pointer-events: none;
+
+  /**
+   * This accounts for scenarios where the main content itself
+   * is scrollable.
+   */
+  overflow-y: hidden;
+}
+
+/**
+ * Setting overflow cancels any in-progress scrolling
+ * when the menu opens. This prevents users from accidentally
+ * scrolling the main content while also dragging the menu open.
+ * The code below accounts for both ion-content and then custom
+ * scroll containers within ion-content (such as virtual scroll)
+ */
+.menu-content-open ion-content {
+  --overflow: hidden;
+}
+
+.menu-content-open .ion-content-scroll-host {
+  overflow: hidden;
+}
+
+.ios .menu-content-reveal {
+  box-shadow: $menu-ios-box-shadow-reveal;
+}
+
+[dir=rtl].ios .menu-content-reveal {
+  box-shadow: $menu-ios-box-shadow-reveal-rtl;
+}
+
+.ios .menu-content-push {
+  box-shadow: $menu-ios-box-shadow-push;
+}
+
+.md .menu-content-reveal {
+  box-shadow: $menu-md-box-shadow;
+}
+
+.md .menu-content-push {
+  box-shadow: $menu-md-box-shadow;
+}
+
+// Accordion Styles
+ion-accordion-group.accordion-group-expand-inset > ion-accordion:first-of-type {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+ion-accordion-group.accordion-group-expand-inset > ion-accordion:last-of-type {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+ion-accordion-group > ion-accordion:last-of-type ion-item[slot="header"] {
+  --border-width: 0px;
+}
+
+ion-accordion.accordion-animated > [slot="header"] .ion-accordion-toggle-icon {
+  transition: 300ms transform cubic-bezier(0.25, 0.8, 0.5, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ion-accordion .ion-accordion-toggle-icon {
+    /* stylelint-disable declaration-no-important */
+    transition: none !important;
+  }
+}
+/**
+ * The > [slot="header"] selector ensures that we do
+ * not modify toggle icons for any nested accordions. The state
+ * of one accordion should not affect any accordions inside
+ * of a nested accordion group.
+ */
+ion-accordion.accordion-expanding > [slot="header"] .ion-accordion-toggle-icon,
+ion-accordion.accordion-expanded > [slot="header"] .ion-accordion-toggle-icon {
+  transform: rotate(180deg);
+}
+
+ion-accordion-group.accordion-group-expand-inset.md > ion-accordion.accordion-previous ion-item[slot="header"] {
+  --border-width: 0px;
+  --inner-border-width: 0px;
+}
+
+ion-accordion-group.accordion-group-expand-inset.md > ion-accordion.accordion-expanding:first-of-type,
+ion-accordion-group.accordion-group-expand-inset.md > ion-accordion.accordion-expanded:first-of-type {
+  margin-top: 0;
+}
+
+// Safari/iOS 15 changes the appearance of input[type="date"].
+// For backwards compatibility from Ionic 5/Safari 14 designs,
+// we override the appearance only when using within an ion-input.
+ion-input input::-webkit-date-and-time-value {
+  text-align: start;
+}
+
+/**
+ * The .ion-datetime-button-overlay class contains
+ * styles that allow any modal/popover to be
+ * sized according to the dimensions of the datetime
+ * when used with ion-datetime-button.
+ */
+.ion-datetime-button-overlay {
+  --width: fit-content;
+  --height: fit-content;
+}
+
+/**
+ * The grid variant can scale down when inline.
+ * When used in a `fit-content` overlay, this causes
+ * the overlay to shrink when the month/year picker is open.
+ * Explicitly setting the dimensions lets us have a consistently
+ * sized grid interface.
+ */
+.ion-datetime-button-overlay ion-datetime.datetime-grid {
+  width: 320px;
+  min-height: 320px;
+}
+
+/**
+ * When moving focus on page transitions we call .focus() on an element which can
+ * add an undesired outline ring. This CSS removes the outline ring.
+ * We also remove the outline ring from elements that are actively being focused
+ * by the focus manager. We are intentionally selective about which elements this
+ * applies to so we do not accidentally override outlines set by the developer.
+ */
+[ion-last-focus],
+header[tabindex="-1"]:focus,
+[role="banner"][tabindex="-1"]:focus,
+main[tabindex="-1"]:focus,
+[role="main"][tabindex="-1"]:focus,
+h1[tabindex="-1"]:focus,
+[role="heading"][aria-level="1"][tabindex="-1"]:focus {
+  outline: none;
+}
+
+/*
+ * If a popover has a child ion-content (or class equivalent) then the .popover-viewport element
+ * should not be scrollable to ensure the inner content does scroll. However, if the popover
+ * does not have a child ion-content (or class equivalent) then the .popover-viewport element
+ * should remain scrollable. This code exists globally because popover targets
+ * .popover-viewport using ::slotted which only supports simple selectors.
+ *
+ * Note that we do not need to account for .ion-content-scroll-host here because that
+ * class should always be placed within ion-content even if ion-content is not scrollable.
+ */
+.popover-viewport:has(> ion-content) {
+  overflow: hidden;
+}
+
+/**
+ * :has has cross-browser support, but it is still relatively new. As a result,
+ * we should fallback to the old behavior for environments that do not support :has.
+ * Developers can explicitly enable this behavior by setting overflow: visible
+ * on .popover-viewport if they know they are not going to use an ion-content.
+ * TODO FW-6106 Remove this
+ */
+@supports not selector(:has(> ion-content)) {
+  .popover-viewport {
+    overflow: hidden;
+  }
+}

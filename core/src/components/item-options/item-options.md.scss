@@ -1,0 +1,31 @@
+@import "./item-options";
+@import "./item-options.md.vars";
+
+// Material Design Item Options
+// --------------------------------------------------
+
+.item-options-md {
+  border-bottom-width: 0;
+  border-bottom-style: $item-md-border-bottom-style;
+  border-bottom-color: $item-md-border-bottom-color;
+}
+
+
+// Material Design No Lines List
+// --------------------------------------------------
+
+.list-md-lines-none .item-options-md {
+  border-bottom-width: 0;
+}
+
+
+// Material Design Full/Inset Lines List
+// --------------------------------------------------
+
+// If the lines are full put a border on both item options
+// If the lines are inset we should only show the border on the end
+// because dragging open start options isn't continuous
+.list-md-lines-full .item-options-md,
+.list-md-lines-inset .item-options-md.item-options-end {
+  border-bottom-width: $item-md-border-bottom-width;
+}

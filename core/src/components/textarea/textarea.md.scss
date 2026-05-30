@@ -1,0 +1,117 @@
+@import "./textarea";
+@import "./textarea.vars";
+@import "./textarea.md.vars";
+@import "./textarea.md.solid";
+@import "./textarea.md.outline";
+
+// Material Design Textarea
+// --------------------------------------------------
+
+:host {
+  --border-width: 1px;
+  --border-color: #{$item-md-border-color};
+  --padding-top: 18px;
+  --padding-end: 0px;
+  --padding-bottom: #{$textarea-padding-bottom};
+  --padding-start: 0px;
+  --highlight-height: 2px;
+
+  font-size: $textarea-md-font-size;
+}
+
+// Textarea Max Length Counter
+// ----------------------------------------------------------------
+.textarea-bottom .counter {
+  letter-spacing: 0.0333333333em;
+}
+
+// Textarea Label
+// ----------------------------------------------------------------
+
+/**
+ * When the textarea is focused the label should
+ * take on the highlight color. This should
+ * only apply to floating or stacked labels.
+ */
+:host(.textarea-label-placement-floating.has-focus) .label-text-wrapper,
+:host(.textarea-label-placement-stacked.has-focus) .label-text-wrapper {
+  color: var(--highlight-color);
+}
+
+:host(.has-focus.textarea-label-placement-floating.ion-valid) .label-text-wrapper,
+:host(.textarea-label-placement-floating.ion-touched.ion-invalid) .label-text-wrapper,
+:host(.has-focus.textarea-label-placement-stacked.ion-valid) .label-text-wrapper,
+:host(.textarea-label-placement-stacked.ion-touched.ion-invalid) .label-text-wrapper {
+  color: var(--highlight-color);
+}
+
+// Textarea - Disabled
+// ----------------------------------------------------------------
+// The textarea, label, helper text, char counter and placeholder
+// should use the same opacity and match the other form controls
+
+:host(.textarea-disabled) {
+  opacity: #{$textarea-md-disabled-opacity};
+}
+
+// Textarea Highlight
+// ----------------------------------------------------------------
+
+.textarea-highlight {
+  @include position(null, null, -1px, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: var(--highlight-height);
+
+  transform: scale(0);
+
+  transition: transform 200ms;
+
+  background: var(--highlight-color);
+}
+
+:host(.has-focus) .textarea-highlight {
+  transform: scale(1);
+}
+
+/**
+ * Adjust the highlight up by 1px
+ * so it is not cut off by the
+ * the item's line (if one is present).
+ */
+:host(.in-item) .textarea-highlight {
+  @include position(null, null, 0, 0);
+}
+
+// Textarea Shape Rounded
+// ----------------------------------------------------------------
+
+:host(.textarea-shape-round) {
+  --border-radius: 16px;
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+/**
+ * Slotted buttons have a lot of default padding that can
+ * cause them to look misaligned from other pieces such
+ * as the control's label, especially when using a clear
+ * fill. We also make them circular to ensure that non-
+ * clear buttons and the focus/hover state on clear ones
+ * don't look too crowded.
+ */
+::slotted(ion-button[slot="start"].button-has-icon-only),
+::slotted(ion-button[slot="end"].button-has-icon-only) {
+  --border-radius: 50%;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+
+  aspect-ratio: 1;
+
+  min-height: 40px;
+}

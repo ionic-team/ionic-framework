@@ -1,0 +1,11 @@
+@import "./split-pane";
+@import "./split-pane.ios.vars";
+
+// Split Pane
+// --------------------------------------------------
+
+:host {
+  --border: #{$split-pane-ios-border};
+  --side-min-width: #{$split-pane-ios-side-min-width};
+  --side-max-width: #{$split-pane-ios-side-max-width};
+}

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Breadcrumbs - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      h1 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #a1a7b0;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      hr {
+        background: #eff1f3;
+
+        margin-top: 18px;
+        margin-bottom: 25px;
+      }
+
+      ion-content ion-breadcrumbs {
+        padding: 3px 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Breadcrumbs - Basic</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-breadcrumbs>
+            <ion-breadcrumb href="#"> Home </ion-breadcrumb>
+            <ion-breadcrumb href="#electronics"> Electronics </ion-breadcrumb>
+            <ion-breadcrumb href="#disabled" disabled> Disabled </ion-breadcrumb>
+            <ion-breadcrumb> Data </ion-breadcrumb>
+          </ion-breadcrumbs>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <h1>Default</h1>
+
+        <ion-breadcrumbs>
+          <ion-breadcrumb> Home </ion-breadcrumb>
+          <ion-breadcrumb> Electronics </ion-breadcrumb>
+          <ion-breadcrumb> Photography </ion-breadcrumb>
+          <ion-breadcrumb> Cameras </ion-breadcrumb>
+          <ion-breadcrumb> Film </ion-breadcrumb>
+          <ion-breadcrumb> 35 mm </ion-breadcrumb>
+        </ion-breadcrumbs>
+
+        <hr />
+
+        <h1>Links</h1>
+
+        <ion-breadcrumbs>
+          <ion-breadcrumb href="#"> Home </ion-breadcrumb>
+          <ion-breadcrumb href="#electronics"> Electronics </ion-breadcrumb>
+          <ion-breadcrumb href="#photography"> Photography </ion-breadcrumb>
+          <ion-breadcrumb href="#cameras"> Cameras </ion-breadcrumb>
+          <ion-breadcrumb href="#film"> Film </ion-breadcrumb>
+          <ion-breadcrumb> 35 mm </ion-breadcrumb>
+        </ion-breadcrumbs>
+
+        <hr />
+
+        <h1>Custom separator</h1>
+
+        <ion-breadcrumbs>
+          <ion-breadcrumb href="#">
+            Home
+            <ion-icon slot="separator" name="arrow-forward"></ion-icon>
+          </ion-breadcrumb>
+          <ion-breadcrumb href="#electronics">
+            Electronics
+            <ion-icon slot="separator" name="arrow-forward"></ion-icon>
+          </ion-breadcrumb>
+          <ion-breadcrumb href="#photography">
+            Photography
+            <ion-icon slot="separator" name="arrow-forward"></ion-icon>
+          </ion-breadcrumb>
+          <ion-breadcrumb href="#cameras">
+            Cameras
+            <ion-icon slot="separator" name="arrow-forward"></ion-icon>
+          </ion-breadcrumb>
+          <ion-breadcrumb href="#film">
+            Film
+            <ion-icon slot="separator" name="arrow-forward"></ion-icon>
+          </ion-breadcrumb>
+          <ion-breadcrumb> 35 mm </ion-breadcrumb>
+        </ion-breadcrumbs>
+
+        <hr />
+
+        <h1>Custom icons</h1>
+
+        <ion-breadcrumbs>
+          <ion-breadcrumb href="#">
+            <ion-icon slot="start" name="home"></ion-icon>
+            Home
+          </ion-breadcrumb>
+          <ion-breadcrumb href="#files">
+            <ion-icon slot="start" name="folder"></ion-icon>
+            Files
+          </ion-breadcrumb>
+          <ion-breadcrumb href="#projects">
+            <ion-icon slot="start" name="folder"></ion-icon>
+            Projects
+          </ion-breadcrumb>
+          <ion-breadcrumb href="#user-research">
+            <ion-icon slot="start" name="folder"></ion-icon>
+            User Research
+          </ion-breadcrumb>
+          <ion-breadcrumb>
+            <ion-icon slot="start" name="document"></ion-icon>
+            Survey.txt
+          </ion-breadcrumb>
+        </ion-breadcrumbs>
+
+        <hr />
+
+        <h1>Custom active</h1>
+
+        <ion-breadcrumbs>
+          <ion-breadcrumb href="#">
+            <ion-icon slot="start" name="home"></ion-icon>
+            Home
+          </ion-breadcrumb>
+          <ion-breadcrumb href="#files">
+            <ion-icon slot="start" name="folder"></ion-icon>
+            Files
+          </ion-breadcrumb>
+          <ion-breadcrumb href="#projects">
+            <ion-icon slot="start" name="folder"></ion-icon>
+            Projects
+          </ion-breadcrumb>
+          <ion-breadcrumb href="#user-research" active>
+            <ion-icon slot="start" name="folder"></ion-icon>
+            User Research
+          </ion-breadcrumb>
+          <ion-breadcrumb>
+            <ion-icon slot="start" name="document"></ion-icon>
+            Survey.txt
+          </ion-breadcrumb>
+        </ion-breadcrumbs>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

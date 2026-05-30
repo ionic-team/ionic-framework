@@ -1,0 +1,183 @@
+@import "./item";
+@import "./item.ios.vars";
+
+// iOS Item
+// --------------------------------------------------
+
+:host {
+  --min-height: #{$item-ios-min-height};
+  --transition: background-color 200ms linear, opacity 200ms linear;
+  --padding-start: #{$item-ios-padding-start};
+  --inner-padding-end: #{$item-ios-padding-end};
+  --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
+  --background: #{$item-ios-background};
+  /**
+   * The active/focus states need
+   * to be the opposite of the background color
+   * so there is enough contrast. The background
+   * defaults to var(--ion-background-color), so we
+   * default to var(--ion-text-color) which will give us
+   * the opposite color.
+   * i.e. if var(--ion-background-color) is #000
+   * then var(--ion-text-color) will be #fff.
+   */
+  --background-activated: #{$text-color};
+  --background-focused: #{$text-color};
+  --background-hover: currentColor;
+  --background-activated-opacity: .12;
+  --background-focused-opacity: .15;
+  --background-hover-opacity: .04;
+  --border-color: #{$item-ios-border-bottom-color};
+  --color: #{$item-ios-color};
+
+  font-size: $item-ios-font-size;
+}
+
+
+// iOS Item: States
+// --------------------------------------------------
+
+:host(.ion-activated) {
+  --transition: none;
+}
+
+:host(.ion-color.ion-focused) .item-native::after {
+  background: #000;
+
+  opacity: .15;
+}
+
+:host(.ion-color.ion-activated) .item-native {
+  &::after {
+    background: #000;
+
+    opacity: .12;
+  }
+}
+
+
+// iOS Item Lines
+// --------------------------------------------------
+
+
+// Full lines - apply the border to the item
+// Inset lines - apply the border to the item inner
+:host(.item-lines-full) {
+  --border-width: #{0px 0px $item-ios-border-bottom-width 0px};
+}
+
+:host(.item-lines-inset) {
+  --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
+}
+
+// Full lines - remove the border from the item inner (inset list items)
+// Inset lines - remove the border on the item (full list items)
+// No lines - remove the border on both (full / inset list items)
+:host(.item-lines-inset),
+:host(.item-lines-none) {
+  --border-width: 0px;
+}
+
+:host(.item-lines-full),
+:host(.item-lines-none) {
+  --inner-border-width: 0px;
+}
+
+// iOS Item Slots
+// --------------------------------------------------
+
+::slotted([slot="start"]) {
+  @include margin($item-ios-slot-start-margin-top, $item-ios-slot-start-margin-end, $item-ios-slot-start-margin-bottom, $item-ios-slot-start-margin-start);
+}
+
+::slotted([slot="end"]) {
+  @include margin($item-ios-slot-end-margin-top, $item-ios-slot-end-margin-end, $item-ios-slot-end-margin-bottom, $item-ios-slot-end-margin-start);
+}
+
+
+// iOS Slotted Icon
+// --------------------------------------------------
+
+::slotted(ion-icon[slot="start"]),
+::slotted(ion-icon[slot="end"]) {
+  @include margin($item-ios-icon-slot-margin-top, $item-ios-icon-slot-margin-end, $item-ios-icon-slot-margin-bottom, $item-ios-icon-slot-margin-start);
+}
+
+
+// iOS Slotted Toggle
+// --------------------------------------------------
+
+::slotted(ion-toggle[slot="start"]),
+::slotted(ion-toggle[slot="end"]) {
+  @include margin(0);
+}
+
+// iOS Stacked / Floating Labels
+// --------------------------------------------------
+
+:host(.item-label-stacked) ::slotted([slot="end"]),
+:host(.item-label-floating) ::slotted([slot="end"]) {
+  @include margin($item-ios-label-slot-end-margin-top, $item-ios-label-slot-end-margin-end, $item-ios-label-slot-end-margin-bottom, $item-ios-label-slot-end-margin-start);
+}
+
+// iOS Item Button
+// --------------------------------------------------
+
+::slotted(.button-small) {
+  --padding-top: 1px;
+  --padding-bottom: 1px;
+  --padding-start: .5em;
+  --padding-end: .5em;
+
+  min-height: 24px;
+
+  font-size: dynamic-font(13px);
+}
+
+// iOS Item Avatar
+// --------------------------------------------------
+
+::slotted(ion-avatar) {
+  width: $item-ios-avatar-width;
+  height: $item-ios-avatar-height;
+}
+
+// iOS Item Thumbnail
+// --------------------------------------------------
+
+::slotted(ion-thumbnail) {
+  --size: #{$item-ios-thumbnail-size};
+}
+
+// iOS Item Avatar/Thumbnail
+// --------------------------------------------------
+
+::slotted(ion-avatar[slot="end"]),
+::slotted(ion-thumbnail[slot="end"]) {
+  @include margin(($item-ios-padding-end * 0.5));
+}
+
+
+// iOS Radio / Toggle Item Label
+// -----------------------------------------
+
+:host(.item-radio) ::slotted(ion-label),
+:host(.item-toggle) ::slotted(ion-label) {
+  @include margin-horizontal(0px, null);
+}
+
+
+// iOS Slotted Label
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  @include margin(10px, 8px, 10px, 0);
+}
+
+// iOS Stacked & Floating Inputs
+// --------------------------------------------------
+
+:host(.item-label-floating),
+:host(.item-label-stacked) {
+  --min-height: 68px;
+}

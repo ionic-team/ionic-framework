@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Input OTP - Shape</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      h2 {
+        text-align: center;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Input OTP - Shape</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Default</h2>
+            <ion-input-otp size="small"></ion-input-otp>
+            <ion-input-otp></ion-input-otp>
+            <ion-input-otp size="large"></ion-input-otp>
+
+            <ion-input-otp size="small" fill="solid"></ion-input-otp>
+            <ion-input-otp fill="solid"></ion-input-otp>
+            <ion-input-otp size="large" fill="solid"></ion-input-otp>
+          </div>
+
+          <div class="grid-item">
+            <h2>Soft</h2>
+            <ion-input-otp size="small" shape="soft"></ion-input-otp>
+            <ion-input-otp shape="soft"></ion-input-otp>
+            <ion-input-otp size="large" shape="soft"></ion-input-otp>
+
+            <ion-input-otp size="small" shape="soft" fill="solid"></ion-input-otp>
+            <ion-input-otp shape="soft" fill="solid"></ion-input-otp>
+            <ion-input-otp size="large" shape="soft" fill="solid"></ion-input-otp>
+          </div>
+
+          <div class="grid-item">
+            <h2>Rectangular</h2>
+            <ion-input-otp size="small" shape="rectangular"></ion-input-otp>
+            <ion-input-otp shape="rectangular"></ion-input-otp>
+            <ion-input-otp size="large" shape="rectangular"></ion-input-otp>
+
+            <ion-input-otp size="small" shape="rectangular" fill="solid"></ion-input-otp>
+            <ion-input-otp shape="rectangular" fill="solid"></ion-input-otp>
+            <ion-input-otp size="large" shape="rectangular" fill="solid"></ion-input-otp>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

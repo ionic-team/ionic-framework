@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toggle - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      ion-toggle {
+        margin-bottom: 8px;
+      }
+
+      hr {
+        background: #ddd;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Toggle - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <ion-toggle>Unchecked</ion-toggle><br />
+        <ion-toggle checked>Checked</ion-toggle><br />
+        <ion-toggle disabled>Disabled</ion-toggle><br />
+        <ion-toggle disabled checked>Disabled, Checked</ion-toggle><br />
+
+        <hr />
+
+        <ion-toggle> Default width </ion-toggle><br />
+        <ion-toggle style="width: 200px"> Specified width </ion-toggle><br />
+        <ion-toggle style="width: 100%"> Full-width </ion-toggle><br />
+        <ion-toggle> Long Label Long Label Long Label Long Label Long Label Long Label </ion-toggle><br />
+      </ion-content>
+
+      <script>
+        document.addEventListener('ionBlur', (ev) => {
+          console.log('ionBlur', ev);
+        });
+
+        document.addEventListener('ionChange', (ev) => {
+          console.log('ionChange', ev);
+        });
+
+        document.addEventListener('ionFocus', (ev) => {
+          console.log('ionFocus', ev);
+        });
+      </script>
+    </ion-app>
+  </body>
+</html>

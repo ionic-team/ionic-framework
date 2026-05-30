@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Toggle - Validation Test</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="validation-info">
+    <h2>Screen Reader Testing Instructions:</h2>
+    <ol>
+      <li>Enable your screen reader (VoiceOver, NVDA, JAWS, etc.)</li>
+      <li>Tab through the form fields</li>
+      <li>When you tab away from an empty required field, the error should be announced immediately</li>
+      <li>The error text should be announced BEFORE the next field is announced</li>
+      <li>Test in Chrome, Safari, and Firefox to verify consistent behavior</li>
+    </ol>
+  </div>
+
+  <form [formGroup]="form">
+    <div class="grid">
+      <div>
+        <h2>Required Field</h2>
+        <ion-toggle
+          #onToggle
+          id="on-toggle"
+          [helperText]="fieldMetadata.on.helperText"
+          [errorText]="fieldMetadata.on.errorText"
+          formControlName="on"
+          required
+        >
+          {{ fieldMetadata.on.label }}
+        </ion-toggle>
+      </div>
+
+      <div>
+        <h2>Optional Field (No Validation)</h2>
+        <ion-toggle
+          #optionalToggle
+          id="optional-toggle"
+          [helperText]="fieldMetadata.optional.helperText"
+          formControlName="optional"
+        >
+          {{ fieldMetadata.optional.label }}
+        </ion-toggle>
+        
+      </div>
+    </div>
+  </form>
+
+  <div class="ion-padding">
+    <ion-button id="submit-btn" expand="block" [disabled]="form.invalid" (click)="onSubmit()">Submit Form</ion-button>
+    <ion-button id="reset-btn" expand="block" fill="outline" (click)="form.reset()">Reset Form</ion-button>
+  </div>
+</ion-content>

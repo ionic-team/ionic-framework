@@ -1,0 +1,200 @@
+@import "./searchbar";
+@import "./searchbar.ios.vars";
+
+// iOS Searchbar
+// --------------------------------------------------
+
+:host {
+  --background: #{$searchbar-ios-input-background-color};
+  --border-radius: #{$searchbar-ios-input-border-radius};
+  --box-shadow: none;
+  --cancel-button-color: #{$searchbar-ios-cancel-button-color};
+  --clear-button-color: #{$searchbar-ios-input-clear-icon-color};
+  --color: #{$searchbar-ios-input-text-color};
+  --icon-color: #{$searchbar-ios-input-search-icon-color};
+
+  @include padding($searchbar-ios-padding-top, $searchbar-ios-padding-end, $searchbar-ios-padding-bottom, $searchbar-ios-padding-start);
+
+  min-height: $searchbar-ios-input-min-height + $searchbar-ios-padding-top + $searchbar-ios-padding-bottom;
+
+  contain: content;
+}
+
+.searchbar-input-container {
+  min-height: $searchbar-ios-input-min-height;
+}
+
+
+// Searchbar Search Icon
+// -----------------------------------------
+
+.searchbar-search-icon {
+  @include margin-horizontal(calc(50% - 60px), null);
+  @include position(0, null, null, 5px);
+
+  position: absolute;
+
+  width: $searchbar-ios-input-search-icon-size;
+  height: 100%;
+
+  contain: strict;
+}
+
+
+// Searchbar Input Field
+// -----------------------------------------
+
+.searchbar-input {
+  @include padding(6px, 0px);
+
+  height: 100%;
+
+  font-size: dynamic-font(17px);
+  font-weight: 400;
+
+  contain: strict;
+}
+
+/**
+ * We should only account for the clear button
+ * if the clear button is actually visible. Otherwise
+ * long text in an input can get cut off when it does not need to.
+ */
+:host(.searchbar-has-value.searchbar-should-show-clear) .searchbar-input {
+  @include padding(null, dynamic-font(28px));
+}
+
+// Searchbar Clear Input Icon
+// -----------------------------------------
+
+.searchbar-clear-button {
+  @include position(0, 0, null, null);
+  @include background-position(center);
+
+  position: absolute;
+
+  width: dynamic-font(30px);
+  height: 100%;
+
+  border: 0;
+
+  background-color: transparent;
+}
+
+.searchbar-clear-icon {
+  width: $searchbar-ios-input-clear-icon-size;
+  height: 100%;
+}
+
+
+// Searchbar Cancel
+// -----------------------------------------
+
+.searchbar-cancel-button {
+  @include padding(0, 0, 0, 12px);
+
+  flex-shrink: 0;
+
+  background-color: $searchbar-ios-cancel-button-background-color;
+
+  font-size: $searchbar-ios-cancel-button-font-size;
+}
+
+
+// Searchbar Left Aligned (iOS Only)
+// -----------------------------------------
+
+:host(.searchbar-left-aligned) .searchbar-search-icon {
+  @include margin-horizontal(0, null);
+}
+
+:host(.searchbar-left-aligned) .searchbar-input {
+  @include padding-horizontal(dynamic-font(30px), null);
+}
+
+
+// Searchbar Has Focus & Animated
+// -----------------------------------------
+
+:host(.searchbar-has-focus) .searchbar-cancel-button,
+:host(.searchbar-should-show-cancel) .searchbar-cancel-button,
+:host(.searchbar-animated) .searchbar-cancel-button {
+  display: block;
+}
+
+:host(.searchbar-animated) .searchbar-search-icon,
+:host(.searchbar-animated) .searchbar-input {
+  transition: $searchbar-ios-input-transition;
+}
+
+:host(.searchbar-animated.searchbar-has-focus) .searchbar-cancel-button,
+:host(.searchbar-animated.searchbar-should-show-cancel) .searchbar-cancel-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+:host(.searchbar-animated) .searchbar-cancel-button {
+  @include margin-horizontal(null, -100%);
+  @include transform(translate3d(0, 0, 0));
+
+  transition: $searchbar-ios-cancel-transition;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+:host(.searchbar-no-animate) .searchbar-search-icon,
+:host(.searchbar-no-animate) .searchbar-input,
+:host(.searchbar-no-animate) .searchbar-cancel-button {
+  transition-duration: 0ms;
+}
+
+// Searchbar Color
+// -----------------------------------------
+
+:host(.ion-color) .searchbar-cancel-button {
+  color: #{current-color(base)};
+}
+
+@media (any-hover: hover) {
+  :host(.ion-color) .searchbar-cancel-button:hover {
+    color: #{current-color(tint)};
+  }
+}
+
+// Searchbar in Toolbar
+// -----------------------------------------
+
+:host-context(ion-toolbar) {
+  @include padding(1px, null, 15px, null);
+
+  min-height: 52px;
+}
+
+// Searchbar in Toolbar Color
+// -----------------------------------------
+
+:host-context(ion-toolbar.ion-color):not(.ion-color) {
+  color: inherit;
+}
+
+:host-context(ion-toolbar.ion-color):not(.ion-color) .searchbar-cancel-button {
+  color: currentColor;
+}
+
+:host-context(ion-toolbar.ion-color) .searchbar-search-icon {
+  color: currentColor;
+
+  opacity: $searchbar-ios-input-icon-opacity;
+}
+
+:host-context(ion-toolbar.ion-color):not(.ion-color) .searchbar-input {
+  background: rgba(var(--ion-color-contrast-rgb), $searchbar-ios-input-background-color-alpha);
+  color: currentColor;
+}
+
+:host-context(ion-toolbar.ion-color):not(.ion-color) .searchbar-clear-button {
+  color: currentColor;
+
+  opacity: $searchbar-ios-input-icon-opacity;
+}

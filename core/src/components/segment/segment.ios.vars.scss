@@ -1,0 +1,14 @@
+@import "../../themes/ionic.globals.ios";
+@import "../segment-button/segment-button.ios.vars";
+
+// iOS Segment
+// --------------------------------------------------
+
+/// @prop - Alpha of the segment for use in the backgrounds
+$segment-ios-background-alpha:                  0.065;
+
+/// @prop - Background color of the segment
+$segment-ios-background-color:                  rgba($text-color-rgb, $segment-ios-background-alpha);
+
+/// @prop - Border radius of the segment
+$segment-ios-border-radius:                     8px;

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Standalone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      body {
+        padding: 20px;
+      }
+
+      ion-datetime {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+
+  <body>
+    <label for="presentation">Presentation</label>
+    <select id="presentation" onchange="changePresentation(event)">
+      <option value="date-time" selected>date-time</option>
+      <option value="time-date">time-date</option>
+      <option value="date">date</option>
+      <option value="time">time</option>
+    </select>
+
+    <label for="size">Size</label>
+    <select id="size" onchange="changeSize(event)">
+      <option value="fixed" selected>fixed</option>
+      <option value="cover">cover</option>
+    </select>
+
+    <br /><br />
+
+    <ion-datetime value="2022-02-22T16:30:00"></ion-datetime>
+
+    <script>
+      const datetime = document.querySelector('ion-datetime');
+
+      const mutationObserver = new MutationObserver(() => {
+        window.dispatchEvent(new CustomEvent('ionWorkingPartsDidChange'));
+      });
+
+      const initCalendarMonthChangeObserver = async () => {
+        if (!datetime.componentOnReady) return;
+        await datetime.componentOnReady();
+
+        // We have to requestAnimationFrame to allow the datetime to render completely.
+        requestAnimationFrame(() => {
+          const calendarBody = datetime.shadowRoot.querySelector('.calendar-body');
+          if (calendarBody) {
+            mutationObserver.observe(calendarBody, {
+              childList: true,
+              subtree: true,
+            });
+          }
+        });
+      };
+
+      const changePresentation = (ev) => {
+        mutationObserver.disconnect();
+        datetime.presentation = ev.target.value;
+        initCalendarMonthChangeObserver();
+      };
+
+      const changeSize = (ev) => {
+        datetime.size = ev.target.value;
+      };
+
+      initCalendarMonthChangeObserver();
+    </script>
+  </body>
+</html>

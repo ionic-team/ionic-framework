@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Select - Validation Test</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="validation-info">
+    <h2>Screen Reader Testing Instructions:</h2>
+    <ol>
+      <li>Enable your screen reader (VoiceOver, NVDA, JAWS, etc.)</li>
+      <li>Tab through the form fields</li>
+      <li>When you tab away from an empty required field, the error should be announced immediately</li>
+      <li>The error text should be announced BEFORE the next field is announced</li>
+      <li>Test in Chrome, Safari, and Firefox to verify consistent behavior</li>
+    </ol>
+  </div>
+
+  <form [formGroup]="form">
+    <div class="grid">
+      <div>
+        <h2>Required Field</h2>
+        <ion-select
+          #fruitsSelect
+          id="fruits-select"
+          [label]="fieldMetadata.fruits.label"
+          placeholder="Select one"
+          interface="alert"
+          [helperText]="fieldMetadata.fruits.helperText"
+          [errorText]="fieldMetadata.fruits.errorText"
+          formControlName="fruits"
+          required
+        >
+          <ion-select-option value="apples">Apples</ion-select-option>
+          <ion-select-option value="oranges">Oranges</ion-select-option>
+          <ion-select-option value="pears">Pears</ion-select-option>
+        </ion-select>
+      </div>
+
+      <div>
+        <h2>Optional Field (No Validation)</h2>
+        <ion-select
+          #optionalSelect
+          id="optional-select"
+          [label]="fieldMetadata.optional.label"
+          placeholder="Select one"
+          interface="alert"
+          [helperText]="fieldMetadata.optional.helperText"
+          formControlName="optional"
+        >
+          <ion-select-option value="red">Red</ion-select-option>
+          <ion-select-option value="blue">Blue</ion-select-option>
+          <ion-select-option value="green">Green</ion-select-option>
+        </ion-select>
+      </div>
+    </div>
+  </form>
+
+  <div class="ion-padding">
+    <ion-button id="submit-btn" expand="block" [disabled]="form.invalid" (click)="onSubmit()">Submit Form</ion-button>
+    <ion-button id="reset-btn" expand="block" fill="outline" (click)="form.reset()">Reset Form</ion-button>
+  </div>
+</ion-content>

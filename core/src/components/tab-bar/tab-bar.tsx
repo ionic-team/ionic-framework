@@ -1,0 +1,152 @@
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
+import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
+import { createColorClasses } from '@utils/theme';
+
+import { getIonMode } from '../../global/ionic-global';
+import type { Color } from '../../interface';
+
+import type { TabBarChangedEventDetail } from './tab-bar-interface';
+
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
+@Component({
+  tag: 'ion-tab-bar',
+  styleUrls: {
+    ios: 'tab-bar.ios.scss',
+    md: 'tab-bar.md.scss',
+  },
+  shadow: true,
+})
+export class TabBar implements ComponentInterface {
+  private keyboardCtrl: KeyboardController | null = null;
+  private keyboardCtrlPromise: Promise<KeyboardController> | null = null;
+  private didLoad = false;
+
+  @Element() el!: HTMLElement;
+
+  @State() keyboardVisible = false;
+
+  /**
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
+  @Prop({ reflect: true }) color?: Color;
+
+  /**
+   * The selected tab component
+   */
+  @Prop() selectedTab?: string;
+  @Watch('selectedTab')
+  selectedTabChanged() {
+    // Skip the initial watcher call that happens during component load
+    // We handle that in componentDidLoad to ensure children are ready
+    if (!this.didLoad) {
+      return;
+    }
+
+    if (this.selectedTab !== undefined) {
+      this.ionTabBarChanged.emit({
+        tab: this.selectedTab,
+      });
+    }
+  }
+
+  /**
+   * If `true`, the tab bar will be translucent.
+   * Only applies when the mode is `"ios"` and the device supports
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+   */
+  @Prop() translucent = false;
+
+  /** @internal */
+  @Event() ionTabBarChanged!: EventEmitter<TabBarChangedEventDetail>;
+
+  /**
+   * @internal
+   * This event is used in IonContent to correctly
+   * calculate the fullscreen content offsets
+   * when IonTabBar is used.
+   */
+  @Event() ionTabBarLoaded!: EventEmitter<void>;
+
+  componentDidLoad() {
+    this.ionTabBarLoaded.emit();
+    // Set the flag to indicate the component has loaded
+    // This allows the watcher to emit changes from this point forward
+    this.didLoad = true;
+
+    // Emit the initial selected tab after the component is fully loaded
+    // This ensures all child components (ion-tab-button) are ready
+    if (this.selectedTab !== undefined) {
+      this.ionTabBarChanged.emit({
+        tab: this.selectedTab,
+      });
+    }
+  }
+
+  async connectedCallback() {
+    const promise = createKeyboardController(async (keyboardOpen, waitForResize) => {
+      /**
+       * If the keyboard is hiding, then we need to wait
+       * for the webview to resize. Otherwise, the tab bar
+       * will flicker before the webview resizes.
+       */
+      if (keyboardOpen === false && waitForResize !== undefined) {
+        await waitForResize;
+      }
+
+      this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
+    });
+    this.keyboardCtrlPromise = promise;
+
+    const keyboardCtrl = await promise;
+
+    /**
+     * Only assign if this is still the current promise.
+     * Otherwise, a new connectedCallback has started or
+     * disconnectedCallback was called, so destroy this instance.
+     */
+    if (this.keyboardCtrlPromise === promise) {
+      this.keyboardCtrl = keyboardCtrl;
+      this.keyboardCtrlPromise = null;
+    } else {
+      keyboardCtrl.destroy();
+    }
+  }
+
+  disconnectedCallback() {
+    if (this.keyboardCtrlPromise) {
+      this.keyboardCtrlPromise.then((ctrl) => ctrl.destroy());
+      this.keyboardCtrlPromise = null;
+    }
+
+    if (this.keyboardCtrl) {
+      this.keyboardCtrl.destroy();
+      this.keyboardCtrl = null;
+    }
+  }
+
+  render() {
+    const { color, translucent, keyboardVisible } = this;
+    const mode = getIonMode(this);
+    const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
+
+    return (
+      <Host
+        role="tablist"
+        aria-hidden={shouldHide ? 'true' : null}
+        class={createColorClasses(color, {
+          [mode]: true,
+          'tab-bar-translucent': translucent,
+          'tab-bar-hidden': shouldHide,
+        })}
+      >
+        <slot></slot>
+      </Host>
+    );
+  }
+}

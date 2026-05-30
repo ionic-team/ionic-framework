@@ -1,0 +1,58 @@
+name: 'Update Reference Screenshots'
+description: 'Update Reference Screenshots'
+
+on:
+  workflow_dispatch:
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+      with:
+        node-version: 24.x
+    - uses: actions/download-artifact@v8
+      with:
+        path: ./artifacts
+    - name: 🔎 Extract Archives
+      # This finds all .zip files in the ./artifacts
+      # directory, including nested directories.
+      # It then unzips every .zip to the root directory
+      run: |
+        find . -type f -name 'UpdatedScreenshots-*.zip' -exec unzip -q -o -d ../ {} \;
+      shell: bash
+      working-directory: ./artifacts
+    - name: Clean core package.json
+      run: git checkout ./package.json
+      shell: bash
+      working-directory: ./core
+    - name: 📸 Push Screenshots
+      # Configure user as Ionitron
+      # and push only the changed .png snapshots
+      # to the remote branch.
+      # Non-Linux screenshots are in .gitignore
+      # to prevent local screenshots from getting
+      # pushed to Git.
+      run: |
+        git config user.name ionitron
+        git config user.email hi@ionicframework.com
+
+        # This adds an empty entry for new
+        # screenshot files so we can track them with
+        # git diff
+        git add src/\*.png -N
+
+        if git diff --exit-code; then
+          echo -e "\033[1;31m⚠️ Error: No new screenshots generated ⚠️\033[0m"
+          echo -e "\033[1;31mThis means that there were zero visual diffs when running screenshot tests.\033[0m"
+          echo -e "\033[1;31mMake sure you have pushed any code changes that would result in visual diffs.\033[0m"
+          exit 1
+        else
+          # This actually adds the contents
+          # of the screenshots (including new ones)
+          git add src/\*.png
+          git commit -m "chore(): add updated snapshots"
+          git push
+        fi
+
+      shell: bash
+      working-directory: ./core

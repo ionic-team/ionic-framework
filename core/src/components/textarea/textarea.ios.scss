@@ -1,0 +1,49 @@
+@import "./textarea";
+@import "./textarea.vars";
+@import "./textarea.ios.vars";
+
+// iOS Textarea
+// --------------------------------------------------
+
+:host {
+  --border-width: #{$hairlines-width};
+  --border-color: #{$item-ios-border-color};
+  --padding-top: #{$textarea-ios-padding-top};
+  --padding-end: 0px;
+  --padding-bottom: #{$textarea-padding-bottom};
+  --padding-start: 0px;
+  --highlight-height: 0px;
+
+  font-size: $textarea-ios-font-size;
+}
+
+// Textarea - Disabled
+// ----------------------------------------------------------------
+// The textarea, label, helper text, char counter and placeholder
+// should use the same opacity and match the other form controls
+
+:host(.textarea-disabled) {
+  opacity: #{$textarea-ios-disabled-opacity};
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+/**
+ * Slotted buttons have a lot of default padding that can
+ * cause them to look misaligned from other pieces such
+ * as the control's label, especially when using a clear
+ * fill. We also make them circular to ensure that non-
+ * clear buttons and the focus/hover state on clear ones
+ * don't look too crowded.
+ */
+::slotted(ion-button[slot="start"].button-has-icon-only),
+::slotted(ion-button[slot="end"].button-has-icon-only) {
+  --border-radius: 50%;
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+
+  aspect-ratio: 1;
+}

@@ -1,0 +1,121 @@
+@import "./buttons.ios.vars";
+@import "./buttons";
+
+
+// iOS Toolbar Default Button
+// --------------------------------------------------
+
+::slotted(*) ion-button {
+  --padding-top: 3px;
+  --padding-bottom: 3px;
+  --padding-start: 5px;
+  --padding-end: 5px;
+
+  @include margin-horizontal(2px, 2px);
+
+  min-height: 32px;
+}
+
+::slotted(*) .button-has-icon-only {
+  --padding-top: 0;
+  --padding-bottom: 0;
+}
+
+::slotted(*) ion-button:not(.button-round) {
+  --border-radius: #{$toolbar-ios-button-border-radius};
+}
+
+
+// iOS Toolbar with Color: Default Buttons
+// --------------------------------------------------
+
+:host-context(.ion-color)::slotted(*) .button {
+  --color: initial;
+  --border-color: initial;
+  --background-focused: #{current-color(contrast)};
+}
+
+:host-context(.ion-color)::slotted(*) .button-solid {
+  --background: #{current-color(contrast)};
+  --background-focused: #000;
+  --background-focused-opacity: .12;
+  --background-activated: #000;
+  --background-activated-opacity: .12;
+  --background-hover: #{current-color(base)};
+  --background-hover-opacity: 0.45;
+  --color: #{current-color(base)};
+  --color-focused: #{current-color(base)};
+}
+
+:host-context(.ion-color)::slotted(*) .button-clear {
+  --color-activated: #{current-color(contrast)};
+  --color-focused: #{current-color(contrast)};
+}
+
+:host-context(.ion-color)::slotted(*) .button-outline {
+  --color-activated: #{current-color(base)};
+  --color-focused: #{current-color(contrast)};
+  --background-activated: #{current-color(contrast)};
+}
+
+
+// iOS Toolbar Button Clear / Outline
+// --------------------------------------------------
+
+::slotted(*) .button-clear,
+::slotted(*) .button-outline {
+  --background-activated: transparent;
+  --background-focused: currentColor;
+  --background-hover: transparent;
+}
+
+
+// iOS Toolbar Button Solid
+// --------------------------------------------------
+
+::slotted(*) .button-solid:not(.ion-color) {
+  --background-focused: #000;
+  --background-focused-opacity: .12;
+  --background-activated: #000;
+  --background-activated-opacity: .12;
+}
+
+
+// iOS Toolbar Button Icon
+// --------------------------------------------------
+
+::slotted(*) ion-icon[slot="start"] {
+  @include margin(0);
+  @include margin-horizontal(null, .3em);
+
+  // This value is calculated by dividing the font size the
+  // icon should be in px (24px) by the font size of its
+  // parent button (17px). e.g. 24 / 17 = 1.4117
+  font-size: 1.41em;
+
+  line-height: .67;
+}
+
+::slotted(*) ion-icon[slot="end"] {
+  @include margin(0);
+  @include margin-horizontal(.4em, null);
+
+  // This value is calculated by dividing the font size the
+  // icon should be in px (24px) by the font size of its
+  // parent button (17px). e.g. 24 / 17 = 1.4117
+  font-size: 1.41em;
+
+  line-height: .67;
+}
+
+::slotted(*) ion-icon[slot="icon-only"] {
+  @include padding(0);
+  @include margin(0);
+
+  // This value is calculated by dividing the font size the
+  // icon should be in px (28px) by the font size of its
+  // parent button (17px). e.g. 28 / 17 = 1.647
+  font-size: 1.65em;
+
+  line-height: .67;
+}

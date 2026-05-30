@@ -1,0 +1,103 @@
+@import "./radio";
+@import "./radio.md.vars";
+
+// Material Design Radio
+// --------------------------------------------------
+
+:host {
+  --color: #{$radio-md-color-off};
+  --color-checked: #{ion-color(primary, base)};
+  --border-width: #{$radio-md-icon-border-width};
+  --border-style: #{$radio-md-icon-border-style};
+  --border-radius: #{$radio-md-icon-border-radius};
+}
+
+:host(.ion-color) .radio-inner {
+  background: current-color(base);
+}
+
+:host(.ion-color.radio-checked) .radio-icon {
+  border-color: current-color(base);
+}
+
+// Material Design Radio Outer Circle: Unchecked
+// -----------------------------------------
+
+.radio-icon {
+  @include margin(0);
+  @include border-radius(var(--border-radius));
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--color);
+}
+
+// Material Design Radio Inner Circle: Unchecked
+// -----------------------------------------
+
+.radio-inner {
+  @include border-radius(var(--inner-border-radius));
+
+  width: calc(50% + var(--border-width));
+  height: calc(50% + var(--border-width));
+
+  transform: scale3d(0, 0, 0);
+
+  transition: transform $radio-md-transition-duration $radio-md-transition-easing;
+
+  background: var(--color-checked);
+}
+
+// Material Design Radio Outer Circle: Checked
+// -----------------------------------------
+
+:host(.radio-checked) .radio-icon {
+  border-color: var(--color-checked);
+}
+
+// Material Design Radio Inner Circle: Checked
+// -----------------------------------------
+
+:host(.radio-checked) .radio-inner {
+  transform: scale3d(1, 1, 1);
+}
+
+// Material Design Radio: Disabled
+// -----------------------------------------
+// The radio itself should use the disabled
+// opacity set by its spec, while the label
+// should match the other form controls
+
+:host(.radio-disabled) .label-text-wrapper {
+  opacity: $radio-md-disabled-opacity;
+}
+
+:host(.radio-disabled) .native-wrapper {
+  opacity: $radio-md-icon-disabled-opacity;
+}
+
+// Material Design Radio: Keyboard Focus
+// -----------------------------------------
+
+:host(.ion-focused) .radio-icon::after {
+  @include border-radius(var(--inner-border-radius));
+
+  display: block;
+  position: absolute;
+
+  width: 36px;
+  height: 36px;
+
+  background: $radio-md-background-color-focused;
+
+  content: "";
+  opacity: 0.2;
+}
+
+// Radio Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper .radio-icon {
+  width: $radio-md-icon-width;
+  height: $radio-md-icon-height;
+}

@@ -1,0 +1,46 @@
+name: 'Build Ionic React'
+description: 'Build Ionic React'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+      with:
+        node-version: 24.x
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - name: 🕸️ Install React Dependencies
+      run: npm ci
+      shell: bash
+      working-directory: ./packages/react
+    - name: 🔄 Sync
+      run: npm run sync
+      shell: bash
+      working-directory: ./packages/react
+    - name: 🖌️ Lint
+      run: npm run lint
+      shell: bash
+      working-directory: ./packages/react
+    - name: 🏗️ Build
+      run: npm run build
+      shell: bash
+      working-directory: ./packages/react
+    - name: 🧪 Test Spec
+      run: npm run test.spec
+      shell: bash
+      working-directory: ./packages/react
+    - name: Clean core package.json
+      run: git checkout ./package.json
+      shell: bash
+      working-directory: ./core
+    - name: 🔍 Check Diff
+      run: git diff --exit-code
+      shell: bash
+      working-directory: ./packages/react
+    - uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-react
+        output: packages/react/ReactBuild.zip
+        paths: packages/react/dist packages/react/css

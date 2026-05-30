@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime Button - Basic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(325px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Datetime Button - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Date/Time</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button slot="end" datetime="default-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false">
+              <ion-datetime
+                locale="en-US"
+                presentation="date-time"
+                id="default-datetime"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+
+          <div class="grid-item">
+            <h2>Date Only</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button slot="end" datetime="date-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false">
+              <ion-datetime
+                locale="en-US"
+                presentation="date"
+                id="date-datetime"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+
+          <div class="grid-item">
+            <h2>Time Only</h2>
+
+            <ion-item>
+              <ion-label>Start Time</ion-label>
+              <ion-datetime-button slot="end" datetime="time-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false">
+              <ion-datetime
+                locale="en-US"
+                presentation="time"
+                id="time-datetime"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+          <div class="grid-item">
+            <h2>Time Only (24 hour)</h2>
+
+            <ion-item>
+              <ion-label>Start Time</ion-label>
+              <ion-datetime-button slot="end" datetime="time-h23-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false">
+              <ion-datetime
+                locale="en-US"
+                presentation="time"
+                id="time-h23-datetime"
+                value="2022-03-15T00:43:00"
+                hour-cycle="h23"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+          <div class="grid-item">
+            <h2>Time/Date</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button slot="end" datetime="time-date-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false">
+              <ion-datetime
+                locale="en-US"
+                presentation="time-date"
+                id="time-date-datetime"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+          <div class="grid-item">
+            <h2>Month</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button slot="end" datetime="month-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false">
+              <ion-datetime
+                locale="en-US"
+                presentation="month"
+                id="month-datetime"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+          <div class="grid-item">
+            <h2>Month/Year</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button slot="end" datetime="month-year-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false">
+              <ion-datetime
+                locale="en-US"
+                presentation="month-year"
+                id="month-year-datetime"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+          <div class="grid-item">
+            <h2>Year</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button slot="end" datetime="year-datetime"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false">
+              <ion-datetime
+                locale="en-US"
+                presentation="year"
+                id="year-datetime"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+          <div class="grid-item">
+            <h2>preferWheel / date</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button slot="end" datetime="prefer-wheel-date"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false">
+              <ion-datetime
+                locale="en-US"
+                prefer-wheel="true"
+                presentation="date"
+                id="prefer-wheel-date"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+
+          <div class="grid-item">
+            <h2>preferWheel / date-time</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button
+                slot="end"
+                id="prefer-wheel-date-time-button"
+                datetime="prefer-wheel-date-time"
+              ></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false">
+              <ion-datetime
+                locale="en-US"
+                prefer-wheel="true"
+                presentation="date-time"
+                id="prefer-wheel-date-time"
+                value="2022-03-15T00:43:00"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+
+          <div class="grid-item">
+            <h2>formatOptions</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button datetime="format-options" slot="end"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false">
+              <ion-datetime
+                id="format-options"
+                presentation="date-time"
+                value="2023-11-02T01:22:00"
+                locale="en-US"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+
+  <script>
+    const formatOptionsDatetime = document.querySelector('#format-options');
+    formatOptionsDatetime.formatOptions = {
+      date: {
+        weekday: 'short',
+        month: 'long',
+        day: '2-digit',
+      },
+      time: {
+        hour: '2-digit',
+        minute: '2-digit',
+      },
+    };
+  </script>
+</html>

@@ -1,0 +1,250 @@
+@import "./alert.vars";
+
+// Alert
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the alert
+   *
+   * @prop --min-width: Minimum width of the alert
+   * @prop --width: Width of the alert
+   * @prop --max-width: Maximum width of the alert
+   *
+   * @prop --min-height: Minimum height of the alert
+   * @prop --height: Height of the alert
+   * @prop --max-height: Maximum height of the alert
+   *
+   * @prop --backdrop-opacity: Opacity of the backdrop
+   */
+  --min-width: #{$alert-min-width};
+  --width: auto;
+  --min-height: auto;
+  --height: auto;
+  --max-height: #{$alert-max-height};
+
+  @include font-smoothing();
+  @include position(0, 0, 0, 0);
+
+  display: flex;
+  position: absolute;
+
+  align-items: center;
+  justify-content: center;
+
+  outline: none;
+
+  font-family: $font-family-base;
+
+  contain: strict;
+  touch-action: none;
+  user-select: none;
+  z-index: $z-index-overlay;
+}
+
+:host(.overlay-hidden) {
+  display: none;
+}
+
+:host(.alert-top) {
+  @include padding(50px, null, null, null);
+
+  align-items: flex-start;
+}
+
+.alert-wrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
+
+  background: var(--background);
+
+  contain: content;
+  opacity: 0;
+  z-index: $z-index-overlay-wrapper;
+}
+
+.alert-title {
+  @include margin(0);
+  @include padding(0);
+}
+
+.alert-sub-title {
+  @include margin(5px, 0, 0);
+  @include padding(0);
+
+  font-weight: normal;
+}
+
+/**
+ * Alert has a maximum height in scenarios
+ * such as the MD alert on tablet devices.
+ * As a result, we need to make sure the inner
+ * containers can scroll otherwise content
+ * may be cut off.
+ */
+.alert-message,
+.alert-input-group {
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+}
+
+.alert-checkbox-label,
+.alert-radio-label {
+  /**
+   * This allows long words to wrap to the next line
+   * instead of flowing outside of the container.
+   *
+   * The "anywhere" keyword should be used instead
+   * of the "break-word" keyword since the parent
+   * container is using flexbox. Flex relies on min-content and
+   * max-content intrinsic sizes to structure the layout. Flex will
+   * wrap content only until it reaches its min-content intrinsic size
+   * which in this case is equal to the longest word in this container.
+   * "break-word" does not shrink the min-content intrinsic size
+   * of the flex item which causes the long word to still overflow.
+   * "anywhere" on the other hand does shrink the min-content
+   * intrinsic size which allows the long word to wrap to the next line.
+   */
+  overflow-wrap: anywhere;
+}
+
+/**
+  * Scrollbars on mobile devices will be hidden.
+  * Users can still scroll the content by swiping.
+  * If a user has a fine pointing device, such as a
+  * mouse or trackpad, then scrollbars will be
+  * visible. This allows users to scroll the
+  * content with their pointing device.
+  * Otherwise, the user would have to use the
+  * keyboard to navigate through the options.
+  * This may not be intuitive for users who
+  * are not familiar with keyboard navigation.
+  */
+@media (any-pointer: coarse) {
+  .alert-checkbox-group::-webkit-scrollbar,
+  .alert-radio-group::-webkit-scrollbar,
+  .alert-message::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.alert-input {
+  @include padding(10px, 0);
+
+  width: 100%;
+
+  border: 0;
+
+  background: inherit;
+
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.alert-button-group {
+  display: flex;
+
+  flex-direction: row;
+
+  width: 100%;
+}
+
+.alert-button-group-vertical {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.alert-button {
+  @include margin(0);
+
+  display: block;
+
+  border: 0;
+
+  font-size: $alert-button-font-size;
+
+  line-height: $alert-button-line-height;
+
+  z-index: 0;
+}
+
+.alert-button.ion-focused,
+.alert-tappable.ion-focused {
+  background: $background-color-step-100;
+}
+
+.alert-button-inner {
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  min-height: inherit;
+}
+
+
+// Alert Button: Disabled
+// --------------------------------------------------
+.alert-input-disabled,
+.alert-checkbox-button-disabled .alert-button-inner,
+.alert-radio-button-disabled .alert-button-inner {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
+
+.alert-tappable {
+  @include margin(0);
+  @include padding(0);
+
+  display: flex;
+
+  width: 100%;
+
+  border: 0;
+
+  background: transparent;
+
+  font-size: inherit;
+
+  line-height: initial;
+
+  text-align: start;
+  appearance: none;
+
+  contain: content;
+}
+
+.alert-button,
+.alert-checkbox,
+.alert-input,
+.alert-radio {
+  outline: none;
+}
+
+.alert-radio-icon,
+.alert-checkbox-icon,
+.alert-checkbox-inner {
+  box-sizing: border-box;
+}
+
+textarea.alert-input {
+  min-height: $alert-input-min-height;
+  resize: none;
+}

@@ -1,0 +1,201 @@
+@import "./segment-button";
+@import "./segment-button.md.vars";
+
+// Material Design Segment Button
+// --------------------------------------------------
+
+:host {
+  --background: #{$segment-button-md-background};
+  --background-checked: #{$segment-button-md-background-checked};
+  --background-hover: var(--color-checked);
+  --background-focused: var(--color-checked);
+  --background-activated-opacity: 0;
+  --background-focused-opacity: .12;
+  --background-hover-opacity: .04;
+  --color: #{$segment-button-md-text-color};
+  --color-checked: #{$segment-button-md-text-color-checked};
+  --indicator-box-shadow: none;
+  --indicator-color: var(--color-checked);
+  --indicator-height: 2px;
+  --indicator-transition: #{$segment-button-md-transition-animated};
+  --indicator-transform: none;
+  --padding-top: #{$segment-button-md-padding-top};
+  --padding-end: #{$segment-button-md-padding-end};
+  --padding-bottom: #{$segment-button-md-padding-bottom};
+  --padding-start: #{$segment-button-md-padding-start};
+  --transition: #{$segment-button-md-transition};
+
+  min-width: $segment-button-md-min-width;
+
+  min-height: $segment-button-md-min-height;
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  font-size: $segment-button-md-font-size;
+  font-weight: $segment-button-md-font-weight;
+
+  letter-spacing: $segment-button-md-letter-spacing;
+
+  line-height: $segment-button-md-line-height;
+
+  text-transform: uppercase;
+}
+
+// Segment Button: Disabled
+// --------------------------------------------------
+
+:host(.segment-button-disabled) {
+  opacity: $segment-button-md-opacity-disabled;
+}
+
+
+// Segment Button: Segment w/ Color
+// --------------------------------------------------
+
+// Default
+:host(.in-segment-color) {
+  background: none;
+  color: $segment-button-md-text-color;
+}
+
+// Indicator color and ripple on a Segment w/ color
+// should not change if the variables are set
+:host(.in-segment-color) ion-ripple-effect {
+  color: #{current-color(base)};
+}
+
+:host(.in-segment-color) .segment-button-indicator-background {
+  background: #{current-color(base)};
+}
+
+// Checked
+:host(.in-segment-color.segment-button-checked) .button-native {
+  color: #{current-color(base)};
+}
+
+// Focused
+:host(.in-segment-color.ion-focused) .button-native::after {
+  background: #{current-color(base)};
+}
+
+@media (any-hover: hover) {
+  :host(.in-segment-color:hover) .button-native {
+    color: $segment-button-md-text-color;
+
+    &::after {
+      background: #{current-color(base)};
+    }
+  }
+
+  :host(.in-segment-color.segment-button-checked:hover) .button-native {
+    color: #{current-color(base)};
+  }
+}
+
+
+// Segment: Default Toolbar
+// --------------------------------------------------
+
+:host(.in-toolbar:not(.in-segment-color)) {
+  --background: #{var(--ion-toolbar-segment-background, $segment-button-md-background)};
+  --background-checked: #{var(--ion-toolbar-segment-background-checked, $segment-button-md-background-checked)};
+  --color: #{var(--ion-toolbar-segment-color, $segment-button-md-text-color)};
+  --color-checked: #{var(--ion-toolbar-segment-color-checked, $segment-button-md-text-color-checked)};
+  --indicator-color: #{var(--ion-toolbar-segment-color-checked, var(--color-checked))};
+}
+
+
+// Segment Button: Toolbar w/ Color
+// --------------------------------------------------
+
+// Default Segment, In a Toolbar with Color
+:host(.in-toolbar-color:not(.in-segment-color)) .button-native {
+  color: #{current-color(contrast, .6)};
+}
+
+// Default Segment, In a Toolbar with Color, Checked
+:host(.in-toolbar-color.segment-button-checked:not(.in-segment-color)) .button-native {
+  color: #{current-color(contrast)};
+}
+
+// Default Segment, In a Toolbar with Color, Hover
+@media (any-hover: hover) {
+  :host(.in-toolbar-color:not(.in-segment-color)) .button-native::after {
+    background: #{current-color(contrast)};
+  }
+}
+
+
+// Segment Button: Icon
+// --------------------------------------------------
+
+::slotted(ion-icon) {
+  @include margin(12px, null, 12px, null);
+
+  font-size: $segment-button-md-icon-size;
+}
+
+// Segment Button: Label
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  @include margin(12px, null, 12px, null);
+}
+
+// Segment Button: Layout
+// --------------------------------------------------
+
+// Layout: icon top / icon bottom
+:host(.segment-button-layout-icon-top) ::slotted(ion-label),
+:host(.segment-button-layout-icon-bottom) ::slotted(ion-icon) {
+  @include margin(0, null, null, null);
+}
+
+:host(.segment-button-layout-icon-top) ::slotted(ion-icon),
+:host(.segment-button-layout-icon-bottom) ::slotted(ion-label) {
+  @include margin(null, null, 0, null);
+}
+
+// Layout: icon start
+:host(.segment-button-layout-icon-start) ::slotted(ion-label) {
+  @include margin-horizontal(8px, 0);
+}
+
+// Layout: icon end
+:host(.segment-button-layout-icon-end) ::slotted(ion-label) {
+  @include margin-horizontal(0, 8px);
+}
+
+// Layout: icon only
+:host(.segment-button-has-icon-only) ::slotted(ion-icon) {
+  @include margin(12px, null, 12px, null);
+}
+
+// Layout: label only
+:host(.segment-button-has-label-only) ::slotted(ion-label) {
+  @include margin(12px, null, 12px, null);
+}
+
+// Segment Button: Indicator
+// --------------------------------------------------
+
+.segment-button-indicator {
+  @include position(null, 0, 0, 0);
+}
+
+.segment-button-indicator-background {
+  background: var(--indicator-color);
+}
+
+// Segment button indicator color should use the background checked variable with
+// a fallback to the default value of --indicator-color
+:host(.in-toolbar:not(.in-segment-color)) .segment-button-indicator-background {
+  background: #{var(--ion-toolbar-segment-indicator-color, var(--indicator-color))};
+}
+
+// Do not use the global or local CSS variable if the toolbar has a color
+:host(.in-toolbar-color:not(.in-segment-color)) .segment-button-indicator-background {
+  background: #{current-color(contrast)};
+}

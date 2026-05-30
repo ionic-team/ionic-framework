@@ -1,0 +1,32 @@
+@import "./segment";
+@import "./segment.md.vars";
+
+// Material Design Segment
+// --------------------------------------------------
+
+:host {
+  --background: transparent;
+
+  grid-auto-columns: minmax(auto, $segment-button-md-max-width);
+}
+
+// Segment: In Toolbar
+// --------------------------------------------------
+
+:host(.in-toolbar) {
+  /**
+   * Segment should inherit the
+   * height of the toolbar.
+   * Note: --min-height is initially
+   * set on ion-toolbar, not ion-segment
+   */
+  min-height: var(--min-height);
+}
+
+
+// Segment: Scrollable
+// --------------------------------------------------
+
+:host(.segment-scrollable) ::slotted(ion-segment-button) {
+  min-width: auto;
+}

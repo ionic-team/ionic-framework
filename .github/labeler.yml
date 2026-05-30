@@ -1,0 +1,22 @@
+# This is used with the label workflow which
+# will triage pull requests and apply a label based on the
+# paths that are modified in the pull request.
+#
+# For more information, see:
+# https://github.com/actions/labeler
+
+'package: core':
+- changed-files:
+  - any-glob-to-any-file: ['core/**/*']
+
+'package: angular':
+- changed-files:
+  - any-glob-to-any-file: ['packages/angular/**/*', 'packages/angular-*/**/*']
+
+'package: react':
+- changed-files:
+  - any-glob-to-any-file: ['packages/react/**/*', 'packages/react-*/**/*']
+
+'package: vue':
+- changed-files:
+  - any-glob-to-any-file: ['packages/vue/**/*', 'packages/vue-*/**/*']

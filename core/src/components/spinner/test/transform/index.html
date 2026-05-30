@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Spinner - Transform</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      ion-spinner {
+        transform: translate(-10px, -10px);
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Spinner - Transform</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-list>
+          <ion-item>
+            <ion-spinner slot="start" duration="2000" name="bubbles"></ion-spinner>
+            <code>bubbles</code>
+          </ion-item>
+          <ion-item>
+            <ion-spinner slot="start" duration="2000" name="circles"></ion-spinner>
+            <code>circles</code>
+          </ion-item>
+          <ion-item>
+            <ion-spinner slot="start" duration="2000" name="circular"></ion-spinner>
+            <code>circular</code>
+          </ion-item>
+          <ion-item>
+            <ion-spinner slot="start" duration="2000" name="crescent"></ion-spinner>
+            <code>crescent</code>
+          </ion-item>
+          <ion-item>
+            <ion-spinner slot="start" duration="2000" name="dots"></ion-spinner>
+            <code>dots</code>
+          </ion-item>
+          <ion-item>
+            <ion-spinner slot="start" duration="2000" name="lines"></ion-spinner>
+            <code>lines</code>
+          </ion-item>
+          <ion-item>
+            <ion-spinner slot="start" duration="2000" name="lines-sharp"></ion-spinner>
+            <code>lines-sharp</code>
+          </ion-item>
+          <ion-item>
+            <ion-spinner slot="start" duration="2000" name="lines-sharp-small"></ion-spinner>
+            <code>lines-sharp-small</code>
+          </ion-item>
+          <ion-item>
+            <ion-spinner slot="start" duration="2000" name="lines-small"></ion-spinner>
+            <code>lines-small</code>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

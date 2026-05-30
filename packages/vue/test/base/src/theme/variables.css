@@ -1,0 +1,10 @@
+/* For information on how to create your own theme, please see:
+http://ionicframework.com/docs/theming/ */
+
+.list-md {
+  background: transparent;
+}
+
+.list-ios ion-item {
+  --ion-item-background: #1c1c1e;
+}

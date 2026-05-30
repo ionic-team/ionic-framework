@@ -1,0 +1,272 @@
+@import "../../themes/ionic.globals";
+
+// Progress bar
+// ------------------------------------------------------------------------
+
+// Host has no background by default - this will be added to the progress-buffer-bar
+:host {
+  /**
+   * @prop --background: Background of the progress track, or the buffer bar if `buffer` is set
+   * @prop --progress-background: Background of the progress bar representing the current value
+   */
+  --background: #{ion-color(primary, base, 0.3)};
+  --progress-background: #{ion-color(primary, base)};
+
+  display: block;
+
+  position: relative;
+
+  width: 100%;
+
+  contain: strict;
+
+  direction: ltr;
+  overflow: hidden;
+}
+
+.progress,
+.progress-indeterminate,
+.indeterminate-bar-primary,
+.indeterminate-bar-secondary,
+.progress-buffer-bar {
+  @include position(0, 0, 0, 0);
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+}
+
+.buffer-circles-container,
+.buffer-circles {
+  @include position(0, 0, 0, 0);
+  position: absolute;
+}
+
+// Extend a bit to overflow. The size of animated distance.
+.buffer-circles {
+  /* stylelint-disable property-disallowed-list */
+  right: -10px;
+  left: -10px;
+  /* stylelint-enable property-disallowed-list */
+}
+
+// Determinate progress bar
+// --------------------------------------------------
+
+.progress,
+.progress-buffer-bar,
+.buffer-circles-container {
+  /* stylelint-disable-next-line property-disallowed-list */
+  transform-origin: left top;
+
+  transition: transform 150ms linear;
+}
+
+// Progress and background bar
+// --------------------------------------------------
+
+.progress,
+.progress-indeterminate {
+  background: var(--progress-background);
+
+  z-index: 2;
+}
+
+.progress-buffer-bar {
+  background: var(--background);
+
+  z-index: 1;
+}
+
+.buffer-circles-container {
+  overflow: hidden;
+}
+
+// MD based animation on indeterminate type
+// --------------------------------------------------
+
+.indeterminate-bar-primary {
+  /* stylelint-disable property-disallowed-list */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: -145.166611%;
+  /* stylelint-enable property-disallowed-list */
+
+  animation: primary-indeterminate-translate 2s infinite linear;
+
+  .progress-indeterminate {
+    animation: primary-indeterminate-scale 2s infinite linear;
+    animation-play-state: inherit;
+  }
+}
+
+.indeterminate-bar-secondary {
+  /* stylelint-disable property-disallowed-list */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: -54.888891%;
+  /* stylelint-enable property-disallowed-list */
+
+  animation: secondary-indeterminate-translate 2s infinite linear;
+
+  .progress-indeterminate {
+    animation: secondary-indeterminate-scale 2s infinite linear;
+    animation-play-state: inherit;
+  }
+}
+
+// Progress Bar: Buffer Circles
+// ------------------------------------------------------------------------
+
+.buffer-circles {
+  background-image: radial-gradient(ellipse at center, var(--background) 0%, var(--background) 30%, transparent 30%);
+
+  /* stylelint-disable property-disallowed-list */
+  background-repeat: repeat-x;
+  background-position: 5px center;
+  background-size: 10px 10px;
+  /* stylelint-enable property-disallowed-list */
+
+  z-index: 0;
+  animation: buffering 450ms infinite linear;
+}
+
+// Progress Bar: Reversed
+// ------------------------------------------------------------------------
+// If reversed is set to true, the animation will be reversed
+// and the bar will start at the top right
+
+:host(.progress-bar-reversed) {
+  transform: scaleX(-1);
+}
+
+// Progress Bar: Paused
+// ------------------------------------------------------------------------
+
+:host(.progress-paused) {
+  .indeterminate-bar-secondary,
+  .indeterminate-bar-primary,
+  .buffer-circles {
+    animation-play-state: paused;
+  }
+}
+
+// Progress Bar: Color
+// ------------------------------------------------------------------------
+
+:host(.ion-color) .buffer-circles {
+  background-image: radial-gradient(ellipse at center, #{current-color(base, 0.3)} 0%, #{current-color(base, 0.3)} 30%, transparent 30%);
+}
+
+:host(.ion-color) {
+  .progress,
+  .progress-indeterminate {
+    background: #{current-color(base)};
+  }
+}
+
+
+// Progress Bar: Animation Keyframes
+// ------------------------------------------------------------------------
+// Source: https://github.com/material-components/material-components-web/blob/master/packages/mdc-linear-progress/_keyframes.scss
+
+@keyframes primary-indeterminate-translate {
+  0% {
+    transform: translateX(0);
+  }
+
+  20% {
+    animation-timing-function: cubic-bezier(.5, 0, .701732, .495819);
+
+    transform: translateX(0);
+  }
+
+  59.15% {
+    animation-timing-function: cubic-bezier(.302435, .381352, .55, .956352);
+
+    transform: translateX(83.67142%);
+  }
+
+  100% {
+    transform: translateX(200.611057%);
+  }
+}
+
+@keyframes primary-indeterminate-scale {
+  0% {
+    transform: scaleX(.08);
+  }
+
+  36.65% {
+    animation-timing-function: cubic-bezier(.334731, .12482, .785844, 1);
+
+    transform: scaleX(.08);
+  }
+
+  69.15% {
+    animation-timing-function: cubic-bezier(.06, .11, .6, 1);
+
+    transform: scaleX(.661479);
+  }
+
+  100% {
+    transform: scaleX(.08);
+  }
+}
+
+@keyframes secondary-indeterminate-translate {
+  0% {
+    animation-timing-function: cubic-bezier(.15, 0, .515058, .409685);
+
+    transform: translateX(0);
+  }
+
+  25% {
+    animation-timing-function: cubic-bezier(.31033, .284058, .8, .733712);
+
+    transform: translateX(37.651913%);
+  }
+
+  48.35% {
+    animation-timing-function: cubic-bezier(.4, .627035, .6, .902026);
+
+    transform: translateX(84.386165%);
+  }
+
+  100% {
+    transform: translateX(160.277782%);
+  }
+}
+
+@keyframes secondary-indeterminate-scale {
+  0% {
+    animation-timing-function: cubic-bezier(.205028, .057051, .57661, .453971);
+
+    transform: scaleX(.08);
+  }
+
+  19.15% {
+    animation-timing-function: cubic-bezier(.152313, .196432, .648374, 1.004315);
+
+    transform: scaleX(.457104);
+  }
+
+  44.15% {
+    animation-timing-function: cubic-bezier(.257759, -.003163, .211762, 1.38179);
+
+    transform: scaleX(.72796);
+  }
+
+  100% {
+    transform: scaleX(.08);
+  }
+}
+
+@keyframes buffering {
+  to {
+    transform: translateX(-10px);
+  }
+}
+

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toggle - enableOnOffLabels</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../css/palettes/dark.class.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Toggle - enableOnOffLabels</ion-title>
+          <ion-buttons slot="end">
+            <ion-button id="popover-trigger">Options</ion-button>
+          </ion-buttons>
+          <ion-popover class="options-popover" trigger="popover-trigger">
+            <ion-list lines="none">
+              <ion-item id="dark-mode">
+                <ion-checkbox>Dark Mode</ion-checkbox>
+              </ion-item>
+            </ion-list>
+          </ion-popover>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-list>
+          <ion-item>
+            <ion-toggle enable-on-off-labels="true">Unchecked</ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle enable-on-off-labels="true" checked>Checked</ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle color="secondary" enable-on-off-labels="true">Secondary Unchecked</ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle color="secondary" enable-on-off-labels="true" checked>Secondary Checked</ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle color="success" enable-on-off-labels="true">Success Unchecked</ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle color="success" enable-on-off-labels="true" checked>Success Checked</ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle color="danger" enable-on-off-labels="true">Danger Unchecked</ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle color="danger" enable-on-off-labels="true" checked>Danger Checked</ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle color="tertiary" enable-on-off-labels="true">Tertiary Unchecked</ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle color="tertiary" enable-on-off-labels="true" checked>Tertiary Checked</ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle color="light" enable-on-off-labels="true">Light Unchecked</ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle color="light" enable-on-off-labels="true" checked>Light Checked</ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle color="medium" enable-on-off-labels="true">Medium Unchecked</ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle color="medium" enable-on-off-labels="true" checked>Medium Checked</ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle color="dark" enable-on-off-labels="true">Dark Unchecked</ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle color="dark" enable-on-off-labels="true" checked>Dark Checked</ion-toggle>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const darkModeCheckbox = document.querySelector('ion-checkbox');
+      darkModeCheckbox.addEventListener('ionChange', (ev) => {
+        document.documentElement.classList.toggle('ion-palette-dark');
+      });
+    </script>
+  </body>
+</html>

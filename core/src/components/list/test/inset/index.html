@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>List - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>List - Inset</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" color="light">
+        <ion-list inset>
+          <ion-item>
+            <ion-label>Text Items</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Text Items</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Text Items</ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ion-list inset>
+          <ion-list-header>
+            <ion-label>List Header</ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-label>Text Items</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Text Items</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Text Items</ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ion-list inset>
+          <ion-list-header>
+            <ion-label>List Header</ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-input label-placement="stacked" label="Stacked Inputs"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label-placement="stacked" label="Stacked Inputs"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label-placement="stacked" label="Stacked Inputs"></ion-input>
+          </ion-item>
+        </ion-list>
+
+        <ion-list inset>
+          <ion-item>
+            <ion-input label="Default Input"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input label-placement="stacked" label="Stacked Input"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Normal Select">
+              <ion-select-option>1</ion-select-option>
+              <ion-select-option>2</ion-select-option>
+              <ion-select-option>3</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label-placement="stacked" label="Stacked Select">
+              <ion-select-option>1</ion-select-option>
+              <ion-select-option>2</ion-select-option>
+              <ion-select-option>3</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+
+    <style>
+      ion-content {
+        background: #e5e5e5;
+      }
+    </style>
+  </body>
+</html>

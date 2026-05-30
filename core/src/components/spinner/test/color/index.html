@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Spinner - Color</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Spinner - Color</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content">
+        <ion-list>
+          <ion-item
+            ><ion-spinner color="primary" slot="start" name="lines"></ion-spinner><code>lines</code> (primary)</ion-item
+          >
+          <ion-item
+            ><ion-spinner color="secondary" slot="start" name="lines-small"></ion-spinner
+            ><code>lines-small</code> (secondary)</ion-item
+          >
+          <ion-item
+            ><ion-spinner color="tertiary" slot="start" name="circular"></ion-spinner
+            ><code>circular</code> (tertiary)</ion-item
+          >
+          <ion-item
+            ><ion-spinner color="success" slot="start" name="dots"></ion-spinner><code>dots</code> (success)</ion-item
+          >
+          <ion-item
+            ><ion-spinner color="warning" slot="start" name="bubbles"></ion-spinner
+            ><code>bubbles</code> (warning)</ion-item
+          >
+          <ion-item
+            ><ion-spinner color="danger" slot="start" name="circles"></ion-spinner
+            ><code>circles</code> (danger)</ion-item
+          >
+          <ion-item
+            ><ion-spinner color="dark" slot="start" name="crescent"></ion-spinner><code>crescent</code> (dark)</ion-item
+          >
+          <ion-item
+            ><ion-spinner color="medium" slot="start" name="lines" paused></ion-spinner><code>lines</code> (paused,
+            medium)</ion-item
+          >
+        </ion-list>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

@@ -1,0 +1,365 @@
+@import "../../themes/ionic.globals";
+@import "./checkbox.vars.scss";
+
+// Checkbox
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --size: Size of the checkbox icon
+   *
+   * @prop --checkbox-background: Background of the checkbox icon
+   * @prop --checkbox-background-checked: Background of the checkbox icon when checked
+   *
+   * @prop --border-color: Border color of the checkbox icon
+   * @prop --border-radius: Border radius of the checkbox icon
+   * @prop --border-width: Border width of the checkbox icon
+   * @prop --border-style: Border style of the checkbox icon
+   * @prop --border-color-checked: Border color of the checkbox icon when checked
+   *
+   * @prop --transition: Transition of the checkbox icon
+   *
+   * @prop --checkmark-color: Color of the checkbox checkmark when checked
+   * @prop --checkmark-width: Stroke width of the checkbox checkmark
+   */
+  --checkbox-background-checked: #{ion-color(primary, base)};
+  --border-color-checked: #{ion-color(primary, base)};
+  --checkmark-color: #{ion-color(primary, contrast)};
+  --transition: none;
+
+  display: inline-block;
+
+  position: relative;
+
+  cursor: pointer;
+
+  user-select: none;
+  z-index: $z-index-item-input;
+}
+
+:host(.in-item) {
+  flex: 1 1 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+/**
+ * Checkbox can be slotted
+ * in components such as item and
+ * toolbar which is why we do not
+ * limit the below behavior to just ion-item.
+ */
+:host([slot="start"]),
+:host([slot="end"]) {
+  // Reset the flex property when the checkbox
+  // is slotted to avoid growing the element larger
+  // than its content.
+  flex: initial;
+
+  width: auto;
+}
+
+:host(.ion-color) {
+  --checkbox-background-checked: #{current-color(base)};
+  --border-color-checked: #{current-color(base)};
+  --checkmark-color: #{current-color(contrast)};
+}
+
+.checkbox-wrapper {
+  display: flex;
+
+  flex-grow: 1;
+
+  align-items: center;
+  justify-content: space-between;
+
+  height: inherit;
+
+  cursor: inherit;
+}
+
+.label-text-wrapper {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+// Checkboxes that are not slotted inside an item and are not used with a
+// stacked label should have margins equal to those of the label.
+:host(.in-item) .label-text-wrapper,
+:host(.in-item:not(.checkbox-label-placement-stacked):not([slot])) .native-wrapper {
+  @include margin($checkbox-item-label-margin-top, null, $checkbox-item-label-margin-bottom, null);
+}
+
+:host(.in-item.checkbox-label-placement-stacked) .label-text-wrapper {
+  @include margin($checkbox-item-label-margin-top, null, $form-control-label-margin, null);
+}
+
+:host(.in-item.checkbox-label-placement-stacked) .native-wrapper {
+  @include margin(null, null, $checkbox-item-label-margin-bottom, null);
+}
+
+/**
+ * If no label text is placed into the slot
+ * then the element should be hidden otherwise
+ * there will be additional margins added.
+ */
+.label-text-wrapper-hidden {
+  display: none;
+}
+
+/**
+ * The native input must be hidden with display instead of visibility or 
+ * aria-hidden to avoid accessibility issues with nested interactive elements.
+ */
+input {
+  display: none;
+}
+
+.native-wrapper {
+  display: flex;
+
+  align-items: center;
+}
+
+.checkbox-icon {
+  @include border-radius(var(--border-radius));
+
+  position: relative;
+
+  width: var(--size);
+  height: var(--size);
+
+  transition: var(--transition);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  background: var(--checkbox-background);
+
+  box-sizing: border-box;
+}
+
+.checkbox-icon path {
+  fill: none;
+  stroke: var(--checkmark-color);
+  stroke-width: var(--checkmark-width);
+
+  opacity: 0;
+}
+
+// Checkbox Bottom Content
+// ----------------------------------------------------------------
+
+.checkbox-bottom {
+  @include padding(4px, null, null, null);
+
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: dynamic-font(12px);
+
+  white-space: normal;
+}
+
+:host(.checkbox-label-placement-stacked) .checkbox-bottom {
+  font-size: dynamic-font(16px);
+}
+
+// Checkbox Hint Text
+// ----------------------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is
+ * present on the checkbox. Otherwise the helper text should
+ * be shown.
+ */
+.checkbox-bottom .error-text {
+  display: none;
+
+  color: ion-color(danger, base);
+}
+
+.checkbox-bottom .helper-text {
+  display: block;
+
+  color: $text-color-step-300;
+}
+
+:host(.ion-touched.ion-invalid) .checkbox-bottom .error-text {
+  display: block;
+}
+
+:host(.ion-touched.ion-invalid) .checkbox-bottom .helper-text {
+  display: none;
+}
+
+// Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the checkbox in LTR and
+ * on the right in RTL.
+ */
+:host(.checkbox-label-placement-start) .checkbox-wrapper {
+  flex-direction: row;
+}
+
+:host(.checkbox-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the checkbox should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(null, $form-control-label-margin, null, 0);
+}
+
+// Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the checkbox in LTR and
+ * on the left in RTL.
+ */
+:host(.checkbox-label-placement-end) .checkbox-wrapper {
+  flex-direction: row-reverse;
+
+  justify-content: start;
+}
+
+/**
+ * The margin between the label and
+ * the checkbox should be on the start
+ * when the label sits at the end.
+ */
+:host(.checkbox-label-placement-end) .label-text-wrapper {
+  @include margin(null, 0, null, $form-control-label-margin);
+}
+
+// Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.checkbox-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the checkbox should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(null, $form-control-label-margin, null, 0);
+}
+
+/**
+ * Label is on the left of the checkbox in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.checkbox-label-placement-fixed) .label-text-wrapper {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+// Label Placement - Stacked
+// ----------------------------------------------------------------
+
+/**
+ * Label is on top of the checkbox.
+ */
+:host(.checkbox-label-placement-stacked) .checkbox-wrapper {
+  flex-direction: column;
+
+  text-align: center;
+}
+
+:host(.checkbox-label-placement-stacked) .label-text-wrapper {
+  @include transform(scale(#{$form-control-label-stacked-scale}));
+
+  /**
+   * The margin between the label and
+   * the checkbox should be on the bottom
+   * when the label sits at the top.
+   */
+  @include margin(null, 0, $form-control-label-margin, 0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the checkbox.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+:host(.checkbox-label-placement-stacked.checkbox-alignment-start) .label-text-wrapper {
+  @include transform-origin(start, top);
+}
+
+:host(.checkbox-label-placement-stacked.checkbox-alignment-center) .label-text-wrapper {
+  @include transform-origin(center, top);
+}
+
+// Justify Content
+// ---------------------------------------------
+
+:host(.checkbox-justify-space-between) .checkbox-wrapper {
+  justify-content: space-between;
+}
+
+:host(.checkbox-justify-start) .checkbox-wrapper {
+  justify-content: start;
+}
+
+:host(.checkbox-justify-end) .checkbox-wrapper {
+  justify-content: end;
+}
+
+// Align Items
+// ---------------------------------------------
+
+:host(.checkbox-alignment-start) .checkbox-wrapper {
+  align-items: start;
+}
+
+:host(.checkbox-alignment-center) .checkbox-wrapper {
+  align-items: center;
+}
+
+// Justify Content & Align Items
+// ---------------------------------------------
+
+// The checkbox should be displayed as block when either justify
+// or alignment is set; otherwise, these properties will have no
+// visible effect.
+:host(.checkbox-justify-space-between),
+:host(.checkbox-justify-start),
+:host(.checkbox-justify-end),
+:host(.checkbox-alignment-start),
+:host(.checkbox-alignment-center) {
+  display: block;
+}
+
+// Checked / Indeterminate Checkbox
+// ---------------------------------------------
+
+:host(.checkbox-checked) .checkbox-icon,
+:host(.checkbox-indeterminate) .checkbox-icon {
+  border-color: var(--border-color-checked);
+
+  background: var(--checkbox-background-checked);
+}
+
+:host(.checkbox-checked) .checkbox-icon path,
+:host(.checkbox-indeterminate) .checkbox-icon path {
+  opacity: 1;
+}
+
+// Disabled Checkbox
+// ---------------------------------------------
+
+:host(.checkbox-disabled) {
+  pointer-events: none;
+}

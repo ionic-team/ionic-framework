@@ -1,0 +1,10 @@
+@import "../../themes/ionic.globals";
+
+:host {
+  @include position(0, 0, 0, 0);
+
+  position: absolute;
+
+  contain: layout size style;
+  z-index: $z-index-page-container;
+}

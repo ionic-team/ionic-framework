@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - Card + Nav</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+  <body>
+    <ion-app>
+      <div class="ion-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Card</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <button id="open-modal">Open Modal</button>
+
+          <ion-modal trigger="open-modal" component="app-nav"></ion-modal>
+        </ion-content>
+      </div>
+    </ion-app>
+
+    <script>
+      const modal = document.querySelector('ion-modal');
+      const nav = document.querySelector('ion-nav');
+      modal.canDismiss = true;
+      modal.presentingElement = document.querySelector('.ion-page');
+    </script>
+
+    <script>
+      class AppNav extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <ion-content>
+            <ion-nav root="page-one"></ion-nav>
+          </ion-content>
+        `;
+        }
+      }
+      class PageOne extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Page One</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <h1>Page One</h1>
+            <ion-nav-link router-direction="forward" component="page-two">
+              <button id="go-page-two">Go to Page Two</button>
+            </ion-nav-link>
+          </ion-content>
+        `;
+        }
+      }
+      class PageTwo extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-back-button></ion-back-button>
+              </ion-buttons>
+              <ion-title>Page Two</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding page-two-content"></ion-content>
+        `;
+        }
+      }
+      customElements.define('page-one', PageOne);
+      customElements.define('page-two', PageTwo);
+      customElements.define('app-nav', AppNav);
+    </script>
+  </body>
+</html>

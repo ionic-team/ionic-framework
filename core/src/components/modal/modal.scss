@@ -1,0 +1,179 @@
+@import "./modal.vars";
+
+// Modals
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the modal content
+   *
+   * @prop --border-color: Border color of the modal content
+   * @prop --border-radius: Border radius of the modal content
+   * @prop --border-width: Border width of the modal content
+   * @prop --border-style: Border style of the modal content
+   *
+   * @prop --min-width: Minimum width of the modal
+   * @prop --width: Width of the modal
+   * @prop --max-width: Maximum width of the modal
+   *
+   * @prop --min-height: Minimum height of the modal
+   * @prop --height: Height of the modal
+   * @prop --max-height: Maximum height of the modal
+   *
+   * @prop --backdrop-opacity: Opacity of the backdrop
+   */
+  --width: 100%;
+  --min-width: auto;
+  --max-width: auto;
+  --height: 100%;
+  --min-height: auto;
+  --max-height: auto;
+  --overflow: hidden;
+  --border-radius: 0;
+  --border-width: 0;
+  --border-style: none;
+  --border-color: transparent;
+  --background: #{$background-color};
+  --box-shadow: none;
+  --backdrop-opacity: 0;
+
+  @include position(0, 0, 0, 0);
+
+  display: flex;
+  position: absolute;
+
+  align-items: center;
+  justify-content: center;
+
+  outline: none;
+
+  color: $modal-text-color;
+
+  contain: strict;
+}
+
+.modal-wrapper,
+ion-backdrop {
+  pointer-events: auto;
+}
+
+:host(.overlay-hidden) {
+  display: none;
+}
+
+.modal-wrapper,
+.modal-shadow {
+  @include border-radius(var(--border-radius));
+
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  background: var(--background);
+
+  box-shadow: var(--box-shadow);
+  overflow: var(--overflow);
+  z-index: 10;
+}
+
+.modal-shadow {
+  position: absolute;
+
+  background: transparent;
+}
+
+@media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+  :host {
+    --width: #{$modal-inset-width};
+    --height: #{$modal-inset-height-small};
+  }
+}
+
+@media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-large) {
+  :host {
+    --width: #{$modal-inset-width};
+    --height: #{$modal-inset-height-large};
+  }
+}
+
+// Sheet Modal
+// --------------------------------------------------
+
+.modal-handle {
+  @include position(5px, 0px, null, 0px);
+  @include border-radius(8px, 8px, 8px, 8px);
+  @include margin(null, auto, null, auto);
+
+  position: absolute;
+
+  width: 36px;
+  height: 5px;
+
+  /**
+   * This allows the handle to appear
+   * on top of user content in WebKit.
+   */
+  transform: translateZ(0);
+
+  border: 0;
+
+  background: var(--ion-color-step-350, var(--ion-background-color-step-350, #c0c0be));
+
+  cursor: pointer;
+
+  z-index: 11;
+
+  &::before {
+    /**
+     * Adds a 4px tap area to the perimeter
+     * of the handle.
+     */
+    @include padding(4px, 4px, 4px, 4px);
+
+    position: absolute;
+
+    width: 36px;
+    height: 5px;
+
+    transform: translate(-50%, -50%);
+
+    content: "";
+  }
+}
+
+/**
+ * Ensure that the sheet modal does not
+ * completely cover the content.
+ *
+ * --ion-modal-offset-top is an internal property set by modal.tsx
+ * with the resolved root safe-area-top pixel value. This decouples
+ * the height calculation from --ion-safe-area-top (which is zeroed
+ * for sheet modals to prevent header double-padding).
+ */
+:host(.modal-sheet) {
+  --height: calc(100% - (var(--ion-modal-offset-top, 0px) + 10px));
+}
+
+:host(.modal-sheet) .modal-wrapper,
+:host(.modal-sheet) .modal-shadow {
+  position: absolute;
+  bottom: 0;
+}
+
+// Sheet Modal - Scroll at all breakpoints
+// --------------------------------------------------
+
+:host(.modal-sheet.modal-no-expand-scroll) ion-footer {
+  position: absolute;
+  bottom: 0;
+
+  width: var(--width);
+}

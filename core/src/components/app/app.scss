@@ -1,0 +1,18 @@
+
+html.plt-mobile ion-app {
+  user-select: none;
+}
+
+/**
+ * This works around a WebKit issue
+ * where user-select: none was causing
+ * contenteditable to not be selectable,
+ * even though inputs and textareas are selectable.
+ */
+html.plt-mobile ion-app [contenteditable] {
+  user-select: text;
+}
+
+ion-app.force-statusbar-padding {
+  --ion-safe-area-top: 20px;
+}

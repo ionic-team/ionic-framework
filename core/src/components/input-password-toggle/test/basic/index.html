@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Input - Toggle Password</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+      }
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Input - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Default</h2>
+            <ion-input type="password" value="supersecurepassword" label="Password">
+              <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+            </ion-input>
+          </div>
+          <div class="grid-item">
+            <h2>Custom Icon</h2>
+            <ion-input type="password" value="supersecurepassword" label="Password">
+              <ion-input-password-toggle show-icon="trash" slot="end"></ion-input-password-toggle>
+            </ion-input>
+          </div>
+          <div class="grid-item">
+            <h2>Custom Mode/Color</h2>
+            <ion-input type="password" value="supersecurepassword" label="Password">
+              <ion-input-password-toggle
+                color="danger"
+                mode="ios"
+                show-icon="trash"
+                slot="end"
+              ></ion-input-password-toggle>
+            </ion-input>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

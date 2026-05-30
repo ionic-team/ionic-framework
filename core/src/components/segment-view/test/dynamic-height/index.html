@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Segment View - Dynamic Height</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      ion-segment-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: fit-content;
+      }
+
+      ion-segment-content:nth-of-type(1) {
+        background: lightpink;
+      }
+      ion-segment-content:nth-of-type(2) {
+        background: lightblue;
+      }
+      ion-segment-content:nth-of-type(3) {
+        background: lightgreen;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Segment View - Dynamic Height</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-segment>
+          <ion-segment-button value="first" content-id="first">
+            <ion-label>First</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="second" content-id="second">
+            <ion-label>Second</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="third" content-id="third">
+            <ion-label>Third</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view>
+          <ion-segment-content id="first">
+            Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
+            quaeritis. Summus brains sit, morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris.
+            Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi dentevil vultus comedat
+            cerebella viventium. Qui animated corpse, cricket bat max brucks terribilem incessu zomby. The voodoo
+            sacerdos flesh eater, suscitat mortuos comedere carnem virus. Zonbi tattered for solum oculi eorum defunctis
+            go lum cerebro. Nescio brains an Undead zombies. Sicut malus putrid voodoo horror. Nigh tofth eliv
+          </ion-segment-content>
+          <ion-segment-content id="second">
+            <ion-input value="" label="Email"></ion-input>
+          </ion-segment-content>
+          <ion-segment-content id="third">
+            <ion-img class="img-part" src="https://picsum.photos/200/300"></ion-img>
+          </ion-segment-content>
+        </ion-segment-view>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

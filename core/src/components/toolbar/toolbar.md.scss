@@ -1,0 +1,69 @@
+@import "./toolbar";
+@import "./toolbar.md.vars";
+
+// Material Design Toolbar
+// --------------------------------------------------
+
+:host {
+  --background: #{$toolbar-md-background};
+  --color: #{$toolbar-md-color};
+  --border-color: #{$toolbar-md-border-color};
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+  --min-height: 56px;
+}
+
+
+// Toolbar: Content
+// --------------------------------------------------
+
+.toolbar-content {
+  flex: 1;
+  order: map-get($toolbar-order-md, content);
+
+  min-width: 0;
+  max-width: 100%;
+}
+
+// Material Design Toolbar Buttons
+// --------------------------------------------------
+
+// Style the first slot with additional margin start
+// this only ever gets added to the first start slot buttons
+::slotted(.buttons-first-slot) {
+  @include margin-horizontal(4px, null);
+}
+
+// Style the last slot with additional margin end
+// this is added to the end, primary, or secondary slot
+// whichever it finds first, and the first one it finds
+// if multiple of the same name are found
+::slotted(.buttons-last-slot) {
+  @include margin-horizontal(null, 4px);
+}
+
+
+// Material Design Toolbar Slot Placement
+// --------------------------------------------------
+
+::slotted([slot="start"]) {
+  order: map-get($toolbar-order-md, slot-start);
+}
+
+::slotted([slot="secondary"]) {
+  order: map-get($toolbar-order-md, slot-secondary);
+}
+
+::slotted([slot="primary"]) {
+  order: map-get($toolbar-order-md, slot-primary);
+
+  text-align: end;
+}
+
+::slotted([slot="end"]) {
+  order: map-get($toolbar-order-md, slot-end);
+
+  text-align: end;
+}

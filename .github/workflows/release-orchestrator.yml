@@ -1,0 +1,81 @@
+name: 'Release - Ionic Framework'
+
+on:
+  schedule:
+    # Run every Monday-Friday
+    # at 6:00 UTC (6:00 am UTC)
+    - cron: '00 06 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      release-type:
+        description: 'Which Ionic release workflow should run?'
+        required: true
+        type: choice
+        default: dev
+        options:
+          - dev
+          - production
+      version:
+        description: 'Which version should be published? (Only for production releases)'
+        required: false
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+          - prepatch
+          - preminor
+          - premajor
+          - prerelease
+      tag:
+        description: 'Which npm tag should this be published to? (Only for production releases)'
+        required: false
+        type: choice
+        default: latest
+        options:
+          - latest
+          - next
+      preid:
+        description: 'Which prerelease identifier should be used? (Only for production releases)'
+        required: false
+        type: choice
+        default: ''
+        options:
+          - ''
+          - alpha
+          - beta
+          - rc
+          - next
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  run-nightly:
+    if: ${{ github.event_name == 'schedule' }}
+    permissions:
+      contents: read
+      id-token: write
+    uses: ./.github/workflows/nightly.yml
+    secrets: inherit
+
+  run-dev:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.release-type == 'dev' }}
+    permissions:
+      contents: read
+      id-token: write
+    uses: ./.github/workflows/dev-build.yml
+    secrets: inherit
+
+  run-production:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.release-type == 'production' }}
+    permissions:
+      contents: write
+      id-token: write
+    uses: ./.github/workflows/release.yml
+    secrets: inherit
+    with:
+      version: ${{ inputs.version }}
+      tag: ${{ inputs.tag }}
+      preid: ${{ inputs.preid }}

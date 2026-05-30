@@ -1,0 +1,487 @@
+@import "../../themes/ionic.globals";
+
+// Datetime
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: The primary background of the datetime component.
+   * @prop --background-rgb: The primary background of the datetime component in RGB format.
+   * @prop --title-color: The text color of the title.
+   *
+   * @prop --wheel-highlight-background: The background of the highlight under the selected
+   * item when using a wheel style layout, or in the month/year picker for grid style layouts.
+   * @prop --wheel-highlight-border-radius: The border radius of the highlight under the selected
+   * item when using a wheel style layout, or in the month/year picker for grid style layouts.
+   * @prop --wheel-fade-background-rgb: The color of the gradient covering non-selected items
+   * when using a wheel style layout, or in the month/year picker for grid style layouts. Must
+   * be in RGB format, e.g. `255, 255, 255`.
+   */
+
+  display: flex;
+
+  flex-flow: column;
+
+  background: var(--background);
+
+  overflow: hidden;
+}
+
+:host(.datetime-size-fixed) {
+  width: auto;
+  height: auto;
+}
+
+:host(.datetime-size-fixed:not(.datetime-prefer-wheel)) {
+  max-width: 350px;
+}
+
+/**
+ * This ensures that the picker is appropriately
+ * sized and never truncates the text.
+ */
+:host(.datetime-size-fixed.datetime-prefer-wheel) {
+  min-width: 350px;
+  max-width: max-content;
+}
+
+:host(.datetime-size-cover) {
+  width: 100%;
+}
+
+:host .calendar-body,
+:host .datetime-year {
+  opacity: 0;
+}
+
+:host(:not(.datetime-ready)) .datetime-year {
+  position: absolute;
+  pointer-events: none;
+}
+
+:host(.datetime-ready) .calendar-body {
+  opacity: 1;
+}
+
+:host(.datetime-ready) .datetime-year {
+  display: none;
+
+  opacity: 1;
+}
+/**
+ * Changing the physical order of the
+ * picker columns in the DOM is added
+ * work, so we just use `order` instead.
+ *
+ * The picker automatically configures
+ * the text alignment, so when switching
+ * the order we need to manually switch
+ * the text alignment too.
+ */
+:host .wheel-order-year-first .day-column {
+ order: 3;
+
+ text-align: end;
+}
+
+:host .wheel-order-year-first .month-column {
+  order: 2;
+
+  text-align: end;
+}
+
+:host .wheel-order-year-first .year-column {
+  order: 1;
+
+  text-align: start;
+}
+
+// Calendar
+// -----------------------------------
+
+/**
+ * This allows the calendar to take
+ * up 100% of the remaining height.
+ * On iOS, if there are more than
+ * 5 rows of dates, the dates should
+ * be resized to fit into this
+ * container.
+ */
+:host .datetime-calendar,
+:host .datetime-year {
+  display: flex;
+
+  flex: 1 1 auto;
+
+  flex-flow: column;
+}
+
+:host(.show-month-and-year) .datetime-year {
+  display: flex;
+}
+
+:host(.show-month-and-year) .calendar-next-prev,
+:host(.show-month-and-year) .calendar-days-of-week,
+:host(.show-month-and-year) .calendar-body,
+:host(.show-month-and-year) .datetime-time {
+  display: none;
+}
+
+:host(.month-year-picker-open) .datetime-footer {
+  display: none;
+}
+
+:host(.datetime-disabled) {
+  pointer-events: none;
+
+  .calendar-days-of-week,
+  .datetime-time {
+    opacity: 0.4;
+  }
+}
+
+:host(.datetime-readonly) {
+  pointer-events: none;
+
+  /**
+   * Allow user to navigate months
+   * while in readonly mode
+   */
+  .calendar-action-buttons,
+  .calendar-body,
+  .datetime-year {
+    pointer-events: initial;
+  }
+
+  /**
+   * Disabled buttons should have full opacity
+   * in readonly mode
+   */
+
+  .calendar-day[disabled]:not(.calendar-day-constrained),
+  .datetime-action-buttons ion-button[disabled] {
+    opacity: 1;
+  }
+}
+
+/**
+ * Title should not wrap
+ * to the next line and should
+ * show ellipsis instead.
+ */
+:host .datetime-header .datetime-title {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+// Calendar / Header / Action Buttons
+// -----------------------------------
+
+:host .datetime-action-buttons.has-clear-button {
+  width: 100%;
+}
+
+:host .datetime-action-buttons ion-buttons {
+  display: flex;
+
+  justify-content: space-between;
+}
+
+/**
+ * The confirm and clear buttons are grouped in a
+ * container so that they appear on the end opposite
+ * of the cancel button.
+ * We use display: flex so that the
+ * wrapper only takes up as much
+ * height as it needs.
+ */
+.datetime-action-buttons .datetime-action-buttons-container {
+  display: flex;
+}
+
+/**
+ * Date/Year button should be on
+ * the opposite side of the component
+ * as the Next/Prev buttons
+ */
+:host .calendar-action-buttons {
+  display: flex;
+
+  justify-content: space-between;
+}
+
+:host .calendar-action-buttons ion-button {
+  --background: transparent;
+}
+
+// Calendar / Header / Days of Week
+// -----------------------------------
+:host .calendar-days-of-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+
+  text-align: center;
+}
+
+.calendar-days-of-week .day-of-week {
+  /**
+   * Center the days of the week within each cell
+   * if the container size is changed as a result
+   * of Dynamic Type.
+   */
+  @include margin(0, auto);
+}
+
+// Calendar / Body
+// -----------------------------------
+:host .calendar-body {
+
+  /**
+   * Show all calendar months inline
+   * and allow them to take up 100% of
+   * the free space. Do not use CSS Grid
+   * here as there are issues with nested grid
+   * on older browsers.
+   */
+  display: flex;
+
+  flex-grow: 1;
+
+  scroll-snap-type: x mandatory;
+
+  /**
+   * Need to explicitly set overflow-y: hidden
+   * for older implementations of scroll snapping.
+   */
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  // Hide scrollbars on Firefox
+  scrollbar-width: none;
+
+  /**
+   * Hide blue outline on calendar body
+   * when it is focused.
+   */
+  outline: none;
+}
+
+:host .calendar-body .calendar-month {
+  display: flex;
+
+  flex-flow: column;
+
+  /**
+   * Swiping should snap to at
+   * most one month at a time.
+   */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+
+  flex-shrink: 0;
+
+  width: 100%;
+}
+
+:host .calendar-body .calendar-month-disabled {
+  /**
+   * Disables swipe gesture snapping for scroll-snap containers
+   */
+  scroll-snap-align: none;
+}
+
+/**
+ * Hide scrollbars on Chrome and Safari
+ */
+:host .calendar-body::-webkit-scrollbar {
+  display: none;
+}
+
+:host .calendar-body .calendar-month-grid {
+  /**
+   * Create 7 columns for
+   * 7 days in a week.
+   */
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+:host .calendar-day-wrapper {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  // Adding a min width and min height allows
+  // it to shrink smaller than its content
+  // which keeps the calendar day highlight
+  // larger while letting the grid items shrink
+  min-width: 0;
+
+  min-height: 0;
+
+  overflow: visible;
+}
+
+/**
+ * Center the day text vertically
+ * and horizontally within its grid cell.
+ */
+.calendar-day {
+  @include border-radius(50%);
+  @include padding(0px);
+  @include margin(0px);
+
+  display: flex;
+
+  position: relative;
+
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  outline: none;
+
+  background: none;
+  color: currentColor;
+
+  font-family: $font-family-base;
+
+  cursor: pointer;
+
+  appearance: none;
+
+  z-index: 0;
+}
+
+:host .calendar-day[disabled] {
+  pointer-events: none;
+
+  opacity: 0.4;
+}
+
+
+.calendar-day:not(.calendar-day-adjacent-day):focus {
+  background: current-color(base, 0.2);
+
+  box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
+}
+
+// Time / Header
+// -----------------------------------
+
+:host .datetime-time {
+  display: flex;
+
+  justify-content: space-between;
+}
+
+:host(.datetime-presentation-time) .datetime-time {
+  @include padding(0);
+}
+
+:host ion-popover {
+  --height: 200px;
+}
+
+:host .time-header {
+  display: flex;
+
+  align-items: center;
+}
+
+:host .time-body {
+  @include border-radius(8px);
+  @include padding(6px, 12px, 6px, 12px);
+
+  display: flex;
+
+  border: none;
+
+  background: var(--ion-color-step-300, var(--ion-background-color-step-300, #edeef0));
+
+  color: $text-color;
+
+  font-family: inherit;
+  font-size: inherit;
+
+  cursor: pointer;
+
+  appearance: none;
+}
+
+:host .time-body-active {
+  color: current-color(base);
+}
+
+:host(.in-item) {
+  position: static;
+}
+
+// Year Picker
+// -----------------------------------
+:host(.show-month-and-year) .calendar-action-buttons .calendar-month-year-toggle {
+  color: #{current-color(base)};
+}
+
+.calendar-month-year {
+  min-width: 0;
+}
+
+.calendar-month-year-toggle {
+  @include text-inherit();
+
+  position: relative;
+
+  border: 0;
+
+  outline: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  z-index: 1;
+
+  &::after {
+    @include button-state();
+
+    transition: opacity 15ms linear, background-color 15ms linear;
+
+    z-index: -1;
+  }
+
+  &.ion-focused::after {
+    background: currentColor;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
+
+.calendar-month-year-toggle ion-icon {
+  @include padding(0, 0, 0, 4px);
+
+  flex-shrink: 0;
+}
+
+.calendar-month-year-toggle #toggle-wrapper {
+  display: inline-flex;
+
+  align-items: center;
+}
+
+// Picker Custom Variables
+// -----------------------------------
+
+ion-picker {
+  --highlight-background: var(--wheel-highlight-background);
+  --highlight-border-radius: var(--wheel-highlight-border-radius);
+  --fade-background-rgb: var(--wheel-fade-background-rgb);
+}

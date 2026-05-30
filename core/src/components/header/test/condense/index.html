@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Header - Condense</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      /**
+       * The large title should not have safe
+       * are applied since it is in the content.
+       */
+      :root {
+        --ion-safe-area-top: 40px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <div class="ion-page">
+        <ion-header translucent="true" id="smallTitleHeader">
+          <div style="position: absolute; left: 0; right: 0; bottom: 0">
+            <img style="transform: rotate(180deg)" src="/src/components/header/test/img.jpg" />
+          </div>
+          <ion-toolbar>
+            <ion-title>Header</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content fullscreen="true">
+          <ion-header collapse="condense" id="largeTitleHeader">
+            <ion-toolbar>
+              <ion-title size="large">Header</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <div class="ion-padding">
+            <h1>Content</h1>
+
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas blandit, justo vitae rhoncus porttitor,
+              massa elit molestie nisl, ut tincidunt orci enim ac ante. Vestibulum tincidunt dignissim elit. Morbi
+              cursus hendrerit turpis, ut egestas tortor pulvinar sit amet. Interdum et malesuada fames ac ante ipsum
+              primis in faucibus. Phasellus faucibus consequat purus vel mollis. Ut ultricies elit nunc. Quisque
+              ultrices turpis vel augue auctor accumsan. Donec bibendum at nisi vel finibus. Fusce id imperdiet odio.
+              Morbi orci ipsum, imperdiet ut iaculis sit amet, suscipit vulputate felis. Nullam arcu leo, volutpat eu
+              porttitor sed, fringilla et arcu. Pellentesque ac libero sapien. Quisque id dui velit. Mauris et pretium
+              tortor.
+            </p>
+            <p>
+              Ut ultricies id augue vel aliquam. Etiam ornare finibus nisl, nec egestas urna. Nam pellentesque libero
+              nec justo tristique lacinia. In sit amet gravida metus, ac tincidunt mauris. Fusce sit amet tempus turpis.
+              Nulla ligula nunc, vestibulum quis quam in, feugiat aliquet nibh. Quisque in ante non nulla luctus gravida
+              vel at lacus. Vivamus erat magna, elementum et dignissim nec, posuere eu ante. Praesent elementum, arcu
+              scelerisque venenatis sodales, turpis nulla aliquam urna, id hendrerit est orci et purus. Duis sem ipsum,
+              imperdiet eu elit id, tincidunt tempus sapien. Praesent tincidunt, sapien sed rhoncus euismod, lectus
+              velit ornare nunc, dapibus varius turpis leo ut magna.
+            </p>
+            <p>
+              Nam quis quam id ante mattis pulvinar non sed mauris. Donec tempor sed nulla at semper. Vivamus ac nunc
+              bibendum, ullamcorper lacus quis, ornare massa. Cras gravida nibh risus, id sollicitudin eros ultricies
+              non. Integer velit massa, suscipit tincidunt rhoncus ut, lacinia et nisl. Maecenas volutpat ipsum blandit
+              sollicitudin lobortis. Suspendisse potenti. Cras non mi non arcu varius dapibus. Suspendisse maximus eget
+              justo a lobortis. Donec nulla ipsum, efficitur eget velit eget, varius rutrum quam. Nulla metus risus,
+              accumsan a tellus ac, faucibus blandit quam. Donec luctus, nisl ac ultricies ornare, nunc elit finibus
+              magna, id elementum ante urna congue ex. Cras condimentum nisi sollicitudin tortor vestibulum luctus.
+              Curabitur non ipsum et ex vestibulum congue.
+            </p>
+            <p>
+              Maecenas rhoncus elit ut consectetur faucibus. Etiam sed sem sed mauris condimentum viverra sit amet at
+              nibh. Mauris bibendum at purus a cursus. Suspendisse potenti. Donec vel lacus ac odio euismod lacinia id
+              in urna. Donec commodo ipsum augue, at bibendum ex convallis suscipit. Nulla ac rhoncus odio. Aenean
+              elementum est nec arcu ultricies dignissim.
+            </p>
+            <p>
+              Sed tincidunt bibendum massa, egestas bibendum est imperdiet vitae. Fusce dignissim consectetur ante a
+              fermentum. Morbi suscipit turpis sapien. Suspendisse eleifend sapien eget nunc mattis mattis. Phasellus
+              rhoncus sodales libero a imperdiet. Nam in vulputate lectus. Proin accumsan enim non nibh sagittis
+              ultricies. Nullam vitae ultricies nunc. Nullam ultrices dolor nec vehicula posuere.
+            </p>
+          </div>
+        </ion-content>
+        <ion-footer translucent="true">
+          <ion-toolbar>
+            <ion-title>Footer</ion-title>
+          </ion-toolbar>
+        </ion-footer>
+      </div>
+    </ion-app>
+  </body>
+</html>

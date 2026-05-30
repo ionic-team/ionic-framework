@@ -1,0 +1,96 @@
+@import "../../themes/ionic.globals";
+
+
+// Label
+// --------------------------------------------------
+
+:host-context(.item) {
+  /**
+   * @prop --color: Color of the label. This property is only available when using `ion-label` inside of an `ion-item`.
+   */
+  --color: initial;
+
+  display: block;
+
+  color: var(--color);
+
+  font-family: $font-family-base;
+  font-size: inherit;
+
+  text-overflow: ellipsis;
+
+  box-sizing: border-box;
+}
+
+:host(.ion-color) {
+  color: current-color(base);
+}
+
+:host(.ion-text-nowrap) {
+  overflow: hidden;
+}
+
+:host-context(.item-interactive-disabled:not(.item-multiple-inputs)) {
+  cursor: default;
+  opacity: .3;
+  pointer-events: none;
+}
+
+:host-context(.item-input) {
+  flex: initial;
+
+  max-width: 200px;
+  pointer-events: none;
+}
+
+:host-context(.item-textarea) {
+  align-self: baseline;
+}
+
+// Overflow hidden is required for the proper
+// margins between skeleton text elements
+:host-context(.item-skeleton-text) {
+  overflow: hidden;
+}
+
+// Fixed Inputs
+// --------------------------------------------------
+
+:host(.label-fixed) {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+// Stacked & Floating Inputs
+// --------------------------------------------------
+
+:host(.label-stacked),
+:host(.label-floating) {
+  @include margin(null, null, 0, null);
+
+  align-self: stretch;
+
+  width: auto;
+  max-width: 100%;
+}
+
+:host(.label-no-animate.label-floating) {
+  transition: none;
+}
+
+// Headings
+// --------------------------------------------------
+
+::slotted(*) h1,
+::slotted(*) h2,
+::slotted(*) h3,
+::slotted(*) h4,
+::slotted(*) h5,
+::slotted(*) h6 {
+  text-overflow: inherit;
+
+  overflow: inherit;
+}

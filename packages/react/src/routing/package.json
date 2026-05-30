@@ -1,0 +1,8 @@
+{
+  "name": "@ionic/react/routing",
+  "version": "5.0.1",
+  "module": "index.mjs",
+  "main": "index.js",
+  "typings": "../dist/types/routing/index.d.ts",
+  "private": true
+}

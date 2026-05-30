@@ -1,0 +1,101 @@
+@import "../themes/ionic.globals.ios.scss";
+
+// Slides
+// --------------------------------------------------
+
+.swiper {
+
+  // These values are the same for iOS and MD
+  // We just do not add a .md or .ios class beforehand
+  // so the styles are easier to override by the user.
+  --bullet-background: $text-color-step-800;
+  --bullet-background-active: ion-color(primary, base);
+  --progress-bar-background: rgba($text-color-rgb, .25);
+  --progress-bar-background-active: ion-color(primary, shade);
+  --scroll-bar-background: rgba($text-color-rgb, .1);
+  --scroll-bar-background-active: rgba($text-color-rgb, .5);
+  /**
+   * @prop --bullet-background: Background of the pagination bullets
+   * @prop --bullet-background-active: Background of the active pagination bullet
+   *
+   * @prop --progress-bar-background: Background of the pagination progress-bar
+   * @prop --progress-bar-background-active: Background of the active pagination progress-bar
+   *
+   * @prop --scroll-bar-background: Background of the pagination scroll-bar
+   * @prop --scroll-bar-background-active: Background of the active pagination scroll-bar
+   */
+  display: block;
+
+  user-select: none;
+}
+
+// Pagination Bullets
+// --------------------------------------------------
+
+.swiper .swiper-pagination-bullet {
+  background: var(--bullet-background);
+}
+
+.swiper .swiper-pagination-bullet-active {
+  background: var(--bullet-background-active);
+}
+
+
+// Pagination Progress Bar
+// --------------------------------------------------
+
+.swiper .swiper-pagination-progressbar {
+  background: var(--progress-bar-background);
+}
+
+.swiper .swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+  background: var(--progress-bar-background-active);
+}
+
+// Scrollbar
+// --------------------------------------------------
+
+.swiper .swiper-scrollbar {
+  background: var(--scroll-bar-background);
+}
+
+.swiper .swiper-scrollbar-drag {
+  background: var(--scroll-bar-background-active);
+}
+
+// Slide
+// --------------------------------------------------
+
+.swiper .slide-zoom {
+  display: block;
+
+  width: 100%;
+
+  text-align: center;
+}
+
+.swiper .swiper-slide {
+
+  // Center slide text vertically
+  display: flex;
+  position: relative;
+
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  font-size: 18px;
+
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.swiper .swiper-slide img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+}

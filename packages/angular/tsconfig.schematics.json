@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowUnreachableCode": false,
+    "lib": ["es2017", "dom"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "pretty": true,
+    "rootDir": "src/schematics",
+    "target": "es2017",
+    "outDir": "dist/schematics"
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/schematics/**/*.ts"]
+}

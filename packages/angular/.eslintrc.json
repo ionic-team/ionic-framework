@@ -1,0 +1,30 @@
+{
+  "root": true,
+  "ignorePatterns": ["test/**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.json"],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "@ionic/eslint-config/recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "rules": {
+        "@typescript-eslint/consistent-type-imports": "off",
+        "@angular-eslint/component-class-suffix": "off",
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "ion",
+            "style": "kebab-case"
+          }
+        ]
+      }
+    }
+  ]
+}

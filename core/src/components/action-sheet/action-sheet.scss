@@ -1,0 +1,239 @@
+@import "./action-sheet.vars";
+
+// Action Sheet
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the action sheet group
+   * @prop --color: Color of the action sheet text
+   *
+   * @prop --min-width: Minimum width of the action sheet
+   * @prop --width: Width of the action sheet
+   * @prop --max-width: Maximum width of the action sheet
+   *
+   * @prop --min-height: Minimum height of the action sheet
+   * @prop --height: height of the action sheet
+   * @prop --max-height: Maximum height of the action sheet
+   *
+   * @prop --backdrop-opacity: Opacity of the backdrop
+   *
+   * @prop --button-background: Background of the action sheet button
+   * @prop --button-background-activated: Background of the action sheet button when pressed. Note: setting this will interfere with the Material Design ripple.
+   * @prop --button-background-activated-opacity: Opacity of the action sheet button background when pressed
+   * @prop --button-background-hover: Background of the action sheet button on hover
+   * @prop --button-background-hover-opacity: Opacity of the action sheet button background on hover
+   * @prop --button-background-focused: Background of the action sheet button when tabbed to
+   * @prop --button-background-focused-opacity: Opacity of the action sheet button background when tabbed to
+   * @prop --button-background-selected: Background of the selected action sheet button
+   * @prop --button-background-selected-opacity: Opacity of the selected action sheet button background
+   *
+   * @prop --button-color: Color of the action sheet button
+   * @prop --button-color-activated: Color of the action sheet button when pressed
+   * @prop --button-color-hover: Color of the action sheet button on hover
+   * @prop --button-color-focused: Color of the action sheet button when tabbed to
+   * @prop --button-color-selected: Color of the selected action sheet button
+   * @prop --button-color-disabled: Color of the selected action sheet button when disabled
+   */
+  --color: initial;
+  --button-color-activated: var(--button-color);
+  --button-color-focused: var(--button-color);
+  --button-color-hover: var(--button-color);
+  --button-color-selected: var(--button-color);
+  --min-width: auto;
+  --width: #{$action-sheet-width};
+  --max-width: #{$action-sheet-max-width};
+  --min-height: auto;
+  --height: auto;
+  --max-height: calc(100% - (var(--ion-safe-area-top) + var(--ion-safe-area-bottom)));
+
+  @include font-smoothing();
+  @include position(0, 0, 0, 0);
+
+  display: block;
+  position: fixed;
+
+  outline: none;
+
+  font-family: $font-family-base;
+
+  touch-action: none;
+  user-select: none;
+  z-index: $z-index-overlay;
+}
+
+:host(.overlay-hidden) {
+  display: none;
+}
+
+.action-sheet-wrapper {
+  @include position(null, 0, 0, 0);
+  @include transform(translate3d(0, 100%, 0));
+
+  display: block;
+  position: absolute;
+
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  height: var(--height);
+  min-height: var(--min-height);
+  max-height: var(--max-height);
+
+  z-index: $z-index-overlay-wrapper;
+  pointer-events: none;
+}
+
+.action-sheet-button {
+  display: block;
+  position: relative;
+
+  width: 100%;
+
+  border: 0;
+
+  outline: none;
+
+  background: var(--button-background);
+  color: var(--button-color);
+
+  font-family: inherit;
+
+  overflow: hidden;
+}
+
+.action-sheet-button:disabled {
+  color: var(--button-color-disabled);
+
+  opacity: 0.4;
+}
+
+.action-sheet-button-inner {
+  display: flex;
+
+  position: relative;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 1;
+}
+
+.action-sheet-container {
+  display: flex;
+
+  flex-flow: column;
+  justify-content: flex-end;
+
+  height: 100%;
+
+  /* Fallback for browsers that do not support dvh */
+  max-height: calc(100vh - (var(--ion-safe-area-top, 0) + var(--ion-safe-area-bottom, 0)));
+  max-height: calc(100dvh - (var(--ion-safe-area-top, 0) + var(--ion-safe-area-bottom, 0)));
+}
+
+.action-sheet-group {
+  flex-shrink: 2;
+  overscroll-behavior-y: contain;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  pointer-events: all;
+
+  background: var(--background);
+}
+
+/**
+  * Scrollbars on mobile devices will be hidden.
+  * Users can still scroll the content by swiping.
+  * If a user has a fine pointing device, such as a
+  * mouse or trackpad, then scrollbars will be
+  * visible. This allows users to scroll the
+  * content with their pointing device.
+  * Otherwise, the user would have to use the
+  * keyboard to navigate through the options.
+  * This may not be intuitive for users who
+  * are not familiar with keyboard navigation.
+  */
+@media (any-pointer: coarse) {
+  .action-sheet-group::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.action-sheet-group-cancel {
+  flex-shrink: 0;
+
+  overflow: hidden;
+}
+
+
+// Action Sheet: States
+// --------------------------------------------------
+
+.action-sheet-button::after {
+  @include button-state();
+}
+
+
+// Action Sheet: Selected
+// --------------------------------------------------
+
+.action-sheet-selected {
+  color: var(--button-color-selected);
+
+  &::after {
+    background: var(--button-background-selected);
+
+    opacity: var(--button-background-selected-opacity);
+  }
+}
+
+
+// Action Sheet: Activated
+// --------------------------------------------------
+
+.action-sheet-button.ion-activated {
+  color: var(--button-color-activated);
+
+  &::after {
+    background: var(--button-background-activated);
+
+    opacity: var(--button-background-activated-opacity);
+  }
+}
+
+
+// Action Sheet: Focused
+// --------------------------------------------------
+
+.action-sheet-button.ion-focused {
+  color: var(--button-color-focused);
+
+  &::after {
+    background: var(--button-background-focused);
+
+    opacity: var(--button-background-focused-opacity);
+  }
+}
+
+// Action Sheet: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  .action-sheet-button:not(:disabled):hover {
+    color: var(--button-color-hover);
+
+    &::after {
+      background: var(--button-background-hover);
+
+      opacity: var(--button-background-hover-opacity);
+    }
+  }
+}

@@ -1,0 +1,234 @@
+@import "./segment-button";
+@import "./segment-button.ios.vars";
+
+// iOS Segment Button
+// --------------------------------------------------
+
+:host {
+  --background: #{$segment-button-ios-background};
+  --background-checked: #{$segment-button-ios-background-checked};
+  --background-hover: #{$segment-button-ios-background-hover};
+  --background-hover-opacity: 0;
+  --background-focused: none;
+  --background-focused-opacity: 0;
+  --border-radius: #{$segment-button-ios-border-radius};
+  --border-width: #{$segment-button-ios-border-width};
+  --border-color: #{$segment-button-ios-border-color};
+  --border-style: solid;
+  --indicator-box-shadow: #{$segment-button-ios-box-shadow-checked};
+  --indicator-color: #{$segment-button-ios-indicator-color};
+  --indicator-height: 100%;
+  --indicator-transition: #{$segment-button-ios-transition-animated};
+  --indicator-transform: none;
+  --transition: #{$segment-button-ios-transition};
+  --padding-top: 0;
+  --padding-end: 13px;
+  --padding-bottom: 0;
+  --padding-start: 13px;
+
+  @include margin($segment-button-ios-margin, null, $segment-button-ios-margin, null);
+
+  position: relative;
+
+  flex-direction: row;
+
+  min-width: #{$segment-button-ios-min-width};
+
+  min-height: #{$segment-button-ios-min-height};
+
+  // Necessary for the z-index to work properly
+  transform: translate3d(0, 0, 0);
+
+  font-size: #{$segment-button-ios-font-size};
+
+  font-weight: 450;
+
+  line-height: #{$segment-button-ios-line-height};
+}
+
+
+// Segment Button: Borders
+// --------------------------------------------------
+
+:host::before {
+  @include margin(5px, 0);
+
+  transition: 160ms opacity ease-in-out;
+
+  transition-delay: 100ms;
+
+  border-left: var(--border-width) var(--border-style) var(--border-color);
+
+  content: "";
+  opacity: 1;
+
+  will-change: opacity;
+}
+
+:host(:first-of-type)::before {
+  border-left-color: transparent;
+}
+
+
+// Segment Button: Disabled
+// --------------------------------------------------
+
+:host(.segment-button-disabled) {
+  opacity: $segment-button-ios-opacity-disabled;
+}
+
+
+// Segment Button: Icon
+// --------------------------------------------------
+
+::slotted(ion-icon) {
+  font-size: $segment-button-ios-icon-size;
+}
+
+
+// Segment Button: Layout
+// --------------------------------------------------
+
+// Layout: icon start
+:host(.segment-button-layout-icon-start) ::slotted(ion-label) {
+  @include margin-horizontal(2px, 0);
+}
+
+// Layout: icon end
+:host(.segment-button-layout-icon-end) ::slotted(ion-label) {
+  @include margin-horizontal(0, 2px);
+}
+
+
+// Segment Button: Checked Indicator
+// --------------------------------------------------
+
+.segment-button-indicator {
+  @include padding(null, $segment-button-ios-margin);
+  @include position(0, 0, 0, 0);
+}
+
+.segment-button-indicator-background {
+  @include border-radius(var(--border-radius));
+
+  background: var(--indicator-color);
+}
+
+.segment-button-indicator-background {
+  transition: var(--indicator-transition);
+}
+
+
+// Segment Button: Checked Borders
+// --------------------------------------------------
+
+:host(.segment-button-checked)::before,
+:host(.segment-button-after-checked)::before {
+  opacity: 0;
+}
+
+
+// Segment Button: Checked
+// --------------------------------------------------
+
+:host(.segment-button-checked) {
+  z-index: -1;
+}
+
+
+// Segment: States
+// --------------------------------------------------
+
+:host(.segment-button-activated) {
+  --indicator-transform: scale(0.95);
+}
+
+:host(.ion-focused) .button-native {
+  opacity: $segment-button-ios-opacity-focused;
+}
+
+@media (any-hover: hover) {
+  // Default Segment, Hover
+  :host(:hover) .button-native {
+    opacity: $segment-button-ios-opacity-hover;
+  }
+
+  :host(.segment-button-checked:hover) .button-native {
+    opacity: 1;
+  }
+}
+
+
+// Segment Button: Segment w/ Color
+// --------------------------------------------------
+
+// Default
+:host(.in-segment-color) {
+  background: none;
+  color: $segment-button-ios-color;
+}
+
+// Indicator color on a Segment w/ color
+// should not change if the variable is set
+:host(.in-segment-color) .segment-button-indicator-background {
+  background: $segment-button-ios-indicator-color;
+}
+
+@media (any-hover: hover) {
+  // Toolbar with Color, Default Segment, Hover
+  // Toolbar with Color, Default Segment, Checked, Hover
+  :host(.in-segment-color:hover) .button-native,
+  :host(.in-segment-color.segment-button-checked:hover) .button-native {
+    color: $segment-button-ios-color;
+  }
+}
+
+
+
+// Segment Button: Toolbar
+// --------------------------------------------------
+
+// Default Segment, In a Toolbar
+:host(.in-toolbar:not(.in-segment-color)) {
+  --background-checked: #{var(--ion-toolbar-segment-background-checked, $segment-button-ios-background-checked)};
+  --color: var(--ion-toolbar-segment-color, var(--ion-toolbar-color), initial);
+  --color-checked: var(--ion-toolbar-segment-color-checked, var(--ion-toolbar-color), initial);
+  --indicator-color: #{var(--ion-toolbar-segment-indicator-color, $segment-button-ios-indicator-color)};
+}
+
+
+// Segment Button: Toolbar w/ Color
+// --------------------------------------------------
+
+// Toolbar with Color, Checked
+/**
+ * Use the contrast color as background since
+ * since the text color is the base color. Otherwise
+ * we will have contrast issues when using light/medium/dark
+ * palettes across light and dark mode.
+ */
+:host(.in-toolbar-color) .segment-button-indicator-background {
+  background: #{current-color(contrast)};
+}
+
+// Toolbar with Color, Default Segment
+:host(.in-toolbar-color:not(.in-segment-color)) .button-native {
+  color: #{current-color(contrast)};
+}
+
+// Toolbar with Color, Default Segment, Checked
+:host(.in-toolbar-color.segment-button-checked:not(.in-segment-color)) .button-native {
+  color: #{current-color(base)};
+}
+
+@media (any-hover: hover) {
+  // Toolbar with Color, Default Segment, Hover
+  :host(.in-toolbar-color:not(.in-segment-color):hover) .button-native {
+    color: #{current-color(contrast)};
+  }
+
+  // Toolbar with Color, Default Segment, Checked / Hover
+  :host(.in-toolbar-color.segment-button-checked:not(.in-segment-color):hover) .button-native {
+    color: #{current-color(base)};
+  }
+}

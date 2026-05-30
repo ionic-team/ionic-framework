@@ -1,0 +1,17 @@
+@import "./header";
+@import "./header.md.vars";
+
+// Material Design Header
+// --------------------------------------------------
+
+.header-md {
+  box-shadow: $header-md-box-shadow;
+}
+
+.header-md.header-collapse-condense {
+  display: none;
+}
+
+.header-md.ion-no-border {
+  box-shadow: none;
+}

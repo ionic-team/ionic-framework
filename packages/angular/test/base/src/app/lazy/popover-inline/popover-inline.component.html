@@ -1,0 +1,13 @@
+<ion-button (click)="openPopover(popover)">Open Popover</ion-button>
+
+<ion-popover #popover>
+  <ng-template>
+    <ion-content>
+      <ion-list>
+        <ion-item *ngFor="let item of items" [button]="true" [disabled]="item.disabled">
+          <ion-label>{{ item.text }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>

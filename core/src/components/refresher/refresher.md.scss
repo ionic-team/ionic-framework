@@ -1,0 +1,98 @@
+@import "./refresher";
+@import "./refresher.md.vars";
+
+// Refresher Content
+// --------------------------------------------------
+
+.refresher-md .refresher-pulling-icon,
+.refresher-md .refresher-refreshing-icon {
+  color: $refresher-md-icon-color;
+}
+
+.refresher-md .refresher-pulling-text,
+.refresher-md .refresher-refreshing-text {
+  color: $refresher-md-text-color;
+}
+
+.refresher-md .refresher-refreshing .spinner-lines-md line,
+.refresher-md .refresher-refreshing .spinner-lines-small-md line,
+.refresher-md .refresher-refreshing .spinner-crescent circle {
+  stroke: $refresher-md-icon-color;
+}
+
+.refresher-md .refresher-refreshing .spinner-bubbles circle,
+.refresher-md .refresher-refreshing .spinner-circles circle,
+.refresher-md .refresher-refreshing .spinner-dots circle {
+  fill: $refresher-md-icon-color;
+}
+
+ion-refresher.refresher-native {
+  display: block;
+
+  z-index: 1;
+
+  ion-spinner {
+    @include margin(0, auto, 0, auto);
+
+    width: 24px;
+    height: 24px;
+
+    color: $refresher-md-native-spinner-color;
+  }
+
+  .spinner-arrow-container {
+    display: inherit;
+  }
+
+  .arrow-container {
+    display: block;
+    position: absolute;
+
+    width: 24px;
+    height: 24px;
+    ion-icon {
+      @include margin(0, auto, 0, auto);
+      @include position(null, 0, -4px, 0);
+
+      position: absolute;
+
+      color: $refresher-md-native-spinner-color;
+
+      font-size: 12px;
+    }
+  }
+
+  &.refresher-pulling ion-refresher-content,
+  &.refresher-ready ion-refresher-content {
+    .refresher-pulling {
+      display: flex;
+    }
+  }
+
+  &.refresher-refreshing ion-refresher-content,
+  &.refresher-completing ion-refresher-content,
+  &.refresher-cancelling ion-refresher-content {
+    .refresher-refreshing {
+      display: flex;
+    }
+  }
+
+  .refresher-pulling-icon {
+    transform: translateY(calc(-100% - 10px));
+  }
+
+  .refresher-pulling-icon,
+  .refresher-refreshing-icon {
+    @include margin(0, auto, 0, auto);
+    @include border-radius(100%);
+    @include padding(8px, 8px, 8px, 8px);
+
+    display: flex;
+
+    border: $refresher-md-native-spinner-border;
+
+    background: $refresher-md-native-spinner-background;
+
+    box-shadow: $refresher-md-native-spinner-box-shadow;
+  }
+}

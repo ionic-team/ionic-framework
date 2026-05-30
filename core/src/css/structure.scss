@@ -1,0 +1,83 @@
+@import "../themes/ionic.globals";
+@import "../themes/ionic.mixins";
+
+
+// Structure
+// --------------------------------------------------
+// Adds structural css to the native html elements
+
+* {
+  box-sizing: border-box;
+
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+
+  text-size-adjust: 100%;
+}
+
+html.ion-ce body {
+  display: block;
+}
+
+html.plt-pwa {
+  height: 100vh;
+}
+
+body {
+  @include font-smoothing();
+  @include margin(0);
+  @include padding(0);
+
+  position: fixed;
+
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+
+  /**
+   * Because body has position: fixed,
+   * it should be promoted to its own
+   * layer.
+   *
+   * WebKit does not always promote
+   * the body to its own layer on page
+   * load in Ionic apps. Once scrolling on
+   * ion-content starts, WebKit will promote
+   * body. Unfortunately, this causes a re-paint
+   * which results in scrolling being halted
+   * until the next user gesture.
+   *
+   * This impacts the Custom Elements build.
+   * The lazy loaded build causes the browser to
+   * re-paint during hydration which causes WebKit
+   * to promote body to its own layer.
+   * In the CE Build, this hydration does not
+   * happen, so the additional re-paint does not occur.
+   */
+  transform: translateZ(0);
+
+  text-rendering: optimizeLegibility;
+
+  overflow: hidden;
+
+  touch-action: manipulation;
+
+  -webkit-user-drag: none;
+
+  -ms-content-zooming: none;
+
+  word-wrap: break-word;
+
+  overscroll-behavior-y: none;
+  -webkit-text-size-adjust: none;
+
+  text-size-adjust: none;
+}

@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "allowUnreachableCode": false,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "lib": [
+      "dom",
+      "es2020",
+      "dom.iterable"
+    ],
+    "importHelpers": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "dist",
+    "declarationDir": "dist/types",
+    "removeComments": false,
+    "inlineSources": true,
+    "sourceMap": true,
+    "jsx": "react-jsx",
+    "target": "es2020",
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "compileOnSave": false,
+  "buildOnSave": false
+}

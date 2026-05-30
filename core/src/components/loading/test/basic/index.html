@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Loading - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      .html-loading {
+        --max-width: auto;
+      }
+
+      .custom-loading {
+        --background: rgba(255, 255, 255, 0.8);
+        --spinner-color: #ea445a;
+
+        --height: 100%;
+        --max-height: auto;
+        --width: 100%;
+        --max-width: auto;
+
+        color: #3478f6;
+      }
+
+      f {
+        display: block;
+        background: blue;
+
+        width: 100%;
+        height: 200px;
+        margin: 20px auto;
+      }
+
+      .red {
+        background-color: #ea445a;
+      }
+
+      .green {
+        background-color: #76d672;
+      }
+
+      .blue {
+        background-color: #3478f6;
+      }
+
+      .yellow {
+        background-color: #ffff80;
+      }
+
+      .pink {
+        background-color: #ff6b86;
+      }
+
+      .purple {
+        background-color: #7e34f6;
+      }
+
+      .black {
+        background-color: #000;
+      }
+
+      .orange {
+        background-color: #f69234;
+      }
+    </style>
+  </head>
+  <script type="module">
+    import { loadingController } from '../../../../../dist/ionic/index.esm.js';
+    window.loadingController = loadingController;
+  </script>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Loading - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <button
+          id="basic-loading"
+          class="expand"
+          onclick="openLoading({ message: 'Hellooo', duration: 2000, htmlAttributes: { 'data-testid': 'basic-loading' } })"
+        >
+          Show Loading
+        </button>
+        <button id="default" class="expand" onclick="openLoading({duration: 2000, content: 'Please wait...'})">
+          Show Default Loading
+        </button>
+        <button
+          id="long-content-loading"
+          class="expand"
+          onclick="openLoading({duration: 2000, message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})"
+        >
+          Show Loading with long message
+        </button>
+        <button
+          id="no-spinner-loading"
+          class="expand"
+          onclick="openLoading({duration: 2000, message: 'Please wait...', spinner: null})"
+        >
+          Show Loading with no spinner
+        </button>
+        <button
+          id="translucent-loading"
+          class="expand"
+          onclick="openLoading({duration: 5000, message: 'Please wait...', translucent: true})"
+        >
+          Show Loading with translucent
+        </button>
+        <button
+          id="custom-class-loading"
+          class="expand"
+          onclick="openLoading({duration: 5000,message: 'Please wait...', spinner: 'lines-sharp', cssClass: 'custom-class custom-loading'})"
+        >
+          Show Loading with cssClass
+        </button>
+        <button id="backdrop-loading" class="expand" onclick="openLoading({backdropDismiss: true})">
+          Show Backdrop Click Loading
+        </button>
+        <button
+          id="html-content-loading"
+          class="expand"
+          onclick="openLoading({cssClass: 'html-loading', duration: 5000, message: '<button>Click impatiently to load faster</button>'})"
+        >
+          Show Loading with HTML content
+        </button>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <f class="red"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="green"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="blue"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="yellow"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="pink"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="purple"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="black"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="orange"></f>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </ion-app>
+    <script>
+      window.Ionic = {
+        config: {
+          innerHTMLTemplatesEnabled: true,
+        },
+      };
+
+      async function openLoading(opts) {
+        const loading = await loadingController.create(opts);
+        await loading.present();
+      }
+    </script>
+  </body>
+</html>

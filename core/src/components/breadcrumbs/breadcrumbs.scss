@@ -1,0 +1,27 @@
+@import "./breadcrumbs.vars";
+
+// Breadcrumbs
+// --------------------------------------------------
+
+:host {
+  @include font-smoothing();
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  align-items: center;
+}
+
+
+// Breadcrumbs: In Toolbar
+// --------------------------------------------------
+
+:host(.in-toolbar-color),
+:host(.in-toolbar-color) .breadcrumbs-collapsed-indicator ion-icon {
+  color: #{current-color(contrast)};
+}
+
+:host(.in-toolbar-color) .breadcrumbs-collapsed-indicator {
+  background: #{current-color(contrast, 0.11)};
+}

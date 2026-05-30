@@ -1,0 +1,20 @@
+<ion-button id="open-modal">Open Modal</ion-button>
+
+<ul>
+  <li>
+    breakpointDidChange event count: <span id="breakpointDidChange">{{ breakpointDidChangeCounter }}</span>
+  </li>
+</ul>
+
+<ion-modal [animated]="false" trigger="open-modal" [breakpoints]="[0.1, 0.5, 1]" [initialBreakpoint]="0.5"
+  (ionBreakpointDidChange)="onBreakpointDidChange()">
+  <ng-template>
+    <ion-content>
+      <ion-list>
+        <ion-item *ngFor="let item of items">
+          <ion-label>{{ item }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>

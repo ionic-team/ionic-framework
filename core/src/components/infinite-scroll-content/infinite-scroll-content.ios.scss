@@ -1,0 +1,18 @@
+@import "./infinite-scroll-content";
+@import "./infinite-scroll-content.ios.vars";
+
+.infinite-scroll-content-ios .infinite-loading-text {
+  color: $infinite-scroll-ios-loading-text-color;
+}
+
+.infinite-scroll-content-ios .infinite-loading-spinner .spinner-lines-ios line,
+.infinite-scroll-content-ios .infinite-loading-spinner .spinner-lines-small-ios line,
+.infinite-scroll-content-ios .infinite-loading-spinner .spinner-crescent circle {
+  stroke: $infinite-scroll-ios-loading-color;
+}
+
+.infinite-scroll-content-ios .infinite-loading-spinner .spinner-bubbles circle,
+.infinite-scroll-content-ios .infinite-loading-spinner .spinner-circles circle,
+.infinite-scroll-content-ios .infinite-loading-spinner .spinner-dots circle {
+  fill: $infinite-scroll-ios-loading-color;
+}

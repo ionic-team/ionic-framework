@@ -1,0 +1,7 @@
+{
+  "packages": [
+    "core",
+    "packages/*"
+  ],
+  "version": "8.8.8"
+}

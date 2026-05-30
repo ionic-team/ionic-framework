@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Item - a11y</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/core.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <main>
+      <h1>Item</h1>
+
+      <ion-item>
+        <ion-input label="Item with Input" placeholder="Placeholder"></ion-input>
+      </ion-item>
+
+      <ion-item disabled>
+        <ion-input label="Item disabled with Input" placeholder="Placeholder"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Item with Input disabled" placeholder="Placeholder" disabled></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Item with Select" label-placement="floating">
+          <ion-select-option value="">No Game Console</ion-select-option>
+          <ion-select-option value="nes">NES</ion-select-option>
+          <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
+          <ion-select-option value="ps">PlayStation</ion-select-option>
+          <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+          <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+          <ion-select-option value="snes">SNES</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item disabled>
+        <ion-select label="Item disabled with Select" label-placement="floating">
+          <ion-select-option value="">No Game Console</ion-select-option>
+          <ion-select-option value="nes">NES</ion-select-option>
+          <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
+          <ion-select-option value="ps">PlayStation</ion-select-option>
+          <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+          <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+          <ion-select-option value="snes">SNES</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Item with Select disabled" label-placement="floating" disabled>
+          <ion-select-option value="">No Game Console</ion-select-option>
+          <ion-select-option value="nes">NES</ion-select-option>
+          <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
+          <ion-select-option value="ps">PlayStation</ion-select-option>
+          <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+          <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+          <ion-select-option value="snes">SNES</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-toggle>Item with Toggle</ion-toggle>
+      </ion-item>
+
+      <ion-item disabled>
+        <ion-toggle>Item disabled with Toggle</ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-toggle disabled>Item with Toggle disabled</ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-radio value="biff">Item with Radio</ion-radio>
+      </ion-item>
+
+      <ion-item disabled>
+        <ion-radio value="biff">Item disabled with Radio</ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-radio value="biff" disabled>Item with Radio disabled</ion-radio>
+      </ion-item>
+    </main>
+  </body>
+</html>

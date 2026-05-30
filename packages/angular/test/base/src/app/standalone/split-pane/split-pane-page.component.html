@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ folder }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ folder }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <ion-button (click)="onClick('one')">Button One</ion-button>
+    <ion-button (click)="onClick('two')">Button Two</ion-button>
+    <ion-button (click)="onClick('three')">Button Three</ion-button>
+    <ion-button (click)="onClick('four')">Button Four</ion-button>
+  </div>
+</ion-content>

@@ -1,0 +1,85 @@
+name: 'Test Core Screenshot'
+description: 'Test Core Screenshot'
+inputs:
+  shard:
+    description: 'Playwright Test Shard (ex: 2)'
+  totalShards:
+    description: 'Playwright total number of test shards (ex: 4)'
+  update:
+    description: 'Whether or not to update the reference snapshots'
+  component:
+    description: 'The component to update the reference snapshots'
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+      with:
+        node-version: 24.x
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - name: 🕸️ Install Dependencies
+      run: npm install
+      shell: bash
+      working-directory: ./core
+    - name: 🧪 Test
+      if: inputs.update != 'true'
+      run: npm run test.e2e.docker.ci ${{ inputs.component }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
+      shell: bash
+      working-directory: ./core
+    - name: Clean core package.json
+      run: git checkout ./package.json
+      shell: bash
+      working-directory: ./core
+    - name: Test and Update
+      id: test-and-update
+      if: inputs.update == 'true'
+      # Keep track of the files that were
+      # changed so they can be correctly restored
+      # in the combine step.
+      # To do this, we move only the changed files
+      # to a separate directory, while preserving the
+      # directory structure of the source.
+      # When, we create and archive of these results
+      # so that the combine step can simply
+      # unzip and move the changed files into place.
+      # We have extra logic added so that job runners
+      # that do not have any new screenshots do not create
+      # an unnecessary .zip.
+      # Note that we need to unzip directory to be "core"
+      # which is why we not using the upload-archive
+      # composite step here.
+      run: |
+        npm run test.e2e.docker.ci ${{ inputs.component }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots='changed'
+        git add src/\*.png --force
+        mkdir updated-screenshots
+        cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots
+        if [ -d core/updated-screenshots/core ]; then
+          echo "hasUpdatedScreenshots=$(echo 'true')" >> $GITHUB_OUTPUT
+          cd core/updated-screenshots
+          zip -q -r ../../UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip core
+        fi
+      shell: bash
+      working-directory: ./core
+    - name: 📦 Archive Updated Screenshots
+      if: inputs.update == 'true' && steps.test-and-update.outputs.hasUpdatedScreenshots == 'true'
+      uses: actions/upload-artifact@v7
+      with:
+        name: updated-screenshots-${{ inputs.shard }}-${{ inputs.totalShards }}
+        path: UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
+    - name: 📦 Archive Test Results
+      # The always() ensures that this step
+      # runs even if the previous step fails.
+      # We want the test results to be archived
+      # even if the test fails in the previous
+      # step, otherwise there would be no way
+      # to debug these tests.
+      if: always()
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: test-results-${{ inputs.shard }}-${{ inputs.totalShards }}
+        output: core/TestResults-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
+        paths: core/playwright-report

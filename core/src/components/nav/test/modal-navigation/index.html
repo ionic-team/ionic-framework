@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nav - Modal Navigation</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Modal Navigation</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <button id="openModal">Open Modal</button>
+        <ion-modal trigger="openModal">
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Modal</ion-title>
+              <ion-buttons slot="end">
+                <ion-button onclick="dismiss()">Close</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content>
+            <ion-nav></ion-nav>
+          </ion-content>
+        </ion-modal>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const modal = document.querySelector('ion-modal');
+      const nav = document.querySelector('ion-nav');
+
+      modal.addEventListener('willPresent', () => {
+        nav.setRoot('page-one');
+      });
+
+      const dismiss = () => modal.dismiss();
+
+      const navigate = (component, componentProps) => {
+        nav.push(component, componentProps);
+      };
+
+      const navigateBack = () => {
+        nav.pop();
+      };
+
+      const navigateToRoot = () => {
+        nav.popToRoot();
+      };
+
+      class PageOne extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <ion-content class="ion-padding">
+            <h1>Page One</h1>
+            <button id="goto-page-two" onclick="navigate('page-two')">Go to Page Two</button>
+          </ion-content>
+        `;
+        }
+      }
+
+      class PageTwo extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <ion-content class="ion-padding">
+            <h1>Page Two</h1>
+            <button id="goto-page-three" onclick="navigate('page-three')">Go to Page Three</button>
+          </ion-content>
+        `;
+        }
+      }
+
+      class PageThree extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <ion-content class="ion-padding">
+            <h1>Page Three</h1>
+            <button id="go-back" onclick="navigateBack()">Go Back</button>
+            <button id="goto-root"onclick="navigateToRoot()">Go to Root</button>
+          </ion-content>
+        `;
+        }
+      }
+
+      customElements.define('page-one', PageOne);
+      customElements.define('page-two', PageTwo);
+      customElements.define('page-three', PageThree);
+    </script>
+  </body>
+</html>

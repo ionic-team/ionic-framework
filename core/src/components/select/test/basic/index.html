@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Select - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Select - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="test-content">
+        <ion-list>
+          <ion-list-header>
+            <ion-label>Single Value</ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-select id="alert-select" label="Alert" placeholder="Select one" interface="alert">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+              <ion-select-option value="pears">Pears</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Popover" placeholder="Select one" interface="popover">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+              <ion-select-option value="pears">Pears</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Action Sheet" placeholder="Select one" interface="action-sheet">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+              <ion-select-option value="pears">Pears</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Modal" placeholder="Select one" interface="modal">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+              <ion-select-option value="pears">Pears</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+          <ion-list-header>
+            <ion-label>Single Value - Overflowing Options</ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-select id="alert-select-scroll-to-selected" label="Alert" interface="alert" value="watermelon">
+              <ion-select-option value="apple">Apple</ion-select-option>
+              <ion-select-option value="apricot">Apricot</ion-select-option>
+              <ion-select-option value="avocado">Avocado</ion-select-option>
+              <ion-select-option value="banana">Banana</ion-select-option>
+              <ion-select-option value="blackberry">Blackberry</ion-select-option>
+              <ion-select-option value="blueberry">Blueberry</ion-select-option>
+              <ion-select-option value="cantaloupe">Cantaloupe</ion-select-option>
+              <ion-select-option value="cherry">Cherry</ion-select-option>
+              <ion-select-option value="coconut">Coconut</ion-select-option>
+              <ion-select-option value="cranberry">Cranberry</ion-select-option>
+              <ion-select-option value="dragonfruit">Dragonfruit</ion-select-option>
+              <ion-select-option value="fig">Fig</ion-select-option>
+              <ion-select-option value="grape">Grape</ion-select-option>
+              <ion-select-option value="grapefruit">Grapefruit</ion-select-option>
+              <ion-select-option value="guava">Guava</ion-select-option>
+              <ion-select-option value="kiwi">Kiwi</ion-select-option>
+              <ion-select-option value="lemon">Lemon</ion-select-option>
+              <ion-select-option value="lime">Lime</ion-select-option>
+              <ion-select-option value="lychee">Lychee</ion-select-option>
+              <ion-select-option value="mango">Mango</ion-select-option>
+              <ion-select-option value="nectarine">Nectarine</ion-select-option>
+              <ion-select-option value="orange">Orange</ion-select-option>
+              <ion-select-option value="papaya">Papaya</ion-select-option>
+              <ion-select-option value="passion-fruit">Passion Fruit</ion-select-option>
+              <ion-select-option value="peach">Peach</ion-select-option>
+              <ion-select-option value="pear">Pear</ion-select-option>
+              <ion-select-option value="pineapple">Pineapple</ion-select-option>
+              <ion-select-option value="plum">Plum</ion-select-option>
+              <ion-select-option value="pomegranate">Pomegranate</ion-select-option>
+              <ion-select-option value="raspberry">Raspberry</ion-select-option>
+              <ion-select-option value="strawberry">Strawberry</ion-select-option>
+              <ion-select-option value="tangerine">Tangerine</ion-select-option>
+              <ion-select-option value="watermelon">Watermelon</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select
+              id="action-sheet-select-scroll-to-selected"
+              label="Action Sheet"
+              interface="action-sheet"
+              value="watermelon"
+            >
+              <ion-select-option value="apple">Apple</ion-select-option>
+              <ion-select-option value="apricot">Apricot</ion-select-option>
+              <ion-select-option value="avocado">Avocado</ion-select-option>
+              <ion-select-option value="banana">Banana</ion-select-option>
+              <ion-select-option value="blackberry">Blackberry</ion-select-option>
+              <ion-select-option value="blueberry">Blueberry</ion-select-option>
+              <ion-select-option value="cantaloupe">Cantaloupe</ion-select-option>
+              <ion-select-option value="cherry">Cherry</ion-select-option>
+              <ion-select-option value="coconut">Coconut</ion-select-option>
+              <ion-select-option value="cranberry">Cranberry</ion-select-option>
+              <ion-select-option value="dragonfruit">Dragonfruit</ion-select-option>
+              <ion-select-option value="fig">Fig</ion-select-option>
+              <ion-select-option value="grape">Grape</ion-select-option>
+              <ion-select-option value="grapefruit">Grapefruit</ion-select-option>
+              <ion-select-option value="guava">Guava</ion-select-option>
+              <ion-select-option value="kiwi">Kiwi</ion-select-option>
+              <ion-select-option value="lemon">Lemon</ion-select-option>
+              <ion-select-option value="lime">Lime</ion-select-option>
+              <ion-select-option value="lychee">Lychee</ion-select-option>
+              <ion-select-option value="mango">Mango</ion-select-option>
+              <ion-select-option value="nectarine">Nectarine</ion-select-option>
+              <ion-select-option value="orange">Orange</ion-select-option>
+              <ion-select-option value="papaya">Papaya</ion-select-option>
+              <ion-select-option value="passion-fruit">Passion Fruit</ion-select-option>
+              <ion-select-option value="peach">Peach</ion-select-option>
+              <ion-select-option value="pear">Pear</ion-select-option>
+              <ion-select-option value="pineapple">Pineapple</ion-select-option>
+              <ion-select-option value="plum">Plum</ion-select-option>
+              <ion-select-option value="pomegranate">Pomegranate</ion-select-option>
+              <ion-select-option value="raspberry">Raspberry</ion-select-option>
+              <ion-select-option value="strawberry">Strawberry</ion-select-option>
+              <ion-select-option value="tangerine">Tangerine</ion-select-option>
+              <ion-select-option value="watermelon">Watermelon</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select id="popover-select-scroll-to-selected" label="Popover" interface="popover" value="watermelon">
+              <ion-select-option value="apple">Apple</ion-select-option>
+              <ion-select-option value="apricot">Apricot</ion-select-option>
+              <ion-select-option value="avocado">Avocado</ion-select-option>
+              <ion-select-option value="banana">Banana</ion-select-option>
+              <ion-select-option value="blackberry">Blackberry</ion-select-option>
+              <ion-select-option value="blueberry">Blueberry</ion-select-option>
+              <ion-select-option value="cantaloupe">Cantaloupe</ion-select-option>
+              <ion-select-option value="cherry">Cherry</ion-select-option>
+              <ion-select-option value="coconut">Coconut</ion-select-option>
+              <ion-select-option value="cranberry">Cranberry</ion-select-option>
+              <ion-select-option value="dragonfruit">Dragonfruit</ion-select-option>
+              <ion-select-option value="fig">Fig</ion-select-option>
+              <ion-select-option value="grape">Grape</ion-select-option>
+              <ion-select-option value="grapefruit">Grapefruit</ion-select-option>
+              <ion-select-option value="guava">Guava</ion-select-option>
+              <ion-select-option value="kiwi">Kiwi</ion-select-option>
+              <ion-select-option value="lemon">Lemon</ion-select-option>
+              <ion-select-option value="lime">Lime</ion-select-option>
+              <ion-select-option value="lychee">Lychee</ion-select-option>
+              <ion-select-option value="mango">Mango</ion-select-option>
+              <ion-select-option value="nectarine">Nectarine</ion-select-option>
+              <ion-select-option value="orange">Orange</ion-select-option>
+              <ion-select-option value="papaya">Papaya</ion-select-option>
+              <ion-select-option value="passion-fruit">Passion Fruit</ion-select-option>
+              <ion-select-option value="peach">Peach</ion-select-option>
+              <ion-select-option value="pear">Pear</ion-select-option>
+              <ion-select-option value="pineapple">Pineapple</ion-select-option>
+              <ion-select-option value="plum">Plum</ion-select-option>
+              <ion-select-option value="pomegranate">Pomegranate</ion-select-option>
+              <ion-select-option value="raspberry">Raspberry</ion-select-option>
+              <ion-select-option value="strawberry">Strawberry</ion-select-option>
+              <ion-select-option value="tangerine">Tangerine</ion-select-option>
+              <ion-select-option value="watermelon">Watermelon</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select id="modal-select-scroll-to-selected" label="Modal" interface="modal" value="watermelon">
+              <ion-select-option value="apple">Apple</ion-select-option>
+              <ion-select-option value="apricot">Apricot</ion-select-option>
+              <ion-select-option value="avocado">Avocado</ion-select-option>
+              <ion-select-option value="banana">Banana</ion-select-option>
+              <ion-select-option value="blackberry">Blackberry</ion-select-option>
+              <ion-select-option value="blueberry">Blueberry</ion-select-option>
+              <ion-select-option value="cantaloupe">Cantaloupe</ion-select-option>
+              <ion-select-option value="cherry">Cherry</ion-select-option>
+              <ion-select-option value="coconut">Coconut</ion-select-option>
+              <ion-select-option value="cranberry">Cranberry</ion-select-option>
+              <ion-select-option value="dragonfruit">Dragonfruit</ion-select-option>
+              <ion-select-option value="fig">Fig</ion-select-option>
+              <ion-select-option value="grape">Grape</ion-select-option>
+              <ion-select-option value="grapefruit">Grapefruit</ion-select-option>
+              <ion-select-option value="guava">Guava</ion-select-option>
+              <ion-select-option value="kiwi">Kiwi</ion-select-option>
+              <ion-select-option value="lemon">Lemon</ion-select-option>
+              <ion-select-option value="lime">Lime</ion-select-option>
+              <ion-select-option value="lychee">Lychee</ion-select-option>
+              <ion-select-option value="mango">Mango</ion-select-option>
+              <ion-select-option value="nectarine">Nectarine</ion-select-option>
+              <ion-select-option value="orange">Orange</ion-select-option>
+              <ion-select-option value="papaya">Papaya</ion-select-option>
+              <ion-select-option value="passion-fruit">Passion Fruit</ion-select-option>
+              <ion-select-option value="peach">Peach</ion-select-option>
+              <ion-select-option value="pear">Pear</ion-select-option>
+              <ion-select-option value="pineapple">Pineapple</ion-select-option>
+              <ion-select-option value="plum">Plum</ion-select-option>
+              <ion-select-option value="pomegranate">Pomegranate</ion-select-option>
+              <ion-select-option value="raspberry">Raspberry</ion-select-option>
+              <ion-select-option value="strawberry">Strawberry</ion-select-option>
+              <ion-select-option value="tangerine">Tangerine</ion-select-option>
+              <ion-select-option value="watermelon">Watermelon</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+          <ion-list-header>
+            <ion-label>Multiple Value Select</ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-select label="Alert" multiple="true" interface="alert">
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="bacon">Bacon</ion-select-option>
+              <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
+              <ion-select-option value="mushrooms">Mushrooms</ion-select-option>
+              <ion-select-option value="onions">Onions</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Popover" multiple="true" interface="popover">
+              <ion-select-option value="bird">Bird</ion-select-option>
+              <ion-select-option value="cat">Cat</ion-select-option>
+              <ion-select-option value="dog">Dog</ion-select-option>
+              <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Modal" multiple="true" interface="modal">
+              <ion-select-option value="bird">Bird</ion-select-option>
+              <ion-select-option value="cat">Cat</ion-select-option>
+              <ion-select-option value="dog">Dog</ion-select-option>
+              <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+          <ion-list-header>
+            <ion-label>Custom Interface Options</ion-label>
+          </ion-list-header>
+
+          <ion-item color="danger">
+            <ion-select
+              label="Alert"
+              id="customAlertSelect"
+              value="bacon"
+              interface="alert"
+              multiple="true"
+              placeholder="Select"
+            >
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="bacon">Bacon</ion-select-option>
+              <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
+              <ion-select-option value="mushrooms">Mushrooms</ion-select-option>
+              <ion-select-option value="onions">Onions</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item color="dark">
+            <ion-select label="Popover" id="customPopoverSelect" interface="popover" placeholder="Select">
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="bacon">Bacon</ion-select-option>
+              <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
+              <ion-select-option value="mushrooms">Mushrooms</ion-select-option>
+              <ion-select-option value="onions">Onions</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item color="primary">
+            <ion-select
+              label="Action Sheet"
+              id="customActionSheetSelect"
+              interface="action-sheet"
+              placeholder="Select One"
+            >
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="bacon">Bacon</ion-select-option>
+              <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
+              <ion-select-option value="mushrooms">Mushrooms</ion-select-option>
+              <ion-select-option value="onions">Onions</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item color="secondary">
+            <ion-select label="Modal Sheet" id="customModalSelect" interface="modal" placeholder="Select One">
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="bacon">Bacon</ion-select-option>
+              <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
+              <ion-select-option value="mushrooms">Mushrooms</ion-select-option>
+              <ion-select-option value="onions">Onions</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+
+      <script>
+        var customAlertSelect = document.getElementById('customAlertSelect');
+        var customAlertOptions = {
+          header: 'Pizza Toppings',
+          subHeader: 'Select your toppings',
+          message: '$1.00 per topping',
+          translucent: true,
+        };
+        customAlertSelect.interfaceOptions = customAlertOptions;
+
+        var customPopoverSelect = document.getElementById('customPopoverSelect');
+        var customPopoverOptions = {
+          header: 'Pizza Toppings',
+          subHeader: 'Select your toppings',
+          message: '$1.50 charge for every topping',
+        };
+        customPopoverSelect.interfaceOptions = customPopoverOptions;
+
+        var customActionSheetSelect = document.getElementById('customActionSheetSelect');
+        var customActionSheetOptions = {
+          header: 'Pizza Toppings',
+          subHeader: 'Select your toppings',
+          message: '$1.50 charge for every topping',
+        };
+        customActionSheetSelect.interfaceOptions = customActionSheetOptions;
+
+        var customModalSelect = document.getElementById('customModalSelect');
+        var customModalSheetOptions = {
+          header: 'Pizza Toppings',
+          breakpoints: [0.5],
+          initialBreakpoint: 0.5,
+        };
+        customModalSelect.interfaceOptions = customModalSheetOptions;
+      </script>
+    </ion-app>
+  </body>
+</html>

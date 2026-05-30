@@ -1,0 +1,81 @@
+@import "./fab-button";
+@import "./fab-button.md.vars";
+
+// Material Design FAB Button
+// --------------------------------------------------
+
+:host {
+  --background: #{$fab-md-background-color};
+  --background-activated: transparent;
+  --background-focused: currentColor;
+  --background-hover: currentColor;
+  --background-activated-opacity: 0;
+  --background-focused-opacity: .24;
+  --background-hover-opacity: .08;
+  --color: #{$fab-md-text-color};
+  --box-shadow: #{$fab-md-box-shadow};
+  --transition: #{
+    box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
+    background-color 280ms cubic-bezier(.4, 0, .2, 1),
+    color 280ms cubic-bezier(.4, 0, .2, 1),
+    opacity 15ms linear 30ms,
+    transform 270ms cubic-bezier(0, 0, .2, 1) 0ms
+  };
+  --close-icon-font-size: #{$fab-md-icon-font-size};
+}
+
+:host(.ion-activated) {
+  --box-shadow: #{$fab-md-box-shadow-activated};
+}
+
+::slotted(ion-icon) {
+  font-size: $fab-md-icon-font-size;
+}
+
+
+// FAB buttons in a list
+// --------------------------------------------------
+
+:host(.fab-button-in-list) {
+  --color: #{$fab-md-list-button-text-color};
+  --color-activated: #{$fab-md-list-button-text-color};
+  --color-focused: var(--color-activated);
+  --background: #{$fab-md-list-button-background-color};
+  --background-activated: transparent;
+  --background-focused: #{$fab-md-list-button-background-color-activated};
+  --background-hover: #{$fab-md-list-button-background-color-hover};
+}
+
+:host(.fab-button-in-list) ::slotted(ion-icon) {
+  font-size: $fab-md-list-button-icon-font-size;
+}
+
+
+// FAB Button: Color
+// --------------------------------------------------
+
+// Focused Button with Color
+:host(.ion-color.ion-focused) .button-native {
+  color: #{current-color(contrast)};
+
+  &::after {
+    background: #{current-color(contrast)};
+  }
+}
+:host(.ion-color.ion-activated) .button-native {
+  color: #{current-color(contrast)};
+
+  &::after {
+    background: transparent;
+  }
+}
+
+@media (any-hover: hover) {
+  :host(.ion-color:hover) .button-native {
+    color: #{current-color(contrast)};
+
+    &::after {
+      background: #{current-color(contrast)};
+    }
+  }
+}

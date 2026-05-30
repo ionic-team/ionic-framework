@@ -1,0 +1,210 @@
+name: 'Release Ionic'
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: 'The type of version to release.'
+        type: string
+        required: true
+      tag:
+        description: 'The tag to publish to NPM.'
+        type: string
+        required: true
+      preid:
+        description: 'The prerelease identifier used when doing a prerelease.'
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  release-core:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: ./.github/actions/publish-npm
+      with:
+        scope: '@ionic/core'
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
+        working-directory: 'core'
+    - name: Cache Built @ionic/core
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-core
+        output: core/CoreBuild.zip
+        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts
+    - name: Cache Built @ionic/docs
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-docs
+        output: packages/docs/DocsBuild.zip
+        paths: packages/docs/core.json packages/docs/core.d.ts
+
+  release-docs:
+    needs: [release-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - name: Restore @ionic/docs built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-docs
+        path: ./packages/docs
+        filename: DocsBuild.zip
+    - uses: ./.github/actions/publish-npm
+      with:
+        scope: '@ionic/docs'
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
+        working-directory: 'packages/docs'
+
+  release-angular:
+    needs: [release-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - name: Restore @ionic/core built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/actions/publish-npm
+      with:
+        scope: '@ionic/angular'
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
+        working-directory: 'packages/angular'
+        folder: './dist'
+    - name: Cache Built @ionic/angular
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-angular
+        output: packages/angular/AngularBuild.zip
+        paths: packages/angular/dist
+
+  release-react:
+    needs: [release-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - name: Restore @ionic/core built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/actions/publish-npm
+      with:
+        scope: '@ionic/react'
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
+        working-directory: 'packages/react'
+    - name: Cache Built @ionic/react
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-react
+        output: packages/react/ReactBuild.zip
+        paths: packages/react/dist packages/react/css
+
+  release-vue:
+    needs: [release-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - name: Restore @ionic/core built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/actions/publish-npm
+      with:
+        scope: '@ionic/vue'
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
+        working-directory: 'packages/vue'
+    - name: Cache Built @ionic/vue
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-vue
+        output: packages/vue/VueBuild.zip
+        paths: packages/vue/dist packages/vue/css
+
+  release-angular-server:
+    needs: [release-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - name: Restore @ionic/core built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/actions/publish-npm
+      with:
+        scope: '@ionic/angular-server'
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
+        working-directory: 'packages/angular-server'
+        folder: './dist'
+
+  release-react-router:
+    needs: [release-react]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - name: Restore @ionic/core built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - name: Restore @ionic/react built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-react
+        path: ./packages/react
+        filename: ReactBuild.zip
+    - uses: ./.github/actions/publish-npm
+      with:
+        scope: '@ionic/react-router'
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
+        working-directory: 'packages/react-router'
+
+  release-vue-router:
+    needs: [release-vue]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - name: Restore @ionic/core built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - name: Restore @ionic/vue built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-vue
+        path: ./packages/vue
+        filename: VueBuild.zip
+    - uses: ./.github/actions/publish-npm
+      with:
+        scope: '@ionic/vue-router'
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
+        working-directory: 'packages/vue-router'

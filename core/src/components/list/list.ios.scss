@@ -1,0 +1,75 @@
+@import "./list";
+@import "./list.ios.vars";
+
+// iOS List
+// --------------------------------------------------
+
+.list-ios {
+  @include margin($list-ios-margin-top, $list-ios-margin-end, $list-ios-margin-bottom, $list-ios-margin-start);
+
+  background: $item-ios-background;
+}
+
+
+// iOS Inset List
+// --------------------------------------------------
+
+.list-ios.list-inset {
+  @include margin($list-inset-ios-margin-top, $list-inset-ios-margin-end, $list-inset-ios-margin-bottom, $list-inset-ios-margin-start);
+  @include border-radius($list-inset-ios-border-radius);
+}
+
+/**
+ * These selectors ensure the last item in the list
+ * has the correct border.
+ * We need to consider the following scenarios:
+ 1. The only item in a list.
+ 2. The last item in a list as long as it is not the only item.
+ 3. The item in the last item-sliding in a list.
+ * Note that we do not select ion-item:last-of-type
+ * because that will cause the borders to disappear on
+ * items in an item-sliding when the item is the last
+ * element in the item-sliding container.
+ */
+.list-ios.list-inset ion-item:only-child,
+.list-ios.list-inset ion-item:not(:only-of-type):last-of-type,
+.list-ios.list-inset ion-item-sliding:last-of-type ion-item {
+  --border-width: 0;
+  --inner-border-width: 0;
+}
+
+.list-ios.list-inset + ion-list.list-inset {
+  @include margin(0, null, null, null);
+}
+
+
+// iOS No Lines List
+// --------------------------------------------------
+
+.list-ios-lines-none .item-lines-default {
+  --inner-border-width: 0px;
+  --border-width: 0px;
+}
+
+// iOS Full Lines List
+// --------------------------------------------------
+
+.list-ios-lines-full .item-lines-default {
+  --inner-border-width: 0px;
+  --border-width: #{0 0 $list-ios-item-border-bottom-width 0};
+}
+
+// iOS Inset Lines List
+// --------------------------------------------------
+
+.list-ios-lines-inset .item-lines-default {
+  --inner-border-width: #{0 0 $list-ios-item-border-bottom-width 0};
+  --border-width: 0px;
+}
+
+// iOS List Inside A Card
+// --------------------------------------------------
+
+ion-card .list-ios {
+  @include margin(0);
+}

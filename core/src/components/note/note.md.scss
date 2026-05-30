@@ -1,0 +1,11 @@
+@import "./note.md.vars";
+@import "./note";
+
+// Material Design Note
+// --------------------------------------------------
+
+:host {
+  --color: #{$note-md-color};
+
+  font-size: $note-md-font-size;
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Split Pane - Wrapped Menu</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      ion-split-pane {
+        --side-width: 200px;
+        --side-min-width: 200px;
+      }
+
+      app-menu {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <ion-app>
+      <ion-split-pane id="splitPane" content-id="split-content">
+        <app-menu side="start"></app-menu>
+        <div class="ion-page" id="split-content">
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-menu-button></ion-menu-button>
+              </ion-buttons>
+
+              <ion-title>Content</ion-title>
+            </ion-toolbar>
+          </ion-header>
+
+          <ion-content class="ion-padding"> Main Content </ion-content>
+        </div>
+      </ion-split-pane>
+    </ion-app>
+
+    <script>
+      class AppMenu extends HTMLElement {
+        constructor() {
+          super();
+        }
+
+        connectedCallback() {
+          this.innerHTML = `
+            <ion-menu side=${this.getAttribute('side')} content-id="split-content">
+              <ion-header>
+                <ion-toolbar color="secondary">
+                  <ion-title>Menu</ion-title>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="ion-padding">Menu Content</ion-content>
+            </ion-menu>
+          `;
+        }
+      }
+
+      customElements.define('app-menu', AppMenu);
+    </script>
+  </body>
+</html>

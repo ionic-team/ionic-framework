@@ -1,0 +1,346 @@
+@import "../../themes/ionic.globals";
+@import "./range.vars.scss";
+
+// Range
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --bar-background: Background of the range bar
+   * @prop --bar-background-active: Background of the active range bar
+   * @prop --bar-height: Height of the range bar
+   * @prop --bar-border-radius: Border radius of the range bar
+   * @prop --height: Height of the range
+   * @prop --knob-background: Background of the range knob
+   * @prop --knob-border-radius: Border radius of the range knob
+   * @prop --knob-box-shadow: Box shadow of the range knob
+   * @prop --knob-size: Size of the range knob
+   * @prop --pin-background: Background of the range pin (only available in MD mode)
+   * @prop --pin-color: Color of the range pin (only available in MD mode)
+   */
+  --knob-handle-size: calc(var(--knob-size) * 2);
+
+  display: flex;
+  position: relative;
+
+  flex: 3;
+  align-items: center;
+
+  font-family: $font-family-base;
+
+  user-select: none;
+  z-index: $z-index-item-input;
+}
+
+:host(.range-disabled) {
+  pointer-events: none;
+}
+
+::slotted(ion-label) {
+  flex: initial;
+}
+
+::slotted(ion-icon[slot]) {
+  font-size: 24px;
+}
+
+.range-slider {
+  position: relative;
+
+  flex: 1;
+
+  width: 100%;
+  height: var(--height);
+
+  contain: size layout style;
+
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+:host(.range-pressed) .range-slider {
+  cursor: grabbing;
+}
+
+.range-pin {
+  position: absolute;
+
+  background: current-color(base);
+  color: current-color(contrast);
+
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.range-knob-handle {
+  @include position(calc((var(--height) - var(--knob-handle-size)) / 2), null, null, 0);
+  @include margin-horizontal(calc(0px - var(--knob-handle-size) / 2), null);
+
+  @include rtl() {
+    /* stylelint-disable-next-line property-disallowed-list */
+    left: unset;
+  }
+
+  display: flex;
+
+  position: absolute;
+
+  justify-content: center;
+
+  width: var(--knob-handle-size);
+  height: var(--knob-handle-size);
+
+  text-align: center;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+.range-bar-container {
+  @include border-radius(var(--bar-border-radius));
+  @include position(calc((var(--height) - var(--bar-height)) / 2), null, null, 0);
+
+  @include rtl() {
+    /* stylelint-disable-next-line property-disallowed-list */
+    left: unset;
+  }
+
+  position: absolute;
+
+  width: 100%;
+  height: var(--bar-height);
+}
+
+.range-bar {
+  @include border-radius(var(--bar-border-radius));
+
+  position: absolute;
+
+  width: 100%;
+  height: var(--bar-height);
+
+  background: var(--bar-background);
+
+  pointer-events: none;
+}
+
+.range-knob {
+  @include border-radius(var(--knob-border-radius));
+  @include position(calc(50% - var(--knob-size) / 2), null, null, calc(50% - var(--knob-size) / 2));
+
+  @include rtl() {
+    /* stylelint-disable-next-line property-disallowed-list */
+    left: unset;
+  }
+
+  position: absolute;
+
+  width: var(--knob-size);
+  height: var(--knob-size);
+
+  background: var(--knob-background);
+
+  box-shadow: var(--knob-box-shadow);
+  z-index: 2;
+  pointer-events: none;
+}
+
+:host(.range-pressed) .range-bar-active {
+  will-change: left, right;
+}
+
+// Range in Item
+// ----------------------------
+
+// .item ion-range .item-inner {
+//   overflow: visible;
+
+//   width: 100%;
+// }
+
+// .item ion-range .input-wrapper {
+//   overflow: visible;
+
+//   flex-direction: column;
+
+//   width: 100%;
+// }
+
+:host(.in-item) {
+  width: 100%;
+}
+
+/**
+ * Range can be slotted
+ * in components such as item and
+ * toolbar which is why we do not
+ * limit the below behavior to just ion-item.
+ */
+:host([slot="start"]),
+:host([slot="end"]) {
+  width: auto;
+}
+
+:host(.in-item) ::slotted(ion-label) {
+  align-self: center;
+}
+
+// Range Wrapper
+// --------------------------------------------------
+
+.range-wrapper {
+  display: flex;
+
+  position: relative;
+
+  flex-grow: 1;
+
+  align-items: center;
+
+  height: inherit;
+}
+
+// Range Label
+// ----------------------------------------------------------------
+
+::slotted([slot="label"]) {
+  /**
+   * Label text should not extend
+   * beyond the bounds of the range.
+   * However, we do not set the max
+   * width to 100% because then
+   * only the label would show and users
+   * would not be able to see the range.
+   */
+  max-width: 200px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+/**
+ * If no label text is placed into the slot
+ * then the element should be hidden otherwise
+ * there will be additional margins added.
+ */
+.label-text-wrapper-hidden {
+  display: none;
+}
+
+// Range Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper {
+  display: flex;
+
+  flex-grow: 1;
+
+  align-items: center;
+}
+
+// Range Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the range in LTR and
+ * on the right in RTL.
+ */
+:host(.range-label-placement-start) .range-wrapper {
+  flex-direction: row;
+}
+
+:host(.range-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the range should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, $form-control-label-margin, 0, 0);
+}
+
+// Range Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the range in LTR and
+ * on the left in RTL.
+ */
+:host(.range-label-placement-end) .range-wrapper {
+  flex-direction: row-reverse;
+}
+
+/**
+ * The margin between the label and
+ * the range should be on the start
+ * when the label sits at the end.
+ */
+:host(.range-label-placement-end) .label-text-wrapper {
+  @include margin(0, 0, 0, $form-control-label-margin);
+}
+
+// Range Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.range-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the range should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, $form-control-label-margin, 0, 0);
+}
+
+/**
+ * Label is on the left of the range in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.range-label-placement-fixed) .label-text-wrapper {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+// Range Label Placement - Stacked
+// ----------------------------------------------------------------
+
+/**
+ * Label is on top of the range.
+ */
+:host(.range-label-placement-stacked) .range-wrapper {
+  flex-direction: column;
+
+  align-items: stretch;
+}
+
+:host(.range-label-placement-stacked) .label-text-wrapper {
+  @include transform-origin(start, top);
+  @include transform(scale(#{$form-control-label-stacked-scale}));
+
+  /**
+  * The margin between the label and
+  * the range should be on the bottom
+  * when the label sits on top.
+  */
+  @include margin(null, 0, $form-control-label-margin, 0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the range.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+:host(.in-item.range-label-placement-stacked) .label-text-wrapper {
+  @include margin($range-item-label-margin-top, null, $form-control-label-margin, null);
+}
+
+:host(.in-item.range-label-placement-stacked) .native-wrapper {
+  @include margin(null, null, $range-item-label-margin-bottom, null);
+}

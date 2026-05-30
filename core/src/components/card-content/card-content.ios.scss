@@ -1,0 +1,47 @@
+@import "./card-content";
+@import "./card-content.ios.vars";
+
+// iOS Card Header
+// --------------------------------------------------
+
+.card-content-ios {
+  @include padding($card-ios-padding-top, $card-ios-padding-end, $card-ios-padding-bottom, $card-ios-padding-start);
+
+  font-size: $card-ios-font-size;
+
+  line-height: 1.4;
+
+  h1 {
+    @include margin(0, 0, 2px);
+
+    font-size: dynamic-font(24px);
+    font-weight: normal;
+  }
+
+  h2 {
+    @include margin(2px, 0);
+
+    font-size: dynamic-font(16px);
+    font-weight: normal;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    @include margin(2px, 0);
+
+    font-size: dynamic-font(14px);
+    font-weight: normal;
+  }
+
+  p {
+    @include margin(0, 0, 2px);
+
+    font-size: dynamic-font(14px);
+  }
+}
+
+ion-card-header + .card-content-ios {
+  padding-top: 0;
+}

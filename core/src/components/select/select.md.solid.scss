@@ -1,0 +1,97 @@
+@import "./select.vars";
+
+// Select Fill: Solid
+// ----------------------------------------------------------------
+
+:host(.select-fill-solid) {
+  --background: #{$background-color-step-50};
+  --border-color: #{$background-color-step-500};
+  --border-radius: 4px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+
+  min-height: 56px;
+}
+
+/**
+ * The solid fill style has a border
+ * at the bottom of the select wrapper.
+ * As a result, the border on the "bottom
+ * content" is not needed.
+ */
+:host(.select-fill-solid) .select-wrapper {
+  border-bottom: var(--border-width) var(--border-style) var(--border-color);
+}
+
+/**
+ * If the select has a validity state, the
+ * border should reflect that as a color.
+ */
+:host(.select-expanded.select-fill-solid.ion-valid),
+:host(.has-focus.select-fill-solid.ion-valid),
+:host(.select-fill-solid.ion-touched.ion-invalid) {
+  --border-color: var(--highlight-color);
+}
+
+/**
+ * The bottom content should never have
+ * a border with the solid style.
+ */
+:host(.select-fill-solid) .select-bottom {
+  border-top: none;
+}
+
+/**
+ * Background and border should be
+ * slightly darker on hover.
+ */
+@media (any-hover: hover) {
+  :host(.select-fill-solid:hover) {
+    --background: #{$background-color-step-100};
+    --border-color: #{$background-color-step-750};
+  }
+}
+
+/**
+ * Background and border should be
+ * much darker on focus.
+ */
+:host(.select-fill-solid.select-expanded),
+:host(.select-fill-solid.has-focus) {
+  --background: #{$background-color-step-150};
+  --border-color: var(--highlight-color);
+}
+
+:host(.select-fill-solid) .select-wrapper {
+  /**
+   * Only the top left and top right borders should.
+   * have a radius when using a solid fill.
+   */
+  @include border-radius(var(--border-radius), var(--border-radius), 0px, 0px);
+}
+
+// Select Label
+// ----------------------------------------------------------------
+
+:host(.label-floating.select-fill-solid) .label-text-wrapper {
+  /**
+   * Label text should not extend
+   * beyond the bounds of the select.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+// Select Icon
+// ----------------------------------------------------------------
+
+/**
+ * When the select has a solid fill and
+ * in an item, then the icon should
+ * take on the highlight color.
+ */
+:host(.in-item.select-expanded.select-fill-solid) .select-wrapper .select-icon,
+:host(.in-item.has-focus.select-fill-solid) .select-wrapper .select-icon,
+:host(.in-item.has-focus.ion-valid.select-fill-solid) .select-wrapper .select-icon,
+:host(.in-item.ion-touched.ion-invalid.select-fill-solid) .select-wrapper .select-icon {
+  color: var(--highlight-color);
+}

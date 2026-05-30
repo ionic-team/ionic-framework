@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Input OTP - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      h2 {
+        text-align: center;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+
+      button {
+        margin: 8px 2px !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Input OTP - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Default</h2>
+            <ion-input-otp> Didn't get a code? <a href="#">Resend the code</a> </ion-input-otp>
+            <ion-input-otp length="2"> Didn't get a code? <a href="#">Resend the code</a> </ion-input-otp>
+            <ion-input-otp id="numberValue" length="6">
+              Didn't get a code? <a href="#">Resend the code</a>
+            </ion-input-otp>
+            <ion-input-otp value="5893" length="8"> Didn't get a code? <a href="#">Resend the code</a> </ion-input-otp>
+          </div>
+
+          <div class="grid-item">
+            <h2>Types</h2>
+            <ion-input-otp class="input-otp-type"> Numbers only <span id="value"></span> </ion-input-otp>
+            <ion-input-otp class="input-otp-type" type="text">
+              Letters and numbers <span id="value"></span>
+            </ion-input-otp>
+            <ion-input-otp class="input-otp-type" type="text" pattern="[a-fA-F]">
+              Custom Pattern: a-f and A-F <span id="value"></span>
+            </ion-input-otp>
+            <ion-input-otp class="input-otp-type" type="text" pattern="[D-L]" autocapitalize="on">
+              Custom Pattern: D-L <span id="value"></span>
+            </ion-input-otp>
+          </div>
+
+          <div class="grid-item">
+            <h2>Disabled</h2>
+            <ion-input-otp value="1234" disabled>Description</ion-input-otp>
+            <ion-input-otp value="1234" fill="solid" disabled>Description</ion-input-otp>
+
+            <h2>Readonly</h2>
+            <ion-input-otp value="1234" readonly>Description</ion-input-otp>
+            <ion-input-otp value="1234" fill="solid" readonly>Description</ion-input-otp>
+          </div>
+
+          <div class="grid-item">
+            <h2>Invalid / Touched</h2>
+            <ion-input-otp class="ion-invalid ion-touched">Description</ion-input-otp>
+            <ion-input-otp fill="solid" class="ion-invalid ion-touched">Description</ion-input-otp>
+            <h2>Valid / Focused</h2>
+            <ion-input-otp class="ion-valid has-focus">Description</ion-input-otp>
+            <ion-input-otp fill="solid" class="ion-valid has-focus">Description</ion-input-otp>
+          </div>
+        </div>
+      </ion-content>
+
+      <script>
+        const numberValue = document.getElementById('numberValue');
+        numberValue.value = 123;
+
+        const inputOtpTypes = document.querySelectorAll('.input-otp-type');
+
+        // Display value under the different input types on ionInput
+        inputOtpTypes.forEach((inputOtpType) => {
+          inputOtpType.addEventListener('ionInput', (event) => {
+            const displayValue = event.detail.value != '' ? `(value: ${event.detail.value})` : '';
+            inputOtpType.querySelector('#value').textContent = displayValue;
+          });
+        });
+
+        document.addEventListener('ionChange', (ev) => {
+          console.log('ionChange', ev);
+        });
+
+        document.addEventListener('ionInput', (ev) => {
+          console.log('ionInput', ev);
+        });
+
+        document.addEventListener('ionComplete', (ev) => {
+          console.log('ionComplete', ev);
+        });
+
+        document.addEventListener('ionFocus', (ev) => {
+          console.log('ionFocus', ev);
+        });
+
+        document.addEventListener('ionBlur', (ev) => {
+          console.log('ionBlur', ev);
+        });
+      </script>
+    </ion-app>
+  </body>
+</html>

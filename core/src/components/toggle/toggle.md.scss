@@ -1,0 +1,78 @@
+@import "./toggle";
+@import "./toggle.md.vars";
+
+// Material Design Toggle
+// -----------------------------------------
+
+:host {
+  --track-background: #{$toggle-md-track-background-color-off};
+  --track-background-checked: #{ion-color(primary, base, $toggle-md-track-background-color-alpha-on)};
+  --border-radius: #{$toggle-md-track-height};
+  --handle-background: #{$toggle-md-handle-background-color-off};
+  --handle-background-checked: #{ion-color(primary, base)};
+  --handle-border-radius: #{$toggle-md-handle-border-radius};
+  --handle-box-shadow: #{$toggle-md-handle-box-shadow};
+  --handle-width: #{$toggle-md-handle-width};
+  --handle-height: #{$toggle-md-handle-height};
+  --handle-max-height: #{$toggle-md-handle-max-height};
+  --handle-spacing: 0;
+  --handle-transition: #{$toggle-md-transition};
+}
+
+// Toggle Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper .toggle-icon {
+  width: $toggle-md-track-width;
+  height: $toggle-md-track-height;
+}
+
+:host(.ion-color.toggle-checked) .toggle-icon {
+  background: current-color(base, $toggle-md-track-background-color-alpha-on);
+}
+
+:host(.ion-color.toggle-checked) .toggle-inner {
+  background: current-color(base);
+}
+
+:host(.toggle-checked) .toggle-inner {
+  color: var(--ion-color-contrast, $toggle-md-on-off-label-checked-color);
+}
+
+// Material Design Toggle Background Track: Unchecked
+// ----------------------------------------------------------
+
+.toggle-icon {
+  transition: background-color $toggle-md-transition-duration;
+}
+
+// Material Design Toggle Inner Knob: Unchecked
+// ----------------------------------------------------------
+
+.toggle-inner {
+  will-change: background-color, transform;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: $toggle-md-on-off-label-color;
+}
+
+.toggle-inner .toggle-switch-icon {
+  @include padding(1px);
+
+  width: 100%;
+  height: 100%;
+}
+
+// Material Design Toggle: Disabled
+// ----------------------------------------------------------
+// The toggle and label should use the
+// same opacity and match the other form
+// controls
+
+:host(.toggle-disabled) {
+  opacity: $toggle-md-disabled-opacity;
+}

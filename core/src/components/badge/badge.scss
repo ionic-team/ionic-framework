@@ -1,0 +1,54 @@
+@import "./badge.vars";
+
+// Badge
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the badge
+   * @prop --color: Text color of the badge
+   *
+   * @prop --padding-top: Top padding of the badge
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the badge
+   * @prop --padding-bottom: Bottom padding of the badge
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the badge
+   */
+  --background: #{ion-color(primary, base)};
+  --color: #{ion-color(primary, contrast)};
+  --padding-top: #{$badge-padding-top};
+  --padding-end: #{$badge-padding-end};
+  --padding-bottom: #{$badge-padding-bottom};
+  --padding-start: #{$badge-padding-start};
+
+  @include font-smoothing();
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  display: inline-block;
+
+  min-width: $badge-min-width;
+
+  background: var(--background);
+  color: var(--color);
+
+  font-family: $font-family-base;
+  font-size: $badge-font-size;
+  font-weight: $badge-font-weight;
+
+  line-height: 1;
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  contain: content;
+  vertical-align: baseline;
+}
+
+:host(.ion-color) {
+  background: #{current-color(base)};
+  color: #{current-color(contrast)};
+}
+
+:host(:empty) {
+  display: none;
+}

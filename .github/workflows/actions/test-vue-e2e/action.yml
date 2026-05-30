@@ -1,0 +1,46 @@
+name: 'Test Vue E2E'
+description: 'Test Vue E2E'
+inputs:
+  app:
+    description: 'The specific test application'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+      with:
+        node-version: 24.x
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-vue
+        path: ./packages/vue
+        filename: VueBuild.zip
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-vue-router
+        path: ./packages/vue-router
+        filename: VueRouterBuild.zip
+    - name: 🧪 Create Test App
+      run: ./build.sh ${{ inputs.app }}
+      shell: bash
+      working-directory: ./packages/vue/test
+    - name: 📦 Install Dependencies
+      run: npm install
+      shell: bash
+      working-directory: ./packages/vue/test/build/${{ inputs.app }}
+    - name: 🔄 Sync
+      run: npm run sync
+      shell: bash
+      working-directory: ./packages/vue/test/build/${{ inputs.app }}
+    - name: 🧪 Run Spec Tests
+      run: npm run test:unit
+      shell: bash
+      working-directory: ./packages/vue/test/build/${{ inputs.app }}
+    - name: 🧪 Run E2E Tests
+      run: npm run test:e2e
+      shell: bash
+      working-directory: ./packages/vue/test/build/${{ inputs.app }}

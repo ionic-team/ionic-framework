@@ -1,0 +1,45 @@
+{
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit": true,
+    "skipTemplateCodegen": true,
+    "fullTemplateTypeCheck": false,
+    "enableResourceInlining": true,
+    "compilationMode": "partial"
+  },
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
+    "declaration": true,
+    "declarationDir": "dist",
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["dom", "es2017"],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "build/es2015",
+    "pretty": true,
+    "removeComments": false,
+    "importHelpers": true,
+    "rootDir": "./",
+    "strictPropertyInitialization": false,
+    "target": "es2015",
+    "baseUrl": ".",
+    "plugins": [
+      {
+        "name": "typescript-eslint-language-service"
+      }
+    ],
+    "paths": {
+      "@ionic/angular/common": ["common/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "src/schematics"],
+  "files": ["src/index.ts", "common/src/index.ts", "standalone/src/index.ts"]
+}

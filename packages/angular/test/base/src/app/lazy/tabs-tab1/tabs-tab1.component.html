@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h1>Welcome to Tab1</h1>
+  <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="one">
+      <ion-label>One</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="two">
+      <ion-label>Two</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <p>
+    Segment changed: <span class="segment-changed">{{changed}}</span>
+  </p>
+  <p>
+    <ion-button routerLink="/lazy/tabs/account/nested/1" id="goto-tab1-page2">Go to Page 2</ion-button>
+    <ion-button routerLink="/lazy/tabs/account/nested/1" [queryParams]="{search:'hello'}" fragment="fragment"
+      id="goto-nested-page1-with-query-params">Go to Page 2 with Query Params</ion-button>
+    <ion-button routerLink="/lazy/tabs/lazy/nested" id="goto-tab3-page2">Go to Tab 3 - Page 2</ion-button>
+    <ion-button routerLink="/lazy/nested-outlet/page" id="goto-nested-page1">Go to nested</ion-button>
+    <ion-button (click)="navCtrl.pop()" id="goto-previous-page">Go to Previous Page</ion-button>
+  </p>
+</ion-content>

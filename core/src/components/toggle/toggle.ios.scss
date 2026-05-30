@@ -1,0 +1,173 @@
+@import "./toggle";
+@import "./toggle.ios.vars";
+
+// iOS Toggle
+// -----------------------------------------
+
+:host {
+  --track-background: #{$toggle-ios-background-color-off};
+  --track-background-checked: #{ion-color(primary, base)};
+  --border-radius: #{$toggle-ios-border-radius};
+  --handle-background: #{$toggle-ios-handle-background-color};
+  --handle-background-checked: #{$toggle-ios-handle-background-color};
+  --handle-border-radius: #{$toggle-ios-handle-border-radius};
+  --handle-box-shadow: #{$toggle-ios-handle-box-shadow};
+  --handle-height: #{$toggle-ios-handle-height};
+  --handle-max-height: #{$toggle-ios-handle-max-height};
+  --handle-width: #{$toggle-ios-handle-width};
+  --handle-spacing: #{$toggle-ios-border-width};
+  --handle-transition: #{$toggle-ios-transition};
+}
+
+// Toggle Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper .toggle-icon {
+  width: $toggle-ios-width;
+  height: $toggle-ios-height;
+
+  /**
+   * The handle box shadow should not
+   * overflow outside of the track container.
+   */
+  overflow: hidden;
+}
+
+:host(.ion-color.toggle-checked) .toggle-icon {
+  background: current-color(base);
+}
+
+:host(.toggle-activated) .toggle-switch-icon {
+  opacity: 0;
+}
+
+// iOS Toggle Background Track: Unchecked
+// ----------------------------------------------------------
+
+.toggle-icon {
+  // Needed to prevent visual glitch in safari/iOS
+  // See https://github.com/ionic-team/ionic-framework/issues/14626
+  transform: translate3d(0, 0, 0);
+
+  transition: background-color $toggle-ios-transition-duration;
+}
+
+// iOS Toggle Inner Knob: Unchecked
+// ----------------------------------------------------------
+
+.toggle-inner {
+  will-change: transform;
+}
+
+// iOS Toggle On/Off Labels
+// ----------------------------------------------------------
+
+.toggle-switch-icon {
+  position: absolute;
+
+  top: 50%;
+
+  width: 11px;
+  height: 11px;
+
+  transform: translateY(-50%);
+
+  transition: opacity $toggle-ios-transition-duration, color $toggle-ios-transition-duration;
+}
+
+.toggle-switch-icon {
+  position: absolute;
+
+  color: #{ion-color(dark, base)};
+}
+
+:host(.toggle-ltr) .toggle-switch-icon {
+  /* stylelint-disable-next-line property-disallowed-list */
+  right: 6px;
+}
+
+:host(.toggle-rtl) .toggle-switch-icon {
+  /* stylelint-disable property-disallowed-list */
+  right: initial;
+  left: 6px;
+  /* stylelint-enable property-disallowed-list */
+}
+
+:host(.toggle-checked) .toggle-switch-icon.toggle-switch-icon-checked {
+  // The color contrast of iOS default on/off labels fails to meet WCAG 2.0.
+  // We use Ionic's color contrast variables to meet the WCAG 2.0 standard (AAA).
+  color: var(--ion-color-contrast, $toggle-ios-on-off-label-checked-color);
+}
+
+:host(.toggle-checked) .toggle-switch-icon:not(.toggle-switch-icon-checked) {
+  opacity: 0;
+}
+
+.toggle-switch-icon-checked {
+  position: absolute;
+
+  width: 15px;
+  height: 15px;
+
+  transform: translateY(-50%) rotate(90deg);
+}
+
+:host(.toggle-ltr) .toggle-switch-icon-checked {
+  /* stylelint-disable property-disallowed-list */
+  right: initial;
+  left: 4px;
+  /* stylelint-enable property-disallowed-list */
+}
+
+:host(.toggle-rtl) .toggle-switch-icon-checked {
+  /* stylelint-disable-next-line property-disallowed-list */
+  right: 4px;
+}
+
+// iOS Toggle Background Oval: Activated or Checked
+// ----------------------------------------------------------
+
+:host(.toggle-activated) .toggle-icon::before,
+:host(.toggle-checked) .toggle-icon::before {
+  transform: scale3d(0, 0, 0);
+}
+
+// iOS Toggle Background Oval: Activated and Checked
+// ----------------------------------------------------------
+
+:host(.toggle-activated.toggle-checked) .toggle-inner::before {
+  transform: scale3d(0, 0, 0);
+}
+
+// iOS Toggle Inner Knob: Activated and Unchecked
+// ----------------------------------------------------------
+
+:host(.toggle-activated) .toggle-inner {
+  width: calc(var(--handle-width) + 6px);
+}
+
+// iOS Toggle Inner Knob: Activated and Checked
+// ----------------------------------------------------------
+
+// when pressing down on the toggle and it IS checked
+// the knob is wider so move it left by 6px in the transform
+
+:host(.toggle-ltr.toggle-activated.toggle-checked) .toggle-icon-wrapper {
+  // transform by 100% - handle width - 6px (width addition on activated)
+  transform: translate3d(calc(100% - var(--handle-width) - 6px), 0, 0);
+}
+
+:host(.toggle-rtl.toggle-activated.toggle-checked) .toggle-icon-wrapper {
+  // transform by -100% + handle width + 6px (width addition on activated)
+  transform: translate3d(calc(-100% + var(--handle-width) + 6px), 0, 0);
+}
+
+// iOS Toggle: Disabled
+// ----------------------------------------------------------
+// The toggle and label should use the
+// same opacity and match the other form
+// controls
+
+:host(.toggle-disabled) {
+  opacity: $toggle-ios-disabled-opacity;
+}

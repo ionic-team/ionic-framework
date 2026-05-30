@@ -1,0 +1,626 @@
+@import "./input.vars";
+
+// Input
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the input
+   *
+   * @prop --color: Color of the input text
+   *
+   * @prop --padding-top: Top padding of the input
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the input
+   * @prop --padding-bottom: Bottom padding of the input
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the input
+   *
+   * @prop --placeholder-color: Color of the input placeholder text
+   * @prop --placeholder-font-style: Font style of the input placeholder text
+   * @prop --placeholder-font-weight: Font weight of the input placeholder text
+   * @prop --placeholder-opacity: Opacity of the input placeholder text
+   *
+   * @prop --highlight-height: The height of the highlight on the input. Only applies to md mode.
+   * @prop --highlight-color-focused: The color of the highlight on the input when focused
+   * @prop --highlight-color-valid: The color of the highlight on the input when valid
+   * @prop --highlight-color-invalid: The color of the highlight on the input when invalid
+   *
+   * @prop --border-color: Color of the border below the input when using helper text, error text, or counter
+   * @prop --border-radius: Radius of the input. A large radius may display unevenly when using fill="outline"; if needed, use shape="round" instead or increase --padding-start.
+   * @prop --border-style: Style of the border below the input when using helper text, error text, or counter
+   * @prop --border-width: Width of the border below the input when using helper text, error text, or counter
+   */
+  --placeholder-color: initial;
+  --placeholder-font-style: initial;
+  --placeholder-font-weight: initial;
+  --placeholder-opacity: #{$placeholder-opacity};
+  --padding-top: 0px;
+  --padding-end: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
+  --background: transparent;
+  --color: initial;
+  --border-style: solid;
+  --highlight-color-focused: #{ion-color(primary, base)};
+  --highlight-color-valid: #{ion-color(success, base)};
+  --highlight-color-invalid: #{ion-color(danger, base)};
+
+  /**
+   * This is a private API that is used to switch
+   * out the highlight color based on the state
+   * of the component without having to write
+   * different selectors for different fill variants.
+   */
+  --highlight-color: var(--highlight-color-focused);
+
+  display: block;
+
+  position: relative;
+
+  width: 100%;
+
+  min-height: 44px;
+
+  /* stylelint-disable-next-line all */
+  padding: 0 !important;
+
+  color: var(--color);
+
+  font-family: $font-family-base;
+
+  z-index: $z-index-item-input;
+}
+
+:host-context(ion-item)[slot="start"],
+:host-context(ion-item)[slot="end"] {
+  width: auto;
+}
+
+:host(.ion-color) {
+  --highlight-color-focused: #{current-color(base)};
+}
+
+// Input Wrapper
+// ----------------------------------------------------------------
+
+/**
+ * Since the label sits on top of the element,
+ * the component needs to be taller otherwise the
+ * label will appear too close to the input text.
+ */
+:host(.input-label-placement-floating),
+:host(.input-label-placement-stacked) {
+  min-height: 56px;
+}
+
+// Native Text Input
+// --------------------------------------------------
+
+.native-input {
+  @include padding(0, 0, 0, 0);
+  @include text-inherit();
+
+  display: inline-block;
+
+  position: relative;
+
+  flex: 1;
+
+  width: 100%;
+  max-width: 100%;
+
+  // Ensure the input fills the full height of the native wrapper.
+  // This prevents the wrapper from being the click event target.
+  height: 100%;
+  max-height: 100%;
+
+  border: 0;
+
+  outline: none;
+
+  background: transparent;
+
+  box-sizing: border-box;
+  appearance: none;
+
+  /**
+   * This ensures the input
+   * remains on top of any decoration
+   * that we render (particularly the
+   * outline border when fill="outline").
+   * If we did not do this then Axe would
+   * be unable to determine the color
+   * contrast of the input.
+   */
+  z-index: 1;
+
+  &::placeholder {
+    color: var(--placeholder-color);
+
+    font-family: inherit;
+    font-style: var(--placeholder-font-style);
+    font-weight: var(--placeholder-font-weight);
+
+    opacity: var(--placeholder-opacity);
+  }
+
+  &:-webkit-autofill {
+    background-color: transparent;
+  }
+
+  &:invalid {
+    box-shadow: none;
+  }
+
+  &::-ms-clear {
+    display: none;
+  }
+}
+
+// Input Cover: Unfocused
+// --------------------------------------------------
+// The input cover is the div that actually receives the
+// tap/click event when scroll assist is configured to true.
+// This make it so the native input element is not clickable.
+// This will only show when the scroll assist is configured
+// otherwise the .input-cover will not be rendered at all
+// The input cover is not clickable when the input is disabled
+.cloned-input {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  // Reset height since absolute positioning with top/bottom handles sizing
+  height: auto;
+  max-height: none;
+
+  pointer-events: none;
+}
+
+/**
+ * The cloned input needs to be disabled on
+ * Android otherwise the viewport will still
+ * shift when running scroll assist.
+ */
+.cloned-input:disabled {
+  opacity: 1;
+}
+
+// Clear Input Icon
+// --------------------------------------------------
+
+.input-clear-icon {
+  @include margin(auto);
+  @include padding(0);
+  @include background-position(center);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+
+  border: 0;
+
+  outline: none;
+
+  background-color: transparent;
+  background-repeat: no-repeat;
+
+  color: $text-color-step-400;
+
+  visibility: hidden;
+  appearance: none;
+}
+
+:host(.in-item-color) .input-clear-icon {
+  color: inherit;
+}
+
+/**
+ * Normally, we would not want to use :focus
+ * here because that would mean tapping the button
+ * on mobile would focus it (and keep it focused).
+ * However, the clear button always disappears after
+ * being activated, so we never get to that state.
+ */
+.input-clear-icon:focus {
+  opacity: 0.5;
+}
+
+:host(.has-value) .input-clear-icon {
+  visibility: visible;
+}
+
+// Input Wrapper
+// ----------------------------------------------------------------
+
+.input-wrapper {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include border-radius(var(--border-radius));
+
+  display: flex;
+
+  position: relative;
+
+  flex-grow: 1;
+
+  align-items: stretch;
+
+  height: inherit;
+
+  min-height: inherit;
+
+  transition: background-color 15ms linear;
+
+  background: var(--background);
+
+  line-height: normal;
+}
+
+// Input Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper {
+  display: flex;
+
+  position: relative;
+
+  flex-grow: 1;
+
+  // ensure start/end slot content is vertically centered
+  align-items: center;
+
+  width: 100%;
+}
+
+// Input Highlight
+// ----------------------------------------------------------------
+
+:host(.ion-touched.ion-invalid) {
+  --highlight-color: var(--highlight-color-invalid);
+}
+
+/**
+ * The component highlight is only shown
+ * on focus, so we can safely set the valid
+ * color state when valid. If we
+ * set it when .has-focus is present then
+ * the highlight color would change
+ * from the valid color to the component's
+ * color during the transition after the
+ * component loses focus.
+ */
+:host(.ion-valid) {
+  --highlight-color: var(--highlight-color-valid);
+}
+
+// Input Bottom Content
+// ----------------------------------------------------------------
+
+.input-bottom {
+  /**
+   * The bottom content should take on the start and end
+   * padding so it is always aligned with either the label
+   * or the start of the text input.
+   */
+  @include padding(5px, var(--padding-end), 0, var(--padding-start));
+
+  display: flex;
+
+  justify-content: space-between;
+
+  border-top: var(--border-width) var(--border-style) var(--border-color);
+
+  font-size: dynamic-font(12px);
+
+  white-space: normal;
+}
+
+/**
+ * If the input has a validity state, the
+ * border and label should reflect that as a color.
+ * The invalid state should show if the input is
+ * invalid and has already been touched.
+ * The valid state should show if the input
+ * is valid, has already been touched, and
+ * is currently focused. Do not show the valid
+ * highlight when the input is blurred.
+ */
+:host(.has-focus.ion-valid),
+:host(.ion-touched.ion-invalid) {
+  --border-color: var(--highlight-color);
+}
+
+// Input Hint Text
+// ----------------------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is
+ * present on the input. Otherwise the helper text should
+ * be shown.
+ */
+.input-bottom .error-text {
+  display: none;
+
+  color: var(--highlight-color-invalid);
+}
+
+.input-bottom .helper-text {
+  display: block;
+
+  color: $text-color-step-300;
+}
+
+:host(.ion-touched.ion-invalid) .input-bottom .error-text {
+  display: block;
+}
+
+:host(.ion-touched.ion-invalid) .input-bottom .helper-text {
+  display: none;
+}
+
+// Input Max Length Counter
+// ----------------------------------------------------------------
+
+.input-bottom .counter {
+  /**
+   * Counter should always be at
+   * the end of the container even
+   * when no helper/error texts are used.
+   */
+  @include margin-horizontal(auto, null);
+
+  color: $text-color-step-300;
+
+  white-space: nowrap;
+
+  padding-inline-start: 16px;
+}
+
+// Input Native
+// ----------------------------------------------------------------
+
+:host(.has-focus) input {
+  caret-color: var(--highlight-color);
+}
+
+// Input Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  /**
+   * This causes the label to take up
+   * the entire height of its container
+   * while still keeping the text centered.
+   */
+  display: flex;
+
+  align-items: center;
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the input.
+   * However, we do not set the max
+   * width to 100% because then
+   * only the label would show and users
+   * would not be able to see what they are typing.
+   */
+  max-width: 200px;
+
+  transition: color 150ms cubic-bezier(.4, 0, .2, 1), transform 150ms cubic-bezier(.4, 0, .2, 1);
+
+  /**
+   * This ensures that double tapping this text
+   * clicks the <label> and focuses the input
+   * when a screen reader is enabled.
+   */
+  pointer-events: none;
+}
+
+/**
+ * We need to use two elements instead of
+ * one. The .label-text-wrapper is responsible
+ * for centering the label text vertically regardless
+ * of the input height using flexbox.
+ *
+ * The .label-text element is responsible for controlling
+ * overflow when label-placement="fixed".
+ * We want the ellipses to show up when the
+ * fixed label overflows, but text-overflow: ellipsis only
+ * works on block-level elements. A flex item is
+ * considered blockified (https://www.w3.org/TR/css-display-3/#blockify).
+ */
+.label-text,
+::slotted([slot="label"]) {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+/**
+ * If no label text is placed into the slot
+ * then the element should be hidden otherwise
+ * there will be additional margins added.
+ */
+.label-text-wrapper-hidden,
+.input-outline-notch-hidden {
+  display: none;
+}
+
+.input-wrapper input {
+  /**
+   * When the floating label appears on top of the
+   * input, we need to fade the input out so that the
+   * label does not overlap with the placeholder.
+   */
+  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Input Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL.
+ */
+:host(.input-label-placement-start) .input-wrapper {
+  flex-direction: row;
+}
+
+:host(.input-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, $form-control-label-margin, 0, 0);
+}
+
+// Input Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the input in LTR and
+ * on the left in RTL.
+ */
+:host(.input-label-placement-end) .input-wrapper {
+  flex-direction: row-reverse;
+}
+
+/**
+ * The margin between the label and
+ * the input should be on the start
+ * when the label sits at the end.
+ */
+:host(.input-label-placement-end) .label-text-wrapper {
+  @include margin(0, 0, 0, $form-control-label-margin);
+}
+
+// Input Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.input-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, $form-control-label-margin, 0, 0);
+}
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.input-label-placement-fixed) .label-text {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+// Input Label Placement - Stacked and Floating
+// ----------------------------------------------------------------
+
+/**
+ * Stacked: Label sits above the input and is scaled down.
+ * Floating: Label sits over the input when the input has no
+ * value and is blurred. Label sits above the input and is scaled
+ * down when the input is focused or has a value.
+ *
+ */
+:host(.input-label-placement-stacked) .input-wrapper,
+:host(.input-label-placement-floating) .input-wrapper {
+  flex-direction: column;
+  align-items: start;
+}
+
+/**
+ * Ensures that the label animates
+ * up and to the left in LTR or
+ * up and to the right in RTL.
+ */
+:host(.input-label-placement-stacked) .label-text-wrapper,
+:host(.input-label-placement-floating) .label-text-wrapper {
+  @include transform-origin(start, top);
+
+  max-width: 100%;
+
+  /**
+   * The 2 ensures the label
+   * remains on top of any browser
+   * autofill background too.
+   */
+  z-index: 2;
+}
+
+/**
+ * Ensures the input does not
+ * overlap the label.
+ */
+:host(.input-label-placement-stacked) input,
+:host(.input-label-placement-floating) input {
+  @include margin(1px, 0, 0, 0);
+}
+
+/**
+ * This makes the label sit over the input
+ * when the input is blurred and has no value.
+ */
+:host(.input-label-placement-floating) .label-text-wrapper {
+  @include transform(translateY(100%), scale(1));
+}
+
+/**
+ * The input should be hidden when the label
+ * is on top of the input. This prevents the label
+ * from overlapping any placeholder value.
+ */
+:host(.input-label-placement-floating) input {
+  opacity: 0;
+}
+
+:host(.has-focus.input-label-placement-floating) input,
+:host(.has-value.input-label-placement-floating) input {
+  opacity: 1;
+}
+
+/**
+ * This makes the label sit above the input.
+ */
+:host(.label-floating) .label-text-wrapper {
+  @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the input.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+::slotted([slot="start"]:last-of-type) {
+  margin-inline-end: $form-control-label-margin;
+  margin-inline-start: 0;
+}
+
+::slotted([slot="end"]:first-of-type) {
+  margin-inline-start: $form-control-label-margin;
+  margin-inline-end: 0;
+}
+
+/**
+ * The input password toggle component should be hidden when the input is readonly/disabled
+ * because it is not possible to edit a password.
+ */
+:host([disabled]) ::slotted(ion-input-password-toggle),
+:host([readonly]) ::slotted(ion-input-password-toggle) {
+  visibility: hidden;
+}

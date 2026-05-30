@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Item - Icons</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Item Icons</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content">
+        <ion-item color="primary" lines="none">
+          <ion-label> ion-item w/ color </ion-label>
+          <ion-icon name="trash" slot="start"></ion-icon>
+        </ion-item>
+
+        <ion-item detail>
+          <ion-label> ion-item [detail] attr </ion-label>
+        </ion-item>
+
+        <ion-item href="#">
+          <ion-label> a[ion-item] w/ push detail </ion-label>
+        </ion-item>
+
+        <ion-item onclick="testClick(event)">
+          <ion-label> button[ion-item] w/ push detail </ion-label>
+        </ion-item>
+
+        <ion-item detail detail-icon="arrow-down">
+          <ion-label>Detail with icon arrow down</ion-label>
+        </ion-item>
+
+        <ion-item detail detail-icon="home">
+          <ion-label>Detail with icon home</ion-label>
+        </ion-item>
+
+        <ion-item detail detail-icon="/src/components/item/test/icons/heart-broken.svg">
+          <ion-label>Detail with custom icon svg</ion-label>
+        </ion-item>
+
+        <ion-item href="#">
+          <ion-label> a[ion-item] w/ right side default icon </ion-label>
+          <ion-icon name="information-circle" slot="end"></ion-icon>
+        </ion-item>
+
+        <ion-item href="#">
+          <ion-label> a[ion-item] w/ right side large icon </ion-label>
+          <ion-icon name="information-circle" size="large" slot="end"></ion-icon>
+        </ion-item>
+
+        <ion-item href="#">
+          <ion-label> a[ion-item] w/ right side small icon </ion-label>
+          <ion-icon name="information-circle" size="small" slot="end"></ion-icon>
+        </ion-item>
+
+        <ion-item onclick="testClick(event)">
+          <ion-icon name="star" slot="start"></ion-icon>
+          <ion-label> button[ion-item] w/ left side icon </ion-label>
+        </ion-item>
+
+        <ion-item onclick="testClick(event)" detail="false">
+          <ion-icon name="flag" slot="start"></ion-icon>
+          <ion-label> button[ion-item][detail="false"] </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="flag" slot="start"></ion-icon>
+          <ion-label> ion-item w/ both side icons </ion-label>
+          <ion-icon name="checkmark" slot="end"></ion-icon>
+        </ion-item>
+
+        <ion-item href="#">
+          <ion-label> a[ion-item] w/ two right side icons </ion-label>
+          <ion-icon name="checkmark-circle" slot="end"></ion-icon>
+          <ion-icon name="shuffle" slot="end"></ion-icon>
+        </ion-item>
+
+        <ion-item onclick="testClick(event)">
+          <ion-icon name="clipboard" slot="start"></ion-icon>
+          <ion-icon name="remove-circle" slot="start"></ion-icon>
+          <ion-label> button[ion-item] w/ two left side icons </ion-label>
+        </ion-item>
+
+        <ion-item onclick="testClick(event)">
+          <ion-label> Red Balloons </ion-label>
+          <ion-badge slot="end">99</ion-badge>
+        </ion-item>
+
+        <ion-item>
+          <ion-label> Problems </ion-label>
+          <ion-badge slot="end">99</ion-badge>
+        </ion-item>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      function testClick(ev) {
+        console.log('CLICK!', ev.target.tagName, ev.target.textContent.trim());
+      }
+    </script>
+  </body>
+</html>

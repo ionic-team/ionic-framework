@@ -1,0 +1,33 @@
+@import "./footer";
+@import "./footer.ios.vars";
+
+// iOS Footer
+// --------------------------------------------------
+
+.footer-ios ion-toolbar:first-of-type {
+  --border-width: #{$hairlines-width} 0 0;
+}
+
+@supports (backdrop-filter: blur(0)) {
+  .footer-background {
+    @include position(0, 0, 0, 0);
+
+    position: absolute;
+
+    backdrop-filter: $footer-ios-translucent-filter;
+  }
+  .footer-translucent-ios ion-toolbar {
+    --opacity: .8;
+  }
+}
+
+.footer-ios.ion-no-border ion-toolbar:first-of-type {
+  --border-width: 0;
+}
+
+// iOS Footer - Collapse Fade
+// --------------------------------------------------
+
+.footer-collapse-fade ion-toolbar {
+  --opacity-scale: inherit;
+}

@@ -1,0 +1,6 @@
+dist
+scripts
+test
+proxies.ts
+src/directives/proxies-list.ts
+**/*/angular-component-lib/utils.ts

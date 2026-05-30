@@ -1,0 +1,29 @@
+@import "./col.vars";
+
+// Column
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --ion-grid-columns: The number of total Columns in the Grid
+   * @prop --ion-grid-column-padding: Padding for the Column
+   * @prop --ion-grid-column-padding-xs: Padding for the Column on xs screens and up
+   * @prop --ion-grid-column-padding-sm: Padding for the Column on sm screens and up
+   * @prop --ion-grid-column-padding-md: Padding for the Column on md screens and up
+   * @prop --ion-grid-column-padding-lg: Padding for the Column on lg screens and up
+   * @prop --ion-grid-column-padding-xl: Padding for the Column on xl screens and up
+   */
+  @include make-breakpoint-padding($grid-column-paddings);
+  @include margin(0);
+
+  box-sizing: border-box;
+
+  position: relative;
+
+  flex-basis: 0;
+  flex-grow: 1;
+
+  width: 100%;
+  max-width: 100%;
+  min-height: 1px; // Prevent columns from collapsing when empty
+}

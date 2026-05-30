@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>List - Lines</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>List - Lines</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-list lines="full">
+          <ion-list-header>
+            <ion-label> Lines: full </ion-label>
+          </ion-list-header>
+          <ion-item><ion-label>Pokémon Yellow</ion-label></ion-item>
+          <ion-item><ion-label>Super Metroid</ion-label></ion-item>
+          <ion-item><ion-label>Mega Man X</ion-label></ion-item>
+          <ion-item><ion-label>The Legend of Zelda</ion-label></ion-item>
+          <ion-item><ion-label>Pac-Man</ion-label></ion-item>
+        </ion-list>
+
+        <ion-list lines="inset">
+          <ion-list-header>
+            <ion-label> Lines: inset </ion-label>
+          </ion-list-header>
+          <ion-item><ion-label>Super Mario World</ion-label></ion-item>
+          <ion-item><ion-label>Street Fighter II</ion-label></ion-item>
+          <ion-item><ion-label>Half Life</ion-label></ion-item>
+          <ion-item><ion-label>Portal</ion-label></ion-item>
+        </ion-list>
+
+        <ion-list lines="none">
+          <ion-list-header>
+            <ion-label> Lines: none </ion-label>
+          </ion-list-header>
+          <ion-item><ion-label>Star Fox</ion-label></ion-item>
+          <ion-item><ion-label>Tetris</ion-label></ion-item>
+          <ion-item><ion-label>Donkey Kong III</ion-label></ion-item>
+          <ion-item><ion-label>Goldeneye 007</ion-label></ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Radio Group - Supporting Text</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-gap: 20px;
+        max-width: 800px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+      }
+      ion-radio {
+        width: 100%;
+      }
+      .custom .helper-text {
+        color: green;
+      }
+      .custom .error-text {
+        color: purple;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Radio Group - Supporting Text</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Supporting Text</h2>
+            <ion-radio-group value="1">
+              <ion-radio value="1">Label</ion-radio>
+              <ion-radio value="2">Label</ion-radio>
+              <ion-radio value="3">Label</ion-radio>
+              <ion-radio value="4">Label</ion-radio>
+              <ion-radio value="5">Label</ion-radio>
+            </ion-radio-group>
+          </div>
+
+          <div class="grid-item">
+            <h2>Helper Text</h2>
+            <ion-radio-group value="1" helper-text="Helper text" error-text="Error text">
+              <ion-radio value="1">Label</ion-radio>
+              <ion-radio value="2">Label</ion-radio>
+              <ion-radio value="3">Label</ion-radio>
+              <ion-radio value="4">Label</ion-radio>
+              <ion-radio value="5">Label</ion-radio>
+            </ion-radio-group>
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text</h2>
+            <ion-radio-group
+              value="1"
+              helper-text="Helper text"
+              error-text="Error text"
+              class="ion-invalid ion-touched"
+            >
+              <ion-radio value="1">Label</ion-radio>
+              <ion-radio value="2">Label</ion-radio>
+              <ion-radio value="3">Label</ion-radio>
+              <ion-radio value="4">Label</ion-radio>
+              <ion-radio value="5">Label</ion-radio>
+            </ion-radio-group>
+          </div>
+
+          <div class="grid-item">
+            <ion-list>
+              <ion-list-header>List</ion-list-header>
+              <ion-radio-group value="1">
+                <ion-item>
+                  <ion-radio value="1">Label</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-radio value="2">Label</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-radio value="3">Label</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-radio value="4">Label</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-radio value="5">Label</ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </div>
+
+          <div class="grid-item">
+            <ion-list>
+              <ion-list-header>Supporting Text: List</ion-list-header>
+              <ion-radio-group value="1" helper-text="Helper text" error-text="Error text">
+                <ion-item>
+                  <ion-radio value="1">Label</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-radio value="2">Label</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-radio value="3">Label</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-radio value="4">Label</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-radio value="5">Label</ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </div>
+
+          <div class="grid-item">
+            <ion-list>
+              <ion-list-header>Error Text: List</ion-list-header>
+              <ion-radio-group
+                value="1"
+                helper-text="Helper text"
+                error-text="Error text"
+                class="ion-invalid ion-touched"
+              >
+                <ion-item>
+                  <ion-radio value="1">Label</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-radio value="2">Label</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-radio value="3">Label</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-radio value="4">Label</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-radio value="5">Label</ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </div>
+
+          <div class="grid-item">
+            <h2>Helper Text: Custom</h2>
+            <ion-radio-group value="1" helper-text="Helper text" error-text="Error text" class="custom">
+              <ion-radio value="1">Label</ion-radio>
+              <ion-radio value="2">Label</ion-radio>
+              <ion-radio value="3">Label</ion-radio>
+              <ion-radio value="4">Label</ion-radio>
+              <ion-radio value="5">Label</ion-radio>
+            </ion-radio-group>
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text: Custom</h2>
+            <ion-radio-group
+              value="1"
+              helper-text="Helper text"
+              error-text="Error text"
+              class="custom ion-invalid ion-touched"
+            >
+              <ion-radio value="1">Label</ion-radio>
+              <ion-radio value="2">Label</ion-radio>
+              <ion-radio value="3">Label</ion-radio>
+              <ion-radio value="4">Label</ion-radio>
+              <ion-radio value="5">Label</ion-radio>
+            </ion-radio-group>
+          </div>
+        </div>
+
+        <button onclick="toggleValid()" class="expand">Toggle error</button>
+
+        <script>
+          const radioGroups = document.querySelectorAll('ion-radio-group[helper-text]');
+
+          function toggleValid() {
+            radioGroups.forEach((radioGroup) => {
+              radioGroup.classList.toggle('ion-invalid');
+              radioGroup.classList.toggle('ion-touched');
+            });
+          }
+        </script>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

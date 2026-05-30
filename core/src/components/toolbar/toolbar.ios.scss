@@ -1,0 +1,92 @@
+@import "./toolbar";
+@import "./toolbar.ios.vars";
+
+// iOS Toolbar
+// --------------------------------------------------
+
+:host {
+  --background: #{$toolbar-ios-background};
+  --color: #{$toolbar-ios-color};
+  --border-color: #{$toolbar-ios-border-color};
+  --padding-top: #{$toolbar-ios-padding-top};
+  --padding-bottom: #{$toolbar-ios-padding-bottom};
+  --padding-start: #{$toolbar-ios-padding-start};
+  --padding-end: #{$toolbar-ios-padding-end};
+  --min-height: #{$toolbar-ios-min-height};
+}
+
+// Toolbar: Content
+// --------------------------------------------------
+
+.toolbar-content {
+  flex: 1;
+  order: map-get($toolbar-order-ios, content);
+
+  min-width: 0;
+}
+
+
+// Toolbar: Segment
+// --------------------------------------------------
+
+:host(.toolbar-segment) .toolbar-content {
+  display: inline-flex;
+}
+
+// Toolbar: Searchbar
+// --------------------------------------------------
+
+:host(.toolbar-searchbar) .toolbar-container {
+  @include padding(0, null);
+}
+
+:host(.toolbar-searchbar) ::slotted(*) {
+  align-self: start;
+}
+
+:host(.toolbar-searchbar) ::slotted(ion-chip) {
+  @include margin(3px, null, null, null);
+}
+
+// iOS Toolbar Slot Placement
+// --------------------------------------------------
+
+::slotted(ion-buttons) {
+  min-height: 38px;
+}
+
+::slotted([slot="start"]) {
+  order: map-get($toolbar-order-ios, slot-start);
+}
+
+::slotted([slot="secondary"]) {
+  order: map-get($toolbar-order-ios, slot-secondary);
+}
+
+::slotted([slot="primary"]) {
+  order: map-get($toolbar-order-ios, slot-primary);
+
+  text-align: end;
+}
+
+::slotted([slot="end"]) {
+  order: map-get($toolbar-order-ios, slot-end);
+
+  text-align: end;
+}
+
+
+// Toolbar: Large Title
+// --------------------------------------------------
+
+:host(.toolbar-title-large) .toolbar-container {
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+:host(.toolbar-title-large) .toolbar-content ion-title {
+  flex: 1;
+  order: map-get($toolbar-order-ios, title-large);
+
+  min-width: 100%;
+}

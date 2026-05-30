@@ -1,0 +1,13 @@
+@import "./footer";
+@import "./footer.md.vars";
+
+// Material Design Footer
+// --------------------------------------------------
+
+.footer-md {
+  box-shadow: $footer-md-box-shadow;
+}
+
+.footer-md.ion-no-border {
+  box-shadow: none;
+}

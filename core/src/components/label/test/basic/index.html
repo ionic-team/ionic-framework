@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Label - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Label - Basic</ion-title>
+          <ion-buttons slot="end">
+            <ion-button onClick="changeColors()"> Color Change </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <div class="ion-padding">
+          <ion-label>Default</ion-label>
+
+          <ion-label color="secondary">Secondary</ion-label>
+
+          <ion-label color="tertiary">Tertiary</ion-label>
+
+          <ion-label color="danger">Danger</ion-label>
+
+          <ion-label class="custom">Custom</ion-label>
+        </div>
+
+        <ion-list>
+          <ion-item>
+            <ion-label>Default</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label color="tertiary">Tertiary</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="custom">Custom</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">Wrap label this label just goes on and on and on</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label position="fixed">Fixed</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Floating</ion-label>
+          </ion-item>
+          <ion-item class="floating-color">
+            <ion-label position="floating" color="success">Floating: Success</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Stacked</ion-label>
+          </ion-item>
+          <ion-item class="stacked-color">
+            <ion-label position="stacked" color="danger">Stacked: Danger</ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+          <ion-item color="tertiary">
+            <ion-label position="floating">(Item: Tertiary) Floating</ion-label>
+          </ion-item>
+          <ion-item color="primary">
+            <ion-label position="stacked">(Item: Primary) Stacked</ion-label>
+          </ion-item>
+          <ion-item class="floating-color" color="tertiary">
+            <ion-label position="floating" color="success">(Item: Tertiary) Floating: Success</ion-label>
+          </ion-item>
+          <ion-item class="stacked-color" color="primary">
+            <ion-label position="stacked" color="danger">(Item: Primary) Stacked: Danger</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+
+      <style>
+        .custom {
+          color: lightblue;
+        }
+      </style>
+
+      <script>
+        const labels = document.querySelectorAll('.floating-color ion-label, .stacked-color ion-label');
+
+        function changeColors() {
+          for (label of labels) {
+            const currentColor = label.color;
+            label.color = currentColor === 'success' ? 'danger' : 'success';
+          }
+        }
+      </script>
+    </ion-app>
+  </body>
+</html>

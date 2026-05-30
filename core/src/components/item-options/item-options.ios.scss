@@ -1,0 +1,36 @@
+@import "./item-options";
+@import "./item-options.ios.vars";
+
+// iOS Item Options
+// --------------------------------------------------
+
+.item-options-ios {
+  border-bottom-width: 0;
+  border-bottom-style: $item-ios-border-bottom-style;
+  border-bottom-color: $item-ios-border-bottom-color;
+
+  &.item-options-end {
+    border-bottom-width: $item-ios-border-bottom-width;
+  }
+}
+
+
+
+// iOS No Lines List
+// --------------------------------------------------
+
+.list-ios-lines-none .item-options-ios {
+  border-bottom-width: 0;
+}
+
+
+// iOS Full/Inset Lines List
+// --------------------------------------------------
+
+// If the lines are full put a border on both item options
+// If the lines are inset we should only show the border on the end
+// because dragging open start options isn't continuous
+.list-ios-lines-full .item-options-ios,
+.list-ios-lines-inset .item-options-ios.item-options-end {
+  border-bottom-width: $item-ios-border-bottom-width;
+}

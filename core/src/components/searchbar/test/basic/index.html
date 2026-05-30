@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Searchbar - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Searchbar - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content">
+        <h5 class="ion-padding-start ion-padding-top">Search - Default</h5>
+        <ion-searchbar id="basic" value="test" type="tel" show-cancel-button="focus" debounce="500"> </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - Always Show Cancel Button</h5>
+        <ion-searchbar id="alwaysCancel" value="after view" animated="true" show-cancel-button="always">
+        </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - Never Show Cancel Button</h5>
+        <ion-searchbar id="noCancel" value="after view" animated="true" show-cancel-button="never"> </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - Show Cancel Button on Focus</h5>
+        <ion-searchbar id="focusCancel" value="after view" animated="true" show-cancel-button="focus"> </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - No Clear Button</h5>
+        <ion-searchbar id="noClear" value="after view" type="text" show-clear-button="never"> </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - Always Show Clear Button</h5>
+        <ion-searchbar id="alwaysClear" value="after view" type="text" show-clear-button="always"> </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - Input mode set to numeric</h5>
+        <ion-searchbar
+          id="numericMode"
+          value="after view"
+          inputmode="numeric"
+          autocorrect="off"
+          autocomplete="off"
+          spellcheck="true"
+          type="text"
+          show-cancel-button="focus"
+        >
+        </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - Disabled</h5>
+        <ion-searchbar id="disabled" value="disabled" type="text" disabled="true"> </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - Danger</h5>
+        <ion-searchbar color="danger" show-cancel-button="focus"> </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - Custom Search Icon</h5>
+        <ion-searchbar search-icon="home" show-cancel-button="focus" debounce="500"> </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - Custom Placeholder</h5>
+        <ion-searchbar
+          id="dynamicProp"
+          autocorrect="on"
+          show-cancel-button="focus"
+          autocomplete="on"
+          spellcheck="false"
+          placeholder="Filter Schedules"
+        >
+        </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - Custom Cancel Button</h5>
+        <ion-searchbar show-cancel-button="always" cancel-button-text="Really Long Cancel"> </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - Custom Cancel Button Icon through property</h5>
+        <ion-searchbar show-cancel-button="always" cancel-button-icon="play-back"> </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - DebounceTime</h5>
+        <ion-searchbar
+          autocorrect="on"
+          show-cancel-button="focus"
+          autocomplete="on"
+          spellcheck="true"
+          type="text"
+          debounce="5000"
+          placeholder="Check the log"
+        >
+        </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - Animated and No Cancel</h5>
+        <ion-searchbar id="dynamicAttr" placeholder="Search" animated="true" show-cancel-button="never">
+        </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - HTML Placeholder Treated As Text</h5>
+        <ion-searchbar mode="ios" animated="false" show-cancel-button="focus" placeholder="<button>Hello</button>">
+        </ion-searchbar>
+
+        <h5 class="ion-padding-start ion-padding-top">Search - Name</h5>
+        <ion-searchbar name="search"> </ion-searchbar>
+
+        <button class="expand" onClick="toggleProp()">Toggle Property</button>
+        <button class="expand" onClick="toggleAttr()">Toggle Attribute</button>
+        <button class="expand" onClick="toggleDisabled()">Toggle Disabled</button>
+
+        <script>
+          function toggleAttr() {
+            var dynamicAttr = document.getElementById('dynamicAttr');
+
+            // Toggle animated attribute
+            const attrIsAnimated = dynamicAttr.getAttribute('animated') === 'true' ? false : true;
+            dynamicAttr.setAttribute('animated', attrIsAnimated);
+
+            // Toggle show-cancel-button attribute
+            let attrShowCancel;
+            const showCancelValue = dynamicAttr.getAttribute('show-cancel-button');
+
+            switch (showCancelValue) {
+              case true:
+              case 'true':
+                attrShowCancel = false;
+                break;
+              case false:
+              case 'false':
+                attrShowCancel = 'always';
+                break;
+              case 'always':
+                attrShowCancel = 'focus';
+                break;
+              case 'focus':
+                attrShowCancel = 'never';
+                break;
+              case 'never':
+              default:
+                attrShowCancel = true;
+                break;
+            }
+
+            dynamicAttr.setAttribute('show-cancel-button', attrShowCancel);
+
+            // Toggle placeholder attribute
+            const attrPlaceholder =
+              dynamicAttr.getAttribute('placeholder') === 'Search' ? 'Enter a Search Term' : 'Search';
+            dynamicAttr.setAttribute('placeholder', attrPlaceholder);
+          }
+
+          function toggleDisabled() {
+            var dynamicAttr = document.getElementById('dynamicAttr');
+
+            // Toggle animated attribute
+            const attrIsAnimated = dynamicAttr.getAttribute('disabled') === 'true' ? false : true;
+            dynamicAttr.setAttribute('disabled', attrIsAnimated);
+          }
+
+          function toggleProp() {
+            var dynamicProp = document.getElementById('dynamicProp');
+            console.log(dynamicProp.autocorrect, dynamicProp.autocomplete, dynamicProp.spellcheck);
+
+            // Toggle autocorrect property
+            const propIsAutocorrect = dynamicProp.autocorrect === 'on' ? 'off' : 'on';
+            dynamicProp.autocorrect = propIsAutocorrect;
+
+            // Toggle autocomplete property
+            const propIsAutocomplete = dynamicProp.autocomplete === 'on' ? 'off' : 'on';
+            dynamicProp.autocomplete = propIsAutocomplete;
+
+            // Toggle spellcheck property
+            const propIsSpellcheck = dynamicProp.spellcheck === true ? false : true;
+            dynamicProp.spellcheck = propIsSpellcheck;
+          }
+        </script>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

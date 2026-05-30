@@ -1,0 +1,434 @@
+@import "../../themes/ionic.globals";
+@import "./toggle.vars.scss";
+
+// Toggle
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --track-background: Background of the toggle track
+   * @prop --track-background-checked: Background of the toggle track when checked
+   * @prop --border-radius: Border radius of the toggle track
+   *
+   * @prop --handle-background: Background of the toggle handle
+   * @prop --handle-background-checked: Background of the toggle handle when checked
+   *
+   * @prop --handle-border-radius: Border radius of the toggle handle
+   * @prop --handle-box-shadow: Box shadow of the toggle handle
+   * @prop --handle-height: Height of the toggle handle
+   * @prop --handle-max-height: Maximum height of the toggle handle
+   * @prop --handle-width: Width of the toggle handle
+   * @prop --handle-spacing: Horizontal spacing around the toggle handle
+   * @prop --handle-transition: Transition of the toggle handle
+   */
+
+  /* stylelint-disable-next-line declaration-no-important */
+  box-sizing: content-box !important;
+
+  display: inline-block;
+
+  position: relative;
+
+  max-width: 100%;
+
+  cursor: pointer;
+  user-select: none;
+  z-index: $z-index-item-input;
+}
+
+:host(.in-item) {
+  flex: 1 1 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+/**
+ * Toggle can be slotted
+ * in components such as item and
+ * toolbar which is why we do not
+ * limit the below behavior to just ion-item.
+ */
+:host([slot="start"]),
+:host([slot="end"]) {
+  // Reset the flex property when the toggle
+  // is slotted to avoid growing the element larger
+  // than its content.
+  flex: initial;
+
+  width: auto;
+}
+
+:host(.ion-focused) input {
+  border: 2px solid #5e9ed6;
+}
+
+:host(.toggle-disabled) {
+  pointer-events: none;
+}
+
+/**
+ * The native input must be hidden with display instead of visibility or
+ * aria-hidden to avoid accessibility issues with nested interactive elements.
+ */
+input {
+  display: none;
+}
+
+// Toggle Wrapper
+// --------------------------------------------------
+
+.toggle-wrapper {
+  display: flex;
+
+  position: relative;
+
+  flex-grow: 1;
+
+  align-items: center;
+  justify-content: space-between;
+
+  height: inherit;
+
+  transition: background-color 15ms linear;
+
+  cursor: inherit;
+}
+
+// Input Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+:host(.in-item) .label-text-wrapper {
+  @include margin($toggle-item-label-margin-top, null, $toggle-item-label-margin-bottom, null);
+}
+
+:host(.in-item.toggle-label-placement-stacked) .label-text-wrapper {
+  @include margin($toggle-item-label-margin-top, null, $form-control-label-margin, null);
+}
+
+:host(.in-item.toggle-label-placement-stacked) .native-wrapper {
+  @include margin(null, null, $toggle-item-label-margin-bottom, null);
+}
+
+/**
+ * If no label text is placed into the slot
+ * then the element should be hidden otherwise
+ * there will be additional margins added.
+ */
+.label-text-wrapper-hidden {
+  display: none;
+}
+
+// Toggle Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper {
+  display: flex;
+
+  align-items: center;
+}
+
+// Toggle Bottom Content
+// ----------------------------------------------------------------
+
+.toggle-bottom {
+  @include padding(4px, null, null, null);
+
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: dynamic-font(12px);
+
+  white-space: normal;
+}
+
+:host(.toggle-label-placement-stacked) .toggle-bottom {
+  font-size: dynamic-font(16px);
+}
+
+// Toggle Hint Text
+// ----------------------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is
+ * present on the checkbox. Otherwise the helper text should
+ * be shown.
+ */
+.toggle-bottom .error-text {
+  display: none;
+
+  color: ion-color(danger, base);
+}
+
+.toggle-bottom .helper-text {
+  display: block;
+
+  color: $text-color-step-300;
+}
+
+:host(.ion-touched.ion-invalid) .toggle-bottom .error-text {
+  display: block;
+}
+
+:host(.ion-touched.ion-invalid) .toggle-bottom .helper-text {
+  display: none;
+}
+
+// Toggle Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL.
+ */
+:host(.toggle-label-placement-start) .toggle-wrapper {
+  flex-direction: row;
+}
+
+:host(.toggle-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(null, $form-control-label-margin, null, 0);
+}
+
+// Toggle Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the input in LTR and
+ * on the left in RTL.
+ */
+:host(.toggle-label-placement-end) .toggle-wrapper {
+  flex-direction: row-reverse;
+
+  justify-content: start;
+}
+
+/**
+ * The margin between the label and
+ * the input should be on the start
+ * when the label sits at the end.
+ */
+:host(.toggle-label-placement-end) .label-text-wrapper {
+  @include margin(null, 0, null, $form-control-label-margin);
+}
+
+// Input Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.toggle-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(null, $form-control-label-margin, null, 0);
+}
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.toggle-label-placement-fixed) .label-text-wrapper {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+// Toggle Label Placement - Stacked
+// ----------------------------------------------------------------
+
+/**
+ * Label is on top of the toggle.
+ */
+:host(.toggle-label-placement-stacked) .toggle-wrapper {
+  flex-direction: column;
+
+  text-align: center;
+}
+
+:host(.toggle-label-placement-stacked) .label-text-wrapper {
+  @include transform(scale(#{$form-control-label-stacked-scale}));
+
+  /**
+   * The margin between the label and
+   * the toggle should be on the bottom
+   * when the label sits on top.
+   */
+  @include margin(null, 0, $form-control-label-margin, 0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the toggle.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+:host(.toggle-label-placement-stacked.toggle-alignment-start) .label-text-wrapper {
+  @include transform-origin(start, top);
+}
+
+:host(.toggle-label-placement-stacked.toggle-alignment-center) .label-text-wrapper {
+  @include transform-origin(center, top);
+}
+
+// Toggle Justify
+// --------------------------------------------------
+
+:host(.toggle-justify-space-between) .toggle-wrapper {
+  justify-content: space-between;
+}
+
+:host(.toggle-justify-start) .toggle-wrapper {
+  justify-content: start;
+}
+
+:host(.toggle-justify-end) .toggle-wrapper {
+  justify-content: end;
+}
+
+// Toggle Align
+// --------------------------------------------------
+
+:host(.toggle-alignment-start) .toggle-wrapper {
+  align-items: start;
+}
+
+:host(.toggle-alignment-center) .toggle-wrapper {
+  align-items: center;
+}
+
+// Justify Content & Align Items
+// ---------------------------------------------
+
+// The toggle should be displayed as block when either justify
+// or alignment is set; otherwise, these properties will have no
+// visible effect.
+:host(.toggle-justify-space-between),
+:host(.toggle-justify-start),
+:host(.toggle-justify-end),
+:host(.toggle-alignment-start),
+:host(.toggle-alignment-center) {
+  display: block;
+}
+
+// Toggle Background Track: Unchecked
+// --------------------------------------------------
+
+.toggle-icon-wrapper {
+  display: flex;
+
+  position: relative;
+
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  transition: var(--handle-transition);
+
+  will-change: transform;
+}
+
+.toggle-icon {
+  @include border-radius(var(--border-radius));
+
+  display: block;
+
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  background: var(--track-background);
+
+  overflow: inherit;
+}
+
+// Toggle Background Track: Checked
+// ----------------------------------------------------------
+
+:host(.toggle-checked) .toggle-icon {
+  background: var(--track-background-checked);
+}
+
+// Toggle Inner Knob: Unchecked
+// --------------------------------------------------
+
+.toggle-inner {
+  @include border-radius(var(--handle-border-radius));
+
+  position: absolute;
+
+  // stylelint-disable-next-line property-disallowed-list
+  left: var(--handle-spacing);
+
+  width: var(--handle-width);
+  height: var(--handle-height);
+
+  max-height: var(--handle-max-height);
+
+  transition: var(--handle-transition);
+
+  background: var(--handle-background);
+
+  box-shadow: var(--handle-box-shadow);
+
+  contain: strict;
+}
+
+/**
+ * We do not use the @ltr and @rtl mixins
+ * here because ion-toggle uses the Shadow DOM
+ * and WebKit does not support :host-context.
+ */
+:host(.toggle-ltr) .toggle-inner {
+  // stylelint-disable-next-line property-disallowed-list
+  left: var(--handle-spacing);
+}
+
+:host(.toggle-rtl) .toggle-inner {
+  // stylelint-disable-next-line property-disallowed-list
+  right: var(--handle-spacing);
+}
+
+// Toggle Inner Knob: Checked
+// ----------------------------------------------------------
+
+:host(.toggle-ltr.toggle-checked) .toggle-icon-wrapper {
+  // transform by 100% - handle width
+  transform: translate3d(calc(100% - var(--handle-width)), 0, 0)
+}
+
+:host(.toggle-rtl.toggle-checked) .toggle-icon-wrapper {
+  // transform by -100% + handle width
+  transform: translate3d(calc(-100% + var(--handle-width)), 0, 0);
+}
+
+:host(.toggle-checked) .toggle-inner {
+  background: var(--handle-background-checked);
+}
+
+:host(.toggle-ltr.toggle-checked) .toggle-inner {
+  // transform by handle spacing amount
+  transform: translate3d(calc(var(--handle-spacing) * -2), 0, 0);
+}
+
+:host(.toggle-rtl.toggle-checked) .toggle-inner {
+  // transform by handle spacing amount
+  transform: translate3d(calc(var(--handle-spacing) * 2), 0, 0);
+}

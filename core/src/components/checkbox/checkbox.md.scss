@@ -1,0 +1,53 @@
+@import "./checkbox";
+@import "./checkbox.md.vars";
+
+// Material Design Checkbox
+// --------------------------------------------------
+
+:host {
+  // Border
+  --border-radius: calc(var(--size) * .125);
+  --border-width: #{$checkbox-md-icon-border-width};
+  --border-style: #{$checkbox-md-icon-border-style};
+  --border-color: #{$checkbox-md-icon-border-color-off};
+  --checkmark-width: 3;
+
+  // Background
+  --checkbox-background: #{$checkbox-md-icon-background-color-off};
+
+  // Transition
+  --transition: #{background $checkbox-md-transition-duration $checkbox-md-transition-easing};
+
+  // Size
+  --size: #{$checkbox-md-icon-size};
+}
+
+.checkbox-icon path {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+}
+
+// Material Design Checkbox: Checked / Indeterminate
+// --------------------------------------------------------
+
+:host(.checkbox-checked) .checkbox-icon path,
+:host(.checkbox-indeterminate) .checkbox-icon path {
+  stroke-dashoffset: 0;
+
+  transition: stroke-dashoffset 90ms linear 90ms;
+}
+
+
+// Material Design Checkbox: Disabled
+// --------------------------------------------------------
+// The checkbox itself should use the disabled
+// opacity set by its spec, while the label
+// should match the other form controls
+
+:host(.checkbox-disabled) .label-text-wrapper {
+  opacity: $checkbox-md-disabled-opacity;
+}
+
+:host(.checkbox-disabled) .native-wrapper {
+  opacity: $checkbox-md-icon-disabled-opacity;
+}

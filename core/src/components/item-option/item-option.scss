@@ -1,0 +1,116 @@
+@import "./item-option.vars";
+
+// Item Option
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the item option
+   * @prop --color: Color of the item option
+   */
+  --background: #{ion-color(primary, base)};
+  --color: #{ion-color(primary, contrast)};
+
+  background: var(--background);
+  color: var(--color);
+
+  font-family: $font-family-base;
+}
+
+:host(.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+.button-native {
+  @include text-inherit();
+  @include padding(0, .7em);
+
+  display: inline-block;
+
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+
+  outline: none;
+
+  background: transparent;
+
+  cursor: pointer;
+  appearance: none;
+
+  box-sizing: border-box;
+}
+
+.button-inner {
+  display: flex;
+
+  flex-flow: column nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.horizontal-wrapper {
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+}
+
+::slotted(*) {
+  flex-shrink: 0;
+}
+
+::slotted([slot="start"]) {
+  @include margin(0, 5px, 0, 0);
+}
+
+::slotted([slot="end"]) {
+  @include margin(0, 0, 0, 5px);
+}
+
+::slotted([slot="icon-only"]) {
+  @include padding(0);
+  @include margin(0, 10px);
+
+  min-width: .9em;
+
+  font-size: 1.8em;
+}
+
+
+// Item Expandable Animation
+// --------------------------------------------------
+
+:host(.item-option-expandable) {
+  flex-shrink: 0;
+
+  transition-duration: 0;
+  transition-property: none;
+  transition-timing-function: cubic-bezier(.65, .05, .36, 1);
+}
+
+
+// Item Disabled Styling
+// --------------------------------------------------
+
+:host(.item-option-disabled) {
+  pointer-events: none;
+}
+
+:host(.item-option-disabled) .button-native {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}

@@ -1,0 +1,51 @@
+@import "../../themes/ionic.globals";
+
+// Datetime Button
+// --------------------------------------------------
+
+:host {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+:host button {
+  @include border-radius(8px);
+  @include margin(0px, 2px, 0px, 2px);
+
+  position: relative;
+
+  transition: 150ms color ease-in-out;
+
+  border: none;
+
+  background: var(--ion-color-step-300, var(--ion-background-color-step-300, #edeef0));
+
+  color: $text-color;
+
+  font-family: inherit;
+  font-size: dynamic-font(16px);
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  appearance: none;
+}
+
+:host(.time-active) #time-button,
+:host(.date-active) #date-button {
+  color: current-color(base);
+}
+
+:host(.datetime-button-disabled) {
+  pointer-events: none;
+}
+
+:host(.datetime-button-disabled) button {
+  opacity: 0.4;
+}

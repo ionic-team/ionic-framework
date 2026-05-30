@@ -1,0 +1,14 @@
+@import "./badge";
+@import "./badge.md.vars";
+
+// Material Design Badge
+// --------------------------------------------------
+
+:host {
+  --padding-top: 3px;
+  --padding-end: 4px;
+  --padding-bottom: 4px;
+  --padding-start: 4px;
+
+  @include border-radius($badge-md-border-radius);
+}

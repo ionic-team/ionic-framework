@@ -1,0 +1,46 @@
+@import "./input";
+@import "./input.ios.vars";
+
+:host {
+  --border-width: #{$hairlines-width};
+  --border-color: #{$item-ios-border-color};
+  --highlight-height: 0px;
+
+  font-size: $input-ios-font-size;
+}
+
+.input-clear-icon ion-icon {
+  width: 18px;
+  height: 18px;
+}
+
+// Input - Disabled
+// ----------------------------------------------------------------
+// The input, label, helper text, char counter and placeholder
+// should use the same opacity and match the other form controls
+
+:host(.input-disabled) {
+  opacity: #{$input-ios-disabled-opacity};
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+/**
+ * Slotted buttons have a lot of default padding that can
+ * cause them to look misaligned from other pieces such
+ * as the control's label, especially when using a clear
+ * fill. We also make them circular to ensure that non-
+ * clear buttons and the focus/hover state on clear ones
+ * don't look too crowded.
+ */
+::slotted(ion-button[slot="start"].button-has-icon-only),
+::slotted(ion-button[slot="end"].button-has-icon-only) {
+  --border-radius: 50%;
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+
+  aspect-ratio: 1;
+}

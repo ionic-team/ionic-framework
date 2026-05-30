@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Presentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      ion-datetime {
+        box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.25), 0px 8px 16px rgba(0, 0, 0, 0.25);
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Presentation</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <select class="ion-margin-end" slot="end">
+            <option value="date-time">date-time</option>
+            <option value="time-date">time-date</option>
+            <option value="time">time</option>
+            <option value="date">date</option>
+            <option value="month-year">month-year</option>
+            <option value="month">month</option>
+            <option value="year">year</option>
+          </select>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-datetime presentation="date-time" value="2022-03-10T13:00:00" max="2022"></ion-datetime>
+      </ion-content>
+    </ion-app>
+    <script>
+      const datetime = document.querySelector('ion-datetime');
+      const select = document.querySelector('select');
+
+      select.addEventListener('change', (ev) => {
+        const presentation = ev.target.value;
+        datetime.presentation = presentation;
+      });
+    </script>
+  </body>
+</html>

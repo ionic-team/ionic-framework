@@ -1,0 +1,36 @@
+name: 'Build Ionic Core'
+description: 'Build Ionic Core'
+inputs:
+  ionicons-version:
+    description: 'The NPM tag of ionicons to install.'
+    type: string
+    required: false
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+      with:
+        node-version: 24.x
+    - name: 🕸️ Install Dependencies
+      run: npm install
+      working-directory: ./core
+      shell: bash
+    # If an Ionicons version was specified install that.
+    # Otherwise just use the version defined in the package.json.
+    - name: 📦 Install Ionicons Version
+      if: inputs.ionicons-version != ''
+      run: npm install ionicons@${{ inputs.ionicons-version }}
+      working-directory: ./core
+      shell: bash
+    - name: 🏗️ Build Core
+      run: npm run build -- --ci
+      working-directory: ./core
+      shell: bash
+    - uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-core
+        output: core/CoreBuild.zip
+        # Include generated proxy files from Stencil output targets so
+        # framework builds can detect when they need to be updated
+        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts core/api.txt packages/angular/src/directives/proxies.ts packages/angular/src/directives/proxies-list.ts packages/angular/standalone/src/directives/proxies.ts packages/vue/src/proxies.ts packages/react/src/components/proxies.ts packages/react/src/components/inner-proxies.ts packages/react/src/components/routing-proxies.ts

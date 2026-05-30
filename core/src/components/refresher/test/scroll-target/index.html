@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Refresher - Custom Scroll Target</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      #content {
+        position: relative;
+
+        display: block;
+        flex: 1;
+
+        height: 100%;
+        overflow: hidden;
+
+        contain: size style;
+      }
+
+      #inner-scroll {
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Pull To Refresh</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content scroll-y="false">
+        <ion-refresher id="refresher" slot="fixed">
+          <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
+        <div id="content">
+          <div id="inner-scroll" class="ion-content-scroll-host" style="overflow-y: auto">
+            <ion-list id="list"></ion-list>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      let items = createItems();
+
+      const list = document.getElementById('list');
+      const refresher = document.getElementById('refresher');
+
+      refresher.addEventListener('ionRefresh', async function () {
+        console.log('refresh fired');
+        const data = await getAsyncData();
+        items = items.concat(data);
+        refresher.complete();
+        render();
+        // Custom event consumed by e2e tests
+        window.dispatchEvent(new CustomEvent('ionRefreshComplete'));
+      });
+
+      function render() {
+        let html = '';
+        for (let item of items) {
+          html += `<ion-item button>${item}</ion-item>`;
+        }
+        list.innerHTML = html;
+      }
+
+      function getAsyncData() {
+        // async return mock data
+        return new Promise((resolve) => {
+          setTimeout(() => resolve(createItems(items.length)), 500);
+        });
+      }
+
+      function createItems(start = 0) {
+        return new Array(30).fill().map((_, i) => start + i + 1);
+      }
+
+      render();
+    </script>
+  </body>
+</html>

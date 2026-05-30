@@ -1,0 +1,23 @@
+@import "./card";
+@import "./card.ios.vars";
+
+// iOS Card
+// --------------------------------------------------
+
+:host {
+  --background: #{$card-ios-background};
+  --color: #{$card-ios-color};
+
+  @include margin($card-ios-margin-top, $card-ios-margin-end, $card-ios-margin-bottom, $card-ios-margin-start);
+  @include border-radius($card-ios-border-radius);
+
+  transition: transform 500ms $card-ios-transition-timing-function;
+
+  font-size: $card-ios-font-size;
+
+  box-shadow: $card-ios-box-shadow;
+}
+
+:host(.ion-activated) {
+  transform: #{$card-ios-transform-activated};
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Item - Buttons</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Items as Links/Buttons</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content">
+        <ion-item href="#" onclick="testClick(event)">
+          <ion-label>a[ion-item]</ion-label>
+        </ion-item>
+
+        <ion-item class="custom ion-activated" href="#" onclick="testClick(event)">
+          <ion-label>a[ion-item].activated</ion-label>
+        </ion-item>
+
+        <ion-item class="custom-hover" href="#" onclick="testClick(event)">
+          <ion-label>custom hover</ion-label>
+        </ion-item>
+
+        <ion-item color="secondary" href="#" onclick="testClick(event)">
+          <ion-label>a[ion-item] secondary</ion-label>
+        </ion-item>
+
+        <ion-item button color="dark" id="attachClick">
+          <ion-label>button[ion-item]</ion-label>
+        </ion-item>
+
+        <ion-item button type="submit" id="attachClick">
+          <ion-label>button[ion-item] type="submit"</ion-label>
+        </ion-item>
+
+        <ion-item button class="ion-activated" onClick="testClick(event)">
+          <ion-label>button[ion-item].activated</ion-label>
+        </ion-item>
+
+        <ion-item button color="danger" onClick="testClick(event)">
+          <ion-label>button[ion-item] danger</ion-label>
+        </ion-item>
+
+        <ion-item button detail class="item-part">
+          <ion-label>
+            <h1>button[ion-item] detail</h1>
+            <h2>Footnote</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item button onclick="testClickOutsize(event)">
+          <ion-button slot="start" onclick="testClick(event)">Default</ion-button>
+          <ion-label>Inner Buttons</ion-label>
+          <ion-button fill="outline" slot="end" onclick="testClick(event)">Outline</ion-button>
+        </ion-item>
+
+        <ion-item button disabled>
+          <ion-button slot="start" onclick="testClick(event)">
+            <ion-icon slot="start" name="home"></ion-icon>
+            Left Icon
+          </ion-button>
+          <ion-label>disabled left icon buttons</ion-label>
+          <ion-button fill="outline" slot="end" onclick="testClick(event)">
+            <ion-icon slot="start" name="star"></ion-icon>
+            Left Icon
+          </ion-button>
+        </ion-item>
+
+        <ion-item>
+          <ion-button slot="start" onclick="testClick(event)">
+            Right Icon
+            <ion-icon name="home" slot="end"></ion-icon>
+          </ion-button>
+          <ion-label>right icon buttons</ion-label>
+          <ion-button fill="outline" slot="end" onclick="testClick(event)">
+            Right Icon
+            <ion-icon name="star" slot="end"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+        <ion-item>
+          <ion-button fill="clear" slot="start" size="default" onclick="testClick(event)">
+            <ion-icon slot="icon-only" name="navigate"></ion-icon>
+          </ion-button>
+          <ion-label>icon only buttons default</ion-label>
+          <ion-button fill="clear" slot="end" size="default" onclick="testClick(event)">
+            <ion-icon slot="icon-only" name="navigate"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+        <ion-item disabled onclick="testClick(event)">
+          <ion-label>ion-item disabled right icon/text button large</ion-label>
+          <ion-button slot="end" size="large" onclick="testClick(event)">
+            <ion-icon slot="start" name="refresh"></ion-icon>
+            Refresh
+          </ion-button>
+        </ion-item>
+
+        <ion-item>
+          <ion-button fill="clear" slot="start" size="small" onclick="testClick(event)">
+            <ion-icon slot="start" name="settings"></ion-icon>
+            Settings
+          </ion-button>
+          <ion-label>ion-item left fill="clear" button small</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>ion-item right fill="clear" button</ion-label>
+          <ion-button color="secondary" fill="clear" slot="end" onclick="testClick(event)"> Edit </ion-button>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+            This is multiline text that has a long description of about how the text is really long and a
+            <a href="#" onclick="testClick(event)">link</a>.
+          </ion-label>
+          <ion-button fill="outline" slot="end" onclick="testClick(event)">View</ion-button>
+        </ion-item>
+
+        <ion-item onclick="testClick(event)">
+          <ion-avatar slot="start">
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
+          </ion-avatar>
+          <ion-label>
+            <h3>Avatar Start</h3>
+          </ion-label>
+          <ion-badge slot="end">260k</ion-badge>
+        </ion-item>
+
+        <ion-item onclick="testClickOutsize(event)">
+          <div>
+            <ion-button fill="clear" slot="end" onclick="testClick(event)">
+              <ion-icon slot="icon-only" name="remove-circle"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" slot="end" onclick="testClick(event)">
+              <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-item>
+      </ion-content>
+    </ion-app>
+
+    <style>
+      .custom {
+        --ripple-color: pink;
+      }
+
+      .custom-hover {
+        --background-hover: green;
+        --background-hover-opacity: 1;
+        --color-hover: purple;
+      }
+
+      .item-part h1 {
+        font-size: 18px;
+        font-weight: 500;
+
+        color: #333;
+      }
+
+      .item-part h2 {
+        font-size: 14px;
+
+        color: #888;
+      }
+
+      .item-part::part(detail-icon) {
+        margin-top: -18px;
+
+        color: red;
+
+        opacity: 1;
+      }
+    </style>
+
+    <script>
+      const attach = document.getElementById('attachClick');
+
+      attach.addEventListener('click', (ev) => {
+        console.log('clicked me!', ev);
+      });
+
+      function testClick(ev) {
+        console.log('CLICK!', ev.target.tagName, ev.target.textContent.trim());
+      }
+
+      function testClickOutsize(ev) {
+        console.log('CLICK OUTSIDE!', ev.target.tagName, ev.target.textContent.trim());
+      }
+    </script>
+  </body>
+</html>

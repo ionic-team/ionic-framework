@@ -1,0 +1,60 @@
+@import "./select";
+@import "./select.ios.vars";
+
+// iOS Select
+// --------------------------------------------------
+
+:host {
+  --border-width: #{$hairlines-width};
+  --border-color: #{$item-ios-border-color};
+  --highlight-height: 0px;
+}
+
+.select-icon {
+  width: $select-ios-icon-size;
+  height: $select-ios-icon-size;
+
+  // Color deviates from the iOS spec, but satisfies WCAG AAA:
+  // https://www.w3.org/TR/WCAG20-TECHS/G18.html
+  color: #{$text-color-step-350};
+}
+
+// Select Inner Wrapper
+// ----------------------------------------------------------------
+
+:host(.select-label-placement-stacked) .select-wrapper-inner,
+:host(.select-label-placement-floating) .select-wrapper-inner {
+  width: calc(100% - $select-ios-icon-size - $select-icon-margin-start);
+}
+
+// Select: Disabled
+// ----------------------------------------------------------------
+// The select and label should use the
+// same opacity and match the other form
+// controls
+
+:host(.select-disabled) {
+  opacity: $select-ios-disabled-opacity;
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+/**
+ * Slotted buttons have a lot of default padding that can
+ * cause them to look misaligned from other pieces such
+ * as the control's label, especially when using a clear
+ * fill. We also make them circular to ensure that non-
+ * clear buttons and the focus/hover state on clear ones
+ * don't look too crowded.
+ */
+::slotted(ion-button[slot="start"].button-has-icon-only),
+::slotted(ion-button[slot="end"].button-has-icon-only) {
+  --border-radius: 50%;
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+
+  aspect-ratio: 1;
+}

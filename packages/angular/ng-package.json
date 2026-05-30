@@ -1,0 +1,7 @@
+{
+  "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+  "lib": {
+    "entryFile": "src/index.ts"
+  },
+  "allowedNonPeerDependencies": ["@ionic/core", "ionicons", "jsonc-parser"]
+}

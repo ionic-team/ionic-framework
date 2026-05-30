@@ -1,0 +1,20 @@
+@import "../../themes/ionic.globals";
+
+
+// Card Title
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --color: Color of the card title
+   */
+
+  display: block;
+  position: relative;
+
+  color: var(--color);
+}
+
+:host(.ion-color) {
+  color: #{current-color(base)};
+}

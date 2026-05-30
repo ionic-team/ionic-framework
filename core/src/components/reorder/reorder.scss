@@ -1,0 +1,26 @@
+// Reorder
+// --------------------------------------------------
+
+:host([slot]) {
+  display: none;
+
+  line-height: 0;
+
+  z-index: 100;
+}
+
+
+// Reorder Icon
+// --------------------------------------------------
+
+.reorder-icon {
+  display: block;
+}
+
+/**
+ * This ensures that custom reorder
+ * icons resize with Dynamic Type.
+ */
+::slotted(ion-icon) {
+  font-size: dynamic-font(16px);
+}

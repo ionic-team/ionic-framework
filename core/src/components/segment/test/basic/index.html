@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Segment - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body onload="listenForEvent()">
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Segment - Basic</ion-title>
+        </ion-toolbar>
+
+        <ion-toolbar>
+          <ion-segment class="event-tester" value="Free">
+            <ion-segment-button value="Paid">
+              <ion-label>PaidPaidPaid</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Free">
+              <ion-label>Free</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Top">
+              <ion-label>Top</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+
+        <ion-toolbar>
+          <ion-segment value="2" scrollable="true">
+            <ion-segment-button value="1">
+              <ion-label>Button 1</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="2">
+              <ion-label>Button 2</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="3">
+              <ion-label>Button 3</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="4">
+              <ion-label>Button 4</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="5">
+              <ion-label>Button 5</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="6">
+              <ion-label>Button 6</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+
+        <ion-toolbar>
+          <ion-segment name="dynamicPropDisable" disabled color="danger">
+            <ion-segment-button value="Bookmarks">
+              <ion-label>Bookmarks</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Reading List">
+              <ion-label>Reading List</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Shared Links">
+              <ion-label>Shared Links</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+
+        <ion-toolbar>
+          <ion-segment name="dynamicAttrElem" color="secondary" value="active">
+            <ion-segment-button value="active">
+              <ion-label>Active</ion-label>
+            </ion-segment-button>
+            <ion-segment-button name="dynamicAttrDisable" value="disabled" disabled="true">
+              <ion-label>Disabled</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="inactive" disabled="false">
+              <ion-label>Inactive</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+
+        <ion-toolbar>
+          <ion-segment value="all">
+            <ion-segment-button value="all">
+              <ion-label>All</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="missed">
+              <ion-label>Missed</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-segment value="segment">
+        <ion-segment-button value="segment">
+          <ion-label>Segment</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="outside">
+          <ion-label>Outside</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="content">
+          <ion-label>Content</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <ion-content>
+        <div class="ion-padding">
+          <ion-segment>
+            <ion-segment-button>
+              <ion-label>Seg 1</ion-label>
+            </ion-segment-button>
+            <ion-segment-button>
+              <ion-label>Seg 2</ion-label>
+            </ion-segment-button>
+            <ion-segment-button>
+              <ion-label>Seg 3</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+
+          <ion-segment class="segment-no-animate" value="is">
+            <ion-segment-button value="animate">
+              <ion-label>Animate</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="is">
+              <ion-label>Is</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="false">
+              <ion-label>False</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+
+          <ion-segment color="dark" value="Reading List">
+            <ion-segment-button value="Bookmarks">
+              <ion-icon name="book"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="Reading List">
+              <ion-icon name="search"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="Shared Links">
+              <ion-icon name="time"></ion-icon>
+            </ion-segment-button>
+          </ion-segment>
+
+          <ion-segment>
+            <ion-segment-button value="330">
+              <ion-label>330ml</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="440">
+              <ion-label>440ml</ion-label>
+            </ion-segment-button>
+            <ion-segment-button disabled value="500">
+              <ion-label>500ml</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="custom">
+              <ion-icon name="create"></ion-icon>
+            </ion-segment-button>
+          </ion-segment>
+
+          <ion-segment name="dynamicPropDisable" disabled color="danger">
+            <ion-segment-button value="Bookmarks">
+              <ion-label>Bookmarks</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Reading List">
+              <ion-label>Reading List</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Shared Links">
+              <ion-label>Shared Links</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+
+          <ion-segment id="finalSegment" name="dynamicAttrElem" color="secondary" value="active">
+            <ion-segment-button value="active">
+              <ion-label>Active</ion-label>
+            </ion-segment-button>
+            <ion-segment-button name="dynamicAttrDisable" value="disabled" disabled="true">
+              <ion-label>Disabled</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="inactive" disabled="false">
+              <ion-label>Inactive</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+
+          <ion-segment name="dynamicAttrElem">
+            <ion-segment-button value="active">
+              <ion-label>Active</ion-label>
+            </ion-segment-button>
+            <ion-segment-button name="dynamicAttrDisable" value="disabled" disabled="true">
+              <ion-label>Disabled</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="inactive" disabled="false">
+              <ion-label>Inactive</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+
+          <ion-segment>
+            <ion-segment-button value="active">
+              <div class="square red"></div>
+            </ion-segment-button>
+            <ion-segment-button name="dynamicAttrDisable">
+              <div class="square green"></div>
+            </ion-segment-button>
+            <ion-segment-button value="inactive">
+              <div class="square blue"></div>
+            </ion-segment-button>
+          </ion-segment>
+
+          <!-- Dynamic Buttons -->
+          <ion-segment id="dynamicButtons"></ion-segment>
+        </div>
+
+        <button class="expand" onClick="toggleDisabled()">Toggle Disabled</button>
+        <button class="expand" onClick="toggleValue()">Toggle Value</button>
+        <button class="expand" onClick="toggleSwipeGesture()">Toggle Swipe Gesture</button>
+
+        <script>
+          var dynamicAttrDisable = document.getElementsByName('dynamicAttrDisable');
+          var dynamicPropDisable = document.getElementsByName('dynamicPropDisable');
+
+          function toggleDisabled() {
+            for (var i = 0; i < dynamicAttrDisable.length; i++) {
+              const attrIsDisabled = dynamicAttrDisable[i].getAttribute('disabled') === 'true' ? false : true;
+              dynamicAttrDisable[i].setAttribute('disabled', attrIsDisabled);
+            }
+            for (var i = 0; i < dynamicPropDisable.length; i++) {
+              const propIsDisabled = dynamicPropDisable[i].disabled === true ? false : true;
+              dynamicPropDisable[i].disabled = propIsDisabled;
+            }
+          }
+
+          function toggleValue() {
+            var dynamicAttrElem = document.getElementsByName('dynamicAttrElem');
+            for (var i = 0; i < dynamicAttrElem.length; i++) {
+              var dynamicAttrValue = dynamicAttrElem[i].getAttribute('value');
+
+              if (dynamicAttrValue === 'active') {
+                dynamicAttrElem[i].setAttribute('value', 'inactive');
+              } else if (dynamicAttrValue === 'inactive') {
+                dynamicAttrElem[i].setAttribute('value', 'disabled');
+              } else {
+                dynamicAttrElem[i].setAttribute('value', 'active');
+              }
+            }
+          }
+
+          function toggleSwipeGesture() {
+            const ionSegmentElement = document.querySelectorAll('ion-segment');
+            for (var i = 0; i < ionSegmentElement.length; i++) {
+              ionSegmentElement[i].swipeGesture = !ionSegmentElement[i].swipeGesture;
+            }
+          }
+
+          async function listenForEvent() {
+            const ionSegmentElement = document.querySelector('ion-segment.event-tester');
+            ionSegmentElement.addEventListener('ionChange', (event) => {
+              console.log('event.target: ', event.target.value);
+            });
+          }
+
+          var dynamicButtons = document.getElementById('dynamicButtons');
+          updateSegmentButtons(2);
+
+          setTimeout(function () {
+            updateSegmentButtons(4);
+          }, 4000);
+
+          function updateSegmentButtons(length) {
+            const buttonsLength = dynamicButtons.children.length;
+            const begin = buttonsLength === 0 ? 0 : buttonsLength;
+
+            for (var i = begin; i < length; i++) {
+              const button = document.createElement('ion-segment-button');
+              button.value = `segment-${i}`;
+              button.innerHTML = `<ion-label>Btn ${i}</ion-label>`;
+
+              dynamicButtons.appendChild(button);
+            }
+          }
+        </script>
+      </ion-content>
+
+      <style>
+        .square {
+          width: 20px;
+          height: 20px;
+          background: black;
+        }
+
+        .square.red {
+          background: red;
+        }
+
+        .square.green {
+          background: green;
+        }
+
+        .square.blue {
+          background: blue;
+        }
+
+        ion-content ion-segment {
+          margin-bottom: 10px;
+        }
+
+        .segment-no-animate ion-segment-button {
+          --indicator-transition: none;
+          --indicator-transform: none;
+        }
+      </style>
+    </ion-app>
+  </body>
+</html>

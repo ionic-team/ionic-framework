@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Position</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      ion-popover.datetime-popover {
+        --min-width: 300px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Position</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <button id="open-datetime" onclick="presentPopover(defaultPopover, event)">Present Popover</button>
+        <ion-popover class="datetime-popover" id="default-popover">
+          <ion-datetime value="2022-05-03T14:23:00.000Z"></ion-datetime>
+        </ion-popover>
+      </ion-content>
+
+      <script>
+        const defaultPopover = document.querySelector('ion-popover#default-popover');
+        const presentPopover = (popover, ev) => {
+          popover.event = ev;
+          popover.showBackdrop = false;
+          popover.isOpen = true;
+
+          const dismiss = () => {
+            popover.isOpen = false;
+            popover.event = undefined;
+
+            popover.removeEventListener('didDismiss', dismiss);
+          };
+
+          popover.addEventListener('didDismiss', dismiss);
+        };
+      </script>
+    </ion-app>
+  </body>
+</html>

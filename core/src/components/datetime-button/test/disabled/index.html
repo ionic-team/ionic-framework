@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime Button - Disabled</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(325px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Datetime Button - Disabled</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Datetime Button Disabled</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button
+                disabled="true"
+                slot="end"
+                id="year-button"
+                datetime="year-datetime"
+              ></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false">
+              <ion-datetime locale="en-US" id="year-datetime" value="2022-03-15T00:43:00"></ion-datetime>
+            </ion-popover>
+          </div>
+          <div class="grid-item">
+            <h2>Custom Button Disabled</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button disabled="true" slot="end" id="custom-button" datetime="custom-datetime">
+                <ion-icon color="primary" id="custom-date-button" slot="date-target" name="calendar"></ion-icon>
+                <ion-icon color="primary" id="custom-time-button" slot="time-target" name="time"></ion-icon>
+              </ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false">
+              <ion-datetime locale="en-US" id="custom-datetime" value="2022-03-15T00:43:00"></ion-datetime>
+            </ion-popover>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

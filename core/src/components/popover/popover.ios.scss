@@ -1,0 +1,113 @@
+@import "./popover";
+@import "./popover.ios.vars";
+
+// iOS Popover
+// --------------------------------------------------
+
+:host {
+  --width: #{$popover-ios-width};
+  --max-height: #{$popover-ios-max-height};
+  --box-shadow: none;
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.08);
+}
+
+:host(.popover-desktop) {
+  --box-shadow: #{$popover-ios-desktop-box-shadow};
+}
+
+.popover-content {
+  @include border-radius($popover-ios-border-radius);
+}
+
+:host(.popover-desktop) .popover-content {
+  border: #{$popover-ios-desktop-border};
+}
+
+
+// Popover Arrow
+// -----------------------------------------
+
+.popover-arrow {
+  display: block;
+  position: absolute;
+
+  width: 20px;
+  height: 10px;
+
+  overflow: hidden;
+  /*
+   * Required for the arrow to render above the backdrop.
+   * Otherwise, the arrow will appear slightly transparent.
+   * The value is set to 11 since it's the minimum value that
+   * will allow the arrow to render above the backdrop.
+   */
+  z-index: 11;
+}
+
+.popover-arrow::after {
+  @include position(3px, null, null, 3px);
+  @include border-radius(3px);
+
+  position: absolute;
+
+  width: 14px;
+  height: 14px;
+
+  transform: rotate(45deg);
+
+  background: var(--background);
+
+  content: "";
+  z-index: $z-index-overlay-wrapper;
+}
+
+:host(.popover-bottom) .popover-arrow {
+  top: auto;
+  bottom: -10px;
+}
+
+:host(.popover-bottom) .popover-arrow::after {
+  top: -6px;
+}
+
+:host(.popover-side-left) .popover-arrow {
+  transform: rotate(90deg);
+}
+
+:host(.popover-side-right) .popover-arrow {
+  transform: rotate(-90deg);
+}
+
+:host(.popover-side-top) .popover-arrow {
+  transform: rotate(180deg);
+}
+
+:host(.popover-side-start) .popover-arrow {
+  @include rtl() {
+    transform: rotate(-90deg);
+  }
+  transform: rotate(90deg);
+}
+
+:host(.popover-side-end) .popover-arrow {
+  @include rtl() {
+    transform: rotate(90deg);
+  }
+  transform: rotate(-90deg);
+}
+
+.popover-arrow,
+.popover-content {
+  opacity: 0;
+}
+
+// Translucent Popover
+// -----------------------------------------
+
+@supports (backdrop-filter: blur(0)) {
+  :host(.popover-translucent) .popover-content,
+  :host(.popover-translucent) .popover-arrow::after {
+    background: $popover-ios-translucent-background-color;
+    backdrop-filter: $popover-ios-translucent-filter;
+  }
+}

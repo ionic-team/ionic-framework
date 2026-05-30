@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Popover - Nested</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+  <style>
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-row-gap: 20px;
+      grid-column-gap: 20px;
+
+      padding: 200px;
+    }
+    .grid-item {
+      margin: 0 auto;
+    }
+    h2 {
+      font-size: 12px;
+      font-weight: normal;
+
+      color: #6f7378;
+
+      margin-top: 10px;
+      margin-left: 5px;
+    }
+
+    ion-item-divider {
+      min-height: 1px;
+    }
+  </style>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Popover - Nested</ion-title>
+          <ion-buttons slot="start">
+            <ion-button id="first-trigger">
+              <ion-icon name="ellipsis-horizontal"></ion-icon>
+            </ion-button>
+            <ion-popover alignment="start" animated="true" trigger="first-trigger" side="end" class="parent-popover">
+              <ion-content>
+                <ion-list lines="none">
+                  <ion-item button detail="false">
+                    <ion-label>Open</ion-label>
+                  </ion-item>
+                  <ion-item button detail id="open-with-popover">
+                    <ion-label>Open With</ion-label>
+                  </ion-item>
+
+                  <ion-popover
+                    animated="true"
+                    trigger-action="click"
+                    trigger="open-with-popover"
+                    side="end"
+                    class="child-popover-one"
+                    alignment="start"
+                  >
+                    <ion-list lines="none">
+                      <ion-item button detail="false">
+                        <ion-label>Preview (default)</ion-label>
+                      </ion-item>
+
+                      <ion-item-divider></ion-item-divider>
+
+                      <ion-item button detail="false">
+                        <ion-label>Figma</ion-label>
+                      </ion-item>
+
+                      <ion-item button detail="false">
+                        <ion-label>Nova</ion-label>
+                      </ion-item>
+
+                      <ion-item button detail="false">
+                        <ion-label>Sketch</ion-label>
+                      </ion-item>
+                    </ion-list>
+                  </ion-popover>
+
+                  <ion-item-divider></ion-item-divider>
+
+                  <ion-item button detail="false">
+                    <ion-label>Move to Trash</ion-label>
+                  </ion-item>
+
+                  <ion-item-divider></ion-item-divider>
+
+                  <ion-item button detail="false">
+                    <ion-label>Get Info</ion-label>
+                  </ion-item>
+
+                  <ion-item button detail="false">
+                    <ion-label>Rename</ion-label>
+                  </ion-item>
+                  <ion-item button detail="false">
+                    <ion-label>Duplicate</ion-label>
+                  </ion-item>
+
+                  <ion-item-divider></ion-item-divider>
+
+                  <ion-item button detail="false">
+                    <ion-label>Copy</ion-label>
+                  </ion-item>
+                  <ion-item button detail id="share-popover">
+                    <ion-label>Share</ion-label>
+                  </ion-item>
+
+                  <ion-popover
+                    animated="true"
+                    trigger-action="click"
+                    trigger="share-popover"
+                    side="end"
+                    class="child-popover-two"
+                    alignment="start"
+                  >
+                    <ion-list lines="none">
+                      <ion-item button detail="false">
+                        <ion-label>Share File</ion-label>
+                      </ion-item>
+
+                      <ion-item-divider></ion-item-divider>
+
+                      <ion-item button detail="false">
+                        <ion-label>Mail</ion-label>
+                      </ion-item>
+
+                      <ion-item button detail="false">
+                        <ion-label>Messages</ion-label>
+                      </ion-item>
+
+                      <ion-item button detail="false">
+                        <ion-label>AirDrop</ion-label>
+                      </ion-item>
+
+                      <ion-item button detail="true" id="share-other-popover">
+                        <ion-label>Other</ion-label>
+                      </ion-item>
+
+                      <ion-popover
+                        animated="true"
+                        trigger-action="click"
+                        trigger="share-other-popover"
+                        side="end"
+                        class="child-popover-three"
+                      >
+                        <ion-list lines="none">
+                          <ion-item button detail="false">
+                            <ion-label>Facebook</ion-label>
+                          </ion-item>
+
+                          <ion-item button detail="false">
+                            <ion-label>Twitter</ion-label>
+                          </ion-item>
+
+                          <ion-item button detail="false">
+                            <ion-label>LinkedIn</ion-label>
+                          </ion-item>
+                        </ion-list>
+                      </ion-popover>
+                    </ion-list>
+                  </ion-popover>
+                </ion-list>
+              </ion-content>
+            </ion-popover>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">Click the icon above to see the nested menu.</ion-content>
+    </ion-app>
+  </body>
+</html>

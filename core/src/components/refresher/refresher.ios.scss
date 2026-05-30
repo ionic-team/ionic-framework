@@ -1,0 +1,102 @@
+@import "./refresher";
+@import "./refresher.ios.vars";
+
+// Refresher Content
+// --------------------------------------------------
+
+.refresher-ios .refresher-pulling-icon,
+.refresher-ios .refresher-refreshing-icon {
+  color: $refresher-ios-icon-color;
+}
+
+.refresher-ios .refresher-pulling-text,
+.refresher-ios .refresher-refreshing-text {
+  color: $refresher-ios-text-color;
+}
+
+.refresher-ios .refresher-refreshing .spinner-lines-ios line,
+.refresher-ios .refresher-refreshing .spinner-lines-small-ios line,
+.refresher-ios .refresher-refreshing .spinner-crescent circle {
+  stroke: $refresher-ios-icon-color;
+}
+
+.refresher-ios .refresher-refreshing .spinner-bubbles circle,
+.refresher-ios .refresher-refreshing .spinner-circles circle,
+.refresher-ios .refresher-refreshing .spinner-dots circle {
+  fill: $refresher-ios-icon-color;
+}
+
+ion-refresher.refresher-native {
+  display: block;
+
+  z-index: 1;
+
+  ion-spinner {
+    @include margin(0, auto, 0, auto);
+  }
+}
+
+.refresher-native .refresher-refreshing ion-spinner {
+  --refreshing-rotation-duration: 2s;
+  display: none;
+  animation: var(--refreshing-rotation-duration) ease-out refresher-rotate forwards;
+}
+.refresher-native .refresher-refreshing {
+  display: none;
+  animation: 250ms linear refresher-pop forwards;
+}
+
+.refresher-native ion-spinner {
+  width: #{$refresher-ios-native-spinner-width};
+  height: #{$refresher-ios-native-spinner-height};
+
+  color: #{$refresher-ios-native-spinner-color};
+}
+
+.refresher-native.refresher-refreshing,
+.refresher-native.refresher-completing {
+  .refresher-pulling ion-spinner {
+    display: none;
+  }
+  .refresher-refreshing ion-spinner {
+    display: block;
+  }
+}
+
+.refresher-native.refresher-pulling {
+  .refresher-pulling ion-spinner {
+    display: block;
+  }
+  .refresher-refreshing ion-spinner {
+    display: none;
+  }
+}
+
+.refresher-native.refresher-completing ion-refresher-content .refresher-refreshing-icon {
+  transform: scale(0) rotate(180deg);
+
+  transition: 300ms;
+}
+
+@keyframes refresher-pop {
+  0% {
+    transform: scale(1);
+    animation-timing-function: ease-in;
+  }
+  50% {
+    transform: scale(1.2);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes refresher-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}

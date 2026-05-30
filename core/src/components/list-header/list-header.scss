@@ -1,0 +1,91 @@
+@import "../../themes/ionic.globals";
+
+
+// List Header
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the list header
+   * @prop --color: Color of the list header text
+   *
+   * @prop --border-color: Color of the list header border
+   * @prop --border-width: Width of the list header border
+   * @prop --border-style: Style of the list header border
+   *
+   * @prop --inner-border-width: Width of the inner list header border
+   */
+  --border-style: solid;
+  --border-width: 0;
+  --inner-border-width: 0;
+
+  @include font-smoothing();
+  @include margin(0);
+  @include padding(0);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 40px;
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  background: var(--background);
+  color: var(--color);
+
+  overflow: hidden;
+}
+
+:host(.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+// Inner List Header
+// --------------------------------------------------
+
+.list-header-inner {
+  display: flex;
+
+  // This is required to work with an inset highlight
+  position: relative;
+
+  flex: 1;
+  flex-direction: inherit;
+  align-items: inherit;
+  align-self: stretch;
+
+  min-height: inherit;
+
+  border-width: var(--inner-border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  overflow: inherit;
+  box-sizing: border-box;
+}
+
+::slotted(ion-label) {
+  flex: 1 1 auto;
+}
+
+// List Header Lines
+// --------------------------------------------------
+
+// Full lines - remove the border from the item inner (inset list items)
+// Inset lines - remove the border on the item (full list items)
+// No lines - remove the border on both (full / inset list items)
+:host(.list-header-lines-inset),
+:host(.list-header-lines-none) {
+  --border-width: 0;
+}
+
+:host(.list-header-lines-full),
+:host(.list-header-lines-none) {
+  --inner-border-width: 0;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - Custom</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .custom-modal {
+        --height: 70%;
+        --border-style: solid;
+        --border-width: 7px 0 0 0;
+        --border-color: #0d51aa;
+        --border-radius: 20px 20px 0 0;
+
+        align-items: flex-end;
+      }
+
+      .custom-modal ion-toolbar {
+        --padding-top: 46px;
+        --padding-bottom: 10px;
+      }
+
+      @media (max-width: 400px) {
+        .custom-modal {
+          --max-width: 98%;
+          --height: 98%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Modal - Custom</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <p>
+          <button id="custom-modal" class="e2ePresentModal" onclick="presentModal()">Present modal</button>
+        </p>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      function createModal() {
+        // create component to open
+        const element = document.createElement('div');
+        element.innerHTML = `
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button>
+              <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Super Modal</ion-title>
+          <ion-buttons slot="end">
+            <ion-button class="dismiss">
+              Close
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <h1>Content of doom</h1>
+        <div>Here's some more content</div>
+        <button class="dismiss">Dismiss Modal</button>
+      </ion-content>
+      `;
+
+        // present the modal
+        const modalElement = Object.assign(document.createElement('ion-modal'), {
+          component: element,
+          cssClass: 'custom-modal',
+        });
+
+        // listen for close event
+        const buttons = element.querySelectorAll('.dismiss');
+        for (var button of buttons) {
+          button.addEventListener('click', () => {
+            modalElement.dismiss();
+          });
+        }
+        document.body.appendChild(modalElement);
+        return modalElement;
+      }
+
+      async function presentModal() {
+        const modal = createModal();
+        await modal.present();
+      }
+      async function presentCloseModal() {
+        const modal = createModal();
+        await modal.present();
+        await modal.dismiss();
+      }
+
+      async function presentCloseModal2() {
+        const modal = createModal();
+        modal.present();
+        setTimeout(() => {
+          modal.dismiss();
+        }, 20);
+      }
+    </script>
+  </body>
+</html>

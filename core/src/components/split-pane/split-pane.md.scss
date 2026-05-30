@@ -1,0 +1,11 @@
+@import "./split-pane";
+@import "./split-pane.md.vars";
+
+// Split Pane
+// --------------------------------------------------
+
+:host {
+  --border: #{$split-pane-md-border};
+  --side-min-width: #{$split-pane-md-side-min-width};
+  --side-max-width: #{$split-pane-md-side-max-width};
+}

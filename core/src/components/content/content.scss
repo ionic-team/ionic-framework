@@ -1,0 +1,254 @@
+@import "../../themes/ionic.globals";
+
+// Content
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the content
+   *
+   * @prop --color: Color of the content
+   *
+   * @prop --padding-top: Top padding of the content
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the content
+   * @prop --padding-bottom: Bottom padding of the content
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the content
+   *
+   * @prop --keyboard-offset: Keyboard offset of the content
+   *
+   * @prop --offset-top: Offset top of the content
+   * @prop --offset-bottom: Offset bottom of the content
+   */
+  --background: #{$background-color};
+  --color: #{$text-color};
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+  --keyboard-offset: 0px;
+  --offset-top: 0px;
+  --offset-bottom: 0px;
+  --overflow: auto;
+
+  display: block;
+  position: relative;
+
+  flex: 1;
+
+  width: 100%;
+  height: 100%;
+
+  /* stylelint-disable */
+  margin: 0 !important;
+
+  padding: 0 !important;
+  /* stylelint-enable */
+
+  font-family: $font-family-base;
+
+  contain: size style;
+}
+
+:host(.ion-color) .inner-scroll {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+#background-content {
+  @include position(calc(var(--offset-top) * -1), 0px,calc(var(--offset-bottom) * -1), 0px);
+
+  position: absolute;
+
+  background: var(--background);
+}
+
+.inner-scroll {
+  @include position(calc(var(--offset-top) * -1), 0px,calc(var(--offset-bottom) * -1), 0px);
+  @include padding(calc(var(--padding-top) + var(--offset-top)), var(--padding-end), calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom) + var(--internal-content-safe-area-padding-bottom, 0px)), var(--padding-start));
+
+  position: absolute;
+
+  color: var(--color);
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+
+  /**
+   * touch-action: manipulation is an alias
+   * for this, but WebKit has an issue
+   * where pointercancel events are not fired
+   * when scrolling: https://bugs.webkit.org/show_bug.cgi?id=240917
+   * Using the long form below avoids the issue.
+   */
+  touch-action: pan-x pan-y pinch-zoom;
+}
+
+.scroll-y,
+.scroll-x {
+  -webkit-overflow-scrolling: touch;
+
+  /**
+   * This adds `.inner-scroll` as part of the
+   * stacking context in WebKit. Without it,
+   * children of ion-content are treated as
+   * siblings rather than descendants. This
+   * can result in the children being put
+   * into their own layers, degrading
+   * scrolling performance.
+   *
+   * An optimization called "layer backing
+   * sharing" usually kicks in to prevent
+   * this, but having translate3d defeats
+   * this optimization.
+   *
+   * See: https://bugs.webkit.org/show_bug.cgi?id=216701
+   */
+  z-index: 0;
+
+  will-change: scroll-position;
+}
+
+.scroll-y {
+  overflow-y: var(--overflow);
+  overscroll-behavior-y: contain;
+}
+
+.scroll-x {
+  overflow-x: var(--overflow);
+  overscroll-behavior-x: contain;
+}
+
+.overscroll::before,
+.overscroll::after {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  content: "";
+}
+
+.overscroll::before {
+  bottom: -1px;
+}
+
+.overscroll::after {
+  top: -1px;
+}
+
+:host(.content-sizing) {
+  display: flex;
+
+  flex-direction: column;
+
+  /**
+   * This resolves a sizing issue in popovers where extra long content
+   * would overflow the popover's height, preventing scrolling. It's a
+   * quirk of flexbox that forces the content to shrink to fit.
+   *
+   * overflow: hidden can't be used here because it prevents the visual
+   * effect from showing on translucent headers.
+   */
+  min-height: 0;
+
+  contain: none;
+}
+:host(.content-sizing) .inner-scroll {
+  position: relative;
+
+  /**
+   * Because the outer content has display: flex here (to help enable
+   * scrolling in a popover), offsetting via `top` (such as when using
+   * a translucent header) creates white space under the content. Use
+   * a negative margin instead to keep the bottom in place. (A similar
+   * thing happens with `bottom` and footers.)
+   */
+  top: 0;
+  bottom: 0;
+
+  margin-top: calc(var(--offset-top) * -1);
+  margin-bottom: calc(var(--offset-bottom) * -1);
+}
+
+.transition-effect {
+  display: none;
+  position: absolute;
+
+  width: 100%;
+  height: 100vh;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+:host(.content-ltr) .transition-effect {
+  /* stylelint-disable property-disallowed-list */
+  left: -100%;
+  /* stylelint-enable property-disallowed-list */
+}
+
+:host(.content-rtl) .transition-effect {
+  /* stylelint-disable property-disallowed-list */
+  right: -100%;
+  /* stylelint-enable property-disallowed-list */
+}
+
+.transition-cover {
+  position: absolute;
+
+  /* stylelint-disable property-disallowed-list */
+  right: 0;
+  /* stylelint-enable property-disallowed-list */
+
+  width: 100%;
+  height: 100%;
+
+  background: black;
+
+  opacity: 0.1;
+}
+
+.transition-shadow {
+  display: block;
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  box-shadow: inset -9px 0 9px 0 rgba(0, 0, 100, 0.03);
+}
+
+:host(.content-ltr) .transition-shadow {
+  /* stylelint-disable property-disallowed-list */
+  right: 0;
+  /* stylelint-enable property-disallowed-list */
+}
+
+:host(.content-rtl) .transition-shadow {
+  /* stylelint-disable property-disallowed-list */
+  left: 0;
+  /* stylelint-enable property-disallowed-list */
+
+  transform: scaleX(-1);
+}
+
+
+// Content: Fixed
+// --------------------------------------------------
+
+::slotted([slot="fixed"]) {
+  position: absolute;
+
+  /**
+   * When presenting ion-content inside of an ion-modal, the .inner-scroll
+   * element is composited. In WebKit, the fixed content is not composited
+   * causing it to appear under the main scrollable content as a result.
+   * The fixed content is correctly composited in other browsers. Adding
+   * the translateZ forces the fixed content to be composited so it correctly
+   * shows on top of the scrollable content. Setting a negative z-index will
+   * still allow the fixed content to appear under the scroll content if specified.
+   */
+  transform: translateZ(0);
+}

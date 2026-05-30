@@ -1,0 +1,9 @@
+@import "./menu";
+@import "./menu.md.vars";
+
+// Material Design Menu
+// --------------------------------------------------
+
+:host(.menu-type-overlay) .menu-inner {
+  box-shadow: $menu-md-box-shadow;
+}

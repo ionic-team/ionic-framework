@@ -1,0 +1,51 @@
+@import "./split-pane.vars";
+@import "../menu/menu.vars";
+
+// Split Pane
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --border: Border between panes
+   * @prop --side-min-width: Minimum width of the side pane. Does not apply when split pane is collapsed.
+   * @prop --side-max-width: Maximum width of the side pane. Does not apply when split pane is collapsed.
+   * @prop --side-width: Width of the side pane. Does not apply when split pane is collapsed.
+   */
+  --side-width: 100%;
+
+  @include position(0, 0, 0, 0);
+
+  display: flex;
+  position: absolute;
+
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  contain: strict;
+}
+
+:host(.split-pane-visible) ::slotted(.split-pane-main) {
+  @include position(0, 0, 0, 0);
+
+  position: relative;
+
+  flex: 1;
+
+  box-shadow: none;
+
+  /**
+   * Content can overflow outside of a router outlet
+   * or a nav container to allow for the translucent
+   * tab bar effect to work. However, this can cause
+   * iOS page transitions to flow outside of the container
+   * and overlap the menu on larger viewports. As a result,
+   * we disable the overflow when that is the case.
+   */
+  overflow: hidden;
+
+  z-index: 0;
+}
+
+::slotted(.split-pane-side:not(ion-menu)) {
+  display: none;
+}
