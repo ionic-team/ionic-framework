@@ -1,5 +1,6 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "../../themes/mixins" as mixins;
+@use "../select-option/select-option.ionic.interface";
 @use "./select-popover.common";
 
 // Ionic Select Popover

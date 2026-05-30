@@ -1,0 +1,10 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+// Select Option - Interface
+// --------------------------------------------------
+
+.action-sheet-button-label-text,
+.alert-radio-label-text,
+.select-option-label-text {
+  gap: globals.$ion-space-300;
+}

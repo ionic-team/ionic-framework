@@ -1,5 +1,6 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "../../themes/mixins" as mixins;
+@use "../select-option/select-option.ionic.interface";
 @use "./action-sheet.common";
 
 // Ionic Action Sheet
@@ -94,10 +95,10 @@
 .action-sheet-icon {
   @include mixins.margin(globals.$ion-space-0, globals.$ion-space-600, globals.$ion-space-0, globals.$ion-space-0);
 
-  color: var(--color, globals.$ion-text-default);
-
   width: globals.$ion-scale-600;
   height: globals.$ion-scale-600;
+
+  color: var(--color, globals.$ion-text-default);
 }
 
 .action-sheet-button-inner {

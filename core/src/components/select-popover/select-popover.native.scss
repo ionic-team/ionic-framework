@@ -1,6 +1,7 @@
 @use "../../themes/native/native.theme.default" as native;
 @use "../../themes/mixins" as mixins;
 @use "../../themes/functions.font" as font;
+@use "../select-option/select-option.native.interface";
 @use "./select-popover.common";
 
 // Select Popover: Native
