@@ -51,6 +51,7 @@ input {
   box-sizing: border-box;
 }
 
+// Hide the native focus outline.
 :host(:focus) {
   outline: none;
 }
