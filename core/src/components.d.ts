@@ -3214,7 +3214,7 @@ export namespace Components {
         "isVisible": () => Promise<boolean>;
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default QUERY['lg']
+          * @default '(min-width: 992px)'
          */
         "when": string | boolean;
     }
@@ -8423,7 +8423,7 @@ declare namespace LocalJSX {
         "onIonSplitPaneVisible"?: (event: IonSplitPaneCustomEvent<{ visible: boolean }>) => void;
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default QUERY['lg']
+          * @default '(min-width: 992px)'
          */
         "when"?: string | boolean;
     }
