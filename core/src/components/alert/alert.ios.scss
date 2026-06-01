@@ -1,3 +1,4 @@
+@use "../select-option/select-option.ios.interface";
 @import "./alert.native";
 @import "./alert.ios.vars";
 
@@ -382,17 +383,4 @@
 .alert-button-role-destructive.ion-activated,
 .alert-button-role-destructive.ion-focused {
   color: $alert-ios-button-destructive-text-color;
-}
-
-// Alert: Select Option
-// --------------------------------------------------
-
-/**
- * Cap slotted children so they can't stretch the option
- * row out of proportion, keeping rows visually uniform
- * regardless of the content.
- */
-.select-option-start > *,
-.select-option-end > * {
-  max-height: $alert-ios-select-option-slot-size;
 }

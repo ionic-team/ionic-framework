@@ -161,6 +161,3 @@ $action-sheet-ios-group-translucent-filter: saturate(280%) blur(20px);
 
 /// @prop - Filter of the translucent action-sheet button
 $action-sheet-ios-button-translucent-filter: saturate(120%);
-
-/// @prop - Maximum size of slotted children rendered in a select option's start/end slot
-$action-sheet-ios-select-option-slot-size: dynamic-font-max(24px, 2);

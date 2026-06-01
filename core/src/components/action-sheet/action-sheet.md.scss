@@ -1,3 +1,4 @@
+@use "../select-option/select-option.md.interface";
 @import "./action-sheet.native";
 @import "./action-sheet.md.vars";
 
@@ -109,17 +110,4 @@
 
 .action-sheet-selected {
   font-weight: bold;
-}
-
-// Action Sheet: Select Option
-// --------------------------------------------------
-
-/**
- * Cap slotted children so they can't stretch the option
- * row out of proportion, keeping rows visually uniform
- * regardless of the content.
- */
-.select-option-start > *,
-.select-option-end > * {
-  max-height: 24px;
 }

@@ -1,3 +1,4 @@
+@use "../select-option/select-option.ios.interface";
 @import "./action-sheet.native";
 @import "./action-sheet.ios.vars";
 
@@ -214,21 +215,4 @@
   .action-sheet-destructive:hover {
     color: $action-sheet-ios-button-destructive-text-color;
   }
-}
-
-// Action Sheet: Select Option
-// --------------------------------------------------
-
-.action-sheet-button-label-text {
-  justify-content: center;
-}
-
-/**
- * Cap slotted children so they can't stretch the option
- * row out of proportion, keeping rows visually uniform
- * regardless of the content.
- */
-.select-option-start > *,
-.select-option-end > * {
-  max-height: $action-sheet-ios-select-option-slot-size;
 }

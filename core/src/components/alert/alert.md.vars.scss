@@ -248,7 +248,7 @@ $alert-md-radio-label-padding-end: 26px;
 $alert-md-radio-label-padding-bottom: $alert-md-radio-label-padding-top;
 
 /// @prop - Padding start on the label for the radio alert
-$alert-md-radio-label-padding-start: $alert-md-radio-label-padding-end + 26px;
+$alert-md-radio-label-padding-start: $alert-md-radio-label-padding-end + 16px;
 
 /// @prop - Font size of the label for the radio alert
 $alert-md-radio-label-font-size: dynamic-font(16px);
@@ -320,7 +320,7 @@ $alert-md-checkbox-label-padding-end: $alert-md-checkbox-left;
 $alert-md-checkbox-label-padding-bottom: $alert-md-checkbox-label-padding-top;
 
 /// @prop - Padding start of the label for the checkbox in the alert
-$alert-md-checkbox-label-padding-start: $alert-md-checkbox-label-padding-end + 27px;
+$alert-md-checkbox-label-padding-start: $alert-md-checkbox-label-padding-end + 16px;
 
 /// @prop - Text color of the label for the checkbox in the alert
 $alert-md-checkbox-label-text-color: $text-color-step-150;

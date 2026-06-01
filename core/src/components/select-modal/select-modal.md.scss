@@ -1,3 +1,4 @@
+@use "../select-option/select-option.md.interface";
 @import "./select-modal.native";
 @import "../../themes/mixins.scss";
 @import "../item/item.md.vars";
@@ -27,17 +28,4 @@ ion-item {
   --background-focused: #{$item-md-color};
   --background-hover: #{$item-md-color};
   --color: #{ion-color(primary, base)};
-}
-
-// Select Modal: Select Option
-// --------------------------------------------------
-
-/**
- * Cap slotted children so they can't stretch the option
- * row out of proportion, keeping rows visually uniform
- * regardless of the content.
- */
-.select-option-start > *,
-.select-option-end > * {
-  max-height: 24px;
 }

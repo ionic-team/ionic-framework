@@ -21,24 +21,3 @@
 .alert-tappable.ion-focused {
   background: native.$background-color-step-100;
 }
-
-// Alert: Select Option
-// --------------------------------------------------
-
-.alert-radio-label,
-.alert-checkbox-label {
-  gap: 12px;
-}
-
-.select-option-start,
-.select-option-end {
-  gap: 8px;
-}
-
-.select-option-description {
-  @include mixins.padding(5px, 0, 0, 0);
-
-  color: native.$text-color-step-300;
-
-  font-size: font.dynamic-font(12px);
-}

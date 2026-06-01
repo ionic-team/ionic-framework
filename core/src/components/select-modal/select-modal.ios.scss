@@ -1,3 +1,4 @@
+@use "../select-option/select-option.ios.interface";
 @import "./select-modal.native";
 @import "../item/item.ios.vars";
 @import "../radio/radio.ios.vars";
@@ -21,21 +22,4 @@ ion-radio::after {
   border-color: #{$item-ios-border-bottom-color};
 
   content: "";
-}
-
-// Select Modal: Select Option
-// --------------------------------------------------
-
-/**
- * Cap slotted children so they can't stretch the option
- * row out of proportion, keeping rows visually uniform
- * regardless of the content.
- */
-.select-option-start > *,
-.select-option-end > * {
-  max-height: dynamic-font-max(24px, 2);
-}
-
-.select-option-has-rich-content {
-  @include padding-horizontal(null, $item-ios-padding-end);
 }
