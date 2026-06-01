@@ -474,11 +474,18 @@ export class Select implements ComponentInterface {
 
       if (optionToFocus) {
         /**
-         * ion-radio and ion-checkbox expose `setFocus`, which correctly
+         * Focus the option directly (`setFocus()`/`focus()`) rather than
+         * with `focusVisibleElement()`. `focusVisibleElement()` forces the
+         * `ion-focused` focus ring on regardless of how the overlay was
+         * opened, whereas a plain focus lets the focus-visible utility
+         * decide: it shows the ring only when the overlay was opened with
+         * the keyboard and hides it for pointer opens.
+         *
+         * `ion-radio` and `ion-checkbox` expose `setFocus`, which correctly
          * delegates focus to their inner focusable element. This is needed
          * because browsers such as Firefox do not delegate focus correctly
-         * when focusing an element with delegatesFocus. Other options are
-         * plain buttons that can be focused directly.
+         * when focusing an element with delegatesFocus. When the option is
+         * a plain button it can be focused directly.
          */
         if (optionToFocus.matches('ion-radio, ion-checkbox')) {
           (optionToFocus as HTMLIonRadioElement | HTMLIonCheckboxElement).setFocus();
@@ -487,12 +494,15 @@ export class Select implements ComponentInterface {
         }
 
         /**
-         * While the focus should be on the option so assistive technologies
-         * announce it, we do not want to show the focus ring when the overlay
-         * opens. The ring should only appear once the user navigates the
-         * overlay with the keyboard, which the focus-visible utility handles.
+         * In the alert interface, when tabbing and pressing enter to open
+         * the select, the value that is currently selected flashes the
+         * focused state briefly before moving to its wrapper. This suppresses
+         * the focus visible state, so that the option will only show as
+         * focused when navigating with the keyboard.
          */
-        suppressFocusVisible();
+        if (this.interface === 'alert') {
+          suppressFocusVisible();
+        }
       }
     };
 
