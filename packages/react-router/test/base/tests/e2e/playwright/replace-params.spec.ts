@@ -29,6 +29,9 @@ test.describe('Replace Params', () => {
     await ionPageVisible(page, 'replace-params-step1');
 
     await page.locator('#go-step2-second').click();
+
+    // Wait for the old page to go away before validating there's only one
+    await expect(page.locator('[data-pageid="replace-params-step2"].ion-page-hidden')).toHaveCount(0);
     await ionPageVisible(page, 'replace-params-step2');
     await expect(page.locator('[data-testid="step2-param"]')).toHaveText('second');
 
