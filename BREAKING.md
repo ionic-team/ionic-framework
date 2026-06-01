@@ -15,6 +15,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 ## Version 9.x
 
 - [Browser and Platform Support](#version-9x-browser-platform-support)
+- [Package Exports](#version-9x-package-exports)
 - [Components](#version-9x-components)
   - [Legacy Picker](#version-9x-legacy-picker)
   - [Router Outlet](#version-9x-router-outlet)
@@ -31,6 +32,23 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | Framework | Supported Version     |
 | --------- | --------------------- |
 | React     | 18+                   |
+
+<h2 id="version-9x-package-exports">Package Exports</h2>
+
+`@ionic/core`'s `package.json` now declares an `exports` field. Subpaths like `@ionic/core/components` and `@ionic/core/loader` previously failed under Node ESM (Angular 21's default Vitest builder, raw Node, etc.) with `ERR_UNSUPPORTED_DIR_IMPORT`, because the strict ESM resolver doesn't read the nested `package.json` files this package relied on. The new `exports` map declares the documented subpaths explicitly.
+
+`exports` is an allowlist. Apps using Node ESM, webpack 5, or TypeScript `moduleResolution: "bundler"`/`"node16"`/`"nodenext"` that import from undocumented internal paths need to switch to one of the supported subpaths:
+
+| Subpath                            | Use                                                   |
+| ---------------------------------- | ----------------------------------------------------- |
+| `@ionic/core`                      | Root entry, controllers, animation builders           |
+| `@ionic/core/components`           | Custom-element constructors and shared utilities      |
+| `@ionic/core/components/ion-*.js`  | Single-component custom-element constructor           |
+| `@ionic/core/loader`               | `defineCustomElements` lazy loader                    |
+| `@ionic/core/hydrate`              | SSR hydration entry                                   |
+| `@ionic/core/css/*.css`            | Global stylesheets and palettes                       |
+
+Apps on `moduleResolution: "node"` (classic) and webpack 4 keep resolving through the legacy fields and are unaffected.
 
 <h2 id="version-9x-components">Components</h2>
 
