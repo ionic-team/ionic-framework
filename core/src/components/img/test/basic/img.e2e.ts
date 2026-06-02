@@ -4,8 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('img: basic'), () => {
-    // TODO FW-3596
-    test.describe.skip('image successfully loads', () => {
+    test.describe('image successfully loads', () => {
       let ionImgWillLoad: EventSpy;
       let ionImgDidLoad: EventSpy;
 
@@ -16,7 +15,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
               status: 200,
               contentType: 'image/png',
               body: Buffer.from(
-                'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIwAAAABJRU5ErkJggg==',
+                'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
                 'base64'
               ),
             });
@@ -52,7 +51,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       test('should emit ionImgDidLoad', async () => {
         await ionImgDidLoad.next();
 
-        expect(ionImgWillLoad).toHaveReceivedEventTimes(1);
+        expect(ionImgDidLoad).toHaveReceivedEventTimes(1);
       });
     });
 
