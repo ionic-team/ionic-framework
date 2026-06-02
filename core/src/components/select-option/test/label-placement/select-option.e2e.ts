@@ -16,7 +16,15 @@ const ALERT_SIZE_OVERRIDES = `
   }
 `;
 
+const INTERFACES = [
+  { name: 'alert', presentEvent: 'ionAlertDidPresent', locator: 'ion-alert .alert-wrapper' },
+  { name: 'popover', presentEvent: 'ionPopoverDidPresent', locator: 'ion-popover' },
+  { name: 'modal', presentEvent: 'ionModalDidPresent', locator: 'ion-modal' },
+] as const;
+
 const JUSTIFY_VARIANTS = ['start', 'end', 'space-between'] as const;
+
+const LABEL_PLACEMENTS = ['start', 'end'] as const;
 
 const FIRST_OPTION_VALUE = `${JUSTIFY_VARIANTS[0]}-short`;
 
@@ -47,50 +55,25 @@ const setContentForInterface = async (
 
 configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('select-option: label placement'), () => {
-    test.describe('alert interface', () => {
-      for (const placement of ['start', 'end'] as const) {
-        test(`placement ${placement}`, async ({ page }) => {
-          await setContentForInterface(page, 'alert', placement, config);
-          await page.addStyleTag({ content: ALERT_SIZE_OVERRIDES });
+    for (const { name, presentEvent, locator } of INTERFACES) {
+      test.describe(`${name} interface`, () => {
+        for (const placement of LABEL_PLACEMENTS) {
+          test(`placement ${placement}`, async ({ page }) => {
+            await setContentForInterface(page, name, placement, config);
 
-          const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
-          await page.locator('#select').click();
-          await ionAlertDidPresent.next();
+            if (name === 'alert') {
+              await page.addStyleTag({ content: ALERT_SIZE_OVERRIDES });
+            }
 
-          const alertWrapper = page.locator('ion-alert .alert-wrapper');
-          await expect(alertWrapper).toHaveScreenshot(screenshot(`select-option-label-alert-${placement}`));
-        });
-      }
-    });
+            const didPresent = await page.spyOnEvent(presentEvent);
+            await page.locator('#select').click();
+            await didPresent.next();
 
-    test.describe('popover interface', () => {
-      for (const placement of ['start', 'end'] as const) {
-        test(`placement ${placement}`, async ({ page }) => {
-          await setContentForInterface(page, 'popover', placement, config);
-
-          const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
-          await page.locator('#select').click();
-          await ionPopoverDidPresent.next();
-
-          const popover = page.locator('ion-popover');
-          await expect(popover).toHaveScreenshot(screenshot(`select-option-label-popover-${placement}`));
-        });
-      }
-    });
-
-    test.describe('modal interface', () => {
-      for (const placement of ['start', 'end'] as const) {
-        test(`placement ${placement}`, async ({ page }) => {
-          await setContentForInterface(page, 'modal', placement, config);
-
-          const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-          await page.locator('#select').click();
-          await ionModalDidPresent.next();
-
-          const modal = page.locator('ion-modal');
-          await expect(modal).toHaveScreenshot(screenshot(`select-option-label-modal-${placement}`));
-        });
-      }
-    });
+            const overlay = page.locator(locator);
+            await expect(overlay).toHaveScreenshot(screenshot(`select-option-label-${name}-${placement}`));
+          });
+        }
+      });
+    }
   });
 });
