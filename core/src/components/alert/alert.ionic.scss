@@ -164,16 +164,11 @@
 
 .alert-radio-label {
   @include globals.typography(globals.$ion-body-md-regular);
-  @include mixins.padding(
-    globals.$ion-space-300,
-    globals.$ion-space-700,
-    globals.$ion-space-300,
-    globals.$ion-scale-1400
-  );
+  @include mixins.padding(globals.$ion-space-200, null, globals.$ion-space-200, null);
 
   // Required for the radio icon to stay on the screen without
   // being squished when the font size scales up.
-  max-width: calc(100% - globals.$ion-space-700);
+  max-width: calc(100% - globals.$ion-space-400);
 
   color: globals.$ion-text-default;
 }
@@ -184,7 +179,16 @@
    * icon's side. When the label is placed at the start, the icon
    * is at the end, so swap the inline paddings to mirror that geometry.
    */
-  @include mixins.padding-horizontal(globals.$ion-space-700, globals.$ion-scale-1400);
+  @include mixins.padding-horizontal(globals.$ion-space-400, globals.$ion-space-800);
+}
+
+.radio-label-placement-end .alert-radio-label {
+  /**
+   * The label's inline padding clears space for the icon on the
+   * icon's side. When the label is placed at the end, the icon
+   * is at the start, so swap the inline paddings to mirror that geometry.
+   */
+  @include mixins.padding-horizontal(globals.$ion-space-800, globals.$ion-space-400);
 }
 
 // Ionic Alert Radio Outer Circle: Unchecked
@@ -196,6 +200,8 @@
 
   display: flex;
   position: relative;
+
+  flex-shrink: 0;
 
   align-items: center;
   justify-content: center;
@@ -215,11 +221,11 @@
 // The icon's inline offset gives it a gap from whichever edge the icon
 // sits on, which depends on label placement
 .radio-label-placement-start .alert-radio-icon {
-  @include globals.position-horizontal(null, globals.$ion-space-700);
+  @include globals.position-horizontal(null, globals.$ion-space-400);
 }
 
 .radio-label-placement-end .alert-radio-icon {
-  @include globals.position-horizontal(globals.$ion-space-700, null);
+  @include globals.position-horizontal(globals.$ion-space-400, null);
 }
 
 // Ionic Alert Radio Inner Dot
@@ -251,15 +257,15 @@
 .alert-checkbox-label {
   @include globals.typography(globals.$ion-body-md-regular);
   @include mixins.padding(
-    globals.$ion-space-300,
-    globals.$ion-space-700,
-    globals.$ion-space-300,
-    globals.$ion-scale-1400
+    globals.$ion-space-200,
+    globals.$ion-space-400,
+    globals.$ion-space-200,
+    globals.$ion-space-800
   );
 
   // Required for the checkbox icon to stay on the screen without
   // being squished when the font size scales up.
-  max-width: calc(100% - globals.$ion-space-700);
+  max-width: calc(100% - globals.$ion-space-400);
 
   color: globals.$ion-text-default;
 }
@@ -270,7 +276,7 @@
    * icon's side. When the label is placed at the start, the icon
    * is at the end, so swap the inline paddings to mirror that geometry.
    */
-  @include mixins.padding-horizontal(globals.$ion-space-700, globals.$ion-scale-1400);
+  @include mixins.padding-horizontal(globals.$ion-space-400, globals.$ion-space-800);
 }
 
 // Ionic Alert Checkbox Outline: Unchecked
@@ -282,6 +288,8 @@
 
   display: flex;
   position: relative;
+
+  flex-shrink: 0;
 
   align-items: center;
   justify-content: center;
@@ -301,11 +309,11 @@
 // The icon's inline offset gives it a gap from whichever edge the icon
 // sits on, which depends on label placement
 .checkbox-label-placement-end .alert-checkbox-icon {
-  @include globals.position-horizontal(globals.$ion-space-700, null);
+  @include globals.position-horizontal(globals.$ion-space-400, null);
 }
 
 .checkbox-label-placement-start .alert-checkbox-icon {
-  @include globals.position-horizontal(null, globals.$ion-space-700);
+  @include globals.position-horizontal(null, globals.$ion-space-400);
 }
 
 .alert-checkbox-inner {

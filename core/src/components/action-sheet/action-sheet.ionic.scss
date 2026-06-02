@@ -75,9 +75,9 @@
 
 .action-sheet-button {
   @include mixins.padding(
-    globals.$ion-space-300,
+    globals.$ion-space-200,
     globals.$ion-space-400,
-    globals.$ion-space-300,
+    globals.$ion-space-200,
     globals.$ion-space-400
   );
   @include globals.typography(globals.$ion-body-md-regular);

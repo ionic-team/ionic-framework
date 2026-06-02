@@ -191,7 +191,7 @@ $alert-md-list-border-bottom: $alert-md-list-border-top;
 $alert-md-radio-top: 0;
 
 /// @prop - Left of the alert radio
-$alert-md-radio-left: 26px;
+$alert-md-radio-left: 16px;
 
 /// @prop - Width of the alert radio
 $alert-md-radio-width: 20px;
@@ -242,7 +242,7 @@ $alert-md-radio-icon-transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
 $alert-md-radio-label-padding-top: 13px;
 
 /// @prop - Padding end on the label for the radio alert
-$alert-md-radio-label-padding-end: 26px;
+$alert-md-radio-label-padding-end: 16px;
 
 /// @prop - Padding bottom on the label for the radio alert
 $alert-md-radio-label-padding-bottom: $alert-md-radio-label-padding-top;
@@ -263,7 +263,7 @@ $alert-md-radio-label-text-color-checked: $alert-md-radio-label-text-color;
 $alert-md-checkbox-top: 0;
 
 /// @prop - Left of the checkbox in the alert
-$alert-md-checkbox-left: 26px;
+$alert-md-checkbox-left: 16px;
 
 /// @prop - Width of the checkbox in the alert
 $alert-md-checkbox-width: 16px;

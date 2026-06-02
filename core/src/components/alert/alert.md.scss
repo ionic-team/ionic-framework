@@ -193,6 +193,8 @@
   display: block;
   position: relative;
 
+  flex-shrink: 0;
+
   width: $alert-md-radio-width;
   height: $alert-md-radio-height;
 
@@ -283,6 +285,8 @@
 
   position: relative;
 
+  flex-shrink: 0;
+
   width: $alert-md-checkbox-width;
   height: $alert-md-checkbox-height;
 
@@ -370,7 +374,7 @@
   overflow: hidden;
 }
 
-.alert-button .alert-button-inner {
+.alert-button-group .alert-button-inner {
   justify-content: $alert-md-button-group-justify-content;
 }
 
