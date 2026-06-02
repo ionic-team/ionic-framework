@@ -83,11 +83,7 @@ export class SelectPopover implements ComponentInterface {
    * Dismisses the host popover that the `ion-select-popover`
    * is rendered within.
    */
-  private dismissParentPopover(isOptionDisabled = false) {
-    if (isOptionDisabled) {
-      return;
-    }
-
+  private dismissParentPopover() {
     const popover = this.el.closest('ion-popover');
     if (popover) {
       popover.dismiss();
@@ -226,7 +222,7 @@ export class SelectPopover implements ComponentInterface {
                 disabled={option.disabled}
                 justify={richOption.justify ?? getOverlayLabelJustify(theme, 'radio')}
                 labelPlacement={richOption.labelPlacement ?? getOverlayLabelPlacement(theme, 'radio')}
-                onClick={() => this.dismissParentPopover(option.disabled)}
+                onClick={() => this.dismissParentPopover()}
                 onKeyDown={(ev) => {
                   if (ev.key === 'Enter' && !ev.repeat) {
                     this.pendingEnterTarget = ev.currentTarget as HTMLElement;
@@ -235,12 +231,12 @@ export class SelectPopover implements ComponentInterface {
                 onKeyUp={(ev) => {
                   if (ev.key === ' ') {
                     // Space selects and dismisses in one press.
-                    this.dismissParentPopover(option.disabled);
+                    this.dismissParentPopover();
                   } else if (ev.key === 'Enter') {
                     const shouldDismiss = this.pendingEnterTarget === ev.currentTarget;
                     this.pendingEnterTarget = null;
                     if (shouldDismiss) {
-                      this.dismissParentPopover(option.disabled);
+                      this.dismissParentPopover();
                     }
                   }
                 }}

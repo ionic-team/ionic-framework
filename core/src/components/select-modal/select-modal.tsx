@@ -50,11 +50,7 @@ export class SelectModal implements ComponentInterface {
 
   @Prop() options: SelectModalOption[] = [];
 
-  private closeModal(isOptionDisabled = false) {
-    if (isOptionDisabled) {
-      return;
-    }
-
+  private closeModal() {
     const modal = this.el.closest('ion-modal');
 
     if (modal) {
@@ -163,7 +159,7 @@ export class SelectModal implements ComponentInterface {
                 disabled={option.disabled}
                 justify={richOption.justify ?? defaultJustify}
                 labelPlacement={richOption.labelPlacement ?? defaultLabelPlacement}
-                onClick={() => this.closeModal(option.disabled)}
+                onClick={() => this.closeModal()}
                 onKeyDown={(ev) => {
                   if (ev.key === 'Enter' && !ev.repeat) {
                     this.pendingEnterTarget = ev.currentTarget as HTMLElement;
@@ -172,12 +168,12 @@ export class SelectModal implements ComponentInterface {
                 onKeyUp={(ev) => {
                   if (ev.key === ' ') {
                     // Space selects and dismisses in one press.
-                    this.closeModal(option.disabled);
+                    this.closeModal();
                   } else if (ev.key === 'Enter') {
                     const shouldClose = this.pendingEnterTarget === ev.currentTarget;
                     this.pendingEnterTarget = null;
                     if (shouldClose) {
-                      this.closeModal(option.disabled);
+                      this.closeModal();
                     }
                   }
                 }}
