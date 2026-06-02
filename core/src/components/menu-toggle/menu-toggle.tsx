@@ -2,13 +2,10 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Listen, Prop, State, h } from '@stencil/core';
 import { menuController } from '@utils/menu-controller';
 
-import { getIonTheme } from '../../global/ionic-global';
-
 import { updateVisibility } from './menu-toggle-util';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - Content is placed inside the toggle to act as the click target.
  */
@@ -45,7 +42,11 @@ export class MenuToggle implements ComponentInterface {
   @Listen('ionMenuChange', { target: 'body' })
   @Listen('ionSplitPaneVisible', { target: 'body' })
   async visibilityChanged() {
-    this.visible = await updateVisibility(this.menu);
+    try {
+      this.visible = await updateVisibility(this.menu);
+    } catch {
+      this.visible = false;
+    }
   }
 
   private onClick = () => {
@@ -53,7 +54,6 @@ export class MenuToggle implements ComponentInterface {
   };
 
   render() {
-    const theme = getIonTheme(this);
     const hidden = this.autoHide && !this.visible;
 
     return (
@@ -61,7 +61,6 @@ export class MenuToggle implements ComponentInterface {
         onClick={this.onClick}
         aria-hidden={hidden ? 'true' : null}
         class={{
-          [theme]: true,
           'menu-toggle-hidden': hidden,
         }}
       >

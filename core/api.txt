@@ -1729,7 +1729,6 @@ ion-menu-toggle,shadow
 ion-menu-toggle,prop,autoHide,boolean,true,false,false
 ion-menu-toggle,prop,menu,string | undefined,undefined,false,false
 ion-menu-toggle,prop,mode,"ios" | "md",undefined,false,false
-ion-menu-toggle,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-modal,shadow
 ion-modal,prop,animated,boolean,true,false,false
