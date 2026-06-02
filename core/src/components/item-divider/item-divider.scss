@@ -308,15 +308,15 @@
 
 // Thumbnail
 ::slotted(ion-thumbnail) {
-  // TODO(FW-6862): separate width and height tokens for thumbnails
-  --size: var(--ion-item-divider-thumbnail-width);
-
   @include mixins.margin(
     var(--ion-item-divider-thumbnail-margin-top),
     var(--ion-item-divider-thumbnail-margin-end),
     var(--ion-item-divider-thumbnail-margin-bottom),
     var(--ion-item-divider-thumbnail-margin-start)
   );
+
+  width: var(--ion-item-divider-thumbnail-width, revert-layer);
+  height: var(--ion-item-divider-thumbnail-height, revert-layer);
 }
 
 ::slotted(ion-thumbnail[slot="start"]) {

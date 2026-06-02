@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * ion-thumbnail does not have mode/RTL-specific logic
+ * This behavior does not vary across modes/directions
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('thumbnail: rendering'), () => {
@@ -22,8 +22,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       await page.setContent(
         `
+          <style>
+            ion-item {
+              --ion-item-thumbnail-width: 20px;
+              --ion-item-thumbnail-height: 20px;
+            }
+          </style>
+
           <ion-item>
-            <ion-thumbnail style="--size: 20px">
+            <ion-thumbnail>
               <img src="/src/components/thumbnail/test/thumbnail.svg" />
             </ion-thumbnail>
           </ion-item>
@@ -33,6 +40,29 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       const item = page.locator('ion-item');
       await expect(item).toHaveScreenshot(screenshot(`thumbnail-ion-item-size-diff`));
+    });
+
+    test('size should be customizable in <ion-item-divider>', async ({ page }) => {
+      await page.setContent(
+        `
+          <style>
+            ion-item-divider {
+              --ion-item-divider-thumbnail-width: 20px;
+              --ion-item-divider-thumbnail-height: 20px;
+            }
+          </style>
+
+          <ion-item-divider>
+            <ion-thumbnail>
+              <img src="/src/components/thumbnail/test/thumbnail.svg" />
+            </ion-thumbnail>
+          </ion-item-divider>
+        `,
+        config
+      );
+
+      const itemDivider = page.locator('ion-item-divider');
+      await expect(itemDivider).toHaveScreenshot(screenshot(`thumbnail-ion-item-divider-size`));
     });
   });
 });
@@ -52,6 +82,12 @@ configs().forEach(({ title, screenshot, config }) => {
       const referenceEl = page.locator('#ion-item');
 
       await expect(referenceEl).toHaveScreenshot(screenshot(`thumbnail-ion-item-diff`));
+    });
+
+    test('should not have visual regressions when rendering inside of an <ion-item-divider>', async ({ page }) => {
+      const referenceEl = page.locator('#ion-item-divider');
+
+      await expect(referenceEl).toHaveScreenshot(screenshot('thumbnail-ion-item-divider'));
     });
   });
 });
