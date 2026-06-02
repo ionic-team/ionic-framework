@@ -20,7 +20,9 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Legacy Picker](#version-9x-legacy-picker)
   - [Router Outlet](#version-9x-router-outlet)
   - [Select](#version-9x-select)
+  - [Input and Searchbar](#version-9x-input-searchbar)
 - [Framework Specific](#version-9x-framework-specific)
+  - [Angular](#version-9x-angular)
   - [React](#version-9x-react)
   - [Vue](#version-9x-vue)
 
@@ -31,7 +33,9 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 **Minimum JavaScript Framework Versions**
 | Framework | Supported Version     |
 | --------- | --------------------- |
+| Angular   | 18+                   |
 | React     | 18+                   |
+| Vue       | 3.5+                  |
 
 <h2 id="version-9x-package-exports">Package Exports</h2>
 
@@ -97,7 +101,90 @@ The `ionChange` event on `ion-select` now only fires when the selected value act
 
 Apps that relied on `ionChange` firing on every confirmation (for example, to detect overlay dismissal without a value change) should listen for `ionDismiss` instead, or use the `didDismiss` event on the underlying alert or action sheet.
 
+<h4 id="version-9x-input-searchbar">Input and Searchbar</h4>
+
+The `autocorrect` property on `ion-input` and `ion-searchbar` is now a `boolean` and defaults to `false`. It was previously typed as `'on' | 'off'` with a default of `'off'`. This resolves a type conflict introduced when TypeScript 5.9 added `autocorrect: boolean` to the DOM `HTMLElement` interface.
+
+The string form no longer behaves the same way. Because an HTML attribute coerces to `true` for any non-empty string, `autocorrect="off"` now evaluates to `true` (autocorrect enabled). Migrate to the boolean property:
+
+- Remove the attribute to keep autocorrect disabled (the default).
+- Use a property binding to enable it: `[autocorrect]="true"` (Angular), `autocorrect={true}` (React), or `:autocorrect="true"` (Vue).
+
 <h2 id="version-9x-framework-specific">Framework Specific</h2>
+
+<h4 id="version-9x-angular">Angular</h4>
+
+**Minimum Angular Version**
+
+Ionic 9 requires Angular 18 or later. Angular 16 and 17 are no longer supported.
+
+**Angular 21 Requires Explicit Zone Change Detection**
+
+Angular 21 defaults `bootstrapModule()` and `bootstrapApplication()` to zoneless change detection. `zone.js` in your polyfills is ignored unless you opt back in explicitly, which surfaces as runtime `NG0909` errors and breaks change detection for asynchronous updates (modal and popover lifecycle, tab navigation, and anything depending on async-resolved state). Ionic 9 relies on zone-based change detection, so apps on Angular 21 must provide it explicitly.
+
+Standalone bootstrap:
+
+```diff
+  import { bootstrapApplication } from '@angular/platform-browser';
++ import { provideZoneChangeDetection } from '@angular/core';
+
+  bootstrapApplication(AppComponent, {
+    providers: [
++     provideZoneChangeDetection(),
+      // ...other providers
+    ],
+  });
+```
+
+NgModule bootstrap:
+
+```diff
+  import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
++ import { provideZoneChangeDetection } from '@angular/core';
+
+  platformBrowserDynamic()
+-   .bootstrapModule(AppModule)
++   .bootstrapModule(AppModule, {
++     applicationProviders: [provideZoneChangeDetection()],
++   })
+    .catch((err) => console.error(err));
+```
+
+Angular forbids `provideZoneChangeDetection()` inside an NgModule's `providers` array, so for NgModule apps it must be passed as `applicationProviders` on the `bootstrapModule()` call. This step is only required on Angular 21. Angular 18 through 20 are unaffected.
+
+**TypeScript**
+
+Ionic 9 supports TypeScript 5.4 or later, matching the minimum for Angular 18. Angular 21 requires TypeScript 5.9 or later per Angular's own requirements.
+
+**Module Resolution**
+
+`@ionic/angular` is now published with `exports`-based subpath resolution. Apps using TypeScript `moduleResolution: "node"` (classic) can fail to resolve subpaths such as `@ionic/angular/standalone`. Set `moduleResolution` to `"bundler"` (the default for `ng new` on Angular 17 and later). See [Package Exports](#version-9x-package-exports).
+
+**CSS Imports No Longer Use the `~` Prefix**
+
+Angular's current build pipeline no longer supports the webpack-loader `~` prefix in CSS `@import` statements:
+
+```diff
+- @import '~@ionic/angular/css/core.css';
++ @import '@ionic/angular/css/core.css';
+```
+
+**Narrowed Event Types**
+
+The Angular output target no longer surfaces the narrow `*CustomEvent` types (such as `RefresherCustomEvent` and `ReorderEndCustomEvent`) through template type inference. Use `CustomEvent<*EventDetail>` and cast `event.target` at call sites that invoke methods on it:
+
+```diff
+- import { RefresherCustomEvent } from '@ionic/angular';
+-
+- onRefresh(event: RefresherCustomEvent) {
+-   event.target.complete();
+- }
++ import type { RefresherEventDetail } from '@ionic/core';
++
++ onRefresh(event: CustomEvent<RefresherEventDetail>) {
++   (event.target as HTMLIonRefresherElement | null)?.complete();
++ }
+```
 
 <h4 id="version-9x-react">React</h4>
 
