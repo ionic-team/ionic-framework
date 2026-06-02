@@ -55,7 +55,31 @@ type OverlayWithSheetModalTrapState = HTMLIonOverlayElement & {
   trapLastSheetOptionControl?: HTMLElement;
 };
 
+/**
+ * Identifies a selectable option in an action sheet, rendered as a
+ * native `<button role="radio">`. Options use a roving tabindex:
+ * the active option is tabbable (`tabIndex="0"`) and the rest are
+ * `tabIndex="-1"`.
+ */
+const isActionSheetRadioOption = (el: HTMLElement) =>
+  el.tagName === 'BUTTON' && el.getAttribute('role') === 'radio' && el.classList.contains('action-sheet-button');
+
+/**
+ * Identifies a selectable option in a select modal, rendered as an
+ * `ion-radio` (single select) or `ion-checkbox` (multiple select).
+ * Options use a roving tabindex: the active option is tabbable
+ * (`tabIndex="0"`) and the rest are `tabIndex="-1"`.
+ */
 const isSelectModalOptionControl = (el: HTMLElement) => el.tagName === 'ION-RADIO' || el.tagName === 'ION-CHECKBOX';
+
+/**
+ * Option controls in groups (select modal radios/checkboxes,
+ * action sheet radio buttons) use a roving tabindex pattern. Focus
+ * can land on an option with `tabIndex="-1"` while a sibling keeps
+ * `tabIndex="0"`, so the Tab trap needs to treat all of them as
+ * option controls when resolving the current/tabbable slot.
+ */
+const isOptionControl = (el: HTMLElement) => isSelectModalOptionControl(el) || isActionSheetRadioOption(el);
 
 /**
  * Returns the currently focused element for keyboard focus checks.
@@ -78,12 +102,13 @@ const getActiveElement = (ownerDoc: Document): HTMLElement | null => {
 
 /**
  * Walks from a focused node (possibly deep inside shadow roots)
- * up to the nearest `ion-radio` / `ion-checkbox` host.
+ * up to the nearest option control host (`ion-radio` / `ion-checkbox`
+ * or an action sheet `<button role="radio">`).
  */
 const getOptionControlHost = (active: HTMLElement | null): HTMLElement | null => {
   let n: HTMLElement | null = active;
   while (n) {
-    if (isSelectModalOptionControl(n)) {
+    if (isOptionControl(n)) {
       return n;
     }
     const root = n.getRootNode();
@@ -152,7 +177,7 @@ const sortSheetModalFocusables = (overlay: HTMLElement, elements: HTMLElement[])
  */
 const getTabbableOptionControlIndex = (elements: HTMLElement[], overlay: HTMLElement): number => {
   return elements.findIndex((el) => {
-    return overlay.contains(el) && isSelectModalOptionControl(el) && el.tabIndex >= 0;
+    return overlay.contains(el) && isOptionControl(el) && el.tabIndex >= 0;
   });
 };
 
@@ -562,6 +587,7 @@ const connectListeners = (doc: Document) => {
 
         const selectModalEl = lastOverlay.querySelector(ION_SELECT_MODAL_SELECTOR);
         const isSheetModal = lastOverlay.classList.contains('modal-sheet');
+        const isActionSheet = lastOverlay.tagName === 'ION-ACTION-SHEET';
 
         /**
          * Some sheet modal content, including ion-select-modal,
@@ -595,16 +621,17 @@ const connectListeners = (doc: Document) => {
           : -1;
 
         /**
-         * Radio/checkbox groups can move focus onto an option with
+         * Radio/checkbox groups (select modal options, action sheet
+         * radio buttons) can move focus onto an option with
          * `tabIndex=-1`, while another option still has `tabIndex=0`
          * in the list. `findIndex` then yields -1 and Tab incorrectly
          * wraps to `allFocusable[0]`.
-         * Treat focus on any option control inside the sheet modal
+         * Treat focus on any option control inside the overlay
          * as the same trap slot as the listed tabbable option
-         * (`tabIndex >= 0`) so Tab goes handle → Cancel, not back
-         * to the first radio.
+         * (`tabIndex >= 0`) so Tab goes to the next control (e.g.
+         * handle → Cancel), not back to the first radio.
          */
-        if (currentIndex < 0 && isSheetModal && activeElement) {
+        if (currentIndex < 0 && (isSheetModal || isActionSheet) && activeElement) {
           const optionHost = getOptionControlHost(activeElement);
           if (optionHost && lastOverlay.contains(optionHost)) {
             const directIndex = allFocusable.indexOf(optionHost);
