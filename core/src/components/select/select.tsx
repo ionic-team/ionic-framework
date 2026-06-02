@@ -597,6 +597,7 @@ export class Select implements ComponentInterface {
         role: isSelected ? 'selected' : '',
         text: content ?? '',
         cssClass: optClass,
+        disabled: option.disabled,
         handler: () => {
           this.setValue(value);
         },
