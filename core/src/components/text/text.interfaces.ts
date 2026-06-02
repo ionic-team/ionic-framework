@@ -16,5 +16,3 @@ export type IonTextRecipe = {
 export type IonTextConfig = {
   hue?: Hue;
 };
-
-export type IonTextHue = Hue;
