@@ -2,12 +2,6 @@ import { expect } from '@playwright/test';
 import type { E2ELocator } from '@utils/test/playwright';
 import { configs, test } from '@utils/test/playwright';
 
-/**
- * Each select interface renders its options differently, but they all share
- * the `select-interface-option` class and forward the option's `disabled`
- * state. These configs let one spec exercise every interface so a disabled
- * option can never silently become selectable in any of them again.
- */
 const DISABLED_OPTION_INTERFACES = [
   {
     name: 'action-sheet',
@@ -49,9 +43,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       test(`${name}: clicking a disabled option should not change the value or dismiss the overlay`, async ({
         page,
       }) => {
-        // A single, disabled option means `.select-interface-option`
-        // resolves to exactly one element, so the locator does not need to
-        // match on text or the disabled state itself.
         await page.setContent(
           `
           <ion-select aria-label="Fruit" interface="${name}">
@@ -62,17 +53,20 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         );
 
         const select = page.locator('ion-select') as E2ELocator;
+
         const ionChange = await select.spyOnEvent('ionChange');
         const ionDidPresent = await page.spyOnEvent(didPresent);
         const ionDidDismiss = await page.spyOnEvent(didDismiss);
 
         await select.click();
+
         await ionDidPresent.next();
 
         const overlay = page.locator(overlayTag);
         const disabledOption = overlay.locator(`.select-interface-option${controlSuffix}`);
 
         await disabledOption.click({ force: true });
+
         await page.waitForChanges();
 
         const value = await select.evaluate((el: HTMLIonSelectElement) => el.value);
