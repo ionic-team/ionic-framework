@@ -913,14 +913,14 @@ export declare interface IonIcon extends Components.IonIcon {}
 
 
 @ProxyCmp({
-  inputs: ['alt', 'mode', 'src', 'theme']
+  inputs: ['alt', 'mode', 'src']
 })
 @Component({
   selector: 'ion-img',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['alt', 'mode', 'src', 'theme'],
+  inputs: ['alt', 'mode', 'src'],
 })
 export class IonImg {
   protected el: HTMLIonImgElement;
