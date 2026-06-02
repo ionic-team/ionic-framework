@@ -35,8 +35,11 @@ interface RichContentOption extends RichContentOpt {
  * with `keyPrefix` to form the final unique key.
  * @returns The converted VNode, a text string, or `null` if the node
  * type isn't supported.
+ *
+ * @internal Exported only so it can be unit tested; not part of the
+ * public API.
  */
-const cloneToVNode = (node: Node, keyPrefix: string, index: number): VNode | string | null => {
+export const cloneToVNode = (node: Node, keyPrefix: string, index: number): VNode | string | null => {
   if (node.nodeType === Node.TEXT_NODE) {
     return node.textContent ?? '';
   }
