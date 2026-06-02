@@ -1,3 +1,5 @@
+// TODO(FW-6886, FW-6892, FW-6891): Remove this file in favor of the Modular Ionic component config. Each overlay will be able to select its own defaults for label placement and justify based on the interface and theme, so this utility will no longer be necessary.
+
 import type { Theme } from '../interface';
 
 /**
