@@ -1068,7 +1068,6 @@ ion-img,shadow
 ion-img,prop,alt,string | undefined,undefined,false,false
 ion-img,prop,mode,"ios" | "md",undefined,false,false
 ion-img,prop,src,string | undefined,undefined,false,false
-ion-img,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-img,event,ionError,void,true
 ion-img,event,ionImgDidLoad,void,true
 ion-img,event,ionImgWillLoad,void,true
@@ -2706,8 +2705,10 @@ ion-tabs,event,ionTabsWillChange,{ tab: string; },false
 
 ion-text,shadow
 ion-text,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-text,prop,hue,"bold" | "subtle" | undefined,undefined,false,false
 ion-text,prop,mode,"ios" | "md",undefined,false,false
-ion-text,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-text,css-prop,--ion-text-hue-bold-semantic-default-color
+ion-text,css-prop,--ion-text-hue-subtle-semantic-default-color
 
 ion-textarea,shadow
 ion-textarea,prop,autoGrow,boolean,false,false,true
@@ -2813,9 +2814,9 @@ ion-textarea,part,wrapper
 
 ion-thumbnail,shadow
 ion-thumbnail,prop,mode,"ios" | "md",undefined,false,false
-ion-thumbnail,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-thumbnail,css-prop,--border-radius
-ion-thumbnail,css-prop,--size
+ion-thumbnail,css-prop,--ion-thumbnail-border-radius
+ion-thumbnail,css-prop,--ion-thumbnail-height
+ion-thumbnail,css-prop,--ion-thumbnail-width
 
 ion-title,shadow
 ion-title,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true

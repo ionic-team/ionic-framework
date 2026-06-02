@@ -4,6 +4,8 @@ import type { IonContentRecipe } from '../components/content/content.interfaces'
 import type { IonItemDividerRecipe } from '../components/item-divider/item-divider.interfaces';
 import type { IonProgressBarConfig, IonProgressBarRecipe } from '../components/progress-bar/progress-bar.interfaces';
 import type { IonSpinnerConfig, IonSpinnerRecipe } from '../components/spinner/spinner.interfaces';
+import type { IonTextConfig, IonTextRecipe } from '../components/text/text.interfaces';
+import type { IonThumbnailRecipe } from '../components/thumbnail/thumbnail.interfaces';
 import type { IonicConfig as IonicGlobalConfig } from '../utils/config';
 
 // Platform-specific theme
@@ -249,6 +251,7 @@ export type IonicConfig = IonicGlobalConfig & {
     IonChip?: IonChipConfig;
     IonProgressBar?: IonProgressBarConfig;
     IonSpinner?: IonSpinnerConfig;
+    IonText?: IonTextConfig;
   };
 };
 
@@ -292,6 +295,8 @@ type Components = {
   IonItemDivider?: IonItemDividerRecipe;
   IonProgressBar?: IonProgressBarRecipe;
   IonSpinner?: IonSpinnerRecipe;
+  IonText?: IonTextRecipe;
+  IonThumbnail?: IonThumbnailRecipe;
 
   IonCard?: any;
   IonItem?: any;
@@ -318,3 +323,6 @@ export type NumberStringKeys = {
   // Enforce keys are strings of numbers (like 50, '50', etc.)
   [K in number as `${K}`]?: string;
 };
+
+export const HUES = ['bold', 'subtle'] as const;
+export type Hue = (typeof HUES)[number];

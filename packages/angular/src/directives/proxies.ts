@@ -913,14 +913,14 @@ export declare interface IonIcon extends Components.IonIcon {}
 
 
 @ProxyCmp({
-  inputs: ['alt', 'mode', 'src', 'theme']
+  inputs: ['alt', 'mode', 'src']
 })
 @Component({
   selector: 'ion-img',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['alt', 'mode', 'src', 'theme'],
+  inputs: ['alt', 'mode', 'src'],
 })
 export class IonImg {
   protected el: HTMLIonImgElement;
@@ -2436,14 +2436,14 @@ export declare interface IonTabButton extends Components.IonTabButton {}
 
 
 @ProxyCmp({
-  inputs: ['color', 'mode', 'theme']
+  inputs: ['color', 'hue', 'mode']
 })
 @Component({
   selector: 'ion-text',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'theme'],
+  inputs: ['color', 'hue', 'mode'],
 })
 export class IonText {
   protected el: HTMLIonTextElement;
@@ -2511,14 +2511,14 @@ the user clears the textarea by performing a keydown event.
 
 
 @ProxyCmp({
-  inputs: ['mode', 'theme']
+  inputs: ['mode']
 })
 @Component({
   selector: 'ion-thumbnail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode', 'theme'],
+  inputs: ['mode'],
 })
 export class IonThumbnail {
   protected el: HTMLIonThumbnailElement;

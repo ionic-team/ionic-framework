@@ -11,11 +11,12 @@ import { ActionSheetButton } from "./components/action-sheet/action-sheet-interf
 import { OverlayEventDetail } from "./utils/overlays-interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { AlertButton, AlertInput } from "./components/alert/alert-interface";
-import { IonBadgeHue, IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
+import { Hue } from "./themes/themes.interfaces";
+import { IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
 import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
-import { IonChipFill, IonChipHue, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
+import { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interfaces";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { GalleryColumns, GalleryGap } from "./components/gallery/gallery-interface";
@@ -54,11 +55,12 @@ export { ActionSheetButton } from "./components/action-sheet/action-sheet-interf
 export { OverlayEventDetail } from "./utils/overlays-interface";
 export { IonicSafeString } from "./utils/sanitization";
 export { AlertButton, AlertInput } from "./components/alert/alert-interface";
-export { IonBadgeHue, IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
+export { Hue } from "./themes/themes.interfaces";
+export { IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
 export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
-export { IonChipFill, IonChipHue, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
+export { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interfaces";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { GalleryColumns, GalleryGap } from "./components/gallery/gallery-interface";
@@ -477,7 +479,7 @@ export namespace Components {
         /**
           * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
          */
-        "hue"?: IonBadgeHue;
+        "hue"?: Hue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -884,7 +886,7 @@ export namespace Components {
         /**
           * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if both the hue property and theme config are unset.
          */
-        "hue"?: IonChipHue;
+        "hue"?: Hue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -1552,10 +1554,6 @@ export namespace Components {
           * The image URL. This attribute is mandatory for the `<img>` element.
          */
         "src"?: string;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonInfiniteScroll {
         /**
@@ -4102,13 +4100,13 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * Set to `"bold"` for a text with vibrant, bold colors or to `"subtle"` for a text with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
+         */
+        "hue"?: Hue;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTextarea {
         /**
@@ -4262,10 +4260,6 @@ export namespace Components {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTitle {
         /**
@@ -6469,7 +6463,7 @@ declare namespace LocalJSX {
         /**
           * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
          */
-        "hue"?: IonBadgeHue;
+        "hue"?: Hue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -6911,7 +6905,7 @@ declare namespace LocalJSX {
         /**
           * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if both the hue property and theme config are unset.
          */
-        "hue"?: IonChipHue;
+        "hue"?: Hue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -7580,10 +7574,6 @@ declare namespace LocalJSX {
           * The image URL. This attribute is mandatory for the `<img>` element.
          */
         "src"?: string;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonInfiniteScroll {
         /**
@@ -10214,13 +10204,13 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
+          * Set to `"bold"` for a text with vibrant, bold colors or to `"subtle"` for a text with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
+         */
+        "hue"?: Hue;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTextarea {
         /**
@@ -10386,10 +10376,6 @@ declare namespace LocalJSX {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTitle {
         /**
@@ -10712,7 +10698,7 @@ declare namespace LocalJSX {
     }
     interface IonBadgeAttributes {
         "color": Color;
-        "hue": IonBadgeHue;
+        "hue": Hue;
         "shape": IonBadgeShape;
         "size": IonBadgeSize;
         "vertical": IonBadgeVerticalPosition;
@@ -10800,7 +10786,7 @@ declare namespace LocalJSX {
         "outline": boolean;
         "fill": IonChipFill;
         "disabled": boolean;
-        "hue": IonChipHue;
+        "hue": Hue;
         "shape": IonChipShape;
         "size": IonChipSize;
     }
@@ -11378,6 +11364,7 @@ declare namespace LocalJSX {
     }
     interface IonTextAttributes {
         "color": Color;
+        "hue": Hue;
     }
     interface IonTextareaAttributes {
         "color": Color;

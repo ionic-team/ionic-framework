@@ -13,6 +13,7 @@ const colors = {
   dark: '#222428',
 };
 
+// TODO(FW-7558): Finalize color palette and update these color values as needed
 export const lightTheme: LightTheme = {
   color: {
     primary: {

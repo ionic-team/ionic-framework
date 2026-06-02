@@ -43,6 +43,10 @@ export const defaultTheme: DefaultTheme = {
       IonSpinner: {
         size: 'medium',
       },
+
+      IonText: {
+        hue: 'bold',
+      },
     },
   },
 
@@ -856,6 +860,35 @@ export const defaultTheme: DefaultTheme = {
           width: 'var(--ion-scaling-xxxl)',
           height: 'var(--ion-scaling-xxxl)',
         },
+      },
+    },
+
+    IonText: {
+      hue: {
+        bold: {
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+          },
+        },
+
+        subtle: {
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
+        },
+      },
+    },
+
+    IonThumbnail: {
+      height: 'var(--ion-scaling-xxxl)',
+      width: 'var(--ion-scaling-xxxl)',
+
+      border: {
+        radius: 'var(--ion-radii-xxxxs)',
       },
     },
   },
