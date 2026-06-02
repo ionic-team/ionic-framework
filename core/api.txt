@@ -2706,8 +2706,10 @@ ion-tabs,event,ionTabsWillChange,{ tab: string; },false
 
 ion-text,shadow
 ion-text,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-text,prop,hue,"bold" | "subtle" | undefined,undefined,false,false
 ion-text,prop,mode,"ios" | "md",undefined,false,false
-ion-text,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-text,css-prop,--ion-text-hue-bold-semantic-default-color
+ion-text,css-prop,--ion-text-hue-subtle-semantic-default-color
 
 ion-textarea,shadow
 ion-textarea,prop,autoGrow,boolean,false,false,true

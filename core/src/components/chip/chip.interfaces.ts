@@ -1,4 +1,4 @@
-import type { IonPadding, IonMargin } from '../../themes/themes.interfaces';
+import type { IonPadding, IonMargin, Hue } from '../../themes/themes.interfaces';
 
 export type IonChipRecipe = {
   letterSpacing?: string | number;
@@ -13,7 +13,7 @@ export type IonChipRecipe = {
 
   // Hues with fills
   hue?: {
-    [K in IonChipHue]?: IonChipFillDefinition;
+    [K in Hue]?: IonChipFillDefinition;
   };
 
   // Sizes
@@ -111,12 +111,11 @@ type IonChipAvatarDefinition = IonChipMediaDefinition & {
 
 export type IonChipConfig = {
   fill?: IonChipFill;
-  hue?: IonChipHue;
+  hue?: Hue;
   size?: IonChipSize;
   shape?: IonChipShape;
 };
 
 export type IonChipFill = 'outline' | 'solid';
-export type IonChipHue = 'bold' | 'subtle';
 export type IonChipSize = 'small' | 'large';
 export type IonChipShape = 'soft' | 'round' | 'rectangular';

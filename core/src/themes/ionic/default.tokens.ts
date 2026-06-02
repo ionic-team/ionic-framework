@@ -41,6 +41,10 @@ export const defaultTheme: DefaultTheme = {
       IonSpinner: {
         size: 'xsmall',
       },
+
+      IonText: {
+        hue: 'bold',
+      },
     },
   },
 
@@ -827,6 +831,26 @@ export const defaultTheme: DefaultTheme = {
         xlarge: {
           width: 'var(--ion-scaling-xxl)',
           height: 'var(--ion-scaling-xxl)',
+        },
+      },
+    },
+
+    IonText: {
+      hue: {
+        bold: {
+          semantic: {
+            default: {
+              color: currentColor('foreground'),
+            },
+          },
+        },
+
+        subtle: {
+          semantic: {
+            default: {
+              color: currentColor('foreground', { subtle: true }),
+            },
+          },
         },
       },
     },

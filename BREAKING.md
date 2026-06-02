@@ -27,6 +27,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Item Divider](#version-9x-item-divider)
   - [Radio Group](#version-9x-radio-group)
   - [Spinner](#version-9x-spinner)
+  - [Text](#version-9x-text)
   - [Textarea](#version-9x-textarea)
   - [Thumbnail](#version-9x-thumbnail)
 
@@ -300,6 +301,28 @@ Additionally, the `radio-group-wrapper` div element has been removed, causing sl
 - CSS classes now include the property name to improve clarity.
   - `.spinner-[spinner-name]` → `.spinner-name-[spinner-name]`
 - Specific theme classes (e.g., `ion-spinner.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
+
+<h4 id="version-9x-text">Text</h4>
+
+The following breaking changes apply to `ion-text`:
+
+1. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property.
+2. Theme classes (`ion-text.md`, `ion-text.ios`) are no longer supported.
+
+<h5>New `hue` property and color tokens</h5>
+
+A new `hue` property selects between vibrant and muted color variants. It defaults to `"bold"`, which preserves prior behavior when `color` is set.
+
+When `color` is set, the text color now reads from a token instead of `--ion-color-base` directly. Global overrides should use the theme tokens; component-specific overrides use the corresponding CSS variables:
+
+| Hue | Token (global) | CSS variable (component-specific) |
+|---|---|---|
+| `bold` | `IonText.hue.bold.semantic.default.color` | `--ion-text-hue-bold-semantic-default-color` |
+| `subtle` | `IonText.hue.subtle.semantic.default.color` | `--ion-text-hue-subtle-semantic-default-color` |
+
+<h5>Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-text.md`, `ion-text.ios`.
 
 <h4 id="version-9x-textarea">Textarea</h4>
 

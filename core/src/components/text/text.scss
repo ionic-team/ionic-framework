@@ -1,8 +1,19 @@
-@import "../../themes/native/native.globals";
-
-// Text
+// Text: Common Styles
 // --------------------------------------------------
 
-:host(.ion-color) {
-  color: current-color(base);
+:host {
+  /**
+   * @prop --ion-text-hue-bold-semantic-default-color: Color of the `bold` hue when a semantic color is applied
+   * @prop --ion-text-hue-subtle-semantic-default-color: Color of the `subtle` hue when a semantic color is applied
+   */
+
+  color: inherit;
+}
+
+:host(.text-hue-bold.ion-color) {
+  color: var(--ion-text-hue-bold-semantic-default-color);
+}
+
+:host(.text-hue-subtle.ion-color) {
+  color: var(--ion-text-hue-subtle-semantic-default-color);
 }
