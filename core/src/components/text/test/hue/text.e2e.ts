@@ -7,7 +7,7 @@ import { HUES } from '../../../../themes/themes.interfaces';
  * This behavior does not vary across modes/directions.
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('text: basic'), () => {
+  test.describe(title('text: hue'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/text/test/hue`, config);
     });
