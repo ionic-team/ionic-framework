@@ -42,7 +42,6 @@
     "zone.js": ">=0.13.0"
   },
   "devDependencies": {
-    "@angular-eslint/eslint-plugin": "^21.0.0",
     "@angular/animations": "^21.0.0",
     "@angular/common": "^21.0.0",
     "@angular/compiler": "^21.0.0",

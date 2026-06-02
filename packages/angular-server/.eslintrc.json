@@ -11,8 +11,7 @@
         "@ionic/eslint-config/recommended"
       ],
       "rules": {
-        "@typescript-eslint/consistent-type-imports": "off",
-        "@angular-eslint/component-class-suffix": "off"
+        "@typescript-eslint/consistent-type-imports": "off"
       }
     }
   ]
