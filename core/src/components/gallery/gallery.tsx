@@ -1,6 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, Watch, h } from '@stencil/core';
-import { isValidLengthPercentage } from '@utils/css-value-validation';
+import { isCssVariable, isValidLengthPercentage } from '@utils/css-value-validation';
 import { raf } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 
@@ -79,7 +79,8 @@ export class Gallery implements ComponentInterface {
   /**
    * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage)
    * values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`,
-   * or numbers (treated as pixel values). Can also be set as a breakpoint map
+   * CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel
+   * values). Can also be set as a breakpoint map
    * (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept
    * space-separated values or CSS keyword values like `inherit`, `auto`, etc.
    */
@@ -201,9 +202,10 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Normalize a single gap value (`gap` as a number, string, or one entry from
-   * a `gap` breakpoint map) to a CSS length string. Returns `undefined` when
-   * the input cannot be interpreted as a valid CSS length.
+   * Normalize a single gap value (`gap` as a number, a string such as a CSS
+   * length-percentage or `var()` reference, or one entry from a `gap`
+   * breakpoint map) to a CSS length string. Returns `undefined` when the
+   * input cannot be interpreted as a valid CSS length or `var()` reference.
    */
   private sanitizeGap(gap: number | string | undefined): string | undefined {
     if (gap === undefined) {
@@ -222,6 +224,10 @@ export class Gallery implements ComponentInterface {
 
     if (typeof normalizedGap !== 'string') {
       return undefined;
+    }
+
+    if (isCssVariable(normalizedGap)) {
+      return normalizedGap;
     }
 
     const isValidCssLength = isValidLengthPercentage(normalizedGap);
@@ -346,7 +352,7 @@ export class Gallery implements ComponentInterface {
     printIonWarning(
       `[ion-gallery] - Invalid "gap" value (${JSON.stringify(
         gap
-      )}). Expected a non-negative number, CSS length string, or breakpoint map object (e.g. { xs: 8, md: "1rem" }).`,
+      )}). Expected a non-negative number, CSS length string, CSS variable (e.g. var(--app-gap)), or breakpoint map object (e.g. { xs: 8, md: "1rem" }).`,
       this.el
     );
     this.hasWarnedInvalidGap = true;
