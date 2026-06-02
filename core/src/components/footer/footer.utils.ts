@@ -1,5 +1,6 @@
 import { readTask, writeTask } from '@stencil/core';
 import { clamp } from '@utils/helpers';
+import { createCollapseHideInteraction } from '@utils/on-scroll/collapse-hide.utils';
 
 export const handleFooterFade = (scrollEl: HTMLElement, baseEl: HTMLElement) => {
   readTask(() => {
@@ -33,3 +34,13 @@ export const handleFooterFade = (scrollEl: HTMLElement, baseEl: HTMLElement) => 
     });
   });
 };
+
+export const createFooterHideInteraction = (footerEl: HTMLElement, scrollEl: HTMLElement): (() => void) =>
+  createCollapseHideInteraction({
+    regionEl: footerEl,
+    scrollEl,
+    slideCssVar: '--footer-hide-slide-y',
+    contentPartnerClass: 'content-footer-hide-scroll-partner',
+    contentHiddenClass: 'content-footer-hide-scroll-hidden',
+    regionHiddenClass: 'footer-collapse-hide-hidden',
+  });
