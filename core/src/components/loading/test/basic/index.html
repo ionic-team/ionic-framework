@@ -30,13 +30,19 @@
         color: #3478f6;
       }
 
-      f {
-        display: block;
-        background: blue;
+      /* A simple multi-colored backdrop so the loading overlay (and its
+         translucent variant) is visible over varied colors. Uses native CSS
+         grid instead of ion-grid so this page's snapshots don't churn when
+         grid/row/col change. */
+      .color-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 30px 10px;
+      }
 
-        width: 100%;
+      .color-block {
         height: 200px;
-        margin: 20px auto;
       }
 
       .red {
@@ -134,34 +140,16 @@
           Show Loading with HTML content
         </button>
 
-        <ion-grid>
-          <ion-row>
-            <ion-col size="6">
-              <f class="red"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="green"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="blue"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="yellow"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="pink"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="purple"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="black"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="orange"></f>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+        <div class="color-grid">
+          <div class="color-block red"></div>
+          <div class="color-block green"></div>
+          <div class="color-block blue"></div>
+          <div class="color-block yellow"></div>
+          <div class="color-block pink"></div>
+          <div class="color-block purple"></div>
+          <div class="color-block black"></div>
+          <div class="color-block orange"></div>
+        </div>
       </ion-content>
     </ion-app>
     <script>
