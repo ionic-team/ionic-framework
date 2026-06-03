@@ -16,6 +16,9 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
       await page.locator('#action-sheet-select').click();
       await ionActionSheetDidPresent.next();
 
+      // Move mouse to away from the alert so hover styles don't interfere with screenshots
+      await page.mouse.move(0, 0);
+
       const firstOption = page.locator('ion-action-sheet .select-interface-option').first();
 
       await expect(firstOption).toHaveScreenshot(screenshot(`select-rich-content-action-sheet`));
@@ -26,6 +29,9 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
 
       await page.locator('#alert-select').click();
       await ionAlertDidPresent.next();
+
+      // Move mouse to away from the alert so hover styles don't interfere with screenshots
+      await page.mouse.move(0, 0);
 
       const firstOption = page.locator('ion-alert .select-interface-option').first();
 
@@ -38,6 +44,9 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
       await page.locator('#modal-select').click();
       await ionModalDidPresent.next();
 
+      // Move mouse to away from the alert so hover styles don't interfere with screenshots
+      await page.mouse.move(0, 0);
+
       const firstOption = page.locator('ion-modal .select-interface-option').first();
 
       await expect(firstOption).toHaveScreenshot(screenshot(`select-rich-content-modal`));
@@ -48,6 +57,9 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
 
       await page.locator('#popover-select').click();
       await ionPopoverDidPresent.next();
+
+      // Move mouse to away from the alert so hover styles don't interfere with screenshots
+      await page.mouse.move(0, 0);
 
       const firstOption = page.locator('ion-popover .select-interface-option').first();
 
