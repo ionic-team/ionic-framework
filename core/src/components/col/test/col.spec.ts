@@ -3,55 +3,57 @@ import { newSpecPage } from '@stencil/core/testing';
 import { Col } from '../col';
 
 describe('ion-col: class', () => {
-  it('applies ion-grid-col--N for size="N"', async () => {
+  it('sets --internal-col-span for size="N"', async () => {
     const page = await newSpecPage({
       components: [Col],
       html: `<ion-col size="3"></ion-col>`,
     });
 
     const col = page.body.querySelector('ion-col')!;
-    expect(col.classList.contains('ion-grid-col--3')).toBe(true);
+    expect(col.classList.contains('col-size')).toBe(true);
+    expect(col.style.getPropertyValue('--internal-col-span')).toBe('3');
   });
 
-  it('applies ion-grid-col-auto for size="auto"', async () => {
+  it('applies col-auto for size="auto"', async () => {
     const page = await newSpecPage({
       components: [Col],
       html: `<ion-col size="auto"></ion-col>`,
     });
 
     const col = page.body.querySelector('ion-col')!;
-    expect(col.classList.contains('ion-grid-col-auto')).toBe(true);
+    expect(col.classList.contains('col-auto')).toBe(true);
   });
 
-  it('applies no sizing class for a value-less size attribute', async () => {
+  it('applies no sizing class for a value less size attribute', async () => {
     const page = await newSpecPage({
       components: [Col],
       html: `<ion-col size></ion-col>`,
     });
 
     const col = page.body.querySelector('ion-col')!;
-    const sizeClasses = Array.from(col.classList).filter((c) => c.startsWith('ion-grid-col'));
+    const sizeClasses = Array.from(col.classList).filter((c) => c.startsWith('col-'));
     expect(sizeClasses).toEqual([]);
   });
 
-  it('applies ion-grid-offset-col--N for offset="N"', async () => {
+  it('sets --internal-col-margin for offset="N"', async () => {
     const page = await newSpecPage({
       components: [Col],
       html: `<ion-col offset="2"></ion-col>`,
     });
 
     const col = page.body.querySelector('ion-col')!;
-    expect(col.classList.contains('ion-grid-offset-col--2')).toBe(true);
+    expect(col.classList.contains('col-offset')).toBe(true);
+    expect(col.style.getPropertyValue('--internal-col-margin')).toBe('2');
   });
 
-  it('applies ion-grid-order-col--N for order="N"', async () => {
+  it('sets the order style for order="N"', async () => {
     const page = await newSpecPage({
       components: [Col],
       html: `<ion-col order="5"></ion-col>`,
     });
 
     const col = page.body.querySelector('ion-col')!;
-    expect(col.classList.contains('ion-grid-order-col--5')).toBe(true);
+    expect(col.style.order).toBe('5');
   });
 
   it('applies no sizing class for a non-numeric size value', async () => {
@@ -61,7 +63,7 @@ describe('ion-col: class', () => {
     });
 
     const col = page.body.querySelector('ion-col')!;
-    const sizeClasses = Array.from(col.classList).filter((c) => c.startsWith('ion-grid-col'));
+    const sizeClasses = Array.from(col.classList).filter((c) => c.startsWith('col-'));
     expect(sizeClasses).toEqual([]);
   });
 });

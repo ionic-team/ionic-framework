@@ -6,14 +6,22 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('grid: basic'), () => {
-    test('should not have visual regressions', async ({ page }) => {
+    test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/grid/test/basic`, config);
 
       await page.setIonViewport();
+    });
 
-      const grid = page.locator('ion-grid');
+    test('should not have visual regressions for default columns', async ({ page }) => {
+      const grid = page.locator('#default-columns');
 
-      await expect(grid).toHaveScreenshot(screenshot(`grid-basic`));
+      await expect(grid).toHaveScreenshot(screenshot('grid-basic'));
+    });
+
+    test('should not have visual regressions for custom columns', async ({ page }) => {
+      const grid = page.locator('#custom-columns');
+
+      await expect(grid).toHaveScreenshot(screenshot('grid-custom-columns'));
     });
   });
 });

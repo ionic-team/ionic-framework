@@ -50,12 +50,14 @@
   overflow: auto;
 }
 
-:host(.ion-grid-col-auto) {
+:host(.col-auto) {
   flex: 0 0 auto;
 }
 
-:host([class^="ion-grid-col--"]),
-:host([class*=" ion-grid-col--"]) {
+// The span and offset multipliers are set as inline custom properties by
+// col.tsx, so any value composes with the runtime `--ion-grid-columns`
+// divisor in `--internal-col-unit-size` above — no per-column class cap.
+:host(.col-size) {
   flex: 0 0
     calc(
       var(--internal-col-span) * var(--internal-col-unit-size) + (var(--internal-col-span) - 1) *
@@ -67,34 +69,10 @@
   );
 }
 
-:host([class^="ion-grid-offset-col--"]),
-:host([class*=" ion-grid-offset-col--"]) {
+:host(.col-offset) {
   $margin-calc: calc(
     var(--internal-col-unit-size) * var(--internal-col-margin) + (var(--ion-row-gap, 0px) * var(--internal-col-margin))
   );
 
   @include mixins.margin-horizontal($margin-calc, 0);
-}
-
-/*
- * While the number of columns can be customized, we generate
- * a default set of classes for 12 columns. In the future, this
- * will be configurable at build time as Ionic becomes more modular.
- * For now, 12 columns is a practical default. Developers who need
- * more columns can override or extend these styles as needed.
- */
-$grid-col-number: 12;
-
-@for $i from 1 through $grid-col-number {
-  :host(.ion-grid-col--#{$i}) {
-    --internal-col-span: #{$i};
-  }
-
-  :host(.ion-grid-order-col--#{$i}) {
-    order: #{$i};
-  }
-
-  :host(.ion-grid-offset-col--#{$i}) {
-    --internal-col-margin: #{$i};
-  }
 }

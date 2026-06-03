@@ -3,6 +3,7 @@ import { Component, Element, Host, Listen, Prop, forceUpdate, h } from '@stencil
 import { printIonWarning } from '@utils/logging';
 import { matchBreakpoint } from '@utils/media';
 
+import type { IonColProperty, IonColStyle } from './col.interface';
 import { ION_COL_BREAKPOINTS } from './col.interface';
 
 const BREAKPOINTS = ['', ...ION_COL_BREAKPOINTS] as const;
@@ -233,7 +234,7 @@ export class Col implements ComponentInterface {
 
   // Loop through all of the breakpoints to see if the media query
   // matches and grab the column value from the relevant prop if so
-  private getColumns(property: 'size' | 'order' | 'offset'): string | undefined {
+  private getColumns(property: IonColProperty): string | undefined {
     let matched: string | undefined;
 
     for (const breakpoint of BREAKPOINTS) {
@@ -255,11 +256,7 @@ export class Col implements ComponentInterface {
     return matched;
   }
 
-  private getStyleClass(
-    property: 'size' | 'order' | 'offset',
-    className: string,
-    acceptsAuto = false
-  ): string | undefined {
+  private getColumnValue(property: IonColProperty): number | undefined {
     const colPropertyValue = this.getColumns(property);
 
     /**
@@ -273,29 +270,32 @@ export class Col implements ComponentInterface {
       return;
     }
 
-    if (acceptsAuto && colPropertyValue === 'auto') {
-      return 'ion-grid-col-auto';
-    }
-
     const valueNumber = parseInt(colPropertyValue, 10);
 
-    if (isNaN(valueNumber)) {
-      return;
+    // Non-numeric values (including "auto") have no numeric span/offset/order.
+    return isNaN(valueNumber) ? undefined : valueNumber;
+  }
+
+  /**
+   * Builds the inline custom properties that drive the token-based calc() in
+   * col.scss. Feeding the span/offset multipliers and order as inline values
+   * lets any column count work against `--ion-grid-columns` without a
+   * build-time class cap.
+   */
+  private getColumnStyle(size: number | undefined, order: number | undefined, offset: number | undefined): IonColStyle {
+    const style: IonColStyle = {};
+
+    if (size !== undefined) {
+      style['--internal-col-span'] = `${size}`;
+    }
+    if (order !== undefined) {
+      style['order'] = `${order}`;
+    }
+    if (offset !== undefined) {
+      style['--internal-col-margin'] = `${offset}`;
     }
 
-    return `${className}-col--${valueNumber}`;
-  }
-
-  private getSizeClass(): string | undefined {
-    return this.getStyleClass('size', 'ion-grid', true);
-  }
-
-  private getOrderClass(): string | undefined {
-    return this.getStyleClass('order', 'ion-grid-order');
-  }
-
-  private getOffsetClass(): string | undefined {
-    return this.getStyleClass('offset', 'ion-grid-offset');
+    return style;
   }
 
   componentDidLoad() {
@@ -321,17 +321,19 @@ export class Col implements ComponentInterface {
   }
 
   render() {
-    const colSize = this.getSizeClass();
-    const colOrder = this.getOrderClass();
-    const colOffset = this.getOffsetClass();
+    const size = this.getColumnValue('size');
+    const order = this.getColumnValue('order');
+    const offset = this.getColumnValue('offset');
+    const isAutoSize = this.getColumns('size') === 'auto';
 
     return (
       <Host
         class={{
-          [`${colSize}`]: colSize !== undefined,
-          [`${colOrder}`]: colOrder !== undefined,
-          [`${colOffset}`]: colOffset !== undefined,
+          'col-size': size !== undefined,
+          'col-auto': isAutoSize,
+          'col-offset': offset !== undefined,
         }}
+        style={this.getColumnStyle(size, order, offset)}
       >
         <slot></slot>
       </Host>
