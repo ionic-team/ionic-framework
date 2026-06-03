@@ -272,15 +272,17 @@ export class Col implements ComponentInterface {
 
     const valueNumber = parseInt(colPropertyValue, 10);
 
-    // Non-numeric values (including "auto") have no numeric span/offset/order.
     return isNaN(valueNumber) ? undefined : valueNumber;
   }
 
   /**
-   * Builds the inline custom properties that drive the token-based calc() in
-   * col.scss. Feeding the span/offset multipliers and order as inline values
-   * lets any column count work against `--ion-grid-columns` without a
-   * build-time class cap.
+   * Builds the inline custom properties that drive the token based calc()
+   * in the styles.
+   *
+   * @param size The number of columns the column should span, or `undefined` for default flex.
+   * @param order The flex order position of the column.
+   * @param offset The number of columns to offset (margin) the column by.
+   * @return An object containing the custom properties to apply to the column's style.
    */
   private getColumnStyle(size: number | undefined, order: number | undefined, offset: number | undefined): IonColStyle {
     const style: IonColStyle = {};

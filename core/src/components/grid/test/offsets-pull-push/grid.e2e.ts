@@ -12,7 +12,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      await expect(page).toHaveScreenshot(screenshot(`grid-offsets`));
+      await expect(page).toHaveScreenshot(screenshot('grid-offsets'));
     });
   });
 });

@@ -54,9 +54,6 @@
   flex: 0 0 auto;
 }
 
-// The span and offset multipliers are set as inline custom properties by
-// col.tsx, so any value composes with the runtime `--ion-grid-columns`
-// divisor in `--internal-col-unit-size` above — no per-column class cap.
 :host(.col-size) {
   flex: 0 0
     calc(

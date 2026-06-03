@@ -13,7 +13,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 
       const grids = page.locator('#grids');
 
-      await expect(grids).toHaveScreenshot(screenshot(`grid-offsets`));
+      await expect(grids).toHaveScreenshot(screenshot('grid-offsets'));
     });
   });
 });
