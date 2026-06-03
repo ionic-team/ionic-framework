@@ -1,9 +1,9 @@
-// Row
+// Row: Common Styles
 // --------------------------------------------------
 
 :host {
   /**
-   * @prop --ion-row-gap: The gap between grid items in the row
+   * @prop --ion-row-gap: The gap between grid columns in the row
    */
 
   display: flex;

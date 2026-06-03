@@ -1,7 +1,5 @@
 import type { IonPadding } from '../../themes/themes.interfaces';
-
-export const ION_COL_BREAKPOINTS = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
-export type IonColBreakpoint = (typeof ION_COL_BREAKPOINTS)[number];
+import { ION_GRID_BREAKPOINTS } from '../grid/grid.interface';
 
 export type IonColRecipe = {
   breakpoint?: {
@@ -10,3 +8,7 @@ export type IonColRecipe = {
     };
   };
 };
+
+// TODO(FW-7285): Replace with global breakpoints when they are available
+export const ION_COL_BREAKPOINTS = ION_GRID_BREAKPOINTS;
+export type IonColBreakpoint = (typeof ION_COL_BREAKPOINTS)[number];

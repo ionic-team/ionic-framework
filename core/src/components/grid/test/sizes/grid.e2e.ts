@@ -13,7 +13,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 
       const content = page.locator('ion-content');
 
-      await expect(content).toHaveScreenshot(screenshot(`grid-sizes`));
+      await expect(content).toHaveScreenshot(screenshot('grid-sizes'));
     });
   });
 });
