@@ -38,7 +38,7 @@
     },
     {
       matchDatasources: ["npm"],
-      matchPackagePatterns: ["@playwright/test", "@axe-core/playwright"],
+      matchPackageNames: ["@playwright/test", "@axe-core/playwright", "playwright-core"],
       groupName: "playwright",
       matchFileNames: [
         "core/package.json"
