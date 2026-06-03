@@ -172,7 +172,9 @@
 // --------------------------------------------------
 
 ::slotted(ion-thumbnail) {
-  --size: #{$item-md-thumbnail-size};
+  // TODO(FW-6847): adopt the revert-layer pattern from item-divider.scss
+  width: var(--ion-item-thumbnail-width, $item-md-thumbnail-width);
+  height: var(--ion-item-thumbnail-height, $item-md-thumbnail-height);
 }
 
 // Material Design Item Avatar/Thumbnail

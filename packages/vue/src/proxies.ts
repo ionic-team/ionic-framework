@@ -30,6 +30,7 @@ import { defineCustomElement as defineIonFab } from '@ionic/core/components/ion-
 import { defineCustomElement as defineIonFabButton } from '@ionic/core/components/ion-fab-button.js';
 import { defineCustomElement as defineIonFabList } from '@ionic/core/components/ion-fab-list.js';
 import { defineCustomElement as defineIonFooter } from '@ionic/core/components/ion-footer.js';
+import { defineCustomElement as defineIonGallery } from '@ionic/core/components/ion-gallery.js';
 import { defineCustomElement as defineIonGrid } from '@ionic/core/components/ion-grid.js';
 import { defineCustomElement as defineIonHeader } from '@ionic/core/components/ion-header.js';
 import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-img.js';
@@ -430,6 +431,14 @@ export const IonFabList: StencilVueComponent<JSX.IonFabList> = /*@__PURE__*/ def
 export const IonFooter: StencilVueComponent<JSX.IonFooter> = /*@__PURE__*/ defineContainer<JSX.IonFooter>('ion-footer', defineIonFooter, [
   'collapse',
   'translucent'
+]);
+
+
+export const IonGallery: StencilVueComponent<JSX.IonGallery> = /*@__PURE__*/ defineContainer<JSX.IonGallery>('ion-gallery', defineIonGallery, [
+  'layout',
+  'order',
+  'columns',
+  'gap'
 ]);
 
 
@@ -1042,7 +1051,8 @@ export const IonTab: StencilVueComponent<JSX.IonTab> = /*@__PURE__*/ defineConta
 
 
 export const IonText: StencilVueComponent<JSX.IonText> = /*@__PURE__*/ defineContainer<JSX.IonText>('ion-text', defineIonText, [
-  'color'
+  'color',
+  'hue'
 ]);
 
 

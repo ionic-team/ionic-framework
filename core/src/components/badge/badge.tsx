@@ -4,8 +4,9 @@ import { createColorClasses } from '@utils/theme';
 
 import { config } from '../../global/config';
 import type { Color } from '../../interface';
+import type { Hue } from '../../themes/themes.interfaces';
 
-import type { IonBadgeHue, IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from './badge.interfaces';
+import type { IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from './badge.interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -31,7 +32,7 @@ export class Badge implements ComponentInterface {
    *
    * Defaults to `"bold"` if both the hue property and theme config are unset.
    */
-  @Prop() hue?: IonBadgeHue;
+  @Prop() hue?: Hue;
 
   /**
    * Set to `"crisp"` for a badge with even slightly rounded corners,
@@ -84,8 +85,8 @@ export class Badge implements ComponentInterface {
    * Gets the badge hue. Uses the `hue` property if set, otherwise
    * checks the theme config and falls back to 'bold' if neither is provided.
    */
-  get hueValue(): IonBadgeHue {
-    const hueConfig = config.getObjectValue('IonBadge.hue', 'bold') as IonBadgeHue;
+  get hueValue(): Hue {
+    const hueConfig = config.getObjectValue('IonBadge.hue', 'bold') as Hue;
     const hue = this.hue || hueConfig;
 
     return hue;

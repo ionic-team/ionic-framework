@@ -1,3 +1,4 @@
+// TODO(FW-7285): Replace with global breakpoints
 export const SIZE_TO_MEDIA: any = {
   xs: '(min-width: 0px)',
   sm: '(min-width: 576px)',

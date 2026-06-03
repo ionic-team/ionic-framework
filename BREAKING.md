@@ -22,11 +22,15 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Content](#version-9x-content)
   - [Datetime](#version-9x-datetime)
   - [Grid](#version-9x-grid)
+  - [Image](#version-9x-image)
   - [Input Otp](#version-9x-input-otp)
   - [Item Divider](#version-9x-item-divider)
+  - [Menu Toggle](#version-9x-menu-toggle)
   - [Radio Group](#version-9x-radio-group)
   - [Spinner](#version-9x-spinner)
+  - [Text](#version-9x-text)
   - [Textarea](#version-9x-textarea)
+  - [Thumbnail](#version-9x-thumbnail)
 
 <h2 id="version-9x-global-styles">Global Styles</h2>
 
@@ -251,6 +255,16 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 </ion-grid>
 ```
 
+<h4 id="version-9x-image">Image</h4>
+
+The following breaking changes apply to `ion-img`:
+
+1. Theme classes (`ion-img.md`, `ion-img.ios`) are no longer supported.
+
+<h5>Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-img.md`, `ion-img.ios`.
+
 <h4 id="version-9x-input-otp">Input Otp</h4>
 
 Converted `ion-input-otp` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
@@ -272,6 +286,16 @@ If you were targeting the internals of `ion-input-otp` in your CSS, you will nee
    - `--inner-padding-start` is replaced by `IonItemDivider.inner.padding.start` for global styles and `--ion-item-divider-inner-padding-start` for component-specific overrides.
 - Specific theme classes (e.g., `ion-item-divider.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
 
+<h4 id="version-9x-menu-toggle">Menu Toggle</h4>
+
+The following breaking changes apply to `ion-menu-toggle`:
+
+1. Theme classes (`ion-menu-toggle.md`, `ion-menu-toggle.ios`) are no longer supported.
+
+<h5>Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-menu-toggle.md`, `ion-menu-toggle.ios`.
+
 <h4 id="version-9x-radio-group">Radio Group</h4>
 
 Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
@@ -289,8 +313,66 @@ Additionally, the `radio-group-wrapper` div element has been removed, causing sl
   - `.spinner-[spinner-name]` → `.spinner-name-[spinner-name]`
 - Specific theme classes (e.g., `ion-spinner.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
 
+<h4 id="version-9x-text">Text</h4>
+
+The following breaking changes apply to `ion-text`:
+
+1. The color applied by the `color` prop is now driven by the centralized Ionic Theming system, scoped to the new `hue` property.
+2. Theme classes (`ion-text.md`, `ion-text.ios`) are no longer supported.
+
+<h5>New `hue` property and color tokens</h5>
+
+A new `hue` property selects between vibrant and muted color variants. It defaults to `"bold"`, which preserves prior behavior when `color` is set.
+
+When `color` is set, the text color now reads from a token instead of `--ion-color-base` directly. Global overrides should use the theme tokens; component-specific overrides use the corresponding CSS variables:
+
+| Hue | Token (global) | CSS variable (component-specific) |
+|---|---|---|
+| `bold` | `IonText.hue.bold.semantic.default.color` | `--ion-text-hue-bold-semantic-default-color` |
+| `subtle` | `IonText.hue.subtle.semantic.default.color` | `--ion-text-hue-subtle-semantic-default-color` |
+
+<h5>Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-text.md`, `ion-text.ios`.
+
 <h4 id="version-9x-textarea">Textarea</h4>
 
 Converted `ion-textarea` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
 If you were targeting the internals of `ion-textarea` in your CSS, you will need to target the `wrapper`, `container`, `label`, `native`, `supporting-text`, `helper-text`, `error-text`, `counter`, or `bottom` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
+
+<h4 id="version-9x-thumbnail">Thumbnail</h4>
+
+The following breaking changes apply to `ion-thumbnail`:
+
+1. `--size` has been split into separate `--ion-thumbnail-width` and `--ion-thumbnail-height` CSS variables. <sup>[1](#version-9x-thumbnail-replaced-css-variables)</sup>
+2. `--border-radius` has been replaced. <sup>[1](#version-9x-thumbnail-replaced-css-variables)</sup>
+3. Theme classes (`ion-thumbnail.md`, `ion-thumbnail.ios`) are no longer supported. <sup>[2](#version-9x-thumbnail-theme-classes)</sup>
+
+<h5 id="version-9x-thumbnail-replaced-css-variables">Replaced CSS variables</h5>
+
+`--size` and `--border-radius` have been replaced. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--size` | `IonThumbnail.width` | `--ion-thumbnail-width` |
+| `--size` | `IonThumbnail.height` | `--ion-thumbnail-height` |
+| `--border-radius` | `IonThumbnail.border.radius` | `--ion-thumbnail-border-radius` |
+
+> [!NOTE]
+> Code that previously set `--size: 48px` on `ion-thumbnail` must now set both `--ion-thumbnail-width: 48px` and `--ion-thumbnail-height: 48px`.
+
+<h5 id="version-9x-thumbnail-slotted">Slotted inside `ion-item` or `ion-item-divider`</h5>
+
+When `ion-thumbnail` is slotted inside a parent component, the parent owns the sizing.
+
+Use the **parent's** thumbnail tokens instead:
+
+| Context | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| Inside `ion-item` | `IonItem.thumbnail.width` / `IonItem.thumbnail.height` | `--ion-item-thumbnail-width` / `--ion-item-thumbnail-height` |
+| Inside `ion-item-divider` | `IonItemDivider.thumbnail.width` / `IonItemDivider.thumbnail.height` | `--ion-item-divider-thumbnail-width` / `--ion-item-divider-thumbnail-height` |
+
+<h5>Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-thumbnail.md`, `ion-thumbnail.ios`.

@@ -32,6 +32,7 @@ import { defineCustomElement as defineIonFab } from '@ionic/core/components/ion-
 import { defineCustomElement as defineIonFabButton } from '@ionic/core/components/ion-fab-button.js';
 import { defineCustomElement as defineIonFabList } from '@ionic/core/components/ion-fab-list.js';
 import { defineCustomElement as defineIonFooter } from '@ionic/core/components/ion-footer.js';
+import { defineCustomElement as defineIonGallery } from '@ionic/core/components/ion-gallery.js';
 import { defineCustomElement as defineIonGrid } from '@ionic/core/components/ion-grid.js';
 import { defineCustomElement as defineIonHeader } from '@ionic/core/components/ion-header.js';
 import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-img.js';
@@ -865,6 +866,30 @@ export declare interface IonFooter extends Components.IonFooter {}
 
 
 @ProxyCmp({
+  defineCustomElementFn: defineIonGallery,
+  inputs: ['columns', 'gap', 'layout', 'mode', 'order', 'theme']
+})
+@Component({
+  selector: 'ion-gallery',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['columns', 'gap', 'layout', 'mode', 'order', 'theme'],
+  standalone: true
+})
+export class IonGallery {
+  protected el: HTMLIonGalleryElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonGallery extends Components.IonGallery {}
+
+
+@ProxyCmp({
   defineCustomElementFn: defineIonGrid,
   inputs: ['fixed', 'mode']
 })
@@ -914,14 +939,14 @@ export declare interface IonHeader extends Components.IonHeader {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonImg,
-  inputs: ['alt', 'mode', 'src', 'theme']
+  inputs: ['alt', 'mode', 'src']
 })
 @Component({
   selector: 'ion-img',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['alt', 'mode', 'src', 'theme'],
+  inputs: ['alt', 'mode', 'src'],
   standalone: true
 })
 export class IonImg {
@@ -1398,14 +1423,14 @@ export declare interface IonMenuButton extends Components.IonMenuButton {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonMenuToggle,
-  inputs: ['autoHide', 'menu', 'mode', 'theme']
+  inputs: ['autoHide', 'menu', 'mode']
 })
 @Component({
   selector: 'ion-menu-toggle',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['autoHide', 'menu', 'mode', 'theme'],
+  inputs: ['autoHide', 'menu', 'mode'],
   standalone: true
 })
 export class IonMenuToggle {
@@ -2161,14 +2186,14 @@ export declare interface IonTabButton extends Components.IonTabButton {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonText,
-  inputs: ['color', 'mode', 'theme']
+  inputs: ['color', 'hue', 'mode']
 })
 @Component({
   selector: 'ion-text',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'theme'],
+  inputs: ['color', 'hue', 'mode'],
   standalone: true
 })
 export class IonText {
@@ -2185,14 +2210,14 @@ export declare interface IonText extends Components.IonText {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonThumbnail,
-  inputs: ['mode', 'theme']
+  inputs: ['mode']
 })
 @Component({
   selector: 'ion-thumbnail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode', 'theme'],
+  inputs: ['mode'],
   standalone: true
 })
 export class IonThumbnail {

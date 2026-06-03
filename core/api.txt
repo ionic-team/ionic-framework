@@ -1043,6 +1043,14 @@ ion-footer,prop,mode,"ios" | "md",undefined,false,false
 ion-footer,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-footer,prop,translucent,boolean,false,false,false
 
+ion-gallery,shadow
+ion-gallery,prop,columns,GalleryBreakpoints<string | number> | number | string,DEFAULT_COLUMNS,false,false
+ion-gallery,prop,gap,GalleryBreakpoints<string | number> | number | string,DEFAULT_GAP,false,false
+ion-gallery,prop,layout,"masonry" | "uniform",'uniform',false,false
+ion-gallery,prop,mode,"ios" | "md",undefined,false,false
+ion-gallery,prop,order,"best-fit" | "sequential" | undefined,undefined,false,false
+ion-gallery,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+
 ion-grid,shadow
 ion-grid,prop,fixed,boolean,false,false,false
 ion-grid,prop,mode,"ios" | "md",undefined,false,false
@@ -1084,7 +1092,6 @@ ion-img,shadow
 ion-img,prop,alt,string | undefined,undefined,false,false
 ion-img,prop,mode,"ios" | "md",undefined,false,false
 ion-img,prop,src,string | undefined,undefined,false,false
-ion-img,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-img,event,ionError,void,true
 ion-img,event,ionImgDidLoad,void,true
 ion-img,event,ionImgWillLoad,void,true
@@ -1746,7 +1753,6 @@ ion-menu-toggle,shadow
 ion-menu-toggle,prop,autoHide,boolean,true,false,false
 ion-menu-toggle,prop,menu,string | undefined,undefined,false,false
 ion-menu-toggle,prop,mode,"ios" | "md",undefined,false,false
-ion-menu-toggle,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-modal,shadow
 ion-modal,prop,animated,boolean,true,false,false
@@ -2722,8 +2728,10 @@ ion-tabs,event,ionTabsWillChange,{ tab: string; },false
 
 ion-text,shadow
 ion-text,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-text,prop,hue,"bold" | "subtle" | undefined,undefined,false,false
 ion-text,prop,mode,"ios" | "md",undefined,false,false
-ion-text,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-text,css-prop,--ion-text-hue-bold-semantic-default-color
+ion-text,css-prop,--ion-text-hue-subtle-semantic-default-color
 
 ion-textarea,shadow
 ion-textarea,prop,autoGrow,boolean,false,false,true
@@ -2829,9 +2837,9 @@ ion-textarea,part,wrapper
 
 ion-thumbnail,shadow
 ion-thumbnail,prop,mode,"ios" | "md",undefined,false,false
-ion-thumbnail,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-thumbnail,css-prop,--border-radius
-ion-thumbnail,css-prop,--size
+ion-thumbnail,css-prop,--ion-thumbnail-border-radius
+ion-thumbnail,css-prop,--ion-thumbnail-height
+ion-thumbnail,css-prop,--ion-thumbnail-width
 
 ion-title,shadow
 ion-title,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true

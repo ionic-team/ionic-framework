@@ -11,13 +11,15 @@ import { ActionSheetButton } from "./components/action-sheet/action-sheet-interf
 import { OverlayEventDetail } from "./utils/overlays-interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { AlertButton, AlertInput } from "./components/alert/alert-interface";
-import { IonBadgeHue, IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
+import { Hue } from "./themes/themes.interfaces";
+import { IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
 import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
-import { IonChipFill, IonChipHue, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
+import { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interfaces";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { GalleryColumns, GalleryGap } from "./components/gallery/gallery-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
@@ -53,13 +55,15 @@ export { ActionSheetButton } from "./components/action-sheet/action-sheet-interf
 export { OverlayEventDetail } from "./utils/overlays-interface";
 export { IonicSafeString } from "./utils/sanitization";
 export { AlertButton, AlertInput } from "./components/alert/alert-interface";
-export { IonBadgeHue, IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
+export { Hue } from "./themes/themes.interfaces";
+export { IonBadgeShape, IonBadgeSize, IonBadgeVerticalPosition } from "./components/badge/badge.interfaces";
 export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
-export { IonChipFill, IonChipHue, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
+export { IonChipFill, IonChipShape, IonChipSize } from "./components/chip/chip.interfaces";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content.interfaces";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { GalleryColumns, GalleryGap } from "./components/gallery/gallery-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { InputOtpChangeEventDetail, InputOtpCompleteEventDetail, InputOtpInputEventDetail } from "./components/input-otp/input-otp-interface";
@@ -475,7 +479,7 @@ export namespace Components {
         /**
           * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
          */
-        "hue"?: IonBadgeHue;
+        "hue"?: Hue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -882,7 +886,7 @@ export namespace Components {
         /**
           * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if both the hue property and theme config are unset.
          */
-        "hue"?: IonChipHue;
+        "hue"?: Hue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -1465,6 +1469,35 @@ export namespace Components {
          */
         "translucent": boolean;
     }
+    interface IonGallery {
+        /**
+          * The number of columns to display. Can be set as a number or an object of breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).
+          * @default DEFAULT_COLUMNS
+         */
+        "columns": GalleryColumns;
+        /**
+          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.
+          * @default DEFAULT_GAP
+         */
+        "gap": GalleryGap;
+        /**
+          * The visual layout of the gallery. When `uniform`, rows take up the height of the tallest item and are spaced evenly across the gallery. Additionally, items will have an aspect ratio of 1/1, forcing them to be square unless a height is explicitly set. When `masonry`, items will be positioned under each other with only the specified gap between them.
+          * @default 'uniform'
+         */
+        "layout": 'uniform' | 'masonry';
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * The order in which items are positioned. Only applies when layout is `masonry`. When `sequential`, items are positioned in the order they are placed in the DOM. When `best-fit`, items are positioned under the column with the most available space. Defaults to `sequential` when layout is `masonry` and `order` is not explicitly set.
+         */
+        "order"?: 'sequential' | 'best-fit';
+        /**
+          * The theme determines the visual appearance of the component.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+    }
     interface IonGrid {
         /**
           * If `true`, the grid will have a fixed width based on the screen size.
@@ -1513,10 +1546,6 @@ export namespace Components {
           * The image URL. This attribute is mandatory for the `<img>` element.
          */
         "src"?: string;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonInfiniteScroll {
         /**
@@ -2317,10 +2346,6 @@ export namespace Components {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonModal {
         /**
@@ -4063,13 +4088,13 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * Set to `"bold"` for a text with vibrant, bold colors or to `"subtle"` for a text with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
+         */
+        "hue"?: Hue;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTextarea {
         /**
@@ -4223,10 +4248,6 @@ export namespace Components {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTitle {
         /**
@@ -4976,6 +4997,12 @@ declare global {
     var HTMLIonFooterElement: {
         prototype: HTMLIonFooterElement;
         new (): HTMLIonFooterElement;
+    };
+    interface HTMLIonGalleryElement extends Components.IonGallery, HTMLStencilElement {
+    }
+    var HTMLIonGalleryElement: {
+        prototype: HTMLIonGalleryElement;
+        new (): HTMLIonGalleryElement;
     };
     interface HTMLIonGridElement extends Components.IonGrid, HTMLStencilElement {
     }
@@ -5934,6 +5961,7 @@ declare global {
         "ion-fab-button": HTMLIonFabButtonElement;
         "ion-fab-list": HTMLIonFabListElement;
         "ion-footer": HTMLIonFooterElement;
+        "ion-gallery": HTMLIonGalleryElement;
         "ion-grid": HTMLIonGridElement;
         "ion-header": HTMLIonHeaderElement;
         "ion-img": HTMLIonImgElement;
@@ -6423,7 +6451,7 @@ declare namespace LocalJSX {
         /**
           * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
          */
-        "hue"?: IonBadgeHue;
+        "hue"?: Hue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -6865,7 +6893,7 @@ declare namespace LocalJSX {
         /**
           * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Defaults to `"subtle"` if both the hue property and theme config are unset.
          */
-        "hue"?: IonChipHue;
+        "hue"?: Hue;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -7437,6 +7465,35 @@ declare namespace LocalJSX {
          */
         "translucent"?: boolean;
     }
+    interface IonGallery {
+        /**
+          * The number of columns to display. Can be set as a number or an object of breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).
+          * @default DEFAULT_COLUMNS
+         */
+        "columns"?: GalleryColumns;
+        /**
+          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.
+          * @default DEFAULT_GAP
+         */
+        "gap"?: GalleryGap;
+        /**
+          * The visual layout of the gallery. When `uniform`, rows take up the height of the tallest item and are spaced evenly across the gallery. Additionally, items will have an aspect ratio of 1/1, forcing them to be square unless a height is explicitly set. When `masonry`, items will be positioned under each other with only the specified gap between them.
+          * @default 'uniform'
+         */
+        "layout"?: 'uniform' | 'masonry';
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * The order in which items are positioned. Only applies when layout is `masonry`. When `sequential`, items are positioned in the order they are placed in the DOM. When `best-fit`, items are positioned under the column with the most available space. Defaults to `sequential` when layout is `masonry` and `order` is not explicitly set.
+         */
+        "order"?: 'sequential' | 'best-fit';
+        /**
+          * The theme determines the visual appearance of the component.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+    }
     interface IonGrid {
         /**
           * If `true`, the grid will have a fixed width based on the screen size.
@@ -7497,10 +7554,6 @@ declare namespace LocalJSX {
           * The image URL. This attribute is mandatory for the `<img>` element.
          */
         "src"?: string;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonInfiniteScroll {
         /**
@@ -8325,10 +8378,6 @@ declare namespace LocalJSX {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonModal {
         /**
@@ -10131,13 +10180,13 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
+          * Set to `"bold"` for a text with vibrant, bold colors or to `"subtle"` for a text with muted, subtle colors.  Defaults to `"bold"` if both the hue property and theme config are unset.
+         */
+        "hue"?: Hue;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTextarea {
         /**
@@ -10303,10 +10352,6 @@ declare namespace LocalJSX {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTitle {
         /**
@@ -10629,7 +10674,7 @@ declare namespace LocalJSX {
     }
     interface IonBadgeAttributes {
         "color": Color;
-        "hue": IonBadgeHue;
+        "hue": Hue;
         "shape": IonBadgeShape;
         "size": IonBadgeSize;
         "vertical": IonBadgeVerticalPosition;
@@ -10717,7 +10762,7 @@ declare namespace LocalJSX {
         "outline": boolean;
         "fill": IonChipFill;
         "disabled": boolean;
-        "hue": IonChipHue;
+        "hue": Hue;
         "shape": IonChipShape;
         "size": IonChipSize;
     }
@@ -10828,6 +10873,12 @@ declare namespace LocalJSX {
     interface IonFooterAttributes {
         "collapse": 'fade';
         "translucent": boolean;
+    }
+    interface IonGalleryAttributes {
+        "layout": 'uniform' | 'masonry';
+        "order": 'sequential' | 'best-fit';
+        "columns": string;
+        "gap": string;
     }
     interface IonGridAttributes {
         "fixed": boolean;
@@ -11289,6 +11340,7 @@ declare namespace LocalJSX {
     }
     interface IonTextAttributes {
         "color": Color;
+        "hue": Hue;
     }
     interface IonTextareaAttributes {
         "color": Color;
@@ -11394,6 +11446,7 @@ declare namespace LocalJSX {
         "ion-fab-button": Omit<IonFabButton, keyof IonFabButtonAttributes> & { [K in keyof IonFabButton & keyof IonFabButtonAttributes]?: IonFabButton[K] } & { [K in keyof IonFabButton & keyof IonFabButtonAttributes as `attr:${K}`]?: IonFabButtonAttributes[K] } & { [K in keyof IonFabButton & keyof IonFabButtonAttributes as `prop:${K}`]?: IonFabButton[K] };
         "ion-fab-list": Omit<IonFabList, keyof IonFabListAttributes> & { [K in keyof IonFabList & keyof IonFabListAttributes]?: IonFabList[K] } & { [K in keyof IonFabList & keyof IonFabListAttributes as `attr:${K}`]?: IonFabListAttributes[K] } & { [K in keyof IonFabList & keyof IonFabListAttributes as `prop:${K}`]?: IonFabList[K] };
         "ion-footer": Omit<IonFooter, keyof IonFooterAttributes> & { [K in keyof IonFooter & keyof IonFooterAttributes]?: IonFooter[K] } & { [K in keyof IonFooter & keyof IonFooterAttributes as `attr:${K}`]?: IonFooterAttributes[K] } & { [K in keyof IonFooter & keyof IonFooterAttributes as `prop:${K}`]?: IonFooter[K] };
+        "ion-gallery": Omit<IonGallery, keyof IonGalleryAttributes> & { [K in keyof IonGallery & keyof IonGalleryAttributes]?: IonGallery[K] } & { [K in keyof IonGallery & keyof IonGalleryAttributes as `attr:${K}`]?: IonGalleryAttributes[K] } & { [K in keyof IonGallery & keyof IonGalleryAttributes as `prop:${K}`]?: IonGallery[K] };
         "ion-grid": Omit<IonGrid, keyof IonGridAttributes> & { [K in keyof IonGrid & keyof IonGridAttributes]?: IonGrid[K] } & { [K in keyof IonGrid & keyof IonGridAttributes as `attr:${K}`]?: IonGridAttributes[K] } & { [K in keyof IonGrid & keyof IonGridAttributes as `prop:${K}`]?: IonGrid[K] };
         "ion-header": Omit<IonHeader, keyof IonHeaderAttributes> & { [K in keyof IonHeader & keyof IonHeaderAttributes]?: IonHeader[K] } & { [K in keyof IonHeader & keyof IonHeaderAttributes as `attr:${K}`]?: IonHeaderAttributes[K] } & { [K in keyof IonHeader & keyof IonHeaderAttributes as `prop:${K}`]?: IonHeader[K] };
         "ion-img": Omit<IonImg, keyof IonImgAttributes> & { [K in keyof IonImg & keyof IonImgAttributes]?: IonImg[K] } & { [K in keyof IonImg & keyof IonImgAttributes as `attr:${K}`]?: IonImgAttributes[K] } & { [K in keyof IonImg & keyof IonImgAttributes as `prop:${K}`]?: IonImg[K] };
@@ -11498,6 +11551,7 @@ declare module "@stencil/core" {
             "ion-fab-button": LocalJSX.IntrinsicElements["ion-fab-button"] & JSXBase.HTMLAttributes<HTMLIonFabButtonElement>;
             "ion-fab-list": LocalJSX.IntrinsicElements["ion-fab-list"] & JSXBase.HTMLAttributes<HTMLIonFabListElement>;
             "ion-footer": LocalJSX.IntrinsicElements["ion-footer"] & JSXBase.HTMLAttributes<HTMLIonFooterElement>;
+            "ion-gallery": LocalJSX.IntrinsicElements["ion-gallery"] & JSXBase.HTMLAttributes<HTMLIonGalleryElement>;
             "ion-grid": LocalJSX.IntrinsicElements["ion-grid"] & JSXBase.HTMLAttributes<HTMLIonGridElement>;
             "ion-header": LocalJSX.IntrinsicElements["ion-header"] & JSXBase.HTMLAttributes<HTMLIonHeaderElement>;
             "ion-img": LocalJSX.IntrinsicElements["ion-img"] & JSXBase.HTMLAttributes<HTMLIonImgElement>;

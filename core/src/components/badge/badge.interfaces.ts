@@ -1,4 +1,4 @@
-import type { IonPadding } from '../../themes/themes.interfaces';
+import type { IonPadding, Hue } from '../../themes/themes.interfaces';
 
 export type IonBadgeRecipe = {
   font?: {
@@ -7,7 +7,7 @@ export type IonBadgeRecipe = {
 
   // Hues
   hue?: {
-    [K in IonBadgeHue]?: IonBadgeStateDefinition & {
+    [K in Hue]?: IonBadgeStateDefinition & {
       semantic?: IonBadgeStateDefinition;
     };
   };
@@ -80,13 +80,11 @@ type IonBadgeSizeDotDefinition = IonBadgeSizeDefinition & {
 };
 
 export type IonBadgeConfig = {
-  hue?: IonBadgeHue;
+  hue?: Hue;
   size?: IonBadgeSize;
   shape?: IonBadgeShape;
 };
 
-export const ION_BADGE_HUES = ['bold', 'subtle'] as const;
-export type IonBadgeHue = (typeof ION_BADGE_HUES)[number];
 export const ION_BADGE_SHAPES = ['crisp', 'soft', 'round', 'rectangular'] as const;
 export type IonBadgeShape = (typeof ION_BADGE_SHAPES)[number];
 export const ION_BADGE_SIZES = ['small', 'medium', 'large'] as const;

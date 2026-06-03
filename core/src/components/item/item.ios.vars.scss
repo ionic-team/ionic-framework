@@ -33,8 +33,11 @@ $item-ios-avatar-width: 36px;
 /// @prop - Height of the avatar in the item
 $item-ios-avatar-height: $item-ios-avatar-width;
 
-/// @prop - Size of the thumbnail in the item
-$item-ios-thumbnail-size: 56px;
+/// @prop - Width of the thumbnail in the item
+$item-ios-thumbnail-width: 56px;
+
+/// @prop - Height of the thumbnail in the item
+$item-ios-thumbnail-height: $item-ios-thumbnail-width;
 
 /// @prop - Padding top for the item content
 $item-ios-padding-top: 10px;
