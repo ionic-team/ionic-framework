@@ -1,6 +1,8 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
+
+import { assertZoneContext } from '../../zone-assert.util';
 
 @Component({
   selector: 'app-virtual-scroll-detail',
@@ -20,7 +22,7 @@ export class VirtualScrollDetailComponent implements OnInit, ViewWillEnter, View
 
   ngOnInit() {
     this.itemNu = this.route.snapshot.paramMap.get('itemId');
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.onInit++;
   }
 
@@ -28,19 +30,19 @@ export class VirtualScrollDetailComponent implements OnInit, ViewWillEnter, View
     if (this.onInit !== 1) {
       throw new Error('ngOnInit was not called');
     }
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.willEnter++;
   }
   ionViewDidEnter() {
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.didEnter++;
   }
   ionViewWillLeave() {
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.willLeave++;
   }
   ionViewDidLeave() {
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.didLeave++;
   }
 }

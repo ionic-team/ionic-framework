@@ -1,6 +1,8 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
 import { Router } from '@angular/router';
+
+import { assertZoneContext } from '../../zone-assert.util';
 
 @Component({
     selector: 'app-router-link',
@@ -43,7 +45,7 @@ export class RouterLinkComponent implements OnInit, ViewWillEnter, ViewDidEnter,
   }
 
   ngOnInit() {
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.onInit++;
   }
 
@@ -51,19 +53,19 @@ export class RouterLinkComponent implements OnInit, ViewWillEnter, ViewDidEnter,
     if (this.onInit !== 1) {
       throw new Error('ngOnInit was not called');
     }
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.willEnter++;
   }
   ionViewDidEnter() {
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.didEnter++;
   }
   ionViewWillLeave() {
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.willLeave++;
   }
   ionViewDidLeave() {
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.didLeave++;
   }
 }

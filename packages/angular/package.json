@@ -60,6 +60,11 @@
     "rxjs": ">=7.5.0",
     "zone.js": ">=0.13.0"
   },
+  "peerDependenciesMeta": {
+    "zone.js": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@angular-devkit/core": "^21.0.0",
     "@angular-devkit/schematics": "^21.0.0",

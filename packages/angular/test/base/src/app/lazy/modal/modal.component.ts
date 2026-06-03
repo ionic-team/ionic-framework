@@ -1,7 +1,9 @@
-import { Component, NgZone } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ModalExampleComponent } from '../modal-example/modal-example.component';
 import { NavComponent } from '../nav/nav.component';
+
+import { assertZoneContext } from '../../zone-assert.util';
 
 @Component({
     selector: 'app-modal',
@@ -14,7 +16,8 @@ export class ModalComponent {
   onDidDismiss = false;
 
   constructor(
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private cdr: ChangeDetectorRef
   ) { }
 
   async openModal() {
@@ -36,15 +39,19 @@ export class ModalComponent {
     });
     await modal.present();
     modal.onWillDismiss().then(() => {
-      NgZone.assertInAngularZone();
+      assertZoneContext();
       this.onWillDismiss = true;
+      // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own; mark the view dirty.
+      this.cdr.markForCheck();
     });
     modal.onDidDismiss().then(() => {
-      NgZone.assertInAngularZone();
+      assertZoneContext();
       if (!this.onWillDismiss) {
         throw new Error('onWillDismiss should be emitted first');
       }
       this.onDidDismiss = true;
+      // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own; mark the view dirty.
+      this.cdr.markForCheck();
     });
   }
 }

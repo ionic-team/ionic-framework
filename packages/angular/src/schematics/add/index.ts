@@ -93,35 +93,6 @@ function addProvideIonicAngular(projectName: string, projectSourceRoot: Path): R
   };
 }
 
-/**
- * Adds `provideZoneChangeDetection()` to a standalone project's app config.
- * Angular 21 makes both `bootstrapApplication` and `bootstrapModule` default
- * to zoneless change detection, which breaks Ionic's NgZone-based async
- * lifecycle. Registering the provider explicitly preserves the existing
- * zone-based default on Angular 18-20 and is required on 21+.
- *
- * NgModule-based projects are equally affected on 21+ but are not handled
- * here: the reliable place to opt out of zoneless for `bootstrapModule` is
- * its `applicationProviders` option in main.ts, not `AppModule.providers`,
- * and this schematic does not yet edit main.ts. Users upgrading an existing
- * NgModule project to ng21 must add it manually.
- *
- * @param projectName The name of the project.
- * @param projectSourceRoot The source root path of the project.
- */
-function addProvideZoneChangeDetection(projectName: string, projectSourceRoot: Path): Rule {
-  return (host: Tree) => {
-    const appConfig = `${projectSourceRoot}/app/app.config.ts`;
-    if (host.exists(appConfig)) {
-      return addRootProvider(
-        projectName,
-        ({ code, external }) => code`${external('provideZoneChangeDetection', '@angular/core')}()`
-      );
-    }
-    return host;
-  };
-}
-
 function addIonicStyles(projectName: string, projectSourceRoot: Path): Rule {
   return (host: Tree) => {
     const ionicStyles = [
@@ -248,7 +219,6 @@ export default function ngAdd(options: IonAddOptions): Rule {
       addIonicAngularToolkitToAngularJson(),
       addIonicAngularModuleToAppModule(sourcePath),
       addProvideIonicAngular(options.project, sourcePath),
-      addProvideZoneChangeDetection(options.project, sourcePath),
       addIonicBuilder(options.project),
       addIonicStyles(options.project, sourcePath),
       addIonicons(options.project, sourcePath),

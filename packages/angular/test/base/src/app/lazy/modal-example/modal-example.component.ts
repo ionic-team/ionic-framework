@@ -1,6 +1,8 @@
-import { Component, Input, NgZone, OnInit, Optional } from '@angular/core';
+import { Component, Input, OnInit, Optional } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ModalController, IonNav, ViewWillLeave, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
+
+import { assertZoneContext } from '../../zone-assert.util';
 
 @Component({
     selector: 'app-modal-example',
@@ -30,7 +32,7 @@ export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnte
   ) {}
 
   ngOnInit() {
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.onInit++;
   }
 
@@ -42,19 +44,19 @@ export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnte
     if (this.onInit !== 1) {
       throw new Error('ngOnInit was not called');
     }
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.willEnter++;
   }
   ionViewDidEnter() {
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.didEnter++;
   }
   ionViewWillLeave() {
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.willLeave++;
   }
   ionViewDidLeave() {
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.didLeave++;
   }
   closeModal() {

@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
 import {
   Platform,
   ModalController,
@@ -12,6 +12,8 @@ import {
   DomController,
   Config,
 } from '@ionic/angular';
+
+import { assertZoneContext } from '../../zone-assert.util';
 
 @Component({
     selector: 'app-providers',
@@ -43,7 +45,8 @@ export class ProvidersComponent {
     navCtrl: NavController,
     domCtrl: DomController,
     config: Config,
-    zone: NgZone
+    zone: NgZone,
+    private cdr: ChangeDetectorRef
   ) {
     // test all providers load
     if (
@@ -64,23 +67,31 @@ export class ProvidersComponent {
 
     // test platform ready()
     platform.ready().then(() => {
-      NgZone.assertInAngularZone();
+      assertZoneContext();
       this.isReady = true;
+      // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own; mark the view dirty.
+      this.cdr.markForCheck();
     });
     platform.resume.subscribe(() => {
       console.log('platform:resume');
-      NgZone.assertInAngularZone();
+      assertZoneContext();
       this.isResumed = true;
+      // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own; mark the view dirty.
+      this.cdr.markForCheck();
     });
     platform.pause.subscribe(() => {
       console.log('platform:pause');
-      NgZone.assertInAngularZone();
+      assertZoneContext();
       this.isPaused = true;
+      // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own; mark the view dirty.
+      this.cdr.markForCheck();
     });
     platform.resize.subscribe(() => {
       console.log('platform:resize');
-      NgZone.assertInAngularZone();
+      assertZoneContext();
       this.isResized = true;
+      // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own; mark the view dirty.
+      this.cdr.markForCheck();
     });
     const firstQuery = platform.getQueryParam('firstParam');
     const secondQuery = platform.getQueryParam('secondParam');
@@ -103,6 +114,8 @@ export class ProvidersComponent {
   async setMenuCount() {
     const menus = await this.menuCtrl.getMenus();
     this.registeredMenuCount = menus.length;
+    // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own; mark the view dirty.
+    this.cdr.markForCheck();
   }
 
   async openActionSheet() {

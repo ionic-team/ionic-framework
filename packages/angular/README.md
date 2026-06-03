@@ -72,7 +72,7 @@ This guide shows you how to test the local Ionic Framework build with a new Angu
     ```sh
     # Change to whichever directory you want the app in
     cd ~/Documents/
-    ng new my-app --style=css --ssr=false --zoneless=false
+    ng new my-app --style=css --ssr=false
     cd my-app
     ```
 

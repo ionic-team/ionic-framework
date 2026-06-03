@@ -128,9 +128,17 @@ Apps that relied on `ionChange` firing on every confirmation (for example, to de
 
 Ionic 9 requires Angular 18 or later. Angular 16 and 17 are no longer supported.
 
-**Angular 21 Requires Explicit Zone Change Detection**
+**Zoneless Change Detection by Default**
 
-Angular 21 defaults `bootstrapModule()` and `bootstrapApplication()` to zoneless change detection. `zone.js` in your polyfills is ignored unless you opt back in explicitly, which surfaces as runtime `NG0909` errors and breaks change detection for asynchronous updates (modal and popover lifecycle, tab navigation, and anything depending on async-resolved state). Ionic 9 relies on zone-based change detection, so apps on Angular 21 must provide it explicitly.
+Ionic 9 defaults to zoneless change detection. Angular 21 bootstraps zoneless out of the box, so a new Ionic 9 app on Angular 21 runs without Zone.js and requires no change-detection provider. The `ng add @ionic/angular` schematic no longer registers `provideZoneChangeDetection()`.
+
+Because Zone.js no longer triggers change detection automatically, component state that you update from an asynchronous callback Angular doesn't wrap (awaiting an overlay result such as `modal.onWillDismiss()`, `setTimeout`, RxJS subscriptions, `Platform` events) no longer re-renders on its own. Update a signal or call `ChangeDetectorRef.markForCheck()` in those callbacks. Template event bindings, `@HostListener`, reactive forms, and Ionic lifecycle hooks (`ionViewWillEnter`, etc.) that set state synchronously are unaffected. Refer to the [Zoneless Change Detection guide](https://ionicframework.com/docs/angular/zoneless) for the patterns.
+
+On Angular 18 through 20, Zone.js remains Angular's default, so those versions are unaffected and require no change. To adopt zoneless there, add `provideZonelessChangeDetection()` (named `provideExperimentalZonelessChangeDetection()` on Angular 18 and 19).
+
+**Keeping Zone.js on Angular 21 (optional)**
+
+To keep using Zone.js on Angular 21, opt back in with `provideZoneChangeDetection()` and keep `zone.js` in your polyfills.
 
 Standalone bootstrap:
 
@@ -160,7 +168,16 @@ NgModule bootstrap:
     .catch((err) => console.error(err));
 ```
 
-Angular forbids `provideZoneChangeDetection()` inside an NgModule's `providers` array, so for NgModule apps it must be passed as `applicationProviders` on the `bootstrapModule()` call. This step is only required on Angular 21. Angular 18 through 20 are unaffected.
+Angular forbids `provideZoneChangeDetection()` inside an NgModule's `providers` array, so for NgModule apps it must be passed as `applicationProviders` on the `bootstrapModule()` call. Both paths also require `zone.js` in your polyfills, which Angular 21's default scaffold omits:
+
+```ts
+// src/polyfills.ts
+import 'zone.js';
+```
+
+**`bindLifecycleEvents` No Longer Exported**
+
+The internal `bindLifecycleEvents` helper is no longer exported from `@ionic/angular/common`. It was framework plumbing for wiring Ionic lifecycle events to component instances and was never part of the documented API. Apps don't call it directly.
 
 **TypeScript**
 

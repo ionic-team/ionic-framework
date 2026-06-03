@@ -1,4 +1,4 @@
-import { enableProdMode, provideZoneChangeDetection } from '@angular/core';
+import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
@@ -12,13 +12,10 @@ const isLazy = window.location.href.includes('lazy');
 
 if (isLazy) {
   document.addEventListener('DOMContentLoaded', () => {
-    // Angular 21 defaults bootstrapModule to zoneless change detection, which
-    // breaks Ionic's NgZone-based async lifecycle. AppModule.providers is too
-    // late to opt back in; the override has to go on bootstrapModule's options.
+    // Ionic 9 defaults to zoneless change detection. Angular 21 bootstraps
+    // zoneless out of the box, so no change-detection provider is registered.
     platformBrowserDynamic()
-    .bootstrapModule(AppModule, {
-      applicationProviders: [provideZoneChangeDetection()],
-    })
+    .bootstrapModule(AppModule)
     .catch(err => console.error(err));
   });
 } else {
