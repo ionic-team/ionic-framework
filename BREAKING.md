@@ -158,7 +158,7 @@ Ionic 9 supports TypeScript 5.4 or later, matching the minimum for Angular 18. A
 
 **Module Resolution**
 
-`@ionic/angular` is now published with `exports`-based subpath resolution. Apps using TypeScript `moduleResolution: "node"` (classic) can fail to resolve subpaths such as `@ionic/angular/standalone`. Set `moduleResolution` to `"bundler"` (the default for `ng new` on Angular 17 and later). See [Package Exports](#version-9x-package-exports).
+`@ionic/angular` is now published with `exports`-based subpath resolution. Apps using TypeScript `moduleResolution: "node"` (classic) can fail to resolve subpaths such as `@ionic/angular/standalone`. Set `moduleResolution` to `"bundler"` (the default for `ng new` on Angular 17 and later). Refer to [Package Exports](#version-9x-package-exports).
 
 **CSS Imports No Longer Use the `~` Prefix**
 
