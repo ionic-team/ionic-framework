@@ -19,7 +19,7 @@
       <div class="ion-page">
         <ion-header id="demo-header" collapse="hide">
           <ion-toolbar>
-            <ion-title>Hide on scroll</ion-title>
+            <ion-title>Hide on scroll (hide)</ion-title>
           </ion-toolbar>
         </ion-header>
         <ion-content>
@@ -113,6 +113,18 @@
         const toggleFooter = document.getElementById('toggle-footer-hide');
         const toggleShowHeader = document.getElementById('toggle-show-header');
         const toggleShowFooter = document.getElementById('toggle-show-footer');
+        const headerTitle = header.querySelector('ion-title');
+        const footerTitle = footer.querySelector('ion-title');
+
+        function syncHeaderToolbarTitle() {
+          const mode = toggleHeader.checked ? 'hide' : 'fixed';
+          headerTitle.textContent = 'Hide on scroll (' + mode + ')';
+        }
+
+        function syncFooterToolbarTitle() {
+          const mode = toggleFooter.checked ? 'hide' : 'fixed';
+          footerTitle.textContent = 'Footer (' + mode + ')';
+        }
 
         toggleHeader.addEventListener('ionChange', function (ev) {
           if (ev.detail.checked) {
@@ -120,6 +132,7 @@
           } else {
             header.removeAttribute('collapse');
           }
+          syncHeaderToolbarTitle();
         });
 
         toggleFooter.addEventListener('ionChange', function (ev) {
@@ -128,7 +141,11 @@
           } else {
             footer.removeAttribute('collapse');
           }
+          syncFooterToolbarTitle();
         });
+
+        syncHeaderToolbarTitle();
+        syncFooterToolbarTitle();
 
         toggleShowHeader.addEventListener('ionChange', function (ev) {
           const inPage = ev.detail.checked;
