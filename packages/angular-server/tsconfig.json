@@ -1,10 +1,6 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "baseUrl": "./packages/angular-server",
-    // TypeScript 6.0 (required by Angular 22) turns the inherited `baseUrl` into a
-    // hard error; suppress it until the shared root tsconfig drops `baseUrl`.
-    "ignoreDeprecations": "6.0",
     "module": "es2022",
     "moduleResolution": "bundler",
     "skipLibCheck": true,

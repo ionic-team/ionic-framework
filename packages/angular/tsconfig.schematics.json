@@ -6,11 +6,8 @@
     "experimentalDecorators": true,
     "allowUnreachableCode": false,
     "lib": ["es2017", "dom"],
-    "module": "commonjs",
-    "moduleResolution": "node",
-    // TypeScript 6.0 (required by Angular 22) deprecates `moduleResolution: "node"`;
-    // suppress the hard error until the schematics move to "node16"/"nodenext".
-    "ignoreDeprecations": "6.0",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "sourceMap": false,
     "pretty": true,
     "rootDir": "src/schematics",
