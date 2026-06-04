@@ -213,5 +213,28 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
           .toBe(expectedGap[breakpoint.name]);
       });
     });
+
+    test('should resolve the gap CSS variable fallback when the variable is not defined', async ({ page }) => {
+      await page.setViewportSize({ width: 768, height: 900 });
+
+      // The CSS variable `--app-gap` is never declared, so the browser
+      // resolves the var() fallback (8px).
+      await page.setContent(
+        `
+          <ion-gallery gap="var(--app-gap, 8px)">
+            <img src="/src/components/gallery/test/assets/01.png" alt="One" />
+            <img src="/src/components/gallery/test/assets/02.png" alt="Two" />
+            <img src="/src/components/gallery/test/assets/03.png" alt="Three" />
+            <img src="/src/components/gallery/test/assets/04.png" alt="Four" />
+          </ion-gallery>
+        `,
+        config
+      );
+
+      const gallery = page.locator('ion-gallery');
+
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).rowGap)).toBe('8px');
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).columnGap)).toBe('8px');
+    });
   });
 });
