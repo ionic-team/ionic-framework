@@ -248,7 +248,7 @@ $alert-md-radio-icon-transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
 $alert-md-radio-label-padding-top: 13px;
 
 /// @prop - Padding end on the label for the radio alert
-$alert-md-radio-label-padding-end: 16px;
+$alert-md-radio-label-padding-end: $alert-md-padding-end;
 
 /// @prop - Padding bottom on the label for the radio alert
 $alert-md-radio-label-padding-bottom: $alert-md-radio-label-padding-top;
@@ -320,7 +320,7 @@ $alert-md-checkbox-icon-transform: rotate(45deg);
 $alert-md-checkbox-label-padding-top: 13px;
 
 /// @prop - Padding end of the label for the checkbox in the alert
-$alert-md-checkbox-label-padding-end: $alert-md-checkbox-left;
+$alert-md-checkbox-label-padding-end: $alert-md-padding-end;
 
 /// @prop - Padding bottom of the label for the checkbox in the alert
 $alert-md-checkbox-label-padding-bottom: $alert-md-checkbox-label-padding-top;

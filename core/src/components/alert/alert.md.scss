@@ -158,27 +158,31 @@
 // --------------------------------------------------
 
 .alert-radio-label {
-  @include padding(
-    $alert-md-radio-label-padding-top,
-    $alert-md-radio-label-padding-end,
-    $alert-md-radio-label-padding-bottom,
-    $alert-md-radio-label-padding-start
-  );
+  @include padding($alert-md-radio-label-padding-top, null, $alert-md-radio-label-padding-bottom, null);
 
   // Required for the radio icon to stay on the screen without
   // being squished when the font size scales up.
-  max-width: calc(100% - $alert-md-radio-left);
+  max-width: calc(100% - $alert-md-radio-width);
 
   color: $alert-md-radio-label-text-color;
 
   font-size: $alert-md-radio-label-font-size;
 }
 
+.radio-label-placement-end .alert-radio-label {
+  /**
+   * The label's inline padding clears space for the icon on the icon's side.
+   * When the label is placed at the end, the icon is at the start, so the
+   * larger padding clears it on the start side.
+   */
+  @include padding-horizontal($alert-md-radio-label-padding-start, $alert-md-radio-label-padding-end);
+}
+
 .radio-label-placement-start .alert-radio-label {
   /**
-   * The label's inline padding clears space for the icon on the
-   * icon's side. When the label is placed at the start, the icon
-   * is at the end, so swap the inline paddings to mirror that geometry.
+   * The label's inline padding clears space for the icon on the icon's side.
+   * When the label is placed at the start, the icon is at the end, so the
+   * larger padding clears it on the end side.
    */
   @include padding-horizontal($alert-md-radio-label-padding-end, $alert-md-radio-label-padding-start);
 }
@@ -251,27 +255,31 @@
 // --------------------------------------------------
 
 .alert-checkbox-label {
-  @include padding(
-    $alert-md-checkbox-label-padding-top,
-    $alert-md-checkbox-label-padding-end,
-    $alert-md-checkbox-label-padding-bottom,
-    $alert-md-checkbox-label-padding-start
-  );
+  @include padding($alert-md-checkbox-label-padding-top, null, $alert-md-checkbox-label-padding-bottom, null);
 
   // Required for the checkbox icon to stay on the screen without
   // being squished when the font size scales up.
-  max-width: calc(100% - $alert-md-checkbox-left);
+  max-width: calc(100% - $alert-md-checkbox-width);
 
   color: $alert-md-checkbox-label-text-color;
 
   font-size: $alert-md-checkbox-label-font-size;
 }
 
+.checkbox-label-placement-end .alert-checkbox-label {
+  /**
+   * The label's inline padding clears space for the icon on the icon's side.
+   * When the label is placed at the end, the icon is at the start, so the
+   * larger padding clears it on the start side.
+   */
+  @include padding-horizontal($alert-md-checkbox-label-padding-start, $alert-md-checkbox-label-padding-end);
+}
+
 .checkbox-label-placement-start .alert-checkbox-label {
   /**
-   * The label's inline padding clears space for the icon on the
-   * icon's side. When the label is placed at the start, the icon
-   * is at the end, so swap the inline paddings to mirror that geometry.
+   * The label's inline padding clears space for the icon on the icon's side.
+   * When the label is placed at the start, the icon is at the end, so the
+   * larger padding clears it on the end side.
    */
   @include padding-horizontal($alert-md-checkbox-label-padding-end, $alert-md-checkbox-label-padding-start);
 }
