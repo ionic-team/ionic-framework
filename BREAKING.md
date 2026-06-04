@@ -166,7 +166,7 @@ The following breaking changes apply to `ion-grid`:
 
 1. `--ion-grid-padding-*` CSS variables have been replaced with per-side, per-breakpoint tokens. <sup>[1](#version-9x-grid-padding-variables)</sup>
 2. `--ion-grid-width-*` CSS variables for the fixed grid have been replaced with per-breakpoint tokens. <sup>[2](#version-9x-grid-fixed-width-variables)</sup>
-3. The `push` and `pull` properties have been deprecated and no longer work. <sup>[3](#version-9x-grid-deprecated-push-and-pull-properties)</sup>
+3. The `push` and `pull` properties have been deprecated. <sup>[3](#version-9x-grid-deprecated-push-and-pull-properties)</sup>
 4. Theme classes (`ion-grid.md`, `ion-grid.ios`) are no longer supported. <sup>[4](#version-9x-grid-theme-classes)</sup>
 
 <h5 id="version-9x-grid-padding-variables">Padding variables</h5>
@@ -185,7 +185,7 @@ Grid padding was a single value per breakpoint and is now set per-side. Use the 
 
 <h5 id="version-9x-grid-deprecated-push-and-pull-properties">Deprecated <code>push</code> and <code>pull</code> properties</h5>
 
-The `push` and `pull` properties have been deprecated and no longer work. A similar look can be achieved with the newly added property `order`.
+The `push` and `pull` properties have been disabled. They now log a deprecation warning and no longer affect layout. Use the `order` property to achieve a similar result.
 
 **Example 1: Swap two columns**
 
