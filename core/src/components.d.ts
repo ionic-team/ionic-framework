@@ -1478,7 +1478,7 @@ export namespace Components {
          */
         "columns": GalleryColumns;
         /**
-          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.
+          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.
           * @default DEFAULT_GAP
          */
         "gap": GalleryGap;
@@ -7526,7 +7526,7 @@ declare namespace LocalJSX {
          */
         "columns"?: GalleryColumns;
         /**
-          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.
+          * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.
           * @default DEFAULT_GAP
          */
         "gap"?: GalleryGap;

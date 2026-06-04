@@ -390,6 +390,26 @@ describe('gallery', () => {
         expect((sharedGallery as any).sanitizeGap('clamp(10px, 20%, 30px)')).toBe('clamp(10px, 20%, 30px)');
       });
 
+      it('should return undefined for malformed math functions', () => {
+        const malformedValues = ['calc', 'calc(', 'calc()', 'min(', 'clamp(', 'calc(10px + 20px'];
+        malformedValues.forEach((value) => {
+          expect((sharedGallery as any).sanitizeGap(value)).toBeUndefined();
+        });
+      });
+
+      it('should return the string for CSS variables', () => {
+        expect((sharedGallery as any).sanitizeGap('var(--app-gap)')).toBe('var(--app-gap)');
+        expect((sharedGallery as any).sanitizeGap('var(--app-gap, 16px)')).toBe('var(--app-gap, 16px)');
+        expect((sharedGallery as any).sanitizeGap('  var(--app-gap)  ')).toBe('var(--app-gap)');
+      });
+
+      it('should return undefined for malformed CSS variables', () => {
+        const malformedValues = ['var(--app-gap. 16px)', 'var(--app-gap', 'var()', 'var(16px)'];
+        malformedValues.forEach((value) => {
+          expect((sharedGallery as any).sanitizeGap(value)).toBeUndefined();
+        });
+      });
+
       it('should return the px value for positive integers', () => {
         expect((sharedGallery as any).sanitizeGap(0)).toBe('0px');
         expect((sharedGallery as any).sanitizeGap('0')).toBe('0px');
@@ -611,6 +631,93 @@ describe('gallery', () => {
         breakpoints.forEach(({ width, expectedGap }) => {
           expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
         });
+      });
+
+      it('should resolve to the CSS variable for each breakpoint without warning when gap is a CSS variable', () => {
+        const breakpoints = DEFAULT_BREAKPOINTS;
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        sharedGallery.gap = 'var(--app-gap)';
+
+        breakpoints.forEach(({ width }) => {
+          expect((sharedGallery as any).getGapForWidth(width)).toBe('var(--app-gap)');
+        });
+
+        expect(warningSpy).not.toHaveBeenCalled();
+
+        warningSpy.mockRestore();
+      });
+
+      it('should resolve to the CSS variable for breakpoints that set one when gap is a breakpoint map', () => {
+        const breakpoints = [
+          { width: 0, expectedGap: DEFAULT_GAP },
+          { width: 575, expectedGap: DEFAULT_GAP },
+          { width: 576, expectedGap: DEFAULT_GAP },
+          { width: 767, expectedGap: DEFAULT_GAP },
+          { width: 768, expectedGap: 'var(--app-gap)' },
+          { width: 991, expectedGap: 'var(--app-gap)' },
+          { width: 992, expectedGap: DEFAULT_GAP },
+          { width: 1199, expectedGap: DEFAULT_GAP },
+          { width: 1200, expectedGap: DEFAULT_GAP },
+          { width: 1399, expectedGap: DEFAULT_GAP },
+          { width: 1400, expectedGap: DEFAULT_GAP },
+        ];
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        sharedGallery.gap = { md: 'var(--app-gap)' };
+
+        breakpoints.forEach(({ width, expectedGap }) => {
+          expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
+        });
+
+        expect(warningSpy).not.toHaveBeenCalled();
+
+        warningSpy.mockRestore();
+      });
+
+      it('should resolve a breakpoint map mixing CSS variables, literals, and unset (default) breakpoints', () => {
+        const breakpoints = [
+          { width: 0, expectedGap: '8px' },
+          { width: 575, expectedGap: '8px' },
+          { width: 576, expectedGap: 'var(--g-sm)' },
+          { width: 767, expectedGap: 'var(--g-sm)' },
+          { width: 768, expectedGap: 'var(--g-md)' },
+          { width: 991, expectedGap: 'var(--g-md)' },
+          { width: 992, expectedGap: DEFAULT_GAP },
+          { width: 1199, expectedGap: DEFAULT_GAP },
+          { width: 1200, expectedGap: '2rem' },
+          { width: 1399, expectedGap: '2rem' },
+          { width: 1400, expectedGap: DEFAULT_GAP },
+        ];
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        sharedGallery.gap = { xs: '8px', sm: 'var(--g-sm)', md: 'var(--g-md)', xl: '2rem' };
+
+        breakpoints.forEach(({ width, expectedGap }) => {
+          expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
+        });
+
+        expect(warningSpy).not.toHaveBeenCalled();
+
+        warningSpy.mockRestore();
+      });
+
+      it('should warn and fallback to the default gap when gap is a malformed CSS variable', () => {
+        const breakpoints = DEFAULT_BREAKPOINTS;
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        sharedGallery.gap = 'var(--app-gap. 16px)';
+
+        breakpoints.forEach(({ width, expectedGap }) => {
+          expect((sharedGallery as any).getGapForWidth(width)).toBe(expectedGap);
+        });
+
+        expect(warningSpy).toHaveBeenCalledWith(
+          expect.stringContaining('[ion-gallery] - Invalid "gap" value ("var(--app-gap. 16px)").'),
+          el
+        );
+
+        warningSpy.mockRestore();
       });
 
       it('should resolve to the proper gap when the gap property is set to an out of order object', () => {
