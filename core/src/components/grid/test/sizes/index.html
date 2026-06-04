@@ -24,12 +24,12 @@
 
       <ion-content id="content" class="grid-demo">
         <h2 class="ion-padding-start">10 Column Layout</h2>
-        <ion-grid class="grid-10">
+        <ion-grid class="grid-10" id="ten-column-layout">
           <ion-row id="row10"></ion-row>
         </ion-grid>
 
         <h2 class="ion-padding-start">Responsive sm</h2>
-        <ion-grid>
+        <ion-grid id="responsive-sm">
           <ion-row>
             <ion-col size="12" size-sm>
               <div>ion-col</div>
@@ -47,7 +47,7 @@
         </ion-grid>
 
         <h2 class="ion-padding-start">Size auto</h2>
-        <ion-grid>
+        <ion-grid id="size-auto">
           <ion-row>
             <ion-col>
               <div>ion-col</div>
@@ -65,39 +65,41 @@
         </ion-grid>
 
         <h2 class="ion-padding-start">Breakpoint Sizes</h2>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1">
-              <div>ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1"</div>
-            </ion-col>
-            <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1">
-              <div>ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1"</div>
-            </ion-col>
-            <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1">
-              <div>ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1"</div>
-            </ion-col>
-            <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1">
-              <div>ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1"</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+        <div id="breakpoint-sizes">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1">
+                <div>ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1"</div>
+              </ion-col>
+              <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1">
+                <div>ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1"</div>
+              </ion-col>
+              <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1">
+                <div>ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1"</div>
+              </ion-col>
+              <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1">
+                <div>ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1"</div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
 
-        <ion-grid>
-          <ion-row>
-            <ion-col size="2">
-              <div>ion-col size="2"</div>
-            </ion-col>
-            <ion-col size="1">
-              <div>ion-col size="1"</div>
-            </ion-col>
-            <ion-col size="2">
-              <div>ion-col size="2"</div>
-            </ion-col>
-            <ion-col size="3">
-              <div>ion-col size="3"</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="2">
+                <div>ion-col size="2"</div>
+              </ion-col>
+              <ion-col size="1">
+                <div>ion-col size="1"</div>
+              </ion-col>
+              <ion-col size="2">
+                <div>ion-col size="2"</div>
+              </ion-col>
+              <ion-col size="3">
+                <div>ion-col size="3"</div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
       </ion-content>
 
       <script>
