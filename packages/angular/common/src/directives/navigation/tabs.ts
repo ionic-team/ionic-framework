@@ -140,6 +140,18 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
   }
 
   /**
+   * Host listener for the `ionTabButtonClick` event. Angular 22 enabled stricter
+   * host-binding type checking, which types `$event` as the DOM `Event`. That is
+   * not assignable to `select`'s public `string | CustomEvent` parameter, so this
+   * thin wrapper narrows the event before forwarding to keep `select`'s public
+   * signature intact.
+   */
+  @HostListener('ionTabButtonClick', ['$event'])
+  onTabButtonClick(ev: Event): Promise<boolean> | undefined {
+    return this.select(ev as CustomEvent);
+  }
+
+  /**
    * When a tab button is clicked, there are several scenarios:
    * 1. If the selected tab is currently active (the tab button has been clicked
    *    again), then it should go to the root view for that tab.
@@ -161,7 +173,6 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
    *      tabRootUrl, forwarding any `queryParams`/`fragment` declared on the
    *      tab button's `href`.
    */
-  @HostListener('ionTabButtonClick', ['$event'])
   select(tabOrEvent: string | CustomEvent): Promise<boolean> | undefined {
     const isTabString = typeof tabOrEvent === 'string';
     const tab = isTabString ? tabOrEvent : (tabOrEvent as CustomEvent).detail.tab;

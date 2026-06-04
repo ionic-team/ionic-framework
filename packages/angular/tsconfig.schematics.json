@@ -8,11 +8,17 @@
     "lib": ["es2017", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
+    // TypeScript 6.0 (required by Angular 22) deprecates `moduleResolution: "node"`;
+    // suppress the hard error until the schematics move to "node16"/"nodenext".
+    "ignoreDeprecations": "6.0",
     "sourceMap": false,
     "pretty": true,
     "rootDir": "src/schematics",
     "target": "es2017",
-    "outDir": "dist/schematics"
+    "outDir": "dist/schematics",
+    // TypeScript 6.0 defaults `types` to []; the devkit .d.ts the schematics
+    // consume reference Node globals (Buffer, node:url), so opt them back in.
+    "types": ["node"]
   },
   "exclude": ["node_modules"],
   "include": ["src/schematics/**/*.ts"]

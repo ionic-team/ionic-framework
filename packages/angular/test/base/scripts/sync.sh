@@ -15,7 +15,9 @@ npm pack ../../../dist
 npm pack ../../../../angular-server/dist
 
 # Install Dependencies
-npm install *.tgz --no-save
+# TODO: Remove --legacy-peer-deps once @angular-eslint reaches v22; the ng22 app pins
+# @angular/cli@^22 while @angular-eslint@21 peer-requires @angular/cli ">=21 <22".
+npm install *.tgz --no-save --legacy-peer-deps
 
 # Delete Angular cache directory
 rm -rf .angular/

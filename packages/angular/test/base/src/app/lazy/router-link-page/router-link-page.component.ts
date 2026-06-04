@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { IonRouterOutlet, ViewDidEnter, ViewDidLeave, ViewWillLeave } from '@ionic/angular';
 
 import { assertZoneContext } from '../../zone-assert.util';
@@ -10,12 +10,14 @@ import { assertZoneContext } from '../../zone-assert.util';
 })
 export class RouterLinkPageComponent implements OnInit, ViewWillLeave, ViewDidEnter, ViewWillLeave, ViewDidLeave {
 
-  onInit = 0;
-  willEnter = 0;
-  didEnter = 0;
-  willLeave = 0;
-  didLeave = 0;
-  canGoBack: boolean | null | undefined = null;
+  // Signals so state set from Ionic lifecycle hooks renders under the
+  // OnPush-by-default change detection introduced in Angular 22.
+  onInit = signal(0);
+  willEnter = signal(0);
+  didEnter = signal(0);
+  willLeave = signal(0);
+  didLeave = signal(0);
+  canGoBack = signal<boolean | null | undefined>(null);
 
   constructor(
     private ionRouterOutlet: IonRouterOutlet
@@ -23,33 +25,33 @@ export class RouterLinkPageComponent implements OnInit, ViewWillLeave, ViewDidEn
 
   ngOnInit() {
     assertZoneContext();
-    this.canGoBack = this.ionRouterOutlet.canGoBack();
-    this.onInit++;
+    this.canGoBack.set(this.ionRouterOutlet.canGoBack());
+    this.onInit.update((value) => value + 1);
   }
 
   ionViewWillEnter() {
-    if (this.onInit !== 1) {
+    if (this.onInit() !== 1) {
       throw new Error('ngOnInit was not called');
     }
-    if (this.canGoBack !== this.ionRouterOutlet.canGoBack()) {
+    if (this.canGoBack() !== this.ionRouterOutlet.canGoBack()) {
       throw new Error('canGoBack() changed');
     }
     assertZoneContext();
-    this.willEnter++;
+    this.willEnter.update((value) => value + 1);
   }
   ionViewDidEnter() {
-    if (this.canGoBack !== this.ionRouterOutlet.canGoBack()) {
+    if (this.canGoBack() !== this.ionRouterOutlet.canGoBack()) {
       throw new Error('canGoBack() changed');
     }
     assertZoneContext();
-    this.didEnter++;
+    this.didEnter.update((value) => value + 1);
   }
   ionViewWillLeave() {
     assertZoneContext();
-    this.willLeave++;
+    this.willLeave.update((value) => value + 1);
   }
   ionViewDidLeave() {
     assertZoneContext();
-    this.didLeave++;
+    this.didLeave.update((value) => value + 1);
   }
 }

@@ -140,7 +140,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        apps: [ng18, ng19, ng20, ng21]
+        apps: [ng18, ng19, ng20, ng21, ng22]
     needs: [build-angular, build-angular-server]
     runs-on: ubuntu-latest
     steps:
