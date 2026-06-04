@@ -34,11 +34,14 @@ $alert-md-background-color: $overlay-md-background-color;
 $alert-md-box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.2), 0 24px 38px 3px rgba(0, 0, 0, 0.14),
   0 9px 46px 8px rgba(0, 0, 0, 0.12);
 
+/// @prop - Padding end of the alert
+$alert-md-padding-end: 24px;
+
 /// @prop - Padding top of the alert head
 $alert-md-head-padding-top: 20px;
 
 /// @prop - Padding end of the alert head
-$alert-md-head-padding-end: 23px;
+$alert-md-head-padding-end: $alert-md-padding-end;
 
 /// @prop - Padding bottom of the alert head
 $alert-md-head-padding-bottom: 15px;
@@ -68,7 +71,7 @@ $alert-md-sub-title-text-color: $text-color;
 $alert-md-message-padding-top: 20px;
 
 /// @prop - Padding end of the alert message
-$alert-md-message-padding-end: 24px;
+$alert-md-message-padding-end: $alert-md-padding-end;
 
 /// @prop - Padding bottom of the alert message
 $alert-md-message-padding-bottom: $alert-md-message-padding-top;
@@ -187,11 +190,14 @@ $alert-md-list-border-top: 1px solid $alert-md-input-border-color;
 /// @prop - Border bottom of the alert list
 $alert-md-list-border-bottom: $alert-md-list-border-top;
 
+/// @prop - Spacing between control and label
+$alert-md-control-label-spacing: 32px;
+
 /// @prop - Top of the alert radio
 $alert-md-radio-top: 0;
 
 /// @prop - Left of the alert radio
-$alert-md-radio-left: 16px;
+$alert-md-radio-left: $alert-md-padding-end;
 
 /// @prop - Width of the alert radio
 $alert-md-radio-width: 20px;
@@ -248,7 +254,7 @@ $alert-md-radio-label-padding-end: 16px;
 $alert-md-radio-label-padding-bottom: $alert-md-radio-label-padding-top;
 
 /// @prop - Padding start on the label for the radio alert
-$alert-md-radio-label-padding-start: $alert-md-radio-label-padding-end + 16px;
+$alert-md-radio-label-padding-start: $alert-md-radio-left + $alert-md-control-label-spacing;
 
 /// @prop - Font size of the label for the radio alert
 $alert-md-radio-label-font-size: dynamic-font(16px);
@@ -263,7 +269,7 @@ $alert-md-radio-label-text-color-checked: $alert-md-radio-label-text-color;
 $alert-md-checkbox-top: 0;
 
 /// @prop - Left of the checkbox in the alert
-$alert-md-checkbox-left: 16px;
+$alert-md-checkbox-left: $alert-md-padding-end;
 
 /// @prop - Width of the checkbox in the alert
 $alert-md-checkbox-width: 16px;
@@ -320,7 +326,7 @@ $alert-md-checkbox-label-padding-end: $alert-md-checkbox-left;
 $alert-md-checkbox-label-padding-bottom: $alert-md-checkbox-label-padding-top;
 
 /// @prop - Padding start of the label for the checkbox in the alert
-$alert-md-checkbox-label-padding-start: $alert-md-checkbox-label-padding-end + 16px;
+$alert-md-checkbox-label-padding-start: $alert-md-checkbox-left + $alert-md-control-label-spacing;
 
 /// @prop - Text color of the label for the checkbox in the alert
 $alert-md-checkbox-label-text-color: $text-color-step-150;
