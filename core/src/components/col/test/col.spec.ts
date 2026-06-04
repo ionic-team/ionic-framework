@@ -68,6 +68,7 @@ describe('ion-col: class', () => {
   });
 });
 
+TODO(FW-7557): Remove this when the push/pull props are removed.
 describe('ion-col: deprecated push/pull props', () => {
   let warnSpy: jest.SpyInstance;
 
