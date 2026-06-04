@@ -13,6 +13,14 @@ import type { Color, Mode } from '../../interface';
 import type { ScrollBaseDetail, ScrollDetail } from './content.interfaces';
 
 /**
+ * How long to wait (in ms) after the last `resize` event before recalculating.
+ * `resize` fires rapidly while a window is dragged, so we wait for it to settle
+ * and recalculate once instead of on every event. 100ms is short enough to feel
+ * instant but long enough to batch the burst.
+ */
+const RESIZE_DEBOUNCE = 100;
+
+/**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  *
  * @slot - Content is placed in the scrollable area if provided without a slot.
@@ -234,7 +242,7 @@ export class Content implements ComponentInterface {
       }
 
       this.resize();
-    }, 100);
+    }, RESIZE_DEBOUNCE);
   }
 
   private shouldForceOverscroll(mode: Mode) {

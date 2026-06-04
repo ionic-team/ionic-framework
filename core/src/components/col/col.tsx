@@ -9,6 +9,14 @@ import { ION_COL_BREAKPOINTS } from './col.interface';
 const BREAKPOINTS = ['', ...ION_COL_BREAKPOINTS] as const;
 
 /**
+ * How long to wait (in ms) after the last `resize` event before re-rendering.
+ * `resize` fires rapidly while a window is dragged, so instead of re-rendering
+ * on every event we wait for it to settle and render once. 100ms is short
+ * enough to feel instant but long enough to batch the burst.
+ */
+const RESIZE_DEBOUNCE = 100;
+
+/**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  */
 @Component({
@@ -222,7 +230,7 @@ export class Col implements ComponentInterface {
 
     this.resizeTimeout = setTimeout(() => {
       forceUpdate(this);
-    }, 100);
+    }, RESIZE_DEBOUNCE);
   }
 
   disconnectedCallback() {
