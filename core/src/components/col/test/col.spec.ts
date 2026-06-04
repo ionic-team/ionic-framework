@@ -24,7 +24,7 @@ describe('ion-col: class', () => {
     expect(col.classList.contains('col-auto')).toBe(true);
   });
 
-  it('applies no sizing class for a value less size attribute', async () => {
+  it('applies no sizing class for a valueless size attribute', async () => {
     const page = await newSpecPage({
       components: [Col],
       html: `<ion-col size></ion-col>`,
