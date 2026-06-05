@@ -17,11 +17,11 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Browser and Platform Support](#version-9x-browser-platform-support)
 - [Package Exports](#version-9x-package-exports)
 - [Components](#version-9x-components)
+  - [Input](#version-9x-input)
   - [Legacy Picker](#version-9x-legacy-picker)
   - [Router Outlet](#version-9x-router-outlet)
-  - [Select](#version-9x-select)
-  - [Input](#version-9x-input)
   - [Searchbar](#version-9x-searchbar)
+  - [Select](#version-9x-select)
 - [Framework Specific](#version-9x-framework-specific)
   - [Angular](#version-9x-angular)
   - [React](#version-9x-react)
@@ -56,6 +56,15 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 Apps on `moduleResolution: "node"` (classic) and webpack 4 keep resolving through the legacy fields and are unaffected.
 
 <h2 id="version-9x-components">Components</h2>
+
+<h4 id="version-9x-input">Input</h4>
+
+The `autocorrect` property on `ion-input` is now a `boolean` and defaults to `false`. It was previously typed as `'on' | 'off'` with a default of `'off'`. This resolves a type conflict introduced when TypeScript 5.9 added `autocorrect: boolean` to the DOM `HTMLElement` interface.
+
+The string form no longer behaves the same way. Because an HTML attribute coerces to `true` for any non-empty string, `autocorrect="off"` now evaluates to `true` (autocorrect enabled). Migrate to the boolean property:
+
+- Remove the attribute to keep autocorrect disabled (the default).
+- Use a property binding to enable it: `[autocorrect]="true"` (Angular), `autocorrect={true}` (React), or `:autocorrect="true"` (Vue).
 
 <h4 id="version-9x-legacy-picker">Legacy Picker</h4>
 
@@ -96,21 +105,6 @@ To disable the gesture on a specific outlet, set `swipeGesture` to `false`:
 
 The `swipeBackEnabled` config option is still respected as the initial default and does not need to change for apps that set it once at startup.
 
-<h4 id="version-9x-select">Select</h4>
-
-The `ionChange` event on `ion-select` now only fires when the selected value actually changes. Previously, the `alert` and `action-sheet` interfaces emitted `ionChange` every time the overlay was confirmed, even when the user chose the option that was already selected. This aligns the `alert` and `action-sheet` interfaces with the existing behavior of the `popover` and `modal` interfaces, and with the documented contract of `ionChange`.
-
-Apps that relied on `ionChange` firing on every confirmation (for example, to detect overlay dismissal without a value change) should listen for `ionDismiss` instead, or use the `didDismiss` event on the underlying alert or action sheet.
-
-<h4 id="version-9x-input">Input</h4>
-
-The `autocorrect` property on `ion-input` is now a `boolean` and defaults to `false`. It was previously typed as `'on' | 'off'` with a default of `'off'`. This resolves a type conflict introduced when TypeScript 5.9 added `autocorrect: boolean` to the DOM `HTMLElement` interface.
-
-The string form no longer behaves the same way. Because an HTML attribute coerces to `true` for any non-empty string, `autocorrect="off"` now evaluates to `true` (autocorrect enabled). Migrate to the boolean property:
-
-- Remove the attribute to keep autocorrect disabled (the default).
-- Use a property binding to enable it: `[autocorrect]="true"` (Angular), `autocorrect={true}` (React), or `:autocorrect="true"` (Vue).
-
 <h4 id="version-9x-searchbar">Searchbar</h4>
 
 The `autocorrect` property on `ion-searchbar` is now a `boolean` and defaults to `false`. It was previously typed as `'on' | 'off'` with a default of `'off'`. This resolves a type conflict introduced when TypeScript 5.9 added `autocorrect: boolean` to the DOM `HTMLElement` interface.
@@ -119,6 +113,12 @@ The string form no longer behaves the same way. Because an HTML attribute coerce
 
 - Remove the attribute to keep autocorrect disabled (the default).
 - Use a property binding to enable it: `[autocorrect]="true"` (Angular), `autocorrect={true}` (React), or `:autocorrect="true"` (Vue).
+
+<h4 id="version-9x-select">Select</h4>
+
+The `ionChange` event on `ion-select` now only fires when the selected value actually changes. Previously, the `alert` and `action-sheet` interfaces emitted `ionChange` every time the overlay was confirmed, even when the user chose the option that was already selected. This aligns the `alert` and `action-sheet` interfaces with the existing behavior of the `popover` and `modal` interfaces, and with the documented contract of `ionChange`.
+
+Apps that relied on `ionChange` firing on every confirmation (for example, to detect overlay dismissal without a value change) should listen for `ionDismiss` instead, or use the `didDismiss` event on the underlying alert or action sheet.
 
 <h2 id="version-9x-framework-specific">Framework Specific</h2>
 
