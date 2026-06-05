@@ -28,13 +28,6 @@ const BREAKPOINT_ORDER: GalleryBreakpoint[] = ['xs', 'sm', 'md', 'lg', 'xl', 'xx
 const GALLERY_ITEM_SELECTOR = 'ion-gallery-item';
 
 /**
- * Grid items placed by the gallery that support CSS grid placement and inline
- * `style`. This is a union of `HTMLElement` and `SVGElement` to support both
- * HTML and SVG elements.
- */
-type GalleryItemElement = HTMLElement | SVGElement;
-
-/**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
@@ -479,47 +472,33 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Check that an element can be a grid item with inline placement styles
-   * (HTML elements and SVG elements expose a usable `style.setProperty`).
-   */
-  private isGalleryItemElement(element: Element): element is GalleryItemElement {
-    return typeof (element as any).style?.setProperty === 'function';
-  }
-
-  /**
    * Return the `ion-gallery-item` elements to place in the grid. Each item is a
    * direct grid cell. A direct child that is not an `ion-gallery-item` is
    * treated as a pass-through wrapper (e.g. a layout `<div>`): its box is
    * collapsed with `display: contents` so the nested items participate in the
    * gallery grid. Children that contain no `ion-gallery-item` are ignored.
    */
-  private getItems(): GalleryItemElement[] {
-    const items: GalleryItemElement[] = [];
+  private getItems(): HTMLIonGalleryItemElement[] {
+    const items: HTMLIonGalleryItemElement[] = [];
 
     Array.from(this.el.children).forEach((child) => {
-      if (!this.isGalleryItemElement(child)) {
-        return;
-      }
-
       // Standard path: <ion-gallery-item> is a direct child of <ion-gallery>.
       if (child.matches(GALLERY_ITEM_SELECTOR)) {
-        items.push(child);
+        items.push(child as HTMLIonGalleryItemElement);
         return;
       }
 
       // Compatibility path: a wrapper element may contain <ion-gallery-item>
       // components. Collapse the wrapper's box so the items participate in the
       // gallery grid.
-      const nestedItems = Array.from(child.querySelectorAll(GALLERY_ITEM_SELECTOR) as NodeListOf<Element>).filter(
-        (nested): nested is GalleryItemElement => this.isGalleryItemElement(nested)
-      );
+      const nestedItems = Array.from(child.querySelectorAll<HTMLIonGalleryItemElement>(GALLERY_ITEM_SELECTOR));
 
       if (nestedItems.length === 0) {
         this.warnInvalidItems();
         return;
       }
 
-      child.style.display = 'contents';
+      (child as HTMLElement).style.display = 'contents';
       items.push(...nestedItems);
     });
 
@@ -546,7 +525,7 @@ export class Gallery implements ComponentInterface {
    * Clear the item styles for the given item element.
    * This is used to switch between uniform and masonry layouts.
    */
-  private clearItemStyles(itemEl: GalleryItemElement) {
+  private clearItemStyles(itemEl: HTMLIonGalleryItemElement) {
     itemEl.style.gridRowStart = '';
     itemEl.style.gridRowEnd = '';
     itemEl.style.gridColumn = '';
@@ -564,7 +543,7 @@ export class Gallery implements ComponentInterface {
    * Whether the item contains any images that have not finished loading.
    * Used to defer masonry placement until the rendered height is final.
    */
-  private hasUnloadedImages(itemEl: GalleryItemElement): boolean {
+  private hasUnloadedImages(itemEl: HTMLIonGalleryItemElement): boolean {
     return Array.from(itemEl.querySelectorAll('img')).some((img) => !img.complete || img.naturalHeight === 0);
   }
 
@@ -572,7 +551,7 @@ export class Gallery implements ComponentInterface {
    * Convert a rendered item height to the number of grid rows it should span.
    * Returns undefined when the item has images that are not fully loaded yet.
    */
-  private calculateRowSpan(itemEl: GalleryItemElement, rowHeight: number, rowGap: number) {
+  private calculateRowSpan(itemEl: HTMLIonGalleryItemElement, rowHeight: number, rowGap: number) {
     if (this.hasUnloadedImages(itemEl)) {
       return undefined;
     }
@@ -614,9 +593,9 @@ export class Gallery implements ComponentInterface {
   /**
    * Apply masonry placement by assigning each item a column and row span.
    */
-  private layoutMasonry(items: GalleryItemElement[], rowHeight: number, rowGap: number, columns: number) {
+  private layoutMasonry(items: HTMLIonGalleryItemElement[], rowHeight: number, rowGap: number, columns: number) {
     const columnHeights = new Array<number>(columns).fill(0);
-    const lastItemsByColumn = new Array<GalleryItemElement | undefined>(columns).fill(undefined);
+    const lastItemsByColumn = new Array<HTMLIonGalleryItemElement | undefined>(columns).fill(undefined);
 
     items.forEach((itemEl, i) => {
       itemEl.style.marginBottom = '';
