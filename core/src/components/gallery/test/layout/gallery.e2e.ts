@@ -28,18 +28,18 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
               </style>
 
               <ion-gallery layout="${layout}"${orderAttribute}>
-                <div>One</div>
-                <div>Two</div>
-                <div>Three</div>
-                <div>Four</div>
-                <div>Five</div>
-                <div>Six</div>
-                <div>Seven</div>
-                <div>Eight</div>
-                <div>Nine</div>
-                <div>Ten</div>
-                <div>Eleven</div>
-                <div>Twelve</div>
+                <ion-gallery-item><div>One</div></ion-gallery-item>
+                <ion-gallery-item><div>Two</div></ion-gallery-item>
+                <ion-gallery-item><div>Three</div></ion-gallery-item>
+                <ion-gallery-item><div>Four</div></ion-gallery-item>
+                <ion-gallery-item><div>Five</div></ion-gallery-item>
+                <ion-gallery-item><div>Six</div></ion-gallery-item>
+                <ion-gallery-item><div>Seven</div></ion-gallery-item>
+                <ion-gallery-item><div>Eight</div></ion-gallery-item>
+                <ion-gallery-item><div>Nine</div></ion-gallery-item>
+                <ion-gallery-item><div>Ten</div></ion-gallery-item>
+                <ion-gallery-item><div>Eleven</div></ion-gallery-item>
+                <ion-gallery-item><div>Twelve</div></ion-gallery-item>
               </ion-gallery>
             `,
             config
@@ -68,18 +68,18 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
               </style>
 
               <ion-gallery layout="${layout}"${orderAttribute}>
-                <div style="height: 175px">One</div>
-                <div style="height: 30px">Two</div>
-                <div style="height: 90px">Three</div>
-                <div style="height: 50px">Four</div>
-                <div style="height: 110px">Five</div>
-                <div style="height: 175px">Six</div>
-                <div style="height: 130px">Seven</div>
-                <div style="height: 80px">Eight</div>
-                <div style="height: 110px">Nine</div>
-                <div style="height: 90px">Ten</div>
-                <div style="height: 100px">Eleven</div>
-                <div style="height: 150px">Twelve</div>
+                <ion-gallery-item><div style="height: 175px">One</div></ion-gallery-item>
+                <ion-gallery-item><div style="height: 30px">Two</div></ion-gallery-item>
+                <ion-gallery-item><div style="height: 90px">Three</div></ion-gallery-item>
+                <ion-gallery-item><div style="height: 50px">Four</div></ion-gallery-item>
+                <ion-gallery-item><div style="height: 110px">Five</div></ion-gallery-item>
+                <ion-gallery-item><div style="height: 175px">Six</div></ion-gallery-item>
+                <ion-gallery-item><div style="height: 130px">Seven</div></ion-gallery-item>
+                <ion-gallery-item><div style="height: 80px">Eight</div></ion-gallery-item>
+                <ion-gallery-item><div style="height: 110px">Nine</div></ion-gallery-item>
+                <ion-gallery-item><div style="height: 90px">Ten</div></ion-gallery-item>
+                <ion-gallery-item><div style="height: 100px">Eleven</div></ion-gallery-item>
+                <ion-gallery-item><div style="height: 150px">Twelve</div></ion-gallery-item>
               </ion-gallery>
             `,
             config
@@ -112,18 +112,18 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
               </style>
 
               <ion-gallery layout="${layout}"${orderAttribute}>
-                <img src="/src/components/gallery/test/assets/01.png" alt="One"/>
-                <img src="/src/components/gallery/test/assets/02.png" alt="Two"/>
-                <img src="/src/components/gallery/test/assets/03.png" alt="Three"/>
-                <img src="/src/components/gallery/test/assets/04.png" alt="Four"/>
-                <img src="/src/components/gallery/test/assets/05.png" alt="Five"/>
-                <img src="/src/components/gallery/test/assets/06.png" alt="Six"/>
-                <img src="/src/components/gallery/test/assets/07.png" alt="Seven"/>
-                <img src="/src/components/gallery/test/assets/08.png" alt="Eight"/>
-                <img src="/src/components/gallery/test/assets/09.png" alt="Nine"/>
-                <img src="/src/components/gallery/test/assets/10.png" alt="Ten"/>
-                <img src="/src/components/gallery/test/assets/11.png" alt="Eleven"/>
-                <img src="/src/components/gallery/test/assets/12.png" alt="Twelve"/>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/01.png" alt="One"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/02.png" alt="Two"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/03.png" alt="Three"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/04.png" alt="Four"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/05.png" alt="Five"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/06.png" alt="Six"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/07.png" alt="Seven"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/08.png" alt="Eight"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/09.png" alt="Nine"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/10.png" alt="Ten"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/11.png" alt="Eleven"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/12.png" alt="Twelve"/></ion-gallery-item>
               </ion-gallery>
             `,
             config
@@ -152,18 +152,18 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
               </style>
 
               <ion-gallery layout="${layout}"${orderAttribute}>
-                <img src="/src/components/gallery/test/assets/01.png" alt="One"/>
-                <img src="/src/components/gallery/test/assets/02.png" alt="Two"/>
-                <img src="/src/components/gallery/test/assets/03.png" alt="Three"/>
-                <img src="/src/components/gallery/test/assets/04.png" alt="Four"/>
-                <img src="/src/components/gallery/test/assets/05.png" alt="Five"/>
-                <img src="/src/components/gallery/test/assets/06.png" alt="Six"/>
-                <img src="/src/components/gallery/test/assets/07.png" alt="Seven"/>
-                <img src="/src/components/gallery/test/assets/08.png" alt="Eight"/>
-                <img src="/src/components/gallery/test/assets/09.png" alt="Nine"/>
-                <img src="/src/components/gallery/test/assets/10.png" alt="Ten"/>
-                <img src="/src/components/gallery/test/assets/11.png" alt="Eleven"/>
-                <img src="/src/components/gallery/test/assets/12.png" alt="Twelve"/>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/01.png" alt="One"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/02.png" alt="Two"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/03.png" alt="Three"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/04.png" alt="Four"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/05.png" alt="Five"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/06.png" alt="Six"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/07.png" alt="Seven"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/08.png" alt="Eight"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/09.png" alt="Nine"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/10.png" alt="Ten"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/11.png" alt="Eleven"/></ion-gallery-item>
+                <ion-gallery-item><img src="/src/components/gallery/test/assets/12.png" alt="Twelve"/></ion-gallery-item>
               </ion-gallery>
             `,
             config
@@ -191,12 +191,12 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
                 </style>
 
                 <ion-gallery layout="${layout}"${orderAttribute}>
-                  <div style="height: 175px">One</div>
-                  <div style="height: 30px">Two</div>
-                  <div style="height: 90px">Three</div>
-                  <div style="height: 50px">Four</div>
-                  <div style="height: 110px">Five</div>
-                  <div style="height: 175px">Six</div>
+                  <ion-gallery-item><div style="height: 175px">One</div></ion-gallery-item>
+                  <ion-gallery-item><div style="height: 30px">Two</div></ion-gallery-item>
+                  <ion-gallery-item><div style="height: 90px">Three</div></ion-gallery-item>
+                  <ion-gallery-item><div style="height: 50px">Four</div></ion-gallery-item>
+                  <ion-gallery-item><div style="height: 110px">Five</div></ion-gallery-item>
+                  <ion-gallery-item><div style="height: 175px">Six</div></ion-gallery-item>
                 </ion-gallery>
               `,
               config
@@ -212,10 +212,12 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
 
             await gallery.evaluate((galleryEl, items) => {
               items.forEach(({ itemLabel, itemHeight }) => {
+                const galleryItemEl = document.createElement('ion-gallery-item');
                 const divEl = document.createElement('div');
                 divEl.style.height = `${itemHeight}px`;
                 divEl.textContent = itemLabel;
-                galleryEl.append(divEl);
+                galleryItemEl.append(divEl);
+                galleryEl.append(galleryItemEl);
               });
             }, appendedItems);
 
@@ -240,12 +242,12 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
                 </style>
 
                 <ion-gallery layout="${layout}"${orderAttribute}>
-                  <img src="/src/components/gallery/test/assets/01.png" alt="One"/>
-                  <img src="/src/components/gallery/test/assets/02.png" alt="Two"/>
-                  <img src="/src/components/gallery/test/assets/03.png" alt="Three"/>
-                  <img src="/src/components/gallery/test/assets/04.png" alt="Four"/>
-                  <img src="/src/components/gallery/test/assets/05.png" alt="Five"/>
-                  <img src="/src/components/gallery/test/assets/06.png" alt="Six"/>
+                  <ion-gallery-item><img src="/src/components/gallery/test/assets/01.png" alt="One"/></ion-gallery-item>
+                  <ion-gallery-item><img src="/src/components/gallery/test/assets/02.png" alt="Two"/></ion-gallery-item>
+                  <ion-gallery-item><img src="/src/components/gallery/test/assets/03.png" alt="Three"/></ion-gallery-item>
+                  <ion-gallery-item><img src="/src/components/gallery/test/assets/04.png" alt="Four"/></ion-gallery-item>
+                  <ion-gallery-item><img src="/src/components/gallery/test/assets/05.png" alt="Five"/></ion-gallery-item>
+                  <ion-gallery-item><img src="/src/components/gallery/test/assets/06.png" alt="Six"/></ion-gallery-item>
                 </ion-gallery>
               `,
               config
@@ -259,11 +261,13 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
 
             await gallery.evaluate((galleryEl, items) => {
               items.forEach(({ itemLabel, itemSrc }) => {
+                const galleryItemEl = document.createElement('ion-gallery-item');
                 const imageEl = document.createElement('img');
                 imageEl.src = itemSrc;
                 imageEl.alt = itemLabel;
 
-                galleryEl.append(imageEl);
+                galleryItemEl.append(imageEl);
+                galleryEl.append(galleryItemEl);
               });
             }, appendedItems);
 
@@ -295,8 +299,9 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
                   ${sharedStyles}
 
                   /**
-                   * Redefine the ::slotted(img) styles from gallery.scss
-                   * because the nested img does not receive slotted styles.
+                   * The gallery item's ::slotted(img) styles only reach a
+                   * directly slotted img, not one nested inside a <figure>,
+                   * so redefine them for the nested image here.
                    */
                   ion-gallery figure img {
                     display: block;
@@ -307,24 +312,36 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
                 </style>
 
                 <ion-gallery layout="${layout}"${orderAttribute}>
-                  <figure>
-                    <img src="/src/components/gallery/test/assets/01.png" alt="One"/>
-                  </figure>
-                  <figure>
-                    <img src="/src/components/gallery/test/assets/02.png" alt="Two"/>
-                  </figure>
-                  <figure>
-                    <img src="/src/components/gallery/test/assets/03.png" alt="Three"/>
-                  </figure>
-                  <figure>
-                    <img src="/src/components/gallery/test/assets/04.png" alt="Four"/>
-                  </figure>
-                  <figure>
-                    <img src="/src/components/gallery/test/assets/05.png" alt="Five"/>
-                  </figure>
-                  <figure>
-                    <img src="/src/components/gallery/test/assets/06.png" alt="Six"/>
-                  </figure>
+                  <ion-gallery-item>
+                    <figure>
+                      <img src="/src/components/gallery/test/assets/01.png" alt="One"/>
+                    </figure>
+                  </ion-gallery-item>
+                  <ion-gallery-item>
+                    <figure>
+                      <img src="/src/components/gallery/test/assets/02.png" alt="Two"/>
+                    </figure>
+                  </ion-gallery-item>
+                  <ion-gallery-item>
+                    <figure>
+                      <img src="/src/components/gallery/test/assets/03.png" alt="Three"/>
+                    </figure>
+                  </ion-gallery-item>
+                  <ion-gallery-item>
+                    <figure>
+                      <img src="/src/components/gallery/test/assets/04.png" alt="Four"/>
+                    </figure>
+                  </ion-gallery-item>
+                  <ion-gallery-item>
+                    <figure>
+                      <img src="/src/components/gallery/test/assets/05.png" alt="Five"/>
+                    </figure>
+                  </ion-gallery-item>
+                  <ion-gallery-item>
+                    <figure>
+                      <img src="/src/components/gallery/test/assets/06.png" alt="Six"/>
+                    </figure>
+                  </ion-gallery-item>
                 </ion-gallery>
               `,
               config
@@ -338,6 +355,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
 
             await gallery.evaluate((galleryEl, items) => {
               items.forEach(({ itemLabel, itemSrc }) => {
+                const galleryItemEl = document.createElement('ion-gallery-item');
                 const figureEl = document.createElement('figure');
                 figureEl.className = 'gallery-image-item';
 
@@ -346,7 +364,8 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
                 imageEl.alt = itemLabel;
 
                 figureEl.append(imageEl);
-                galleryEl.append(figureEl);
+                galleryItemEl.append(figureEl);
+                galleryEl.append(galleryItemEl);
               });
             }, appendedItems);
 
@@ -376,18 +395,18 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
       await page.setContent(
         `
           <ion-gallery layout="masonry" style="--app-gap: 24px" gap="var(--app-gap)">
-            <div style="height: 40px">One</div>
-            <div style="height: 80px">Two</div>
-            <div style="height: 60px">Three</div>
-            <div style="height: 100px">Four</div>
-            <div style="height: 50px">Five</div>
-            <div style="height: 70px">Six</div>
-            <div style="height: 90px">Seven</div>
-            <div style="height: 55px">Eight</div>
-            <div style="height: 75px">Nine</div>
-            <div style="height: 65px">Ten</div>
-            <div style="height: 85px">Eleven</div>
-            <div style="height: 45px">Twelve</div>
+            <ion-gallery-item><div style="height: 40px">One</div></ion-gallery-item>
+            <ion-gallery-item><div style="height: 80px">Two</div></ion-gallery-item>
+            <ion-gallery-item><div style="height: 60px">Three</div></ion-gallery-item>
+            <ion-gallery-item><div style="height: 100px">Four</div></ion-gallery-item>
+            <ion-gallery-item><div style="height: 50px">Five</div></ion-gallery-item>
+            <ion-gallery-item><div style="height: 70px">Six</div></ion-gallery-item>
+            <ion-gallery-item><div style="height: 90px">Seven</div></ion-gallery-item>
+            <ion-gallery-item><div style="height: 55px">Eight</div></ion-gallery-item>
+            <ion-gallery-item><div style="height: 75px">Nine</div></ion-gallery-item>
+            <ion-gallery-item><div style="height: 65px">Ten</div></ion-gallery-item>
+            <ion-gallery-item><div style="height: 85px">Eleven</div></ion-gallery-item>
+            <ion-gallery-item><div style="height: 45px">Twelve</div></ion-gallery-item>
           </ion-gallery>
         `,
         config

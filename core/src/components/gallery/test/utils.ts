@@ -3,57 +3,57 @@ export const sharedStyles = `
     width: 343px;
   }
 
-  div {
+  ion-gallery-item div {
     color: #fff;
     height: 150px;
   }
 
-  div:nth-child(1) {
+  ion-gallery-item:nth-child(1) div {
     background: #ff6b6b;
   }
 
-  div:nth-child(2) {
+  ion-gallery-item:nth-child(2) div {
     background: #4ecdc4;
   }
 
-  div:nth-child(3) {
+  ion-gallery-item:nth-child(3) div {
     background: #ffe66d;
     color: #333;
   }
 
-  div:nth-child(4) {
+  ion-gallery-item:nth-child(4) div {
     background: #5f27cd;
   }
 
-  div:nth-child(5) {
+  ion-gallery-item:nth-child(5) div {
     background: #7f8c8d;
   }
 
-  div:nth-child(6) {
+  ion-gallery-item:nth-child(6) div {
     background: #ff9f43;
   }
 
-  div:nth-child(7) {
+  ion-gallery-item:nth-child(7) div {
     background: #ff3f34;
   }
 
-  div:nth-child(8) {
+  ion-gallery-item:nth-child(8) div {
     background: #2ecc71;
   }
 
-  div:nth-child(9) {
+  ion-gallery-item:nth-child(9) div {
     background: #34495e;
   }
 
-  div:nth-child(10) {
+  ion-gallery-item:nth-child(10) div {
     background: #1abc9c;
   }
 
-  div:nth-child(11) {
+  ion-gallery-item:nth-child(11) div {
     background: #e67e22;
   }
 
-  div:nth-child(12) {
+  ion-gallery-item:nth-child(12) div {
     background: #9b59b6;
   }
 `;
