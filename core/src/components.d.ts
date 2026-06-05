@@ -1043,10 +1043,6 @@ export namespace Components {
           * The size of the column for xs screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
          */
         "sizeXs"?: string;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonContent {
         /**
@@ -1512,10 +1508,6 @@ export namespace Components {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonHeader {
         /**
@@ -3463,7 +3455,7 @@ export namespace Components {
           * The mode determines the platform behaviors of the component.
           * @default getIonMode(this)
          */
-        "mode": "ios" | "md";
+        "mode": "md" | "ios";
         "setRouteId": (id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder) => Promise<RouteWrite>;
         "swipeHandler"?: SwipeGestureHandler;
         /**
@@ -3476,10 +3468,6 @@ export namespace Components {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonSearchbar {
         /**
@@ -7062,10 +7050,6 @@ declare namespace LocalJSX {
           * The size of the column for xs screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
          */
         "sizeXs"?: string;
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonContent {
         /**
@@ -7520,10 +7504,6 @@ declare namespace LocalJSX {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonHeader {
         /**
@@ -9511,7 +9491,7 @@ declare namespace LocalJSX {
           * The mode determines the platform behaviors of the component.
           * @default getIonMode(this)
          */
-        "mode"?: "ios" | "md";
+        "mode"?: "md" | "ios";
         "onIonNavDidChange"?: (event: IonRouterOutletCustomEvent<void>) => void;
         "onIonNavWillChange"?: (event: IonRouterOutletCustomEvent<void>) => void;
         "onIonNavWillLoad"?: (event: IonRouterOutletCustomEvent<void>) => void;
@@ -9526,10 +9506,6 @@ declare namespace LocalJSX {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonSearchbar {
         /**
@@ -11229,7 +11205,7 @@ declare namespace LocalJSX {
         "target": string | undefined;
     }
     interface IonRouterOutletAttributes {
-        "mode": "ios" | "md";
+        "mode": "md" | "ios";
         "animated": boolean;
     }
     interface IonSearchbarAttributes {

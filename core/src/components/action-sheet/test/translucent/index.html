@@ -14,10 +14,16 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
 
     <style>
-      f {
-        display: block;
-        width: 100%;
+      .color-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .color-block {
         height: 150px;
+
+        border: 5px solid transparent;
+        background-clip: padding-box;
       }
 
       .red {
@@ -77,19 +83,17 @@
         <button class="expand" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</button>
         <button class="expand" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</button>
 
-        <ion-grid>
-          <ion-row>
-            <ion-col size="4"><f class="red"></f></ion-col>
-            <ion-col size="4"><f class="green"></f></ion-col>
-            <ion-col size="4"><f class="blue"></f></ion-col>
-            <ion-col size="4"><f class="yellow"></f></ion-col>
-            <ion-col size="4"><f class="pink"></f></ion-col>
-            <ion-col size="4"><f class="purple"></f></ion-col>
-            <ion-col size="4"><f class="black"></f></ion-col>
-            <ion-col size="4"><f class="fuchsia"></f></ion-col>
-            <ion-col size="4"><f class="orange"></f></ion-col>
-          </ion-row>
-        </ion-grid>
+        <div class="color-grid">
+          <div class="color-block red"></div>
+          <div class="color-block green"></div>
+          <div class="color-block blue"></div>
+          <div class="color-block yellow"></div>
+          <div class="color-block pink"></div>
+          <div class="color-block purple"></div>
+          <div class="color-block black"></div>
+          <div class="color-block fuchsia"></div>
+          <div class="color-block orange"></div>
+        </div>
       </ion-content>
       <ion-action-sheet-controller></ion-action-sheet-controller>
     </ion-app>

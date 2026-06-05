@@ -19,6 +19,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Button](#version-9x-button)
   - [Card](#version-9x-card)
   - [Chip](#version-9x-chip)
+  - [Col](#version-9x-col)
   - [Content](#version-9x-content)
   - [Datetime](#version-9x-datetime)
   - [Grid](#version-9x-grid)
@@ -27,6 +28,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Item Divider](#version-9x-item-divider)
   - [Menu Toggle](#version-9x-menu-toggle)
   - [Radio Group](#version-9x-radio-group)
+  - [Row](#version-9x-row)
   - [Spinner](#version-9x-spinner)
   - [Text](#version-9x-text)
   - [Textarea](#version-9x-textarea)
@@ -87,6 +89,25 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - Specific theme classes (e.g., `ion-chip.md`) are no longer supported. Style modifications based on the active theme must be implemented using theme tokens rather than direct class targeting.
 - The `border-radius` of the `ios` and `md` chip now defaults to `10px` and `8px`, respectively, instead of `16px` in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"round"`, or override the `IonChip.shape.round.border.radius` to specify a different value for global styles and `--ion-chip-shape-round-border-radius` for component-specific styles.
 
+<h4 id="version-9x-col">Col</h4>
+
+The following breaking changes apply to `ion-col`:
+
+1. `--ion-grid-column-padding-*` CSS variables have been replaced with per-side, per-breakpoint tokens in the `col` namespace. <sup>[1](#version-9x-col-padding-variables)</sup>
+2. Theme classes (`ion-col.md`, `ion-col.ios`) are no longer supported. <sup>[2](#version-9x-col-theme-classes)</sup>
+
+<h5 id="version-9x-col-padding-variables">Padding variables</h5>
+
+Column padding was a single value per breakpoint and is now set per-side, and the variables have moved from the `grid` namespace to the `col` namespace. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--ion-grid-column-padding-{bp}` | `IonCol.breakpoint.{bp}.padding.{top\|end\|bottom\|start}` | `--ion-col-breakpoint-{bp}-padding-{top\|end\|bottom\|start}` |
+
+<h5 id="version-9x-col-theme-classes">Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-col.md`, `ion-col.ios`.
+
 <h4 id="version-9x-content">Content</h4>
 
 The following breaking changes apply to `ion-content`:
@@ -141,9 +162,32 @@ Remove any instances that target the theme classes: `ion-content.md`, `ion-conte
 
 <h4 id="version-9x-grid">Grid</h4>
 
-- The properties `pull` and `push` have been deprecated and no longer work. A similar look can be achieved with the newly added property `order`.
+The following breaking changes apply to `ion-grid`:
 
-<h5>Example 1: Swap two columns</h5>
+1. `--ion-grid-padding-*` CSS variables have been replaced with per-side, per-breakpoint tokens. <sup>[1](#version-9x-grid-padding-variables)</sup>
+2. `--ion-grid-width-*` CSS variables for the fixed grid have been replaced with per-breakpoint tokens. <sup>[2](#version-9x-grid-fixed-width-variables)</sup>
+3. The `push` and `pull` properties have been deprecated. <sup>[3](#version-9x-grid-deprecated-push-and-pull-properties)</sup>
+4. Theme classes (`ion-grid.md`, `ion-grid.ios`) are no longer supported. <sup>[4](#version-9x-grid-theme-classes)</sup>
+
+<h5 id="version-9x-grid-padding-variables">Padding variables</h5>
+
+Grid padding was a single value per breakpoint and is now set per-side. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--ion-grid-padding-{bp}` | `IonGrid.breakpoint.{bp}.padding.{top\|end\|bottom\|start}` | `--ion-grid-breakpoint-{bp}-padding-{top\|end\|bottom\|start}` |
+
+<h5 id="version-9x-grid-fixed-width-variables">Fixed width variables</h5>
+
+| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--ion-grid-width-{bp}` | `IonGrid.breakpoint.{bp}.width` | `--ion-grid-breakpoint-{bp}-width` |
+
+<h5 id="version-9x-grid-deprecated-push-and-pull-properties">Deprecated <code>push</code> and <code>pull</code> properties</h5>
+
+The `push` and `pull` properties have been disabled. They now log a deprecation warning and no longer affect layout. Use the `order` property to achieve a similar result.
+
+**Example 1: Swap two columns**
 
 **Version up to 8.x**
 
@@ -169,7 +213,7 @@ Remove any instances that target the theme classes: `ion-content.md`, `ion-conte
 </ion-grid>
 ```
 
-<h5>Example 2: Reorder columns with specific sizes</h5>
+**Example 2: Reorder columns with specific sizes**
 
 To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `size="3" pull="9"`:
 
@@ -195,7 +239,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 </ion-grid>
 ```
 
-<h5>Example 3: Push</h5>
+**Example 3: Push**
 
 ```html
 <ion-grid>
@@ -225,7 +269,7 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
 </ion-grid>
 ```
 
-<h5>Example 4: Push and Pull</h5>
+**Example 4: Push and Pull**
 
 ```html
 <ion-grid>
@@ -254,6 +298,10 @@ To reorder two columns where column 1 has `size="9" push="3"` and column 2 has `
   </ion-row>
 </ion-grid>
 ```
+
+<h5 id="version-9x-grid-theme-classes">Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-grid.md`, `ion-grid.ios`.
 
 <h4 id="version-9x-image">Image</h4>
 
@@ -303,6 +351,16 @@ Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en
 If you were targeting the internals of `ion-radio-group` in your CSS, you will need to target the `supporting-text`, `helper-text` or `error-text` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
 
 Additionally, the `radio-group-wrapper` div element has been removed, causing slotted elements to be direct children of the `ion-radio-group`.
+
+<h4 id="version-9x-row">Row</h4>
+
+The following breaking changes apply to `ion-row`:
+
+1. Theme classes (`ion-row.md`, `ion-row.ios`) are no longer supported. <sup>[1](#version-9x-row-theme-classes)</sup>
+
+<h5 id="version-9x-row-theme-classes">Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-row.md`, `ion-row.ios`.
 
 <h4 id="version-9x-spinner">Spinner</h4>
 

@@ -1,8 +1,9 @@
+<!-- TODO(FW-7557): Remove this in a major release. -->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Grid - Pull & Push</title>
+    <title>Grid - Pull & Push (deprecated)</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -18,12 +19,12 @@
     <ion-app>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Grid - Offsets</ion-title>
+          <ion-title>Grid - Pull & Push (deprecated)</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content id="content" class="grid-demo">
-        <h2 class="ion-padding-start">Push</h2>
+        <h2 class="ion-padding-start">Push (deprecated)</h2>
         <ion-grid>
           <ion-row>
             <ion-col size="auto" push="1">
@@ -35,7 +36,7 @@
           </ion-row>
         </ion-grid>
 
-        <h2 class="ion-padding-start">Push and Pull</h2>
+        <h2 class="ion-padding-start">Push and Pull (deprecated)</h2>
         <ion-grid>
           <ion-row>
             <ion-col size="9" push="3">
@@ -57,42 +58,7 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-
-        <h2 class="ion-padding-start">Offset</h2>
-        <ion-grid>
-          <ion-row>
-            <ion-col offset="5">
-              <div>ion-col offset=5</div>
-            </ion-col>
-            <ion-col offset="2">
-              <div>ion-col offset="2"</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-
-        <h2 class="ion-padding-start">Dynamic Offset</h2>
-        <ion-grid>
-          <ion-row>
-            <ion-col id="dynamicOffsetCol" offset="2" offset-md="5">
-              <div>ion-col offset="2" offset-md="5"</div>
-            </ion-col>
-            <ion-col offset="2" offset-md="5">
-              <div>ion-col offset="2" offset-md="5"</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-
-        <button onclick="updateOffset()">Update Offset</button>
       </ion-content>
-
-      <script>
-        function updateOffset() {
-          var dynamicOffsetCol = document.getElementById('dynamicOffsetCol');
-          var currentOffset = dynamicOffsetCol.offset;
-          dynamicOffsetCol.offset = currentOffset === '2' ? '4' : '2';
-          console.log('Updating offset from ' + currentOffset + ' to ' + dynamicOffsetCol.offset);
-        }
-      </script>
 
       <style>
         .grid-demo ion-col div {

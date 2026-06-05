@@ -1,27 +1,43 @@
-@import "./col.vars";
+@use "../../themes/mixins" as mixins;
+@use "../grid/grid.mixins" as grid;
+@use "./col.vars" as vars;
 
-// Column
+// Column: Common Styles
 // --------------------------------------------------
 
 :host {
   /**
-   * @prop --col-unit-size: The size of each Column unit.
+   * @prop --ion-col-breakpoint-xs-padding-top: Top padding on xs screens
+   * @prop --ion-col-breakpoint-xs-padding-end: End padding on xs screens
+   * @prop --ion-col-breakpoint-xs-padding-bottom: Bottom padding on xs screens
+   * @prop --ion-col-breakpoint-xs-padding-start: Start padding on xs screens
+   *
+   * @prop --ion-col-breakpoint-sm-padding-top: Top padding on sm screens
+   * @prop --ion-col-breakpoint-sm-padding-end: End padding on sm screens
+   * @prop --ion-col-breakpoint-sm-padding-bottom: Bottom padding on sm screens
+   * @prop --ion-col-breakpoint-sm-padding-start: Start padding on sm screens
+   *
+   * @prop --ion-col-breakpoint-md-padding-top: Top padding on md screens
+   * @prop --ion-col-breakpoint-md-padding-end: End padding on md screens
+   * @prop --ion-col-breakpoint-md-padding-bottom: Bottom padding on md screens
+   * @prop --ion-col-breakpoint-md-padding-start: Start padding on md screens
+   *
+   * @prop --ion-col-breakpoint-lg-padding-top: Top padding on lg screens
+   * @prop --ion-col-breakpoint-lg-padding-end: End padding on lg screens
+   * @prop --ion-col-breakpoint-lg-padding-bottom: Bottom padding on lg screens
+   * @prop --ion-col-breakpoint-lg-padding-start: Start padding on lg screens
+   *
+   * @prop --ion-col-breakpoint-xl-padding-top: Top padding on xl screens
+   * @prop --ion-col-breakpoint-xl-padding-end: End padding on xl screens
+   * @prop --ion-col-breakpoint-xl-padding-bottom: Bottom padding on xl screens
+   * @prop --ion-col-breakpoint-xl-padding-start: Start padding on xl screens
    */
-  --col-unit-size: calc(
-    (100% - (var(--ion-grid-columns, 12) - 1) * var(--ion-grid-gap, 0px)) / var(--ion-grid-columns, 12)
+  --internal-col-unit-size: calc(
+    (100% - (var(--ion-grid-columns, 12) - 1) * var(--ion-row-gap, 0px)) / var(--ion-grid-columns, 12)
   );
 
-  /**
-   * @prop --ion-grid-columns: The number of total Columns in the Grid
-   * @prop --ion-grid-column-padding: Padding for the Column
-   * @prop --ion-grid-column-padding-xs: Padding for the Column on xs screens and up
-   * @prop --ion-grid-column-padding-sm: Padding for the Column on sm screens and up
-   * @prop --ion-grid-column-padding-md: Padding for the Column on md screens and up
-   * @prop --ion-grid-column-padding-lg: Padding for the Column on lg screens and up
-   * @prop --ion-grid-column-padding-xl: Padding for the Column on xl screens and up
-   */
-  @include make-breakpoint-padding($grid-column-paddings);
-  @include margin(0);
+  @include grid.make-breakpoint-padding(vars.$grid-column-paddings);
+  @include mixins.margin(0);
 
   box-sizing: border-box;
 
@@ -34,48 +50,26 @@
   overflow: auto;
 }
 
-:host(.ion-grid-col-auto) {
+:host(.col-auto) {
   flex: 0 0 auto;
 }
 
-:host([class^="ion-grid-col--"]),
-:host([class*=" ion-grid-col--"]) {
+:host(.col-size) {
   flex: 0 0
-    calc(var(--ion-grid-col-span) * var(--col-unit-size) + (var(--ion-grid-col-span) - 1) * var(--ion-grid-gap, 0px));
+    calc(
+      var(--internal-col-span) * var(--internal-col-unit-size) + (var(--internal-col-span) - 1) *
+        var(--ion-row-gap, 0px)
+    );
 
   max-width: calc(
-    var(--ion-grid-col-span) * var(--col-unit-size) + (var(--ion-grid-col-span) - 1) * var(--ion-grid-gap, 0px)
+    var(--internal-col-span) * var(--internal-col-unit-size) + (var(--internal-col-span) - 1) * var(--ion-row-gap, 0px)
   );
 }
 
-:host([class^="ion-grid-offset-col--"]),
-:host([class*=" ion-grid-offset-col--"]) {
-  --margin-calc: calc(
-    var(--col-unit-size) * var(--ion-grid-col-margin) + (var(--ion-grid-gap, 0px) * var(--ion-grid-col-margin))
+:host(.col-offset) {
+  $margin-calc: calc(
+    var(--internal-col-unit-size) * var(--internal-col-margin) + (var(--ion-row-gap, 0px) * var(--internal-col-margin))
   );
 
-  @include margin-horizontal(var(--margin-calc), 0);
-}
-
-/* 
- * While the number of columns can be customized, we generate
- * a default set of classes for 12 columns. In the future, this
- * will be configurable at build time as Ionic becomes more modular.
- * For now, 12 columns is a practical default. Developers who need
- * more columns can override or extend these styles as needed.
- */
-$grid-col-number: 12;
-
-@for $i from 1 through $grid-col-number {
-  :host(.ion-grid-col--#{$i}) {
-    --ion-grid-col-span: #{$i};
-  }
-
-  :host(.ion-grid-order-col--#{$i}) {
-    order: #{$i};
-  }
-
-  :host(.ion-grid-offset-col--#{$i}) {
-    --ion-grid-col-margin: #{$i};
-  }
+  @include mixins.margin-horizontal($margin-calc, 0);
 }

@@ -465,6 +465,55 @@ export const defaultTheme: DefaultTheme = {
       },
     },
 
+    IonCol: {
+      breakpoint: {
+        xs: {
+          padding: {
+            bottom: '5px',
+            end: '5px',
+            start: '5px',
+            top: '5px',
+          },
+        },
+
+        sm: {
+          padding: {
+            bottom: '5px',
+            end: '5px',
+            start: '5px',
+            top: '5px',
+          },
+        },
+
+        md: {
+          padding: {
+            bottom: '5px',
+            end: '5px',
+            start: '5px',
+            top: '5px',
+          },
+        },
+
+        lg: {
+          padding: {
+            bottom: '5px',
+            end: '5px',
+            start: '5px',
+            top: '5px',
+          },
+        },
+
+        xl: {
+          padding: {
+            bottom: '5px',
+            end: '5px',
+            start: '5px',
+            top: '5px',
+          },
+        },
+      },
+    },
+
     IonContent: {
       default: {
         background: baseColors.backgroundColor,
@@ -490,6 +539,67 @@ export const defaultTheme: DefaultTheme = {
         start: 'var(--ion-spacing-0)',
         top: 'var(--ion-spacing-0)',
       },
+    },
+
+    IonGrid: {
+      breakpoint: {
+        xs: {
+          padding: {
+            bottom: '5px',
+            end: '5px',
+            start: '5px',
+            top: '5px',
+          },
+
+          width: '100%',
+        },
+
+        sm: {
+          padding: {
+            bottom: '5px',
+            end: '5px',
+            start: '5px',
+            top: '5px',
+          },
+
+          width: '540px',
+        },
+
+        md: {
+          padding: {
+            bottom: '5px',
+            end: '5px',
+            start: '5px',
+            top: '5px',
+          },
+
+          width: '720px',
+        },
+
+        lg: {
+          padding: {
+            bottom: '5px',
+            end: '5px',
+            start: '5px',
+            top: '5px',
+          },
+
+          width: '960px',
+        },
+
+        xl: {
+          padding: {
+            bottom: '5px',
+            end: '5px',
+            start: '5px',
+            top: '5px',
+          },
+
+          width: '1140px',
+        },
+      },
+
+      columns: 12,
     },
 
     IonItemDivider: {
@@ -759,6 +869,10 @@ export const defaultTheme: DefaultTheme = {
           },
         },
       },
+    },
+
+    IonRow: {
+      gap: 'var(--ion-spacing-0)',
     },
 
     IonSpinner: {

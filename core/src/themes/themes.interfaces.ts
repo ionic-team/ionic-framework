@@ -1,8 +1,11 @@
 import type { IonBadgeConfig, IonBadgeRecipe } from '../components/badge/badge.interfaces';
 import type { IonChipConfig, IonChipRecipe } from '../components/chip/chip.interfaces';
+import type { IonColRecipe } from '../components/col/col.interface';
 import type { IonContentRecipe } from '../components/content/content.interfaces';
+import type { IonGridRecipe } from '../components/grid/grid.interface';
 import type { IonItemDividerRecipe } from '../components/item-divider/item-divider.interfaces';
 import type { IonProgressBarConfig, IonProgressBarRecipe } from '../components/progress-bar/progress-bar.interfaces';
+import type { IonRowRecipe } from '../components/row/row.interface';
 import type { IonSpinnerConfig, IonSpinnerRecipe } from '../components/spinner/spinner.interfaces';
 import type { IonTextConfig, IonTextRecipe } from '../components/text/text.interfaces';
 import type { IonThumbnailRecipe } from '../components/thumbnail/thumbnail.interfaces';
@@ -291,9 +294,12 @@ type Components = {
   IonAvatar?: any;
   IonBadge?: IonBadgeRecipe;
   IonChip?: IonChipRecipe;
+  IonCol?: IonColRecipe;
   IonContent?: IonContentRecipe;
+  IonGrid?: IonGridRecipe;
   IonItemDivider?: IonItemDividerRecipe;
   IonProgressBar?: IonProgressBarRecipe;
+  IonRow?: IonRowRecipe;
   IonSpinner?: IonSpinnerRecipe;
   IonText?: IonTextRecipe;
   IonThumbnail?: IonThumbnailRecipe;

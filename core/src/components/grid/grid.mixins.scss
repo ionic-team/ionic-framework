@@ -1,5 +1,6 @@
-@import "../../themes/native/native.globals";
-@import "../../themes/mixins";
+@use "sass:map";
+@use "../../themes/common.globals" as globals;
+@use "../../themes/mixins" as mixins;
 
 // Responsive Mixins
 // --------------------------------------------------
@@ -7,9 +8,9 @@
 // Creates a fixed width for the grid based on the screen size
 // ---------------------------------------------------------------------------------
 
-@mixin make-grid-widths($widths: $grid-widths, $breakpoints: $screen-breakpoints) {
+@mixin make-grid-widths($widths, $breakpoints: globals.$screen-breakpoints) {
   @each $breakpoint, $width in $widths {
-    @include media-breakpoint-up($breakpoint, $breakpoints) {
+    @include mixins.media-breakpoint-up($breakpoint, $breakpoints) {
       width: $width;
     }
   }
@@ -21,11 +22,16 @@
 // ---------------------------------------------------------------------------------
 
 @mixin make-breakpoint-padding($paddings) {
-  @each $breakpoint in map-keys($paddings) {
-    @include media-breakpoint-up($breakpoint) {
-      $padding: map-get($paddings, $breakpoint);
+  @each $breakpoint in map.keys($paddings) {
+    @include mixins.media-breakpoint-up($breakpoint, globals.$screen-breakpoints) {
+      $padding: map.get($paddings, $breakpoint);
 
-      @include padding($padding);
+      @include mixins.padding(
+        map.get($padding, top),
+        map.get($padding, end),
+        map.get($padding, bottom),
+        map.get($padding, start)
+      );
     }
   }
 }

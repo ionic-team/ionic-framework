@@ -3,15 +3,21 @@ import { Component, Element, Host, Listen, Prop, forceUpdate, h } from '@stencil
 import { printIonWarning } from '@utils/logging';
 import { matchBreakpoint } from '@utils/media';
 
-import { getIonTheme } from '../../global/ionic-global';
+import type { IonColProperty, IonColStyle } from './col.interface';
+import { ION_COL_BREAKPOINTS } from './col.interface';
 
-// TODO(FW-7285): Replace with global breakpoints
-// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
+const BREAKPOINTS = ['', ...ION_COL_BREAKPOINTS] as const;
+
+/**
+ * How long to wait (in ms) after the last `resize` event before re-rendering.
+ * `resize` fires rapidly while a window is dragged, so instead of re-rendering
+ * on every event we wait for it to settle and render once. 100ms is short
+ * enough to feel instant but long enough to batch the burst.
+ */
+const RESIZE_DEBOUNCE = 100;
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-col',
@@ -19,6 +25,8 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true,
 })
 export class Col implements ComponentInterface {
+  private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+
   @Element() el!: HTMLIonColElement;
   /**
    * The amount to offset the column, in terms of how many columns it should shift to the end
@@ -92,72 +100,84 @@ export class Col implements ComponentInterface {
    */
   @Prop() orderXl?: string;
 
+  // TODO(FW-7557): Remove this in a major release.
   /**
    * The amount to pull the column, in terms of how many columns it should shift to the start of
    * the total available.
    * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pull?: string;
+  // TODO(FW-7557): Remove this in a major release.
   /**
    * The amount to pull the column for xs screens, in terms of how many columns it should shift
    * to the start of the total available.
    * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pullXs?: string;
+  // TODO(FW-7557): Remove this in a major release.
   /**
    * The amount to pull the column for sm screens, in terms of how many columns it should shift
    * to the start of the total available.
    * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pullSm?: string;
+  // TODO(FW-7557): Remove this in a major release.
   /**
    * The amount to pull the column for md screens, in terms of how many columns it should shift
    * to the start of the total available.
    * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pullMd?: string;
+  // TODO(FW-7557): Remove this in a major release.
   /**
    * The amount to pull the column for lg screens, in terms of how many columns it should shift
    * to the start of the total available.
    * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pullLg?: string;
+  // TODO(FW-7557): Remove this in a major release.
   /**
    * The amount to pull the column for xl screens, in terms of how many columns it should shift
    * to the start of the total available.
    * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pullXl?: string;
+  // TODO(FW-7557): Remove this in a major release.
   /**
    * The amount to push the column, in terms of how many columns it should shift to the end
    * of the total available.
    * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() push?: string;
+  // TODO(FW-7557): Remove this in a major release.
   /**
    * The amount to push the column for xs screens, in terms of how many columns it should shift
    * to the end of the total available.
    * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pushXs?: string;
+  // TODO(FW-7557): Remove this in a major release.
   /**
    * The amount to push the column for sm screens, in terms of how many columns it should shift
    * to the end of the total available.
    * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pushSm?: string;
+  // TODO(FW-7557): Remove this in a major release.
   /**
    * The amount to push the column for md screens, in terms of how many columns it should shift
    * to the end of the total available.
    * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pushMd?: string;
+  // TODO(FW-7557): Remove this in a major release.
   /**
    * The amount to push the column for lg screens, in terms of how many columns it should shift
    * to the end of the total available.
    * @deprecated Use the combination of `size` and `order` properties to achieve the same effect.
    */
   @Prop() pushLg?: string;
+  // TODO(FW-7557): Remove this in a major release.
   /**
    * The amount to push the column for xl screens, in terms of how many columns it should shift
    * to the end of the total available.
@@ -203,20 +223,36 @@ export class Col implements ComponentInterface {
 
   @Listen('resize', { target: 'window' })
   onResize() {
-    forceUpdate(this);
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = null;
+    }
+
+    this.resizeTimeout = setTimeout(() => {
+      forceUpdate(this);
+    }, RESIZE_DEBOUNCE);
+  }
+
+  disconnectedCallback() {
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = null;
+    }
   }
 
   // Loop through all of the breakpoints to see if the media query
   // matches and grab the column value from the relevant prop if so
-  private getColumns(property: string) {
-    let matched;
+  private getColumns(property: IonColProperty): string | undefined {
+    let matched: string | undefined;
 
     for (const breakpoint of BREAKPOINTS) {
       const matches = matchBreakpoint(breakpoint);
 
       // Grab the value of the property, if it exists and our
       // media query matches we return the value
-      const columns = (this as any)[property + breakpoint.charAt(0).toUpperCase() + breakpoint.slice(1)];
+      const columns = this[(property + breakpoint.charAt(0).toUpperCase() + breakpoint.slice(1)) as keyof this] as
+        | string
+        | undefined;
 
       if (matches && columns !== undefined) {
         matched = columns;
@@ -228,40 +264,48 @@ export class Col implements ComponentInterface {
     return matched;
   }
 
-  private getStyleClass(property: string, className: string, acceptsAuto = false): string | undefined {
+  private getColumnValue(property: IonColProperty): number | undefined {
     const colPropertyValue = this.getColumns(property);
 
-    // If size wasn't set for any breakpoint
-    // or if the user set the size without a value
-    // it means we need to stick with the default and return
-    // e.g. <ion-col size-md>
+    /**
+     * Return early when no value matched any breakpoint, or when the
+     * matched value is an empty string. The empty-string case comes
+     * from a value-less HTML attribute (e.g. `<ion-col size-md>`) —
+     * the attribute is present but carries no width, so the column
+     * falls back to the default flex layout.
+     */
     if (!colPropertyValue || colPropertyValue === '') {
       return;
     }
 
-    if (acceptsAuto && colPropertyValue === 'auto') {
-      return 'ion-grid-col-auto';
+    const valueNumber = parseInt(colPropertyValue, 10);
+
+    return isNaN(valueNumber) ? undefined : valueNumber;
+  }
+
+  /**
+   * Builds the inline custom properties that drive the token based calc()
+   * in the styles.
+   *
+   * @param size The number of columns the column should span, or `undefined` for default flex.
+   * @param order The flex order position of the column.
+   * @param offset The number of columns to offset (margin) the column by.
+   * @return An object containing the custom properties to apply to the column's style.
+   */
+  private getColumnStyle(size: number | undefined, order: number | undefined, offset: number | undefined): IonColStyle {
+    const style: IonColStyle = {};
+
+    if (size !== undefined) {
+      style['--internal-col-span'] = `${size}`;
+    }
+    if (order !== undefined) {
+      style['order'] = `${order}`;
+    }
+    if (offset !== undefined) {
+      style['--internal-col-margin'] = `${offset}`;
     }
 
-    const valueNumber = parseInt(colPropertyValue);
-
-    if (isNaN(valueNumber)) {
-      return;
-    }
-
-    return `${className}-col--${valueNumber}`;
-  }
-
-  private getSizeClass(): string | undefined {
-    return this.getStyleClass('size', 'ion-grid', true);
-  }
-
-  private getOrderClass(): string | undefined {
-    return this.getStyleClass('order', 'ion-grid-order');
-  }
-
-  private getOffsetClass(): string | undefined {
-    return this.getStyleClass('offset', 'ion-grid-offset');
+    return style;
   }
 
   componentDidLoad() {
@@ -287,20 +331,19 @@ export class Col implements ComponentInterface {
   }
 
   render() {
-    const theme = getIonTheme(this);
-
-    const colSize = this.getSizeClass();
-    const colOrder = this.getOrderClass();
-    const colOffset = this.getOffsetClass();
+    const size = this.getColumnValue('size');
+    const order = this.getColumnValue('order');
+    const offset = this.getColumnValue('offset');
+    const isAutoSize = this.getColumns('size') === 'auto';
 
     return (
       <Host
         class={{
-          [theme]: true,
-          [`${colSize}`]: colSize !== undefined,
-          [`${colOrder}`]: colOrder !== undefined,
-          [`${colOffset}`]: colOffset !== undefined,
+          'col-size': size !== undefined,
+          'col-auto': isAutoSize,
+          'col-offset': offset !== undefined,
         }}
+        style={this.getColumnStyle(size, order, offset)}
       >
         <slot></slot>
       </Host>

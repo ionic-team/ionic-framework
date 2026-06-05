@@ -1,14 +1,14 @@
-@import "./row.vars";
-
-// Row
+// Row: Common Styles
 // --------------------------------------------------
+
 :host {
+  /**
+   * @prop --ion-row-gap: The gap between grid columns in the row
+   */
+
   display: flex;
 
   flex-wrap: wrap;
 
-  /**
-   * @prop --ion-grid-gap: The gap between grid items
-   */
-  gap: var(--ion-grid-gap, 0px);
+  gap: var(--ion-row-gap);
 }

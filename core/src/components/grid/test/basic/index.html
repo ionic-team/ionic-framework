@@ -12,6 +12,24 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      .grid-demo ion-col div {
+        background-color: #f7f7f7;
+        border: 1px solid #ddd;
+        font-size: 0.8em;
+        padding: 10px 5px;
+      }
+    </style>
   </head>
 
   <body>
@@ -23,7 +41,8 @@
       </ion-header>
 
       <ion-content id="content" class="grid-demo">
-        <ion-grid>
+        <h2>Default Columns</h2>
+        <ion-grid id="default-columns">
           <ion-row>
             <ion-col size="3">
               <div>ion-col</div>
@@ -205,16 +224,55 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-      </ion-content>
 
-      <style>
-        .grid-demo ion-col div {
-          background-color: #f7f7f7;
-          border: 1px solid #ddd;
-          font-size: 0.8em;
-          padding: 10px 5px;
-        }
-      </style>
+        <h2>Custom Column Count</h2>
+        <ion-grid id="custom-columns" style="--ion-grid-columns: 16">
+          <ion-row>
+            <ion-col size="16">
+              <div>ion-col[size-16] full width</div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="8">
+              <div>ion-col[size-8] half</div>
+            </ion-col>
+            <ion-col size="8">
+              <div>ion-col[size-8] half</div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="4">
+              <div>ion-col[size-4]</div>
+            </ion-col>
+            <ion-col size="4">
+              <div>ion-col[size-4]</div>
+            </ion-col>
+            <ion-col size="4">
+              <div>ion-col[size-4]</div>
+            </ion-col>
+            <ion-col size="4">
+              <div>ion-col[size-4]</div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="13">
+              <div>ion-col[size-13]</div>
+            </ion-col>
+            <ion-col size="3">
+              <div>ion-col[size-3]</div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="10" offset="6">
+              <div>ion-col[size-10][offset-6]</div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
     </ion-app>
   </body>
 </html>
