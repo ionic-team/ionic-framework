@@ -94,8 +94,10 @@ export class Select implements ComponentInterface {
 
   /**
    * The text to display on the cancel button.
+   * Defaults to `'Cancel'` for the `alert` and `action-sheet`
+   * interfaces, and `'Okay'` for the `modal` interface.
    */
-  @Prop() cancelText = 'Cancel';
+  @Prop() cancelText?: string;
 
   /**
    * The color to use from your application's color palette.
@@ -492,6 +494,18 @@ export class Select implements ComponentInterface {
     return overlay;
   }
 
+  /**
+   * Resolves the cancel button text, falling back to the
+   * per-interface default when `cancelText` is not set:
+   * `'Okay'` for the `modal` interface, `'Cancel'` otherwise.
+   */
+  private get interfaceCancelText(): string {
+    if (this.cancelText !== undefined) {
+      return this.cancelText;
+    }
+    return this.interface === 'modal' ? 'Ok' : 'Cancel';
+  }
+
   private createOverlay(ev?: UIEvent): Promise<OverlaySelect> {
     let selectInterface = this.interface;
     if (selectInterface === 'action-sheet' && this.multiple) {
@@ -577,7 +591,7 @@ export class Select implements ComponentInterface {
 
     // Add "cancel" button
     actionSheetButtons.push({
-      text: this.cancelText,
+      text: this.interfaceCancelText,
       role: 'cancel',
       handler: () => {
         this.ionCancel.emit();
@@ -751,7 +765,7 @@ export class Select implements ComponentInterface {
       inputs: this.createAlertInputs(this.childOpts, inputType, this.value),
       buttons: [
         {
-          text: this.cancelText,
+          text: this.interfaceCancelText,
           role: 'cancel',
           handler: () => {
             this.ionCancel.emit();
@@ -798,7 +812,7 @@ export class Select implements ComponentInterface {
       component: 'ion-select-modal',
       componentProps: {
         header: interfaceOptions.header,
-        cancelText: this.cancelText,
+        cancelText: this.interfaceCancelText,
         multiple,
         value,
         options: this.createOverlaySelectOptions(this.childOpts, value),
