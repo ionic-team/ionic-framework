@@ -23,8 +23,14 @@ type GalleryBreakpoint = keyof typeof BREAKPOINTS;
 const BREAKPOINT_ORDER: GalleryBreakpoint[] = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
 
 /**
- * Direct slotted children that support CSS grid placement and inline `style`.
- * This is a union of `HTMLElement` and `SVGElement` to support both HTML and SVG elements.
+ * The tag of the component used to wrap each gallery item.
+ */
+const GALLERY_ITEM_SELECTOR = 'ion-gallery-item';
+
+/**
+ * Grid items placed by the gallery that support CSS grid placement and inline
+ * `style`. This is a union of `HTMLElement` and `SVGElement` to support both
+ * HTML and SVG elements.
  */
 type GalleryItemElement = HTMLElement | SVGElement;
 
@@ -32,7 +38,8 @@ type GalleryItemElement = HTMLElement | SVGElement;
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
- * @slot - Content is placed in a responsive gallery layout.
+ * @slot - One or more `ion-gallery-item` components, placed in a responsive
+ * gallery layout.
  */
 @Component({
   tag: 'ion-gallery',
@@ -51,6 +58,7 @@ export class Gallery implements ComponentInterface {
   private hasWarnedInvalidColumns = false;
   private hasWarnedInvalidGap = false;
   private hasWarnedUnusedOrder = false;
+  private hasWarnedInvalidItems = false;
 
   /**
    * The visual layout of the gallery. When `uniform`, rows take up the height
@@ -111,7 +119,7 @@ export class Gallery implements ComponentInterface {
       this.updateResponsiveStyles();
       this.scheduleMasonryResize();
     });
-    this.resizeObserver.observe(this.el);
+    this.observeResizes();
 
     this.scheduleMasonryResize();
 
@@ -126,6 +134,24 @@ export class Gallery implements ComponentInterface {
 
     this.resizeObserver?.disconnect();
     this.resizeObserver = undefined;
+  }
+
+  /**
+   * Observe the host and each item for size changes. Items are observed in
+   * addition to the host so masonry placement is recomputed when an item's
+   * rendered height changes — most importantly when a dynamically added
+   * `ion-gallery-item` finishes hydrating, which (unlike an `<img>`) emits no
+   * `load` event and does not change the host's measured size while collapsed.
+   */
+  private observeResizes() {
+    const observer = this.resizeObserver;
+    if (observer === undefined) {
+      return;
+    }
+
+    observer.disconnect();
+    observer.observe(this.el);
+    this.getItems().forEach((item) => observer.observe(item));
   }
 
   /**
@@ -153,6 +179,9 @@ export class Gallery implements ComponentInterface {
    * are added or removed from the gallery.
    */
   private onSlotChange = () => {
+    // Re-observe so newly added items are watched for size changes (e.g. a
+    // freshly appended item finishing hydration), then recompute placement.
+    this.observeResizes();
     this.scheduleMasonryResize();
   };
 
@@ -450,13 +479,67 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Return all directly slotted children of the gallery that can be grid items
-   * with inline placement styles (HTML elements and SVG elements).
+   * Check that an element can be a grid item with inline placement styles
+   * (HTML elements and SVG elements expose a usable `style.setProperty`).
+   */
+  private isGalleryItemElement(element: Element): element is GalleryItemElement {
+    return typeof (element as any).style?.setProperty === 'function';
+  }
+
+  /**
+   * Return the `ion-gallery-item` elements to place in the grid. Each item is a
+   * direct grid cell. A direct child that is not an `ion-gallery-item` is
+   * treated as a pass-through wrapper (e.g. a layout `<div>`): its box is
+   * collapsed with `display: contents` so the nested items participate in the
+   * gallery grid. Children that contain no `ion-gallery-item` are ignored.
    */
   private getItems(): GalleryItemElement[] {
-    return Array.from(this.el.children).filter(
-      (child): child is GalleryItemElement => typeof (child as any).style?.setProperty === 'function'
+    const items: GalleryItemElement[] = [];
+
+    Array.from(this.el.children).forEach((child) => {
+      if (!this.isGalleryItemElement(child)) {
+        return;
+      }
+
+      // Standard path: <ion-gallery-item> is a direct child of <ion-gallery>.
+      if (child.matches(GALLERY_ITEM_SELECTOR)) {
+        items.push(child);
+        return;
+      }
+
+      // Compatibility path: a wrapper element may contain <ion-gallery-item>
+      // components. Collapse the wrapper's box so the items participate in the
+      // gallery grid.
+      const nestedItems = Array.from(child.querySelectorAll(GALLERY_ITEM_SELECTOR) as NodeListOf<Element>).filter(
+        (nested): nested is GalleryItemElement => this.isGalleryItemElement(nested)
+      );
+
+      if (nestedItems.length === 0) {
+        this.warnInvalidItems();
+        return;
+      }
+
+      child.style.display = 'contents';
+      items.push(...nestedItems);
+    });
+
+    return items;
+  }
+
+  /**
+   * Warn when the gallery has content that is not wrapped in an
+   * `ion-gallery-item` component.
+   */
+  private warnInvalidItems() {
+    if (this.hasWarnedInvalidItems) {
+      return;
+    }
+
+    printIonWarning(
+      `[ion-gallery] - Gallery items must be wrapped in "ion-gallery-item" components. Direct children that are not "ion-gallery-item" (and do not contain one) are ignored.`,
+      this.el
     );
+    this.hasWarnedInvalidItems = true;
   }
 
   /**
@@ -478,11 +561,19 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
+   * Whether the item contains any images that have not finished loading.
+   * Used to defer masonry placement until the rendered height is final.
+   */
+  private hasUnloadedImages(itemEl: GalleryItemElement): boolean {
+    return Array.from(itemEl.querySelectorAll('img')).some((img) => !img.complete || img.naturalHeight === 0);
+  }
+
+  /**
    * Convert a rendered item height to the number of grid rows it should span.
-   * Returns undefined for images that are not fully loaded yet.
+   * Returns undefined when the item has images that are not fully loaded yet.
    */
   private calculateRowSpan(itemEl: GalleryItemElement, rowHeight: number, rowGap: number) {
-    if (itemEl instanceof HTMLImageElement && (!itemEl.complete || itemEl.naturalHeight === 0)) {
+    if (this.hasUnloadedImages(itemEl)) {
       return undefined;
     }
 

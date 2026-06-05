@@ -1,0 +1,50 @@
+@use "../../themes/native/native.globals" as globals;
+
+// Gallery Item
+// --------------------------------------------------
+
+:host {
+  display: block;
+}
+
+// Slotted content
+// --------------------------------------------------
+
+// Reset the default margin for slotted elements so wrapper elements
+// (such as <figure>) align properly with other gallery items.
+::slotted(*) {
+  @include globals.margin(0);
+
+  width: 100%;
+}
+
+::slotted(img) {
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+// Layout: Uniform
+// --------------------------------------------------
+
+// In the uniform layout each cell is square by default. The aspect ratio is
+// applied to the slotted content (rather than the item) so that an explicit
+// height on the content takes precedence — a set `height` overrides
+// `aspect-ratio` on the same element. The item then sizes to its content,
+// allowing items with an explicit height to opt out of the square.
+:host(.in-gallery-layout-uniform) ::slotted(*) {
+  aspect-ratio: 1 / 1;
+}
+
+// Layout: Masonry
+// --------------------------------------------------
+
+:host(.in-gallery-layout-masonry) {
+  // Clear min-height so items size to their content
+  min-height: unset;
+
+  // The spacing between stacked items. Applies to all items except
+  // for the last item in each column to remove any trailing space.
+  margin-bottom: var(--internal-gallery-gap, 16px);
+}
