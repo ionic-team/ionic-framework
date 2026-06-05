@@ -12,6 +12,12 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
       await page.setIonViewport();
     });
 
+    test('should not have visual regressions for order', async ({ page }) => {
+      const order = page.locator('#order');
+
+      await expect(order).toHaveScreenshot(screenshot('grid-offsets-order'));
+    });
+
     test('should shift the column by its offset count in column units', async ({ page }) => {
       const { rowWidth, offsetMargin, noOffsetMargin } = await page.locator('#offset-1 ion-row').evaluate((row) => {
         const offsetCol = row.querySelector('ion-col[offset="1"]')!;
@@ -29,12 +35,6 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 
       expect(offsetMargin).toBeCloseTo(columnUnit, 0);
       expect(noOffsetMargin).toBe(0);
-    });
-
-    test('should not have visual regressions for order', async ({ page }) => {
-      const order = page.locator('#order');
-
-      await expect(order).toHaveScreenshot(screenshot('grid-offsets-order'));
     });
 
     test('should scale the offset margin with the offset count', async ({ page }) => {
