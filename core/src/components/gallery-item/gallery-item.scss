@@ -41,9 +41,6 @@
 // --------------------------------------------------
 
 :host(.in-gallery-layout-masonry) {
-  // Clear min-height so items size to their content
-  min-height: unset;
-
   // The spacing between stacked items. Applies to all items except
   // for the last item in each column to remove any trailing space.
   margin-bottom: var(--internal-gallery-gap, 16px);
