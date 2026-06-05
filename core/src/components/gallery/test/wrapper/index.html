@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gallery - Wrapper</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Gallery - Wrapper</ion-title>
+          <ion-buttons slot="end">
+            <ion-button onClick="toggleLayout()">Toggle Layout</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <h2>Layout: <span id="layout-label">Uniform</span></h2>
+        <ion-gallery>
+          <div class="some-wrapper">
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/01.png" alt="One" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/02.png" alt="Two" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/03.png" alt="Three" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/04.png" alt="Four" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/05.png" alt="Five" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/06.png" alt="Six" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/07.png" alt="Seven" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/08.png" alt="Eight" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/09.png" alt="Nine" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/10.png" alt="Ten" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/11.png" alt="Eleven" /></ion-gallery-item>
+            <ion-gallery-item><img src="/src/components/gallery/test/assets/12.png" alt="Twelve" /></ion-gallery-item>
+          </div>
+        </ion-gallery>
+
+        <script>
+          function toggleLayout() {
+            const gallery = document.querySelector('ion-gallery');
+            const currentLayout = gallery.layout;
+            const currentOrder = gallery.order;
+
+            let layout;
+            let order;
+
+            if (currentLayout === 'uniform') {
+              document.getElementById('layout-label').textContent = 'Masonry (Sequential)';
+              layout = 'masonry';
+              order = 'sequential';
+            } else if (currentLayout === 'masonry' && currentOrder === 'sequential') {
+              document.getElementById('layout-label').textContent = 'Masonry (Best Fit)';
+              layout = 'masonry';
+              order = 'best-fit';
+            } else {
+              document.getElementById('layout-label').textContent = 'Uniform';
+              layout = 'uniform';
+              // Clear the order so it does not carry over to the uniform layout,
+              // which would trigger the "order has no effect" warning.
+              order = undefined;
+            }
+
+            gallery.layout = layout;
+            gallery.order = order;
+          }
+        </script>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>
