@@ -20,7 +20,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Legacy Picker](#version-9x-legacy-picker)
   - [Router Outlet](#version-9x-router-outlet)
   - [Select](#version-9x-select)
-  - [Input and Searchbar](#version-9x-input-searchbar)
+  - [Input](#version-9x-input)
+  - [Searchbar](#version-9x-searchbar)
 - [Framework Specific](#version-9x-framework-specific)
   - [Angular](#version-9x-angular)
   - [React](#version-9x-react)
@@ -101,9 +102,18 @@ The `ionChange` event on `ion-select` now only fires when the selected value act
 
 Apps that relied on `ionChange` firing on every confirmation (for example, to detect overlay dismissal without a value change) should listen for `ionDismiss` instead, or use the `didDismiss` event on the underlying alert or action sheet.
 
-<h4 id="version-9x-input-searchbar">Input and Searchbar</h4>
+<h4 id="version-9x-input">Input</h4>
 
-The `autocorrect` property on `ion-input` and `ion-searchbar` is now a `boolean` and defaults to `false`. It was previously typed as `'on' | 'off'` with a default of `'off'`. This resolves a type conflict introduced when TypeScript 5.9 added `autocorrect: boolean` to the DOM `HTMLElement` interface.
+The `autocorrect` property on `ion-input` is now a `boolean` and defaults to `false`. It was previously typed as `'on' | 'off'` with a default of `'off'`. This resolves a type conflict introduced when TypeScript 5.9 added `autocorrect: boolean` to the DOM `HTMLElement` interface.
+
+The string form no longer behaves the same way. Because an HTML attribute coerces to `true` for any non-empty string, `autocorrect="off"` now evaluates to `true` (autocorrect enabled). Migrate to the boolean property:
+
+- Remove the attribute to keep autocorrect disabled (the default).
+- Use a property binding to enable it: `[autocorrect]="true"` (Angular), `autocorrect={true}` (React), or `:autocorrect="true"` (Vue).
+
+<h4 id="version-9x-searchbar">Searchbar</h4>
+
+The `autocorrect` property on `ion-searchbar` is now a `boolean` and defaults to `false`. It was previously typed as `'on' | 'off'` with a default of `'off'`. This resolves a type conflict introduced when TypeScript 5.9 added `autocorrect: boolean` to the DOM `HTMLElement` interface.
 
 The string form no longer behaves the same way. Because an HTML attribute coerces to `true` for any non-empty string, `autocorrect="off"` now evaluates to `true` (autocorrect enabled). Migrate to the boolean property:
 
