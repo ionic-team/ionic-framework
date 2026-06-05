@@ -116,7 +116,7 @@ export declare interface IonAccordion extends Components.IonAccordion {}
 })
 export class IonAccordionGroup {
   protected el: HTMLIonAccordionGroupElement;
-  @Output() ionChange = new EventEmitter<CustomEvent<IIonAccordionGroupAccordionGroupChangeEventDetail>>();
+  @Output() ionChange = new EventEmitter<IonAccordionGroupCustomEvent<IIonAccordionGroupAccordionGroupChangeEventDetail>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -124,6 +124,7 @@ export class IonAccordionGroup {
 }
 
 
+import type { IonAccordionGroupCustomEvent } from '@ionic/core/components';
 import type { AccordionGroupChangeEventDetail as IIonAccordionGroupAccordionGroupChangeEventDetail } from '@ionic/core/components';
 
 export declare interface IonAccordionGroup extends Components.IonAccordionGroup {
@@ -132,7 +133,7 @@ export declare interface IonAccordionGroup extends Components.IonAccordionGroup 
 
 This event will not emit when programmatically setting the `value` property.
    */
-  ionChange: EventEmitter<CustomEvent<IIonAccordionGroupAccordionGroupChangeEventDetail>>;
+  ionChange: EventEmitter<IonAccordionGroupCustomEvent<IIonAccordionGroupAccordionGroupChangeEventDetail>>;
 }
 
 
@@ -151,14 +152,14 @@ This event will not emit when programmatically setting the `value` property.
 })
 export class IonActionSheet {
   protected el: HTMLIonActionSheetElement;
-  @Output() ionActionSheetDidPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() ionActionSheetWillPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() ionActionSheetWillDismiss = new EventEmitter<CustomEvent<IIonActionSheetOverlayEventDetail>>();
-  @Output() ionActionSheetDidDismiss = new EventEmitter<CustomEvent<IIonActionSheetOverlayEventDetail>>();
-  @Output() didPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() willPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() willDismiss = new EventEmitter<CustomEvent<IIonActionSheetOverlayEventDetail>>();
-  @Output() didDismiss = new EventEmitter<CustomEvent<IIonActionSheetOverlayEventDetail>>();
+  @Output() ionActionSheetDidPresent = new EventEmitter<IonActionSheetCustomEvent<void>>();
+  @Output() ionActionSheetWillPresent = new EventEmitter<IonActionSheetCustomEvent<void>>();
+  @Output() ionActionSheetWillDismiss = new EventEmitter<IonActionSheetCustomEvent<IIonActionSheetOverlayEventDetail>>();
+  @Output() ionActionSheetDidDismiss = new EventEmitter<IonActionSheetCustomEvent<IIonActionSheetOverlayEventDetail>>();
+  @Output() didPresent = new EventEmitter<IonActionSheetCustomEvent<void>>();
+  @Output() willPresent = new EventEmitter<IonActionSheetCustomEvent<void>>();
+  @Output() willDismiss = new EventEmitter<IonActionSheetCustomEvent<IIonActionSheetOverlayEventDetail>>();
+  @Output() didDismiss = new EventEmitter<IonActionSheetCustomEvent<IIonActionSheetOverlayEventDetail>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -166,45 +167,46 @@ export class IonActionSheet {
 }
 
 
+import type { IonActionSheetCustomEvent } from '@ionic/core/components';
 import type { OverlayEventDetail as IIonActionSheetOverlayEventDetail } from '@ionic/core/components';
 
 export declare interface IonActionSheet extends Components.IonActionSheet {
   /**
    * Emitted after the action sheet has presented.
    */
-  ionActionSheetDidPresent: EventEmitter<CustomEvent<void>>;
+  ionActionSheetDidPresent: EventEmitter<IonActionSheetCustomEvent<void>>;
   /**
    * Emitted before the action sheet has presented.
    */
-  ionActionSheetWillPresent: EventEmitter<CustomEvent<void>>;
+  ionActionSheetWillPresent: EventEmitter<IonActionSheetCustomEvent<void>>;
   /**
    * Emitted before the action sheet has dismissed.
    */
-  ionActionSheetWillDismiss: EventEmitter<CustomEvent<IIonActionSheetOverlayEventDetail>>;
+  ionActionSheetWillDismiss: EventEmitter<IonActionSheetCustomEvent<IIonActionSheetOverlayEventDetail>>;
   /**
    * Emitted after the action sheet has dismissed.
    */
-  ionActionSheetDidDismiss: EventEmitter<CustomEvent<IIonActionSheetOverlayEventDetail>>;
+  ionActionSheetDidDismiss: EventEmitter<IonActionSheetCustomEvent<IIonActionSheetOverlayEventDetail>>;
   /**
    * Emitted after the action sheet has presented.
 Shorthand for ionActionSheetWillDismiss.
    */
-  didPresent: EventEmitter<CustomEvent<void>>;
+  didPresent: EventEmitter<IonActionSheetCustomEvent<void>>;
   /**
    * Emitted before the action sheet has presented.
 Shorthand for ionActionSheetWillPresent.
    */
-  willPresent: EventEmitter<CustomEvent<void>>;
+  willPresent: EventEmitter<IonActionSheetCustomEvent<void>>;
   /**
    * Emitted before the action sheet has dismissed.
 Shorthand for ionActionSheetWillDismiss.
    */
-  willDismiss: EventEmitter<CustomEvent<IIonActionSheetOverlayEventDetail>>;
+  willDismiss: EventEmitter<IonActionSheetCustomEvent<IIonActionSheetOverlayEventDetail>>;
   /**
    * Emitted after the action sheet has dismissed.
 Shorthand for ionActionSheetDidDismiss.
    */
-  didDismiss: EventEmitter<CustomEvent<IIonActionSheetOverlayEventDetail>>;
+  didDismiss: EventEmitter<IonActionSheetCustomEvent<IIonActionSheetOverlayEventDetail>>;
 }
 
 
@@ -223,14 +225,14 @@ Shorthand for ionActionSheetDidDismiss.
 })
 export class IonAlert {
   protected el: HTMLIonAlertElement;
-  @Output() ionAlertDidPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() ionAlertWillPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() ionAlertWillDismiss = new EventEmitter<CustomEvent<IIonAlertOverlayEventDetail>>();
-  @Output() ionAlertDidDismiss = new EventEmitter<CustomEvent<IIonAlertOverlayEventDetail>>();
-  @Output() didPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() willPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() willDismiss = new EventEmitter<CustomEvent<IIonAlertOverlayEventDetail>>();
-  @Output() didDismiss = new EventEmitter<CustomEvent<IIonAlertOverlayEventDetail>>();
+  @Output() ionAlertDidPresent = new EventEmitter<IonAlertCustomEvent<void>>();
+  @Output() ionAlertWillPresent = new EventEmitter<IonAlertCustomEvent<void>>();
+  @Output() ionAlertWillDismiss = new EventEmitter<IonAlertCustomEvent<IIonAlertOverlayEventDetail>>();
+  @Output() ionAlertDidDismiss = new EventEmitter<IonAlertCustomEvent<IIonAlertOverlayEventDetail>>();
+  @Output() didPresent = new EventEmitter<IonAlertCustomEvent<void>>();
+  @Output() willPresent = new EventEmitter<IonAlertCustomEvent<void>>();
+  @Output() willDismiss = new EventEmitter<IonAlertCustomEvent<IIonAlertOverlayEventDetail>>();
+  @Output() didDismiss = new EventEmitter<IonAlertCustomEvent<IIonAlertOverlayEventDetail>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -238,45 +240,46 @@ export class IonAlert {
 }
 
 
+import type { IonAlertCustomEvent } from '@ionic/core/components';
 import type { OverlayEventDetail as IIonAlertOverlayEventDetail } from '@ionic/core/components';
 
 export declare interface IonAlert extends Components.IonAlert {
   /**
    * Emitted after the alert has presented.
    */
-  ionAlertDidPresent: EventEmitter<CustomEvent<void>>;
+  ionAlertDidPresent: EventEmitter<IonAlertCustomEvent<void>>;
   /**
    * Emitted before the alert has presented.
    */
-  ionAlertWillPresent: EventEmitter<CustomEvent<void>>;
+  ionAlertWillPresent: EventEmitter<IonAlertCustomEvent<void>>;
   /**
    * Emitted before the alert has dismissed.
    */
-  ionAlertWillDismiss: EventEmitter<CustomEvent<IIonAlertOverlayEventDetail>>;
+  ionAlertWillDismiss: EventEmitter<IonAlertCustomEvent<IIonAlertOverlayEventDetail>>;
   /**
    * Emitted after the alert has dismissed.
    */
-  ionAlertDidDismiss: EventEmitter<CustomEvent<IIonAlertOverlayEventDetail>>;
+  ionAlertDidDismiss: EventEmitter<IonAlertCustomEvent<IIonAlertOverlayEventDetail>>;
   /**
    * Emitted after the alert has presented.
 Shorthand for ionAlertWillDismiss.
    */
-  didPresent: EventEmitter<CustomEvent<void>>;
+  didPresent: EventEmitter<IonAlertCustomEvent<void>>;
   /**
    * Emitted before the alert has presented.
 Shorthand for ionAlertWillPresent.
    */
-  willPresent: EventEmitter<CustomEvent<void>>;
+  willPresent: EventEmitter<IonAlertCustomEvent<void>>;
   /**
    * Emitted before the alert has dismissed.
 Shorthand for ionAlertWillDismiss.
    */
-  willDismiss: EventEmitter<CustomEvent<IIonAlertOverlayEventDetail>>;
+  willDismiss: EventEmitter<IonAlertCustomEvent<IIonAlertOverlayEventDetail>>;
   /**
    * Emitted after the alert has dismissed.
 Shorthand for ionAlertDidDismiss.
    */
-  didDismiss: EventEmitter<CustomEvent<IIonAlertOverlayEventDetail>>;
+  didDismiss: EventEmitter<IonAlertCustomEvent<IIonAlertOverlayEventDetail>>;
 }
 
 
@@ -339,7 +342,7 @@ export declare interface IonAvatar extends Components.IonAvatar {}
 })
 export class IonBackdrop {
   protected el: HTMLIonBackdropElement;
-  @Output() ionBackdropTap = new EventEmitter<CustomEvent<void>>();
+  @Output() ionBackdropTap = new EventEmitter<IonBackdropCustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -347,11 +350,13 @@ export class IonBackdrop {
 }
 
 
+import type { IonBackdropCustomEvent } from '@ionic/core/components';
+
 export declare interface IonBackdrop extends Components.IonBackdrop {
   /**
    * Emitted when the backdrop is tapped.
    */
-  ionBackdropTap: EventEmitter<CustomEvent<void>>;
+  ionBackdropTap: EventEmitter<IonBackdropCustomEvent<void>>;
 }
 
 
@@ -392,8 +397,8 @@ export declare interface IonBadge extends Components.IonBadge {}
 })
 export class IonBreadcrumb {
   protected el: HTMLIonBreadcrumbElement;
-  @Output() ionFocus = new EventEmitter<CustomEvent<void>>();
-  @Output() ionBlur = new EventEmitter<CustomEvent<void>>();
+  @Output() ionFocus = new EventEmitter<IonBreadcrumbCustomEvent<void>>();
+  @Output() ionBlur = new EventEmitter<IonBreadcrumbCustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -401,15 +406,17 @@ export class IonBreadcrumb {
 }
 
 
+import type { IonBreadcrumbCustomEvent } from '@ionic/core/components';
+
 export declare interface IonBreadcrumb extends Components.IonBreadcrumb {
   /**
    * Emitted when the breadcrumb has focus.
    */
-  ionFocus: EventEmitter<CustomEvent<void>>;
+  ionFocus: EventEmitter<IonBreadcrumbCustomEvent<void>>;
   /**
    * Emitted when the breadcrumb loses focus.
    */
-  ionBlur: EventEmitter<CustomEvent<void>>;
+  ionBlur: EventEmitter<IonBreadcrumbCustomEvent<void>>;
 }
 
 
@@ -427,7 +434,7 @@ export declare interface IonBreadcrumb extends Components.IonBreadcrumb {
 })
 export class IonBreadcrumbs {
   protected el: HTMLIonBreadcrumbsElement;
-  @Output() ionCollapsedClick = new EventEmitter<CustomEvent<IIonBreadcrumbsBreadcrumbCollapsedClickEventDetail>>();
+  @Output() ionCollapsedClick = new EventEmitter<IonBreadcrumbsCustomEvent<IIonBreadcrumbsBreadcrumbCollapsedClickEventDetail>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -435,13 +442,14 @@ export class IonBreadcrumbs {
 }
 
 
+import type { IonBreadcrumbsCustomEvent } from '@ionic/core/components';
 import type { BreadcrumbCollapsedClickEventDetail as IIonBreadcrumbsBreadcrumbCollapsedClickEventDetail } from '@ionic/core/components';
 
 export declare interface IonBreadcrumbs extends Components.IonBreadcrumbs {
   /**
    * Emitted when the collapsed indicator is clicked on.
    */
-  ionCollapsedClick: EventEmitter<CustomEvent<IIonBreadcrumbsBreadcrumbCollapsedClickEventDetail>>;
+  ionCollapsedClick: EventEmitter<IonBreadcrumbsCustomEvent<IIonBreadcrumbsBreadcrumbCollapsedClickEventDetail>>;
 }
 
 
@@ -459,8 +467,8 @@ export declare interface IonBreadcrumbs extends Components.IonBreadcrumbs {
 })
 export class IonButton {
   protected el: HTMLIonButtonElement;
-  @Output() ionFocus = new EventEmitter<CustomEvent<void>>();
-  @Output() ionBlur = new EventEmitter<CustomEvent<void>>();
+  @Output() ionFocus = new EventEmitter<IonButtonCustomEvent<void>>();
+  @Output() ionBlur = new EventEmitter<IonButtonCustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -468,15 +476,17 @@ export class IonButton {
 }
 
 
+import type { IonButtonCustomEvent } from '@ionic/core/components';
+
 export declare interface IonButton extends Components.IonButton {
   /**
    * Emitted when the button has focus.
    */
-  ionFocus: EventEmitter<CustomEvent<void>>;
+  ionFocus: EventEmitter<IonButtonCustomEvent<void>>;
   /**
    * Emitted when the button loses focus.
    */
-  ionBlur: EventEmitter<CustomEvent<void>>;
+  ionBlur: EventEmitter<IonButtonCustomEvent<void>>;
 }
 
 
@@ -679,9 +689,9 @@ export declare interface IonCol extends Components.IonCol {}
 })
 export class IonContent {
   protected el: HTMLIonContentElement;
-  @Output() ionScrollStart = new EventEmitter<CustomEvent<IIonContentScrollBaseDetail>>();
-  @Output() ionScroll = new EventEmitter<CustomEvent<IIonContentScrollDetail>>();
-  @Output() ionScrollEnd = new EventEmitter<CustomEvent<IIonContentScrollBaseDetail>>();
+  @Output() ionScrollStart = new EventEmitter<IonContentCustomEvent<IIonContentScrollBaseDetail>>();
+  @Output() ionScroll = new EventEmitter<IonContentCustomEvent<IIonContentScrollDetail>>();
+  @Output() ionScrollEnd = new EventEmitter<IonContentCustomEvent<IIonContentScrollBaseDetail>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -689,6 +699,7 @@ export class IonContent {
 }
 
 
+import type { IonContentCustomEvent } from '@ionic/core/components';
 import type { ScrollBaseDetail as IIonContentScrollBaseDetail } from '@ionic/core/components';
 import type { ScrollDetail as IIonContentScrollDetail } from '@ionic/core/components';
 
@@ -697,17 +708,17 @@ export declare interface IonContent extends Components.IonContent {
    * Emitted when the scroll has started. This event is disabled by default.
 Set `scrollEvents` to `true` to enable.
    */
-  ionScrollStart: EventEmitter<CustomEvent<IIonContentScrollBaseDetail>>;
+  ionScrollStart: EventEmitter<IonContentCustomEvent<IIonContentScrollBaseDetail>>;
   /**
    * Emitted while scrolling. This event is disabled by default.
 Set `scrollEvents` to `true` to enable.
    */
-  ionScroll: EventEmitter<CustomEvent<IIonContentScrollDetail>>;
+  ionScroll: EventEmitter<IonContentCustomEvent<IIonContentScrollDetail>>;
   /**
    * Emitted when the scroll has ended. This event is disabled by default.
 Set `scrollEvents` to `true` to enable.
    */
-  ionScrollEnd: EventEmitter<CustomEvent<IIonContentScrollBaseDetail>>;
+  ionScrollEnd: EventEmitter<IonContentCustomEvent<IIonContentScrollBaseDetail>>;
 }
 
 
@@ -772,8 +783,8 @@ export declare interface IonFab extends Components.IonFab {}
 })
 export class IonFabButton {
   protected el: HTMLIonFabButtonElement;
-  @Output() ionFocus = new EventEmitter<CustomEvent<void>>();
-  @Output() ionBlur = new EventEmitter<CustomEvent<void>>();
+  @Output() ionFocus = new EventEmitter<IonFabButtonCustomEvent<void>>();
+  @Output() ionBlur = new EventEmitter<IonFabButtonCustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -781,15 +792,17 @@ export class IonFabButton {
 }
 
 
+import type { IonFabButtonCustomEvent } from '@ionic/core/components';
+
 export declare interface IonFabButton extends Components.IonFabButton {
   /**
    * Emitted when the button has focus.
    */
-  ionFocus: EventEmitter<CustomEvent<void>>;
+  ionFocus: EventEmitter<IonFabButtonCustomEvent<void>>;
   /**
    * Emitted when the button loses focus.
    */
-  ionBlur: EventEmitter<CustomEvent<void>>;
+  ionBlur: EventEmitter<IonFabButtonCustomEvent<void>>;
 }
 
 
@@ -899,9 +912,9 @@ export declare interface IonHeader extends Components.IonHeader {}
 })
 export class IonImg {
   protected el: HTMLIonImgElement;
-  @Output() ionImgWillLoad = new EventEmitter<CustomEvent<void>>();
-  @Output() ionImgDidLoad = new EventEmitter<CustomEvent<void>>();
-  @Output() ionError = new EventEmitter<CustomEvent<void>>();
+  @Output() ionImgWillLoad = new EventEmitter<IonImgCustomEvent<void>>();
+  @Output() ionImgDidLoad = new EventEmitter<IonImgCustomEvent<void>>();
+  @Output() ionError = new EventEmitter<IonImgCustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -909,19 +922,21 @@ export class IonImg {
 }
 
 
+import type { IonImgCustomEvent } from '@ionic/core/components';
+
 export declare interface IonImg extends Components.IonImg {
   /**
    * Emitted when the img src has been set
    */
-  ionImgWillLoad: EventEmitter<CustomEvent<void>>;
+  ionImgWillLoad: EventEmitter<IonImgCustomEvent<void>>;
   /**
    * Emitted when the image has finished loading
    */
-  ionImgDidLoad: EventEmitter<CustomEvent<void>>;
+  ionImgDidLoad: EventEmitter<IonImgCustomEvent<void>>;
   /**
    * Emitted when the img fails to load
    */
-  ionError: EventEmitter<CustomEvent<void>>;
+  ionError: EventEmitter<IonImgCustomEvent<void>>;
 }
 
 
@@ -940,13 +955,15 @@ export declare interface IonImg extends Components.IonImg {
 })
 export class IonInfiniteScroll {
   protected el: HTMLIonInfiniteScrollElement;
-  @Output() ionInfinite = new EventEmitter<CustomEvent<void>>();
+  @Output() ionInfinite = new EventEmitter<IonInfiniteScrollCustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
+
+import type { IonInfiniteScrollCustomEvent } from '@ionic/core/components';
 
 export declare interface IonInfiniteScroll extends Components.IonInfiniteScroll {
   /**
@@ -955,7 +972,7 @@ the threshold distance. From within your infinite handler,
 you must call the infinite scroll's `complete()` method when
 your async operation has completed.
    */
-  ionInfinite: EventEmitter<CustomEvent<void>>;
+  ionInfinite: EventEmitter<IonInfiniteScrollCustomEvent<void>>;
 }
 
 
@@ -1110,7 +1127,7 @@ export declare interface IonItemOption extends Components.IonItemOption {}
 })
 export class IonItemOptions {
   protected el: HTMLIonItemOptionsElement;
-  @Output() ionSwipe = new EventEmitter<CustomEvent<any>>();
+  @Output() ionSwipe = new EventEmitter<IonItemOptionsCustomEvent<any>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1118,11 +1135,13 @@ export class IonItemOptions {
 }
 
 
+import type { IonItemOptionsCustomEvent } from '@ionic/core/components';
+
 export declare interface IonItemOptions extends Components.IonItemOptions {
   /**
    * Emitted when the item has been fully swiped.
    */
-  ionSwipe: EventEmitter<CustomEvent<any>>;
+  ionSwipe: EventEmitter<IonItemOptionsCustomEvent<any>>;
 }
 
 
@@ -1141,7 +1160,7 @@ export declare interface IonItemOptions extends Components.IonItemOptions {
 })
 export class IonItemSliding {
   protected el: HTMLIonItemSlidingElement;
-  @Output() ionDrag = new EventEmitter<CustomEvent<any>>();
+  @Output() ionDrag = new EventEmitter<IonItemSlidingCustomEvent<any>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1149,11 +1168,13 @@ export class IonItemSliding {
 }
 
 
+import type { IonItemSlidingCustomEvent } from '@ionic/core/components';
+
 export declare interface IonItemSliding extends Components.IonItemSliding {
   /**
    * Emitted when the sliding position changes.
    */
-  ionDrag: EventEmitter<CustomEvent<any>>;
+  ionDrag: EventEmitter<IonItemSlidingCustomEvent<any>>;
 }
 
 
@@ -1242,14 +1263,14 @@ export declare interface IonListHeader extends Components.IonListHeader {}
 })
 export class IonLoading {
   protected el: HTMLIonLoadingElement;
-  @Output() ionLoadingDidPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() ionLoadingWillPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() ionLoadingWillDismiss = new EventEmitter<CustomEvent<IIonLoadingOverlayEventDetail>>();
-  @Output() ionLoadingDidDismiss = new EventEmitter<CustomEvent<IIonLoadingOverlayEventDetail>>();
-  @Output() didPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() willPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() willDismiss = new EventEmitter<CustomEvent<IIonLoadingOverlayEventDetail>>();
-  @Output() didDismiss = new EventEmitter<CustomEvent<IIonLoadingOverlayEventDetail>>();
+  @Output() ionLoadingDidPresent = new EventEmitter<IonLoadingCustomEvent<void>>();
+  @Output() ionLoadingWillPresent = new EventEmitter<IonLoadingCustomEvent<void>>();
+  @Output() ionLoadingWillDismiss = new EventEmitter<IonLoadingCustomEvent<IIonLoadingOverlayEventDetail>>();
+  @Output() ionLoadingDidDismiss = new EventEmitter<IonLoadingCustomEvent<IIonLoadingOverlayEventDetail>>();
+  @Output() didPresent = new EventEmitter<IonLoadingCustomEvent<void>>();
+  @Output() willPresent = new EventEmitter<IonLoadingCustomEvent<void>>();
+  @Output() willDismiss = new EventEmitter<IonLoadingCustomEvent<IIonLoadingOverlayEventDetail>>();
+  @Output() didDismiss = new EventEmitter<IonLoadingCustomEvent<IIonLoadingOverlayEventDetail>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1257,45 +1278,46 @@ export class IonLoading {
 }
 
 
+import type { IonLoadingCustomEvent } from '@ionic/core/components';
 import type { OverlayEventDetail as IIonLoadingOverlayEventDetail } from '@ionic/core/components';
 
 export declare interface IonLoading extends Components.IonLoading {
   /**
    * Emitted after the loading has presented.
    */
-  ionLoadingDidPresent: EventEmitter<CustomEvent<void>>;
+  ionLoadingDidPresent: EventEmitter<IonLoadingCustomEvent<void>>;
   /**
    * Emitted before the loading has presented.
    */
-  ionLoadingWillPresent: EventEmitter<CustomEvent<void>>;
+  ionLoadingWillPresent: EventEmitter<IonLoadingCustomEvent<void>>;
   /**
    * Emitted before the loading has dismissed.
    */
-  ionLoadingWillDismiss: EventEmitter<CustomEvent<IIonLoadingOverlayEventDetail>>;
+  ionLoadingWillDismiss: EventEmitter<IonLoadingCustomEvent<IIonLoadingOverlayEventDetail>>;
   /**
    * Emitted after the loading has dismissed.
    */
-  ionLoadingDidDismiss: EventEmitter<CustomEvent<IIonLoadingOverlayEventDetail>>;
+  ionLoadingDidDismiss: EventEmitter<IonLoadingCustomEvent<IIonLoadingOverlayEventDetail>>;
   /**
    * Emitted after the loading indicator has presented.
 Shorthand for ionLoadingWillDismiss.
    */
-  didPresent: EventEmitter<CustomEvent<void>>;
+  didPresent: EventEmitter<IonLoadingCustomEvent<void>>;
   /**
    * Emitted before the loading indicator has presented.
 Shorthand for ionLoadingWillPresent.
    */
-  willPresent: EventEmitter<CustomEvent<void>>;
+  willPresent: EventEmitter<IonLoadingCustomEvent<void>>;
   /**
    * Emitted before the loading indicator has dismissed.
 Shorthand for ionLoadingWillDismiss.
    */
-  willDismiss: EventEmitter<CustomEvent<IIonLoadingOverlayEventDetail>>;
+  willDismiss: EventEmitter<IonLoadingCustomEvent<IIonLoadingOverlayEventDetail>>;
   /**
    * Emitted after the loading indicator has dismissed.
 Shorthand for ionLoadingDidDismiss.
    */
-  didDismiss: EventEmitter<CustomEvent<IIonLoadingOverlayEventDetail>>;
+  didDismiss: EventEmitter<IonLoadingCustomEvent<IIonLoadingOverlayEventDetail>>;
 }
 
 
@@ -1314,10 +1336,10 @@ Shorthand for ionLoadingDidDismiss.
 })
 export class IonMenu {
   protected el: HTMLIonMenuElement;
-  @Output() ionWillOpen = new EventEmitter<CustomEvent<void>>();
-  @Output() ionWillClose = new EventEmitter<CustomEvent<IIonMenuMenuCloseEventDetail>>();
-  @Output() ionDidOpen = new EventEmitter<CustomEvent<void>>();
-  @Output() ionDidClose = new EventEmitter<CustomEvent<IIonMenuMenuCloseEventDetail>>();
+  @Output() ionWillOpen = new EventEmitter<IonMenuCustomEvent<void>>();
+  @Output() ionWillClose = new EventEmitter<IonMenuCustomEvent<IIonMenuMenuCloseEventDetail>>();
+  @Output() ionDidOpen = new EventEmitter<IonMenuCustomEvent<void>>();
+  @Output() ionDidClose = new EventEmitter<IonMenuCustomEvent<IIonMenuMenuCloseEventDetail>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1325,25 +1347,26 @@ export class IonMenu {
 }
 
 
+import type { IonMenuCustomEvent } from '@ionic/core/components';
 import type { MenuCloseEventDetail as IIonMenuMenuCloseEventDetail } from '@ionic/core/components';
 
 export declare interface IonMenu extends Components.IonMenu {
   /**
    * Emitted when the menu is about to be opened.
    */
-  ionWillOpen: EventEmitter<CustomEvent<void>>;
+  ionWillOpen: EventEmitter<IonMenuCustomEvent<void>>;
   /**
    * Emitted when the menu is about to be closed.
    */
-  ionWillClose: EventEmitter<CustomEvent<IIonMenuMenuCloseEventDetail>>;
+  ionWillClose: EventEmitter<IonMenuCustomEvent<IIonMenuMenuCloseEventDetail>>;
   /**
    * Emitted when the menu is open.
    */
-  ionDidOpen: EventEmitter<CustomEvent<void>>;
+  ionDidOpen: EventEmitter<IonMenuCustomEvent<void>>;
   /**
    * Emitted when the menu is closed.
    */
-  ionDidClose: EventEmitter<CustomEvent<IIonMenuMenuCloseEventDetail>>;
+  ionDidClose: EventEmitter<IonMenuCustomEvent<IIonMenuMenuCloseEventDetail>>;
 }
 
 
@@ -1477,7 +1500,7 @@ export declare interface IonPicker extends Components.IonPicker {}
 })
 export class IonPickerColumn {
   protected el: HTMLIonPickerColumnElement;
-  @Output() ionChange = new EventEmitter<CustomEvent<IIonPickerColumnPickerColumnChangeEventDetail>>();
+  @Output() ionChange = new EventEmitter<IonPickerColumnCustomEvent<IIonPickerColumnPickerColumnChangeEventDetail>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1485,6 +1508,7 @@ export class IonPickerColumn {
 }
 
 
+import type { IonPickerColumnCustomEvent } from '@ionic/core/components';
 import type { PickerColumnChangeEventDetail as IIonPickerColumnPickerColumnChangeEventDetail } from '@ionic/core/components';
 
 export declare interface IonPickerColumn extends Components.IonPickerColumn {
@@ -1493,7 +1517,7 @@ export declare interface IonPickerColumn extends Components.IonPickerColumn {
 
 This event will not emit when programmatically setting the `value` property.
    */
-  ionChange: EventEmitter<CustomEvent<IIonPickerColumnPickerColumnChangeEventDetail>>;
+  ionChange: EventEmitter<IonPickerColumnCustomEvent<IIonPickerColumnPickerColumnChangeEventDetail>>;
 }
 
 
@@ -1557,8 +1581,8 @@ export declare interface IonProgressBar extends Components.IonProgressBar {}
 })
 export class IonRadio {
   protected el: HTMLIonRadioElement;
-  @Output() ionFocus = new EventEmitter<CustomEvent<void>>();
-  @Output() ionBlur = new EventEmitter<CustomEvent<void>>();
+  @Output() ionFocus = new EventEmitter<IonRadioCustomEvent<void>>();
+  @Output() ionBlur = new EventEmitter<IonRadioCustomEvent<void>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1566,15 +1590,17 @@ export class IonRadio {
 }
 
 
+import type { IonRadioCustomEvent } from '@ionic/core/components';
+
 export declare interface IonRadio extends Components.IonRadio {
   /**
    * Emitted when the radio button has focus.
    */
-  ionFocus: EventEmitter<CustomEvent<void>>;
+  ionFocus: EventEmitter<IonRadioCustomEvent<void>>;
   /**
    * Emitted when the radio button loses focus.
    */
-  ionBlur: EventEmitter<CustomEvent<void>>;
+  ionBlur: EventEmitter<IonRadioCustomEvent<void>>;
 }
 
 
@@ -1593,11 +1619,11 @@ export declare interface IonRadio extends Components.IonRadio {
 })
 export class IonRefresher {
   protected el: HTMLIonRefresherElement;
-  @Output() ionRefresh = new EventEmitter<CustomEvent<IIonRefresherRefresherEventDetail>>();
-  @Output() ionPull = new EventEmitter<CustomEvent<void>>();
-  @Output() ionStart = new EventEmitter<CustomEvent<void>>();
-  @Output() ionPullStart = new EventEmitter<CustomEvent<void>>();
-  @Output() ionPullEnd = new EventEmitter<CustomEvent<IIonRefresherRefresherPullEndEventDetail>>();
+  @Output() ionRefresh = new EventEmitter<IonRefresherCustomEvent<IIonRefresherRefresherEventDetail>>();
+  @Output() ionPull = new EventEmitter<IonRefresherCustomEvent<void>>();
+  @Output() ionStart = new EventEmitter<IonRefresherCustomEvent<void>>();
+  @Output() ionPullStart = new EventEmitter<IonRefresherCustomEvent<void>>();
+  @Output() ionPullEnd = new EventEmitter<IonRefresherCustomEvent<IIonRefresherRefresherPullEndEventDetail>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1605,6 +1631,7 @@ export class IonRefresher {
 }
 
 
+import type { IonRefresherCustomEvent } from '@ionic/core/components';
 import type { RefresherEventDetail as IIonRefresherRefresherEventDetail } from '@ionic/core/components';
 import type { RefresherPullEndEventDetail as IIonRefresherRefresherPullEndEventDetail } from '@ionic/core/components';
 
@@ -1615,25 +1642,25 @@ further than the `pullMin` or pulls the content down and exceeds the pullMax.
 Updates the refresher state to `refreshing`. The `complete()` method should be
 called when the async operation has completed.
    */
-  ionRefresh: EventEmitter<CustomEvent<IIonRefresherRefresherEventDetail>>;
+  ionRefresh: EventEmitter<IonRefresherCustomEvent<IIonRefresherRefresherEventDetail>>;
   /**
    * Emitted while the user is pulling down the content and exposing the refresher.
    */
-  ionPull: EventEmitter<CustomEvent<void>>;
+  ionPull: EventEmitter<IonRefresherCustomEvent<void>>;
   /**
    * Emitted when the user begins to start pulling down. @deprecated Use `ionPullStart` instead.
    */
-  ionStart: EventEmitter<CustomEvent<void>>;
+  ionStart: EventEmitter<IonRefresherCustomEvent<void>>;
   /**
    * Emitted when the user begins to start pulling down.
    */
-  ionPullStart: EventEmitter<CustomEvent<void>>;
+  ionPullStart: EventEmitter<IonRefresherCustomEvent<void>>;
   /**
    * Emitted when the refresher has returned to the inactive state
 after a pull gesture. This fires whether the refresh completed
 successfully or was canceled.
    */
-  ionPullEnd: EventEmitter<CustomEvent<IIonRefresherRefresherPullEndEventDetail>>;
+  ionPullEnd: EventEmitter<IonRefresherCustomEvent<IIonRefresherRefresherPullEndEventDetail>>;
 }
 
 
@@ -1697,10 +1724,10 @@ export declare interface IonReorder extends Components.IonReorder {}
 })
 export class IonReorderGroup {
   protected el: HTMLIonReorderGroupElement;
-  @Output() ionItemReorder = new EventEmitter<CustomEvent<IIonReorderGroupItemReorderEventDetail>>();
-  @Output() ionReorderStart = new EventEmitter<CustomEvent<void>>();
-  @Output() ionReorderMove = new EventEmitter<CustomEvent<IIonReorderGroupReorderMoveEventDetail>>();
-  @Output() ionReorderEnd = new EventEmitter<CustomEvent<IIonReorderGroupReorderEndEventDetail>>();
+  @Output() ionItemReorder = new EventEmitter<IonReorderGroupCustomEvent<IIonReorderGroupItemReorderEventDetail>>();
+  @Output() ionReorderStart = new EventEmitter<IonReorderGroupCustomEvent<void>>();
+  @Output() ionReorderMove = new EventEmitter<IonReorderGroupCustomEvent<IIonReorderGroupReorderMoveEventDetail>>();
+  @Output() ionReorderEnd = new EventEmitter<IonReorderGroupCustomEvent<IIonReorderGroupReorderEndEventDetail>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1708,6 +1735,7 @@ export class IonReorderGroup {
 }
 
 
+import type { IonReorderGroupCustomEvent } from '@ionic/core/components';
 import type { ItemReorderEventDetail as IIonReorderGroupItemReorderEventDetail } from '@ionic/core/components';
 import type { ReorderMoveEventDetail as IIonReorderGroupReorderMoveEventDetail } from '@ionic/core/components';
 import type { ReorderEndEventDetail as IIonReorderGroupReorderEndEventDetail } from '@ionic/core/components';
@@ -1719,15 +1747,15 @@ export declare interface IonReorderGroup extends Components.IonReorderGroup {
 being different you should now add checks as they are always emitted
 in `ionReorderEnd`, even when they are the same.
    */
-  ionItemReorder: EventEmitter<CustomEvent<IIonReorderGroupItemReorderEventDetail>>;
+  ionItemReorder: EventEmitter<IonReorderGroupCustomEvent<IIonReorderGroupItemReorderEventDetail>>;
   /**
    * Event that is emitted when the reorder gesture starts.
    */
-  ionReorderStart: EventEmitter<CustomEvent<void>>;
+  ionReorderStart: EventEmitter<IonReorderGroupCustomEvent<void>>;
   /**
    * Event that is emitted as the reorder gesture moves.
    */
-  ionReorderMove: EventEmitter<CustomEvent<IIonReorderGroupReorderMoveEventDetail>>;
+  ionReorderMove: EventEmitter<IonReorderGroupCustomEvent<IIonReorderGroupReorderMoveEventDetail>>;
   /**
    * Event that is emitted when the reorder gesture ends.
 The from and to properties are always available, regardless of
@@ -1736,7 +1764,7 @@ from its start position, the from and to properties will be the same.
 Once the event has been emitted, the `complete()` method then needs
 to be called in order to finalize the reorder action.
    */
-  ionReorderEnd: EventEmitter<CustomEvent<IIonReorderGroupReorderEndEventDetail>>;
+  ionReorderEnd: EventEmitter<IonReorderGroupCustomEvent<IIonReorderGroupReorderEndEventDetail>>;
 }
 
 
@@ -1845,7 +1873,7 @@ export declare interface IonSegmentContent extends Components.IonSegmentContent 
 })
 export class IonSegmentView {
   protected el: HTMLIonSegmentViewElement;
-  @Output() ionSegmentViewScroll = new EventEmitter<CustomEvent<IIonSegmentViewSegmentViewScrollEvent>>();
+  @Output() ionSegmentViewScroll = new EventEmitter<IonSegmentViewCustomEvent<IIonSegmentViewSegmentViewScrollEvent>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1853,13 +1881,14 @@ export class IonSegmentView {
 }
 
 
+import type { IonSegmentViewCustomEvent } from '@ionic/core/components';
 import type { SegmentViewScrollEvent as IIonSegmentViewSegmentViewScrollEvent } from '@ionic/core/components';
 
 export declare interface IonSegmentView extends Components.IonSegmentView {
   /**
    * Emitted when the segment view is scrolled.
    */
-  ionSegmentViewScroll: EventEmitter<CustomEvent<IIonSegmentViewSegmentViewScrollEvent>>;
+  ionSegmentViewScroll: EventEmitter<IonSegmentViewCustomEvent<IIonSegmentViewSegmentViewScrollEvent>>;
 }
 
 
@@ -1969,7 +1998,7 @@ export declare interface IonSpinner extends Components.IonSpinner {}
 })
 export class IonSplitPane {
   protected el: HTMLIonSplitPaneElement;
-  @Output() ionSplitPaneVisible = new EventEmitter<CustomEvent<{ visible: boolean }>>();
+  @Output() ionSplitPaneVisible = new EventEmitter<IonSplitPaneCustomEvent<{ visible: boolean }>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1977,11 +2006,13 @@ export class IonSplitPane {
 }
 
 
+import type { IonSplitPaneCustomEvent } from '@ionic/core/components';
+
 export declare interface IonSplitPane extends Components.IonSplitPane {
   /**
    * Expression to be called when the split-pane visibility has changed
    */
-  ionSplitPaneVisible: EventEmitter<CustomEvent<{ visible: boolean }>>;
+  ionSplitPaneVisible: EventEmitter<IonSplitPaneCustomEvent<{ visible: boolean }>>;
 }
 
 
@@ -2138,14 +2169,14 @@ export declare interface IonTitle extends Components.IonTitle {}
 })
 export class IonToast {
   protected el: HTMLIonToastElement;
-  @Output() ionToastDidPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() ionToastWillPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() ionToastWillDismiss = new EventEmitter<CustomEvent<IIonToastOverlayEventDetail>>();
-  @Output() ionToastDidDismiss = new EventEmitter<CustomEvent<IIonToastOverlayEventDetail>>();
-  @Output() didPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() willPresent = new EventEmitter<CustomEvent<void>>();
-  @Output() willDismiss = new EventEmitter<CustomEvent<IIonToastOverlayEventDetail>>();
-  @Output() didDismiss = new EventEmitter<CustomEvent<IIonToastOverlayEventDetail>>();
+  @Output() ionToastDidPresent = new EventEmitter<IonToastCustomEvent<void>>();
+  @Output() ionToastWillPresent = new EventEmitter<IonToastCustomEvent<void>>();
+  @Output() ionToastWillDismiss = new EventEmitter<IonToastCustomEvent<IIonToastOverlayEventDetail>>();
+  @Output() ionToastDidDismiss = new EventEmitter<IonToastCustomEvent<IIonToastOverlayEventDetail>>();
+  @Output() didPresent = new EventEmitter<IonToastCustomEvent<void>>();
+  @Output() willPresent = new EventEmitter<IonToastCustomEvent<void>>();
+  @Output() willDismiss = new EventEmitter<IonToastCustomEvent<IIonToastOverlayEventDetail>>();
+  @Output() didDismiss = new EventEmitter<IonToastCustomEvent<IIonToastOverlayEventDetail>>();
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2153,45 +2184,46 @@ export class IonToast {
 }
 
 
+import type { IonToastCustomEvent } from '@ionic/core/components';
 import type { OverlayEventDetail as IIonToastOverlayEventDetail } from '@ionic/core/components';
 
 export declare interface IonToast extends Components.IonToast {
   /**
    * Emitted after the toast has presented.
    */
-  ionToastDidPresent: EventEmitter<CustomEvent<void>>;
+  ionToastDidPresent: EventEmitter<IonToastCustomEvent<void>>;
   /**
    * Emitted before the toast has presented.
    */
-  ionToastWillPresent: EventEmitter<CustomEvent<void>>;
+  ionToastWillPresent: EventEmitter<IonToastCustomEvent<void>>;
   /**
    * Emitted before the toast has dismissed.
    */
-  ionToastWillDismiss: EventEmitter<CustomEvent<IIonToastOverlayEventDetail>>;
+  ionToastWillDismiss: EventEmitter<IonToastCustomEvent<IIonToastOverlayEventDetail>>;
   /**
    * Emitted after the toast has dismissed.
    */
-  ionToastDidDismiss: EventEmitter<CustomEvent<IIonToastOverlayEventDetail>>;
+  ionToastDidDismiss: EventEmitter<IonToastCustomEvent<IIonToastOverlayEventDetail>>;
   /**
    * Emitted after the toast has presented.
 Shorthand for ionToastWillDismiss.
    */
-  didPresent: EventEmitter<CustomEvent<void>>;
+  didPresent: EventEmitter<IonToastCustomEvent<void>>;
   /**
    * Emitted before the toast has presented.
 Shorthand for ionToastWillPresent.
    */
-  willPresent: EventEmitter<CustomEvent<void>>;
+  willPresent: EventEmitter<IonToastCustomEvent<void>>;
   /**
    * Emitted before the toast has dismissed.
 Shorthand for ionToastWillDismiss.
    */
-  willDismiss: EventEmitter<CustomEvent<IIonToastOverlayEventDetail>>;
+  willDismiss: EventEmitter<IonToastCustomEvent<IIonToastOverlayEventDetail>>;
   /**
    * Emitted after the toast has dismissed.
 Shorthand for ionToastDidDismiss.
    */
-  didDismiss: EventEmitter<CustomEvent<IIonToastOverlayEventDetail>>;
+  didDismiss: EventEmitter<IonToastCustomEvent<IIonToastOverlayEventDetail>>;
 }
 
 

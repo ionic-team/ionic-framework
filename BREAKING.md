@@ -169,23 +169,6 @@ Angular's current build pipeline no longer supports the webpack-loader `~` prefi
 + @import '@ionic/angular/css/core.css';
 ```
 
-**Narrowed Event Types**
-
-The Angular output target no longer surfaces the narrow `*CustomEvent` types (such as `RefresherCustomEvent` and `ReorderEndCustomEvent`) through template type inference. Use `CustomEvent<*EventDetail>` and cast `event.target` at call sites that invoke methods on it:
-
-```diff
-- import { RefresherCustomEvent } from '@ionic/angular';
--
-- onRefresh(event: RefresherCustomEvent) {
--   event.target.complete();
-- }
-+ import type { RefresherEventDetail } from '@ionic/core';
-+
-+ onRefresh(event: CustomEvent<RefresherEventDetail>) {
-+   (event.target as HTMLIonRefresherElement | null)?.complete();
-+ }
-```
-
 <h4 id="version-9x-react">React</h4>
 
 The `@ionic/react-router` package now requires React Router v6. React Router v5 is no longer supported.
