@@ -746,53 +746,78 @@ describe('gallery', () => {
 
   describe('gallery: layout', () => {
     describe('getItems()', () => {
-      it('should include direct child SVG elements with HTML elements', () => {
-        const div = document.createElement('div');
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        el.appendChild(div);
-        el.appendChild(svg);
+      it('should collect direct ion-gallery-item children as items', () => {
+        const itemOne = document.createElement('ion-gallery-item');
+        const itemTwo = document.createElement('ion-gallery-item');
+        el.appendChild(itemOne);
+        el.appendChild(itemTwo);
 
         const items = (sharedGallery as any).getItems();
 
-        expect(items).toEqual([div, svg]);
-        expect(items[1].namespaceURI).toBe('http://www.w3.org/2000/svg');
+        expect(items).toEqual([itemOne, itemTwo]);
       });
 
-      it('should exclude direct children without a usable CSSStyleDeclaration (no setProperty)', () => {
-        const included = document.createElement('div');
-        const excluded = document.createElement('div');
-        Object.defineProperty(excluded, 'style', {
-          configurable: true,
-          enumerable: true,
-          get() {
-            return { cssText: '' } as unknown as CSSStyleDeclaration;
-          },
-        });
-        el.appendChild(included);
-        el.appendChild(excluded);
+      it('should flatten a wrapper element and collapse its box with display: contents', () => {
+        const wrapper = document.createElement('div');
+        const itemOne = document.createElement('ion-gallery-item');
+        const itemTwo = document.createElement('ion-gallery-item');
+        wrapper.appendChild(itemOne);
+        wrapper.appendChild(itemTwo);
+        el.appendChild(wrapper);
 
         const items = (sharedGallery as any).getItems();
 
-        expect(items).toEqual([included]);
+        expect(items).toEqual([itemOne, itemTwo]);
+        expect(wrapper.style.display).toBe('contents');
       });
 
-      it('should apply masonry grid placement styles to slotted SVG elements', () => {
-        const div = document.createElement('div');
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        el.appendChild(div);
-        el.appendChild(svg);
+      it('should warn and ignore children that do not contain an ion-gallery-item', () => {
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        el.appendChild(document.createElement('img'));
 
         const items = (sharedGallery as any).getItems();
 
-        jest.spyOn(div, 'getBoundingClientRect').mockReturnValue({ height: 20 } as DOMRect);
-        jest.spyOn(svg, 'getBoundingClientRect').mockReturnValue({ height: 30 } as DOMRect);
+        expect(items).toEqual([]);
+        expect(warningSpy).toHaveBeenCalledWith(
+          expect.stringContaining('[ion-gallery] - Gallery items must be wrapped in "ion-gallery-item" components.'),
+          el
+        );
+
+        warningSpy.mockRestore();
+      });
+
+      it('should only warn once about invalid children', () => {
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        el.appendChild(document.createElement('img'));
+        el.appendChild(document.createElement('span'));
+
+        (sharedGallery as any).getItems();
+        (sharedGallery as any).getItems();
+
+        expect(warningSpy).toHaveBeenCalledTimes(1);
+
+        warningSpy.mockRestore();
+      });
+
+      it('should apply masonry grid placement styles to items', () => {
+        const itemOne = document.createElement('ion-gallery-item');
+        const itemTwo = document.createElement('ion-gallery-item');
+        el.appendChild(itemOne);
+        el.appendChild(itemTwo);
+
+        jest.spyOn(itemOne, 'getBoundingClientRect').mockReturnValue({ height: 20 } as DOMRect);
+        jest.spyOn(itemTwo, 'getBoundingClientRect').mockReturnValue({ height: 30 } as DOMRect);
+
+        const items = (sharedGallery as any).getItems();
 
         (sharedGallery as any).layoutMasonry(items, 10, 0, 2);
 
-        expect(div.style.gridColumn).toBe('1');
-        expect(svg.style.gridColumn).toBe('2');
-        expect(svg.style.gridRowStart).not.toBe('');
-        expect(svg.style.gridRowEnd).not.toBe('');
+        expect(itemOne.style.gridColumn).toBe('1');
+        expect(itemTwo.style.gridColumn).toBe('2');
+        expect(itemTwo.style.gridRowStart).not.toBe('');
+        expect(itemTwo.style.gridRowEnd).not.toBe('');
       });
     });
 
