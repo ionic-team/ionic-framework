@@ -5,6 +5,7 @@ import { Build, Component, Element, Event, Host, Prop, State, Watch, h } from '@
 import { checkInvalidState } from '@utils/forms';
 import { renderHiddenInput, inheritAriaAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
+import { renderIcon } from '@utils/icon';
 import { hapticSelection } from '@utils/native/haptic';
 import { isPlatform } from '@utils/platform';
 import { isRTL } from '@utils/rtl';
@@ -402,29 +403,34 @@ export class Toggle implements ComponentInterface {
   }
 
   private renderOnOffSwitchLabels(checked: boolean) {
+    const theme = getIonTheme(this);
     const icon = this.getSwitchLabelIcon(checked);
 
-    return (
-      <ion-icon
-        class={{
-          'toggle-switch-icon': true,
-          'toggle-switch-icon-checked': checked,
-          /**
-           * The default checked icon is being modified with
-           * styling that causes it to rotate by 90 degrees
-           * when the theme is `ios`.
-           *
-           * To prevent any rotation on a custom icon that is
-           * set through the config, we need to apply a class
-           * that handles the styling only when the default
-           * checked icon is being used.
-           */
-          'toggle-switch-icon-checked-default': checked && icon === this.toggleDefaultCheckedIcon,
-        }}
-        icon={icon}
-        aria-hidden="true"
-      ></ion-icon>
-    );
+    // Map the ionic-theme default SVGs to their Phosphor class names.
+    // Pass null when a custom icon is configured so the SVG is always used.
+    const phosphorMap: Record<string, string> = {
+      [checkRegular]: 'ph-check',
+      [minusRegular]: 'ph-minus',
+    };
+    const ionicIconClass = phosphorMap[icon] ?? null;
+
+    return renderIcon(theme, ionicIconClass, icon, {
+      class: {
+        'toggle-switch-icon': true,
+        'toggle-switch-icon-checked': checked,
+        /**
+         * The default checked icon is being modified with
+         * styling that causes it to rotate by 90 degrees
+         * when the theme is `ios`.
+         *
+         * To prevent any rotation on a custom icon that is
+         * set through the config, we need to apply a class
+         * that handles the styling only when the default
+         * checked icon is being used.
+         */
+        'toggle-switch-icon-checked-default': checked && icon === this.toggleDefaultCheckedIcon,
+      },
+    });
   }
 
   private renderToggleControl() {
