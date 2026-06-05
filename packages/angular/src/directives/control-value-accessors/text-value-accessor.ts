@@ -3,6 +3,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 
 @Directive({
+  standalone: false,
   selector: 'ion-input:not([type=number]),ion-input-otp[type=text],ion-textarea,ion-searchbar',
   providers: [
     {

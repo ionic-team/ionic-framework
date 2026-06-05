@@ -1293,9 +1293,9 @@ export namespace Components {
         "autocomplete": AutocompleteTypes;
         /**
           * Whether auto correction should be enabled when the user is entering/editing the text value.
-          * @default 'off'
+          * @default false
          */
-        "autocorrect": 'on' | 'off';
+        "autocorrect": boolean;
         /**
           * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
           * @default false
@@ -2838,9 +2838,9 @@ export namespace Components {
         "autocomplete": AutocompleteTypes;
         /**
           * Set the input's autocorrect property.
-          * @default 'off'
+          * @default false
          */
-        "autocorrect": 'on' | 'off';
+        "autocorrect": boolean;
         /**
           * Set the cancel button icon. Only applies to `md` mode. Defaults to `arrow-back-sharp`.
           * @default config.get('backButtonIcon', arrowBackSharp) as string
@@ -3214,7 +3214,7 @@ export namespace Components {
         "isVisible": () => Promise<boolean>;
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default QUERY['lg']
+          * @default '(min-width: 992px)'
          */
         "when": string | boolean;
     }
@@ -6436,9 +6436,9 @@ declare namespace LocalJSX {
         "autocomplete"?: AutocompleteTypes;
         /**
           * Whether auto correction should be enabled when the user is entering/editing the text value.
-          * @default 'off'
+          * @default false
          */
-        "autocorrect"?: 'on' | 'off';
+        "autocorrect"?: boolean;
         /**
           * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
           * @default false
@@ -7991,9 +7991,9 @@ declare namespace LocalJSX {
         "autocomplete"?: AutocompleteTypes;
         /**
           * Set the input's autocorrect property.
-          * @default 'off'
+          * @default false
          */
-        "autocorrect"?: 'on' | 'off';
+        "autocorrect"?: boolean;
         /**
           * Set the cancel button icon. Only applies to `md` mode. Defaults to `arrow-back-sharp`.
           * @default config.get('backButtonIcon', arrowBackSharp) as string
@@ -8423,7 +8423,7 @@ declare namespace LocalJSX {
         "onIonSplitPaneVisible"?: (event: IonSplitPaneCustomEvent<{ visible: boolean }>) => void;
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default QUERY['lg']
+          * @default '(min-width: 992px)'
          */
         "when"?: string | boolean;
     }
@@ -9168,7 +9168,7 @@ declare namespace LocalJSX {
         "color": Color;
         "autocapitalize": string;
         "autocomplete": AutocompleteTypes;
-        "autocorrect": 'on' | 'off';
+        "autocorrect": boolean;
         "autofocus": boolean;
         "clearInput": boolean;
         "clearInputIcon": string;
@@ -9458,7 +9458,7 @@ declare namespace LocalJSX {
         "animated": boolean;
         "autocapitalize": string;
         "autocomplete": AutocompleteTypes;
-        "autocorrect": 'on' | 'off';
+        "autocorrect": boolean;
         "cancelButtonIcon": string;
         "cancelButtonText": string;
         "clearIcon": string;

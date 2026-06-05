@@ -18,7 +18,7 @@ From here you can either build the application or start a local dev server. When
 
 > [!NOTE]
 > Syncing is required to verify that the minimal supported Angular version is still compatible with the latest Ionic Framework changes.
-> For example, Ionic Framework 8 supports Angular 16, but the latest version of Ionic Framework may not be compatible with Angular 16. Syncing allows you to verify that the latest changes are still compatible with the minimal supported version.
+> For example, Ionic Framework 9 supports Angular 18, but the latest version of Ionic Framework may not be compatible with Angular 18. Syncing allows you to verify that the latest changes are still compatible with the minimal supported version.
 >
 > Support for the minimal version and maximum version can be found on the [Support page](https://ionicframework.com/docs/reference/support#ionic-angular) of the Ionic Framework documentation.
 

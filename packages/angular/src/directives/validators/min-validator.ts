@@ -12,11 +12,11 @@ export const ION_MIN_VALIDATOR: Provider = {
 };
 
 @Directive({
+  standalone: false,
   selector:
     'ion-input[type=number][min][formControlName],ion-input[type=number][min][formControl],ion-input[type=number][min][ngModel]',
   providers: [ION_MIN_VALIDATOR],
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
-  host: { '[attr.min]': '_enabled ? min : null' },
+  host: { '[attr.min]': 'enabled(min) ? min : null' },
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonMinValidator extends MinValidator {}

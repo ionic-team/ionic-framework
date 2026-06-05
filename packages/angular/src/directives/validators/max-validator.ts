@@ -12,11 +12,11 @@ export const ION_MAX_VALIDATOR: Provider = {
 };
 
 @Directive({
+  standalone: false,
   selector:
     'ion-input[type=number][max][formControlName],ion-input[type=number][max][formControl],ion-input[type=number][max][ngModel]',
   providers: [ION_MAX_VALIDATOR],
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
-  host: { '[attr.max]': '_enabled ? max : null' },
+  host: { '[attr.max]': 'enabled(max) ? max : null' },
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonMaxValidator extends MaxValidator {}

@@ -289,9 +289,9 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
 
   // Forward the nesting context as a prop to avoid contextType on the class.
   const ReactComponentWithNesting: React.FC<IonicReactInternalProps<PropType>> = (props) =>
-    createElement(NestedOverlayContext.Consumer, null, (isNested: boolean) =>
-      createElement(ReactComponent, { ...(props as InternalProps), isNested })
-    );
+    createElement(NestedOverlayContext.Consumer, {
+      children: (isNested: boolean) => createElement(ReactComponent, { ...(props as InternalProps), isNested }),
+    });
   ReactComponentWithNesting.displayName = displayName;
 
   return createForwardRef<PropType, ElementType>(ReactComponentWithNesting, displayName);

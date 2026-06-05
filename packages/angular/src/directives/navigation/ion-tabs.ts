@@ -6,6 +6,7 @@ import { IonTabBar, IonTab } from '../proxies';
 import { IonRouterOutlet } from './ion-router-outlet';
 
 @Component({
+  standalone: false,
   selector: 'ion-tabs',
   template: `
     <ng-content select="[slot=top]"></ng-content>

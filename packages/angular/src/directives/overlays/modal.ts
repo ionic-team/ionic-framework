@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IonModal as IonModalBase } from '@ionic/angular/common';
 
 @Component({
+  standalone: false,
   selector: 'ion-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div class="ion-delegate-host ion-page" *ngIf="isCmpOpen || keepContentsMounted">

@@ -16,6 +16,9 @@
       "rules": {
         "@typescript-eslint/consistent-type-imports": "off",
         "@angular-eslint/component-class-suffix": "off",
+        "@angular-eslint/prefer-inject": "off",
+        "@angular-eslint/prefer-standalone": "off",
+        "@angular-eslint/no-host-metadata-property": "off",
         "@angular-eslint/component-selector": [
           "error",
           {

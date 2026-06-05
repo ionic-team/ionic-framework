@@ -3,6 +3,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor, setIonicClasses } from '@ionic/angular/common';
 
 @Directive({
+  standalone: false,
   selector: 'ion-checkbox,ion-toggle',
   providers: [
     {

@@ -4,6 +4,7 @@ import { IonBackButton as IonBackButtonBase, NavController, Config } from '@ioni
 import { IonRouterOutlet } from './ion-router-outlet';
 
 @Component({
+  standalone: false,
   selector: 'ion-back-button',
   template: '<ng-content></ng-content>',
   changeDetection: ChangeDetectionStrategy.OnPush,
