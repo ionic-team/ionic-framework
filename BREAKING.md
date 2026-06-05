@@ -175,10 +175,6 @@ Angular forbids `provideZoneChangeDetection()` inside an NgModule's `providers` 
 import 'zone.js';
 ```
 
-**`bindLifecycleEvents` No Longer Exported**
-
-The internal `bindLifecycleEvents` helper is no longer exported from `@ionic/angular/common`. It was framework plumbing for wiring Ionic lifecycle events to component instances and was never part of the documented API. Apps don't call it directly.
-
 **TypeScript**
 
 Ionic 9 supports TypeScript 5.4 or later, matching the minimum for Angular 18. Angular 21 requires TypeScript 5.9 or later per Angular's own requirements.
