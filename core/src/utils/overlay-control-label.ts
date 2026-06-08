@@ -14,7 +14,7 @@ import type { Theme } from '../interface';
  *
  * `interfaceType` is optional; only `"modal"` changes the result, so
  * callers that aren't a modal can omit it.
- *`
+ *
  * Used by `alert`, `select-popover`, and `select-modal` as the fallback
  * when an option doesn't explicitly set `labelPlacement`.
  */
