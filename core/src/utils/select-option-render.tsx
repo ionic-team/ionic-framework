@@ -1,5 +1,6 @@
 import type { VNode } from '@stencil/core';
 import { h } from '@stencil/core';
+import { sanitizeDOMTree } from '@utils/sanitization';
 
 import type { RichContentOption as RichContentOpt } from '../components/select/select-interface';
 
@@ -84,6 +85,9 @@ export const cloneToVNode = (node: Node, keyPrefix: string, index: number): VNod
 const renderClonedContent = (id: string, content: HTMLElement, className: string, useSpan = false) => {
   const Tag = useSpan ? 'span' : 'div';
   const keyPrefix = `${className}-${id}`;
+
+  sanitizeDOMTree(content);
+
   return (
     <Tag class={className} key={keyPrefix}>
       {Array.from(content.childNodes).map((child, i) => cloneToVNode(child, keyPrefix, i))}

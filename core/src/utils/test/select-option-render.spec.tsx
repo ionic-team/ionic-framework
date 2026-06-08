@@ -1,6 +1,6 @@
 import type { VNode } from '@stencil/core';
 
-import { cloneToVNode } from '../select-option-render';
+import { cloneToVNode, renderOptionLabel } from '../select-option-render';
 
 /**
  * `cloneToVNode` returns Stencil's internal VNode object, whose fields are
@@ -149,5 +149,22 @@ describe('cloneToVNode', () => {
       // `h` normalizes an empty children array to `null`
       expect(vnode.$children$).toBeNull();
     });
+  });
+});
+
+describe('renderOptionLabel', () => {
+  it('should sanitize an HTMLElement label that bypassed ion-select', () => {
+    // Mirrors a vanilla JS caller passing DOM straight to an overlay, which
+    // never runs through `getOptionContent`'s `sanitizeDOMTree`.
+    const label = document.createElement('span');
+    label.innerHTML = '<a href="javascript:alert(1)" onclick="evil()" class="safe">hi</a>';
+
+    const result = asVNode(renderOptionLabel({ id: '1', label }, 'select-option') as unknown as VNode);
+
+    const anchor = result.$children$?.[0].$children$?.[0];
+    expect(anchor?.$tag$).toBe('a');
+    expect(anchor?.$attrs$?.href).toBeUndefined();
+    expect(anchor?.$attrs$?.onclick).toBeUndefined();
+    expect(anchor?.$attrs$?.class).toBe('safe');
   });
 });
