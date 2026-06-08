@@ -234,6 +234,16 @@ export const attachView = (
 
   applicationRef.attachView(componentRef.hostView);
 
+  /**
+   * Run change detection on the freshly attached view so Angular's init hooks
+   * (`ngOnInit`, `ngAfterViewInit`) fire before the web component dispatches its
+   * Ionic lifecycle events (`ionViewWillEnter`, etc.). `createComponent` only runs
+   * the creation pass. The init hooks run during an update pass. Under Zone.js an
+   * implicit tick used to cover this, but zoneless Angular schedules no such tick,
+   * so without this the first `ionViewWillEnter` could run before `ngOnInit`.
+   */
+  componentRef.changeDetectorRef.detectChanges();
+
   elRefMap.set(hostElement, componentRef);
   elEventsMap.set(hostElement, unbindEvents);
   return hostElement;

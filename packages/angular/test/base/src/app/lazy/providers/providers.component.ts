@@ -26,6 +26,7 @@ export class ProvidersComponent {
   isResumed = false;
   isPaused = false;
   isResized = false;
+  resizeCount = 0;
   isTesting?: boolean = undefined;
   isDesktop?: boolean = undefined;
   isMobile?: boolean = undefined;
@@ -69,28 +70,29 @@ export class ProvidersComponent {
     platform.ready().then(() => {
       assertZoneContext();
       this.isReady = true;
-      // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own; mark the view dirty.
+      // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own, so mark the view dirty.
       this.cdr.markForCheck();
     });
     platform.resume.subscribe(() => {
       console.log('platform:resume');
       assertZoneContext();
       this.isResumed = true;
-      // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own; mark the view dirty.
+      // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own, so mark the view dirty.
       this.cdr.markForCheck();
     });
     platform.pause.subscribe(() => {
       console.log('platform:pause');
       assertZoneContext();
       this.isPaused = true;
-      // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own; mark the view dirty.
+      // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own, so mark the view dirty.
       this.cdr.markForCheck();
     });
     platform.resize.subscribe(() => {
       console.log('platform:resize');
       assertZoneContext();
       this.isResized = true;
-      // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own; mark the view dirty.
+      this.resizeCount++;
+      // Zoneless: state set in an async callback Angular does not wrap won't re-render on its own, so mark the view dirty.
       this.cdr.markForCheck();
     });
     const firstQuery = platform.getQueryParam('firstParam');
