@@ -5,6 +5,8 @@
 
 :host {
   display: block;
+
+  width: 100%;
 }
 
 // Slotted content
@@ -28,11 +30,13 @@
 // Layout: Uniform
 // --------------------------------------------------
 
-// In the uniform layout each cell is square by default. The aspect ratio is
-// applied to the slotted content (rather than the item) so that an explicit
-// height on the content takes precedence — a set `height` overrides
-// `aspect-ratio` on the same element. The item then sizes to its content,
-// allowing items with an explicit height to opt out of the square.
+// In the uniform layout each cell is square. The aspect ratio is applied to
+// the slotted content so it fills the cell and a wrapper such as `<figure>`
+// carries the ratio for a nested `img` to `inherit`; it is also applied to
+// the item itself so the cell stays square even when it is empty or holds
+// non-element content (e.g. bare text). An explicit `height` on the content
+// overrides the ratio for that content.
+:host(.in-gallery-layout-uniform),
 :host(.in-gallery-layout-uniform) ::slotted(*) {
   aspect-ratio: 1 / 1;
 }
