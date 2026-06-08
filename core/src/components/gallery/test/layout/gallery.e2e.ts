@@ -18,7 +18,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
       const orderSuffix = layout === 'masonry' ? `-${order}` : '';
 
       test.describe(title(`gallery: ${layout} layout${layout === 'masonry' ? ` (${order})` : ''}`), () => {
-        test(`should properly display same height divs with ${layout} layout${
+        test(`should properly display same height items with ${layout} layout${
           layout === 'masonry' ? ` and ${order} order` : ''
         }`, async ({ page }) => {
           await page.setContent(
@@ -28,18 +28,18 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
               </style>
 
               <ion-gallery layout="${layout}"${orderAttribute}>
-                <ion-gallery-item><div>One</div></ion-gallery-item>
-                <ion-gallery-item><div>Two</div></ion-gallery-item>
-                <ion-gallery-item><div>Three</div></ion-gallery-item>
-                <ion-gallery-item><div>Four</div></ion-gallery-item>
-                <ion-gallery-item><div>Five</div></ion-gallery-item>
-                <ion-gallery-item><div>Six</div></ion-gallery-item>
-                <ion-gallery-item><div>Seven</div></ion-gallery-item>
-                <ion-gallery-item><div>Eight</div></ion-gallery-item>
-                <ion-gallery-item><div>Nine</div></ion-gallery-item>
-                <ion-gallery-item><div>Ten</div></ion-gallery-item>
-                <ion-gallery-item><div>Eleven</div></ion-gallery-item>
-                <ion-gallery-item><div>Twelve</div></ion-gallery-item>
+                <ion-gallery-item style="height: 150px">One</ion-gallery-item>
+                <ion-gallery-item style="height: 150px">Two</ion-gallery-item>
+                <ion-gallery-item style="height: 150px">Three</ion-gallery-item>
+                <ion-gallery-item style="height: 150px">Four</ion-gallery-item>
+                <ion-gallery-item style="height: 150px">Five</ion-gallery-item>
+                <ion-gallery-item style="height: 150px">Six</ion-gallery-item>
+                <ion-gallery-item style="height: 150px">Seven</ion-gallery-item>
+                <ion-gallery-item style="height: 150px">Eight</ion-gallery-item>
+                <ion-gallery-item style="height: 150px">Nine</ion-gallery-item>
+                <ion-gallery-item style="height: 150px">Ten</ion-gallery-item>
+                <ion-gallery-item style="height: 150px">Eleven</ion-gallery-item>
+                <ion-gallery-item style="height: 150px">Twelve</ion-gallery-item>
               </ion-gallery>
             `,
             config
@@ -58,7 +58,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
           await expect(gallery).toHaveScreenshot(screenshot(`gallery-${layout}${orderSuffix}-divs-same-height`));
         });
 
-        test(`should properly display variable height divs with ${layout} layout${
+        test(`should properly display variable height items with ${layout} layout${
           layout === 'masonry' ? ` and ${order} order` : ''
         }`, async ({ page }) => {
           await page.setContent(
@@ -68,18 +68,18 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
               </style>
 
               <ion-gallery layout="${layout}"${orderAttribute}>
-                <ion-gallery-item><div style="height: 175px">One</div></ion-gallery-item>
-                <ion-gallery-item><div style="height: 30px">Two</div></ion-gallery-item>
-                <ion-gallery-item><div style="height: 90px">Three</div></ion-gallery-item>
-                <ion-gallery-item><div style="height: 50px">Four</div></ion-gallery-item>
-                <ion-gallery-item><div style="height: 110px">Five</div></ion-gallery-item>
-                <ion-gallery-item><div style="height: 175px">Six</div></ion-gallery-item>
-                <ion-gallery-item><div style="height: 130px">Seven</div></ion-gallery-item>
-                <ion-gallery-item><div style="height: 80px">Eight</div></ion-gallery-item>
-                <ion-gallery-item><div style="height: 110px">Nine</div></ion-gallery-item>
-                <ion-gallery-item><div style="height: 90px">Ten</div></ion-gallery-item>
-                <ion-gallery-item><div style="height: 100px">Eleven</div></ion-gallery-item>
-                <ion-gallery-item><div style="height: 150px">Twelve</div></ion-gallery-item>
+                <ion-gallery-item style="height: 175px">One</ion-gallery-item>
+                <ion-gallery-item style="height: 30px">Two</ion-gallery-item>
+                <ion-gallery-item style="height: 90px">Three</ion-gallery-item>
+                <ion-gallery-item style="height: 50px">Four</ion-gallery-item>
+                <ion-gallery-item style="height: 110px">Five</ion-gallery-item>
+                <ion-gallery-item style="height: 175px">Six</ion-gallery-item>
+                <ion-gallery-item style="height: 130px">Seven</ion-gallery-item>
+                <ion-gallery-item style="height: 80px">Eight</ion-gallery-item>
+                <ion-gallery-item style="height: 110px">Nine</ion-gallery-item>
+                <ion-gallery-item style="height: 90px">Ten</ion-gallery-item>
+                <ion-gallery-item style="height: 100px">Eleven</ion-gallery-item>
+                <ion-gallery-item style="height: 150px">Twelve</ion-gallery-item>
               </ion-gallery>
             `,
             config
@@ -183,7 +183,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
         });
 
         if (layout === 'masonry') {
-          test(`should properly display dynamically appended divs with ${order} order`, async ({ page }) => {
+          test(`should properly display dynamically appended items with ${order} order`, async ({ page }) => {
             await page.setContent(
               `
                 <style>
@@ -191,12 +191,12 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
                 </style>
 
                 <ion-gallery layout="${layout}"${orderAttribute}>
-                  <ion-gallery-item><div style="height: 175px">One</div></ion-gallery-item>
-                  <ion-gallery-item><div style="height: 30px">Two</div></ion-gallery-item>
-                  <ion-gallery-item><div style="height: 90px">Three</div></ion-gallery-item>
-                  <ion-gallery-item><div style="height: 50px">Four</div></ion-gallery-item>
-                  <ion-gallery-item><div style="height: 110px">Five</div></ion-gallery-item>
-                  <ion-gallery-item><div style="height: 175px">Six</div></ion-gallery-item>
+                  <ion-gallery-item style="height: 175px">One</ion-gallery-item>
+                  <ion-gallery-item style="height: 30px">Two</ion-gallery-item>
+                  <ion-gallery-item style="height: 90px">Three</ion-gallery-item>
+                  <ion-gallery-item style="height: 50px">Four</ion-gallery-item>
+                  <ion-gallery-item style="height: 110px">Five</ion-gallery-item>
+                  <ion-gallery-item style="height: 175px">Six</ion-gallery-item>
                 </ion-gallery>
               `,
               config
@@ -204,8 +204,8 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
 
             const gallery = page.locator('ion-gallery');
 
-            const divHeights = [130, 80, 110, 90, 100, 150];
-            const appendedItems = divHeights.map((height, i) => ({
+            const itemHeights = [130, 80, 110, 90, 100, 150];
+            const appendedItems = itemHeights.map((height, i) => ({
               itemLabel: numberToWords(7 + i),
               itemHeight: height,
             }));
@@ -213,10 +213,8 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
             await gallery.evaluate((galleryEl, items) => {
               items.forEach(({ itemLabel, itemHeight }) => {
                 const galleryItemEl = document.createElement('ion-gallery-item');
-                const divEl = document.createElement('div');
-                divEl.style.height = `${itemHeight}px`;
-                divEl.textContent = itemLabel;
-                galleryItemEl.append(divEl);
+                galleryItemEl.style.height = `${itemHeight}px`;
+                galleryItemEl.textContent = itemLabel;
                 galleryEl.append(galleryItemEl);
               });
             }, appendedItems);
@@ -395,18 +393,18 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
       await page.setContent(
         `
           <ion-gallery layout="masonry" style="--app-gap: 24px" gap="var(--app-gap)">
-            <ion-gallery-item><div style="height: 40px">One</div></ion-gallery-item>
-            <ion-gallery-item><div style="height: 80px">Two</div></ion-gallery-item>
-            <ion-gallery-item><div style="height: 60px">Three</div></ion-gallery-item>
-            <ion-gallery-item><div style="height: 100px">Four</div></ion-gallery-item>
-            <ion-gallery-item><div style="height: 50px">Five</div></ion-gallery-item>
-            <ion-gallery-item><div style="height: 70px">Six</div></ion-gallery-item>
-            <ion-gallery-item><div style="height: 90px">Seven</div></ion-gallery-item>
-            <ion-gallery-item><div style="height: 55px">Eight</div></ion-gallery-item>
-            <ion-gallery-item><div style="height: 75px">Nine</div></ion-gallery-item>
-            <ion-gallery-item><div style="height: 65px">Ten</div></ion-gallery-item>
-            <ion-gallery-item><div style="height: 85px">Eleven</div></ion-gallery-item>
-            <ion-gallery-item><div style="height: 45px">Twelve</div></ion-gallery-item>
+            <ion-gallery-item style="height: 40px">One</ion-gallery-item>
+            <ion-gallery-item style="height: 80px">Two</ion-gallery-item>
+            <ion-gallery-item style="height: 60px">Three</ion-gallery-item>
+            <ion-gallery-item style="height: 100px">Four</ion-gallery-item>
+            <ion-gallery-item style="height: 50px">Five</ion-gallery-item>
+            <ion-gallery-item style="height: 70px">Six</ion-gallery-item>
+            <ion-gallery-item style="height: 90px">Seven</ion-gallery-item>
+            <ion-gallery-item style="height: 55px">Eight</ion-gallery-item>
+            <ion-gallery-item style="height: 75px">Nine</ion-gallery-item>
+            <ion-gallery-item style="height: 65px">Ten</ion-gallery-item>
+            <ion-gallery-item style="height: 85px">Eleven</ion-gallery-item>
+            <ion-gallery-item style="height: 45px">Twelve</ion-gallery-item>
           </ion-gallery>
         `,
         config
