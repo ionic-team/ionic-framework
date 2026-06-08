@@ -1,4 +1,4 @@
-import { IonicSafeString, reflectPropertiesToAttributes, sanitizeDOMString, sanitizeDOMTree } from '..';
+import { blockedTags, IonicSafeString, reflectPropertiesToAttributes, sanitizeDOMString, sanitizeDOMTree } from '..';
 
 describe('sanitizeDOMString', () => {
   it('disable sanitizer', () => {
@@ -81,20 +81,11 @@ describe('sanitizeDOMTree', () => {
 
   it('should strip every blocked tag type', () => {
     const root = document.createElement('div');
-    root.innerHTML = `
-      <script></script>
-      <style></style>
-      <iframe></iframe>
-      <meta />
-      <link />
-      <object></object>
-      <embed />
-      <span>keep</span>
-    `;
+    root.innerHTML = blockedTags.map((tag) => `<${tag}></${tag}>`).join('') + '<span>keep</span>';
 
     sanitizeDOMTree(root);
 
-    for (const blocked of ['script', 'style', 'iframe', 'meta', 'link', 'object', 'embed']) {
+    for (const blocked of blockedTags) {
       expect(root.querySelector(blocked)).toBeNull();
     }
     expect(root.querySelector('span')).not.toBeNull();
@@ -142,6 +133,108 @@ describe('sanitizeDOMTree', () => {
     expect(button.getAttribute('size')).toBe('small');
     expect(button.getAttribute('color')).toBe('primary');
     expect(button.getAttribute('shape')).toBe('round');
+  });
+
+  it('should strip the style attribute', () => {
+    const root = document.createElement('div');
+    root.innerHTML = '<span style="background:url(//evil)">text</span>';
+
+    sanitizeDOMTree(root);
+
+    expect(root.querySelector('span')!.hasAttribute('style')).toBe(false);
+  });
+
+  it('should strip form/navigation-hijack attributes', () => {
+    const root = document.createElement('div');
+    root.innerHTML = '<button formaction="//evil" action="//evil" target="_blank">go</button>';
+
+    sanitizeDOMTree(root);
+
+    const button = root.querySelector('button')!;
+    expect(button.hasAttribute('formaction')).toBe(false);
+    expect(button.hasAttribute('action')).toBe(false);
+    expect(button.hasAttribute('target')).toBe(false);
+  });
+
+  it('should preserve inline SVG presentation attributes', () => {
+    const root = document.createElement('div');
+    root.innerHTML =
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">' +
+      '<circle cx="12" cy="12" r="10" fill="red" stroke="blue" stroke-width="2"></circle></svg>';
+
+    sanitizeDOMTree(root);
+
+    const svg = root.querySelector('svg')!;
+    expect(svg.getAttribute('viewBox')).toBe('0 0 24 24');
+    expect(svg.getAttribute('width')).toBe('24');
+    const circle = root.querySelector('circle')!;
+    expect(circle.getAttribute('cx')).toBe('12');
+    expect(circle.getAttribute('r')).toBe('10');
+    expect(circle.getAttribute('fill')).toBe('red');
+    expect(circle.getAttribute('stroke-width')).toBe('2');
+  });
+
+  it('should preserve aria-* and data-* attributes', () => {
+    const root = document.createElement('div');
+    root.innerHTML = '<ion-icon aria-hidden="true" data-value="star"></ion-icon>';
+
+    sanitizeDOMTree(root);
+
+    const icon = root.querySelector('ion-icon')!;
+    expect(icon.getAttribute('aria-hidden')).toBe('true');
+    expect(icon.getAttribute('data-value')).toBe('star');
+  });
+
+  it('should strip namespaced attributes such as xlink:href', () => {
+    const root = document.createElement('div');
+    root.innerHTML = '<svg><a xlink:href="javascript:alert(1)"><text>x</text></a></svg>';
+
+    sanitizeDOMTree(root);
+
+    const anchor = root.querySelector('a')!;
+    expect(anchor.hasAttribute('xlink:href')).toBe(false);
+  });
+
+  it('should strip entity-obfuscated javascript: schemes', () => {
+    const root = document.createElement('div');
+    // The parser decodes &#9; to a tab, hiding the scheme from a naive
+    // substring check; normalization must still catch it.
+    root.innerHTML = '<a href="java&#9;script:alert(1)">link</a>';
+
+    sanitizeDOMTree(root);
+
+    expect(root.querySelector('a')!.hasAttribute('href')).toBe(false);
+  });
+
+  it('should strip vbscript: schemes', () => {
+    const root = document.createElement('div');
+    root.innerHTML = '<a href="vbscript:msgbox(1)">link</a>';
+
+    sanitizeDOMTree(root);
+
+    expect(root.querySelector('a')!.hasAttribute('href')).toBe(false);
+  });
+
+  it('should keep safe image data: URIs', () => {
+    const root = document.createElement('div');
+    const png = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVR4nGNgAAAAAgAB';
+    root.innerHTML = `<img src="${png}" />`;
+
+    sanitizeDOMTree(root);
+
+    expect(root.querySelector('img')!.getAttribute('src')).toBe(png);
+  });
+
+  it('should strip document-bearing data: URIs', () => {
+    const root = document.createElement('div');
+    root.innerHTML =
+      '<a href="data:text/html,<script>alert(1)</script>">html</a>' +
+      '<img src="data:image/svg+xml,<svg onload=alert(1)>" />';
+
+    sanitizeDOMTree(root);
+
+    expect(root.querySelector('a')!.hasAttribute('href')).toBe(false);
+    expect(root.querySelector('img')!.hasAttribute('src')).toBe(false);
   });
 
   it('should be a no-op when the sanitizer is disabled', () => {
