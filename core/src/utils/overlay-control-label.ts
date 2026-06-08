@@ -8,7 +8,7 @@ import type { Theme } from '../interface';
  * option-row layout:
  * - `ionic`: always `"start"`.
  * - `ios`: `"start"` for radio in `alert` and `popover`. The `modal`
- *   interface flips iOS radio back to `"end"`s. Checkbox is always
+ *   interface flips iOS radio back to `"end"`. Checkbox is always
  *   `"end"` on iOS.
  * - everything else (e.g. `md`): `"end"`.
  *
