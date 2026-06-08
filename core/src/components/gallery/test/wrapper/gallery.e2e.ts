@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-import { sharedStyles } from '../utils';
+import { sharedGalleryStyles } from '../utils';
 
 const LAYOUT_OPTIONS = ['uniform', 'masonry'];
 const ITEM_HEIGHTS = [175, 30, 90, 50, 110, 175, 130, 80, 110, 90, 100, 150];
@@ -32,7 +32,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, title }) => {
         await page.setContent(
           `
             <style>
-              ${sharedStyles}
+              ${sharedGalleryStyles}
             </style>
 
             <ion-gallery id="unwrapped" layout="${layout}">${items}</ion-gallery>

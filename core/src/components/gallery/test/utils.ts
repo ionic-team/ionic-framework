@@ -1,8 +1,10 @@
-export const sharedStyles = `
+export const sharedGalleryStyles = `
   ion-gallery {
     width: 343px;
   }
+`;
 
+export const sharedGalleryItemStyles = `
   ion-gallery-item {
     color: #fff;
   }

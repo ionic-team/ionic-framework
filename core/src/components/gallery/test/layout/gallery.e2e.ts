@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-import { numberToWords, sharedStyles } from '../utils';
+import { numberToWords, sharedGalleryStyles, sharedGalleryItemStyles } from '../utils';
 
 const LAYOUT_OPTIONS = ['uniform', 'masonry'];
 const ORDER_OPTIONS = ['sequential', 'best-fit'];
@@ -24,7 +24,8 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
           await page.setContent(
             `
               <style>
-                ${sharedStyles}
+                ${sharedGalleryStyles}
+                ${sharedGalleryItemStyles}
               </style>
 
               <ion-gallery layout="${layout}"${orderAttribute}>
@@ -64,7 +65,8 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
           await page.setContent(
             `
               <style>
-                ${sharedStyles}
+                ${sharedGalleryStyles}
+                ${sharedGalleryItemStyles}
               </style>
 
               <ion-gallery layout="${layout}"${orderAttribute}>
@@ -104,7 +106,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
           await page.setContent(
             `
               <style>
-                ${sharedStyles}
+                ${sharedGalleryStyles}
 
                 img {
                   height: 164px;
@@ -148,7 +150,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
           await page.setContent(
             `
               <style>
-                ${sharedStyles}
+                ${sharedGalleryStyles}
               </style>
 
               <ion-gallery layout="${layout}"${orderAttribute}>
@@ -187,7 +189,8 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
             await page.setContent(
               `
                 <style>
-                  ${sharedStyles}
+                  ${sharedGalleryStyles}
+                  ${sharedGalleryItemStyles}
                 </style>
 
                 <ion-gallery layout="${layout}"${orderAttribute}>
@@ -236,7 +239,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
             await page.setContent(
               `
                 <style>
-                  ${sharedStyles}
+                  ${sharedGalleryStyles}
                 </style>
 
                 <ion-gallery layout="${layout}"${orderAttribute}>
@@ -294,7 +297,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
             await page.setContent(
               `
                 <style>
-                  ${sharedStyles}
+                  ${sharedGalleryStyles}
 
                   /**
                    * The gallery item's ::slotted(img) styles only reach a
