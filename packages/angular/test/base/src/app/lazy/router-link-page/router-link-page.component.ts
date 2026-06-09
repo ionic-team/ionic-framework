@@ -1,5 +1,7 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonRouterOutlet, ViewDidEnter, ViewDidLeave, ViewWillLeave } from '@ionic/angular';
+
+import { assertZoneContext } from '../../zone-assert.util';
 
 @Component({
     selector: 'app-router-link-page',
@@ -20,7 +22,7 @@ export class RouterLinkPageComponent implements OnInit, ViewWillLeave, ViewDidEn
   ) {}
 
   ngOnInit() {
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.canGoBack = this.ionRouterOutlet.canGoBack();
     this.onInit++;
   }
@@ -32,22 +34,22 @@ export class RouterLinkPageComponent implements OnInit, ViewWillLeave, ViewDidEn
     if (this.canGoBack !== this.ionRouterOutlet.canGoBack()) {
       throw new Error('canGoBack() changed');
     }
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.willEnter++;
   }
   ionViewDidEnter() {
     if (this.canGoBack !== this.ionRouterOutlet.canGoBack()) {
       throw new Error('canGoBack() changed');
     }
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.didEnter++;
   }
   ionViewWillLeave() {
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.willLeave++;
   }
   ionViewDidLeave() {
-    NgZone.assertInAngularZone();
+    assertZoneContext();
     this.didLeave++;
   }
 }

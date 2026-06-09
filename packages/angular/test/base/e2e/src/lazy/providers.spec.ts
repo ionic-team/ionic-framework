@@ -18,6 +18,19 @@ test.describe('Providers', () => {
     await expect(page.locator('#query-params')).toHaveText('firstParam: null, secondParam: null');
   });
 
+  // Guards the zoneless re-render path for Platform observables: a resize fired
+  // after the initial render must still update the view. The constructor's
+  // synthetic resize only proves wiring during the first CD pass. This fires a
+  // resize from outside Angular post-render, which only re-renders if the resize
+  // subscription's markForCheck reaches the scheduler.
+  test('should re-render when a resize is fired after load', async ({ page }) => {
+    await expect(page.locator('#resize-count')).toHaveText('1');
+
+    await page.evaluate(() => window.dispatchEvent(new CustomEvent('resize')));
+
+    await expect(page.locator('#resize-count')).toHaveText('2');
+  });
+
   test('should detect testing mode', async ({ page }) => {
     await page.goto('/lazy/providers?ionic:_testing=true');
 

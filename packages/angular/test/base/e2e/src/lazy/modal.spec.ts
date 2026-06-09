@@ -25,6 +25,29 @@ test.describe('Modals', () => {
     await expect(page.locator('#onDidDismiss')).toHaveText('true');
   });
 
+  test('should call ngOnInit before ionViewWillEnter when reopening a modal', async ({ page }) => {
+    const lifecycleErrors: string[] = [];
+    page.on('pageerror', (err) => lifecycleErrors.push(err.message));
+
+    // Open
+    await page.locator('#action-button').click();
+    await expect(page.locator('ion-modal')).toBeVisible();
+
+    // Close
+    await page.locator('#close-modal').click();
+    await expect(page.locator('ion-modal')).not.toBeVisible();
+
+    // Reopen. The modal content component asserts onInit === 1 inside
+    // ionViewWillEnter and throws "ngOnInit was not called" otherwise.
+    await page.locator('#action-button').click();
+    await expect(page.locator('ion-modal')).toBeVisible();
+    // ionViewDidEnter fires after ionViewWillEnter, so once it lands the enter
+    // hooks have run and any ordering error has already surfaced as a pageerror.
+    await expect(page.locator('#ionViewDidEnter')).toHaveText('1');
+
+    expect(lifecycleErrors.filter((msg) => msg.includes('ngOnInit was not called'))).toEqual([]);
+  });
+
   test('should open nav modal and close', async ({ page }) => {
     await page.locator('#action-button-2').click();
 
