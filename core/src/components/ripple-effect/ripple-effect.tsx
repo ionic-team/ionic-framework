@@ -55,6 +55,16 @@ export class RippleEffect implements ComponentInterface {
         const moveY = height * 0.5 - posY;
 
         writeTask(() => {
+          /*
+           * The host may have been removed from the DOM between the read and write
+           * tasks. Resolve with a no-op so callers awaiting `addRipple` never hang,
+           * and skip appending a ripple to a detached host.
+           */
+          if (!this.el.isConnected) {
+            resolve(noop);
+            return;
+          }
+
           const div = document.createElement('div');
           div.classList.add('ripple-effect');
           const style = div.style;
@@ -98,6 +108,9 @@ const removeRipple = (ripple: HTMLElement) => {
     ripple.remove();
   }, 200);
 };
+
+// Callable no-op cleanup returned by addRipple when there is nothing to remove
+const noop = () => undefined;
 
 const PADDING = 10;
 const INITIAL_ORIGIN_SCALE = 0.5;
