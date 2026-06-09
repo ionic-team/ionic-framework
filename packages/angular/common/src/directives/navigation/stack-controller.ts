@@ -236,7 +236,6 @@ export class StackController {
   }
 
   destroy(): void {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.containerEl = undefined!;
     this.views.forEach(destroyView);
     this.activeView = undefined;

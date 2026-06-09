@@ -111,8 +111,6 @@ const MODAL_METHODS = [
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: MODAL_INPUTS,
 })
-
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonModal {
   // TODO(FW-2827): type
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;

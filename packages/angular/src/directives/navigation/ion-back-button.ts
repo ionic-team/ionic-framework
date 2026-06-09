@@ -9,7 +9,6 @@ import { IonRouterOutlet } from './ion-router-outlet';
   template: '<ng-content></ng-content>',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonBackButton extends IonBackButtonBase {
   constructor(
     @Optional() routerOutlet: IonRouterOutlet,

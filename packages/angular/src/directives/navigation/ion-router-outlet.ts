@@ -17,7 +17,6 @@ import { IonRouterOutlet as IonRouterOutletBase } from '@ionic/angular/common';
   selector: 'ion-router-outlet',
   template: '<ng-container #outletContent><ng-content></ng-content></ng-container>',
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonRouterOutlet extends IonRouterOutletBase {
   /**
    * `static: true` must be set so the query results are resolved

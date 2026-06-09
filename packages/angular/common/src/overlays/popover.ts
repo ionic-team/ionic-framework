@@ -87,8 +87,6 @@ const POPOVER_METHODS = ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'];
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: POPOVER_INPUTS,
 })
-
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonPopover {
   // TODO(FW-2827): type
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;

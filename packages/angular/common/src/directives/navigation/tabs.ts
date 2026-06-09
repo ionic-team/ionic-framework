@@ -61,7 +61,6 @@ const parseHrefExtras = (href: string | undefined): { queryParams?: Params; frag
 @Directive({
   selector: 'ion-tabs',
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterContentChecked {
   /**
    * Note: These must be redeclared on each child class since it needs
@@ -219,6 +218,8 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
       }
 
       const rootView = this.outlet.getRootView(tab);
+      // Keep the explicit rootView null-guard; an optional-chain rewrite changes the short-circuit value spread below.
+      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
       const navigationExtras = rootView && tabRootUrl === rootView.url && rootView.savedExtras;
       return this.navCtrl.navigateRoot(tabRootUrl, {
         ...navigationExtras,
