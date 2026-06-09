@@ -1,5 +1,17 @@
 @import "./picker-column-option";
 
-:host(.option-active) {
+/**
+ * The active option is colored when either:
+ * - picker-column applies the `option-active` class (standalone ion-picker,
+ *   where the column lives in the light DOM), or
+ * - datetime sets `part="... active"` on the option. This is the reliable
+ *   value-based source of truth and keeps the option colored when the column
+ *   lives inside datetime's shadow DOM, where the class can be missed
+ *   (WebKit's elementsFromPoint is unreliable in a shadow root). 
+ *   TODO(FW-6594): Determine if this workaround can be removed when iOS 16 is
+ *   no longer supported.
+ */
+:host(.option-active),
+:host([part~="active"]) {
   color: current-color(base);
 }
