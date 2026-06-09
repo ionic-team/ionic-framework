@@ -1,19 +1,14 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Method, Prop, h, readTask, writeTask } from '@stencil/core';
 
-import { getIonTheme } from '../../global/ionic-global';
+import type { IonRippleEffectType } from './ripple-effect.interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-ripple-effect',
-  styleUrls: {
-    ios: 'ripple-effect.common.scss',
-    md: 'ripple-effect.common.scss',
-    ionic: 'ripple-effect.ionic.scss',
-  },
+  styleUrl: 'ripple-effect.scss',
   shadow: true,
 })
 export class RippleEffect implements ComponentInterface {
@@ -28,7 +23,7 @@ export class RippleEffect implements ComponentInterface {
    * NOTE: Surfaces for bounded ripples should have the overflow property set to hidden,
    * while surfaces for unbounded ripples should have it set to visible.
    */
-  @Prop() type: 'bounded' | 'unbounded' = 'bounded';
+  @Prop() type: IonRippleEffectType = 'bounded';
 
   /**
    * Adds the ripple effect to the parent element.
@@ -66,8 +61,8 @@ export class RippleEffect implements ComponentInterface {
           style.top = styleY + 'px';
           style.left = styleX + 'px';
           style.width = style.height = initialSize + 'px';
-          style.setProperty('--final-scale', `${finalScale}`);
-          style.setProperty('--translate-end', `${moveX}px, ${moveY}px`);
+          style.setProperty('--internal-final-scale', `${finalScale}`);
+          style.setProperty('--internal-translate-end', `${moveX}px, ${moveY}px`);
 
           const container = this.el.shadowRoot || this.el;
           container.appendChild(div);
@@ -75,7 +70,7 @@ export class RippleEffect implements ComponentInterface {
             resolve(() => {
               removeRipple(div);
             });
-          }, 225 + 100);
+          }, SCALE_DURATION + 100);
         });
       });
     });
@@ -86,12 +81,10 @@ export class RippleEffect implements ComponentInterface {
   }
 
   render() {
-    const theme = getIonTheme(this);
     return (
       <Host
         role="presentation"
         class={{
-          [theme]: true,
           unbounded: this.unbounded,
         }}
       ></Host>
@@ -108,3 +101,11 @@ const removeRipple = (ripple: HTMLElement) => {
 
 const PADDING = 10;
 const INITIAL_ORIGIN_SCALE = 0.5;
+
+/*
+ * Duration of the ripple scale animation in milliseconds. This MUST stay in
+ * sync with $scale-duration in ripple-effect.scss: the ripple cleanup is
+ * scheduled off this value, so changing one without the other desyncs the
+ * animation from the removal timing.
+ */
+const SCALE_DURATION = 225;

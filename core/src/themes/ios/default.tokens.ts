@@ -899,6 +899,10 @@ export const defaultTheme: DefaultTheme = {
       },
     },
 
+    IonRippleEffect: {
+      opacity: '0.16',
+    },
+
     IonRow: {
       gap: 'var(--ion-spacing-0)',
     },
