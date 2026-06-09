@@ -20,7 +20,6 @@
         color: white;
         width: 300px;
         height: 100px;
-        margin: 1rem;
       }
 
       .block {
@@ -31,7 +30,30 @@
         width: 300px;
         height: 300px;
         border-radius: 20px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, max-content);
+        gap: 1rem;
+        align-items: start;
+      }
+
+      .ripple-demo {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        height: 120px;
         margin: 1rem;
+        background: #262626;
+        color: white;
+        border-radius: 8px;
+      }
+
+      .ripple-demo ion-ripple-effect {
+        border-radius: inherit;
       }
     </style>
   </head>
@@ -47,37 +69,34 @@
       <ion-content class="ion-padding" no-bounce>
         <p>
           <ion-button id="small-btn" size="small">Small</ion-button>
-        </p>
-        <p>
           <ion-button id="large-btn" size="large">Large</ion-button>
-        </p>
-        <p>
           <ion-button id="large-btn-outline" size="large" fill="outline">Large</ion-button>
-        </p>
-        <p>
           <ion-button id="large-btn-clear" size="large" fill="clear">Large</ion-button>
         </p>
-        <div class="my-block ion-activatable" id="ripple-with-button">
-          <ion-ripple-effect></ion-ripple-effect>
-          This is just a div + effect behind
-          <ion-button onclick="buttonClicked()">Nested button</ion-button>
-        </div>
-        <div class="my-block ion-activatable">
-          This is just a div + effect on top
-          <ion-button onclick="buttonClicked()">Nested button</ion-button>
-          <ion-ripple-effect></ion-ripple-effect>
-        </div>
 
-        <div class="my-block ion-activatable">
-          This is just a div + effect
-          <ion-ripple-effect></ion-ripple-effect>
-        </div>
+        <div class="grid">
+          <div class="my-block ion-activatable" id="ripple-with-button">
+            <ion-ripple-effect></ion-ripple-effect>
+            This is just a div + effect behind
+            <ion-button onclick="buttonClicked()">Nested button</ion-button>
+          </div>
+          <div class="my-block ion-activatable">
+            This is just a div + effect on top
+            <ion-button onclick="buttonClicked()">Nested button</ion-button>
+            <ion-ripple-effect></ion-ripple-effect>
+          </div>
 
-        <a class="my-block ion-activatable">
-          This is just a a + effect on top
-          <ion-button onclick="buttonClicked()">Nested button</ion-button>
-          <ion-ripple-effect></ion-ripple-effect>
-        </a>
+          <div class="my-block ion-activatable">
+            This is just a div + effect
+            <ion-ripple-effect></ion-ripple-effect>
+          </div>
+
+          <a class="my-block ion-activatable">
+            This is just a a + effect on top
+            <ion-button onclick="buttonClicked()">Nested button</ion-button>
+            <ion-ripple-effect></ion-ripple-effect>
+          </a>
+        </div>
 
         <button class="my-block ion-activatable">
           This is just a button + effect on top
@@ -88,6 +107,25 @@
         <a class="block ion-activatable">
           <ion-ripple-effect></ion-ripple-effect>
         </a>
+
+        <h2>Ripple at full expansion (auto-triggered, persists for inspection)</h2>
+        <p>
+          <button onclick="triggerDemoRipples()">Replay</button>
+        </p>
+        <div class="ripple-demo bounded" id="bounded-demo">
+          Bounded
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
+        <div class="ripple-demo unbounded" id="unbounded-demo">
+          Unbounded
+          <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+        </div>
+
+        <p>
+          <ion-button class="ripple-demo-button" fill="solid">Solid</ion-button>
+          <ion-button class="ripple-demo-button" fill="outline">Outline</ion-button>
+          <ion-button class="ripple-demo-button" fill="clear">Clear</ion-button>
+        </p>
       </ion-content>
     </ion-app>
     <script>
@@ -98,6 +136,42 @@
       function buttonClicked() {
         console.log('button clicked');
       }
+
+      /*
+       * Triggers each demo ripple from the center of its surface and leaves it
+       * mounted. addRipple returns a cleanup callback; we hold onto it and only
+       * call it on replay, so the ripple animates once and then rests at full
+       * expansion (peak opacity) for inspection.
+       */
+      let demoRippleCleanups = [];
+      async function triggerDemoRipples() {
+        await customElements.whenDefined('ion-ripple-effect');
+
+        demoRippleCleanups.forEach((cleanup) => cleanup());
+
+        // Wait for the demo buttons to render so their shadow ripple exists.
+        const buttons = [...document.querySelectorAll('.ripple-demo-button')];
+        await Promise.all(buttons.map((button) => button.componentOnReady?.()));
+
+        // Light-DOM demo ripples plus the ripple inside each button's shadow root.
+        // A button only renders a ripple in md and ionic modes, so filter out misses.
+        const ripples = [
+          ...document.querySelectorAll('.ripple-demo ion-ripple-effect'),
+          ...buttons.map((button) => button.shadowRoot?.querySelector('ion-ripple-effect')).filter(Boolean),
+        ];
+
+        demoRippleCleanups = await Promise.all(
+          ripples.map((ripple) => {
+            const rect = ripple.getBoundingClientRect();
+            return ripple.addRipple(rect.left + rect.width / 2, rect.top + rect.height / 2);
+          })
+        );
+      }
+
+      window.addEventListener('load', () => {
+        // Defer a frame so the demo surfaces have their final layout before we measure.
+        requestAnimationFrame(triggerDemoRipples);
+      });
     </script>
   </body>
 </html>
