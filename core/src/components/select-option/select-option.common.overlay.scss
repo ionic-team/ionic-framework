@@ -1,0 +1,83 @@
+// Select Option - Overlay
+// --------------------------------------------------
+
+// Outer label container, which also spaces the start
+// and end slots when a select option has rich content
+.action-sheet-button-label-has-rich-content,
+.alert-radio-label-has-rich-content,
+.alert-checkbox-label-has-rich-content,
+.select-option-label-has-rich-content {
+  display: flex;
+
+  align-items: center;
+}
+
+/**
+ * Outer label container has rich content
+ * (start, content, description, end) that needs the
+ * label to span the available row width.
+ */
+.action-sheet-button-label-has-rich-content,
+.alert-radio-label-has-rich-content,
+.alert-checkbox-label-has-rich-content,
+.select-option-content {
+  flex: 1;
+}
+
+// Inner label container of a select option when
+// there is rich content within the default slot
+.action-sheet-button-label-text,
+.alert-checkbox-label-text,
+.alert-radio-label-text,
+.select-option-label-text {
+  display: flex;
+
+  align-items: center;
+}
+
+// Start and end slots
+.select-option-start,
+.select-option-end {
+  display: flex;
+
+  align-items: center;
+}
+
+.select-option-description {
+  display: block;
+}
+
+// Select Option: Select Modal / Select Popover
+// --------------------------------------------------
+
+/**
+ * Non-rich labels are plain text and should ellipsize when they
+ * overflow the row. Rich-content labels switch to flex so the
+ * start / content / end pieces can lay out side-by-side and wrap.
+ */
+.select-option-label:not(.select-option-label-has-rich-content) {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+.select-option-label-has-rich-content {
+  display: flex;
+
+  align-items: center;
+}
+
+ion-radio.select-option-has-rich-content::part(label),
+ion-checkbox.select-option-has-rich-content::part(label),
+.select-option-content {
+  flex: 1;
+
+  /**
+   * Let rich content wrap instead of inheriting the label part's
+   * single-line truncation, so arbitrary slotted elements render
+   * without clipping.
+   */
+  white-space: normal;
+}

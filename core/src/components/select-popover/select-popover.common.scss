@@ -1,15 +1,16 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/mixins" as mixins;
+@use "../select-option/select-option.common.overlay";
 
 // Select Popover
 // --------------------------------------------------
 
 :host ion-list {
-  @include margin(0);
+  @include mixins.margin(0);
 }
 
 ion-list-header,
 ion-label {
-  @include margin(0);
+  @include mixins.margin(0);
 }
 
 /**
@@ -20,23 +21,4 @@ ion-label {
  */
 :host {
   overflow-y: auto;
-}
-
-// Select Popover: Select Option
-// --------------------------------------------------
-
-.select-option-label {
-  display: flex;
-
-  align-items: center;
-}
-
-.select-option-label-text {
-  display: flex;
-
-  flex-wrap: wrap;
-}
-
-.select-option-description {
-  display: block;
 }

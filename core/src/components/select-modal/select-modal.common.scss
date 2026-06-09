@@ -1,19 +1,8 @@
+@use "../select-option/select-option.common.overlay";
+
 // Select Modal
 // --------------------------------------------------
 
 :host {
   height: 100%;
-}
-
-// Select Modal: Select Option
-// --------------------------------------------------
-
-.select-option-label {
-  display: flex;
-
-  align-items: center;
-}
-
-.select-option-description {
-  display: block;
 }
