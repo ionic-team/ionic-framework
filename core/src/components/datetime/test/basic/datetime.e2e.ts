@@ -319,9 +319,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await expect(calendarHeader).toHaveText(/June 2022/);
     });
-    test('should not re-render if swipe is in progress', async ({ page, skip }) => {
-      skip.browser('webkit', 'Wheel is not available in WebKit');
-
+    test('should not re-render while a swipe is in progress', async ({ page }) => {
       await page.setContent(
         `
         <ion-datetime value="2022-05-03"></ion-datetime>
@@ -336,15 +334,19 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await expect(calendarHeader).toHaveText(/May 2022/);
 
-      const box = await calendarBody.boundingBox();
+      // Scroll the calendar a little, but not far enough to land on the next
+      // month. This mimics a swipe that the user started but did not finish.
+      await calendarBody.evaluate((el: HTMLElement) => {
+        const monthWidth = el.querySelector('.calendar-month')!.clientWidth;
+        el.scrollLeft = monthWidth + 30;
+      });
 
-      if (box) {
-        await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-        await page.mouse.wheel(-50, 0);
-        await page.waitForChanges();
+      // Give the component time to react to the scroll
+      await page.waitForChanges();
 
-        await expect(calendarHeader).toHaveText(/May 2022/);
-      }
+      // Because the calendar never settled on a new month, the header should
+      // still show the original month.
+      await expect(calendarHeader).toHaveText(/May 2022/);
     });
   });
 });
