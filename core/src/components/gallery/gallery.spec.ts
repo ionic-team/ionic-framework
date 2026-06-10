@@ -757,7 +757,7 @@ describe('gallery', () => {
         expect(items).toEqual([itemOne, itemTwo]);
       });
 
-      it('should flatten a wrapper element and collapse its box with display: contents', () => {
+      it('should return items found inside a wrapper element', () => {
         const wrapper = document.createElement('div');
         const itemOne = document.createElement('ion-gallery-item');
         const itemTwo = document.createElement('ion-gallery-item');
@@ -768,10 +768,52 @@ describe('gallery', () => {
         const items = (sharedGallery as any).getItems();
 
         expect(items).toEqual([itemOne, itemTwo]);
+      });
+
+      it('should not return items that belong to a nested gallery', () => {
+        const ownedItem = document.createElement('ion-gallery-item');
+
+        const nestedGallery = document.createElement('ion-gallery');
+        nestedGallery.appendChild(document.createElement('ion-gallery-item'));
+
+        // A wrapper holds one of our items alongside a nested gallery.
+        const wrapper = document.createElement('div');
+        wrapper.appendChild(ownedItem);
+        wrapper.appendChild(nestedGallery);
+        el.appendChild(wrapper);
+
+        const items = (sharedGallery as any).getItems();
+
+        // Only the item whose nearest gallery ancestor is this gallery is
+        // returned; the nested gallery's item is left to the nested gallery.
+        expect(items).toEqual([ownedItem]);
+      });
+
+      it('should return no items when a gallery only contains a nested gallery', () => {
+        const nestedGallery = document.createElement('ion-gallery');
+        nestedGallery.appendChild(document.createElement('ion-gallery-item'));
+        nestedGallery.appendChild(document.createElement('ion-gallery-item'));
+        el.appendChild(nestedGallery);
+
+        const items = (sharedGallery as any).getItems();
+
+        // The nested gallery's items belong to it, not the outer gallery.
+        expect(items).toEqual([]);
+      });
+    });
+
+    describe('collapseWrappers()', () => {
+      it('should collapse a wrapper that owns items with display: contents', () => {
+        const wrapper = document.createElement('div');
+        wrapper.appendChild(document.createElement('ion-gallery-item'));
+        el.appendChild(wrapper);
+
+        (sharedGallery as any).collapseWrappers();
+
         expect(wrapper.style.display).toBe('contents');
       });
 
-      it('should clear display: contents on a wrapper when it no longer contains items', () => {
+      it('should restore the box of a wrapper that no longer owns items', () => {
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
         const wrapper = document.createElement('div');
@@ -780,18 +822,16 @@ describe('gallery', () => {
         el.appendChild(wrapper);
 
         // Wrapper is initially collapsed with display: contents.
-        (sharedGallery as any).getItems();
+        (sharedGallery as any).collapseWrappers();
         expect(wrapper.style.display).toBe('contents');
 
         // Remove the item, leaving the wrapper empty.
         wrapper.removeChild(item);
 
-        // Verify that the wrapper has no items, is no longer collapsed and
-        // a warning is issued about the invalid child element.
-        const items = (sharedGallery as any).getItems();
-        expect(items).toEqual([]);
+        // The wrapper is no longer collapsed and a warning is issued about the
+        // now-invalid child element.
+        (sharedGallery as any).collapseWrappers();
         expect(wrapper.style.display).toBe('');
-
         expect(warningSpy).toHaveBeenCalledWith(
           expect.stringContaining('[ion-gallery] - Gallery items must be wrapped in "ion-gallery-item" components.'),
           el
@@ -808,7 +848,7 @@ describe('gallery', () => {
         stray.style.display = 'flex';
         el.appendChild(stray);
 
-        (sharedGallery as any).getItems();
+        (sharedGallery as any).collapseWrappers();
 
         // We only undo a `display: contents` we set ourselves; an inline
         // display the consumer set must be left intact.
@@ -817,42 +857,19 @@ describe('gallery', () => {
         warningSpy.mockRestore();
       });
 
-      it('should not return items that belong to a nested gallery', () => {
-        const ownedItem = document.createElement('ion-gallery-item');
-
-        const nestedGallery = document.createElement('ion-gallery');
-        const nestedItem = document.createElement('ion-gallery-item');
-        nestedGallery.appendChild(nestedItem);
-
-        // A wrapper holds one of our items alongside a nested gallery.
-        const wrapper = document.createElement('div');
-        wrapper.appendChild(ownedItem);
-        wrapper.appendChild(nestedGallery);
-        el.appendChild(wrapper);
-
-        const items = (sharedGallery as any).getItems();
-
-        // Only the item whose nearest gallery ancestor is this gallery is
-        // returned; the nested gallery's item is left to the nested gallery.
-        expect(items).toEqual([ownedItem]);
-        expect(wrapper.style.display).toBe('contents');
-      });
-
-      it('should warn and return no items when a gallery only contains a nested gallery', () => {
+      it('should warn and not collapse when a gallery only contains a nested gallery', () => {
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
         // Nesting a gallery directly inside a gallery is invalid: the outer
         // gallery has no items of its own to place.
         const nestedGallery = document.createElement('ion-gallery');
         nestedGallery.appendChild(document.createElement('ion-gallery-item'));
-        nestedGallery.appendChild(document.createElement('ion-gallery-item'));
         el.appendChild(nestedGallery);
 
-        const items = (sharedGallery as any).getItems();
+        (sharedGallery as any).collapseWrappers();
 
-        // The nested gallery's items belong to it, so the outer gallery
-        // returns no items and warns about the invalid content.
-        expect(items).toEqual([]);
+        // The nested gallery is left untouched and the outer gallery warns.
+        expect(nestedGallery.style.display).toBe('');
         expect(warningSpy).toHaveBeenCalledWith(
           expect.stringContaining('[ion-gallery] - Gallery items must be wrapped in "ion-gallery-item" components.'),
           el
@@ -861,14 +878,13 @@ describe('gallery', () => {
         warningSpy.mockRestore();
       });
 
-      it('should warn and ignore children that do not contain an ion-gallery-item', () => {
+      it('should warn about children that do not contain an ion-gallery-item', () => {
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
         el.appendChild(document.createElement('img'));
 
-        const items = (sharedGallery as any).getItems();
+        (sharedGallery as any).collapseWrappers();
 
-        expect(items).toEqual([]);
         expect(warningSpy).toHaveBeenCalledWith(
           expect.stringContaining('[ion-gallery] - Gallery items must be wrapped in "ion-gallery-item" components.'),
           el
@@ -883,14 +899,16 @@ describe('gallery', () => {
         el.appendChild(document.createElement('img'));
         el.appendChild(document.createElement('span'));
 
-        (sharedGallery as any).getItems();
-        (sharedGallery as any).getItems();
+        (sharedGallery as any).collapseWrappers();
+        (sharedGallery as any).collapseWrappers();
 
         expect(warningSpy).toHaveBeenCalledTimes(1);
 
         warningSpy.mockRestore();
       });
+    });
 
+    describe('layoutMasonry()', () => {
       it('should apply masonry grid placement styles to items', () => {
         const itemOne = document.createElement('ion-gallery-item');
         const itemTwo = document.createElement('ion-gallery-item');
@@ -900,9 +918,7 @@ describe('gallery', () => {
         jest.spyOn(itemOne, 'getBoundingClientRect').mockReturnValue({ height: 20 } as DOMRect);
         jest.spyOn(itemTwo, 'getBoundingClientRect').mockReturnValue({ height: 30 } as DOMRect);
 
-        const items = (sharedGallery as any).getItems();
-
-        (sharedGallery as any).layoutMasonry(items, 10, 0, 2);
+        (sharedGallery as any).layoutMasonry([itemOne, itemTwo], 10, 0, 2);
 
         expect(itemOne.style.gridColumn).toBe('1');
         expect(itemTwo.style.gridColumn).toBe('2');

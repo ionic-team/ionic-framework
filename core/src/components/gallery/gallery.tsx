@@ -107,6 +107,7 @@ export class Gallery implements ComponentInterface {
   }
 
   componentDidLoad() {
+    this.collapseWrappers();
     this.updateResponsiveStyles(true);
     this.resizeObserver = new ResizeObserver(() => {
       this.updateResponsiveStyles();
@@ -166,14 +167,12 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Listen for the slotchange event on the slot.
-   * When the layout is `masonry`, this listener is used to schedule a resize
-   * of the masonry grid when the slot changes. This is useful for when items
-   * are added or removed from the gallery.
+   * Listen for the slotchange event on the slot. When the gallery's items are
+   * added or removed, re-collapse wrappers, re-observe items for size changes,
+   * and recompute the masonry grid.
    */
   private onSlotChange = () => {
-    // Re-observe so newly added items are watched for size changes (e.g. a
-    // freshly appended item finishing hydration), then recompute placement.
+    this.collapseWrappers();
     this.observeResizes();
     this.scheduleMasonryResize();
   };
@@ -473,50 +472,42 @@ export class Gallery implements ComponentInterface {
 
   /**
    * Return the `ion-gallery-item` elements to place in the grid. Each item is a
-   * direct grid cell. A direct child that is not an `ion-gallery-item` is
-   * treated as a pass-through wrapper (e.g. a layout `<div>`): its box is
-   * collapsed with `display: contents` so the nested items participate in the
-   * gallery grid. Children that contain no `ion-gallery-item` are ignored.
+   * direct grid cell, whether a direct child or nested inside a pass-through
+   * wrapper (e.g. a layout `<div>`). Items belonging to a nested `ion-gallery`
+   * are excluded.
    */
   private getItems(): HTMLIonGalleryItemElement[] {
-    const items: HTMLIonGalleryItemElement[] = [];
+    return Array.from(this.el.querySelectorAll<HTMLIonGalleryItemElement>(GALLERY_ITEM_SELECTOR)).filter(
+      (item) => item.closest('ion-gallery') === this.el
+    );
+  }
 
-    Array.from(this.el.children).forEach((child) => {
-      // Standard path: <ion-gallery-item> is a direct child of <ion-gallery>.
+  /**
+   * Collapse each pass-through wrapper's box with `display: contents` so its
+   * items participate in the gallery grid. Restore the box of a wrapper that
+   * no longer contains items, and warn about children that contain none.
+   */
+  private collapseWrappers() {
+    const items = this.getItems();
+
+    Array.from(this.el.children as HTMLCollectionOf<HTMLElement>).forEach((child) => {
       if (child.matches(GALLERY_ITEM_SELECTOR)) {
-        items.push(child as HTMLIonGalleryItemElement);
         return;
       }
 
-      // Compatibility path: a wrapper element may contain <ion-gallery-item>
-      // components. Collapse the wrapper's box so the items participate in the
-      // gallery grid.
-      //
-      // `nestedItems` queries for items at any depth, including ones that
-      // live inside a nested gallery.
-      // `ownedItems` narrows that to the items this gallery is responsible
-      // for: those whose closest gallery ancestor is this host.
-      const nestedItems = Array.from(child.querySelectorAll<HTMLIonGalleryItemElement>(GALLERY_ITEM_SELECTOR));
-      const ownedItems = nestedItems.filter((item) => item.closest('ion-gallery') === this.el);
-
-      // Ignore wrapper elements that contain no items, and warn the user about
-      // any invalid content that is not wrapped in an `ion-gallery-item`.
-      if (ownedItems.length === 0) {
+      if (!items.some((item) => child.contains(item))) {
         // If the wrapper was previously collapsed with `display: contents`
         // but now contains no items, clear the display style.
-        if ((child as HTMLElement).style.display === 'contents') {
-          (child as HTMLElement).style.display = '';
+        if (child.style.display === 'contents') {
+          child.style.display = '';
         }
         this.warnInvalidItems();
         return;
       }
 
       // Collapse the wrapper's box so its items sit directly in the grid.
-      (child as HTMLElement).style.display = 'contents';
-      items.push(...ownedItems);
+      child.style.display = 'contents';
     });
-
-    return items;
   }
 
   /**
