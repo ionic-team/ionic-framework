@@ -25,3 +25,7 @@
 
   overflow: hidden;
 }
+
+::slotted(ion-skeleton-text) {
+  @include border-radius(var(--border-radius, revert-layer));
+}

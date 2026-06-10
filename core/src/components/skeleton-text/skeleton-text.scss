@@ -1,30 +1,54 @@
-@import "./skeleton-text.vars";
+@use "../../themes/mixins" as mixins;
 
 // Skeleton Text
 // --------------------------------------------------
 
+// RGB fallback used when no theme provides the skeleton's background
+$background-rgb-fallback: var(--ion-text-color-rgb, 0, 0, 0);
+
+// Alpha fallbacks, used when no theme provides them
+$default-alpha-fallback: 0.065;
+$animated-alpha-fallback: 0.135;
+
+// Resting color, also the base/edge stops of the animated shimmer.
+$background-default: rgba(
+  var(--ion-skeleton-text-default-background-rgb, $background-rgb-fallback),
+  var(--ion-skeleton-text-default-background-alpha, $default-alpha-fallback)
+);
+
+// Highlight color of the animated shimmer.
+$background-animated: rgba(
+  var(--ion-skeleton-text-animated-background-rgb, $background-rgb-fallback),
+  var(--ion-skeleton-text-animated-background-alpha, $animated-alpha-fallback)
+);
+
 :host {
   /**
-   * @prop --background: Background of the skeleton text
-   * @prop --background-rgb: Background of the skeleton text in rgb format
+   * @prop --ion-skeleton-text-default-background-rgb: Background color when it's not being animated in RGB format (e.g. `255, 0, 0`), also the base of the animated shimmer
+   * @prop --ion-skeleton-text-default-background-alpha: Opacity of the background when it's not being animated, from 0 to 1
    *
-   * @prop --border-radius: Border radius of the skeleton text
+   * @prop --ion-skeleton-text-animated-background-rgb: Highlight color of the animated shimmer in RGB format (e.g. `255, 0, 0`)
+   * @prop --ion-skeleton-text-animated-background-alpha: Opacity of the animated shimmer highlight, from 0 to 1
+   *
+   * @prop --ion-skeleton-text-border-radius: Border radius of the skeleton text
+   * @prop --ion-skeleton-text-line-height: Line height of the skeleton text
+   *
+   * @prop --ion-skeleton-text-margin-top: Top margin of the skeleton text
+   * @prop --ion-skeleton-text-margin-bottom: Bottom margin of the skeleton text
    */
-  --background: #{$skeleton-text-background};
-
-  @include border-radius(var(--border-radius, inherit));
+  @include mixins.border-radius(var(--ion-skeleton-text-border-radius, inherit));
 
   display: block;
 
   width: 100%;
   height: inherit;
 
-  margin-top: 4px;
-  margin-bottom: 4px;
+  margin-top: var(--ion-skeleton-text-margin-top);
+  margin-bottom: var(--ion-skeleton-text-margin-bottom);
 
-  background: var(--background);
+  background: $background-default;
 
-  line-height: 10px;
+  line-height: var(--ion-skeleton-text-line-height);
 
   user-select: none;
 
@@ -36,7 +60,7 @@ span {
 }
 
 :host(.in-media) {
-  @include margin(0);
+  @include mixins.margin(0);
 
   height: 100%;
 }
@@ -47,12 +71,7 @@ span {
 :host(.skeleton-text-animated) {
   position: relative;
 
-  background: linear-gradient(
-    to right,
-    $skeleton-text-background 8%,
-    $skeleton-text-background-animated 18%,
-    $skeleton-text-background 33%
-  );
+  background: linear-gradient(to right, $background-default 8%, $background-animated 18%, $background-default 33%);
   background-size: 800px 104px;
   animation-duration: 1s;
   animation-fill-mode: forwards;

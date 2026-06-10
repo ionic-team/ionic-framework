@@ -875,6 +875,29 @@ export const defaultTheme: DefaultTheme = {
       gap: 'var(--ion-spacing-0)',
     },
 
+    IonSkeletonText: {
+      animated: {
+        background: {
+          alpha: 0.135,
+          rgb: baseColors.textColorRgb,
+        },
+      },
+
+      default: {
+        background: {
+          alpha: 0.065,
+          rgb: baseColors.textColorRgb,
+        },
+      },
+
+      lineHeight: 'var(--ion-scaling-250)',
+
+      margin: {
+        bottom: 'var(--ion-spacing-xxs)',
+        top: 'var(--ion-spacing-xxs)',
+      },
+    },
+
     IonSpinner: {
       color: '#626262',
 
