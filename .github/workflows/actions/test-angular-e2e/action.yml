@@ -29,9 +29,7 @@ runs:
       shell: bash
       working-directory: ./packages/angular/test
     - name: 🕸️ Install Dependencies
-      # --legacy-peer-deps: the ng22 app pins @angular/cli@^22 while @angular-eslint@21
-      # (latest published) peer-requires @angular/cli ">=21 <22". Remove once @angular-eslint@22 ships.
-      run: npm install --legacy-peer-deps
+      run: npm install
       shell: bash
       working-directory: ./packages/angular/test/build/${{ inputs.app }}
     - name: 📦 Install Playwright Browsers
