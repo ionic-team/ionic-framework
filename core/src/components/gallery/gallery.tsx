@@ -493,7 +493,14 @@ export class Gallery implements ComponentInterface {
       // gallery grid.
       const nestedItems = Array.from(child.querySelectorAll<HTMLIonGalleryItemElement>(GALLERY_ITEM_SELECTOR));
 
+      // Ignore wrapper elements that contain no items, and warn the user about
+      // any invalid content that is not wrapped in an `ion-gallery-item`.
       if (nestedItems.length === 0) {
+        // If the wrapper was previously collapsed with `display: contents`
+        // but now contains no items, clear the display style.
+        if ((child as HTMLElement).style.display === 'contents') {
+          (child as HTMLElement).style.display = '';
+        }
         this.warnInvalidItems();
         return;
       }

@@ -771,6 +771,35 @@ describe('gallery', () => {
         expect(wrapper.style.display).toBe('contents');
       });
 
+      it('should clear display: contents on a wrapper when it no longer contains items', () => {
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        const wrapper = document.createElement('div');
+        const item = document.createElement('ion-gallery-item');
+        wrapper.appendChild(item);
+        el.appendChild(wrapper);
+
+        // Wrapper is initially collapsed with display: contents.
+        (sharedGallery as any).getItems();
+        expect(wrapper.style.display).toBe('contents');
+
+        // Remove the item, leaving the wrapper empty.
+        wrapper.removeChild(item);
+
+        // Verify that the wrapper has no items, is no longer collapsed and
+        // a warning is issued about the invalid child element.
+        const items = (sharedGallery as any).getItems();
+        expect(items).toEqual([]);
+        expect(wrapper.style.display).toBe('');
+
+        expect(warningSpy).toHaveBeenCalledWith(
+          expect.stringContaining('[ion-gallery] - Gallery items must be wrapped in "ion-gallery-item" components.'),
+          el
+        );
+
+        warningSpy.mockRestore();
+      });
+
       it('should warn and ignore children that do not contain an ion-gallery-item', () => {
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
