@@ -506,7 +506,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Positions the input placeholder
    */
-  private positionPlaceholder() {
+  private positionPlaceholder(numTries = 0) {
     const inputEl = this.nativeInput;
     if (!inputEl) {
       return;
@@ -539,7 +539,17 @@ export class Searchbar implements ComponentInterface {
          * such as Dynamic Type on iOS as well as 8px
          * of padding.
          */
-        const iconLeft = 'calc(50% - ' + (textWidth / 2 + iconEl.clientWidth + 8) + 'px)';
+        const iconWidth = iconEl.clientWidth;
+        if (iconWidth == 0 && numTries < 10) {
+          /*
+           * fix for https://github.com/ionic-team/ionic-framework/issues/30434
+           * iconEl.clientWidth can very briefly be 0 when this is called from componentDidLoad
+           * this will try again until it is nonzero
+           */
+          this.positionPlaceholder(numTries + 1);
+          return;
+        }
+        const iconLeft = 'calc(50% - ' + (textWidth / 2 + iconWidth + 8) + 'px)';
 
         // Set the input padding start and icon margin start
         if (rtl) {
