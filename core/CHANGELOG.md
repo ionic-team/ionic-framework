@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.10](https://github.com/ionic-team/ionic-framework/compare/v8.8.9...v8.8.10) (2026-06-10)
+
+
+### Bug Fixes
+
+* **modal:** prevent sheet gesture crash with late-bound breakpoints ([#31202](https://github.com/ionic-team/ionic-framework/issues/31202)) ([c61265a](https://github.com/ionic-team/ionic-framework/commit/c61265adb5891b24d4d413245244ee8dcf61757e))
+
+
+
+
+
 ## [8.8.9](https://github.com/ionic-team/ionic-framework/compare/v8.8.8...v8.8.9) (2026-06-03)
 
 
