@@ -105,6 +105,18 @@ export class Toggle implements ComponentInterface {
   @Prop() enableOnOffLabels: boolean | undefined = config.get('toggleOnOffLabels');
 
   /**
+   * The built-in named SVG icon name or the exact `src` of an SVG file
+   * to use when the toggle is checked.
+   */
+  @Prop() checkedIcon?: string | null;
+
+  /**
+   * The built-in named SVG icon name or the exact `src` of an SVG file
+   * to use when the toggle is unchecked.
+   */
+  @Prop() uncheckedIcon?: string | null;
+
+  /**
    * Where to place the label relative to the input.
    * `"start"`: The label will appear to the left of the toggle in LTR and to the right in RTL.
    * `"end"`: The label will appear to the right of the toggle in LTR and to the left in RTL.
@@ -348,10 +360,13 @@ export class Toggle implements ComponentInterface {
   };
 
   private getSwitchLabelIcon = (mode: Mode, checked: boolean) => {
+    const checkedIcon = this.checkedIcon ?? config.get('toggleCheckedIcon');
+    const uncheckedIcon = this.uncheckedIcon ?? config.get('toggleUncheckedIcon');
+
     if (mode === 'md') {
-      return checked ? checkmarkOutline : removeOutline;
+      return checked ? checkedIcon ?? checkmarkOutline : uncheckedIcon ?? removeOutline;
     }
-    return checked ? removeOutline : ellipseOutline;
+    return checked ? checkedIcon ?? removeOutline : uncheckedIcon ?? ellipseOutline;
   };
 
   private renderOnOffSwitchLabels(mode: Mode, checked: boolean) {
