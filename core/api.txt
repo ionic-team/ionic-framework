@@ -2409,7 +2409,7 @@ ion-split-pane,prop,contentId,string | undefined,undefined,false,true
 ion-split-pane,prop,disabled,boolean,false,false,false
 ion-split-pane,prop,mode,"ios" | "md",undefined,false,false
 ion-split-pane,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-split-pane,prop,when,boolean | string,QUERY['lg'],false,false
+ion-split-pane,prop,when,boolean | string,'(min-width: 992px)',false,false
 ion-split-pane,event,ionSplitPaneVisible,{ visible: boolean; },true
 ion-split-pane,css-prop,--border,ionic
 ion-split-pane,css-prop,--border,ios

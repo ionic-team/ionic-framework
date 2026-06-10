@@ -3982,7 +3982,7 @@ export namespace Components {
         "theme"?: "ios" | "md" | "ionic";
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default QUERY['lg']
+          * @default '(min-width: 992px)'
          */
         "when": string | boolean;
     }
@@ -10136,7 +10136,7 @@ declare namespace LocalJSX {
         "theme"?: "ios" | "md" | "ionic";
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default QUERY['lg']
+          * @default '(min-width: 992px)'
          */
         "when"?: string | boolean;
     }
