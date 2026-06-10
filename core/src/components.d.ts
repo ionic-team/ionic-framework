@@ -1474,12 +1474,12 @@ export namespace Components {
     interface IonGallery {
         /**
           * The number of columns to display. Can be set as a number or an object of breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).
-          * @default DEFAULT_COLUMNS
+          * @default {   xs: 2,   sm: 3,   md: 4,   lg: 6,   xl: 8,   xxl: 10, }
          */
         "columns": GalleryColumns;
         /**
           * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.
-          * @default DEFAULT_GAP
+          * @default '16px'
          */
         "gap": GalleryGap;
         /**
@@ -3982,7 +3982,7 @@ export namespace Components {
         "theme"?: "ios" | "md" | "ionic";
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default QUERY['lg']
+          * @default '(min-width: 992px)'
          */
         "when": string | boolean;
     }
@@ -7530,12 +7530,12 @@ declare namespace LocalJSX {
     interface IonGallery {
         /**
           * The number of columns to display. Can be set as a number or an object of breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).
-          * @default DEFAULT_COLUMNS
+          * @default {   xs: 2,   sm: 3,   md: 4,   lg: 6,   xl: 8,   xxl: 10, }
          */
         "columns"?: GalleryColumns;
         /**
           * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.
-          * @default DEFAULT_GAP
+          * @default '16px'
          */
         "gap"?: GalleryGap;
         /**
@@ -10136,7 +10136,7 @@ declare namespace LocalJSX {
         "theme"?: "ios" | "md" | "ionic";
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default QUERY['lg']
+          * @default '(min-width: 992px)'
          */
         "when"?: string | boolean;
     }

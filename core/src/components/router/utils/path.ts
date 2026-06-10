@@ -8,13 +8,16 @@ export const generatePath = (segments: string[]): string => {
   return '/' + path;
 };
 
-const generateUrl = (segments: string[], useHash: boolean, queryString?: string) => {
+const generateUrl = (segments: string[], useHash: boolean, queryString?: string, fragment?: string) => {
   let url = generatePath(segments);
   if (useHash) {
     url = '#' + url;
   }
   if (queryString !== undefined) {
     url += '?' + queryString;
+  }
+  if (fragment !== undefined) {
+    url += '#' + fragment;
   }
   return url;
 };
@@ -26,9 +29,10 @@ export const writeSegments = (
   segments: string[],
   direction: RouterDirection,
   state: number,
-  queryString?: string
+  queryString?: string,
+  fragment?: string
 ) => {
-  const url = generateUrl([...parsePath(root).segments, ...segments], useHash, queryString);
+  const url = generateUrl([...parsePath(root).segments, ...segments], useHash, queryString, fragment);
   if (direction === ROUTER_INTENT_FORWARD) {
     history.pushState(state, '', url);
   } else {
@@ -97,13 +101,23 @@ export const readSegments = (loc: Location, root: string, useHash: boolean): str
 /**
  * Parses the path to:
  * - segments an array of '/' separated parts,
- * - queryString (undefined when no query string).
+ * - queryString (undefined when no query string),
+ * - fragment (undefined when no `#`).
  */
 export const parsePath = (path: string | undefined | null): ParsedRoute => {
   let segments = [''];
   let queryString;
+  let fragment;
 
   if (path != null) {
+    // The fragment ("#") starts a section that runs to the end of the URL.
+    // Anything inside it (including "?") is part of the fragment per RFC 3986.
+    const fragStart = path.indexOf('#');
+    if (fragStart > -1) {
+      fragment = path.substring(fragStart + 1);
+      path = path.substring(0, fragStart);
+    }
+
     const qsStart = path.indexOf('?');
     if (qsStart > -1) {
       queryString = path.substring(qsStart + 1);
@@ -120,5 +134,5 @@ export const parsePath = (path: string | undefined | null): ParsedRoute => {
     }
   }
 
-  return { segments, queryString };
+  return { segments, queryString, fragment };
 };
