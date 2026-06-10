@@ -800,6 +800,67 @@ describe('gallery', () => {
         warningSpy.mockRestore();
       });
 
+      it('should not clear an unrelated inline display on an invalid child', () => {
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        // A non-item child with its own inline display and no gallery items.
+        const stray = document.createElement('div');
+        stray.style.display = 'flex';
+        el.appendChild(stray);
+
+        (sharedGallery as any).getItems();
+
+        // We only undo a `display: contents` we set ourselves; an inline
+        // display the consumer set must be left intact.
+        expect(stray.style.display).toBe('flex');
+
+        warningSpy.mockRestore();
+      });
+
+      it('should not return items that belong to a nested gallery', () => {
+        const ownedItem = document.createElement('ion-gallery-item');
+
+        const nestedGallery = document.createElement('ion-gallery');
+        const nestedItem = document.createElement('ion-gallery-item');
+        nestedGallery.appendChild(nestedItem);
+
+        // A wrapper holds one of our items alongside a nested gallery.
+        const wrapper = document.createElement('div');
+        wrapper.appendChild(ownedItem);
+        wrapper.appendChild(nestedGallery);
+        el.appendChild(wrapper);
+
+        const items = (sharedGallery as any).getItems();
+
+        // Only the item whose nearest gallery ancestor is this gallery is
+        // returned; the nested gallery's item is left to the nested gallery.
+        expect(items).toEqual([ownedItem]);
+        expect(wrapper.style.display).toBe('contents');
+      });
+
+      it('should warn and return no items when a gallery only contains a nested gallery', () => {
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        // Nesting a gallery directly inside a gallery is invalid: the outer
+        // gallery has no items of its own to place.
+        const nestedGallery = document.createElement('ion-gallery');
+        nestedGallery.appendChild(document.createElement('ion-gallery-item'));
+        nestedGallery.appendChild(document.createElement('ion-gallery-item'));
+        el.appendChild(nestedGallery);
+
+        const items = (sharedGallery as any).getItems();
+
+        // The nested gallery's items belong to it, so the outer gallery
+        // returns no items and warns about the invalid content.
+        expect(items).toEqual([]);
+        expect(warningSpy).toHaveBeenCalledWith(
+          expect.stringContaining('[ion-gallery] - Gallery items must be wrapped in "ion-gallery-item" components.'),
+          el
+        );
+
+        warningSpy.mockRestore();
+      });
+
       it('should warn and ignore children that do not contain an ion-gallery-item', () => {
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 

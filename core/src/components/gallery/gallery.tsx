@@ -491,11 +491,17 @@ export class Gallery implements ComponentInterface {
       // Compatibility path: a wrapper element may contain <ion-gallery-item>
       // components. Collapse the wrapper's box so the items participate in the
       // gallery grid.
+      //
+      // `nestedItems` queries for items at any depth, including ones that
+      // live inside a nested gallery.
+      // `ownedItems` narrows that to the items this gallery is responsible
+      // for: those whose closest gallery ancestor is this host.
       const nestedItems = Array.from(child.querySelectorAll<HTMLIonGalleryItemElement>(GALLERY_ITEM_SELECTOR));
+      const ownedItems = nestedItems.filter((item) => item.closest('ion-gallery') === this.el);
 
       // Ignore wrapper elements that contain no items, and warn the user about
       // any invalid content that is not wrapped in an `ion-gallery-item`.
-      if (nestedItems.length === 0) {
+      if (ownedItems.length === 0) {
         // If the wrapper was previously collapsed with `display: contents`
         // but now contains no items, clear the display style.
         if ((child as HTMLElement).style.display === 'contents') {
@@ -505,8 +511,9 @@ export class Gallery implements ComponentInterface {
         return;
       }
 
+      // Collapse the wrapper's box so its items sit directly in the grid.
       (child as HTMLElement).style.display = 'contents';
-      items.push(...nestedItems);
+      items.push(...ownedItems);
     });
 
     return items;
@@ -514,7 +521,8 @@ export class Gallery implements ComponentInterface {
 
   /**
    * Warn when the gallery has content that is not wrapped in an
-   * `ion-gallery-item` component.
+   * `ion-gallery-item` component. Items belonging to a nested
+   * gallery are considered invalid content for the parent gallery.
    */
   private warnInvalidItems() {
     if (this.hasWarnedInvalidItems) {
