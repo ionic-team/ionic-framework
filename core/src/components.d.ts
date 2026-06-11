@@ -1474,12 +1474,12 @@ export namespace Components {
     interface IonGallery {
         /**
           * The number of columns to display. Can be set as a number or an object of breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).
-          * @default DEFAULT_COLUMNS
+          * @default {   xs: 2,   sm: 3,   md: 4,   lg: 6,   xl: 8,   xxl: 10, }
          */
         "columns": GalleryColumns;
         /**
           * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.
-          * @default DEFAULT_GAP
+          * @default '16px'
          */
         "gap": GalleryGap;
         /**
@@ -3864,6 +3864,14 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * How to pack the label and the option's selection control within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.  Applies to the `alert`, `popover`, and `modal` interfaces, but has no visible effect on radio options in `popover` or `modal` on the `md` and `ionic` themes (the radio control is hidden there).  When unset, the interface picks a default based on theme and control type.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
+        /**
+          * Where the label is placed relative to the option's selection control (radio circle or checkbox box) when the option is rendered in an `alert`, `popover`, or `modal` interface. `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL. `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL.  Applies to the `alert`, `popover`, and `modal` interfaces, but has no visible effect on radio options in `popover` or `modal` on the `md` and `ionic` themes (the radio control is hidden there).  When unset, the interface picks a default based on theme and control type.
+         */
+        "labelPlacement"?: 'start' | 'end';
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -3974,7 +3982,7 @@ export namespace Components {
         "theme"?: "ios" | "md" | "ionic";
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default QUERY['lg']
+          * @default '(min-width: 992px)'
          */
         "when": string | boolean;
     }
@@ -7522,12 +7530,12 @@ declare namespace LocalJSX {
     interface IonGallery {
         /**
           * The number of columns to display. Can be set as a number or an object of breakpoint values (e.g. `{ xs: 2, sm: 3, md: 4 }`).
-          * @default DEFAULT_COLUMNS
+          * @default {   xs: 2,   sm: 3,   md: 4,   lg: 6,   xl: 8,   xxl: 10, }
          */
         "columns"?: GalleryColumns;
         /**
           * The space between gallery items. Accepts valid CSS [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length-percentage) values like `16px`, `1rem`, `20%`, math functions like `calc(10px + 20%)`, CSS variables like `var(--app-gallery-gap)`, or numbers (treated as pixel values). Can also be set as a breakpoint map (e.g. `{ xs: '8px', sm: '1rem', md: '24px' }`). Does not accept space-separated values or CSS keyword values like `inherit`, `auto`, etc.
-          * @default DEFAULT_GAP
+          * @default '16px'
          */
         "gap"?: GalleryGap;
         /**
@@ -10003,6 +10011,14 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * How to pack the label and the option's selection control within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.  Applies to the `alert`, `popover`, and `modal` interfaces, but has no visible effect on radio options in `popover` or `modal` on the `md` and `ionic` themes (the radio control is hidden there).  When unset, the interface picks a default based on theme and control type.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
+        /**
+          * Where the label is placed relative to the option's selection control (radio circle or checkbox box) when the option is rendered in an `alert`, `popover`, or `modal` interface. `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL. `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL.  Applies to the `alert`, `popover`, and `modal` interfaces, but has no visible effect on radio options in `popover` or `modal` on the `md` and `ionic` themes (the radio control is hidden there).  When unset, the interface picks a default based on theme and control type.
+         */
+        "labelPlacement"?: 'start' | 'end';
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -10120,7 +10136,7 @@ declare namespace LocalJSX {
         "theme"?: "ios" | "md" | "ionic";
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-          * @default QUERY['lg']
+          * @default '(min-width: 992px)'
          */
         "when"?: string | boolean;
     }
@@ -11382,6 +11398,8 @@ declare namespace LocalJSX {
         "disabled": boolean;
         "value": string;
         "description": string;
+        "labelPlacement": 'start' | 'end';
+        "justify": 'start' | 'end' | 'space-between';
     }
     interface IonSelectPopoverAttributes {
         "header": string;

@@ -1,0 +1,60 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+// Select Option - Interface
+// --------------------------------------------------
+
+// Outer label container, which also spaces the start
+// and end slots when a select option has rich content
+.action-sheet-button-label-has-rich-content,
+.alert-radio-label-has-rich-content,
+.alert-checkbox-label-has-rich-content,
+.select-option-label-has-rich-content {
+  gap: globals.$ion-space-300;
+}
+
+// Inner label container of a select option when
+// there is rich content within the default slot
+.action-sheet-button-label-text,
+.alert-checkbox-label-text,
+.alert-radio-label-text,
+.select-option-label-text {
+  gap: globals.$ion-space-300;
+}
+
+.select-option-description {
+  @include globals.typography(globals.$ion-body-md-regular);
+  @include globals.padding(globals.$ion-space-0);
+
+  color: globals.$ion-text-subtle;
+
+  font-size: globals.$ion-font-size-350;
+}
+
+// Start and end slots
+.select-option-start,
+.select-option-end {
+  gap: globals.$ion-space-200;
+}
+
+/**
+ * Cap slotted children so they can't stretch the option
+ * row out of proportion, keeping rows visually uniform
+ * regardless of the content.
+ */
+
+// Avatar / Image / SVG / Thumbnail / Icon
+.select-option-start > ion-avatar,
+.select-option-start > ion-img,
+.select-option-start > ion-thumbnail,
+.select-option-start > ion-icon,
+.select-option-start > img,
+.select-option-start > svg,
+.select-option-end > ion-avatar,
+.select-option-end > ion-img,
+.select-option-end > ion-thumbnail,
+.select-option-end > ion-icon,
+.select-option-end > img,
+.select-option-end > svg {
+  width: globals.$ion-scale-1200;
+  height: globals.$ion-scale-1200;
+}
