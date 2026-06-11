@@ -881,7 +881,8 @@ describe('gallery', () => {
       it('should warn about children that do not contain an ion-gallery-item', () => {
         const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
 
-        el.appendChild(document.createElement('img'));
+        const img = document.createElement('img');
+        el.appendChild(img);
 
         (sharedGallery as any).collapseWrappers();
 
@@ -889,6 +890,10 @@ describe('gallery', () => {
           expect.stringContaining('[ion-gallery] - Gallery items must be wrapped in "ion-gallery-item" components.'),
           el
         );
+
+        // Only wrappers that own items are collapsed, so an ignored child's
+        // inline display must be left untouched.
+        expect(img.style.display).toBe('');
 
         warningSpy.mockRestore();
       });
