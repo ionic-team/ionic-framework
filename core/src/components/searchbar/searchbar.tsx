@@ -506,7 +506,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Positions the input placeholder
    */
-  private positionPlaceholder(numTries = 0) {
+  private positionPlaceholder() {
     const inputEl = this.nativeInput;
     if (!inputEl) {
       return;
@@ -540,15 +540,23 @@ export class Searchbar implements ComponentInterface {
          * of padding.
          */
         const iconWidth = iconEl.clientWidth;
-        if (iconWidth == 0 && numTries < 10) {
-          /*
-           * fix for https://github.com/ionic-team/ionic-framework/issues/30434
-           * iconEl.clientWidth can very briefly be 0 when this is called from componentDidLoad
-           * this will try again until it is nonzero
-           */
-          this.positionPlaceholder(numTries + 1);
+
+        /**
+         * Fix for https://github.com/ionic-team/ionic-framework/issues/30434:
+         * iconEl.clientWidth can very briefly be 0 when this is called from componentDidLoad.
+         * If it is zero, set up a ResizeObserver and call this function when it observes a width greater than 0.
+         */
+        if (iconWidth === 0) {
+          const observer = new ResizeObserver((entries) => {
+            if (entries[0].contentRect.width > 0) {
+              observer.disconnect();
+              this.positionPlaceholder();
+            }
+          });
+          observer.observe(iconEl);
           return;
         }
+
         const iconLeft = 'calc(50% - ' + (textWidth / 2 + iconWidth + 8) + 'px)';
 
         // Set the input padding start and icon margin start
