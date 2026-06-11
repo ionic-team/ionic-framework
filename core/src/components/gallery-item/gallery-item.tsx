@@ -28,25 +28,26 @@ export class GalleryItem implements ComponentInterface {
    */
   @State() galleryLayout?: 'uniform' | 'masonry';
 
+  componentWillLoad() {
+    this.syncGalleryLayout();
+  }
+
   componentDidLoad() {
     this.warnInvalidParent();
   }
 
   connectedCallback() {
-    // Reflect the layout of the gallery the item is currently in.
-    // This is necessary because the item may be moved between galleries, and
-    // we want to ensure it always reflects the layout of its current parent.
-    this.galleryLayout = this.el.closest('ion-gallery')?.layout;
+    this.syncGalleryLayout();
   }
 
   /**
-   * Mirror the parent gallery's layout onto the item so it can keep its
-   * layout-specific styles in sync. Called by `ion-gallery`.
+   * Resolve the layout from the parent `ion-gallery`. Called internally on
+   * load and connect, and by the gallery when its layout changes.
    * @internal
    */
   @Method()
-  async setGalleryLayout(layout: 'uniform' | 'masonry') {
-    this.galleryLayout = layout;
+  async syncGalleryLayout() {
+    this.galleryLayout = this.el.closest('ion-gallery')?.layout;
   }
 
   private onSlotChange = () => {

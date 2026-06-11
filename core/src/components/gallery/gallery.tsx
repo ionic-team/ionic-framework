@@ -112,9 +112,8 @@ export class Gallery implements ComponentInterface {
    * changes.
    */
   private syncItemLayout() {
-    const { layout } = this;
     this.getItems().forEach((item) => {
-      item.setGalleryLayout(layout);
+      item.syncGalleryLayout();
     });
   }
 
