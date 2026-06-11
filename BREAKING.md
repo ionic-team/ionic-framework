@@ -28,6 +28,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Item Divider](#version-9x-item-divider)
   - [Menu Toggle](#version-9x-menu-toggle)
   - [Radio Group](#version-9x-radio-group)
+  - [Ripple Effect](#version-9x-ripple-effect)
   - [Row](#version-9x-row)
   - [Spinner](#version-9x-spinner)
   - [Text](#version-9x-text)
@@ -351,6 +352,25 @@ Converted `ion-radio-group` to use [Shadow DOM](https://developer.mozilla.org/en
 If you were targeting the internals of `ion-radio-group` in your CSS, you will need to target the `supporting-text`, `helper-text` or `error-text` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead, or use the provided CSS Variables.
 
 Additionally, the `radio-group-wrapper` div element has been removed, causing slotted elements to be direct children of the `ion-radio-group`.
+
+<h4 id="version-9x-ripple-effect">Ripple Effect</h4>
+
+The following breaking changes apply to `ion-ripple-effect`:
+
+1. The previously undocumented `--ripple-opacity` CSS variable has been renamed to `--ion-ripple-effect-opacity`. <sup>[1](#version-9x-ripple-effect-opacity-variable)</sup>
+2. Theme classes (`ion-ripple-effect.md`, `ion-ripple-effect.ios`) are no longer supported. <sup>[2](#version-9x-ripple-effect-theme-classes)</sup>
+
+<h5 id="version-9x-ripple-effect-opacity-variable">Opacity variable</h5>
+
+The ripple fade opacity is now part of the centralized Ionic Theming system. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--ripple-opacity` | `IonRippleEffect.opacity` | `--ion-ripple-effect-opacity` |
+
+<h5 id="version-9x-ripple-effect-theme-classes">Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-ripple-effect.md`, `ion-ripple-effect.ios`.
 
 <h4 id="version-9x-row">Row</h4>
 

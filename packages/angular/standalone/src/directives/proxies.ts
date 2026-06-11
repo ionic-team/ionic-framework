@@ -1859,7 +1859,7 @@ to be called in order to finalize the reorder action.
 
 @ProxyCmp({
   defineCustomElementFn: defineIonRippleEffect,
-  inputs: ['mode', 'theme', 'type'],
+  inputs: ['mode', 'type'],
   methods: ['addRipple']
 })
 @Component({
@@ -1867,7 +1867,7 @@ to be called in order to finalize the reorder action.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode', 'theme', 'type'],
+  inputs: ['mode', 'type'],
   standalone: true
 })
 export class IonRippleEffect {
