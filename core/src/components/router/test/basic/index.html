@@ -26,7 +26,10 @@
           <p><a href='#/two/second-page'>Go to page 2</a></p>
           <p><a href='#/two/three/hola'>Go to page 3 (hola)</a></p>
           <p><a href='#/two/three/something'>Go to page 3 (something)</a></p>
-
+          <p><ion-router-link id="link-with-fragment" href="/two/second-page#anchor">Page 2 with fragment</ion-router-link></p>
+          <p><ion-router-link id="link-with-query-and-fragment" href="/two/three/hola?flag=true#anchor">Page 3 with query and fragment</ion-router-link></p>
+          <div style="height: 2000px;">page-one spacer</div>
+          <h2 id="anchor">page-one anchor (must lose to the active page's anchor)</h2>
         </ion-content>`;
         }
       }
@@ -42,6 +45,9 @@
         <ion-content>
           <p><a href='#/two/three/hola'>Go to page 3 (hola)</a></p>
           <p><a href='#/two/three/hello'>Go to page 3 (hello)</a></p>
+          <div style="height: 2000px;">spacer</div>
+          <h2 id="anchor">Anchor target</h2>
+          <div style="height: 500px;">trailing spacer</div>
         </ion-content>`;
         }
       }
@@ -60,6 +66,7 @@
           <p><a href='#/two/second-page'>Go to page 2</a></p>
           <p><a href='#/two/'>Go to page 1</a></p>
           <ion-button id="btn-rel" href="./relative?param=1">Page 3 (relative)</ion-button>
+          <ion-button id="btn-rel-with-fragment" href="./relative#anchor">Page 3 (relative with fragment)</ion-button>
           <ion-button id="btn-abs" href="/two/three/absolute">Page 3 (absolute)</ion-button>
         </ion-content>`;
         }
