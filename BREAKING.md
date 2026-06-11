@@ -367,13 +367,13 @@ Remove any instances that target the theme classes: `ion-row.md`, `ion-row.ios`.
 
 The following breaking changes apply to `ion-skeleton-text`:
 
-1. `--background` and `--background-rgb` CSS variables have been replaced with per-state background tokens, each split into an RGB channel and an alpha. <sup>[1](#version-9x-skeleton-text-replaced-css-variables)</sup>
+1. `--background` and `--background-rgb` CSS variables have been replaced with per-state background tokens, each split into an RGB value and an alpha. <sup>[1](#version-9x-skeleton-text-replaced-css-variables)</sup>
 2. `--border-radius` has been replaced. <sup>[1](#version-9x-skeleton-text-replaced-css-variables)</sup>
 3. Theme classes (`ion-skeleton-text.md`, `ion-skeleton-text.ios`) are no longer supported. <sup>[2](#version-9x-skeleton-text-theme-classes)</sup>
 
 <h5 id="version-9x-skeleton-text-replaced-css-variables">Replaced CSS variables</h5>
 
-The background is now defined per state (resting and animated), and each state exposes an RGB channel plus an alpha so the color and its opacity can be set independently. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+The background is now defined per state (resting and animated), and each state exposes an RGB value plus an alpha so the color and its opacity can be set independently. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
 
 | Old (8.x) | New token (global) | New CSS variable (component-specific) |
 |---|---|---|
