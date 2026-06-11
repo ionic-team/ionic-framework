@@ -1,0 +1,47 @@
+@use "./select-option.native.overlay";
+@use "../../themes/mixins" as mixins;
+@use "../item/item.ios.vars" as item;
+
+// Select Option - Interface
+// --------------------------------------------------
+
+/**
+ * Cap slotted children so they can't stretch the option
+ * row out of proportion, keeping rows visually uniform
+ * regardless of the content.
+ */
+
+// Avatar / Image / SVG / Thumbnail
+.select-option-start > ion-avatar,
+.select-option-start > ion-img,
+.select-option-start > ion-thumbnail,
+.select-option-start > img,
+.select-option-start > svg,
+.select-option-end > ion-avatar,
+.select-option-end > ion-img,
+.select-option-end > ion-thumbnail,
+.select-option-end > img,
+.select-option-end > svg {
+  width: 44px;
+  height: 44px;
+}
+
+// Icon
+.select-option-start > ion-icon,
+.select-option-end > ion-icon {
+  width: 28px;
+  height: 28px;
+}
+
+// Select Option: Action Sheet
+// --------------------------------------------------
+.action-sheet-button-label-text {
+  justify-content: center;
+}
+
+// Select Option: Select Modal
+// --------------------------------------------------
+
+.select-option-has-rich-content {
+  @include mixins.padding-horizontal(null, item.$item-ios-padding-end);
+}

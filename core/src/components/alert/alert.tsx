@@ -6,6 +6,7 @@ import { createButtonActiveGesture } from '@utils/gesture/button-active';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
+import { getOverlayLabelJustify, getOverlayLabelPlacement } from '@utils/overlay-control-label';
 import {
   createDelegateController,
   createTriggerController,
@@ -603,6 +604,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
             endContent: richInput.endContent,
             description: richInput.description,
           };
+          const defaultLabelPlacement = getOverlayLabelPlacement(theme, 'checkbox');
+          const defaultJustify = getOverlayLabelJustify(theme, 'checkbox');
 
           return (
             <button
@@ -618,13 +621,26 @@ export class Alert implements ComponentInterface, OverlayInterface {
                 'alert-tappable': true,
                 'alert-checkbox': true,
                 'alert-checkbox-button': true,
-                'ion-focusable': true,
+                'ion-focusable': !i.disabled,
+                'ion-activatable': !i.disabled,
                 'alert-checkbox-button-disabled': i.disabled || false,
               }}
             >
-              <div class="alert-button-inner">
+              <div
+                class={{
+                  'alert-button-inner': true,
+                  [`checkbox-label-placement-${richInput.labelPlacement ?? defaultLabelPlacement}`]: true,
+                  [`checkbox-justify-${richInput.justify ?? defaultJustify}`]: true,
+                }}
+              >
                 <div class="alert-checkbox-icon">
-                  <div class="alert-checkbox-inner"></div>
+                  {theme === 'ionic' ? (
+                    <svg class="alert-checkbox-inner" viewBox="0 0 256 256" aria-hidden="true">
+                      <path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z" />
+                    </svg>
+                  ) : (
+                    <div class="alert-checkbox-inner"></div>
+                  )}
                 </div>
                 {renderOptionLabel(optionLabelOptions, 'alert-checkbox-label')}
               </div>
@@ -638,6 +654,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   private renderRadio() {
     const inputs = this.processedInputs;
+    const theme = getIonTheme(this);
 
     if (inputs.length === 0) {
       return null;
@@ -660,6 +677,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
             endContent: richInput.endContent,
             description: richInput.description,
           };
+          const defaultLabelPlacement = getOverlayLabelPlacement(theme, 'radio');
+          const defaultJustify = getOverlayLabelJustify(theme, 'radio');
 
           return (
             <button
@@ -674,12 +693,19 @@ export class Alert implements ComponentInterface, OverlayInterface {
                 'alert-radio-button': true,
                 'alert-tappable': true,
                 'alert-radio': true,
-                'ion-focusable': true,
+                'ion-focusable': !i.disabled,
+                'ion-activatable': !i.disabled,
                 'alert-radio-button-disabled': i.disabled || false,
               }}
               role="radio"
             >
-              <div class="alert-button-inner">
+              <div
+                class={{
+                  'alert-button-inner': true,
+                  [`radio-label-placement-${richInput.labelPlacement ?? defaultLabelPlacement}`]: true,
+                  [`radio-justify-${richInput.justify ?? defaultJustify}`]: true,
+                }}
+              >
                 <div class="alert-radio-icon">
                   <div class="alert-radio-inner"></div>
                 </div>
