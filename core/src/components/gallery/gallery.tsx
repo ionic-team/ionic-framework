@@ -97,12 +97,24 @@ export class Gallery implements ComponentInterface {
   @Watch('order')
   protected onLayoutOrOrderChanged() {
     this.syncResponsiveLayout();
+    this.syncItemLayout();
 
     // Wait until the next animation frame to warn about unused order
     // to avoid erroneous warnings when the layout and order are updated
     // in the same frame.
     raf(() => {
       this.warnUnusedOrder();
+    });
+  }
+
+  /**
+   * Sync the current layout with each item when the gallery's `layout`
+   * changes.
+   */
+  private syncItemLayout() {
+    const { layout } = this;
+    this.getItems().forEach((item) => {
+      item.setGalleryLayout(layout);
     });
   }
 

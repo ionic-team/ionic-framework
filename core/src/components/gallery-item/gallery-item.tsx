@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, State, h } from '@stencil/core';
+import { Component, Element, Host, Method, State, h } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -18,8 +18,6 @@ import { getIonTheme } from '../../global/ionic-global';
 })
 export class GalleryItem implements ComponentInterface {
   private hasWarnedInvalidParent = false;
-  private galleryEl?: HTMLIonGalleryElement;
-  private galleryClassObserver?: MutationObserver;
 
   @Element() el!: HTMLIonGalleryItemElement;
 
@@ -30,20 +28,25 @@ export class GalleryItem implements ComponentInterface {
    */
   @State() galleryLayout?: 'uniform' | 'masonry';
 
-  componentWillLoad() {
-    this.galleryEl = this.el.closest('ion-gallery') ?? undefined;
-    this.syncLayoutClasses();
-  }
-
   componentDidLoad() {
-    this.watchGalleryLayoutClasses();
     this.warnInvalidParent();
   }
 
-  disconnectedCallback() {
-    this.galleryClassObserver?.disconnect();
-    this.galleryClassObserver = undefined;
-    this.galleryEl = undefined;
+  connectedCallback() {
+    // Reflect the layout of the gallery the item is currently in.
+    // This is necessary because the item may be moved between galleries, and
+    // we want to ensure it always reflects the layout of its current parent.
+    this.galleryLayout = this.el.closest('ion-gallery')?.layout;
+  }
+
+  /**
+   * Mirror the parent gallery's layout onto the item so it can keep its
+   * layout-specific styles in sync. Called by `ion-gallery`.
+   * @internal
+   */
+  @Method()
+  async setGalleryLayout(layout: 'uniform' | 'masonry') {
+    this.galleryLayout = layout;
   }
 
   private onSlotChange = () => {
@@ -54,7 +57,7 @@ export class GalleryItem implements ComponentInterface {
    * Warn when the item is not a descendant of an `ion-gallery`.
    */
   private warnInvalidParent() {
-    if (this.hasWarnedInvalidParent || this.galleryEl !== undefined) {
+    if (this.hasWarnedInvalidParent || this.el.closest('ion-gallery') !== null) {
       return;
     }
 
@@ -63,29 +66,6 @@ export class GalleryItem implements ComponentInterface {
       this.el
     );
     this.hasWarnedInvalidParent = true;
-  }
-
-  /**
-   * Watch the parent gallery's class list so the item can react to layout
-   * changes (the gallery reflects its layout as a `gallery-layout-*` class).
-   */
-  private watchGalleryLayoutClasses() {
-    const galleryEl = this.galleryEl;
-    if (galleryEl === undefined) {
-      return;
-    }
-
-    this.galleryClassObserver?.disconnect();
-    this.galleryClassObserver = new MutationObserver(() => this.syncLayoutClasses());
-    this.galleryClassObserver.observe(galleryEl, {
-      attributes: true,
-      attributeFilter: ['class'],
-    });
-  }
-
-  private syncLayoutClasses() {
-    const layout = this.galleryEl?.layout;
-    this.galleryLayout = layout === 'masonry' || layout === 'uniform' ? layout : undefined;
   }
 
   render() {

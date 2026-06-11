@@ -1506,6 +1506,10 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
+          * Mirror the parent gallery's layout onto the item so it can keep its layout-specific styles in sync. Called by `ion-gallery`.
+         */
+        "setGalleryLayout": (layout: "uniform" | "masonry") => Promise<void>;
+        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";

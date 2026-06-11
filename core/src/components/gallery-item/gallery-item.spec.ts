@@ -57,10 +57,25 @@ describe('gallery-item', () => {
     expect(warningSpy).not.toHaveBeenCalled();
   });
 
+  it('should not have the gallery layout classes when not inside a gallery', async () => {
+    // Suppress the warning for the missing gallery parent.
+    jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+    const page = await newSpecPage({
+      components: [Gallery, GalleryItem],
+      html: `<ion-gallery-item></ion-gallery-item>`,
+    });
+
+    const item = page.body.querySelector('ion-gallery-item')!;
+
+    expect(item.classList.contains('in-gallery-layout-uniform')).toBe(false);
+    expect(item.classList.contains('in-gallery-layout-masonry')).toBe(false);
+  });
+
   it('should reflect the parent gallery uniform layout as a class', async () => {
     const page = await newSpecPage({
       components: [Gallery, GalleryItem],
-      html: `<ion-gallery layout="uniform"><ion-gallery-item></ion-gallery-item></ion-gallery>`,
+      html: `<ion-gallery><ion-gallery-item></ion-gallery-item></ion-gallery>`,
     });
 
     const item = page.body.querySelector('ion-gallery-item')!;
@@ -76,6 +91,68 @@ describe('gallery-item', () => {
     });
 
     const item = page.body.querySelector('ion-gallery-item')!;
+
+    expect(item.classList.contains('in-gallery-layout-masonry')).toBe(true);
+    expect(item.classList.contains('in-gallery-layout-uniform')).toBe(false);
+  });
+
+  it('should update the layout class when the parent gallery layout changes', async () => {
+    const page = await newSpecPage({
+      components: [Gallery, GalleryItem],
+      html: `<ion-gallery layout="uniform"><ion-gallery-item></ion-gallery-item></ion-gallery>`,
+    });
+
+    const gallery = page.body.querySelector('ion-gallery')!;
+    const item = page.body.querySelector('ion-gallery-item')!;
+
+    expect(item.classList.contains('in-gallery-layout-uniform')).toBe(true);
+
+    // Update the parent gallery's layout at runtime.
+    gallery.layout = 'masonry';
+    await page.waitForChanges();
+
+    // Verify that the item reflects the new layout class.
+    expect(item.classList.contains('in-gallery-layout-masonry')).toBe(true);
+    expect(item.classList.contains('in-gallery-layout-uniform')).toBe(false);
+  });
+
+  it('should keep its layout class after being detached and reattached', async () => {
+    const page = await newSpecPage({
+      components: [Gallery, GalleryItem],
+      html: `<ion-gallery layout="uniform"><ion-gallery-item></ion-gallery-item></ion-gallery>`,
+    });
+
+    const gallery = page.body.querySelector('ion-gallery')!;
+    const item = page.body.querySelector('ion-gallery-item')!;
+
+    expect(item.classList.contains('in-gallery-layout-uniform')).toBe(true);
+
+    // Detach and reattach the item, e.g. when a framework re-renders the DOM.
+    item.remove();
+    gallery.appendChild(item);
+    await page.waitForChanges();
+
+    // Verify that the item still reflects the correct layout class.
+    expect(item.classList.contains('in-gallery-layout-uniform')).toBe(true);
+  });
+
+  it('should reflect the new gallery layout after being moved between galleries', async () => {
+    const page = await newSpecPage({
+      components: [Gallery, GalleryItem],
+      html: `
+        <ion-gallery layout="uniform"><ion-gallery-item></ion-gallery-item></ion-gallery>
+        <ion-gallery layout="masonry"></ion-gallery>
+      `,
+    });
+
+    const item = page.body.querySelector('ion-gallery-item')!;
+    const masonryGallery = page.body.querySelectorAll('ion-gallery')[1];
+
+    expect(item.classList.contains('in-gallery-layout-uniform')).toBe(true);
+
+    // Move the item out of the uniform gallery and into the masonry gallery.
+    masonryGallery.appendChild(item);
+    await page.waitForChanges();
 
     expect(item.classList.contains('in-gallery-layout-masonry')).toBe(true);
     expect(item.classList.contains('in-gallery-layout-uniform')).toBe(false);
