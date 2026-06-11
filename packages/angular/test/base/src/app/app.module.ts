@@ -5,6 +5,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLandingComponent } from './app-landing/app-landing.component';
+import { ModeSwitcherComponent } from './mode-switcher.component';
 
 const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
 
@@ -19,6 +20,7 @@ export function ionicConfigFactory(): any {
     BrowserModule,
     AppRoutingModule,
     IonicModule.forRoot(ionicConfigFactory()),
+    ModeSwitcherComponent,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
