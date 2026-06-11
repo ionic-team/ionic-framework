@@ -15,7 +15,6 @@ import { IonNav as IonNavBase, AngularDelegate } from '@ionic/angular/common';
   template: '<ng-content></ng-content>',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonNav extends IonNavBase {
   constructor(
     ref: ElementRef,

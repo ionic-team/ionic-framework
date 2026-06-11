@@ -30,14 +30,13 @@
     "rootDir": "./",
     "strictPropertyInitialization": false,
     "target": "es2015",
-    "baseUrl": ".",
     "plugins": [
       {
         "name": "typescript-eslint-language-service"
       }
     ],
     "paths": {
-      "@ionic/angular/common": ["common/src/index.ts"]
+      "@ionic/angular/common": ["./common/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "src/schematics"],

@@ -18,5 +18,4 @@ export const ION_MAX_VALIDATOR: Provider = {
   providers: [ION_MAX_VALIDATOR],
   host: { '[attr.max]': 'enabled(max) ? max : null' },
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonMaxValidator extends MaxValidator {}

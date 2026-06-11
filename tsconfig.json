@@ -22,7 +22,6 @@
     "removeComments": false,
     "strictPropertyInitialization": false,
     "target": "es2017",
-    "baseUrl": ".",
     "paths": {
       "@ionic/core/hydrate": [
         "./core/hydrate"

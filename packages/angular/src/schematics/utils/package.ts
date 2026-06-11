@@ -1,4 +1,4 @@
-import { Tree } from '@angular-devkit/schematics';
+import { SchematicsException, Tree } from '@angular-devkit/schematics';
 
 /**
  * Adds a package to the package.json
@@ -6,6 +6,9 @@ import { Tree } from '@angular-devkit/schematics';
 export function addPackageToPackageJson(host: Tree, type: string, pkg: string, version: string): Tree {
   if (host.exists('package.json')) {
     const sourceText = host.read('package.json')?.toString('utf-8');
+    if (sourceText === undefined) {
+      throw new SchematicsException('Could not read package.json');
+    }
     const json = JSON.parse(sourceText);
     if (!json[type]) {
       json[type] = {};

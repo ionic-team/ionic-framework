@@ -18,5 +18,4 @@ export const ION_MIN_VALIDATOR: Provider = {
   providers: [ION_MIN_VALIDATOR],
   host: { '[attr.min]': 'enabled(min) ? min : null' },
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonMinValidator extends MinValidator {}

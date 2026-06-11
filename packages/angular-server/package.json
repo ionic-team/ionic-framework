@@ -47,22 +47,22 @@
     }
   },
   "devDependencies": {
-    "@angular/animations": "^21.0.0",
-    "@angular/common": "^21.0.0",
-    "@angular/compiler": "^21.0.0",
-    "@angular/compiler-cli": "^21.0.0",
-    "@angular/core": "^21.0.0",
-    "@angular/platform-browser": "^21.0.0",
-    "@angular/platform-browser-dynamic": "^21.0.0",
-    "@angular/platform-server": "^21.0.0",
+    "@angular/animations": "^22.0.0",
+    "@angular/common": "^22.0.0",
+    "@angular/compiler": "^22.0.0",
+    "@angular/compiler-cli": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/platform-browser": "^22.0.0",
+    "@angular/platform-browser-dynamic": "^22.0.0",
+    "@angular/platform-server": "^22.0.0",
     "@ionic/eslint-config": "^0.4.0",
     "@ionic/prettier-config": "^2.0.0",
-    "@types/node": "^20.14.9",
+    "@types/node": "^22.9.3",
     "eslint": "^8.57.0",
-    "ng-packagr": "^21.0.0",
+    "ng-packagr": "^22.0.0",
     "prettier": "^2.4.1",
     "rxjs": "^7.8.0",
-    "typescript": "~5.9.0"
+    "typescript": "~6.0.0"
   },
   "prettier": "@ionic/prettier-config",
   "dependencies": {

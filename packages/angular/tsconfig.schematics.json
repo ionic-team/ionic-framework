@@ -6,13 +6,16 @@
     "experimentalDecorators": true,
     "allowUnreachableCode": false,
     "lib": ["es2017", "dom"],
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "sourceMap": false,
     "pretty": true,
     "rootDir": "src/schematics",
     "target": "es2017",
-    "outDir": "dist/schematics"
+    "outDir": "dist/schematics",
+    // TypeScript 6.0 defaults `types` to []; the devkit .d.ts the schematics
+    // consume reference Node globals (Buffer, node:url), so opt them back in.
+    "types": ["node"]
   },
   "exclude": ["node_modules"],
   "include": ["src/schematics/**/*.ts"]

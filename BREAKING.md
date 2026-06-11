@@ -175,9 +175,17 @@ Angular forbids `provideZoneChangeDetection()` inside an NgModule's `providers` 
 import 'zone.js';
 ```
 
+**OnPush by Default on Angular 22**
+
+Angular 22 changes the default change detection strategy to `OnPush` for components that don't declare one. Combined with the zoneless default above, any component state that you mutate as a plain field from an Ionic lifecycle hook (`ionViewWillEnter`, etc.) no longer re-renders on its own. Run `ng update`, which migrates existing components to eager change detection and preserves the previous behavior, or use a signal (or `ChangeDetectorRef.markForCheck()`) for state set in those hooks. Ionic's own Angular components already declare `OnPush` explicitly and are unaffected. Angular 18 through 21 keep the eager default, so they require no change.
+
 **TypeScript**
 
-Ionic 9 supports TypeScript 5.4 or later, matching the minimum for Angular 18. Angular 21 requires TypeScript 5.9 or later per Angular's own requirements.
+Ionic 9 supports TypeScript 5.4 or later, matching the minimum for Angular 18. Angular 21 requires TypeScript 5.9 or later, and Angular 22 requires TypeScript 6.0 or later, per Angular's own requirements.
+
+**Node.js**
+
+Angular 22 raises the minimum Node.js version to `^22.22.3 || ^24.15.0 || ^26.0.0`. Angular 18 through 21 are unaffected.
 
 **Module Resolution**
 

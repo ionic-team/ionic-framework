@@ -41,7 +41,6 @@ import { RouteView, StackDidChangeEvent, StackWillChangeEvent, getUrl, isTabSwit
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['animated', 'animation', 'mode', 'swipeGesture'],
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class IonRouterOutlet implements OnDestroy, OnInit {
   abstract outletContent: any;
 
@@ -203,7 +202,6 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
   deactivate(): void {
     if (this.activated) {
       if (this.activatedView) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const context = this.getContext()!;
         this.activatedView.savedData = new Map(context.children['contexts']);
 
@@ -253,7 +251,6 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
       const saved = enteringView.savedData;
       if (saved) {
         // self-restore
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const context = this.getContext()!;
         context.children['contexts'] = saved;
       }
@@ -277,7 +274,6 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
 
       const injector = new OutletInjector(activatedRouteProxy, childContexts, this.location.injector);
 
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const component = snapshot.routeConfig!.component ?? snapshot.component;
 
       /**
@@ -304,7 +300,6 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
        * At this point this.activated has been set earlier
        * in this function, so it is guaranteed to be non-null.
        */
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       enteringView = this.stackCtrl.createView(this.activated!, activatedRoute);
 
       // Store references to the proxy by component

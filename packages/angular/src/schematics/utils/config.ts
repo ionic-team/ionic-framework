@@ -1,6 +1,5 @@
 import type { SchematicOptions } from '@angular/cli/lib/config/workspace-schema';
-import type { JsonObject } from '@angular-devkit/core';
-import { WorkspaceDefinition } from '@angular-devkit/core/src/workspace';
+import type { JsonObject, workspaces } from '@angular-devkit/core';
 import { Tree, SchematicsException } from '@angular-devkit/schematics';
 import { parse } from 'jsonc-parser';
 
@@ -139,7 +138,7 @@ export function getWorkspacePath(host: Tree): string {
   return path;
 }
 
-export function getWorkspace(host: Tree): WorkspaceDefinition {
+export function getWorkspace(host: Tree): workspaces.WorkspaceDefinition {
   const path = getWorkspacePath(host);
   const configBuffer = host.read(path);
   if (configBuffer === null) {
@@ -147,5 +146,5 @@ export function getWorkspace(host: Tree): WorkspaceDefinition {
   }
   const content = configBuffer.toString();
 
-  return parse(content) as WorkspaceDefinition;
+  return parse(content) as workspaces.WorkspaceDefinition;
 }

@@ -5,7 +5,7 @@
 # You can see what browsers were selected by your queries by running:
 #   npx browserslist
 
-# Compatible with Angular 18-21 - Main browsers only
+# Compatible with Angular 18-22 - Main browsers only
 chrome >= 120
 firefox >= 115
 safari >= 17

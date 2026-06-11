@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "baseUrl": "./packages/angular-server",
     "module": "es2022",
     "moduleResolution": "bundler",
     "skipLibCheck": true,
