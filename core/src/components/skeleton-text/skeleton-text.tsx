@@ -3,12 +3,10 @@ import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import { hostContext } from '@utils/theme';
 
 import { config } from '../../global/config';
-import { getIonTheme } from '../../global/ionic-global';
 import type { StyleEventDetail } from '../../interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-skeleton-text',
@@ -34,9 +32,10 @@ export class SkeletonText implements ComponentInterface {
   }
 
   private emitStyle() {
-    // The emitted property is used by item in order
-    // to add the item-skeleton-text class which applies
-    // overflow: hidden to its label
+    /*
+     * The emitted property is used by `ion-item` in order to add the
+     * `.item-skeleton-text` class which applies styles to `ion-label`.
+     */
     const style: StyleEventDetail = {
       'skeleton-text': true,
     };
@@ -47,12 +46,10 @@ export class SkeletonText implements ComponentInterface {
   render() {
     const animated = this.animated && config.getBoolean('animated', true);
     const inMedia = hostContext('ion-avatar', this.el) || hostContext('ion-thumbnail', this.el);
-    const theme = getIonTheme(this);
 
     return (
       <Host
         class={{
-          [theme]: true,
           'skeleton-text-animated': animated,
           'in-media': inMedia,
         }}

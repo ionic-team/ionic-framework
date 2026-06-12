@@ -7,6 +7,7 @@ import type { IonItemDividerRecipe } from '../components/item-divider/item-divid
 import type { IonProgressBarConfig, IonProgressBarRecipe } from '../components/progress-bar/progress-bar.interfaces';
 import type { IonRippleEffectRecipe } from '../components/ripple-effect/ripple-effect.interface';
 import type { IonRowRecipe } from '../components/row/row.interface';
+import type { IonSkeletonTextRecipe } from '../components/skeleton-text/skeleton-text.interface';
 import type { IonSpinnerConfig, IonSpinnerRecipe } from '../components/spinner/spinner.interfaces';
 import type { IonTextConfig, IonTextRecipe } from '../components/text/text.interfaces';
 import type { IonThumbnailRecipe } from '../components/thumbnail/thumbnail.interfaces';
@@ -302,6 +303,7 @@ type Components = {
   IonProgressBar?: IonProgressBarRecipe;
   IonRippleEffect?: IonRippleEffectRecipe;
   IonRow?: IonRowRecipe;
+  IonSkeletonText?: IonSkeletonTextRecipe;
   IonSpinner?: IonSpinnerRecipe;
   IonText?: IonTextRecipe;
   IonThumbnail?: IonThumbnailRecipe;

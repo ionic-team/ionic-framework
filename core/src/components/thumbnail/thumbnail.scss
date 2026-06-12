@@ -27,3 +27,7 @@
   object-fit: cover;
   overflow: hidden;
 }
+
+::slotted(ion-skeleton-text) {
+  @include mixins.border-radius(var(--ion-thumbnail-border-radius, revert-layer));
+}
