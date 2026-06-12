@@ -44,8 +44,133 @@ type OverlayWithFocusTrapProps = HTMLIonOverlayElement & {
   backdropBreakpoint?: number;
 };
 
+const OVERLAY_FOCUS_TRAP_SELECTOR = 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker-legacy,ion-popover';
+
 /**
- * Determines if the overlay's backdrop is always blocking (no background interaction).
+ * The focus trap is generic and knows nothing about which components are
+ * inside an overlay. Components mark their elements with these `data-*`
+ * attributes, which the trap reads, to control how Tab moves through them.
+ * This keeps private component class names (e.g. `.modal-handle`,
+ * `.action-sheet-button`) out of the trap, so changing a component does
+ *  not silently break Tab order.
+ *
+ * - `data-focus-ignore`: skip this element as a tab stop.
+ * - `data-focus-order`: explicit numeric placement in the tab sequence.
+ * - `data-roving-focus`: a container whose focusable descendants share a
+ *   single tab stop via a roving tabindex.
+ */
+const FOCUS_IGNORE_SELECTOR = '[data-focus-ignore]';
+const FOCUS_ORDER_SELECTOR = '[data-focus-order]';
+const ROVING_FOCUS_SELECTOR = '[data-roving-focus]';
+
+/**
+ * Used to restore focus to the correct member when Tab would land on
+ * a roving group's tabbable slot (e.g. Shift+Tab from the sheet handle
+ * back into the option list).
+ */
+type OverlayWithRovingFocusState = HTMLIonOverlayElement & {
+  trapLastRovingFocus?: HTMLElement;
+};
+
+/**
+ * Returns the roving-focus group an element belongs to, or `null`.
+ * A member is a descendant of a `[data-roving-focus]` container. The
+ * container itself is not a member. Members share a single tab stop.
+ */
+const getRovingFocusGroup = (el: HTMLElement): HTMLElement | null => {
+  const group = el.closest<HTMLElement>(ROVING_FOCUS_SELECTOR);
+  return group !== null && group !== el ? group : null;
+};
+
+/**
+ * Whether an element participates in a roving-focus group.
+ */
+const isRovingFocusItem = (el: HTMLElement) => getRovingFocusGroup(el) !== null;
+
+/**
+ * Returns the currently focused element for keyboard focus checks.
+ *
+ * Starts from `document.activeElement` (non-shadow / light DOM focus).
+ * If focus is inside one or more open shadow roots
+ * (e.g. native control inside `ion-radio`), walks through nested
+ * `shadowRoot.activeElement` values until the innermost focused node is reached.
+ */
+const getActiveElement = (ownerDoc: Document): HTMLElement | null => {
+  let active = ownerDoc.activeElement as HTMLElement | null;
+  if (!active) {
+    return null;
+  }
+  while (active.shadowRoot?.activeElement) {
+    active = active.shadowRoot.activeElement as HTMLElement;
+  }
+  return active;
+};
+
+/**
+ * Walks from a focused node (possibly deep inside shadow roots) up to
+ * the nearest roving-focus host (e.g. `ion-radio` inside an
+ * `ion-radio-group`, or an action sheet `<button role="radio">`).
+ */
+const getRovingFocusHost = (active: HTMLElement | null): HTMLElement | null => {
+  let n: HTMLElement | null = active;
+  while (n) {
+    if (isRovingFocusItem(n)) {
+      return n;
+    }
+    const root = n.getRootNode();
+    if (root instanceof ShadowRoot && root.host instanceof HTMLElement) {
+      n = root.host;
+    } else {
+      return null;
+    }
+  }
+  return null;
+};
+
+/**
+ * Reorders focusables for components that declare an explicit tab order
+ * via `data-focus-order`. Elements without the attribute keep their
+ * visual order and are visited first. Elements with it are appended
+ * afterwards, sorted by ascending numeric value.
+ *
+ * Example (sheet modal): the options have no order and are visited
+ * first in visual order, then the drag handle (`data-focus-order="1"`),
+ * then the header Cancel button (`data-focus-order="2"`).
+ */
+const applyFocusOrder = (elements: HTMLElement[]): HTMLElement[] => {
+  const sortByVisualPosition = (els: HTMLElement[]) =>
+    [...els].sort((a, b) => {
+      const ra = a.getBoundingClientRect();
+      const rb = b.getBoundingClientRect();
+      const topDiff = ra.top - rb.top;
+      if (Math.abs(topDiff) > 1) {
+        return topDiff;
+      }
+      return ra.left - rb.left;
+    });
+
+  const unordered = elements.filter((el) => !el.matches(FOCUS_ORDER_SELECTOR));
+  const ordered = elements
+    .filter((el) => el.matches(FOCUS_ORDER_SELECTOR))
+    .sort((a, b) => Number(a.getAttribute('data-focus-order')) - Number(b.getAttribute('data-focus-order')));
+
+  return [...sortByVisualPosition(unordered), ...ordered];
+};
+
+/**
+ * Roving-focus members use a tabindex pattern where only one member is
+ * tabbable (`tabIndex="0"`) while the others are not (`tabIndex="-1"`).
+ * This returns the index of the current tabbable member.
+ */
+const getTabbableRovingFocusIndex = (elements: HTMLElement[], overlay: HTMLElement): number => {
+  return elements.findIndex((el) => {
+    return overlay.contains(el) && isRovingFocusItem(el) && el.tabIndex >= 0;
+  });
+};
+
+/**
+ * Determines if the overlay's backdrop is always blocking
+ * (no background interaction).
  * Returns false if showBackdrop=false or backdropBreakpoint > 0.
  */
 const isBackdropAlwaysBlocking = (el: OverlayWithFocusTrapProps): boolean => {
@@ -184,10 +309,7 @@ const focusElementInOverlay = (hostToFocus: HTMLElement | null | undefined, over
  * Should NOT include: Toast
  */
 const trapKeyboardFocus = (ev: Event, doc: Document) => {
-  const lastOverlay = getPresentedOverlay(
-    doc,
-    'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker-legacy,ion-popover'
-  );
+  const lastOverlay = getPresentedOverlay(doc, OVERLAY_FOCUS_TRAP_SELECTOR);
   const target = ev.target as HTMLElement | null;
 
   /**
@@ -384,6 +506,31 @@ const connectListeners = (doc: Document) => {
       true
     );
 
+    /**
+     * Remember which roving-focus member last received focus
+     * (arrows, click, or Tab). A roving group keeps `tabIndex=0` on a
+     * single member (e.g. the checked/first radio), so the Tab trap
+     * uses this when wrapping back into the group or focusing its slot.
+     */
+    doc.addEventListener(
+      'focusin',
+      (ev: FocusEvent) => {
+        const lastOverlay = getPresentedOverlay(doc, OVERLAY_FOCUS_TRAP_SELECTOR);
+        if (!lastOverlay || lastOverlay.classList.contains(FOCUS_TRAP_DISABLE_CLASS)) {
+          return;
+        }
+        const target = ev.target;
+        if (!(target instanceof HTMLElement)) {
+          return;
+        }
+        const rovingHost = getRovingFocusHost(target);
+        if (rovingHost && lastOverlay.contains(rovingHost)) {
+          (lastOverlay as OverlayWithRovingFocusState).trapLastRovingFocus = rovingHost;
+        }
+      },
+      true
+    );
+
     // Listen for keydown events to intercept Tab navigation.
     // This is needed for Safari and Firefox which may skip focusable
     // elements or allow focus to escape the overlay.
@@ -394,15 +541,11 @@ const connectListeners = (doc: Document) => {
       (ev: KeyboardEvent) => {
         if (ev.key !== 'Tab' && ev.key !== 'Alt+Tab') return;
 
-        const lastOverlay = getPresentedOverlay(
-          doc,
-          'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker-legacy,ion-popover'
-        );
+        const lastOverlay = getPresentedOverlay(doc, OVERLAY_FOCUS_TRAP_SELECTOR);
 
         if (!lastOverlay || lastOverlay.classList.contains(FOCUS_TRAP_DISABLE_CLASS)) return;
 
-        const activeElement = doc.activeElement as HTMLElement | null;
-
+        const activeElement = getActiveElement(doc);
         if (activeElement === lastOverlay) {
           ev.preventDefault();
           focusFirstDescendant(lastOverlay);
@@ -420,10 +563,40 @@ const connectListeners = (doc: Document) => {
         if (!isInsideOverlay) return;
 
         // Get all focusable elements from both light and shadow DOM
-        const allFocusable = [
+        let allFocusable = [
           ...lastOverlay.querySelectorAll<HTMLElement>(focusableQueryString),
           ...(lastOverlay.shadowRoot?.querySelectorAll<HTMLElement>(focusableQueryString) || []),
         ];
+
+        /**
+         * Some elements match `focusableQueryString` but are not
+         * intended tab stops (e.g. the `ion-item` wrappers a select
+         * modal renders around its options). Components opt these out
+         * with `data-focus-ignore` so Tab can move between the real
+         * controls.
+         */
+        allFocusable = allFocusable.filter((el) => !el.matches(FOCUS_IGNORE_SELECTOR));
+
+        /**
+         * A roving-focus group is a single tab stop: only its currently
+         * tabbable member (`tabIndex >= 0`) participates. Other
+         * focusables inside the group are not independent tab stops —
+         * this includes inactive members and focusable wrappers such as
+         * the `ion-item` that carries `ion-focusable` on behalf of a
+         * radio. Drop them so Tab moves between the group and the
+         * surrounding controls (e.g. the handle), not into the wrappers.
+         */
+        allFocusable = allFocusable.filter((el) => !isRovingFocusItem(el) || el.tabIndex >= 0);
+
+        /**
+         * When a component declares an explicit tab order via
+         * `data-focus-order` (e.g. a sheet modal's handle and Cancel
+         * button), reorder accordingly. Overlays that declare no order
+         * keep their DOM order.
+         */
+        if (allFocusable.some((el) => el.matches(FOCUS_ORDER_SELECTOR))) {
+          allFocusable = applyFocusOrder(allFocusable);
+        }
 
         if (allFocusable.length === 0) {
           ev.preventDefault();
@@ -431,7 +604,7 @@ const connectListeners = (doc: Document) => {
         }
 
         // Find current element's index (accounting for shadow DOM)
-        const currentIndex = activeElement
+        let currentIndex = activeElement
           ? allFocusable.findIndex((el) => {
               if (el === activeElement) return true;
               if (el.shadowRoot?.contains(activeElement)) return true;
@@ -439,6 +612,30 @@ const connectListeners = (doc: Document) => {
               return rootNode instanceof ShadowRoot && rootNode.host === el;
             })
           : -1;
+
+        /**
+         * A roving-focus group keeps `tabIndex=0` on a single member
+         * while the others are `-1`. Arrow keys can move focus onto a
+         * `tabIndex=-1` member, which `focusableQueryString` excludes,
+         * so `findIndex` yields -1 and Tab would wrap to
+         * `allFocusable[0]`. Treat focus on any group member as the
+         * group's tabbable slot so Tab goes to the next control (e.g.
+         * handle → Cancel), not back to the first member.
+         */
+        if (currentIndex < 0 && activeElement) {
+          const rovingHost = getRovingFocusHost(activeElement);
+          if (rovingHost && lastOverlay.contains(rovingHost)) {
+            const directIndex = allFocusable.indexOf(rovingHost);
+            if (directIndex >= 0) {
+              currentIndex = directIndex;
+            } else {
+              const tabbableIndex = getTabbableRovingFocusIndex(allFocusable, lastOverlay);
+              if (tabbableIndex >= 0) {
+                currentIndex = tabbableIndex;
+              }
+            }
+          }
+        }
 
         ev.preventDefault();
 
@@ -455,21 +652,44 @@ const connectListeners = (doc: Document) => {
           focusVisibleElement(element);
         };
 
+        let nextIndex: number;
         if (ev.shiftKey) {
           // Shift+Tab: previous element, wrap to last if at first
           if (currentIndex <= 0) {
-            focusLastDescendant(lastOverlay);
+            nextIndex = allFocusable.length - 1;
           } else {
-            focusElement(allFocusable[currentIndex - 1]);
+            nextIndex = currentIndex - 1;
           }
         } else {
           // Tab: next element, wrap to first if at last
           if (currentIndex < 0 || currentIndex >= allFocusable.length - 1) {
-            focusFirstDescendant(lastOverlay);
+            nextIndex = 0;
           } else {
-            focusElement(allFocusable[currentIndex + 1]);
+            nextIndex = currentIndex + 1;
           }
         }
+
+        const nextEl = allFocusable[nextIndex];
+
+        const overlayTrap = lastOverlay as OverlayWithRovingFocusState;
+        const tabbableRovingIndex = getTabbableRovingFocusIndex(allFocusable, lastOverlay);
+
+        /**
+         * The trap list only includes one tabbable member of a roving
+         * group (`tabIndex >= 0`), usually the checked/first radio.
+         * `focusin` tracks the real last-focused member. Use it whenever
+         * Tab would focus that slot (wrap from Cancel, Shift+Tab from
+         * handle, etc.).
+         */
+        let focusTarget = nextEl;
+        if (tabbableRovingIndex >= 0 && nextIndex === tabbableRovingIndex) {
+          const saved = overlayTrap.trapLastRovingFocus;
+          if (saved?.isConnected && lastOverlay.contains(saved) && saved !== nextEl) {
+            focusTarget = saved;
+          }
+        }
+
+        focusElement(focusTarget);
       },
       true
     );

@@ -53,6 +53,11 @@
   width: auto;
 }
 
+// Hide the native focus outline.
+:host(:focus) {
+  outline: none;
+}
+
 .checkbox-wrapper {
   display: flex;
 

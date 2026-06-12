@@ -1693,6 +1693,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
               aria-label="Activate to adjust the size of the dialog overlaying the screen"
               onClick={isHandleCycle ? this.onHandleClick : undefined}
               part="handle"
+              data-focus-order="1"
               ref={(el) => (this.dragHandleEl = el)}
             ></button>
           )}

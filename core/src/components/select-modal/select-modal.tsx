@@ -143,6 +143,7 @@ export class SelectModal implements ComponentInterface {
           return (
             <ion-item
               lines="none"
+              data-focus-ignore
               // TODO FW-4784
               disabled={option.disabled}
               class={{
@@ -210,6 +211,7 @@ export class SelectModal implements ComponentInterface {
 
       return (
         <ion-item
+          data-focus-ignore
           // TODO FW-4784
           disabled={option.disabled}
           class={{
@@ -254,7 +256,11 @@ export class SelectModal implements ComponentInterface {
             {this.header !== undefined && <ion-title>{this.header}</ion-title>}
 
             <ion-buttons slot="end">
-              <ion-button aria-label={this.cancelIcon ? this.cancelText : undefined} onClick={() => this.closeModal()}>
+              <ion-button
+                aria-label={this.cancelIcon ? this.cancelText : undefined}
+                data-focus-order="2"
+                onClick={() => this.closeModal()}
+              >
                 {this.cancelIcon ? (
                   <ion-icon aria-hidden="true" slot="icon-only" icon={this.cancelButtonIcon}></ion-icon>
                 ) : (

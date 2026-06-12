@@ -8,7 +8,7 @@ import { configs, test } from '@utils/test/playwright';
  * does not. The overlay rendering is already tested in the respective
  * test files.
  */
-configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
   test.describe(title('select: basic'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/select/test/basic', config);
@@ -35,7 +35,11 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
         await expect(alert).toHaveScreenshot(screenshot(`select-basic-alert-scroll-to-selected`));
       });
 
-      test('it should not focus any option when opened with no value', async ({ page }) => {
+      // On open, the alert focuses its wrapper (mirroring the native alert
+      // behavior) rather than an option, so no option is focused or shows the
+      // focus ring. Tabbing then moves focus into the radio group, focusing
+      // the first option and showing the focus ring.
+      test('it should focus the wrapper on open, then the first option on Tab', async ({ page, pageUtils }) => {
         // ion-app is required to apply the focused styles
         await page.setContent(
           `
@@ -60,12 +64,26 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
 
         const alert = page.locator('ion-alert');
 
-        // Verify that no option has the ion-focused class
-        const focusedOptions = alert.locator('.alert-radio-button.ion-focused');
-        await expect(focusedOptions).toHaveCount(0);
+        // On open the wrapper is focused and no option has the focus ring.
+        await expect(alert.locator('.alert-wrapper')).toBeFocused();
+        await expect(alert.locator('.alert-radio-button.ion-focused')).toHaveCount(0);
+
+        // Tabbing moves focus into the radio group, focusing the first option
+        // and showing the focus ring.
+        await pageUtils.pressKeys('Tab');
+        await page.waitForChanges();
+
+        const firstOption = alert.locator('.alert-radio-button').nth(0);
+        await expect(firstOption).toBeFocused();
+        await expect(firstOption).toHaveClass(/ion-focused/);
+
+        await expect(alert).toHaveScreenshot(screenshot(`select-basic-alert-opened-focused`));
       });
 
-      test('it should not focus any option when opened with a value', async ({ page }) => {
+      // Same as above, but with a selected value: the wrapper is focused on
+      // open and tabbing focuses the selected option (the roving tabindex
+      // points at the checked radio) rather than the first option.
+      test('it should focus the wrapper on open, then the selected option on Tab', async ({ page, pageUtils }) => {
         // ion-app is required to apply the focused styles
         await page.setContent(
           `
@@ -90,9 +108,101 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
 
         const alert = page.locator('ion-alert');
 
-        // Alert interface doesn't apply ion-focused class to selected options
-        const focusedOptions = alert.locator('.alert-radio-button.ion-focused');
-        await expect(focusedOptions).toHaveCount(0);
+        // On open the wrapper is focused and no option has the focus ring.
+        await expect(alert.locator('.alert-wrapper')).toBeFocused();
+        await expect(alert.locator('.alert-radio-button.ion-focused')).toHaveCount(0);
+
+        // Tabbing moves focus to the selected option and shows the focus ring.
+        await pageUtils.pressKeys('Tab');
+        await page.waitForChanges();
+
+        const selectedOption = alert.locator('.alert-radio-button').nth(1);
+        await expect(selectedOption).toBeFocused();
+        await expect(selectedOption).toHaveClass(/ion-focused/);
+
+        await expect(alert).toHaveScreenshot(screenshot(`select-basic-alert-opened-with-value-focused`));
+      });
+
+      // When opening with the keyboard (Tab to the select, then Enter), the
+      // focus indicator should display on the alert wrapper.
+      test('it should show the focus indicator when opened with the keyboard', async ({ page, pageUtils, skip }) => {
+        // TODO (ROU-5437)
+        skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="alert">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+        // Tab to the select and open it with the keyboard.
+        await pageUtils.pressKeys('Tab');
+        await pageUtils.pressKeys('Enter');
+        await ionAlertDidPresent.next();
+
+        await page.waitForChanges();
+
+        const alert = page.locator('ion-alert');
+
+        // The wrapper should have :focus-visible, and no option should
+        // have the .ion-focused class.
+        const wrapper = alert.locator('.alert-wrapper');
+        await expect(wrapper).toBeFocused();
+        expect(await wrapper.evaluate((el) => el.matches(':focus-visible'))).toBe(true);
+        await expect(alert.locator('.alert-radio-button.ion-focused')).toHaveCount(0);
+      });
+
+      // When opening with the keyboard and a value, the focus indicator
+      // still displays on the wrapper, not the selected option.
+      test('it should focus the wrapper when opened with the keyboard and a value', async ({
+        page,
+        pageUtils,
+        skip,
+      }) => {
+        // TODO (ROU-5437)
+        skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="alert" value="bananas">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+        // Tab to the select and open it with the keyboard.
+        await pageUtils.pressKeys('Tab');
+        await pageUtils.pressKeys('Enter');
+        await ionAlertDidPresent.next();
+
+        await page.waitForChanges();
+
+        const alert = page.locator('ion-alert');
+
+        // The wrapper (not the selected option) has :focus-visible, and no
+        // option has the .ion-focused class.
+        const wrapper = alert.locator('.alert-wrapper');
+        await expect(wrapper).toBeFocused();
+        expect(await wrapper.evaluate((el) => el.matches(':focus-visible'))).toBe(true);
+        await expect(alert.locator('.alert-radio-button.ion-focused')).toHaveCount(0);
       });
     });
 
@@ -117,7 +227,10 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
         await expect(actionSheet).toHaveScreenshot(screenshot(`select-basic-action-sheet-scroll-to-selected`));
       });
 
-      test('it should not focus any option when opened with no value', async ({ page }) => {
+      // On open, the action sheet focuses its dialog rather than an option,
+      // so no option is focused or shows the focus ring. Tabbing then moves
+      // focus to the first option and shows the focus ring.
+      test('it should focus the dialog on open, then the first option on Tab', async ({ page, pageUtils }) => {
         // ion-app is required to apply the focused styles
         await page.setContent(
           `
@@ -142,12 +255,27 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
 
         const actionSheet = page.locator('ion-action-sheet');
 
-        // Verify that none of the options have the ion-focused class
-        const focusedOptions = actionSheet.locator('.action-sheet-button.ion-focused');
-        await expect(focusedOptions).toHaveCount(0);
+        // On open the dialog is focused and no option has the focus ring.
+        await expect(actionSheet).toBeFocused();
+        await expect(actionSheet.locator('.action-sheet-button.ion-focused')).toHaveCount(0);
+
+        // Tabbing moves focus to the first option and shows the focus ring.
+        await pageUtils.pressKeys('Tab');
+        await page.waitForChanges();
+
+        const firstOption = actionSheet.locator('.action-sheet-button').nth(0);
+        await expect(firstOption).toBeFocused();
+        await expect(firstOption).toHaveClass(/ion-focused/);
+
+        await expect(actionSheet).toHaveScreenshot(screenshot(`select-basic-action-sheet-opened-focused`));
       });
 
-      test('it should focus the second option when opened with a value', async ({ page }) => {
+      // Same as above, but with a selected value: the selected option is
+      // focused on open and tabbing moves focus to the Cancel button.
+      test('it should focus the selected option on open, then the Cancel button on Tab', async ({
+        page,
+        pageUtils,
+      }) => {
         // ion-app is required to apply the focused styles
         await page.setContent(
           `
@@ -172,9 +300,19 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
 
         const actionSheet = page.locator('ion-action-sheet');
 
-        // Find the button containing "Bananas" and verify it has the ion-focused class
+        // On open the selected option is focused and no option has the focus ring.
         const bananasOption = actionSheet.locator('.action-sheet-button:has-text("Bananas")');
-        await expect(bananasOption).toHaveClass(/ion-focused/);
+        await expect(bananasOption).toBeFocused();
+        await expect(actionSheet.locator('.action-sheet-button.ion-focused')).toHaveCount(0);
+
+        // Tabbing moves focus to the Cancel button and shows the focus ring.
+        await pageUtils.pressKeys('Tab');
+        await page.waitForChanges();
+        const cancelButton = actionSheet.getByRole('button', { name: 'Cancel' });
+        await expect(cancelButton).toBeFocused();
+        await expect(cancelButton).toHaveClass(/ion-focused/);
+
+        await expect(actionSheet).toHaveScreenshot(screenshot(`select-basic-action-sheet-opened-with-value-focused`));
       });
 
       test('it should focus the second option when opened with a value and a header', async ({ page }) => {
@@ -213,36 +351,160 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
 
         const actionSheet = page.locator('ion-action-sheet');
 
-        // Find the option containing "Bananas" and verify it has the ion-focused class
+        // Find the option containing "Bananas" and verify it has focus
+        // so screen readers announce it
         const bananasOption = actionSheet.locator('.action-sheet-button:has-text("Bananas")');
+        await expect(bananasOption).toBeFocused();
+
+        // Verify the focus indicator is not shown when the action sheet
+        // first opens.
+        await expect(actionSheet.locator('.action-sheet-button.ion-focused')).toHaveCount(0);
+      });
+
+      // When opening with the keyboard (Tab to the select, then Enter), no
+      // focus indicator should display on the action sheet, but we still
+      // need to ensure the dialog is focused.
+      test('it should add the focused class when opened with the keyboard', async ({ page, pageUtils, skip }) => {
+        // TODO (ROU-5437)
+        skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="action-sheet">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+
+        // Tab to the select and open it with the keyboard.
+        await pageUtils.pressKeys('Tab');
+        await pageUtils.pressKeys('Enter');
+        await ionActionSheetDidPresent.next();
+
+        await page.waitForChanges();
+
+        const actionSheet = page.locator('ion-action-sheet');
+
+        // The action sheet should have :focus-visible, and no option should
+        // have the .ion-focused class.
+        await expect(actionSheet).toBeFocused();
+        expect(await actionSheet.evaluate((el) => el.matches(':focus-visible'))).toBe(true);
+        await expect(actionSheet.locator('.action-sheet-button.ion-focused')).toHaveCount(0);
+      });
+
+      // When opening with the keyboard and a value, the focus indicator
+      // should display on the selected option.
+      test('it should focus the selected option when opened with the keyboard and a value', async ({
+        page,
+        pageUtils,
+        skip,
+      }) => {
+        // TODO (ROU-5437)
+        skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="action-sheet" value="bananas">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+
+        // Tab to the select and open it with the keyboard.
+        await pageUtils.pressKeys('Tab');
+        await pageUtils.pressKeys('Enter');
+        await ionActionSheetDidPresent.next();
+
+        await page.waitForChanges();
+
+        const actionSheet = page.locator('ion-action-sheet');
+
+        // The selected option (Bananas) is focused and shows the focus ring.
+        const bananasOption = actionSheet.locator('.action-sheet-button:has-text("Bananas")');
+        await expect(bananasOption).toBeFocused();
         await expect(bananasOption).toHaveClass(/ion-focused/);
       });
     });
 
     test.describe('select: popover', () => {
-      test('it should open a popover select', async ({ page, skip }) => {
-        // TODO (ROU-5437)
-        skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
-
+      test('it should open a popover select', async ({ page }) => {
         const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
 
         await page.click('#customPopoverSelect');
 
         await ionPopoverDidPresent.next();
 
-        const popover = page.locator('ion-popover');
-
-        // select has no value, so first option should be focused by default
-        const popoverOption1 = popover.locator('.select-interface-option:first-of-type ion-radio');
-        await expect(popoverOption1).toBeFocused();
-
-        await expect(popover).toBeVisible();
+        await expect(page.locator('ion-popover')).toBeVisible();
       });
 
-      test('it should focus the second option when opened with a value', async ({ page, skip }) => {
-        // TODO (ROU-5437)
-        skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+      // On open, the popover focuses the first option (so screen readers
+      // announce it) rather than the dialog, but no option shows the focus
+      // ring. Arrowing then moves focus to the next option and shows the focus
+      // ring.
+      test('it should focus the first option on open, then the next option on Arrow', async ({ page, pageUtils }) => {
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="popover">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
 
+        const select = page.locator('ion-select');
+        const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+        await select.click();
+        await ionPopoverDidPresent.next();
+
+        await page.waitForChanges();
+
+        const popover = page.locator('ion-popover');
+
+        // On open the first option is focused and no option has the focus ring.
+        await expect(popover.locator('.select-interface-option').nth(0).locator('ion-radio')).toBeFocused();
+        await expect(popover.locator('.select-interface-option.ion-focused')).toHaveCount(0);
+
+        // Arrowing moves focus to the next option and shows the focus ring.
+        await pageUtils.pressKeys('ArrowDown');
+        await page.waitForChanges();
+
+        const secondOption = popover.locator('.select-interface-option').nth(1);
+        await expect(secondOption.locator('ion-radio')).toBeFocused();
+        await expect(secondOption).toHaveClass(/ion-focused/);
+
+        await expect(popover).toHaveScreenshot(screenshot(`select-basic-popover-opened-focused`));
+      });
+
+      // Same as above, but with a selected value: the popover focuses the
+      // selected option (so screen readers announce it), but no option
+      // shows the focus ring. Arrowing then moves focus to the next option
+      // and shows the focus ring.
+      test('it should focus the selected option on open, then the next option on Arrow', async ({
+        page,
+        pageUtils,
+      }) => {
         // ion-app is required to apply the focused styles
         await page.setContent(
           `
@@ -267,9 +529,99 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
 
         const popover = page.locator('ion-popover');
 
-        // Find the option containing "Bananas" and verify it has the ion-focused class
+        // On open the selected option is focused and no option has the focus ring.
         const bananasOption = popover.locator('.select-interface-option:has-text("Bananas")');
-        await expect(bananasOption).toHaveClass(/ion-focused/);
+        await expect(bananasOption.locator('ion-radio')).toBeFocused();
+        await expect(popover.locator('.select-interface-option.ion-focused')).toHaveCount(0);
+
+        // Arrowing moves focus to the next option and shows the focus ring.
+        await pageUtils.pressKeys('ArrowDown');
+        await page.waitForChanges();
+
+        const orangesOption = popover.locator('.select-interface-option:has-text("Oranges")');
+        await expect(orangesOption.locator('ion-radio')).toBeFocused();
+        await expect(orangesOption).toHaveClass(/ion-focused/);
+
+        await expect(popover).toHaveScreenshot(screenshot(`select-basic-popover-opened-with-value-focused`));
+      });
+
+      // When opening with the keyboard (Tab to the select, then Enter), the
+      // focus indicator should display on the focused option.
+      test('it should show the focus indicator when opened with the keyboard', async ({ page, pageUtils, skip }) => {
+        // TODO (ROU-5437)
+        skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="popover">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+        // Tab to the select and open it with the keyboard.
+        await pageUtils.pressKeys('Tab');
+        await pageUtils.pressKeys('Enter');
+        await ionPopoverDidPresent.next();
+
+        await page.waitForChanges();
+
+        const popover = page.locator('ion-popover');
+
+        // The focus indicator should be shown on the focused option.
+        await expect(popover.locator('.select-interface-option').nth(0)).toHaveClass(/ion-focused/);
+      });
+
+      // When opening with the keyboard and a value, the focus indicator
+      // should display on the selected option.
+      test('it should focus the selected option when opened with the keyboard and a value', async ({
+        page,
+        pageUtils,
+        skip,
+      }) => {
+        // TODO (ROU-5437)
+        skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="popover" value="bananas">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+        // Tab to the select and open it with the keyboard.
+        await pageUtils.pressKeys('Tab');
+        await pageUtils.pressKeys('Enter');
+        await ionPopoverDidPresent.next();
+
+        await page.waitForChanges();
+
+        const popover = page.locator('ion-popover');
+
+        // The selected option (Bananas, the 2nd), not the first, is focused and
+        // shows the focus ring.
+        const firstOption = popover.locator('.select-interface-option').nth(0);
+        const selectedOption = popover.locator('.select-interface-option').nth(1);
+        await expect(selectedOption.locator('ion-radio')).toBeFocused();
+        await expect(selectedOption).toHaveClass(/ion-focused/);
+        await expect(firstOption).not.toHaveClass(/ion-focused/);
       });
 
       test('it should scroll to selected option when opened', async ({ page }) => {
@@ -282,10 +634,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
         await expect(popover).toHaveScreenshot(screenshot(`select-basic-popover-scroll-to-selected`));
       });
 
-      test('opening a popover with Enter should not immediately dismiss it', async ({ page, skip }, testInfo) => {
-        // TODO (ROU-5437)
-        skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
-
+      test('opening a popover with Enter should not immediately dismiss it', async ({ page, pageUtils }, testInfo) => {
         testInfo.annotations.push({
           type: 'issue',
           description: 'https://github.com/ionic-team/ionic-framework/issues/30561',
@@ -307,7 +656,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
         const ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
 
         await page.locator('ion-select button').focus();
-        await page.keyboard.press('Enter');
+        await pageUtils.pressKeys('Enter');
         await ionPopoverDidPresent.next();
 
         const popover = page.locator('ion-popover');
@@ -318,10 +667,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
         await expect(popover).toBeVisible();
       });
 
-      test('holding Enter to open a popover should not immediately dismiss it', async ({ page, skip }, testInfo) => {
-        // TODO (ROU-5437)
-        skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
-
+      test('holding Enter to open a popover should not immediately dismiss it', async ({ page }, testInfo) => {
         testInfo.annotations.push({
           type: 'issue',
           description: 'https://github.com/ionic-team/ionic-framework/issues/30561',
@@ -371,16 +717,61 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
 
         await ionModalDidPresent.next();
 
-        const modal = page.locator('ion-modal');
-
-        // select has no value, so first option should be focused by default
-        const modalOption1 = modal.locator('.select-interface-option:first-of-type ion-radio');
-        await expect(modalOption1).toBeFocused();
-
-        await expect(modal).toBeVisible();
+        await expect(page.locator('ion-modal')).toBeVisible();
       });
 
-      test('it should focus the second option when opened with a value', async ({ page }) => {
+      // On open, the modal focuses the first option (so screen readers
+      // announce it) rather than the dialog, but no option shows the focus
+      // ring. Arrowing then moves focus to the next option and shows the
+      // focus ring.
+      test('it should focus the first option on open, then the next option on Arrow', async ({ page, pageUtils }) => {
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="modal">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const select = page.locator('ion-select');
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        await select.click();
+        await ionModalDidPresent.next();
+
+        await page.waitForChanges();
+
+        const modal = page.locator('ion-modal');
+
+        // On open the first option is focused and no option has the focus ring.
+        await expect(modal.locator('.select-interface-option').nth(0).locator('ion-radio')).toBeFocused();
+        await expect(modal.locator('.select-interface-option.ion-focused')).toHaveCount(0);
+
+        // Arrowing moves focus to the next option and shows the focus ring.
+        await pageUtils.pressKeys('ArrowDown');
+        await page.waitForChanges();
+
+        const secondOption = modal.locator('.select-interface-option').nth(1);
+        await expect(secondOption.locator('ion-radio')).toBeFocused();
+        await expect(secondOption).toHaveClass(/ion-focused/);
+
+        await expect(modal).toHaveScreenshot(screenshot(`select-basic-modal-opened-focused`));
+      });
+
+      // Same as above, but with a selected value: the modal focuses the
+      // selected option (so screen readers announce it), but no option shows
+      // the focus ring. Arrowing then moves focus to the next option and
+      // shows the focus ring.
+      test('it should focus the selected option on open, then the next option on Arrow', async ({
+        page,
+        pageUtils,
+      }) => {
         // ion-app is required to apply the focused styles
         await page.setContent(
           `
@@ -405,9 +796,99 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
 
         const modal = page.locator('ion-modal');
 
-        // Find the option containing "Bananas" and verify it has the ion-focused class
+        // On open the selected option is focused and no option has the focus ring.
         const bananasOption = modal.locator('.select-interface-option:has-text("Bananas")');
-        await expect(bananasOption).toHaveClass(/ion-focused/);
+        await expect(bananasOption.locator('ion-radio')).toBeFocused();
+        await expect(modal.locator('.select-interface-option.ion-focused')).toHaveCount(0);
+
+        // Arrowing moves focus to the next option and shows the focus ring.
+        await pageUtils.pressKeys('ArrowDown');
+        await page.waitForChanges();
+
+        const orangesOption = modal.locator('.select-interface-option:has-text("Oranges")');
+        await expect(orangesOption.locator('ion-radio')).toBeFocused();
+        await expect(orangesOption).toHaveClass(/ion-focused/);
+
+        await expect(modal).toHaveScreenshot(screenshot(`select-basic-modal-opened-with-value-focused`));
+      });
+
+      // When opening with the keyboard (Tab to the select, then Enter), the
+      // focus indicator should display on the focused option.
+      test('it should show the focus indicator when opened with the keyboard', async ({ page, pageUtils, skip }) => {
+        // TODO (ROU-5437)
+        skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="modal">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        // Tab to the select and open it with the keyboard.
+        await pageUtils.pressKeys('Tab');
+        await pageUtils.pressKeys('Enter');
+        await ionModalDidPresent.next();
+
+        await page.waitForChanges();
+
+        const modal = page.locator('ion-modal');
+
+        // The focus indicator should be shown on the focused option.
+        await expect(modal.locator('.select-interface-option').nth(0)).toHaveClass(/ion-focused/);
+      });
+
+      // When opening with the keyboard and a value, the focus indicator
+      // should display on the selected option.
+      test('it should focus the selected option when opened with the keyboard and a value', async ({
+        page,
+        pageUtils,
+        skip,
+      }) => {
+        // TODO (ROU-5437)
+        skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
+        // ion-app is required to apply the focused styles
+        await page.setContent(
+          `
+          <ion-app>
+            <ion-select label="Fruit" interface="modal" value="bananas">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-app>
+        `,
+          config
+        );
+
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        // Tab to the select and open it with the keyboard.
+        await pageUtils.pressKeys('Tab');
+        await pageUtils.pressKeys('Enter');
+        await ionModalDidPresent.next();
+
+        await page.waitForChanges();
+
+        const modal = page.locator('ion-modal');
+
+        // The selected option (Bananas, the 2nd), not the first, is focused and
+        // shows the focus ring.
+        const firstOption = modal.locator('.select-interface-option').nth(0);
+        const selectedOption = modal.locator('.select-interface-option').nth(1);
+        await expect(selectedOption.locator('ion-radio')).toBeFocused();
+        await expect(selectedOption).toHaveClass(/ion-focused/);
+        await expect(firstOption).not.toHaveClass(/ion-focused/);
       });
 
       test('it should scroll to selected option when opened', async ({ page }) => {
@@ -418,6 +899,89 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
 
         const modal = page.locator('ion-modal');
         await expect(modal).toHaveScreenshot(screenshot(`select-basic-modal-scroll-to-selected`));
+      });
+
+      test('it should support keyboard focus cycling between list, handle, and cancel', async ({ page, pageUtils }) => {
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        await page.click('#customModalSelect');
+        await ionModalDidPresent.next();
+
+        const modal = page.locator('ion-modal');
+        const firstOption = modal.locator('.select-interface-option:first-of-type ion-radio');
+        const secondOption = modal.locator('.select-interface-option:nth-of-type(2) ion-radio');
+        const handle = modal.locator('.modal-handle');
+        const cancelButton = modal.getByRole('button', { name: 'Cancel' });
+
+        await expect(firstOption).toBeFocused();
+
+        // After moving focus with arrow keys, Tab should still visit the handle
+        // before the cancel button
+        await pageUtils.pressKeys('ArrowDown');
+        await expect(secondOption).toBeFocused();
+        await page.waitForChanges();
+        await pageUtils.pressKeys('Tab');
+        await expect(handle).toBeFocused();
+        await pageUtils.pressKeys('Shift+Tab');
+        await expect(secondOption).toBeFocused();
+
+        await pageUtils.pressKeys('ArrowUp');
+        await expect(firstOption).toBeFocused();
+
+        // Forward cycle: list option -> handle -> cancel -> list option
+        await pageUtils.pressKeys('Tab');
+        await expect(handle).toBeFocused();
+
+        await pageUtils.pressKeys('Tab');
+        await expect(cancelButton).toBeFocused();
+
+        await pageUtils.pressKeys('Tab');
+        await expect(firstOption).toBeFocused();
+
+        // Reverse cycle: list option -> cancel -> handle -> list option
+        await pageUtils.pressKeys('Shift+Tab');
+        await expect(cancelButton).toBeFocused();
+
+        await pageUtils.pressKeys('Shift+Tab');
+        await expect(handle).toBeFocused();
+
+        await pageUtils.pressKeys('Shift+Tab');
+        await expect(firstOption).toBeFocused();
+      });
+
+      test('it should tab through cancel using the last arrow-highlighted option', async ({ page, pageUtils }) => {
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        await page.click('#customModalSelect');
+        await ionModalDidPresent.next();
+
+        const modal = page.locator('ion-modal');
+        const thirdOption = modal.locator('.select-interface-option:nth-of-type(3) ion-radio');
+        const handle = modal.locator('.modal-handle');
+        const cancelButton = modal.getByRole('button', { name: 'Cancel' });
+
+        await pageUtils.pressKeys('ArrowDown');
+        await pageUtils.pressKeys('ArrowDown');
+        await expect(thirdOption).toBeFocused();
+        await page.waitForChanges();
+
+        await pageUtils.pressKeys('Tab');
+        await expect(handle).toBeFocused();
+
+        await pageUtils.pressKeys('Tab');
+        await expect(cancelButton).toBeFocused();
+
+        await pageUtils.pressKeys('Tab');
+        await expect(thirdOption).toBeFocused();
+
+        await pageUtils.pressKeys('Shift+Tab');
+        await expect(cancelButton).toBeFocused();
+
+        await pageUtils.pressKeys('Shift+Tab');
+        await expect(handle).toBeFocused();
+
+        await pageUtils.pressKeys('Shift+Tab');
+        await expect(thirdOption).toBeFocused();
       });
     });
   });
@@ -530,10 +1094,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(ionChange).toHaveReceivedEventTimes(1);
     });
 
-    test('should fire ionChange when confirming a popover value with Enter', async ({ page, skip }, testInfo) => {
-      // TODO (ROU-5437)
-      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
-
+    test('should fire ionChange when confirming a popover value with Enter', async ({ page, pageUtils }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30561',
@@ -563,7 +1124,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const secondRadio = popover.locator('ion-radio').nth(1);
 
       await secondRadio.focus();
-      await page.keyboard.press('Enter');
+      await pageUtils.pressKeys('Enter');
 
       await ionChange.next();
       await ionPopoverDidDismiss.next();
@@ -603,11 +1164,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
     test('should fire ionChange exactly once when confirming a popover value with Space', async ({
       page,
-      skip,
+      pageUtils,
     }, testInfo) => {
-      // TODO (ROU-5437)
-      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
-
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30561',
@@ -637,7 +1195,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const secondRadio = popover.locator('ion-radio').nth(1);
 
       await secondRadio.focus();
-      await page.keyboard.press('Space');
+      await pageUtils.pressKeys('Space');
 
       await ionChange.next();
       await ionPopoverDidDismiss.next();
@@ -649,11 +1207,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
     test('should not fire ionChange when confirming the already-selected popover option with Enter', async ({
       page,
-      skip,
+      pageUtils,
     }, testInfo) => {
-      // TODO (ROU-5437)
-      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
-
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/26789',
@@ -683,7 +1238,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectedRadio = popover.locator('ion-radio').nth(0);
 
       await selectedRadio.focus();
-      await page.keyboard.press('Enter');
+      await pageUtils.pressKeys('Enter');
 
       await ionPopoverDidDismiss.next();
 
@@ -694,11 +1249,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
     test('should not fire ionChange when confirming the already-selected popover option with Space', async ({
       page,
-      skip,
+      pageUtils,
     }, testInfo) => {
-      // TODO (ROU-5437)
-      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
-
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/26789',
@@ -728,7 +1280,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectedRadio = popover.locator('ion-radio').nth(0);
 
       await selectedRadio.focus();
-      await page.keyboard.press('Space');
+      await pageUtils.pressKeys('Space');
 
       await ionPopoverDidDismiss.next();
 
@@ -739,11 +1291,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
     test('should fire ionChange exactly once when confirming a modal value with Enter', async ({
       page,
-      skip,
+      pageUtils,
     }, testInfo) => {
-      // TODO (ROU-5437)
-      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
-
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30561',
@@ -773,7 +1322,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const secondRadio = modal.locator('ion-radio').nth(1);
 
       await secondRadio.focus();
-      await page.keyboard.press('Enter');
+      await pageUtils.pressKeys('Enter');
 
       await ionChange.next();
       await ionModalDidDismiss.next();
@@ -785,11 +1334,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
     test('should fire ionChange exactly once when confirming a modal value with Space', async ({
       page,
-      skip,
+      pageUtils,
     }, testInfo) => {
-      // TODO (ROU-5437)
-      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
-
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30561',
@@ -819,7 +1365,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const secondRadio = modal.locator('ion-radio').nth(1);
 
       await secondRadio.focus();
-      await page.keyboard.press('Space');
+      await pageUtils.pressKeys('Space');
 
       await ionChange.next();
       await ionModalDidDismiss.next();
@@ -831,11 +1377,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
     test('should not fire ionChange when confirming the already-selected modal option with Enter', async ({
       page,
-      skip,
+      pageUtils,
     }, testInfo) => {
-      // TODO (ROU-5437)
-      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
-
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/26789',
@@ -865,7 +1408,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectedRadio = modal.locator('ion-radio').nth(0);
 
       await selectedRadio.focus();
-      await page.keyboard.press('Enter');
+      await pageUtils.pressKeys('Enter');
 
       await ionModalDidDismiss.next();
 
@@ -876,11 +1419,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
     test('should not fire ionChange when confirming the already-selected modal option with Space', async ({
       page,
-      skip,
+      pageUtils,
     }, testInfo) => {
-      // TODO (ROU-5437)
-      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
-
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/26789',
@@ -910,7 +1450,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const selectedRadio = modal.locator('ion-radio').nth(0);
 
       await selectedRadio.focus();
-      await page.keyboard.press('Space');
+      await pageUtils.pressKeys('Space');
 
       await ionModalDidDismiss.next();
 
