@@ -3121,10 +3121,9 @@ export namespace Components {
     }
     interface IonSelect {
         /**
-          * The text to display on the cancel button.
-          * @default 'Cancel'
+          * The text to display on the cancel button. Defaults to `'Cancel'` for the `alert` and `action-sheet` interfaces, and `'Okay'` for the `modal` interface.
          */
-        "cancelText": string;
+        "cancelText"?: string;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).  This property is only available when using the modern select syntax.
          */
@@ -8465,8 +8464,7 @@ declare namespace LocalJSX {
     }
     interface IonSelect {
         /**
-          * The text to display on the cancel button.
-          * @default 'Cancel'
+          * The text to display on the cancel button. Defaults to `'Cancel'` for the `alert` and `action-sheet` interfaces, and `'Okay'` for the `modal` interface.
          */
         "cancelText"?: string;
         /**
