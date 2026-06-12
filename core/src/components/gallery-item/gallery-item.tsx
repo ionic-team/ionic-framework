@@ -77,8 +77,7 @@ export class GalleryItem implements ComponentInterface {
       <Host
         class={{
           [theme]: true,
-          'in-gallery-layout-uniform': galleryLayout === 'uniform',
-          'in-gallery-layout-masonry': galleryLayout === 'masonry',
+          [`in-gallery-layout-${galleryLayout}`]: galleryLayout != undefined,
         }}
       >
         <slot onSlotchange={this.onSlotChange} />
