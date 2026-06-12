@@ -401,6 +401,8 @@ export class Range implements ComponentInterface {
     this.min = isSafeNumber(this.min) ? this.min : 0;
     this.max = isSafeNumber(this.max) ? this.max : 100;
     this.step = isSafeNumber(this.step) ? this.step : 1;
+
+    this.updateRatio();
   }
 
   componentDidLoad() {

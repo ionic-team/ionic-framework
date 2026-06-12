@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Range - Modal</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-content class="ion-padding">
+        <ion-button id="open-modal">Open Modal</ion-button>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const openModal = document.querySelector('#open-modal');
+
+      openModal.addEventListener('click', async () => {
+        const content = document.createElement('div');
+        content.innerHTML = `
+          <ion-content class="ion-padding">
+            <ion-range aria-label="Dual Knobs Range"></ion-range>
+          </ion-content>
+        `;
+
+        const range = content.querySelector('ion-range');
+        range.dualKnobs = true;
+        range.value = { lower: 20, upper: 80 };
+
+        const modal = Object.assign(document.createElement('ion-modal'), {
+          breakpoints: [0, 1],
+          component: content,
+          handle: true,
+          initialBreakpoint: 1,
+        });
+
+        document.body.appendChild(modal);
+        await modal.present();
+      });
+    </script>
+  </body>
+</html>
