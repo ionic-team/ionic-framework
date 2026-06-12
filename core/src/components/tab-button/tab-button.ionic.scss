@@ -8,15 +8,6 @@
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-radius-025};
 
-  // Add styles from typography mixin but exclude line-height.
-  // line-height causes inconsistent rendering in Firefox (FW-7566).
-  font-family: map-get(globals.$ion-body-action-xs, font-family);
-  font-size: map-get(globals.$ion-body-action-xs, font-size);
-  font-weight: map-get(globals.$ion-body-action-xs, font-weight);
-  letter-spacing: map-get(globals.$ion-body-action-xs, letter-spacing);
-  text-decoration: map-get(globals.$ion-body-action-xs, text-decoration);
-  text-transform: map-get(globals.$ion-body-action-xs, text-transform);
-
   position: relative;
 
   align-content: center;
@@ -25,6 +16,17 @@
 
   min-height: globals.$ion-scale-1200;
   max-height: globals.$ion-scale-1800;
+
+  // Add styles from typography mixin but exclude line-height.
+  // line-height causes inconsistent rendering in Firefox (FW-7566).
+  font-family: map-get(globals.$ion-body-action-xs, font-family);
+  font-size: map-get(globals.$ion-body-action-xs, font-size);
+  font-weight: map-get(globals.$ion-body-action-xs, font-weight);
+
+  letter-spacing: map-get(globals.$ion-body-action-xs, letter-spacing);
+
+  text-decoration: map-get(globals.$ion-body-action-xs, text-decoration);
+  text-transform: map-get(globals.$ion-body-action-xs, text-transform);
 }
 
 // Tab Button: Native
