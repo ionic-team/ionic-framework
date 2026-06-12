@@ -1,3 +1,4 @@
 import type React from 'react';
 
-export type ReactComponentOrElement = React.ComponentClass<any, any> | React.FC<any> | JSX.Element;
+export type ReactComponent<Props = any> = React.ComponentClass<Props, any> | React.FC<Props>;
+export type ReactComponentOrElement<Props = any> = ReactComponent<Props> | JSX.Element;
