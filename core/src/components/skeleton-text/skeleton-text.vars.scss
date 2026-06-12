@@ -1,0 +1,18 @@
+// RGB fallback used when no theme provides the skeleton's background
+$background-rgb-fallback: var(--ion-text-color-rgb, 0, 0, 0);
+
+// Alpha fallbacks, used when no theme provides them
+$default-alpha-fallback: 0.065;
+$animated-alpha-fallback: 0.135;
+
+// Resting color, also the base/edge stops of the animated shimmer
+$background-default: rgba(
+  var(--ion-skeleton-text-default-background-rgb, $background-rgb-fallback),
+  var(--ion-skeleton-text-default-background-alpha, $default-alpha-fallback)
+);
+
+// Highlight color of the animated shimmer
+$background-animated: rgba(
+  var(--ion-skeleton-text-animated-background-rgb, $background-rgb-fallback),
+  var(--ion-skeleton-text-animated-background-alpha, $animated-alpha-fallback)
+);

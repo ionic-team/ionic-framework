@@ -1,26 +1,8 @@
 @use "../../themes/mixins" as mixins;
+@use "./skeleton-text.vars" as variables;
 
 // Skeleton Text: Common Styles
 // --------------------------------------------------
-
-// RGB fallback used when no theme provides the skeleton's background
-$background-rgb-fallback: var(--ion-text-color-rgb, 0, 0, 0);
-
-// Alpha fallbacks, used when no theme provides them
-$default-alpha-fallback: 0.065;
-$animated-alpha-fallback: 0.135;
-
-// Resting color, also the base/edge stops of the animated shimmer
-$background-default: rgba(
-  var(--ion-skeleton-text-default-background-rgb, $background-rgb-fallback),
-  var(--ion-skeleton-text-default-background-alpha, $default-alpha-fallback)
-);
-
-// Highlight color of the animated shimmer
-$background-animated: rgba(
-  var(--ion-skeleton-text-animated-background-rgb, $background-rgb-fallback),
-  var(--ion-skeleton-text-animated-background-alpha, $animated-alpha-fallback)
-);
 
 :host {
   /**
@@ -46,7 +28,7 @@ $background-animated: rgba(
   margin-top: var(--ion-skeleton-text-margin-top);
   margin-bottom: var(--ion-skeleton-text-margin-bottom);
 
-  background: $background-default;
+  background: variables.$background-default;
 
   line-height: var(--ion-skeleton-text-line-height);
 
@@ -71,7 +53,12 @@ span {
 :host(.skeleton-text-animated) {
   position: relative;
 
-  background: linear-gradient(to right, $background-default 8%, $background-animated 18%, $background-default 33%);
+  background: linear-gradient(
+    to right,
+    variables.$background-default 8%,
+    variables.$background-animated 18%,
+    variables.$background-default 33%
+  );
   background-size: 800px 104px;
   animation-duration: 1s;
   animation-fill-mode: forwards;
