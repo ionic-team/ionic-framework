@@ -32,6 +32,7 @@ export class Searchbar implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private loadTimeout: ReturnType<typeof setTimeout> | undefined;
   private clearTimeout: ReturnType<typeof setTimeout> | undefined;
+  private searchIconResizeObserver?: ResizeObserver;
 
   /**
    * The value of the input when the textarea is focused.
@@ -302,6 +303,7 @@ export class Searchbar implements ComponentInterface {
     if (this.clearTimeout) {
       clearTimeout(this.clearTimeout);
     }
+    this.searchIconResizeObserver?.disconnect();
   }
 
   private emitStyle() {
@@ -547,13 +549,14 @@ export class Searchbar implements ComponentInterface {
          * If it is zero, set up a ResizeObserver and call this function when it observes a width greater than 0.
          */
         if (iconWidth === 0) {
-          const observer = new ResizeObserver((entries) => {
+          this.searchIconResizeObserver?.disconnect();
+          this.searchIconResizeObserver = new ResizeObserver((entries) => {
             if (entries[0].contentRect.width > 0) {
-              observer.disconnect();
+              this.searchIconResizeObserver?.disconnect();
               this.positionPlaceholder();
             }
           });
-          observer.observe(iconEl);
+          this.searchIconResizeObserver?.observe(iconEl);
           return;
         }
 
