@@ -35,11 +35,21 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       await cardModalPage.openModalByTrigger('#card');
       await cardModalPage.openModalByTrigger('.add');
 
+      // Firefox only: Move the mouse away from the ".add" button
+      // so the button's hover state is not captured in the
+      // screenshot
+      await page.mouse.move(0, 0);
+
       await expect(page).toHaveScreenshot(screenshot(`modal-card-stacked-present`));
     });
     test('should not have visual regressions with stacked custom cards', async ({ page }) => {
       await cardModalPage.openModalByTrigger('#card-custom');
       await cardModalPage.openModalByTrigger('.add');
+
+      // Firefox only: Move the mouse away from the ".add" button
+      // so the button's hover state is not captured in the
+      // screenshot
+      await page.mouse.move(0, 0);
 
       await expect(page).toHaveScreenshot(screenshot(`modal-card-custom-stacked-present`));
     });
@@ -125,7 +135,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       expect(ionDragEnd.length).toBe(0);
 
       /**
-       * Drage the modal further to verify it does:
+       * Drag the modal further to verify it does:
        * - not emit the event again for `ionDragStart`
        * - emit more `ionDragMove` events
        * - emit the `ionDragEnd` event when the gesture ends

@@ -1,4 +1,6 @@
-@import "./alert.vars";
+@use "../../themes/functions.font" as font;
+@use "../../themes/mixins" as mixins;
+@use "../select-option/select-option.common.overlay";
 
 // Alert
 // --------------------------------------------------
@@ -17,14 +19,14 @@
    *
    * @prop --backdrop-opacity: Opacity of the backdrop
    */
-  --min-width: #{$alert-min-width};
+  --min-width: 250px;
   --width: auto;
   --min-height: auto;
   --height: auto;
-  --max-height: #{$alert-max-height};
+  --max-height: 90%;
 
-  @include font-smoothing();
-  @include position(0, 0, 0, 0);
+  @include mixins.font-smoothing();
+  @include mixins.position(0, 0, 0, 0);
 
   display: flex;
   position: absolute;
@@ -34,12 +36,9 @@
 
   outline: none;
 
-  font-family: $font-family-base;
-
   contain: strict;
   touch-action: none;
   user-select: none;
-  z-index: $z-index-overlay;
 }
 
 :host(.overlay-hidden) {
@@ -47,7 +46,7 @@
 }
 
 :host(.alert-top) {
-  @include padding(50px, null, null, null);
+  @include mixins.padding(50px, null, null, null);
 
   align-items: flex-start;
 }
@@ -69,17 +68,16 @@
 
   contain: content;
   opacity: 0;
-  z-index: $z-index-overlay-wrapper;
 }
 
 .alert-title {
-  @include margin(0);
-  @include padding(0);
+  @include mixins.margin(0);
+  @include mixins.padding(0);
 }
 
 .alert-sub-title {
-  @include margin(5px, 0, 0);
-  @include padding(0);
+  @include mixins.margin(5px, 0, 0);
+  @include mixins.padding(0);
 
   font-weight: normal;
 }
@@ -140,7 +138,7 @@
 }
 
 .alert-input {
-  @include padding(10px, 0);
+  @include mixins.padding(10px, 0);
 
   width: 100%;
 
@@ -166,22 +164,17 @@
 }
 
 .alert-button {
-  @include margin(0);
+  @include mixins.margin(0);
 
   display: block;
 
   border: 0;
 
-  font-size: $alert-button-font-size;
+  font-size: font.dynamic-font(14px);
 
-  line-height: $alert-button-line-height;
+  line-height: font.dynamic-font(20px);
 
   z-index: 0;
-}
-
-.alert-button.ion-focused,
-.alert-tappable.ion-focused {
-  background: $background-color-step-100;
 }
 
 .alert-button-inner {
@@ -198,6 +191,45 @@
   min-height: inherit;
 }
 
+// Alert Option: Label Placement
+// --------------------------------------------------
+
+/**
+ * Label is on the right of the radio in LTR and
+ * on the left in RTL.
+ */
+.radio-label-placement-start,
+.checkbox-label-placement-start {
+  flex-direction: row-reverse;
+}
+
+/**
+ * Label is on the left of the radio in LTR and
+ * on the right in RTL.
+ */
+.radio-label-placement-end,
+.checkbox-label-placement-end {
+  flex-direction: row;
+}
+
+// Alert Option: Justify
+// --------------------------------------------------
+
+.radio-justify-start,
+.checkbox-justify-start {
+  justify-content: start;
+}
+
+.radio-justify-end,
+.checkbox-justify-end {
+  justify-content: end;
+}
+
+.radio-justify-space-between,
+.checkbox-justify-space-between {
+  justify-content: space-between;
+}
+
 // Alert Button: Disabled
 // --------------------------------------------------
 .alert-input-disabled,
@@ -209,8 +241,8 @@
 }
 
 .alert-tappable {
-  @include margin(0);
-  @include padding(0);
+  @include mixins.margin(0);
+  @include mixins.padding(0);
 
   display: flex;
 
@@ -244,24 +276,6 @@
 }
 
 textarea.alert-input {
-  min-height: $alert-input-min-height;
+  min-height: 37px;
   resize: none;
-}
-
-// Alert Button: Select Option
-// --------------------------------------------------
-
-.alert-radio-label,
-.alert-checkbox-label {
-  display: flex;
-
-  align-items: center;
-}
-
-.select-option-content {
-  flex: 1;
-}
-
-.select-option-description {
-  display: block;
 }

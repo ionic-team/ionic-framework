@@ -366,4 +366,39 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, screenshot, t
       });
     });
   });
+
+  test.describe(title('gallery: masonry gap'), () => {
+    test('should resolve the gap CSS variable in the masonry layout', async ({ page }) => {
+      await page.setViewportSize({ width: 768, height: 900 });
+
+      // Twelve items so the first item is never the last in its column, whose
+      // bottom margin masonry zeroes out to remove trailing space.
+      await page.setContent(
+        `
+          <ion-gallery layout="masonry" style="--app-gap: 24px" gap="var(--app-gap)">
+            <div style="height: 40px">One</div>
+            <div style="height: 80px">Two</div>
+            <div style="height: 60px">Three</div>
+            <div style="height: 100px">Four</div>
+            <div style="height: 50px">Five</div>
+            <div style="height: 70px">Six</div>
+            <div style="height: 90px">Seven</div>
+            <div style="height: 55px">Eight</div>
+            <div style="height: 75px">Nine</div>
+            <div style="height: 65px">Ten</div>
+            <div style="height: 85px">Eleven</div>
+            <div style="height: 45px">Twelve</div>
+          </ion-gallery>
+        `,
+        config
+      );
+
+      const gallery = page.locator('ion-gallery');
+
+      // In the masonry layout the gap variable drives the column gap
+      // and the spacing below items (margin bottom).
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el).columnGap)).toBe('24px');
+      await expect.poll(() => gallery.evaluate((el) => getComputedStyle(el.children[0]).marginBottom)).toBe('24px');
+    });
+  });
 });
