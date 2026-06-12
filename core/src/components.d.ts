@@ -1454,9 +1454,9 @@ export namespace Components {
     }
     interface IonFooter {
         /**
-          * Describes the scroll effect that will be applied to the footer. Only applies when the theme is `"ios"`.
+          * Describes the scroll effect that will be applied to the footer.  - `"fade"` only applies when the theme is `"ios"`. - `"hide"` applies to all themes (`"ios"`, `"md"`, and `"ionic"`): the footer   slides down and fades out after cumulative downward scrolling on the page content,   and returns on any upward scroll (same behavior as `ion-header[collapse="hide"]`).
          */
-        "collapse"?: 'fade';
+        "collapse"?: 'fade' | 'hide';
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -1517,9 +1517,9 @@ export namespace Components {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header.  - `"condense"` and `"fade"` only apply when the theme is `"ios"`.   Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles). - `"hide"` applies to all themes (`"ios"`, `"md"`, and `"ionic"`): the header   slides up and fades out after cumulative downward scrolling on the page content,   and returns on any upward scroll.
          */
-        "collapse"?: 'condense' | 'fade';
+        "collapse"?: 'condense' | 'fade' | 'hide';
         /**
           * If `true`, the header will have a line at the bottom. TODO(ROU-10855): add support for this prop on ios/md themes
           * @default false
@@ -7510,9 +7510,9 @@ declare namespace LocalJSX {
     }
     interface IonFooter {
         /**
-          * Describes the scroll effect that will be applied to the footer. Only applies when the theme is `"ios"`.
+          * Describes the scroll effect that will be applied to the footer.  - `"fade"` only applies when the theme is `"ios"`. - `"hide"` applies to all themes (`"ios"`, `"md"`, and `"ionic"`): the footer   slides down and fades out after cumulative downward scrolling on the page content,   and returns on any upward scroll (same behavior as `ion-header[collapse="hide"]`).
          */
-        "collapse"?: 'fade';
+        "collapse"?: 'fade' | 'hide';
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -7573,9 +7573,9 @@ declare namespace LocalJSX {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header.  - `"condense"` and `"fade"` only apply when the theme is `"ios"`.   Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles). - `"hide"` applies to all themes (`"ios"`, `"md"`, and `"ionic"`): the header   slides up and fades out after cumulative downward scrolling on the page content,   and returns on any upward scroll.
          */
-        "collapse"?: 'condense' | 'fade';
+        "collapse"?: 'condense' | 'fade' | 'hide';
         /**
           * If `true`, the header will have a line at the bottom. TODO(ROU-10855): add support for this prop on ios/md themes
           * @default false
@@ -10980,7 +10980,7 @@ declare namespace LocalJSX {
         "side": 'start' | 'end' | 'top' | 'bottom';
     }
     interface IonFooterAttributes {
-        "collapse": 'fade';
+        "collapse": 'fade' | 'hide';
         "translucent": boolean;
     }
     interface IonGalleryAttributes {
@@ -10993,7 +10993,7 @@ declare namespace LocalJSX {
         "fixed": boolean;
     }
     interface IonHeaderAttributes {
-        "collapse": 'condense' | 'fade';
+        "collapse": 'condense' | 'fade' | 'hide';
         "divider": boolean;
         "translucent": boolean;
     }

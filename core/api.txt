@@ -892,7 +892,7 @@ ion-fab-list,prop,side,"bottom" | "end" | "start" | "top",'bottom',false,false
 ion-fab-list,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-footer,none
-ion-footer,prop,collapse,"fade" | undefined,undefined,false,false
+ion-footer,prop,collapse,"fade" | "hide" | undefined,undefined,false,false
 ion-footer,prop,mode,"ios" | "md",undefined,false,false
 ion-footer,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-footer,prop,translucent,boolean,false,false,false
@@ -930,7 +930,7 @@ ion-grid,css-prop,--ion-grid-width-xl
 ion-grid,css-prop,--ion-grid-width-xs
 
 ion-header,none
-ion-header,prop,collapse,"condense" | "fade" | undefined,undefined,false,false
+ion-header,prop,collapse,"condense" | "fade" | "hide" | undefined,undefined,false,false
 ion-header,prop,divider,boolean,false,false,false
 ion-header,prop,mode,"ios" | "md",undefined,false,false
 ion-header,prop,theme,"ios" | "md" | "ionic",undefined,false,false

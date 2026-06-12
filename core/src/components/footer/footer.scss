@@ -17,3 +17,27 @@ ion-footer {
 ion-footer.footer-toolbar-padding ion-toolbar:last-of-type {
   padding-bottom: var(--ion-safe-area-bottom, 0);
 }
+
+// `collapse="hide"` — same motion pattern as `ion-header` (slide + opacity); TS in @utils/on-scroll.
+$footer-hide-curve-base: cubic-bezier(0.4, 0, 1, 1);
+$footer-hide-curve-quick: cubic-bezier(0, 0, 0.2, 1);
+
+ion-footer.footer-collapse-hide {
+  // --footer-hide-slide-y is set at runtime through @utils/on-scroll/collapse-hide.utils.
+
+  @include transform(translateY(0));
+
+  transition: transform 300ms $footer-hide-curve-quick, opacity 300ms $footer-hide-curve-quick;
+
+  opacity: 1;
+}
+
+ion-footer.footer-collapse-hide.footer-collapse-hide-hidden {
+  @include transform(translateY(var(--footer-hide-slide-y, 0px)));
+
+  pointer-events: none;
+
+  transition: transform 200ms $footer-hide-curve-base, opacity 300ms $footer-hide-curve-base;
+
+  opacity: 0;
+}

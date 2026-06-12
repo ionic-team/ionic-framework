@@ -259,3 +259,113 @@
    */
   transform: translateZ(0);
 }
+
+// `ion-header` / `ion-footer` `[collapse="hide"]`.
+// Slide distances are set on this host at runtime through @utils/on-scroll/collapse-hide.utils.
+// `transform` is composited (GPU). `height` is transitioned in sync for layout; interpolating height
+// still triggers layout work—`backface-visibility: hidden` keeps the layer friendly for the transform.
+$transition-curve-base: cubic-bezier(0.4, 0, 1, 1);
+$transition-curve-quick: cubic-bezier(0, 0, 0.2, 1);
+
+// --- Header only -------------------------------------------------
+:host(.content-header-hide-scroll-partner:not(.content-footer-hide-scroll-partner)) .inner-scroll {
+  @include transform(translateY(0));
+
+  backface-visibility: hidden;
+
+  height: 100%;
+
+  transition: transform 300ms $transition-curve-quick, height 300ms $transition-curve-quick;
+}
+
+:host(.content-header-hide-scroll-partner:not(.content-footer-hide-scroll-partner).content-header-hide-scroll-hidden)
+  .inner-scroll {
+  @include transform(translateY(calc(-1 * var(--header-hide-slide-y, 0px))));
+
+  backface-visibility: hidden;
+
+  height: calc(100% + var(--header-hide-slide-y, 0px));
+
+  transition: transform 200ms $transition-curve-base, height 200ms $transition-curve-base;
+}
+
+// --- Footer only -------------------------------------------------
+:host(.content-footer-hide-scroll-partner:not(.content-header-hide-scroll-partner)) .inner-scroll {
+  @include transform(translateY(0));
+
+  backface-visibility: hidden;
+
+  height: 100%;
+
+  transition: transform 300ms $transition-curve-quick, height 300ms $transition-curve-quick;
+}
+
+:host(.content-footer-hide-scroll-partner:not(.content-header-hide-scroll-partner).content-footer-hide-scroll-hidden)
+  .inner-scroll {
+  @include transform(translateY(0));
+
+  backface-visibility: hidden;
+
+  height: calc(100% + var(--footer-hide-slide-y, 0px));
+
+  transition: transform 200ms $transition-curve-base, height 200ms $transition-curve-base;
+}
+
+// --- Both --------------------------------------------------------
+:host(
+    .content-header-hide-scroll-partner.content-footer-hide-scroll-partner:not(.content-header-hide-scroll-hidden):not(
+        .content-footer-hide-scroll-hidden
+      )
+  )
+  .inner-scroll {
+  @include transform(translateY(0));
+
+  backface-visibility: hidden;
+
+  height: 100%;
+
+  transition: transform 300ms $transition-curve-quick, height 300ms $transition-curve-quick;
+}
+
+:host(
+    .content-header-hide-scroll-partner.content-footer-hide-scroll-partner.content-header-hide-scroll-hidden:not(
+        .content-footer-hide-scroll-hidden
+      )
+  )
+  .inner-scroll {
+  @include transform(translateY(calc(-1 * var(--header-hide-slide-y, 0px))));
+
+  backface-visibility: hidden;
+
+  height: calc(100% + var(--header-hide-slide-y, 0px));
+
+  transition: transform 200ms $transition-curve-base, height 200ms $transition-curve-base;
+}
+
+:host(
+    .content-header-hide-scroll-partner.content-footer-hide-scroll-partner:not(
+        .content-header-hide-scroll-hidden
+      ).content-footer-hide-scroll-hidden
+  )
+  .inner-scroll {
+  @include transform(translateY(0));
+
+  backface-visibility: hidden;
+
+  height: calc(100% + var(--footer-hide-slide-y, 0px));
+
+  transition: transform 200ms $transition-curve-base, height 200ms $transition-curve-base;
+}
+
+:host(
+    .content-header-hide-scroll-partner.content-footer-hide-scroll-partner.content-header-hide-scroll-hidden.content-footer-hide-scroll-hidden
+  )
+  .inner-scroll {
+  @include transform(translateY(calc(-1 * var(--header-hide-slide-y, 0px))));
+
+  backface-visibility: hidden;
+
+  height: calc(100% + var(--header-hide-slide-y, 0px) + var(--footer-hide-slide-y, 0px));
+
+  transition: transform 200ms $transition-curve-base, height 200ms $transition-curve-base;
+}

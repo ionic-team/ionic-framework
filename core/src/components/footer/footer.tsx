@@ -7,7 +7,7 @@ import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 
-import { handleFooterFade } from './footer.utils';
+import { handleFooterFade, createFooterHideInteraction } from './footer.utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -24,6 +24,11 @@ import { handleFooterFade } from './footer.utils';
 export class Footer implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private contentScrollCallback?: () => void;
+  private footerHideCleanup?: () => void;
+  private appliedCollapse?: 'fade' | 'hide';
+  private appliedTheme?: string;
+  private didLoad = false;
+  private setupToken = 0;
   private keyboardCtrl: KeyboardController | null = null;
   private keyboardCtrlPromise: Promise<KeyboardController> | null = null;
 
@@ -33,9 +38,13 @@ export class Footer implements ComponentInterface {
 
   /**
    * Describes the scroll effect that will be applied to the footer.
-   * Only applies when the theme is `"ios"`.
+   *
+   * - `"fade"` only applies when the theme is `"ios"`.
+   * - `"hide"` applies to all themes (`"ios"`, `"md"`, and `"ionic"`): the footer
+   *   slides down and fades out after cumulative downward scrolling on the page content,
+   *   and returns on any upward scroll (same behavior as `ion-header[collapse="hide"]`).
    */
-  @Prop() collapse?: 'fade';
+  @Prop() collapse?: 'fade' | 'hide';
 
   /**
    * If `true`, the footer will be translucent.
@@ -48,6 +57,7 @@ export class Footer implements ComponentInterface {
   @Prop() translucent = false;
 
   componentDidLoad() {
+    this.didLoad = true;
     this.checkCollapsibleFooter();
   }
 
@@ -56,6 +66,12 @@ export class Footer implements ComponentInterface {
   }
 
   async connectedCallback() {
+    // On re-attach (didLoad already true but disconnectedCallback ran since),
+    // componentDidLoad will not fire again — re-run setup here.
+    if (this.didLoad) {
+      this.checkCollapsibleFooter();
+    }
+
     const promise = createKeyboardController(async (keyboardOpen, waitForResize) => {
       /**
        * If the keyboard is hiding, then we need to wait
@@ -86,6 +102,8 @@ export class Footer implements ComponentInterface {
   }
 
   disconnectedCallback() {
+    this.destroyCollapsibleFooter();
+
     if (this.keyboardCtrlPromise) {
       this.keyboardCtrlPromise.then((ctrl) => ctrl.destroy());
       this.keyboardCtrlPromise = null;
@@ -99,31 +117,64 @@ export class Footer implements ComponentInterface {
 
   private checkCollapsibleFooter = () => {
     const theme = getIonTheme(this);
-    if (theme !== 'ios') {
+    const { collapse } = this;
+    const hasFade = collapse === 'fade';
+    const hasHide = collapse === 'hide';
+
+    const runIosFade = theme === 'ios' && hasFade;
+
+    if (!runIosFade && !hasHide) {
+      this.destroyCollapsibleFooter();
       return;
     }
 
-    const { collapse } = this;
-    const hasFade = collapse === 'fade';
+    // Skip teardown/rebuild when the collapse mode and theme have not changed
+    // since the last setup — avoids thrashing listeners and resetting scroll
+    // accumulators on unrelated re-renders (e.g. keyboardVisible state flips).
+    const activeMode = hasHide ? 'hide' : 'fade';
+    if (this.appliedCollapse === activeMode && this.appliedTheme === theme) {
+      return;
+    }
 
     this.destroyCollapsibleFooter();
 
-    if (hasFade) {
-      const appRootSelector = config.get('appRootSelector', 'ion-app');
-      const pageEl = this.el.closest(`${appRootSelector},ion-page,.ion-page,page-inner`);
-      const contentEl = pageEl ? findIonContent(pageEl) : null;
+    const appRootSelector = config.get('appRootSelector', 'ion-app');
+    const pageEl = this.el.closest(`${appRootSelector},ion-page,.ion-page,page-inner`);
+    const contentEl = pageEl ? findIonContent(pageEl) : null;
 
-      if (!contentEl) {
-        printIonContentErrorMsg(this.el);
-        return;
-      }
+    if (!contentEl) {
+      printIonContentErrorMsg(this.el);
+      return;
+    }
 
+    this.appliedCollapse = activeMode;
+    this.appliedTheme = theme;
+
+    if (runIosFade) {
       this.setupFadeFooter(contentEl);
+    } else if (hasHide) {
+      void this.setupHideFooter(contentEl);
     }
   };
 
+  private async setupHideFooter(contentEl: HTMLElement) {
+    const token = ++this.setupToken;
+    const scrollEl = await getScrollElement(contentEl);
+    // A newer checkCollapsibleFooter ran while we were awaiting — abandon.
+    if (token !== this.setupToken) {
+      return;
+    }
+    this.scrollEl = scrollEl;
+    this.footerHideCleanup = createFooterHideInteraction(this.el, scrollEl);
+  }
+
   private setupFadeFooter = async (contentEl: HTMLElement) => {
-    const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
+    const token = ++this.setupToken;
+    const scrollEl = await getScrollElement(contentEl);
+    if (token !== this.setupToken) {
+      return;
+    }
+    this.scrollEl = scrollEl;
 
     /**
      * Handle fading of toolbars on scroll
@@ -137,10 +188,21 @@ export class Footer implements ComponentInterface {
   };
 
   private destroyCollapsibleFooter() {
+    // Invalidate any in-flight setupHideFooter/setupFadeFooter awaits.
+    this.setupToken++;
+
+    if (this.footerHideCleanup) {
+      this.footerHideCleanup();
+      this.footerHideCleanup = undefined;
+    }
+
     if (this.scrollEl && this.contentScrollCallback) {
       this.scrollEl.removeEventListener('scroll', this.contentScrollCallback);
       this.contentScrollCallback = undefined;
     }
+
+    this.appliedCollapse = undefined;
+    this.appliedTheme = undefined;
   }
 
   render() {

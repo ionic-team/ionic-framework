@@ -10,6 +10,7 @@ import { getIonTheme } from '../../global/ionic-global';
 
 import {
   cloneElement,
+  createHeaderHideInteraction,
   createHeaderIndex,
   handleContentScroll,
   handleHeaderFade,
@@ -34,19 +35,24 @@ import {
 export class Header implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private contentScrollCallback?: () => void;
+  private headerHideCleanup?: () => void;
   private intersectionObserver?: IntersectionObserver;
   private collapsibleMainHeader?: HTMLElement;
   private inheritedAttributes: Attributes = {};
+  private didLoad = false;
 
   @Element() el!: HTMLElement;
 
   /**
    * Describes the scroll effect that will be applied to the header.
-   * Only applies when the theme is `"ios"`.
    *
-   * Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+   * - `"condense"` and `"fade"` only apply when the theme is `"ios"`.
+   *   Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles).
+   * - `"hide"` applies to all themes (`"ios"`, `"md"`, and `"ionic"`): the header
+   *   slides up and fades out after cumulative downward scrolling on the page content,
+   *   and returns on any upward scroll.
    */
-  @Prop() collapse?: 'condense' | 'fade';
+  @Prop() collapse?: 'condense' | 'fade' | 'hide';
 
   /**
    * If `true`, the header will have a line at the bottom.
@@ -69,11 +75,20 @@ export class Header implements ComponentInterface {
   }
 
   componentDidLoad() {
+    this.didLoad = true;
     this.checkCollapsibleHeader();
   }
 
   componentDidUpdate() {
     this.checkCollapsibleHeader();
+  }
+
+  connectedCallback() {
+    // On re-attach (didLoad already true but disconnectedCallback ran since),
+    // componentDidLoad will not fire again — re-run setup here.
+    if (this.didLoad) {
+      this.checkCollapsibleHeader();
+    }
   }
 
   disconnectedCallback() {
@@ -82,20 +97,24 @@ export class Header implements ComponentInterface {
 
   private async checkCollapsibleHeader() {
     const theme = getIonTheme(this);
-
-    if (theme !== 'ios') {
-      return;
-    }
-
     const { collapse } = this;
     const hasCondense = collapse === 'condense';
     const hasFade = collapse === 'fade';
+    const hasHide = collapse === 'hide';
+
+    const runIosCollapse = theme === 'ios' && (hasCondense || hasFade);
+    const runHide = hasHide;
+
+    if (!runIosCollapse && !runHide) {
+      this.destroyCollapsibleHeader();
+      return;
+    }
 
     this.destroyCollapsibleHeader();
 
     const appRootSelector = config.get('appRootSelector', 'ion-app');
 
-    if (hasCondense) {
+    if (runIosCollapse && hasCondense) {
       const pageEl = this.el.closest(`${appRootSelector},ion-page,.ion-page,page-inner`);
       const contentEl = pageEl ? findIonContent(pageEl) : null;
 
@@ -107,7 +126,7 @@ export class Header implements ComponentInterface {
       });
 
       await this.setupCondenseHeader(contentEl, pageEl);
-    } else if (hasFade) {
+    } else if (runIosCollapse && hasFade) {
       const pageEl = this.el.closest(`${appRootSelector},ion-page,.ion-page,page-inner`);
       const contentEl = pageEl ? findIonContent(pageEl) : null;
 
@@ -120,6 +139,23 @@ export class Header implements ComponentInterface {
 
       await this.setupFadeHeader(contentEl, condenseHeader);
     }
+
+    if (runHide) {
+      const pageEl = this.el.closest(`${appRootSelector},ion-page,.ion-page,page-inner`);
+      const contentEl = pageEl ? findIonContent(pageEl) : null;
+
+      if (!contentEl) {
+        printIonContentErrorMsg(this.el);
+        return;
+      }
+
+      await this.setupHideHeader(contentEl);
+    }
+  }
+
+  private async setupHideHeader(contentEl: HTMLElement) {
+    const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
+    this.headerHideCleanup = createHeaderHideInteraction(this.el, scrollEl);
   }
 
   private setupFadeHeader = async (contentEl: HTMLElement, condenseHeader: HTMLElement | null) => {
@@ -140,6 +176,11 @@ export class Header implements ComponentInterface {
     if (this.intersectionObserver) {
       this.intersectionObserver.disconnect();
       this.intersectionObserver = undefined;
+    }
+
+    if (this.headerHideCleanup) {
+      this.headerHideCleanup();
+      this.headerHideCleanup = undefined;
     }
 
     if (this.scrollEl && this.contentScrollCallback) {

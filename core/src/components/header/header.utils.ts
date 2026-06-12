@@ -1,5 +1,6 @@
 import { readTask, writeTask } from '@stencil/core';
 import { clamp } from '@utils/helpers';
+import { createCollapseHideInteraction } from '@utils/on-scroll/collapse-hide.utils';
 
 const TRANSITION = 'all 0.2s ease-in-out';
 const ROLE_NONE = 'none';
@@ -223,6 +224,16 @@ export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, trans
     titleDiv.style.transform = `scale3d(${scale}, ${scale}, 1)`;
   });
 };
+
+export const createHeaderHideInteraction = (headerEl: HTMLElement, scrollEl: HTMLElement): (() => void) =>
+  createCollapseHideInteraction({
+    regionEl: headerEl,
+    scrollEl,
+    slideCssVar: '--header-hide-slide-y',
+    contentPartnerClass: 'content-header-hide-scroll-partner',
+    contentHiddenClass: 'content-header-hide-scroll-hidden',
+    regionHiddenClass: 'header-collapse-hide-hidden',
+  });
 
 export const handleHeaderFade = (scrollEl: HTMLElement, baseEl: HTMLElement, condenseHeader: HTMLElement | null) => {
   readTask(() => {
