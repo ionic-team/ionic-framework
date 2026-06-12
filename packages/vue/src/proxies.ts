@@ -31,6 +31,7 @@ import { defineCustomElement as defineIonFabButton } from '@ionic/core/component
 import { defineCustomElement as defineIonFabList } from '@ionic/core/components/ion-fab-list.js';
 import { defineCustomElement as defineIonFooter } from '@ionic/core/components/ion-footer.js';
 import { defineCustomElement as defineIonGallery } from '@ionic/core/components/ion-gallery.js';
+import { defineCustomElement as defineIonGalleryItem } from '@ionic/core/components/ion-gallery-item.js';
 import { defineCustomElement as defineIonGrid } from '@ionic/core/components/ion-grid.js';
 import { defineCustomElement as defineIonHeader } from '@ionic/core/components/ion-header.js';
 import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-img.js';
@@ -439,6 +440,9 @@ export const IonGallery: StencilVueComponent<JSX.IonGallery> = /*@__PURE__*/ def
   'columns',
   'gap'
 ]);
+
+
+export const IonGalleryItem: StencilVueComponent<JSX.IonGalleryItem> = /*@__PURE__*/ defineContainer<JSX.IonGalleryItem>('ion-gallery-item', defineIonGalleryItem);
 
 
 export const IonGrid: StencilVueComponent<JSX.IonGrid> = /*@__PURE__*/ defineContainer<JSX.IonGrid>('ion-grid', defineIonGrid, [

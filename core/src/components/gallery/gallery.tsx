@@ -23,16 +23,16 @@ type GalleryBreakpoint = keyof typeof BREAKPOINTS;
 const BREAKPOINT_ORDER: GalleryBreakpoint[] = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
 
 /**
- * Direct slotted children that support CSS grid placement and inline `style`.
- * This is a union of `HTMLElement` and `SVGElement` to support both HTML and SVG elements.
+ * The tag of the component used to wrap each gallery item.
  */
-type GalleryItemElement = HTMLElement | SVGElement;
+const GALLERY_ITEM_SELECTOR = 'ion-gallery-item';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
- * @slot - Content is placed in a responsive gallery layout.
+ * @slot - One or more `ion-gallery-item` components, placed in a responsive
+ * gallery layout.
  */
 @Component({
   tag: 'ion-gallery',
@@ -51,6 +51,7 @@ export class Gallery implements ComponentInterface {
   private hasWarnedInvalidColumns = false;
   private hasWarnedInvalidGap = false;
   private hasWarnedUnusedOrder = false;
+  private hasWarnedInvalidItems = false;
 
   /**
    * The visual layout of the gallery. When `uniform`, rows take up the height
@@ -96,6 +97,7 @@ export class Gallery implements ComponentInterface {
   @Watch('order')
   protected onLayoutOrOrderChanged() {
     this.syncResponsiveLayout();
+    this.syncItemLayout();
 
     // Wait until the next animation frame to warn about unused order
     // to avoid erroneous warnings when the layout and order are updated
@@ -105,13 +107,24 @@ export class Gallery implements ComponentInterface {
     });
   }
 
+  /**
+   * Sync the current layout with each item when the gallery's `layout`
+   * changes.
+   */
+  private syncItemLayout() {
+    this.getItems().forEach((item) => {
+      item.syncGalleryLayout();
+    });
+  }
+
   componentDidLoad() {
+    this.collapseWrappers();
     this.updateResponsiveStyles(true);
     this.resizeObserver = new ResizeObserver(() => {
       this.updateResponsiveStyles();
       this.scheduleMasonryResize();
     });
-    this.resizeObserver.observe(this.el);
+    this.observeResizes();
 
     this.scheduleMasonryResize();
 
@@ -126,6 +139,24 @@ export class Gallery implements ComponentInterface {
 
     this.resizeObserver?.disconnect();
     this.resizeObserver = undefined;
+  }
+
+  /**
+   * Observe the host and each item for size changes. Items are observed in
+   * addition to the host so masonry placement is recomputed when an item's
+   * rendered height changes — most importantly when a dynamically added
+   * `ion-gallery-item` finishes hydrating, which (unlike an `<img>`) emits no
+   * `load` event and does not change the host's measured size while collapsed.
+   */
+  private observeResizes() {
+    const observer = this.resizeObserver;
+    if (observer === undefined) {
+      return;
+    }
+
+    observer.disconnect();
+    observer.observe(this.el);
+    this.getItems().forEach((item) => observer.observe(item));
   }
 
   /**
@@ -147,12 +178,13 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Listen for the slotchange event on the slot.
-   * When the layout is `masonry`, this listener is used to schedule a resize
-   * of the masonry grid when the slot changes. This is useful for when items
-   * are added or removed from the gallery.
+   * Listen for the slotchange event on the slot. When the gallery's items are
+   * added or removed, re-collapse wrappers, re-observe items for size changes,
+   * and recompute the masonry grid.
    */
   private onSlotChange = () => {
+    this.collapseWrappers();
+    this.observeResizes();
     this.scheduleMasonryResize();
   };
 
@@ -450,20 +482,67 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Return all directly slotted children of the gallery that can be grid items
-   * with inline placement styles (HTML elements and SVG elements).
+   * Return the `ion-gallery-item` elements to place in the grid. Each item is a
+   * direct grid cell, whether a direct child or nested inside a pass-through
+   * wrapper (e.g. a layout `<div>`). Items belonging to a nested `ion-gallery`
+   * are excluded.
    */
-  private getItems(): GalleryItemElement[] {
-    return Array.from(this.el.children).filter(
-      (child): child is GalleryItemElement => typeof (child as any).style?.setProperty === 'function'
+  private getItems(): HTMLIonGalleryItemElement[] {
+    return Array.from(this.el.querySelectorAll<HTMLIonGalleryItemElement>(GALLERY_ITEM_SELECTOR)).filter(
+      (item) => item.closest('ion-gallery') === this.el
     );
+  }
+
+  /**
+   * Collapse each pass-through wrapper's box with `display: contents` so its
+   * items participate in the gallery grid. Restore the box of a wrapper that
+   * no longer contains items, and warn about children that contain none.
+   */
+  private collapseWrappers() {
+    const items = this.getItems();
+
+    Array.from(this.el.children as HTMLCollectionOf<HTMLElement>).forEach((child) => {
+      if (child.matches(GALLERY_ITEM_SELECTOR)) {
+        return;
+      }
+
+      if (!items.some((item) => child.contains(item))) {
+        // If the wrapper was previously collapsed with `display: contents`
+        // but now contains no items, clear the display style.
+        if (child.style.display === 'contents') {
+          child.style.display = '';
+        }
+        this.warnInvalidItems();
+        return;
+      }
+
+      // Collapse the wrapper's box so its items sit directly in the grid.
+      child.style.display = 'contents';
+    });
+  }
+
+  /**
+   * Warn when the gallery has content that is not wrapped in an
+   * `ion-gallery-item` component. Items belonging to a nested
+   * gallery are considered invalid content for the parent gallery.
+   */
+  private warnInvalidItems() {
+    if (this.hasWarnedInvalidItems) {
+      return;
+    }
+
+    printIonWarning(
+      `[ion-gallery] - Gallery items must be wrapped in "ion-gallery-item" components. Direct children that are not "ion-gallery-item" (and do not contain one) are ignored.`,
+      this.el
+    );
+    this.hasWarnedInvalidItems = true;
   }
 
   /**
    * Clear the item styles for the given item element.
    * This is used to switch between uniform and masonry layouts.
    */
-  private clearItemStyles(itemEl: GalleryItemElement) {
+  private clearItemStyles(itemEl: HTMLIonGalleryItemElement) {
     itemEl.style.gridRowStart = '';
     itemEl.style.gridRowEnd = '';
     itemEl.style.gridColumn = '';
@@ -478,11 +557,19 @@ export class Gallery implements ComponentInterface {
   }
 
   /**
-   * Convert a rendered item height to the number of grid rows it should span.
-   * Returns undefined for images that are not fully loaded yet.
+   * Whether the item contains any images that have not finished loading.
+   * Used to defer masonry placement until the rendered height is final.
    */
-  private calculateRowSpan(itemEl: GalleryItemElement, rowHeight: number, rowGap: number) {
-    if (itemEl instanceof HTMLImageElement && (!itemEl.complete || itemEl.naturalHeight === 0)) {
+  private hasUnloadedImages(itemEl: HTMLIonGalleryItemElement): boolean {
+    return Array.from(itemEl.querySelectorAll('img')).some((img) => !img.complete || img.naturalHeight === 0);
+  }
+
+  /**
+   * Convert a rendered item height to the number of grid rows it should span.
+   * Returns undefined when the item has images that are not fully loaded yet.
+   */
+  private calculateRowSpan(itemEl: HTMLIonGalleryItemElement, rowHeight: number, rowGap: number) {
+    if (this.hasUnloadedImages(itemEl)) {
       return undefined;
     }
 
@@ -523,9 +610,9 @@ export class Gallery implements ComponentInterface {
   /**
    * Apply masonry placement by assigning each item a column and row span.
    */
-  private layoutMasonry(items: GalleryItemElement[], rowHeight: number, rowGap: number, columns: number) {
+  private layoutMasonry(items: HTMLIonGalleryItemElement[], rowHeight: number, rowGap: number, columns: number) {
     const columnHeights = new Array<number>(columns).fill(0);
-    const lastItemsByColumn = new Array<GalleryItemElement | undefined>(columns).fill(undefined);
+    const lastItemsByColumn = new Array<HTMLIonGalleryItemElement | undefined>(columns).fill(undefined);
 
     items.forEach((itemEl, i) => {
       itemEl.style.marginBottom = '';
