@@ -36,6 +36,7 @@ import { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/r
 import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 import { RefresherEventDetail, RefresherPullEndEventDetail } from "./components/refresher/refresher-interface";
 import { ItemReorderEventDetail, ReorderEndEventDetail, ReorderMoveEventDetail } from "./components/reorder-group/reorder-group-interface";
+import { IonRippleEffectType } from "./components/ripple-effect/ripple-effect.interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 import { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
@@ -80,6 +81,7 @@ export { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/r
 export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 export { RefresherEventDetail, RefresherPullEndEventDetail } from "./components/refresher/refresher-interface";
 export { ItemReorderEventDetail, ReorderEndEventDetail, ReorderMoveEventDetail } from "./components/reorder-group/reorder-group-interface";
+export { IonRippleEffectType } from "./components/ripple-effect/ripple-effect.interface";
 export { NavigationHookCallback } from "./components/route/route-interface";
 export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 export { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
@@ -3319,14 +3321,10 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
-        /**
           * Sets the type of ripple-effect:  - `bounded`: the ripple effect expands from the user's click position - `unbounded`: the ripple effect expands from the center of the button and overflows the container.  NOTE: Surfaces for bounded ripples should have the overflow property set to hidden, while surfaces for unbounded ripples should have it set to visible.
           * @default 'bounded'
          */
-        "type": 'bounded' | 'unbounded';
+        "type": IonRippleEffectType;
     }
     interface IonRoute {
         /**
@@ -9351,14 +9349,10 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
-        /**
           * Sets the type of ripple-effect:  - `bounded`: the ripple effect expands from the user's click position - `unbounded`: the ripple effect expands from the center of the button and overflows the container.  NOTE: Surfaces for bounded ripples should have the overflow property set to hidden, while surfaces for unbounded ripples should have it set to visible.
           * @default 'bounded'
          */
-        "type"?: 'bounded' | 'unbounded';
+        "type"?: IonRippleEffectType;
     }
     interface IonRoute {
         /**
@@ -11175,7 +11169,7 @@ declare namespace LocalJSX {
         "disabled": boolean;
     }
     interface IonRippleEffectAttributes {
-        "type": 'bounded' | 'unbounded';
+        "type": IonRippleEffectType;
     }
     interface IonRouteAttributes {
         "url": string;

@@ -49,7 +49,6 @@
   --background-hover-opacity: 1;
   --background: #{globals.ion-color(primary, base)};
   --color: #{globals.ion-color(primary, contrast)};
-  --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
 }
 
@@ -65,7 +64,6 @@
   --background-hover-opacity: 1;
   --border-color: #{globals.ion-color(primary, base)};
   --color: #{globals.ion-color(primary, base)};
-  --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
 }
 
@@ -85,12 +83,19 @@
   --background-hover: #{globals.ion-color(primary, shade, $subtle: true)};
   --background-hover-opacity: 1;
   --color: #{globals.ion-color(primary, foreground)};
-  --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
 }
 
 // Ripple Effect
 // -------------------------------------------------------------------------------
+
+// Set via the custom property (not `opacity` directly) because the ripple's
+// opacity is animated in @keyframes, which would override a direct value.
+:host(.button-solid) ion-ripple-effect,
+:host(.button-outline) ion-ripple-effect,
+:host(.button-clear) ion-ripple-effect {
+  --ion-ripple-effect-opacity: var(--background-activated-opacity, 1);
+}
 
 :host(.button-solid.ion-color) ion-ripple-effect {
   color: globals.current-color(shade);

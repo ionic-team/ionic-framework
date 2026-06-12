@@ -2230,9 +2230,9 @@ ion-reorder-group,event,ionReorderStart,void,true
 
 ion-ripple-effect,shadow
 ion-ripple-effect,prop,mode,"ios" | "md",undefined,false,false
-ion-ripple-effect,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-ripple-effect,prop,type,"bounded" | "unbounded",'bounded',false,false
 ion-ripple-effect,method,addRipple,addRipple(x: number, y: number) => Promise<() => void>
+ion-ripple-effect,css-prop,--ion-ripple-effect-opacity
 
 ion-route,none
 ion-route,prop,beforeEnter,(() => NavigationHookResult | Promise<NavigationHookResult>) | undefined,undefined,false,false
