@@ -32,6 +32,7 @@ export class Searchbar implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private loadTimeout: ReturnType<typeof setTimeout> | undefined;
   private clearTimeout: ReturnType<typeof setTimeout> | undefined;
+  private searchIconResizeObserver?: ResizeObserver;
 
   /**
    * The value of the input when the textarea is focused.
@@ -302,6 +303,7 @@ export class Searchbar implements ComponentInterface {
     if (this.clearTimeout) {
       clearTimeout(this.clearTimeout);
     }
+    this.searchIconResizeObserver?.disconnect();
   }
 
   private emitStyle() {
@@ -539,7 +541,26 @@ export class Searchbar implements ComponentInterface {
          * such as Dynamic Type on iOS as well as 8px
          * of padding.
          */
-        const iconLeft = 'calc(50% - ' + (textWidth / 2 + iconEl.clientWidth + 8) + 'px)';
+        const iconWidth = iconEl.clientWidth;
+
+        /**
+         * Fix for https://github.com/ionic-team/ionic-framework/issues/30434:
+         * iconEl.clientWidth can very briefly be 0 when this is called from componentDidLoad.
+         * If it is zero, set up a ResizeObserver and call this function when it observes a width greater than 0.
+         */
+        if (iconWidth === 0) {
+          this.searchIconResizeObserver?.disconnect();
+          this.searchIconResizeObserver = new ResizeObserver((entries) => {
+            if (entries[0].contentRect.width > 0) {
+              this.searchIconResizeObserver?.disconnect();
+              this.positionPlaceholder();
+            }
+          });
+          this.searchIconResizeObserver?.observe(iconEl);
+          return;
+        }
+
+        const iconLeft = 'calc(50% - ' + (textWidth / 2 + iconWidth + 8) + 'px)';
 
         // Set the input padding start and icon margin start
         if (rtl) {
