@@ -17,10 +17,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
               padding: 8px;
             }
 
-            .line {
-              width: 60%;
-            }
-
             #circle {
               border-radius: 50%;
 
@@ -30,7 +26,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           </style>
 
           <div id="container">
-            <ion-skeleton-text class="line"></ion-skeleton-text>
+            <div>
+              <ion-skeleton-text style="width: 60%"></ion-skeleton-text>
+              <ion-skeleton-text></ion-skeleton-text>
+              <ion-skeleton-text style="width: 88%"></ion-skeleton-text>
+              <ion-skeleton-text style="width: 70%"></ion-skeleton-text>
+              <ion-skeleton-text style="width: 60%"></ion-skeleton-text>
+            </div>
 
             <div id="circle">
               <ion-skeleton-text></ion-skeleton-text>
@@ -45,7 +47,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
             </ion-thumbnail>
 
             <ion-label>
-              <ion-skeleton-text class="line"></ion-skeleton-text>
+              <ion-skeleton-text style="width: 60%"></ion-skeleton-text>
             </ion-label>
           </div>
         `,
