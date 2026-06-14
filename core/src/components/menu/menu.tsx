@@ -499,7 +499,7 @@ export class Menu implements ComponentInterface, MenuI {
      * Menu direction animation is calculated based on the document direction.
      * If the document direction changes, we need to create a new animation.
      */
-    const isEndSide = isEnd(this.side);
+    const isEndSide = isEnd(this.side, this.el);
     if (width === this.width && this.animation !== undefined && isEndSide === this.isEndSide) {
       return;
     }
