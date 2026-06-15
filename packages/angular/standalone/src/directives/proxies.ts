@@ -2035,14 +2035,14 @@ export declare interface IonSelectOption extends Components.IonSelectOption {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSkeletonText,
-  inputs: ['animated', 'mode', 'theme']
+  inputs: ['animated', 'mode']
 })
 @Component({
   selector: 'ion-skeleton-text',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'mode', 'theme'],
+  inputs: ['animated', 'mode'],
   standalone: true
 })
 export class IonSkeletonText {

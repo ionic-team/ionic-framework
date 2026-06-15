@@ -30,6 +30,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Radio Group](#version-9x-radio-group)
   - [Ripple Effect](#version-9x-ripple-effect)
   - [Row](#version-9x-row)
+  - [Skeleton Text](#version-9x-skeleton-text)
   - [Spinner](#version-9x-spinner)
   - [Text](#version-9x-text)
   - [Textarea](#version-9x-textarea)
@@ -381,6 +382,33 @@ The following breaking changes apply to `ion-row`:
 <h5 id="version-9x-row-theme-classes">Theme classes</h5>
 
 Remove any instances that target the theme classes: `ion-row.md`, `ion-row.ios`.
+
+<h4 id="version-9x-skeleton-text">Skeleton Text</h4>
+
+The following breaking changes apply to `ion-skeleton-text`:
+
+1. `--background` and `--background-rgb` CSS variables have been replaced with per-state background tokens, each split into an RGB value and an alpha. <sup>[1](#version-9x-skeleton-text-replaced-css-variables)</sup>
+2. `--border-radius` has been replaced. <sup>[1](#version-9x-skeleton-text-replaced-css-variables)</sup>
+3. Theme classes (`ion-skeleton-text.md`, `ion-skeleton-text.ios`) are no longer supported. <sup>[2](#version-9x-skeleton-text-theme-classes)</sup>
+
+<h5 id="version-9x-skeleton-text-replaced-css-variables">Replaced CSS variables</h5>
+
+The background is now defined per state (resting and animated), and each state exposes an RGB value plus an alpha so the color and its opacity can be set independently. Use the new token structure for global styles, or the corresponding CSS variable for component-specific overrides:
+
+| Old (8.x) | New token (global) | New CSS variable (component-specific) |
+|---|---|---|
+| `--background-rgb` | `IonSkeletonText.default.background.rgb` | `--ion-skeleton-text-default-background-rgb` |
+| `--background-rgb` | `IonSkeletonText.animated.background.rgb` | `--ion-skeleton-text-animated-background-rgb` |
+| `--border-radius` | `IonSkeletonText.border.radius` | `--ion-skeleton-text-border-radius` |
+
+The previously fixed opacities are now adjustable through new per-state alpha tokens (`IonSkeletonText.default.background.alpha` / `--ion-skeleton-text-default-background-alpha`, and the `animated` equivalents).
+
+> [!NOTE]
+> `--background` (the resting color) has been removed with no one-to-one replacement; set `--ion-skeleton-text-default-background-rgb` (and optionally `--ion-skeleton-text-default-background-alpha`) instead. The single `--background-rgb` variable previously tinted both the resting fill and the animated shimmer. It is now split per state, so set both `--ion-skeleton-text-default-background-rgb` and `--ion-skeleton-text-animated-background-rgb` to recolor both.
+
+<h5 id="version-9x-skeleton-text-theme-classes">Theme classes</h5>
+
+Remove any instances that target the theme classes: `ion-skeleton-text.md`, `ion-skeleton-text.ios`.
 
 <h4 id="version-9x-spinner">Spinner</h4>
 
