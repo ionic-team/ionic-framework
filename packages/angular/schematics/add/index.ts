@@ -24,8 +24,8 @@ import {
   addSchematics,
   addStyle,
   getDefaultAngularAppName,
-} from './../utils/config';
-import { addPackageToPackageJson } from './../utils/package';
+} from '../utils/config';
+import { addPackageToPackageJson } from '../utils/package';
 import { Schema as IonAddOptions } from './schema';
 
 function addIonicAngularToPackageJson(): Rule {
