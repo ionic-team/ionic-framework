@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { IonRouterOutlet } from '@ionic/angular';
+import { IonRouterOutlet } from '@ionic/angular/lazy';
 
 import { assertZoneContext } from '../../zone-assert.util';
 

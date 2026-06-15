@@ -1,5 +1,5 @@
 import { Component, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { IonTabs, IonButton } from '@ionic/angular';
+import { IonTabs, IonButton } from '@ionic/angular/lazy';
 
 @Component({
     selector: 'app-view-child',

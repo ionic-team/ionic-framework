@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import { IonItem, IonLabel, IonReorder, IonReorderGroup } from '@ionic/angular/standalone';
-import type { ReorderEndCustomEvent } from '@ionic/angular/standalone';
+import { IonItem, IonLabel, IonReorder, IonReorderGroup } from '@ionic/angular';
+import type { ReorderEndCustomEvent } from '@ionic/angular';
 
 @Component({
   selector: 'app-reorder-group',

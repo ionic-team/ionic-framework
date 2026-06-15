@@ -1,6 +1,6 @@
 import { Component, VERSION } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IonBackButton, IonButtons, IonContent, IonLabel, IonList, IonListHeader, IonHeader, IonItem, IonRouterLink, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonBackButton, IonButtons, IonContent, IonLabel, IonList, IonListHeader, IonHeader, IonItem, IonRouterLink, IonTitle, IonToolbar } from '@ionic/angular';
 
 @Component({
   selector: 'app-home-page',

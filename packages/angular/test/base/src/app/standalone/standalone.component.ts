@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 
 @Component({
   selector: 'app-standalone',

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { IonContent, IonHeader, IonModal, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonModal, IonTitle, IonToolbar } from '@ionic/angular';
 
 /**
  * Child route component containing only the sheet modal with showBackdrop=false.

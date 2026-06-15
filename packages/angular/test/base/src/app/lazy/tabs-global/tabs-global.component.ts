@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { NavController } from "@ionic/angular";
+import { NavController } from "@ionic/angular/lazy";
 
 /**
  * This component is used in conjunction with a tabs router-outlet,

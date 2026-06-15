@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Optional } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { ModalController, IonNav, ViewWillLeave, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
+import { ModalController, IonNav, ViewWillLeave, ViewDidEnter, ViewDidLeave } from '@ionic/angular/lazy';
 
 import { assertZoneContext } from '../../zone-assert.util';
 

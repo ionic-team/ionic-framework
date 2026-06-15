@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HeaderFn } from '@ionic/core';
-import { IonVirtualScroll } from '@ionic/angular';
+import { IonVirtualScroll } from '@ionic/angular/lazy';
 
 @Component({
   selector: 'app-virtual-scroll',

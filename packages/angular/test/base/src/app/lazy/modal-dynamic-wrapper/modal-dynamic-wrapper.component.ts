@@ -1,5 +1,5 @@
 import { Component, ComponentRef, OnDestroy, ViewChild, ViewContainerRef } from "@angular/core";
-import { ModalController } from "@ionic/angular";
+import { ModalController } from "@ionic/angular/lazy";
 import { DynamicComponentWrapperComponent } from "./dynamic-component-wrapper.component";
 import { DynamicModalContentComponent } from "./dynamic-modal-content.component";
 

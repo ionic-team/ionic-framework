@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import { AccordionModalComponent } from './accordion-modal/accordion-modal.component';
 
 @Component({

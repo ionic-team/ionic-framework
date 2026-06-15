@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/lazy';
 import { ModalExampleComponent } from '../modal-example/modal-example.component';
 import { NavComponent } from '../nav/nav.component';
 

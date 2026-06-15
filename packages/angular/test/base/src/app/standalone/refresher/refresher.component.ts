@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonRefresher, IonRefresherContent, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-import type { RefresherCustomEvent, RefresherPullEndCustomEvent } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonRefresher, IonRefresherContent, IonTitle, IonToolbar } from '@ionic/angular';
+import type { RefresherCustomEvent, RefresherPullEndCustomEvent } from '@ionic/angular';
 
 @Component({
   selector: 'app-refresher',

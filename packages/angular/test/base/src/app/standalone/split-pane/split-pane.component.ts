@@ -12,7 +12,7 @@ import {
   IonRouterLink,
   IonRouterOutlet,
   IonSplitPane
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 @Component({
   selector: 'app-split-pane',

@@ -1,5 +1,5 @@
 import { Component, inject, Injector } from '@angular/core';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, ModalController } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, ModalController } from '@ionic/angular';
 import { ModalCustomInjectorModalComponent } from './modal/modal.component';
 import { TestService } from './test.service';
 

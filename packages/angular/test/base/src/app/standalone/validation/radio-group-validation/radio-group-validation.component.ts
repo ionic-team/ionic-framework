@@ -13,7 +13,7 @@ import {
   IonRadio,
   IonTitle,
   IonToolbar
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 @Component({
   selector: 'app-radio-group-validation',

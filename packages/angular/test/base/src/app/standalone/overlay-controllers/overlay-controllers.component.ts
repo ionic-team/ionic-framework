@@ -4,7 +4,7 @@ import {
   LoadingController,
   ModalController,
   PopoverController,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 @Component({
   selector: 'app-overlay-controllers',

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IonContent, IonItem, IonLabel, IonRouterLink } from '@ionic/angular/standalone';
+import { IonContent, IonItem, IonLabel, IonRouterLink } from '@ionic/angular';
 
 @Component({
   selector: 'app-swipe-gesture-disabled-main',

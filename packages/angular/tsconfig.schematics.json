@@ -10,10 +10,10 @@
     "moduleResolution": "node",
     "sourceMap": false,
     "pretty": true,
-    "rootDir": "src/schematics",
+    "rootDir": "lazy/src/schematics",
     "target": "es2017",
     "outDir": "dist/schematics"
   },
   "exclude": ["node_modules"],
-  "include": ["src/schematics/**/*.ts"]
+  "include": ["lazy/src/schematics/**/*.ts"]
 }

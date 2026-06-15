@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { MenuController, IonMenu } from '@ionic/angular/standalone';
+import { MenuController, IonMenu } from '@ionic/angular';
 
 @Component({
   selector: 'app-menu-controller',
