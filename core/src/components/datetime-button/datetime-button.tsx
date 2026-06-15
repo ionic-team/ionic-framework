@@ -7,7 +7,6 @@ import { createColorClasses } from '@utils/theme';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { DatetimePresentation } from '../datetime/datetime-interface';
-import { getToday } from '../datetime/utils/data';
 import { getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
 import { getHourCycle } from '../datetime/utils/helpers';
 import { parseDate } from '../datetime/utils/parse';
@@ -125,7 +124,7 @@ export class DatetimeButton implements ComponentInterface {
       overlayEl.classList.add('ion-datetime-button-overlay');
     }
 
-    componentOnReady(datetimeEl, () => {
+    componentOnReady(datetimeEl, async () => {
       const datetimePresentation = (this.datetimePresentation = datetimeEl.presentation || 'date-time');
 
       /**
@@ -138,7 +137,7 @@ export class DatetimeButton implements ComponentInterface {
        * to re-render the displayed
        * text in the buttons.
        */
-      this.setDateTimeText();
+      await this.setDateTimeText();
       addEventListener(datetimeEl, 'ionValueChange', this.setDateTimeText);
 
       /**
@@ -189,7 +188,7 @@ export class DatetimeButton implements ComponentInterface {
    * ion-datetime and then format it according
    * to the locale specified on ion-datetime.
    */
-  private setDateTimeText = () => {
+  private setDateTimeText = async () => {
     const { datetimeEl, datetimePresentation } = this;
 
     if (!datetimeEl) {
@@ -204,7 +203,8 @@ export class DatetimeButton implements ComponentInterface {
      * Both ion-datetime and ion-datetime-button default
      * to today's date and time if no value is set.
      */
-    const parsedDatetimes = parseDate(parsedValues.length > 0 ? parsedValues : [getToday()]);
+    const defaultDatetime = [(await datetimeEl.getClosestDate(new Date())).toISOString()];
+    const parsedDatetimes = parseDate(parsedValues.length > 0 ? parsedValues : defaultDatetime);
 
     if (!parsedDatetimes) {
       return;

@@ -35,7 +35,13 @@ import {
   getTimeColumnsData,
   getCombinedDateColumnData,
 } from './utils/data';
-import { formatValue, getLocalizedDateTime, getLocalizedTime, getMonthAndYear } from './utils/format';
+import {
+  formatValue,
+  getLocalizedDateTime,
+  getLocalizedTime,
+  getMonthAndYear,
+  removeDateTzOffset,
+} from './utils/format';
 import { isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth, getHourCycle } from './utils/helpers';
 import {
   calculateHourFromAMPM,
@@ -602,6 +608,45 @@ export class Datetime implements ComponentInterface {
     if (closeOverlay) {
       this.closeParentOverlay(CANCEL_ROLE);
     }
+  }
+
+  /**
+   * Get the closest valid DatetimeParts according to the restrictions on this Datetime
+   * @param parts The DatetimeParts to find the closest valid value for
+   */
+  private getClosestDatetimeParts(parts: DatetimeParts) {
+    const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
+    const minuteValues = (this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues));
+    const monthValues = (this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues));
+    const yearValues = (this.parsedYearValues = convertToArrayOfNumbers(this.yearValues));
+    const dayValues = (this.parsedDayValues = convertToArrayOfNumbers(this.dayValues));
+    return getClosestValidDate({
+      refParts: parts,
+      monthValues,
+      dayValues,
+      yearValues,
+      hourValues,
+      minuteValues,
+      minParts: this.minParts,
+      maxParts: this.maxParts,
+    });
+  }
+
+  /**
+   * Get the closest valid Date according to the restrictions on this Datetime
+   * @param date The Date to find the closest valid value for
+   */
+  @Method()
+  async getClosestDate(date: Date) {
+    const closest = this.getClosestDatetimeParts({
+      month: date.getMonth(),
+      day: date.getDay(),
+      year: date.getFullYear(),
+      dayOfWeek: date.getDay(),
+      hour: date.getHours(),
+      minute: date.getMinutes(),
+    });
+    return removeDateTzOffset(new Date(convertDataToISO(closest)));
   }
 
   private warnIfIncorrectValueUsage = () => {
@@ -1495,27 +1540,12 @@ export class Datetime implements ComponentInterface {
       warnIfTimeZoneProvided(el, formatOptions);
     }
 
-    const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
-    const minuteValues = (this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues));
-    const monthValues = (this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues));
-    const yearValues = (this.parsedYearValues = convertToArrayOfNumbers(this.yearValues));
-    const dayValues = (this.parsedDayValues = convertToArrayOfNumbers(this.dayValues));
-
     const todayParts = (this.todayParts = parseDate(getToday())!);
 
     this.processMinParts();
     this.processMaxParts();
 
-    this.defaultParts = getClosestValidDate({
-      refParts: todayParts,
-      monthValues,
-      dayValues,
-      yearValues,
-      hourValues,
-      minuteValues,
-      minParts: this.minParts,
-      maxParts: this.maxParts,
-    });
+    this.defaultParts = this.getClosestDatetimeParts(todayParts);
 
     this.processValue(this.value);
 

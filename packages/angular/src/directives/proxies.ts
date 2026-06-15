@@ -635,7 +635,7 @@ Set `scrollEvents` to `true` to enable.
 
 @ProxyCmp({
   inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showAdjacentDays', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
-  methods: ['confirm', 'reset', 'cancel']
+  methods: ['confirm', 'reset', 'cancel', 'getClosestDate']
 })
 @Component({
   selector: 'ion-datetime',

@@ -962,6 +962,11 @@ export namespace Components {
          */
         "formatOptions"?: FormatOptions;
         /**
+          * Get the closest valid Date according to the restrictions on this Datetime
+          * @param date The Date to find the closest valid value for
+         */
+        "getClosestDate": (date: Date) => Promise<Date>;
+        /**
           * Used to apply custom text and background colors to specific dates.  Can be either an array of objects containing ISO strings and colors, or a callback that receives an ISO string and returns the colors.  Only applies to the `date`, `date-time`, and `time-date` presentations, with `preferWheel="false"`.
          */
         "highlightedDates"?: DatetimeHighlight[] | DatetimeHighlightCallback;
