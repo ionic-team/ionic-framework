@@ -116,6 +116,8 @@ The string form no longer behaves the same way. Because an HTML attribute coerce
 
 <h4 id="version-9x-select">Select</h4>
 
+**`ionChange` Only Fires When the Value Changes**
+
 The `ionChange` event on `ion-select` now only fires when the selected value actually changes. Previously, the `alert` and `action-sheet` interfaces emitted `ionChange` every time the overlay was confirmed, even when the user chose the option that was already selected. This aligns the `alert` and `action-sheet` interfaces with the existing behavior of the `popover` and `modal` interfaces, and with the documented contract of `ionChange`.
 
 Apps that relied on `ionChange` firing on every confirmation (for example, to detect overlay dismissal without a value change) should listen for `ionDismiss` instead, or use the `didDismiss` event on the underlying alert or action sheet.
