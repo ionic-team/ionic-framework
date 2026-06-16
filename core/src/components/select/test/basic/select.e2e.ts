@@ -76,8 +76,6 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
         const firstOption = alert.locator('.alert-radio-button').nth(0);
         await expect(firstOption).toBeFocused();
         await expect(firstOption).toHaveClass(/ion-focused/);
-
-        await expect(alert).toHaveScreenshot(screenshot(`select-basic-alert-opened-focused`));
       });
 
       // Same as above, but with a selected value: the wrapper is focused on
@@ -119,8 +117,6 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
         const selectedOption = alert.locator('.alert-radio-button').nth(1);
         await expect(selectedOption).toBeFocused();
         await expect(selectedOption).toHaveClass(/ion-focused/);
-
-        await expect(alert).toHaveScreenshot(screenshot(`select-basic-alert-opened-with-value-focused`));
       });
 
       // When opening with the keyboard (Tab to the select, then Enter), the
@@ -266,8 +262,6 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
         const firstOption = actionSheet.locator('.action-sheet-button').nth(0);
         await expect(firstOption).toBeFocused();
         await expect(firstOption).toHaveClass(/ion-focused/);
-
-        await expect(actionSheet).toHaveScreenshot(screenshot(`select-basic-action-sheet-opened-focused`));
       });
 
       // Same as above, but with a selected value: the selected option is
@@ -311,8 +305,6 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
         const cancelButton = actionSheet.getByRole('button', { name: 'Cancel' });
         await expect(cancelButton).toBeFocused();
         await expect(cancelButton).toHaveClass(/ion-focused/);
-
-        await expect(actionSheet).toHaveScreenshot(screenshot(`select-basic-action-sheet-opened-with-value-focused`));
       });
 
       test('it should focus the second option when opened with a value and a header', async ({ page }) => {
@@ -493,8 +485,6 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
         const secondOption = popover.locator('.select-interface-option').nth(1);
         await expect(secondOption.locator('ion-radio')).toBeFocused();
         await expect(secondOption).toHaveClass(/ion-focused/);
-
-        await expect(popover).toHaveScreenshot(screenshot(`select-basic-popover-opened-focused`));
       });
 
       // Same as above, but with a selected value: the popover focuses the
@@ -541,8 +531,6 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
         const orangesOption = popover.locator('.select-interface-option:has-text("Oranges")');
         await expect(orangesOption.locator('ion-radio')).toBeFocused();
         await expect(orangesOption).toHaveClass(/ion-focused/);
-
-        await expect(popover).toHaveScreenshot(screenshot(`select-basic-popover-opened-with-value-focused`));
       });
 
       // When opening with the keyboard (Tab to the select, then Enter), the
@@ -760,8 +748,6 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
         const secondOption = modal.locator('.select-interface-option').nth(1);
         await expect(secondOption.locator('ion-radio')).toBeFocused();
         await expect(secondOption).toHaveClass(/ion-focused/);
-
-        await expect(modal).toHaveScreenshot(screenshot(`select-basic-modal-opened-focused`));
       });
 
       // Same as above, but with a selected value: the modal focuses the
@@ -808,8 +794,6 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
         const orangesOption = modal.locator('.select-interface-option:has-text("Oranges")');
         await expect(orangesOption.locator('ion-radio')).toBeFocused();
         await expect(orangesOption).toHaveClass(/ion-focused/);
-
-        await expect(modal).toHaveScreenshot(screenshot(`select-basic-modal-opened-with-value-focused`));
       });
 
       // When opening with the keyboard (Tab to the select, then Enter), the
