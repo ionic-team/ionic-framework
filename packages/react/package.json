@@ -77,14 +77,6 @@
   "jest": {
     "testEnvironment": "jsdom",
     "preset": "ts-jest",
-    "transform": {
-      "^.+\\.(ts|tsx)$": [
-        "ts-jest",
-        {
-          "isolatedModules": true
-        }
-      ]
-    },
     "setupFilesAfterEnv": [
       "<rootDir>/jest.setup.js"
     ],
