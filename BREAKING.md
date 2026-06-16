@@ -120,6 +120,12 @@ The `ionChange` event on `ion-select` now only fires when the selected value act
 
 Apps that relied on `ionChange` firing on every confirmation (for example, to detect overlay dismissal without a value change) should listen for `ionDismiss` instead, or use the `didDismiss` event on the underlying alert or action sheet.
 
+**Action Sheet Interface `selected` Role Removed**
+
+When using `interface="action-sheet"`, `ion-select` no longer assigns the `selected` role to the action sheet button for the currently selected option. This aligns the `action-sheet` interface with the `alert`, `popover`, and `modal` interfaces, none of which assign this role. The selected option's styling is unchanged because it is driven by the option's checked state.
+
+Because the option button no longer carries the `selected` role, the action sheet's dismiss role for a selected option is no longer `"selected"`. Apps that inspected this role to detect that a value was chosen, such as reading `role` from the underlying action sheet's `onDidDismiss` result, should listen for `ion-select`'s `ionChange` event instead, which emits the selected value when the selection changes.
+
 <h2 id="version-9x-framework-specific">Framework Specific</h2>
 
 <h4 id="version-9x-angular">Angular</h4>
