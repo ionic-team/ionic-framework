@@ -2003,8 +2003,8 @@ export namespace Components {
          */
         "handle"?: boolean;
         /**
-          * The interaction behavior for the sheet modal when the handle is pressed.  Defaults to `"none"`, which  means the modal will not change size or position when the handle is pressed. Set to `"cycle"` to let the modal cycle between available breakpoints when pressed.  Handle behavior is unavailable when the `handle` property is set to `false` or when the `breakpoints` property is not set (using a fullscreen or card modal).
-          * @default 'none'
+          * The interaction behavior for the sheet modal when the handle is pressed.  Handle behavior is unavailable when the `handle` property is set to `false` or when the `breakpoints` property is not set (using a fullscreen or card modal).  Set to `"cycle"` to make the handle focusable and let the sheet modal cycle between available breakpoints when pressed. This keeps the sheet operable with assistive technology.  Set to `"none"` to make the handle purely decorative when pressed and removed from the tab order.  Defaults to `"cycle"`.
+          * @default 'cycle'
          */
         "handleBehavior"?: ModalHandleBehavior;
         /**
@@ -7152,8 +7152,8 @@ declare namespace LocalJSX {
          */
         "handle"?: boolean;
         /**
-          * The interaction behavior for the sheet modal when the handle is pressed.  Defaults to `"none"`, which  means the modal will not change size or position when the handle is pressed. Set to `"cycle"` to let the modal cycle between available breakpoints when pressed.  Handle behavior is unavailable when the `handle` property is set to `false` or when the `breakpoints` property is not set (using a fullscreen or card modal).
-          * @default 'none'
+          * The interaction behavior for the sheet modal when the handle is pressed.  Handle behavior is unavailable when the `handle` property is set to `false` or when the `breakpoints` property is not set (using a fullscreen or card modal).  Set to `"cycle"` to make the handle focusable and let the sheet modal cycle between available breakpoints when pressed. This keeps the sheet operable with assistive technology.  Set to `"none"` to make the handle purely decorative when pressed and removed from the tab order.  Defaults to `"cycle"`.
+          * @default 'cycle'
          */
         "handleBehavior"?: ModalHandleBehavior;
         /**

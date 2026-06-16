@@ -264,7 +264,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const modal = page.locator('ion-modal');
 
-      await page.click('#sheet-modal');
+      await page.click('#handle-behavior-none-modal');
       await ionModalDidPresent.next();
 
       const handle = page.locator('ion-modal .modal-handle');
