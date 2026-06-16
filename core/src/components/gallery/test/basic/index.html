@@ -24,33 +24,48 @@
 
       <ion-content class="ion-padding">
         <ion-gallery>
-          <img src="/src/components/gallery/test/assets/01.png" alt="One" />
-          <img src="/src/components/gallery/test/assets/02.png" alt="Two" />
-          <img src="/src/components/gallery/test/assets/03.png" alt="Three" />
-          <img src="/src/components/gallery/test/assets/04.png" alt="Four" />
-          <img src="/src/components/gallery/test/assets/05.png" alt="Five" />
-          <img src="/src/components/gallery/test/assets/06.png" alt="Six" />
-          <img src="/src/components/gallery/test/assets/07.png" alt="Seven" />
-          <img src="/src/components/gallery/test/assets/08.png" alt="Eight" />
-          <img src="/src/components/gallery/test/assets/09.png" alt="Nine" />
-          <img src="/src/components/gallery/test/assets/10.png" alt="Ten" />
-          <img src="/src/components/gallery/test/assets/11.png" alt="Eleven" />
-          <img src="/src/components/gallery/test/assets/12.png" alt="Twelve" />
+          <ion-gallery-item><img src="/src/components/gallery/test/assets/01.png" alt="One" /></ion-gallery-item>
+          <ion-gallery-item><img src="/src/components/gallery/test/assets/02.png" alt="Two" /></ion-gallery-item>
+          <ion-gallery-item><img src="/src/components/gallery/test/assets/03.png" alt="Three" /></ion-gallery-item>
+          <ion-gallery-item><img src="/src/components/gallery/test/assets/04.png" alt="Four" /></ion-gallery-item>
+          <ion-gallery-item><img src="/src/components/gallery/test/assets/05.png" alt="Five" /></ion-gallery-item>
+          <ion-gallery-item><img src="/src/components/gallery/test/assets/06.png" alt="Six" /></ion-gallery-item>
+          <ion-gallery-item><img src="/src/components/gallery/test/assets/07.png" alt="Seven" /></ion-gallery-item>
+          <ion-gallery-item><img src="/src/components/gallery/test/assets/08.png" alt="Eight" /></ion-gallery-item>
+          <ion-gallery-item><img src="/src/components/gallery/test/assets/09.png" alt="Nine" /></ion-gallery-item>
+          <ion-gallery-item><img src="/src/components/gallery/test/assets/10.png" alt="Ten" /></ion-gallery-item>
+          <ion-gallery-item><img src="/src/components/gallery/test/assets/11.png" alt="Eleven" /></ion-gallery-item>
+          <ion-gallery-item><img src="/src/components/gallery/test/assets/12.png" alt="Twelve" /></ion-gallery-item>
         </ion-gallery>
 
         <ion-gallery>
-          <div>One</div>
-          <div>Two</div>
-          <div>Three</div>
-          <div>Four</div>
-          <div>Five</div>
-          <div>Six</div>
-          <div>Seven</div>
-          <div>Eight</div>
-          <div>Nine</div>
-          <div>Ten</div>
-          <div>Eleven</div>
-          <div>Twelve</div>
+          <ion-gallery-item>One</ion-gallery-item>
+          <ion-gallery-item>Two</ion-gallery-item>
+          <ion-gallery-item>Three</ion-gallery-item>
+          <ion-gallery-item>Four</ion-gallery-item>
+          <ion-gallery-item>Five</ion-gallery-item>
+          <ion-gallery-item>Six</ion-gallery-item>
+          <ion-gallery-item>Seven</ion-gallery-item>
+          <ion-gallery-item>Eight</ion-gallery-item>
+          <ion-gallery-item>Nine</ion-gallery-item>
+          <ion-gallery-item>Ten</ion-gallery-item>
+          <ion-gallery-item>Eleven</ion-gallery-item>
+          <ion-gallery-item>Twelve</ion-gallery-item>
+        </ion-gallery>
+
+        <ion-gallery>
+          <ion-gallery-item style="height: 175px">One</ion-gallery-item>
+          <ion-gallery-item style="height: 30px">Two</ion-gallery-item>
+          <ion-gallery-item style="height: 90px">Three</ion-gallery-item>
+          <ion-gallery-item style="height: 50px">Four</ion-gallery-item>
+          <ion-gallery-item style="height: 110px">Five</ion-gallery-item>
+          <ion-gallery-item style="height: 175px">Six</ion-gallery-item>
+          <ion-gallery-item style="height: 130px">Seven</ion-gallery-item>
+          <ion-gallery-item style="height: 80px">Eight</ion-gallery-item>
+          <ion-gallery-item style="height: 110px">Nine</ion-gallery-item>
+          <ion-gallery-item style="height: 90px">Ten</ion-gallery-item>
+          <ion-gallery-item style="height: 100px">Eleven</ion-gallery-item>
+          <ion-gallery-item style="height: 150px">Twelve</ion-gallery-item>
         </ion-gallery>
       </ion-content>
     </ion-app>
@@ -60,64 +75,64 @@
         margin-bottom: 16px;
       }
 
-      ion-gallery img,
-      ion-gallery div {
+      ion-gallery-item,
+      ion-gallery-item img {
         border-radius: 16px;
       }
 
-      ion-gallery div {
+      ion-gallery-item {
         display: flex;
         align-items: center;
         justify-content: center;
         color: #fff;
       }
 
-      ion-gallery div:nth-child(1) {
+      ion-gallery-item:nth-child(1) {
         background: #ff6b6b;
       }
 
-      ion-gallery div:nth-child(2) {
+      ion-gallery-item:nth-child(2) {
         background: #4ecdc4;
       }
 
-      ion-gallery div:nth-child(3) {
+      ion-gallery-item:nth-child(3) {
         background: #ffe66d;
         color: #333;
       }
 
-      ion-gallery div:nth-child(4) {
+      ion-gallery-item:nth-child(4) {
         background: #5f27cd;
       }
 
-      ion-gallery div:nth-child(5) {
+      ion-gallery-item:nth-child(5) {
         background: #7f8c8d;
       }
 
-      ion-gallery div:nth-child(6) {
+      ion-gallery-item:nth-child(6) {
         background: #ff9f43;
       }
 
-      ion-gallery div:nth-child(7) {
+      ion-gallery-item:nth-child(7) {
         background: #ff3f34;
       }
 
-      ion-gallery div:nth-child(8) {
+      ion-gallery-item:nth-child(8) {
         background: #2ecc71;
       }
 
-      ion-gallery div:nth-child(9) {
+      ion-gallery-item:nth-child(9) {
         background: #34495e;
       }
 
-      ion-gallery div:nth-child(10) {
+      ion-gallery-item:nth-child(10) {
         background: #1abc9c;
       }
 
-      ion-gallery div:nth-child(11) {
+      ion-gallery-item:nth-child(11) {
         background: #e67e22;
       }
 
-      ion-gallery div:nth-child(12) {
+      ion-gallery-item:nth-child(12) {
         background: #9b59b6;
       }
     </style>

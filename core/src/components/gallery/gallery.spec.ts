@@ -746,53 +746,189 @@ describe('gallery', () => {
 
   describe('gallery: layout', () => {
     describe('getItems()', () => {
-      it('should include direct child SVG elements with HTML elements', () => {
-        const div = document.createElement('div');
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        el.appendChild(div);
-        el.appendChild(svg);
+      it('should collect direct ion-gallery-item children as items', () => {
+        const itemOne = document.createElement('ion-gallery-item');
+        const itemTwo = document.createElement('ion-gallery-item');
+        el.appendChild(itemOne);
+        el.appendChild(itemTwo);
 
         const items = (sharedGallery as any).getItems();
 
-        expect(items).toEqual([div, svg]);
-        expect(items[1].namespaceURI).toBe('http://www.w3.org/2000/svg');
+        expect(items).toEqual([itemOne, itemTwo]);
       });
 
-      it('should exclude direct children without a usable CSSStyleDeclaration (no setProperty)', () => {
-        const included = document.createElement('div');
-        const excluded = document.createElement('div');
-        Object.defineProperty(excluded, 'style', {
-          configurable: true,
-          enumerable: true,
-          get() {
-            return { cssText: '' } as unknown as CSSStyleDeclaration;
-          },
-        });
-        el.appendChild(included);
-        el.appendChild(excluded);
+      it('should return items found inside a wrapper element', () => {
+        const wrapper = document.createElement('div');
+        const itemOne = document.createElement('ion-gallery-item');
+        const itemTwo = document.createElement('ion-gallery-item');
+        wrapper.appendChild(itemOne);
+        wrapper.appendChild(itemTwo);
+        el.appendChild(wrapper);
 
         const items = (sharedGallery as any).getItems();
 
-        expect(items).toEqual([included]);
+        expect(items).toEqual([itemOne, itemTwo]);
       });
 
-      it('should apply masonry grid placement styles to slotted SVG elements', () => {
-        const div = document.createElement('div');
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        el.appendChild(div);
-        el.appendChild(svg);
+      it('should not return items that belong to a nested gallery', () => {
+        const ownedItem = document.createElement('ion-gallery-item');
+
+        const nestedGallery = document.createElement('ion-gallery');
+        nestedGallery.appendChild(document.createElement('ion-gallery-item'));
+
+        // A wrapper holds one of our items alongside a nested gallery.
+        const wrapper = document.createElement('div');
+        wrapper.appendChild(ownedItem);
+        wrapper.appendChild(nestedGallery);
+        el.appendChild(wrapper);
 
         const items = (sharedGallery as any).getItems();
 
-        jest.spyOn(div, 'getBoundingClientRect').mockReturnValue({ height: 20 } as DOMRect);
-        jest.spyOn(svg, 'getBoundingClientRect').mockReturnValue({ height: 30 } as DOMRect);
+        // Only the item whose nearest gallery ancestor is this gallery is
+        // returned; the nested gallery's item is left to the nested gallery.
+        expect(items).toEqual([ownedItem]);
+      });
 
-        (sharedGallery as any).layoutMasonry(items, 10, 0, 2);
+      it('should return no items when a gallery only contains a nested gallery', () => {
+        const nestedGallery = document.createElement('ion-gallery');
+        nestedGallery.appendChild(document.createElement('ion-gallery-item'));
+        nestedGallery.appendChild(document.createElement('ion-gallery-item'));
+        el.appendChild(nestedGallery);
 
-        expect(div.style.gridColumn).toBe('1');
-        expect(svg.style.gridColumn).toBe('2');
-        expect(svg.style.gridRowStart).not.toBe('');
-        expect(svg.style.gridRowEnd).not.toBe('');
+        const items = (sharedGallery as any).getItems();
+
+        // The nested gallery's items belong to it, not the outer gallery.
+        expect(items).toEqual([]);
+      });
+    });
+
+    describe('collapseWrappers()', () => {
+      it('should collapse a wrapper that owns items with display: contents', () => {
+        const wrapper = document.createElement('div');
+        wrapper.appendChild(document.createElement('ion-gallery-item'));
+        el.appendChild(wrapper);
+
+        (sharedGallery as any).collapseWrappers();
+
+        expect(wrapper.style.display).toBe('contents');
+      });
+
+      it('should restore the box of a wrapper that no longer owns items', () => {
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        const wrapper = document.createElement('div');
+        const item = document.createElement('ion-gallery-item');
+        wrapper.appendChild(item);
+        el.appendChild(wrapper);
+
+        // Wrapper is initially collapsed with display: contents.
+        (sharedGallery as any).collapseWrappers();
+        expect(wrapper.style.display).toBe('contents');
+
+        // Remove the item, leaving the wrapper empty.
+        wrapper.removeChild(item);
+
+        // The wrapper is no longer collapsed and a warning is issued about the
+        // now-invalid child element.
+        (sharedGallery as any).collapseWrappers();
+        expect(wrapper.style.display).toBe('');
+        expect(warningSpy).toHaveBeenCalledWith(
+          expect.stringContaining('[ion-gallery] - Gallery items must be wrapped in "ion-gallery-item" components.'),
+          el
+        );
+
+        warningSpy.mockRestore();
+      });
+
+      it('should not clear an unrelated inline display on an invalid child', () => {
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        // A non-item child with its own inline display and no gallery items.
+        const stray = document.createElement('div');
+        stray.style.display = 'flex';
+        el.appendChild(stray);
+
+        (sharedGallery as any).collapseWrappers();
+
+        // We only undo a `display: contents` we set ourselves; an inline
+        // display the consumer set must be left intact.
+        expect(stray.style.display).toBe('flex');
+
+        warningSpy.mockRestore();
+      });
+
+      it('should warn and not collapse when a gallery only contains a nested gallery', () => {
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        // Nesting a gallery directly inside a gallery is invalid: the outer
+        // gallery has no items of its own to place.
+        const nestedGallery = document.createElement('ion-gallery');
+        nestedGallery.appendChild(document.createElement('ion-gallery-item'));
+        el.appendChild(nestedGallery);
+
+        (sharedGallery as any).collapseWrappers();
+
+        // The nested gallery is left untouched and the outer gallery warns.
+        expect(nestedGallery.style.display).toBe('');
+        expect(warningSpy).toHaveBeenCalledWith(
+          expect.stringContaining('[ion-gallery] - Gallery items must be wrapped in "ion-gallery-item" components.'),
+          el
+        );
+
+        warningSpy.mockRestore();
+      });
+
+      it('should warn about children that do not contain an ion-gallery-item', () => {
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        const img = document.createElement('img');
+        el.appendChild(img);
+
+        (sharedGallery as any).collapseWrappers();
+
+        expect(warningSpy).toHaveBeenCalledWith(
+          expect.stringContaining('[ion-gallery] - Gallery items must be wrapped in "ion-gallery-item" components.'),
+          el
+        );
+
+        // Only wrappers that own items are collapsed, so an ignored child's
+        // inline display must be left untouched.
+        expect(img.style.display).toBe('');
+
+        warningSpy.mockRestore();
+      });
+
+      it('should only warn once about invalid children', () => {
+        const warningSpy = jest.spyOn(logging, 'printIonWarning').mockImplementation(() => {});
+
+        el.appendChild(document.createElement('img'));
+        el.appendChild(document.createElement('span'));
+
+        (sharedGallery as any).collapseWrappers();
+        (sharedGallery as any).collapseWrappers();
+
+        expect(warningSpy).toHaveBeenCalledTimes(1);
+
+        warningSpy.mockRestore();
+      });
+    });
+
+    describe('layoutMasonry()', () => {
+      it('should apply masonry grid placement styles to items', () => {
+        const itemOne = document.createElement('ion-gallery-item');
+        const itemTwo = document.createElement('ion-gallery-item');
+        el.appendChild(itemOne);
+        el.appendChild(itemTwo);
+
+        jest.spyOn(itemOne, 'getBoundingClientRect').mockReturnValue({ height: 20 } as DOMRect);
+        jest.spyOn(itemTwo, 'getBoundingClientRect').mockReturnValue({ height: 30 } as DOMRect);
+
+        (sharedGallery as any).layoutMasonry([itemOne, itemTwo], 10, 0, 2);
+
+        expect(itemOne.style.gridColumn).toBe('1');
+        expect(itemTwo.style.gridColumn).toBe('2');
+        expect(itemTwo.style.gridRowStart).not.toBe('');
+        expect(itemTwo.style.gridRowEnd).not.toBe('');
       });
     });
 
