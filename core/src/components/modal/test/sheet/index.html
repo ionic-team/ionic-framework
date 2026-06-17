@@ -133,6 +133,12 @@
           >
             Present Sheet Modal (HandleBehavior: Cycle)
           </button>
+          <button
+            id="handle-behavior-none-modal"
+            onclick="presentModal({ handleBehavior: 'none', initialBreakpoint: 0.25, breakpoints: [0, 0.25, 0.5, 0.75, 1] })"
+          >
+            Present Sheet Modal (HandleBehavior: None)
+          </button>
           <button id="custom-handle-modal" onclick="presentModal({ cssClass: 'custom-handle' })">
             Present Sheet Modal (Custom Handle)
           </button>

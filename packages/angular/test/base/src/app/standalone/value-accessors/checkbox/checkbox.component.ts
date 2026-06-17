@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { AfterViewInit, Component, signal } from "@angular/core";
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { IonCheckbox } from "@ionic/angular";
 import { ValueAccessorTestComponent } from "../value-accessor-test/value-accessor-test.component";
@@ -14,11 +14,12 @@ import { ValueAccessorTestComponent } from "../value-accessor-test/value-accesso
     ValueAccessorTestComponent
   ]
 })
-export class CheckboxComponent {
-  dynamicLabel = '';
+export class CheckboxComponent implements AfterViewInit {
+  // Signal so the label set in ngAfterViewInit renders under OnPush (Angular 22 default).
+  dynamicLabel = signal('');
 
   ngAfterViewInit(): void {
-    this.dynamicLabel = 'Dynamic Checkbox Label';
+    this.dynamicLabel.set('Dynamic Checkbox Label');
   }
 
   form = this.fb.group({

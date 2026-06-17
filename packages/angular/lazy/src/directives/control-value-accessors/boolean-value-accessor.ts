@@ -23,8 +23,13 @@ export class BooleanValueAccessorDirective extends ValueAccessor {
     setIonicClasses(this.elementRef);
   }
 
-  @HostListener('ionChange', ['$event.target'])
-  _handleIonChange(el: HTMLIonCheckboxElement | HTMLIonToggleElement): void {
+  // Bind `$event` and cast `.target` in the body rather than `['$event.target']`:
+  // this directive's multi-element selector makes Angular 22's stricter host-binding
+  // type checking infer `$event` as the DOM `Event` (target: `EventTarget | null`),
+  // not the concrete element. The single-element standalone CVAs keep `['$event.target']`.
+  @HostListener('ionChange', ['$event'])
+  _handleIonChange(ev: Event): void {
+    const el = ev.target as HTMLIonCheckboxElement | HTMLIonToggleElement;
     this.handleValueChange(el, el.checked);
   }
 }

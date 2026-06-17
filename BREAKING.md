@@ -19,6 +19,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Components](#version-9x-components)
   - [Input](#version-9x-input)
   - [Legacy Picker](#version-9x-legacy-picker)
+  - [Modal](#version-9x-modal)
   - [Router Outlet](#version-9x-router-outlet)
   - [Searchbar](#version-9x-searchbar)
   - [Select](#version-9x-select)
@@ -72,6 +73,16 @@ The string form no longer behaves the same way. Because an HTML attribute coerce
    - Usages such as `ion-picker-legacy` or `IonPickerLegacy` should be changed to `ion-picker` and `IonPicker`, respectively.
 - Remove any usages of `pickerController`. If using React, remove any usages of the `useIonPicker` hook. These controller-based APIs have been removed. Use the inline picker component instead.
 - Remove any usages of the `PickerOptions`, `PickerButton`, `PickerColumn`, and `PickerColumnOption` type exports. These types were associated with the legacy picker and have been removed.
+
+<h4 id="version-9x-modal">Modal</h4>
+
+The `handleBehavior` property on `ion-modal` now defaults to `"cycle"` instead of `"none"`. For sheet modals that display a handle, this means the handle is now focusable and activating it (by click, keyboard, or screen reader) cycles the sheet through its available breakpoints. This matches the native iOS sheet behavior and keeps sheet modals operable for assistive technology users by default.
+
+Sheet modals that relied on the handle being inert should set `handleBehavior="none"` to restore the previous behavior:
+
+```html
+<ion-modal handle-behavior="none"></ion-modal>
+```
 
 <h4 id="version-9x-router-outlet">Router Outlet</h4>
 
@@ -175,9 +186,17 @@ Angular forbids `provideZoneChangeDetection()` inside an NgModule's `providers` 
 import 'zone.js';
 ```
 
+**OnPush by Default on Angular 22**
+
+Angular 22 changes the default change detection strategy to `OnPush` for components that don't declare one. Combined with the zoneless default above, any component state that you mutate as a plain field from an Ionic lifecycle hook (`ionViewWillEnter`, etc.) no longer re-renders on its own. Run `ng update`, which migrates existing components to eager change detection and preserves the previous behavior, or use a signal (or `ChangeDetectorRef.markForCheck()`) for state set in those hooks. Ionic's own Angular components already declare `OnPush` explicitly and are unaffected. Angular 18 through 21 keep the eager default, so they require no change.
+
 **TypeScript**
 
-Ionic 9 supports TypeScript 5.4 or later, matching the minimum for Angular 18. Angular 21 requires TypeScript 5.9 or later per Angular's own requirements.
+Ionic 9 supports TypeScript 5.4 or later, matching the minimum for Angular 18. Angular 21 requires TypeScript 5.9 or later, and Angular 22 requires TypeScript 6.0 or later, per Angular's own requirements.
+
+**Node.js**
+
+Angular 22 raises the minimum Node.js version to `^22.22.3 || ^24.15.0 || ^26.0.0`. Angular 18 through 21 are unaffected.
 
 **Module Resolution**
 

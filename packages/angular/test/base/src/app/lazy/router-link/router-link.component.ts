@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { NavController, ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave } from '@ionic/angular/lazy';
 import { Router } from '@angular/router';
 
@@ -11,11 +11,13 @@ import { assertZoneContext } from '../../zone-assert.util';
 })
 export class RouterLinkComponent implements OnInit, ViewWillEnter, ViewDidEnter, ViewWillLeave, ViewDidLeave {
 
-  onInit = 0;
-  willEnter = 0;
-  didEnter = 0;
-  willLeave = 0;
-  didLeave = 0;
+  // Signals so state set from Ionic lifecycle hooks renders under the
+  // OnPush-by-default change detection introduced in Angular 22.
+  onInit = signal(0);
+  willEnter = signal(0);
+  didEnter = signal(0);
+  willLeave = signal(0);
+  didLeave = signal(0);
   changes = 0;
 
   constructor(
@@ -46,26 +48,26 @@ export class RouterLinkComponent implements OnInit, ViewWillEnter, ViewDidEnter,
 
   ngOnInit() {
     assertZoneContext();
-    this.onInit++;
+    this.onInit.update((value) => value + 1);
   }
 
   ionViewWillEnter() {
-    if (this.onInit !== 1) {
+    if (this.onInit() !== 1) {
       throw new Error('ngOnInit was not called');
     }
     assertZoneContext();
-    this.willEnter++;
+    this.willEnter.update((value) => value + 1);
   }
   ionViewDidEnter() {
     assertZoneContext();
-    this.didEnter++;
+    this.didEnter.update((value) => value + 1);
   }
   ionViewWillLeave() {
     assertZoneContext();
-    this.willLeave++;
+    this.willLeave.update((value) => value + 1);
   }
   ionViewDidLeave() {
     assertZoneContext();
-    this.didLeave++;
+    this.didLeave.update((value) => value + 1);
   }
 }

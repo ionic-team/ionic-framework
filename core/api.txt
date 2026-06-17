@@ -1167,7 +1167,7 @@ ion-modal,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefin
 ion-modal,prop,expandToScroll,boolean,true,false,false
 ion-modal,prop,focusTrap,boolean,true,false,false
 ion-modal,prop,handle,boolean | undefined,undefined,false,false
-ion-modal,prop,handleBehavior,"cycle" | "none" | undefined,'none',false,false
+ion-modal,prop,handleBehavior,"cycle" | "none" | undefined,'cycle',false,false
 ion-modal,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-modal,prop,initialBreakpoint,number | undefined,undefined,false,false
 ion-modal,prop,isOpen,boolean,false,false,false
