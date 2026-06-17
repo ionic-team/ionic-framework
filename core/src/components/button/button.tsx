@@ -198,6 +198,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
        * then do not append a new one again.
        */
       if (formButtonEl !== null && formEl.contains(formButtonEl)) {
+        formButtonEl.disabled = this.disabled;
         return;
       }
 
