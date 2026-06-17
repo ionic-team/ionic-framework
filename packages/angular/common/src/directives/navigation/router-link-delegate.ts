@@ -1,5 +1,5 @@
 import { LocationStrategy } from '@angular/common';
-import { ElementRef, OnChanges, OnInit, Directive, HostListener, Input, Optional } from '@angular/core';
+import { ElementRef, OnChanges, OnDestroy, OnInit, Directive, HostListener, Input, Optional } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import type { AnimationBuilder, RouterDirection } from '@ionic/core/components';
 
@@ -14,7 +14,7 @@ import { NavController } from '../../providers/nav-controller';
 @Directive({
   selector: ':not(a):not(area)[routerLink]',
 })
-export class RouterLinkDelegateDirective implements OnInit, OnChanges {
+export class RouterLinkDelegateDirective implements OnInit, OnChanges, OnDestroy {
   @Input()
   routerDirection: RouterDirection = 'forward';
 
@@ -32,10 +32,45 @@ export class RouterLinkDelegateDirective implements OnInit, OnChanges {
   ngOnInit(): void {
     this.updateTargetUrlAndHref();
     this.updateTabindex();
+
+    /**
+     * Ionic components like `ion-item` render a native anchor in their shadow DOM,
+     * so a modifier click (ctrl/meta/shift) or a non-`_self` target should open a
+     * new tab via the browser default instead of navigating in-app.
+     *
+     * We listen in the capture phase so this runs before Angular's `RouterLink`
+     * handler and our own bubble-phase `onClick`. On a new-tab intent it stops
+     * propagation to cancel the in-app navigation, but leaves `preventDefault`
+     * alone so the native anchor can still open the tab.
+     */
+    this.elementRef.nativeElement.addEventListener('click', this.onCaptureClick, { capture: true });
   }
 
   ngOnChanges(): void {
     this.updateTargetUrlAndHref();
+  }
+
+  ngOnDestroy(): void {
+    this.elementRef.nativeElement.removeEventListener('click', this.onCaptureClick, { capture: true });
+  }
+
+  private onCaptureClick = (ev: Event): void => {
+    if (this.opensInNewTab(ev)) {
+      ev.stopImmediatePropagation();
+    }
+  };
+
+  /**
+   * True when the click should open a new tab: a modifier was held
+   * (ctrl/meta/shift), or the host targets something other than `_self`.
+   */
+  private opensInNewTab(ev: Event): boolean {
+    if (ev instanceof MouseEvent && (ev.ctrlKey || ev.metaKey || ev.shiftKey)) {
+      return true;
+    }
+
+    const target = this.elementRef.nativeElement.target;
+    return target != null && target !== '' && target !== '_self';
   }
 
   /**
