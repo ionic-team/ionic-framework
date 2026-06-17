@@ -197,7 +197,6 @@ configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, 
     });
 
     test('it should reset the breakpoint value on dismiss', async ({ page }) => {
-      await page.goto('/src/components/modal/test/sheet', config);
       test.info().annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/25245',
@@ -342,8 +341,6 @@ configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, 
       // In this scenario, the modal is opened and has no backdrop, allowing
       // the background content to be focused. We need to ensure that we can
       // navigate to the drag handle using the keyboard and voiceover/talkback.
-      await page.goto('/src/components/modal/test/sheet', config);
-
       await page.setContent(
         `
         <ion-content>
@@ -390,6 +387,73 @@ configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, 
       await page.keyboard.press('Tab');
 
       await expect(dragHandle).toBeFocused();
+    });
+
+    test('it should preserve the last arrow-focused radio when tabbing', async ({ page, pageUtils }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-button id="open-modal">Open</ion-button>
+          <ion-modal trigger="open-modal">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>Options</ion-title>
+                <ion-buttons slot="end">
+                  <ion-button id="cancel-button">Cancel</ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content>
+              <ion-list>
+                <ion-radio-group value="one">
+                  <ion-item>
+                    <ion-radio value="one">One</ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-radio value="two">Two</ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-radio value="three">Three</ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
+            </ion-content>
+          </ion-modal>
+        </ion-app>
+        <script>
+          const modal = document.querySelector('ion-modal');
+          const cancelButton = document.querySelector('#cancel-button');
+
+          modal.breakpoints = [0, 0.5, 1];
+          modal.initialBreakpoint = 0.5;
+          modal.handleBehavior = 'cycle';
+
+          cancelButton.addEventListener('click', () => {
+            modal.dismiss();
+          });
+        </script>
+      `,
+        config
+      );
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#open-modal');
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+      const firstRadio = modal.locator('ion-radio').nth(0);
+      const secondRadio = modal.locator('ion-radio').nth(1);
+      const handle = modal.locator('.modal-handle');
+
+      await firstRadio.focus();
+      await expect(firstRadio).toBeFocused();
+
+      await pageUtils.pressKeys('ArrowDown');
+      await expect(secondRadio).toBeFocused();
+
+      await pageUtils.pressKeys('Tab');
+      await expect(handle).toBeFocused();
     });
   });
 

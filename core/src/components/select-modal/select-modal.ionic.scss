@@ -23,18 +23,6 @@ ion-item {
   --border-radius: #{globals.$ion-border-radius-400};
 }
 
-// TODO(): Remove this when the focus styles are added back to the interface
-ion-item.ion-focused::part(native)::after {
-  // Your styles for the ::after pseudo element when ion-item is focused
-  outline: none;
-}
-
-ion-item.ion-focused.item-checkbox-checked,
-ion-item.ion-focused.item-radio-checked {
-  --background-focused: #{globals.$ion-bg-primary-subtle-default};
-  --background-focused-opacity: 1;
-}
-
 // Toolbar
 // ----------------------------------------------------------------
 

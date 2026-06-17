@@ -353,6 +353,7 @@ export class Checkbox implements ComponentInterface {
     } = this;
     const theme = getIonTheme(this);
     const path = getSVGPath(theme, indeterminate);
+    const inItem = hostContext('ion-item', el);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
@@ -375,10 +376,11 @@ export class Checkbox implements ComponentInterface {
         onClick={this.onClick}
         class={createColorClasses(color, {
           [theme]: true,
-          'in-item': hostContext('ion-item', el),
+          'in-item': inItem,
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
-          'ion-focusable': true,
+          // Focus styling should not apply when the checkbox is in an item
+          'ion-focusable': !inItem,
           'checkbox-indeterminate': indeterminate,
           interactive: true,
           [`checkbox-justify-${justify}`]: justify !== undefined,
