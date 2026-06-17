@@ -642,6 +642,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
               class="action-sheet-group"
               ref={(el) => (this.groupEl = el)}
               role={hasRadioButtons ? 'radiogroup' : undefined}
+              data-roving-focus={hasRadioButtons ? true : undefined}
             >
               {header !== undefined && (
                 <div

@@ -912,6 +912,10 @@ ion-gallery,prop,mode,"ios" | "md",undefined,false,false
 ion-gallery,prop,order,"best-fit" | "sequential" | undefined,undefined,false,false
 ion-gallery,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
+ion-gallery-item,shadow
+ion-gallery-item,prop,mode,"ios" | "md",undefined,false,false
+ion-gallery-item,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+
 ion-grid,shadow
 ion-grid,prop,fixed,boolean,false,false,false
 ion-grid,prop,mode,"ios" | "md",undefined,false,false
