@@ -40,7 +40,6 @@ import {
   getLocalizedDateTime,
   getLocalizedTime,
   getMonthAndYear,
-  removeDateTzOffset,
 } from './utils/format';
 import { isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth, getHourCycle } from './utils/helpers';
 import {
@@ -633,20 +632,15 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * Get the closest valid Date according to the restrictions on this Datetime
-   * @param date The Date to find the closest valid value for
+   * Returns the default parts the datetime falls back to when no value is set:
+   * today's date and time snapped to the closest value allowed by the
+   * component's constraints (`min`, `max`, and the `*Values` props).
+   *
+   * @internal
    */
   @Method()
-  async getClosestDate(date: Date) {
-    const closest = this.getClosestDatetimeParts({
-      month: date.getMonth(),
-      day: date.getDay(),
-      year: date.getFullYear(),
-      dayOfWeek: date.getDay(),
-      hour: date.getHours(),
-      minute: date.getMinutes(),
-    });
-    return removeDateTzOffset(new Date(convertDataToISO(closest)));
+  async getDefaultPart(): Promise<DatetimeParts> {
+    return this.defaultParts;
   }
 
   private warnIfIncorrectValueUsage = () => {

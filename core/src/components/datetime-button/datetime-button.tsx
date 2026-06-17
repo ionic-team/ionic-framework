@@ -10,6 +10,7 @@ import type { DatetimePresentation } from '../datetime/datetime-interface';
 import { getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
 import { getHourCycle } from '../datetime/utils/helpers';
 import { parseDate } from '../datetime/utils/parse';
+import { convertDataToISO } from '../datetime/utils/manipulation';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
@@ -200,11 +201,14 @@ export class DatetimeButton implements ComponentInterface {
     const parsedValues = this.getParsedDateValues(value);
 
     /**
-     * Both ion-datetime and ion-datetime-button default
-     * to today's date and time if no value is set.
+     * Both ion-datetime and ion-datetime-button default to today's date and
+     * time if no value is set. We read the datetime's computed default so the
+     * button respects the same constraints (min, max, minuteValues, etc.) that
+     * the datetime applies to its own fallback, instead of using a raw "now".
      */
-    const defaultDatetime = [(await datetimeEl.getClosestDate(new Date())).toISOString()];
-    const parsedDatetimes = parseDate(parsedValues.length > 0 ? parsedValues : defaultDatetime);
+    const parsedDatetimes = parseDate(
+      parsedValues.length > 0 ? parsedValues : [convertDataToISO(await datetimeEl.getDefaultPart())]
+    );
 
     if (!parsedDatetimes) {
       return;

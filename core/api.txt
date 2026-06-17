@@ -545,7 +545,6 @@ ion-datetime,prop,value,null | string | string[] | undefined,undefined,false,fal
 ion-datetime,prop,yearValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,method,cancel,cancel(closeOverlay?: boolean) => Promise<void>
 ion-datetime,method,confirm,confirm(closeOverlay?: boolean) => Promise<void>
-ion-datetime,method,getClosestDate,getClosestDate(date: Date) => Promise<Date>
 ion-datetime,method,reset,reset(startDate?: string) => Promise<void>
 ion-datetime,event,ionBlur,void,true
 ion-datetime,event,ionCancel,void,true
