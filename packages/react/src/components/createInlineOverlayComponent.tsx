@@ -127,6 +127,41 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     componentWillUnmount() {
       this.isUnmounted = true;
       const node = this.ref.current;
+      if (!node) {
+        return;
+      }
+      /**
+       * CoreDelegate (or user code in onWillPresent) can move the overlay out
+       * of where React rendered it. React's unmount only removes the node from
+       * its original React location, so we recover a relocated host here,
+       * regardless of open state.
+       *
+       * We can't gate this on `isOpen`: the overlay can be moved before it
+       * finishes presenting (e.g. the React 18 StrictMode mount/unmount cycle,
+       * where the present events that flip `isOpen` haven't fired yet), which
+       * would orphan the relocated host in the DOM. It also has to run
+       * synchronously here, since React's portal `removeChild` runs after
+       * `componentWillUnmount` returns and needs the host where it expects it.
+       */
+      if (node.isConnected) {
+        if (this.props.isNested) {
+          /**
+           * Nested overlays render inline inside a `<template>`. If the host
+           * has been moved out of that template, React's unmount won't reach
+           * it, so remove it directly. A host still in its template is left
+           * for React to remove.
+           */
+          if (!(node.parentElement instanceof HTMLTemplateElement)) {
+            node.remove();
+          }
+        } else if (this.portalTarget && node.parentNode !== this.portalTarget) {
+          /**
+           * Portaled overlays: move the host back into `portalTarget` so
+           * React's portal `removeChild` can find it.
+           */
+          this.portalTarget.appendChild(node);
+        }
+      }
       /**
        * If the overlay is being unmounted, but is still
        * open, this means the unmount was triggered outside
@@ -140,30 +175,13 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * Unmounting the overlay at this stage should skip
        * the dismiss lifecycle, including skipping the transition.
        *
+       * Detach the local event listener that performs the state updates,
+       * before dismissing the overlay, to prevent the callback handlers
+       * executing after the component has been unmounted. This is to
+       * avoid memory leaks.
        */
-      if (node && this.state.isOpen) {
-        /**
-         * Detach the local event listener that performs the state updates,
-         * before dismissing the overlay, to prevent the callback handlers
-         * executing after the component has been unmounted. This is to
-         * avoid memory leaks.
-         */
+      if (this.state.isOpen) {
         node.removeEventListener('didDismiss', this.handleDidDismiss);
-        if (this.props.isNested) {
-          /**
-           * Nested overlays render inline (no portal). CoreDelegate may
-           * have moved the node out of its React parent, so React's
-           * unmount won't reach it. Remove it directly.
-           */
-          node.remove();
-        } else if (node.isConnected && this.portalTarget && node.parentNode !== this.portalTarget) {
-          /**
-           * Portaled path: move the overlay back into `portalTarget` so
-           * React's portal removeChild can find it. CoreDelegate (or user
-           * code in onWillPresent) may have moved it elsewhere while open.
-           */
-          this.portalTarget.appendChild(node);
-        }
         detachProps(node, this.props);
       }
     }
@@ -288,10 +306,12 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
   };
 
   // Forward the nesting context as a prop to avoid contextType on the class.
+  // The render function is passed via `children` (not as a varargs child) so it
+  // matches `Context.Consumer`'s render-prop signature `(value) => ReactNode`.
   const ReactComponentWithNesting: React.FC<IonicReactInternalProps<PropType>> = (props) =>
-    createElement(NestedOverlayContext.Consumer, null, (isNested: boolean) =>
-      createElement(ReactComponent, { ...(props as InternalProps), isNested })
-    );
+    createElement(NestedOverlayContext.Consumer, {
+      children: (isNested: boolean) => createElement(ReactComponent, { ...(props as InternalProps), isNested }),
+    });
   ReactComponentWithNesting.displayName = displayName;
 
   return createForwardRef<PropType, ElementType>(ReactComponentWithNesting, displayName);
