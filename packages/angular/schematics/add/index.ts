@@ -16,7 +16,6 @@ import { addRootProvider } from '@schematics/angular/utility';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 
 import { addIonicModuleImportToNgModule } from '../utils/ast';
-
 import {
   addArchitectBuilder,
   addAsset,
@@ -26,6 +25,7 @@ import {
   getDefaultAngularAppName,
 } from '../utils/config';
 import { addPackageToPackageJson } from '../utils/package';
+
 import { Schema as IonAddOptions } from './schema';
 
 function addIonicAngularToPackageJson(): Rule {
