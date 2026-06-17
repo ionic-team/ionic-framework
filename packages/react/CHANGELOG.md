@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.11](https://github.com/ionic-team/ionic-framework/compare/v8.8.10...v8.8.11) (2026-06-17)
+
+
+### Bug Fixes
+
+* **react:** remove relocated inline overlays orphaned on unmount ([#31223](https://github.com/ionic-team/ionic-framework/issues/31223)) ([d28d25b](https://github.com/ionic-team/ionic-framework/commit/d28d25b798d32db6148155bb34fdbd13243286d9))
+
+
+
+
+
 ## [8.8.10](https://github.com/ionic-team/ionic-framework/compare/v8.8.9...v8.8.10) (2026-06-10)
 
 **Note:** Version bump only for package @ionic/react
