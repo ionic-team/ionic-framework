@@ -8,6 +8,8 @@
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-radius-025};
 
+  @include globals.typography(globals.$ion-body-action-xs);
+
   position: relative;
 
   align-content: center;
@@ -16,17 +18,6 @@
 
   min-height: globals.$ion-scale-1200;
   max-height: globals.$ion-scale-1800;
-
-  // Add styles from typography mixin but exclude line-height.
-  // line-height causes inconsistent rendering in Firefox (FW-7566).
-  font-family: map-get(globals.$ion-body-action-xs, font-family);
-  font-size: map-get(globals.$ion-body-action-xs, font-size);
-  font-weight: map-get(globals.$ion-body-action-xs, font-weight);
-
-  letter-spacing: map-get(globals.$ion-body-action-xs, letter-spacing);
-
-  text-decoration: map-get(globals.$ion-body-action-xs, text-decoration);
-  text-transform: map-get(globals.$ion-body-action-xs, text-transform);
 }
 
 // Tab Button: Native
@@ -156,4 +147,10 @@
 
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom:empty) {
   @include globals.position(calc(50% + 14px));
+}
+
+// Workaround for a rendering bug in firefox when the button is shorter than
+// the tab-bar content area. Add margin above the icon to make the button 24px tall.
+:host(.tab-has-icon.tab-has-label) ::slotted(ion-icon) {
+  margin-top: globals.$ion-space-100;
 }
