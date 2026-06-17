@@ -25,7 +25,16 @@ export const createForwardRef = <PropType, ElementType>(
   };
   forwardRef.displayName = displayName;
 
-  return React.forwardRef(forwardRef);
+  // Cast the render function to the type React.forwardRef already infers for it.
+  // React 18's `forwardRef` wraps the props in `PropsWithoutRef`, and since
+  // `PropType` is unconstrained TypeScript can't prove the round-trip is safe.
+  // The cast keeps the inferred component type intact without widening to `any`.
+  return React.forwardRef(
+    forwardRef as React.ForwardRefRenderFunction<
+      ElementType,
+      React.PropsWithoutRef<IonicReactExternalProps<PropType, ElementType>>
+    >
+  );
 };
 
 export const isPlatform = (platform: Platforms) => {
