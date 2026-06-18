@@ -178,8 +178,12 @@
   top: 50%;
 }
 
-// Workaround for a rendering bug in firefox when the button is shorter than
-// the tab-bar content area. Add margin above the icon to make the button 24px tall.
+/* 
+ * Workaround for a rendering bug in Firefox when the button is shorter than
+ * the tab-bar content area: the button varies in height, causing screenshot
+ * flake. Add margin above the icon to make the button as tall as the
+ * tab-bar's content area.
+*/
 :host(.tab-layout-icon-top.tab-has-icon.tab-has-label) ::slotted(ion-icon) {
   margin-top: globals.$ion-space-100;
 }
