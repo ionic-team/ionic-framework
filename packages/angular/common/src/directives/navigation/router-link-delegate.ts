@@ -1,5 +1,5 @@
 import { LocationStrategy } from '@angular/common';
-import { ElementRef, OnChanges, OnInit, Directive, HostListener, Input, Optional } from '@angular/core';
+import { ElementRef, OnChanges, OnDestroy, OnInit, Directive, HostListener, Input, Optional } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import type { AnimationBuilder, RouterDirection } from '@ionic/core/components';
 
@@ -14,7 +14,7 @@ import { NavController } from '../../providers/nav-controller';
 @Directive({
   selector: ':not(a):not(area)[routerLink]',
 })
-export class RouterLinkDelegateDirective implements OnInit, OnChanges {
+export class RouterLinkDelegateDirective implements OnInit, OnChanges, OnDestroy {
   @Input()
   routerDirection: RouterDirection = 'forward';
 
@@ -32,10 +32,49 @@ export class RouterLinkDelegateDirective implements OnInit, OnChanges {
   ngOnInit(): void {
     this.updateTargetUrlAndHref();
     this.updateTabindex();
+
+    /**
+     * Ionic components like `ion-item` render a native anchor in their shadow DOM,
+     * so a modifier click (ctrl/meta/shift/alt) or a non-`_self` target should let
+     * the browser handle the navigation natively (new tab, new window, download)
+     * instead of navigating in-app.
+     *
+     * We listen in the capture phase so this runs before Angular's `RouterLink`
+     * handler and our own bubble-phase `onClick`. On a native-navigation intent it
+     * stops propagation to cancel the in-app navigation, but leaves `preventDefault`
+     * alone so the native anchor can still act.
+     */
+    this.elementRef.nativeElement.addEventListener('click', this.onCaptureClick, { capture: true });
   }
 
   ngOnChanges(): void {
     this.updateTargetUrlAndHref();
+  }
+
+  ngOnDestroy(): void {
+    this.elementRef.nativeElement.removeEventListener('click', this.onCaptureClick, { capture: true });
+  }
+
+  private onCaptureClick = (ev: Event): void => {
+    if (this.opensNatively(ev)) {
+      ev.stopImmediatePropagation();
+    }
+  };
+
+  /**
+   * True when the browser should handle the click natively instead of routing
+   * in-app: a modifier was held (ctrl/meta/shift/alt), or the host targets
+   * something other than `_self`. This mirrors the modifier set Angular's own
+   * `RouterLink` guards on, so an Ionic `routerLink` behaves like a plain anchor
+   * for new-tab, new-window, and download intents.
+   */
+  private opensNatively(ev: Event): boolean {
+    if (ev instanceof MouseEvent && (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.altKey)) {
+      return true;
+    }
+
+    const target = this.elementRef.nativeElement.target;
+    return target != null && target !== '' && target !== '_self';
   }
 
   /**
