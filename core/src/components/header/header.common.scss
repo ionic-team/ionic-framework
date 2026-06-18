@@ -1,3 +1,5 @@
+@import "../../themes/native/native.globals";
+
 // Header
 // --------------------------------------------------
 
@@ -12,4 +14,31 @@ ion-header {
 
 ion-header ion-toolbar:first-of-type {
   padding-top: var(--ion-safe-area-top, 0);
+}
+
+// `collapse="hide"` — motion is CSS-driven; TS toggles `.header-collapse-hide-hidden`.
+// Easing approximates Ionic motion "base" (hide) and "quick" (show).
+$transition-curve-base: cubic-bezier(0.4, 0, 1, 1);
+$transition-curve-quick: cubic-bezier(0, 0, 0.2, 1);
+
+ion-header.header-collapse-hide {
+  // --header-hide-slide-y is set at runtime through @utils/on-scroll/collapse-hide.utils.
+
+  @include transform(translateY(0));
+
+  transition: transform 300ms $transition-curve-quick, opacity 300ms $transition-curve-quick;
+
+  opacity: 1;
+
+  z-index: 10;
+}
+
+ion-header.header-collapse-hide.header-collapse-hide-hidden {
+  @include transform(translateY(calc(-1 * var(--header-hide-slide-y, 0px))));
+
+  pointer-events: none;
+
+  transition: transform 200ms $transition-curve-base, opacity 300ms $transition-curve-base;
+
+  opacity: 0;
 }
