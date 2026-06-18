@@ -9,8 +9,8 @@ import type { Color } from '../../interface';
 import type { DatetimePresentation } from '../datetime/datetime-interface';
 import { getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
 import { getHourCycle } from '../datetime/utils/helpers';
-import { parseDate } from '../datetime/utils/parse';
 import { convertDataToISO } from '../datetime/utils/manipulation';
+import { parseDate } from '../datetime/utils/parse';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *

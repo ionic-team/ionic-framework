@@ -35,12 +35,7 @@ import {
   getTimeColumnsData,
   getCombinedDateColumnData,
 } from './utils/data';
-import {
-  formatValue,
-  getLocalizedDateTime,
-  getLocalizedTime,
-  getMonthAndYear,
-} from './utils/format';
+import { formatValue, getLocalizedDateTime, getLocalizedTime, getMonthAndYear } from './utils/format';
 import { isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth, getHourCycle } from './utils/helpers';
 import {
   calculateHourFromAMPM,
