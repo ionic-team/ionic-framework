@@ -30,6 +30,7 @@ export const routes: Routes = [
       { path: 'back-button', loadComponent: () => import('../back-button/back-button.component').then(c => c.BackButtonComponent) },
       { path: 'router-link', loadComponent: () => import('../router-link/router-link.component').then(c => c.RouterLinkComponent) },
       { path: 'nav', loadComponent: () => import('../nav/nav.component').then(c => c.NavComponent) },
+      { path: 'nav-modal-root', loadComponent: () => import('../nav-modal-root/nav-modal-root.component').then(c => c.NavModalRootComponent) },
       { path: 'providers', loadComponent: () => import('../providers/providers.component').then(c => c.ProvidersComponent) },
       { path: 'overlay-controllers', loadComponent: () => import('../overlay-controllers/overlay-controllers.component').then(c => c.OverlayControllersComponent) },
       { path: 'button', loadComponent: () => import('../button/button.component').then(c => c.ButtonComponent) },
