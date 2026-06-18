@@ -56,7 +56,7 @@ configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
   });
 });
 
-configs().forEach(({ config, screenshot, title }) => {
+configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('should not have visual regressions'), () => {
     let alertFixture!: AlertFixture;
 
@@ -176,6 +176,10 @@ class AlertFixture {
     await ionAlertDidPresent.next();
     this.alert = this.page.locator('ion-alert');
     await expect(this.alert).toBeVisible();
+
+    // Move mouse to the top-left corner of the page to avoid hover
+    // styles on buttons when taking screenshots
+    await this.page.mouse.move(0, 0);
 
     return this.alert;
   }

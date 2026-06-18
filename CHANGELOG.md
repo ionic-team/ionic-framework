@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.11](https://github.com/ionic-team/ionic-framework/compare/v8.8.10...v8.8.11) (2026-06-17)
+
+
+### Bug Fixes
+
+* **react:** remove relocated inline overlays orphaned on unmount ([#31223](https://github.com/ionic-team/ionic-framework/issues/31223)) ([d28d25b](https://github.com/ionic-team/ionic-framework/commit/d28d25b798d32db6148155bb34fdbd13243286d9))
+* **searchbar:** fix search icon sometimes being offset incorrectly ([#31212](https://github.com/ionic-team/ionic-framework/issues/31212)) ([3394c30](https://github.com/ionic-team/ionic-framework/commit/3394c305b5141326cc045132507dff62dd0e4dd6)), closes [#30434](https://github.com/ionic-team/ionic-framework/issues/30434)
+
+
+
+
+
+## [8.8.10](https://github.com/ionic-team/ionic-framework/compare/v8.8.9...v8.8.10) (2026-06-10)
+
+
+### Bug Fixes
+
+* **modal:** prevent sheet gesture crash with late-bound breakpoints ([#31202](https://github.com/ionic-team/ionic-framework/issues/31202)) ([c61265a](https://github.com/ionic-team/ionic-framework/commit/c61265adb5891b24d4d413245244ee8dcf61757e))
+
+
+
+
+
+## [8.8.9](https://github.com/ionic-team/ionic-framework/compare/v8.8.8...v8.8.9) (2026-06-03)
+
+
+### Bug Fixes
+
+* **router:** support anchor fragments in href ([#31172](https://github.com/ionic-team/ionic-framework/issues/31172)) ([a982516](https://github.com/ionic-team/ionic-framework/commit/a982516afad1e848534db702694ef47f5e49c78d)), closes [#19566](https://github.com/ionic-team/ionic-framework/issues/19566) [#19365](https://github.com/ionic-team/ionic-framework/issues/19365)
+
+
+
+
+
 ## [8.8.8](https://github.com/ionic-team/ionic-framework/compare/v8.8.7...v8.8.8) (2026-05-20)
 
 

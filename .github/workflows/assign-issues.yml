@@ -11,7 +11,7 @@ jobs:
       issues: write
     steps:
       - name: 'Auto-assign issue'
-        uses: pozil/auto-assign-issue@70adb98ca8b3941524e9ecde48e89067c4f96736 # v3.0.0
+        uses: pozil/auto-assign-issue@af6beea6bdf1e8eb373f061c5bc168681fc6d011 # v4.0.1
         with:
           assignees: brandyscarney, thetaPC, ShaneK
           numOfAssignee: 1

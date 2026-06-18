@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Alert - States</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+  <script type="module">
+    import { alertController } from '../../../../dist/ionic/index.esm.js';
+    window.alertController = alertController;
+  </script>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Alert - States</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <button class="expand" id="radio" onclick="presentAlertRadio()">Radio</button>
+        <button class="expand" id="checkbox" onclick="presentAlertCheckbox()">Checkbox</button>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      async function openAlert(opts) {
+        const alert = await alertController.create(opts);
+        await alert.present();
+        return alert;
+      }
+
+      // Swap the first button's label to "Hovered" while it's hovered so
+      // the state is obvious.
+      function hoverText(alert) {
+        const button = alert.querySelector('.alert-tappable');
+        const label = button?.querySelector('.alert-radio-label, .alert-checkbox-label');
+
+        if (label) {
+          const original = label.textContent;
+          button.addEventListener('mouseenter', () => {
+            label.textContent = 'Hovered';
+          });
+
+          button.addEventListener('mouseleave', () => {
+            label.textContent = original;
+          });
+        }
+      }
+
+      async function presentAlertRadio() {
+        const alert = await openAlert({
+          header: 'Radio',
+          inputs: [
+            {
+              type: 'radio',
+              label: 'Default',
+              value: 'default',
+            },
+            {
+              type: 'radio',
+              label: 'Focused',
+              value: 'focused',
+              cssClass: 'ion-focused',
+            },
+            {
+              type: 'radio',
+              label: 'Activated',
+              value: 'activated',
+              cssClass: 'ion-activated',
+            },
+            {
+              type: 'radio',
+              label: 'Selected',
+              value: 'selected',
+              checked: true,
+            },
+            {
+              type: 'radio',
+              label: 'Disabled',
+              value: 'disabled',
+              disabled: true,
+            },
+          ],
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              cssClass: 'secondary',
+            },
+            {
+              text: 'Ok',
+            },
+          ],
+        });
+
+        hoverText(alert);
+      }
+
+      async function presentAlertCheckbox() {
+        const alert = await openAlert({
+          header: 'Checkbox',
+          inputs: [
+            {
+              type: 'checkbox',
+              label: 'Default',
+              value: 'default',
+            },
+            {
+              type: 'checkbox',
+              label: 'Focused',
+              value: 'focused',
+              cssClass: 'ion-focused',
+            },
+            {
+              type: 'checkbox',
+              label: 'Activated',
+              value: 'activated',
+              cssClass: 'ion-activated',
+            },
+            {
+              type: 'checkbox',
+              label: 'Selected',
+              value: 'selected',
+              checked: true,
+            },
+            {
+              type: 'checkbox',
+              label: 'Disabled',
+              value: 'disabled',
+              disabled: true,
+            },
+          ],
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              cssClass: 'secondary',
+            },
+            {
+              text: 'Ok',
+            },
+          ],
+        });
+
+        hoverText(alert);
+      }
+    </script>
+  </body>
+</html>

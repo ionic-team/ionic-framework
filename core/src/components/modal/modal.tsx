@@ -450,6 +450,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Event() ionDragEnd!: EventEmitter<ModalDragEventDetail>;
 
+  @Watch('breakpoints')
   breakpointsChanged(breakpoints: number[] | undefined) {
     if (breakpoints !== undefined) {
       this.sortedBreakpoints = breakpoints.sort((a, b) => a - b);
@@ -1692,6 +1693,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
               aria-label="Activate to adjust the size of the dialog overlaying the screen"
               onClick={isHandleCycle ? this.onHandleClick : undefined}
               part="handle"
+              data-focus-order="1"
               ref={(el) => (this.dragHandleEl = el)}
             ></button>
           )}

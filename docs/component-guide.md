@@ -13,6 +13,7 @@
   * [Checkbox](#checkbox)
   * [Switch](#switch)
   * [Accordion](#accordion)
+- [Overlay Focus Trap](#overlay-focus-trap)
 - [Rendering Anchor or Button](#rendering-anchor-or-button)
   * [Example Components](#example-components-4)
   * [Component Structure](#component-structure-1)
@@ -643,6 +644,33 @@ There is a WebKit bug open for this: https://bugs.webkit.org/show_bug.cgi?id=196
 In order to use the arrow keys to navigate the accordions, users must be in "Focus Mode". Typically, NVDA automatically switches between Browse and Focus modes when inside of a form, but not every accordion needs a form.
 
 You can either wrap your `ion-accordion-group` in a form, or manually toggle Focus Mode using NVDA's keyboard shortcut.
+
+
+## Overlay Focus Trap
+
+Overlays (`ion-alert`, `ion-action-sheet`, `ion-loading`, `ion-modal`, `ion-popover`) trap keyboard focus so that `Tab`/`Shift+Tab` cycle only through the controls inside the open overlay. This trap lives in [`core/src/utils/overlays.ts`](../core/src/utils/overlays.ts) and is intentionally generic. It does not reference any component's private class names or tag names.
+
+Instead, components mark their elements with one of three `data-*` attributes that the trap reads. This keeps the contract explicit and decoupled. Restyling or restructuring a component cannot silently break Tab order, and the trap never needs to know which components are inside it.
+
+| Attribute | Applies to | Example components | Description |
+| --- | --- | --- | --- |
+| `data-roving-focus` | the **group container** | [`ion-radio-group`](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/radio-group), [`ion-action-sheet`](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/action-sheet) | Marks a group whose focusable descendants share a single roving `tabindex`. The trap treats the whole group as one tab stop and resolves focus to its active member, so `Tab` moves on to the next control instead of cycling within the group. |
+| `data-focus-order="N"` | an **individual item** whose visual order differs from DOM order | [`ion-modal`](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/modal) (drag handle), [`ion-select-modal`](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/select-modal) (Cancel button) | Gives the element an explicit position in the tab sequence. Elements without the attribute keep their visual order and are visited first; elements with it follow, sorted by ascending numeric value. |
+| `data-focus-ignore` | a **focusable wrapper** that is not a real tab stop | [`ion-select-modal`](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/select-modal) (option wrappers) | Removes the element from the tab sequence. The real control inside it (the radio or checkbox) remains the tab stop. |
+
+_The `data-roving-focus` and `data-focus-ignore` attributes are booleans that take no value, so the bare attribute is enough. Only `data-focus-order` takes a value, which is its numeric position._
+
+### Guidelines
+
+- Set `data-roving-focus` on the container that manages the roving tabindex (e.g. the radio group), not on each member. In a roving group only one member is tabbable at a time (`tabIndex="0"`) while the rest are `tabIndex="-1"` and skipped by the focusable query. The marker tells the trap to treat the whole group as a single Tab stop, represented by whichever member currently holds `tabIndex="0"`.
+- `data-focus-order` values only need to be relative (e.g. Modal sheet handle `1`, Cancel button `2`). They are numeric so the trap stays component-agnostic.
+- Use `data-focus-ignore` instead of removing `ion-focusable`/`tabindex` when an element must keep its focus styling (e.g. an `ion-item` carrying `ion-focusable` on behalf of an inner control) but should not be an independent tab stop.
+- These attributes have no associated CSS, so adding them does not affect rendering.
+
+### References
+
+- [Focus-trap implementation](../core/src/utils/overlays.ts)
+- [WAI-ARIA APG roving tabindex pattern](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
 
 
 ## Rendering Anchor or Button

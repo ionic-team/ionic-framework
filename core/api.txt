@@ -1044,12 +1044,23 @@ ion-footer,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-footer,prop,translucent,boolean,false,false,false
 
 ion-gallery,shadow
-ion-gallery,prop,columns,GalleryBreakpoints<string | number> | number | string,DEFAULT_COLUMNS,false,false
-ion-gallery,prop,gap,GalleryBreakpoints<string | number> | number | string,DEFAULT_GAP,false,false
+ion-gallery,prop,columns,GalleryBreakpoints<string | number> | number | string,{
+  xs: 2,
+  sm: 3,
+  md: 4,
+  lg: 6,
+  xl: 8,
+  xxl: 10,
+},false,false
+ion-gallery,prop,gap,GalleryBreakpoints<string | number> | number | string,'16px',false,false
 ion-gallery,prop,layout,"masonry" | "uniform",'uniform',false,false
 ion-gallery,prop,mode,"ios" | "md",undefined,false,false
 ion-gallery,prop,order,"best-fit" | "sequential" | undefined,undefined,false,false
 ion-gallery,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+
+ion-gallery-item,shadow
+ion-gallery-item,prop,mode,"ios" | "md",undefined,false,false
+ion-gallery-item,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-grid,shadow
 ion-grid,prop,fixed,boolean,false,false,false
@@ -2588,6 +2599,8 @@ ion-select-modal,prop,options,SelectModalOption[],[],false,false
 ion-select-option,shadow
 ion-select-option,prop,description,string | undefined,undefined,false,false
 ion-select-option,prop,disabled,boolean,false,false,false
+ion-select-option,prop,justify,"end" | "space-between" | "start" | undefined,undefined,false,false
+ion-select-option,prop,labelPlacement,"end" | "start" | undefined,undefined,false,false
 ion-select-option,prop,mode,"ios" | "md",undefined,false,false
 ion-select-option,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-select-option,prop,value,any,undefined,false,false
@@ -2635,7 +2648,7 @@ ion-split-pane,prop,contentId,string | undefined,undefined,false,true
 ion-split-pane,prop,disabled,boolean,false,false,false
 ion-split-pane,prop,mode,"ios" | "md",undefined,false,false
 ion-split-pane,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-split-pane,prop,when,boolean | string,QUERY['lg'],false,false
+ion-split-pane,prop,when,boolean | string,'(min-width: 992px)',false,false
 ion-split-pane,event,ionSplitPaneVisible,{ visible: boolean; },true
 ion-split-pane,css-prop,--border,ionic
 ion-split-pane,css-prop,--border,ios

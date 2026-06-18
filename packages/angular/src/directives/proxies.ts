@@ -847,6 +847,28 @@ export declare interface IonGallery extends Components.IonGallery {}
 
 
 @ProxyCmp({
+  inputs: ['mode', 'theme']
+})
+@Component({
+  selector: 'ion-gallery-item',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['mode', 'theme'],
+})
+export class IonGalleryItem {
+  protected el: HTMLIonGalleryItemElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonGalleryItem extends Components.IonGalleryItem {}
+
+
+@ProxyCmp({
   inputs: ['fixed', 'mode']
 })
 @Component({
@@ -2275,14 +2297,14 @@ export declare interface IonSelectModal extends Components.IonSelectModal {}
 
 
 @ProxyCmp({
-  inputs: ['description', 'disabled', 'mode', 'theme', 'value']
+  inputs: ['description', 'disabled', 'justify', 'labelPlacement', 'mode', 'theme', 'value']
 })
 @Component({
   selector: 'ion-select-option',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['description', 'disabled', 'mode', 'theme', 'value'],
+  inputs: ['description', 'disabled', 'justify', 'labelPlacement', 'mode', 'theme', 'value'],
 })
 export class IonSelectOption {
   protected el: HTMLIonSelectOptionElement;

@@ -386,6 +386,7 @@ export class RadioGroup implements ComponentInterface {
         aria-labelledby={label ? labelId : null}
         aria-describedby={this.hintTextId}
         aria-invalid={this.isInvalid ? 'true' : undefined}
+        data-roving-focus
         onClick={this.onClick}
       >
         {this.renderHintText()}

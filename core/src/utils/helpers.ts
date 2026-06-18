@@ -315,6 +315,20 @@ export const focusVisibleElement = (el: HTMLElement) => {
 };
 
 /**
+ * Clears the keyboard focus ring (`ion-focused`) that the focus-visible
+ * utility may have applied to elements during a programmatic focus.
+ *
+ * Use this after moving DOM focus to an element for assistive technologies
+ * (e.g. when an overlay opens) where the option should be focused so screen
+ * readers announce it, but the focus ring should not be shown until the user
+ * navigates with the keyboard (Tab/Arrow). The focus-visible utility will add
+ * `ion-focused` again on the next keyboard-driven focus change.
+ */
+export const suppressFocusVisible = () => {
+  focusElements([]);
+};
+
+/**
  * This method is used to add a hidden input to a host element that contains
  * a Shadow DOM. It does not add the input inside of the Shadow root which
  * allows it to be picked up inside of forms. It should contain the same

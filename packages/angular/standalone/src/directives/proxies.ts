@@ -33,6 +33,7 @@ import { defineCustomElement as defineIonFabButton } from '@ionic/core/component
 import { defineCustomElement as defineIonFabList } from '@ionic/core/components/ion-fab-list.js';
 import { defineCustomElement as defineIonFooter } from '@ionic/core/components/ion-footer.js';
 import { defineCustomElement as defineIonGallery } from '@ionic/core/components/ion-gallery.js';
+import { defineCustomElement as defineIonGalleryItem } from '@ionic/core/components/ion-gallery-item.js';
 import { defineCustomElement as defineIonGrid } from '@ionic/core/components/ion-grid.js';
 import { defineCustomElement as defineIonHeader } from '@ionic/core/components/ion-header.js';
 import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-img.js';
@@ -887,6 +888,30 @@ export class IonGallery {
 
 
 export declare interface IonGallery extends Components.IonGallery {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonGalleryItem,
+  inputs: ['mode', 'theme']
+})
+@Component({
+  selector: 'ion-gallery-item',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['mode', 'theme'],
+  standalone: true
+})
+export class IonGalleryItem {
+  protected el: HTMLIonGalleryItemElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonGalleryItem extends Components.IonGalleryItem {}
 
 
 @ProxyCmp({
@@ -2011,14 +2036,14 @@ export declare interface IonSelectModal extends Components.IonSelectModal {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSelectOption,
-  inputs: ['description', 'disabled', 'mode', 'theme', 'value']
+  inputs: ['description', 'disabled', 'justify', 'labelPlacement', 'mode', 'theme', 'value']
 })
 @Component({
   selector: 'ion-select-option',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['description', 'disabled', 'mode', 'theme', 'value'],
+  inputs: ['description', 'disabled', 'justify', 'labelPlacement', 'mode', 'theme', 'value'],
   standalone: true
 })
 export class IonSelectOption {
