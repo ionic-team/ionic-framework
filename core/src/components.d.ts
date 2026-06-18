@@ -3467,7 +3467,7 @@ export namespace Components {
           * The mode determines the platform behaviors of the component.
           * @default getIonMode(this)
          */
-        "mode": "md" | "ios";
+        "mode": "ios" | "md";
         "setRouteId": (id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder) => Promise<RouteWrite>;
         "swipeHandler"?: SwipeGestureHandler;
         /**
@@ -9520,7 +9520,7 @@ declare namespace LocalJSX {
           * The mode determines the platform behaviors of the component.
           * @default getIonMode(this)
          */
-        "mode"?: "md" | "ios";
+        "mode"?: "ios" | "md";
         "onIonNavDidChange"?: (event: IonRouterOutletCustomEvent<void>) => void;
         "onIonNavWillChange"?: (event: IonRouterOutletCustomEvent<void>) => void;
         "onIonNavWillLoad"?: (event: IonRouterOutletCustomEvent<void>) => void;
@@ -11238,7 +11238,7 @@ declare namespace LocalJSX {
         "target": string | undefined;
     }
     interface IonRouterOutletAttributes {
-        "mode": "md" | "ios";
+        "mode": "ios" | "md";
         "animated": boolean;
     }
     interface IonSearchbarAttributes {
