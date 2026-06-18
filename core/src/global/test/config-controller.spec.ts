@@ -83,6 +83,36 @@ describe('Config', () => {
     expect(config.get('text0' as any, 'HEY')).toEqual('hola');
   });
 
+  describe('getObjectValue', () => {
+    it('should read a nested component value from the custom theme', () => {
+      const config = new Config();
+      config.set('customTheme', { config: { components: { IonBadge: { size: 'large' } } } } as any);
+      expect(config.getObjectValue('IonBadge.size', 'small')).toEqual('large');
+    });
+
+    it('should return the fallback when the custom theme has no components', () => {
+      /**
+       * The base theme config only carries global values (e.g. formHighlight)
+       * and has no `components` key. Reading a component value must fall back
+       * gracefully instead of throwing.
+       */
+      const config = new Config();
+      config.set('customTheme', { config: { formHighlight: false } } as any);
+      expect(config.getObjectValue('IonBadge.size', 'small')).toEqual('small');
+    });
+
+    it('should return the fallback when the custom theme is unset', () => {
+      const config = new Config();
+      expect(config.getObjectValue('IonBadge.size', 'small')).toEqual('small');
+    });
+
+    it('should read a non-component value directly from the global config', () => {
+      const config = new Config();
+      config.set('mode' as any, 'ios');
+      expect(config.getObjectValue('mode')).toEqual('ios');
+    });
+  });
+
   it('should not throw an exception with a malformed URI', () => {
     // https://github.com/ionic-team/ionic-framework/issues/29479
 
