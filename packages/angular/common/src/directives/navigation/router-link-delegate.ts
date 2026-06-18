@@ -35,13 +35,14 @@ export class RouterLinkDelegateDirective implements OnInit, OnChanges, OnDestroy
 
     /**
      * Ionic components like `ion-item` render a native anchor in their shadow DOM,
-     * so a modifier click (ctrl/meta/shift) or a non-`_self` target should open a
-     * new tab via the browser default instead of navigating in-app.
+     * so a modifier click (ctrl/meta/shift/alt) or a non-`_self` target should let
+     * the browser handle the navigation natively (new tab, new window, download)
+     * instead of navigating in-app.
      *
      * We listen in the capture phase so this runs before Angular's `RouterLink`
-     * handler and our own bubble-phase `onClick`. On a new-tab intent it stops
-     * propagation to cancel the in-app navigation, but leaves `preventDefault`
-     * alone so the native anchor can still open the tab.
+     * handler and our own bubble-phase `onClick`. On a native-navigation intent it
+     * stops propagation to cancel the in-app navigation, but leaves `preventDefault`
+     * alone so the native anchor can still act.
      */
     this.elementRef.nativeElement.addEventListener('click', this.onCaptureClick, { capture: true });
   }
@@ -55,17 +56,20 @@ export class RouterLinkDelegateDirective implements OnInit, OnChanges, OnDestroy
   }
 
   private onCaptureClick = (ev: Event): void => {
-    if (this.opensInNewTab(ev)) {
+    if (this.opensNatively(ev)) {
       ev.stopImmediatePropagation();
     }
   };
 
   /**
-   * True when the click should open a new tab: a modifier was held
-   * (ctrl/meta/shift), or the host targets something other than `_self`.
+   * True when the browser should handle the click natively instead of routing
+   * in-app: a modifier was held (ctrl/meta/shift/alt), or the host targets
+   * something other than `_self`. This mirrors the modifier set Angular's own
+   * `RouterLink` guards on, so an Ionic `routerLink` behaves like a plain anchor
+   * for new-tab, new-window, and download intents.
    */
-  private opensInNewTab(ev: Event): boolean {
-    if (ev instanceof MouseEvent && (ev.ctrlKey || ev.metaKey || ev.shiftKey)) {
+  private opensNatively(ev: Event): boolean {
+    if (ev instanceof MouseEvent && (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.altKey)) {
       return true;
     }
 

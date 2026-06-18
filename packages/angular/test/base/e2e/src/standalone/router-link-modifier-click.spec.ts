@@ -1,9 +1,10 @@
 import { test, expect, type Page } from '@playwright/test';
 
 /**
- * Issue #26394: a modifier click (ctrl/meta/shift) or a non-`_self` target on a
- * `routerLink` over a non-anchor Ionic component (ion-item, ion-button) must
- * open a new tab instead of navigating the current page in-app.
+ * Issue #26394: a modifier click (ctrl/meta/shift/alt) or a non-`_self` target on
+ * a `routerLink` over a non-anchor Ionic component (ion-item, ion-button) must let
+ * the browser handle the navigation natively (new tab, window, download) instead
+ * of navigating the current page in-app.
  *
  * Playwright headless can't dispatch a real modifier-click or observe the
  * browser's native new-tab default, so we dispatch a synthetic click on the
@@ -35,8 +36,8 @@ test.describe('RouterLink: modifier click', () => {
     expect(defaultPrevented).toBe(true);
   });
 
-  for (const modifier of ['ctrlKey', 'metaKey', 'shiftKey']) {
-    test(`${modifier}+click does not navigate the current page and allows a native new tab`, async ({
+  for (const modifier of ['ctrlKey', 'metaKey', 'shiftKey', 'altKey']) {
+    test(`${modifier}+click does not navigate the current page and allows native handling`, async ({
       page,
     }, testInfo) => {
       testInfo.annotations.push({
@@ -49,7 +50,8 @@ test.describe('RouterLink: modifier click', () => {
       // Give any in-app navigation a chance to run before asserting it did not.
       await page.waitForTimeout(300);
       await expect(page).toHaveURL(/.*\/standalone\/router-link/);
-      // Default is left intact so the browser can open the link in a new tab.
+      // Default is left intact so the browser can handle the link natively
+      // (new tab, new window, or download, depending on the browser and OS).
       expect(defaultPrevented).toBe(false);
     });
   }
