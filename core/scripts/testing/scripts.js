@@ -118,14 +118,27 @@ const DEFAULT_PALETTE = 'light';
     paletteName = DEFAULT_PALETTE;
   }
 
+  /*
+   * Tracks when the asynchronous theme token loading has finished injecting
+   * the component theme CSS. Tests wait on this (see the Playwright `goto`
+   * helper) so screenshots are not taken before the themed CSS variables are
+   * available, which would render components unstyled.
+   */
+  window.__ionicTestThemeReady = false;
+
   // Load theme tokens if the theme is valid
   const validThemes = ['ionic', 'ios', 'md'];
   if (themeName && validThemes.includes(themeName)) {
-    loadThemeTokens(themeName, paletteName);
-  } else if(themeName) {
-    console.warn(
-      `Unsupported theme "${themeName}". Supported themes are: ${validThemes.join(', ')}. Defaulting to ${DEFAULT_THEME}.`
-    );
+    loadThemeTokens(themeName, paletteName).finally(() => {
+      window.__ionicTestThemeReady = true;
+    });
+  } else {
+    if (themeName) {
+      console.warn(
+        `Unsupported theme "${themeName}". Supported themes are: ${validThemes.join(', ')}. Defaulting to ${DEFAULT_THEME}.`
+      );
+    }
+    window.__ionicTestThemeReady = true;
   }
 
   /**
@@ -148,6 +161,25 @@ const DEFAULT_PALETTE = 'light';
     return result;
   };
 
+  /*
+   * Resolves once the Ionic Config instance (created by `initialize()` in
+   * ionic-global.ts) is available. If the app has already loaded we resolve
+   * immediately; otherwise we wait for the `appload` event, which fires after
+   * `initialize()` has set up the config. This is event-driven rather than
+   * polled, so there's no arbitrary timeout. JavaScript's single-threaded
+   * execution guarantees `appload` cannot fire between the synchronous check
+   * and `addEventListener`, so there is no missed-event race.
+   */
+  function whenConfigReady() {
+    return new Promise((resolve) => {
+      if (window.testAppLoaded === true || window.Ionic?.config?.set) {
+        resolve();
+      } else {
+        window.addEventListener('appload', () => resolve(), { once: true });
+      }
+    });
+  }
+
   // TODO(FW-6750): Determine if this function can be removed once the theme tokens can be imported directly into the test pages
   async function loadThemeTokens(themeName, paletteName) {
     try {
@@ -156,7 +188,6 @@ const DEFAULT_PALETTE = 'light';
       // Load the default tokens for the theme
       const defaultTokens = await import(`/themes/${themeName}/default.tokens.js`);
       let theme = defaultTokens.defaultTheme;
-
       // Merge with existing theme to preserve any customizations
       if (customTheme) {
         theme = deepMerge(theme, customTheme);
@@ -175,39 +206,36 @@ const DEFAULT_PALETTE = 'light';
         theme.palette.highContrastDark.enabled = 'always';
       }
 
-      if (window.Ionic?.config?.set) {
-        /**
-         * New Page Load after Initial App Load or Playwright Test:
-         * 
-         * If the Config instance exists, we must use the
-         * `set()` method. This ensures the internal private Map inside
-         * the `Config` class is updated with the loaded theme tokens.
-         * Without this, components would read 'undefined' or 'base'
-         * values from the stale Map when trying to access them through
-         * methods like `config.get()`.
-         */
-        window.Ionic.config.set('customTheme', theme);
-      } else {
-        /**
-         * App Initialization or Browser Refresh:
-         * 
-         * If the Config instance doesn't exist yet,
-         * we attach the theme to the global Ionic object. The `initialize()`
-         * method in `ionic-global.ts` will later merge this into the new
-         * `Config` instance via `config.reset()`.
-         */
-        window.Ionic = window.Ionic || {};
-        window.Ionic.config = window.Ionic.config || {};
+      window.Ionic = window.Ionic || {};
+      window.Ionic.config = window.Ionic.config || {};
+
+      /**
+       * App Initialization or Browser Refresh:
+       *
+       * If the Config instance doesn't exist yet, stash the theme on the
+       * global Ionic object so `initialize()` in ionic-global.ts can merge it
+       * into the new Config instance via `config.reset()`.
+       */
+      if (!window.Ionic.config.set) {
         window.Ionic.config.customTheme = theme;
       }
 
       /**
-       * Re-applying the global theme is critical for Playwright tests.
-       * Even if the config is set, the CSS variables for the specific theme 
-       * (e.g., md or ios) must be force-injected into the document head to 
-       * ensure visual assertions pass correctly.
+       * Wait for the Config instance to be created by `initialize()`, then set
+       * the theme and force-inject the global and component CSS ourselves.
+       *
+       * This avoids a race: if `initialize()` runs before this async import
+       * resolves, it applies the base theme (which has no component tokens) and
+       * replaces the global Ionic.config, orphaning the stash above. By always
+       * applying here once the Config instance exists, the component CSS
+       * variables (e.g. --ion-badge-*) are reliably injected regardless of
+       * ordering, instead of flaky unstyled renders.
        */
-      if (window.Ionic?.config?.get && window.Ionic?.config?.set) {
+      await whenConfigReady();
+
+      if (window.Ionic?.config?.set) {
+        window.Ionic.config.set('customTheme', theme);
+
         const themeModule = await import('/themes/utils/theme.js');
         themeModule.applyGlobalTheme(theme);
         themeModule.applyComponentsTheme(theme);

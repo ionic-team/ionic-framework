@@ -99,7 +99,16 @@ configs().forEach(({ config, title }) => {
   });
 
   const result = await Promise.all([
-    page.waitForFunction(() => (window as any).testAppLoaded === true, { timeout: 4750 }),
+    /*
+     * Wait for the app to load and for any asynchronous theme token loading to
+     * finish injecting the component theme CSS. `__ionicTestThemeReady` is only
+     * set by the test scripts that load themes; when it is undefined (e.g. pages
+     * that don't run those scripts) the `!== false` check lets the test proceed.
+     */
+    page.waitForFunction(
+      () => (window as any).testAppLoaded === true && (window as any).__ionicTestThemeReady !== false,
+      { timeout: 4750 }
+    ),
     originalFn(formattedUrl, options),
   ]);
 
