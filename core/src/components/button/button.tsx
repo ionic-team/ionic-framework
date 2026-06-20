@@ -200,8 +200,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
        * creation (e.g., runtime property updates).
        */
       if (formButtonEl !== null && formEl.contains(formButtonEl)) {
-        // formButtonEl.disabled = this.disabled;
-        // formButtonEl.type = this.type;
+        formButtonEl.disabled = this.disabled;
+        formButtonEl.type = this.type;
         return;
       }
 
