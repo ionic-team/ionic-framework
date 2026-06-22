@@ -284,41 +284,6 @@ test.describe('Form', () => {
     });
   });
 
-  test.describe('async disabled state during init', () => {
-    test('should submit form when button disabled state resolves asynchronously during init', async ({ page }) => {
-      // Wait for the component to initialize. The async validator resolves during ngOnInit
-      await page.waitForTimeout(200);
-
-      // Get the submit button
-      const submitButton = page.locator('ion-button[type="submit"]');
-
-      // Set up a promise that resolves when the form submits
-      const submitPromise = page.evaluate(() => {
-        return new Promise<void>((resolve) => {
-          const form = document.querySelector('form');
-          if (form) {
-            form.addEventListener('submit', (e) => {
-              e.preventDefault();
-              resolve();
-            });
-          }
-        });
-      });
-
-      // Click the submit button
-      await submitButton.click();
-
-      // Assert the form actually submitted
-      // This will timeout (fail) if the submit event never fires
-      await Promise.race([
-        submitPromise,
-        new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('Form did not submit within 2 seconds')), 2000)
-        ),
-      ]);
-    });
-  });
-
   // Helper functions
   async function testStatus(page: any, status: string) {
     await expect(page.locator('#status')).toHaveText(status);

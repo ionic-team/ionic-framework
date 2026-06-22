@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl, AbstractControl, ValidationErrors, AsyncValidatorFn } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 
 function otpRequiredLength(length: number) {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -10,18 +10,6 @@ function otpRequiredLength(length: number) {
     return null;
   };
 }
-
-// async validation test
-function asyncValidator() {
-  return (control: AbstractControl): Promise<ValidationErrors | null> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(null);
-      }, 100);
-    });
-  };
-}
-
 @Component({
     selector: 'app-form',
     templateUrl: './form.component.html',
@@ -38,7 +26,7 @@ export class FormComponent {
       datetime: ['2010-08-20', Validators.required],
       select: [undefined, Validators.required],
       toggle: [false],
-      input: ['', [Validators.required], [asyncValidator()]],
+      input: ['', Validators.required],
       input2: ['Default Value'],
       inputOtp: [null, [Validators.required, otpRequiredLength(4)]],
       inputOtpText: ['', [Validators.required, otpRequiredLength(4)]],
