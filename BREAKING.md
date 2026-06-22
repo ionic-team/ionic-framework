@@ -139,6 +139,9 @@ Apps that relied on `ionChange` firing on every confirmation (for example, to de
 
 Ionic 9 requires Angular 18 or later. Angular 16 and 17 are no longer supported.
 
+**Standalone Components Imported by Default**
+Following industry standards, Ionic 9 makes standalone components the default import path. Standalone component imports have changed from `@ionic/angular/standalone` to `@ionic/angular`. Lazy-loaded component imports have changed from `@ionic/angular` to `@ionic/angular/lazy`.
+
 **Zoneless Change Detection by Default**
 
 Ionic 9 defaults to zoneless change detection. Angular 21 bootstraps zoneless out of the box, so a new Ionic 9 app on Angular 21 runs without Zone.js and requires no change-detection provider. The `ng add @ionic/angular` schematic no longer registers `provideZoneChangeDetection()`.

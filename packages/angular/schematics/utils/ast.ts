@@ -24,7 +24,7 @@ export function addIonicModuleImportToNgModule(host: Tree, modulePath: string): 
   const recorder = host.beginUpdate(modulePath);
   const moduleSource = getSourceFile(host, modulePath) as any;
 
-  const ionicModuleChange = insertImport(moduleSource, modulePath, 'IonicModule', '@ionic/angular');
+  const ionicModuleChange = insertImport(moduleSource, modulePath, 'IonicModule', '@ionic/angular/lazy');
 
   applyToUpdateRecorder(recorder, [ionicModuleChange]);
 
