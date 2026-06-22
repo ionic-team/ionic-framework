@@ -1,12 +1,23 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { AttachInternals, Component, Element, Event, Fragment, Host, Prop, State, h, Watch } from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Fragment,
+  Host,
+  Method,
+  Prop,
+  State,
+  h,
+  Watch,
+  AttachInternals,
+} from '@stencil/core';
 import { reportValidityToElementInternals } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
-import { Method } from 'ionicons/dist/types/stencil-public-runtime';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
