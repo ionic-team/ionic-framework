@@ -95,7 +95,7 @@ export class Select implements ComponentInterface {
   /**
    * The text to display on the cancel button.
    * Defaults to `'Cancel'` for the `alert` and `action-sheet`
-   * interfaces, and `'Okay'` for the `modal` interface.
+   * interfaces, and `'Ok'` for the `modal` interface.
    */
   @Prop() cancelText?: string;
 
@@ -530,7 +530,7 @@ export class Select implements ComponentInterface {
   /**
    * Resolves the cancel button text, falling back to the
    * per-interface default when `cancelText` is not set:
-   * `'Okay'` for the `modal` interface, `'Cancel'` otherwise.
+   * `'Ok'` for the `modal` interface, `'Cancel'` otherwise.
    */
   private get interfaceCancelText(): string {
     if (this.cancelText !== undefined) {

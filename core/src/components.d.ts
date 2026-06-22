@@ -3022,7 +3022,7 @@ export namespace Components {
     }
     interface IonSelect {
         /**
-          * The text to display on the cancel button. Defaults to `'Cancel'` for the `alert` and `action-sheet` interfaces, and `'Okay'` for the `modal` interface.
+          * The text to display on the cancel button. Defaults to `'Cancel'` for the `alert` and `action-sheet` interfaces, and `'Ok'` for the `modal` interface.
          */
         "cancelText"?: string;
         /**
@@ -8204,7 +8204,7 @@ declare namespace LocalJSX {
     }
     interface IonSelect {
         /**
-          * The text to display on the cancel button. Defaults to `'Cancel'` for the `alert` and `action-sheet` interfaces, and `'Okay'` for the `modal` interface.
+          * The text to display on the cancel button. Defaults to `'Cancel'` for the `alert` and `action-sheet` interfaces, and `'Ok'` for the `modal` interface.
          */
         "cancelText"?: string;
         /**
