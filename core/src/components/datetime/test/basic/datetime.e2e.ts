@@ -822,7 +822,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
  * modes/directions.
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe.only(title('datetime: animated'), () => {
+  test.describe(title('datetime: animated'), () => {
     test('next month button should instantly replace month view when animations are disabled', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',
