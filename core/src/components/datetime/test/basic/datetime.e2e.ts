@@ -830,8 +830,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       });
 
       await page.addInitScript(() => {
-
-
         (window as any).__scrollToCalls = [];
         const original = Element.prototype.scrollTo;
         Element.prototype.scrollTo = function (this: Element, ...args: any[]) {
