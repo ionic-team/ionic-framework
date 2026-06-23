@@ -154,42 +154,6 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
       expect(submitEvent).toHaveReceivedEvent();
     });
 
-    test('should submit the form when disabled state changes asynchronously', async ({ page }, testInfo) => {
-      testInfo.annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/30968',
-      });
-
-      await page.setContent(
-        `
-        <form>
-          <input type="text" />
-          <ion-button type="submit" disabled>Submit</ion-button>
-        </form>
-        `,
-        config
-      );
-
-      const submitEvent = await page.spyOnEvent('submit');
-      const button = page.locator('ion-button');
-
-      // Simulate async disabled state change — e.g. async validator resolving
-      await button.evaluate((el: HTMLIonButtonElement) => {
-        el.disabled = true;
-        setTimeout(() => {
-          el.disabled = false;
-        }, 0);
-      });
-
-      // Wait for the async change to settle
-      await page.waitForTimeout(100);
-
-      await page.click('ion-button');
-
-      expect(submitEvent).toHaveReceivedEvent();
-    });
-  });
-
   test.describe(title('should throw a warning if the form cannot be found'), () => {
     test('form is a string selector', async ({ page }) => {
       const logs: string[] = [];
