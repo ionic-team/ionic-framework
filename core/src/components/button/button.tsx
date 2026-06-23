@@ -196,7 +196,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       /**
        * If the form already has a rendered form button
        * then do not append a new one again. Sync the
-       * disabled state and type in it changes after button
+       * disabled state and type if it changes after button
        * creation (e.g., runtime property updates).
        */
       if (formButtonEl !== null && formEl.contains(formButtonEl)) {
