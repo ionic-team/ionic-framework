@@ -282,7 +282,52 @@ test.describe('Form', () => {
 
       await expect(control).toHaveClass(/ng-invalid/);
     });
-  });
+
+    test('should keep hidden submit button disabled state in sync', async ({ page }) => {
+
+      // Get the disabled state of both visible and hidden button
+      const getDisabledState = () =>
+        page.evaluate(() => {
+          const visible = document.querySelector(
+            '#submit-button'
+          ) as HTMLIonButtonElement;
+
+          const hidden = document.querySelector(
+            'form button[type="submit"][style*="display: none"]'
+          ) as HTMLButtonElement;
+
+          return {
+            visible: visible?.disabled,
+            hidden: hidden?.disabled,
+          };
+        });
+      
+      // Ensure disabled state of both visible and hidden button
+      // Should match each other and expected
+      const expectDisabledStatesMatch = async (expected: boolean) => {
+        const state = await getDisabledState();
+        expect(state.visible).toBe(expected);
+        expect(state.hidden).toBe(expected);
+        expect(state.visible).toBe(state.hidden);
+        return state;
+      };
+
+      // Initial state - should be disabled and both match
+      await expectDisabledStatesMatch(true);
+
+      // Set form values - should be enabled
+      await page.locator('#set-values').click();
+
+      // After set values - should be enabled and both match
+      await expectDisabledStatesMatch(false);
+
+      // User clicks submit button
+      await page.locator('#submit-button').click();
+
+      // Form should submit successfully
+      await expect(page.locator('#submit')).toHaveText('true');
+    });
+    });
 
   // Helper functions
   async function testStatus(page: any, status: string) {
