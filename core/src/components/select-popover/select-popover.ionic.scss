@@ -1,22 +1,50 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "../../themes/mixins" as mixins;
+@use "../select-option/select-option.ionic.overlay";
 @use "./select-popover.common";
-@use "./select-popover.md" as select-popover-md;
 
 // Ionic Select Popover
 // --------------------------------------------------
 
-// Select Popover: Select Option
-// --------------------------------------------------
-
-.select-option-label {
-  gap: globals.$ion-space-300;
+ion-item {
+  --border-width: #{globals.$ion-border-size-0};
+  --background-focused: transparent;
+  --background-focused-opacity: 1;
+  --background-hover: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-hover-opacity: 1;
+  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-activated-opacity: 1;
 }
 
-.select-option-description {
-  @include globals.typography(globals.$ion-body-md-regular);
-  @include globals.padding(0);
+ion-item.ion-focused.item-checkbox-checked,
+ion-item.ion-focused.item-radio-checked {
+  --background-focused: #{globals.$ion-bg-primary-subtle-default};
+  --background-focused-opacity: 1;
+}
 
-  color: globals.$ion-text-subtle;
+// Radio
+// ----------------------------------------------------------------
 
-  font-size: globals.$ion-font-size-350;
+ion-list ion-radio::part(container) {
+  display: none;
+}
+
+ion-list ion-radio::part(label) {
+  @include mixins.margin(globals.$ion-space-0);
+}
+
+// Radio and Checkbox: Label
+// ----------------------------------------------------------------
+
+ion-list ion-radio::part(label),
+ion-list ion-checkbox::part(label) {
+  @include globals.typography(globals.$ion-body-lg-medium);
+}
+
+// Radio and Checkbox: Checked
+// ----------------------------------------------------------------
+
+.item-radio-checked,
+.item-checkbox-checked {
+  --background: #{globals.$ion-bg-primary-subtle-default};
 }

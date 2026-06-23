@@ -23,11 +23,19 @@ export interface SelectActionSheetButton extends Omit<ActionSheetButton, 'text'>
 export interface SelectAlertInput extends Omit<AlertInput, 'label'>, RichContentOption {
   /** The main label for the option as a string or an HTMLElement. */
   label?: string | HTMLElement;
+  /** Where the label sits relative to the option's selection control. */
+  labelPlacement?: 'start' | 'end';
+  /** How to pack the label and the option's selection control within a line. */
+  justify?: 'start' | 'end' | 'space-between';
 }
 
 export interface SelectOverlayOption extends Omit<SelectPopoverOption, 'text'>, RichContentOption {
   /** The main text for the option as a string or an HTMLElement. */
   text?: string | HTMLElement;
+  /** Where the label sits relative to the option's selection control. */
+  labelPlacement?: 'start' | 'end';
+  /** How to pack the label and the option's selection control within a line. */
+  justify?: 'start' | 'end' | 'space-between';
 }
 
 export interface RichContentOption {

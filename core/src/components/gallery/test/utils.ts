@@ -1,59 +1,60 @@
-export const sharedStyles = `
+export const sharedGalleryStyles = `
   ion-gallery {
     width: 343px;
   }
+`;
 
-  div {
+export const sharedGalleryItemStyles = `
+  ion-gallery-item {
     color: #fff;
-    height: 150px;
   }
 
-  div:nth-child(1) {
+  ion-gallery-item:nth-child(1) {
     background: #ff6b6b;
   }
 
-  div:nth-child(2) {
+  ion-gallery-item:nth-child(2) {
     background: #4ecdc4;
   }
 
-  div:nth-child(3) {
+  ion-gallery-item:nth-child(3) {
     background: #ffe66d;
     color: #333;
   }
 
-  div:nth-child(4) {
+  ion-gallery-item:nth-child(4) {
     background: #5f27cd;
   }
 
-  div:nth-child(5) {
+  ion-gallery-item:nth-child(5) {
     background: #7f8c8d;
   }
 
-  div:nth-child(6) {
+  ion-gallery-item:nth-child(6) {
     background: #ff9f43;
   }
 
-  div:nth-child(7) {
+  ion-gallery-item:nth-child(7) {
     background: #ff3f34;
   }
 
-  div:nth-child(8) {
+  ion-gallery-item:nth-child(8) {
     background: #2ecc71;
   }
 
-  div:nth-child(9) {
+  ion-gallery-item:nth-child(9) {
     background: #34495e;
   }
 
-  div:nth-child(10) {
+  ion-gallery-item:nth-child(10) {
     background: #1abc9c;
   }
 
-  div:nth-child(11) {
+  ion-gallery-item:nth-child(11) {
     background: #e67e22;
   }
 
-  div:nth-child(12) {
+  ion-gallery-item:nth-child(12) {
     background: #9b59b6;
   }
 `;

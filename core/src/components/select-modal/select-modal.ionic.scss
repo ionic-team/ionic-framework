@@ -1,4 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "../select-option/select-option.ionic.overlay";
 @use "./select-modal.common";
 
 // Ionic Select Modal
@@ -12,12 +13,14 @@
 // ----------------------------------------------------------------
 
 ion-item {
-  --border-width: 0;
-}
-
-ion-item.ion-focused::part(native)::after {
-  // Your styles for the ::after pseudo element when ion-item is focused
-  border: none;
+  --border-width: #{globals.$ion-border-size-0};
+  --background-focused: transparent;
+  --background-focused-opacity: 1;
+  --background-hover: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-hover-opacity: 1;
+  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-activated-opacity: 1;
+  --border-radius: #{globals.$ion-border-radius-400};
 }
 
 // Toolbar
@@ -35,7 +38,7 @@ ion-list ion-radio::part(container) {
 }
 
 ion-list ion-radio::part(label) {
-  @include globals.margin(0);
+  @include globals.margin(globals.$ion-space-0);
 }
 
 // Radio and Checkbox: Label
@@ -51,8 +54,7 @@ ion-list ion-checkbox::part(label) {
 
 .item-radio-checked,
 .item-checkbox-checked {
-  --background: #{globals.$ion-semantics-primary-100};
-  --border-radius: #{globals.$ion-border-radius-400};
+  --background: #{globals.$ion-bg-primary-subtle-default};
 }
 
 // Content

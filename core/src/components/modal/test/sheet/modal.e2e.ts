@@ -197,7 +197,6 @@ configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, 
     });
 
     test('it should reset the breakpoint value on dismiss', async ({ page }) => {
-      await page.goto('/src/components/modal/test/sheet', config);
       test.info().annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/25245',
@@ -342,8 +341,6 @@ configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, 
       // In this scenario, the modal is opened and has no backdrop, allowing
       // the background content to be focused. We need to ensure that we can
       // navigate to the drag handle using the keyboard and voiceover/talkback.
-      await page.goto('/src/components/modal/test/sheet', config);
-
       await page.setContent(
         `
         <ion-content>
@@ -391,6 +388,73 @@ configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, 
 
       await expect(dragHandle).toBeFocused();
     });
+
+    test('it should preserve the last arrow-focused radio when tabbing', async ({ page, pageUtils }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-button id="open-modal">Open</ion-button>
+          <ion-modal trigger="open-modal">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>Options</ion-title>
+                <ion-buttons slot="end">
+                  <ion-button id="cancel-button">Cancel</ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content>
+              <ion-list>
+                <ion-radio-group value="one">
+                  <ion-item>
+                    <ion-radio value="one">One</ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-radio value="two">Two</ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-radio value="three">Three</ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
+            </ion-content>
+          </ion-modal>
+        </ion-app>
+        <script>
+          const modal = document.querySelector('ion-modal');
+          const cancelButton = document.querySelector('#cancel-button');
+
+          modal.breakpoints = [0, 0.5, 1];
+          modal.initialBreakpoint = 0.5;
+          modal.handleBehavior = 'cycle';
+
+          cancelButton.addEventListener('click', () => {
+            modal.dismiss();
+          });
+        </script>
+      `,
+        config
+      );
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#open-modal');
+      await ionModalDidPresent.next();
+
+      const modal = page.locator('ion-modal');
+      const firstRadio = modal.locator('ion-radio').nth(0);
+      const secondRadio = modal.locator('ion-radio').nth(1);
+      const handle = modal.locator('.modal-handle');
+
+      await firstRadio.focus();
+      await expect(firstRadio).toBeFocused();
+
+      await pageUtils.pressKeys('ArrowDown');
+      await expect(secondRadio).toBeFocused();
+
+      await pageUtils.pressKeys('Tab');
+      await expect(handle).toBeFocused();
+    });
   });
 
   test.describe(title('sheet modal: drag events'), () => {
@@ -436,6 +500,53 @@ configs({ modes: ['ios', 'ionic-ios'], directions: ['ltr'] }).forEach(({ title, 
 
       expect(ionDragEnd.length).toBe(1);
       expect(Object.keys(dragEndEvent.detail).length).toBe(5);
+    });
+  });
+
+  test.describe(title('sheet modal: late breakpoints binding'), () => {
+    test('should not crash when swiped after breakpoints are set after the modal loads', async ({ page }) => {
+      const pageErrors: string[] = [];
+      page.on('pageerror', (err) => pageErrors.push(err.message));
+
+      await page.setContent(
+        `
+        <ion-modal initial-breakpoint="1">
+          <ion-content>Modal Content</ion-content>
+        </ion-modal>
+      `,
+        config
+      );
+
+      const modal = page.locator('ion-modal');
+
+      /**
+       * Simulates a JS framework (e.g. Angular with zoneless change detection)
+       * applying the `breakpoints` binding after the web component has finished
+       * loading. `setContent` resolves after `componentDidLoad`, so this lands
+       * too late for the manual `breakpointsChanged()` call in `componentDidLoad`
+       * to pick it up
+       */
+      await modal.evaluate((el: HTMLIonModalElement) => {
+        el.breakpoints = [0, 1];
+      });
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+
+      await modal.evaluate((el: HTMLIonModalElement) => el.present());
+      await ionModalDidPresent.next();
+
+      // Swiping the sheet down should snap it to breakpoint 0 and dismiss it
+      // without throwing an error
+      const handle = page.locator('ion-modal .modal-handle');
+      await expect(handle).toBeVisible();
+      await dragElementBy(handle, page, 0, 600);
+
+      // Flush any pending errors from the gesture's end handler
+      await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      expect(pageErrors).toEqual([]);
+
+      await ionModalDidDismiss.next();
     });
   });
 });

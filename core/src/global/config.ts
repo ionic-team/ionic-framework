@@ -30,7 +30,7 @@ export class Config {
     if (firstKey.startsWith('Ion')) {
       const customTheme = this.m.get('customTheme');
 
-      root = customTheme ? customTheme.config?.components[firstKey as keyof IonicConfig] : undefined;
+      root = customTheme?.config?.components?.[firstKey as keyof IonicConfig];
     } else {
       // Otherwise, get the value directly from the global config
       root = this.m.get(firstKey as keyof IonicConfig);

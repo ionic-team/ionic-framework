@@ -1,0 +1,51 @@
+@use "../../themes/mixins" as mixins;
+
+// Gallery Item
+// --------------------------------------------------
+
+:host {
+  display: block;
+
+  width: 100%;
+}
+
+// Slotted content
+// --------------------------------------------------
+
+// Reset the default margin for slotted elements so wrapper elements
+// (such as <figure>) align properly with other gallery items.
+::slotted(*) {
+  @include mixins.margin(0);
+
+  width: 100%;
+}
+
+::slotted(img) {
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+// Layout: Uniform
+// --------------------------------------------------
+
+// In the uniform layout each cell is square. The aspect ratio is applied to
+// the slotted content so it fills the cell and a wrapper such as `<figure>`
+// carries the ratio for a nested `img` to `inherit`; it is also applied to
+// the item itself so the cell stays square even when it is empty or holds
+// non-element content (e.g. bare text). An explicit `height` on the content
+// overrides the ratio for that content.
+:host(.in-gallery-layout-uniform),
+:host(.in-gallery-layout-uniform) ::slotted(*) {
+  aspect-ratio: 1 / 1;
+}
+
+// Layout: Masonry
+// --------------------------------------------------
+
+:host(.in-gallery-layout-masonry) {
+  // The spacing between stacked items. Applies to all items except
+  // for the last item in each column to remove any trailing space.
+  margin-bottom: var(--internal-gallery-gap, 16px);
+}
