@@ -154,7 +154,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
       expect(submitEvent).toHaveReceivedEvent();
     });
   });
-  
+
   test.describe(title('should throw a warning if the form cannot be found'), () => {
     test('form is a string selector', async ({ page }) => {
       const logs: string[] = [];
