@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import type { NotchController } from '@utils/forms';
 import { compareOptions, createNotchController, isOptionSelected, checkInvalidState } from '@utils/forms';
 import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
@@ -8,10 +9,12 @@ import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
 import type { OverlaySelect } from '@utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
+import { reflectPropertiesToAttributes, sanitizeDOMTree } from '@utils/sanitization';
 import { createColorClasses, hostContext } from '@utils/theme';
 import { watchForOptions } from '@utils/watch-options';
 import { caretDownSharp, chevronExpand } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type {
   ActionSheetOptions,
@@ -22,11 +25,15 @@ import type {
   StyleEventDetail,
   ModalOptions,
 } from '../../interface';
-import type { ActionSheetButton } from '../action-sheet/action-sheet-interface';
-import type { AlertInput } from '../alert/alert-interface';
-import type { SelectPopoverOption } from '../select-popover/select-popover-interface';
 
-import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from './select-interface';
+import type {
+  SelectChangeEventDetail,
+  SelectInterface,
+  SelectCompareFn,
+  SelectActionSheetButton,
+  SelectAlertInput,
+  SelectOverlayOption,
+} from './select-interface';
 
 // TODO(FW-2832): types
 
@@ -68,8 +75,8 @@ export class Select implements ComponentInterface {
   private nativeWrapperEl: HTMLElement | undefined;
   private notchSpacerEl: HTMLElement | undefined;
   private validationObserver?: MutationObserver;
-
   private notchController?: NotchController;
+  private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -583,7 +590,7 @@ export class Select implements ComponentInterface {
     }
   }
 
-  private createActionSheetButtons(data: HTMLIonSelectOptionElement[], selectValue: any): ActionSheetButton[] {
+  private createActionSheetButtons(data: HTMLIonSelectOptionElement[], selectValue: any): SelectActionSheetButton[] {
     const actionSheetButtons = data.map((option) => {
       const value = getOptionValue(option);
 
@@ -593,10 +600,12 @@ export class Select implements ComponentInterface {
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
       const isSelected = isOptionSelected(selectValue, value, this.compareWith);
+      const { content, startContent, endContent } = extractOptionContent(option, this.customHTMLEnabled);
 
       return {
-        text: option.textContent,
+        text: content ?? '',
         cssClass: optClass,
+        disabled: option.disabled,
         handler: () => {
           this.setValue(value);
         },
@@ -604,7 +613,10 @@ export class Select implements ComponentInterface {
           'aria-checked': isSelected ? 'true' : 'false',
           role: 'radio',
         },
-      } as ActionSheetButton;
+        startContent,
+        endContent,
+        description: option.description,
+      } as SelectActionSheetButton;
     });
 
     // Add "cancel" button
@@ -623,7 +635,7 @@ export class Select implements ComponentInterface {
     data: HTMLIonSelectOptionElement[],
     inputType: 'checkbox' | 'radio',
     selectValue: any
-  ): AlertInput[] {
+  ): SelectAlertInput[] {
     const alertInputs = data.map((option) => {
       const value = getOptionValue(option);
 
@@ -632,21 +644,27 @@ export class Select implements ComponentInterface {
         .filter((cls) => cls !== 'hydrated')
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
+      const { content, startContent, endContent } = extractOptionContent(option, this.customHTMLEnabled);
 
       return {
         type: inputType,
         cssClass: optClass,
-        label: option.textContent || '',
+        label: content ?? '',
         value,
         checked: isOptionSelected(selectValue, value, this.compareWith),
         disabled: option.disabled,
+        startContent,
+        endContent,
+        description: option.description,
+        labelPlacement: option.labelPlacement,
+        justify: option.justify,
       };
     });
 
     return alertInputs;
   }
 
-  private createOverlaySelectOptions(data: HTMLIonSelectOptionElement[], selectValue: any): SelectPopoverOption[] {
+  private createOverlaySelectOptions(data: HTMLIonSelectOptionElement[], selectValue: any): SelectOverlayOption[] {
     const popoverOptions = data.map((option) => {
       const value = getOptionValue(option);
 
@@ -655,9 +673,10 @@ export class Select implements ComponentInterface {
         .filter((cls) => cls !== 'hydrated')
         .join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
+      const { content, startContent, endContent } = extractOptionContent(option, this.customHTMLEnabled);
 
       return {
-        text: option.textContent || '',
+        text: content ?? '',
         cssClass: optClass,
         value,
         checked: isOptionSelected(selectValue, value, this.compareWith),
@@ -668,6 +687,11 @@ export class Select implements ComponentInterface {
             this.close();
           }
         },
+        startContent,
+        endContent,
+        description: option.description,
+        labelPlacement: option.labelPlacement,
+        justify: option.justify,
       };
     });
 
@@ -708,6 +732,9 @@ export class Select implements ComponentInterface {
       };
     }
 
+    const options = this.createOverlaySelectOptions(this.childOpts, value);
+    const hasRichContent = options.some((opt) => opt.startContent || opt.endContent || opt.description);
+
     const popoverOpts: PopoverOptions = {
       mode,
       event,
@@ -717,14 +744,18 @@ export class Select implements ComponentInterface {
       ...interfaceOptions,
 
       component: 'ion-select-popover',
-      cssClass: ['select-popover', interfaceOptions.cssClass],
+      cssClass: [
+        'select-popover',
+        hasRichContent ? 'select-popover-rich-content' : undefined,
+        interfaceOptions.cssClass,
+      ],
       componentProps: {
         header: interfaceOptions.header,
         subHeader: interfaceOptions.subHeader,
         message: interfaceOptions.message,
         multiple,
         value,
-        options: this.createOverlaySelectOptions(this.childOpts, value),
+        options,
       },
     };
 
@@ -895,12 +926,18 @@ export class Select implements ComponentInterface {
     return;
   }
 
-  private getText(): string {
+  /**
+   * Returns the text to display in the select based on the selected value.
+   *
+   * @param useHTML If `true`, the returned text will include any custom HTML content from the selected option. If `false`, the returned text will be plain text without any HTML. Defaults to `false`.
+   * @returns The text to display in the select, either with or without HTML based on the `useHTML` parameter.
+   */
+  private getText(useHTML = false): string {
     const selectedText = this.selectedText;
     if (selectedText != null && selectedText !== '') {
       return selectedText;
     }
-    return generateText(this.childOpts, this.value, this.compareWith);
+    return generateText(this.childOpts, this.value, this.compareWith, useHTML);
   }
 
   private setFocus() {
@@ -1062,6 +1099,56 @@ export class Select implements ComponentInterface {
   }
 
   /**
+   * Wraps text nodes in the select text with span elements
+   * so spacing can be added between elements without
+   * changing the display to prevent losing the ellipses
+   * behavior.
+   *
+   * Only wraps when the string contains HTML elements
+   * alongside text.
+   */
+  private wrapSelectTextNodes(html: string): string {
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+
+    const hasElements = Array.from(temp.childNodes).some((n) => n.nodeType === Node.ELEMENT_NODE);
+
+    // Return the plain text
+    if (!hasElements) {
+      return html;
+    }
+
+    Array.from(temp.childNodes).forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
+        const text = node.textContent;
+
+        /**
+         * Split comma separator from the text content
+         * e.g., ", Bacon" becomes ", " text node + <span>Bacon</span>.
+         */
+        const commaMatch = text.match(/^(,\s*)(.*)/);
+        if (commaMatch) {
+          const commaNode = document.createTextNode(commaMatch[1]);
+          const wrapper = document.createElement('span');
+
+          wrapper.textContent = commaMatch[2];
+          node.parentNode?.replaceChild(wrapper, node);
+          wrapper.parentNode?.insertBefore(commaNode, wrapper);
+
+          return;
+        }
+
+        const wrapper = document.createElement('span');
+
+        node.parentNode?.replaceChild(wrapper, node);
+        wrapper.appendChild(node);
+      }
+    });
+
+    return temp.innerHTML;
+  }
+
+  /**
    * Renders either the placeholder
    * or the selected values based on
    * the state of the select.
@@ -1069,7 +1156,7 @@ export class Select implements ComponentInterface {
   private renderSelectText() {
     const { placeholder } = this;
 
-    const displayValue = this.getText();
+    const displayValue = this.getText(true);
 
     let addPlaceholderClass = false;
     let selectText = displayValue;
@@ -1084,6 +1171,11 @@ export class Select implements ComponentInterface {
     };
 
     const textPart = addPlaceholderClass ? 'placeholder' : 'text';
+
+    if (this.customHTMLEnabled) {
+      const wrapped = this.wrapSelectTextNodes(selectText);
+      return <div aria-hidden="true" class={selectTextClasses} part={textPart} innerHTML={wrapped}></div>;
+    }
 
     return (
       <div aria-hidden="true" class={selectTextClasses} part={textPart}>
@@ -1113,6 +1205,7 @@ export class Select implements ComponentInterface {
 
   private get ariaLabel() {
     const { placeholder, inheritedAttributes } = this;
+    // Get the plain text from the selected text
     const displayValue = this.getText();
 
     // The aria label should be preferred over visible text if both are specified
@@ -1332,30 +1425,250 @@ const parseValue = (value: any) => {
 const generateText = (
   opts: HTMLIonSelectOptionElement[],
   value: any | any[],
-  compareWith?: string | SelectCompareFn | null
+  compareWith?: string | SelectCompareFn | null,
+  useHTML = false
 ) => {
   if (value === undefined) {
     return '';
   }
   if (Array.isArray(value)) {
     return value
-      .map((v) => textForValue(opts, v, compareWith))
+      .map((v) => textForValue(opts, v, compareWith, useHTML))
       .filter((opt) => opt !== null)
       .join(', ');
   } else {
-    return textForValue(opts, value, compareWith) || '';
+    return textForValue(opts, value, compareWith, useHTML) || '';
   }
 };
 
+/**
+ * Returns the display text for a given value from the list of options.
+ * When `useHTML` is true, returns sanitized HTML for the select text.
+ * When `useHTML` is false, returns plain text for aria-label and other
+ * text-only contexts.
+ *
+ * @param opts - The list of ion-select-option elements.
+ * @param value - The value to find the matching option for.
+ * @param compareWith - Custom comparison function or property name.
+ * @param useHTML - If true, returns HTML string. If false, returns plain text.
+ */
 const textForValue = (
   opts: HTMLIonSelectOptionElement[],
   value: any,
-  compareWith?: string | SelectCompareFn | null
+  compareWith?: string | SelectCompareFn | null,
+  useHTML = false
 ): string | null => {
   const selectOpt = opts.find((opt) => {
     return compareOptions(value, getOptionValue(opt), compareWith);
   });
-  return selectOpt ? selectOpt.textContent : null;
+  const customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
+
+  if (!selectOpt) {
+    return null;
+  }
+
+  // Return sanitized HTML for the select text
+  if (customHTMLEnabled && useHTML) {
+    return getOptionContent(selectOpt, undefined, true) as string | null;
+  }
+
+  /**
+   * When custom HTML is enabled, extract only the default slot content.
+   * This ensures aria-label and other text-only contexts read only
+   * the relevant option text.
+   */
+  if (customHTMLEnabled) {
+    const content = getOptionContent(selectOpt);
+
+    if (typeof content === 'string') {
+      return content;
+    }
+
+    /**
+     * Elements were found in the default slot, extract and concatenate
+     * their text content while trimming whitespace.
+     */
+    if (content) {
+      const texts = Array.from(content.childNodes)
+        .map((n) => n.textContent?.trim())
+        .filter((t) => t);
+      return texts.join(' ') || null;
+    }
+
+    // Empty option
+    return null;
+  }
+
+  return getDefaultSlotPlainText(selectOpt);
+};
+
+/**
+ * Trims whitespace from all text nodes within a DOM tree.
+ * This prevents invisible layout shifts and unwanted gaps between
+ * elements when HTML content is injected via innerHTML or cloneNode,
+ * as browsers preserve whitespace (tabs, newlines, spaces) from
+ * the original source markup.
+ *
+ * @param node The root node to start trimming text nodes from.
+ */
+const trimTextNodes = (node: Node): void => {
+  node.childNodes.forEach((child) => {
+    if (child.nodeType === Node.TEXT_NODE) {
+      child.textContent = child.textContent?.trim() || '';
+    } else if (child.nodeType === Node.ELEMENT_NODE) {
+      trimTextNodes(child);
+    }
+  });
+};
+
+/**
+ * Extracts and clones content from an `ion-select-option` element
+ * for rendering within overlay interfaces or the select text when `customHTMLEnabled` is `true`.
+ *
+ * @param option - The `ion-select-option` element to extract content from.
+ * @param slotName - Optional slot name to extract. If omitted, extracts the default slot content.
+ * @param useHTML - If `true`, the returned string will include any custom HTML content. If `false`, the returned string will be plain text without any HTML.
+ * @returns When `useHTML` is `true`, a sanitized HTML string. When `false`, a
+ * div element containing cloned child nodes. Returns `null` if no matching
+ * content is found.
+ */
+const getOptionContent = (
+  option: HTMLIonSelectOptionElement,
+  slotName?: string,
+  useHTML: boolean = false
+): HTMLElement | string | null => {
+  let nodes: Node[];
+
+  if (slotName) {
+    // Named slot: get elements with matching slot attribute
+    nodes = Array.from(option.children).filter((el) => el.getAttribute('slot') === slotName);
+  } else {
+    // Default slot: get nodes without a slot attribute
+    const defaultSlot = getOptionDefaultSlot(option) || [];
+    nodes = defaultSlot.filter((node) => {
+      /**
+       * Exclude whitespace-only text nodes (newline noise between
+       * markup elements). Element nodes are always kept, even when
+       * their textContent is empty (e.g. <svg>, <img>).
+       */
+      if (node.nodeType === Node.TEXT_NODE) {
+        return node.textContent?.trim().length !== 0;
+      }
+      return true;
+    });
+  }
+
+  if (nodes.length === 0) {
+    return null;
+  }
+
+  // Return plain text if no elements are found
+  if (!slotName && nodes.every((n) => n.nodeType === Node.TEXT_NODE)) {
+    return nodes.map((n) => n.textContent?.trim()).join(' ') || null;
+  }
+
+  /**
+   * Mirror known custom-element properties (e.g. ion-icon's `icon`)
+   * onto attributes before cloning. Frameworks like Vue set these as
+   * DOM properties, which `cloneNode` doesn't copy, so without this
+   * step the cloned overlay copy renders without the prop's value.
+   */
+  nodes.forEach((n) => {
+    if (n.nodeType === Node.ELEMENT_NODE) {
+      reflectPropertiesToAttributes(n as Element);
+    }
+  });
+
+  // Clone each node into a temporary container
+  const container = document.createElement('div');
+  nodes.forEach((n) => {
+    const clone = n.cloneNode(true);
+    if (clone.nodeType === Node.TEXT_NODE) {
+      clone.textContent = clone.textContent?.trim() || '';
+    } else {
+      trimTextNodes(clone);
+    }
+    container.appendChild(clone);
+  });
+
+  /**
+   * Sanitize the cloned DOM in place. Trusted attributes (size, color,
+   * shape, etc.) are preserved; event handlers, javascript: URLs, and
+   * blocked tags are stripped.
+   */
+  sanitizeDOMTree(container);
+
+  if (useHTML) {
+    return container.innerHTML.trim() || null;
+  }
+
+  return container;
+};
+
+/**
+ * Returns the child nodes that belong to the default slot of an
+ * option element, excluding any nodes that are assigned to named
+ * slots.
+ *
+ * @param option - The `ion-select-option` element to extract default-slot nodes from.
+ * @returns An array of default slot nodes, or `null` if none are found.
+ */
+const getOptionDefaultSlot = (option: HTMLIonSelectOptionElement): Node[] | null => {
+  const defaultSlotNodes = Array.from(option.childNodes).filter((node) => {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      return !(node as HTMLElement).hasAttribute('slot');
+    }
+    return node.nodeType === Node.TEXT_NODE;
+  });
+
+  if (defaultSlotNodes.length === 0) {
+    return null;
+  }
+
+  return defaultSlotNodes;
+};
+
+/**
+ * Extracts plain text from only the default slot of an option,
+ * excluding content assigned to named slots (start/end).
+ */
+const getDefaultSlotPlainText = (option: HTMLIonSelectOptionElement): string => {
+  const texts = Array.from(option.childNodes)
+    .filter((node) => {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        return !(node as HTMLElement).hasAttribute('slot');
+      }
+      return node.nodeType === Node.TEXT_NODE;
+    })
+    .filter((node) => node.nodeType === Node.TEXT_NODE)
+    .map((n) => n.textContent?.trim())
+    .filter((t) => t);
+  return texts.join(' ');
+};
+
+/**
+ * Extracts the rich content from an `ion-select-option`.
+ * When `customHTMLEnabled` is `false`, only the plain text from the
+ * default slot is read and the start and end slots are skipped.
+ *
+ * @param option - The `ion-select-option` element to extract content from.
+ * @param customHTMLEnabled - Whether custom HTML rendering is enabled
+ * via the `innerHTMLTemplatesEnabled` config.
+ */
+const extractOptionContent = (option: HTMLIonSelectOptionElement, customHTMLEnabled: boolean) => {
+  if (!customHTMLEnabled) {
+    return {
+      content: getDefaultSlotPlainText(option),
+      startContent: undefined as HTMLElement | undefined,
+      endContent: undefined as HTMLElement | undefined,
+    };
+  }
+
+  return {
+    content: getOptionContent(option),
+    startContent: (getOptionContent(option, 'start') as HTMLElement | null) ?? undefined,
+    endContent: (getOptionContent(option, 'end') as HTMLElement | null) ?? undefined,
+  };
 };
 
 let selectIds = 0;

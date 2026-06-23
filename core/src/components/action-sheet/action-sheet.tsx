@@ -17,11 +17,13 @@ import {
   safeCall,
   setOverlayId,
 } from '@utils/overlays';
+import { renderOptionLabel } from '@utils/select-option-render';
 import { getClassMap } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
+import type { SelectActionSheetButton } from '../select/select-interface';
 
 import type { ActionSheetButton } from './action-sheet-interface';
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -562,6 +564,21 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         htmlAttrs['aria-checked'] = isActiveRadio ? 'true' : 'false';
       }
 
+      /**
+       * Cast to `SelectActionSheetButton` to access rich content
+       * fields (`startContent`, `endContent`, `description`)
+       * that are passed through from `ion-select` but not
+       * part of the public `ActionSheetButton` interface.
+       */
+      const richButton = b as SelectActionSheetButton;
+      const optionLabelOptions = {
+        id: buttonId,
+        label: richButton.text,
+        startContent: richButton.startContent,
+        endContent: richButton.endContent,
+        description: richButton.description,
+      };
+
       return (
         <button
           {...htmlAttrs}
@@ -583,7 +600,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         >
           <span class="action-sheet-button-inner">
             {b.icon && <ion-icon icon={b.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />}
-            {b.text}
+            {renderOptionLabel(optionLabelOptions, 'action-sheet-button-label', true)}
           </span>
           {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </button>

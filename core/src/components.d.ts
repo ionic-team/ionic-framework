@@ -3143,10 +3143,26 @@ export namespace Components {
     }
     interface IonSelectOption {
         /**
+          * Text that is placed underneath the option text to provide additional details about the option.
+         */
+        "description"?: string;
+        /**
           * If `true`, the user cannot interact with the select option. This property does not apply when `interface="action-sheet"` as `ion-action-sheet` does not allow for disabled buttons.
           * @default false
          */
         "disabled": boolean;
+        /**
+          * How to pack the label and the option's selection control within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.  Applies to the `alert`, `popover`, and `modal` interfaces, but has no visible effect on radio options in `popover` or `modal` on `md` (the radio control is hidden there).  When unset, the interface picks a default based on mode and control type.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
+        /**
+          * Where the label is placed relative to the option's selection control (radio circle or checkbox box) when the option is rendered in an `alert`, `popover`, or `modal` interface. `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL. `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL.  Applies to the `alert`, `popover`, and `modal` interfaces, but has no visible effect on radio options in `popover` or `modal` on `md` (the radio control is hidden there).  When unset, the interface picks a default based on mode and control type.
+         */
+        "labelPlacement"?: 'start' | 'end';
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
         /**
           * The text value of the option.
          */
@@ -8345,10 +8361,26 @@ declare namespace LocalJSX {
     }
     interface IonSelectOption {
         /**
+          * Text that is placed underneath the option text to provide additional details about the option.
+         */
+        "description"?: string;
+        /**
           * If `true`, the user cannot interact with the select option. This property does not apply when `interface="action-sheet"` as `ion-action-sheet` does not allow for disabled buttons.
           * @default false
          */
         "disabled"?: boolean;
+        /**
+          * How to pack the label and the option's selection control within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.  Applies to the `alert`, `popover`, and `modal` interfaces, but has no visible effect on radio options in `popover` or `modal` on `md` (the radio control is hidden there).  When unset, the interface picks a default based on mode and control type.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
+        /**
+          * Where the label is placed relative to the option's selection control (radio circle or checkbox box) when the option is rendered in an `alert`, `popover`, or `modal` interface. `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL. `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL.  Applies to the `alert`, `popover`, and `modal` interfaces, but has no visible effect on radio options in `popover` or `modal` on `md` (the radio control is hidden there).  When unset, the interface picks a default based on mode and control type.
+         */
+        "labelPlacement"?: 'start' | 'end';
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
         /**
           * The text value of the option.
          */
@@ -9528,6 +9560,9 @@ declare namespace LocalJSX {
     interface IonSelectOptionAttributes {
         "disabled": boolean;
         "value": string;
+        "description": string;
+        "labelPlacement": 'start' | 'end';
+        "justify": 'start' | 'end' | 'space-between';
     }
     interface IonSelectPopoverAttributes {
         "header": string;

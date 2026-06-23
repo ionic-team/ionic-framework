@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Select - Rich Content Option</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <script>
+      window.Ionic = {
+        config: {
+          innerHTMLTemplatesEnabled: true,
+        },
+      };
+    </script>
+    <style>
+      .native-img {
+        max-height: 20px;
+        width: auto;
+        object-fit: contain;
+      }
+
+      .span-style {
+        font-size: 12px;
+        color: var(--ion-color-primary);
+        padding-inline-start: 4px;
+      }
+
+      .no-text-span-style {
+        padding: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Select - Rich Content Option</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="test-content">
+        <ion-list>
+          <ion-list-header>
+            <ion-label>Single Value</ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-select id="action-sheet-select" label="Action Sheet" placeholder="Select one" interface="action-sheet">
+              <ion-select-option value="full" description="Choose me!">
+                <ion-badge slot="end">NEW</ion-badge>
+                <ion-avatar slot="start" size="xlarge">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Full Content
+              </ion-select-option>
+              <ion-select-option value="slots">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Slots
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="start-slot">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Start Slot
+              </ion-select-option>
+              <ion-select-option value="end-slot">
+                End Slot
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="description" description="Choose me!"> Description </ion-select-option>
+              <ion-select-option value="inner">
+                Inner Content
+                <ion-badge>NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-text" description="Choose me!">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <span class="span-style no-text-span-style">This is a span element</span>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-inner">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option
+                value="long"
+                description="This is a long description that demonstrates how rich content options handle text overflow"
+              >
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                This is a very long option label that demonstrates how the start and end slots stay at their intrinsic
+                widths while the content area absorbs the remaining row width
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="svg">
+                <svg slot="start" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+                SVGs
+                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+                <svg slot="end" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+              </ion-select-option>
+              <ion-select-option value="icons">
+                <ion-icon slot="start" name="heart" aria-hidden="true"></ion-icon>
+                <ion-icon name="ellipse" aria-hidden="true"></ion-icon>
+                Icons
+                <ion-icon slot="end" name="star" aria-hidden="true"></ion-icon>
+              </ion-select-option>
+              <ion-select-option value="imgs">
+                <ion-img slot="start" src="/src/components/thumbnail/test/thumbnail.svg"></ion-img>
+                Images
+                <ion-img slot="end" src="/src/components/thumbnail/test/thumbnail.svg"></ion-img>
+              </ion-select-option>
+              <ion-select-option value="thumbnails">
+                <ion-thumbnail slot="start">
+                  <img src="/src/components/thumbnail/test/thumbnail.svg" />
+                </ion-thumbnail>
+                Thumbnails
+                <ion-thumbnail slot="end">
+                  <img src="/src/components/thumbnail/test/thumbnail.svg" />
+                </ion-thumbnail>
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select id="alert-select" label="Alert" placeholder="Select one" interface="alert">
+              <ion-select-option value="full" description="Choose me!">
+                <ion-badge slot="end">NEW</ion-badge>
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Full Content
+              </ion-select-option>
+              <ion-select-option value="slots">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Slots
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="start-slot">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Start Slot
+              </ion-select-option>
+              <ion-select-option value="end-slot">
+                End Slot
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="description" description="Choose me!"> Description </ion-select-option>
+              <ion-select-option value="inner">
+                Inner Content
+                <ion-badge>NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-text" description="Choose me!">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <span class="span-style no-text-span-style">This is a span element</span>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-inner">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option
+                value="long"
+                description="This is a long description that demonstrates how rich content options handle text overflow"
+              >
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                This is a very long option label that demonstrates how the start and end slots stay at their intrinsic
+                widths while the content area absorbs the remaining row width
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="svg">
+                <svg slot="start" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+                SVGs
+                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+                <svg slot="end" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+              </ion-select-option>
+              <ion-select-option value="icons">
+                <ion-icon slot="start" name="heart" aria-hidden="true"></ion-icon>
+                <ion-icon name="ellipse" aria-hidden="true"></ion-icon>
+                Icons
+                <ion-icon slot="end" name="star" aria-hidden="true"></ion-icon>
+              </ion-select-option>
+              <ion-select-option value="imgs">
+                <ion-img slot="start" src="/src/components/thumbnail/test/thumbnail.svg"></ion-img>
+                Images
+                <ion-img slot="end" src="/src/components/thumbnail/test/thumbnail.svg"></ion-img>
+              </ion-select-option>
+              <ion-select-option value="thumbnails">
+                <ion-thumbnail slot="start">
+                  <img src="/src/components/thumbnail/test/thumbnail.svg" />
+                </ion-thumbnail>
+                Thumbnails
+                <ion-thumbnail slot="end">
+                  <img src="/src/components/thumbnail/test/thumbnail.svg" />
+                </ion-thumbnail>
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select id="modal-select" label="Modal" placeholder="Select one" interface="modal">
+              <ion-select-option value="full" description="Choose me!">
+                <ion-badge slot="end">NEW</ion-badge>
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Full Content
+              </ion-select-option>
+              <ion-select-option value="slots">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Slots
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="start-slot">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Start Slot
+              </ion-select-option>
+              <ion-select-option value="end-slot">
+                End Slot
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="description" description="Choose me!"> Description </ion-select-option>
+              <ion-select-option value="inner">
+                Inner Content
+                <ion-badge>NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-text" description="Choose me!">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <span class="span-style no-text-span-style">This is a span element</span>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-inner">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option
+                value="long"
+                description="This is a long description that demonstrates how rich content options handle text overflow"
+              >
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                This is a very long option label that demonstrates how the start and end slots stay at their intrinsic
+                widths while the content area absorbs the remaining row width
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="svg">
+                <svg slot="start" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+                SVGs
+                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+                <svg slot="end" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+              </ion-select-option>
+              <ion-select-option value="icons">
+                <ion-icon slot="start" name="heart" aria-hidden="true"></ion-icon>
+                <ion-icon name="ellipse" aria-hidden="true"></ion-icon>
+                Icons
+                <ion-icon slot="end" name="star" aria-hidden="true"></ion-icon>
+              </ion-select-option>
+              <ion-select-option value="imgs">
+                <ion-img slot="start" src="/src/components/thumbnail/test/thumbnail.svg"></ion-img>
+                Images
+                <ion-img slot="end" src="/src/components/thumbnail/test/thumbnail.svg"></ion-img>
+              </ion-select-option>
+              <ion-select-option value="thumbnails">
+                <ion-thumbnail slot="start">
+                  <img src="/src/components/thumbnail/test/thumbnail.svg" />
+                </ion-thumbnail>
+                Thumbnails
+                <ion-thumbnail slot="end">
+                  <img src="/src/components/thumbnail/test/thumbnail.svg" />
+                </ion-thumbnail>
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select id="popover-select" label="Popover" placeholder="Select one" interface="popover">
+              <ion-select-option value="full" description="Choose me!">
+                <ion-badge slot="end">NEW</ion-badge>
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Full Content
+              </ion-select-option>
+              <ion-select-option value="slots">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Slots
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="start-slot">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Start Slot
+              </ion-select-option>
+              <ion-select-option value="end-slot">
+                End Slot
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="description" description="Choose me!"> Description </ion-select-option>
+              <ion-select-option value="inner">
+                Inner Content
+                <ion-badge>NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-text" description="Choose me!">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <span class="span-style no-text-span-style">This is a span element</span>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-inner">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option
+                value="long"
+                description="This is a long description that demonstrates how rich content options handle text overflow"
+              >
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                This is a very long option label that demonstrates how the start and end slots stay at their intrinsic
+                widths while the content area absorbs the remaining row width
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="svg">
+                <svg slot="start" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+                SVGs
+                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+                <svg slot="end" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+              </ion-select-option>
+              <ion-select-option value="icons">
+                <ion-icon slot="start" name="heart" aria-hidden="true"></ion-icon>
+                <ion-icon name="ellipse" aria-hidden="true"></ion-icon>
+                Icons
+                <ion-icon slot="end" name="star" aria-hidden="true"></ion-icon>
+              </ion-select-option>
+              <ion-select-option value="imgs">
+                <ion-img slot="start" src="/src/components/thumbnail/test/thumbnail.svg"></ion-img>
+                Images
+                <ion-img slot="end" src="/src/components/thumbnail/test/thumbnail.svg"></ion-img>
+              </ion-select-option>
+              <ion-select-option value="thumbnails">
+                <ion-thumbnail slot="start">
+                  <img src="/src/components/thumbnail/test/thumbnail.svg" />
+                </ion-thumbnail>
+                Thumbnails
+                <ion-thumbnail slot="end">
+                  <img src="/src/components/thumbnail/test/thumbnail.svg" />
+                </ion-thumbnail>
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+          <ion-list-header>
+            <ion-label>Multiple Value</ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-select id="alert-select-multiple" label="Alert" multiple="true" interface="alert">
+              <ion-select-option value="full" description="Choose me!">
+                <ion-badge slot="end">NEW</ion-badge>
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Full Content
+              </ion-select-option>
+              <ion-select-option value="slots">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Slots
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="start-slot">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Start Slot
+              </ion-select-option>
+              <ion-select-option value="end-slot">
+                End Slot
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="description" description="Choose me!"> Description </ion-select-option>
+              <ion-select-option value="inner">
+                Inner Content
+                <ion-badge>NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-text" description="Choose me!">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <span class="span-style no-text-span-style">This is a span element</span>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-inner">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option
+                value="long"
+                description="This is a long description that demonstrates how rich content options handle text overflow"
+              >
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                This is a very long option label that demonstrates how the start and end slots stay at their intrinsic
+                widths while the content area absorbs the remaining row width
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="svg">
+                <svg slot="start" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+                SVGs
+                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+                <svg slot="end" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+              </ion-select-option>
+              <ion-select-option value="icons">
+                <ion-icon slot="start" name="heart" aria-hidden="true"></ion-icon>
+                <ion-icon name="ellipse" aria-hidden="true"></ion-icon>
+                Icons
+                <ion-icon slot="end" name="star" aria-hidden="true"></ion-icon>
+              </ion-select-option>
+              <ion-select-option value="imgs">
+                <ion-img slot="start" src="/src/components/thumbnail/test/thumbnail.svg"></ion-img>
+                Images
+                <ion-img slot="end" src="/src/components/thumbnail/test/thumbnail.svg"></ion-img>
+              </ion-select-option>
+              <ion-select-option value="thumbnails">
+                <ion-thumbnail slot="start">
+                  <img src="/src/components/thumbnail/test/thumbnail.svg" />
+                </ion-thumbnail>
+                Thumbnails
+                <ion-thumbnail slot="end">
+                  <img src="/src/components/thumbnail/test/thumbnail.svg" />
+                </ion-thumbnail>
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select id="modal-select-multiple" label="Modal" multiple="true" interface="modal">
+              <ion-select-option value="full" description="Choose me!">
+                <ion-badge slot="end">NEW</ion-badge>
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Full Content
+              </ion-select-option>
+              <ion-select-option value="slots">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Slots
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="start-slot">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Start Slot
+              </ion-select-option>
+              <ion-select-option value="end-slot">
+                End Slot
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="description" description="Choose me!"> Description </ion-select-option>
+              <ion-select-option value="inner">
+                Inner Content
+                <ion-badge>NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-text" description="Choose me!">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <span class="span-style no-text-span-style">This is a span element</span>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-inner">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option
+                value="long"
+                description="This is a long description that demonstrates how rich content options handle text overflow"
+              >
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                This is a very long option label that demonstrates how the start and end slots stay at their intrinsic
+                widths while the content area absorbs the remaining row width
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="svg">
+                <svg slot="start" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+                SVGs
+                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+                <svg slot="end" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+                <ion-badge slot="end">SVG</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="icons">
+                <ion-icon slot="start" name="heart" aria-hidden="true"></ion-icon>
+                <ion-icon name="ellipse" aria-hidden="true"></ion-icon>
+                Icons
+                <ion-icon slot="end" name="star" aria-hidden="true"></ion-icon>
+              </ion-select-option>
+              <ion-select-option value="imgs">
+                <ion-img slot="start" src="/src/components/thumbnail/test/thumbnail.svg"></ion-img>
+                Images
+                <ion-img slot="end" src="/src/components/thumbnail/test/thumbnail.svg"></ion-img>
+              </ion-select-option>
+              <ion-select-option value="thumbnails">
+                <ion-thumbnail slot="start">
+                  <img src="/src/components/thumbnail/test/thumbnail.svg" />
+                </ion-thumbnail>
+                Thumbnails
+                <ion-thumbnail slot="end">
+                  <img src="/src/components/thumbnail/test/thumbnail.svg" />
+                </ion-thumbnail>
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select id="popover-select-multiple" label="Popover" multiple="true" interface="popover">
+              <ion-select-option value="full" description="Choose me!">
+                <ion-badge slot="end">NEW</ion-badge>
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Full Content
+              </ion-select-option>
+              <ion-select-option value="slots">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Slots
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="start-slot">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                Start Slot
+              </ion-select-option>
+              <ion-select-option value="end-slot">
+                End Slot
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="description" description="Choose me!"> Description </ion-select-option>
+              <ion-select-option value="inner">
+                Inner Content
+                <ion-badge>NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-text" description="Choose me!">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <span class="span-style no-text-span-style">This is a span element</span>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="no-inner">
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option
+                value="long"
+                description="This is a long description that demonstrates how rich content options handle text overflow"
+              >
+                <ion-avatar slot="start" size="large">
+                  <img src="/src/components/avatar/test/avatar.svg" />
+                </ion-avatar>
+                This is a very long option label that demonstrates how the start and end slots stay at their intrinsic
+                widths while the content area absorbs the remaining row width
+                <ion-badge slot="end">NEW</ion-badge>
+              </ion-select-option>
+              <ion-select-option value="svg">
+                <svg slot="start" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+                SVGs
+                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+                <svg slot="end" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="14" fill="tomato" stroke="darkred" stroke-width="2" />
+                </svg>
+              </ion-select-option>
+              <ion-select-option value="icons">
+                <ion-icon slot="start" name="heart" aria-hidden="true"></ion-icon>
+                <ion-icon name="ellipse" aria-hidden="true"></ion-icon>
+                Icons
+                <ion-icon slot="end" name="star" aria-hidden="true"></ion-icon>
+              </ion-select-option>
+              <ion-select-option value="imgs">
+                <ion-img slot="start" src="/src/components/thumbnail/test/thumbnail.svg"></ion-img>
+                Images
+                <ion-img slot="end" src="/src/components/thumbnail/test/thumbnail.svg"></ion-img>
+              </ion-select-option>
+              <ion-select-option value="thumbnails">
+                <ion-thumbnail slot="start">
+                  <img src="/src/components/thumbnail/test/thumbnail.svg" />
+                </ion-thumbnail>
+                Thumbnails
+                <ion-thumbnail slot="end">
+                  <img src="/src/components/thumbnail/test/thumbnail.svg" />
+                </ion-thumbnail>
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>
