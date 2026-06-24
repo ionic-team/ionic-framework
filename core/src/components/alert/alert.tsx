@@ -6,6 +6,7 @@ import { createButtonActiveGesture } from '@utils/gesture/button-active';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
+import { getOverlayLabelJustify, getOverlayLabelPlacement } from '@utils/overlay-control-label';
 import {
   BACKDROP,
   cleanupRootFocusTrapAccessibility,
@@ -607,6 +608,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
             endContent: richInput.endContent,
             description: richInput.description,
           };
+          const defaultLabelPlacement = getOverlayLabelPlacement(mode, 'checkbox');
+          const defaultJustify = getOverlayLabelJustify(mode, 'checkbox');
 
           return (
             <button
@@ -622,11 +625,18 @@ export class Alert implements ComponentInterface, OverlayInterface {
                 'alert-tappable': true,
                 'alert-checkbox': true,
                 'alert-checkbox-button': true,
-                'ion-focusable': true,
+                'ion-focusable': !i.disabled,
+                'ion-activatable': !i.disabled,
                 'alert-checkbox-button-disabled': i.disabled || false,
               }}
             >
-              <div class="alert-button-inner">
+              <div
+                class={{
+                  'alert-button-inner': true,
+                  [`checkbox-label-placement-${richInput.labelPlacement ?? defaultLabelPlacement}`]: true,
+                  [`checkbox-justify-${richInput.justify ?? defaultJustify}`]: true,
+                }}
+              >
                 <div class="alert-checkbox-icon">
                   <div class="alert-checkbox-inner"></div>
                 </div>
@@ -642,6 +652,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   private renderRadio() {
     const inputs = this.processedInputs;
+    const mode = getIonMode(this);
 
     if (inputs.length === 0) {
       return null;
@@ -664,6 +675,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
             endContent: richInput.endContent,
             description: richInput.description,
           };
+          const defaultLabelPlacement = getOverlayLabelPlacement(mode, 'radio');
+          const defaultJustify = getOverlayLabelJustify(mode, 'radio');
 
           return (
             <button
@@ -678,12 +691,19 @@ export class Alert implements ComponentInterface, OverlayInterface {
                 'alert-radio-button': true,
                 'alert-tappable': true,
                 'alert-radio': true,
-                'ion-focusable': true,
+                'ion-focusable': !i.disabled,
+                'ion-activatable': !i.disabled,
                 'alert-radio-button-disabled': i.disabled || false,
               }}
               role="radio"
             >
-              <div class="alert-button-inner">
+              <div
+                class={{
+                  'alert-button-inner': true,
+                  [`radio-label-placement-${richInput.labelPlacement ?? defaultLabelPlacement}`]: true,
+                  [`radio-justify-${richInput.justify ?? defaultJustify}`]: true,
+                }}
+              >
                 <div class="alert-radio-icon">
                   <div class="alert-radio-inner"></div>
                 </div>
