@@ -107,7 +107,7 @@ This is where the standalone component implementations live. It was added as a s
 
 Ionic developers can access this by importing from `@ionic/angular`.
 
-**src**
+**lazy**
 
 This is where the lazy loaded component implementations live.
 

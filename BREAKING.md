@@ -203,7 +203,7 @@ Angular 22 raises the minimum Node.js version to `^22.22.3 || ^24.15.0 || ^26.0.
 
 **Module Resolution**
 
-`@ionic/angular` is now published with `exports`-based subpath resolution. Apps using TypeScript `moduleResolution: "node"` (classic) can fail to resolve subpaths such as `@ionic/angular/standalone`. Set `moduleResolution` to `"bundler"` (the default for `ng new` on Angular 17 and later). Refer to [Package Exports](#version-9x-package-exports).
+`@ionic/angular` is now published with `exports`-based subpath resolution. Apps using TypeScript `moduleResolution: "node"` (classic) can fail to resolve subpaths such as `@ionic/angular/lazy`. Set `moduleResolution` to `"bundler"` (the default for `ng new` on Angular 17 and later). Refer to [Package Exports](#version-9x-package-exports).
 
 **CSS Imports No Longer Use the `~` Prefix**
 
