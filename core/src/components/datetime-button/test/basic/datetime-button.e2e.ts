@@ -346,9 +346,27 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   });
 
   test.describe(title('datetime-button: datetime constraints'), () => {
-    test('should default to exact current time with no constraints', async ({ page }) => {
-      const fixedTime = new Date('2026-06-18T17:54:54.518Z');
+    const fixedTime = new Date('2026-06-18T17:54:54.518Z');
+
+    const dateFormat = new Intl.DateTimeFormat('en-US', {
+      weekday: 'short',
+      month: 'long',
+      day: '2-digit',
+    });
+    const timeFormat = new Intl.DateTimeFormat('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    test.beforeEach(async ({ page }) => {
       await page.clock.setFixedTime(fixedTime);
+    });
+
+    test('should default to exact current time with no constraints', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30183',
+      });
 
       await page.setContent(
         `
@@ -373,23 +391,15 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       );
       await page.locator('.datetime-ready').waitFor();
 
-      const dateFormat = new Intl.DateTimeFormat('en-US', {
-        weekday: 'short',
-        month: 'long',
-        day: '2-digit',
-      });
-      const timeFormat = new Intl.DateTimeFormat('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-
       await expect(page.locator('#date-button')).toContainText(dateFormat.format(fixedTime));
       await expect(page.locator('#time-button')).toContainText(timeFormat.format(fixedTime));
     });
 
     test('should obey minuteValues constraint', async ({ page }) => {
-      const fixedTime = new Date('2026-06-18T17:54:54.518Z');
-      await page.clock.setFixedTime(fixedTime);
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30183',
+      });
 
       await page.setContent(
         `
@@ -409,22 +419,17 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       );
       await page.locator('.datetime-ready').waitFor();
 
-      await page.pause();
-
-      const expectedTime = fixedTime;
+      const expectedTime = new Date(fixedTime);
       expectedTime.setMinutes(0);
-
-      const timeFormat = new Intl.DateTimeFormat('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-      });
 
       await expect(page.locator('#time-button')).toContainText(timeFormat.format(expectedTime));
     });
 
     test('should obey hourValues constraint', async ({ page }) => {
-      const fixedTime = new Date('2026-06-18T17:54:54.518Z');
-      await page.clock.setFixedTime(fixedTime);
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30183',
+      });
 
       await page.setContent(
         `
@@ -444,22 +449,17 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       );
       await page.locator('.datetime-ready').waitFor();
 
-      await page.pause();
-
-      const expectedTime = fixedTime;
+      const expectedTime = new Date(fixedTime);
       expectedTime.setHours(0);
-
-      const timeFormat = new Intl.DateTimeFormat('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-      });
 
       await expect(page.locator('#time-button')).toContainText(timeFormat.format(expectedTime));
     });
 
     test('should obey monthValues constraint', async ({ page }) => {
-      const fixedTime = new Date('2026-06-18T17:54:54.518Z');
-      await page.clock.setFixedTime(fixedTime);
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30183',
+      });
 
       await page.setContent(
         `
@@ -480,16 +480,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       );
       await page.locator('.datetime-ready').waitFor();
 
-      await page.pause();
-
-      const expectedTime = fixedTime;
+      const expectedTime = new Date(fixedTime);
       expectedTime.setMonth(0);
-
-      const dateFormat = new Intl.DateTimeFormat('en-US', {
-        weekday: 'short',
-        month: 'long',
-        day: '2-digit',
-      });
 
       await expect(page.locator('#date-button')).toContainText(dateFormat.format(expectedTime));
     });

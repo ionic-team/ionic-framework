@@ -605,28 +605,6 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * Get the closest valid DatetimeParts according to the restrictions on this Datetime
-   * @param parts The DatetimeParts to find the closest valid value for
-   */
-  private getClosestDatetimeParts(parts: DatetimeParts) {
-    const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
-    const minuteValues = (this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues));
-    const monthValues = (this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues));
-    const yearValues = (this.parsedYearValues = convertToArrayOfNumbers(this.yearValues));
-    const dayValues = (this.parsedDayValues = convertToArrayOfNumbers(this.dayValues));
-    return getClosestValidDate({
-      refParts: parts,
-      monthValues,
-      dayValues,
-      yearValues,
-      hourValues,
-      minuteValues,
-      minParts: this.minParts,
-      maxParts: this.maxParts,
-    });
-  }
-
-  /**
    * Returns the default parts the datetime falls back to when no value is set:
    * today's date and time snapped to the closest value allowed by the
    * component's constraints (`min`, `max`, and the `*Values` props).
@@ -1534,7 +1512,21 @@ export class Datetime implements ComponentInterface {
     this.processMinParts();
     this.processMaxParts();
 
-    this.defaultParts = this.getClosestDatetimeParts(todayParts);
+    const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
+    const minuteValues = (this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues));
+    const monthValues = (this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues));
+    const yearValues = (this.parsedYearValues = convertToArrayOfNumbers(this.yearValues));
+    const dayValues = (this.parsedDayValues = convertToArrayOfNumbers(this.dayValues));
+    this.defaultParts = getClosestValidDate({
+      refParts: todayParts,
+      monthValues,
+      dayValues,
+      yearValues,
+      hourValues,
+      minuteValues,
+      minParts: this.minParts,
+      maxParts: this.maxParts,
+    });
 
     this.processValue(this.value);
 

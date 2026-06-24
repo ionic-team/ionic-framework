@@ -9,7 +9,6 @@ import type { Color } from '../../interface';
 import type { DatetimePresentation } from '../datetime/datetime-interface';
 import { getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
 import { getHourCycle } from '../datetime/utils/helpers';
-import { convertDataToISO } from '../datetime/utils/manipulation';
 import { parseDate } from '../datetime/utils/parse';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -206,9 +205,7 @@ export class DatetimeButton implements ComponentInterface {
      * button respects the same constraints (min, max, minuteValues, etc.) that
      * the datetime applies to its own fallback, instead of using a raw "now".
      */
-    const parsedDatetimes = parseDate(
-      parsedValues.length > 0 ? parsedValues : [convertDataToISO(await datetimeEl.getDefaultPart())]
-    );
+    const parsedDatetimes = parsedValues.length > 0 ? parseDate(parsedValues) : [await datetimeEl.getDefaultPart()];
 
     if (!parsedDatetimes) {
       return;
