@@ -283,49 +283,30 @@ test.describe('Form', () => {
       await expect(control).toHaveClass(/ng-invalid/);
     });
 
-    test('should keep hidden submit button disabled state in sync', async ({ page }) => {
-
-      // Get the disabled state of both visible and hidden button
-      const getDisabledState = () =>
+    test('should keep hidden button type in sync with visible button', async ({ page }) => {
+      
+      // Get type of the hidden button
+      const getHiddenType = () =>
         page.evaluate(() => {
-          const visible = document.querySelector(
-            '#submit-button'
-          ) as HTMLIonButtonElement;
-
           const hidden = document.querySelector(
-            'form button[type="submit"][style*="display: none"]'
+            'form button[style*="display: none"]'
           ) as HTMLButtonElement;
 
-          return {
-            visible: visible?.disabled,
-            hidden: hidden?.disabled,
-          };
+          return hidden?.type;
         });
-      
-      // Ensure disabled state of both visible and hidden button
-      // Should match each other and expected
-      const expectDisabledStatesMatch = async (expected: boolean) => {
-        const state = await getDisabledState();
-        expect(state.visible).toBe(expected);
-        expect(state.hidden).toBe(expected);
-        expect(state.visible).toBe(state.hidden);
-        return state;
-      };
 
-      // Initial state - should be disabled and both match
-      await expectDisabledStatesMatch(true);
+      // Type should be submit to start
+      expect(await getHiddenType()).toBe('submit');
 
-      // Set form values - should be enabled
-      await page.locator('#set-values').click();
+      // Set type of visible button to reset
+      await page.locator('#submit-button').evaluate((el: HTMLIonButtonElement) => {
+        el.type = 'reset';
+      });
 
-      // After set values - should be enabled and both match
-      await expectDisabledStatesMatch(false);
-
-      // User clicks submit button
-      await page.locator('#submit-button').click();
-
-      // Form should submit successfully
-      await expect(page.locator('#submit')).toHaveText('true');
+      // Expect hidden button type to be reset
+      await expect
+        .poll(async () => await getHiddenType())
+        .toBe('reset');
     });
     });
 
