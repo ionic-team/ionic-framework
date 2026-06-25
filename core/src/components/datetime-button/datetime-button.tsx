@@ -124,7 +124,7 @@ export class DatetimeButton implements ComponentInterface {
       overlayEl.classList.add('ion-datetime-button-overlay');
     }
 
-    componentOnReady(datetimeEl, async () => {
+    componentOnReady(datetimeEl, () => {
       const datetimePresentation = (this.datetimePresentation = datetimeEl.presentation || 'date-time');
 
       /**
@@ -137,7 +137,7 @@ export class DatetimeButton implements ComponentInterface {
        * to re-render the displayed
        * text in the buttons.
        */
-      await this.setDateTimeText();
+      this.setDateTimeText();
       addEventListener(datetimeEl, 'ionValueChange', this.setDateTimeText);
 
       /**
