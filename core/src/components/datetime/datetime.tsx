@@ -604,6 +604,18 @@ export class Datetime implements ComponentInterface {
     }
   }
 
+  /**
+   * Returns the default parts the datetime falls back to when no value is set:
+   * today's date and time snapped to the closest value allowed by the
+   * component's constraints (`min`, `max`, and the `*Values` props).
+   *
+   * @internal
+   */
+  @Method()
+  async getDefaultPart(): Promise<DatetimeParts> {
+    return this.defaultParts;
+  }
+
   private warnIfIncorrectValueUsage = () => {
     const { multiple, value } = this;
     if (!multiple && Array.isArray(value)) {
