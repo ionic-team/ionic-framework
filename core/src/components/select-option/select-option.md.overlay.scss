@@ -1,0 +1,44 @@
+@use "./select-option.overlay";
+
+// Select Option - Interface
+// --------------------------------------------------
+
+/**
+ * Cap slotted children so they can't stretch the option
+ * row out of proportion, keeping rows visually uniform
+ * regardless of the content.
+ */
+
+// Avatar
+.select-option-start > ion-avatar,
+.select-option-end > ion-avatar {
+  width: 40px;
+  height: 40px;
+}
+
+// Icon
+.select-option-start > ion-icon,
+.select-option-end > ion-icon {
+  width: 24px;
+  height: 24px;
+}
+
+// Image / SVG / Thumbnail
+.select-option-start > ion-img,
+.select-option-start > img,
+.select-option-start > svg,
+.select-option-start > ion-thumbnail,
+.select-option-end > ion-img,
+.select-option-end > img,
+.select-option-end > svg,
+.select-option-end > ion-thumbnail {
+  width: 56px;
+  height: 56px;
+}
+
+// Video
+.select-option-start > video,
+.select-option-end > video {
+  width: 114px;
+  height: 56px;
+}
