@@ -1507,16 +1507,17 @@ export class Datetime implements ComponentInterface {
       warnIfTimeZoneProvided(el, formatOptions);
     }
 
-    const todayParts = (this.todayParts = parseDate(getToday())!);
-
-    this.processMinParts();
-    this.processMaxParts();
-
     const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
     const minuteValues = (this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues));
     const monthValues = (this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues));
     const yearValues = (this.parsedYearValues = convertToArrayOfNumbers(this.yearValues));
     const dayValues = (this.parsedDayValues = convertToArrayOfNumbers(this.dayValues));
+
+    const todayParts = (this.todayParts = parseDate(getToday())!);
+
+    this.processMinParts();
+    this.processMaxParts();
+
     this.defaultParts = getClosestValidDate({
       refParts: todayParts,
       monthValues,
