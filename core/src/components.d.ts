@@ -3873,7 +3873,7 @@ export namespace Components {
          */
         "description"?: string;
         /**
-          * If `true`, the user cannot interact with the select option. This property does not apply when `interface="action-sheet"` as `ion-action-sheet` does not allow for disabled buttons.
+          * If `true`, the user cannot interact with the select option.
           * @default false
          */
         "disabled": boolean;
@@ -10037,7 +10037,7 @@ declare namespace LocalJSX {
          */
         "description"?: string;
         /**
-          * If `true`, the user cannot interact with the select option. This property does not apply when `interface="action-sheet"` as `ion-action-sheet` does not allow for disabled buttons.
+          * If `true`, the user cannot interact with the select option.
           * @default false
          */
         "disabled"?: boolean;
