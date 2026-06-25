@@ -362,8 +362,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.clock.setFixedTime(fixedTime);
     });
 
-    test('should default to exact current time with no constraints', async ({ page }) => {
-      test.info().annotations.push({
+    test('should default to exact current time with no constraints', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30183',
       });
@@ -395,8 +395,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(page.locator('#time-button')).toContainText(timeFormat.format(fixedTime));
     });
 
-    test('should obey minuteValues constraint', async ({ page }) => {
-      test.info().annotations.push({
+    test('should obey minuteValues constraint', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30183',
       });
@@ -425,8 +425,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(page.locator('#time-button')).toContainText(timeFormat.format(expectedTime));
     });
 
-    test('should obey hourValues constraint', async ({ page }) => {
-      test.info().annotations.push({
+    test('should obey hourValues constraint', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30183',
       });
@@ -455,8 +455,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(page.locator('#time-button')).toContainText(timeFormat.format(expectedTime));
     });
 
-    test('should obey monthValues constraint', async ({ page }) => {
-      test.info().annotations.push({
+    test('should obey monthValues constraint', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30183',
       });
