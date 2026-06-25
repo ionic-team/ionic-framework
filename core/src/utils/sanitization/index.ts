@@ -4,13 +4,17 @@ import { printIonError } from '@utils/logging';
  * Sanitize an untrusted HTML string.
  *
  * Parses the string into a detached DOM, removes blocked tags, strips
- * attributes outside the `allowedAttributes` list (refer `sanitizeElement`),
- * and scrubs script-scheme URLs. Returns the sanitized HTML string.
+ * attributes outside the narrow `domStringAllowedAttributes` list (refer
+ * `sanitizeElement`), and scrubs script-scheme URLs. Returns the sanitized
+ * HTML string.
  *
  * Use this when you have an HTML string from an unknown source and need to
  * render it via `innerHTML`. Use `sanitizeDOMTree` instead when you already
  * have a DOM tree and want to sanitize it in place without a string round
- * trip; both apply the same attribute policy.
+ * trip. The two apply the same dangerous-vector scrubbing but different
+ * attribute allowlists: this path stays narrow so existing consumers
+ * (toast, loading, alert message, etc.) are unaffected, while
+ * `sanitizeDOMTree` uses the wider rich-content allowlist.
  *
  * @param untrustedString - The HTML string to sanitize. Pass an
  * `IonicSafeString` to bypass sanitization, or `undefined` to short-circuit.
@@ -70,7 +74,7 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
 
         /* eslint-disable-next-line */
         for (let childIndex = 0; childIndex < childElements.length; childIndex++) {
-          sanitizeElement(childElements[childIndex]);
+          sanitizeElement(childElements[childIndex], domStringAllowedAttributes);
         }
       }
     });
@@ -85,7 +89,7 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
 
     /* eslint-disable-next-line */
     for (let childIndex = 0; childIndex < dfChildren.length; childIndex++) {
-      sanitizeElement(dfChildren[childIndex]);
+      sanitizeElement(dfChildren[childIndex], domStringAllowedAttributes);
     }
 
     // Append document fragment to div
@@ -106,8 +110,8 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
  * Sanitize an entire trusted DOM tree in place.
  *
  * Removes blocked tags (`script`, `iframe`, etc.) from the subtree and
- * then sanitizes attributes on every remaining element using the same
- * allowlist policy as `sanitizeDOMString` (refer `sanitizeElement`).
+ * then sanitizes attributes on every remaining element using the wider
+ * `richContentAllowedAttributes` allowlist (refer `sanitizeElement`).
  * Component presentational attributes (`size`, `color`, `shape`, inline
  * SVG, `aria-*`, `data-*`) are preserved; `style`, event handlers (`on*`),
  * form/navigation-hijack attributes, script-scheme URLs, and non-image
@@ -132,7 +136,7 @@ export const sanitizeDOMTree = (root: HTMLElement) => {
     }
   });
 
-  sanitizeElement(root);
+  sanitizeElement(root, richContentAllowedAttributes, richContentAllowedAttributePrefixes);
 };
 
 /**
@@ -141,7 +145,7 @@ export const sanitizeDOMTree = (root: HTMLElement) => {
  * clean those up as well
  */
 // TODO(FW-2832): type (using Element triggers other type errors as well)
-const sanitizeElement = (element: any) => {
+const sanitizeElement = (element: any, allowedAttributes: string[], allowedAttributePrefixes: string[] = []) => {
   // IE uses childNodes, so ignore nodes that are not elements
   if (element.nodeType && element.nodeType !== 1) {
     return;
@@ -178,7 +182,7 @@ const sanitizeElement = (element: any) => {
      * (`formaction`, `action`, `target`), namespaced attributes like
      * `xlink:href`, and anything else not explicitly known to be safe.
      */
-    if (!isAttributeAllowed(lowerName)) {
+    if (!isAttributeAllowed(lowerName, allowedAttributes, allowedAttributePrefixes)) {
       element.removeAttribute(attributeName);
       continue;
     }
@@ -229,7 +233,7 @@ const sanitizeElement = (element: any) => {
 
   /* eslint-disable-next-line */
   for (let i = 0; i < childElements.length; i++) {
-    sanitizeElement(childElements[i]);
+    sanitizeElement(childElements[i], allowedAttributes, allowedAttributePrefixes);
   }
 };
 
@@ -292,13 +296,25 @@ export const reflectPropertiesToAttributes = (root: Element): void => {
 };
 
 /**
- * Attribute names that are always safe to keep. Covers global HTML
- * attributes, the Ionic component presentational props that cloned rich
- * content (e.g. `ion-select-option` markup) relies on, and the inert SVG
- * presentation attributes used by inline icons.
+ * Attribute allowlist for `sanitizeDOMString`. Intentionally narrow: this
+ * path sanitizes developer HTML strings rendered via `innerHTML` by
+ * `ion-toast`, `ion-loading`, the `ion-alert` message,
+ * `ion-refresher-content`, and `ion-infinite-scroll-content`, so the list
+ * is kept to the minimum those have always needed. Broadening it here would
+ * change sanitization output for all of those consumers, so the wider
+ * rich-content allowlist below is deliberately scoped to `sanitizeDOMTree`
+ * instead.
+ */
+const domStringAllowedAttributes = ['class', 'id', 'href', 'src', 'name', 'slot'];
+
+/**
+ * Attribute allowlist for `sanitizeDOMTree` (the select rich-content path).
+ * Covers global HTML attributes, the Ionic component presentational props
+ * that cloned rich content (e.g. `ion-select-option` markup) relies on, and
+ * the inert SVG presentation attributes used by inline icons.
  *
  * `aria-*` and `data-*` are allowed separately by prefix (refer
- * `allowedAttributePrefixes`) since they are inert and not worth
+ * `richContentAllowedAttributePrefixes`) since they are inert and not worth
  * enumerating. URL-bearing names (`href`, `src`) are allowed here, but
  * their values are still scrubbed for script schemes in `sanitizeElement`.
  *
@@ -306,7 +322,7 @@ export const reflectPropertiesToAttributes = (root: Element): void => {
  * form/navigation-hijack attributes (`formaction`, `action`, `target`),
  * which are therefore stripped.
  */
-const allowedAttributes = [
+const richContentAllowedAttributes = [
   // Global / structural
   'class',
   'id',
@@ -371,17 +387,21 @@ const allowedAttributes = [
 ];
 
 /**
- * Attribute-name prefixes that are always safe to keep. `aria-*` and
- * `data-*` attributes cannot execute script or load resources, so they are
- * allowed wholesale rather than enumerated by name.
+ * Attribute-name prefixes that are always safe to keep in the rich-content
+ * path. `aria-*` and `data-*` attributes cannot execute script or load
+ * resources, so they are allowed wholesale rather than enumerated by name.
  */
-const allowedAttributePrefixes = ['aria-', 'data-'];
+const richContentAllowedAttributePrefixes = ['aria-', 'data-'];
 
 /**
  * Whether an attribute name (already lowercased) is safe to keep, by exact
  * match or by an allowed prefix.
  */
-const isAttributeAllowed = (lowerName: string): boolean => {
+const isAttributeAllowed = (
+  lowerName: string,
+  allowedAttributes: string[],
+  allowedAttributePrefixes: string[]
+): boolean => {
   if (allowedAttributes.includes(lowerName)) {
     return true;
   }
