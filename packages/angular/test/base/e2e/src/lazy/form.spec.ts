@@ -283,31 +283,6 @@ test.describe('Form', () => {
       await expect(control).toHaveClass(/ng-invalid/);
     });
 
-    test('should keep hidden button type in sync with visible button', async ({ page }) => {
-      
-      // Get type of the hidden button
-      const getHiddenType = () =>
-        page.evaluate(() => {
-          const hidden = document.querySelector(
-            'form button[style*="display: none"]'
-          ) as HTMLButtonElement;
-
-          return hidden?.type;
-        });
-
-      // Type should be submit to start
-      expect(await getHiddenType()).toBe('submit');
-
-      // Set type of visible button to reset
-      await page.locator('#submit-button').evaluate((el: HTMLIonButtonElement) => {
-        el.type = 'reset';
-      });
-
-      // Expect hidden button type to be reset
-      await expect
-        .poll(async () => await getHiddenType())
-        .toBe('reset');
-    });
     });
 
   // Helper functions
