@@ -1,8 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
-import { inheritAriaAttributes } from '@utils/helpers';
+import { inheritAriaAttributes, hasShadowDom } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { close } from 'ionicons/icons';
 
@@ -26,6 +27,8 @@ import type { RouterDirection } from '../router/utils/interface';
 })
 export class FabButton implements ComponentInterface, AnchorInterface, ButtonInterface {
   private fab: HTMLIonFabElement | null = null;
+  private formButtonEl: HTMLButtonElement | null = null;
+  private formEl: HTMLFormElement | null = null;
   private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLElement;
@@ -46,6 +49,13 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
    * If `true`, the user cannot interact with the fab button.
    */
   @Prop() disabled = false;
+  @Watch('disabled')
+  disabledChanged() {
+    const { disabled } = this;
+    if (this.formButtonEl) {
+      this.formButtonEl.disabled = disabled;
+    }
+  }
 
   /**
    * This attribute instructs browsers to download a URL instead of navigating to
@@ -104,6 +114,11 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   /**
+   * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
+   */
+  @Prop() form?: string | HTMLFormElement;
+
+  /**
    * The size of the button. Set this to `small` in order to have a mini fab button.
    */
   @Prop() size?: 'small';
@@ -137,33 +152,101 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
     this.ionBlur.emit();
   };
 
-  private onClick = () => {
-    const { fab } = this;
-    if (!fab) {
-      return;
+  private onClick = (ev: Event) => {
+    const { el, fab } = this;
+    if (this.type !== 'button' && hasShadowDom(el)) {
+      this.submitForm(ev);
     }
-
-    fab.toggle();
+    if (fab) {
+      fab.toggle();
+    }
   };
+
+  /**
+   * Renders a hidden native button inside the associated form so that pressing
+   * Enter on a form field or clicking this component triggers form submission.
+   * The shadow DOM button does not participate in form submission natively,
+   * which is why this workaround is necessary.
+   */
+  private renderHiddenButton() {
+    const formEl = (this.formEl = this.findForm());
+    if (formEl) {
+      const { formButtonEl } = this;
+      if (formButtonEl !== null && formEl.contains(formButtonEl)) {
+        return;
+      }
+      const newFormButtonEl = (this.formButtonEl = document.createElement('button'));
+      newFormButtonEl.type = this.type;
+      newFormButtonEl.style.display = 'none';
+      newFormButtonEl.disabled = this.disabled;
+      formEl.appendChild(newFormButtonEl);
+    }
+  }
+
+  private findForm(): HTMLFormElement | null {
+    const { form } = this;
+    if (form instanceof HTMLFormElement) {
+      return form;
+    }
+    if (typeof form === 'string') {
+      const el: HTMLElement | null = document.getElementById(form);
+      if (el) {
+        if (el instanceof HTMLFormElement) {
+          return el;
+        } else {
+          printIonWarning(
+            `[ion-fab-button] - Form with selector: "#${form}" could not be found. Verify that the id is attached to a <form> element.`,
+            this.el
+          );
+          return null;
+        }
+      } else {
+        printIonWarning(
+          `[ion-fab-button] - Form with selector: "#${form}" could not be found. Verify that the id is correct and the form is rendered in the DOM.`,
+          this.el
+        );
+        return null;
+      }
+    }
+    if (form !== undefined) {
+      printIonWarning(
+        `[ion-fab-button] - The provided "form" element is invalid. Verify that the form is a HTMLFormElement and rendered in the DOM.`,
+        this.el
+      );
+      return null;
+    }
+    return this.el.closest('form');
+  }
+
+  private submitForm(ev: Event) {
+    if (this.formEl && this.formButtonEl) {
+      ev.preventDefault();
+      this.formButtonEl.click();
+    }
+  }
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
   render() {
-    const { el, disabled, color, href, activated, show, translucent, size, inheritedAttributes } = this;
+    const { el, disabled, color, href, activated, show, translucent, size, inheritedAttributes, type } = this;
     const inList = hostContext('ion-fab-list', el);
     const mode = getIonMode(this);
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
       TagType === 'button'
-        ? { type: this.type }
+        ? { type }
         : {
             download: this.download,
             href,
             rel: this.rel,
             target: this.target,
           };
+
+    if (type !== 'button') {
+      this.renderHiddenButton();
+    }
 
     return (
       <Host

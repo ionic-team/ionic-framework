@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>FAB Button - Form Submit</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>FAB Button - Form Submit</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding" id="content">
+        <p>The FAB button below is inside the form. Clicking it should submit the form.</p>
+        <form onsubmit="handleSubmit(event)" action="http://httpbin.org/get" method="GET">
+          <ion-list>
+            <ion-item>
+              <ion-input label="Name" name="name" required placeholder="Enter name"></ion-input>
+            </ion-item>
+          </ion-list>
+
+          <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+            <ion-fab-button type="submit">
+              <ion-icon name="cloud-upload-outline"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+        </form>
+
+        <br /><br />
+
+        <p>The FAB button below is outside the form but linked by id. Clicking it should also submit the form.</p>
+        <form id="outside-form" onsubmit="handleSubmit(event)" action="http://httpbin.org/get" method="GET">
+          <ion-list>
+            <ion-item>
+              <ion-input label="Email" name="email" type="email" required placeholder="Enter email"></ion-input>
+            </ion-item>
+          </ion-list>
+        </form>
+
+        <ion-fab-button form="outside-form" type="submit">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      function handleSubmit(event) {
+        event.preventDefault();
+        console.log('Form submitted!', event.target);
+        alert('Form submitted! Check console for details.');
+      }
+    </script>
+  </body>
+</html>
