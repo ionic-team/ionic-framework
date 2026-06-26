@@ -282,8 +282,7 @@ test.describe('Form', () => {
 
       await expect(control).toHaveClass(/ng-invalid/);
     });
-
-    });
+  });
 
   // Helper functions
   async function testStatus(page: any, status: string) {
