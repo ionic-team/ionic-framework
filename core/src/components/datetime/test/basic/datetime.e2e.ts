@@ -816,3 +816,83 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 });
+
+/**
+ * This behavior does not differ across
+ * modes/directions.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime: animated'), () => {
+    test('next month button should instantly replace month view when animations are disabled', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30484',
+      });
+
+      await page.addInitScript(() => {
+        (window as any).__scrollToCalls = [];
+        const original = Element.prototype.scrollTo;
+        Element.prototype.scrollTo = function (this: Element, ...args: any[]) {
+          if (this.classList?.contains('calendar-body')) {
+            (window as any).__scrollToCalls.push(args[0]);
+          }
+          return (original as any).apply(this, args);
+        };
+      });
+
+      await page.setContent(
+        `
+              <script>window.Ionic = {config: {animated: false}};</script>
+              <ion-datetime value="2026-06-19T16:08:25.697Z"></ion-datetime>
+              `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      const nextMonthButton = page.locator('ion-datetime .calendar-next-prev ion-button').nth(1);
+      await nextMonthButton.click();
+      await page.waitForChanges();
+
+      const scrollCalls = await page.evaluate(() => (window as any).__scrollToCalls);
+
+      expect(scrollCalls.length).toBeGreaterThan(0);
+      expect(scrollCalls[0].behavior).toBe('instant');
+    });
+
+    test('previous month button should instantly replace month view when animations are disabled', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30484',
+      });
+
+      await page.addInitScript(() => {
+        (window as any).__scrollToCalls = [];
+        const original = Element.prototype.scrollTo;
+        Element.prototype.scrollTo = function (this: Element, ...args: any[]) {
+          if (this.classList?.contains('calendar-body')) {
+            (window as any).__scrollToCalls.push(args[0]);
+          }
+          return (original as any).apply(this, args);
+        };
+      });
+
+      await page.setContent(
+        `
+              <script>window.Ionic = {config: {animated: false}};</script>
+              <ion-datetime value="2026-06-19T16:08:25.697Z"></ion-datetime>
+              `,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      const prevMonthButton = page.locator('ion-datetime .calendar-next-prev ion-button').nth(0);
+      await prevMonthButton.click();
+      await page.waitForChanges();
+
+      const scrollCalls = await page.evaluate(() => (window as any).__scrollToCalls);
+
+      expect(scrollCalls.length).toBeGreaterThan(0);
+      expect(scrollCalls[0].behavior).toBe('instant');
+    });
+  });
+});

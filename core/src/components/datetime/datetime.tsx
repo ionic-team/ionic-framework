@@ -8,6 +8,7 @@ import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Mode, StyleEventDetail } from '../../interface';
 
@@ -1567,10 +1568,11 @@ export class Datetime implements ComponentInterface {
 
     const left = (nextMonth as HTMLElement).offsetWidth * 2;
 
+    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
     calendarBodyRef.scrollTo({
       top: 0,
       left: left * (isRTL(this.el) ? -1 : 1),
-      behavior: 'smooth',
+      behavior: scrollMode,
     });
   };
 
@@ -1587,10 +1589,11 @@ export class Datetime implements ComponentInterface {
 
     const left = (prevMonth as HTMLElement).offsetWidth * 2;
 
+    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
     calendarBodyRef.scrollTo({
       top: 0,
       left: left * (isRTL(this.el) ? 1 : -1),
-      behavior: 'smooth',
+      behavior: scrollMode,
     });
   };
 
