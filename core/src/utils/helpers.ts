@@ -319,10 +319,15 @@ export const pointerCoord = (ev: any): { x: number; y: number } => {
  * Given a side, return if it should be on the end
  * based on the value of dir
  * @param side the side
+ * @param hostElement the host element
  * @param isRTL whether the application dir is rtl
  */
-export const isEndSide = (side: Side): boolean => {
-  const isRTL = document.dir === 'rtl';
+export const isEndSide = (side: Side, hostElement?: Element): boolean => {
+  const isRTL = hostElement
+		? hostElement.closest('[dir]')?.getAttribute('dir') === 'rtl'
+		: document.dir === 'rtl'
+	;
+
   switch (side) {
     case 'start':
       return isRTL;
