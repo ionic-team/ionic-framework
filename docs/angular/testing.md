@@ -6,15 +6,19 @@ Ionic Framework supports multiple versions of Angular. As a result, we need to v
 
 The Angular test app supports syncing your locally built changes for validation. This allows you to test local changes like `core` without having to publish a new version of the package.
 
+0. In the root directory, run `npm unlink *` to remove any previous links you have built.
 1. Build the `core` directory.
 2. Navigate to `packages/angular` and run `npm run sync`.
 3. Build `packages/angular` using `npm run build`.
-4. [Build the Angular test app](#test-app-build-structure).
-5. Navigate to the built test app directory (e.g. `packages/angular/test/build/ng14`).
-6. Install dependencies using `npm install`.
-7. Sync your local changes using `npm run sync`.
+4. Navigate to `packages/angular-server` and run `npm install` and `npm run build`.
+5. [Build the Angular test app](#test-app-build-structure) using `./build.sh`.
+6. Navigate to the built test app directory (e.g. `packages/angular/test/build/ng14`).
+7. Install dependencies using `npm install`.
+8. Sync your local changes using `npm run sync`.
 
 From here you can either build the application or start a local dev server. When re-syncing changes, you will need to [wipe or disable the application cache](#application-cache).
+
+If this is your first time running Playwright tests in the repository, install the [Playwright browser dependencies](/docs/core/testing/usage-instructions.md#installing-dependencies)
 
 > [!NOTE]
 > Syncing is required to verify that the minimal supported Angular version is still compatible with the latest Ionic Framework changes.
