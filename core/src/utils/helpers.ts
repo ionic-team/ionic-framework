@@ -1,5 +1,6 @@
 import type { EventEmitter } from '@stencil/core';
 import { printIonError } from '@utils/logging';
+import { isRTL } from '@utils/rtl';
 
 import type { Side } from '../components/menu/menu-interface';
 
@@ -319,15 +320,17 @@ export const pointerCoord = (ev: any): { x: number; y: number } => {
  * Given a side, return if it should be on the end
  * based on the value of dir
  * @param side the side
- * @param isRTL whether the application dir is rtl
+ * @param hostElement the host element used to resolve the nearest ancestor `dir`
  */
-export const isEndSide = (side: Side): boolean => {
-  const isRTL = document.dir === 'rtl';
+export const isEndSide = (side: Side, hostElement?: Element): boolean => {
+  const dirHost = hostElement?.closest('[dir]') as HTMLElement | undefined;
+  const rtl = isRTL(dirHost);
+
   switch (side) {
     case 'start':
-      return isRTL;
+      return rtl;
     case 'end':
-      return !isRTL;
+      return !rtl;
     default:
       throw new Error(`"${side}" is not a valid value for [side]. Use "start" or "end" instead.`);
   }

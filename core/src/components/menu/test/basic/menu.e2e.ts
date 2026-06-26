@@ -137,6 +137,30 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       });
       await ionDidClose.next();
     });
+
+    test('should render on the correct side when ion-app direction is rtl', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30226',
+      });
+
+      const ionDidOpen = await page.spyOnEvent('ionDidOpen');
+      const ionDidClose = await page.spyOnEvent('ionDidClose');
+
+      await page.evaluate(() => {
+        document.dir = 'ltr';
+        document.querySelector('ion-app')?.setAttribute('dir', 'rtl');
+      });
+      await page.click('#open-start');
+      await ionDidOpen.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`menu-basic-ion-app-dir-rtl`));
+
+      await page.locator('[menu-id="start-menu"]').evaluate(async (el: HTMLIonMenuElement) => {
+        await el.close();
+      });
+      await ionDidClose.next();
+    });
   });
 });
 
