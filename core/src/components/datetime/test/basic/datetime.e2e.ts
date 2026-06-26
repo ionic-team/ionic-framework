@@ -818,7 +818,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 });
 
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe.only(title("datetime: interaction between month/year wheels and selected date(s) with different values of multiple"), () => {
+  test.describe(title("datetime: interaction between month/year wheels and selected date(s) with different values of multiple"), () => {
     test('using month wheel should change selection when multiple=false', async ({page}, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
