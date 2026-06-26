@@ -1966,10 +1966,13 @@ export class Datetime implements ComponentInterface {
             month: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...activePart,
-            month: ev.detail.value,
-          });
+          // Month wheel is navigation-only in multi-select mode as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
+          if (!this.multiple) {
+            this.setActiveParts({
+              ...activePart,
+              month: ev.detail.value,
+            });
+          }
 
           ev.stopPropagation();
         }}
@@ -2010,10 +2013,13 @@ export class Datetime implements ComponentInterface {
             year: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...activePart,
-            year: ev.detail.value,
-          });
+          // Year wheel is navigation-only in multi-select mode as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
+          if (!this.multiple) {
+            this.setActiveParts({
+              ...activePart,
+              year: ev.detail.value,
+            });
+          }
 
           ev.stopPropagation();
         }}
