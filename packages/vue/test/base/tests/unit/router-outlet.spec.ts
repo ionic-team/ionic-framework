@@ -148,3 +148,115 @@ describe('Routing', () => {
     )
   });
 });
+
+/**
+ * These tests verify that handlePageTransition does not
+ * throw when enteringViewItem.ionPageElement is undefined.
+ * This can happen when a page component is missing the
+ * required <ion-page> wrapper.
+ */
+describe('handlePageTransition - undefined enteringEl', () => {
+  const enteringViewItem = {
+    ionPageElement: undefined,
+    vueComponent: {},
+    vueComponentRef: {},
+    routerAnimation: undefined,
+    mount: true,
+    matchedRoute: { path: '/' },
+    pathname: '/',
+  };
+
+  const leavingViewItem = {
+    ionPageElement: document.createElement('div'),
+    vueComponent: {},
+    vueComponentRef: {},
+    routerAnimation: undefined,
+    mount: true,
+    matchedRoute: { path: '/page2' },
+    pathname: '/page2',
+  };
+
+  const mockViewStacks = {
+    getViewStack: vi.fn().mockReturnValue([enteringViewItem, leavingViewItem]),
+    findViewItemByRouteInfo: vi.fn().mockReturnValue(enteringViewItem),
+    findLeavingViewItemByRouteInfo: vi.fn().mockReturnValue(leavingViewItem),
+    getChildrenToRender: vi.fn().mockReturnValue([]),
+    createViewItem: vi.fn().mockReturnValue(enteringViewItem),
+    add: vi.fn(),
+    clear: vi.fn(),
+    registerIonPage: vi.fn(),
+    size: vi.fn().mockReturnValue(1),
+    findViewItemByPathname: vi.fn(),
+    unmountLeavingViews: vi.fn(),
+    mountIntermediaryViews: vi.fn(),
+  };
+
+  const mockNavManager = {
+    getLeavingRouteInfo: vi.fn().mockReturnValue({
+      pathname: '/page2',
+      pushedByRoute: '/',
+      routerAnimation: undefined,
+    }),
+    getCurrentRouteInfo: vi.fn().mockReturnValue({
+      pathname: '/',
+      pushedByRoute: '/',
+      routerDirection: 'forward',
+      routerAction: 'push',
+      routerAnimation: undefined,
+      prevRouteLastPathname: '/page2',
+      delta: 1,
+    }),
+    canGoBack: vi.fn().mockReturnValue(false),
+    handleNavigateBack: vi.fn(),
+  };
+
+  const mountOutlet = async () => {
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: BasePage },
+        { path: '/page2', component: BasePage }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+
+    return mount(IonRouterOutlet, {
+      global: {
+        plugins: [router, IonicVue],
+        provide: {
+          navManager: mockNavManager,
+          viewStacks: mockViewStacks,
+        }
+      }
+    });
+  };
+
+  it('should warn when enteringEl is undefined', async () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => { });
+
+    await mountOutlet();
+    await waitForRouter();
+
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringContaining('does not have the required <ion-page> component')
+    );
+
+    warnSpy.mockRestore();
+  });
+
+  it('should not call transition when enteringEl is undefined', async () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => { });
+
+    const commitFn = vi.fn();
+    const wrapper = await mountOutlet();
+    wrapper.findComponent(IonRouterOutlet).vm.$el.commit = commitFn;
+
+    await waitForRouter();
+
+    expect(commitFn).not.toHaveBeenCalled();
+
+    vi.restoreAllMocks();
+  });
+});
