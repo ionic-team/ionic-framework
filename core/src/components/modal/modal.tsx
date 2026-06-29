@@ -644,6 +644,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
       await waitForMount();
     }
 
+    // Recalculate content dimensions before showing the modal so the initial
+    // paint uses the final content offset and background geometry.
+    await this.recalculateContentDimensions();
+
     writeTask(() => this.el.classList.add('show-modal'));
 
     // Recalculate isSheetModal before safe-area setup because framework
@@ -1515,6 +1519,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const { contentEl, hasFooter } = this.findContentAndFooter();
     this.applyFullscreenSafeAreaTo(contentEl, hasFooter);
+  }
+
+  /**
+   * Recalculates the inner ion-content dimensions after the modal has mounted so
+   * its offsets and background geometry reflect the modal's final size before it is shown.
+   */
+  private async recalculateContentDimensions(): Promise<void> {
+    const contentEl = this.el.querySelector('ion-content') as HTMLIonContentElement | null;
+
+    if (contentEl) {
+      await contentEl.recalculateDimensions();
+    }
   }
 
   /**
