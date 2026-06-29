@@ -2,7 +2,7 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
 import { Modal } from '../../modal';
-import { Content } from '../../../content/content'
+import { Content } from '../../../content/content';
 import { FOCUS_TRAP_DISABLE_CLASS } from '@utils/overlays';
 
 describe('modal: htmlAttributes inheritance', () => {
@@ -54,9 +54,7 @@ describe('modal: content dimensions', () => {
 
     const modal = page.body.querySelector('ion-modal')!;
 
-    const recalculateSpy = jest
-      .spyOn(Content.prototype, 'recalculateDimensions')
-      .mockResolvedValue(undefined);
+    const recalculateSpy = jest.spyOn(Content.prototype, 'recalculateDimensions').mockResolvedValue(undefined);
 
     await modal.present();
     await page.waitForChanges();
