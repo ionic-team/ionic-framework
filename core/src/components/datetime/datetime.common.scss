@@ -276,9 +276,13 @@
    * the range-selection highlight track is positioned relative to the wrapper,
    * not the scroll container.
    */
-  position: relative;
-
+  /**
+   * position: relative is required so that the ::before pseudo-element used for
+   * the range-selection highlight track is positioned relative to the wrapper,
+   * not the scroll container.
+   */
   display: flex;
+  position: relative;
 
   align-items: center;
   justify-content: center;
@@ -405,20 +409,20 @@
  * because those hide the element from the accessibility tree as well.
  */
 :host .calendar-month-year-announce {
+  @include padding(0px);
+  @include margin(0px);
+
   position: absolute;
 
   width: 1px;
   height: 1px;
 
-  @include padding(0px);
-  @include margin(0px);
+  white-space: nowrap;
 
   overflow: hidden;
 
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
-
-  white-space: nowrap;
 }
 
 // Feature: monthNavigation="scroll" (vertical month scroll)
@@ -464,10 +468,10 @@
 :host(.datetime-month-navigation-scroll) .calendar-month-scroll-heading {
   @include padding(16px, 16px, 4px);
 
+  color: current-color(base);
+
   font-size: 18px;
   font-weight: 600;
-
-  color: current-color(base);
 }
 
 // Feature: monthYearPickerView="grid"
@@ -480,13 +484,13 @@
  * shadow part are fully preserved.
  */
 :host .month-year-grid-container {
+  @include padding(8px);
+
   display: flex;
 
   flex-direction: column;
 
   overflow: auto;
-
-  @include padding(8px);
 }
 
 :host .month-year-grid {
@@ -514,11 +518,11 @@
  * Buttons are pushed to the inline-end so they sit at the right (LTR) / left (RTL).
  */
 :host .month-year-grid-year-nav {
+  @include margin-horizontal(0px);
+
   display: flex;
 
   justify-content: flex-end;
-
-  @include margin-horizontal(0px);
 }
 
 /**
@@ -530,16 +534,15 @@
 }
 
 :host .month-year-grid-cell {
+  @include padding(8px, 4px);
+  @include border-radius(8px);
+
   display: flex;
 
   align-items: center;
   justify-content: center;
 
-  @include padding(8px, 4px);
-
   border: none;
-
-  border-radius: 8px;
 
   background: none;
 
@@ -580,13 +583,13 @@
 :host .calendar-day-wrapper-range-start::before,
 :host .calendar-day-wrapper-in-range::before,
 :host .calendar-day-wrapper-range-end::before {
-  content: '';
-
   position: absolute;
 
   inset-block: 0;
 
   background: current-color(base, 0.15);
+
+  content: "";
 
   z-index: 0;
 }

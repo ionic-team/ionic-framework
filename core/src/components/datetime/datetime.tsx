@@ -784,7 +784,12 @@ export class Datetime implements ComponentInterface {
    */
   private get rangeActiveParts(): DatetimeRangeParts | undefined {
     const { activeParts } = this;
-    if (!Array.isArray(activeParts) && activeParts !== null && typeof activeParts === 'object' && 'start' in activeParts) {
+    if (
+      !Array.isArray(activeParts) &&
+      activeParts !== null &&
+      typeof activeParts === 'object' &&
+      'start' in activeParts
+    ) {
       return activeParts as DatetimeRangeParts;
     }
     return undefined;
@@ -817,7 +822,9 @@ export class Datetime implements ComponentInterface {
     this.setWorkingParts(validatedParts);
 
     if (isMultipleMode) {
-      const activePartsArray = Array.isArray(activeParts) ? (activeParts as DatetimeParts[]) : [activeParts as DatetimeParts];
+      const activePartsArray = Array.isArray(activeParts)
+        ? (activeParts as DatetimeParts[])
+        : [activeParts as DatetimeParts];
       if (removeDate) {
         this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
       } else {
@@ -1728,15 +1735,15 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
-    const { el, formatOptions, highlightedDates, multiple, selectionMode, monthNavigation, presentation, preferWheel } = this;
+    const { el, formatOptions, highlightedDates, multiple, selectionMode, monthNavigation, presentation, preferWheel } =
+      this;
 
     /**
      * When monthYearPickerView="grid" and the presentation is month/month-year/year,
      * the grid is always visible (no toggle), so we must pre-initialize the year page.
      */
     if (this.monthYearPickerView === 'grid') {
-      this.yearGridPageStart =
-        Math.floor(this.workingParts.year / YEAR_GRID_PAGE_SIZE) * YEAR_GRID_PAGE_SIZE;
+      this.yearGridPageStart = Math.floor(this.workingParts.year / YEAR_GRID_PAGE_SIZE) * YEAR_GRID_PAGE_SIZE;
     }
 
     /**
@@ -1782,10 +1789,7 @@ export class Datetime implements ComponentInterface {
     }
 
     if (monthNavigation === 'scroll' && preferWheel) {
-      printIonWarning(
-        '[ion-datetime] - monthNavigation="scroll" has no effect when preferWheel="true".',
-        el
-      );
+      printIonWarning('[ion-datetime] - monthNavigation="scroll" has no effect when preferWheel="true".', el);
     }
 
     if (highlightedDates !== undefined) {
@@ -1924,8 +1928,7 @@ export class Datetime implements ComponentInterface {
        * Reset the year page to the one containing the current working year
        * every time the grid picker opens.
        */
-      this.yearGridPageStart =
-        Math.floor(this.workingParts.year / YEAR_GRID_PAGE_SIZE) * YEAR_GRID_PAGE_SIZE;
+      this.yearGridPageStart = Math.floor(this.workingParts.year / YEAR_GRID_PAGE_SIZE) * YEAR_GRID_PAGE_SIZE;
     }
   };
 
@@ -3178,7 +3181,16 @@ export class Datetime implements ComponentInterface {
    * Selecting a month or year cell updates `workingParts` and closes the overlay.
    */
   private renderMonthYearGrid() {
-    const { locale, workingParts, minParts, maxParts, parsedMonthValues, parsedYearValues, datetimePreviousIcon, datetimeNextIcon } = this;
+    const {
+      locale,
+      workingParts,
+      minParts,
+      maxParts,
+      parsedMonthValues,
+      parsedYearValues,
+      datetimePreviousIcon,
+      datetimeNextIcon,
+    } = this;
 
     const months = getMonthColumnData(locale, workingParts, minParts, maxParts, parsedMonthValues);
 
@@ -3235,18 +3247,36 @@ export class Datetime implements ComponentInterface {
               size="small"
               disabled={prevPageDisabled}
               aria-label="Previous years"
-              onClick={() => { this.yearGridPageStart -= YEAR_GRID_PAGE_SIZE; }}
+              onClick={() => {
+                this.yearGridPageStart -= YEAR_GRID_PAGE_SIZE;
+              }}
             >
-              <ion-icon dir={hostDir} aria-hidden="true" slot="icon-only" icon={datetimePreviousIcon} lazy={false} flipRtl></ion-icon>
+              <ion-icon
+                dir={hostDir}
+                aria-hidden="true"
+                slot="icon-only"
+                icon={datetimePreviousIcon}
+                lazy={false}
+                flipRtl
+              ></ion-icon>
             </ion-button>
             <ion-button
               fill="clear"
               size="small"
               disabled={nextPageDisabled}
               aria-label="Next years"
-              onClick={() => { this.yearGridPageStart += YEAR_GRID_PAGE_SIZE; }}
+              onClick={() => {
+                this.yearGridPageStart += YEAR_GRID_PAGE_SIZE;
+              }}
             >
-              <ion-icon dir={hostDir} aria-hidden="true" slot="icon-only" icon={datetimeNextIcon} lazy={false} flipRtl></ion-icon>
+              <ion-icon
+                dir={hostDir}
+                aria-hidden="true"
+                slot="icon-only"
+                icon={datetimeNextIcon}
+                lazy={false}
+                flipRtl
+              ></ion-icon>
             </ion-button>
           </div>
 
