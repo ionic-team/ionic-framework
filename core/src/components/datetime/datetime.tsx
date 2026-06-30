@@ -794,7 +794,7 @@ export class Datetime implements ComponentInterface {
     this.setWorkingParts(validatedParts);
 
     if (isMultipleMode) {
-      const activePartsArray = Array.isArray(activeParts) ? (activeParts as DatetimeParts[]) : [];
+      const activePartsArray = Array.isArray(activeParts) ? (activeParts as DatetimeParts[]) : [activeParts as DatetimeParts];
       if (removeDate) {
         this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
       } else {
