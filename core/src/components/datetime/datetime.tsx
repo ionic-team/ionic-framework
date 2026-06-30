@@ -155,12 +155,35 @@ export class Datetime implements ComponentInterface {
 
   private resolveForceDateScrolling?: () => void;
 
+  /**
+   * Set to `true` by the scroll-mode scroll listener when the render window
+   * re-centres (i.e. `scrollWindowCenter` changes). `componentDidRender` reads
+   * this flag and restores `scrollTop` so the visible month stays in place.
+   */
+  private scrollModeNeedsPositionRestore = false;
+
   @State() showMonthAndYear = false;
 
   /** Starting year of the currently displayed year page in the grid picker. */
   @State() yearGridPageStart = 0;
 
   @State() activeParts: DatetimeParts | DatetimeParts[] | DatetimeRangeParts = [];
+
+  /**
+   * The month used as the centre of the ±6 scroll window in
+   * `monthNavigation="scroll"` mode. Decoupled from `workingParts` so that
+   * `workingParts` can update freely for aria-live announcements without
+   * triggering a window re-render on every month boundary. The window only
+   * re-centres when the user scrolls within 1 month of either edge.
+   */
+  @State() scrollWindowCenter: DatetimeParts = {
+    month: 5,
+    day: 28,
+    year: 2021,
+    hour: 13,
+    minute: 52,
+    ampm: 'pm',
+  };
 
   @State() workingParts: DatetimeParts = {
     month: 5,
@@ -1055,7 +1078,34 @@ export class Datetime implements ComponentInterface {
               const month = Number(nearest.dataset.month);
               const year = Number(nearest.dataset.year);
               if (month !== this.workingParts.month || year !== this.workingParts.year) {
+                /**
+                 * Always update workingParts so the aria-live region announces
+                 * the correct month as the user scrolls.
+                 */
                 writeTask(() => this.setWorkingParts({ ...this.workingParts, month, year }));
+
+                /**
+                 * Only re-centre the scroll window (and trigger a DOM re-render)
+                 * when the user is within 1 month of either edge. This prevents
+                 * the window from rebuilding on every month boundary, which would
+                 * cause a jump even after the scrollTop restore.
+                 */
+                const months = this.generateScrollModeMonths();
+                const first = months[0];
+                const last = months[months.length - 1];
+                // Compute the month 1 step inside each edge
+                const secondMonth = getNextMonth({ year: first.year, month: first.month, day: null });
+                const secondLastMonth = getPreviousMonth({ year: last.year, month: last.month, day: null });
+                const nearStart =
+                  (year === first.year && month === first.month) ||
+                  (year === secondMonth.year && month === secondMonth.month);
+                const nearEnd =
+                  (year === last.year && month === last.month) ||
+                  (year === secondLastMonth.year && month === secondLastMonth.month);
+                if (nearStart || nearEnd) {
+                  this.scrollModeNeedsPositionRestore = true;
+                  this.scrollWindowCenter = { ...this.workingParts, month, year };
+                }
               }
             }
           }, 50);
@@ -1486,6 +1536,29 @@ export class Datetime implements ComponentInterface {
       }
     }
 
+    /**
+     * Scroll mode: after the ±6 window re-centres (workingParts changed via
+     * the scroll listener), the DOM has a new set of months. Restore scrollTop
+     * so the working month stays at the same visual position instead of jumping.
+     */
+    if (this.scrollModeNeedsPositionRestore && this.monthNavigation === 'scroll' && calendarBodyRef) {
+      this.scrollModeNeedsPositionRestore = false;
+      /**
+       * The window re-centred around `scrollWindowCenter`. Restore scrollTop
+       * so `workingParts` (the month the user was viewing) stays at the same
+       * visual position instead of jumping to the top of the new render window.
+       */
+      const { workingParts } = this;
+      writeTask(() => {
+        const workingMonthEl = calendarBodyRef.querySelector<HTMLElement>(
+          `.calendar-month[data-month="${workingParts.month}"][data-year="${workingParts.year}"]`
+        );
+        if (workingMonthEl) {
+          calendarBodyRef.scrollTop = workingMonthEl.offsetTop;
+        }
+      });
+    }
+
     if (prevPresentation === null) {
       this.prevPresentation = presentation;
       return;
@@ -1603,14 +1676,21 @@ export class Datetime implements ComponentInterface {
        */
       this.animateToDate(targetValue);
     } else {
-      this.setWorkingParts({
+      const newParts: DatetimeParts = {
         month,
         day,
         year,
         hour,
         minute,
-        ampm,
-      });
+        ampm: ampm as 'am' | 'pm',
+      };
+      this.setWorkingParts(newParts);
+      /**
+       * Also re-centre the scroll window so that programmatic value changes
+       * (and the initial load) put the correct month at the centre of the
+       * ±6 render window in scroll mode.
+       */
+      this.scrollWindowCenter = newParts;
     }
   };
 
@@ -1666,6 +1746,17 @@ export class Datetime implements ComponentInterface {
     if (multiple && selectionMode === undefined) {
       printIonWarning(
         '[ion-datetime] - The `multiple` prop is deprecated. Use `selectionMode="multiple"` instead.',
+        el
+      );
+    }
+
+    /**
+     * Warn when both `multiple` and `selectionMode` are set — `selectionMode`
+     * takes precedence and `multiple` is ignored.
+     */
+    if (multiple && selectionMode !== undefined) {
+      printIonWarning(
+        `[ion-datetime] - Both \`multiple\` and \`selectionMode\` are set. \`selectionMode="${selectionMode}"\` takes precedence; \`multiple\` will be ignored. Remove the \`multiple\` prop to dismiss this warning.`,
         el
       );
     }
@@ -2462,20 +2553,20 @@ export class Datetime implements ComponentInterface {
    * current working month (13 total), clamped to min/max bounds.
    */
   private generateScrollModeMonths(): DatetimeParts[] {
-    const { minParts, maxParts, workingParts } = this;
-    const WINDOW = 6; // months before and after the working month
+    const { minParts, maxParts, scrollWindowCenter } = this;
+    const WINDOW = 6; // months before and after the window centre
 
-    // Compute window start (workingMonth - WINDOW)
-    let startMonth = workingParts.month - WINDOW;
-    let startYear = workingParts.year;
+    // Compute window start (centre - WINDOW)
+    let startMonth = scrollWindowCenter.month - WINDOW;
+    let startYear = scrollWindowCenter.year;
     while (startMonth <= 0) {
       startMonth += 12;
       startYear--;
     }
 
-    // Compute window end (workingMonth + WINDOW)
-    let endMonth = workingParts.month + WINDOW;
-    let endYear = workingParts.year;
+    // Compute window end (centre + WINDOW)
+    let endMonth = scrollWindowCenter.month + WINDOW;
+    let endYear = scrollWindowCenter.year;
     while (endMonth > 12) {
       endMonth -= 12;
       endYear++;
@@ -3127,7 +3218,7 @@ export class Datetime implements ComponentInterface {
               disabled={month.disabled}
               aria-selected={month.value === workingParts.month ? 'true' : 'false'}
               onClick={() => {
-                this.setWorkingParts({ ...workingParts, month: month.value as number });
+                this.setWorkingParts({ ...this.workingParts, month: month.value as number });
                 this.toggleMonthAndYearView();
               }}
             >
@@ -3160,30 +3251,23 @@ export class Datetime implements ComponentInterface {
           </div>
 
           <div class="month-year-grid month-year-grid-years" role="grid" aria-label="Select year">
-            {pageYears.map((year) => {
-              const isDisabled =
-                year < minYear ||
-                year > maxYear ||
-                (parsedYearValues !== undefined && !parsedYearValues.includes(year));
-              return (
-                <button
-                  key={year}
-                  role="gridcell"
-                  class={{
-                    'month-year-grid-cell': true,
-                    'month-year-grid-cell-active': year === workingParts.year,
-                  }}
-                  disabled={isDisabled}
-                  aria-selected={year === workingParts.year ? 'true' : 'false'}
-                  onClick={() => {
-                    this.setWorkingParts({ ...workingParts, year });
-                    this.toggleMonthAndYearView();
-                  }}
-                >
-                  {year}
-                </button>
-              );
-            })}
+            {pageYears.map((year) => (
+              <button
+                key={year}
+                role="gridcell"
+                class={{
+                  'month-year-grid-cell': true,
+                  'month-year-grid-cell-active': year === workingParts.year,
+                }}
+                aria-selected={year === workingParts.year ? 'true' : 'false'}
+                onClick={() => {
+                  this.setWorkingParts({ ...this.workingParts, year });
+                  this.toggleMonthAndYearView();
+                }}
+              >
+                {year}
+              </button>
+            ))}
           </div>
         </div>
       </div>
