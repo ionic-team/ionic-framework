@@ -34,11 +34,11 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 **Minimum Browser Versions**
 | Desktop Browser | Supported Versions |
-| --------------- | ----------------- |
-| Chrome          | 89+               |
-| Safari          | 16+               |
-| Edge            | 89+               |
-| Firefox         | 75+               |
+| --------------- | ------------------ |
+| Chrome          | 89+                |
+| Safari          | 16+                |
+| Edge            | 89+                |
+| Firefox         | 75+                |
 
 **Minimum JavaScript Framework Versions**
 | Framework | Supported Version     |
