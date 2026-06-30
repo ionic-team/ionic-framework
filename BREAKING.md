@@ -140,6 +140,7 @@ Apps that relied on `ionChange` firing on every confirmation (for example, to de
 Ionic 9 requires Angular 18 or later. Angular 16 and 17 are no longer supported.
 
 **Standalone Components Imported by Default**
+
 Following industry standards, Ionic 9 makes standalone components the default import path. Standalone component imports have changed from `@ionic/angular/standalone` to `@ionic/angular`. Lazy-loaded component imports have changed from `@ionic/angular` to `@ionic/angular/lazy`.
 
 **Zoneless Change Detection by Default**
