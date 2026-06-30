@@ -703,20 +703,21 @@ ion-datetime,prop,locale,string,'default',false,false
 ion-datetime,prop,max,string | undefined,undefined,false,false
 ion-datetime,prop,min,string | undefined,undefined,false,false
 ion-datetime,prop,minuteValues,number | number[] | string | undefined,undefined,false,false
-ion-datetime,prop,mode,"ios" | "md",undefined,false,false
+ion-datetime,prop,monthNavigation,"arrows" | "scroll",'arrows',false,false
 ion-datetime,prop,monthValues,number | number[] | string | undefined,undefined,false,false
+ion-datetime,prop,monthYearPickerView,"grid" | "wheel",'wheel',false,false
 ion-datetime,prop,multiple,boolean,false,false,false
 ion-datetime,prop,name,string,this.inputId,false,false
 ion-datetime,prop,preferWheel,boolean,false,false,false
 ion-datetime,prop,presentation,"date" | "date-time" | "month" | "month-year" | "time" | "time-date" | "year",'date-time',false,false
 ion-datetime,prop,readonly,boolean,false,false,false
+ion-datetime,prop,selectionMode,"multiple" | "range" | undefined,undefined,false,false
 ion-datetime,prop,showAdjacentDays,boolean,false,false,false
 ion-datetime,prop,showClearButton,boolean,false,false,false
 ion-datetime,prop,showDefaultButtons,boolean,false,false,false
 ion-datetime,prop,showDefaultTimeLabel,boolean,true,false,false
 ion-datetime,prop,showDefaultTitle,boolean,false,false,false
 ion-datetime,prop,size,"cover" | "fixed",'fixed',false,false
-ion-datetime,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-datetime,prop,titleSelectedDatesFormatter,((selectedDates: string[]) => string) | undefined,undefined,false,false
 ion-datetime,prop,value,null | string | string[] | undefined,undefined,false,false
 ion-datetime,prop,yearValues,number | number[] | string | undefined,undefined,false,false
@@ -742,10 +743,6 @@ ion-datetime,css-prop,--wheel-highlight-background,ios
 ion-datetime,css-prop,--wheel-highlight-background,md
 ion-datetime,css-prop,--wheel-highlight-border-radius,ios
 ion-datetime,css-prop,--wheel-highlight-border-radius,md
-ion-datetime,part,calendar-day
-ion-datetime,part,calendar-day active
-ion-datetime,part,calendar-day disabled
-ion-datetime,part,calendar-day today
 ion-datetime,part,calendar-days-of-week
 ion-datetime,part,calendar-header
 ion-datetime,part,datetime-header
@@ -755,11 +752,6 @@ ion-datetime,part,month-year-button
 ion-datetime,part,navigation-button
 ion-datetime,part,next-button
 ion-datetime,part,previous-button
-ion-datetime,part,time-button
-ion-datetime,part,time-button active
-ion-datetime,part,wheel
-ion-datetime,part,wheel-item
-ion-datetime,part,wheel-item active
 
 ion-datetime-button,shadow
 ion-datetime-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true

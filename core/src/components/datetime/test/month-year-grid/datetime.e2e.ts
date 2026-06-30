@@ -70,7 +70,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(datetime).not.toHaveClass(/datetime-month-year-picker-grid/);
     });
 
-    test('clicking toggle button should show the grid picker', async ({ page }) => {
+    test('clicking toggle button should show the grid picker', async () => {
       await fixture.goto(config);
       await fixture.openPicker();
 
@@ -78,7 +78,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(gridContainer).toBeVisible();
     });
 
-    test('grid should show month cells', async ({ page }) => {
+    test('grid should show month cells', async () => {
       await fixture.goto(config);
       await fixture.openPicker();
 
@@ -87,7 +87,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(monthCells).toHaveCount(12);
     });
 
-    test('grid should show year cells', async ({ page }) => {
+    test('grid should show year cells', async () => {
       await fixture.goto(config);
       await fixture.openPicker();
 
@@ -150,7 +150,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       }
     });
 
-    test('disabled months should respect max constraint', async ({ page }) => {
+    test('disabled months should respect max constraint', async () => {
       await fixture.goto(config, { max: '2022-03-31' });
       await fixture.openPicker();
 
@@ -160,7 +160,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(aprilCell).toHaveAttribute('disabled', '');
     });
 
-    test('disabled months should respect min constraint', async ({ page }) => {
+    test('disabled months should respect min constraint', async () => {
       await fixture.goto(config, { min: '2022-09-01' });
       await fixture.openPicker();
 
@@ -170,7 +170,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(januaryCell).toHaveAttribute('disabled', '');
     });
 
-    test('picker should not show wheel picker when monthYearPickerView="grid"', async ({ page }) => {
+    test('picker should not show wheel picker when monthYearPickerView="grid"', async () => {
       await fixture.goto(config, { monthYearPickerView: 'grid' });
       await fixture.openPicker();
 
@@ -179,7 +179,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(wheelPicker).not.toBeAttached();
     });
 
-    test('wheel mode should show ion-picker-column when monthYearPickerView="wheel"', async ({ page }) => {
+    test('wheel mode should show ion-picker-column when monthYearPickerView="wheel"', async () => {
       await fixture.goto(config, { monthYearPickerView: 'wheel' });
       await fixture.openPicker();
 
@@ -188,7 +188,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(wheelPicker).toBeAttached();
     });
 
-    test('grid cells should display correct month names in locale', async ({ page }) => {
+    test('grid cells should display correct month names in locale', async () => {
       await fixture.goto(config, { monthYearPickerView: 'grid' });
       await fixture.openPicker();
 
@@ -197,7 +197,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(monthCells.first()).toContainText('Jan');
     });
 
-    test('currently selected month should be highlighted in the grid', async ({ page }) => {
+    test('currently selected month should be highlighted in the grid', async () => {
       await fixture.goto(config);
       await fixture.openPicker();
 

@@ -166,7 +166,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(june20).toHaveClass(/calendar-day-range-end/);
     });
 
-    test('in-range days should have in-range CSS class but not be active', async ({ page }) => {
+    test('in-range days should have in-range CSS class but not be active', async () => {
       const datetime = await fixture.goto(config, RANGE_VALUE);
 
       for (let day = 11; day <= 19; day++) {
@@ -176,7 +176,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       }
     });
 
-    test('days outside the range should not have range CSS classes', async ({ page }) => {
+    test('days outside the range should not have range CSS classes', async () => {
       const datetime = await fixture.goto(config, RANGE_VALUE);
       const june5 = datetime.locator('[data-month="6"][data-day="5"]');
 
@@ -185,21 +185,21 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(june5).not.toHaveClass(/calendar-day-range-end/);
     });
 
-    test('wrapper element for range-start should have the correct class', async ({ page }) => {
+    test('wrapper element for range-start should have the correct class', async () => {
       const datetime = await fixture.goto(config, RANGE_VALUE);
       const june10Wrapper = datetime.locator('[data-month="6"][data-day="10"]').locator('..');
 
       await expect(june10Wrapper).toHaveClass(/calendar-day-wrapper-range-start/);
     });
 
-    test('wrapper element for in-range day should have the correct class', async ({ page }) => {
+    test('wrapper element for in-range day should have the correct class', async () => {
       const datetime = await fixture.goto(config, RANGE_VALUE);
       const june15Wrapper = datetime.locator('[data-month="6"][data-day="15"]').locator('..');
 
       await expect(june15Wrapper).toHaveClass(/calendar-day-wrapper-in-range/);
     });
 
-    test('wrapper element for range-end should have the correct class', async ({ page }) => {
+    test('wrapper element for range-end should have the correct class', async () => {
       const datetime = await fixture.goto(config, RANGE_VALUE);
       const june20Wrapper = datetime.locator('[data-month="6"][data-day="20"]').locator('..');
 
@@ -241,7 +241,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(datetime).toHaveJSProperty('value', START_DATE);
     });
 
-    test('clear button should reset range selection', async ({ page }) => {
+    test('clear button should reset range selection', async () => {
       const datetime = await fixture.goto(config, RANGE_VALUE, {
         showDefaultButtons: true,
         showClearButton: true,
@@ -252,7 +252,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(datetime).toHaveJSProperty('value', undefined);
     });
 
-    test('disabled days should not be part of in-range highlight', async ({ page }) => {
+    test('disabled days should not be part of in-range highlight', async () => {
       const datetime = await fixture.goto(config, RANGE_VALUE, {
         min: '2022-06-12', // days 10 and 11 are disabled (before min)
       });

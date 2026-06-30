@@ -51,7 +51,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(datetime).not.toHaveClass(/datetime-month-navigation-scroll/);
     });
 
-    test('calendar-body should use vertical scroll axis when monthNavigation="scroll"', async ({ page }) => {
+    test('calendar-body should use vertical scroll axis when monthNavigation="scroll"', async () => {
       const datetime = await fixture.goto(config, 'scroll');
       const calendarBody = datetime.locator('.calendar-body');
 
@@ -68,7 +68,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(overflowY).toBe('scroll');
     });
 
-    test('calendar-body should use horizontal scroll axis when monthNavigation="arrows"', async ({ page }) => {
+    test('calendar-body should use horizontal scroll axis when monthNavigation="arrows"', async () => {
       const datetime = await fixture.goto(config, 'arrows');
       const calendarBody = datetime.locator('.calendar-body');
 
