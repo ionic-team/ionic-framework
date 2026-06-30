@@ -806,19 +806,22 @@ export class Datetime implements ComponentInterface {
       /**
        * If there is no existing start, or if a complete range already exists,
        * start a fresh range with the tapped day as the start.
+       * Return early — ionChange must not fire until the range is committed.
        */
       if (!current || current.end !== undefined) {
         this.activeParts = { start: validatedParts };
+        return;
+      }
+
+      /**
+       * A start exists but no end yet. Commit the end date.
+       * Swap start/end if the tapped date is before the start.
+       * Fall through so confirm() fires and ionChange is emitted.
+       */
+      if (isBefore(validatedParts, current.start)) {
+        this.activeParts = { start: validatedParts, end: current.start };
       } else {
-        /**
-         * A start exists but no end yet. Commit the end date.
-         * Swap start/end if the tapped date is before the start.
-         */
-        if (isBefore(validatedParts, current.start)) {
-          this.activeParts = { start: validatedParts, end: current.start };
-        } else {
-          this.activeParts = { start: current.start, end: validatedParts };
-        }
+        this.activeParts = { start: current.start, end: validatedParts };
       }
     } else {
       this.activeParts = {

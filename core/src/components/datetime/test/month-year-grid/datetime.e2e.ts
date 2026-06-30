@@ -82,7 +82,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await fixture.goto(config);
       await fixture.openPicker();
 
-      const monthCells = fixture.datetime.locator('.month-year-grid .month-year-grid-cell');
+      // Use aria-label to target only the month grid, not the year grid
+      // (the year grid element also carries the month-year-grid class)
+      const monthCells = fixture.datetime.locator('[aria-label="Select month"] .month-year-grid-cell');
       // There are 12 months
       await expect(monthCells).toHaveCount(12);
     });
@@ -91,9 +93,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await fixture.goto(config);
       await fixture.openPicker();
 
-      const yearCells = fixture.datetime.locator('.month-year-grid-years .month-year-grid-cell');
-      // There should be multiple years
-      await expect(yearCells).toHaveCount(expect.any(Number) as any);
+      const yearCells = fixture.datetime.locator('[aria-label="Select year"] .month-year-grid-cell');
       const count = await yearCells.count();
       expect(count).toBeGreaterThan(0);
     });
@@ -106,7 +106,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await fixture.openPicker();
 
       // Click on January (first month cell)
-      const januaryCell = fixture.datetime.locator('.month-year-grid .month-year-grid-cell').first();
+      const januaryCell = fixture.datetime.locator('[aria-label="Select month"] .month-year-grid-cell').first();
       await januaryCell.click();
       await page.waitForChanges();
 
@@ -120,7 +120,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       const gridContainer = fixture.datetime.locator('.month-year-grid-container');
       await expect(gridContainer).toBeVisible();
 
-      const januaryCell = fixture.datetime.locator('.month-year-grid .month-year-grid-cell').first();
+      const januaryCell = fixture.datetime.locator('[aria-label="Select month"] .month-year-grid-cell').first();
       await januaryCell.click();
       await page.waitForChanges();
 
@@ -155,7 +155,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await fixture.openPicker();
 
       // April (index 3, 0-based) through December should be disabled
-      const monthCells = fixture.datetime.locator('.month-year-grid .month-year-grid-cell');
+      const monthCells = fixture.datetime.locator('[aria-label="Select month"] .month-year-grid-cell');
       const aprilCell = monthCells.nth(3); // April is index 3
       await expect(aprilCell).toHaveAttribute('disabled', '');
     });
@@ -165,7 +165,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await fixture.openPicker();
 
       // January (index 0) through August (index 7) should be disabled
-      const monthCells = fixture.datetime.locator('.month-year-grid .month-year-grid-cell');
+      const monthCells = fixture.datetime.locator('[aria-label="Select month"] .month-year-grid-cell');
       const januaryCell = monthCells.nth(0);
       await expect(januaryCell).toHaveAttribute('disabled', '');
     });
@@ -192,7 +192,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await fixture.goto(config, { monthYearPickerView: 'grid' });
       await fixture.openPicker();
 
-      const monthCells = fixture.datetime.locator('.month-year-grid .month-year-grid-cell');
+      const monthCells = fixture.datetime.locator('[aria-label="Select month"] .month-year-grid-cell');
       // First cell should be January in en-US
       await expect(monthCells.first()).toContainText('Jan');
     });
@@ -202,7 +202,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await fixture.openPicker();
 
       // June is the current month (value="2022-06-15"), index 5
-      const monthCells = fixture.datetime.locator('.month-year-grid .month-year-grid-cell');
+      const monthCells = fixture.datetime.locator('[aria-label="Select month"] .month-year-grid-cell');
       const juneCell = monthCells.nth(5);
 
       // The current month cell should have an active/selected class

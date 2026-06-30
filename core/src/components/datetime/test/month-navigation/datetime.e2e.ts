@@ -127,27 +127,29 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
     test('programmatic nextMonth() should navigate to next month in scroll mode', async ({ page }) => {
       const datetime = await fixture.goto(config, 'scroll');
-      const monthYear = datetime.locator('.calendar-month-year');
+      // In scroll mode the shared header is visually hidden; use the aria-live region instead
+      const announce = datetime.locator('.calendar-month-year-announce');
 
-      await expect(monthYear).toHaveText(/June 2022/);
+      await expect(announce).toHaveText(/June 2022/);
 
       // Trigger navigation programmatically (simulates swipe-based snap completion)
       await datetime.evaluate((el: HTMLIonDatetimeElement) => (el as any).nextMonth());
       await page.waitForChanges();
 
-      await expect(monthYear).toHaveText(/July 2022/);
+      await expect(announce).toHaveText(/July 2022/);
     });
 
     test('programmatic prevMonth() should navigate to previous month in scroll mode', async ({ page }) => {
       const datetime = await fixture.goto(config, 'scroll');
-      const monthYear = datetime.locator('.calendar-month-year');
+      // In scroll mode the shared header is visually hidden; use the aria-live region instead
+      const announce = datetime.locator('.calendar-month-year-announce');
 
-      await expect(monthYear).toHaveText(/June 2022/);
+      await expect(announce).toHaveText(/June 2022/);
 
       await datetime.evaluate((el: HTMLIonDatetimeElement) => (el as any).prevMonth());
       await page.waitForChanges();
 
-      await expect(monthYear).toHaveText(/May 2022/);
+      await expect(announce).toHaveText(/May 2022/);
     });
   });
 });
