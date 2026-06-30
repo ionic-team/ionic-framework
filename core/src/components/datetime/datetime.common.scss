@@ -271,6 +271,13 @@
 }
 
 :host .calendar-day-wrapper {
+  /**
+   * position: relative is required so that the ::before pseudo-element used for
+   * the range-selection highlight track is positioned relative to the wrapper,
+   * not the scroll container.
+   */
+  position: relative;
+
   display: flex;
 
   align-items: center;
@@ -383,4 +390,221 @@
   display: inline-flex;
 
   align-items: center;
+}
+
+// Accessibility: visually-hidden aria-live region
+// -----------------------------------
+
+/**
+ * The `.calendar-month-year-announce` element is a visually-hidden live region
+ * that announces the current month/year to screen readers whenever `workingParts`
+ * changes. This is especially important in `monthNavigation="scroll"` mode where
+ * the scroll gesture alone is insufficient for AT users to detect the change.
+ *
+ * The clip/clip-path technique is preferred over display:none or visibility:hidden
+ * because those hide the element from the accessibility tree as well.
+ */
+:host .calendar-month-year-announce {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  @include padding(0px);
+  @include margin(0px);
+
+  overflow: hidden;
+
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+
+  white-space: nowrap;
+}
+
+// Feature: monthNavigation="scroll" (vertical month scroll)
+// -----------------------------------
+
+/**
+ * When `monthNavigation="scroll"`, all months in the valid range are rendered
+ * in a single continuous vertical list. There is no virtual window or
+ * scroll-snap — the user scrolls freely through months.
+ *
+ * The shared calendar header (month/year toggle + prev/next arrows) is hidden;
+ * each month card renders its own heading instead.
+ */
+:host(.datetime-month-navigation-scroll) .calendar-header {
+  /**
+   * Keep the element in the DOM for the aria-live region (screen reader
+   * announcements) but remove all visual space.
+   */
+  position: absolute;
+
+  pointer-events: none;
+}
+
+:host(.datetime-month-navigation-scroll) .calendar-body {
+  flex-direction: column;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  /**
+   * Cap the scroll container so roughly 1.5 months are visible at a time.
+   * When the datetime is inside a modal/popover the parent constrains the
+   * height anyway and this max-height has no effect.
+   */
+  max-height: 460px;
+}
+
+/**
+ * Per-month heading shown at the top of each month card in scroll mode.
+ * Styled to match the image reference: prominent left-aligned text in the
+ * primary colour.
+ */
+:host(.datetime-month-navigation-scroll) .calendar-month-scroll-heading {
+  @include padding(16px, 16px, 4px);
+
+  font-size: 18px;
+  font-weight: 600;
+
+  color: current-color(base);
+}
+
+// Feature: monthYearPickerView="grid"
+// -----------------------------------
+
+/**
+ * Grid-based month/year picker overlay.
+ * Shown inside the existing .datetime-year toggle overlay when
+ * `monthYearPickerView="grid"`. The toggle mechanism and `month-year-button`
+ * shadow part are fully preserved.
+ */
+:host .month-year-grid-container {
+  display: flex;
+
+  flex-direction: column;
+
+  overflow: auto;
+
+  @include padding(8px);
+}
+
+:host .month-year-grid {
+  display: grid;
+
+  /* Month grid: 3 columns × 4 rows */
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 8px;
+
+  margin-bottom: 16px;
+}
+
+/**
+ * Year section: wraps the prev/next nav row and the year grid.
+ */
+:host .month-year-grid-year-section {
+  display: flex;
+
+  flex-direction: column;
+}
+
+/**
+ * Nav row that holds the prev/next year-page arrow buttons.
+ * Buttons are pushed to the inline-end so they sit at the right (LTR) / left (RTL).
+ */
+:host .month-year-grid-year-nav {
+  display: flex;
+
+  justify-content: flex-end;
+
+  @include margin-horizontal(0px);
+}
+
+/**
+ * Year grid: 4 columns (no scroll — pagination is handled by the nav arrows).
+ */
+:host .month-year-grid-years {
+  /* 4 columns to match the reference design */
+  grid-template-columns: repeat(4, 1fr);
+}
+
+:host .month-year-grid-cell {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  @include padding(8px, 4px);
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: none;
+
+  color: currentColor;
+
+  font-family: inherit;
+  font-size: inherit;
+
+  cursor: pointer;
+
+  appearance: none;
+}
+
+:host .month-year-grid-cell[disabled] {
+  opacity: 0.3;
+
+  pointer-events: none;
+}
+
+// Feature: selectionMode="range" — range highlight track
+// -----------------------------------
+
+/**
+ * The range-selection track is rendered as a ::before pseudo-element on the
+ * `.calendar-day-wrapper` rather than on the `.calendar-day` button itself.
+ * This is necessary because the button element has a fixed circular size that
+ * does not span the full grid cell, so a background on the button alone would
+ * produce gaps in the highlight track between adjacent days.
+ *
+ * The track is split into three parts:
+ *   - `range-start`: right half of the cell only (connecting to the next day)
+ *   - `in-range`:    full cell width
+ *   - `range-end`:   left half of the cell only (connecting from the previous day)
+ *
+ * Logical properties (`inset-inline-start/end`) are used so that RTL layouts
+ * automatically reverse the direction of the connecting fill.
+ */
+:host .calendar-day-wrapper-range-start::before,
+:host .calendar-day-wrapper-in-range::before,
+:host .calendar-day-wrapper-range-end::before {
+  content: '';
+
+  position: absolute;
+
+  inset-block: 0;
+
+  background: current-color(base, 0.15);
+
+  z-index: 0;
+}
+
+:host .calendar-day-wrapper-range-start::before {
+  /* Connect only to the inline-end (right in LTR, left in RTL) */
+  inset-inline-start: 50%;
+  inset-inline-end: 0;
+}
+
+:host .calendar-day-wrapper-in-range::before {
+  /* Full cell width */
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+}
+
+:host .calendar-day-wrapper-range-end::before {
+  /* Connect only from the inline-start (left in LTR, right in RTL) */
+  inset-inline-start: 0;
+  inset-inline-end: 50%;
 }

@@ -15,7 +15,7 @@ import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { GalleryColumns, GalleryGap } from "./components/gallery/gallery-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
@@ -54,7 +54,7 @@ export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimeParts, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { GalleryColumns, GalleryGap } from "./components/gallery/gallery-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
@@ -1204,15 +1204,22 @@ export namespace Components {
          */
         "minuteValues"?: number[] | number | string;
         /**
-          * The mode determines the platform behaviors of the component.
+          * Controls the month navigation mode when using a grid-style layout.  - `"arrows"` (default) preserves the existing prev/next button behaviour. - `"scroll"` swaps the horizontal scroll axis to vertical. The   `previous-button` and `next-button` shadow parts remain in the DOM   and keyboard-focusable in both modes.
+          * @default 'arrows'
          */
-        "mode"?: "ios" | "md";
+        "monthNavigation": 'arrows' | 'scroll';
         /**
           * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
          */
         "monthValues"?: number[] | number | string;
         /**
+          * Controls the month/year picker overlay style when using a grid-style layout.  - `"wheel"` (default) preserves the existing `ion-picker-column` behaviour. - `"grid"` replaces the wheel columns with a month name grid and a year grid   shown simultaneously inside the existing toggle overlay.
+          * @default 'wheel'
+         */
+        "monthYearPickerView": 'wheel' | 'grid';
+        /**
           * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"` and `preferWheel="false"`.
+          * @deprecated Use `selectionMode="multiple"` instead.
           * @default false
          */
         "multiple": boolean;
@@ -1241,6 +1248,10 @@ export namespace Components {
           * @param startDate A valid [ISO-8601 string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#date_time_string_format) to reset the datetime state to.
          */
         "reset": (startDate?: string) => Promise<void>;
+        /**
+          * Controls date selection behaviour when using a grid-style layout.  - `"multiple"` enables toggling of individual dates (replaces the deprecated `multiple` boolean). - `"range"` enables start/end date range selection. `value` will emit a two-element ISO 8601   string array `[startDate, endDate]` once both dates are selected.  Only applies to `presentation="date"` and `preferWheel="false"`. Logs a warning if used with any other `presentation` or with `preferWheel="true"`.
+         */
+        "selectionMode"?: 'multiple' | 'range';
         /**
           * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled.
           * @default false
@@ -1271,10 +1282,6 @@ export namespace Components {
           * @default 'fixed'
          */
         "size": 'cover' | 'fixed';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
         /**
           * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
@@ -7258,15 +7265,22 @@ declare namespace LocalJSX {
          */
         "minuteValues"?: number[] | number | string;
         /**
-          * The mode determines the platform behaviors of the component.
+          * Controls the month navigation mode when using a grid-style layout.  - `"arrows"` (default) preserves the existing prev/next button behaviour. - `"scroll"` swaps the horizontal scroll axis to vertical. The   `previous-button` and `next-button` shadow parts remain in the DOM   and keyboard-focusable in both modes.
+          * @default 'arrows'
          */
-        "mode"?: "ios" | "md";
+        "monthNavigation"?: 'arrows' | 'scroll';
         /**
           * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
          */
         "monthValues"?: number[] | number | string;
         /**
+          * Controls the month/year picker overlay style when using a grid-style layout.  - `"wheel"` (default) preserves the existing `ion-picker-column` behaviour. - `"grid"` replaces the wheel columns with a month name grid and a year grid   shown simultaneously inside the existing toggle overlay.
+          * @default 'wheel'
+         */
+        "monthYearPickerView"?: 'wheel' | 'grid';
+        /**
           * If `true`, multiple dates can be selected at once. Only applies to `presentation="date"` and `preferWheel="false"`.
+          * @deprecated Use `selectionMode="multiple"` instead.
           * @default false
          */
         "multiple"?: boolean;
@@ -7319,6 +7333,10 @@ declare namespace LocalJSX {
          */
         "readonly"?: boolean;
         /**
+          * Controls date selection behaviour when using a grid-style layout.  - `"multiple"` enables toggling of individual dates (replaces the deprecated `multiple` boolean). - `"range"` enables start/end date range selection. `value` will emit a two-element ISO 8601   string array `[startDate, endDate]` once both dates are selected.  Only applies to `presentation="date"` and `preferWheel="false"`. Logs a warning if used with any other `presentation` or with `preferWheel="true"`.
+         */
+        "selectionMode"?: 'multiple' | 'range';
+        /**
           * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled.
           * @default false
          */
@@ -7348,10 +7366,6 @@ declare namespace LocalJSX {
           * @default 'fixed'
          */
         "size"?: 'cover' | 'fixed';
-        /**
-          * The theme determines the visual appearance of the component.
-         */
-        "theme"?: "ios" | "md" | "ionic";
         /**
           * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
@@ -10967,6 +10981,9 @@ declare namespace LocalJSX {
         "locale": string;
         "firstDayOfWeek": number;
         "multiple": boolean;
+        "selectionMode": 'multiple' | 'range';
+        "monthNavigation": 'arrows' | 'scroll';
+        "monthYearPickerView": 'wheel' | 'grid';
         "value": string | string[] | null;
         "showDefaultTitle": boolean;
         "showDefaultButtons": boolean;

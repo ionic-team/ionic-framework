@@ -18,6 +18,7 @@ import type {
   DatetimePresentation,
   DatetimeChangeEventDetail,
   DatetimeParts,
+  DatetimeRangeParts,
   TitleSelectedDatesFormatter,
   DatetimeHighlight,
   DatetimeHighlightStyle,
@@ -110,6 +111,9 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
  * @part datetime-title - The element that contains the `title` slot content.
  * @part datetime-selected-date - The element that contains the selected date.
  */
+/** Number of years shown per page in the `monthYearPickerView="grid"` year grid (4 cols × 6 rows). */
+const YEAR_GRID_PAGE_SIZE = 24;
+
 @Component({
   tag: 'ion-datetime',
   styleUrls: {
@@ -153,7 +157,10 @@ export class Datetime implements ComponentInterface {
 
   @State() showMonthAndYear = false;
 
-  @State() activeParts: DatetimeParts | DatetimeParts[] = [];
+  /** Starting year of the currently displayed year page in the grid picker. */
+  @State() yearGridPageStart = 0;
+
+  @State() activeParts: DatetimeParts | DatetimeParts[] | DatetimeRangeParts = [];
 
   @State() workingParts: DatetimeParts = {
     month: 5,
@@ -403,8 +410,40 @@ export class Datetime implements ComponentInterface {
   /**
    * If `true`, multiple dates can be selected at once. Only
    * applies to `presentation="date"` and `preferWheel="false"`.
+   * @deprecated Use `selectionMode="multiple"` instead.
    */
   @Prop() multiple = false;
+
+  /**
+   * Controls date selection behaviour when using a grid-style layout.
+   *
+   * - `"multiple"` enables toggling of individual dates (replaces the deprecated `multiple` boolean).
+   * - `"range"` enables start/end date range selection. `value` will emit a two-element ISO 8601
+   *   string array `[startDate, endDate]` once both dates are selected.
+   *
+   * Only applies to `presentation="date"` and `preferWheel="false"`.
+   * Logs a warning if used with any other `presentation` or with `preferWheel="true"`.
+   */
+  @Prop() selectionMode?: 'multiple' | 'range';
+
+  /**
+   * Controls the month navigation mode when using a grid-style layout.
+   *
+   * - `"arrows"` (default) preserves the existing prev/next button behaviour.
+   * - `"scroll"` swaps the horizontal scroll axis to vertical. The
+   *   `previous-button` and `next-button` shadow parts remain in the DOM
+   *   and keyboard-focusable in both modes.
+   */
+  @Prop() monthNavigation: 'arrows' | 'scroll' = 'arrows';
+
+  /**
+   * Controls the month/year picker overlay style when using a grid-style layout.
+   *
+   * - `"wheel"` (default) preserves the existing `ion-picker-column` behaviour.
+   * - `"grid"` replaces the wheel columns with a month name grid and a year grid
+   *   shown simultaneously inside the existing toggle overlay.
+   */
+  @Prop() monthYearPickerView: 'wheel' | 'grid' = 'wheel';
 
   /**
    * Used to apply custom text and background colors to specific dates.
@@ -558,20 +597,33 @@ export class Datetime implements ComponentInterface {
      * We only update the value if the presentation is not a calendar picker.
      */
     if (activeParts !== undefined || !isCalendarPicker) {
-      const activePartsIsArray = Array.isArray(activeParts);
-      if (activePartsIsArray && activeParts.length === 0) {
-        if (preferWheel) {
-          /**
-           * If the datetime is using a wheel picker, but the
-           * active parts are empty, then the user has confirmed the
-           * initial value (working parts) presented to them.
-           */
-          this.setValue(convertDataToISO(workingParts));
-        } else {
-          this.setValue(undefined);
+      if (this.isRangeMode) {
+        /**
+         * For range mode, only emit a value once both start and end are selected.
+         * Suppress ionChange for partial ranges (start set, end not yet set) to
+         * avoid sending incomplete data to consumers.
+         */
+        const rangeParts = this.rangeActiveParts;
+        if (rangeParts?.start && rangeParts.end) {
+          this.setValue([convertDataToISO(rangeParts.start), convertDataToISO(rangeParts.end)]);
         }
+        // If range is incomplete, do not emit — wait for the user to pick an end date.
       } else {
-        this.setValue(convertDataToISO(activeParts));
+        const activePartsIsArray = Array.isArray(activeParts);
+        if (activePartsIsArray && (activeParts as DatetimeParts[]).length === 0) {
+          if (preferWheel) {
+            /**
+             * If the datetime is using a wheel picker, but the
+             * active parts are empty, then the user has confirmed the
+             * initial value (working parts) presented to them.
+             */
+            this.setValue(convertDataToISO(workingParts));
+          } else {
+            this.setValue(undefined);
+          }
+        } else {
+          this.setValue(convertDataToISO(activeParts as DatetimeParts | DatetimeParts[]));
+        }
       }
     }
 
@@ -610,8 +662,11 @@ export class Datetime implements ComponentInterface {
   }
 
   private warnIfIncorrectValueUsage = () => {
-    const { multiple, value } = this;
-    if (!multiple && Array.isArray(value)) {
+    const { value } = this;
+    const isMultipleMode = this.isMultipleMode;
+    const isRangeMode = this.isRangeMode;
+
+    if (!isMultipleMode && !isRangeMode && Array.isArray(value)) {
       /**
        * We do some processing on the `value` array so
        * that it looks more like an array when logged to
@@ -621,10 +676,17 @@ export class Datetime implements ComponentInterface {
        * Custom behavior: ['a', 'b']
        */
       printIonWarning(
-        `[ion-datetime] - An array of values was passed, but multiple is "false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+        `[ion-datetime] - An array of values was passed, but multiple/range selection is not enabled. This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property, or set selectionMode="multiple" or selectionMode="range".
 
   Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
 `,
+        this.el
+      );
+    }
+
+    if (isRangeMode && Array.isArray(value) && value.length !== 2) {
+      printIonWarning(
+        `[ion-datetime] - For selectionMode="range", the "value" property should be an array of exactly 2 ISO 8601 date strings [startDate, endDate]. Received ${value.length} value(s).`,
         this.el
       );
     }
@@ -652,7 +714,15 @@ export class Datetime implements ComponentInterface {
 
   private getActivePart = () => {
     const { activeParts } = this;
-    return Array.isArray(activeParts) ? activeParts[0] : activeParts;
+    if (Array.isArray(activeParts)) {
+      return activeParts[0] as DatetimeParts | undefined;
+    }
+    // Range mode: return the start date as the representative active part
+    const rangeParts = this.rangeActiveParts;
+    if (rangeParts) {
+      return rangeParts.start;
+    }
+    return activeParts as DatetimeParts;
   };
 
   private closeParentOverlay = (role: string) => {
@@ -671,6 +741,32 @@ export class Datetime implements ComponentInterface {
     };
   };
 
+  /**
+   * Returns `true` when the datetime is in multiple-date selection mode.
+   * Accounts for both the new `selectionMode="multiple"` prop and the
+   * deprecated `multiple` boolean prop.
+   */
+  private get isMultipleMode() {
+    return this.selectionMode === 'multiple' || (this.selectionMode === undefined && this.multiple);
+  }
+
+  /** Returns `true` when the datetime is in date-range selection mode. */
+  private get isRangeMode() {
+    return this.selectionMode === 'range';
+  }
+
+  /**
+   * Type-guard that checks whether `activeParts` currently holds a
+   * `DatetimeRangeParts` object (`{ start, end? }`).
+   */
+  private get rangeActiveParts(): DatetimeRangeParts | undefined {
+    const { activeParts } = this;
+    if (!Array.isArray(activeParts) && activeParts !== null && typeof activeParts === 'object' && 'start' in activeParts) {
+      return activeParts as DatetimeRangeParts;
+    }
+    return undefined;
+  }
+
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
     /** if the datetime component is in readonly mode,
      * allow browsing of the calendar without changing
@@ -680,7 +776,9 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const { multiple, minParts, maxParts, activeParts } = this;
+    const { minParts, maxParts, activeParts } = this;
+    const isMultipleMode = this.isMultipleMode;
+    const isRangeMode = this.isRangeMode;
 
     /**
      * When setting the active parts, it is possible
@@ -695,12 +793,32 @@ export class Datetime implements ComponentInterface {
     const validatedParts = validateParts(parts, minParts, maxParts);
     this.setWorkingParts(validatedParts);
 
-    if (multiple) {
-      const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts];
+    if (isMultipleMode) {
+      const activePartsArray = Array.isArray(activeParts) ? (activeParts as DatetimeParts[]) : [];
       if (removeDate) {
         this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
       } else {
         this.activeParts = [...activePartsArray, validatedParts];
+      }
+    } else if (isRangeMode) {
+      const current = this.rangeActiveParts;
+
+      /**
+       * If there is no existing start, or if a complete range already exists,
+       * start a fresh range with the tapped day as the start.
+       */
+      if (!current || current.end !== undefined) {
+        this.activeParts = { start: validatedParts };
+      } else {
+        /**
+         * A start exists but no end yet. Commit the end date.
+         * Swap start/end if the tapped date is before the start.
+         */
+        if (isBefore(validatedParts, current.start)) {
+          this.activeParts = { start: validatedParts, end: current.start };
+        } else {
+          this.activeParts = { start: current.start, end: validatedParts };
+        }
       }
     } else {
       this.activeParts = {
@@ -898,18 +1016,69 @@ export class Datetime implements ComponentInterface {
     }
 
     /**
-     * For performance reasons, we only render 3
-     * months at a time: The current month, the previous
-     * month, and the next month. We have a scroll listener
+     * In scroll mode, all months are rendered in a continuous vertical list.
+     * We just scroll to the working month on init and update workingParts
+     * as the user scrolls (for the aria-live region).
+     */
+    if (this.monthNavigation === 'scroll') {
+      writeTask(() => {
+        const workingMonthEl = calendarBodyRef.querySelector<HTMLElement>(
+          `.calendar-month[data-month="${this.workingParts.month}"][data-year="${this.workingParts.year}"]`
+        );
+        if (workingMonthEl) {
+          calendarBodyRef.scrollTop = workingMonthEl.offsetTop;
+        }
+
+        let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
+        const scrollCallback = () => {
+          if (scrollTimeout) clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            /**
+             * Find the month whose top edge is closest to the top of the scroll
+             * container and update workingParts so the aria-live region announces
+             * the correct month to screen readers.
+             */
+            const containerTop = calendarBodyRef.getBoundingClientRect().top;
+            let nearest: HTMLElement | null = null;
+            let nearestDist = Infinity;
+            for (const el of calendarBodyRef.querySelectorAll<HTMLElement>('.calendar-month[data-month]')) {
+              const dist = Math.abs(el.getBoundingClientRect().top - containerTop);
+              if (dist < nearestDist) {
+                nearestDist = dist;
+                nearest = el;
+              }
+            }
+            if (nearest) {
+              const month = Number(nearest.dataset.month);
+              const year = Number(nearest.dataset.year);
+              if (month !== this.workingParts.month || year !== this.workingParts.year) {
+                writeTask(() => this.setWorkingParts({ ...this.workingParts, month, year }));
+              }
+            }
+          }, 50);
+        };
+
+        calendarBodyRef.addEventListener('scroll', scrollCallback);
+        this.destroyCalendarListener = () => {
+          calendarBodyRef.removeEventListener('scroll', scrollCallback);
+        };
+      });
+      return;
+    }
+
+    /**
+     * Horizontal arrows mode — 3-month virtual window with scroll-snap.
+     *
+     * For performance reasons, we only render 3 months at a time: The current
+     * month, the previous month, and the next month. We have a scroll listener
      * on the calendar body to append/prepend new months.
      *
-     * We can do this because Stencil is smart enough to not
-     * re-create the .calendar-month containers, but rather
-     * update the content within those containers.
+     * We can do this because Stencil is smart enough to not re-create the
+     * .calendar-month containers, but rather update the content within those
+     * containers.
      *
-     * As an added bonus, WebKit has some troubles with
-     * scroll-snap-stop: always, so not rendering all of
-     * the months in a row allows us to mostly sidestep
+     * As an added bonus, WebKit has some troubles with scroll-snap-stop: always,
+     * so not rendering all of the months in a row allows us to mostly sidestep
      * that issue.
      */
     const months = calendarBodyRef.querySelectorAll('.calendar-month');
@@ -933,11 +1102,8 @@ export class Datetime implements ComponentInterface {
         const box = calendarBodyRef.getBoundingClientRect();
 
         /**
-         * If the current scroll position is all the way to the left
-         * then we have scrolled to the previous month.
-         * Otherwise, assume that we have scrolled to the next
-         * month. We have a tolerance of 2px to account for
-         * sub pixel rendering.
+         * Horizontal scroll: scrollLeft ≈ 0 (LTR) or ≈ 0 (RTL) means we scrolled
+         * to the previous (leftmost) month.
          *
          * Check below the next line ensures that we did not
          * swipe and abort (i.e. we swiped but we are still on the current month).
@@ -1312,7 +1478,7 @@ export class Datetime implements ComponentInterface {
        * the scroll callback in this file does not fire,
        * and the resolveForceDateScrolling promise never resolves.
        */
-      if (workingMonth && forceRenderDate === undefined) {
+      if (workingMonth && forceRenderDate === undefined && this.monthNavigation !== 'scroll') {
         calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
       }
     }
@@ -1389,7 +1555,16 @@ export class Datetime implements ComponentInterface {
      * `value` property is set.
      */
     if (hasValue) {
-      if (Array.isArray(valueToProcess)) {
+      if (this.isRangeMode && Array.isArray(valueToProcess) && valueToProcess.length >= 2) {
+        /**
+         * For range mode with a two-element array value, map the first element to
+         * `start` and the last element to `end`, clamping both to min/max bounds.
+         */
+        this.activeParts = {
+          start: clampDate(valueToProcess[0], minParts, maxParts),
+          end: clampDate(valueToProcess[valueToProcess.length - 1], minParts, maxParts),
+        };
+      } else if (Array.isArray(valueToProcess)) {
         this.activeParts = [...valueToProcess];
       } else {
         this.activeParts = {
@@ -1470,9 +1645,29 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
-    const { el, formatOptions, highlightedDates, multiple, presentation, preferWheel } = this;
+    const { el, formatOptions, highlightedDates, multiple, selectionMode, monthNavigation, presentation, preferWheel } = this;
 
-    if (multiple) {
+    /**
+     * When monthYearPickerView="grid" and the presentation is month/month-year/year,
+     * the grid is always visible (no toggle), so we must pre-initialize the year page.
+     */
+    if (this.monthYearPickerView === 'grid') {
+      this.yearGridPageStart =
+        Math.floor(this.workingParts.year / YEAR_GRID_PAGE_SIZE) * YEAR_GRID_PAGE_SIZE;
+    }
+
+    /**
+     * Warn when the deprecated `multiple` boolean is used.
+     * Developers should migrate to `selectionMode="multiple"`.
+     */
+    if (multiple && selectionMode === undefined) {
+      printIonWarning(
+        '[ion-datetime] - The `multiple` prop is deprecated. Use `selectionMode="multiple"` instead.',
+        el
+      );
+    }
+
+    if (multiple || selectionMode === 'multiple') {
       if (presentation !== 'date') {
         printIonWarning('[ion-datetime] - Multiple date selection is only supported for presentation="date".', el);
       }
@@ -1480,6 +1675,23 @@ export class Datetime implements ComponentInterface {
       if (preferWheel) {
         printIonWarning('[ion-datetime] - Multiple date selection is not supported with preferWheel="true".', el);
       }
+    }
+
+    if (selectionMode === 'range') {
+      if (presentation !== 'date') {
+        printIonWarning('[ion-datetime] - Range date selection is only supported for presentation="date".', el);
+      }
+
+      if (preferWheel) {
+        printIonWarning('[ion-datetime] - Range date selection is not supported with preferWheel="true".', el);
+      }
+    }
+
+    if (monthNavigation === 'scroll' && preferWheel) {
+      printIonWarning(
+        '[ion-datetime] - monthNavigation="scroll" has no effect when preferWheel="true".',
+        el
+      );
     }
 
     if (highlightedDates !== undefined) {
@@ -1558,13 +1770,25 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const left = (nextMonth as HTMLElement).offsetWidth * 2;
-
-    calendarBodyRef.scrollTo({
-      top: 0,
-      left: left * (isRTL(this.el) ? -1 : 1),
-      behavior: 'smooth',
-    });
+    if (this.monthNavigation === 'scroll') {
+      /**
+       * Vertical scroll mode: navigate to the next month card in the continuous list.
+       */
+      const nextParts = getNextMonth(this.workingParts);
+      const nextEl = calendarBodyRef.querySelector<HTMLElement>(
+        `.calendar-month[data-month="${nextParts.month}"][data-year="${nextParts.year}"]`
+      );
+      if (nextEl) {
+        calendarBodyRef.scrollTo({ top: nextEl.offsetTop, behavior: 'smooth' });
+      }
+    } else {
+      const left = (nextMonth as HTMLElement).offsetWidth * 2;
+      calendarBodyRef.scrollTo({
+        top: 0,
+        left: left * (isRTL(this.el) ? -1 : 1),
+        behavior: 'smooth',
+      });
+    }
   };
 
   private prevMonth = () => {
@@ -1578,17 +1802,37 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const left = (prevMonth as HTMLElement).offsetWidth * 2;
-
-    calendarBodyRef.scrollTo({
-      top: 0,
-      left: left * (isRTL(this.el) ? 1 : -1),
-      behavior: 'smooth',
-    });
+    if (this.monthNavigation === 'scroll') {
+      /**
+       * Vertical scroll mode: navigate to the previous month card in the continuous list.
+       */
+      const prevParts = getPreviousMonth(this.workingParts);
+      const prevEl = calendarBodyRef.querySelector<HTMLElement>(
+        `.calendar-month[data-month="${prevParts.month}"][data-year="${prevParts.year}"]`
+      );
+      if (prevEl) {
+        calendarBodyRef.scrollTo({ top: prevEl.offsetTop, behavior: 'smooth' });
+      }
+    } else {
+      const left = (prevMonth as HTMLElement).offsetWidth * 2;
+      calendarBodyRef.scrollTo({
+        top: 0,
+        left: left * (isRTL(this.el) ? 1 : -1),
+        behavior: 'smooth',
+      });
+    }
   };
 
   private toggleMonthAndYearView = () => {
     this.showMonthAndYear = !this.showMonthAndYear;
+    if (this.showMonthAndYear && this.monthYearPickerView === 'grid') {
+      /**
+       * Reset the year page to the one containing the current working year
+       * every time the grid picker opens.
+       */
+      this.yearGridPageStart =
+        Math.floor(this.workingParts.year / YEAR_GRID_PAGE_SIZE) * YEAR_GRID_PAGE_SIZE;
+    }
   };
 
   /**
@@ -2208,6 +2452,62 @@ export class Datetime implements ComponentInterface {
    * Grid Render Methods
    */
 
+  /**
+   * In `monthNavigation="scroll"` mode, a sliding window of months is rendered
+   * in a vertical list. Only a portion of the list is visible at a time — the
+   * rest scrolls into view. The window is 6 months before and 6 months after the
+   * current working month (13 total), clamped to min/max bounds.
+   */
+  private generateScrollModeMonths(): DatetimeParts[] {
+    const { minParts, maxParts, workingParts } = this;
+    const WINDOW = 6; // months before and after the working month
+
+    // Compute window start (workingMonth - WINDOW)
+    let startMonth = workingParts.month - WINDOW;
+    let startYear = workingParts.year;
+    while (startMonth <= 0) {
+      startMonth += 12;
+      startYear--;
+    }
+
+    // Compute window end (workingMonth + WINDOW)
+    let endMonth = workingParts.month + WINDOW;
+    let endYear = workingParts.year;
+    while (endMonth > 12) {
+      endMonth -= 12;
+      endYear++;
+    }
+
+    // Clamp to min/max bounds
+    if (minParts) {
+      const minM = minParts.month ?? 1;
+      if (startYear < minParts.year || (startYear === minParts.year && startMonth < minM)) {
+        startYear = minParts.year;
+        startMonth = minM;
+      }
+    }
+    if (maxParts) {
+      const maxM = maxParts.month ?? 12;
+      if (endYear > maxParts.year || (endYear === maxParts.year && endMonth > maxM)) {
+        endYear = maxParts.year;
+        endMonth = maxM;
+      }
+    }
+
+    const result: DatetimeParts[] = [];
+    let y = startYear;
+    let m = startMonth;
+    while (y < endYear || (y === endYear && m <= endMonth)) {
+      result.push({ year: y, month: m, day: null });
+      m++;
+      if (m > 12) {
+        m = 1;
+        y++;
+      }
+    }
+    return result;
+  }
+
   private renderCalendarHeader(theme: Theme) {
     const { disabled, datetimeNextIcon, datetimePreviousIcon, datetimeCollapsedIcon, datetimeExpandedIcon } = this;
 
@@ -2219,6 +2519,15 @@ export class Datetime implements ComponentInterface {
 
     return (
       <div class="calendar-header" part="calendar-header">
+        {/*
+          Visually-hidden live region that announces the newly-visible month to
+          screen readers when `workingParts` changes. This is especially important
+          for `monthNavigation="scroll"` where the scroll gesture alone is not
+          sufficient for keyboard/AT users to detect the month change.
+        */}
+        <div class="calendar-month-year-announce" aria-live="polite" aria-atomic="true">
+          {getMonthAndYear(this.locale, this.workingParts)}
+        </div>
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
             <button
@@ -2288,8 +2597,13 @@ export class Datetime implements ComponentInterface {
       </div>
     );
   }
-  private renderMonth(month: number, year: number) {
+  /**
+   * @param theme - When provided (scroll mode), an inline month/year heading and
+   *   days-of-week row are rendered inside each month card.
+   */
+  private renderMonth(month: number, year: number, theme?: Theme) {
     const { disabled, readonly } = this;
+    const isScrollMode = theme !== undefined;
 
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
     const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
@@ -2320,18 +2634,39 @@ export class Datetime implements ComponentInterface {
 
     return (
       <div
-        // Non-visible months should be hidden from screen readers
-        aria-hidden={!isWorkingMonth ? 'true' : null}
+        // In scroll mode all months are visible; in arrows mode only the working
+        // month is exposed to the accessibility tree.
+        aria-hidden={!isScrollMode && !isWorkingMonth ? 'true' : null}
+        // data attributes used by initializeCalendarListener to scroll-to on init
+        data-month={month}
+        data-year={year}
         class={{
           'calendar-month': true,
           // Prevents scroll snap swipe gestures for months outside of the min/max bounds
-          'calendar-month-disabled': !isWorkingMonth && swipeDisabled,
+          'calendar-month-disabled': !isScrollMode && !isWorkingMonth && swipeDisabled,
         }}
       >
+        {/* Per-month heading rendered only in scroll mode */}
+        {isScrollMode && (
+          <div class="calendar-month-scroll-heading" aria-hidden="true">
+            {getMonthAndYear(this.locale, { month, year, day: null })}
+          </div>
+        )}
+        {/* Days-of-week repeated per month in scroll mode */}
+        {isScrollMode && theme && (
+          <div class="calendar-days-of-week" aria-hidden="true" part="calendar-days-of-week">
+            {getDaysOfWeek(this.locale, theme, this.firstDayOfWeek % 7).map((d) => (
+              <div class="day-of-week">{d}</div>
+            ))}
+          </div>
+        )}
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7, this.showAdjacentDays).map((dateObject, index) => {
             const { day, dayOfWeek, isAdjacentDay } = dateObject;
-            const { el, highlightedDates, isDateEnabled, multiple, showAdjacentDays } = this;
+            const { el, highlightedDates, isDateEnabled, showAdjacentDays } = this;
+            const isMultipleMode = this.isMultipleMode;
+            const isRangeMode = this.isRangeMode;
+
             let _month = month;
             let _year = year;
             if (showAdjacentDays && isAdjacentDay && day !== null) {
@@ -2358,6 +2693,15 @@ export class Datetime implements ComponentInterface {
 
             const referenceParts = { month: _month, day, year: _year, isAdjacentDay };
             const isCalendarPadding = day === null;
+
+            /**
+             * In range mode, pass `[]` as `activeParts` (so the existing "isActive"
+             * logic stays false for individual days) and pass the current range to
+             * the new `rangeParts` parameter instead.
+             */
+            const rangeParts = isRangeMode ? this.rangeActiveParts : undefined;
+            const activepartsForState = isRangeMode ? [] : (this.activeParts as DatetimeParts | DatetimeParts[]);
+
             const {
               isActive,
               isToday,
@@ -2365,14 +2709,18 @@ export class Datetime implements ComponentInterface {
               ariaSelected,
               disabled: isDayDisabled,
               text,
+              isRangeStart,
+              isInRange,
+              isRangeEnd,
             } = getCalendarDayState(
               this.locale,
               referenceParts,
-              this.activeParts,
+              activepartsForState,
               this.todayParts,
               this.minParts,
               this.maxParts,
-              this.parsedDayValues
+              this.parsedDayValues,
+              rangeParts
             );
 
             const dateIsoString = convertDataToISO(referenceParts);
@@ -2428,7 +2776,20 @@ export class Datetime implements ComponentInterface {
             }
 
             return (
-              <div class="calendar-day-wrapper">
+              <div
+                class={{
+                  'calendar-day-wrapper': true,
+                  /**
+                   * Range-highlight track classes.
+                   * Applied to the wrapper (not the button) so that a continuous
+                   * pseudo-element background can span the full grid cell width,
+                   * including the gaps between the circular day buttons.
+                   */
+                  'calendar-day-wrapper-range-start': isRangeStart && !isCalendarPadding,
+                  'calendar-day-wrapper-in-range': isInRange && !isCalendarPadding,
+                  'calendar-day-wrapper-range-end': isRangeEnd && !isCalendarPadding,
+                }}
+              >
                 <button
                   // We need to use !important for the inline styles here because
                   // otherwise the CSS shadow parts will override these styles.
@@ -2461,6 +2822,9 @@ export class Datetime implements ComponentInterface {
                     'calendar-day-constrained': isCalDayConstrained,
                     'calendar-day-today': isToday,
                     'calendar-day-adjacent-day': isAdjacentDay,
+                    'calendar-day-range-start': isRangeStart,
+                    'calendar-day-in-range': isInRange,
+                    'calendar-day-range-end': isRangeEnd,
                   }}
                   part={dateParts}
                   aria-hidden={isCalendarPadding ? 'true' : null}
@@ -2474,18 +2838,25 @@ export class Datetime implements ComponentInterface {
                     if (isAdjacentDay) {
                       // The user selected a day outside the current month. Ignore this button, as the month will be re-rendered.
                       this.el.blur();
-                      this.activeParts = { ...activePart, ...referenceParts };
-                      this.animateToDate(referenceParts);
-                      this.confirm();
+                      if (isRangeMode) {
+                        this.setActiveParts(referenceParts);
+                      } else {
+                        this.activeParts = { ...activePart, ...referenceParts };
+                        this.animateToDate(referenceParts);
+                        this.confirm();
+                      }
                     } else {
                       this.setWorkingParts({
                         ...this.workingParts,
                         ...referenceParts,
                       });
 
-                      // Multiple only needs date info so we can wipe out other fields like time.
-                      if (multiple) {
+                      if (isMultipleMode) {
+                        // Multiple only needs date info so we can wipe out other fields like time.
                         this.setActiveParts(referenceParts, isActive);
+                      } else if (isRangeMode) {
+                        // Range mode: setActiveParts handles start/end toggling internally.
+                        this.setActiveParts(referenceParts);
                       } else {
                         this.setActiveParts({
                           ...activePart,
@@ -2504,20 +2875,37 @@ export class Datetime implements ComponentInterface {
       </div>
     );
   }
-  private renderCalendarBody() {
+  private renderCalendarBody(theme: Theme) {
+    const isScrollMode = this.monthNavigation === 'scroll';
+    const months = isScrollMode
+      ? this.generateScrollModeMonths()
+      : generateMonths(this.workingParts, this.forceRenderDate);
+
     return (
       <div class="calendar-body ion-focusable" ref={(el) => (this.calendarBodyRef = el)} tabindex="0">
-        {generateMonths(this.workingParts, this.forceRenderDate).map(({ month, year }) => {
-          return this.renderMonth(month, year);
-        })}
+        {months.map(({ month, year }) => this.renderMonth(month, year, isScrollMode ? theme : undefined))}
       </div>
     );
   }
   private renderCalendar(theme: Theme) {
+    const isScrollMode = this.monthNavigation === 'scroll';
     return (
       <div class="datetime-calendar" key="datetime-calendar">
-        {this.renderCalendarHeader(theme)}
-        {this.renderCalendarBody()}
+        {/*
+         * In scroll mode the per-month headings replace the shared header.
+         * We still render a minimal header so the visually-hidden aria-live
+         * region is present for screen readers.
+         */}
+        {isScrollMode ? (
+          <div class="calendar-header" part="calendar-header">
+            <div class="calendar-month-year-announce" aria-live="polite" aria-atomic="true">
+              {getMonthAndYear(this.locale, this.workingParts)}
+            </div>
+          </div>
+        ) : (
+          this.renderCalendarHeader(theme)
+        )}
+        {this.renderCalendarBody(theme)}
       </div>
     );
   }
@@ -2601,18 +2989,40 @@ export class Datetime implements ComponentInterface {
   }
 
   private getHeaderSelectedDateText() {
-    const { activeParts, formatOptions, multiple, titleSelectedDatesFormatter } = this;
+    const { activeParts, formatOptions, titleSelectedDatesFormatter } = this;
+    const isMultipleMode = this.isMultipleMode;
+    const isRangeMode = this.isRangeMode;
     const isArray = Array.isArray(activeParts);
 
     let headerText: string;
-    if (multiple && isArray && activeParts.length !== 1) {
-      headerText = `${activeParts.length} days`; // default/fallback for multiple selection
+    if (isMultipleMode && isArray && (activeParts as DatetimeParts[]).length !== 1) {
+      headerText = `${(activeParts as DatetimeParts[]).length} days`; // default/fallback for multiple selection
       if (titleSelectedDatesFormatter !== undefined) {
         try {
-          headerText = titleSelectedDatesFormatter(convertDataToISO(activeParts));
+          headerText = titleSelectedDatesFormatter(convertDataToISO(activeParts as DatetimeParts[]));
         } catch (e) {
           printIonError('[ion-datetime] - Exception in provided `titleSelectedDatesFormatter`:', e);
         }
+      }
+    } else if (isRangeMode) {
+      const rangeParts = this.rangeActiveParts;
+      const dateFormat = formatOptions?.date ?? { month: 'short', day: 'numeric' };
+      if (rangeParts?.start && rangeParts.end) {
+        const startText = getLocalizedDateTime(this.locale, rangeParts.start, dateFormat);
+        const endText = getLocalizedDateTime(this.locale, rangeParts.end, dateFormat);
+        headerText = `${startText} – ${endText}`;
+      } else if (rangeParts?.start) {
+        headerText = getLocalizedDateTime(
+          this.locale,
+          rangeParts.start,
+          formatOptions?.date ?? { weekday: 'short', month: 'short', day: 'numeric' }
+        );
+      } else {
+        headerText = getLocalizedDateTime(
+          this.locale,
+          this.getActivePartsWithFallback(),
+          formatOptions?.date ?? { weekday: 'short', month: 'short', day: 'numeric' }
+        );
       }
     } else {
       // for exactly 1 day selected (multiple set or not), show a formatted version of that
@@ -2663,14 +3073,137 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
+   * Renders a grid-based month/year picker overlay.
+   * Used when `monthYearPickerView="grid"` and the user opens the overlay by
+   * clicking the `month-year-button`.
+   *
+   * - Month section: 3-column × 4-row grid of all 12 month names.
+   * - Year section: 4-column × 6-row paginated grid of years, with prev/next
+   *   arrows to navigate between pages of YEAR_GRID_PAGE_SIZE years.
+   *
+   * Selecting a month or year cell updates `workingParts` and closes the overlay.
+   */
+  private renderMonthYearGrid() {
+    const { locale, workingParts, minParts, maxParts, parsedMonthValues, parsedYearValues, datetimePreviousIcon, datetimeNextIcon } = this;
+
+    const months = getMonthColumnData(locale, workingParts, minParts, maxParts, parsedMonthValues);
+
+    // Build the page of YEAR_GRID_PAGE_SIZE years to display
+    const pageStart = this.yearGridPageStart;
+    const pageEnd = pageStart + YEAR_GRID_PAGE_SIZE - 1;
+
+    // Determine the full available year range (same logic as getYearColumnData)
+    const minYear = minParts?.year ?? workingParts.year - 100;
+    const maxYear = maxParts?.year ?? workingParts.year;
+
+    const prevPageDisabled = pageStart <= minYear;
+    const nextPageDisabled = pageEnd >= maxYear;
+
+    const hostDir = this.el.getAttribute('dir') || undefined;
+
+    // Generate years for the current page, clamped to min/max
+    const pageYears: number[] = [];
+    for (let y = pageStart; y <= pageEnd; y++) {
+      if (y < minYear || y > maxYear) continue;
+      if (parsedYearValues !== undefined && !parsedYearValues.includes(y)) continue;
+      pageYears.push(y);
+    }
+
+    return (
+      <div class="month-year-grid-container">
+        {/* Month name grid — 3 columns × 4 rows */}
+        <div class="month-year-grid" role="grid" aria-label="Select month">
+          {months.map((month) => (
+            <button
+              key={month.value}
+              role="gridcell"
+              class={{
+                'month-year-grid-cell': true,
+                'month-year-grid-cell-active': month.value === workingParts.month,
+              }}
+              disabled={month.disabled}
+              aria-selected={month.value === workingParts.month ? 'true' : 'false'}
+              onClick={() => {
+                this.setWorkingParts({ ...workingParts, month: month.value as number });
+                this.toggleMonthAndYearView();
+              }}
+            >
+              {month.text}
+            </button>
+          ))}
+        </div>
+
+        {/* Year section: pagination arrows + 4-column grid */}
+        <div class="month-year-grid-year-section">
+          <div class="month-year-grid-year-nav" aria-label="Year navigation">
+            <ion-button
+              fill="clear"
+              size="small"
+              disabled={prevPageDisabled}
+              aria-label="Previous years"
+              onClick={() => { this.yearGridPageStart -= YEAR_GRID_PAGE_SIZE; }}
+            >
+              <ion-icon dir={hostDir} aria-hidden="true" slot="icon-only" icon={datetimePreviousIcon} lazy={false} flipRtl></ion-icon>
+            </ion-button>
+            <ion-button
+              fill="clear"
+              size="small"
+              disabled={nextPageDisabled}
+              aria-label="Next years"
+              onClick={() => { this.yearGridPageStart += YEAR_GRID_PAGE_SIZE; }}
+            >
+              <ion-icon dir={hostDir} aria-hidden="true" slot="icon-only" icon={datetimeNextIcon} lazy={false} flipRtl></ion-icon>
+            </ion-button>
+          </div>
+
+          <div class="month-year-grid month-year-grid-years" role="grid" aria-label="Select year">
+            {pageYears.map((year) => {
+              const isDisabled =
+                year < minYear ||
+                year > maxYear ||
+                (parsedYearValues !== undefined && !parsedYearValues.includes(year));
+              return (
+                <button
+                  key={year}
+                  role="gridcell"
+                  class={{
+                    'month-year-grid-cell': true,
+                    'month-year-grid-cell-active': year === workingParts.year,
+                  }}
+                  disabled={isDisabled}
+                  aria-selected={year === workingParts.year ? 'true' : 'false'}
+                  onClick={() => {
+                    this.setWorkingParts({ ...workingParts, year });
+                    this.toggleMonthAndYearView();
+                  }}
+                >
+                  {year}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /**
    * Renders the month/year picker that is
    * displayed on the calendar grid.
    * The .datetime-year class has additional
    * styles that let us show/hide the
    * picker when the user clicks on the
    * toggle in the calendar header.
+   *
+   * When `monthYearPickerView="grid"`, a grid-based picker is rendered
+   * instead of the default `ion-picker-column` wheel columns. The toggle
+   * mechanism (`showMonthAndYear`, `month-year-button` shadow part) is
+   * preserved in both modes.
    */
   private renderCalendarViewMonthYearPicker() {
+    if (this.monthYearPickerView === 'grid') {
+      return <div class="datetime-year">{this.renderMonthYearGrid()}</div>;
+    }
     return <div class="datetime-year">{this.renderWheelView('month-year')}</div>;
   }
 
@@ -2713,6 +3246,14 @@ export class Datetime implements ComponentInterface {
       case 'month':
       case 'month-year':
       case 'year':
+        /**
+         * When monthYearPickerView="grid", render the grid picker inline instead
+         * of the default wheel columns. The grid is not wrapped in .datetime-year
+         * here because there is no toggle — it is always visible.
+         */
+        if (this.monthYearPickerView === 'grid') {
+          return [this.renderHeader(false), this.renderMonthYearGrid(), this.renderFooter()];
+        }
         return [this.renderHeader(false), this.renderWheelView(), this.renderFooter()];
       default:
         return [
@@ -2850,6 +3391,9 @@ export class Datetime implements ComponentInterface {
             [`datetime-size-${size}`]: true,
             [`datetime-prefer-wheel`]: hasWheelVariant,
             [`datetime-grid`]: isGridStyle,
+            [`datetime-month-navigation-${this.monthNavigation}`]: isGridStyle,
+            [`datetime-month-year-picker-${this.monthYearPickerView}`]: isGridStyle,
+            [`datetime-selection-mode-${this.selectionMode ?? 'single'}`]: isGridStyle,
           }),
         }}
       >

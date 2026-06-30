@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Range Selection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .grid-item {
+        margin-bottom: 20px;
+        margin-right: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      ion-datetime {
+        box-shadow: 0px 8px 16px 0 rgba(0, 0, 0, 0.25);
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Range Selection</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Default Value</h2>
+            <ion-datetime
+              locale="en-US"
+              id="noDefaultValue"
+              presentation="date"
+              selection-mode="range"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>With Range Value</h2>
+            <ion-datetime
+              locale="en-US"
+              id="withRangeValue"
+              presentation="date"
+              selection-mode="range"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Start Only (Partial Range)</h2>
+            <ion-datetime
+              locale="en-US"
+              id="startOnly"
+              presentation="date"
+              selection-mode="range"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>With Buttons</h2>
+            <ion-datetime
+              locale="en-US"
+              id="withButtons"
+              presentation="date"
+              selection-mode="range"
+              show-default-buttons="true"
+              show-clear-button="true"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>With Min/Max</h2>
+            <ion-datetime
+              locale="en-US"
+              id="withMinMax"
+              presentation="date"
+              selection-mode="range"
+              min="2022-06-05"
+              max="2022-06-25"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Cross-Month Range</h2>
+            <ion-datetime
+              locale="en-US"
+              id="crossMonth"
+              presentation="date"
+              selection-mode="range"
+            ></ion-datetime>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      document.querySelector('#withRangeValue').value = ['2022-06-10', '2022-06-20'];
+      document.querySelector('#startOnly').value = ['2022-06-10'];
+      document.querySelector('#withButtons').value = ['2022-06-10', '2022-06-20'];
+      document.querySelector('#withMinMax').value = ['2022-06-10', '2022-06-20'];
+      document.querySelector('#crossMonth').value = ['2022-05-25', '2022-06-10'];
+    </script>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Month Navigation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .grid-item {
+        margin-bottom: 20px;
+        margin-right: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      ion-datetime {
+        box-shadow: 0px 8px 16px 0 rgba(0, 0, 0, 0.25);
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Month Navigation</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Arrows (Default)</h2>
+            <ion-datetime
+              locale="en-US"
+              id="arrows"
+              presentation="date"
+              value="2022-06-15"
+              month-navigation="arrows"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Scroll</h2>
+            <ion-datetime
+              locale="en-US"
+              id="scroll"
+              presentation="date"
+              value="2022-06-15"
+              month-navigation="scroll"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Scroll - With Min/Max</h2>
+            <ion-datetime
+              locale="en-US"
+              id="scrollMinMax"
+              presentation="date"
+              value="2022-06-15"
+              month-navigation="scroll"
+              min="2022-04-01"
+              max="2022-09-30"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Scroll - With Buttons</h2>
+            <ion-datetime
+              locale="en-US"
+              id="scrollWithButtons"
+              presentation="date"
+              value="2022-06-15"
+              month-navigation="scroll"
+              show-default-buttons="true"
+            ></ion-datetime>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>
