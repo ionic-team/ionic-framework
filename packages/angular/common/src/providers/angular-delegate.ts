@@ -236,11 +236,15 @@ export const attachView = (
 
   /**
    * Run change detection on the freshly attached view so Angular's init hooks
-   * (`ngOnInit`, `ngAfterViewInit`) fire before the web component dispatches its
-   * Ionic lifecycle events (`ionViewWillEnter`, etc.). `createComponent` only runs
-   * the creation pass. The init hooks run during an update pass. Under Zone.js an
+   * (`ngOnInit`, `ngAfterViewInit`) fire and template bindings (e.g.
+   * `<ion-nav [root]="rootPage">`) apply during this synchronous pass, before the
+   * web component runs its load lifecycle and dispatches its Ionic lifecycle events
+   * (`ionViewWillEnter`, etc.). `createComponent` only runs the creation pass; the
+   * init hooks and binding updates run during an update pass. Under Zone.js an
    * implicit tick used to cover this, but zoneless Angular schedules no such tick,
-   * so without this the first `ionViewWillEnter` could run before `ngOnInit`.
+   * so without this the binding could land after the element has loaded (too late
+   * for `ion-nav` to read it) and the first `ionViewWillEnter` could run before
+   * `ngOnInit`.
    */
   componentRef.changeDetectorRef.detectChanges();
 
