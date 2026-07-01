@@ -1,4 +1,44 @@
-import { inheritAriaAttributes } from './helpers';
+import { inheritAriaAttributes, isEndSide } from './helpers';
+
+describe('isEndSide', () => {
+  afterEach(() => {
+    document.dir = 'ltr';
+  });
+
+  it('should use document direction when no host element is provided', () => {
+    document.dir = 'rtl';
+    expect(isEndSide('start')).toBe(true);
+    expect(isEndSide('end')).toBe(false);
+  });
+
+  it('should use the nearest ancestor dir attribute', () => {
+    document.dir = 'ltr';
+
+    const app = document.createElement('ion-app');
+    app.setAttribute('dir', 'rtl');
+
+    const menu = document.createElement('ion-menu');
+    app.appendChild(menu);
+    document.body.appendChild(app);
+
+    expect(isEndSide('start', menu)).toBe(true);
+    expect(isEndSide('end', menu)).toBe(false);
+
+    document.body.removeChild(app);
+  });
+
+  it('should fall back to document direction when no ancestor has dir', () => {
+    document.dir = 'rtl';
+
+    const menu = document.createElement('ion-menu');
+    document.body.appendChild(menu);
+
+    expect(isEndSide('start', menu)).toBe(true);
+    expect(isEndSide('end', menu)).toBe(false);
+
+    document.body.removeChild(menu);
+  });
+});
 
 describe('inheritAriaAttributes', () => {
   it('should inherit aria attributes', () => {
