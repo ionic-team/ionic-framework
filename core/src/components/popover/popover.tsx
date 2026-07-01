@@ -731,16 +731,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
     return (
       <Host
-        /*
-          `aria-modal` is only meaningful on an element with role `dialog`
-          or `alertdialog` per the ARIA spec; without a role, assistive
-          technologies ignore it. `role` is listed before the
-          `htmlAttributes` spread so consumers can still override it (e.g.
-          with `menu` for a menu-style popover) by passing their own
-          `role` in `htmlAttributes`, the same convention used by modal
-          and alert.
-        */
-        role="dialog"
         aria-modal="true"
         no-router
         tabindex="-1"
