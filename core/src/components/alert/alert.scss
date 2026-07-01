@@ -199,6 +199,46 @@
 }
 
 
+// Alert Option: Label Placement
+// --------------------------------------------------
+
+/**
+ * Label is on the right of the radio in LTR and
+ * on the left in RTL.
+ */
+.radio-label-placement-start,
+.checkbox-label-placement-start {
+  flex-direction: row-reverse;
+}
+
+/**
+ * Label is on the left of the radio in LTR and
+ * on the right in RTL.
+ */
+.radio-label-placement-end,
+.checkbox-label-placement-end {
+  flex-direction: row;
+}
+
+// Alert Option: Justify
+// --------------------------------------------------
+
+.radio-justify-start,
+.checkbox-justify-start {
+  justify-content: start;
+}
+
+.radio-justify-end,
+.checkbox-justify-end {
+  justify-content: end;
+}
+
+.radio-justify-space-between,
+.checkbox-justify-space-between {
+  justify-content: space-between;
+}
+
+
 // Alert Button: Disabled
 // --------------------------------------------------
 .alert-input-disabled,

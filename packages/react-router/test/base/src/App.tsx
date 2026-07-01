@@ -69,6 +69,7 @@ import TabLifecycleOutside from './pages/tab-lifecycle/TabLifecycleOutside';
 import { RouterLinkModifierClick, RouterLinkModifierClickTarget } from './pages/router-link-modifier-click/RouterLinkModifierClick';
 import { NavigateRootPageA, NavigateRootPageB, NavigateRootPageC } from './pages/navigate-root/NavigateRoot';
 import SuspenseOutlet from './pages/suspense-outlet/SuspenseOutlet';
+import { PropsUpdateDirect, PropsUpdateRoutesWrapper } from './pages/props-update/PropsUpdate';
 
 setupIonicReact();
 
@@ -136,6 +137,8 @@ const App: React.FC = () => {
           <Route path="/navigate-root/page-b" element={<NavigateRootPageB />} />
           <Route path="/navigate-root/page-c" element={<NavigateRootPageC />} />
           <Route path="/suspense-outlet/*" element={<SuspenseOutlet />} />
+          <Route path="/props-update-routes/*" element={<PropsUpdateRoutesWrapper />} />
+          <Route path="/props-update-direct/*" element={<PropsUpdateDirect />} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

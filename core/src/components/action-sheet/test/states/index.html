@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Action Sheet - States</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+  <script type="module">
+    import { actionSheetController } from '../../../../dist/ionic/index.esm.js';
+    window.actionSheetController = actionSheetController;
+  </script>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Action Sheet - States</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <button class="expand" id="basic" onclick="presentBasic()">Basic</button>
+      </ion-content>
+    </ion-app>
+
+    <style>
+      #delete-button {
+        color: #eb445a;
+      }
+    </style>
+    <script>
+      window.addEventListener('ionActionSheetDidDismiss', function (e) {
+        console.log('didDismiss', e);
+      });
+
+      async function presentBasic() {
+        const actionSheet = await actionSheetController.create({
+          header: 'Albums',
+          subHeader: 'This is a sub header inside of an action sheet',
+          buttons: [
+            {
+              text: 'Default',
+              icon: 'ellipse-outline',
+            },
+            {
+              text: 'Activated',
+              icon: 'flash',
+              cssClass: 'ion-activated',
+            },
+            {
+              text: 'Focused',
+              icon: 'eye',
+              cssClass: 'ion-focused',
+            },
+            {
+              text: 'Selected',
+              icon: 'checkmark-circle',
+              role: 'selected',
+            },
+            {
+              text: 'Disabled',
+              icon: 'ban',
+              disabled: true,
+            },
+          ],
+        });
+
+        await actionSheet.present();
+
+        // Swap the first button's label to "Hovered" while it's hovered so
+        // the state is obvious.
+        const defaultButton = actionSheet.querySelector('button.action-sheet-button');
+        const label = defaultButton?.querySelector('.action-sheet-button-label');
+
+        if (label) {
+          const original = label.textContent;
+
+          defaultButton.addEventListener('mouseenter', () => {
+            label.textContent = 'Hovered';
+          });
+
+          defaultButton.addEventListener('mouseleave', () => {
+            label.textContent = original;
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

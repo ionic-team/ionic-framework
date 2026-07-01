@@ -1,3 +1,4 @@
+@use "../select-option/select-option.ios.overlay";
 @import "./alert";
 @import "./alert.ios.vars";
 
@@ -146,9 +147,6 @@
 .alert-radio-label {
   @include padding($alert-ios-radio-label-padding-top, $alert-ios-radio-label-padding-end, $alert-ios-radio-label-padding-bottom, $alert-ios-radio-label-padding-start);
 
-  flex: 1;
-  order: 0;
-
   color: $alert-ios-radio-label-text-color;
 }
 
@@ -167,7 +165,7 @@
 .alert-radio-icon {
   position: relative;
 
-  order: 1;
+  flex-shrink: 0;
 
   min-width: $alert-ios-radio-min-width;
 }
@@ -176,8 +174,8 @@
 // iOS Alert Radio Checked
 // -----------------------------------------
 
-[aria-checked=true] .alert-radio-inner {
-  @include position($alert-ios-radio-icon-top, null, null, $alert-ios-radio-icon-start);
+[aria-checked="true"] .alert-radio-inner {
+  @include position($alert-ios-radio-icon-top, null, null, null);
 
   position: absolute;
 
@@ -193,14 +191,21 @@
   border-color: $alert-ios-radio-icon-border-color;
 }
 
+// The icon's inline offset gives it a gap from whichever edge the icon
+// sits on, which depends on label placement
+[aria-checked="true"] .radio-label-placement-end .alert-radio-inner {
+  @include position-horizontal(null, $alert-ios-radio-icon-start);
+}
+
+[aria-checked="true"] .radio-label-placement-start .alert-radio-inner {
+  @include position-horizontal($alert-ios-radio-icon-start, null);
+}
 
 // iOS Alert Checkbox Label
 // --------------------------------------------------
 
 .alert-checkbox-label {
   @include padding($alert-ios-checkbox-label-padding-top, $alert-ios-checkbox-label-padding-end, $alert-ios-checkbox-label-padding-bottom, $alert-ios-checkbox-label-padding-start);
-
-  flex: 1;
 
   color: $alert-ios-checkbox-label-text-color;
 }
@@ -210,9 +215,11 @@
 
 .alert-checkbox-icon {
   @include border-radius($alert-ios-checkbox-border-radius);
-  @include margin($alert-ios-checkbox-margin-top, $alert-ios-checkbox-margin-end, $alert-ios-checkbox-margin-bottom, $alert-ios-checkbox-margin-start);
+  @include margin($alert-ios-checkbox-margin-top, null, $alert-ios-checkbox-margin-bottom, null);
 
   position: relative;
+
+  flex-shrink: 0;
 
   width: $alert-ios-checkbox-size;
   height: $alert-ios-checkbox-size;
@@ -226,6 +233,16 @@
   contain: strict;
 }
 
+// The icon's inline margins are asymmetric (larger gap from the row
+// edge, smaller gap toward the label), so they swap with label
+// placement.
+.checkbox-label-placement-end .alert-checkbox-icon {
+  @include margin-horizontal($alert-ios-checkbox-margin-start, $alert-ios-checkbox-margin-end);
+}
+
+.checkbox-label-placement-start .alert-checkbox-icon {
+  @include margin-horizontal($alert-ios-checkbox-margin-end, $alert-ios-checkbox-margin-start);
+}
 
 // iOS Alert Checkbox Outer Circle: Checked
 // -----------------------------------------
@@ -240,8 +257,8 @@
 // iOS Alert Checkbox Inner Checkmark: Checked
 // -----------------------------------------
 
-[aria-checked=true] .alert-checkbox-inner {
-  @include position($alert-ios-checkbox-icon-top, null, null, $alert-ios-checkbox-icon-start);
+[aria-checked="true"] .alert-checkbox-inner {
+  @include position($alert-ios-checkbox-icon-top, null, null, null);
 
   position: absolute;
 
@@ -257,6 +274,15 @@
   border-color: $alert-ios-checkbox-icon-border-color;
 }
 
+// The icon's inline offset gives it a gap from whichever edge the icon
+// sits on, which depends on label placement
+[aria-checked="true"] .checkbox-label-placement-end .alert-checkbox-inner {
+  @include position-horizontal($alert-ios-checkbox-icon-start, null);
+}
+
+[aria-checked="true"] .checkbox-label-placement-start .alert-checkbox-inner {
+  @include position-horizontal(null, $alert-ios-checkbox-icon-start);
+}
 
 // iOS Alert Button
 // --------------------------------------------------
@@ -329,7 +355,7 @@
   background-color: $alert-ios-button-background-color-activated;
 }
 
-// iOS Action Sheet Button: Destructive
+// iOS Alert Button: Destructive
 // ---------------------------------------------------
 
 .alert-button-role-destructive,

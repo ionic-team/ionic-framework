@@ -643,21 +643,19 @@ export class ReactRouterViewStack extends ViewStacks {
       this.outletParentPaths.delete(outletId);
     }
 
-    // Sync child elements with stored viewItems (e.g. to reflect new props)
-    React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
-      // Ensure the child is a valid React element since we
-      // might have whitespace strings or other non-element children
-      if (React.isValidElement(child)) {
-        // Find view item by exact path match to avoid wildcard routes overwriting specific routes
-        const childPath = (child.props as any).path;
-        const viewItem = viewItems.find((v) => {
-          const viewItemPath = v.reactElement?.props?.path;
-          // Only update if paths match exactly (prevents wildcard routes from overwriting specific routes)
-          return viewItemPath === childPath;
-        });
-        if (viewItem) {
-          viewItem.reactElement = child;
-        }
+    // Re-sync each route element onto its stored viewItem so prop changes from a
+    // parent re-render reach the child. extractRouteChildren unwraps the <Routes>
+    // wrapper, which has no path of its own. Without it we'd iterate props.children
+    // directly, never match a viewItem, and the child's props would go stale.
+    extractRouteChildren(ionRouterOutlet.props.children).forEach((child) => {
+      // Match on exact path so a wildcard route doesn't overwrite a specific one.
+      const childPath = (child.props as any).path;
+      const viewItem = viewItems.find((v) => {
+        const viewItemPath = v.reactElement?.props?.path;
+        return viewItemPath === childPath;
+      });
+      if (viewItem) {
+        viewItem.reactElement = child;
       }
     });
 

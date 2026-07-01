@@ -1,5 +1,9 @@
+@use "../select-option/select-option.md.overlay";
 @import "./select-popover";
 @import "./select-popover.md.vars";
+
+// Select Popover: Select Option
+// --------------------------------------------------
 
 ion-list ion-radio::part(container) {
   display: none;

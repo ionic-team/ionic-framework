@@ -186,6 +186,12 @@ const Main: React.FC = () => {
           <IonItem routerLink="/route-context-shape">
             <IonLabel>Route Context Shape</IonLabel>
           </IonItem>
+          <IonItem routerLink="/props-update-routes/child">
+            <IonLabel>Props Update (Routes wrapper)</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/props-update-direct/child">
+            <IonLabel>Props Update (direct)</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

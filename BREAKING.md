@@ -127,9 +127,17 @@ The string form no longer behaves the same way. Because an HTML attribute coerce
 
 <h4 id="version-9x-select">Select</h4>
 
+**`ionChange` Only Fires When the Value Changes**
+
 The `ionChange` event on `ion-select` now only fires when the selected value actually changes. Previously, the `alert` and `action-sheet` interfaces emitted `ionChange` every time the overlay was confirmed, even when the user chose the option that was already selected. This aligns the `alert` and `action-sheet` interfaces with the existing behavior of the `popover` and `modal` interfaces, and with the documented contract of `ionChange`.
 
 Apps that relied on `ionChange` firing on every confirmation (for example, to detect overlay dismissal without a value change) should listen for `ionDismiss` instead, or use the `didDismiss` event on the underlying alert or action sheet.
+
+**Action Sheet Interface `selected` Role Removed**
+
+When using `interface="action-sheet"`, `ion-select` no longer assigns the `selected` role to the action sheet button for the currently selected option. This aligns the `action-sheet` interface with the `alert`, `popover`, and `modal` interfaces, none of which assign this role. This does not change the selected option's styling.
+
+Previously, the `selected` role was assigned only to the option matching the select's current value. Because the dismiss role mirrors the tapped button, this surfaced in just one case: re-selecting the already-selected option dismissed the action sheet with `role: "selected"` in `ionActionSheetDidDismiss`. Tapping any other option changed the value and dismissed with `role: ""`. Now that the role is no longer assigned, both cases dismiss with `role: undefined`. Apps that inspected this role to detect that a value was chosen, such as reading `role` from the underlying action sheet's `onDidDismiss` result, should listen for `ion-select`'s `ionChange` event instead, which emits the selected value when the selection changes.
 
 <h2 id="version-9x-framework-specific">Framework Specific</h2>
 

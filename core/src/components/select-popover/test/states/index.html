@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Select Popover - States</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Select Popover - States</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <button class="expand" id="single" onclick="presentSingle()">Radio</button>
+        <button class="expand" id="multiple" onclick="presentMultiple()">Checkbox</button>
+
+        <ion-popover id="popover-single" class="select-popover">
+          <ion-select-popover id="select-popover-single" multiple="false"></ion-select-popover>
+        </ion-popover>
+
+        <ion-popover id="popover-multiple" class="select-popover">
+          <ion-select-popover id="select-popover-multiple" multiple="true"></ion-select-popover>
+        </ion-popover>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const states = [
+        {
+          value: 'default',
+          text: 'Default',
+        },
+        {
+          value: 'focused',
+          text: 'Focused',
+          cssClass: 'ion-focused',
+        },
+        {
+          value: 'activated',
+          text: 'Activated',
+          cssClass: 'ion-activated',
+        },
+        {
+          value: 'selected',
+          text: 'Selected',
+          checked: true,
+        },
+        {
+          value: 'disabled',
+          text: 'Disabled',
+          disabled: true,
+        },
+      ];
+
+      document.getElementById('select-popover-single').options = states;
+      document.getElementById('select-popover-multiple').options = states;
+
+      // Swap the first option's label to "Hovered" while it's hovered so the
+      // state is obvious. Attached inline after present() so the listener is
+      // wired up at a stable point in the JS event loop — keeps timing
+      // deterministic across all browsers.
+      function hoverText(popover) {
+        const item = popover.querySelector('ion-item');
+        const label = item?.querySelector('.select-option-label');
+
+        if (!label) {
+          return;
+        }
+
+        const original = label.textContent;
+
+        item.addEventListener('mouseenter', () => {
+          label.textContent = 'Hovered';
+        });
+
+        item.addEventListener('mouseleave', () => {
+          label.textContent = original;
+        });
+      }
+
+      async function presentSingle() {
+        const popover = document.getElementById('popover-single');
+        await popover.present();
+        hoverText(popover);
+      }
+
+      async function presentMultiple() {
+        const popover = document.getElementById('popover-multiple');
+        await popover.present();
+        hoverText(popover);
+      }
+    </script>
+  </body>
+</html>
