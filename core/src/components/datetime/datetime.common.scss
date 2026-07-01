@@ -425,6 +425,28 @@
   clip-path: inset(50%);
 }
 
+/**
+ * The `.calendar-range-announce` element is a visually-hidden live region used in
+ * `selectionMode="range"` mode. After the user selects a start date it announces
+ * "Select an end date" to screen readers so AT users know the next expected action.
+ */
+:host .calendar-range-announce {
+  @include padding(0px);
+  @include margin(0px);
+
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+}
+
 // Feature: monthNavigation="scroll" (vertical month scroll)
 // -----------------------------------
 

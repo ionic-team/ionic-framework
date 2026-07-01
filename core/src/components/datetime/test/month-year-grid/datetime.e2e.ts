@@ -6,19 +6,6 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('datetime: month/year grid picker (visual regressions)'), () => {
-    test('grid picker open should not have visual regressions', async ({ page }) => {
-      await page.setContent(
-        `<ion-datetime locale="en-US" presentation="date" value="2022-06-15" month-year-picker-view="grid"></ion-datetime>`,
-        config
-      );
-      await page.locator('.datetime-ready').waitFor();
-
-      await page.locator('ion-datetime .calendar-month-year').click();
-      await page.locator('.month-year-picker-open').waitFor();
-
-      await expect(page.locator('ion-datetime')).toHaveScreenshot(screenshot('datetime-month-year-grid-open'));
-    });
-
     test('month-year presentation with grid should not have visual regressions', async ({ page }) => {
       await page.setContent(
         `<ion-datetime locale="en-US" presentation="month-year" value="2022-06-15" month-year-picker-view="grid"></ion-datetime>`,

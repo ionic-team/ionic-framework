@@ -114,6 +114,24 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
 /** Number of years shown per page in the `monthYearPickerView="grid"` year grid (4 cols × 6 rows). */
 const YEAR_GRID_PAGE_SIZE = 24;
 
+/**
+ * Returns the aria-label for a calendar day button, appending a range-state
+ * suffix when the day is a range start, range end, or falls inside a range.
+ * Returns the base label unchanged for non-range days.
+ */
+const getRangeAriaLabel = (
+  baseLabel: string | null,
+  isRangeStart: boolean,
+  isRangeEnd: boolean,
+  isInRange: boolean
+): string | null => {
+  if (!baseLabel) return baseLabel;
+  if (isRangeStart) return `${baseLabel}, range start`;
+  if (isRangeEnd) return `${baseLabel}, range end`;
+  if (isInRange) return `${baseLabel}, in range`;
+  return baseLabel;
+};
+
 @Component({
   tag: 'ion-datetime',
   styleUrls: {
@@ -126,6 +144,7 @@ const YEAR_GRID_PAGE_SIZE = 24;
 export class Datetime implements ComponentInterface {
   private inputId = `ion-dt-${datetimeIds++}`;
   private calendarBodyRef?: HTMLElement;
+  private monthYearButtonRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
   private intersectionTrackerRef?: HTMLElement;
   private clearFocusVisible?: () => void;
@@ -501,6 +520,36 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
+   * Manages focus when the month/year grid overlay opens or closes.
+   *
+   * On open: moves focus into the first enabled cell of the month grid so
+   * keyboard and screen-reader users can navigate immediately.
+   * On close: returns focus to the `month-year-button` so the user's
+   * position in the page is not lost.
+   *
+   * Only active when `monthYearPickerView="grid"` and the picker is used as
+   * a toggle overlay (date/date-time/time-date presentations). The always-
+   * visible grid used by month/month-year/year presentations is excluded.
+   */
+  @Watch('showMonthAndYear')
+  protected showMonthAndYearChanged(isOpen: boolean) {
+    if (this.monthYearPickerView !== 'grid') {
+      return;
+    }
+
+    raf(() => {
+      if (isOpen) {
+        const firstCell = this.el.shadowRoot?.querySelector<HTMLElement>(
+          '.month-year-grid-container .month-year-grid-cell:not([disabled])'
+        );
+        firstCell?.focus();
+      } else {
+        this.monthYearButtonRef?.focus();
+      }
+    });
+  }
+
+  /**
    * If `true`, a header will be shown above the calendar
    * picker. This will include both the slotted title, and
    * the selected date.
@@ -665,6 +714,24 @@ export class Datetime implements ComponentInterface {
   @Method()
   async reset(startDate?: string) {
     this.processValue(startDate);
+
+    /**
+     * In range mode, a single ISO date string is not a valid range value.
+     * Clear activeParts so the user can begin a fresh range selection from
+     * the reset date rather than leaving the component in an inconsistent state.
+     */
+    if (this.isRangeMode) {
+      this.activeParts = [];
+    }
+
+    /**
+     * If the grid picker is active, re-align the year page to the working
+     * year after the reset so the correct year is visible without the user
+     * having to manually page to it.
+     */
+    if (this.monthYearPickerView === 'grid') {
+      this.yearGridPageStart = Math.floor(this.workingParts.year / YEAR_GRID_PAGE_SIZE) * YEAR_GRID_PAGE_SIZE;
+    }
   }
 
   /**
@@ -1735,7 +1802,7 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
-    const { el, formatOptions, highlightedDates, multiple, selectionMode, monthNavigation, presentation, preferWheel } =
+    const { el, formatOptions, highlightedDates, multiple, selectionMode, monthNavigation, presentation, preferWheel, titleSelectedDatesFormatter } =
       this;
 
     /**
@@ -1786,6 +1853,7 @@ export class Datetime implements ComponentInterface {
       if (preferWheel) {
         printIonWarning('[ion-datetime] - Range date selection is not supported with preferWheel="true".', el);
       }
+
     }
 
     if (monthNavigation === 'scroll' && preferWheel) {
@@ -1929,6 +1997,49 @@ export class Datetime implements ComponentInterface {
        * every time the grid picker opens.
        */
       this.yearGridPageStart = Math.floor(this.workingParts.year / YEAR_GRID_PAGE_SIZE) * YEAR_GRID_PAGE_SIZE;
+    }
+  };
+
+  /**
+   * Handles arrow-key navigation within a `role="grid"` container in the
+   * month/year grid picker. Left/Right move one cell, Up/Down move one row
+   * (`cols` cells). Disabled cells are skipped; navigation stops at the edges.
+   */
+  private handleGridKeyDown = (ev: KeyboardEvent, cols: number) => {
+    const grid = ev.currentTarget as HTMLElement;
+    const cells = Array.from(grid.querySelectorAll<HTMLElement>('[role="gridcell"]'));
+    const focused = cells.find((c) => c === (this.el.shadowRoot?.activeElement ?? document.activeElement));
+    if (!focused) return;
+
+    const idx = cells.indexOf(focused);
+    let nextIdx: number | undefined;
+
+    switch (ev.key) {
+      case 'ArrowRight':
+        ev.preventDefault();
+        nextIdx = idx + 1;
+        break;
+      case 'ArrowLeft':
+        ev.preventDefault();
+        nextIdx = idx - 1;
+        break;
+      case 'ArrowDown':
+        ev.preventDefault();
+        nextIdx = idx + cols;
+        break;
+      case 'ArrowUp':
+        ev.preventDefault();
+        nextIdx = idx - cols;
+        break;
+      default:
+        return;
+    }
+
+    if (nextIdx !== undefined && nextIdx >= 0 && nextIdx < cells.length) {
+      const target = cells[nextIdx];
+      if (!target.hasAttribute('disabled')) {
+        target.focus();
+      }
     }
   };
 
@@ -2636,6 +2747,7 @@ export class Datetime implements ComponentInterface {
               part="month-year-button"
               disabled={disabled}
               aria-label={this.showMonthAndYear ? 'Hide year picker' : 'Show year picker'}
+              ref={(el) => (this.monthYearButtonRef = el)}
               onClick={() => this.toggleMonthAndYearView()}
             >
               <span id="toggle-wrapper">
@@ -2926,7 +3038,7 @@ export class Datetime implements ComponentInterface {
                   part={dateParts}
                   aria-hidden={isCalendarPadding ? 'true' : null}
                   aria-selected={ariaSelected}
-                  aria-label={ariaLabel}
+                  aria-label={getRangeAriaLabel(ariaLabel, isRangeStart, isRangeEnd, isInRange)}
                   onClick={() => {
                     if (isCalendarPadding) {
                       return;
@@ -2986,6 +3098,8 @@ export class Datetime implements ComponentInterface {
   }
   private renderCalendar(theme: Theme) {
     const isScrollMode = this.monthNavigation === 'scroll';
+    const rangeAwaitingEnd =
+      this.isRangeMode && this.rangeActiveParts?.start !== undefined && this.rangeActiveParts?.end === undefined;
     return (
       <div class="datetime-calendar" key="datetime-calendar">
         {/*
@@ -3001,6 +3115,15 @@ export class Datetime implements ComponentInterface {
           </div>
         ) : (
           this.renderCalendarHeader(theme)
+        )}
+        {/*
+         * Visually hidden aria-live region used in range mode to prompt screen
+         * reader users to select an end date after a start date has been picked.
+         */}
+        {this.isRangeMode && (
+          <div class="calendar-range-announce" aria-live="polite" aria-atomic="true">
+            {rangeAwaitingEnd ? 'Select an end date' : ''}
+          </div>
         )}
         {this.renderCalendarBody(theme)}
       </div>
@@ -3105,9 +3228,28 @@ export class Datetime implements ComponentInterface {
       const rangeParts = this.rangeActiveParts;
       const dateFormat = formatOptions?.date ?? { month: 'short', day: 'numeric' };
       if (rangeParts?.start && rangeParts.end) {
-        const startText = getLocalizedDateTime(this.locale, rangeParts.start, dateFormat);
-        const endText = getLocalizedDateTime(this.locale, rangeParts.end, dateFormat);
-        headerText = `${startText} – ${endText}`;
+        /**
+         * A complete range: invoke `titleSelectedDatesFormatter` if provided so
+         * developers can customise the header text, otherwise fall back to the
+         * default "startDate – endDate" format.
+         */
+        if (titleSelectedDatesFormatter !== undefined) {
+          try {
+            headerText = titleSelectedDatesFormatter([
+              convertDataToISO(rangeParts.start),
+              convertDataToISO(rangeParts.end),
+            ]);
+          } catch (e) {
+            printIonError('[ion-datetime] - Exception in provided `titleSelectedDatesFormatter`:', e);
+            const startText = getLocalizedDateTime(this.locale, rangeParts.start, dateFormat);
+            const endText = getLocalizedDateTime(this.locale, rangeParts.end, dateFormat);
+            headerText = `${startText} – ${endText}`;
+          }
+        } else {
+          const startText = getLocalizedDateTime(this.locale, rangeParts.start, dateFormat);
+          const endText = getLocalizedDateTime(this.locale, rangeParts.end, dateFormat);
+          headerText = `${startText} – ${endText}`;
+        }
       } else if (rangeParts?.start) {
         headerText = getLocalizedDateTime(
           this.locale,
@@ -3218,7 +3360,7 @@ export class Datetime implements ComponentInterface {
     return (
       <div class="month-year-grid-container">
         {/* Month name grid — 3 columns × 4 rows */}
-        <div class="month-year-grid" role="grid" aria-label="Select month">
+        <div class="month-year-grid" role="grid" aria-label="Select month" onKeyDown={(ev) => this.handleGridKeyDown(ev, 3)}>
           {months.map((month) => (
             <button
               key={month.value}
@@ -3280,7 +3422,7 @@ export class Datetime implements ComponentInterface {
             </ion-button>
           </div>
 
-          <div class="month-year-grid month-year-grid-years" role="grid" aria-label="Select year">
+          <div class="month-year-grid month-year-grid-years" role="grid" aria-label="Select year" onKeyDown={(ev) => this.handleGridKeyDown(ev, 4)}>
             {pageYears.map((year) => (
               <button
                 key={year}
@@ -3319,7 +3461,16 @@ export class Datetime implements ComponentInterface {
    */
   private renderCalendarViewMonthYearPicker() {
     if (this.monthYearPickerView === 'grid') {
-      return <div class="datetime-year">{this.renderMonthYearGrid()}</div>;
+      return (
+        <div
+          class="datetime-year"
+          role={this.showMonthAndYear ? 'dialog' : undefined}
+          aria-modal={this.showMonthAndYear ? 'true' : undefined}
+          aria-label={this.showMonthAndYear ? 'Select month and year' : undefined}
+        >
+          {this.renderMonthYearGrid()}
+        </div>
+      );
     }
     return <div class="datetime-year">{this.renderWheelView('month-year')}</div>;
   }
