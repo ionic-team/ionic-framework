@@ -751,6 +751,18 @@ export class Datetime implements ComponentInterface {
     }
   }
 
+  /**
+   * Returns the default parts the datetime falls back to when no value is set:
+   * today's date and time snapped to the closest value allowed by the
+   * component's constraints (`min`, `max`, and the `*Values` props).
+   *
+   * @internal
+   */
+  @Method()
+  async getDefaultPart(): Promise<DatetimeParts> {
+    return this.defaultParts;
+  }
+
   private warnIfIncorrectValueUsage = () => {
     const { value } = this;
     const isMultipleMode = this.isMultipleMode;
@@ -1936,6 +1948,8 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
+    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
+
     if (this.monthNavigation === 'scroll') {
       /**
        * Vertical scroll mode: navigate to the next month card in the continuous list.
@@ -1945,14 +1959,14 @@ export class Datetime implements ComponentInterface {
         `.calendar-month[data-month="${nextParts.month}"][data-year="${nextParts.year}"]`
       );
       if (nextEl) {
-        calendarBodyRef.scrollTo({ top: nextEl.offsetTop, behavior: 'smooth' });
+        calendarBodyRef.scrollTo({ top: nextEl.offsetTop, behavior: scrollMode });
       }
     } else {
       const left = (nextMonth as HTMLElement).offsetWidth * 2;
       calendarBodyRef.scrollTo({
         top: 0,
         left: left * (isRTL(this.el) ? -1 : 1),
-        behavior: 'smooth',
+        behavior: scrollMode,
       });
     }
   };
@@ -1968,6 +1982,8 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
+    const scrollMode = config.getBoolean('animated', true) ? 'smooth' : 'instant';
+
     if (this.monthNavigation === 'scroll') {
       /**
        * Vertical scroll mode: navigate to the previous month card in the continuous list.
@@ -1977,14 +1993,14 @@ export class Datetime implements ComponentInterface {
         `.calendar-month[data-month="${prevParts.month}"][data-year="${prevParts.year}"]`
       );
       if (prevEl) {
-        calendarBodyRef.scrollTo({ top: prevEl.offsetTop, behavior: 'smooth' });
+        calendarBodyRef.scrollTo({ top: prevEl.offsetTop, behavior: scrollMode });
       }
     } else {
       const left = (prevMonth as HTMLElement).offsetWidth * 2;
       calendarBodyRef.scrollTo({
         top: 0,
         left: left * (isRTL(this.el) ? 1 : -1),
-        behavior: 'smooth',
+        behavior: scrollMode,
       });
     }
   };
@@ -2409,10 +2425,13 @@ export class Datetime implements ComponentInterface {
             month: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...activePart,
-            month: ev.detail.value,
-          });
+          // Month wheel is navigation-only in multi-select mode as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
+          if (!this.multiple) {
+            this.setActiveParts({
+              ...activePart,
+              month: ev.detail.value,
+            });
+          }
 
           ev.stopPropagation();
         }}
@@ -2453,10 +2472,13 @@ export class Datetime implements ComponentInterface {
             year: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...activePart,
-            year: ev.detail.value,
-          });
+          // Year wheel is navigation-only in multi-select mode as a fix for https://github.com/ionic-team/ionic-framework/issues/29673
+          if (!this.multiple) {
+            this.setActiveParts({
+              ...activePart,
+              year: ev.detail.value,
+            });
+          }
 
           ev.stopPropagation();
         }}
