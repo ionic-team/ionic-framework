@@ -594,21 +594,27 @@ export const present = async <OverlayPresentOptions>(
    */
   if (overlay.keyboardClose && (document.activeElement === null || !overlay.el.contains(document.activeElement))) {
     /**
-     * `role="dialog"`/`role="alertdialog"`, `aria-modal`, and the overlay's
-     * accessible label all live on the `.ion-overlay-wrapper` element inside
-     * the overlay's shadow root (see modal.tsx, alert.tsx, action-sheet.tsx,
-     * loading.tsx, popover.tsx) -- never on the host element itself.
+     * Some overlays (modal, alert) declare `role="dialog"`/`alertdialog`,
+     * `aria-modal`, and the accessible label on the `.ion-overlay-wrapper`
+     * element inside the overlay rather than on the host itself. Focusing
+     * `overlay.el` (the host) in that case hands assistive technologies a
+     * focus target with no accessible role or name -- screen readers that
+     * rely on the focus/accessibility-focus event to know a dialog opened
+     * (e.g. Android TalkBack, which does not treat `aria-modal` alone as a
+     * navigation boundary) get no usable landing point, so their linear
+     * navigation cursor never actually enters the overlay's content.
      *
-     * Focusing `overlay.el` (the host) instead of this wrapper hands
-     * assistive technologies a focus target with no accessible role or
-     * name. Screen readers that rely on the focus/accessibility-focus
-     * event to know a dialog opened (e.g. Android TalkBack, which does
-     * not treat `aria-modal` alone as a navigation boundary) get no
-     * usable landing point, so their linear navigation cursor never
-     * actually enters the overlay's content.
+     * Other overlays (action-sheet, loading, popover) keep those
+     * attributes on the host and leave `.ion-overlay-wrapper` without a
+     * `tabindex`, in which case it is not focusable and the host remains
+     * the correct target. Only redirect to the wrapper when it actually
+     * declares a `tabindex` (i.e. the component authored it to be
+     * focusable) so overlays that already focus the host correctly are
+     * left untouched.
      */
     const overlayWrapper = getElementRoot(overlay.el).querySelector<HTMLElement>('.ion-overlay-wrapper');
-    (overlayWrapper ?? overlay.el).focus();
+    const focusTarget = overlayWrapper?.hasAttribute('tabindex') ? overlayWrapper : overlay.el;
+    focusTarget.focus();
   }
 
   /**
