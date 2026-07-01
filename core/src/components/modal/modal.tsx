@@ -1644,10 +1644,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
             same element. They must also be set inside the
             shadow DOM otherwise ion-button will not be highlighted
             when using VoiceOver: https://bugs.webkit.org/show_bug.cgi?id=247134
+
+            tabIndex={-1} makes this element (rather than the role-less
+            host) the thing that `present()` in overlays.ts focuses when
+            the modal opens, so assistive technologies get a focus target
+            that actually carries the dialog's role/label. It is not part
+            of the Tab order since -1 is never Tab-reachable.
           */
           role="dialog"
           {...inheritedAttributes}
           aria-modal="true"
+          tabIndex={-1}
           class="modal-wrapper ion-overlay-wrapper"
           part="content"
           ref={(el) => (this.wrapperEl = el)}

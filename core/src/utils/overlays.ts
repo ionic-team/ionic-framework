@@ -593,7 +593,22 @@ export const present = async <OverlayPresentOptions>(
    * to the overlay container.
    */
   if (overlay.keyboardClose && (document.activeElement === null || !overlay.el.contains(document.activeElement))) {
-    overlay.el.focus();
+    /**
+     * `role="dialog"`/`role="alertdialog"`, `aria-modal`, and the overlay's
+     * accessible label all live on the `.ion-overlay-wrapper` element inside
+     * the overlay's shadow root (see modal.tsx, alert.tsx, action-sheet.tsx,
+     * loading.tsx, popover.tsx) -- never on the host element itself.
+     *
+     * Focusing `overlay.el` (the host) instead of this wrapper hands
+     * assistive technologies a focus target with no accessible role or
+     * name. Screen readers that rely on the focus/accessibility-focus
+     * event to know a dialog opened (e.g. Android TalkBack, which does
+     * not treat `aria-modal` alone as a navigation boundary) get no
+     * usable landing point, so their linear navigation cursor never
+     * actually enters the overlay's content.
+     */
+    const overlayWrapper = getElementRoot(overlay.el).querySelector<HTMLElement>('.ion-overlay-wrapper');
+    (overlayWrapper ?? overlay.el).focus();
   }
 
   /**
