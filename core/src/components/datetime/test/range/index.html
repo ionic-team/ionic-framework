@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Range Selection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .grid-item {
+        margin-bottom: 20px;
+        margin-right: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+        color: #6f7378;
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      h3 {
+        font-size: 14px;
+        font-weight: 600;
+        margin-top: 32px;
+        margin-bottom: 4px;
+        border-top: 1px solid #e0e0e0;
+        padding-top: 16px;
+      }
+
+      ion-datetime {
+        box-shadow: 0px 8px 16px 0 rgba(0, 0, 0, 0.25);
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Range Selection</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <h3>Basic</h3>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Default Value</h2>
+            <ion-datetime locale="en-US" id="noDefaultValue" presentation="date" selection-mode="range"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>With Range Value</h2>
+            <ion-datetime locale="en-US" id="withRangeValue" presentation="date" selection-mode="range"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Start Only (Partial Range)</h2>
+            <ion-datetime locale="en-US" id="startOnly" presentation="date" selection-mode="range"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>With Buttons</h2>
+            <ion-datetime
+              locale="en-US"
+              id="withButtons"
+              presentation="date"
+              selection-mode="range"
+              show-default-buttons="true"
+              show-clear-button="true"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>With Min/Max</h2>
+            <ion-datetime
+              locale="en-US"
+              id="withMinMax"
+              presentation="date"
+              selection-mode="range"
+              min="2022-06-05"
+              max="2022-06-25"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Cross-Month Range</h2>
+            <ion-datetime locale="en-US" id="crossMonth" presentation="date" selection-mode="range"></ion-datetime>
+          </div>
+        </div>
+
+        <h3>showDefaultTitle + titleSelectedDatesFormatter</h3>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Default Header — Complete Range</h2>
+            <ion-datetime
+              locale="en-US"
+              id="titleComplete"
+              presentation="date"
+              selection-mode="range"
+              show-default-title="true"
+            >
+              <span slot="title">Select Range</span>
+            </ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Default Header — Partial Range (start only)</h2>
+            <ion-datetime
+              locale="en-US"
+              id="titlePartial"
+              presentation="date"
+              selection-mode="range"
+              show-default-title="true"
+            >
+              <span slot="title">Select Range</span>
+            </ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Custom Formatter</h2>
+            <ion-datetime
+              locale="en-US"
+              id="customFormatter"
+              presentation="date"
+              selection-mode="range"
+              show-default-title="true"
+            >
+              <span slot="title">Trip Dates</span>
+            </ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>formatOptions Applied to Header</h2>
+            <ion-datetime
+              locale="en-US"
+              id="withFormatOptions"
+              presentation="date"
+              selection-mode="range"
+              show-default-title="true"
+            >
+              <span slot="title">Select Dates</span>
+            </ion-datetime>
+          </div>
+        </div>
+
+        <h3>highlightedDates</h3>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Range Styling Overrides Highlights on Active Days</h2>
+            <ion-datetime
+              locale="en-US"
+              id="highlightOverride"
+              presentation="date"
+              selection-mode="range"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Highlighted Days Outside the Range Keep Their Styles</h2>
+            <ion-datetime
+              locale="en-US"
+              id="highlightOutside"
+              presentation="date"
+              selection-mode="range"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Callback-Style highlightedDates + Range</h2>
+            <ion-datetime
+              locale="en-US"
+              id="highlightCallback"
+              presentation="date"
+              selection-mode="range"
+            ></ion-datetime>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      // Basic
+      document.querySelector('#withRangeValue').value = ['2022-06-10', '2022-06-20'];
+      document.querySelector('#startOnly').value = ['2022-06-10'];
+      document.querySelector('#withButtons').value = ['2022-06-10', '2022-06-20'];
+      document.querySelector('#withMinMax').value = ['2022-06-10', '2022-06-20'];
+      document.querySelector('#crossMonth').value = ['2022-05-25', '2022-06-10'];
+
+      // showDefaultTitle
+      document.querySelector('#titleComplete').value = ['2022-06-10', '2022-06-20'];
+      document.querySelector('#titlePartial').value = ['2022-06-15'];
+
+      const customFormatter = document.querySelector('#customFormatter');
+      customFormatter.value = ['2022-06-10', '2022-06-20'];
+      customFormatter.titleSelectedDatesFormatter = ([start, end]) => {
+        const fmt = (iso) => new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(new Date(iso));
+        return `${fmt(start)} → ${fmt(end)}`;
+      };
+
+      const withFormatOptions = document.querySelector('#withFormatOptions');
+      withFormatOptions.value = ['2022-06-10', '2022-06-20'];
+      withFormatOptions.formatOptions = { date: { year: 'numeric', month: 'long', day: 'numeric' } };
+
+      // highlightedDates: range styling must override highlight styles on active/in-range days
+      const highlightOverride = document.querySelector('#highlightOverride');
+      highlightOverride.value = ['2022-06-10', '2022-06-20'];
+      // Jun 12 and Jun 18 are inside the range — their highlight styles should be suppressed
+      highlightOverride.highlightedDates = [
+        { date: '2022-06-12', textColor: 'purple', backgroundColor: 'pink' },
+        { date: '2022-06-18', textColor: 'blue', backgroundColor: 'lightblue' },
+      ];
+
+      // Highlighted days outside the selected range should keep their custom styles
+      const highlightOutside = document.querySelector('#highlightOutside');
+      highlightOutside.value = ['2022-06-10', '2022-06-20'];
+      highlightOutside.highlightedDates = [
+        { date: '2022-06-05', textColor: 'green', backgroundColor: 'lightgreen' }, // before range
+        { date: '2022-06-25', textColor: 'orange', backgroundColor: 'lightyellow' }, // after range
+        { date: '2022-06-15', textColor: 'purple', backgroundColor: 'pink' }, // inside range — should be suppressed
+      ];
+
+      // Callback-style highlightedDates + range
+      const highlightCallback = document.querySelector('#highlightCallback');
+      highlightCallback.value = ['2022-06-10', '2022-06-20'];
+      highlightCallback.highlightedDates = (isoString) => {
+        const date = new Date(isoString);
+        if (date.getUTCDay() === 1) {
+          // Mondays
+          return { textColor: 'white', backgroundColor: 'steelblue' };
+        }
+        return undefined;
+      };
+
+      // Log ionChange to confirm it only fires for complete ranges
+      document.querySelectorAll('ion-datetime').forEach((dt) => {
+        dt.addEventListener('ionChange', (ev) => {
+          console.log(`ionChange [${dt.id}]:`, ev.detail.value);
+        });
+      });
+    </script>
+  </body>
+</html>

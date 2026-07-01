@@ -191,6 +191,46 @@
             <ion-datetime show-adjacent-days="true" id="display" value="2022-02-22T16:30:00"></ion-datetime>
           </div>
         </div>
+
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Cross-Month Range — Highlight must not gap at boundary</h2>
+            <ion-datetime
+              locale="en-US"
+              id="rangeAdjacent"
+              presentation="date"
+              selection-mode="range"
+              show-adjacent-days="true"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Range Starting on Adjacent Day</h2>
+            <ion-datetime
+              locale="en-US"
+              id="rangeStartAdjacent"
+              presentation="date"
+              selection-mode="range"
+              show-adjacent-days="true"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Range Ending on Adjacent Day</h2>
+            <ion-datetime
+              locale="en-US"
+              id="rangeEndAdjacent"
+              presentation="date"
+              selection-mode="range"
+              show-adjacent-days="true"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Without Adjacent Days — Highlight stops at last visible day</h2>
+            <ion-datetime locale="en-US" id="rangNoAdjacent" presentation="date" selection-mode="range"></ion-datetime>
+          </div>
+        </div>
       </ion-content>
     </ion-app>
 
@@ -323,6 +363,12 @@
       datetimeDefault.addEventListener('ionChange', (ev) => {
         console.log(ev.target.value);
       });
+
+      // Range + adjacent days
+      document.querySelector('#rangeAdjacent').value = ['2022-05-28', '2022-06-05'];
+      document.querySelector('#rangeStartAdjacent').value = ['2022-05-31', '2022-06-10'];
+      document.querySelector('#rangeEndAdjacent').value = ['2022-06-24', '2022-07-02'];
+      document.querySelector('#rangNoAdjacent').value = ['2022-05-28', '2022-06-05'];
     </script>
   </body>
 </html>
