@@ -32,12 +32,26 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 This section details the desktop browser, JavaScript framework, and mobile platform versions that are supported by Ionic 9.
 
+**Minimum Browser Versions**
+| Desktop Browser | Supported Versions |
+| --------------- | ------------------ |
+| Chrome          | 89+                |
+| Safari          | 16+                |
+| Edge            | 89+                |
+| Firefox         | 75+                |
+
 **Minimum JavaScript Framework Versions**
 | Framework | Supported Version     |
 | --------- | --------------------- |
 | Angular   | 18+                   |
 | React     | 18+                   |
 | Vue       | 3.5+                  |
+
+**Minimum Mobile Platform Versions**
+| Platform | Supported Version      |
+| -------- | ---------------------- |
+| iOS      | 16+                    |
+| Android  | 5.1+ with Chromium 89+ |
 
 <h2 id="version-9x-package-exports">Package Exports</h2>
 

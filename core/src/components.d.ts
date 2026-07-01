@@ -1239,6 +1239,9 @@ export namespace Components {
          */
         "translucent": boolean;
     }
+    /**
+     * @deprecated 
+     */
     interface IonImg {
         /**
           * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
@@ -4203,6 +4206,9 @@ declare global {
         "ionImgDidLoad": void;
         "ionError": void;
     }
+    /**
+     * @deprecated 
+     */
     interface HTMLIonImgElement extends Components.IonImg, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonImgElementEventMap>(type: K, listener: (this: HTMLIonImgElement, ev: IonImgCustomEvent<HTMLIonImgElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -6386,6 +6392,9 @@ declare namespace LocalJSX {
          */
         "translucent"?: boolean;
     }
+    /**
+     * @deprecated 
+     */
     interface IonImg {
         /**
           * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
@@ -9812,6 +9821,9 @@ declare module "@stencil/core" {
             "ion-footer": LocalJSX.IntrinsicElements["ion-footer"] & JSXBase.HTMLAttributes<HTMLIonFooterElement>;
             "ion-grid": LocalJSX.IntrinsicElements["ion-grid"] & JSXBase.HTMLAttributes<HTMLIonGridElement>;
             "ion-header": LocalJSX.IntrinsicElements["ion-header"] & JSXBase.HTMLAttributes<HTMLIonHeaderElement>;
+            /**
+             * @deprecated 
+             */
             "ion-img": LocalJSX.IntrinsicElements["ion-img"] & JSXBase.HTMLAttributes<HTMLIonImgElement>;
             "ion-infinite-scroll": LocalJSX.IntrinsicElements["ion-infinite-scroll"] & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollElement>;
             "ion-infinite-scroll-content": LocalJSX.IntrinsicElements["ion-infinite-scroll-content"] & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollContentElement>;
