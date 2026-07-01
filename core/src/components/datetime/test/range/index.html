@@ -51,7 +51,6 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-
         <h3>Basic</h3>
         <div class="grid">
           <div class="grid-item">
@@ -186,7 +185,6 @@
             ></ion-datetime>
           </div>
         </div>
-
       </ion-content>
     </ion-app>
 
@@ -205,8 +203,7 @@
       const customFormatter = document.querySelector('#customFormatter');
       customFormatter.value = ['2022-06-10', '2022-06-20'];
       customFormatter.titleSelectedDatesFormatter = ([start, end]) => {
-        const fmt = (iso) =>
-          new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(new Date(iso));
+        const fmt = (iso) => new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(new Date(iso));
         return `${fmt(start)} → ${fmt(end)}`;
       };
 
@@ -227,9 +224,9 @@
       const highlightOutside = document.querySelector('#highlightOutside');
       highlightOutside.value = ['2022-06-10', '2022-06-20'];
       highlightOutside.highlightedDates = [
-        { date: '2022-06-05', textColor: 'green', backgroundColor: 'lightgreen' },  // before range
+        { date: '2022-06-05', textColor: 'green', backgroundColor: 'lightgreen' }, // before range
         { date: '2022-06-25', textColor: 'orange', backgroundColor: 'lightyellow' }, // after range
-        { date: '2022-06-15', textColor: 'purple', backgroundColor: 'pink' },        // inside range — should be suppressed
+        { date: '2022-06-15', textColor: 'purple', backgroundColor: 'pink' }, // inside range — should be suppressed
       ];
 
       // Callback-style highlightedDates + range
@@ -237,7 +234,8 @@
       highlightCallback.value = ['2022-06-10', '2022-06-20'];
       highlightCallback.highlightedDates = (isoString) => {
         const date = new Date(isoString);
-        if (date.getUTCDay() === 1) { // Mondays
+        if (date.getUTCDay() === 1) {
+          // Mondays
           return { textColor: 'white', backgroundColor: 'steelblue' };
         }
         return undefined;

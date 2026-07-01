@@ -1865,7 +1865,6 @@ export class Datetime implements ComponentInterface {
       if (preferWheel) {
         printIonWarning('[ion-datetime] - Range date selection is not supported with preferWheel="true".', el);
       }
-
     }
 
     if (monthNavigation === 'scroll' && preferWheel) {
@@ -2987,10 +2986,11 @@ export class Datetime implements ComponentInterface {
             let dateStyle: DatetimeHighlightStyle | undefined = undefined;
 
             /**
-             * Custom highlight styles should not override the style for selected dates,
-             * nor apply to "filler days" at the start of the grid.
+             * Custom highlight styles should not override the style for selected dates
+             * or days within an active range, nor apply to "filler days" at the start
+             * of the grid.
              */
-            if (highlightedDates !== undefined && !isActive && day !== null && !isAdjacentDay) {
+            if (highlightedDates !== undefined && !isActive && !isInRange && day !== null && !isAdjacentDay) {
               dateStyle = getHighlightStyles(highlightedDates, dateIsoString, el);
             }
 
@@ -3382,7 +3382,12 @@ export class Datetime implements ComponentInterface {
     return (
       <div class="month-year-grid-container">
         {/* Month name grid — 3 columns × 4 rows */}
-        <div class="month-year-grid" role="grid" aria-label="Select month" onKeyDown={(ev) => this.handleGridKeyDown(ev, 3)}>
+        <div
+          class="month-year-grid"
+          role="grid"
+          aria-label="Select month"
+          onKeyDown={(ev) => this.handleGridKeyDown(ev, 3)}
+        >
           {months.map((month) => (
             <button
               key={month.value}
@@ -3444,7 +3449,12 @@ export class Datetime implements ComponentInterface {
             </ion-button>
           </div>
 
-          <div class="month-year-grid month-year-grid-years" role="grid" aria-label="Select year" onKeyDown={(ev) => this.handleGridKeyDown(ev, 4)}>
+          <div
+            class="month-year-grid month-year-grid-years"
+            role="grid"
+            aria-label="Select year"
+            onKeyDown={(ev) => this.handleGridKeyDown(ev, 4)}
+          >
             {pageYears.map((year) => (
               <button
                 key={year}
