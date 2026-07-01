@@ -32,7 +32,7 @@ module.exports = [
         // inferred project for them (the ts-eslint 8 equivalent of the old
         // createDefaultProgram option).
         projectService: {
-          allowDefaultProject: ['src/ionic-core.ts', 'src/schematics/add/*.ts', 'src/schematics/utils/*.ts'],
+          allowDefaultProject: ['lazy/src/ionic-core.ts', 'schematics/add/*.ts', 'schematics/utils/*.ts'],
         },
         tsconfigRootDir: __dirname,
       },

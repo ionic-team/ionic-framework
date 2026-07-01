@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, signal } from "@angular/core";
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
-import { IonCheckbox } from "@ionic/angular/standalone";
+import { IonCheckbox } from "@ionic/angular";
 import { ValueAccessorTestComponent } from "../value-accessor-test/value-accessor-test.component";
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonBackButton, IonButtons, IonContent, IonHeader, IonRouterOutlet, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonBackButton, IonButtons, IonContent, IonHeader, IonRouterOutlet, IonTitle, IonToolbar } from '@ionic/angular';
 
 @Component({
   selector: 'app-swipe-gesture-disabled',

@@ -11,7 +11,7 @@ import {
   NavController,
   DomController,
   Config,
-} from '@ionic/angular';
+} from '@ionic/angular/lazy';
 
 import { assertZoneContext } from '../../zone-assert.util';
 

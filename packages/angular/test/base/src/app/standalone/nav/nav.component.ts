@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonNav } from '@ionic/angular/standalone';
+import { IonNav } from '@ionic/angular';
 
 import { PageOneComponent } from './page-one.component';
 

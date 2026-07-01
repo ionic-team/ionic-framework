@@ -16,7 +16,6 @@ import { addRootProvider } from '@schematics/angular/utility';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 
 import { addIonicModuleImportToNgModule } from '../utils/ast';
-
 import {
   addArchitectBuilder,
   addAsset,
@@ -24,8 +23,9 @@ import {
   addSchematics,
   addStyle,
   getDefaultAngularAppName,
-} from './../utils/config';
-import { addPackageToPackageJson } from './../utils/package';
+} from '../utils/config';
+import { addPackageToPackageJson } from '../utils/package';
+
 import { Schema as IonAddOptions } from './schema';
 
 function addIonicAngularToPackageJson(): Rule {
@@ -86,7 +86,7 @@ function addProvideIonicAngular(projectName: string, projectSourceRoot: Path): R
     if (host.exists(appConfig)) {
       return addRootProvider(
         projectName,
-        ({ code, external }) => code`${external('provideIonicAngular', '@ionic/angular/standalone')}({})`
+        ({ code, external }) => code`${external('provideIonicAngular', '@ionic/angular')}({})`
       );
     }
     return host;

@@ -147,6 +147,10 @@ Previously, the `selected` role was assigned only to the option matching the sel
 
 Ionic 9 requires Angular 18 or later. Angular 16 and 17 are no longer supported.
 
+**Standalone Components Imported by Default**
+
+Following industry standards, Ionic 9 makes standalone components the default import path. Standalone component imports have changed from `@ionic/angular/standalone` to `@ionic/angular`. Lazy-loaded component imports have changed from `@ionic/angular` to `@ionic/angular/lazy`.
+
 **Zoneless Change Detection by Default**
 
 Ionic 9 defaults to zoneless change detection. Angular 21 bootstraps zoneless out of the box, so a new Ionic 9 app on Angular 21 runs without Zone.js and requires no change-detection provider. The `ng add @ionic/angular` schematic no longer registers `provideZoneChangeDetection()`.
@@ -208,7 +212,7 @@ Angular 22 raises the minimum Node.js version to `^22.22.3 || ^24.15.0 || ^26.0.
 
 **Module Resolution**
 
-`@ionic/angular` is now published with `exports`-based subpath resolution. Apps using TypeScript `moduleResolution: "node"` (classic) can fail to resolve subpaths such as `@ionic/angular/standalone`. Set `moduleResolution` to `"bundler"` (the default for `ng new` on Angular 17 and later). Refer to [Package Exports](#version-9x-package-exports).
+`@ionic/angular` is now published with `exports`-based subpath resolution. Apps using TypeScript `moduleResolution: "node"` (classic) can fail to resolve subpaths such as `@ionic/angular/lazy`. Set `moduleResolution` to `"bundler"` (the default for `ng new` on Angular 17 and later). Refer to [Package Exports](#version-9x-package-exports).
 
 **CSS Imports No Longer Use the `~` Prefix**
 

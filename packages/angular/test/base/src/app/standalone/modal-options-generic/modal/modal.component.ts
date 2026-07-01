@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonButtons } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonButtons } from '@ionic/angular';
 
 @Component({
   selector: 'app-generic-modal',

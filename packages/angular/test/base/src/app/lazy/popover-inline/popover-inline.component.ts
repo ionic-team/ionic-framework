@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from "@angular/core";
 
-import { IonPopover } from "@ionic/angular";
+import { IonPopover } from "@ionic/angular/lazy";
 
 /**
  * Validates that inline popovers will correctly display

@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular/lazy';
 
 import { assertZoneContext } from '../../zone-assert.util';
 

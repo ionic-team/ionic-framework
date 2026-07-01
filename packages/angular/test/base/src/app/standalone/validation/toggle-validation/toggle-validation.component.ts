@@ -12,7 +12,7 @@ import {
   IonToggle,
   IonTitle,
   IonToolbar
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 @Component({
   selector: 'app-toggle-validation',

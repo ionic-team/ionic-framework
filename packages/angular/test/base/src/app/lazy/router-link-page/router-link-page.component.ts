@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { IonRouterOutlet, ViewDidEnter, ViewDidLeave, ViewWillLeave } from '@ionic/angular';
+import { IonRouterOutlet, ViewDidEnter, ViewDidLeave, ViewWillLeave } from '@ionic/angular/lazy';
 
 import { assertZoneContext } from '../../zone-assert.util';
 

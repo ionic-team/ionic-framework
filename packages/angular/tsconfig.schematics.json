@@ -10,7 +10,7 @@
     "moduleResolution": "nodenext",
     "sourceMap": false,
     "pretty": true,
-    "rootDir": "src/schematics",
+    "rootDir": "schematics",
     "target": "es2017",
     "outDir": "dist/schematics",
     // TypeScript 6.0 defaults `types` to []; the devkit .d.ts the schematics
@@ -18,5 +18,5 @@
     "types": ["node"]
   },
   "exclude": ["node_modules"],
-  "include": ["src/schematics/**/*.ts"]
+  "include": ["schematics/**/*.ts"]
 }

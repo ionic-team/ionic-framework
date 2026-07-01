@@ -30,8 +30,8 @@ const getAngularOutputTargets = () => {
   return [
     angularOutputTarget({
       componentCorePackage,
-      directivesProxyFile: '../packages/angular/src/directives/proxies.ts',
-      directivesArrayFile: '../packages/angular/src/directives/proxies-list.ts',
+      directivesProxyFile: '../packages/angular/lazy/src/directives/proxies.ts',
+      directivesArrayFile: '../packages/angular/lazy/src/directives/proxies-list.ts',
       excludeComponents,
       outputType: 'component',
     }),
