@@ -1802,7 +1802,7 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
-    const { el, formatOptions, highlightedDates, multiple, selectionMode, monthNavigation, presentation, preferWheel, titleSelectedDatesFormatter } =
+    const { el, formatOptions, highlightedDates, multiple, selectionMode, monthNavigation, presentation, preferWheel } =
       this;
 
     /**
