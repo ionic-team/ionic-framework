@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Popover - a11y</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <main>
+      <h1>Popover - a11y</h1>
+
+      <button id="open-popover">Open Popover</button>
+      <ion-popover id="basic-popover" trigger="open-popover">
+        <ion-content class="ion-padding">Popover Content</ion-content>
+      </ion-popover>
+
+      <button id="open-menu-popover">Open Menu Popover</button>
+      <ion-popover id="menu-popover" trigger="open-menu-popover">
+        <ion-content class="ion-padding">Menu Popover Content</ion-content>
+      </ion-popover>
+    </main>
+
+    <script>
+      // htmlAttributes is an object prop and cannot be set as a plain HTML
+      // attribute string; set it via JS to verify consumers can still
+      // override the default role (see popover.tsx render()).
+      document.querySelector('#menu-popover').htmlAttributes = { role: 'menu' };
+    </script>
+  </body>
+</html>
