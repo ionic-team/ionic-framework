@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { IonButton, IonContent, IonHeader, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonHeader, IonTitle, IonToolbar, ModalController } from '@ionic/angular';
 
 import { NavModalRootPageComponent } from './nav-modal-root-page.component';
 import { NavWrapperComponent } from './nav-wrapper.component';
