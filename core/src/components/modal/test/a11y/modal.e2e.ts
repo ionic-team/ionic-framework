@@ -28,16 +28,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const button = page.locator('#open-modal');
+      const wrapper = page.locator('ion-modal .modal-wrapper');
 
       await button.click();
       await ionModalDidPresent.next();
 
-      const focusedRole = await page.evaluate(() => {
-        const modal = document.querySelector('ion-modal')!;
-        return modal.shadowRoot?.activeElement?.getAttribute('role') ?? null;
-      });
-
-      expect(focusedRole).toBe('dialog');
+      await expect(wrapper).toHaveAttribute('role', 'dialog');
+      await expect(wrapper).toBeFocused();
     });
   });
 });
