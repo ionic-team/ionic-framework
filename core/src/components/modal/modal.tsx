@@ -1650,11 +1650,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
             the modal opens, so assistive technologies get a focus target
             that actually carries the dialog's role/label. It is not part
             of the Tab order since -1 is never Tab-reachable.
+
+            This is only applied to default modals. For sheet and iOS card
+            modals the wrapper doubles as the drag-gesture surface, and
+            leaving focus on that surface interferes with the pointer
+            gesture (most visibly on Firefox). Those modals keep focusing
+            the host as before. See FW-7611.
           */
           role="dialog"
           {...inheritedAttributes}
           aria-modal="true"
-          tabIndex={-1}
+          tabIndex={!isCardModal && !isSheetModal ? -1 : undefined}
           class="modal-wrapper ion-overlay-wrapper"
           part="content"
           ref={(el) => (this.wrapperEl = el)}

@@ -611,10 +611,14 @@ export const present = async <OverlayPresentOptions>(
      * declares a `tabindex` (i.e. the component authored it to be
      * focusable) so overlays that already focus the host correctly are
      * left untouched.
+     *
+     * `preventScroll` keeps this purely an accessibility-focus move: we
+     * do not want focusing the wrapper to scroll it into view, since the
+     * host was already the scroll-neutral, full-viewport container.
      */
     const overlayWrapper = getElementRoot(overlay.el).querySelector<HTMLElement>('.ion-overlay-wrapper');
     const focusTarget = overlayWrapper?.hasAttribute('tabindex') ? overlayWrapper : overlay.el;
-    focusTarget.focus();
+    focusTarget.focus({ preventScroll: true });
   }
 
   /**
