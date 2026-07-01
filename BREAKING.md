@@ -139,6 +139,14 @@ When using `interface="action-sheet"`, `ion-select` no longer assigns the `selec
 
 Previously, the `selected` role was assigned only to the option matching the select's current value. Because the dismiss role mirrors the tapped button, this surfaced in just one case: re-selecting the already-selected option dismissed the action sheet with `role: "selected"` in `ionActionSheetDidDismiss`. Tapping any other option changed the value and dismissed with `role: ""`. Now that the role is no longer assigned, both cases dismiss with `role: undefined`. Apps that inspected this role to detect that a value was chosen, such as reading `role` from the underlying action sheet's `onDidDismiss` result, should listen for `ion-select`'s `ionChange` event instead, which emits the selected value when the selection changes.
 
+**`cancelText` Default Is Now Per-Interface**
+
+The default value of the `cancelText` property on `ion-select` now depends on the `interface`. It defaults to `'Ok'` for the `modal` interface and `'Cancel'` for the `alert` and `action-sheet` interfaces. Previously, `cancelText` defaulted to `'Cancel'` for every interface.
+
+The property type changed from `string` to `string | undefined`. When `cancelText` is left unset, the per-interface default is used. Setting `cancelText` to an explicit string continues to override the button text for all interfaces as before.
+
+Apps using the `modal` interface that relied on the cancel button reading `'Cancel'` should set `cancelText="Cancel"` to keep the previous text.
+
 <h2 id="version-9x-framework-specific">Framework Specific</h2>
 
 <h4 id="version-9x-angular">Angular</h4>
