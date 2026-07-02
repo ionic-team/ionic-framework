@@ -195,3 +195,10 @@
 
   justify-content: flex-end;
 }
+
+// Grid picker — active cell
+// -----------------------------------
+
+:host .month-year-grid-cell.month-year-grid-cell-active {
+  color: current-color(base);
+}

@@ -198,6 +198,16 @@ export const getYear = (locale: string, refParts: DatetimeParts) => {
 };
 
 /**
+ * Given a locale and a date object,
+ * return the localized long month name.
+ * Example: June
+ */
+export const getMonthName = (locale: string, refParts: DatetimeParts) => {
+  const date = getNormalizedDate(refParts);
+  return new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(date);
+};
+
+/**
  * Given reference parts, return a JS Date object
  * with a normalized time.
  */

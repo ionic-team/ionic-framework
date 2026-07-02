@@ -515,6 +515,66 @@
   overflow: auto;
 }
 
+/**
+ * When `monthYearPickerView="grid"`, the single month-year toggle button is
+ * replaced by two side-by-side buttons (month name + year). This wrapper
+ * lays them out in a row with a small gap.
+ */
+:host .calendar-month-year-grid-buttons {
+  display: flex;
+
+  gap: 4px;
+}
+
+/**
+ * Segmented control used inside the inline grid for `presentation="month-year"`.
+ * Two tab-style buttons ("Month" / "Year") switch the panel between the month
+ * grid and the year grid.
+ */
+:host .month-year-segment {
+  @include margin(0px, 0px, 12px, 0px);
+  @include border-radius(8px);
+  @include padding(2px);
+
+  display: flex;
+
+  gap: 2px;
+
+  background: var(--ion-color-step-100, rgba(0, 0, 0, 0.06));
+}
+
+:host .month-year-segment-btn {
+  @include padding(6px, 12px);
+  @include border-radius(6px);
+
+  flex: 1;
+
+  border: none;
+
+  background: none;
+
+  color: currentColor;
+
+  font-family: inherit;
+  font-size: inherit;
+
+  cursor: pointer;
+
+  opacity: 0.6;
+
+  appearance: none;
+
+  transition: background 150ms ease, opacity 150ms ease, box-shadow 150ms ease;
+}
+
+:host .month-year-segment-btn-active {
+  background: var(--ion-background-color, #fff);
+
+  opacity: 1;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
 :host .month-year-grid {
   display: grid;
 

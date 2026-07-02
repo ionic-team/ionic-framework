@@ -39,7 +39,14 @@ import {
   getTimeColumnsData,
   getCombinedDateColumnData,
 } from './utils/data';
-import { formatValue, getLocalizedDateTime, getLocalizedTime, getMonthAndYear } from './utils/format';
+import {
+  formatValue,
+  getLocalizedDateTime,
+  getLocalizedTime,
+  getMonthAndYear,
+  getMonthName,
+  getYear,
+} from './utils/format';
 import { isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth, getHourCycle } from './utils/helpers';
 import {
   calculateHourFromAMPM,
@@ -144,7 +151,8 @@ const getRangeAriaLabel = (
 export class Datetime implements ComponentInterface {
   private inputId = `ion-dt-${datetimeIds++}`;
   private calendarBodyRef?: HTMLElement;
-  private monthYearButtonRef?: HTMLElement;
+  private monthButtonRef?: HTMLElement;
+  private yearButtonRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
   private intersectionTrackerRef?: HTMLElement;
   private clearFocusVisible?: () => void;
@@ -185,6 +193,9 @@ export class Datetime implements ComponentInterface {
 
   /** Starting year of the currently displayed year page in the grid picker. */
   @State() yearGridPageStart = 0;
+
+  /** Which grid panel is active in the month/year grid overlay ('month' or 'year'). */
+  @State() gridPickerActiveTab: 'month' | 'year' = 'month';
 
   @State() activeParts: DatetimeParts | DatetimeParts[] | DatetimeRangeParts = [];
 
@@ -537,14 +548,27 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
+    // Focus management only applies to the toggle overlay (date/date-time/time-date).
+    // The always-visible inline grid used by month/month-year/year presentations
+    // has no overlay to open or close.
+    const { presentation } = this;
+    const isOverlayPresentation =
+      presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
+    if (!isOverlayPresentation) {
+      return;
+    }
+
     raf(() => {
       if (isOpen) {
-        const firstCell = this.el.shadowRoot?.querySelector<HTMLElement>(
-          '.month-year-grid-container .month-year-grid-cell:not([disabled])'
-        );
+        const selector =
+          this.gridPickerActiveTab === 'year'
+            ? '.month-year-grid-years .month-year-grid-cell:not([disabled])'
+            : '.month-year-grid:not(.month-year-grid-years) .month-year-grid-cell:not([disabled])';
+        const firstCell = this.el.shadowRoot?.querySelector<HTMLElement>(selector);
         firstCell?.focus();
       } else {
-        this.monthYearButtonRef?.focus();
+        const returnRef = this.gridPickerActiveTab === 'year' ? this.yearButtonRef : this.monthButtonRef;
+        returnRef?.focus();
       }
     });
   }
@@ -2006,13 +2030,17 @@ export class Datetime implements ComponentInterface {
 
   private toggleMonthAndYearView = () => {
     this.showMonthAndYear = !this.showMonthAndYear;
-    if (this.showMonthAndYear && this.monthYearPickerView === 'grid') {
-      /**
-       * Reset the year page to the one containing the current working year
-       * every time the grid picker opens.
-       */
-      this.yearGridPageStart = Math.floor(this.workingParts.year / YEAR_GRID_PAGE_SIZE) * YEAR_GRID_PAGE_SIZE;
-    }
+  };
+
+  /**
+   * Opens the grid picker overlay to the specified tab (month or year).
+   * Resets the year page to the one containing the current working year
+   * each time the picker opens.
+   */
+  private openGridPicker = (tab: 'month' | 'year') => {
+    this.gridPickerActiveTab = tab;
+    this.yearGridPageStart = Math.floor(this.workingParts.year / YEAR_GRID_PAGE_SIZE) * YEAR_GRID_PAGE_SIZE;
+    this.showMonthAndYear = true;
   };
 
   /**
@@ -2759,31 +2787,69 @@ export class Datetime implements ComponentInterface {
         </div>
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
-            <button
-              class={{
-                'calendar-month-year-toggle': true,
-                'ion-activatable': true,
-                'ion-focusable': true,
-              }}
-              part="month-year-button"
-              disabled={disabled}
-              aria-label={this.showMonthAndYear ? 'Hide year picker' : 'Show year picker'}
-              ref={(el) => (this.monthYearButtonRef = el)}
-              onClick={() => this.toggleMonthAndYearView()}
-            >
-              <span id="toggle-wrapper">
-                {getMonthAndYear(this.locale, this.workingParts)}
-                {theme !== 'ionic' && (
-                  <ion-icon
-                    aria-hidden="true"
-                    icon={this.showMonthAndYear ? datetimeExpandedIcon : datetimeCollapsedIcon}
-                    lazy={false}
-                    flipRtl={true}
-                  ></ion-icon>
-                )}
-              </span>
-              {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-            </button>
+            {this.monthYearPickerView === 'grid' ? (
+              <div class="calendar-month-year-grid-buttons">
+                <button
+                  class={{
+                    'calendar-month-year-toggle': true,
+                    'calendar-month-year-toggle-month': true,
+                    'ion-activatable': true,
+                    'ion-focusable': true,
+                  }}
+                  part="month-year-button"
+                  disabled={disabled}
+                  aria-expanded={this.showMonthAndYear && this.gridPickerActiveTab === 'month' ? 'true' : 'false'}
+                  aria-label="Select month"
+                  ref={(el) => (this.monthButtonRef = el)}
+                  onClick={() => this.openGridPicker('month')}
+                >
+                  {getMonthName(this.locale, this.workingParts)}
+                  {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+                </button>
+                <button
+                  class={{
+                    'calendar-month-year-toggle': true,
+                    'calendar-month-year-toggle-year': true,
+                    'ion-activatable': true,
+                    'ion-focusable': true,
+                  }}
+                  part="month-year-button"
+                  disabled={disabled}
+                  aria-expanded={this.showMonthAndYear && this.gridPickerActiveTab === 'year' ? 'true' : 'false'}
+                  aria-label="Select year"
+                  ref={(el) => (this.yearButtonRef = el)}
+                  onClick={() => this.openGridPicker('year')}
+                >
+                  {getYear(this.locale, this.workingParts)}
+                  {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+                </button>
+              </div>
+            ) : (
+              <button
+                class={{
+                  'calendar-month-year-toggle': true,
+                  'ion-activatable': true,
+                  'ion-focusable': true,
+                }}
+                part="month-year-button"
+                disabled={disabled}
+                aria-label={this.showMonthAndYear ? 'Hide year picker' : 'Show year picker'}
+                onClick={() => this.toggleMonthAndYearView()}
+              >
+                <span id="toggle-wrapper">
+                  {getMonthAndYear(this.locale, this.workingParts)}
+                  {theme !== 'ionic' && (
+                    <ion-icon
+                      aria-hidden="true"
+                      icon={this.showMonthAndYear ? datetimeExpandedIcon : datetimeCollapsedIcon}
+                      lazy={false}
+                      flipRtl={true}
+                    ></ion-icon>
+                  )}
+                </span>
+                {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+              </button>
+            )}
           </div>
 
           <div class="calendar-next-prev">
@@ -3344,7 +3410,7 @@ export class Datetime implements ComponentInterface {
    *
    * Selecting a month or year cell updates `workingParts` and closes the overlay.
    */
-  private renderMonthYearGrid({ showMonths = true, showYears = true } = {}) {
+  private renderMonthYearGrid({ showMonths = true, showYears = true, segmented = false, inline = false } = {}) {
     const {
       locale,
       workingParts,
@@ -3379,103 +3445,150 @@ export class Datetime implements ComponentInterface {
       pageYears.push(y);
     }
 
+    const monthGrid = (
+      <div
+        class="month-year-grid"
+        role="grid"
+        aria-label="Select month"
+        onKeyDown={(ev) => this.handleGridKeyDown(ev, 3)}
+      >
+        {months.map((month) => (
+          <button
+            key={month.value}
+            role="gridcell"
+            class={{
+              'month-year-grid-cell': true,
+              'month-year-grid-cell-active': month.value === workingParts.month,
+            }}
+            disabled={month.disabled}
+            aria-selected={month.value === workingParts.month ? 'true' : 'false'}
+            onClick={() => {
+              this.setWorkingParts({ ...this.workingParts, month: month.value as number });
+              if (!inline) {
+                this.toggleMonthAndYearView();
+              }
+            }}
+          >
+            {month.text}
+          </button>
+        ))}
+      </div>
+    );
+
+    const yearGrid = (
+      <div class="month-year-grid-year-section">
+        <div class="month-year-grid-year-nav" aria-label="Year navigation">
+          <ion-button
+            fill="clear"
+            size="small"
+            disabled={prevPageDisabled}
+            aria-label="Previous years"
+            onClick={() => {
+              this.yearGridPageStart -= YEAR_GRID_PAGE_SIZE;
+            }}
+          >
+            <ion-icon
+              dir={hostDir}
+              aria-hidden="true"
+              slot="icon-only"
+              icon={datetimePreviousIcon}
+              lazy={false}
+              flipRtl
+            ></ion-icon>
+          </ion-button>
+          <ion-button
+            fill="clear"
+            size="small"
+            disabled={nextPageDisabled}
+            aria-label="Next years"
+            onClick={() => {
+              this.yearGridPageStart += YEAR_GRID_PAGE_SIZE;
+            }}
+          >
+            <ion-icon
+              dir={hostDir}
+              aria-hidden="true"
+              slot="icon-only"
+              icon={datetimeNextIcon}
+              lazy={false}
+              flipRtl
+            ></ion-icon>
+          </ion-button>
+        </div>
+
+        <div
+          class="month-year-grid month-year-grid-years"
+          role="grid"
+          aria-label="Select year"
+          onKeyDown={(ev) => this.handleGridKeyDown(ev, 4)}
+        >
+          {pageYears.map((year) => (
+            <button
+              key={year}
+              role="gridcell"
+              class={{
+                'month-year-grid-cell': true,
+                'month-year-grid-cell-active': year === workingParts.year,
+              }}
+              aria-selected={year === workingParts.year ? 'true' : 'false'}
+              onClick={() => {
+                this.setWorkingParts({ ...this.workingParts, year });
+                if (!inline) {
+                  this.toggleMonthAndYearView();
+                }
+              }}
+            >
+              {year}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+
+    if (segmented) {
+      const activeTab = this.gridPickerActiveTab;
+      return (
+        <div class="month-year-grid-container">
+          <div class="month-year-segment" role="tablist">
+            <button
+              role="tab"
+              aria-selected={activeTab === 'month' ? 'true' : 'false'}
+              class={{
+                'month-year-segment-btn': true,
+                'month-year-segment-btn-active': activeTab === 'month',
+              }}
+              onClick={() => {
+                this.gridPickerActiveTab = 'month';
+              }}
+            >
+              {getMonthName(locale, workingParts)}
+            </button>
+            <button
+              role="tab"
+              aria-selected={activeTab === 'year' ? 'true' : 'false'}
+              class={{
+                'month-year-segment-btn': true,
+                'month-year-segment-btn-active': activeTab === 'year',
+              }}
+              onClick={() => {
+                this.gridPickerActiveTab = 'year';
+              }}
+            >
+              {getYear(locale, workingParts)}
+            </button>
+          </div>
+          <div role="tabpanel">{activeTab === 'month' ? monthGrid : yearGrid}</div>
+        </div>
+      );
+    }
+
     return (
       <div class="month-year-grid-container">
         {/* Month name grid — 3 columns × 4 rows */}
-        {showMonths && (
-          <div
-            class="month-year-grid"
-            role="grid"
-            aria-label="Select month"
-            onKeyDown={(ev) => this.handleGridKeyDown(ev, 3)}
-          >
-            {months.map((month) => (
-              <button
-                key={month.value}
-                role="gridcell"
-                class={{
-                  'month-year-grid-cell': true,
-                  'month-year-grid-cell-active': month.value === workingParts.month,
-                }}
-                disabled={month.disabled}
-                aria-selected={month.value === workingParts.month ? 'true' : 'false'}
-                onClick={() => {
-                  this.setWorkingParts({ ...this.workingParts, month: month.value as number });
-                  this.toggleMonthAndYearView();
-                }}
-              >
-                {month.text}
-              </button>
-            ))}
-          </div>
-        )}
+        {showMonths && monthGrid}
 
         {/* Year section: pagination arrows + 4-column grid */}
-        {showYears && <div class="month-year-grid-year-section">
-          <div class="month-year-grid-year-nav" aria-label="Year navigation">
-            <ion-button
-              fill="clear"
-              size="small"
-              disabled={prevPageDisabled}
-              aria-label="Previous years"
-              onClick={() => {
-                this.yearGridPageStart -= YEAR_GRID_PAGE_SIZE;
-              }}
-            >
-              <ion-icon
-                dir={hostDir}
-                aria-hidden="true"
-                slot="icon-only"
-                icon={datetimePreviousIcon}
-                lazy={false}
-                flipRtl
-              ></ion-icon>
-            </ion-button>
-            <ion-button
-              fill="clear"
-              size="small"
-              disabled={nextPageDisabled}
-              aria-label="Next years"
-              onClick={() => {
-                this.yearGridPageStart += YEAR_GRID_PAGE_SIZE;
-              }}
-            >
-              <ion-icon
-                dir={hostDir}
-                aria-hidden="true"
-                slot="icon-only"
-                icon={datetimeNextIcon}
-                lazy={false}
-                flipRtl
-              ></ion-icon>
-            </ion-button>
-          </div>
-
-          <div
-            class="month-year-grid month-year-grid-years"
-            role="grid"
-            aria-label="Select year"
-            onKeyDown={(ev) => this.handleGridKeyDown(ev, 4)}
-          >
-            {pageYears.map((year) => (
-              <button
-                key={year}
-                role="gridcell"
-                class={{
-                  'month-year-grid-cell': true,
-                  'month-year-grid-cell-active': year === workingParts.year,
-                }}
-                aria-selected={year === workingParts.year ? 'true' : 'false'}
-                onClick={() => {
-                  this.setWorkingParts({ ...this.workingParts, year });
-                  this.toggleMonthAndYearView();
-                }}
-              >
-                {year}
-              </button>
-            ))}
-          </div>
-        </div>}
+        {showYears && yearGrid}
       </div>
     );
   }
@@ -3502,7 +3615,10 @@ export class Datetime implements ComponentInterface {
           aria-modal={this.showMonthAndYear ? 'true' : undefined}
           aria-label={this.showMonthAndYear ? 'Select month and year' : undefined}
         >
-          {this.renderMonthYearGrid()}
+          {this.renderMonthYearGrid({
+            showMonths: this.gridPickerActiveTab === 'month',
+            showYears: this.gridPickerActiveTab === 'year',
+          })}
         </div>
       );
     }
@@ -3561,7 +3677,12 @@ export class Datetime implements ComponentInterface {
         if (this.monthYearPickerView === 'grid') {
           const showMonths = this.presentation !== 'year';
           const showYears = this.presentation !== 'month';
-          return [this.renderHeader(false), this.renderMonthYearGrid({ showMonths, showYears }), this.renderFooter()];
+          const segmented = this.presentation === 'month-year';
+          return [
+            this.renderHeader(false),
+            this.renderMonthYearGrid({ showMonths, showYears, segmented, inline: true }),
+            this.renderFooter(),
+          ];
         }
         return [this.renderHeader(false), this.renderWheelView(), this.renderFooter()];
       default:
