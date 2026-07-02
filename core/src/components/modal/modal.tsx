@@ -1655,7 +1655,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
             modals the wrapper doubles as the drag-gesture surface, and
             leaving focus on that surface interferes with the pointer
             gesture (most visibly on Firefox). Those modals keep focusing
-            the host as before. See FW-7611.
+            the host as before. 
           */
           role="dialog"
           {...inheritedAttributes}
