@@ -1229,9 +1229,7 @@ export class Datetime implements ComponentInterface {
                   const targetEl = calendarBodyRef.querySelector<HTMLElement>(
                     `.calendar-month[data-month="${month}"][data-year="${year}"]`
                   );
-                  this.scrollModeRestoreOffset = targetEl
-                    ? calendarBodyRef.scrollTop - targetEl.offsetTop
-                    : 0;
+                  this.scrollModeRestoreOffset = targetEl ? calendarBodyRef.scrollTop - targetEl.offsetTop : 0;
                   this.scrollModeNeedsPositionRestore = true;
                   this.scrollWindowCenter = { ...this.workingParts, month, year };
                 }
