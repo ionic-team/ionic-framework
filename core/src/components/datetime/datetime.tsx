@@ -3344,7 +3344,7 @@ export class Datetime implements ComponentInterface {
    *
    * Selecting a month or year cell updates `workingParts` and closes the overlay.
    */
-  private renderMonthYearGrid() {
+  private renderMonthYearGrid({ showMonths = true, showYears = true } = {}) {
     const {
       locale,
       workingParts,
@@ -3382,34 +3382,36 @@ export class Datetime implements ComponentInterface {
     return (
       <div class="month-year-grid-container">
         {/* Month name grid — 3 columns × 4 rows */}
-        <div
-          class="month-year-grid"
-          role="grid"
-          aria-label="Select month"
-          onKeyDown={(ev) => this.handleGridKeyDown(ev, 3)}
-        >
-          {months.map((month) => (
-            <button
-              key={month.value}
-              role="gridcell"
-              class={{
-                'month-year-grid-cell': true,
-                'month-year-grid-cell-active': month.value === workingParts.month,
-              }}
-              disabled={month.disabled}
-              aria-selected={month.value === workingParts.month ? 'true' : 'false'}
-              onClick={() => {
-                this.setWorkingParts({ ...this.workingParts, month: month.value as number });
-                this.toggleMonthAndYearView();
-              }}
-            >
-              {month.text}
-            </button>
-          ))}
-        </div>
+        {showMonths && (
+          <div
+            class="month-year-grid"
+            role="grid"
+            aria-label="Select month"
+            onKeyDown={(ev) => this.handleGridKeyDown(ev, 3)}
+          >
+            {months.map((month) => (
+              <button
+                key={month.value}
+                role="gridcell"
+                class={{
+                  'month-year-grid-cell': true,
+                  'month-year-grid-cell-active': month.value === workingParts.month,
+                }}
+                disabled={month.disabled}
+                aria-selected={month.value === workingParts.month ? 'true' : 'false'}
+                onClick={() => {
+                  this.setWorkingParts({ ...this.workingParts, month: month.value as number });
+                  this.toggleMonthAndYearView();
+                }}
+              >
+                {month.text}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Year section: pagination arrows + 4-column grid */}
-        <div class="month-year-grid-year-section">
+        {showYears && <div class="month-year-grid-year-section">
           <div class="month-year-grid-year-nav" aria-label="Year navigation">
             <ion-button
               fill="clear"
@@ -3473,7 +3475,7 @@ export class Datetime implements ComponentInterface {
               </button>
             ))}
           </div>
-        </div>
+        </div>}
       </div>
     );
   }
@@ -3550,9 +3552,16 @@ export class Datetime implements ComponentInterface {
          * When monthYearPickerView="grid", render the grid picker inline instead
          * of the default wheel columns. The grid is not wrapped in .datetime-year
          * here because there is no toggle — it is always visible.
+         *
+         * Only show the sections relevant to the presentation:
+         * - "month"      → month grid only
+         * - "year"       → year grid only
+         * - "month-year" → both grids
          */
         if (this.monthYearPickerView === 'grid') {
-          return [this.renderHeader(false), this.renderMonthYearGrid(), this.renderFooter()];
+          const showMonths = this.presentation !== 'year';
+          const showYears = this.presentation !== 'month';
+          return [this.renderHeader(false), this.renderMonthYearGrid({ showMonths, showYears }), this.renderFooter()];
         }
         return [this.renderHeader(false), this.renderWheelView(), this.renderFooter()];
       default:
