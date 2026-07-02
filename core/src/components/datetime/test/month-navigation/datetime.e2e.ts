@@ -106,6 +106,38 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(datetime).toHaveJSProperty('value', '2022-06-20');
     });
 
+    test('arrows mode: months excluded by monthValues should be disabled in the calendar', async ({ page }) => {
+      await page.setContent(
+        `<ion-datetime locale="en-US" presentation="date" value="2022-06-15" month-navigation="arrows" month-values="1,3,5,6,7,9,11"></ion-datetime>`,
+        config
+      );
+      await page.locator('.datetime-ready').waitFor();
+
+      const datetime = page.locator('ion-datetime');
+
+      // The current month (June = 6) is in monthValues — it should be rendered and enabled
+      await expect(datetime.locator('.calendar-month-grid .calendar-day[data-day="15"]').first()).not.toHaveAttribute(
+        'disabled'
+      );
+
+      // Navigate to the next month (July = 7, also in monthValues) — should be enabled
+      const nextButton = datetime.locator('.calendar-next-prev ion-button:nth-child(2)');
+      await nextButton.click();
+      await page.waitForChanges();
+      await expect(datetime.locator('.calendar-month-grid .calendar-day[data-day="1"]').first()).not.toHaveAttribute(
+        'disabled'
+      );
+
+      // Navigate to August (8, not in monthValues) — all days should be disabled
+      await nextButton.click();
+      await page.waitForChanges();
+      const augustDays = datetime.locator('.calendar-month-grid .calendar-day:not(.calendar-day-padding)');
+      const augustCount = await augustDays.count();
+      for (let i = 0; i < augustCount; i++) {
+        await expect(augustDays.nth(i)).toHaveAttribute('disabled', '');
+      }
+    });
+
     test('scroll mode: min/max should clamp the rendered month window', async ({ page }) => {
       await page.setContent(
         `<ion-datetime locale="en-US" presentation="date" value="2022-06-15" month-navigation="scroll" min="2022-04-01" max="2022-09-30"></ion-datetime>`,
