@@ -231,6 +231,43 @@
             <ion-datetime locale="en-US" id="rangNoAdjacent" presentation="date" selection-mode="range"></ion-datetime>
           </div>
         </div>
+
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Scroll Mode — Adjacent Days Visible at Month Boundary</h2>
+            <ion-datetime
+              locale="en-US"
+              id="scrollAdjacent"
+              presentation="date"
+              month-navigation="scroll"
+              show-adjacent-days="true"
+              value="2022-06-15"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Scroll Mode — No Adjacent Days</h2>
+            <ion-datetime
+              locale="en-US"
+              id="scrollNoAdjacent"
+              presentation="date"
+              month-navigation="scroll"
+              value="2022-06-15"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Scroll Mode — Range + Adjacent Days</h2>
+            <ion-datetime
+              locale="en-US"
+              id="scrollRangeAdjacent"
+              presentation="date"
+              month-navigation="scroll"
+              selection-mode="range"
+              show-adjacent-days="true"
+            ></ion-datetime>
+          </div>
+        </div>
       </ion-content>
     </ion-app>
 
@@ -369,6 +406,9 @@
       document.querySelector('#rangeStartAdjacent').value = ['2022-05-31', '2022-06-10'];
       document.querySelector('#rangeEndAdjacent').value = ['2022-06-24', '2022-07-02'];
       document.querySelector('#rangNoAdjacent').value = ['2022-05-28', '2022-06-05'];
+
+      // Scroll mode + adjacent days
+      document.querySelector('#scrollRangeAdjacent').value = ['2022-05-28', '2022-06-05'];
     </script>
   </body>
 </html>

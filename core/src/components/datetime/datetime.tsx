@@ -184,10 +184,18 @@ export class Datetime implements ComponentInterface {
 
   /**
    * Set to `true` by the scroll-mode scroll listener when the render window
-   * re-centres (i.e. `scrollWindowCenter` changes). `componentDidRender` reads
-   * this flag and restores `scrollTop` so the visible month stays in place.
+   * re-centres. `componentDidRender` reads this flag and restores `scrollTop`
+   * synchronously (before the browser paints) so the visible month stays in place.
    */
   private scrollModeNeedsPositionRestore = false;
+
+  /**
+   * How far (in px) the user was scrolled past the top of the target month
+   * when the window re-centre was triggered. Captured before the re-render so
+   * it can be re-applied afterward, preserving the exact visual position even
+   * when months have different heights (4, 5, or 6 week rows).
+   */
+  private scrollModeRestoreOffset = 0;
 
   @State() showMonthAndYear = false;
 
@@ -1195,10 +1203,9 @@ export class Datetime implements ComponentInterface {
                 writeTask(() => this.setWorkingParts({ ...this.workingParts, month, year }));
 
                 /**
-                 * Only re-centre the scroll window (and trigger a DOM re-render)
-                 * when the user is within 1 month of either edge. This prevents
-                 * the window from rebuilding on every month boundary, which would
-                 * cause a jump even after the scrollTop restore.
+                 * Only re-centre the scroll window when the user is within 2
+                 * months of either edge. This avoids a DOM rebuild (and the
+                 * associated scrollTop restore) on every single month boundary.
                  */
                 const months = this.generateScrollModeMonths();
                 const first = months[0];
@@ -1213,6 +1220,18 @@ export class Datetime implements ComponentInterface {
                   (year === last.year && month === last.month) ||
                   (year === secondLastMonth.year && month === secondLastMonth.month);
                 if (nearStart || nearEnd) {
+                  /**
+                   * Capture how far past the top of the target month the user is
+                   * scrolled RIGHT NOW (before the DOM re-render shifts things).
+                   * Re-applying this offset after the re-render keeps the exact
+                   * visual position stable even when months have different row counts.
+                   */
+                  const targetEl = calendarBodyRef.querySelector<HTMLElement>(
+                    `.calendar-month[data-month="${month}"][data-year="${year}"]`
+                  );
+                  this.scrollModeRestoreOffset = targetEl
+                    ? calendarBodyRef.scrollTop - targetEl.offsetTop
+                    : 0;
                   this.scrollModeNeedsPositionRestore = true;
                   this.scrollWindowCenter = { ...this.workingParts, month, year };
                 }
@@ -1647,26 +1666,24 @@ export class Datetime implements ComponentInterface {
     }
 
     /**
-     * Scroll mode: after the ±6 window re-centres (workingParts changed via
-     * the scroll listener), the DOM has a new set of months. Restore scrollTop
-     * so the working month stays at the same visual position instead of jumping.
+     * Scroll mode: after the ±6 window re-centres, the DOM months have shifted.
+     * Restore scrollTop synchronously (before the browser paints) so the currently
+     * visible month stays in place.
+     *
+     * We use `scrollWindowCenter` (not `workingParts`) because `setWorkingParts`
+     * is deferred in a writeTask and is therefore stale at this point.
+     * `scrollWindowCenter` was set synchronously in the scroll listener and always
+     * holds the month/year that triggered the re-centre.
      */
     if (this.scrollModeNeedsPositionRestore && this.monthNavigation === 'scroll' && calendarBodyRef) {
       this.scrollModeNeedsPositionRestore = false;
-      /**
-       * The window re-centred around `scrollWindowCenter`. Restore scrollTop
-       * so `workingParts` (the month the user was viewing) stays at the same
-       * visual position instead of jumping to the top of the new render window.
-       */
-      const { workingParts } = this;
-      writeTask(() => {
-        const workingMonthEl = calendarBodyRef.querySelector<HTMLElement>(
-          `.calendar-month[data-month="${workingParts.month}"][data-year="${workingParts.year}"]`
-        );
-        if (workingMonthEl) {
-          calendarBodyRef.scrollTop = workingMonthEl.offsetTop;
-        }
-      });
+      const { scrollWindowCenter, scrollModeRestoreOffset } = this;
+      const targetEl = calendarBodyRef.querySelector<HTMLElement>(
+        `.calendar-month[data-month="${scrollWindowCenter.month}"][data-year="${scrollWindowCenter.year}"]`
+      );
+      if (targetEl) {
+        calendarBodyRef.scrollTop = targetEl.offsetTop + scrollModeRestoreOffset;
+      }
     }
 
     if (prevPresentation === null) {
@@ -1776,13 +1793,15 @@ export class Datetime implements ComponentInterface {
     const bodyIsVisible = el.classList.contains('datetime-ready');
     const { isGridStyle, showMonthAndYear } = this;
 
-    if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
+    if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear && this.monthNavigation !== 'scroll') {
       /**
        * Only animate if:
        * 1. We're using grid style (wheel style pickers should just jump to new value)
        * 2. The month and/or year actually changed, and both are defined (otherwise there's nothing to animate to)
        * 3. The calendar body is visible (prevents animation when in collapsed datetime-button, for example)
        * 4. The month/year picker is not open (since you wouldn't see the animation anyway)
+       * 5. Not in scroll mode — scroll mode does not use the snap-based animation; the
+       *    month is already visible in the continuous list so no programmatic scroll is needed.
        */
       this.animateToDate(targetValue);
     } else {
@@ -1796,11 +1815,14 @@ export class Datetime implements ComponentInterface {
       };
       this.setWorkingParts(newParts);
       /**
-       * Also re-centre the scroll window so that programmatic value changes
-       * (and the initial load) put the correct month at the centre of the
-       * ±6 render window in scroll mode.
+       * Re-centre the scroll window when the month/year actually changed
+       * (e.g. programmatic value changes, initial load, reset). Skip when
+       * only the day/time changed so that clicking or deselecting a date
+       * within the already-visible month does not trigger a scroll jump.
        */
-      this.scrollWindowCenter = newParts;
+      if (didChangeMonth) {
+        this.scrollWindowCenter = newParts;
+      }
     }
   };
 
@@ -3139,7 +3161,11 @@ export class Datetime implements ComponentInterface {
                         this.setActiveParts(referenceParts);
                       } else {
                         this.activeParts = { ...activePart, ...referenceParts };
-                        this.animateToDate(referenceParts);
+                        // In scroll mode the neighboring month is already visible in the
+                        // list, so animating to it would cause an unwanted jump.
+                        if (this.monthNavigation !== 'scroll') {
+                          this.animateToDate(referenceParts);
+                        }
                         this.confirm();
                       }
                     } else {
