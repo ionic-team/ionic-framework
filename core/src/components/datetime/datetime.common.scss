@@ -665,11 +665,16 @@
 :host .calendar-day-wrapper-range-start::before,
 :host .calendar-day-wrapper-in-range::before,
 :host .calendar-day-wrapper-range-end::before {
+  /**
+   * @prop --range-background: The background color of the range selection track
+   * (the area between the start and end dates, inclusive). Defaults to 15% opacity
+   * of the component color.
+   */
   position: absolute;
 
   inset-block: 0;
 
-  background: current-color(base, 0.15);
+  background: var(--range-background, #{current-color(base, 0.15)});
 
   content: "";
 

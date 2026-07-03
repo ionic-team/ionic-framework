@@ -356,6 +356,8 @@ export const IonDatetime: StencilVueComponent<JSX.IonDatetime, JSX.IonDatetime["
   'highlightedDates',
   'value',
   'showDefaultTitle',
+  'startDateLabel',
+  'endDateLabel',
   'showDefaultButtons',
   'showClearButton',
   'showDefaultTimeLabel',

@@ -485,7 +485,7 @@ export class Datetime implements ComponentInterface {
    * Only applies to `presentation="date"` and `preferWheel="false"`.
    * Logs a warning if used with any other `presentation` or with `preferWheel="true"`.
    */
-  @Prop() selectionMode?: 'multiple' | 'range';
+  @Prop() selectionMode?: 'single' | 'multiple' | 'range';
 
   /**
    * Controls the month navigation mode when using a grid-style layout.
@@ -587,6 +587,22 @@ export class Datetime implements ComponentInterface {
    * the selected date.
    */
   @Prop() showDefaultTitle = false;
+
+  /**
+   * The label for the range start date shown in the header when
+   * `showDefaultTitle` is enabled and no start date has been selected yet.
+   * Useful for translating or customizing the default placeholder text.
+   * Only applies when `selectionMode="range"`.
+   */
+  @Prop() startDateLabel = 'Start date';
+
+  /**
+   * The label for the range end date shown in the header when
+   * `showDefaultTitle` is enabled and no end date has been selected yet.
+   * Useful for translating or customizing the default placeholder text.
+   * Only applies when `selectionMode="range"`.
+   */
+  @Prop() endDateLabel = 'End date';
 
   /**
    * If `true`, the default "Cancel" and "OK" buttons
@@ -776,6 +792,15 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async cancel(closeOverlay = false) {
+    /**
+     * In range mode, cancelling should fully reset any partial range selection
+     * (i.e. a start date with no end date) so the component returns to an
+     * empty state rather than leaving a dangling start date.
+     */
+    if (this.isRangeMode) {
+      this.activeParts = [];
+    }
+
     this.ionCancel.emit();
 
     if (closeOverlay) {
@@ -818,9 +843,9 @@ export class Datetime implements ComponentInterface {
       );
     }
 
-    if (isRangeMode && Array.isArray(value) && value.length !== 2) {
+    if (isRangeMode && Array.isArray(value) && value.length > 2) {
       printIonWarning(
-        `[ion-datetime] - For selectionMode="range", the "value" property should be an array of exactly 2 ISO 8601 date strings [startDate, endDate]. Received ${value.length} value(s).`,
+        `[ion-datetime] - For selectionMode="range", the "value" property should be an array of 1 or 2 ISO 8601 date strings [startDate] or [startDate, endDate]. Received ${value.length} value(s).`,
         this.el
       );
     }
@@ -1765,6 +1790,15 @@ export class Datetime implements ComponentInterface {
           start: clampDate(valueToProcess[0], minParts, maxParts),
           end: clampDate(valueToProcess[valueToProcess.length - 1], minParts, maxParts),
         };
+      } else if (this.isRangeMode && Array.isArray(valueToProcess) && valueToProcess.length === 1) {
+        /**
+         * A single-element array in range mode is a valid partial range (start date
+         * only, no end date yet). `end` is intentionally omitted so the component
+         * enters the "awaiting end date" state rather than treating this as an error.
+         */
+        this.activeParts = {
+          start: clampDate(valueToProcess[0], minParts, maxParts),
+        };
       } else if (Array.isArray(valueToProcess)) {
         this.activeParts = [...valueToProcess];
       } else {
@@ -2121,6 +2155,13 @@ export class Datetime implements ComponentInterface {
      * is disabled or readonly.
      */
     const isButtonDisabled = disabled || readonly;
+    /**
+     * In range mode, the confirm button should remain disabled until the
+     * user has selected both a start and end date. This prevents committing
+     * an incomplete range value.
+     */
+    const isConfirmDisabled =
+      isButtonDisabled || (this.isRangeMode && !(this.rangeActiveParts?.start && this.rangeActiveParts?.end));
     const confirmFill = theme === 'ionic' ? 'solid' : undefined;
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (!hasSlottedButtons && !showDefaultButtons && !showClearButton) {
@@ -2176,7 +2217,7 @@ export class Datetime implements ComponentInterface {
                     fill={confirmFill}
                     color={this.color}
                     onClick={() => this.confirm(true)}
-                    disabled={isButtonDisabled}
+                    disabled={isConfirmDisabled}
                   >
                     {this.doneText}
                   </ion-button>
@@ -3085,9 +3126,16 @@ export class Datetime implements ComponentInterface {
             // "Filler days" at the beginning of the grid should not get the calendar day
             // CSS parts added to them
             if (!isCalendarPadding && !isAdjacentDay) {
+              const rangePartsList = [
+                isRangeStart ? 'range-start' : '',
+                isRangeEnd ? 'range-end' : '',
+                isRangeStart || isInRange || isRangeEnd ? 'range-selection' : '',
+              ]
+                .filter(Boolean)
+                .join(' ');
               dateParts = `calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}${
                 isCalDayDisabled ? ' disabled' : ''
-              }`;
+              }${rangePartsList ? ` ${rangePartsList}` : ''}`;
             } else if (isAdjacentDay) {
               dateParts = `calendar-day${isCalDayDisabled ? ' disabled' : ''}`;
             }
@@ -3363,17 +3411,22 @@ export class Datetime implements ComponentInterface {
           headerText = `${startText} – ${endText}`;
         }
       } else if (rangeParts?.start) {
-        headerText = getLocalizedDateTime(
+        /**
+         * Start selected but no end yet: show "October 1st – End date"
+         * so the user knows they need to pick an end date.
+         */
+        const startText = getLocalizedDateTime(
           this.locale,
           rangeParts.start,
           formatOptions?.date ?? { weekday: 'short', month: 'short', day: 'numeric' }
         );
+        headerText = `${startText} – ${this.endDateLabel}`;
       } else {
-        headerText = getLocalizedDateTime(
-          this.locale,
-          this.getActivePartsWithFallback(),
-          formatOptions?.date ?? { weekday: 'short', month: 'short', day: 'numeric' }
-        );
+        /**
+         * No selection yet: show the "Start date – End date" placeholder
+         * so the user knows the datetime is in range selection mode.
+         */
+        headerText = `${this.startDateLabel} – ${this.endDateLabel}`;
       }
     } else {
       // for exactly 1 day selected (multiple set or not), show a formatted version of that

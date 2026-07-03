@@ -40,6 +40,31 @@
         box-shadow: 0px 8px 16px 0 rgba(0, 0, 0, 0.25);
         border-radius: 8px;
       }
+
+      /* Shadow parts demo: custom red range */
+      .range-parts-demo::part(range-start),
+      .range-parts-demo::part(range-end) {
+        background: rgb(235, 68, 90);
+        color: #fff;
+      }
+      .range-parts-demo::part(range-start) {
+        border-radius: 32px 0 0 32px;
+      }
+      .range-parts-demo::part(range-end) {
+        border-radius: 0 32px 32px 0;
+      }
+      /* Single-day range: start and end are the same button */
+      .range-parts-demo::part(range-start range-end) {
+        border-radius: 50%;
+      }
+
+      /* Combined demo: blue theme */
+      .range-combined-demo::part(range-start),
+      .range-combined-demo::part(range-end) {
+        background: rgb(56, 128, 255);
+        color: #fff;
+        border-radius: 50%;
+      }
     </style>
   </head>
 
@@ -101,6 +126,19 @@
         <h3>showDefaultTitle + titleSelectedDatesFormatter</h3>
         <div class="grid">
           <div class="grid-item">
+            <h2>Default Header — Empty (no range selected)</h2>
+            <ion-datetime
+              locale="en-US"
+              id="titleEmpty"
+              presentation="date"
+              selection-mode="range"
+              show-default-title="true"
+            >
+              <span slot="title">Select Range</span>
+            </ion-datetime>
+          </div>
+
+          <div class="grid-item">
             <h2>Default Header — Complete Range</h2>
             <ion-datetime
               locale="en-US"
@@ -153,6 +191,122 @@
           </div>
         </div>
 
+        <h3>startDateLabel / endDateLabel (custom placeholder text)</h3>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Custom Labels — Empty State</h2>
+            <ion-datetime
+              locale="en-US"
+              id="customLabelsEmpty"
+              presentation="date"
+              selection-mode="range"
+              show-default-title="true"
+              start-date-label="Departure"
+              end-date-label="Return"
+            >
+              <span slot="title">Flight Dates</span>
+            </ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Custom Labels — Start Selected Only</h2>
+            <ion-datetime
+              locale="en-US"
+              id="customLabelsPartial"
+              presentation="date"
+              selection-mode="range"
+              show-default-title="true"
+              start-date-label="Check-in"
+              end-date-label="Check-out"
+            >
+              <span slot="title">Stay Dates</span>
+            </ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Custom Labels — Complete Range</h2>
+            <ion-datetime
+              locale="en-US"
+              id="customLabelsComplete"
+              presentation="date"
+              selection-mode="range"
+              show-default-title="true"
+              start-date-label="From"
+              end-date-label="To"
+            >
+              <span slot="title">Date Range</span>
+            </ion-datetime>
+          </div>
+        </div>
+
+        <h3>showDefaultButtons — Confirm / Cancel behavior</h3>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Confirm Disabled Until Range Complete</h2>
+            <p style="font-size:12px;color:#6f7378;margin:4px 5px">
+              Click one day → confirm button stays disabled. Click a second day → confirm enables.
+            </p>
+            <ion-datetime
+              locale="en-US"
+              id="buttonsConfirmDisabled"
+              presentation="date"
+              selection-mode="range"
+              show-default-buttons="true"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Cancel Resets Partial Range</h2>
+            <p style="font-size:12px;color:#6f7378;margin:4px 5px">
+              Click one day to set a start date, then Cancel → selection clears entirely.
+            </p>
+            <ion-datetime
+              locale="en-US"
+              id="buttonsCancelReset"
+              presentation="date"
+              selection-mode="range"
+              show-default-buttons="true"
+            ></ion-datetime>
+          </div>
+        </div>
+
+        <h3>Styling API (--range-background + shadow parts)</h3>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>--range-background CSS Variable</h2>
+            <ion-datetime
+              locale="en-US"
+              id="rangeBackground"
+              presentation="date"
+              selection-mode="range"
+              style="--range-background: rgba(235, 68, 90, 0.1);"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Shadow Parts (range-start, range-end, range-selection)</h2>
+            <ion-datetime
+              locale="en-US"
+              id="rangeParts"
+              presentation="date"
+              selection-mode="range"
+              class="range-parts-demo"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Combined Styling</h2>
+            <ion-datetime
+              locale="en-US"
+              id="rangeCombined"
+              presentation="date"
+              selection-mode="range"
+              style="--range-background: rgba(56, 128, 255, 0.1);"
+              class="range-combined-demo"
+            ></ion-datetime>
+          </div>
+        </div>
+
         <h3>highlightedDates</h3>
         <div class="grid">
           <div class="grid-item">
@@ -197,7 +351,9 @@
       document.querySelector('#crossMonth').value = ['2022-05-25', '2022-06-10'];
 
       // showDefaultTitle
+      // titleEmpty: no value — header should read "Start date – End date"
       document.querySelector('#titleComplete').value = ['2022-06-10', '2022-06-20'];
+      // titlePartial: single-element array sets a valid partial range (start only, no end)
       document.querySelector('#titlePartial').value = ['2022-06-15'];
 
       const customFormatter = document.querySelector('#customFormatter');
@@ -210,6 +366,20 @@
       const withFormatOptions = document.querySelector('#withFormatOptions');
       withFormatOptions.value = ['2022-06-10', '2022-06-20'];
       withFormatOptions.formatOptions = { date: { year: 'numeric', month: 'long', day: 'numeric' } };
+
+      // startDateLabel / endDateLabel: single-element array = valid partial range, end-date placeholder visible
+      document.querySelector('#customLabelsPartial').value = ['2022-06-10'];
+      document.querySelector('#customLabelsComplete').value = ['2022-06-10', '2022-06-20'];
+      // customLabelsEmpty: no value — header should read "Departure – Return"
+
+      // showDefaultButtons: pre-populate buttonsConfirmDisabled so confirm starts enabled,
+      // but leave buttonsCancelReset empty so the user can test clicking one day then cancel.
+      document.querySelector('#buttonsConfirmDisabled').value = ['2022-06-10', '2022-06-20'];
+
+      // Styling API — seed committed ranges so the visual styles are immediately visible
+      document.querySelector('#rangeBackground').value = ['2022-06-10', '2022-06-20'];
+      document.querySelector('#rangeParts').value = ['2022-06-10', '2022-06-20'];
+      document.querySelector('#rangeCombined').value = ['2022-06-10', '2022-06-20'];
 
       // highlightedDates: range styling must override highlight styles on active/in-range days
       const highlightOverride = document.querySelector('#highlightOverride');

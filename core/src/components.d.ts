@@ -1162,6 +1162,11 @@ export namespace Components {
          */
         "doneText": string;
         /**
+          * The label for the range end date shown in the header when `showDefaultTitle` is enabled and no end date has been selected yet. Useful for translating or customizing the default placeholder text. Only applies when `selectionMode="range"`.
+          * @default 'End date'
+         */
+        "endDateLabel": string;
+        /**
           * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
           * @default 0
          */
@@ -1255,7 +1260,7 @@ export namespace Components {
         /**
           * Controls date selection behaviour when using a grid-style layout.  - `"multiple"` enables toggling of individual dates (replaces the deprecated `multiple` boolean). - `"range"` enables start/end date range selection. `value` will emit a two-element ISO 8601   string array `[startDate, endDate]` once both dates are selected.  Only applies to `presentation="date"` and `preferWheel="false"`. Logs a warning if used with any other `presentation` or with `preferWheel="true"`.
          */
-        "selectionMode"?: 'multiple' | 'range';
+        "selectionMode"?: 'single' | 'multiple' | 'range';
         /**
           * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled.
           * @default false
@@ -1286,6 +1291,11 @@ export namespace Components {
           * @default 'fixed'
          */
         "size": 'cover' | 'fixed';
+        /**
+          * The label for the range start date shown in the header when `showDefaultTitle` is enabled and no start date has been selected yet. Useful for translating or customizing the default placeholder text. Only applies when `selectionMode="range"`.
+          * @default 'Start date'
+         */
+        "startDateLabel": string;
         /**
           * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
@@ -7227,6 +7237,11 @@ declare namespace LocalJSX {
          */
         "doneText"?: string;
         /**
+          * The label for the range end date shown in the header when `showDefaultTitle` is enabled and no end date has been selected yet. Useful for translating or customizing the default placeholder text. Only applies when `selectionMode="range"`.
+          * @default 'End date'
+         */
+        "endDateLabel"?: string;
+        /**
           * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
           * @default 0
          */
@@ -7339,7 +7354,7 @@ declare namespace LocalJSX {
         /**
           * Controls date selection behaviour when using a grid-style layout.  - `"multiple"` enables toggling of individual dates (replaces the deprecated `multiple` boolean). - `"range"` enables start/end date range selection. `value` will emit a two-element ISO 8601   string array `[startDate, endDate]` once both dates are selected.  Only applies to `presentation="date"` and `preferWheel="false"`. Logs a warning if used with any other `presentation` or with `preferWheel="true"`.
          */
-        "selectionMode"?: 'multiple' | 'range';
+        "selectionMode"?: 'single' | 'multiple' | 'range';
         /**
           * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled.
           * @default false
@@ -7370,6 +7385,11 @@ declare namespace LocalJSX {
           * @default 'fixed'
          */
         "size"?: 'cover' | 'fixed';
+        /**
+          * The label for the range start date shown in the header when `showDefaultTitle` is enabled and no start date has been selected yet. Useful for translating or customizing the default placeholder text. Only applies when `selectionMode="range"`.
+          * @default 'Start date'
+         */
+        "startDateLabel"?: string;
         /**
           * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
@@ -10985,11 +11005,13 @@ declare namespace LocalJSX {
         "locale": string;
         "firstDayOfWeek": number;
         "multiple": boolean;
-        "selectionMode": 'multiple' | 'range';
+        "selectionMode": 'single' | 'multiple' | 'range';
         "monthNavigation": 'arrows' | 'scroll';
         "monthYearPickerView": 'wheel' | 'grid';
         "value": string | string[] | null;
         "showDefaultTitle": boolean;
+        "startDateLabel": string;
+        "endDateLabel": string;
         "showDefaultButtons": boolean;
         "showClearButton": boolean;
         "showDefaultTimeLabel": boolean;
