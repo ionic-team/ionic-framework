@@ -259,3 +259,56 @@
    */
   transform: translateZ(0);
 }
+
+
+// Content: Header/Footer/Tab Bar Scroll Effect Hide — Gap Compensation
+// --------------------------------------------------
+// When a bar hides via scrollEffect="hide", it stays in the layout flow
+// but is translated out of view. The inner-scroll must shift and expand
+// to fill the gap so no empty space is visible to the user.
+
+// Header gap compensation — only when content is NOT fullscreen.
+// When fullscreen=true, inner-scroll already fills the full viewport
+// (offset-top = 0), so translateY would over-shift the content.
+:host(.content-header-hide-scroll-partner:not(.content-fullscreen)) .inner-scroll {
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1),
+              height 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+:host(.content-header-hide-scroll-partner:not(.content-fullscreen).content-header-hide-scroll-hidden) .inner-scroll {
+  transform: translateY(calc(-1 * var(--internal-header-hide-slide-y, 0px)));
+  height: calc(100% + var(--internal-header-hide-slide-y, 0px));
+  transition: transform 200ms cubic-bezier(0.4, 0, 1, 1),
+              height 200ms cubic-bezier(0.4, 0, 1, 1);
+}
+
+// Footer gap compensation — only when content is NOT fullscreen
+:host(.content-footer-hide-scroll-partner:not(.content-fullscreen)) .inner-scroll {
+  transition: height 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:host(.content-footer-hide-scroll-partner:not(.content-fullscreen).content-footer-hide-scroll-hidden) .inner-scroll {
+  height: calc(100% + var(--internal-footer-hide-slide-y, 0px));
+  transition: height 350ms cubic-bezier(0.4, 0, 1, 1);
+}
+
+// Tab bar gap compensation — only when content is NOT fullscreen
+:host(.content-tab-bar-hide-scroll-partner:not(.content-fullscreen)) .inner-scroll {
+  transition: height 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:host(.content-tab-bar-hide-scroll-partner:not(.content-fullscreen).content-tab-bar-hide-scroll-hidden) .inner-scroll {
+  height: calc(100% + var(--internal-tab-bar-hide-slide-y, 0px));
+  transition: height 350ms cubic-bezier(0.4, 0, 1, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host(.content-header-hide-scroll-partner:not(.content-fullscreen)) .inner-scroll,
+  :host(.content-header-hide-scroll-partner:not(.content-fullscreen).content-header-hide-scroll-hidden) .inner-scroll,
+  :host(.content-footer-hide-scroll-partner:not(.content-fullscreen)) .inner-scroll,
+  :host(.content-footer-hide-scroll-partner:not(.content-fullscreen).content-footer-hide-scroll-hidden) .inner-scroll,
+  :host(.content-tab-bar-hide-scroll-partner:not(.content-fullscreen)) .inner-scroll,
+  :host(.content-tab-bar-hide-scroll-partner:not(.content-fullscreen).content-tab-bar-hide-scroll-hidden) .inner-scroll {
+    transition: none;
+  }
+}

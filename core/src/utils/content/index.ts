@@ -4,6 +4,7 @@ import { printRequiredElementError } from '../logging';
 const ION_CONTENT_TAG_NAME = 'ION-CONTENT';
 export const ION_CONTENT_ELEMENT_SELECTOR = 'ion-content';
 export const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
+export const ION_PAGE_ELEMENT_SELECTOR = 'ion-app,ion-page,.ion-page,page-inner';
 /**
  * Selector used for implementations reliant on `<ion-content>` for scroll event changes.
  *

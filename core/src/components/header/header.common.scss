@@ -13,3 +13,27 @@ ion-header {
 ion-header ion-toolbar:first-of-type {
   padding-top: var(--ion-safe-area-top, 0);
 }
+
+// Header - Scroll Effect Hide
+// --------------------------------------------------
+
+// Show transition (returning to visible state)
+ion-header.header-scroll-effect-hide {
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1),
+              opacity 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+// Hidden state — hide is faster than show
+ion-header.header-scroll-effect-hide.header-scroll-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 200ms cubic-bezier(0.4, 0, 1, 1),
+              opacity 300ms cubic-bezier(0.4, 0, 1, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ion-header.header-scroll-effect-hide,
+  ion-header.header-scroll-effect-hide.header-scroll-hidden {
+    transition: none;
+  }
+}
