@@ -1645,17 +1645,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
             shadow DOM otherwise ion-button will not be highlighted
             when using VoiceOver: https://bugs.webkit.org/show_bug.cgi?id=247134
 
-            tabIndex={-1} makes this element (rather than the role-less
-            host) the thing that `present()` in overlays.ts focuses when
-            the modal opens, so assistive technologies get a focus target
-            that actually carries the dialog's role/label. It is not part
-            of the Tab order since -1 is never Tab-reachable.
-
-            This is only applied to default modals. For sheet and iOS card
-            modals the wrapper doubles as the drag-gesture surface, and
-            leaving focus on that surface interferes with the pointer
-            gesture (most visibly on Firefox). Those modals keep focusing
-            the host as before. 
+            tabIndex={-1} makes this element (rather than the role-less host) 
+            receive focus when present() is called, so assistive technologies 
+            get a proper focus target. This only applies to default modals. 
+            Sheet and card modals continue to focus the host to preserve 
+            gesture handling.
           */
           role="dialog"
           {...inheritedAttributes}
