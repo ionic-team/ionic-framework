@@ -113,8 +113,24 @@ export const createSwipeToCloseGesture = (
     return false;
   };
 
+  /**
+   * The wrapper element carries `tabindex="-1"` so that `present()` can
+   * move focus to the element that declares the dialog role (see
+   * modal.tsx). Firefox treats a focusable element as a selection root:
+   * pressing the pointer inside it places a text caret, and a later
+   * press over that caret can begin a native drag and drop session
+   * instead of delivering pointer events. If that happens while the
+   * swipe-to-close gesture is active, the gesture never receives the
+   * final pointerup and hangs mid-drag. Canceling any native dragstart
+   * while the gesture is active prevents the hijack; native drag and
+   * drop behaves as usual while the modal is not being dragged.
+   */
+  const preventNativeDragStart = (ev: DragEvent) => ev.preventDefault();
+
   const onStart = (detail: GestureDetail) => {
     const { deltaY } = detail;
+
+    el.addEventListener('dragstart', preventNativeDragStart);
 
     /**
      * Get the initial scrollY value so
@@ -237,6 +253,8 @@ export const createSwipeToCloseGesture = (
   };
 
   const onEnd = (detail: GestureDetail) => {
+    el.removeEventListener('dragstart', preventNativeDragStart);
+
     const velocity = detail.velocityY;
     const step = detail.deltaY / height;
 

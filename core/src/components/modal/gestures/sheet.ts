@@ -298,7 +298,23 @@ export const createSheetGesture = (
     return true;
   };
 
+  /**
+   * The wrapper element carries `tabindex="-1"` so that `present()` can
+   * move focus to the element that declares the dialog role (see
+   * modal.tsx). Firefox treats a focusable element as a selection root:
+   * pressing the pointer inside it places a text caret, and a later
+   * press over that caret can begin a native drag and drop session
+   * instead of delivering pointer events. If that happens while the
+   * sheet gesture is active, the gesture never receives the final
+   * pointerup and hangs mid-drag. Canceling any native dragstart while
+   * the gesture is active prevents the hijack; native drag and drop
+   * behaves as usual while the sheet is not being dragged.
+   */
+  const preventNativeDragStart = (ev: DragEvent) => ev.preventDefault();
+
   const onStart = (detail: GestureDetail) => {
+    baseEl.addEventListener('dragstart', preventNativeDragStart);
+
     /**
      * If canDismiss is anything other than `true`
      * then users should be able to swipe down
@@ -443,6 +459,8 @@ export const createSheetGesture = (
   };
 
   const onEnd = (detail: GestureDetail) => {
+    baseEl.removeEventListener('dragstart', preventNativeDragStart);
+
     const snapBreakpoint = calculateSnapBreakpoint(detail.deltaY);
 
     const eventDetail: ModalDragEventDetail = {

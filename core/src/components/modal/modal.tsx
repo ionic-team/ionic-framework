@@ -1645,16 +1645,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
             shadow DOM otherwise ion-button will not be highlighted
             when using VoiceOver: https://bugs.webkit.org/show_bug.cgi?id=247134
 
-            tabIndex={-1} makes this element (rather than the role-less host) 
-            receive focus when present() is called, so assistive technologies 
-            get a proper focus target. This only applies to default modals. 
-            Sheet and card modals continue to focus the host to preserve 
-            gesture handling.
+            tabIndex={-1} makes this element (rather than the role-less host)
+            receive focus when present() is called, so assistive technologies
+            get a proper focus target that carries the dialog's role/label.
           */
           role="dialog"
           {...inheritedAttributes}
           aria-modal="true"
-          tabIndex={!isCardModal && !isSheetModal ? -1 : undefined}
+          tabIndex={-1}
           class="modal-wrapper ion-overlay-wrapper"
           part="content"
           ref={(el) => (this.wrapperEl = el)}
