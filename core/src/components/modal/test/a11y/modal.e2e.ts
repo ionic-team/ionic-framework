@@ -20,10 +20,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(results.violations).toEqual([]);
     });
 
-    // role="dialog" lives on .modal-wrapper, not the host, so focus must land
-    // there on present for screen readers (e.g. TalkBack) to enter the dialog
-    // (IONIC-91 / FW-7611).
-    test('should move focus to the dialog wrapper, not the role-less host, on present', async ({ page }) => {
+    // Focus the wrapper with role="dialog" on present so screen readers
+    // (e.g. TalkBack) enter the dialog.
+    test('should focus the modal wrapper on present', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'FW-7611',
+      });
       await page.goto(`/src/components/modal/test/a11y`, config);
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
