@@ -25,7 +25,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('should focus the modal wrapper on present', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
-        description: 'FW-7611',
+        description: 'modal content is inaccessible when TalkBack is enabled',
       });
       await page.goto(`/src/components/modal/test/a11y`, config);
 
@@ -40,13 +40,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(wrapper).toBeFocused();
     });
 
-    // The wrapper is focused on present, and browsers may draw a native
-    // focus ring for it when the modal is opened via keyboard interaction
-    // (:focus-visible). The wrapper must suppress it like the host does.
+    // Browsers may draw a native focus ring on the focused wrapper when
+    // the modal is opened via keyboard. The wrapper must suppress it.
     test('should not render a focus ring on the wrapper when presented via keyboard', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
-        description: 'FW-7611',
+        description: 'modal content is inaccessible when TalkBack is enabled',
       });
       await page.goto(`/src/components/modal/test/a11y`, config);
 
@@ -54,8 +53,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const button = page.locator('#open-modal');
       const wrapper = page.locator('ion-modal .modal-wrapper');
 
-      // Open the modal with the keyboard so the browser applies its
-      // keyboard-modality focus heuristics (:focus-visible) to the wrapper.
+      // Open with the keyboard so :focus-visible applies to the wrapper.
       await button.focus();
       await page.keyboard.press('Enter');
       await ionModalDidPresent.next();
@@ -67,7 +65,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('should focus the sheet modal wrapper on present', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
-        description: 'FW-7611',
+        description: 'modal content is inaccessible when TalkBack is enabled',
       });
       await page.setContent(
         `
@@ -92,7 +90,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('should focus the card modal wrapper on present', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
-        description: 'FW-7611',
+        description: 'modal content is inaccessible when TalkBack is enabled',
       });
       await page.setContent(
         `

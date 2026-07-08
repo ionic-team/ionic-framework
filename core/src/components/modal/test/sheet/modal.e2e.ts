@@ -399,15 +399,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(Object.keys(dragEndEvent.detail).length).toBe(5);
     });
 
-    // The wrapper carries tabindex="-1", which makes Firefox treat it as a
-    // selection root: a press over a text caret inside it can start a native
-    // drag and drop session that swallows the pointer stream, leaving the
-    // gesture hanging. The gesture cancels native dragstart only while it is
-    // active; native drag and drop must work again once the gesture ends.
+    // A native drag and drop session started mid-gesture would swallow the
+    // pointer events the gesture needs to finish (see gestures/sheet.ts).
+    // Native drag and drop must work again once the gesture ends.
     test('should cancel native drag and drop only while the gesture is active', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
-        description: 'FW-7611',
+        description: 'modal content is inaccessible when TalkBack is enabled',
       });
       await page.goto('/src/components/modal/test/sheet', config);
 

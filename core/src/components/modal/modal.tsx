@@ -1647,7 +1647,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
             tabIndex={-1} makes this element (rather than the role-less host)
             receive focus when present() is called, so assistive technologies
-            get a proper focus target that carries the dialog's role/label.
+            get a proper focus target.
           */
           role="dialog"
           {...inheritedAttributes}
