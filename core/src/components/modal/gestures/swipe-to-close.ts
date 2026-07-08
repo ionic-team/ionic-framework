@@ -114,10 +114,9 @@ export const createSwipeToCloseGesture = (
   };
 
   /**
-   * In Firefox, a press over a text caret inside the focusable wrapper
-   * can start a native drag and drop session, swallowing the pointer
-   * events the gesture needs to finish. Cancel native drag and drop
-   * while the gesture is active.
+   * In Firefox, pressing over a text caret in the focusable wrapper can
+   * start a native drag that swallows the gesture's pointer events.
+   * Cancel native drag while the gesture is active.
    */
   const preventNativeDragStart = (ev: DragEvent) => ev.preventDefault();
 

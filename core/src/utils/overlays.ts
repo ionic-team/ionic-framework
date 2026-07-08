@@ -594,12 +594,10 @@ export const present = async <OverlayPresentOptions>(
    */
   if (overlay.keyboardClose && (document.activeElement === null || !overlay.el.contains(document.activeElement))) {
     /**
-     * Some overlays (e.g. modal) declare the dialog role and accessible
-     * label on the `.ion-overlay-wrapper` inside the shadow root rather
-     * than on the host. Screen readers such as Android TalkBack need
-     * focus to land on that element to enter the overlay, so focus the
-     * wrapper when the component made it focusable via `tabindex`.
-     * Overlays that keep the role on the host focus the host as before.
+     * Some overlays (e.g. modal) put the dialog role and label on the
+     * `.ion-overlay-wrapper` rather than the host. Screen readers like
+     * TalkBack need focus to land there, so focus the wrapper when it is
+     * focusable (has a `tabindex`); otherwise focus the host as before.
      */
     const overlayWrapper = getElementRoot(overlay.el).querySelector<HTMLElement>('.ion-overlay-wrapper');
     const focusTarget = overlayWrapper?.hasAttribute('tabindex') ? overlayWrapper : overlay.el;

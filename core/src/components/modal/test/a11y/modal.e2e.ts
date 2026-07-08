@@ -20,8 +20,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(results.violations).toEqual([]);
     });
 
-    // Focus the wrapper with role="dialog" on present so screen readers
-    // (e.g. TalkBack) enter the dialog.
+    // Focus the role="dialog" wrapper on present so screen readers can enter.
     test('should focus the modal wrapper on present', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
@@ -40,8 +39,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(wrapper).toBeFocused();
     });
 
-    // Browsers may draw a native focus ring on the focused wrapper when
-    // the modal is opened via keyboard. The wrapper must suppress it.
+    // The focused wrapper must not show a focus ring when opened via keyboard.
     test('should not render a focus ring on the wrapper when presented via keyboard', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',

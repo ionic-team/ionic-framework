@@ -85,9 +85,8 @@ ion-backdrop {
 }
 
 /**
- * The wrapper is focused when the modal is presented (see modal.tsx).
- * Suppress the native focus ring, matching the host above, which was
- * the previous focus target.
+ * The wrapper is focused on present (see modal.tsx); suppress its focus
+ * ring, matching the host above.
  */
 .modal-wrapper {
   outline: none;
