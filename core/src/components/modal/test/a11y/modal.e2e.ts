@@ -40,6 +40,30 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(wrapper).toBeFocused();
     });
 
+    // The wrapper is focused on present, and browsers may draw a native
+    // focus ring for it when the modal is opened via keyboard interaction
+    // (:focus-visible). The wrapper must suppress it like the host does.
+    test('should not render a focus ring on the wrapper when presented via keyboard', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'FW-7611',
+      });
+      await page.goto(`/src/components/modal/test/a11y`, config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const button = page.locator('#open-modal');
+      const wrapper = page.locator('ion-modal .modal-wrapper');
+
+      // Open the modal with the keyboard so the browser applies its
+      // keyboard-modality focus heuristics (:focus-visible) to the wrapper.
+      await button.focus();
+      await page.keyboard.press('Enter');
+      await ionModalDidPresent.next();
+
+      await expect(wrapper).toBeFocused();
+      await expect(wrapper).toHaveCSS('outline-style', 'none');
+    });
+
     test('should focus the sheet modal wrapper on present', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',

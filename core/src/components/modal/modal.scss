@@ -84,6 +84,18 @@ ion-backdrop {
   z-index: 10;
 }
 
+/**
+ * The wrapper carries tabindex="-1" and receives focus when the modal
+ * is presented (see modal.tsx). Suppress the native focus ring that
+ * browsers may draw for it (for example after keyboard interaction),
+ * matching the host, which was the previous focus target and does the
+ * same above. Screen readers draw their own accessibility-focus
+ * indicator, so assistive technology users are unaffected.
+ */
+.modal-wrapper {
+  outline: none;
+}
+
 .modal-shadow {
   position: absolute;
 
