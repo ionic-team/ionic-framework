@@ -36,6 +36,7 @@ export class Footer implements ComponentInterface {
   private previousScrollTop = 0;
   private scrollTopAtDirectionChange = 0;
   private lastWheelEventTime = 0;
+  private suppressShowUntil = 0;
 
   private readonly TOP_VISIBLE_THRESHOLD = 80;
   private readonly SCROLL_HIDE_THRESHOLD = 60;
@@ -251,6 +252,12 @@ export class Footer implements ComponentInterface {
 
       const shouldHide = isScrollingDown;
       if (shouldHide !== this.scrollHidden) {
+        // After hiding, the content height increases (CSS transition), which lowers
+        // max scrollTop and triggers a spurious upward-scroll event. Suppress "show"
+        // actions briefly to absorb that adjustment.
+        if (!shouldHide && Date.now() < this.suppressShowUntil) {
+          return;
+        }
         writeTask(() => this.setHidden(shouldHide));
       }
     });
@@ -263,9 +270,14 @@ export class Footer implements ComponentInterface {
     if (hidden) {
       this.el.setAttribute('inert', '');
       this.el.setAttribute('aria-hidden', 'true');
+      // Suppress "show" events for slightly longer than the content height
+      // transition (350ms) to prevent the scrollTop adjustment from immediately
+      // re-showing the footer.
+      this.suppressShowUntil = Date.now() + 400;
     } else {
       this.el.removeAttribute('inert');
       this.el.removeAttribute('aria-hidden');
+      this.suppressShowUntil = 0;
     }
 
     if (this.contentEl) {
@@ -319,6 +331,7 @@ export class Footer implements ComponentInterface {
     this.previousScrollTop = 0;
     this.scrollTopAtDirectionChange = 0;
     this.lastWheelEventTime = 0;
+    this.suppressShowUntil = 0;
   }
 
   render() {
