@@ -1,4 +1,4 @@
-@import "../../themes/ionic.globals";
+@import "../../themes/native/native.globals";
 
 :host {
   /**
@@ -11,14 +11,6 @@
   align-items: center;
   justify-content: center;
 
-  width: auto;
-
-  /* stylelint-disable */
-  padding-right: var(--ion-safe-area-right);
-  padding-bottom: var(--ion-safe-area-bottom, 0);
-  padding-left: var(--ion-safe-area-left);
-  /* stylelint-enable */
-
   border-top: var(--border);
 
   background: var(--background);
@@ -26,7 +18,6 @@
 
   text-align: center;
 
-  contain: strict;
   user-select: none;
   z-index: $z-index-toolbar;
 
@@ -34,28 +25,9 @@
   box-sizing: content-box !important;
 }
 
-:host(.ion-color) ::slotted(ion-tab-button) {
-  --background-focused: #{current-color(shade)};
-  --color-selected: #{current-color(contrast)};
-}
-
-:host(.ion-color) ::slotted(.tab-selected) {
-  color: #{current-color(contrast)};;
-}
-
-:host(.ion-color),
-:host(.ion-color) ::slotted(ion-tab-button) {
-  color: #{current-color(contrast, .7)};
-}
-
-:host(.ion-color),
-:host(.ion-color) ::slotted(ion-tab-button) {
-  background: #{current-color(base)};
-}
-
 :host(.ion-color) ::slotted(ion-tab-button.ion-focused),
 :host(.tab-bar-translucent) ::slotted(ion-tab-button.ion-focused) {
-  background: var(--background-focused)
+  background: var(--background-focused);
 }
 
 :host(.tab-bar-translucent) ::slotted(ion-tab-button) {
@@ -63,9 +35,6 @@
 }
 
 :host([slot="top"]) {
-  padding-top: var(--ion-safe-area-top, 0);
-  padding-bottom: 0;
-
   border-top: 0;
   border-bottom: var(--border);
 }
@@ -73,6 +42,28 @@
 :host(.tab-bar-hidden) {
   /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
+}
+
+// Tab Bar Expand
+// --------------------------------------------------
+
+/* Full */
+:host(.tab-bar-full) {
+  width: auto;
+
+  contain: strict;
+
+  /* stylelint-disable */
+  padding-bottom: var(--ion-safe-area-bottom, 0);
+
+  padding-right: var(--ion-safe-area-right);
+  padding-left: var(--ion-safe-area-left);
+  /* stylelint-enable */
+}
+
+:host([slot="top"].tab-bar-full) {
+  padding-top: var(--ion-safe-area-top, 0);
+  padding-bottom: 0;
 }
 
 // Tab Bar - Scroll Effect Hide

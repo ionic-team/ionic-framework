@@ -6,7 +6,7 @@ import { inheritAriaAttributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 
 import type { HeaderScrollEffect } from './header-interface';
 import {
@@ -21,13 +21,15 @@ import {
 } from './header.utils';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-header',
   styleUrls: {
     ios: 'header.ios.scss',
     md: 'header.md.scss',
+    ionic: 'header.ionic.scss',
   },
 })
 export class Header implements ComponentInterface {
@@ -73,8 +75,14 @@ export class Header implements ComponentInterface {
   @Prop() collapse?: 'condense' | 'fade';
 
   /**
+   * If `true`, the header will have a line at the bottom.
+   * TODO(ROU-10855): add support for this prop on ios/md themes
+   */
+  @Prop() divider = false;
+
+  /**
    * If `true`, the header will be translucent.
-   * Only applies when the mode is `"ios"` and the device supports
+   * Only applies when the theme is `"ios"` or `"ionic"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    *
    * Note: In order to scroll content behind the header, the `fullscreen`
@@ -385,8 +393,8 @@ export class Header implements ComponentInterface {
   }
 
   render() {
-    const { translucent, inheritedAttributes } = this;
-    const mode = getIonMode(this);
+    const { translucent, inheritedAttributes, divider } = this;
+    const theme = getIonTheme(this);
     const effectiveEffect = this.scrollEffect ?? this.collapse;
     const isHide = effectiveEffect === 'hide';
     // Use 'none' as fallback for collapse-based class (only for non-hide effects)
@@ -394,25 +402,26 @@ export class Header implements ComponentInterface {
     const isCondensed = collapse === 'condense';
 
     // banner role must be at top level, so remove role if inside a menu
-    const roleType = getRoleType(hostContext('ion-menu', this.el), isCondensed, mode);
+    const roleType = getRoleType(hostContext('ion-menu', this.el), isCondensed, theme);
 
     return (
       <Host
         role={roleType}
         class={{
-          [mode]: true,
+          [theme]: true,
 
           // Used internally for styling
-          [`header-${mode}`]: true,
+          [`header-${theme}`]: true,
 
           [`header-translucent`]: this.translucent,
           [`header-collapse-${collapse}`]: true,
-          [`header-translucent-${mode}`]: this.translucent,
+          [`header-translucent-${theme}`]: this.translucent,
+          ['header-divider']: divider,
           'header-scroll-effect-hide': isHide,
         }}
         {...inheritedAttributes}
       >
-        {mode === 'ios' && translucent && <div class="header-background"></div>}
+        {theme !== 'md' && translucent && <div class="header-background"></div>}
         <slot></slot>
       </Host>
     );

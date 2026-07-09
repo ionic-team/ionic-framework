@@ -92,7 +92,7 @@
 // Tab Bar Hide on Scroll
 // --------------------------------------------------
 
-:host(.tab-bar-hide-on-scroll) {
+:host(.tab-bar-scroll-effect-hide) {
   transition: transform globals.$ion-transition-time-200 globals.$ion-transition-curve-spring;
 }
 

@@ -5,19 +5,21 @@ import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 import type { TabBarChangedEventDetail, TabBarScrollEffect } from './tab-bar-interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-tab-bar',
   styleUrls: {
     ios: 'tab-bar.ios.scss',
     md: 'tab-bar.md.scss',
+    ionic: 'tab-bar.ionic.scss',
   },
   shadow: true,
 })
@@ -84,10 +86,30 @@ export class TabBar implements ComponentInterface {
 
   /**
    * If `true`, the tab bar will be translucent.
-   * Only applies when the mode is `"ios"` and the device supports
+   * Only applies when the theme is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
+
+  /**
+   * Set to `"compact"` to display a width based on the items
+   * inside the tab bar. This value will only work for the
+   * `ionic` theme.
+   *
+   * Set to `"full"` to display a full width tab bar.
+   *
+   * Defaults to `"full"`.
+   */
+  @Prop() expand: 'compact' | 'full' = 'full';
+
+  /**
+   * Set to `"soft"` for a tab bar with slightly rounded corners,
+   * `"round"` for a tab bar with fully rounded corners, or
+   * `"rectangular"` for a tab bar without rounded corners.
+   *
+   * Defaults to `"round"` for the `"ionic"` theme, undefined for all other themes.
+   */
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
   /** @internal */
   @Event() ionTabBarChanged!: EventEmitter<TabBarChangedEventDetail>;
@@ -326,9 +348,26 @@ export class TabBar implements ComponentInterface {
     this.lastWheelTime = 0;
   }
 
+  private getShape(): string | undefined {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    // TODO(ROU-11234): Remove theme check when shapes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
+
   render() {
-    const { color, translucent, keyboardVisible, scrollEffect, scrollHidden } = this;
-    const mode = getIonMode(this);
+    const { color, translucent, keyboardVisible, scrollEffect, scrollHidden, expand } = this;
+    const theme = getIonTheme(this);
+    const shape = this.getShape();
     const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
 
     return (
@@ -337,11 +376,13 @@ export class TabBar implements ComponentInterface {
         aria-hidden={shouldHide || scrollHidden ? 'true' : null}
         inert={scrollHidden ? '' : null}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           'tab-bar-translucent': translucent,
           'tab-bar-hidden': shouldHide,
           'tab-bar-scroll-effect-hide': scrollEffect === 'hide',
           'tab-bar-scroll-hidden': scrollHidden,
+          [`tab-bar-${expand}`]: true,
+          [`tab-bar-${shape}`]: shape !== undefined,
         })}
       >
         <slot></slot>

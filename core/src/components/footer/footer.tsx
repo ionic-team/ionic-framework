@@ -5,19 +5,21 @@ import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 import { printIonWarning } from '@utils/logging';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 
 import type { FooterScrollEffect } from './footer-interface';
 import { handleFooterFade } from './footer.utils';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-footer',
   styleUrls: {
     ios: 'footer.ios.scss',
     md: 'footer.md.scss',
+    ionic: 'footer.ionic.scss',
   },
 })
 export class Footer implements ComponentInterface {
@@ -323,7 +325,7 @@ export class Footer implements ComponentInterface {
 
   render() {
     const { translucent, scrollEffect, collapse } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const effectiveEffect = scrollEffect ?? collapse;
     const isHide = effectiveEffect === 'hide';
     const tabs = this.el.closest('ion-tabs');
@@ -333,20 +335,20 @@ export class Footer implements ComponentInterface {
       <Host
         role="contentinfo"
         class={{
-          [mode]: true,
+          [theme]: true,
 
           // Used internally for styling
-          [`footer-${mode}`]: true,
+          [`footer-${theme}`]: true,
 
           [`footer-translucent`]: translucent,
-          [`footer-translucent-${mode}`]: translucent,
+          [`footer-translucent-${theme}`]: translucent,
           ['footer-toolbar-padding']: !this.keyboardVisible && (!tabBar || tabBar.slot !== 'bottom'),
 
           [`footer-collapse-${effectiveEffect}`]: !isHide && effectiveEffect !== undefined,
           'footer-scroll-effect-hide': isHide,
         }}
       >
-        {mode === 'ios' && translucent && <div class="footer-background"></div>}
+        {theme === 'ios' && translucent && <div class="footer-background"></div>}
         <slot></slot>
       </Host>
     );
