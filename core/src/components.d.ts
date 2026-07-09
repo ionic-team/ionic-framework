@@ -1462,7 +1462,7 @@ export namespace Components {
     }
     interface IonFooter {
         /**
-          * Describes the scroll effect that will be applied to the footer. Only applies in iOS mode.
+          * Describes the scroll effect that will be applied to the footer. Only applies when the theme is `"ios"`.
           * @deprecated Use `scrollEffect` instead.
          */
         "collapse"?: 'fade';
@@ -1471,7 +1471,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Describes the scroll effect that will be applied to the footer. `"hide"` slides the footer out of view when scrolling down and back in when scrolling up. Applies to all themes. `"fade"` fades the toolbar background on scroll. Only applies in iOS mode.
+          * Describes the scroll effect that will be applied to the footer. `"hide"` slides the footer out of view when scrolling down and back in when scrolling up. `"fade"` fades the toolbar background on scroll. Only applies when the theme is `"ios"`.
          */
         "scrollEffect"?: FooterScrollEffect;
         /**
@@ -1479,7 +1479,7 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the footer will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
+          * If `true`, the footer will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
           * @default false
          */
         "translucent": boolean;
@@ -1544,7 +1544,7 @@ export namespace Components {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header. Only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
           * @deprecated Use `scrollEffect` instead.
          */
         "collapse"?: 'condense' | 'fade';
@@ -1558,7 +1558,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Describes the scroll effect that will be applied to the header. `"hide"` slides the header out of view when scrolling down and back in when scrolling up. Applies to all themes. `"condense"` collapses the large title into the main toolbar on scroll. Only applies in iOS mode. `"fade"` fades the toolbar background on scroll. Only applies in iOS mode.
+          * Describes the scroll effect that will be applied to the header. `"hide"` slides the header out of view when scrolling down and back in when scrolling up. `"condense"` collapses the large title into the main toolbar on scroll. Only applies when the theme is `"ios"`. `"fade"` fades the toolbar background on scroll. Only applies when the theme is `"ios"`.
          */
         "scrollEffect"?: HeaderScrollEffect;
         /**
@@ -4060,7 +4060,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Describes the scroll effect that will be applied to the tab bar. `"hide"` slides the tab bar out of view when scrolling down and back in when scrolling up. Applies to all themes.
+          * Describes the scroll effect that will be applied to the tab bar. `"hide"` slides the tab bar out of view when scrolling down and back in when scrolling up.
          */
         "scrollEffect"?: TabBarScrollEffect;
         /**
@@ -7548,7 +7548,7 @@ declare namespace LocalJSX {
     }
     interface IonFooter {
         /**
-          * Describes the scroll effect that will be applied to the footer. Only applies in iOS mode.
+          * Describes the scroll effect that will be applied to the footer. Only applies when the theme is `"ios"`.
           * @deprecated Use `scrollEffect` instead.
          */
         "collapse"?: 'fade';
@@ -7557,7 +7557,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Describes the scroll effect that will be applied to the footer. `"hide"` slides the footer out of view when scrolling down and back in when scrolling up. Applies to all themes. `"fade"` fades the toolbar background on scroll. Only applies in iOS mode.
+          * Describes the scroll effect that will be applied to the footer. `"hide"` slides the footer out of view when scrolling down and back in when scrolling up. `"fade"` fades the toolbar background on scroll. Only applies when the theme is `"ios"`.
          */
         "scrollEffect"?: FooterScrollEffect;
         /**
@@ -7565,7 +7565,7 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the footer will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
+          * If `true`, the footer will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
           * @default false
          */
         "translucent"?: boolean;
@@ -7626,7 +7626,7 @@ declare namespace LocalJSX {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header. Only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
           * @deprecated Use `scrollEffect` instead.
          */
         "collapse"?: 'condense' | 'fade';
@@ -7640,7 +7640,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Describes the scroll effect that will be applied to the header. `"hide"` slides the header out of view when scrolling down and back in when scrolling up. Applies to all themes. `"condense"` collapses the large title into the main toolbar on scroll. Only applies in iOS mode. `"fade"` fades the toolbar background on scroll. Only applies in iOS mode.
+          * Describes the scroll effect that will be applied to the header. `"hide"` slides the header out of view when scrolling down and back in when scrolling up. `"condense"` collapses the large title into the main toolbar on scroll. Only applies when the theme is `"ios"`. `"fade"` fades the toolbar background on scroll. Only applies when the theme is `"ios"`.
          */
         "scrollEffect"?: HeaderScrollEffect;
         /**
@@ -10238,7 +10238,7 @@ declare namespace LocalJSX {
         "onIonTabBarChanged"?: (event: IonTabBarCustomEvent<TabBarChangedEventDetail>) => void;
         "onIonTabBarLoaded"?: (event: IonTabBarCustomEvent<void>) => void;
         /**
-          * Describes the scroll effect that will be applied to the tab bar. `"hide"` slides the tab bar out of view when scrolling down and back in when scrolling up. Applies to all themes.
+          * Describes the scroll effect that will be applied to the tab bar. `"hide"` slides the tab bar out of view when scrolling down and back in when scrolling up.
          */
         "scrollEffect"?: TabBarScrollEffect;
         /**

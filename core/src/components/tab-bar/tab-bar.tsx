@@ -34,13 +34,13 @@ export class TabBar implements ComponentInterface {
   private contentEl?: HTMLElement;
 
   // scrollEffect="hide" scroll tracking state
-  private lastScrollTop = 0;
-  private scrollDirectionChangeTop = 0;
-  private lastWheelTime = 0;
+  private previousScrollTop = 0;
+  private scrollTopAtDirectionChange = 0;
+  private lastWheelEventTime = 0;
 
-  private readonly VISIBLE_ZONE = 80;
-  private readonly HIDE_THRESHOLD = 60;
-  private readonly WHEEL_SCROLL_SUPPRESS_MS = 80;
+  private readonly TOP_VISIBLE_THRESHOLD = 80;
+  private readonly SCROLL_HIDE_THRESHOLD = 60;
+  private readonly WHEEL_SUPPRESS_DURATION_MS = 80;
 
   @Element() el!: HTMLElement;
 
@@ -76,7 +76,7 @@ export class TabBar implements ComponentInterface {
   /**
    * Describes the scroll effect that will be applied to the tab bar.
    * `"hide"` slides the tab bar out of view when scrolling down and back in
-   * when scrolling up. Applies to all themes.
+   * when scrolling up.
    */
   @Prop() scrollEffect?: TabBarScrollEffect;
   @Watch('scrollEffect')
@@ -221,23 +221,23 @@ export class TabBar implements ComponentInterface {
 
   private updateHideSlideY() {
     readTask(() => {
-      const heightPx = this.el.offsetHeight;
+      const tabBarHeightPx = this.el.offsetHeight;
       writeTask(() => {
-        this.el.style.setProperty('--internal-tab-bar-hide-slide-y', `${heightPx}px`);
+        this.el.style.setProperty('--internal-tab-bar-hide-slide-y', `${tabBarHeightPx}px`);
         if (this.contentEl) {
-          this.contentEl.style.setProperty('--internal-tab-bar-hide-slide-y', `${heightPx}px`);
+          this.contentEl.style.setProperty('--internal-tab-bar-hide-slide-y', `${tabBarHeightPx}px`);
         }
       });
     });
   }
 
   private handleWheelEffectHide = (ev: WheelEvent) => {
-    this.lastWheelTime = Date.now();
+    this.lastWheelEventTime = Date.now();
 
     readTask(() => {
-      const scrollTop = this.scrollEl!.scrollTop;
+      const currentScrollTop = this.scrollEl!.scrollTop;
 
-      if (scrollTop <= this.VISIBLE_ZONE) {
+      if (currentScrollTop <= this.TOP_VISIBLE_THRESHOLD) {
         if (this.scrollHidden) {
           writeTask(() => {
             this.scrollHidden = false;
@@ -248,7 +248,7 @@ export class TabBar implements ComponentInterface {
       }
 
       if (ev.deltaY < 0) {
-        this.scrollDirectionChangeTop = scrollTop;
+        this.scrollTopAtDirectionChange = currentScrollTop;
         if (this.scrollHidden) {
           writeTask(() => {
             this.scrollHidden = false;
@@ -256,8 +256,8 @@ export class TabBar implements ComponentInterface {
           });
         }
       } else if (ev.deltaY > 0) {
-        const delta = scrollTop - this.scrollDirectionChangeTop;
-        if (delta >= this.HIDE_THRESHOLD && !this.scrollHidden) {
+        const scrolledSinceDirectionChange = currentScrollTop - this.scrollTopAtDirectionChange;
+        if (scrolledSinceDirectionChange >= this.SCROLL_HIDE_THRESHOLD && !this.scrollHidden) {
           writeTask(() => {
             this.scrollHidden = true;
             this.updateContentHiddenClass(true);
@@ -268,36 +268,37 @@ export class TabBar implements ComponentInterface {
   };
 
   private handleScrollEffectHide = () => {
-    if (Date.now() - this.lastWheelTime < this.WHEEL_SCROLL_SUPPRESS_MS) {
+    // Suppress scroll events shortly after a wheel event — delta already processed via wheel
+    if (Date.now() - this.lastWheelEventTime < this.WHEEL_SUPPRESS_DURATION_MS) {
       return;
     }
 
     readTask(() => {
-      const scrollTop = this.scrollEl!.scrollTop;
+      const currentScrollTop = this.scrollEl!.scrollTop;
 
-      if (scrollTop <= this.VISIBLE_ZONE) {
+      if (currentScrollTop <= this.TOP_VISIBLE_THRESHOLD) {
         if (this.scrollHidden) {
           writeTask(() => {
             this.scrollHidden = false;
             this.updateContentHiddenClass(false);
           });
         }
-        this.lastScrollTop = scrollTop;
+        this.previousScrollTop = currentScrollTop;
         return;
       }
 
-      const isScrollingDown = scrollTop > this.lastScrollTop;
-      const wasScrollingDown = this.lastScrollTop > this.scrollDirectionChangeTop;
+      const isScrollingDown = currentScrollTop > this.previousScrollTop;
+      const wasScrollingDown = this.previousScrollTop > this.scrollTopAtDirectionChange;
 
       if (isScrollingDown !== wasScrollingDown) {
-        this.scrollDirectionChangeTop = this.lastScrollTop;
+        this.scrollTopAtDirectionChange = this.previousScrollTop;
       }
 
-      const delta = Math.abs(scrollTop - this.scrollDirectionChangeTop);
-      const threshold = isScrollingDown ? this.HIDE_THRESHOLD : 0;
-      this.lastScrollTop = scrollTop;
+      const scrolledSinceDirectionChange = Math.abs(currentScrollTop - this.scrollTopAtDirectionChange);
+      const requiredScrollDistance = isScrollingDown ? this.SCROLL_HIDE_THRESHOLD : 0;
+      this.previousScrollTop = currentScrollTop;
 
-      if (delta < threshold) {
+      if (scrolledSinceDirectionChange < requiredScrollDistance) {
         return;
       }
 
@@ -343,9 +344,9 @@ export class TabBar implements ComponentInterface {
     if (this.scrollHidden) {
       this.scrollHidden = false;
     }
-    this.lastScrollTop = 0;
-    this.scrollDirectionChangeTop = 0;
-    this.lastWheelTime = 0;
+    this.previousScrollTop = 0;
+    this.scrollTopAtDirectionChange = 0;
+    this.lastWheelEventTime = 0;
   }
 
   private getShape(): string | undefined {

@@ -19,7 +19,7 @@ import { handleFooterFade } from './footer.utils';
   styleUrls: {
     ios: 'footer.ios.scss',
     md: 'footer.md.scss',
-    ionic: 'footer.ionic.scss',
+    ionic: 'footer.md.scss',
   },
 })
 export class Footer implements ComponentInterface {
@@ -33,13 +33,13 @@ export class Footer implements ComponentInterface {
 
   // scrollEffect="hide" scroll tracking state
   private scrollHidden = false;
-  private lastScrollTop = 0;
-  private scrollDirectionChangeTop = 0;
-  private lastWheelTime = 0;
+  private previousScrollTop = 0;
+  private scrollTopAtDirectionChange = 0;
+  private lastWheelEventTime = 0;
 
-  private readonly VISIBLE_ZONE = 80;
-  private readonly HIDE_THRESHOLD = 60;
-  private readonly WHEEL_SCROLL_SUPPRESS_MS = 80;
+  private readonly TOP_VISIBLE_THRESHOLD = 80;
+  private readonly SCROLL_HIDE_THRESHOLD = 60;
+  private readonly WHEEL_SUPPRESS_DURATION_MS = 80;
 
   @State() private keyboardVisible = false;
 
@@ -48,14 +48,14 @@ export class Footer implements ComponentInterface {
   /**
    * Describes the scroll effect that will be applied to the footer.
    * `"hide"` slides the footer out of view when scrolling down and back in
-   * when scrolling up. Applies to all themes.
-   * `"fade"` fades the toolbar background on scroll. Only applies in iOS mode.
+   * when scrolling up.
+   * `"fade"` fades the toolbar background on scroll. Only applies when the theme is `"ios"`.
    */
   @Prop() scrollEffect?: FooterScrollEffect;
 
   /**
    * Describes the scroll effect that will be applied to the footer.
-   * Only applies in iOS mode.
+   * Only applies when the theme is `"ios"`.
    *
    * @deprecated Use `scrollEffect` instead.
    */
@@ -63,7 +63,7 @@ export class Footer implements ComponentInterface {
 
   /**
    * If `true`, the footer will be translucent.
-   * Only applies when the mode is `"ios"` and the device supports
+   * Only applies when the theme is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    *
    * Note: In order to scroll content behind the footer, the `fullscreen`
@@ -133,7 +133,8 @@ export class Footer implements ComponentInterface {
       );
     }
 
-    const effectiveEffect = scrollEffect ?? collapse;
+    const hasHide = (scrollEffect ?? collapse) === 'hide';
+    const hasFade = (scrollEffect ?? collapse) === 'fade';
 
     this.destroyCollapsibleFooter();
 
@@ -141,7 +142,7 @@ export class Footer implements ComponentInterface {
     const contentEl = pageEl ? findIonContent(pageEl) : null;
 
     // scrollEffect="hide" is cross-platform — runs before the iOS guard
-    if (effectiveEffect === 'hide' && contentEl) {
+    if (hasHide && contentEl) {
       await this.setupScrollEffectHide(contentEl);
       return;
     }
@@ -150,7 +151,7 @@ export class Footer implements ComponentInterface {
       return;
     }
 
-    if (effectiveEffect === 'fade') {
+    if (hasFade) {
       if (!contentEl) {
         printIonContentErrorMsg(this.el);
         return;
@@ -182,23 +183,23 @@ export class Footer implements ComponentInterface {
 
   private updateHideSlideY() {
     readTask(() => {
-      const heightPx = this.el.offsetHeight;
+      const footerHeightPx = this.el.offsetHeight;
       writeTask(() => {
-        this.el.style.setProperty('--internal-footer-hide-slide-y', `${heightPx}px`);
+        this.el.style.setProperty('--internal-footer-hide-slide-y', `${footerHeightPx}px`);
         if (this.contentEl) {
-          this.contentEl.style.setProperty('--internal-footer-hide-slide-y', `${heightPx}px`);
+          this.contentEl.style.setProperty('--internal-footer-hide-slide-y', `${footerHeightPx}px`);
         }
       });
     });
   }
 
   private handleWheelEffectHide = (ev: WheelEvent) => {
-    this.lastWheelTime = Date.now();
+    this.lastWheelEventTime = Date.now();
 
     readTask(() => {
-      const scrollTop = this.scrollEl!.scrollTop;
+      const currentScrollTop = this.scrollEl!.scrollTop;
 
-      if (scrollTop <= this.VISIBLE_ZONE) {
+      if (currentScrollTop <= this.TOP_VISIBLE_THRESHOLD) {
         if (this.scrollHidden) {
           writeTask(() => this.setHidden(false));
         }
@@ -206,13 +207,13 @@ export class Footer implements ComponentInterface {
       }
 
       if (ev.deltaY < 0) {
-        this.scrollDirectionChangeTop = scrollTop;
+        this.scrollTopAtDirectionChange = currentScrollTop;
         if (this.scrollHidden) {
           writeTask(() => this.setHidden(false));
         }
       } else if (ev.deltaY > 0) {
-        const delta = scrollTop - this.scrollDirectionChangeTop;
-        if (delta >= this.HIDE_THRESHOLD && !this.scrollHidden) {
+        const scrolledSinceDirectionChange = currentScrollTop - this.scrollTopAtDirectionChange;
+        if (scrolledSinceDirectionChange >= this.SCROLL_HIDE_THRESHOLD && !this.scrollHidden) {
           writeTask(() => this.setHidden(true));
         }
       }
@@ -221,33 +222,33 @@ export class Footer implements ComponentInterface {
 
   private handleScrollEffectHide = () => {
     // Suppress scroll events shortly after a wheel event — delta already processed via wheel
-    if (Date.now() - this.lastWheelTime < this.WHEEL_SCROLL_SUPPRESS_MS) {
+    if (Date.now() - this.lastWheelEventTime < this.WHEEL_SUPPRESS_DURATION_MS) {
       return;
     }
 
     readTask(() => {
-      const scrollTop = this.scrollEl!.scrollTop;
+      const currentScrollTop = this.scrollEl!.scrollTop;
 
-      if (scrollTop <= this.VISIBLE_ZONE) {
+      if (currentScrollTop <= this.TOP_VISIBLE_THRESHOLD) {
         if (this.scrollHidden) {
           writeTask(() => this.setHidden(false));
         }
-        this.lastScrollTop = scrollTop;
+        this.previousScrollTop = currentScrollTop;
         return;
       }
 
-      const isScrollingDown = scrollTop > this.lastScrollTop;
-      const wasScrollingDown = this.lastScrollTop > this.scrollDirectionChangeTop;
+      const isScrollingDown = currentScrollTop > this.previousScrollTop;
+      const wasScrollingDown = this.previousScrollTop > this.scrollTopAtDirectionChange;
 
       if (isScrollingDown !== wasScrollingDown) {
-        this.scrollDirectionChangeTop = this.lastScrollTop;
+        this.scrollTopAtDirectionChange = this.previousScrollTop;
       }
 
-      const delta = Math.abs(scrollTop - this.scrollDirectionChangeTop);
-      const threshold = isScrollingDown ? this.HIDE_THRESHOLD : 0;
-      this.lastScrollTop = scrollTop;
+      const scrolledSinceDirectionChange = Math.abs(currentScrollTop - this.scrollTopAtDirectionChange);
+      const requiredScrollDistance = isScrollingDown ? this.SCROLL_HIDE_THRESHOLD : 0;
+      this.previousScrollTop = currentScrollTop;
 
-      if (delta < threshold) {
+      if (scrolledSinceDirectionChange < requiredScrollDistance) {
         return;
       }
 
@@ -318,16 +319,16 @@ export class Footer implements ComponentInterface {
       this.scrollHidden = false;
     }
     this.el.style.removeProperty('--internal-footer-hide-slide-y');
-    this.lastScrollTop = 0;
-    this.scrollDirectionChangeTop = 0;
-    this.lastWheelTime = 0;
+    this.previousScrollTop = 0;
+    this.scrollTopAtDirectionChange = 0;
+    this.lastWheelEventTime = 0;
   }
 
   render() {
     const { translucent, scrollEffect, collapse } = this;
     const theme = getIonTheme(this);
-    const effectiveEffect = scrollEffect ?? collapse;
-    const isHide = effectiveEffect === 'hide';
+    const hasHide = (scrollEffect ?? collapse) === 'hide';
+    const hasFade = (scrollEffect ?? collapse) === 'fade';
     const tabs = this.el.closest('ion-tabs');
     const tabBar = tabs?.querySelector(':scope > ion-tab-bar');
 
@@ -344,8 +345,8 @@ export class Footer implements ComponentInterface {
           [`footer-translucent-${theme}`]: translucent,
           ['footer-toolbar-padding']: !this.keyboardVisible && (!tabBar || tabBar.slot !== 'bottom'),
 
-          [`footer-collapse-${effectiveEffect}`]: !isHide && effectiveEffect !== undefined,
-          'footer-scroll-effect-hide': isHide,
+          'footer-collapse-fade': hasFade,
+          'footer-scroll-effect-hide': hasHide,
         }}
       >
         {theme === 'ios' && translucent && <div class="footer-background"></div>}

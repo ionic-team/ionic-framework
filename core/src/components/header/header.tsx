@@ -44,29 +44,29 @@ export class Header implements ComponentInterface {
 
   // scrollEffect="hide" scroll tracking state
   private scrollHidden = false;
-  private lastScrollTop = 0;
-  private scrollDirectionChangeTop = 0;
-  private lastWheelTime = 0;
+  private previousScrollTop = 0;
+  private scrollTopAtDirectionChange = 0;
+  private lastWheelEventTime = 0;
 
-  private readonly VISIBLE_ZONE = 80;
-  private readonly HIDE_THRESHOLD = 60;
-  private readonly WHEEL_SCROLL_SUPPRESS_MS = 80;
+  private readonly TOP_VISIBLE_THRESHOLD = 80;
+  private readonly SCROLL_HIDE_THRESHOLD = 60;
+  private readonly WHEEL_SUPPRESS_DURATION_MS = 80;
 
   @Element() el!: HTMLElement;
 
   /**
    * Describes the scroll effect that will be applied to the header.
    * `"hide"` slides the header out of view when scrolling down and back in
-   * when scrolling up. Applies to all themes.
+   * when scrolling up.
    * `"condense"` collapses the large title into the main toolbar on scroll.
-   * Only applies in iOS mode.
-   * `"fade"` fades the toolbar background on scroll. Only applies in iOS mode.
+   * Only applies when the theme is `"ios"`.
+   * `"fade"` fades the toolbar background on scroll. Only applies when the theme is `"ios"`.
    */
   @Prop() scrollEffect?: HeaderScrollEffect;
 
   /**
    * Describes the scroll effect that will be applied to the header.
-   * Only applies in iOS mode.
+   * Only applies when the theme is `"ios"`.
    *
    * Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
    *
@@ -116,7 +116,9 @@ export class Header implements ComponentInterface {
       );
     }
 
-    const effectiveEffect = scrollEffect ?? collapse;
+    const hasHide = (scrollEffect ?? collapse) === 'hide';
+    const hasCondense = (scrollEffect ?? collapse) === 'condense';
+    const hasFade = (scrollEffect ?? collapse) === 'fade';
 
     this.destroyCollapsibleHeader();
 
@@ -124,7 +126,7 @@ export class Header implements ComponentInterface {
     const contentEl = pageEl ? findIonContent(pageEl) : null;
 
     // scrollEffect="hide" is cross-platform — runs before the iOS guard
-    if (effectiveEffect === 'hide' && contentEl) {
+    if (hasHide && contentEl) {
       await this.setupScrollEffectHide(contentEl);
     }
 
@@ -132,7 +134,7 @@ export class Header implements ComponentInterface {
       return;
     }
 
-    if (effectiveEffect === 'condense') {
+    if (hasCondense) {
       // Cloned elements are always needed in iOS transition
       writeTask(() => {
         const title = cloneElement('ion-title') as HTMLIonTitleElement;
@@ -141,7 +143,7 @@ export class Header implements ComponentInterface {
       });
 
       await this.setupCondenseHeader(contentEl, pageEl);
-    } else if (effectiveEffect === 'fade') {
+    } else if (hasFade) {
       if (!contentEl) {
         printIonContentErrorMsg(this.el);
         return;
@@ -177,23 +179,23 @@ export class Header implements ComponentInterface {
 
   private updateHideSlideY() {
     readTask(() => {
-      const heightPx = this.el.offsetHeight;
+      const headerHeightPx = this.el.offsetHeight;
       writeTask(() => {
-        this.el.style.setProperty('--internal-header-hide-slide-y', `${heightPx}px`);
+        this.el.style.setProperty('--internal-header-hide-slide-y', `${headerHeightPx}px`);
         if (this.contentEl) {
-          this.contentEl.style.setProperty('--internal-header-hide-slide-y', `${heightPx}px`);
+          this.contentEl.style.setProperty('--internal-header-hide-slide-y', `${headerHeightPx}px`);
         }
       });
     });
   }
 
   private handleWheelEffectHide = (ev: WheelEvent) => {
-    this.lastWheelTime = Date.now();
+    this.lastWheelEventTime = Date.now();
 
     readTask(() => {
-      const scrollTop = this.scrollEl!.scrollTop;
+      const currentScrollTop = this.scrollEl!.scrollTop;
 
-      if (scrollTop <= this.VISIBLE_ZONE) {
+      if (currentScrollTop <= this.TOP_VISIBLE_THRESHOLD) {
         if (this.scrollHidden) {
           writeTask(() => this.setHidden(false));
         }
@@ -201,13 +203,13 @@ export class Header implements ComponentInterface {
       }
 
       if (ev.deltaY < 0) {
-        this.scrollDirectionChangeTop = scrollTop;
+        this.scrollTopAtDirectionChange = currentScrollTop;
         if (this.scrollHidden) {
           writeTask(() => this.setHidden(false));
         }
       } else if (ev.deltaY > 0) {
-        const delta = scrollTop - this.scrollDirectionChangeTop;
-        if (delta >= this.HIDE_THRESHOLD && !this.scrollHidden) {
+        const scrolledSinceDirectionChange = currentScrollTop - this.scrollTopAtDirectionChange;
+        if (scrolledSinceDirectionChange >= this.SCROLL_HIDE_THRESHOLD && !this.scrollHidden) {
           writeTask(() => this.setHidden(true));
         }
       }
@@ -216,33 +218,33 @@ export class Header implements ComponentInterface {
 
   private handleScrollEffectHide = () => {
     // Suppress scroll events shortly after a wheel event — delta already processed via wheel
-    if (Date.now() - this.lastWheelTime < this.WHEEL_SCROLL_SUPPRESS_MS) {
+    if (Date.now() - this.lastWheelEventTime < this.WHEEL_SUPPRESS_DURATION_MS) {
       return;
     }
 
     readTask(() => {
-      const scrollTop = this.scrollEl!.scrollTop;
+      const currentScrollTop = this.scrollEl!.scrollTop;
 
-      if (scrollTop <= this.VISIBLE_ZONE) {
+      if (currentScrollTop <= this.TOP_VISIBLE_THRESHOLD) {
         if (this.scrollHidden) {
           writeTask(() => this.setHidden(false));
         }
-        this.lastScrollTop = scrollTop;
+        this.previousScrollTop = currentScrollTop;
         return;
       }
 
-      const isScrollingDown = scrollTop > this.lastScrollTop;
-      const wasScrollingDown = this.lastScrollTop > this.scrollDirectionChangeTop;
+      const isScrollingDown = currentScrollTop > this.previousScrollTop;
+      const wasScrollingDown = this.previousScrollTop > this.scrollTopAtDirectionChange;
 
       if (isScrollingDown !== wasScrollingDown) {
-        this.scrollDirectionChangeTop = this.lastScrollTop;
+        this.scrollTopAtDirectionChange = this.previousScrollTop;
       }
 
-      const delta = Math.abs(scrollTop - this.scrollDirectionChangeTop);
-      const threshold = isScrollingDown ? this.HIDE_THRESHOLD : 0;
-      this.lastScrollTop = scrollTop;
+      const scrolledSinceDirectionChange = Math.abs(currentScrollTop - this.scrollTopAtDirectionChange);
+      const requiredScrollDistance = isScrollingDown ? this.SCROLL_HIDE_THRESHOLD : 0;
+      this.previousScrollTop = currentScrollTop;
 
-      if (delta < threshold) {
+      if (scrolledSinceDirectionChange < requiredScrollDistance) {
         return;
       }
 
@@ -323,9 +325,9 @@ export class Header implements ComponentInterface {
       this.scrollHidden = false;
     }
     this.el.style.removeProperty('--internal-header-hide-slide-y');
-    this.lastScrollTop = 0;
-    this.scrollDirectionChangeTop = 0;
-    this.lastWheelTime = 0;
+    this.previousScrollTop = 0;
+    this.scrollTopAtDirectionChange = 0;
+    this.lastWheelEventTime = 0;
   }
 
   private async setupCondenseHeader(contentEl: HTMLElement | null, pageEl: Element | null) {
@@ -395,14 +397,16 @@ export class Header implements ComponentInterface {
   render() {
     const { translucent, inheritedAttributes, divider } = this;
     const theme = getIonTheme(this);
-    const effectiveEffect = this.scrollEffect ?? this.collapse;
-    const isHide = effectiveEffect === 'hide';
+    const hasHide = (this.scrollEffect ?? this.collapse) === 'hide';
+    const hasCondense = (this.scrollEffect ?? this.collapse) === 'condense';
+    const hasFade = (this.scrollEffect ?? this.collapse) === 'fade';
     // Use 'none' as fallback for collapse-based class (only for non-hide effects)
-    const collapse = isHide ? 'none' : effectiveEffect || 'none';
-    const isCondensed = collapse === 'condense';
+    let collapseClass = 'none';
+    if (hasCondense) collapseClass = 'condense';
+    else if (hasFade) collapseClass = 'fade';
 
     // banner role must be at top level, so remove role if inside a menu
-    const roleType = getRoleType(hostContext('ion-menu', this.el), isCondensed, theme);
+    const roleType = getRoleType(hostContext('ion-menu', this.el), hasCondense, theme);
 
     return (
       <Host
@@ -414,10 +418,10 @@ export class Header implements ComponentInterface {
           [`header-${theme}`]: true,
 
           [`header-translucent`]: this.translucent,
-          [`header-collapse-${collapse}`]: true,
+          [`header-collapse-${collapseClass}`]: true,
           [`header-translucent-${theme}`]: this.translucent,
           ['header-divider']: divider,
-          'header-scroll-effect-hide': isHide,
+          'header-scroll-effect-hide': hasHide,
         }}
         {...inheritedAttributes}
       >
