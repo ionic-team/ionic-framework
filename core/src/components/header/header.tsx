@@ -6,7 +6,7 @@ import { inheritAriaAttributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { hostContext } from '@utils/theme';
 
-import { getIonTheme } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 
 import type { HeaderScrollEffect } from './header-interface';
 import {
@@ -65,6 +65,7 @@ export class Header implements ComponentInterface {
 
   /**
    * Describes the scroll effect that will be applied to the header.
+   * Only applies when the mode is `"ios"`.
    *
    * Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
    *
@@ -127,7 +128,11 @@ export class Header implements ComponentInterface {
       return;
     }
 
-    if (hasCondense) {
+    // condense/fade via the deprecated `collapse` prop are iOS-only.
+    // condense/fade via the new `scrollEffect` prop work in all modes.
+    const isModeRestricted = scrollEffect === undefined && getIonMode(this) !== 'ios';
+
+    if (hasCondense && !isModeRestricted) {
       // Cloned elements are always needed in iOS transition
       writeTask(() => {
         const title = cloneElement('ion-title') as HTMLIonTitleElement;
@@ -136,7 +141,7 @@ export class Header implements ComponentInterface {
       });
 
       await this.setupCondenseHeader(contentEl, pageEl);
-    } else if (hasFade) {
+    } else if (hasFade && !isModeRestricted) {
       if (!contentEl) {
         printIonContentErrorMsg(this.el);
         return;

@@ -5,7 +5,7 @@ import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 import { printIonWarning } from '@utils/logging';
 
-import { getIonTheme } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 
 import type { FooterScrollEffect } from './footer-interface';
 import { handleFooterFade } from './footer.utils';
@@ -55,6 +55,7 @@ export class Footer implements ComponentInterface {
 
   /**
    * Describes the scroll effect that will be applied to the footer.
+   * Only applies when the mode is `"ios"`.
    *
    * @deprecated Use `scrollEffect` instead.
    */
@@ -144,7 +145,10 @@ export class Footer implements ComponentInterface {
       return;
     }
 
-    if (hasFade) {
+    // fade via the deprecated `collapse` prop is iOS-only.
+    // fade via the new `scrollEffect` prop works in all modes.
+    const isModeRestricted = scrollEffect === undefined && getIonMode(this) !== 'ios';
+    if (hasFade && !isModeRestricted) {
       if (!contentEl) {
         printIonContentErrorMsg(this.el);
         return;
