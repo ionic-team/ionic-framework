@@ -1462,7 +1462,7 @@ export namespace Components {
     }
     interface IonFooter {
         /**
-          * Describes the scroll effect that will be applied to the footer. Only applies when the theme is `"ios"`.
+          * Describes the scroll effect that will be applied to the footer.
           * @deprecated Use `scrollEffect` instead.
          */
         "collapse"?: 'fade';
@@ -1471,7 +1471,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Describes the scroll effect that will be applied to the footer. `"hide"` slides the footer out of view when scrolling down and back in when scrolling up. `"fade"` fades the toolbar background on scroll. Only applies when the theme is `"ios"`.
+          * Describes the scroll effect that will be applied to the footer. `"hide"` slides the footer out of view when scrolling down and back in when scrolling up. `"fade"` fades the toolbar background on scroll.
          */
         "scrollEffect"?: FooterScrollEffect;
         /**
@@ -1544,7 +1544,7 @@ export namespace Components {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
           * @deprecated Use `scrollEffect` instead.
          */
         "collapse"?: 'condense' | 'fade';
@@ -1558,7 +1558,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Describes the scroll effect that will be applied to the header. `"hide"` slides the header out of view when scrolling down and back in when scrolling up. `"condense"` collapses the large title into the main toolbar on scroll. Only applies when the theme is `"ios"`. `"fade"` fades the toolbar background on scroll. Only applies when the theme is `"ios"`.
+          * Describes the scroll effect that will be applied to the header. `"hide"` slides the header out of view when scrolling down and back in when scrolling up. `"condense"` collapses the large title into the main toolbar on scroll. `"fade"` fades the toolbar background on scroll.
          */
         "scrollEffect"?: HeaderScrollEffect;
         /**
@@ -7548,7 +7548,7 @@ declare namespace LocalJSX {
     }
     interface IonFooter {
         /**
-          * Describes the scroll effect that will be applied to the footer. Only applies when the theme is `"ios"`.
+          * Describes the scroll effect that will be applied to the footer.
           * @deprecated Use `scrollEffect` instead.
          */
         "collapse"?: 'fade';
@@ -7557,7 +7557,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Describes the scroll effect that will be applied to the footer. `"hide"` slides the footer out of view when scrolling down and back in when scrolling up. `"fade"` fades the toolbar background on scroll. Only applies when the theme is `"ios"`.
+          * Describes the scroll effect that will be applied to the footer. `"hide"` slides the footer out of view when scrolling down and back in when scrolling up. `"fade"` fades the toolbar background on scroll.
          */
         "scrollEffect"?: FooterScrollEffect;
         /**
@@ -7626,7 +7626,7 @@ declare namespace LocalJSX {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
           * @deprecated Use `scrollEffect` instead.
          */
         "collapse"?: 'condense' | 'fade';
@@ -7640,7 +7640,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Describes the scroll effect that will be applied to the header. `"hide"` slides the header out of view when scrolling down and back in when scrolling up. `"condense"` collapses the large title into the main toolbar on scroll. Only applies when the theme is `"ios"`. `"fade"` fades the toolbar background on scroll. Only applies when the theme is `"ios"`.
+          * Describes the scroll effect that will be applied to the header. `"hide"` slides the header out of view when scrolling down and back in when scrolling up. `"condense"` collapses the large title into the main toolbar on scroll. `"fade"` fades the toolbar background on scroll.
          */
         "scrollEffect"?: HeaderScrollEffect;
         /**
