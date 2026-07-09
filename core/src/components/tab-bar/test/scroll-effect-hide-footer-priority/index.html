@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tab Bar - Scroll Effect Hide (Footer Priority)</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <div class="ion-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Header</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <div class="ion-padding" style="height: 3000px">
+            <h1>Content</h1>
+            <p>Scroll down. The tab bar should NOT hide because it is nested inside ion-footer which has no scrollEffect. The footer controls hide behavior — the tab bar defers to it.</p>
+          </div>
+        </ion-content>
+        <!--
+          The footer has no scrollEffect prop.
+          The tab bar has scrollEffect="hide" but should be ignored
+          because the parent footer takes priority.
+        -->
+        <ion-footer id="footer">
+          <ion-tab-bar id="tabBar" slot="bottom" scroll-effect="hide">
+            <ion-tab-button>
+              <ion-icon name="home-outline"></ion-icon>
+              <ion-label>Home</ion-label>
+            </ion-tab-button>
+            <ion-tab-button>
+              <ion-icon name="heart-outline"></ion-icon>
+              <ion-label>Favorites</ion-label>
+            </ion-tab-button>
+            <ion-tab-button>
+              <ion-icon name="search-outline"></ion-icon>
+              <ion-label>Search</ion-label>
+            </ion-tab-button>
+          </ion-tab-bar>
+        </ion-footer>
+      </div>
+    </ion-app>
+  </body>
+</html>

@@ -187,9 +187,8 @@ export class TabBar implements ComponentInterface {
   }
 
   private setupScrollEffect = async () => {
-    // If parent ion-footer also has scrollEffect="hide", defer to the footer's animation
-    const footerEl = this.el.closest('ion-footer') as (HTMLIonFooterElement & { scrollEffect?: string }) | null;
-    if (footerEl?.scrollEffect === 'hide') {
+    // When nested inside ion-footer, the footer owns the hide animation.
+    if (this.el.closest('ion-footer')) {
       return;
     }
 
