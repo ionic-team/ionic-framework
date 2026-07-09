@@ -37,6 +37,7 @@ export class TabBar implements ComponentInterface {
   private previousScrollTop = 0;
   private scrollTopAtDirectionChange = 0;
   private lastWheelEventTime = 0;
+  private suppressShowUntil = 0;
 
   private readonly TOP_VISIBLE_THRESHOLD = 80;
   private readonly SCROLL_HIDE_THRESHOLD = 60;
@@ -238,10 +239,7 @@ export class TabBar implements ComponentInterface {
 
       if (currentScrollTop <= this.TOP_VISIBLE_THRESHOLD) {
         if (this.scrollHidden) {
-          writeTask(() => {
-            this.scrollHidden = false;
-            this.updateContentHiddenClass(false);
-          });
+          writeTask(() => this.setHidden(false));
         }
         return;
       }
@@ -249,18 +247,12 @@ export class TabBar implements ComponentInterface {
       if (ev.deltaY < 0) {
         this.scrollTopAtDirectionChange = currentScrollTop;
         if (this.scrollHidden) {
-          writeTask(() => {
-            this.scrollHidden = false;
-            this.updateContentHiddenClass(false);
-          });
+          writeTask(() => this.setHidden(false));
         }
       } else if (ev.deltaY > 0) {
         const scrolledSinceDirectionChange = currentScrollTop - this.scrollTopAtDirectionChange;
         if (scrolledSinceDirectionChange >= this.SCROLL_HIDE_THRESHOLD && !this.scrollHidden) {
-          writeTask(() => {
-            this.scrollHidden = true;
-            this.updateContentHiddenClass(true);
-          });
+          writeTask(() => this.setHidden(true));
         }
       }
     });
@@ -277,12 +269,14 @@ export class TabBar implements ComponentInterface {
 
       if (currentScrollTop <= this.TOP_VISIBLE_THRESHOLD) {
         if (this.scrollHidden) {
-          writeTask(() => {
-            this.scrollHidden = false;
-            this.updateContentHiddenClass(false);
-          });
+          writeTask(() => this.setHidden(false));
         }
         this.previousScrollTop = currentScrollTop;
+        return;
+      }
+
+      // No movement — skip to avoid toggling state on duplicate scroll events
+      if (currentScrollTop === this.previousScrollTop) {
         return;
       }
 
@@ -303,13 +297,34 @@ export class TabBar implements ComponentInterface {
 
       const shouldHide = isScrollingDown;
       if (shouldHide !== this.scrollHidden) {
-        writeTask(() => {
-          this.scrollHidden = shouldHide;
-          this.updateContentHiddenClass(shouldHide);
-        });
+        // After hiding, the content height increases (CSS transition), which lowers
+        // max scrollTop and triggers a spurious upward-scroll event. Suppress "show"
+        // actions briefly to absorb that adjustment.
+        if (!shouldHide && Date.now() < this.suppressShowUntil) {
+          return;
+        }
+        writeTask(() => this.setHidden(shouldHide));
       }
     });
   };
+
+  private setHidden(hidden: boolean) {
+    this.scrollHidden = hidden;
+    this.el.classList.toggle('tab-bar-scroll-hidden', hidden);
+
+    if (hidden) {
+      this.el.setAttribute('inert', '');
+      // Suppress "show" events for slightly longer than the content height
+      // transition (350ms) to prevent the scrollTop adjustment from immediately
+      // re-showing the tab bar.
+      this.suppressShowUntil = Date.now() + 400;
+    } else {
+      this.el.removeAttribute('inert');
+      this.suppressShowUntil = 0;
+    }
+
+    this.updateContentHiddenClass(hidden);
+  }
 
   private updateContentHiddenClass(hidden: boolean) {
     if (this.contentEl) {
@@ -346,6 +361,7 @@ export class TabBar implements ComponentInterface {
     this.previousScrollTop = 0;
     this.scrollTopAtDirectionChange = 0;
     this.lastWheelEventTime = 0;
+    this.suppressShowUntil = 0;
   }
 
   private getShape(): string | undefined {

@@ -14,7 +14,7 @@ configs({ modes: ['ios', 'md', 'ionic-ios', 'ionic-md'], directions: ['ltr'] }).
       await page.goto('/src/components/tab-bar/test/scroll-effect-hide', config);
 
       const tabBar = page.locator('ion-tab-bar');
-      const content = page.locator('ion-content').first();
+      const content = page.locator('ion-content');
 
       await expect(tabBar).not.toHaveClass(/tab-bar-scroll-hidden/);
 
@@ -29,7 +29,7 @@ configs({ modes: ['ios', 'md', 'ionic-ios', 'ionic-md'], directions: ['ltr'] }).
       await page.goto('/src/components/tab-bar/test/scroll-effect-hide', config);
 
       const tabBar = page.locator('ion-tab-bar');
-      const content = page.locator('ion-content').first();
+      const content = page.locator('ion-content');
 
       await content.evaluate((el: HTMLIonContentElement) => el.scrollToBottom(0));
       await page.locator('ion-tab-bar.tab-bar-scroll-hidden').waitFor();
