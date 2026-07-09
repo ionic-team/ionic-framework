@@ -6,7 +6,7 @@ import { inheritAriaAttributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { hostContext } from '@utils/theme';
 
-import { getIonMode, getIonTheme } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 import type { HeaderScrollEffect } from './header-interface';
 import {
@@ -59,14 +59,12 @@ export class Header implements ComponentInterface {
    * `"hide"` slides the header out of view when scrolling down and back in
    * when scrolling up.
    * `"condense"` collapses the large title into the main toolbar on scroll.
-   * Only applies when the theme is `"ios"`.
-   * `"fade"` fades the toolbar background on scroll. Only applies when the theme is `"ios"`.
+   * `"fade"` fades the toolbar background on scroll.
    */
   @Prop() scrollEffect?: HeaderScrollEffect;
 
   /**
    * Describes the scroll effect that will be applied to the header.
-   * Only applies when the theme is `"ios"`.
    *
    * Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
    *
@@ -107,7 +105,6 @@ export class Header implements ComponentInterface {
   }
 
   private async checkCollapsibleHeader() {
-    const mode = getIonMode(this);
     const { scrollEffect, collapse } = this;
 
     if (collapse !== undefined && scrollEffect === undefined) {
@@ -125,12 +122,8 @@ export class Header implements ComponentInterface {
     const pageEl = this.el.closest(ION_PAGE_ELEMENT_SELECTOR);
     const contentEl = pageEl ? findIonContent(pageEl) : null;
 
-    // scrollEffect="hide" is cross-platform — runs before the iOS guard
     if (hasHide && contentEl) {
       await this.setupScrollEffectHide(contentEl);
-    }
-
-    if (mode !== 'ios') {
       return;
     }
 

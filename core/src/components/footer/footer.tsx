@@ -5,7 +5,7 @@ import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 import { printIonWarning } from '@utils/logging';
 
-import { getIonMode, getIonTheme } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 import type { FooterScrollEffect } from './footer-interface';
 import { handleFooterFade } from './footer.utils';
@@ -49,13 +49,12 @@ export class Footer implements ComponentInterface {
    * Describes the scroll effect that will be applied to the footer.
    * `"hide"` slides the footer out of view when scrolling down and back in
    * when scrolling up.
-   * `"fade"` fades the toolbar background on scroll. Only applies when the theme is `"ios"`.
+   * `"fade"` fades the toolbar background on scroll.
    */
   @Prop() scrollEffect?: FooterScrollEffect;
 
   /**
    * Describes the scroll effect that will be applied to the footer.
-   * Only applies when the theme is `"ios"`.
    *
    * @deprecated Use `scrollEffect` instead.
    */
@@ -124,7 +123,6 @@ export class Footer implements ComponentInterface {
   }
 
   private checkCollapsibleFooter = async () => {
-    const mode = getIonMode(this);
     const { scrollEffect, collapse } = this;
 
     if (collapse !== undefined && scrollEffect === undefined) {
@@ -141,13 +139,8 @@ export class Footer implements ComponentInterface {
     const pageEl = this.el.closest(ION_PAGE_ELEMENT_SELECTOR);
     const contentEl = pageEl ? findIonContent(pageEl) : null;
 
-    // scrollEffect="hide" is cross-platform — runs before the iOS guard
     if (hasHide && contentEl) {
       await this.setupScrollEffectHide(contentEl);
-      return;
-    }
-
-    if (mode !== 'ios') {
       return;
     }
 
