@@ -1,5 +1,6 @@
 import { readTask, writeTask } from '@stencil/core';
 import { clamp } from '@utils/helpers';
+import { getIonMode } from '../../global/ionic-global';
 
 const TRANSITION = 'all 0.2s ease-in-out';
 const ROLE_NONE = 'none';
@@ -171,9 +172,15 @@ export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
   const headerEl = headerIndex.el;
   const toolbars = headerIndex.toolbars;
   const ionTitles = toolbars.map((toolbar) => toolbar.ionTitleEl);
+  // In iOS, two headers are visible at once (large title + small title).
+  // Only one can have role="banner" at a time, so we toggle it on scroll.
+  // In other modes, the role is set once by the render and never needs to change.
+  const shouldManageRole = getIonMode(headerEl) === 'ios';
 
   if (active) {
-    headerEl.setAttribute('role', ROLE_BANNER);
+    if (shouldManageRole) {
+      headerEl.setAttribute('role', ROLE_BANNER);
+    }
     headerEl.classList.remove('header-collapse-condense-inactive');
 
     ionTitles.forEach((ionTitle) => {
@@ -191,7 +198,9 @@ export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
      * To solve this, the role needs to be toggled
      * based on which header is active.
      */
-    headerEl.setAttribute('role', ROLE_NONE);
+    if (shouldManageRole) {
+      headerEl.setAttribute('role', ROLE_NONE);
+    }
     headerEl.classList.add('header-collapse-condense-inactive');
 
     /**
