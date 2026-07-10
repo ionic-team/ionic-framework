@@ -148,3 +148,32 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('button: aria description updates'), () => {
+    test('native button updates aria-description when host attribute changes', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/30626',
+      });
+
+      await page.setContent(
+        `
+        <ion-button aria-label="label" aria-description="0">Button</ion-button>
+      `,
+        config
+      );
+
+      const host = page.locator('ion-button');
+      const nativeButton = host.locator('button');
+
+      await expect(nativeButton).toHaveAttribute('aria-description', '0');
+
+      await host.evaluate((el) => {
+        el.setAttribute('aria-description', '1');
+      });
+
+      await expect(nativeButton).toHaveAttribute('aria-description', '1');
+    });
+  });
+});
