@@ -4,8 +4,10 @@ import { ION_PAGE_ELEMENT_SELECTOR, findIonContent, getScrollElement, printIonCo
 import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 import { printIonWarning } from '@utils/logging';
+import type { ScrollHideController } from '@utils/scroll-hide-controller';
+import { createScrollHideController } from '@utils/scroll-hide-controller';
 
-import { getIonMode, getIonTheme } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 import type { FooterScrollEffect } from './footer-interface';
 import { handleFooterFade } from './footer.utils';
@@ -25,22 +27,12 @@ import { handleFooterFade } from './footer.utils';
 export class Footer implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private contentScrollCallback?: () => void;
-  private contentWheelCallback?: EventListener;
   private keyboardCtrl: KeyboardController | null = null;
   private keyboardCtrlPromise: Promise<KeyboardController> | null = null;
+  private scrollHideCtrl?: ScrollHideController;
   private resizeObserver?: ResizeObserver;
   private contentEl?: HTMLElement;
-
-  // scrollEffect="hide" scroll tracking state
-  private scrollHidden = false;
-  private previousScrollTop = 0;
-  private scrollTopAtDirectionChange = 0;
-  private lastWheelEventTime = 0;
-  private suppressShowUntil = 0;
-
-  private readonly TOP_VISIBLE_THRESHOLD = 80;
-  private readonly SCROLL_HIDE_THRESHOLD = 60;
-  private readonly WHEEL_SUPPRESS_DURATION_MS = 80;
+  private isHidden = false;
 
   @State() private keyboardVisible = false;
 
@@ -56,7 +48,7 @@ export class Footer implements ComponentInterface {
 
   /**
    * Describes the scroll effect that will be applied to the footer.
-   * Only applies when the mode is `"ios"`.
+   * Only applies when the theme is `"ios"`.
    *
    * @deprecated Use `scrollEffect` instead.
    */
@@ -147,8 +139,8 @@ export class Footer implements ComponentInterface {
     }
 
     // fade via the deprecated `collapse` prop is iOS-only.
-    // fade via the new `scrollEffect` prop works in all modes.
-    const isModeRestricted = scrollEffect === undefined && getIonMode(this) !== 'ios';
+    // fade via the new `scrollEffect` prop works in all themes.
+    const isModeRestricted = scrollEffect === undefined && getIonTheme(this) !== 'ios';
     if (hasFade && !isModeRestricted) {
       if (!contentEl) {
         printIonContentErrorMsg(this.el);
@@ -161,123 +153,47 @@ export class Footer implements ComponentInterface {
 
   private setupScrollEffectHide = async (contentEl: HTMLElement) => {
     this.contentEl = contentEl;
-    const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
+    const scrollEl = await getScrollElement(contentEl);
 
-    this.updateHideSlideY();
+    this.updateHideHeight();
 
     if (typeof ResizeObserver !== 'undefined') {
-      this.resizeObserver = new ResizeObserver(() => this.updateHideSlideY());
+      this.resizeObserver = new ResizeObserver(() => this.updateHideHeight());
       this.resizeObserver.observe(this.el);
     }
 
-    this.contentScrollCallback = () => this.handleScrollEffectHide();
-    scrollEl.addEventListener('scroll', this.contentScrollCallback, { passive: true });
-
-    this.contentWheelCallback = (ev: Event) => this.handleWheelEffectHide(ev as WheelEvent);
-    scrollEl.addEventListener('wheel', this.contentWheelCallback, { passive: true });
+    this.scrollHideCtrl = createScrollHideController(scrollEl, (hidden) => this.setHidden(hidden));
 
     contentEl.classList.add('content-footer-hide-scroll-partner');
   };
 
-  private updateHideSlideY() {
+  /**
+   * Reads the footer's current height and writes it as a CSS variable
+   * on both the footer and the sibling content. The content uses this
+   * value to expand its scroll area when the footer hides (gap compensation).
+   */
+  private updateHideHeight() {
     readTask(() => {
       const footerHeightPx = this.el.offsetHeight;
       writeTask(() => {
-        this.el.style.setProperty('--internal-footer-hide-slide-y', `${footerHeightPx}px`);
+        this.el.style.setProperty('--internal-footer-hide-height', `${footerHeightPx}px`);
         if (this.contentEl) {
-          this.contentEl.style.setProperty('--internal-footer-hide-slide-y', `${footerHeightPx}px`);
+          this.contentEl.style.setProperty('--internal-footer-hide-height', `${footerHeightPx}px`);
         }
       });
     });
   }
 
-  private handleWheelEffectHide = (ev: WheelEvent) => {
-    this.lastWheelEventTime = Date.now();
-
-    readTask(() => {
-      const currentScrollTop = this.scrollEl!.scrollTop;
-
-      if (currentScrollTop <= this.TOP_VISIBLE_THRESHOLD) {
-        if (this.scrollHidden) {
-          writeTask(() => this.setHidden(false));
-        }
-        return;
-      }
-
-      if (ev.deltaY < 0) {
-        this.scrollTopAtDirectionChange = currentScrollTop;
-        if (this.scrollHidden) {
-          writeTask(() => this.setHidden(false));
-        }
-      } else if (ev.deltaY > 0) {
-        const scrolledSinceDirectionChange = currentScrollTop - this.scrollTopAtDirectionChange;
-        if (scrolledSinceDirectionChange >= this.SCROLL_HIDE_THRESHOLD && !this.scrollHidden) {
-          writeTask(() => this.setHidden(true));
-        }
-      }
-    });
-  };
-
-  private handleScrollEffectHide = () => {
-    // Suppress scroll events shortly after a wheel event — delta already processed via wheel
-    if (Date.now() - this.lastWheelEventTime < this.WHEEL_SUPPRESS_DURATION_MS) {
-      return;
-    }
-
-    readTask(() => {
-      const currentScrollTop = this.scrollEl!.scrollTop;
-
-      if (currentScrollTop <= this.TOP_VISIBLE_THRESHOLD) {
-        if (this.scrollHidden) {
-          writeTask(() => this.setHidden(false));
-        }
-        this.previousScrollTop = currentScrollTop;
-        return;
-      }
-
-      const isScrollingDown = currentScrollTop > this.previousScrollTop;
-      const wasScrollingDown = this.previousScrollTop > this.scrollTopAtDirectionChange;
-
-      if (isScrollingDown !== wasScrollingDown) {
-        this.scrollTopAtDirectionChange = this.previousScrollTop;
-      }
-
-      const scrolledSinceDirectionChange = Math.abs(currentScrollTop - this.scrollTopAtDirectionChange);
-      const requiredScrollDistance = isScrollingDown ? this.SCROLL_HIDE_THRESHOLD : 0;
-      this.previousScrollTop = currentScrollTop;
-
-      if (scrolledSinceDirectionChange < requiredScrollDistance) {
-        return;
-      }
-
-      const shouldHide = isScrollingDown;
-      if (shouldHide !== this.scrollHidden) {
-        // After hiding, the content height increases (CSS transition), which lowers
-        // max scrollTop and triggers a spurious upward-scroll event. Suppress "show"
-        // actions briefly to absorb that adjustment.
-        if (!shouldHide && Date.now() < this.suppressShowUntil) {
-          return;
-        }
-        writeTask(() => this.setHidden(shouldHide));
-      }
-    });
-  };
-
   private setHidden(hidden: boolean) {
-    this.scrollHidden = hidden;
+    this.isHidden = hidden;
     this.el.classList.toggle('footer-scroll-hidden', hidden);
 
     if (hidden) {
       this.el.setAttribute('inert', '');
       this.el.setAttribute('aria-hidden', 'true');
-      // Suppress "show" events for slightly longer than the content height
-      // transition (350ms) to prevent the scrollTop adjustment from immediately
-      // re-showing the footer.
-      this.suppressShowUntil = Date.now() + 400;
     } else {
       this.el.removeAttribute('inert');
       this.el.removeAttribute('aria-hidden');
-      this.suppressShowUntil = 0;
     }
 
     if (this.contentEl) {
@@ -305,9 +221,9 @@ export class Footer implements ComponentInterface {
       this.contentScrollCallback = undefined;
     }
 
-    if (this.scrollEl && this.contentWheelCallback) {
-      this.scrollEl.removeEventListener('wheel', this.contentWheelCallback);
-      this.contentWheelCallback = undefined;
+    if (this.scrollHideCtrl) {
+      this.scrollHideCtrl.destroy();
+      this.scrollHideCtrl = undefined;
     }
 
     if (this.resizeObserver) {
@@ -317,21 +233,17 @@ export class Footer implements ComponentInterface {
 
     if (this.contentEl) {
       this.contentEl.classList.remove('content-footer-hide-scroll-partner', 'content-footer-hide-scroll-hidden');
-      this.contentEl.style.removeProperty('--internal-footer-hide-slide-y');
+      this.contentEl.style.removeProperty('--internal-footer-hide-height');
       this.contentEl = undefined;
     }
 
-    if (this.scrollHidden) {
+    if (this.isHidden) {
       this.el.classList.remove('footer-scroll-hidden');
       this.el.removeAttribute('inert');
       this.el.removeAttribute('aria-hidden');
-      this.scrollHidden = false;
+      this.isHidden = false;
     }
-    this.el.style.removeProperty('--internal-footer-hide-slide-y');
-    this.previousScrollTop = 0;
-    this.scrollTopAtDirectionChange = 0;
-    this.lastWheelEventTime = 0;
-    this.suppressShowUntil = 0;
+    this.el.style.removeProperty('--internal-footer-hide-height');
   }
 
   render() {

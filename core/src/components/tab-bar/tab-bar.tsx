@@ -3,6 +3,8 @@ import { Component, Element, Event, Host, Prop, State, Watch, h, readTask, write
 import { ION_PAGE_ELEMENT_SELECTOR, findIonContent, getScrollElement } from '@utils/content';
 import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
+import type { ScrollHideController } from '@utils/scroll-hide-controller';
+import { createScrollHideController } from '@utils/scroll-hide-controller';
 import { createColorClasses } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -27,26 +29,14 @@ export class TabBar implements ComponentInterface {
   private keyboardCtrl: KeyboardController | null = null;
   private keyboardCtrlPromise: Promise<KeyboardController> | null = null;
   private didLoad = false;
-  private scrollEl?: HTMLElement;
-  private contentScrollCallback?: () => void;
-  private contentWheelCallback?: EventListener;
+  private scrollHideCtrl?: ScrollHideController;
   private resizeObserver?: ResizeObserver;
   private contentEl?: HTMLElement;
-
-  // scrollEffect="hide" scroll tracking state
-  private previousScrollTop = 0;
-  private scrollTopAtDirectionChange = 0;
-  private lastWheelEventTime = 0;
-  private suppressShowUntil = 0;
-
-  private readonly TOP_VISIBLE_THRESHOLD = 80;
-  private readonly SCROLL_HIDE_THRESHOLD = 60;
-  private readonly WHEEL_SUPPRESS_DURATION_MS = 80;
 
   @Element() el!: HTMLElement;
 
   @State() keyboardVisible = false;
-  @State() scrollHidden = false;
+  @State() isHidden = false;
 
   /**
    * The color to use from your application's color palette.
@@ -201,146 +191,56 @@ export class TabBar implements ComponentInterface {
     }
 
     this.contentEl = contentEl;
-    const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
+    const scrollEl = await getScrollElement(contentEl);
 
-    this.updateHideSlideY();
+    this.updateHideHeight();
 
     if (typeof ResizeObserver !== 'undefined') {
-      this.resizeObserver = new ResizeObserver(() => this.updateHideSlideY());
+      this.resizeObserver = new ResizeObserver(() => this.updateHideHeight());
       this.resizeObserver.observe(this.el);
     }
 
-    this.contentScrollCallback = () => this.handleScrollEffectHide();
-    scrollEl.addEventListener('scroll', this.contentScrollCallback, { passive: true });
-
-    this.contentWheelCallback = (ev: Event) => this.handleWheelEffectHide(ev as WheelEvent);
-    scrollEl.addEventListener('wheel', this.contentWheelCallback, { passive: true });
+    this.scrollHideCtrl = createScrollHideController(scrollEl, (hidden) => this.setHidden(hidden));
 
     contentEl.classList.add('content-tab-bar-hide-scroll-partner');
   };
 
-  private updateHideSlideY() {
+  /**
+   * Reads the tab bar's current height and writes it as a CSS variable
+   * on both the tab bar and the sibling content. The content uses this
+   * value to expand its scroll area when the tab bar hides (gap compensation).
+   */
+  private updateHideHeight() {
     readTask(() => {
       const tabBarHeightPx = this.el.offsetHeight;
       writeTask(() => {
-        this.el.style.setProperty('--internal-tab-bar-hide-slide-y', `${tabBarHeightPx}px`);
+        this.el.style.setProperty('--internal-tab-bar-hide-height', `${tabBarHeightPx}px`);
         if (this.contentEl) {
-          this.contentEl.style.setProperty('--internal-tab-bar-hide-slide-y', `${tabBarHeightPx}px`);
+          this.contentEl.style.setProperty('--internal-tab-bar-hide-height', `${tabBarHeightPx}px`);
         }
       });
     });
   }
 
-  private handleWheelEffectHide = (ev: WheelEvent) => {
-    this.lastWheelEventTime = Date.now();
-
-    readTask(() => {
-      const currentScrollTop = this.scrollEl!.scrollTop;
-
-      if (currentScrollTop <= this.TOP_VISIBLE_THRESHOLD) {
-        if (this.scrollHidden) {
-          writeTask(() => this.setHidden(false));
-        }
-        return;
-      }
-
-      if (ev.deltaY < 0) {
-        this.scrollTopAtDirectionChange = currentScrollTop;
-        if (this.scrollHidden) {
-          writeTask(() => this.setHidden(false));
-        }
-      } else if (ev.deltaY > 0) {
-        const scrolledSinceDirectionChange = currentScrollTop - this.scrollTopAtDirectionChange;
-        if (scrolledSinceDirectionChange >= this.SCROLL_HIDE_THRESHOLD && !this.scrollHidden) {
-          writeTask(() => this.setHidden(true));
-        }
-      }
-    });
-  };
-
-  private handleScrollEffectHide = () => {
-    // Suppress scroll events shortly after a wheel event — delta already processed via wheel
-    if (Date.now() - this.lastWheelEventTime < this.WHEEL_SUPPRESS_DURATION_MS) {
-      return;
-    }
-
-    readTask(() => {
-      const currentScrollTop = this.scrollEl!.scrollTop;
-
-      if (currentScrollTop <= this.TOP_VISIBLE_THRESHOLD) {
-        if (this.scrollHidden) {
-          writeTask(() => this.setHidden(false));
-        }
-        this.previousScrollTop = currentScrollTop;
-        return;
-      }
-
-      // No movement — skip to avoid toggling state on duplicate scroll events
-      if (currentScrollTop === this.previousScrollTop) {
-        return;
-      }
-
-      const isScrollingDown = currentScrollTop > this.previousScrollTop;
-      const wasScrollingDown = this.previousScrollTop > this.scrollTopAtDirectionChange;
-
-      if (isScrollingDown !== wasScrollingDown) {
-        this.scrollTopAtDirectionChange = this.previousScrollTop;
-      }
-
-      const scrolledSinceDirectionChange = Math.abs(currentScrollTop - this.scrollTopAtDirectionChange);
-      const requiredScrollDistance = isScrollingDown ? this.SCROLL_HIDE_THRESHOLD : 0;
-      this.previousScrollTop = currentScrollTop;
-
-      if (scrolledSinceDirectionChange < requiredScrollDistance) {
-        return;
-      }
-
-      const shouldHide = isScrollingDown;
-      if (shouldHide !== this.scrollHidden) {
-        // After hiding, the content height increases (CSS transition), which lowers
-        // max scrollTop and triggers a spurious upward-scroll event. Suppress "show"
-        // actions briefly to absorb that adjustment.
-        if (!shouldHide && Date.now() < this.suppressShowUntil) {
-          return;
-        }
-        writeTask(() => this.setHidden(shouldHide));
-      }
-    });
-  };
-
   private setHidden(hidden: boolean) {
-    this.scrollHidden = hidden;
+    this.isHidden = hidden;
     this.el.classList.toggle('tab-bar-scroll-hidden', hidden);
 
     if (hidden) {
       this.el.setAttribute('inert', '');
-      // Suppress "show" events for slightly longer than the content height
-      // transition (350ms) to prevent the scrollTop adjustment from immediately
-      // re-showing the tab bar.
-      this.suppressShowUntil = Date.now() + 400;
     } else {
       this.el.removeAttribute('inert');
-      this.suppressShowUntil = 0;
     }
 
-    this.updateContentHiddenClass(hidden);
-  }
-
-  private updateContentHiddenClass(hidden: boolean) {
     if (this.contentEl) {
       this.contentEl.classList.toggle('content-tab-bar-hide-scroll-hidden', hidden);
     }
   }
 
   private destroyScrollEffect() {
-    if (this.scrollEl && this.contentScrollCallback) {
-      this.scrollEl.removeEventListener('scroll', this.contentScrollCallback);
-      this.contentScrollCallback = undefined;
-    }
-
-    if (this.scrollEl && this.contentWheelCallback) {
-      this.scrollEl.removeEventListener('wheel', this.contentWheelCallback);
-      this.contentWheelCallback = undefined;
+    if (this.scrollHideCtrl) {
+      this.scrollHideCtrl.destroy();
+      this.scrollHideCtrl = undefined;
     }
 
     if (this.resizeObserver) {
@@ -350,18 +250,14 @@ export class TabBar implements ComponentInterface {
 
     if (this.contentEl) {
       this.contentEl.classList.remove('content-tab-bar-hide-scroll-partner', 'content-tab-bar-hide-scroll-hidden');
-      this.contentEl.style.removeProperty('--internal-tab-bar-hide-slide-y');
+      this.contentEl.style.removeProperty('--internal-tab-bar-hide-height');
       this.contentEl = undefined;
     }
 
-    this.el.style.removeProperty('--internal-tab-bar-hide-slide-y');
-    if (this.scrollHidden) {
-      this.scrollHidden = false;
+    this.el.style.removeProperty('--internal-tab-bar-hide-height');
+    if (this.isHidden) {
+      this.isHidden = false;
     }
-    this.previousScrollTop = 0;
-    this.scrollTopAtDirectionChange = 0;
-    this.lastWheelEventTime = 0;
-    this.suppressShowUntil = 0;
   }
 
   private getShape(): string | undefined {
@@ -381,7 +277,7 @@ export class TabBar implements ComponentInterface {
   }
 
   render() {
-    const { color, translucent, keyboardVisible, scrollEffect, scrollHidden, expand } = this;
+    const { color, translucent, keyboardVisible, scrollEffect, isHidden, expand } = this;
     const theme = getIonTheme(this);
     const shape = this.getShape();
     const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
@@ -389,14 +285,14 @@ export class TabBar implements ComponentInterface {
     return (
       <Host
         role="tablist"
-        aria-hidden={shouldHide || scrollHidden ? 'true' : null}
-        inert={scrollHidden ? '' : null}
+        aria-hidden={shouldHide || isHidden ? 'true' : null}
+        inert={isHidden ? '' : null}
         class={createColorClasses(color, {
           [theme]: true,
           'tab-bar-translucent': translucent,
           'tab-bar-hidden': shouldHide,
           'tab-bar-scroll-effect-hide': scrollEffect === 'hide',
-          'tab-bar-scroll-hidden': scrollHidden,
+          'tab-bar-scroll-hidden': isHidden,
           [`tab-bar-${expand}`]: true,
           [`tab-bar-${shape}`]: shape !== undefined,
         })}

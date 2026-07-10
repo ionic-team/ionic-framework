@@ -17,13 +17,15 @@ ion-header ion-toolbar:first-of-type {
 // Header - Scroll Effect Hide
 // --------------------------------------------------
 
-// Show transition (returning to visible state)
+// Slide back into view when scrolling up — smooth deceleration eases the
+// header back into place.
 ion-header.header-scroll-effect-hide {
   transition: transform 300ms cubic-bezier(0, 0, 0.2, 1),
               opacity 300ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-// Hidden state — hide is faster than show
+// Slide out of view when scrolling down — header moves off the top of the
+// screen and fades out. Faster than the return to feel responsive to scroll.
 ion-header.header-scroll-effect-hide.header-scroll-hidden {
   transform: translateY(-100%);
   opacity: 0;
