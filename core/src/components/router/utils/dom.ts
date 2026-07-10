@@ -1,6 +1,7 @@
+import { Build } from '@stencil/core';
 import { findClosestIonContent, getScrollElement, isIonContent } from '@utils/content';
 import { componentOnReady, raf } from '@utils/helpers';
-import { printIonError } from '@utils/logging';
+import { printIonError, printIonWarning } from '@utils/logging';
 
 import type { AnimationBuilder } from '../../../interface';
 
@@ -202,17 +203,41 @@ export const scrollToFragment = async (
   }
 };
 
+/** How long the router waits for a navigation outlet before giving up and proceeding. */
+const NAV_NODE_TIMEOUT = 500;
+
 export const waitUntilNavNode = (): Promise<void> => {
   if (searchNavNode(document.body)) {
     return Promise.resolve();
   }
   return new Promise((resolve) => {
-    window.addEventListener('ionNavWillLoad', () => resolve(), { once: true });
+    /**
+     * Outlets emit `ionNavWillLoad` as they load, so resolve as soon as one does.
+     * A timeout backstops the case where the page has no outlet at all: without it
+     * the router would wait forever and its `componentWillLoad` would never settle,
+     * which in turn prevents the app from signalling that it has finished loading.
+     */
+    const done = () => {
+      window.removeEventListener('ionNavWillLoad', done);
+      clearTimeout(timeout);
+
+      if (Build.isDev && !searchNavNode(document.body)) {
+        printIonWarning(
+          '[ion-router] - No outlet found. The router requires an ion-router-outlet or ion-tabs to render routed views. ' +
+            'Note that as of Ionic 9 ion-nav is no longer a router outlet.'
+        );
+      }
+
+      resolve();
+    };
+
+    const timeout = setTimeout(done, NAV_NODE_TIMEOUT);
+    window.addEventListener('ionNavWillLoad', done, { once: true });
   });
 };
 
 /** Selector for all the outlets supported by the router. */
-const OUTLET_SELECTOR = ':not([no-router]) ion-nav, :not([no-router]) ion-tabs, :not([no-router]) ion-router-outlet';
+const OUTLET_SELECTOR = ':not([no-router]) ion-tabs, :not([no-router]) ion-router-outlet';
 
 const searchNavNode = (root: HTMLElement | undefined): NavOutletElement | undefined => {
   if (!root) {

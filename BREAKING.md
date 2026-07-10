@@ -20,6 +20,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Input](#version-9x-input)
   - [Legacy Picker](#version-9x-legacy-picker)
   - [Modal](#version-9x-modal)
+  - [Nav](#version-9x-nav)
   - [Router Outlet](#version-9x-router-outlet)
   - [Searchbar](#version-9x-searchbar)
   - [Select](#version-9x-select)
@@ -96,6 +97,28 @@ Sheet modals that relied on the handle being inert should set `handleBehavior="n
 
 ```html
 <ion-modal handle-behavior="none"></ion-modal>
+```
+
+<h4 id="version-9x-nav">Nav</h4>
+
+`ion-nav` no longer integrates with `ion-router`. It is now a standalone imperative stack navigation component, driven only through its own API (`root`, `push`, `pop`, `setRoot`, etc.) and `ion-nav-link`.
+
+The following behaviors have been removed:
+
+- The router no longer discovers or drives an `ion-nav`. Placing an `ion-nav` inside an `ion-router` no longer turns it into a routed outlet.
+- Navigating an `ion-nav` (via `push`, `pop`, `ion-nav-link`, or the swipe-to-go-back gesture) no longer updates the URL, and the router's navigation guards no longer run for `ion-nav` transitions.
+- The internal `setRouteId()` and `getRouteId()` methods and the `updateURL` nav option have been removed.
+
+Apps that relied on `ion-nav` to update the URL (for example, pushing components and expecting the browser URL to change) should use `ion-router-outlet` for URL-based routing. An `ion-nav` can still be used inside a routed page for local, URL-less stack navigation:
+
+```html
+<!-- The outlet handles URL-based routing -->
+<ion-router-outlet></ion-router-outlet>
+```
+
+```html
+<!-- Inside a routed page, an ion-nav manages a local, URL-less stack -->
+<ion-nav root="page-one"></ion-nav>
 ```
 
 <h4 id="version-9x-router-outlet">Router Outlet</h4>
