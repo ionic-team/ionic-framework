@@ -373,9 +373,9 @@
 
 
 .calendar-day:not(.calendar-day-adjacent-day):focus {
-  background: #{ion-color(primary, base, 0.2)};
+  background: ion-color(primary, base, 0.2);
 
-  box-shadow: 0px 0px 0px 4px #{ion-color(primary, base, 0.2)};
+  box-shadow: 0px 0px 0px 4px ion-color(primary, base, 0.2);
 }
 
 :host(.ion-color) .calendar-day:not(.calendar-day-adjacent-day):focus {
@@ -428,11 +428,11 @@
 }
 
 :host .time-body-active {
-  color: #{ion-color(primary, base)};
+  color: ion-color(primary, base);
 }
 
 :host(.ion-color) .time-body-active {
-  color: #{current-color(base)};
+  color: current-color(base);
 }
 
 :host(.in-item) {
@@ -442,11 +442,11 @@
 // Year Picker
 // -----------------------------------
 :host(.show-month-and-year) .calendar-action-buttons .calendar-month-year-toggle {
-  color: #{ion-color(primary, base)};
+  color: ion-color(primary, base);
 }
 
-:host(.show-month-and-year.ion-color) .calendar-action-buttons .calendar-month-year-toggle {
-  color: #{current-color(base)};
+:host(.ion-color.show-month-and-year) .calendar-action-buttons .calendar-month-year-toggle {
+  color: current-color(base);
 }
 
 .calendar-month-year {

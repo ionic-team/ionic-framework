@@ -13,10 +13,10 @@
  */
 :host(.option-active),
 :host([part~="active"]) {
-  color: #{ion-color(primary, base)};
+  color: ion-color(primary, base);
 }
 
 :host(.ion-color.option-active),
 :host(.ion-color[part~="active"]) {
-  color: #{current-color(base)};
+  color: current-color(base);
 }

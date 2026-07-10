@@ -189,6 +189,6 @@
   }
 
   :host(.ion-color:focus) .picker-opts {
-    background: #{current-color(base, 0.2)};
+    background: current-color(base, 0.2);
   }
 }
