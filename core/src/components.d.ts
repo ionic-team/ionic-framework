@@ -928,7 +928,6 @@ export namespace Components {
         "clearText": string;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
@@ -1080,7 +1079,6 @@ export namespace Components {
     interface IonDatetimeButton {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
@@ -2244,7 +2242,6 @@ export namespace Components {
     interface IonPickerColumn {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
@@ -2278,7 +2275,6 @@ export namespace Components {
     interface IonPickerColumnOption {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
@@ -6061,7 +6057,6 @@ declare namespace LocalJSX {
         "clearText"?: string;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
@@ -6227,7 +6222,6 @@ declare namespace LocalJSX {
     interface IonDatetimeButton {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
@@ -7353,7 +7347,6 @@ declare namespace LocalJSX {
     interface IonPickerColumn {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
@@ -7382,7 +7375,6 @@ declare namespace LocalJSX {
     interface IonPickerColumnOption {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-          * @default 'primary'
          */
         "color"?: Color;
         /**
