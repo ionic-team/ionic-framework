@@ -151,13 +151,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       expect(Object.keys(dragEndEvent.detail).length).toBe(4);
     });
 
-    // Native drag is cancelled during the gesture (see gestures/swipe-to-close.ts)
-    // but must work again once it ends.
-    test('should cancel native drag and drop only while the gesture is active', async ({ page }, testInfo) => {
-      testInfo.annotations.push({
-        type: 'issue',
-        description: 'modal content is inaccessible when TalkBack is enabled',
-      });
+    // Native drag can interfere with the swipe gesture when initiated over
+    // text in the focusable wrapper. Suppress it during the gesture only.
+    test('should cancel native drag and drop only while the gesture is active', async ({ page }) => {
       await page.goto('/src/components/modal/test/card', config);
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');

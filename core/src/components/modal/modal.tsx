@@ -1645,8 +1645,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
             shadow DOM otherwise ion-button will not be highlighted
             when using VoiceOver: https://bugs.webkit.org/show_bug.cgi?id=247134
 
-            tabIndex={-1} lets present() focus this element (which carries
-            the dialog role) instead of the role-less host.
+            tabIndex={-1} is required so present() can move focus to this
+            element (which carries the dialog role) instead of the role-less
+            host. role="dialog" alone does not make an element focusable, so
+            without the tabindex focus() would be a no-op.
           */
           role="dialog"
           {...inheritedAttributes}
