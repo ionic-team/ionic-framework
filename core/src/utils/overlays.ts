@@ -604,7 +604,17 @@ export const present = async <OverlayPresentOptions>(
      */
     const overlayWrapper = getElementRoot(overlay.el).querySelector<HTMLElement>('[role="dialog"][tabindex]');
     const focusTarget = overlayWrapper ?? overlay.el;
-    focusTarget.focus({ preventScroll: true });
+    /**
+     * `preventScroll` keeps this a pure focus move so the viewport does not
+     * jump when the wrapper is partially off-screen (e.g. a sheet modal).
+     * Guard the options call so an older engine that mishandles it can never
+     * reject present(); we fall back to a plain focus() in that case.
+     */
+    try {
+      focusTarget.focus({ preventScroll: true });
+    } catch {
+      focusTarget.focus();
+    }
   }
 
   /**
