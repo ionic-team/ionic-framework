@@ -260,7 +260,6 @@
   transform: translateZ(0);
 }
 
-
 // Content: Header/Footer/Tab Bar Scroll Effect Hide — Gap Compensation
 // --------------------------------------------------
 // When a bar hides via scrollEffect="hide", it stays in the layout flow
@@ -271,8 +270,7 @@
 // When fullscreen=true, inner-scroll already fills the full viewport
 // (offset-top = 0), so translateY would over-shift the content.
 :host(.content-header-hide-scroll-partner:not(.content-fullscreen)) .inner-scroll {
-  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1),
-              height 300ms cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1), height 300ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 :host(.content-header-hide-scroll-partner:not(.content-fullscreen).content-header-hide-scroll-hidden) .inner-scroll {
@@ -280,8 +278,7 @@
 
   transform: translateY(calc(-1 * var(--internal-header-hide-height, 0px)));
 
-  transition: transform 200ms cubic-bezier(0.4, 0, 1, 1),
-              height 200ms cubic-bezier(0.4, 0, 1, 1);
+  transition: transform 200ms cubic-bezier(0.4, 0, 1, 1), height 200ms cubic-bezier(0.4, 0, 1, 1);
 }
 
 // Footer gap compensation — only when content is NOT fullscreen
@@ -312,7 +309,8 @@
   :host(.content-footer-hide-scroll-partner:not(.content-fullscreen)) .inner-scroll,
   :host(.content-footer-hide-scroll-partner:not(.content-fullscreen).content-footer-hide-scroll-hidden) .inner-scroll,
   :host(.content-tab-bar-hide-scroll-partner:not(.content-fullscreen)) .inner-scroll,
-  :host(.content-tab-bar-hide-scroll-partner:not(.content-fullscreen).content-tab-bar-hide-scroll-hidden) .inner-scroll {
+  :host(.content-tab-bar-hide-scroll-partner:not(.content-fullscreen).content-tab-bar-hide-scroll-hidden)
+    .inner-scroll {
     transition: none;
   }
 }
