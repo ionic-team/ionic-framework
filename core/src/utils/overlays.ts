@@ -595,12 +595,12 @@ export const present = async <OverlayPresentOptions>(
   if (overlay.keyboardClose && (document.activeElement === null || !overlay.el.contains(document.activeElement))) {
     /**
      * Some overlays (e.g. modal) put the dialog role and label on the
-     * `.ion-overlay-wrapper` rather than the host. Screen readers like
-     * TalkBack need focus to land there, so focus the wrapper when it is
-     * focusable (has a `tabindex`); otherwise focus the host as before.
+     * `.ion-overlay-wrapper` rather than the host. Screen readers need
+     * focus on the element with role="dialog" to properly announce and
+     * navigate the dialog.
      */
-    const overlayWrapper = getElementRoot(overlay.el).querySelector<HTMLElement>('.ion-overlay-wrapper');
-    const focusTarget = overlayWrapper?.hasAttribute('tabindex') ? overlayWrapper : overlay.el;
+    const overlayWrapper = getElementRoot(overlay.el).querySelector<HTMLElement>('[role="dialog"]');
+    const focusTarget = overlayWrapper ?? overlay.el;
     focusTarget.focus({ preventScroll: true });
   }
 
