@@ -266,9 +266,9 @@ export class Header implements ComponentInterface {
     this.scrollEl = await getScrollElement(contentEl);
 
     const headers = pageEl.querySelectorAll('ion-header');
-    this.collapsibleMainHeader = Array.from(headers).find((header: HTMLIonHeaderElement) => {
-      const scrollEffect = (header as HTMLIonHeaderElement & { scrollEffect?: string }).scrollEffect;
-      return header.collapse !== 'condense' && scrollEffect !== 'condense';
+    this.collapsibleMainHeader = Array.from(headers).find((header) => {
+      const effect = header.scrollEffect ?? header.collapse;
+      return effect !== 'condense';
     }) as HTMLElement | undefined;
 
     if (!this.collapsibleMainHeader) {
@@ -324,11 +324,6 @@ export class Header implements ComponentInterface {
     const hasHide = (this.scrollEffect ?? this.collapse) === 'hide';
     const hasCondense = (this.scrollEffect ?? this.collapse) === 'condense';
     const hasFade = (this.scrollEffect ?? this.collapse) === 'fade';
-    // Use 'none' as fallback for collapse-based class (only for non-hide effects)
-    let collapseClass = 'none';
-    if (hasCondense) collapseClass = 'condense';
-    else if (hasFade) collapseClass = 'fade';
-
     // banner role must be at top level, so remove role if inside a menu
     const roleType = getRoleType(hostContext('ion-menu', this.el), hasCondense, theme);
 
@@ -342,7 +337,8 @@ export class Header implements ComponentInterface {
           [`header-${theme}`]: true,
 
           [`header-translucent`]: this.translucent,
-          [`header-collapse-${collapseClass}`]: true,
+          ['header-collapse-condense']: hasCondense,
+          ['header-collapse-fade']: hasFade,
           [`header-translucent-${theme}`]: this.translucent,
           ['header-divider']: divider,
           'header-scroll-effect-hide': hasHide,
