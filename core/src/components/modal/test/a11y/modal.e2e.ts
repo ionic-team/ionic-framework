@@ -40,11 +40,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     // The focused wrapper must not show a focus ring when opened via keyboard.
-    test('should not render a focus ring on the wrapper when presented via keyboard', async ({ page }, testInfo) => {
-      testInfo.annotations.push({
-        type: 'issue',
-        description: 'modal content is inaccessible when TalkBack is enabled',
-      });
+    test('should not render a focus ring on the wrapper when presented via keyboard', async ({ page }) => {
       await page.goto(`/src/components/modal/test/a11y`, config);
 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
