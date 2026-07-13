@@ -597,9 +597,12 @@ export const present = async <OverlayPresentOptions>(
      * Some overlays (e.g. modal) put the dialog role and label on the
      * `.ion-overlay-wrapper` rather than the host. Screen readers need
      * focus on the element with role="dialog" to properly announce and
-     * navigate the dialog.
+     * navigate the dialog. The `[tabindex]` qualifier ensures we only
+     * target such a wrapper when it is actually focusable; otherwise
+     * (e.g. picker-legacy, whose role="dialog" wrapper has no tabindex)
+     * `focus()` would be a no-op, so we fall back to the host.
      */
-    const overlayWrapper = getElementRoot(overlay.el).querySelector<HTMLElement>('[role="dialog"]');
+    const overlayWrapper = getElementRoot(overlay.el).querySelector<HTMLElement>('[role="dialog"][tabindex]');
     const focusTarget = overlayWrapper ?? overlay.el;
     focusTarget.focus({ preventScroll: true });
   }
