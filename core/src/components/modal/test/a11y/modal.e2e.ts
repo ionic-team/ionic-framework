@@ -88,7 +88,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('should focus the card modal wrapper on present', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
-        description: 'modal content is inaccessible when TalkBack is enabled',
+        description: 'FW-7611',
       });
       await page.setContent(
         `
