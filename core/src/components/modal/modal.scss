@@ -85,8 +85,8 @@ ion-backdrop {
 }
 
 /**
- * The wrapper is focused on present (see modal.tsx); suppress its focus
- * ring, matching the host above.
+ * The wrapper receives programmatic focus for screen readers but should not
+ * show a visible focus ring, which is meant only for keyboard navigation.
  */
 .modal-wrapper {
   outline: none;
