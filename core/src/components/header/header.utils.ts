@@ -1,5 +1,6 @@
 import { readTask, writeTask } from '@stencil/core';
 import { clamp } from '@utils/helpers';
+
 import { getIonMode } from '../../global/ionic-global';
 
 const TRANSITION = 'all 0.2s ease-in-out';

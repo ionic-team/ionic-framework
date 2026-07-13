@@ -228,8 +228,10 @@ export class TabBar implements ComponentInterface {
 
     if (hidden) {
       this.el.setAttribute('inert', '');
+      this.el.setAttribute('aria-hidden', 'true');
     } else {
       this.el.removeAttribute('inert');
+      this.el.removeAttribute('aria-hidden');
     }
 
     if (this.contentEl) {
@@ -256,6 +258,9 @@ export class TabBar implements ComponentInterface {
 
     this.el.style.removeProperty('--internal-tab-bar-hide-height');
     if (this.isHidden) {
+      this.el.classList.remove('tab-bar-scroll-hidden');
+      this.el.removeAttribute('inert');
+      this.el.removeAttribute('aria-hidden');
       this.isHidden = false;
     }
   }
