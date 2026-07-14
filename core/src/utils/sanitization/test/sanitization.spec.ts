@@ -62,6 +62,21 @@ describe('sanitizeDOMString', () => {
       )
     ).toEqual('<ion-item><ion-label>Hello!</ion-label><ion-button>Click me</ion-button></ion-item>');
   });
+
+  it('strips rich-content attributes that are scoped to sanitizeDOMTree', () => {
+    /**
+     * Attributes only allowed by the wider sanitizeDOMTree (rich-content)
+     * allowlist must still be stripped here. This keeps the output unchanged
+     * for existing consumers (toast, loading, alert message, refresher and
+     * infinite-scroll content) that run their innerHTML through
+     * sanitizeDOMString.
+     */
+    expect(
+      sanitizeDOMString(
+        '<ion-label class="lbl" type="button" value="x" width="40" mode="ios" aria-hidden="true" data-foo="bar">Hi</ion-label>'
+      )
+    ).toEqual('<ion-label class="lbl">Hi</ion-label>');
+  });
 });
 
 describe('sanitizeDOMTree', () => {
