@@ -513,7 +513,7 @@ ion-content,part,scroll
 ion-datetime,shadow
 ion-datetime,prop,cancelText,string,'Cancel',false,false
 ion-datetime,prop,clearText,string,'Clear',false,false
-ion-datetime,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,false
+ion-datetime,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,false
 ion-datetime,prop,dayValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,disabled,boolean,false,false,false
 ion-datetime,prop,doneText,string,'Done',false,false
@@ -582,7 +582,7 @@ ion-datetime,part,wheel-item
 ion-datetime,part,wheel-item active
 
 ion-datetime-button,shadow
-ion-datetime-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true
+ion-datetime-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-datetime-button,prop,datetime,string | undefined,undefined,false,false
 ion-datetime-button,prop,disabled,boolean,false,false,true
 ion-datetime-button,prop,mode,"ios" | "md",undefined,false,false
@@ -1269,7 +1269,7 @@ ion-picker,css-prop,--highlight-border-radius,ios
 ion-picker,css-prop,--highlight-border-radius,md
 
 ion-picker-column,shadow
-ion-picker-column,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true
+ion-picker-column,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-picker-column,prop,disabled,boolean,false,false,false
 ion-picker-column,prop,mode,"ios" | "md",undefined,false,false
 ion-picker-column,prop,value,number | string | undefined,undefined,false,false
@@ -1277,7 +1277,7 @@ ion-picker-column,method,setFocus,setFocus() => Promise<void>
 ion-picker-column,event,ionChange,PickerColumnChangeEventDetail,true
 
 ion-picker-column-option,shadow
-ion-picker-column-option,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true
+ion-picker-column-option,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-picker-column-option,prop,disabled,boolean,false,false,false
 ion-picker-column-option,prop,value,any,undefined,false,false
 
