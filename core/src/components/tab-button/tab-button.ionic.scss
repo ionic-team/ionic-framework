@@ -148,3 +148,29 @@
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom:empty) {
   @include globals.position(calc(50% + 14px));
 }
+
+:host(.tab-layout-icon-top.tab-has-icon.tab-has-label) ::slotted(ion-badge.badge-vertical-top) {
+  top: 2px;
+}
+
+:host(.tab-layout-icon-top.tab-has-icon.tab-has-label) ::slotted(ion-badge.badge-vertical-bottom) {
+  @include globals.position(calc(50% - globals.$ion-scale-150));
+}
+
+:host(.tab-layout-icon-top.tab-has-icon.tab-has-label) ::slotted(ion-badge.badge-vertical-top:empty) {
+  top: 0;
+}
+
+:host(.tab-layout-icon-top.tab-has-icon.tab-has-label) ::slotted(ion-badge.badge-vertical-bottom:empty) {
+  @include globals.position(calc(50% - globals.$ion-scale-100/2));
+}
+
+/* 
+ * Workaround for a rendering bug in Firefox when the button is shorter than
+ * the tab-bar content area: the button varies in height, causing screenshot
+ * flake. Add margin above the icon to make the button as tall as the
+ * tab-bar's content area.
+*/
+:host(.tab-layout-icon-top.tab-has-icon.tab-has-label) ::slotted(ion-icon) {
+  margin-top: globals.$ion-space-100;
+}

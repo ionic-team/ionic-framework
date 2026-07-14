@@ -1,5 +1,5 @@
 # Get Playwright
-FROM mcr.microsoft.com/playwright:v1.61.0
+FROM mcr.microsoft.com/playwright:v1.61.1
 
 # Set the working directory
 WORKDIR /ionic
