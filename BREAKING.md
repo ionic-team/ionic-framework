@@ -109,12 +109,16 @@ The following behaviors have been removed:
 - Navigating an `ion-nav` (via `push`, `pop`, `ion-nav-link`, or the swipe-to-go-back gesture) no longer updates the URL, and the router's navigation guards no longer run for `ion-nav` transitions.
 - The internal `setRouteId()` and `getRouteId()` methods and the `updateURL` nav option have been removed.
 
-Apps that relied on `ion-nav` to update the URL (for example, pushing components and expecting the browser URL to change) should use `ion-router-outlet` for URL-based routing. An `ion-nav` can still be used inside a routed page for local, URL-less stack navigation:
+Apps that relied on `ion-nav` to update the URL (for example, pushing components and expecting the browser URL to change) should use `ion-router-outlet` for URL-based routing:
 
-```html
-<!-- The outlet handles URL-based routing -->
-<ion-router-outlet></ion-router-outlet>
+```diff
+- <ion-router>
+-   <ion-nav root="page-one"></ion-nav>
+- </ion-router>
++ <ion-router-outlet></ion-router-outlet>
 ```
+
+An `ion-nav` can still be used inside a routed page for local, URL-less stack navigation:
 
 ```html
 <!-- Inside a routed page, an ion-nav manages a local, URL-less stack -->
