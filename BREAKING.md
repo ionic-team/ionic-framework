@@ -165,6 +165,12 @@ Ionic 9 requires Angular 18 or later. Angular 16 and 17 are no longer supported.
 
 Following industry standards, Ionic 9 makes standalone components the default import path. Standalone component imports have changed from `@ionic/angular/standalone` to `@ionic/angular`. Lazy-loaded component imports have changed from `@ionic/angular` to `@ionic/angular/lazy`.
 
+**IonicModule Deprecation**
+
+`IonicModule` is deprecated in Ionic 9 and will be removed in a future major version. It remains fully functional in Ionic 9, so existing applications continue to work without changes.
+
+Applications should migrate to `provideIonicAngular()`, which works in both standalone and NgModule-based applications. For an NgModule-based app, replace `IonicModule.forRoot(config)` in the `imports` array with `provideIonicAngular(config)` in the `providers` array. Any config passed to `IonicModule.forRoot()` can be passed as an object to `provideIonicAngular()`. Refer to the [build options guide](https://ionicframework.com/docs/angular/build-options) for migration steps.
+
 **Zoneless Change Detection by Default**
 
 Ionic 9 defaults to zoneless change detection. Angular 21 bootstraps zoneless out of the box, so a new Ionic 9 app on Angular 21 runs without Zone.js and requires no change-detection provider. The `ng add @ionic/angular` schematic no longer registers `provideZoneChangeDetection()`.

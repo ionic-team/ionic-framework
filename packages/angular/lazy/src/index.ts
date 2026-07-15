@@ -43,7 +43,12 @@ export { ModalController } from './providers/modal-controller';
 export { PopoverController } from './providers/popover-controller';
 export { ToastController } from './providers/toast-controller';
 
-// PACKAGE MODULE
+/*
+ * PACKAGE MODULE
+ * `IonicModule` is deprecated and will be removed in a future major version.
+ * Use `provideIonicAngular()` from `@ionic/angular` instead. The deprecation is
+ * declared on the class itself, so consumers importing it here see the notice.
+ */
 export { IonicModule } from './ionic-module';
 
 export {
