@@ -1,6 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h, readTask, writeTask } from '@stencil/core';
-import { ION_PAGE_ELEMENT_SELECTOR, findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
+import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -8,6 +8,7 @@ import type { ScrollHideController } from '@utils/scroll-hide-controller';
 import { createScrollHideController } from '@utils/scroll-hide-controller';
 import { hostContext } from '@utils/theme';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 
 import type { HeaderScrollEffect } from './header-interface';
@@ -113,7 +114,8 @@ export class Header implements ComponentInterface {
 
     this.destroyCollapsibleHeader();
 
-    const pageEl = this.el.closest(ION_PAGE_ELEMENT_SELECTOR);
+    const appRootSelector = config.get('appRootSelector', 'ion-app');
+    const pageEl = this.el.closest(`${appRootSelector}, ion-page, .ion-page, page-inner`);
     const contentEl = pageEl ? findIonContent(pageEl) : null;
 
     if (hasHide && contentEl) {
