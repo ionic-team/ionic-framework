@@ -17,6 +17,15 @@
 }
 
 /**
+ * When the condense header is active (large title visible),
+ * the main header's box-shadow should be hidden so it blends
+ * with the condense header below it.
+ */
+.header-md.header-collapse-condense-inactive:not(.header-collapse-condense) {
+  box-shadow: none;
+}
+
+/**
  * The deprecated collapse="condense" attribute is iOS-only.
  * On md, the condense header should be hidden since the JS
  * won't activate it. Without this, the header renders as a

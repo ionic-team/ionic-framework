@@ -67,15 +67,6 @@ ion-header ion-toolbar:first-of-type {
   padding-bottom: 13px;
 }
 
-/**
- * When the condense header is active (large title visible),
- * the main header's toolbar background fades in/out via --opacity-scale.
- * Also remove box-shadow so the main header blends with the condense header.
- */
-.header-collapse-condense-inactive:not(.header-collapse-condense) {
-  box-shadow: none;
-}
-
 .header-collapse-main {
   --opacity-scale: 1;
 }
