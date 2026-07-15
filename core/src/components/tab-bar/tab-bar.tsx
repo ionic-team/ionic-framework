@@ -33,6 +33,7 @@ export class TabBar implements ComponentInterface {
   private scrollHideCtrl?: ScrollHideController;
   private resizeObserver?: ResizeObserver;
   private contentEl?: HTMLElement;
+  private setupHidePromise: Promise<HTMLElement> | null = null;
 
   @Element() el!: HTMLElement;
 
@@ -193,18 +194,31 @@ export class TabBar implements ComponentInterface {
     }
 
     this.contentEl = contentEl;
-    const scrollEl = await getScrollElement(contentEl);
 
-    this.updateHideHeight();
+    const promise = getScrollElement(contentEl);
+    this.setupHidePromise = promise;
 
-    if (typeof ResizeObserver !== 'undefined') {
-      this.resizeObserver = new ResizeObserver(() => this.updateHideHeight());
-      this.resizeObserver.observe(this.el);
+    const scrollEl = await promise;
+
+    /**
+     * Only assign if this is still the current promise.
+     * Otherwise, a new checkScrollEffect has started or
+     * disconnectedCallback was called, so this setup is stale.
+     */
+    if (this.setupHidePromise === promise) {
+      this.setupHidePromise = null;
+
+      this.updateHideHeight();
+
+      if (typeof ResizeObserver !== 'undefined') {
+        this.resizeObserver = new ResizeObserver(() => this.updateHideHeight());
+        this.resizeObserver.observe(this.el);
+      }
+
+      this.scrollHideCtrl = createScrollHideController(scrollEl, (hidden) => this.setHidden(hidden));
+
+      contentEl.classList.add('content-tab-bar-hide-scroll-partner');
     }
-
-    this.scrollHideCtrl = createScrollHideController(scrollEl, (hidden) => this.setHidden(hidden));
-
-    contentEl.classList.add('content-tab-bar-hide-scroll-partner');
   };
 
   /**
