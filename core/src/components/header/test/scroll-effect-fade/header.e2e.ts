@@ -17,18 +17,14 @@ configs({ modes: ['ios', 'md', 'ionic-ios', 'ionic-md'], directions: ['ltr'] }).
       const content = page.locator('ion-content');
 
       // Initially, opacity-scale should be 0 (toolbar background hidden)
-      const initialOpacity = await header.evaluate((el: HTMLElement) =>
-        el.style.getPropertyValue('--opacity-scale')
-      );
+      const initialOpacity = await header.evaluate((el: HTMLElement) => el.style.getPropertyValue('--opacity-scale'));
       expect(initialOpacity).toBe('0');
 
       // Scroll to bottom — opacity-scale should be 1 (toolbar background visible)
       await content.evaluate((el: HTMLIonContentElement) => el.scrollToBottom(0));
       await page.waitForChanges();
 
-      const scrolledOpacity = await header.evaluate((el: HTMLElement) =>
-        el.style.getPropertyValue('--opacity-scale')
-      );
+      const scrolledOpacity = await header.evaluate((el: HTMLElement) => el.style.getPropertyValue('--opacity-scale'));
       expect(scrolledOpacity).toBe('1');
     });
   });
