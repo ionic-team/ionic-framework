@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.14](https://github.com/ionic-team/ionic-framework/compare/v8.8.13...v8.8.14) (2026-07-15)
+
+
+### Bug Fixes
+
+* **tab-bar:** fire tab change events on tab click ([#31262](https://github.com/ionic-team/ionic-framework/issues/31262)) ([44461dd](https://github.com/ionic-team/ionic-framework/commit/44461ddda5ef44030f477931dd94cce4674801a6)), closes [#30145](https://github.com/ionic-team/ionic-framework/issues/30145)
+
+
+
+
+
 ## [8.8.13](https://github.com/ionic-team/ionic-framework/compare/v8.8.12...v8.8.13) (2026-07-01)
 
 **Note:** Version bump only for package @ionic/react
