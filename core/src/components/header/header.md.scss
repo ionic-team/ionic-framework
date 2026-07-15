@@ -17,6 +17,16 @@
 }
 
 /**
+ * The deprecated collapse="condense" attribute is iOS-only.
+ * On md, the condense header should be hidden since the JS
+ * won't activate it. Without this, the header renders as a
+ * normal visible header, adding unwanted height to the page.
+ */
+.header-md[collapse="condense"]:not(.header-collapse-condense) {
+  display: none;
+}
+
+/**
  * The fade effect fades the toolbar background via --opacity-scale,
  * but box-shadow is not affected by that variable. Remove it so
  * the shadow doesn't persist when the background is faded out.
