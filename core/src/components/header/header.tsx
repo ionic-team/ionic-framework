@@ -46,6 +46,7 @@ export class Header implements ComponentInterface {
   private contentEl?: HTMLElement;
   private isHidden = false;
   private setupHidePromise: Promise<HTMLElement> | null = null;
+  private hasWarnedCollapse = false;
 
   @Element() el!: HTMLElement;
 
@@ -103,9 +104,11 @@ export class Header implements ComponentInterface {
   private async checkCollapsibleHeader() {
     const { scrollEffect, collapse } = this;
 
-    if (collapse !== undefined && scrollEffect === undefined) {
+    if (collapse !== undefined && scrollEffect === undefined && !this.hasWarnedCollapse) {
+      this.hasWarnedCollapse = true;
       printIonWarning(
-        `The \`collapse\` property on \`ion-header\` is deprecated. Use \`scrollEffect\` instead.\nExample: <ion-header scroll-effect="${collapse}">`
+        `[ion-header] - The \`collapse\` property is deprecated. Use \`scrollEffect\` instead.\nExample: <ion-header scroll-effect="${collapse}">`,
+        this.el
       );
     }
 

@@ -35,6 +35,7 @@ export class Footer implements ComponentInterface {
   private contentEl?: HTMLElement;
   private isHidden = false;
   private setupHidePromise: Promise<HTMLElement> | null = null;
+  private hasWarnedCollapse = false;
 
   @State() private keyboardVisible = false;
 
@@ -121,9 +122,11 @@ export class Footer implements ComponentInterface {
   private checkCollapsibleFooter = async () => {
     const { scrollEffect, collapse } = this;
 
-    if (collapse !== undefined && scrollEffect === undefined) {
+    if (collapse !== undefined && scrollEffect === undefined && !this.hasWarnedCollapse) {
+      this.hasWarnedCollapse = true;
       printIonWarning(
-        `The \`collapse\` property on \`ion-footer\` is deprecated. Use \`scrollEffect\` instead.\nExample: <ion-footer scroll-effect="${collapse}">`
+        `[ion-footer] - The \`collapse\` property is deprecated. Use \`scrollEffect\` instead.\nExample: <ion-footer scroll-effect="${collapse}">`,
+        this.el
       );
     }
 

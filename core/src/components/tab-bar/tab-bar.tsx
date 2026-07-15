@@ -35,6 +35,7 @@ export class TabBar implements ComponentInterface {
   private resizeObserver?: ResizeObserver;
   private contentEl?: HTMLElement;
   private setupHidePromise: Promise<HTMLElement> | null = null;
+  private hasWarnedFooter = false;
 
   @Element() el!: HTMLElement;
 
@@ -185,10 +186,14 @@ export class TabBar implements ComponentInterface {
     // independently — doing so would leave an empty footer behind.
     // The footer should own the scroll effect instead.
     if (this.el.closest('ion-footer')) {
-      printIonWarning(
-        `<ion-tab-bar> scroll-effect="hide" is ignored when nested inside <ion-footer>. ` +
-          `Set scroll-effect="hide" on the <ion-footer> instead.`
-      );
+      if (!this.hasWarnedFooter) {
+        this.hasWarnedFooter = true;
+        printIonWarning(
+          `[ion-tab-bar] - scroll-effect="hide" is ignored when nested inside <ion-footer>. ` +
+            `Set scroll-effect="hide" on the <ion-footer> instead.`,
+          this.el
+        );
+      }
       return;
     }
 
