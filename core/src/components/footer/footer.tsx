@@ -33,7 +33,7 @@ export class Footer implements ComponentInterface {
   private scrollHideCtrl?: ScrollHideController;
   private resizeObserver?: ResizeObserver;
   private contentEl?: HTMLElement;
-  private isHidden = false;
+  @State() private isHidden = false;
   private setupHidePromise: Promise<HTMLElement> | null = null;
   private hasWarnedCollapse = false;
 
@@ -205,15 +205,6 @@ export class Footer implements ComponentInterface {
 
   private setHidden(hidden: boolean) {
     this.isHidden = hidden;
-    this.el.classList.toggle('footer-scroll-hidden', hidden);
-
-    if (hidden) {
-      this.el.setAttribute('inert', '');
-      this.el.setAttribute('aria-hidden', 'true');
-    } else {
-      this.el.removeAttribute('inert');
-      this.el.removeAttribute('aria-hidden');
-    }
 
     if (this.contentEl) {
       this.contentEl.classList.toggle('content-footer-hide-scroll-hidden', hidden);
@@ -257,16 +248,13 @@ export class Footer implements ComponentInterface {
     }
 
     if (this.isHidden) {
-      this.el.classList.remove('footer-scroll-hidden');
-      this.el.removeAttribute('inert');
-      this.el.removeAttribute('aria-hidden');
       this.isHidden = false;
     }
     this.el.style.removeProperty('--internal-footer-hide-height');
   }
 
   render() {
-    const { translucent, scrollEffect, collapse } = this;
+    const { translucent, scrollEffect, collapse, isHidden } = this;
     const theme = getIonTheme(this);
     const hasHide = (scrollEffect ?? collapse) === 'hide';
     const hasFade = (scrollEffect ?? collapse) === 'fade';
@@ -276,6 +264,8 @@ export class Footer implements ComponentInterface {
     return (
       <Host
         role="contentinfo"
+        aria-hidden={isHidden ? 'true' : null}
+        inert={isHidden ? '' : null}
         class={{
           [theme]: true,
 
@@ -288,6 +278,7 @@ export class Footer implements ComponentInterface {
 
           'footer-collapse-fade': hasFade,
           'footer-scroll-effect-hide': hasHide,
+          'footer-scroll-hidden': isHidden,
         }}
       >
         {theme === 'ios' && translucent && <div class="footer-background"></div>}

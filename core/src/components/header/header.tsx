@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, h, readTask, writeTask } from '@stencil/core';
+import { Component, Element, Host, Prop, State, h, readTask, writeTask } from '@stencil/core';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
@@ -44,7 +44,7 @@ export class Header implements ComponentInterface {
   private scrollHideCtrl?: ScrollHideController;
   private resizeObserver?: ResizeObserver;
   private contentEl?: HTMLElement;
-  private isHidden = false;
+  @State() private isHidden = false;
   private setupHidePromise: Promise<HTMLElement> | null = null;
   private hasWarnedCollapse = false;
 
@@ -203,15 +203,6 @@ export class Header implements ComponentInterface {
 
   private setHidden(hidden: boolean) {
     this.isHidden = hidden;
-    this.el.classList.toggle('header-scroll-hidden', hidden);
-
-    if (hidden) {
-      this.el.setAttribute('inert', '');
-      this.el.setAttribute('aria-hidden', 'true');
-    } else {
-      this.el.removeAttribute('inert');
-      this.el.removeAttribute('aria-hidden');
-    }
 
     if (this.contentEl) {
       this.contentEl.classList.toggle('content-header-hide-scroll-hidden', hidden);
@@ -265,9 +256,6 @@ export class Header implements ComponentInterface {
     }
 
     if (this.isHidden) {
-      this.el.classList.remove('header-scroll-hidden');
-      this.el.removeAttribute('inert');
-      this.el.removeAttribute('aria-hidden');
       this.isHidden = false;
     }
     this.el.style.removeProperty('--internal-header-hide-height');
@@ -338,7 +326,7 @@ export class Header implements ComponentInterface {
   }
 
   render() {
-    const { translucent, inheritedAttributes, divider } = this;
+    const { translucent, inheritedAttributes, divider, isHidden } = this;
     const theme = getIonTheme(this);
     const hasHide = (this.scrollEffect ?? this.collapse) === 'hide';
     const hasCondense = (this.scrollEffect ?? this.collapse) === 'condense';
@@ -349,6 +337,8 @@ export class Header implements ComponentInterface {
     return (
       <Host
         role={roleType}
+        aria-hidden={isHidden ? 'true' : null}
+        inert={isHidden ? '' : null}
         class={{
           [theme]: true,
 
@@ -361,6 +351,7 @@ export class Header implements ComponentInterface {
           [`header-translucent-${theme}`]: this.translucent,
           ['header-divider']: divider,
           'header-scroll-effect-hide': hasHide,
+          'header-scroll-hidden': isHidden,
         }}
         {...inheritedAttributes}
       >
