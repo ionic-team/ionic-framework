@@ -153,7 +153,6 @@ ion-header ion-toolbar:first-of-type {
  * is not reflected on the host in some frameworks.
  */
 ion-header:not(.header-collapse-main):has(
-    ~ ion-content ion-header[collapse="condense"],
     ~ ion-content ion-header[scroll-effect="condense"],
     ~ ion-content ion-header.header-collapse-condense
   ) {

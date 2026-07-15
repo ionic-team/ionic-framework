@@ -256,8 +256,11 @@ export class Footer implements ComponentInterface {
   render() {
     const { translucent, scrollEffect, collapse, isHidden } = this;
     const theme = getIonTheme(this);
-    const hasHide = (scrollEffect ?? collapse) === 'hide';
-    const hasFade = (scrollEffect ?? collapse) === 'fade';
+    const effect = scrollEffect ?? collapse;
+    // fade via the deprecated `collapse` prop is iOS-only.
+    const isModeRestricted = scrollEffect === undefined && theme !== 'ios';
+    const hasHide = effect === 'hide';
+    const hasFade = effect === 'fade' && !isModeRestricted;
     const tabs = this.el.closest('ion-tabs');
     const tabBar = tabs?.querySelector(':scope > ion-tab-bar');
 

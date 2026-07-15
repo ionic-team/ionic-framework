@@ -326,11 +326,14 @@ export class Header implements ComponentInterface {
   }
 
   render() {
-    const { translucent, inheritedAttributes, divider, isHidden } = this;
+    const { translucent, inheritedAttributes, divider, isHidden, scrollEffect, collapse } = this;
     const theme = getIonTheme(this);
-    const hasHide = (this.scrollEffect ?? this.collapse) === 'hide';
-    const hasCondense = (this.scrollEffect ?? this.collapse) === 'condense';
-    const hasFade = (this.scrollEffect ?? this.collapse) === 'fade';
+    const effect = scrollEffect ?? collapse;
+    // condense/fade via the deprecated `collapse` prop are iOS-only.
+    const isModeRestricted = scrollEffect === undefined && theme !== 'ios';
+    const hasHide = effect === 'hide';
+    const hasCondense = effect === 'condense' && !isModeRestricted;
+    const hasFade = effect === 'fade' && !isModeRestricted;
     // banner role must be at top level, so remove role if inside a menu
     const roleType = getRoleType(hostContext('ion-menu', this.el));
 

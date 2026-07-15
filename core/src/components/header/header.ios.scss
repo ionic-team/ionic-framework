@@ -35,3 +35,14 @@
 
 // Note: Shared condense/fade styles are in header.common.scss.
 // Only iOS-specific overrides (backdrop-filter, translucent) remain here.
+
+/**
+ * Pre-configuration hiding for the deprecated collapse="condense" prop,
+ * which is iOS-only. The cross-theme equivalent for scrollEffect="condense"
+ * is in header.common.scss.
+ */
+ion-header.header-ios:not(.header-collapse-main):has(
+    ~ ion-content ion-header.header-ios[collapse="condense"]
+  ) {
+  opacity: 0;
+}
