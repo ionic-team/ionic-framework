@@ -5,6 +5,7 @@ import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 import type { ScrollHideController } from '@utils/scroll-hide-controller';
 import { createScrollHideController } from '@utils/scroll-hide-controller';
+import { printIonWarning } from '@utils/logging';
 import { createColorClasses } from '@utils/theme';
 
 import { config } from '../../global/config';
@@ -180,8 +181,14 @@ export class TabBar implements ComponentInterface {
   }
 
   private setupScrollEffect = async () => {
-    // When nested inside ion-footer, the footer owns the hide animation.
+    // When nested inside ion-footer, the tab-bar should not hide
+    // independently — doing so would leave an empty footer behind.
+    // The footer should own the scroll effect instead.
     if (this.el.closest('ion-footer')) {
+      printIonWarning(
+        `<ion-tab-bar> scroll-effect="hide" is ignored when nested inside <ion-footer>. ` +
+          `Set scroll-effect="hide" on the <ion-footer> instead.`
+      );
       return;
     }
 

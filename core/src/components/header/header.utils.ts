@@ -76,7 +76,7 @@ export const setToolbarBackgroundOpacity = (headerEl: HTMLIonHeaderElement, opac
    * has collapsed, so it is handled
    * by handleHeaderFade()
    */
-  if (headerEl.collapse === 'fade' || headerEl.scrollEffect === 'fade') {
+  if ((headerEl.scrollEffect ?? headerEl.collapse) === 'fade') {
     return;
   }
 
