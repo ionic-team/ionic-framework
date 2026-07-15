@@ -3,7 +3,7 @@ description: 'Build Ionic Angular'
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@v6
+    - uses: actions/setup-node@v7
       with:
         node-version: 24.x
     - uses: ./.github/workflows/actions/download-archive
