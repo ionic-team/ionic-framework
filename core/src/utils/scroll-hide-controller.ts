@@ -6,11 +6,18 @@ const WHEEL_SUPPRESS_DURATION_MS = 80;
 const SUPPRESS_SHOW_DURATION_MS = 400;
 
 /**
- * Creates a controller that manages scroll-based hide/show behavior.
+ * Creates a controller that manages scroll-based hide/show behavior
+ * for headers, footers, and tab bars.
  *
- * Listens for scroll and wheel events on the provided scroll element and
- * determines when to hide or show a bar (header, footer, or tab bar) based
- * on scroll direction and distance thresholds.
+ * Listens to both wheel and scroll events. Wheel events (desktop mice)
+ * give direction instantly via deltaY. Scroll events cover touch,
+ * trackpad, and programmatic scrolling where wheel doesn't fire.
+ * A short suppression window stops them from double-processing the
+ * same gesture.
+ *
+ * When the user reverses scroll direction, we save that position as
+ * an anchor. The bar only hides/shows after scrolling 60px past that
+ * anchor, which prevents flickering on small or jittery movements.
  *
  * @internal
  * @param scrollEl The scrollable element to listen on.
@@ -22,6 +29,8 @@ export const createScrollHideController = (
 ): ScrollHideController => {
   let isHidden = false;
   let lastScrollPosition = 0;
+  // Where the user last changed scroll direction. We measure distance
+  // from here to decide whether to commit to hiding or showing.
   let scrollPositionAtDirectionChange = 0;
   let lastWheelEventTimestamp = 0;
   let suppressShowUntil = 0;
