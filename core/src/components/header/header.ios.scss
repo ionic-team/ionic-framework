@@ -33,8 +33,10 @@
   --border-width: 0;
 }
 
-// Note: Shared condense/fade styles are in header.common.scss.
-// Only iOS-specific overrides (backdrop-filter, translucent) remain here.
+
+.header-collapse-condense ion-toolbar:last-of-type {
+  --border-width: 0px;
+}
 
 /**
  * Pre-configuration hiding for the deprecated collapse="condense" prop,
