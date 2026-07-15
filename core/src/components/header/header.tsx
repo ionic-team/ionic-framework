@@ -325,7 +325,7 @@ export class Header implements ComponentInterface {
     const hasCondense = (this.scrollEffect ?? this.collapse) === 'condense';
     const hasFade = (this.scrollEffect ?? this.collapse) === 'fade';
     // banner role must be at top level, so remove role if inside a menu
-    const roleType = getRoleType(hostContext('ion-menu', this.el), hasCondense, theme);
+    const roleType = getRoleType(hostContext('ion-menu', this.el));
 
     return (
       <Host

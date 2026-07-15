@@ -1,8 +1,6 @@
 import { readTask, writeTask } from '@stencil/core';
 import { clamp } from '@utils/helpers';
 
-import { getIonMode } from '../../global/ionic-global';
-
 const TRANSITION = 'all 0.2s ease-in-out';
 const ROLE_NONE = 'none';
 const ROLE_BANNER = 'banner';
@@ -78,7 +76,7 @@ export const setToolbarBackgroundOpacity = (headerEl: HTMLIonHeaderElement, opac
    * has collapsed, so it is handled
    * by handleHeaderFade()
    */
-  if (headerEl.collapse === 'fade') {
+  if (headerEl.collapse === 'fade' || headerEl.scrollEffect === 'fade') {
     return;
   }
 
@@ -173,15 +171,9 @@ export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
   const headerEl = headerIndex.el;
   const toolbars = headerIndex.toolbars;
   const ionTitles = toolbars.map((toolbar) => toolbar.ionTitleEl);
-  // In iOS, two headers are visible at once (large title + small title).
-  // Only one can have role="banner" at a time, so we toggle it on scroll.
-  // In other modes, the role is set once by the render and never needs to change.
-  const shouldManageRole = getIonMode(headerEl) === 'ios';
 
   if (active) {
-    if (shouldManageRole) {
-      headerEl.setAttribute('role', ROLE_BANNER);
-    }
+    headerEl.setAttribute('role', ROLE_BANNER);
     headerEl.classList.remove('header-collapse-condense-inactive');
 
     ionTitles.forEach((ionTitle) => {
@@ -199,9 +191,7 @@ export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
      * To solve this, the role needs to be toggled
      * based on which header is active.
      */
-    if (shouldManageRole) {
-      headerEl.setAttribute('role', ROLE_NONE);
-    }
+    headerEl.setAttribute('role', ROLE_NONE);
     headerEl.classList.add('header-collapse-condense-inactive');
 
     /**
@@ -272,21 +262,13 @@ export const handleHeaderFade = (scrollEl: HTMLElement, baseEl: HTMLElement, con
  * Get the role type for the ion-header.
  *
  * @param isInsideMenu If ion-header is inside ion-menu.
- * @param isCondensed If ion-header has collapse="condense".
- * @param theme The current theme.
- * @returns 'none' if inside ion-menu or if condensed in md
- * theme, otherwise 'banner'.
+ * @returns 'none' if inside ion-menu, otherwise 'banner'.
+ * Condensed headers start as 'banner' and have their role
+ * toggled dynamically by setHeaderActive() on scroll.
  */
-export const getRoleType = (isInsideMenu: boolean, isCondensed: boolean, theme: 'ios' | 'md' | 'ionic') => {
+export const getRoleType = (isInsideMenu: boolean) => {
   // If the header is inside a menu, it should not have the banner role.
   if (isInsideMenu) {
-    return ROLE_NONE;
-  }
-  /**
-   * Only apply role="none" to `md` & `ionic` theme condensed headers
-   * since the large header is never shown.
-   */
-  if (isCondensed && theme !== 'ios') {
     return ROLE_NONE;
   }
   // Default to banner role.

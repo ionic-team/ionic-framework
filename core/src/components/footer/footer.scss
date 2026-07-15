@@ -18,6 +18,13 @@ ion-footer.footer-toolbar-padding ion-toolbar:last-of-type {
   padding-bottom: var(--ion-safe-area-bottom, 0);
 }
 
+// Footer - Collapse Fade
+// --------------------------------------------------
+
+.footer-collapse-fade ion-toolbar {
+  --opacity-scale: inherit;
+}
+
 // Footer - Scroll Effect Hide
 // --------------------------------------------------
 
