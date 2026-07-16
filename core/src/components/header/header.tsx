@@ -346,8 +346,11 @@ export class Header implements ComponentInterface {
     const hasHide = effect === 'hide';
     const hasCondense = effect === 'condense' && !isModeRestricted;
     const hasFade = effect === 'fade' && !isModeRestricted;
+    // A hidden condense header (deprecated collapse prop on non-iOS) should
+    // not have a landmark role since it's display:none.
+    const isHiddenCondense = effect === 'condense' && isModeRestricted;
     // banner role must be at top level, so remove role if inside a menu
-    const roleType = getRoleType(hostContext('ion-menu', this.el));
+    const roleType = isHiddenCondense ? 'none' : getRoleType(hostContext('ion-menu', this.el));
 
     return (
       <Host
