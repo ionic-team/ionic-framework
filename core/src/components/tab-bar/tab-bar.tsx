@@ -40,7 +40,7 @@ export class TabBar implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @State() keyboardVisible = false;
-  @State() isHidden = false;
+  private isHidden = false;
 
   /**
    * The color to use from your application's color palette.
@@ -310,7 +310,7 @@ export class TabBar implements ComponentInterface {
   }
 
   render() {
-    const { color, translucent, keyboardVisible, scrollEffect, isHidden, expand } = this;
+    const { color, translucent, keyboardVisible, scrollEffect, expand } = this;
     const theme = getIonTheme(this);
     const shape = this.getShape();
     const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
@@ -318,14 +318,12 @@ export class TabBar implements ComponentInterface {
     return (
       <Host
         role="tablist"
-        aria-hidden={shouldHide || isHidden ? 'true' : null}
-        inert={isHidden ? '' : null}
+        aria-hidden={shouldHide ? 'true' : null}
         class={createColorClasses(color, {
           [theme]: true,
           'tab-bar-translucent': translucent,
           'tab-bar-hidden': shouldHide,
           'tab-bar-scroll-effect-hide': scrollEffect === 'hide',
-          'tab-bar-scroll-hidden': isHidden,
           [`tab-bar-${expand}`]: true,
           [`tab-bar-${shape}`]: shape !== undefined,
         })}
