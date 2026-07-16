@@ -299,7 +299,6 @@ export const createSheetGesture = (
   };
 
   const onStart = (detail: GestureDetail) => {
-
     /**
      * If canDismiss is anything other than `true`
      * then users should be able to swipe down

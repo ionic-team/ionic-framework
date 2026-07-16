@@ -1648,7 +1648,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
             tabIndex={-1} is required so present() can move focus to this
             element (which carries the dialog role) instead of the role-less
             host. role="dialog" alone does not make an element focusable, so
-            without the tabindex focus() would be a no-op.
+            without the tabindex focus() would be a no-op and screen readers
+            may not properly announce the dialog and its content when it opens.
           */
           role="dialog"
           {...inheritedAttributes}
