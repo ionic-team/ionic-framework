@@ -109,20 +109,62 @@ The following behaviors have been removed:
 - Navigating an `ion-nav` (via `push`, `pop`, `ion-nav-link`, or the swipe-to-go-back gesture) no longer updates the URL, and the router's navigation guards no longer run for `ion-nav` transitions.
 - The internal `setRouteId()` and `getRouteId()` methods and the `updateURL` nav option have been removed.
 
-Apps that relied on `ion-nav` to update the URL (for example, pushing components and expecting the browser URL to change) should use `ion-router-outlet` for URL-based routing:
+Apps that relied on `ion-nav` to update the URL (for example, pushing components and expecting the browser URL to change) should use `ion-router-outlet` for URL-based routing. Keep the `ion-route` definitions and swap the outlet element:
 
 ```diff
-- <ion-router>
--   <ion-nav root="page-one"></ion-nav>
-- </ion-router>
+  <ion-router>
+    <ion-route url="/" component="page-one"></ion-route>
+    <ion-route url="/page-two" component="page-two"></ion-route>
+  </ion-router>
+
+- <ion-nav></ion-nav>
 + <ion-router-outlet></ion-router-outlet>
 ```
 
-An `ion-nav` can still be used inside a routed page for local, URL-less stack navigation:
+An `ion-nav` can still be used inside a routed page for local, URL-less stack navigation. It manages its own stack via `root` and `ion-nav-link`, and the URL never changes as you push and pop:
 
 ```html
 <!-- Inside a routed page, an ion-nav manages a local, URL-less stack -->
 <ion-nav root="page-one"></ion-nav>
+
+<script>
+  // Each view is a standard custom element. Setting `root` renders the first
+  // view, and `ion-nav-link` pushes the next one. The URL never changes.
+  customElements.define(
+    'page-one',
+    class extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar><ion-title>Page One</ion-title></ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <ion-nav-link router-direction="forward" component="page-two">
+              <ion-button>Go to Page Two</ion-button>
+            </ion-nav-link>
+          </ion-content>
+        `;
+      }
+    }
+  );
+
+  customElements.define(
+    'page-two',
+    class extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+              <ion-title>Page Two</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">Page Two content</ion-content>
+        `;
+      }
+    }
+  );
+</script>
 ```
 
 <h4 id="version-9x-router-outlet">Router Outlet</h4>
