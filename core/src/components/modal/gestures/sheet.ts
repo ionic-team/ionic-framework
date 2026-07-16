@@ -298,15 +298,7 @@ export const createSheetGesture = (
     return true;
   };
 
-  /**
-   * In Firefox, pressing over a text caret in the focusable wrapper can
-   * start a native drag that swallows the gesture's pointer events.
-   * Cancel native drag while the gesture is active.
-   */
-  const preventNativeDragStart = (ev: DragEvent) => ev.preventDefault();
-
   const onStart = (detail: GestureDetail) => {
-    baseEl.addEventListener('dragstart', preventNativeDragStart);
 
     /**
      * If canDismiss is anything other than `true`
@@ -452,8 +444,6 @@ export const createSheetGesture = (
   };
 
   const onEnd = (detail: GestureDetail) => {
-    baseEl.removeEventListener('dragstart', preventNativeDragStart);
-
     const snapBreakpoint = calculateSnapBreakpoint(detail.deltaY);
 
     const eventDetail: ModalDragEventDetail = {

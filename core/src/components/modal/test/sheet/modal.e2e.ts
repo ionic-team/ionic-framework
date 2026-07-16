@@ -398,42 +398,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(ionDragEnd.length).toBe(1);
       expect(Object.keys(dragEndEvent.detail).length).toBe(5);
     });
-
-    // Native drag can interfere with the swipe gesture when initiated over
-    // text in the focusable wrapper. Suppress it during the gesture only.
-    test('should cancel native drag and drop only while the gesture is active', async ({ page }) => {
-      await page.goto('/src/components/modal/test/sheet', config);
-
-      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-
-      await page.click('#drag-events');
-      await ionModalDidPresent.next();
-
-      const ionDragStart = await page.spyOnEvent('ionDragStart');
-      const ionDragEnd = await page.spyOnEvent('ionDragEnd');
-
-      const dispatchNativeDragStart = () => {
-        return page.evaluate(() => {
-          const content = document.querySelector('.modal-sheet ion-content')!;
-          const ev = new DragEvent('dragstart', { bubbles: true, cancelable: true, composed: true });
-          content.dispatchEvent(ev);
-          return ev.defaultPrevented;
-        });
-      };
-
-      const header = page.locator('.modal-sheet ion-header');
-
-      // Hold the drag mid-gesture without releasing
-      await dragElementBy(header, page, 0, 50, undefined, undefined, false);
-      await ionDragStart.next();
-
-      expect(await dispatchNativeDragStart()).toBe(true);
-
-      await page.mouse.up();
-      await ionDragEnd.next();
-
-      expect(await dispatchNativeDragStart()).toBe(false);
-    });
   });
 
   test.describe(title('sheet modal: late breakpoints binding'), () => {

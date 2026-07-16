@@ -113,17 +113,8 @@ export const createSwipeToCloseGesture = (
     return false;
   };
 
-  /**
-   * In Firefox, pressing over a text caret in the focusable wrapper can
-   * start a native drag that swallows the gesture's pointer events.
-   * Cancel native drag while the gesture is active.
-   */
-  const preventNativeDragStart = (ev: DragEvent) => ev.preventDefault();
-
   const onStart = (detail: GestureDetail) => {
     const { deltaY } = detail;
-
-    el.addEventListener('dragstart', preventNativeDragStart);
 
     /**
      * Get the initial scrollY value so
@@ -246,8 +237,6 @@ export const createSwipeToCloseGesture = (
   };
 
   const onEnd = (detail: GestureDetail) => {
-    el.removeEventListener('dragstart', preventNativeDragStart);
-
     const velocity = detail.velocityY;
     const step = detail.deltaY / height;
 
