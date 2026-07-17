@@ -72,6 +72,11 @@ export class TabBar implements ComponentInterface {
    * Describes the scroll effect that will be applied to the tab bar.
    * `"hide"` slides the tab bar out of view when scrolling down and back in
    * when scrolling up.
+   *
+   * Note: `"hide"` is ignored when the tab bar is nested inside an
+   * `ion-footer` to avoid leaving an empty footer visible on screen.
+   * Set `scroll-effect="hide"` on the footer instead so the entire
+   * footer hides together.
    */
   @Prop() scrollEffect?: TabBarScrollEffect;
   @Watch('scrollEffect')
