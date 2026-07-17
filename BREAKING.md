@@ -54,6 +54,13 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | iOS      | 16+                    |
 | Android  | 5.1+ with Chromium 89+ |
 
+**Minimum Native Runtime Versions**
+| Native Runtime | Supported Version |
+| -------------- | ----------------- |
+| Capacitor      | 7+                |
+
+Ionic's native platform detection no longer checks the Capacitor 2 `isNative` flag. `isCapacitorNative` now relies solely on `Capacitor.isNativePlatform()`, which was added in Capacitor 3. Apps running Capacitor 2 will no longer be detected as a native/hybrid platform, so `isPlatform('capacitor')`, `isPlatform('hybrid')`, and `getPlatforms()` will report web instead of native. Upgrade to a supported Capacitor version (7 or later).
+
 <h2 id="version-9x-package-exports">Package Exports</h2>
 
 `@ionic/core`'s `package.json` now declares an `exports` field. Subpaths like `@ionic/core/components` and `@ionic/core/loader` previously failed under Node ESM (Angular 21's default Vitest builder, raw Node, etc.) with `ERR_UNSUPPORTED_DIR_IMPORT`, because the strict ESM resolver doesn't read the nested `package.json` files this package relied on. The new `exports` map declares the documented subpaths explicitly.
