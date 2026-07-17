@@ -23,3 +23,15 @@
 
   font-weight: normal;
 }
+
+// Material Design Title: Large
+// --------------------------------------------------
+
+:host(.title-large) {
+  width: 100%;
+  height: 100%;
+
+  font-size: dynamic-font(28px);
+
+  font-weight: 400;
+}
