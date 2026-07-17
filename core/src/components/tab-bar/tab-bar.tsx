@@ -283,6 +283,9 @@ export class TabBar implements ComponentInterface {
     }
   }
 
+  // Named differently from header/footer's destroyCollapsible* because
+  // tab-bar only supports "hide", while header/footer handle multiple
+  // effects (hide, condense, fade) through one teardown method.
   private destroyScrollEffect() {
     this.setupHidePromise = null;
 

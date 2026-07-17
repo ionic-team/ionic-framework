@@ -16,8 +16,9 @@ const SUPPRESS_SHOW_DURATION_MS = 400;
  * same gesture.
  *
  * When the user reverses scroll direction, we save that position as
- * an anchor. The bar only hides/shows after scrolling 60px past that
+ * an anchor. The bar only hides after scrolling 60px past that
  * anchor, which prevents flickering on small or jittery movements.
+ * Showing is immediate on direction change.
  *
  * @internal
  * @param scrollEl The scrollable element to listen on.

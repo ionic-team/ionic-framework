@@ -267,8 +267,8 @@
 // to fill the gap so no empty space is visible to the user.
 
 // Header gap compensation — only when content is NOT fullscreen.
-// When fullscreen=true, inner-scroll already fills the full viewport
-// (offset-top = 0), so translateY would over-shift the content.
+// When fullscreen=true, inner-scroll already extends behind the header
+// (offset-top = header height), so translateY would over-shift the content.
 :host(.content-header-hide-scroll-partner:not(.content-fullscreen)) .inner-scroll {
   transition: transform 300ms cubic-bezier(0, 0, 0.2, 1), height 300ms cubic-bezier(0, 0, 0.2, 1);
 }

@@ -33,6 +33,9 @@
   --border-width: 0;
 }
 
+// This rule also exists in header.common.scss, but the iOS border rule
+// above overrides it by source order. Repeating it here ensures the
+// condense header's last toolbar has no border on iOS.
 .header-collapse-condense ion-toolbar:last-of-type {
   --border-width: 0px;
 }
