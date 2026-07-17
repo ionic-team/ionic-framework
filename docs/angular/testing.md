@@ -83,7 +83,7 @@ If you need to add E2E tests that are only run on a specific version of the JS F
 Tests for lazy loaded Ionic UI components should only be added under the `/lazy` route. This ensures the `IonicModule` is added.
 
 > [!CAUTION]
-> The lazy loaded build and its `IonicModule` are deprecated and will be removed in a future major version. New components should be tested as standalone components (see below). These lazy tests remain to verify that the deprecated build keeps working while it is still supported.
+> The lazy loaded build, including `IonicModule`, is deprecated and will be removed in a future major version. New components should be tested as standalone components (see below). These lazy tests remain to verify that the deprecated build keeps working while it is still supported.
 
 ### Testing Standalone Ionic Components
 
