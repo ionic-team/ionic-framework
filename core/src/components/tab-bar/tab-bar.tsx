@@ -268,6 +268,8 @@ export class TabBar implements ComponentInterface {
   }
 
   private destroyScrollEffect() {
+    this.setupHidePromise = null;
+
     if (this.scrollHideCtrl) {
       this.scrollHideCtrl.destroy();
       this.scrollHideCtrl = undefined;

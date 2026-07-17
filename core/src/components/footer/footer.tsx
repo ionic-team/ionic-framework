@@ -235,6 +235,8 @@ export class Footer implements ComponentInterface {
   };
 
   private destroyCollapsibleFooter() {
+    this.setupHidePromise = null;
+
     if (this.scrollEl && this.contentScrollCallback) {
       this.scrollEl.removeEventListener('scroll', this.contentScrollCallback);
       this.contentScrollCallback = undefined;

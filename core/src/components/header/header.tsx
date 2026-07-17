@@ -233,6 +233,8 @@ export class Header implements ComponentInterface {
   };
 
   private destroyCollapsibleHeader() {
+    this.setupHidePromise = null;
+
     if (this.intersectionObserver) {
       this.intersectionObserver.disconnect();
       this.intersectionObserver = undefined;
