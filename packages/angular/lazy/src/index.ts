@@ -45,9 +45,7 @@ export { ToastController } from './providers/toast-controller';
 
 /*
  * PACKAGE MODULE
- * `IonicModule` is deprecated and will be removed in a future major version.
- * Use `provideIonicAngular()` from `@ionic/angular` instead. The deprecation is
- * declared on the class itself, so consumers importing it here see the notice.
+ * TODO(FW-7617): Remove the `IonicModule` export once the deprecated module is removed.
  */
 export { IonicModule } from './ionic-module';
 
