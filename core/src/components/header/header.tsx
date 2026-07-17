@@ -377,6 +377,7 @@ export class Header implements ComponentInterface {
 
           [`header-translucent`]: this.translucent,
           ['header-collapse-condense']: hasCondense,
+          ['header-collapse-condense-hidden']: isHiddenCondense,
           ['header-collapse-fade']: hasFade,
           [`header-translucent-${theme}`]: this.translucent,
           ['header-divider']: divider,

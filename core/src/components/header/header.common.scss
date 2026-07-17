@@ -136,18 +136,30 @@ ion-header ion-toolbar:first-of-type {
  * The :has(...) part of the selector ensures a couple things:
  * 1. This will only apply within a page view since the content
  * must be a subsequent-sibling of the header (~ ion-content).
- * 2. This will only apply when that content has a collapse header
- *    (ion-header[collapse="condense"] or ion-header[scroll-effect="condense"])
+ * 2. This will only apply when that content has a condense header
+ *    (via scroll-effect="condense" attribute or .header-collapse-condense class)
  *
  * We use opacity: 0 to avoid a layout shift.
- * We target both the attribute and the class in the event that the attribute
- * is not reflected on the host in some frameworks.
+ * We target both the attribute and the class because the attribute
+ * is only present for scrollEffect (reflected), while the class
+ * covers the deprecated collapse prop (not reflected).
  */
 ion-header:not(.header-collapse-main):has(
     ~ ion-content ion-header[scroll-effect="condense"],
     ~ ion-content ion-header.header-collapse-condense
   ) {
   opacity: 0;
+}
+
+/**
+ * The deprecated collapse="condense" prop is iOS-only.
+ * On non-iOS themes, the condense header should be hidden since
+ * the JS won't activate it. Uses a class instead of an attribute
+ * selector because collapse is not a reflected prop, and framework
+ * proxies (Angular/Vue) bind it as a property.
+ */
+.header-collapse-condense-hidden {
+  display: none;
 }
 
 // Header - Scroll Effect Hide
