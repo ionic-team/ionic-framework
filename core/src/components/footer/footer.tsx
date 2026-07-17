@@ -36,6 +36,7 @@ export class Footer implements ComponentInterface {
   private isHidden = false;
   private setupHidePromise: Promise<HTMLElement> | null = null;
   private hasWarnedCollapse = false;
+  private activeEffect?: string;
 
   @State() private keyboardVisible = false;
 
@@ -130,10 +131,21 @@ export class Footer implements ComponentInterface {
       );
     }
 
-    const hasHide = (scrollEffect ?? collapse) === 'hide';
-    const hasFade = (scrollEffect ?? collapse) === 'fade';
+    const effect = scrollEffect ?? collapse;
+
+    // Skip teardown/rebuild if the effect hasn't changed.
+    // This prevents keyboard toggles (which trigger re-renders via
+    // @State keyboardVisible) from destroying the scroll controller
+    // and resetting isHidden.
+    if (effect === this.activeEffect) {
+      return;
+    }
+
+    const hasHide = effect === 'hide';
+    const hasFade = effect === 'fade';
 
     this.destroyCollapsibleFooter();
+    this.activeEffect = effect;
 
     const appRootSelector = config.get('appRootSelector', 'ion-app');
     const pageEl = this.el.closest(`${appRootSelector}, ion-page, .ion-page, page-inner`);
@@ -236,6 +248,7 @@ export class Footer implements ComponentInterface {
 
   private destroyCollapsibleFooter() {
     this.setupHidePromise = null;
+    this.activeEffect = undefined;
 
     if (this.scrollEl && this.contentScrollCallback) {
       this.scrollEl.removeEventListener('scroll', this.contentScrollCallback);

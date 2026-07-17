@@ -47,6 +47,7 @@ export class Header implements ComponentInterface {
   private isHidden = false;
   private setupHidePromise: Promise<HTMLElement> | null = null;
   private hasWarnedCollapse = false;
+  private activeEffect?: string;
 
   @Element() el!: HTMLElement;
 
@@ -112,11 +113,21 @@ export class Header implements ComponentInterface {
       );
     }
 
-    const hasHide = (scrollEffect ?? collapse) === 'hide';
-    const hasCondense = (scrollEffect ?? collapse) === 'condense';
-    const hasFade = (scrollEffect ?? collapse) === 'fade';
+    const effect = scrollEffect ?? collapse;
+
+    // Skip teardown/rebuild if the effect hasn't changed.
+    // This prevents re-renders from destroying the scroll controller
+    // and resetting isHidden.
+    if (effect === this.activeEffect) {
+      return;
+    }
+
+    const hasHide = effect === 'hide';
+    const hasCondense = effect === 'condense';
+    const hasFade = effect === 'fade';
 
     this.destroyCollapsibleHeader();
+    this.activeEffect = effect;
 
     const appRootSelector = config.get('appRootSelector', 'ion-app');
     const pageEl = this.el.closest(`${appRootSelector}, ion-page, .ion-page, page-inner`);
@@ -234,6 +245,7 @@ export class Header implements ComponentInterface {
 
   private destroyCollapsibleHeader() {
     this.setupHidePromise = null;
+    this.activeEffect = undefined;
 
     if (this.intersectionObserver) {
       this.intersectionObserver.disconnect();
