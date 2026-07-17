@@ -2114,10 +2114,6 @@ export namespace Components {
          */
         "getPrevious": (view?: ViewController) => Promise<ViewController | undefined>;
         /**
-          * Called by <ion-router> to retrieve the current component.
-         */
-        "getRouteId": () => Promise<RouteID | undefined>;
-        /**
           * Inserts a component into the navigation stack at the specified index. This is useful to add a component at any point in the navigation stack.
           * @param insertIndex The index to insert the component at in the stack.
           * @param component The component to insert into the navigation stack.
@@ -2192,15 +2188,6 @@ export namespace Components {
           * @param done The transition complete function.
          */
         "setRoot": <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
-        /**
-          * Called by the router to update the view.
-          * @param id The component tag.
-          * @param params The component params.
-          * @param direction A direction hint.
-          * @param animation an AnimationBuilder.
-          * @return the status.
-         */
-        "setRouteId": (id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder) => Promise<RouteWrite>;
         /**
           * If the nav component should allow for swipe-to-go-back.
          */
@@ -2720,7 +2707,7 @@ export namespace Components {
          */
         "beforeLeave"?: NavigationHookCallback;
         /**
-          * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
+          * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-router-outlet`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
          */
         "component": string;
         /**
@@ -7889,7 +7876,7 @@ declare namespace LocalJSX {
          */
         "beforeLeave"?: NavigationHookCallback;
         /**
-          * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
+          * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-router-outlet`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
          */
         "component": string;
         /**

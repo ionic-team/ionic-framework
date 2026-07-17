@@ -1,5 +1,5 @@
-import type { EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Method, Prop, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Method, Prop, Watch, h } from '@stencil/core';
 import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
 import { assert } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -9,7 +9,6 @@ import { lifecycle, setPageHidden, transition } from '@utils/transition';
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture } from '../../interface';
-import type { NavOutlet, RouteID, RouteWrite, RouterDirection } from '../router/utils/interface';
 
 import { LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_LEAVE, LIFECYCLE_WILL_UNLOAD } from './constants';
 import type {
@@ -21,18 +20,17 @@ import type {
   TransitionInstruction,
 } from './nav-interface';
 import type { ViewController } from './view-controller';
-import { VIEW_STATE_ATTACHED, VIEW_STATE_DESTROYED, VIEW_STATE_NEW, convertToViews, matches } from './view-controller';
+import { VIEW_STATE_ATTACHED, VIEW_STATE_DESTROYED, VIEW_STATE_NEW, convertToViews } from './view-controller';
 
 @Component({
   tag: 'ion-nav',
   styleUrl: 'nav.scss',
   shadow: true,
 })
-export class Nav implements NavOutlet {
+export class Nav implements ComponentInterface {
   private transInstr: TransitionInstruction[] = [];
   private sbAni?: Animation;
   private gestureOrAnimationInProgress = false;
-  private useRouter = false;
   private isTransitioning = false;
   private destroyed = false;
   private views: ViewController[] = [];
@@ -78,8 +76,6 @@ export class Nav implements NavOutlet {
 
   @Watch('root')
   rootChanged() {
-    const isDev = Build.isDev;
-
     if (this.root === undefined) {
       return;
     }
@@ -92,13 +88,7 @@ export class Nav implements NavOutlet {
       return;
     }
 
-    if (!this.useRouter) {
-      if (this.root !== undefined) {
-        this.setRoot(this.root, this.rootParams);
-      }
-    } else if (isDev) {
-      printIonWarning('[ion-nav] - A root attribute is not supported when using ion-router.', this.el);
-    }
+    this.setRoot(this.root, this.rootParams);
   }
 
   /**
@@ -116,8 +106,6 @@ export class Nav implements NavOutlet {
   @Event({ bubbles: false }) ionNavDidChange!: EventEmitter<void>;
 
   componentWillLoad() {
-    this.useRouter = document.querySelector('ion-router') !== null && this.el.closest('[no-router]') === null;
-
     if (this.swipeGesture === undefined) {
       const mode = getIonMode(this);
       this.swipeGesture = config.getBoolean('swipeBackEnabled', mode === 'ios');
@@ -353,99 +341,6 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Called by the router to update the view.
-   *
-   * @param id The component tag.
-   * @param params The component params.
-   * @param direction A direction hint.
-   * @param animation an AnimationBuilder.
-   *
-   * @return the status.
-   * @internal
-   */
-  @Method()
-  setRouteId(
-    id: string,
-    params: ComponentProps | undefined,
-    direction: RouterDirection,
-    animation?: AnimationBuilder
-  ): Promise<RouteWrite> {
-    const active = this.getActiveSync();
-    if (matches(active, id, params)) {
-      return Promise.resolve({
-        changed: false,
-        element: active.element,
-      });
-    }
-
-    let resolve: (result: RouteWrite) => void;
-    const promise = new Promise<RouteWrite>((r) => (resolve = r));
-    let finish: Promise<boolean>;
-    const commonOpts: NavOptions = {
-      updateURL: false,
-      viewIsReady: (enteringEl) => {
-        let mark: () => void;
-        const p = new Promise<void>((r) => (mark = r));
-        resolve({
-          changed: true,
-          element: enteringEl,
-          markVisible: async () => {
-            mark();
-            await finish;
-          },
-        });
-        return p;
-      },
-    };
-
-    if (direction === 'root') {
-      finish = this.setRoot(id, params, commonOpts);
-    } else {
-      // Look for a view matching the target in the view stack.
-      const viewController = this.views.find((v) => matches(v, id, params));
-
-      if (viewController) {
-        finish = this.popTo(viewController, {
-          ...commonOpts,
-          direction: 'back',
-          animationBuilder: animation,
-        });
-      } else if (direction === 'forward') {
-        finish = this.push(id, params, {
-          ...commonOpts,
-          animationBuilder: animation,
-        });
-      } else if (direction === 'back') {
-        finish = this.setRoot(id, params, {
-          ...commonOpts,
-          direction: 'back',
-          animated: true,
-          animationBuilder: animation,
-        });
-      }
-    }
-    return promise;
-  }
-
-  /**
-   * Called by <ion-router> to retrieve the current component.
-   *
-   * @internal
-   */
-  @Method()
-  async getRouteId(): Promise<RouteID | undefined> {
-    const active = this.getActiveSync();
-    if (active) {
-      return {
-        id: active.element!.tagName,
-        params: active.params,
-        element: active.element,
-      };
-    }
-    return undefined;
-  }
-
-  /**
    * Get the active view.
    */
   @Method()
@@ -524,26 +419,6 @@ export class Nav implements NavOutlet {
     });
     ti.done = done;
 
-    /**
-     * If using router, check to see if navigation hooks
-     * will allow us to perform this transition. This
-     * is required in order for hooks to work with
-     * the ion-back-button or swipe to go back.
-     */
-    if (ti.opts && ti.opts.updateURL !== false && this.useRouter) {
-      const router = document.querySelector('ion-router');
-      if (router) {
-        const canTransition = await router.canTransition();
-        if (canTransition === false) {
-          return false;
-        }
-        if (typeof canTransition === 'string') {
-          router.push(canTransition, ti.opts!.direction || 'back');
-          return false;
-        }
-      }
-    }
-
     // Normalize empty
     if (ti.insertViews?.length === 0) {
       ti.insertViews = undefined;
@@ -575,14 +450,6 @@ export class Nav implements NavOutlet {
       );
     }
     ti.resolve!(result.hasCompleted);
-
-    if (ti.opts!.updateURL !== false && this.useRouter) {
-      const router = document.querySelector('ion-router');
-      if (router) {
-        const direction = result.direction === 'back' ? 'back' : 'forward';
-        router.navChanged(direction);
-      }
-    }
   }
 
   private failed(rejectReason: any, ti: TransitionInstruction) {

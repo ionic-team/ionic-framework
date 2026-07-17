@@ -20,6 +20,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Input](#version-9x-input)
   - [Legacy Picker](#version-9x-legacy-picker)
   - [Modal](#version-9x-modal)
+  - [Nav](#version-9x-nav)
   - [Router Outlet](#version-9x-router-outlet)
   - [Searchbar](#version-9x-searchbar)
   - [Select](#version-9x-select)
@@ -96,6 +97,74 @@ Sheet modals that relied on the handle being inert should set `handleBehavior="n
 
 ```html
 <ion-modal handle-behavior="none"></ion-modal>
+```
+
+<h4 id="version-9x-nav">Nav</h4>
+
+`ion-nav` no longer integrates with `ion-router`. It is now a standalone imperative stack navigation component, driven only through its own API (`root`, `push`, `pop`, `setRoot`, etc.) and `ion-nav-link`.
+
+The following behaviors have been removed:
+
+- The router no longer discovers or drives an `ion-nav`. Placing an `ion-nav` inside an `ion-router` no longer turns it into a routed outlet.
+- Navigating an `ion-nav` (via `push`, `pop`, `ion-nav-link`, or the swipe-to-go-back gesture) no longer updates the URL, and the router's navigation guards no longer run for `ion-nav` transitions.
+- The internal `setRouteId()` and `getRouteId()` methods and the `updateURL` nav option have been removed.
+
+Apps that relied on `ion-nav` to update the URL (for example, pushing components and expecting the browser URL to change) should use `ion-router-outlet` for URL-based routing. Keep the `ion-route` definitions and swap the outlet element:
+
+```diff
+  <ion-router>
+    <ion-route url="/" component="page-one"></ion-route>
+    <ion-route url="/page-two" component="page-two"></ion-route>
+  </ion-router>
+
+- <ion-nav></ion-nav>
++ <ion-router-outlet></ion-router-outlet>
+```
+
+An `ion-nav` can still be used inside a routed page for local, URL-less stack navigation. It manages its own stack via `root` and `ion-nav-link`, and the URL never changes as you push and pop:
+
+```html
+<!-- Inside a routed page, an ion-nav manages a local, URL-less stack -->
+<ion-nav root="page-one"></ion-nav>
+
+<script>
+  // Each view is a standard custom element. Setting `root` renders the first
+  // view, and `ion-nav-link` pushes the next one. The URL never changes.
+  customElements.define(
+    'page-one',
+    class extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar><ion-title>Page One</ion-title></ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <ion-nav-link router-direction="forward" component="page-two">
+              <ion-button>Go to Page Two</ion-button>
+            </ion-nav-link>
+          </ion-content>
+        `;
+      }
+    }
+  );
+
+  customElements.define(
+    'page-two',
+    class extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+              <ion-title>Page Two</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">Page Two content</ion-content>
+        `;
+      }
+    }
+  );
+</script>
 ```
 
 <h4 id="version-9x-router-outlet">Router Outlet</h4>
