@@ -149,6 +149,17 @@ export class TabBar implements ComponentInterface {
       }
 
       this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
+
+      // Toggle aria-hidden imperatively for the keyboard case.
+      // scroll-effect hide also sets aria-hidden via setHidden,
+      // so keeping a single imperative path avoids render() clearing
+      // the scroll-set attribute on re-render.
+      const shouldHide = keyboardOpen && this.el.getAttribute('slot') !== 'top';
+      if (shouldHide || this.isHidden) {
+        this.el.setAttribute('aria-hidden', 'true');
+      } else {
+        this.el.removeAttribute('aria-hidden');
+      }
     });
     this.keyboardCtrlPromise = promise;
 
@@ -320,7 +331,6 @@ export class TabBar implements ComponentInterface {
     return (
       <Host
         role="tablist"
-        aria-hidden={shouldHide ? 'true' : null}
         class={createColorClasses(color, {
           [theme]: true,
           'tab-bar-translucent': translucent,
