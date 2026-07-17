@@ -298,6 +298,20 @@ export class Header implements ComponentInterface {
 
     this.scrollEl = await getScrollElement(contentEl);
 
+    /**
+     * The condense effect requires an ion-title with size="large"
+     * in the condense header. Without it, there is nothing to
+     * collapse into the main header toolbar.
+     */
+    const hasLargeTitle = this.el.querySelector('ion-title[size="large"]') !== null;
+    if (!hasLargeTitle) {
+      printIonWarning(
+        '[ion-header] - The condense scroll effect requires an <ion-title size="large"> in the condense header.',
+        this.el
+      );
+      return;
+    }
+
     const headers = pageEl.querySelectorAll('ion-header');
     this.collapsibleMainHeader = Array.from(headers).find((header) => {
       const effect = header.scrollEffect ?? header.collapse;
