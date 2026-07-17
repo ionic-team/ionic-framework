@@ -4060,7 +4060,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Describes the scroll effect that will be applied to the tab bar. `"hide"` slides the tab bar out of view when scrolling down and back in when scrolling up.
+          * Describes the scroll effect that will be applied to the tab bar. `"hide"` slides the tab bar out of view when scrolling down and back in when scrolling up.  Note: `"hide"` is ignored when the tab bar is nested inside an `ion-footer` to avoid leaving an empty footer visible on screen. Set `scroll-effect="hide"` on the footer instead so the entire footer hides together.
          */
         "scrollEffect"?: TabBarScrollEffect;
         /**
@@ -10238,7 +10238,7 @@ declare namespace LocalJSX {
         "onIonTabBarChanged"?: (event: IonTabBarCustomEvent<TabBarChangedEventDetail>) => void;
         "onIonTabBarLoaded"?: (event: IonTabBarCustomEvent<void>) => void;
         /**
-          * Describes the scroll effect that will be applied to the tab bar. `"hide"` slides the tab bar out of view when scrolling down and back in when scrolling up.
+          * Describes the scroll effect that will be applied to the tab bar. `"hide"` slides the tab bar out of view when scrolling down and back in when scrolling up.  Note: `"hide"` is ignored when the tab bar is nested inside an `ion-footer` to avoid leaving an empty footer visible on screen. Set `scroll-effect="hide"` on the footer instead so the entire footer hides together.
          */
         "scrollEffect"?: TabBarScrollEffect;
         /**
