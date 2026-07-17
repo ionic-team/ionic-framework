@@ -84,6 +84,14 @@ ion-backdrop {
   z-index: 10;
 }
 
+/**
+ * The wrapper receives programmatic focus for screen readers but should not
+ * show a visible focus ring, which is meant only for keyboard navigation.
+ */
+.modal-wrapper {
+  outline: none;
+}
+
 .modal-shadow {
   position: absolute;
 

@@ -117,6 +117,13 @@ export const createSwipeToCloseGesture = (
     const { deltaY } = detail;
 
     /**
+     * Firefox automatically selects the header text during drag
+     * due to the focusable wrapper (tabindex="-1"). Remove any
+     * selection that may have occurred.
+     */
+    window.getSelection()?.removeAllRanges();
+
+    /**
      * Get the initial scrollY value so
      * that we can correctly reset the scrollY
      * prop when the gesture ends.
