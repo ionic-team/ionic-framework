@@ -23,6 +23,10 @@ configs({ modes: ['ios', 'md', 'ionic-ios', 'ionic-md'], directions: ['ltr'] }).
 
       await expect(footer).toHaveClass(/footer-scroll-hidden/);
       await expect(footer).toHaveAttribute('inert', '');
+
+      // Verify the footer is visually off-screen via transform
+      const transform = await footer.evaluate((el) => getComputedStyle(el).transform);
+      expect(transform).not.toBe('none');
     });
 
     test('should show the footer again when scrolling back to the top', async ({ page }) => {

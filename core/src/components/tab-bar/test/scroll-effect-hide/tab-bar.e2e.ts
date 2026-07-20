@@ -23,6 +23,10 @@ configs({ modes: ['ios', 'md', 'ionic-ios', 'ionic-md'], directions: ['ltr'] }).
 
       await expect(tabBar).toHaveClass(/tab-bar-scroll-hidden/);
       await expect(tabBar).toHaveAttribute('inert', '');
+
+      // Verify the tab bar is visually off-screen via transform
+      const transform = await tabBar.evaluate((el) => getComputedStyle(el).transform);
+      expect(transform).not.toBe('none');
     });
 
     test('should show the tab bar again when scrolling back to the top', async ({ page }) => {
