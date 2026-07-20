@@ -599,7 +599,7 @@ button {
  * :host(.label-floating.select-label-placement-floating) .native-wrapper .select-placeholder
  */
 :host(.select-expanded.select-label-placement-floating) .native-wrapper .select-placeholder,
-:host(.has-focus.select-label-placement-floating) .native-wrapper .select-placeholder,
+:host(.has-focus.select-label-placement-floating):not(.has-value) .native-wrapper .select-placeholder,
 :host(.has-value.select-label-placement-floating) .native-wrapper .select-placeholder {
   opacity: 1;
 }
