@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
-import { findIonContent, getScrollElement } from '@utils/content';
+import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import { findIonContent } from '@utils/content';
 import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 import { printIonWarning } from '@utils/logging';
@@ -32,15 +32,12 @@ export class TabBar implements ComponentInterface {
   private keyboardCtrlPromise: Promise<KeyboardController> | null = null;
   private didLoad = false;
   private scrollHideCtrl?: ScrollHideController;
-  private resizeObserver?: ResizeObserver;
-  private contentEl?: HTMLElement;
-  private setupHidePromise: Promise<HTMLElement> | null = null;  
+  private scrollHideCtrlPromise: Promise<ScrollHideController> | null = null;
   private hasWarnedFooter = false;
 
   @Element() el!: HTMLElement;
 
   @State() keyboardVisible = false;
-  private isHidden = false;
 
   /**
    * The color to use from your application's color palette.
@@ -160,7 +157,8 @@ export class TabBar implements ComponentInterface {
       // so keeping a single imperative path avoids render() clearing
       // the scroll-set attribute on re-render.
       const shouldHide = keyboardOpen && this.el.getAttribute('slot') !== 'top';
-      if (shouldHide || this.isHidden) {
+      const isScrollHidden = this.scrollHideCtrl?.isHidden ?? false;
+      if (shouldHide || isScrollHidden) {
         this.el.setAttribute('aria-hidden', 'true');
       } else {
         this.el.removeAttribute('aria-hidden');
@@ -221,101 +219,35 @@ export class TabBar implements ComponentInterface {
       return;
     }
 
-    this.contentEl = contentEl;
+    const promise = createScrollHideController(contentEl, {
+      el: this.el,
+      cssVar: '--internal-tab-bar-hide-height',
+      hiddenClass: 'tab-bar-scroll-hidden',
+      contentPartnerClass: 'content-tab-bar-hide-scroll-partner',
+      contentHiddenClass: 'content-tab-bar-hide-scroll-hidden',
+      shouldKeepAriaHidden: () => this.keyboardVisible,
+    });
+    this.scrollHideCtrlPromise = promise;
 
-    const promise = getScrollElement(contentEl);
-    this.setupHidePromise = promise;
+    const controller = await promise;
 
-    const scrollEl = await promise;
-
-    /**
-     * Only assign if this is still the current promise.
-     * Otherwise, a new checkScrollEffect has started or
-     * disconnectedCallback was called, so this setup is stale.
-     */
-    if (this.setupHidePromise === promise) {
-      this.setupHidePromise = null;
-
-      this.updateHideHeight();
-
-      if (typeof ResizeObserver !== 'undefined') {
-        this.resizeObserver = new ResizeObserver(() => this.updateHideHeight());
-        this.resizeObserver.observe(this.el);
-      }
-
-      this.scrollHideCtrl = createScrollHideController(scrollEl, (hidden) => this.setHidden(hidden));
-
-      contentEl.classList.add('content-tab-bar-hide-scroll-partner');
+    if (this.scrollHideCtrlPromise === promise) {
+      this.scrollHideCtrlPromise = null;
+      this.scrollHideCtrl = controller;
+    } else {
+      controller.destroy();
     }
   };
-
-  /**
-   * Reads the tab bar's current height and writes it as a CSS variable
-   * on both the tab bar and the sibling content. The content uses this
-   * value to expand its scroll area when the tab bar hides (gap compensation).
-   */
-  private updateHideHeight() {
-    readTask(() => {
-      const tabBarHeightPx = this.el.offsetHeight;
-      writeTask(() => {
-        this.el.style.setProperty('--internal-tab-bar-hide-height', `${tabBarHeightPx}px`);
-        if (this.contentEl) {
-          this.contentEl.style.setProperty('--internal-tab-bar-hide-height', `${tabBarHeightPx}px`);
-        }
-      });
-    });
-  }
-
-  private setHidden(hidden: boolean) {
-    this.isHidden = hidden;
-    this.el.classList.toggle('tab-bar-scroll-hidden', hidden);
-
-    if (hidden) {
-      this.el.setAttribute('inert', '');
-      this.el.setAttribute('aria-hidden', 'true');
-    } else {
-      this.el.removeAttribute('inert');
-      // Only remove aria-hidden if the keyboard isn't also hiding the tab bar.
-      // The keyboard callback sets aria-hidden independently, so clearing it
-      // here while the keyboard is open would expose the tab bar to AT.
-      if (!this.keyboardVisible) {
-        this.el.removeAttribute('aria-hidden');
-      }
-    }
-
-    if (this.contentEl) {
-      this.contentEl.classList.toggle('content-tab-bar-hide-scroll-hidden', hidden);
-    }
-  }
 
   // Named differently from header/footer's destroyCollapsible* because
   // tab-bar only supports "hide", while header/footer handle multiple
   // effects (hide, condense, fade) through one teardown method.
   private destroyScrollEffect() {
-    this.setupHidePromise = null;
+    this.scrollHideCtrlPromise = null;
 
     if (this.scrollHideCtrl) {
       this.scrollHideCtrl.destroy();
       this.scrollHideCtrl = undefined;
-    }
-
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-      this.resizeObserver = undefined;
-    }
-
-    if (this.contentEl) {
-      this.contentEl.classList.remove('content-tab-bar-hide-scroll-partner', 'content-tab-bar-hide-scroll-hidden');
-      this.contentEl.style.removeProperty('--internal-tab-bar-hide-height');
-      this.contentEl = undefined;
-    }
-
-    this.el.style.removeProperty('--internal-tab-bar-hide-height');
-    if (this.isHidden) {
-      this.el.classList.remove('tab-bar-scroll-hidden');
-      this.el.removeAttribute('inert');
-      this.el.removeAttribute('aria-hidden');
-      this.isHidden = false;
     }
   }
 

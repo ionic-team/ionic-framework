@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, State, h, readTask, writeTask } from '@stencil/core';
+import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
@@ -31,10 +31,7 @@ export class Footer implements ComponentInterface {
   private keyboardCtrl: KeyboardController | null = null;
   private keyboardCtrlPromise: Promise<KeyboardController> | null = null;
   private scrollHideCtrl?: ScrollHideController;
-  private resizeObserver?: ResizeObserver;
-  private contentEl?: HTMLElement;
-  private isHidden = false;
-  private setupHidePromise: Promise<HTMLElement> | null = null;
+  private scrollHideCtrlPromise: Promise<ScrollHideController> | null = null;
   private hasWarnedCollapse = false;
   private activeEffect?: string;
 
@@ -171,67 +168,24 @@ export class Footer implements ComponentInterface {
   };
 
   private setupScrollEffectHide = async (contentEl: HTMLElement) => {
-    this.contentEl = contentEl;
+    const promise = createScrollHideController(contentEl, {
+      el: this.el,
+      cssVar: '--internal-footer-hide-height',
+      hiddenClass: 'footer-scroll-hidden',
+      contentPartnerClass: 'content-footer-hide-scroll-partner',
+      contentHiddenClass: 'content-footer-hide-scroll-hidden',
+    });
+    this.scrollHideCtrlPromise = promise;
 
-    const promise = getScrollElement(contentEl);
-    this.setupHidePromise = promise;
+    const controller = await promise;
 
-    const scrollEl = await promise;
-
-    /**
-     * Only assign if this is still the current promise.
-     * Otherwise, a new checkCollapsibleFooter has started or
-     * disconnectedCallback was called, so this setup is stale.
-     */
-    if (this.setupHidePromise === promise) {
-      this.setupHidePromise = null;
-
-      this.updateHideHeight();
-
-      if (typeof ResizeObserver !== 'undefined') {
-        this.resizeObserver = new ResizeObserver(() => this.updateHideHeight());
-        this.resizeObserver.observe(this.el);
-      }
-
-      this.scrollHideCtrl = createScrollHideController(scrollEl, (hidden) => this.setHidden(hidden));
-
-      contentEl.classList.add('content-footer-hide-scroll-partner');
+    if (this.scrollHideCtrlPromise === promise) {
+      this.scrollHideCtrlPromise = null;
+      this.scrollHideCtrl = controller;
+    } else {
+      controller.destroy();
     }
   };
-
-  /**
-   * Reads the footer's current height and writes it as a CSS variable
-   * on both the footer and the sibling content. The content uses this
-   * value to expand its scroll area when the footer hides (gap compensation).
-   */
-  private updateHideHeight() {
-    readTask(() => {
-      const footerHeightPx = this.el.offsetHeight;
-      writeTask(() => {
-        this.el.style.setProperty('--internal-footer-hide-height', `${footerHeightPx}px`);
-        if (this.contentEl) {
-          this.contentEl.style.setProperty('--internal-footer-hide-height', `${footerHeightPx}px`);
-        }
-      });
-    });
-  }
-
-  private setHidden(hidden: boolean) {
-    this.isHidden = hidden;
-    this.el.classList.toggle('footer-scroll-hidden', hidden);
-
-    if (hidden) {
-      this.el.setAttribute('inert', '');
-      this.el.setAttribute('aria-hidden', 'true');
-    } else {
-      this.el.removeAttribute('inert');
-      this.el.removeAttribute('aria-hidden');
-    }
-
-    if (this.contentEl) {
-      this.contentEl.classList.toggle('content-footer-hide-scroll-hidden', hidden);
-    }
-  }
 
   private setupFadeFooter = async (contentEl: HTMLElement) => {
     const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
@@ -248,37 +202,18 @@ export class Footer implements ComponentInterface {
   };
 
   private destroyCollapsibleFooter() {
-    this.setupHidePromise = null;
     this.activeEffect = undefined;
-
-    if (this.scrollEl && this.contentScrollCallback) {
-      this.scrollEl.removeEventListener('scroll', this.contentScrollCallback);
-      this.contentScrollCallback = undefined;
-    }
+    this.scrollHideCtrlPromise = null;
 
     if (this.scrollHideCtrl) {
       this.scrollHideCtrl.destroy();
       this.scrollHideCtrl = undefined;
     }
 
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-      this.resizeObserver = undefined;
+    if (this.scrollEl && this.contentScrollCallback) {
+      this.scrollEl.removeEventListener('scroll', this.contentScrollCallback);
+      this.contentScrollCallback = undefined;
     }
-
-    if (this.contentEl) {
-      this.contentEl.classList.remove('content-footer-hide-scroll-partner', 'content-footer-hide-scroll-hidden');
-      this.contentEl.style.removeProperty('--internal-footer-hide-height');
-      this.contentEl = undefined;
-    }
-
-    if (this.isHidden) {
-      this.el.classList.remove('footer-scroll-hidden');
-      this.el.removeAttribute('inert');
-      this.el.removeAttribute('aria-hidden');
-      this.isHidden = false;
-    }
-    this.el.style.removeProperty('--internal-footer-hide-height');
   }
 
   render() {

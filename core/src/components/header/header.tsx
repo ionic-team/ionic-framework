@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, h, readTask, writeTask } from '@stencil/core';
+import { Component, Element, Host, Prop, h, writeTask } from '@stencil/core';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
@@ -42,10 +42,7 @@ export class Header implements ComponentInterface {
   private collapsibleMainHeader?: HTMLElement;
   private inheritedAttributes: Attributes = {};
   private scrollHideCtrl?: ScrollHideController;
-  private resizeObserver?: ResizeObserver;
-  private contentEl?: HTMLElement;
-  private isHidden = false;
-  private setupHidePromise: Promise<HTMLElement> | null = null;
+  private scrollHideCtrlPromise: Promise<ScrollHideController> | null = null;
   private hasWarnedCollapse = false;
   private activeEffect?: string;
 
@@ -168,68 +165,25 @@ export class Header implements ComponentInterface {
   }
 
   private setupScrollEffectHide = async (contentEl: HTMLElement) => {
-    this.contentEl = contentEl;
+    const promise = createScrollHideController(contentEl, {
+      el: this.el,
+      cssVar: '--internal-header-hide-height',
+      hiddenClass: 'header-scroll-hidden',
+      contentPartnerClass: 'content-header-hide-scroll-partner',
+      contentHiddenClass: 'content-header-hide-scroll-hidden',
+    });
+    this.scrollHideCtrlPromise = promise;
 
-    const promise = getScrollElement(contentEl);
-    this.setupHidePromise = promise;
+    const controller = await promise;
 
-    const scrollEl = await promise;
-
-    /**
-     * Only assign if this is still the current promise.
-     * Otherwise, a new checkCollapsibleHeader has started or
-     * disconnectedCallback was called, so this setup is stale.
-     */
-    if (this.setupHidePromise === promise) {
-      this.setupHidePromise = null;
-
-      this.updateHideHeight();
-
-      if (typeof ResizeObserver !== 'undefined') {
-        this.resizeObserver = new ResizeObserver(() => this.updateHideHeight());
-        this.resizeObserver.observe(this.el);
-      }
-
-      this.scrollHideCtrl = createScrollHideController(scrollEl, (hidden) => this.setHidden(hidden));
-
-      contentEl.classList.add('content-header-hide-scroll-partner');
+    if (this.scrollHideCtrlPromise === promise) {
+      this.scrollHideCtrlPromise = null;
+      this.scrollHideCtrl = controller;
+    } else {
+      // A newer setup superseded this one — tear down the stale controller.
+      controller.destroy();
     }
   };
-
-  /**
-   * Reads the header's current height and writes it as a CSS variable
-   * on both the header and the sibling content. The content uses this
-   * value to shift up and expand its scroll area when the header hides
-   * (gap compensation).
-   */
-  private updateHideHeight() {
-    readTask(() => {
-      const headerHeightPx = this.el.offsetHeight;
-      writeTask(() => {
-        this.el.style.setProperty('--internal-header-hide-height', `${headerHeightPx}px`);
-        if (this.contentEl) {
-          this.contentEl.style.setProperty('--internal-header-hide-height', `${headerHeightPx}px`);
-        }
-      });
-    });
-  }
-
-  private setHidden(hidden: boolean) {
-    this.isHidden = hidden;
-    this.el.classList.toggle('header-scroll-hidden', hidden);
-
-    if (hidden) {
-      this.el.setAttribute('inert', '');
-      this.el.setAttribute('aria-hidden', 'true');
-    } else {
-      this.el.removeAttribute('inert');
-      this.el.removeAttribute('aria-hidden');
-    }
-
-    if (this.contentEl) {
-      this.contentEl.classList.toggle('content-header-hide-scroll-hidden', hidden);
-    }
-  }
 
   private setupFadeHeader = async (contentEl: HTMLElement, condenseHeader: HTMLElement | null) => {
     const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
@@ -246,8 +200,13 @@ export class Header implements ComponentInterface {
   };
 
   private destroyCollapsibleHeader() {
-    this.setupHidePromise = null;
     this.activeEffect = undefined;
+    this.scrollHideCtrlPromise = null;
+
+    if (this.scrollHideCtrl) {
+      this.scrollHideCtrl.destroy();
+      this.scrollHideCtrl = undefined;
+    }
 
     if (this.intersectionObserver) {
       this.intersectionObserver.disconnect();
@@ -259,34 +218,10 @@ export class Header implements ComponentInterface {
       this.contentScrollCallback = undefined;
     }
 
-    if (this.scrollHideCtrl) {
-      this.scrollHideCtrl.destroy();
-      this.scrollHideCtrl = undefined;
-    }
-
     if (this.collapsibleMainHeader) {
       this.collapsibleMainHeader.classList.remove('header-collapse-main');
       this.collapsibleMainHeader = undefined;
     }
-
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-      this.resizeObserver = undefined;
-    }
-
-    if (this.contentEl) {
-      this.contentEl.classList.remove('content-header-hide-scroll-partner', 'content-header-hide-scroll-hidden');
-      this.contentEl.style.removeProperty('--internal-header-hide-height');
-      this.contentEl = undefined;
-    }
-
-    if (this.isHidden) {
-      this.el.classList.remove('header-scroll-hidden');
-      this.el.removeAttribute('inert');
-      this.el.removeAttribute('aria-hidden');
-      this.isHidden = false;
-    }
-    this.el.style.removeProperty('--internal-header-hide-height');
   }
 
   private async setupCondenseHeader(contentEl: HTMLElement | null, pageEl: Element | null) {

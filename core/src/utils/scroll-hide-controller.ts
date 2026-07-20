@@ -1,9 +1,36 @@
 import { readTask, writeTask } from '@stencil/core';
 
+import { getScrollElement } from './content';
+
 const TOP_VISIBLE_THRESHOLD = 80;
 const SCROLL_HIDE_THRESHOLD = 60;
 const WHEEL_SUPPRESS_DURATION_MS = 80;
 const SUPPRESS_SHOW_DURATION_MS = 400;
+
+export interface ScrollHideOptions {
+  /** The component's host element. */
+  el: HTMLElement;
+  /** CSS variable name for the hide height, e.g. `--internal-header-hide-height`. */
+  cssVar: string;
+  /** Class toggled on the component when hidden, e.g. `header-scroll-hidden`. */
+  hiddenClass: string;
+  /** Class added to content when the scroll-hide effect is active, e.g. `content-header-hide-scroll-partner`. */
+  contentPartnerClass: string;
+  /** Class toggled on content when hidden, e.g. `content-header-hide-scroll-hidden`. */
+  contentHiddenClass: string;
+  /**
+   * Optional guard called before removing aria-hidden on show.
+   * Return `true` to keep aria-hidden (e.g. when the keyboard is open).
+   */
+  shouldKeepAriaHidden?: () => boolean;
+}
+
+export type ScrollHideController = {
+  /** Whether the component is currently hidden by the scroll effect. */
+  readonly isHidden: boolean;
+  /** Destroy all listeners, observers, and clean up DOM state. */
+  destroy: () => void;
+};
 
 /**
  * Creates a controller that manages scroll-based hide/show behavior
@@ -20,21 +47,72 @@ const SUPPRESS_SHOW_DURATION_MS = 400;
  * anchor, which prevents flickering on small or jittery movements.
  * Showing is immediate on direction change.
  *
+ * When `options` is provided, the controller also handles the DOM
+ * setup: ResizeObserver for height tracking, CSS variable read/write,
+ * content partner/hidden class toggling, inert/aria-hidden, and
+ * full teardown cleanup. This avoids duplicating the same setup
+ * across header, footer, and tab-bar.
+ *
  * @internal
- * @param scrollEl The scrollable element to listen on.
- * @param onHiddenChange Callback invoked inside a writeTask when visibility changes.
+ * @param contentEl The content element to resolve the scroll element from.
+ * @param options Configuration for DOM setup (classes, CSS vars, a11y).
  */
-export const createScrollHideController = (
-  scrollEl: HTMLElement,
-  onHiddenChange: (hidden: boolean) => void
-): ScrollHideController => {
-  let isHidden = false;
+export const createScrollHideController = async (
+  contentEl: HTMLElement,
+  options: ScrollHideOptions
+): Promise<ScrollHideController> => {
+  const { el, cssVar, hiddenClass, contentPartnerClass, contentHiddenClass, shouldKeepAriaHidden } = options;
+
+  let controllerIsHidden = false;
+  let resizeObserver: ResizeObserver | undefined;
+
+  // --- DOM setup: height tracking, classes, a11y ---
+
+  const updateHideHeight = () => {
+    readTask(() => {
+      const heightPx = el.offsetHeight;
+      writeTask(() => {
+        el.style.setProperty(cssVar, `${heightPx}px`);
+        contentEl.style.setProperty(cssVar, `${heightPx}px`);
+      });
+    });
+  };
+
+  const setHidden = (hidden: boolean) => {
+    controllerIsHidden = hidden;
+    controller.isHidden = hidden;
+    el.classList.toggle(hiddenClass, hidden);
+
+    if (hidden) {
+      el.setAttribute('inert', '');
+      el.setAttribute('aria-hidden', 'true');
+    } else {
+      el.removeAttribute('inert');
+      if (!shouldKeepAriaHidden || !shouldKeepAriaHidden()) {
+        el.removeAttribute('aria-hidden');
+      }
+    }
+
+    contentEl.classList.toggle(contentHiddenClass, hidden);
+  };
+
+  // --- Scroll math ---
+
+  const scrollEl = await getScrollElement(contentEl);
+
   let lastScrollPosition = 0;
-  // Where the user last changed scroll direction. We measure distance
-  // from here to decide whether to commit to hiding or showing.
   let scrollPositionAtDirectionChange = 0;
   let lastWheelEventTimestamp = 0;
   let suppressShowUntil = 0;
+
+  const commitHide = (hidden: boolean) => {
+    if (hidden) {
+      suppressShowUntil = Date.now() + SUPPRESS_SHOW_DURATION_MS;
+    } else {
+      suppressShowUntil = 0;
+    }
+    setHidden(hidden);
+  };
 
   const handleWheel = (wheelEvent: WheelEvent) => {
     lastWheelEventTimestamp = Date.now();
@@ -43,28 +121,27 @@ export const createScrollHideController = (
       const currentScrollTop = scrollEl.scrollTop;
 
       if (currentScrollTop <= TOP_VISIBLE_THRESHOLD) {
-        if (isHidden) {
-          writeTask(() => setHidden(false));
+        if (controllerIsHidden) {
+          writeTask(() => commitHide(false));
         }
         return;
       }
 
       if (wheelEvent.deltaY < 0) {
         scrollPositionAtDirectionChange = currentScrollTop;
-        if (isHidden) {
-          writeTask(() => setHidden(false));
+        if (controllerIsHidden) {
+          writeTask(() => commitHide(false));
         }
       } else if (wheelEvent.deltaY > 0) {
         const scrolledSinceDirectionChange = currentScrollTop - scrollPositionAtDirectionChange;
-        if (scrolledSinceDirectionChange >= SCROLL_HIDE_THRESHOLD && !isHidden) {
-          writeTask(() => setHidden(true));
+        if (scrolledSinceDirectionChange >= SCROLL_HIDE_THRESHOLD && !controllerIsHidden) {
+          writeTask(() => commitHide(true));
         }
       }
     });
   };
 
   const handleScroll = () => {
-    // Suppress scroll events shortly after a wheel event — delta already processed via wheel
     if (Date.now() - lastWheelEventTimestamp < WHEEL_SUPPRESS_DURATION_MS) {
       return;
     }
@@ -73,14 +150,13 @@ export const createScrollHideController = (
       const currentScrollTop = scrollEl.scrollTop;
 
       if (currentScrollTop <= TOP_VISIBLE_THRESHOLD) {
-        if (isHidden) {
-          writeTask(() => setHidden(false));
+        if (controllerIsHidden) {
+          writeTask(() => commitHide(false));
         }
         lastScrollPosition = currentScrollTop;
         return;
       }
 
-      // No movement — skip to avoid toggling state on duplicate scroll events
       if (currentScrollTop === lastScrollPosition) {
         return;
       }
@@ -101,45 +177,57 @@ export const createScrollHideController = (
       }
 
       const shouldHide = isScrollingDown;
-      if (shouldHide !== isHidden) {
-        // After hiding, the content height increases (CSS transition), which lowers
-        // max scrollTop and triggers a spurious upward-scroll event. Suppress "show"
-        // actions briefly to absorb that adjustment.
+      if (shouldHide !== controllerIsHidden) {
         if (!shouldHide && Date.now() < suppressShowUntil) {
           return;
         }
-        writeTask(() => setHidden(shouldHide));
+        writeTask(() => commitHide(shouldHide));
       }
     });
   };
 
-  const setHidden = (hidden: boolean) => {
-    isHidden = hidden;
-    if (hidden) {
-      suppressShowUntil = Date.now() + SUPPRESS_SHOW_DURATION_MS;
-    } else {
-      suppressShowUntil = 0;
-    }
-    onHiddenChange(hidden);
-  };
+  // --- Setup ---
+
+  updateHideHeight();
+
+  if (typeof ResizeObserver !== 'undefined') {
+    resizeObserver = new ResizeObserver(() => updateHideHeight());
+    resizeObserver.observe(el);
+  }
 
   scrollEl.addEventListener('scroll', handleScroll, { passive: true });
   scrollEl.addEventListener('wheel', handleWheel as EventListener, { passive: true });
+
+  contentEl.classList.add(contentPartnerClass);
+
+  // --- Controller ---
 
   const destroy = () => {
     scrollEl.removeEventListener('scroll', handleScroll);
     scrollEl.removeEventListener('wheel', handleWheel as EventListener);
 
-    isHidden = false;
-    lastScrollPosition = 0;
-    scrollPositionAtDirectionChange = 0;
-    lastWheelEventTimestamp = 0;
-    suppressShowUntil = 0;
+    if (resizeObserver) {
+      resizeObserver.disconnect();
+      resizeObserver = undefined;
+    }
+
+    contentEl.classList.remove(contentPartnerClass, contentHiddenClass);
+    contentEl.style.removeProperty(cssVar);
+
+    if (controllerIsHidden) {
+      el.classList.remove(hiddenClass);
+      el.removeAttribute('inert');
+      el.removeAttribute('aria-hidden');
+      controllerIsHidden = false;
+      controller.isHidden = false;
+    }
+    el.style.removeProperty(cssVar);
   };
 
-  return { destroy };
-};
+  const controller = {
+    isHidden: false,
+    destroy,
+  };
 
-export type ScrollHideController = {
-  destroy: () => void;
+  return controller as ScrollHideController;
 };
