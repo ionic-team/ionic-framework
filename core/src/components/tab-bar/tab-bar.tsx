@@ -78,7 +78,7 @@ export class TabBar implements ComponentInterface {
    * Set `scroll-effect="hide"` on the footer instead so the entire
    * footer hides together.
    */
-  @Prop() scrollEffect?: TabBarScrollEffect;
+  @Prop({ reflect: true }) scrollEffect?: TabBarScrollEffect;
   @Watch('scrollEffect')
   scrollEffectChanged() {
     this.checkScrollEffect();

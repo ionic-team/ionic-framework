@@ -48,7 +48,7 @@ export class Footer implements ComponentInterface {
    * when scrolling up.
    * `"fade"` fades the toolbar background on scroll.
    */
-  @Prop() scrollEffect?: FooterScrollEffect;
+  @Prop({ reflect: true }) scrollEffect?: FooterScrollEffect;
 
   /**
    * Describes the scroll effect that will be applied to the footer.

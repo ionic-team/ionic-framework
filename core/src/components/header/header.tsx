@@ -58,7 +58,7 @@ export class Header implements ComponentInterface {
    * `"condense"` collapses the large title into the main toolbar on scroll.
    * `"fade"` fades the toolbar background on scroll.
    */
-  @Prop() scrollEffect?: HeaderScrollEffect;
+  @Prop({ reflect: true }) scrollEffect?: HeaderScrollEffect;
 
   /**
    * Describes the scroll effect that will be applied to the header.
