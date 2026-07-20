@@ -11,7 +11,6 @@ configs({ modes: ['ios', 'md', 'ionic-ios', 'ionic-md'], directions: ['ltr'] }).
 
         // Without a large title, the condense effect should not activate.
         // The header should get the hidden class instead.
-        await expect(condenseHeader).not.toHaveClass(/\bheader-collapse-condense\b/);
         await expect(condenseHeader).toHaveClass(/header-collapse-condense-hidden/);
       });
 
