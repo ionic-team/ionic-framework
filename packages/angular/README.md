@@ -112,3 +112,6 @@ Ionic developers can access this by importing from `@ionic/angular`.
 This is where the lazy loaded component implementations live.
 
 Ionic developers can access this by importing from `@ionic/angular/lazy`.
+
+> [!CAUTION]
+> The lazy loaded build, including `IonicModule`, is deprecated and will be removed in a future major version. New code should use the standalone components and `provideIonicAngular()` imported from `@ionic/angular`.

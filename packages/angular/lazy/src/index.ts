@@ -43,7 +43,10 @@ export { ModalController } from './providers/modal-controller';
 export { PopoverController } from './providers/popover-controller';
 export { ToastController } from './providers/toast-controller';
 
-// PACKAGE MODULE
+/*
+ * PACKAGE MODULE
+ * TODO(FW-7617): Remove the `IonicModule` export once the deprecated module is removed.
+ */
 export { IonicModule } from './ionic-module';
 
 export {
