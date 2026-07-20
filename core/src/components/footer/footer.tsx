@@ -145,7 +145,6 @@ export class Footer implements ComponentInterface {
     const hasFade = effect === 'fade';
 
     this.destroyCollapsibleFooter();
-    this.activeEffect = effect;
 
     const appRootSelector = config.get('appRootSelector', 'ion-app');
     const pageEl = this.el.closest(`${appRootSelector}, ion-page, .ion-page, page-inner`);
@@ -153,6 +152,7 @@ export class Footer implements ComponentInterface {
 
     if (hasHide && contentEl) {
       await this.setupScrollEffectHide(contentEl);
+      this.activeEffect = effect;
       return;
     }
 
@@ -166,6 +166,7 @@ export class Footer implements ComponentInterface {
       }
 
       this.setupFadeFooter(contentEl);
+      this.activeEffect = effect;
     }
   };
 

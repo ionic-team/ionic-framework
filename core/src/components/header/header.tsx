@@ -127,7 +127,6 @@ export class Header implements ComponentInterface {
     const hasFade = effect === 'fade';
 
     this.destroyCollapsibleHeader();
-    this.activeEffect = effect;
 
     const appRootSelector = config.get('appRootSelector', 'ion-app');
     const pageEl = this.el.closest(`${appRootSelector}, ion-page, .ion-page, page-inner`);
@@ -135,6 +134,7 @@ export class Header implements ComponentInterface {
 
     if (hasHide && contentEl) {
       await this.setupScrollEffectHide(contentEl);
+      this.activeEffect = effect;
       return;
     }
 
@@ -151,6 +151,7 @@ export class Header implements ComponentInterface {
       });
 
       await this.setupCondenseHeader(contentEl, pageEl);
+      this.activeEffect = effect;
     } else if (hasFade && !isModeRestricted) {
       if (!contentEl) {
         printIonContentErrorMsg(this.el);
@@ -162,6 +163,7 @@ export class Header implements ComponentInterface {
       ) as HTMLElement | null;
 
       await this.setupFadeHeader(contentEl, condenseHeader);
+      this.activeEffect = effect;
     }
   }
 
