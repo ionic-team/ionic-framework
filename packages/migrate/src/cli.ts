@@ -7,6 +7,7 @@ import { detectFrameworks } from './detect.js';
 import { selectMigrations } from './registry.js';
 import { run } from './runner.js';
 import { buildReport } from './report.js';
+import { formatTouched, prettierFormatter } from './format.js';
 import { allMigrations } from './migrations/index.js';
 
 interface Args {
@@ -15,6 +16,7 @@ interface Args {
   check: boolean;
   experimental: boolean;
   force: boolean;
+  noFormat: boolean;
   help: boolean;
   from?: number;
   to?: number;
@@ -30,6 +32,7 @@ Options:
   --check          Report only; exit non-zero if any migration applies (for CI)
   --experimental   Include experimental migrations
   --force          Write even if the working tree is dirty or not a git repo
+  --no-format      Skip running the project's Prettier over changed files
   --from <major>   Override the detected source major version
   --to <major>     Override the target major version
   -h, --help       Show this help`;
@@ -45,13 +48,22 @@ function parseMajorArg(flag: string, value: string | undefined): number {
 }
 
 function parseArgs(argv: string[]): Args {
-  const args: Args = { dir: '.', dryRun: false, check: false, experimental: false, force: false, help: false };
+  const args: Args = {
+    dir: '.',
+    dryRun: false,
+    check: false,
+    experimental: false,
+    force: false,
+    noFormat: false,
+    help: false,
+  };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--dry-run') args.dryRun = true;
     else if (a === '--check') args.check = true;
     else if (a === '--experimental') args.experimental = true;
     else if (a === '--force') args.force = true;
+    else if (a === '--no-format') args.noFormat = true;
     else if (a === '--help' || a === '-h') args.help = true;
     else if (a === '--from') args.from = parseMajorArg('--from', argv[++i]);
     else if (a === '--to') args.to = parseMajorArg('--to', argv[++i]);
@@ -142,6 +154,22 @@ function main(): void {
 
   const result = run(ctx, migrations, { dryRun: !writing });
   console.log(buildReport(result));
+
+  if (writing && !args.noFormat) {
+    try {
+      const formatted = formatTouched(ctx, prettierFormatter);
+      if (formatted.length > 0) {
+        console.log(`\nFormatted ${formatted.length} changed file(s) with Prettier.`);
+      }
+    } catch (e) {
+      // Formatting is cosmetic and runs after the edits are already on disk, so
+      // a formatter failure must not fail the migration. Warn (surfacing
+      // Prettier's own stderr when we have it) and exit successfully.
+      const stderr = e instanceof Error ? (e as { stderr?: Buffer | string }).stderr : undefined;
+      const reason = String(stderr ?? '').trim() || (e instanceof Error ? e.message : String(e));
+      console.warn(`\nSkipped Prettier formatting; it exited with an error:\n${reason}`);
+    }
+  }
 
   if (args.check && result.entries.length > 0) {
     process.exit(1);

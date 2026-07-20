@@ -3,6 +3,7 @@ import type { Migration } from '../types.js';
 import { angularStandaloneImports } from './v9/angular-standalone-imports.js';
 import { angularCssTilde } from './v9/angular-css-tilde.js';
 import { angularZoneless } from './v9/angular-zoneless.js';
+import { angularZonelessManual } from './v9/angular-zoneless-manual.js';
 import { angularDeps } from './v9/angular-deps.js';
 import { reactDeps } from './v9/react-deps.js';
 import { reactRouter6Routes } from './v9/react-router-6-routes.js';
@@ -23,6 +24,7 @@ export const allMigrations: Migration[] = [
   angularStandaloneImports,
   angularCssTilde,
   angularZoneless,
+  angularZonelessManual,
   angularDeps,
   reactDeps,
   reactRouter6Routes,

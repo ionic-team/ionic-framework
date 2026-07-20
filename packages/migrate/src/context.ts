@@ -8,15 +8,35 @@ function join(root: string, rel: string): string {
   return `${root.replace(/\/$/, '')}/${rel.replace(/^\//, '')}`;
 }
 
-/** Build/vendor directories that no glob or source load should descend into. */
+/**
+ * Build/vendor directories that no glob or source load should descend into, at
+ * any depth. `node_modules` in particular nests in monorepos, so these must
+ * match wherever they appear.
+ */
 const EXCLUDE_DIRS = ['node_modules', 'dist', 'www', '.angular', '.git'];
 
-/** Matches a path under any {@link EXCLUDE_DIRS} entry, derived from that list. */
-const EXCLUDE_RE = new RegExp(`(^|/)(${EXCLUDE_DIRS.map((d) => d.replace(/\./g, '\\.')).join('|')})/`);
+/**
+ * Excludes anchored to the project root only. Capacitor's `ios`/`android`
+ * platforms and the `build/` output dir sit at the root, and their `public/`
+ * folders hold a copy of the built (minified) web bundle - scanning those
+ * produces false matches against bundled Ionic code, not the app's own source.
+ * Root-anchored so an app source folder that merely shares one of these names
+ * deeper in the tree (e.g. `src/theme/ios/`) is still scanned.
+ */
+const ROOT_EXCLUDE_DIRS = ['ios', 'android', 'build'];
 
-/** Negative glob patterns (one per {@link EXCLUDE_DIRS} entry) rooted at `root`. */
+/** Matches a path under any excluded directory, derived from the lists above. */
+const EXCLUDE_RE = new RegExp(
+  `(^|/)(${EXCLUDE_DIRS.map((d) => d.replace(/\./g, '\\.')).join('|')})/` +
+    `|^(${ROOT_EXCLUDE_DIRS.map((d) => d.replace(/\./g, '\\.')).join('|')})/`
+);
+
+/** Negative glob patterns (one per excluded directory) rooted at `root`. */
 function EXCLUDE_GLOBS(root: string): string[] {
-  return EXCLUDE_DIRS.map((dir) => `!${join(root, `**/${dir}/**`)}`);
+  return [
+    ...EXCLUDE_DIRS.map((dir) => `!${join(root, `**/${dir}/**`)}`),
+    ...ROOT_EXCLUDE_DIRS.map((dir) => `!${join(root, `${dir}/**`)}`),
+  ];
 }
 
 /**
@@ -42,21 +62,33 @@ export interface MigrationContext {
   glob(patterns: string[]): string[];
   /** Convert an absolute path to one relative to {@link rootDir}. */
   relative(absPath: string): string;
+  /**
+   * Paths (relative to {@link rootDir}) that this run has modified, via either
+   * {@link writeFile} or a ts-morph {@link save}. Drives the post-run formatter.
+   */
+  readonly touchedFiles: ReadonlySet<string>;
   /** Persist any pending ts-morph edits to the underlying filesystem. */
   save(): void;
 }
 
 function buildContext(rootDir: string, project: Project): MigrationContext {
   const fs = project.getFileSystem();
+  const touched = new Set<string>();
+  const toRelative = (abs: string): string => {
+    const prefix = `${rootDir.replace(/\/$/, '')}/`;
+    return abs.startsWith(prefix) ? abs.slice(prefix.length) : abs;
+  };
   return {
     rootDir,
     project,
+    touchedFiles: touched,
     readFile(relPath) {
       const abs = join(rootDir, relPath);
       return fs.fileExistsSync(abs) ? fs.readFileSync(abs) : undefined;
     },
     writeFile(relPath, content) {
       fs.writeFileSync(join(rootDir, relPath), content);
+      touched.add(relPath);
     },
     glob(patterns) {
       const prefix = `${rootDir.replace(/\/$/, '')}/`;
@@ -69,11 +101,12 @@ function buildContext(rootDir: string, project: Project): MigrationContext {
         .map((abs) => (abs.startsWith(prefix) ? abs.slice(prefix.length) : abs))
         .filter((rel) => !EXCLUDE_RE.test(rel));
     },
-    relative(absPath) {
-      const prefix = `${rootDir.replace(/\/$/, '')}/`;
-      return absPath.startsWith(prefix) ? absPath.slice(prefix.length) : absPath;
-    },
+    relative: toRelative,
     save() {
+      // Record files ts-morph is about to write so the formatter can find them.
+      for (const file of project.getSourceFiles()) {
+        if (!file.isSaved()) touched.add(toRelative(file.getFilePath()));
+      }
       project.saveSync();
     },
   };
