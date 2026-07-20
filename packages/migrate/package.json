@@ -1,0 +1,28 @@
+{
+  "name": "@ionic/migrate",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Migration tool to automate and report on breaking changes across Ionic Framework major versions.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "ionic-migrate": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "test.watch": "vitest",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ts-morph": "^25.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.0"
+  }
+}
