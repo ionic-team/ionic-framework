@@ -275,7 +275,12 @@ export class TabBar implements ComponentInterface {
       this.el.setAttribute('aria-hidden', 'true');
     } else {
       this.el.removeAttribute('inert');
-      this.el.removeAttribute('aria-hidden');
+      // Only remove aria-hidden if the keyboard isn't also hiding the tab bar.
+      // The keyboard callback sets aria-hidden independently, so clearing it
+      // here while the keyboard is open would expose the tab bar to AT.
+      if (!this.keyboardVisible) {
+        this.el.removeAttribute('aria-hidden');
+      }
     }
 
     if (this.contentEl) {
