@@ -34,7 +34,7 @@ export class TabBar implements ComponentInterface {
   private scrollHideCtrl?: ScrollHideController;
   private resizeObserver?: ResizeObserver;
   private contentEl?: HTMLElement;
-  private setupHidePromise: Promise<HTMLElement> | null = null;
+  private setupHidePromise: Promise<HTMLElement> | null = null;  
   private hasWarnedFooter = false;
 
   @Element() el!: HTMLElement;

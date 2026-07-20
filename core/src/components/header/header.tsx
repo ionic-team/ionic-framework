@@ -371,12 +371,14 @@ export class Header implements ComponentInterface {
     const effect = scrollEffect ?? collapse;
     // condense/fade via the deprecated `collapse` prop are iOS-only.
     const isModeRestricted = scrollEffect === undefined && theme !== 'ios';
+    const hasLargeTitle = this.el.querySelector('ion-title[size="large"]') !== null;
     const hasHide = effect === 'hide';
-    const hasCondense = effect === 'condense' && !isModeRestricted;
+    const hasCondense = effect === 'condense' && !isModeRestricted && hasLargeTitle;
     const hasFade = effect === 'fade' && !isModeRestricted;
-    // A hidden condense header (deprecated collapse prop on non-iOS) should
-    // not have a landmark role since it's display:none.
-    const isHiddenCondense = effect === 'condense' && isModeRestricted;
+    // The condense header should be hidden when
+    // - deprecated collapse prop is used on non-iOS (mode restricted), or
+    // - scrollEffect="condense" is set but no ion-title[size="large"] is present
+    const isHiddenCondense = effect === 'condense' && !hasCondense;
     // banner role must be at top level, so remove role if inside a menu
     const roleType = isHiddenCondense ? 'none' : getRoleType(hostContext('ion-menu', this.el));
 

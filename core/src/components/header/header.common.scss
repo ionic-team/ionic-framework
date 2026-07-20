@@ -136,16 +136,16 @@ ion-header ion-toolbar:first-of-type {
  * The :has(...) part of the selector ensures a couple things:
  * 1. This will only apply within a page view since the content
  * must be a subsequent-sibling of the header (~ ion-content).
- * 2. This will only apply when that content has a condense header
- *    (via scroll-effect="condense" attribute or .header-collapse-condense class)
+ * 2. This will only apply when that content has an active condense
+ *    header (the .header-collapse-condense class).
  *
  * We use opacity: 0 to avoid a layout shift.
- * We target both the attribute and the class because the attribute
- * is only present for scrollEffect (reflected), while the class
- * covers the deprecated collapse prop (not reflected).
+ * We use the class (not the attribute) because the class is only
+ * added when the condense effect is valid (large title present).
+ * The attribute alone is not sufficient since it would match even
+ * when the effect is guarded (e.g. no large title).
  */
 ion-header:not(.header-collapse-main):has(
-    ~ ion-content ion-header[scroll-effect="condense"],
     ~ ion-content ion-header.header-collapse-condense
   ) {
   opacity: 0;
