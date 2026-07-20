@@ -1,4 +1,7 @@
-import { Project } from 'ts-morph';
+import { Project, QuoteKind } from 'ts-morph';
+
+/** ts-morph should emit single-quoted strings to match Ionic/Angular style. */
+const MANIPULATION_SETTINGS = { quoteKind: QuoteKind.Single } as const;
 
 /** Join a root dir and a relative path using posix separators. */
 function join(root: string, rel: string): string {
@@ -82,7 +85,10 @@ function buildContext(rootDir: string, project: Project): MigrationContext {
  * plain file. Used by tests.
  */
 export function createInMemoryContext(files: Record<string, string>, rootDir = '/app'): MigrationContext {
-  const project = new Project({ useInMemoryFileSystem: true });
+  const project = new Project({
+    useInMemoryFileSystem: true,
+    manipulationSettings: MANIPULATION_SETTINGS,
+  });
   const fs = project.getFileSystem();
   // Write everything to the filesystem so glob/readFile see it, mirroring how
   // the disk context works, then load TS sources into ts-morph.
@@ -105,6 +111,7 @@ export function createDiskContext(rootDir: string): MigrationContext {
   const project = new Project({
     skipAddingFilesFromTsConfig: true,
     compilerOptions: { allowJs: false },
+    manipulationSettings: MANIPULATION_SETTINGS,
   });
   // Load the whole tree (minus build/vendor dirs), not just `src/`, so AST
   // migrations cover files outside `src/` (Angular multi-project workspaces and

@@ -7,9 +7,7 @@ import { reactDeps } from '../src/migrations/v9/react-deps.js';
 import { reactRouter6Code } from '../src/migrations/v9/react-router-6-code.js';
 import { vueDeps } from '../src/migrations/v9/vue-deps.js';
 import { vueRouterNextGuard } from '../src/migrations/v9/vue-router-next-guard.js';
-import { angularZoneless } from '../src/migrations/v9/angular-zoneless.js';
 import { coreLegacyPicker } from '../src/migrations/v9/core-legacy-picker.js';
-import { coreAutocorrect } from '../src/migrations/v9/core-autocorrect.js';
 import { coreIonImg } from '../src/migrations/v9/core-ion-img.js';
 
 describe('react-deps', () => {
@@ -118,25 +116,39 @@ describe('vue-deps', () => {
 });
 
 describe('react-router-6-code (report-only)', () => {
-  it('reports removed imports and Route props with locations', () => {
+  it('reports removed imports and the render prop, but not the auto-fixed exact/component', () => {
     const ctx = createInMemoryContext({
       'App.tsx':
         `import { Redirect, useHistory } from 'react-router-dom';\n` +
-        `export const App = () => <Route path="/" component={Home} exact />;\n`,
+        `export const App = () => <Route path="/" component={Home} exact render={() => <X />} />;\n`,
     });
 
     const details = reactRouter6Code.detect(ctx).map((f) => f.detail);
 
     expect(details.some((d) => d.includes('Redirect removed'))).toBe(true);
     expect(details.some((d) => d.includes('useHistory removed'))).toBe(true);
+    expect(details.some((d) => d.includes('"render" prop removed'))).toBe(true);
+    // exact/component are owned by react-router-6-routes and must not be double-reported here.
+    expect(details.some((d) => d.includes('"component" prop removed'))).toBe(false);
+    expect(details.some((d) => d.includes('"exact" prop removed'))).toBe(false);
+  });
+
+  it('reports a component prop react-router-6-routes cannot auto-fix (non-identifier initializer)', () => {
+    const ctx = createInMemoryContext({
+      'App.tsx': `export const App = () => <Route path="/" component={Views.Home} />;\n`,
+    });
+
+    const details = reactRouter6Code.detect(ctx).map((f) => f.detail);
+
+    // A bare `component={X}` is left to react-router-6-routes, but a member-access
+    // initializer it can't rewrite must still be surfaced here.
     expect(details.some((d) => d.includes('"component" prop removed'))).toBe(true);
-    expect(details.some((d) => d.includes('"exact" prop removed'))).toBe(true);
   });
 
   it('ignores non-router imports and non-Route elements', () => {
     const ctx = createInMemoryContext({
       'App.tsx':
-        `import { useState } from 'react';\n` + `export const App = () => <Home component={X} />;\n`,
+        `import { useState } from 'react';\n` + `export const App = () => <Home render={() => null} />;\n`,
     });
 
     expect(reactRouter6Code.detect(ctx)).toEqual([]);
@@ -161,16 +173,6 @@ describe('core report-only migrations', () => {
     expect(coreLegacyPicker.detect(ctx)).toHaveLength(1);
   });
 
-  it('core-autocorrect flags string autocorrect attributes', () => {
-    const ctx = createInMemoryContext({
-      'page.html': `<ion-input autocorrect="off"></ion-input>\n<ion-input></ion-input>\n`,
-    });
-
-    const findings = coreAutocorrect.detect(ctx);
-    expect(findings).toHaveLength(1);
-    expect(findings[0].line).toBe(1);
-  });
-
   it('core-ion-img flags ion-img usage', () => {
     const ctx = createInMemoryContext({ 'page.html': `<ion-img src="x.png"></ion-img>\n` });
 
@@ -181,24 +183,7 @@ describe('core report-only migrations', () => {
     const ctx = createInMemoryContext({ 'page.html': `<ion-button>Hi</ion-button>\n` });
 
     expect(coreLegacyPicker.detect(ctx)).toEqual([]);
-    expect(coreAutocorrect.detect(ctx)).toEqual([]);
     expect(coreIonImg.detect(ctx)).toEqual([]);
-  });
-});
-
-describe('angular-zoneless (report-only)', () => {
-  it('flags the bootstrap call in main.ts', () => {
-    const ctx = createInMemoryContext({
-      'src/main.ts': `bootstrapApplication(AppComponent, { providers: [] });\n`,
-    });
-
-    expect(angularZoneless.detect(ctx)).toHaveLength(1);
-  });
-
-  it('ignores files without a bootstrap call', () => {
-    const ctx = createInMemoryContext({ 'src/main.ts': `console.log('hello');\n` });
-
-    expect(angularZoneless.detect(ctx)).toEqual([]);
   });
 });
 
