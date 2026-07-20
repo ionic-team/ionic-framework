@@ -145,9 +145,7 @@ ion-header ion-toolbar:first-of-type {
  * The attribute alone is not sufficient since it would match even
  * when the effect is guarded (e.g. no large title).
  */
-ion-header:not(.header-collapse-main):has(
-    ~ ion-content ion-header.header-collapse-condense
-  ) {
+ion-header:not(.header-collapse-main):has(~ ion-content ion-header.header-collapse-condense) {
   opacity: 0;
 }
 
