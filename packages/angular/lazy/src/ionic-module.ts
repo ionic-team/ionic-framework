@@ -56,6 +56,11 @@ type OptInAngularFeatures = {
   useSetInputAPI?: boolean;
 };
 
+/**
+ * @deprecated `IonicModule` is deprecated and will be removed in a future major version.
+ * Use `provideIonicAngular()` instead, which works in both standalone and NgModule-based
+ * applications. Refer to https://ionicframework.com/docs/angular/build-options for migration steps.
+ */
 @NgModule({
   declarations: DECLARATIONS,
   exports: DECLARATIONS,
@@ -63,7 +68,15 @@ type OptInAngularFeatures = {
   imports: [CommonModule],
 })
 export class IonicModule {
+  /**
+   * @deprecated `IonicModule.forRoot()` is deprecated and will be removed in a future major version.
+   * Use `provideIonicAngular()` instead. Any config passed here can be passed as an object to that
+   * function. Refer to https://ionicframework.com/docs/angular/build-options for migration steps.
+   */
   static forRoot(config: IonicConfig & OptInAngularFeatures = {}): ModuleWithProviders<IonicModule> {
+    console.warn(
+      `[Ionic Warning]: IonicModule has been deprecated in favor of provideIonicAngular() and will be removed in a future major version. Refer to https://ionicframework.com/docs/angular/build-options for migration steps.`
+    );
     return {
       ngModule: IonicModule,
       providers: [
