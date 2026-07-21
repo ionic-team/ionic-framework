@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, dragElementBy, test } from '@utils/test/playwright';
 
 import { CardModalPage } from '../fixtures';
 
@@ -35,11 +35,21 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       await cardModalPage.openModalByTrigger('#card');
       await cardModalPage.openModalByTrigger('.add');
 
+      // Firefox only: Move the mouse away from the ".add" button
+      // so the button's hover state is not captured in the
+      // screenshot
+      await page.mouse.move(0, 0);
+
       await expect(page).toHaveScreenshot(screenshot(`modal-card-stacked-present`));
     });
     test('should not have visual regressions with stacked custom cards', async ({ page }) => {
       await cardModalPage.openModalByTrigger('#card-custom');
       await cardModalPage.openModalByTrigger('.add');
+
+      // Firefox only: Move the mouse away from the ".add" button
+      // so the button's hover state is not captured in the
+      // screenshot
+      await page.mouse.move(0, 0);
 
       await expect(page).toHaveScreenshot(screenshot(`modal-card-custom-stacked-present`));
     });
@@ -93,6 +103,52 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
         const content = page.locator('ion-modal ion-content');
         await expect(content).toHaveJSProperty('scrollY', true);
       });
+    });
+  });
+
+  test.describe(title('card modal: drag events'), () => {
+    test('should emit ionDragStart, ionDragMove, and ionDragEnd events', async ({ page }) => {
+      await page.goto('/src/components/modal/test/card', config);
+
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#drag-events');
+      await ionModalDidPresent.next();
+
+      const ionDragStart = await page.spyOnEvent('ionDragStart');
+      const ionDragMove = await page.spyOnEvent('ionDragMove');
+      const ionDragEnd = await page.spyOnEvent('ionDragEnd');
+
+      const header = page.locator('.modal-card ion-header');
+
+      // Start the drag to verify it emits the events before the gesture ends
+      await dragElementBy(header, page, 0, 50, undefined, undefined, false);
+
+      await ionDragStart.next();
+      const dragMoveEvent = await ionDragMove.next();
+
+      expect(ionDragStart.length).toBe(1);
+
+      expect(ionDragMove.length).toBeGreaterThan(0);
+      expect(Object.keys(dragMoveEvent.detail).length).toBe(4);
+
+      expect(ionDragEnd.length).toBe(0);
+
+      /**
+       * Drag the modal further to verify it does:
+       * - not emit the event again for `ionDragStart`
+       * - emit more `ionDragMove` events
+       * - emit the `ionDragEnd` event when the gesture ends
+       */
+      await dragElementBy(header, page, 0, 100);
+
+      const dragEndEvent = await ionDragEnd.next();
+
+      expect(ionDragStart.length).toBe(1);
+      expect(ionDragMove.length).toBeGreaterThan(0);
+
+      expect(ionDragEnd.length).toBe(1);
+      expect(Object.keys(dragEndEvent.detail).length).toBe(4);
     });
   });
 });

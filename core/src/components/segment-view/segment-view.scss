@@ -21,7 +21,8 @@
   display: none;
 }
 
-:host(.segment-view-disabled) {
+:host(.segment-view-disabled),
+:host(.segment-view-swipe-disabled) {
   touch-action: none;
   overflow-x: hidden;
 }

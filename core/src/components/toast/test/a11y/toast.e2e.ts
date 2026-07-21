@@ -34,7 +34,7 @@ configs({ directions: ['ltr'], palettes: ['dark', 'light'] }).forEach(({ title, 
       await page.setContent(
         `
           <script type="module">
-            import { toastController } from '../../../../dist/ionic/index.esm.js';
+            import { toastController } from '../../../../../dist/ionic/index.esm.js';
             window.toastController = toastController;
           </script>
 

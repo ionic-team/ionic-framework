@@ -1,6 +1,6 @@
 import { Injector, Injectable, EnvironmentInjector, inject } from '@angular/core';
 import { AngularDelegate, OverlayBaseController } from '@ionic/angular/common';
-import type { ModalOptions } from '@ionic/core';
+import type { ModalOptions } from '@ionic/angular/common';
 import { modalController } from '@ionic/core';
 
 @Injectable()
@@ -14,9 +14,10 @@ export class ModalController extends OverlayBaseController<ModalOptions, HTMLIon
   }
 
   create(opts: ModalOptions): Promise<HTMLIonModalElement> {
+    const { injector: customInjector, ...restOpts } = opts;
     return super.create({
-      ...opts,
-      delegate: this.angularDelegate.create(this.environmentInjector, this.injector, 'modal'),
+      ...restOpts,
+      delegate: this.angularDelegate.create(this.environmentInjector, this.injector, 'modal', customInjector),
     });
   }
 }

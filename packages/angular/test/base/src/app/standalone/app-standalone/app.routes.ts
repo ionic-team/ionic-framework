@@ -7,6 +7,7 @@ export const routes: Routes = [
     component: AppComponent,
     children: [
       { path: '', loadComponent: () => import('../home-page/home-page.component').then(c => c.HomePageComponent) },
+      { path: 'inputs', loadComponent: () => import('../inputs/inputs.component').then(c => c.InputsComponent) },
       { path: 'menu-controller', loadComponent: () => import('../menu-controller/menu-controller.component').then(c => c.MenuControllerComponent) },
       { path: 'action-sheet-controller', loadComponent: () => import('../action-sheet-controller/action-sheet-controller.component').then(c => c.ActionSheetControllerComponent) },
       { path: 'popover', loadComponent: () => import('../popover/popover.component').then(c => c.PopoverComponent) },
@@ -22,13 +23,18 @@ export const routes: Routes = [
         ]
       },
       { path: 'programmatic-modal', loadComponent: () => import('../programmatic-modal/programmatic-modal.component').then(c => c.ProgrammaticModalComponent) },
+      { path: 'modal-custom-injector', loadComponent: () => import('../modal-custom-injector/modal-custom-injector.component').then(c => c.ModalCustomInjectorComponent) },
+      { path: 'modal-options-generic', loadComponent: () => import('../modal-options-generic/modal-options-generic.component').then(c => c.ModalOptionsGenericComponent) },
+      { path: 'popover-custom-injector', loadComponent: () => import('../popover-custom-injector/popover-custom-injector.component').then(c => c.PopoverCustomInjectorComponent) },
       { path: 'router-outlet', loadComponent: () => import('../router-outlet/router-outlet.component').then(c => c.RouterOutletComponent) },
       { path: 'back-button', loadComponent: () => import('../back-button/back-button.component').then(c => c.BackButtonComponent) },
       { path: 'router-link', loadComponent: () => import('../router-link/router-link.component').then(c => c.RouterLinkComponent) },
       { path: 'nav', loadComponent: () => import('../nav/nav.component').then(c => c.NavComponent) },
+      { path: 'nav-modal-root', loadComponent: () => import('../nav-modal-root/nav-modal-root.component').then(c => c.NavModalRootComponent) },
       { path: 'providers', loadComponent: () => import('../providers/providers.component').then(c => c.ProvidersComponent) },
       { path: 'overlay-controllers', loadComponent: () => import('../overlay-controllers/overlay-controllers.component').then(c => c.OverlayControllersComponent) },
       { path: 'button', loadComponent: () => import('../button/button.component').then(c => c.ButtonComponent) },
+      { path: 'refresher', loadComponent: () => import('../refresher/refresher.component').then(c => c.RefresherComponent) },
       { path: 'reorder-group', loadComponent: () => import('../reorder-group/reorder-group.component').then(c => c.ReorderGroupComponent) },
       { path: 'icon', loadComponent: () => import('../icon/icon.component').then(c => c.IconComponent) },
       { path: 'split-pane', redirectTo: '/standalone/split-pane/inbox', pathMatch: 'full' },
@@ -50,6 +56,17 @@ export const routes: Routes = [
         ]
       },
       { path: 'tabs-basic', loadComponent: () => import('../tabs-basic/tabs-basic.component').then(c => c.TabsBasicComponent) },
+      { path: 'tabs-search-params', redirectTo: '/standalone/tabs-search-params/tab1?foo=bar', pathMatch: 'full' },
+      {
+        path: 'tabs-search-params',
+        loadComponent: () => import('../tabs-search-params/tabs-search-params.component').then(c => c.TabsSearchParamsComponent),
+        children: [
+          { path: 'tab1', loadComponent: () => import('../tabs-search-params/tab1.component').then(c => c.TabsSearchParamsTab1Component) },
+          { path: 'tab2', loadComponent: () => import('../tabs-search-params/tab2.component').then(c => c.TabsSearchParamsTab2Component) },
+          { path: 'tab3', loadComponent: () => import('../tabs-search-params/tab3.component').then(c => c.TabsSearchParamsTab3Component) },
+          { path: 'tab4', loadComponent: () => import('../tabs-search-params/tab4.component').then(c => c.TabsSearchParamsTab4Component) }
+        ]
+      },
       {
         path: 'validation',
         children: [

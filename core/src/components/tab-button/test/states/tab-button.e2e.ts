@@ -80,3 +80,25 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
     });
   });
 });
+
+configs({ palettes: ['dark'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('tab-button: states in dark palette'), () => {
+    test.describe('focus', () => {
+      test('should render correct focus state in dark palette', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-tab-bar style="width: 300px">
+            <ion-tab-button href="#" class="ion-focused">
+              <ion-label>Favorites</ion-label>
+            </ion-tab-button>
+          </ion-tab-bar>
+        `,
+          config
+        );
+
+        const tabBar = page.locator('ion-tab-bar');
+        await expect(tabBar).toHaveScreenshot(screenshot('tab-button-focus'));
+      });
+    });
+  });
+});

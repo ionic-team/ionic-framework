@@ -23,6 +23,7 @@ It is based on <a href="https://www.webcomponents.org/introduction">Web Componen
 | [Contributing](./CONTRIBUTING.md)       | How to contribute including creating pull requests, commit message guidelines, and more. |
 | [Component Guide](./component-guide.md) | Guidelines for implementing component states, accessibility, and more.                   |
 | [Sass Guidelines](./sass-guidelines.md) | Outlines scenarios where Sass members and comments should be used.                       |
+| [CSS Shadow Parts Guidelines](./shadow-parts-guidelines.md) | Guidelines for CSS shadow parts in components.                       |
 
 ## Packages
 

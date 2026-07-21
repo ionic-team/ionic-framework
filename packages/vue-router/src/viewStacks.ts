@@ -196,8 +196,15 @@ export const createViewStacks = (router: Router) => {
     if (!viewStack) return;
 
     const startIndex = viewStack.findIndex((v) => v === viewItem);
+    if (startIndex === -1) return;
 
-    for (let i = startIndex + 1; i < startIndex - delta; i++) {
+    // delta from popstate reflects browser history depth, which can exceed
+    // the outlet's view stack when tab switches build up history without
+    // adding new view items. Clamp to the stack length so we never index
+    // past the end of the array.
+    const endIndex = Math.min(viewStack.length, startIndex - delta);
+
+    for (let i = startIndex + 1; i < endIndex; i++) {
       const viewItem = viewStack[i];
       viewItem.mount = false;
       viewItem.ionPageElement = undefined;
@@ -233,8 +240,11 @@ export const createViewStacks = (router: Router) => {
     if (!viewStack) return;
 
     const startIndex = viewStack.findIndex((v) => v === viewItem);
+    if (startIndex === -1) return;
 
-    for (let i = startIndex + 1; i < startIndex + delta; i++) {
+    const endIndex = Math.min(viewStack.length, startIndex + delta);
+
+    for (let i = startIndex + 1; i < endIndex; i++) {
       viewStack[i].mount = true;
     }
   };

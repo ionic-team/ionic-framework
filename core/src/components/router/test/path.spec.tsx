@@ -48,6 +48,47 @@ describe('parsePath', () => {
     expect(parsePath('path/to/file.js?').queryString).toEqual('');
     expect(parsePath('path/to/file.js?a=b').queryString).toEqual('a=b');
   });
+
+  it('should strip the fragment from segments and return it', () => {
+    const result = parsePath('/catalog#pens');
+    expect(result.segments).toEqual(['catalog']);
+    expect(result.fragment).toEqual('pens');
+  });
+
+  it('should parse fragment alongside query string (query first)', () => {
+    const result = parsePath('/catalog?x=1#pens');
+    expect(result.segments).toEqual(['catalog']);
+    expect(result.queryString).toEqual('x=1');
+    expect(result.fragment).toEqual('pens');
+  });
+
+  it('should treat "?" inside fragment as part of the fragment', () => {
+    // Per RFC 3986 the fragment starts at the first "#" and runs to the end.
+    const result = parsePath('/catalog#pens?x=1');
+    expect(result.segments).toEqual(['catalog']);
+    expect(result.queryString).toBeUndefined();
+    expect(result.fragment).toEqual('pens?x=1');
+  });
+
+  it('should parse fragment-only path', () => {
+    const result = parsePath('#pens');
+    expect(result.segments).toEqual(['']);
+    expect(result.fragment).toEqual('pens');
+  });
+
+  it('should leave fragment undefined when there is no "#"', () => {
+    expect(parsePath('/catalog').fragment).toBeUndefined();
+    expect(parsePath('/catalog?x=1').fragment).toBeUndefined();
+    expect(parsePath(null).fragment).toBeUndefined();
+    expect(parsePath(undefined).fragment).toBeUndefined();
+  });
+
+  it('should preserve percent-encoded characters in the fragment', () => {
+    // parsePath keeps the fragment in its URL-encoded form; decoding for id
+    // matching is the consumer's responsibility (see `scrollToFragment`).
+    expect(parsePath('/catalog#sec%20one').fragment).toEqual('sec%20one');
+    expect(parsePath('/catalog#%E4%B8%AD%E6%96%87').fragment).toEqual('%E4%B8%AD%E6%96%87');
+  });
 });
 
 describe('generatePath', () => {
@@ -242,6 +283,31 @@ describe('writeSegments', () => {
 
     writeSegments(history, '/path/to/', true, ['second', 'page'], ROUTER_INTENT_FORWARD, 123, 'flag=true');
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/path/to/second/page?flag=true');
+  });
+
+  it('should append the fragment after the query string (no hash)', () => {
+    const history = mockHistory();
+    writeSegments(history, '/', false, ['catalog'], ROUTER_INTENT_FORWARD, 1, 'x=1', 'pens');
+    expect(history.pushState).toHaveBeenCalledWith(1, '', '/catalog?x=1#pens');
+  });
+
+  it('should append the fragment when there is no query string (no hash)', () => {
+    const history = mockHistory();
+    writeSegments(history, '/', false, ['catalog'], ROUTER_INTENT_FORWARD, 1, undefined, 'pens');
+    expect(history.pushState).toHaveBeenCalledWith(1, '', '/catalog#pens');
+  });
+
+  it('should append the fragment in hash routing mode', () => {
+    // In hash routing the routing "#" wraps the path; the URL fragment is a second "#" appended at the end.
+    const history = mockHistory();
+    writeSegments(history, '/', true, ['catalog'], ROUTER_INTENT_FORWARD, 1, undefined, 'pens');
+    expect(history.pushState).toHaveBeenCalledWith(1, '', '#/catalog#pens');
+  });
+
+  it('should omit the fragment when none is provided', () => {
+    const history = mockHistory();
+    writeSegments(history, '/', false, ['catalog'], ROUTER_INTENT_FORWARD, 1);
+    expect(history.pushState).toHaveBeenCalledWith(1, '', '/catalog');
   });
 });
 

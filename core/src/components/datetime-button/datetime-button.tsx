@@ -7,7 +7,6 @@ import { createColorClasses } from '@utils/theme';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { DatetimePresentation } from '../datetime/datetime-interface';
-import { getToday } from '../datetime/utils/data';
 import { getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
 import { getHourCycle } from '../datetime/utils/helpers';
 import { parseDate } from '../datetime/utils/parse';
@@ -189,7 +188,7 @@ export class DatetimeButton implements ComponentInterface {
    * ion-datetime and then format it according
    * to the locale specified on ion-datetime.
    */
-  private setDateTimeText = () => {
+  private setDateTimeText = async () => {
     const { datetimeEl, datetimePresentation } = this;
 
     if (!datetimeEl) {
@@ -201,10 +200,12 @@ export class DatetimeButton implements ComponentInterface {
     const parsedValues = this.getParsedDateValues(value);
 
     /**
-     * Both ion-datetime and ion-datetime-button default
-     * to today's date and time if no value is set.
+     * Both ion-datetime and ion-datetime-button default to today's date and
+     * time if no value is set. We read the datetime's computed default so the
+     * button respects the same constraints (min, max, minuteValues, etc.) that
+     * the datetime applies to its own fallback, instead of using a raw "now".
      */
-    const parsedDatetimes = parseDate(parsedValues.length > 0 ? parsedValues : [getToday()]);
+    const parsedDatetimes = parsedValues.length > 0 ? parseDate(parsedValues) : [await datetimeEl.getDefaultPart()];
 
     if (!parsedDatetimes) {
       return;

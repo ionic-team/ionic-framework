@@ -27,6 +27,7 @@ import Main from './pages/Main';
 import Tabs from './pages/Tabs';
 import TabsBasic from './pages/TabsBasic';
 import NavComponent from './pages/navigation/NavComponent';
+import NavModalComponent from './pages/navigation/NavModalComponent';
 import TabsDirectNavigation from './pages/TabsDirectNavigation';
 import TabsSimilarPrefixes from './pages/TabsSimilarPrefixes';
 import IonModalConditional from './pages/overlay-components/IonModalConditional';
@@ -44,7 +45,8 @@ setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
-    <IonReactRouter>
+    {/* Vercel previews serve this app under /react/, so derive basename from Vite's base URL */}
+    <IonReactRouter basename={import.meta.env?.BASE_URL?.replace(/\/$/, '') || undefined}>
       <IonRouterOutlet>
         <Route exact path="/" component={Main} />
         <Route path="/overlay-hooks" component={OverlayHooks} />
@@ -65,6 +67,7 @@ const App: React.FC = () => (
         />
         <Route path="/keep-contents-mounted" component={KeepContentsMounted} />
         <Route path="/navigation" component={NavComponent} />
+        <Route path="/navigation-modal" component={NavModalComponent} />
         <Route path="/tabs" component={Tabs} />
         <Route path="/tabs-basic" component={TabsBasic} />
         <Route path="/tabs-direct-navigation" component={TabsDirectNavigation} />

@@ -17,6 +17,8 @@
   * [Example Components](#example-components-4)
   * [Component Structure](#component-structure-1)
 - [Converting Scoped to Shadow](#converting-scoped-to-shadow)
+- [Sass Variables](#sass-variables)
+- [CSS Shadow Parts](#css-shadow-parts)
 - [RTL](#rtl)
 - [Adding New Components with Native Input Support](#adding-new-components-with-native-input-support)
   * [Angular Integration](#angular-integration)
@@ -721,6 +723,14 @@ There will be some CSS issues when converting to shadow. Below are some of the d
 /* IN SHADOW*/
 :host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(ion-segment-button) {
 ```
+
+## Sass Variables
+
+For guidelines on when to use Sass Variables, see the [Sass Guidelines](./sass-guidelines.md).
+
+## CSS Shadow Parts
+
+For guidelines on adding CSS shadow parts, see the [CSS Shadow Parts Guidelines](./shadow-parts-guidelines.md).
 
 ## RTL
 

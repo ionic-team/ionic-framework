@@ -3,6 +3,147 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.14](https://github.com/ionic-team/ionic-framework/compare/v8.8.13...v8.8.14) (2026-07-15)
+
+
+### Bug Fixes
+
+* **tab-bar:** fire tab change events on tab click ([#31262](https://github.com/ionic-team/ionic-framework/issues/31262)) ([44461dd](https://github.com/ionic-team/ionic-framework/commit/44461ddda5ef44030f477931dd94cce4674801a6)), closes [#30145](https://github.com/ionic-team/ionic-framework/issues/30145)
+
+
+
+
+
+## [8.8.13](https://github.com/ionic-team/ionic-framework/compare/v8.8.12...v8.8.13) (2026-07-01)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.8.12](https://github.com/ionic-team/ionic-framework/compare/v8.8.11...v8.8.12) (2026-06-24)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.8.11](https://github.com/ionic-team/ionic-framework/compare/v8.8.10...v8.8.11) (2026-06-17)
+
+
+### Bug Fixes
+
+* **react:** remove relocated inline overlays orphaned on unmount ([#31223](https://github.com/ionic-team/ionic-framework/issues/31223)) ([d28d25b](https://github.com/ionic-team/ionic-framework/commit/d28d25b798d32db6148155bb34fdbd13243286d9))
+
+
+
+
+
+## [8.8.10](https://github.com/ionic-team/ionic-framework/compare/v8.8.9...v8.8.10) (2026-06-10)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.8.9](https://github.com/ionic-team/ionic-framework/compare/v8.8.8...v8.8.9) (2026-06-03)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.8.8](https://github.com/ionic-team/ionic-framework/compare/v8.8.7...v8.8.8) (2026-05-20)
+
+
+### Bug Fixes
+
+* **react:** bind events properly for overlays rendered within a nav ([#31159](https://github.com/ionic-team/ionic-framework/issues/31159)) ([fa4593d](https://github.com/ionic-team/ionic-framework/commit/fa4593d8a4d61a583dbf6fa551cd846fe258624f)), closes [#27843](https://github.com/ionic-team/ionic-framework/issues/27843)
+
+
+
+
+
+## [8.8.7](https://github.com/ionic-team/ionic-framework/compare/v8.8.6...v8.8.7) (2026-05-13)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.8.6](https://github.com/ionic-team/ionic-framework/compare/v8.8.5...v8.8.6) (2026-05-06)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.8.5](https://github.com/ionic-team/ionic-framework/compare/v8.8.4...v8.8.5) (2026-04-29)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.8.4](https://github.com/ionic-team/ionic-framework/compare/v8.8.3...v8.8.4) (2026-04-15)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.8.3](https://github.com/ionic-team/ionic-framework/compare/v8.8.2...v8.8.3) (2026-04-01)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.8.2](https://github.com/ionic-team/ionic-framework/compare/v8.8.1...v8.8.2) (2026-03-25)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.8.1](https://github.com/ionic-team/ionic-framework/compare/v8.8.0...v8.8.1) (2026-03-06)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [8.8.0](https://github.com/ionic-team/ionic-framework/compare/v8.7.18...v8.8.0) (2026-03-04)
+
+
+### Features
+
+* **modal:** add drag events for sheet and card modals ([#30962](https://github.com/ionic-team/ionic-framework/issues/30962)) ([d29ac71](https://github.com/ionic-team/ionic-framework/commit/d29ac713fad604c256fb385eb0c26eb9717e1ff4)), closes [#23955](https://github.com/ionic-team/ionic-framework/issues/23955)
+* **textarea:** reflect disabled and readonly props ([#30910](https://github.com/ionic-team/ionic-framework/issues/30910)) ([55735df](https://github.com/ionic-team/ionic-framework/commit/55735df3fa62c8e259c56db3169f3d5459e71c0c))
+
+
+
+
+
+## [8.7.18](https://github.com/ionic-team/ionic-framework/compare/v8.7.17...v8.7.18) (2026-02-25)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
 ## [8.7.17](https://github.com/ionic-team/ionic-framework/compare/v8.7.15...v8.7.17) (2026-01-14)
 
 **Note:** Version bump only for package @ionic/react

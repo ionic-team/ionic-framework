@@ -514,6 +514,7 @@ export class Accordion implements ComponentInterface {
 
           'accordion-animated': this.shouldAnimate(),
         }}
+        tabindex={disabled ? '-1' : undefined}
       >
         <div
           onClick={() => this.toggleExpanded()}

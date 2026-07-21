@@ -2,48 +2,70 @@ describe('Inputs', () => {
   beforeEach(() => {
     cy.visit('/inputs')
   })
-  it('should have default value', () => {
-    cy.get('ion-checkbox').should('have.prop', 'checked').and('eq', false);
-    cy.get('ion-toggle').should('have.prop', 'checked').and('eq', false);
-    cy.get('ion-input').should('have.prop', 'value').and('eq', '');
-    cy.get('ion-input-otp').should('have.prop', 'value').and('eq', '');
-    cy.get('ion-range').should('have.prop', 'value').and('deep.eq', { lower: 30, upper: 70 });
-    cy.get('ion-textarea').should('have.prop', 'value').and('eq', '');
-    cy.get('ion-searchbar').should('have.prop', 'value').and('eq', '');
-    cy.get('ion-datetime').should('have.prop', 'value').and('eq', '');
-    cy.get('ion-radio-group').should('have.prop', 'value').and('eq', 'red');
-    cy.get('ion-segment').should('have.prop', 'value').and('eq', 'dogs');
-    cy.get('ion-select').should('have.prop', 'value').and('eq', 'apples');
-  });
+  
+  describe('basic functionality', () => {
+    it('should have default value', () => {
+      cy.get('ion-checkbox').should('have.prop', 'checked').and('eq', false);
+      cy.get('ion-toggle').should('have.prop', 'checked').and('eq', false);
+      cy.get('ion-input').should('have.prop', 'value').and('eq', '');
+      cy.get('ion-input-otp').should('have.prop', 'value').and('eq', '');
+      cy.get('ion-range').should('have.prop', 'value').and('deep.eq', { lower: 30, upper: 70 });
+      cy.get('ion-textarea').should('have.prop', 'value').and('eq', '');
+      cy.get('ion-searchbar').should('have.prop', 'value').and('eq', '');
+      cy.get('ion-datetime').should('have.prop', 'value').and('eq', '');
+      cy.get('ion-radio-group').should('have.prop', 'value').and('eq', 'red');
+      cy.get('ion-segment').should('have.prop', 'value').and('eq', 'dogs');
+      cy.get('ion-select').should('have.prop', 'value').and('eq', 'apples');
+    });
 
-  it('should set/reset values', () => {
-    cy.get('ion-button#set').click();
+    it('should set/reset values', () => {
+      cy.get('ion-button#set').click();
 
-    cy.get('ion-checkbox').should('have.prop', 'checked').and('eq', true);
-    cy.get('ion-toggle').should('have.prop', 'checked').and('eq', true);
-    cy.get('ion-input').should('have.prop', 'value').and('eq', 'Hello World');
-    cy.get('ion-input-otp').should('have.prop', 'value').and('eq', '1234');
-    cy.get('ion-range').should('have.prop', 'value').and('deep.eq', { lower: 10, upper: 90 });
-    cy.get('ion-textarea').should('have.prop', 'value').and('eq', 'Lorem Ipsum');
-    cy.get('ion-searchbar').should('have.prop', 'value').and('eq', 'Search Query');
-    cy.get('ion-datetime').should('have.prop', 'value').and('eq', '2019-01-31');
-    cy.get('ion-radio-group').should('have.prop', 'value').and('eq', 'blue');
-    cy.get('ion-segment').should('have.prop', 'value').and('eq', 'cats');
-    cy.get('ion-select').should('have.prop', 'value').and('eq', 'bananas');
+      cy.get('ion-checkbox').should('have.prop', 'checked').and('eq', true);
+      cy.get('ion-toggle').should('have.prop', 'checked').and('eq', true);
+      cy.get('ion-input').should('have.prop', 'value').and('eq', 'Hello World');
+      cy.get('ion-input-otp').should('have.prop', 'value').and('eq', '1234');
+      cy.get('ion-range').should('have.prop', 'value').and('deep.eq', { lower: 10, upper: 90 });
+      cy.get('ion-textarea').should('have.prop', 'value').and('eq', 'Lorem Ipsum');
+      cy.get('ion-searchbar').should('have.prop', 'value').and('eq', 'Search Query');
+      cy.get('ion-datetime').should('have.prop', 'value').and('eq', '2019-01-31');
+      cy.get('ion-radio-group').should('have.prop', 'value').and('eq', 'blue');
+      cy.get('ion-segment').should('have.prop', 'value').and('eq', 'cats');
+      cy.get('ion-select').should('have.prop', 'value').and('eq', 'bananas');
 
-    cy.get('ion-button#reset').click();
+      cy.get('ion-button#reset').click();
 
-    cy.get('ion-checkbox').should('have.prop', 'checked').and('eq', false);
-    cy.get('ion-toggle').should('have.prop', 'checked').and('eq', false);
-    cy.get('ion-input').should('have.prop', 'value').and('eq', '');
-    cy.get('ion-input-otp').should('have.prop', 'value').and('eq', '');
-    cy.get('ion-range').should('have.prop', 'value').and('deep.eq', { lower: 30, upper: 70 });
-    cy.get('ion-textarea').should('have.prop', 'value').and('eq', '');
-    cy.get('ion-searchbar').should('have.prop', 'value').and('eq', '');
-    cy.get('ion-datetime').should('have.prop', 'value').and('eq', '');
-    cy.get('ion-radio-group').should('have.prop', 'value').and('eq', 'red');
-    cy.get('ion-segment').should('have.prop', 'value').and('eq', 'dogs');
-    cy.get('ion-select').should('have.prop', 'value').and('eq', 'apples');
+      cy.get('ion-checkbox').should('have.prop', 'checked').and('eq', false);
+      cy.get('ion-toggle').should('have.prop', 'checked').and('eq', false);
+      cy.get('ion-input').should('have.prop', 'value').and('eq', '');
+      cy.get('ion-input-otp').should('have.prop', 'value').and('eq', '');
+      cy.get('ion-range').should('have.prop', 'value').and('deep.eq', { lower: 30, upper: 70 });
+      cy.get('ion-textarea').should('have.prop', 'value').and('eq', '');
+      cy.get('ion-searchbar').should('have.prop', 'value').and('eq', '');
+      cy.get('ion-datetime').should('have.prop', 'value').and('eq', '');
+      cy.get('ion-radio-group').should('have.prop', 'value').and('eq', 'red');
+      cy.get('ion-segment').should('have.prop', 'value').and('eq', 'dogs');
+      cy.get('ion-select').should('have.prop', 'value').and('eq', 'apples');
+    });
+
+    it('should reflect props when component has a default value', () => {
+      // Disable inputs
+      cy.get('ion-button#disable').click();
+
+      // Disabled prop
+      cy.get('ion-input').should('have.attr', 'disabled');
+      cy.get('ion-input-otp').should('have.attr', 'disabled');
+      cy.get('ion-textarea').should('have.attr', 'disabled');
+
+      // Reset disabled state and set readonly state
+      cy.get('ion-button#disable').click();
+      cy.get('ion-button#readonly').click();
+
+      // Readonly prop
+      cy.get('ion-input').should('have.attr', 'readonly');
+      cy.get('ion-input-otp').should('have.attr', 'readonly');
+      cy.get('ion-textarea').should('have.attr', 'readonly');
+    });
   });
 
   describe('updating text input refs', () => {

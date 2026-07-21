@@ -8,7 +8,9 @@ expect.extend({
       throw new Error('expected toHaveShadowPart to be called on an element with a shadow root');
     }
 
-    const shadowPart = received.shadowRoot.querySelector(`[part="${part}"]`);
+    // Use attribute selector with ~= to match space-separated part values
+    // e.g., [part~="knob"] matches elements with part="knob" or part="knob knob-a"
+    const shadowPart = received.shadowRoot.querySelector(`[part~="${part}"]`);
     const pass = shadowPart !== null;
 
     const message = `expected ${received.tagName.toLowerCase()} to have shadow part "${part}"`;

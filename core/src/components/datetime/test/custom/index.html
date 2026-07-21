@@ -74,6 +74,13 @@
         color: rgb(128, 30, 171);
       }
 
+      /* Targets the month/year picker and the wheel style datetime */
+      .custom-grid-wheel::part(wheel):focus,
+      /* Targets the time picker */
+      ion-picker-column:focus {
+        background-color: rgba(138, 238, 69, 0.37);
+      }
+
       /*
       * Custom Datetime Day Parts
       * -------------------------------------------
@@ -127,6 +134,46 @@
         background-color: rgb(154 209 98 / 0.2);
         color: #9ad162;
       }
+
+      /*
+      * Custom Datetime Header Parts
+      * -------------------------------------------
+      */
+
+      #custom-grid::part(calendar-header),
+      #custom-title::part(datetime-header) {
+        background-color: orange;
+      }
+
+      #custom-grid::part(month-year-button) {
+        background-color: lightblue;
+        color: rgb(128, 30, 171);
+      }
+
+      #custom-grid::part(navigation-button) {
+        background-color: firebrick;
+      }
+
+      #custom-grid::part(previous-button) {
+        color: white;
+      }
+
+      #custom-grid::part(next-button) {
+        color: black;
+      }
+
+      #custom-grid::part(calendar-days-of-week) {
+        background-color: #9ad162;
+        color: white;
+      }
+
+      #custom-title::part(datetime-title) {
+        background-color: pink;
+      }
+
+      #custom-title::part(datetime-selected-date) {
+        background-color: violet;
+      }
     </style>
   </head>
 
@@ -155,6 +202,11 @@
           <div class="grid-item">
             <h2>Grid Style</h2>
             <ion-datetime id="custom-calendar-days" value="2023-06-15" presentation="date"></ion-datetime>
+          </div>
+          <div class="grid-item">
+            <ion-datetime id="custom-title" presentation="date">
+              <span slot="title">Select Date</span>
+            </ion-datetime>
           </div>
         </div>
       </ion-content>

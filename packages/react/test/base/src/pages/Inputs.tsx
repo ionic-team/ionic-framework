@@ -66,6 +66,10 @@ const Inputs: React.FC<InputsProps> = () => {
   const [segment, setSegment] = useState('dogs');
   const [select, setSelect] = useState('apples');
 
+  // States
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isReadonly, setIsReadonly] = useState(false);
+
   const reset = () => {
     setCheckbox(false);
     setToggle(false);
@@ -94,6 +98,14 @@ const Inputs: React.FC<InputsProps> = () => {
     setSelect('bananas');
   };
 
+  const toggleDisable = () => {
+    setIsDisabled(!isDisabled);
+  };
+
+  const toggleReadonly = () => {
+    setIsReadonly(!isReadonly);
+  };
+
   return (
     <IonPage data-pageid="inputs">
       <IonHeader translucent={true}>
@@ -109,6 +121,7 @@ const Inputs: React.FC<InputsProps> = () => {
             onIonChange={(e: IonSegmentCustomEvent<SegmentChangeEventDetail>) => {
               if (typeof e.detail.value === 'string') setSegment(e.detail.value);
             }}
+            disabled={isDisabled}
           >
             <IonSegmentButton value="dogs">
               <IonLabel>Dogs</IonLabel>
@@ -122,6 +135,7 @@ const Inputs: React.FC<InputsProps> = () => {
           <IonSearchbar
             value={searchbar}
             onIonInput={(e: IonSearchbarCustomEvent<SearchbarInputEventDetail>) => setSearchbar(e.detail.value!)}
+            disabled={isDisabled}
           ></IonSearchbar>
         </IonToolbar>
       </IonHeader>
@@ -137,6 +151,7 @@ const Inputs: React.FC<InputsProps> = () => {
           <IonCheckbox
             checked={checkbox}
             onIonChange={(e: IonCheckboxCustomEvent<CheckboxChangeEventDetail>) => setCheckbox(e.detail.checked)}
+            disabled={isDisabled}
           >
             Checkbox
           </IonCheckbox>
@@ -146,6 +161,7 @@ const Inputs: React.FC<InputsProps> = () => {
           <IonToggle
             checked={toggle}
             onIonChange={(e: IonToggleCustomEvent<ToggleChangeEventDetail>) => setToggle(e.detail.checked)}
+            disabled={isDisabled}
           >
             Toggle
           </IonToggle>
@@ -156,6 +172,8 @@ const Inputs: React.FC<InputsProps> = () => {
             value={input}
             onIonInput={(e: IonInputCustomEvent<InputInputEventDetail>) => setInput(e.detail.value!)}
             label="Input"
+            disabled={isDisabled}
+            readonly={isReadonly}
           ></IonInput>
         </IonItem>
 
@@ -163,6 +181,8 @@ const Inputs: React.FC<InputsProps> = () => {
           <IonInputOtp
             value={inputOtp}
             onIonInput={(e: IonInputOtpCustomEvent<InputOtpInputEventDetail>) => setInputOtp(e.detail.value ?? '')}
+            disabled={isDisabled}
+            readonly={isReadonly}
           ></IonInputOtp>
         </IonItem>
 
@@ -174,6 +194,7 @@ const Inputs: React.FC<InputsProps> = () => {
             max={100}
             value={range}
             onIonChange={(e: IonRangeCustomEvent<RangeChangeEventDetail>) => setRange(e.detail.value as { lower: number; upper: number })}
+            disabled={isDisabled}
           ></IonRange>
         </IonItem>
 
@@ -182,6 +203,8 @@ const Inputs: React.FC<InputsProps> = () => {
             value={textarea}
             onIonInput={(e: IonTextareaCustomEvent<TextareaInputEventDetail>) => setTextarea(e.detail.value!)}
             label="Textarea"
+            disabled={isDisabled}
+            readonly={isReadonly}
           ></IonTextarea>
         </IonItem>
 
@@ -195,6 +218,8 @@ const Inputs: React.FC<InputsProps> = () => {
                 setDatetime(value);
               }
             }}
+            disabled={isDisabled}
+            readonly={isReadonly}
           ></IonDatetime>
         </IonItem>
 
@@ -203,13 +228,13 @@ const Inputs: React.FC<InputsProps> = () => {
           onIonChange={(e: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>) => setRadio(e.detail.value)}
         >
           <IonItem>
-            <IonRadio value="red">Red</IonRadio>
+            <IonRadio value="red" disabled={isDisabled}>Red</IonRadio>
           </IonItem>
           <IonItem>
-            <IonRadio value="green">Green</IonRadio>
+            <IonRadio value="green" disabled={isDisabled}>Green</IonRadio>
           </IonItem>
           <IonItem>
-            <IonRadio value="blue">Blue</IonRadio>
+            <IonRadio value="blue" disabled={isDisabled}>Blue</IonRadio>
           </IonItem>
         </IonRadioGroup>
 
@@ -218,6 +243,7 @@ const Inputs: React.FC<InputsProps> = () => {
             value={select}
             onIonChange={(e: IonSelectCustomEvent<SelectChangeEventDetail<any>>) => setSelect(e.detail.value)}
             label="Select"
+            disabled={isDisabled}
           >
             <IonSelectOption value="apples">Apples</IonSelectOption>
             <IonSelectOption value="bananas">Bananas</IonSelectOption>
@@ -241,6 +267,8 @@ const Inputs: React.FC<InputsProps> = () => {
 
           <IonButton expand="block" onClick={reset} id="reset">Reset Values</IonButton>
           <IonButton expand="block" onClick={set} id="set">Set Values</IonButton>
+          <IonButton expand="block" onClick={toggleDisable} id="disable">Toggle Disabled</IonButton>
+          <IonButton expand="block" onClick={toggleReadonly} id="readonly">Toggle Readonly</IonButton>
         </div>
       </IonContent>
     </IonPage>
