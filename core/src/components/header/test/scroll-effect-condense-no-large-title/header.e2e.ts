@@ -19,7 +19,6 @@ configs({ modes: ['ios', 'md', 'ionic-ios', 'ionic-md'], directions: ['ltr'] }).
 
         const mainHeader = page.locator('#smallTitleHeader');
 
-        // The main header should remain visible (not hidden by the :has() ghost-hide rule)
         await expect(mainHeader).toBeVisible();
         await expect(mainHeader).toHaveScreenshot(screenshot(`header-condense-no-large-title-main-visible-diff`));
       });
