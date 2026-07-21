@@ -15,7 +15,7 @@ interface IonPageInternalProps extends IonPageProps {
 }
 
 class IonPageInternal extends React.Component<IonPageInternalProps> {
-  context!: React.ContextType<typeof NavContext>;
+  declare context: React.ContextType<typeof NavContext>;
 
   constructor(props: IonPageInternalProps) {
     super(props);

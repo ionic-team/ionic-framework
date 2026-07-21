@@ -1,34 +1,18 @@
 {
+  "extends": "../tsconfig",
   "compilerOptions": {
-    "strict": true,
-    "alwaysStrict": true,
-    "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode": false,
-    "declaration": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
     "assumeChangesOnlyAffectDirectDependencies": true,
-    "jsx": "react",
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment",
+    // dom.iterable required for for...of iteration over DOM collections (NodeList, HTMLCollection)
+    // See: slot-mutation-controller.ts, popover.tsx, router/utils/dom.ts
     "lib": [
       "dom",
       "dom.iterable",
-      "es2017",
-      "es2020",
-      "es2021",
-      "esnext"
+      "es2022"
     ],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "jsx": "react",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
     "outDir": ".tmp",
-    "pretty": true,
-    "removeComments": false,
-    "target": "es2017",
     "baseUrl": ".",
     "paths": {
       "@utils/*": ["src/utils/*"],
@@ -37,7 +21,7 @@
     }
   },
   "include": [
-    "src",
+    "src"
   ],
   "exclude": [
     "node_modules"

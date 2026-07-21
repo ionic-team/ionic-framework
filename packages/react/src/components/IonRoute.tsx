@@ -15,7 +15,7 @@ export interface IonRouteProps {
 interface IonRouteState {}
 
 export class IonRoute extends React.PureComponent<IonRouteProps, IonRouteState> {
-  context!: React.ContextType<typeof NavContext>;
+  declare context: React.ContextType<typeof NavContext>;
 
   render() {
     const IonRouteInner = this.context.getIonRoute();

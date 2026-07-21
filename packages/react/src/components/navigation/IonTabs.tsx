@@ -52,7 +52,7 @@ export class IonTabs extends React.Component<Props> {
     return true;
   }
 
-  context!: React.ContextType<typeof NavContext>;
+  declare context: React.ContextType<typeof NavContext>;
   /**
    * `routerOutletRef` allows users to add a `ref` to `IonRouterOutlet`.
    * Without this, `ref.current` will be `undefined` in the user's app,

@@ -25,7 +25,7 @@ interface InternalProps extends Props {
 interface InternalState {}
 
 class IonRouterOutletContainer extends React.Component<InternalProps, InternalState> {
-  context!: React.ContextType<typeof NavContext>;
+  declare context: React.ContextType<typeof NavContext>;
   private readonly outletId: string;
 
   constructor(props: InternalProps) {

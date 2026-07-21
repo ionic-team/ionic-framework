@@ -58,7 +58,7 @@ const matchesTab = (pathname: string, href: string | undefined): boolean => {
 };
 
 class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarState> {
-  context!: React.ContextType<typeof NavContext>;
+  declare context: React.ContextType<typeof NavContext>;
 
   constructor(props: InternalProps) {
     super(props);
