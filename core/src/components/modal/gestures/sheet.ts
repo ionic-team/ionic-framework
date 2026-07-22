@@ -300,6 +300,13 @@ export const createSheetGesture = (
 
   const onStart = (detail: GestureDetail) => {
     /**
+     * Firefox automatically selects the header text during drag
+     * due to the focusable wrapper (tabindex="-1"). Remove any
+     * selection that may have occurred.
+     */
+    window.getSelection()?.removeAllRanges();
+
+    /**
      * If canDismiss is anything other than `true`
      * then users should be able to swipe down
      * until a threshold is hit. At that point,

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.15](https://github.com/ionic-team/ionic-framework/compare/v8.8.14...v8.8.15) (2026-07-22)
+
+
+### Bug Fixes
+
+* **angular-server:** fallback to scoped+annotations when SSR DOM lacks attachShadow ([#30967](https://github.com/ionic-team/ionic-framework/issues/30967)) ([ae6911f](https://github.com/ionic-team/ionic-framework/commit/ae6911f6c8d46467ae54114295688bbba5ccbf5e)), closes [#29751](https://github.com/ionic-team/ionic-framework/issues/29751)
+
+
+
+
+
 ## [8.8.14](https://github.com/ionic-team/ionic-framework/compare/v8.8.13...v8.8.14) (2026-07-15)
 
 **Note:** Version bump only for package @ionic/angular-server
