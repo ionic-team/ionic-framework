@@ -5,6 +5,8 @@
     "esModuleInterop": true,
     "outDir": "dist",
     "declarationDir": "dist/types",
+    /* rootDir set to satisfy @rollup/plugin-typescript (TS5011) for a predictable output layout. */
+    "rootDir": "src",
     "inlineSources": true,
     "sourceMap": true,
     "jsx": "react"

@@ -5,7 +5,7 @@
  */
 
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
-import { IonRoute, RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
+import { IonRoute, RouteManagerContext, StackContext, generateId } from '@ionic/react';
 import React from 'react';
 import type { RouteObject } from 'react-router-dom';
 import { Route, UNSAFE_RouteContext as RouteContext, matchRoutes } from 'react-router-dom';
@@ -134,7 +134,7 @@ const isViewItemPreservableOnPop = (viewItem: ViewItem | undefined): boolean => 
 
 export class StackManager extends React.PureComponent<StackManagerProps> {
   id: string; // Unique id for the router outlet aka outletId
-  context!: React.ContextType<typeof RouteManagerContext>;
+  declare context: React.ContextType<typeof RouteManagerContext>;
   ionRouterOutlet?: React.ReactElement;
   routerOutletElement: HTMLIonRouterOutletElement | undefined;
   prevProps?: StackManagerProps;
@@ -1772,7 +1772,7 @@ export class StackManager extends React.PureComponent<StackManagerProps> {
 
           const components = this.context.getChildrenToRender(
             this.id,
-            this.ionRouterOutlet,
+            this.ionRouterOutlet!,
             this.props.routeInfo,
             () => {
               // Callback triggers re-render when view items are modified during getChildrenToRender
