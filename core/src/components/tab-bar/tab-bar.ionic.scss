@@ -138,3 +138,13 @@
 :host(.tab-bar-rectangular) {
   @include globals.border-radius(globals.$ion-border-radius-0);
 }
+
+// Reduced Motion
+// --------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+  :host(.tab-bar-scroll-effect-hide),
+  :host(.tab-bar-compact.tab-bar-scroll-hidden) {
+    transition: none;
+  }
+}
