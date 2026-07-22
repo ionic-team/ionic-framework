@@ -4,6 +4,13 @@
     "esModuleInterop": true,
     "outDir": "dist",
     "declarationDir": "dist/types",
+    /*
+     * rootDir is set to satisfy @rollup/plugin-typescript (TS5011) so the
+     * output file layout is predictable. Setting rootDir restricts the program
+     * to files under it, which stops @types from being auto-included, so the
+     * ambient type packages must be listed explicitly. jest and jest-dom are
+     * needed because the test files are type-checked as part of the build.
+     */
     "rootDir": "src",
     "types": ["node", "jest", "@testing-library/jest-dom"],
     "inlineSources": true,
