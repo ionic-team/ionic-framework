@@ -11,22 +11,18 @@ import { findOpeningTags, lineAt } from '../../ast/markup.js';
  * `true`, ENABLING autocorrect - the opposite of the author's intent.
  * (`autocorrect="on"` stays enabled in both versions, so it needs no change.)
  *
- * The safe, dialect-agnostic fix is to remove `autocorrect="off"`, restoring the
- * disabled default. Scoped to `ion-input`/`ion-searchbar` so a native
- * `<input autocorrect="off">` (valid Safari HTML) is never touched.
- *
- * This migration auto-fixes what it can safely edit: external templates
- * (`.html`), Vue SFCs (`.vue`), and React JSX (`.tsx`, `<IonInput>`). The
- * surfaces that can't be auto-edited (Angular inline templates, `.js`/`.jsx`)
- * are surfaced report-only by the companion `core-autocorrect-manual`.
+ * The fix removes `autocorrect="off"`, restoring the disabled default. Scoped to
+ * `ion-input`/`ion-searchbar` so a native `<input autocorrect="off">` (valid
+ * Safari HTML) is never touched. Surfaces this can't auto-edit are reported by
+ * the companion `core-autocorrect-manual`.
  *
  * See https://ionicframework.com/docs/updating/9-0#input
  */
 const TEMPLATE_GLOBS = ['**/*.html', '**/*.vue'];
 const TEMPLATE_TAGS = ['ion-input', 'ion-searchbar'];
 const JSX_TAGS = new Set(['IonInput', 'IonSearchbar']);
-const OFF_ATTR = /\s+autocorrect\s*=\s*["']off["']/;
-const DETAIL = 'remove autocorrect="off" (v9 boolean: "off" now enables autocorrect)';
+export const OFF_ATTR = /\s+autocorrect\s*=\s*["']off["']/;
+export const DETAIL = 'remove autocorrect="off" (v9 boolean: "off" now enables autocorrect)';
 
 /** JSX `<IonInput>`/`<IonSearchbar>` elements across the loaded TS sources. */
 function jsxAutocorrectOff(ctx: MigrationContext): JsxAttribute[] {

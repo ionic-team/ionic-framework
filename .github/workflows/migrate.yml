@@ -78,7 +78,7 @@ jobs:
       - name: Build
         run: npm run build
 
-  # Always-running required gate -- see header comment for why this exists.
+  # Always-running required gate. See header comment for why this exists.
   # Green when the package was untouched (test-migrate skipped) or tests pass;
   # red when detection failed or the tests actually failed.
   verify-migrate:

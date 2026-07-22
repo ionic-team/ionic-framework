@@ -3,8 +3,8 @@ import type { RunResult } from './runner.js';
 /**
  * Render a "doctor" report of a run: one section per migration that matched,
  * grouped by whether it was auto-applied or needs manual work, each with its
- * finding count and docs link. Plain ASCII so it renders cleanly in any
- * terminal and copy-pastes without mangling.
+ * finding count and docs link. Plain ASCII so it renders in any terminal and
+ * copy-pastes without mangling.
  */
 export function buildReport(result: RunResult): string {
   if (result.entries.length === 0) {

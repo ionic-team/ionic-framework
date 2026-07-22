@@ -11,13 +11,12 @@ const REWRITES: Record<string, string> = {
  *   - `@ionic/angular`            (was lazy)       -> `@ionic/angular/lazy`
  *   - `@ionic/angular/standalone` (was standalone) -> `@ionic/angular`
  *
- * See https://ionicframework.com/docs/updating/9-0#component-imports
+ * Single-shot: `@ionic/angular` means lazy in v8 but standalone in v9, so the
+ * two states are textually identical and re-running would wrongly rewrite
+ * already-migrated imports. The engine's version gate blocks re-application once
+ * the project reads as v9.
  *
- * Single-shot: `@ionic/angular` is a v8 lazy import but a v9 standalone import,
- * so the two states are textually identical and this migration cannot be
- * re-run safely. The migration assumes a v8 starting point; the engine's
- * version gate (see `detectFrameworks`, which recognizes the v9 pin) guards
- * against re-application after `angular-deps` has bumped `package.json`.
+ * See https://ionicframework.com/docs/updating/9-0#component-imports
  */
 export const angularStandaloneImports: Migration = {
   id: 'angular-standalone-imports',

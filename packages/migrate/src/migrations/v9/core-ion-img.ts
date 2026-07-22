@@ -19,7 +19,7 @@ export const coreIonImg: Migration = {
   detect(ctx) {
     return scanLines(ctx, SOURCE_GLOBS, (line) =>
       /<ion-img\b|\bIonImg\b/.test(line)
-        ? 'ion-img is deprecated; replace with a native <img loading="lazy" decoding="async">'
+        ? 'ion-img is deprecated. Replace with a native <img loading="lazy" decoding="async">'
         : undefined
     );
   },

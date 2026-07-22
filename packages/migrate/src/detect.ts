@@ -22,6 +22,20 @@ export function parseMajor(range: string | undefined): number | undefined {
 }
 
 /**
+ * Whether a range is a plain, comparable semver range rather than a
+ * protocol/alias reference (`workspace:`, `catalog:`, `npm:`, `file:`, `link:`,
+ * `portal:`), git/URL ref, or dist-tag (`latest`, `*`). Those can embed a digit
+ * (`catalog:vue3`, `git+...#v3.4.0`), so a bare digit-scan would wrongly treat
+ * them as a version.
+ */
+export function isPlainSemverRange(range: string): boolean {
+  if (/^(workspace|catalog|npm|file|link|portal|git|https?):/.test(range)) return false;
+  if (/^git\+|:\/\//.test(range)) return false;
+  // A plain range starts with an optional operator then a number.
+  return /^\s*[\^~>=<]*\s*\d/.test(range);
+}
+
+/**
  * Determine which Ionic framework binding(s) a project depends on and the major
  * version installed for each, by reading its `package.json`.
  */
@@ -46,11 +60,21 @@ export function detectFrameworks(ctx: MigrationContext): DetectedFramework[] {
     string,
   ][]) {
     const range = deps[pkgName];
+    if (range === undefined) continue;
     // A project already pinned to the v9 dev build reads as major 8 via semver
     // (the pin is versioned `8.8.x-dev`), so recognize it explicitly as v9.
     // This closes the re-run gate: a migrated project detects as v9 and selects
     // no v8->v9 migrations. Remove once the pin becomes `^9.0.0` at GA.
-    const major = range === IONIC_V9_VERSION ? 9 : parseMajor(range);
+    if (range === IONIC_V9_VERSION) {
+      detected.push({ framework, major: 9 });
+      continue;
+    }
+    // Only a plain, bumpable semver range gates re-runs correctly. angular-deps
+    // won't rewrite a protocol/alias range (npm:, git+, workspace:, ...), so if
+    // we migrated one the version gate would never close and single-shot
+    // migrations could re-run and corrupt already-migrated code. Skip it.
+    if (!isPlainSemverRange(range)) continue;
+    const major = parseMajor(range);
     if (major !== undefined) {
       detected.push({ framework, major });
     }

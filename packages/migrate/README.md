@@ -23,7 +23,7 @@ tree, so git is your undo. Then review the diff and the checklist it prints.
 
 ```
 --dry-run        Report what would change without writing anything
---check          Report only; exit non-zero if any migration applies (for CI)
+--check          Report only. Exit non-zero if any migration applies (for CI)
 --experimental   Include experimental migrations
 --force          Write even if the working tree is dirty or not a git repo
 --no-format      Skip running the project's Prettier over changed files
@@ -51,12 +51,33 @@ Every breaking change is one of two kinds:
 | NgModule bootstrap zone provider | Angular | report |
 | `@ionic/react` + React Router v6 bumps, drop `@types/react-router*` | React | auto |
 | `<Route exact>` removal, `component={X}` -> `element={<X />}` | React | auto |
-| `Redirect`/`useHistory`/`RouteComponentProps`, `render` prop, non-identifier `component` | React | report |
+| React Router v6: removed imports, `IonRedirect`, `render`/non-identifier `component`, `history` prop, regex paths | React | report |
 | `@ionic/vue` + Vue Router 5 + Vue 3.5 bumps | Vue | auto |
 | `next()` in navigation guards | Vue | report |
 | `autocorrect="off"` on `ion-input`/`ion-searchbar` | all | auto |
 | Legacy picker (`ion-picker-legacy`, `pickerController`, removed types) | all | report |
 | `ion-img` deprecation | all | report |
+| `ion-nav` router removal (`setRouteId`/`getRouteId`/`updateURL`) | all | report |
+
+### What it can't detect
+
+Some v9 breaks are runtime behavior changes with no reliable source signal, so
+the tool leaves them out rather than guess. Check these by hand against the
+[migration guide](https://ionicframework.com/docs/updating/9-0):
+
+- `ion-modal`'s `handleBehavior` now defaults to `"cycle"`. A sheet modal with a
+  handle becomes focusable and cycles its breakpoints. Set `handleBehavior="none"`
+  to keep the handle inert.
+- `ion-select`'s `ionChange` only fires on an actual change now, and the action
+  sheet's `selected` role is gone. Code that ran on every confirmation, or read
+  that role, needs a look.
+- Platform detection no longer honors Capacitor 2's `isNative` flag, so a
+  Capacitor 2 app reports web from `isPlatform('capacitor')` and `'hybrid'`.
+  Upgrade to Capacitor 7 or later.
+- In React and Vue the `swipeBackEnabled` config is read once when the outlet
+  mounts. If you toggle it at runtime, move to the `swipeGesture` prop on
+  `ion-router-outlet`. Setting it once at startup still works, so most apps need
+  no change, which is why we don't flag it.
 
 ## How it works
 

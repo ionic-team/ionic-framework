@@ -1,21 +1,15 @@
 import { SyntaxKind } from 'ts-morph';
 
 import type { Finding, Migration } from '../../types.js';
+import { ZONE_PROVIDER } from './angular-zoneless.js';
 
 /**
- * Report-only companion to `angular-zoneless`. The auto-fix adds
- * `provideZoneChangeDetection()` to the standalone `bootstrapApplication`
- * providers array, but NgModule apps bootstrap via
- * `platformBrowserDynamic().bootstrapModule(AppModule)`, where the provider is
- * passed as `applicationProviders` on the `bootstrapModule` call (Angular's own
- * recommendation for NgModule apps; it is also accepted in the AppModule's
- * `@NgModule({ providers })`). Which shape fits depends on the app, so this
- * flags the bootstrap for manual migration rather than dropping the warning
- * NgModule apps previously received.
+ * Report-only companion to `angular-zoneless`. NgModule apps bootstrap via
+ * `bootstrapModule`, which the auto-fix can't edit, so flag them for a manual
+ * zone-provider migration rather than dropping the warning they previously got.
  *
  * See https://ionicframework.com/docs/updating/9-0#zoneless-change-detection
  */
-const ZONE_PROVIDER = /provide(Experimental)?Zone(less)?ChangeDetection/;
 const DETAIL =
   'NgModule bootstrap: pass provideZoneChangeDetection() as applicationProviders on bootstrapModule to keep Zone.js';
 

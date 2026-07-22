@@ -1,4 +1,4 @@
-import { parseMajor } from '../detect.js';
+import { isPlainSemverRange, parseMajor } from '../detect.js';
 import type { PackageJson } from './package-json.js';
 import type { Finding, Framework, Migration } from '../types.js';
 import { findDependency, readPackageJson, setRange, writePackageJson } from './package-json.js';
@@ -22,20 +22,6 @@ export interface DepsMigrationOptions {
 
 function targetRange(target: BumpTarget): string {
   return typeof target === 'number' ? `^${target}.0.0` : target;
-}
-
-/**
- * Ranges that don't express a plain, comparable version and must never be
- * rewritten: protocol/alias references (`workspace:`, `catalog:`, `npm:`,
- * `file:`, `link:`, `portal:`), git/URL refs, and dist-tags (`latest`, `*`).
- * These can embed a digit (`catalog:vue3`, `git+...#v3.4.0`), so a bare
- * digit-scan would wrongly treat them as a version.
- */
-function isPlainSemverRange(range: string): boolean {
-  if (/^(workspace|catalog|npm|file|link|portal|git|https?):/.test(range)) return false;
-  if (/^git\+|:\/\//.test(range)) return false;
-  // A plain range starts with an optional operator then a number.
-  return /^\s*[\^~>=<]*\s*\d/.test(range);
 }
 
 /**

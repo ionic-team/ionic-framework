@@ -17,7 +17,7 @@ export interface OpeningTag {
  * quoted attribute values, so a `>` inside an attribute (e.g. an Angular
  * binding `[disabled]="a > b"`) does not end the tag early. This is enough to
  * safely locate and edit attributes on specific elements without a full HTML
- * parser; it is deliberately not a general-purpose parser.
+ * parser. It is deliberately not a general-purpose parser.
  */
 export function findOpeningTags(source: string, tagNames: string[]): OpeningTag[] {
   const names = new Set(tagNames.map((n) => n.toLowerCase()));

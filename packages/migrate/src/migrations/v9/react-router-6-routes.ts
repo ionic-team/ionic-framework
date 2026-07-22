@@ -4,7 +4,8 @@ import type { JsxAttribute, JsxExpression, JsxOpeningElement, JsxSelfClosingElem
 import type { MigrationContext } from '../../context.js';
 import type { Migration } from '../../types.js';
 
-const ROUTE_TAGS = new Set(['Route', 'IonRoute']);
+/** The route element tags handled by both react-router migrations. */
+export const ROUTE_TAGS = new Set(['Route', 'IonRoute']);
 
 type RouteElement = JsxOpeningElement | JsxSelfClosingElement;
 
@@ -91,7 +92,7 @@ function routeActions(ctx: MigrationContext): RouteAction[] {
  *   - `<Route exact />`             ->  `<Route />`  (v6 matches exactly by default)
  *
  * The semantic changes that need developer judgement (`render` prop, removed
- * hooks/props, `/*` nested paths) stay report-only in `react-router-6-code`.
+ * hooks/props) stay report-only in `react-router-6-code`.
  *
  * See https://ionicframework.com/docs/updating/9-0#react-router
  */

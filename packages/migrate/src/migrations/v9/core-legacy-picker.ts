@@ -23,13 +23,13 @@ export const coreLegacyPicker: Migration = {
         return 'replace legacy picker with ion-picker (inline)';
       }
       if (/\bpickerController\b|\buseIonPicker\b/.test(line)) {
-        return 'remove pickerController/useIonPicker; use the inline ion-picker';
+        return 'remove pickerController/useIonPicker - use the inline ion-picker';
       }
       // The legacy picker's type exports were removed alongside the component.
       // (PickerColumn/PickerColumnOption are intentionally excluded: they are
       // also valid v9 component names, so matching them bare would be noisy.)
       if (/\b(PickerOptions|PickerButton)\b/.test(line)) {
-        return 'legacy picker type removed; use the inline ion-picker component API';
+        return 'legacy picker type removed. Use the inline ion-picker component API';
       }
       return undefined;
     });

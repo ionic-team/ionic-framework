@@ -11,15 +11,13 @@ import type { Migration } from '../../types.js';
  * keeps re-rendering on async state exactly as it did on v8. The developer can
  * adopt zoneless later on their own schedule.
  *
- * Scope: the standalone `bootstrapApplication(App, { providers: [...] })` shape.
- * NgModule bootstrap (`platformBrowserDynamic().bootstrapModule`) needs the
- * provider passed as `applicationProviders` on the `bootstrapModule` call and
- * is left for manual migration. Zone.js must remain in `angular.json` polyfills
- * (v8 apps already have it); this migration does not touch that.
+ * Scoped to the standalone `bootstrapApplication` shape. NgModule bootstraps
+ * are handled report-only by the companion `angular-zoneless-manual`.
  *
  * See https://ionicframework.com/docs/updating/9-0#zoneless-change-detection
  */
-const ZONE_PROVIDER = /provide(Experimental)?Zone(less)?ChangeDetection/;
+/** Matches any zone or zoneless change-detection provider already in place. */
+export const ZONE_PROVIDER = /provide(Experimental)?Zone(less)?ChangeDetection/;
 const CORE_MODULE = '@angular/core';
 const PROVIDER = 'provideZoneChangeDetection';
 

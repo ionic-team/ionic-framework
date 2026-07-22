@@ -22,7 +22,7 @@ export const angularCssTilde: Migration = {
     const findings: Finding[] = [];
     for (const filePath of ctx.glob(['**/*.css', '**/*.scss'])) {
       const text = ctx.readFile(filePath);
-      if (!text) continue;
+      if (text === undefined) continue;
       text.split('\n').forEach((line, i) => {
         // Fresh non-global regex per line: TILDE_IONIC_IMPORT is /g (needed for
         // fix's replace), and a global regex's stateful lastIndex makes repeated
@@ -38,7 +38,7 @@ export const angularCssTilde: Migration = {
   fix(ctx) {
     for (const filePath of ctx.glob(['**/*.css', '**/*.scss'])) {
       const text = ctx.readFile(filePath);
-      if (!text) continue;
+      if (text === undefined) continue;
       const next = text.replace(TILDE_IONIC_IMPORT, '$1$2');
       if (next !== text) ctx.writeFile(filePath, next);
     }

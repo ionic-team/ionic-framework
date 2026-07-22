@@ -19,7 +19,7 @@ export interface RunOptions {
 }
 
 /**
- * Run migrations against a context. Each migration is detected first; only
+ * Run migrations against a context. Each migration is detected first, and only
  * migrations with findings are reported. Auto-fixable migrations are applied
  * unless {@link RunOptions.dryRun} is set. Report-only migrations (no `fix`)
  * are always reported but never applied.

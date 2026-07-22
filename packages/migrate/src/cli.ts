@@ -29,7 +29,7 @@ edits are written in place (commit first - git is your undo).
 
 Options:
   --dry-run        Report what would change without writing anything
-  --check          Report only; exit non-zero if any migration applies (for CI)
+  --check          Report only. Exit non-zero if any migration applies (for CI)
   --experimental   Include experimental migrations
   --force          Write even if the working tree is dirty or not a git repo
   --no-format      Skip running the project's Prettier over changed files
@@ -167,7 +167,7 @@ function main(): void {
       // Prettier's own stderr when we have it) and exit successfully.
       const stderr = e instanceof Error ? (e as { stderr?: Buffer | string }).stderr : undefined;
       const reason = String(stderr ?? '').trim() || (e instanceof Error ? e.message : String(e));
-      console.warn(`\nSkipped Prettier formatting; it exited with an error:\n${reason}`);
+      console.warn(`\nSkipped Prettier formatting. It exited with an error:\n${reason}`);
     }
   }
 

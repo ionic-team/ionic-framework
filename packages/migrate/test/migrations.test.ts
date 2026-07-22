@@ -9,6 +9,7 @@ import { vueDeps } from '../src/migrations/v9/vue-deps.js';
 import { vueRouterNextGuard } from '../src/migrations/v9/vue-router-next-guard.js';
 import { coreLegacyPicker } from '../src/migrations/v9/core-legacy-picker.js';
 import { coreIonImg } from '../src/migrations/v9/core-ion-img.js';
+import { coreNavRouter } from '../src/migrations/v9/core-nav-router.js';
 
 describe('react-deps', () => {
   it('bumps @ionic/react + router deps and drops @types/react-router*', () => {
@@ -145,6 +146,38 @@ describe('react-router-6-code (report-only)', () => {
     expect(details.some((d) => d.includes('"component" prop removed'))).toBe(true);
   });
 
+  it('reports IonRedirect imported from @ionic/react', () => {
+    const ctx = createInMemoryContext({
+      'App.tsx': `import { IonRedirect, IonPage } from '@ionic/react';\nexport const App = () => <IonPage />;\n`,
+    });
+
+    const details = reactRouter6Code.detect(ctx).map((f) => f.detail);
+
+    expect(details.some((d) => d.includes('IonRedirect removed'))).toBe(true);
+  });
+
+  it('reports the removed history prop on IonReact routers', () => {
+    const ctx = createInMemoryContext({
+      'App.tsx': `export const App = () => <IonReactRouter history={history}>x</IonReactRouter>;\n`,
+    });
+
+    const details = reactRouter6Code.detect(ctx).map((f) => f.detail);
+
+    expect(details.some((d) => d.includes('history prop removed'))).toBe(true);
+  });
+
+  it('reports regex path constraints but not plain paths', () => {
+    const ctx = createInMemoryContext({
+      'App.tsx':
+        `export const A = () => <Route path="/:tab(sessions)" />;\n` +
+        `export const B = () => <Route path="/sessions/:id" />;\n`,
+    });
+
+    const details = reactRouter6Code.detect(ctx).map((f) => f.detail);
+
+    expect(details.filter((d) => d.includes('regex path constraints removed'))).toHaveLength(1);
+  });
+
   it('ignores non-router imports and non-Route elements', () => {
     const ctx = createInMemoryContext({
       'App.tsx':
@@ -179,11 +212,23 @@ describe('core report-only migrations', () => {
     expect(coreIonImg.detect(ctx)).toHaveLength(1);
   });
 
+  it('core-nav-router flags removed setRouteId/getRouteId and updateURL', () => {
+    const ctx = createInMemoryContext({
+      'nav.ts':
+        `await nav.setRouteId('home');\n` +
+        `const id = nav.getRouteId();\n` +
+        `await nav.push(Page, undefined, { updateURL: false });\n`,
+    });
+
+    expect(coreNavRouter.detect(ctx)).toHaveLength(3);
+  });
+
   it('does not flag when nothing matches', () => {
     const ctx = createInMemoryContext({ 'page.html': `<ion-button>Hi</ion-button>\n` });
 
     expect(coreLegacyPicker.detect(ctx)).toEqual([]);
     expect(coreIonImg.detect(ctx)).toEqual([]);
+    expect(coreNavRouter.detect(ctx)).toEqual([]);
   });
 });
 

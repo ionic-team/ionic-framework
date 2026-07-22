@@ -44,9 +44,9 @@ function EXCLUDE_GLOBS(root: string): string[] {
  * {@link project} (ts-morph); config, CSS, HTML, and Vue-SFC edits use
  * {@link readFile}/{@link writeFile}. Both are backed by a single filesystem
  * (in-memory for tests, real disk for the CLI). Note the two views are not
- * auto-synced: ts-morph caches the text of files it has loaded, so a
- * {@link writeFile} to a `.ts`/`.tsx` file ts-morph also holds will be clobbered
- * by the next {@link save}. Today no migration edits a loaded file both ways, so
+ * auto-synced: {@link writeFile} buffers text writes that {@link save} flushes
+ * after the ts-morph save, so writing a `.ts`/`.tsx` file ts-morph also holds
+ * would override its edits. Today no migration edits a loaded file both ways, so
  * a given file is only ever touched through one view.
  */
 export interface MigrationContext {
@@ -56,7 +56,7 @@ export interface MigrationContext {
   readonly project: Project;
   /** Read a file's text, or `undefined` if it does not exist. */
   readFile(relPath: string): string | undefined;
-  /** Write a file's text, creating it if needed. */
+  /** Buffer a file's text (creating it if needed); persisted by {@link save}. */
   writeFile(relPath: string, content: string): void;
   /** Return paths (relative to {@link rootDir}) matching the given glob patterns. */
   glob(patterns: string[]): string[];
@@ -67,13 +67,19 @@ export interface MigrationContext {
    * {@link writeFile} or a ts-morph {@link save}. Drives the post-run formatter.
    */
   readonly touchedFiles: ReadonlySet<string>;
-  /** Persist any pending ts-morph edits to the underlying filesystem. */
+  /** Persist pending ts-morph edits and buffered text writes to the filesystem. */
   save(): void;
 }
 
 function buildContext(rootDir: string, project: Project): MigrationContext {
   const fs = project.getFileSystem();
   const touched = new Set<string>();
+  // Text writes are buffered here and flushed only by `save()`. A run that
+  // throws partway (a later migration failing) never calls `save()`, so nothing
+  // lands on disk. This keeps the package.json version bump - which closes the
+  // re-run gate - from persisting unless every migration and the ts-morph save
+  // succeeded.
+  const pendingWrites = new Map<string, string>();
   const toRelative = (abs: string): string => {
     const prefix = `${rootDir.replace(/\/$/, '')}/`;
     return abs.startsWith(prefix) ? abs.slice(prefix.length) : abs;
@@ -83,11 +89,12 @@ function buildContext(rootDir: string, project: Project): MigrationContext {
     project,
     touchedFiles: touched,
     readFile(relPath) {
+      if (pendingWrites.has(relPath)) return pendingWrites.get(relPath);
       const abs = join(rootDir, relPath);
       return fs.fileExistsSync(abs) ? fs.readFileSync(abs) : undefined;
     },
     writeFile(relPath, content) {
-      fs.writeFileSync(join(rootDir, relPath), content);
+      pendingWrites.set(relPath, content);
       touched.add(relPath);
     },
     glob(patterns) {
@@ -107,14 +114,20 @@ function buildContext(rootDir: string, project: Project): MigrationContext {
       for (const file of project.getSourceFiles()) {
         if (!file.isSaved()) touched.add(toRelative(file.getFilePath()));
       }
+      // ts-morph edits first, then the buffered text writes, so the gate-closing
+      // package.json bump is the last thing to hit disk.
       project.saveSync();
+      for (const [relPath, content] of pendingWrites) {
+        fs.writeFileSync(join(rootDir, relPath), content);
+      }
+      pendingWrites.clear();
     },
   };
 }
 
 /**
  * Build a context whose filesystem lives entirely in memory. `.ts`/`.tsx`
- * entries are loaded as ts-morph source files; everything else is written as a
+ * entries are loaded as ts-morph source files. Everything else is written as a
  * plain file. Used by tests.
  */
 export function createInMemoryContext(files: Record<string, string>, rootDir = '/app'): MigrationContext {

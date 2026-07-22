@@ -60,6 +60,22 @@ describe('detectFrameworks', () => {
     expect(detectFrameworks(ctx)).toEqual([{ framework: 'angular', major: 9 }]);
   });
 
+  it('skips a protocol/alias dependency range it cannot bump or gate', () => {
+    // angular-deps won't rewrite an `npm:`/`workspace:` range, so detecting it
+    // as v8 would leave the re-run gate open and let single-shot migrations
+    // corrupt already-migrated code. It must not be treated as migratable.
+    const ctx = createInMemoryContext({
+      'package.json': JSON.stringify({
+        dependencies: {
+          '@ionic/angular': 'npm:@myco/ionic-fork@8.5.0',
+          '@ionic/react': 'workspace:^8.0.0',
+        },
+      }),
+    });
+
+    expect(detectFrameworks(ctx)).toEqual([]);
+  });
+
   it('throws a clear error on a malformed package.json', () => {
     const ctx = createInMemoryContext({ 'package.json': '{ not valid json' });
 
@@ -149,6 +165,30 @@ describe('run', () => {
     const result = run(ctx, [rewriteFoo]);
 
     expect(result.entries).toEqual([]);
+  });
+
+  it('persists nothing to disk when a later migration throws', () => {
+    // Writes are buffered until save(), which only runs after every migration
+    // succeeds. A throw partway must leave the files on disk untouched so a
+    // re-run starts clean and the gate-closing package.json bump never persists.
+    const ctx = createInMemoryContext({ 'package.json': '{}\n' });
+    const bumpFirst = fakeMigration({
+      id: 'bump-first',
+      detect: () => [{ filePath: 'package.json', line: 1, detail: 'bump' }],
+      fix: (c) => c.writeFile('package.json', '{"bumped":true}\n'),
+    });
+    const throwsSecond = fakeMigration({
+      id: 'throws-second',
+      detect: () => [{ filePath: 'data.txt', line: 1, detail: 'x' }],
+      fix: () => {
+        throw new Error('boom');
+      },
+    });
+
+    expect(() => run(ctx, [bumpFirst, throwsSecond])).toThrow(/boom/);
+    // Read the underlying filesystem, not the write buffer, to prove nothing landed.
+    const fs = ctx.project.getFileSystem();
+    expect(fs.readFileSync(`${ctx.rootDir}/package.json`)).toBe('{}\n');
   });
 });
 

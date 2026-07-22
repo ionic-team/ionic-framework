@@ -2,7 +2,7 @@ import type { Migration } from '../../types.js';
 import { scanLines } from '../../ast/text-scan.js';
 
 /**
- * Vue Router 5 deprecates calling `next()` inside navigation guards; the
+ * Vue Router 5 deprecates calling `next()` inside navigation guards. The
  * return-value form is preferred. Report-only: flags files that declare guards
  * so the developer can migrate the callback style. The dep bump itself is
  * handled by `vue-deps`.

@@ -14,10 +14,11 @@ import { coreLegacyPicker } from './v9/core-legacy-picker.js';
 import { coreAutocorrect } from './v9/core-autocorrect.js';
 import { coreAutocorrectManual } from './v9/core-autocorrect-manual.js';
 import { coreIonImg } from './v9/core-ion-img.js';
+import { coreNavRouter } from './v9/core-nav-router.js';
 
 /**
  * Every migration the tool knows about, across all major versions. To add a
- * migration, drop a file under `migrations/v<major>/` and register it here; the
+ * migration, drop a file under `migrations/v<major>/` and register it here. The
  * engine filters by version range and framework at run time.
  */
 export const allMigrations: Migration[] = [
@@ -35,4 +36,5 @@ export const allMigrations: Migration[] = [
   coreAutocorrect,
   coreAutocorrectManual,
   coreIonImg,
+  coreNavRouter,
 ];
