@@ -147,8 +147,10 @@ export class Header implements ComponentInterface {
         cloneElement('ion-back-button');
       });
 
-      await this.setupCondenseHeader(contentEl, pageEl);
-      this.activeEffect = effect;
+      const didSetup = await this.setupCondenseHeader(contentEl, pageEl);
+      if (didSetup) {
+        this.activeEffect = effect;
+      }
     } else if (hasFade && !isModeRestricted) {
       if (!contentEl) {
         printIonContentErrorMsg(this.el);
@@ -222,13 +224,13 @@ export class Header implements ComponentInterface {
     }
   }
 
-  private async setupCondenseHeader(contentEl: HTMLElement | null, pageEl: Element | null) {
+  private async setupCondenseHeader(contentEl: HTMLElement | null, pageEl: Element | null): Promise<boolean> {
     if (!contentEl || !pageEl) {
       printIonContentErrorMsg(this.el);
-      return;
+      return false;
     }
     if (typeof (IntersectionObserver as any) === 'undefined') {
-      return;
+      return false;
     }
 
     this.scrollEl = await getScrollElement(contentEl);
@@ -244,7 +246,7 @@ export class Header implements ComponentInterface {
         '[ion-header] - The condense scroll effect requires an <ion-title size="large"> in the condense header.',
         this.el
       );
-      return;
+      return false;
     }
 
     const headers = pageEl.querySelectorAll('ion-header');
@@ -254,14 +256,14 @@ export class Header implements ComponentInterface {
     }) as HTMLElement | undefined;
 
     if (!this.collapsibleMainHeader) {
-      return;
+      return false;
     }
 
     const mainHeaderIndex = createHeaderIndex(this.collapsibleMainHeader);
     const scrollHeaderIndex = createHeaderIndex(this.el);
 
     if (!mainHeaderIndex || !scrollHeaderIndex) {
-      return;
+      return false;
     }
 
     setHeaderActive(mainHeaderIndex, false);
@@ -298,6 +300,8 @@ export class Header implements ComponentInterface {
         this.collapsibleMainHeader.classList.add('header-collapse-main');
       }
     });
+
+    return true;
   }
 
   render() {
