@@ -28,6 +28,13 @@ export interface ScrollHideOptions {
 export type ScrollHideController = {
   /** Whether the component is currently hidden by the scroll effect. */
   readonly isHidden: boolean;
+  /**
+   * Activate the controller by attaching listeners, observers, and
+   * content classes. Must be called only after the caller confirms this
+   * setup is still current (promise-identity guard). A controller that
+   * is never initialized has no side effects and can be discarded.
+   */
+  init: () => void;
   /** Destroy all listeners, observers, and clean up DOM state. */
   destroy: () => void;
 };
@@ -186,23 +193,29 @@ export const createScrollHideController = async (
     });
   };
 
-  // --- Setup ---
-
-  updateHideHeight();
-
-  if (typeof ResizeObserver !== 'undefined') {
-    resizeObserver = new ResizeObserver(() => updateHideHeight());
-    resizeObserver.observe(el);
-  }
-
-  scrollEl.addEventListener('scroll', handleScroll, { passive: true });
-  scrollEl.addEventListener('wheel', handleWheel as EventListener, { passive: true });
-
-  contentEl.classList.add(contentPartnerClass);
-
   // --- Controller ---
 
+  let initialized = false;
+
+  const init = () => {
+    initialized = true;
+
+    updateHideHeight();
+
+    if (typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(() => updateHideHeight());
+      resizeObserver.observe(el);
+    }
+
+    scrollEl.addEventListener('scroll', handleScroll, { passive: true });
+    scrollEl.addEventListener('wheel', handleWheel as EventListener, { passive: true });
+
+    contentEl.classList.add(contentPartnerClass);
+  };
+
   const destroy = () => {
+    if (!initialized) return;
+
     scrollEl.removeEventListener('scroll', handleScroll);
     scrollEl.removeEventListener('wheel', handleWheel as EventListener);
 
@@ -226,6 +239,7 @@ export const createScrollHideController = async (
 
   const controller = {
     isHidden: false,
+    init,
     destroy,
   };
 

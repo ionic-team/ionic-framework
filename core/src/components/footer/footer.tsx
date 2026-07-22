@@ -181,9 +181,8 @@ export class Footer implements ComponentInterface {
 
     if (this.scrollHideCtrlPromise === promise) {
       this.scrollHideCtrlPromise = null;
+      controller.init();
       this.scrollHideCtrl = controller;
-    } else {
-      controller.destroy();
     }
   };
 

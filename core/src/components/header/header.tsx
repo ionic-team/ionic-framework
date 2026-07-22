@@ -178,10 +178,8 @@ export class Header implements ComponentInterface {
 
     if (this.scrollHideCtrlPromise === promise) {
       this.scrollHideCtrlPromise = null;
+      controller.init();
       this.scrollHideCtrl = controller;
-    } else {
-      // A newer setup superseded this one — tear down the stale controller.
-      controller.destroy();
     }
   };
 
