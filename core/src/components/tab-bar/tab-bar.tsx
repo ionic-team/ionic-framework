@@ -225,7 +225,7 @@ export class TabBar implements ComponentInterface {
       hiddenClass: 'tab-bar-scroll-hidden',
       contentPartnerClass: 'content-tab-bar-hide-scroll-partner',
       contentHiddenClass: 'content-tab-bar-hide-scroll-hidden',
-      shouldKeepAriaHidden: () => this.keyboardVisible,
+      shouldKeepAriaHidden: () => this.keyboardVisible && this.el.getAttribute('slot') !== 'top',
     });
     this.scrollHideCtrlPromise = setupPromise;
 
