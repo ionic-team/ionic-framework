@@ -45,6 +45,7 @@ export class Header implements ComponentInterface {
   private scrollHideCtrlPromise: Promise<ScrollHideController> | null = null;
   private hasWarnedCollapse = false;
   private activeEffect?: string;
+  private fadeCondenseSetupId = 0;
 
   @Element() el!: HTMLElement;
 
@@ -186,7 +187,15 @@ export class Header implements ComponentInterface {
   };
 
   private setupFadeHeader = async (contentEl: HTMLElement, condenseHeader: HTMLElement | null) => {
-    const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
+    const setupId = ++this.fadeCondenseSetupId;
+
+    const scrollEl = await getScrollElement(contentEl);
+
+    if (this.fadeCondenseSetupId !== setupId) {
+      return;
+    }
+
+    this.scrollEl = scrollEl;
 
     /**
      * Handle fading of toolbars on scroll
@@ -201,6 +210,7 @@ export class Header implements ComponentInterface {
 
   private destroyCollapsibleHeader() {
     this.activeEffect = undefined;
+    this.fadeCondenseSetupId++;
     this.scrollHideCtrlPromise = null;
 
     if (this.scrollHideCtrl) {
@@ -233,7 +243,15 @@ export class Header implements ComponentInterface {
       return false;
     }
 
-    this.scrollEl = await getScrollElement(contentEl);
+    const setupId = ++this.fadeCondenseSetupId;
+
+    const scrollEl = await getScrollElement(contentEl);
+
+    if (this.fadeCondenseSetupId !== setupId) {
+      return false;
+    }
+
+    this.scrollEl = scrollEl;
 
     /**
      * The condense effect requires an ion-title with size="large"

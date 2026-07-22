@@ -34,6 +34,7 @@ export class Footer implements ComponentInterface {
   private scrollHideCtrlPromise: Promise<ScrollHideController> | null = null;
   private hasWarnedCollapse = false;
   private activeEffect?: string;
+  private fadeSetupId = 0;
 
   @State() private keyboardVisible = false;
 
@@ -187,7 +188,15 @@ export class Footer implements ComponentInterface {
   };
 
   private setupFadeFooter = async (contentEl: HTMLElement) => {
-    const scrollEl = (this.scrollEl = await getScrollElement(contentEl));
+    const setupId = ++this.fadeSetupId;
+
+    const scrollEl = await getScrollElement(contentEl);
+
+    if (this.fadeSetupId !== setupId) {
+      return;
+    }
+
+    this.scrollEl = scrollEl;
 
     /**
      * Handle fading of toolbars on scroll
@@ -202,6 +211,7 @@ export class Footer implements ComponentInterface {
 
   private destroyCollapsibleFooter() {
     this.activeEffect = undefined;
+    this.fadeSetupId++;
     this.scrollHideCtrlPromise = null;
 
     if (this.scrollHideCtrl) {
