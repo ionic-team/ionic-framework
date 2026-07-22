@@ -54,7 +54,7 @@ const Home: React.FC<{
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonHeader collapse="condense">
+        <IonHeader scrollEffect="condense">
           <IonToolbar>
             <IonTitle size="large">HOME</IonTitle>
           </IonToolbar>
@@ -82,7 +82,7 @@ const NewRoute: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonHeader collapse="condense">
+        <IonHeader scrollEffect="condense">
           <IonToolbar>
             <IonTitle size="large">New Route</IonTitle>
           </IonToolbar>
@@ -101,7 +101,7 @@ const Failed: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonHeader collapse="condense">
+        <IonHeader scrollEffect="condense">
           <IonToolbar>
             <IonTitle size="large">New Route Failed</IonTitle>
           </IonToolbar>
