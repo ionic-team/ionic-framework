@@ -157,7 +157,7 @@ export class TabBar implements ComponentInterface {
       // so keeping a single imperative path avoids render() clearing
       // the scroll-set attribute on re-render.
       const shouldHide = keyboardOpen && this.el.getAttribute('slot') !== 'top';
-      const isScrollHidden = this.scrollHideCtrl?.isHidden ?? false;
+      const isScrollHidden = this.scrollHideCtrl?.isHidden() ?? false;
       if (shouldHide || isScrollHidden) {
         this.el.setAttribute('aria-hidden', 'true');
       } else {

@@ -27,7 +27,7 @@ export interface ScrollHideOptions {
 
 export type ScrollHideController = {
   /** Whether the component is currently hidden by the scroll effect. */
-  readonly isHidden: boolean;
+  isHidden: () => boolean;
   /**
    * Activate the controller by attaching listeners, observers, and
    * content classes. Must be called only after the caller confirms this
@@ -87,7 +87,6 @@ export const createScrollHideController = async (
 
   const setHidden = (hidden: boolean) => {
     controllerIsHidden = hidden;
-    controller.isHidden = hidden;
     el.classList.toggle(hiddenClass, hidden);
 
     if (hidden) {
@@ -232,16 +231,11 @@ export const createScrollHideController = async (
       el.removeAttribute('inert');
       el.removeAttribute('aria-hidden');
       controllerIsHidden = false;
-      controller.isHidden = false;
     }
     el.style.removeProperty(cssVar);
   };
 
-  const controller = {
-    isHidden: false,
-    init,
-    destroy,
-  };
+  const isHidden = () => controllerIsHidden;
 
-  return controller as ScrollHideController;
+  return { isHidden, init, destroy };
 };
