@@ -1228,7 +1228,8 @@ export class Select implements ComponentInterface {
      * TODO(FW-5592): Remove hasStartEndSlots condition
      */
     const labelShouldFloat =
-      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || isExpanded || hasStartEndSlots));
+      labelPlacement === 'stacked' ||
+      (labelPlacement === 'floating' && (hasValue || hasFocus || isExpanded || hasStartEndSlots));
 
     return (
       <Host
