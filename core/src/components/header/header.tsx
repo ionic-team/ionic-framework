@@ -167,18 +167,18 @@ export class Header implements ComponentInterface {
   }
 
   private setupScrollEffectHide = async (contentEl: HTMLElement) => {
-    const promise = createScrollHideController(contentEl, {
+    const setupPromise = createScrollHideController(contentEl, {
       el: this.el,
       cssVar: '--internal-header-hide-height',
       hiddenClass: 'header-scroll-hidden',
       contentPartnerClass: 'content-header-hide-scroll-partner',
       contentHiddenClass: 'content-header-hide-scroll-hidden',
     });
-    this.scrollHideCtrlPromise = promise;
+    this.scrollHideCtrlPromise = setupPromise;
 
-    const controller = await promise;
+    const controller = await setupPromise;
 
-    if (this.scrollHideCtrlPromise === promise) {
+    if (this.scrollHideCtrlPromise === setupPromise) {
       this.scrollHideCtrlPromise = null;
       controller.init();
       this.scrollHideCtrl = controller;

@@ -219,7 +219,7 @@ export class TabBar implements ComponentInterface {
       return;
     }
 
-    const promise = createScrollHideController(contentEl, {
+    const setupPromise = createScrollHideController(contentEl, {
       el: this.el,
       cssVar: '--internal-tab-bar-hide-height',
       hiddenClass: 'tab-bar-scroll-hidden',
@@ -227,11 +227,11 @@ export class TabBar implements ComponentInterface {
       contentHiddenClass: 'content-tab-bar-hide-scroll-hidden',
       shouldKeepAriaHidden: () => this.keyboardVisible,
     });
-    this.scrollHideCtrlPromise = promise;
+    this.scrollHideCtrlPromise = setupPromise;
 
-    const controller = await promise;
+    const controller = await setupPromise;
 
-    if (this.scrollHideCtrlPromise === promise) {
+    if (this.scrollHideCtrlPromise === setupPromise) {
       this.scrollHideCtrlPromise = null;
       controller.init();
       this.scrollHideCtrl = controller;

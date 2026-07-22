@@ -168,18 +168,18 @@ export class Footer implements ComponentInterface {
   };
 
   private setupScrollEffectHide = async (contentEl: HTMLElement) => {
-    const promise = createScrollHideController(contentEl, {
+    const setupPromise = createScrollHideController(contentEl, {
       el: this.el,
       cssVar: '--internal-footer-hide-height',
       hiddenClass: 'footer-scroll-hidden',
       contentPartnerClass: 'content-footer-hide-scroll-partner',
       contentHiddenClass: 'content-footer-hide-scroll-hidden',
     });
-    this.scrollHideCtrlPromise = promise;
+    this.scrollHideCtrlPromise = setupPromise;
 
-    const controller = await promise;
+    const controller = await setupPromise;
 
-    if (this.scrollHideCtrlPromise === promise) {
+    if (this.scrollHideCtrlPromise === setupPromise) {
       this.scrollHideCtrlPromise = null;
       controller.init();
       this.scrollHideCtrl = controller;
