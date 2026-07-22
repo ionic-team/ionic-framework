@@ -148,8 +148,8 @@ export class Footer implements ComponentInterface {
     const contentEl = pageEl ? findIonContent(pageEl) : null;
 
     if (hasHide && contentEl) {
-      await this.setupScrollEffectHide(contentEl);
       this.activeEffect = effect;
+      await this.setupScrollEffectHide(contentEl);
       return;
     }
 

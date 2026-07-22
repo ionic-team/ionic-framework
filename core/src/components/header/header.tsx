@@ -130,8 +130,8 @@ export class Header implements ComponentInterface {
     const contentEl = pageEl ? findIonContent(pageEl) : null;
 
     if (hasHide && contentEl) {
-      await this.setupScrollEffectHide(contentEl);
       this.activeEffect = effect;
+      await this.setupScrollEffectHide(contentEl);
       return;
     }
 
@@ -161,8 +161,8 @@ export class Header implements ComponentInterface {
         'ion-header[collapse="condense"],ion-header[scroll-effect="condense"]'
       ) as HTMLElement | null;
 
-      await this.setupFadeHeader(contentEl, condenseHeader);
       this.activeEffect = effect;
+      await this.setupFadeHeader(contentEl, condenseHeader);
     }
   }
 
