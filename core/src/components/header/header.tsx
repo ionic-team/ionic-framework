@@ -310,9 +310,9 @@ export class Header implements ComponentInterface {
     const effect = scrollEffect ?? collapse;
     // condense/fade via the deprecated `collapse` prop are iOS-only.
     const isModeRestricted = scrollEffect === undefined && theme !== 'ios';
-    const hasLargeTitle = this.el.querySelector('ion-title[size="large"]') !== null;
     const hasHide = effect === 'hide';
-    const hasCondense = effect === 'condense' && !isModeRestricted && hasLargeTitle;
+    const hasCondense =
+      effect === 'condense' && !isModeRestricted && this.el.querySelector('ion-title[size="large"]') !== null;
     const hasFade = effect === 'fade' && !isModeRestricted;
     // The condense header should be hidden when
     // - deprecated collapse prop is used on non-iOS (mode restricted), or
