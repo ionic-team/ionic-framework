@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig",
+  "extends": "../../core/tsconfig.base.json",
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
