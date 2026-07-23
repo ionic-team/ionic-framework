@@ -35,6 +35,12 @@ export const dragElementBy = async (
 
   await page.mouse.down();
 
+  // Firefox treats focusable elements (tabindex="-1") as draggable text and
+  // initiates text selection on mouse.down(). In Playwright, this selection
+  // locks in before the gesture detector fires, blocking pointer events.
+  // Clearing it here allows the drag gesture to proceed normally.
+  await page.evaluate(() => window.getSelection()?.removeAllRanges());
+
   // Drag the element.
   await moveElement(page, startX, startY, dragByX, dragByY);
 

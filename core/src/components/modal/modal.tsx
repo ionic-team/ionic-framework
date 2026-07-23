@@ -1188,8 +1188,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   private onModalFocus = (ev: FocusEvent) => {
     const { dragHandleEl, el } = this;
-    // Only handle focus if the modal itself was focused (not a child element)
-    if (ev.target === el && dragHandleEl && dragHandleEl.tabIndex !== -1) {
+    /**
+     * Focus events from inside the shadow DOM are retargeted to the host, so
+     * `ev.target === el` is also true when a shadow child (e.g. the dialog
+     * wrapper that present() focuses for screen readers) receives focus. Use
+     * the shadow root's activeElement to tell the two apart: it is `null` only
+     * when the host itself was focused directly (e.g. tabbing into the modal).
+     * Only then do we redirect to the handle, so the wrapper focus set on
+     * present() is left intact.
+     */
+    if (ev.target === el && el.shadowRoot?.activeElement == null && dragHandleEl && dragHandleEl.tabIndex !== -1) {
       dragHandleEl.focus();
     }
   };
@@ -1657,10 +1665,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
             same element. They must also be set inside the
             shadow DOM otherwise ion-button will not be highlighted
             when using VoiceOver: https://bugs.webkit.org/show_bug.cgi?id=247134
+
+            tabIndex={-1} is required so present() can move focus to this
+            element (which carries the dialog role) instead of the role-less
+            host. role="dialog" alone does not make an element focusable, so
+            without the tabindex focus() would be a no-op and screen readers
+            may not properly announce the dialog and its content when it opens.
           */
           role="dialog"
           {...inheritedAttributes}
           aria-modal="true"
+          tabIndex={-1}
           class="modal-wrapper ion-overlay-wrapper"
           part="content"
           ref={(el) => (this.wrapperEl = el)}
