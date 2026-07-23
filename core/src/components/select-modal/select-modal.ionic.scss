@@ -30,10 +30,6 @@ ion-toolbar {
   @include globals.typography(globals.$ion-heading-h6-medium);
 }
 
-ion-toolbar ion-icon[slot="icon-only"] {
-  font-size: globals.$ion-font-size-500;
-}
-
 // Radio
 // ----------------------------------------------------------------
 
