@@ -126,6 +126,12 @@ export const createScrollHideController = async (
     readTask(() => {
       const currentScrollTop = scrollEl.scrollTop;
 
+      // Both wheel and scroll events fire for mouse wheel input.
+      // Scroll events are suppressed for 80ms after a wheel event,
+      // but when they resume, handleScroll needs an up-to-date
+      // lastScrollPosition or it may detect the wrong direction.
+      lastScrollPosition = currentScrollTop;
+
       if (currentScrollTop <= TOP_VISIBLE_THRESHOLD) {
         if (controllerIsHidden) {
           writeTask(() => commitHide(false));
