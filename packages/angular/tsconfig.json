@@ -11,7 +11,6 @@
   "compilerOptions": {
     "declarationDir": "dist",
     "module": "es2022",
-    "outDir": "build/es2022",
     "rootDir": "./",
     "target": "es2022",
     "plugins": [
