@@ -199,6 +199,17 @@
 
 // Calendar / Body
 // -----------------------------------
+
+/**
+ * In iOS mode the calendar rows are allowed to collapse, so a month
+ * spanning six week-rows can overlap the selection highlights with
+ * the default 350px height. This ensures the month view always has
+ * enough space to not cause overlap.
+ */
+:host .calendar-body {
+  min-height: 282px;
+}
+
 :host .calendar-body .calendar-month .calendar-month-grid {
 
   /**

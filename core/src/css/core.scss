@@ -409,16 +409,6 @@ ion-input input::-webkit-date-and-time-value {
 }
 
 /**
- * In iOS mode the calendar rows are allowed to collapse, so a month
- * spanning six week-rows overlaps the selection highlights when the
- * overlay caps the height at 320px. Restore the iOS grid min-height
- * (refer to datetime.ios.scss) so six-week months have room.
- */
-html.ios .ion-datetime-button-overlay ion-datetime.datetime-grid {
-  min-height: 350px;
-}
-
-/**
  * When moving focus on page transitions we call .focus() on an element which can
  * add an undesired outline ring. This CSS removes the outline ring.
  * We also remove the outline ring from elements that are actively being focused
