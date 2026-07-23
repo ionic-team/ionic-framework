@@ -58,7 +58,6 @@
   line-height: $badge-line-height-in-button;
 
   ::slotted(ion-icon) {
-    width: $badge-icon-size-in-button;
-    height: $badge-icon-size-in-button;
+    font-size: $badge-icon-size-in-button;
   }
 }

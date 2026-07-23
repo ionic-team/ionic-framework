@@ -213,8 +213,7 @@
 
 .select-icon,
 ::slotted(ion-icon) {
-  width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
+  font-size: globals.$ion-font-size-400;
 }
 
 .select-icon {

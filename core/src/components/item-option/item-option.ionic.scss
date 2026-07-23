@@ -36,10 +36,9 @@
 ::slotted([slot="icon-only"]) {
   @include globals.margin(0);
 
-  width: globals.$ion-scale-500;
-
   min-width: initial;
-  height: globals.$ion-scale-500;
+
+  font-size: globals.$ion-font-size-500;
 }
 
 // Item Option Shapes

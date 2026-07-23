@@ -31,8 +31,7 @@
 
   position: absolute;
 
-  width: $badge-ios-in-tab-button-icon-size;
-  height: $badge-ios-in-tab-button-icon-size;
-
   transform: translate(-50%, -50%);
+
+  font-size: $badge-ios-in-tab-button-icon-size;
 }
