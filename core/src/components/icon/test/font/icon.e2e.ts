@@ -25,6 +25,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         config
       );
 
+      await page.evaluate(() => document.fonts.ready);
+
       const icon = page.locator('ion-icon');
       await expect(icon).toHaveScreenshot(screenshot(`icon-font`));
     });
