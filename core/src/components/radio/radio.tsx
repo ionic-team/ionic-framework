@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import { isOptionSelected } from '@utils/forms';
 import { addEventListener, removeEventListener } from '@utils/helpers';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -27,6 +27,7 @@ import type { Color } from '../../interface';
 export class Radio implements ComponentInterface {
   private inputId = `ion-rb-${radioButtonIds++}`;
   private radioGroup: HTMLIonRadioGroupElement | null = null;
+  private itemFocusObserver?: MutationObserver;
 
   @Element() el!: HTMLIonRadioElement;
 
@@ -150,6 +151,22 @@ export class Radio implements ComponentInterface {
       this.updateState();
       addEventListener(radioGroup, 'ionValueChange', this.updateState);
     }
+
+    // The item toggles `item-multiple-inputs` after this control renders and as
+    // inputs are added or removed. Re-render when it flips so the focus
+    // indicator stays in sync.
+    const item = this.el.closest('ion-item');
+    if (item && Build.isBrowser && typeof MutationObserver !== 'undefined') {
+      let wasMultipleInputs = item.classList.contains('item-multiple-inputs');
+      this.itemFocusObserver = new MutationObserver(() => {
+        const isMultipleInputs = item.classList.contains('item-multiple-inputs');
+        if (isMultipleInputs !== wasMultipleInputs) {
+          wasMultipleInputs = isMultipleInputs;
+          forceUpdate(this);
+        }
+      });
+      this.itemFocusObserver.observe(item, { attributes: true, attributeFilter: ['class'] });
+    }
   }
 
   disconnectedCallback() {
@@ -157,6 +174,10 @@ export class Radio implements ComponentInterface {
     if (radioGroup) {
       removeEventListener(radioGroup, 'ionValueChange', this.updateState);
       this.radioGroup = null;
+    }
+    if (this.itemFocusObserver) {
+      this.itemFocusObserver.disconnect();
+      this.itemFocusObserver = undefined;
     }
   }
 
@@ -216,6 +237,7 @@ export class Radio implements ComponentInterface {
     const { checked, disabled, color, el, justify, labelPlacement, hasLabel, buttonTabindex, alignment } = this;
     const mode = getIonMode(this);
     const inItem = hostContext('ion-item', el);
+    const inMultipleInputsItem = hostContext('ion-item.item-multiple-inputs', el);
 
     return (
       <Host
@@ -230,9 +252,11 @@ export class Radio implements ComponentInterface {
           [`radio-justify-${justify}`]: justify !== undefined,
           [`radio-alignment-${alignment}`]: alignment !== undefined,
           [`radio-label-placement-${labelPlacement}`]: true,
-          // Focus and active styling should not apply when the radio is in an item
+          // Focus/active styling should not apply in an item, since the item
+          // handles it. The exception is a multi-input item, which has no single
+          // indicator of its own; active styling stays suppressed there regardless.
           'ion-activatable': !inItem,
-          'ion-focusable': !inItem,
+          'ion-focusable': !inItem || inMultipleInputsItem,
         })}
         role="radio"
         aria-checked={checked ? 'true' : 'false'}

@@ -30,6 +30,9 @@ $checkbox-md-transition-duration:        180ms;
 /// @prop - Transition easing of the checkbox
 $checkbox-md-transition-easing:          cubic-bezier(.4, 0, .2, 1);
 
+/// @prop - Background color of focus indicator for checkbox when focused
+$checkbox-md-background-color-focused:   ion-color(primary, tint);
+
 /// @prop - Opacity of the disabled checkbox
 /// This value is used because the checkbox color is set to
 /// `rgb(0, 0, 0, 0.60)` when enabled and we need it to be

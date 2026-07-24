@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, forceUpdate, h } from '@stencil/core';
 import { checkInvalidState } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
@@ -37,6 +37,7 @@ export class Checkbox implements ComponentInterface {
   private errorTextId = `${this.inputId}-error-text`;
   private inheritedAttributes: Attributes = {};
   private validationObserver?: MutationObserver;
+  private itemFocusObserver?: MutationObserver;
 
   @Element() el!: HTMLIonCheckboxElement;
 
@@ -199,6 +200,22 @@ export class Checkbox implements ComponentInterface {
     // Always set initial state
     this.isInvalid = checkInvalidState(el);
     this.hasLabelContent = this.el.textContent !== '';
+
+    // The item toggles `item-multiple-inputs` after this control renders and as
+    // inputs are added or removed. Re-render when it flips so the focus
+    // indicator stays in sync.
+    const item = el.closest('ion-item');
+    if (item && Build.isBrowser && typeof MutationObserver !== 'undefined') {
+      let wasMultipleInputs = item.classList.contains('item-multiple-inputs');
+      this.itemFocusObserver = new MutationObserver(() => {
+        const isMultipleInputs = item.classList.contains('item-multiple-inputs');
+        if (isMultipleInputs !== wasMultipleInputs) {
+          wasMultipleInputs = isMultipleInputs;
+          forceUpdate(this);
+        }
+      });
+      this.itemFocusObserver.observe(item, { attributes: true, attributeFilter: ['class'] });
+    }
   }
 
   componentWillLoad() {
@@ -210,10 +227,14 @@ export class Checkbox implements ComponentInterface {
   }
 
   disconnectedCallback() {
-    // Clean up validation observer to prevent memory leaks.
+    // Clean up observers to prevent memory leaks.
     if (this.validationObserver) {
       this.validationObserver.disconnect();
       this.validationObserver = undefined;
+    }
+    if (this.itemFocusObserver) {
+      this.itemFocusObserver.disconnect();
+      this.itemFocusObserver = undefined;
     }
   }
 
@@ -338,6 +359,8 @@ export class Checkbox implements ComponentInterface {
     } = this;
     const mode = getIonMode(this);
     const path = getSVGPath(mode, indeterminate);
+    const inItem = hostContext('ion-item', el);
+    const inMultipleInputsItem = hostContext('ion-item.item-multiple-inputs', el);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
@@ -360,11 +383,15 @@ export class Checkbox implements ComponentInterface {
         onClick={this.onClick}
         class={createColorClasses(color, {
           [mode]: true,
-          'in-item': hostContext('ion-item', el),
+          'in-item': inItem,
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
           interactive: true,
+          // Focus styling should not apply when the checkbox is in an item,
+          // since the item handles the focus indicator instead. The exception
+          // is a multi-input item, which has no single indicator of its own.
+          'ion-focusable': !inItem || inMultipleInputsItem,
           [`checkbox-justify-${justify}`]: justify !== undefined,
           [`checkbox-alignment-${alignment}`]: alignment !== undefined,
           [`checkbox-label-placement-${labelPlacement}`]: true,

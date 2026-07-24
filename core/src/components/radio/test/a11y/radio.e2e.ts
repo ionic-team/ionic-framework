@@ -151,6 +151,78 @@ configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, 
 });
 
 /**
+ * These tests assert the `ion-focusable` gating class the component controls,
+ * not the rendered focus ring. `ion-focused` is not asserted directly because
+ * it depends on keyboard-mode detection, which is unreliable on WebKit. The
+ * gating logic does not vary across modes.
+ */
+configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
+  test.describe(title('radio: focus indicator'), () => {
+    test('standalone radio should be focusable', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-radio-group value="a">
+            <ion-radio value="a" aria-label="Radio">Radio</ion-radio>
+          </ion-radio-group>
+        </ion-app>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      await expect(radio).toHaveClass(/ion-focusable/);
+    });
+
+    test('radio in a single-input item should not show its own focus indicator', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-radio-group value="a">
+            <ion-item>
+              <ion-radio value="a">Radio</ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-app>
+      `,
+        config
+      );
+
+      // The item owns the focus indicator for single-input items, so the radio
+      // must not become focusable itself.
+      const radio = page.locator('ion-radio');
+      const item = page.locator('ion-item');
+      await expect(radio).not.toHaveClass(/ion-focusable/);
+      await expect(item).toHaveClass(/ion-focusable/);
+    });
+
+    test('radio in a multi-input item should be focusable', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-app>
+          <ion-item>
+            <ion-radio-group value="a">
+              <ion-radio value="a">Radio 1</ion-radio>
+            </ion-radio-group>
+            <ion-radio-group value="b">
+              <ion-radio value="b">Radio 2</ion-radio>
+            </ion-radio-group>
+          </ion-item>
+        </ion-app>
+      `,
+        config
+      );
+
+      // Multi-input items do not draw a single focus indicator, so each control
+      // must be able to show its own.
+      const radios = page.locator('ion-radio');
+      await expect(radios.nth(0)).toHaveClass(/ion-focusable/);
+      await expect(radios.nth(1)).toHaveClass(/ion-focusable/);
+    });
+  });
+});
+
+/**
  * This behavior does not vary across directions
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
