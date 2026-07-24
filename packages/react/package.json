@@ -54,7 +54,7 @@
     "@ionic/prettier-config": "^2.0.0",
     "@rollup/plugin-typescript": "^11.1.5",
     "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.0.14",
