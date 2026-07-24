@@ -429,6 +429,7 @@ export const IonFabList: StencilVueComponent<JSX.IonFabList> = /*@__PURE__*/ def
 
 
 export const IonFooter: StencilVueComponent<JSX.IonFooter> = /*@__PURE__*/ defineContainer<JSX.IonFooter>('ion-footer', defineIonFooter, [
+  'scrollEffect',
   'collapse',
   'translucent'
 ]);
@@ -451,6 +452,7 @@ export const IonGrid: StencilVueComponent<JSX.IonGrid> = /*@__PURE__*/ defineCon
 
 
 export const IonHeader: StencilVueComponent<JSX.IonHeader> = /*@__PURE__*/ defineContainer<JSX.IonHeader>('ion-header', defineIonHeader, [
+  'scrollEffect',
   'collapse',
   'divider',
   'translucent'

@@ -8,6 +8,15 @@
   box-shadow: $footer-md-box-shadow;
 }
 
+/**
+ * The fade effect fades the toolbar background via --opacity-scale,
+ * but box-shadow is not affected by that variable. Remove it so
+ * the shadow doesn't persist when the background is faded out.
+ */
+.footer-md.footer-collapse-fade {
+  box-shadow: none;
+}
+
 .footer-md.ion-no-border {
   box-shadow: none;
 }
