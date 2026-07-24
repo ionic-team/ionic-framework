@@ -48,3 +48,6 @@ $toggle-ios-disabled-opacity:          .3;
 
 /// @prop - The text color of the on/off labels when the toggle is checked
 $toggle-ios-on-off-label-checked-color: #fff;
+
+/// @prop - Color of the focus indicator ring for the toggle when focused
+$toggle-ios-focus-ring-color:          #{ion-color(primary, base, 0.2)};

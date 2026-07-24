@@ -476,6 +476,10 @@ export class Toggle implements ComponentInterface {
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
+          // A toggle always shows its own focus indicator: unlike checkbox and
+          // radio, it is excluded from the item's input cover, so an item never
+          // draws a focus indicator on its behalf.
+          'ion-focusable': true,
           'toggle-activated': activated,
           'toggle-checked': checked,
           'toggle-disabled': disabled,
